@@ -1,0 +1,9 @@
+The files in this folder are generated from files in Docs/References folder with CodeSynthesis XSD version 3.2 using command lines:
+
+xsd cxx-tree --type-naming ucc --type-regex "/(?:[^ ]* )?(.+)Type/\u$1/" --function-naming lcc --generate-serialization --generate-doxygen --namespace-map http://www.w3.org/2000/09/xmldsig#=ds --root-element Signature xmldsig-core-schema.xsd
+
+xsd cxx-tree --type-naming ucc --type-regex "/(?:[^ ]* )?(.+)Type/\u$1/" --function-naming lcc --generate-serialization  --generate-doxygen --namespace-map http://uri.etsi.org/01903/v1.3.2#=xades --namespace-map http://www.w3.org/2000/09/xmldsig#=ds --root-element Signature XAdES.xsd
+
+xsd cxx-tree --type-naming ucc --function-naming lcc --generate-serialization --generate-doxygen --namespace-map urn:oasis:names:tc:opendocument:xmlns:manifest:1.0=manifest --root-element manifest:manifest OpenDocument_manifest_schema.xsd 
+
+The files are for reference, not modified.
