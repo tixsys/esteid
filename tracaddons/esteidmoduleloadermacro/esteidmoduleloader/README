@@ -1,0 +1,20 @@
+Installing
+----------
+svn co https://id.eesti.ee/svn/tracaddons/esteidmoduleloadermacro
+(cd esteidmoduleloadermacro && python setup.py bdist_egg)
+mv esteidmoduleloadermacro/dist/*.egg <path to my trac project>/plugins
+rm -rf esteidmoduleloadermacro
+
+Add those lines to <path to my trac project>/conf/trac.ini
+
+[components]
+esteidmoduleloader.* = enabled
+
+Using
+-----
+[[EstEIDModuleLoaderHeader]]
+
+[[EstEIDLoadModule(/usr/lib/onepin-opensc-pkcs11.so)]]
+[[EstEIDLoadModule(/usr/lib/esteid-pkcs11.so)]]
+[[EstEIDLoadModule(c:\windows\system32\esteid-pkcs11.dll)]]
+...

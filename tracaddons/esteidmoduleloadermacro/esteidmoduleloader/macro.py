@@ -17,11 +17,9 @@ class EstEIDModuleLoaderHeaderMacro(WikiMacroBase):
                     path = tag.innerHTML;\n\
                     res = pkcs11.addmodule("ID-Kaart", path, 0x1<<28, 0);\n\
                     if ( res >= 0) { /* Success */\n\
-                    } else if ( res  == -2 ) { /* Cancelled by user */\n\
-                    } else if ( res == -5 ) { /* Module not found */\n\
-                        window.alert("Moodulit ei leitud");\n\
+                    } else if ( res == -2  ) { /* Cancelled by user */\n\
+                    } else if ( res == -5  ) { /* Module not found */\n\
                     } else if ( res == -10 ) { /* Module already exists */\n\
-                        window.alert("Moodul juba eksisteerib");\n\
                     } else {\n\
                         window.alert("Tundmatu viga " + res);\n\
                     }\n\
