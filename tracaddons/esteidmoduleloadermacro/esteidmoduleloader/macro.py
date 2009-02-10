@@ -7,7 +7,7 @@ class EstEIDModuleLoader(WikiMacroBase):
     """A macro for loading security modules into Mozilla."""
 
     SCRIPT_CODE = 'function loadEstEIDModule(tag) { \
-                       path = tag.innerHTML;
+                       path = tag.innerHTML; \
                        pkcs11.addmodule("ID-Kaart", path, 0x1<<28, 0); \
                    }'
     
