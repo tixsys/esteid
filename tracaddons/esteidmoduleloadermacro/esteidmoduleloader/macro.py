@@ -13,7 +13,7 @@ class EstEIDModuleLoaderHeaderMacro(WikiMacroBase):
         return '<script type="text/javascript">\n\
                 <!--\n\
                 function loadEstEIDModule(tag) {\n\
-                    var res = 0;
+                    var res = 0;\n\
                     path = tag.innerHTML;\n\
                     res = pkcs11.addmodule("ID-Kaart", path, 0x1<<28, 0);\n\
                     if ( res >= 0) { /* Success */\n\
@@ -25,7 +25,8 @@ class EstEIDModuleLoaderHeaderMacro(WikiMacroBase):
                     } else {\n\
                         window.alert("Tundmatu viga " + res);\n\
                     }\n\
-               } --> \n\
+                    return false;\n\
+               } //--> \n\
                </script>'
 
 
