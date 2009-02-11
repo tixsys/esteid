@@ -1,0 +1,8 @@
+* TM signing fixed (wrong certs)
+* Digest algorithm is read from conf 
+* BES signature validation
+* Xml based configuration
+* various bug fixes
+--This line, and those below, will be ignored--
+
+A    .
