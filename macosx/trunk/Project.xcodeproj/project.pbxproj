@@ -12,6 +12,8 @@
 		8122F1280F55F79000FA51CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1240F55F79000FA51CD /* Localizable.strings */; };
 		8122F1290F55F79000FA51CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1260F55F79000FA51CD /* InfoPlist.strings */; };
 		8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+		81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
+		81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,12 @@
 		8122F12D0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8122F12E0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8122F17C0F55F95000FA51CD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebPlugIn.webplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F874BC0F560A5500FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WebPlugIn/Info.plist; sourceTree = "<group>"; };
+		81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebPlugIn.h; path = WebPlugIn/Sources/EstEIDWebPlugIn.h; sourceTree = "<group>"; };
+		81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebPlugIn.m; path = WebPlugIn/Sources/EstEIDWebPlugIn.m; sourceTree = "<group>"; };
+		81F874C10F560ABF00FCAB5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
+		81F875820F560BE000FCAB5D /* 1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 1.html; path = WebPlugIn/Tests/1.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +47,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81F8748B0F56085100FCAB5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +82,7 @@
 				8122F17C0F55F95000FA51CD /* Carbon.framework */,
 				8122F07E0F55F43600FA51CD /* Foundation.framework */,
 				8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */,
+				81F874C10F560ABF00FCAB5D /* WebKit.framework */,
 			);
 			name = "External Frameworks and Libraries";
 			sourceTree = "<group>";
@@ -84,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				8122F1120F55F75500FA51CD /* EstEID.plugin */,
+				81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,7 +135,9 @@
 		8122F04A0F55F36A00FA51CD /* WebPlugIn */ = {
 			isa = PBXGroup;
 			children = (
+				81F874BC0F560A5500FCAB5D /* Info.plist */,
 				8122F1080F55F5DC00FA51CD /* Sources */,
+				81F875650F560BCC00FCAB5D /* Tests */,
 			);
 			name = WebPlugIn;
 			sourceTree = "<group>";
@@ -140,6 +160,8 @@
 		8122F1080F55F5DC00FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */,
+				81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -150,6 +172,14 @@
 				8122F1090F55F62700FA51CD /* Prefix.pch */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		81F875650F560BCC00FCAB5D /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				81F875820F560BE000FCAB5D /* 1.html */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,6 +200,23 @@
 			name = CMPlugIn;
 			productName = CMPlugIn;
 			productReference = 8122F1120F55F75500FA51CD /* EstEID.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		81F8748C0F56085100FCAB5D /* WebPlugIn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "WebPlugIn" */;
+			buildPhases = (
+				81F874890F56085100FCAB5D /* Resources */,
+				81F8748A0F56085100FCAB5D /* Sources */,
+				81F8748B0F56085100FCAB5D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WebPlugIn;
+			productName = WebPlugIn;
+			productReference = 81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -194,6 +241,7 @@
 			projectRoot = "";
 			targets = (
 				8122F1110F55F75500FA51CD /* CMPlugIn */,
+				81F8748C0F56085100FCAB5D /* WebPlugIn */,
 			);
 		};
 /* End PBXProject section */
@@ -208,6 +256,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81F874890F56085100FCAB5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -217,6 +272,14 @@
 			files = (
 				8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */,
 				8122F1230F55F78100FA51CD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81F8748A0F56085100FCAB5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,10 +339,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -309,10 +369,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					ppc,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -338,6 +395,60 @@
 			};
 			name = Release;
 		};
+		81F8748F0F56085200FCAB5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = WebPlugIn/Info.plist;
+				INSTALL_PATH = "/Library/Internet Plug-ins";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = WebPlugIn;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = webplugin;
+			};
+			name = Debug;
+		};
+		81F874900F56085200FCAB5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = WebPlugIn/Info.plist;
+				INSTALL_PATH = "/Library/Internet Plug-ins";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = WebPlugIn;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = webplugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +466,15 @@
 			buildConfigurations = (
 				8122F1140F55F75700FA51CD /* Debug */,
 				8122F1150F55F75700FA51CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "WebPlugIn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F8748F0F56085200FCAB5D /* Debug */,
+				81F874900F56085200FCAB5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
