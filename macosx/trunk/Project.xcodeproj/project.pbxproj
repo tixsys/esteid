@@ -1,0 +1,365 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
+		8122F1230F55F78100FA51CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1210F55F78100FA51CD /* main.m */; };
+		8122F1280F55F79000FA51CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1240F55F79000FA51CD /* Localizable.strings */; };
+		8122F1290F55F79000FA51CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1260F55F79000FA51CD /* InfoPlist.strings */; };
+		8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8122F07A0F55F42800FA51CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		8122F07E0F55F43600FA51CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = /System/Library/Frameworks/PreferencePanes.framework; sourceTree = "<absolute>"; };
+		8122F1090F55F62700FA51CD /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		8122F1120F55F75500FA51CD /* EstEID.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEID.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		8122F1190F55F77100FA51CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CMPlugIn/Info.plist; sourceTree = "<group>"; };
+		8122F11F0F55F78100FA51CD /* EstEIDCMPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDCMPlugIn.h; path = CMPlugIn/Sources/EstEIDCMPlugIn.h; sourceTree = "<group>"; };
+		8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDCMPlugIn.m; path = CMPlugIn/Sources/EstEIDCMPlugIn.m; sourceTree = "<group>"; };
+		8122F1210F55F78100FA51CD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CMPlugIn/Sources/main.m; sourceTree = "<group>"; };
+		8122F1250F55F79000FA51CD /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = CMPlugIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8122F1270F55F79000FA51CD /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = CMPlugIn/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8122F12A0F55F79800FA51CD /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = CMPlugIn/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8122F12B0F55F79800FA51CD /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = CMPlugIn/et.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8122F12D0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8122F12E0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8122F17C0F55F95000FA51CD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8122F1100F55F75500FA51CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				8122F0480F55F35400FA51CD /* CMPlugIn */,
+				8122F1060F55F5C300FA51CD /* PreferencePane */,
+				8122F0470F55F34E00FA51CD /* Updater */,
+				8122F04A0F55F36A00FA51CD /* WebPlugIn */,
+				8122F10A0F55F64000FA51CD /* Other */,
+				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = Project;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8122F07A0F55F42800FA51CD /* AppKit.framework */,
+				8122F17C0F55F95000FA51CD /* Carbon.framework */,
+				8122F07E0F55F43600FA51CD /* Foundation.framework */,
+				8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		08FB77AFFE84173DC02AAC07 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				8122F11F0F55F78100FA51CD /* EstEIDCMPlugIn.h */,
+				8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */,
+				8122F1210F55F78100FA51CD /* main.m */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8122F1120F55F75500FA51CD /* EstEID.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8122F0470F55F34E00FA51CD /* Updater */ = {
+			isa = PBXGroup;
+			children = (
+				8122F1070F55F5D500FA51CD /* Sources */,
+			);
+			name = Updater;
+			sourceTree = "<group>";
+		};
+		8122F0480F55F35400FA51CD /* CMPlugIn */ = {
+			isa = PBXGroup;
+			children = (
+				08FB77AFFE84173DC02AAC07 /* Sources */,
+				8122F1190F55F77100FA51CD /* Info.plist */,
+				8122F1260F55F79000FA51CD /* InfoPlist.strings */,
+				8122F1240F55F79000FA51CD /* Localizable.strings */,
+			);
+			name = CMPlugIn;
+			sourceTree = "<group>";
+		};
+		8122F0490F55F35D00FA51CD /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		8122F04A0F55F36A00FA51CD /* WebPlugIn */ = {
+			isa = PBXGroup;
+			children = (
+				8122F1080F55F5DC00FA51CD /* Sources */,
+			);
+			name = WebPlugIn;
+			sourceTree = "<group>";
+		};
+		8122F1060F55F5C300FA51CD /* PreferencePane */ = {
+			isa = PBXGroup;
+			children = (
+				8122F0490F55F35D00FA51CD /* Sources */,
+			);
+			name = PreferencePane;
+			sourceTree = "<group>";
+		};
+		8122F1070F55F5D500FA51CD /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		8122F1080F55F5DC00FA51CD /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		8122F10A0F55F64000FA51CD /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				8122F1090F55F62700FA51CD /* Prefix.pch */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8122F1110F55F75500FA51CD /* CMPlugIn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "CMPlugIn" */;
+			buildPhases = (
+				8122F10E0F55F75500FA51CD /* Resources */,
+				8122F10F0F55F75500FA51CD /* Sources */,
+				8122F1100F55F75500FA51CD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CMPlugIn;
+			productName = CMPlugIn;
+			productReference = 8122F1120F55F75500FA51CD /* EstEID.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Project" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				et,
+				ru,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* Project */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8122F1110F55F75500FA51CD /* CMPlugIn */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8122F10E0F55F75500FA51CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8122F1280F55F79000FA51CD /* Localizable.strings in Resources */,
+				8122F1290F55F79000FA51CD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8122F10F0F55F75500FA51CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */,
+				8122F1230F55F78100FA51CD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		8122F1240F55F79000FA51CD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8122F1250F55F79000FA51CD /* en */,
+				8122F12B0F55F79800FA51CD /* et */,
+				8122F12D0F55F7A200FA51CD /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		8122F1260F55F79000FA51CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8122F1270F55F79000FA51CD /* en */,
+				8122F12A0F55F79800FA51CD /* et */,
+				8122F12E0F55F7A200FA51CD /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		8122F1140F55F75700FA51CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = CMPlugIn/Info.plist;
+				INSTALL_PATH = "/Library/Contextual Menu Items";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEID;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		8122F1150F55F75700FA51CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = CMPlugIn/Info.plist;
+				INSTALL_PATH = "/Library/Contextual Menu Items";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEID;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "CMPlugIn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8122F1140F55F75700FA51CD /* Debug */,
+				8122F1150F55F75700FA51CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}
