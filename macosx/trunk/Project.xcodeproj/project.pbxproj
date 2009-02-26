@@ -14,6 +14,12 @@
 		8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
 		81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
 		81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
+		81F875B30F560EC900FCAB5D /* EstEIDPreferencePane.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */; };
+		81F875B70F560F5900FCAB5D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */; };
+		81F875CA0F560F7F00FCAB5D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 81F875C90F560F7F00FCAB5D /* Icon.png */; };
+		81F875E30F56100400FCAB5D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F875DD0F56100400FCAB5D /* InfoPlist.strings */; };
+		81F875E40F56100400FCAB5D /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81F875DF0F56100400FCAB5D /* PreferencePane.nib */; };
+		81F875E50F56100400FCAB5D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F875E10F56100400FCAB5D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +45,18 @@
 		81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebPlugIn.m; path = WebPlugIn/Sources/EstEIDWebPlugIn.m; sourceTree = "<group>"; };
 		81F874C10F560ABF00FCAB5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		81F875820F560BE000FCAB5D /* 1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 1.html; path = WebPlugIn/Tests/1.html; sourceTree = "<group>"; };
+		81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEID.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPreferencePane.m; path = PreferencePane/Sources/EstEIDPreferencePane.m; sourceTree = "<group>"; };
+		81F875B20F560EC900FCAB5D /* EstEIDPreferencePane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPreferencePane.h; path = PreferencePane/Sources/EstEIDPreferencePane.h; sourceTree = "<group>"; };
+		81F875C70F560F6C00FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PreferencePane/Info.plist; sourceTree = "<group>"; };
+		81F875C90F560F7F00FCAB5D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = PreferencePane/Images/Icon.png; sourceTree = "<group>"; };
+		81F875DE0F56100400FCAB5D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = PreferencePane/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81F875E00F56100400FCAB5D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = PreferencePane/en.lproj/PreferencePane.nib; sourceTree = "<group>"; };
+		81F875E20F56100400FCAB5D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = PreferencePane/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81F875E60F56100E00FCAB5D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = PreferencePane/et.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81F875E70F56100E00FCAB5D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = PreferencePane/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81F875E90F56101800FCAB5D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = PreferencePane/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81F875EA0F56101800FCAB5D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = PreferencePane/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +73,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81F875980F560E9A00FCAB5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F875B70F560F5900FCAB5D /* PreferencePanes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +128,7 @@
 			children = (
 				8122F1120F55F75500FA51CD /* EstEID.plugin */,
 				81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */,
+				81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +155,8 @@
 		8122F0490F55F35D00FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				81F875B20F560EC900FCAB5D /* EstEIDPreferencePane.h */,
+				81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -145,7 +174,12 @@
 		8122F1060F55F5C300FA51CD /* PreferencePane */ = {
 			isa = PBXGroup;
 			children = (
+				81F875A00F560EAC00FCAB5D /* Images */,
 				8122F0490F55F35D00FA51CD /* Sources */,
+				81F875C70F560F6C00FCAB5D /* Info.plist */,
+				81F875DD0F56100400FCAB5D /* InfoPlist.strings */,
+				81F875E10F56100400FCAB5D /* Localizable.strings */,
+				81F875DF0F56100400FCAB5D /* PreferencePane.nib */,
 			);
 			name = PreferencePane;
 			sourceTree = "<group>";
@@ -180,6 +214,14 @@
 				81F875820F560BE000FCAB5D /* 1.html */,
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		81F875A00F560EAC00FCAB5D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				81F875C90F560F7F00FCAB5D /* Icon.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +261,23 @@
 			productReference = 81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		81F875990F560E9A00FCAB5D /* PreferencePane */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "PreferencePane" */;
+			buildPhases = (
+				81F875960F560E9A00FCAB5D /* Resources */,
+				81F875970F560E9A00FCAB5D /* Sources */,
+				81F875980F560E9A00FCAB5D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PreferencePane;
+			productName = PreferencePane;
+			productReference = 81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -241,6 +300,7 @@
 			projectRoot = "";
 			targets = (
 				8122F1110F55F75500FA51CD /* CMPlugIn */,
+				81F875990F560E9A00FCAB5D /* PreferencePane */,
 				81F8748C0F56085100FCAB5D /* WebPlugIn */,
 			);
 		};
@@ -263,6 +323,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81F875960F560E9A00FCAB5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F875CA0F560F7F00FCAB5D /* Icon.png in Resources */,
+				81F875E30F56100400FCAB5D /* InfoPlist.strings in Resources */,
+				81F875E40F56100400FCAB5D /* PreferencePane.nib in Resources */,
+				81F875E50F56100400FCAB5D /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -280,6 +351,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81F875970F560E9A00FCAB5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81F875B30F560EC900FCAB5D /* EstEIDPreferencePane.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +383,34 @@
 				8122F12E0F55F7A200FA51CD /* ru */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		81F875DD0F56100400FCAB5D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81F875DE0F56100400FCAB5D /* en */,
+				81F875E70F56100E00FCAB5D /* et */,
+				81F875E90F56101800FCAB5D /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		81F875DF0F56100400FCAB5D /* PreferencePane.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81F875E00F56100400FCAB5D /* en */,
+			);
+			name = PreferencePane.nib;
+			sourceTree = "<group>";
+		};
+		81F875E10F56100400FCAB5D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81F875E20F56100400FCAB5D /* en */,
+				81F875E60F56100E00FCAB5D /* et */,
+				81F875EA0F56101800FCAB5D /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -449,6 +556,58 @@
 			};
 			name = Release;
 		};
+		81F8759D0F560E9B00FCAB5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = PreferencePane/Info.plist;
+				INSTALL_PATH = /Library/PreferencePanes;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEID;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		81F8759E0F560E9B00FCAB5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = PreferencePane/Info.plist;
+				INSTALL_PATH = /Library/PreferencePanes;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEID;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = prefPane;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -475,6 +634,15 @@
 			buildConfigurations = (
 				81F8748F0F56085200FCAB5D /* Debug */,
 				81F874900F56085200FCAB5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "PreferencePane" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81F8759D0F560E9B00FCAB5D /* Debug */,
+				81F8759E0F560E9B00FCAB5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
