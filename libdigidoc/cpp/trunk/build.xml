@@ -1,0 +1,204 @@
+<project name="libdigidoc" default="build" basedir=".">
+    
+    <!-- Properties from files -->
+    <loadproperties srcFile="build.properties"/>
+    
+    
+    <!-- Define cpp tasks -->
+    <taskdef resource="cpptasks.tasks" classpath="${path.cpptasks.jar}"/>
+    
+    <!-- Info -->
+    <target name="info">
+        <echo message="Building ${ant.project.name} project using java (${java.runtime.version}) with ${ant.version}"/>
+    </target>
+    
+    <!-- Clean -->
+    <target name="clean">
+        <delete quiet="yes" dir="${dir.build}"/>
+    </target>
+    
+    <!-- Init -->
+    <target name="init">
+        <mkdir dir="${dir.obj}"/>
+        <mkdir dir="${dir.dist}"/>
+    </target>
+    
+    <!-- Build libdigidoc.so -->
+    <target name="build-libdigidoc.so" depends="info,init">
+        <cc outfile="${dir.dist}/libdigidoc.so" objdir="${dir.obj}">
+            
+            <compiler name="g++">
+                <compilerarg value="-g" if="debug"/>
+                <compilerarg value="-Wall"/>
+                <compilerarg value="-fPIC"/>
+                <!--
+                <defineset>
+                    <define name="ENABLE_SOMETHING"/>
+                    <define name="HAVE_CONFIG_H"/>
+                </defineset>
+                -->
+                <includepath path="${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+                <fileset dir="${dir.src}">
+                    <include name="**/*.cpp"/>
+                    <include name="**/*.cxx"/>
+                    <exclude name="main_*.cpp"/>
+                </fileset>
+            </compiler>
+            
+            <linker name="g++">
+                <linkerarg value="-shared"/>
+                <linkerarg value="-g" if="debug"/>
+                <linkerarg value="-O3" unless="debug"/>
+                <linkerarg value="-Wall"/>
+                <linkerarg value="-fPIC"/>
+                <linkerarg value="-L/usr/lib/debug/usr/lib/" if="debug"/>
+                <linkerarg value="-L../../${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+                <libset libs="stdc++ xerces-c xml-security-c crypto p11 minizip"/>
+            </linker>
+        </cc>
+    </target>
+    
+    <!-- Build demo -->
+    <target name="build-demo" depends="build-libdigidoc.so">
+        <cc outfile="${dir.dist}/demo" objdir="${dir.obj}">
+            
+            <compiler name="g++">
+                <compilerarg value="-Wall"/>
+                <compilerarg value="-fPIC"/>
+                <fileset dir="${dir.src}">
+                    <include name="main_demo.cpp"/>
+                </fileset>
+                <includepath path="${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+            </compiler>
+
+            <linker name="g++">
+                <linkerarg value="-O3"/>
+                <linkerarg value="-Wall"/>
+                <linkerarg value="-fPIC"/>
+                <linkerarg value="-L../../${dir.dist}"/>
+                
+                <libset libs="digidoc"/>
+            </linker>
+        </cc>
+    </target>
+	
+	<target name="build-tool" depends="build-libdigidoc.so">
+	        <cc outfile="${dir.dist}/tool" objdir="${dir.obj}">
+	            
+	            <compiler name="g++">
+	                <compilerarg value="-Wall"/>
+	                <compilerarg value="-fPIC"/>
+	                <fileset dir="${dir.src}">
+	                    <include name="bdoc_ref.cpp"/>
+	                </fileset>
+	                <includepath path="${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+	            </compiler>
+
+	            <linker name="g++">
+	                <linkerarg value="-O3"/>
+	                <linkerarg value="-Wall"/>
+	                <linkerarg value="-fPIC"/>
+	                <linkerarg value="-L../../${dir.dist}"/>
+	                
+	                <libset libs="digidoc"/>
+	            </linker>
+	        </cc>
+	    </target>
+
+    
+    <!-- Build test -->
+    <target name="build-test" depends="build-libdigidoc.so">
+        <cc outfile="${dir.dist}/test" objdir="${dir.obj}">
+            
+            <compiler name="g++">
+                <compilerarg value="-g" if="debug"/>
+                <compilerarg value="-Wall"/>
+                <compilerarg value="-fPIC"/>
+                <fileset dir="${dir.src}">
+                    <include name="main_test-1.cpp"/>
+                </fileset>
+                <includepath path="${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+            </compiler>
+
+            <linker name="g++">
+                <linkerarg value="-g" if="debug"/>
+                <linkerarg value="-O3" unless="debug"/>
+                <linkerarg value="-Wall"/>
+                <linkerarg value="-fPIC"/>
+                <linkerarg value="-L/usr/lib/debug/usr/lib/" if="debug"/>
+                <linkerarg value="-L../../${dir.dist}"/>
+                
+                <libset libs="digidoc"/>
+            </linker>
+        </cc>
+    </target>
+	
+    <!-- Build unittests -->
+    <target name="build-unittests" depends="build-libdigidoc.so">
+        <cc outfile="${dir.dist}/unittests" objdir="${dir.obj}">
+            
+            <compiler name="g++">
+                <compilerarg value="-Wall"/>
+                <compilerarg value="-fPIC"/>
+                <fileset dir="${dir.test}/src">
+                    <include name="**/*.cpp"/>
+                </fileset>
+                <includepath path="${dir.lib}/zlib-1.2.3/contrib/minizip"/>
+                <includepath path="${dir.src}"/>
+            </compiler>
+
+            <linker name="g++">
+                <linkerarg value="-Wall"/>
+                <linkerarg value="-fPIC"/>
+                <linkerarg value="-L../../${dir.dist}"/>
+                
+                <libset libs="cppunit digidoc"/>
+            </linker>
+        </cc>
+    </target>
+    
+    <!-- Run demo list application -->
+    <target name="run-demo-list">
+        <exec executable="${dir.dist}/demo">
+            <env key="LD_LIBRARY_PATH" path="${dir.dist}"/>
+            <arg value="list"/>
+            <arg value="--validateOnline"/>
+            <arg value="digidoc-bes.bdoc"/>
+        </exec>
+    </target>
+    
+    <!-- Run demo create application -->
+    <target name="run-demo-create">
+        <exec executable="${dir.dist}/demo">
+            <env key="LD_LIBRARY_PATH" path="${dir.dist}"/>
+            <arg value="create"/>
+            <arg value="--file=file1.txt"/>
+            <arg value="--file=file2.txt"/>
+            <arg value="--file=file3.txt"/>
+            <arg value="--profile=TM"/>
+            <arg value="digidoc-bes.bdoc"/>
+        </exec>
+    </target>
+    
+    <!-- Run test application -->
+    <target name="run-test" depends="build-unittests, build-tool, build-demo">
+        <exec executable="python">
+            <!--env key="LD_LIBRARY_PATH" path="${dir.dist}"/-->
+            <arg value="test/test.py"/>
+        </exec>
+    </target>
+	
+	<target name="test" depends="run-test"/>
+	
+    <!-- Run unittests -->
+    <target name="run-unittests" depends="build-unittests">
+        <exec executable="${dir.dist}/unittests">
+            <env key="LD_LIBRARY_PATH" path="${dir.dist}"/>
+        </exec>
+    </target>
+    
+    <!-- Build -->
+    <target name="build" depends="build-demo,build-test, build-tool, build-unittests"/>
+	<target name="all" depends="build"/>
+    
+</project>
