@@ -1,0 +1,4 @@
+* More sane personal Data file field name array population
+* somehow append service, to ContractID
+* pcsc_stringify_error
+* Reconnect to manager on "no readers found" error

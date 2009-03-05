@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<overlay id="esteid" 
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <statusbar id="status-bar">
+        <statusbarpanel id="esteidpanel" label="Loading..."/>
+    </statusbar>
+    <script src="esteid.js"/>
+</overlay>
