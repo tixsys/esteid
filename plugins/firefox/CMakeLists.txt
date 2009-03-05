@@ -64,7 +64,7 @@ add_custom_target( xpi-jar
 add_dependencies( xpi-jar xpi-stage)
 
 add_custom_target( xpi ALL
-	DEPENDS install.rdf
+	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
 	DEPENDS esteid
 	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
 	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
@@ -111,9 +111,14 @@ endif(NOT EXISTS ${XPIDL})
 message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 
 add_definitions(${GECKO_SDK_CFLAGS})
+link_directories(${GECKO_SDK_DIR}/lib)
 link_directories(${GECKO_SDK_LIBRARY_DIRS})
 include_directories(${GECKO_SDK_DIR}/include)
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
+
+set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti -fshort-wchar")
+set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
+
 
 include_directories(${CARDLIB})
 
@@ -168,8 +173,6 @@ set(esteid_module_SRCS
     ${CARDLIB}/SmartCardManager.cpp
 )
 
-set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti")
-set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
 # TODO: Find a better way to pass special CFLAGS to targets
 add_definitions(${XPCOM_CPP_FLAGS})
 add_library(esteid SHARED ${esteid_module_SRCS})
