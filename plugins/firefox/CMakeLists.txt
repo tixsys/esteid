@@ -10,7 +10,7 @@ project(xpi)
 # FIXME: Ugly son of a bitch!
 set(CARDLIB ../../qesteidutil/trunk/cardlib)
 
-set( CMAKE_VERBOSE_MAKEFILE TRUE)
+# set( CMAKE_VERBOSE_MAKEFILE TRUE)
 
 # Define directories
 # set( CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/build)
@@ -96,15 +96,12 @@ IF(PKG_CONFIG_FOUND)
         endif(NOT GECKO_SDK_DIR)
     ENDIF(GECKO_SDK_FOUND)
 ELSE(PKG_CONFIG_FOUND)
-    set(NSPR_LIBRARIES plds4 plc4 nspr4)
+    if(NOT MSVC)
+	set(${THREAD_LIBS} pthread)
+    endif(NOT MSVC)
+    set(NSPR_LIBRARIES plds4 plc4 nspr4 ${THREAD_LIBS} ${CMAKE_DL_LIBS})
     set(GECKO_LIBRARIES xpcomglue_s xul xpcom)
-    if(MSVC)
-        set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES} )
-                        	# odbc32 odbccp32 shlwapi
-    else(MSVC)
-        set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES}
-	                        pthread dl)
-    endif(MSVC)
+    set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES} )
     FIND_PATH(GECKO_SDK_DIR include/xpcom/nsCOMPtr.h
         PATHS
 	    /src/xulrunner-sdk
@@ -131,24 +128,27 @@ message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 add_definitions(${GECKO_SDK_CFLAGS})
 link_directories(${GECKO_SDK_DIR}/sdk/lib)
 link_directories(${GECKO_SDK_LIBRARY_DIRS})
+include_directories(${GECKO_SDK_DIR}/include)
 include_directories(${GECKO_SDK_DIR}/include/xpcom)
 include_directories(${GECKO_SDK_DIR}/include/dom)
 include_directories(${GECKO_SDK_DIR}/sdk/include)
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
 
+if(WIN32)
+  add_definitions(-DXP_WIN -D_USRDLL)
+endif(WIN32)
+
+# XPCOM modules must be built with 2 byte wchar,
+# no RTTI and xpcom-config.h included from every source file
+# In addition, when compiling with MSVC, we link VC Runtime statically.
+# TODO: generate version_script
 if(MSVC)
-set(XPCOM_CPP_FLAGS /FI xpcom-config.h /MT /D "XP_WIN" /D "_USRDLL" /Zc:wchar_t-)
-set(XPCOM_LINK_FLAGS )
+  set(XPCOM_CPP_FLAGS /FI xpcom-config.h /MT /Zc:wchar_t-)
+  set(XPCOM_LINK_FLAGS )
+else(MSVC)
+  set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti -fshort-wchar")
+  set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
 endif(MSVC)
-
-if(GCC)
-set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti -fshort-wchar")
-set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
-endif(GCC)
-
-if(NOT XPCOM_CPP_FLAGS)
-    message(WARNING "Could not recognize Your compiler. Please make sure it uses 2 byte wchars and NO RTTI")
-endif(NOT XPCOM_CPP_FLAGS)
 
 include_directories(${CARDLIB})
 
