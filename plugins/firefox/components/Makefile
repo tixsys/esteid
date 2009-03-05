@@ -6,6 +6,7 @@ CARDLIB := ../../../esteidutil/trunk/src/cardlib
 FF_LDFLAGS := -L${GECKO_SDK}/lib
 IDL_FLAGS := -v -w -I${GECKO_SDK}/idl
 
+CPPFLAGS += -DESTEID_MOZPLUG_VERSION='"0.0.1"'
 CPPFLAGS += -fPIC -Wall ${NSPR_INCLUDES} -I${GECKO_SDK}/include
 CPPFLAGS += -include ${GECKO_SDK}/xpcom-config.h
 CPPFLAGS += -I/usr/include/PCSC -I${CARDLIB}
@@ -27,7 +28,7 @@ all: ${COMPONENT_NAME}.so ${COMPONENT_NAME}.xpt #${COMPONENT_NAME}.js
 
 ${COMPONENT_NAME}.so: nsEstEID.o nsEstEIDService.o EstEIDServiceBase.o \
 			EstEIDModule.o
-	${CXX} -Wl,--discard-all -Wl,-Bsymbolic -Wl,--version-script=${COMPONENT_NAME}.version_script -Wl,-z,defs -shared $(FF_LDFLAGS) -L./ -o $@ $^ -lcardlib -lxpcomglue_s -lxpcom ${NSPR_LIBS}
+	${CXX} -Wl,--discard-all -Wl,-Bsymbolic -Wl,--version-script=xpcom.version_script -Wl,-z,defs -shared $(FF_LDFLAGS) -L./ -o $@ $^ -lcardlib -lxpcomglue_s -lxpcom ${NSPR_LIBS}
 
 ${COMPONENT_NAME}.xpt: nsIEstEID.xpt nsIEstEID.xpt
 	xpt_link $@ $+
