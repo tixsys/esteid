@@ -8,6 +8,7 @@
 
 #include <iostream>
 
+#if 0
 class huinja : public nsSupportsWeakReference {
 public:
     NS_DECL_ISUPPORTS
@@ -16,6 +17,7 @@ public:
 };
 
 NS_IMPL_ISUPPORTS1( huinja, nsISupportsWeakReference );
+#endif
 
 NS_IMPL_ISUPPORTS1( nsEstEIDService, nsITimerCallback );
 

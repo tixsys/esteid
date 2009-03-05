@@ -2,3 +2,4 @@
 * somehow append service, to ContractID
 * pcsc_stringify_error
 * Reconnect to manager on "no readers found" error
+* investigate no-rtti flag effect on virtual functions

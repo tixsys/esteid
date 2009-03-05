@@ -14,8 +14,6 @@ NS_GENERIC_FACTORY_CONSTRUCTOR_INIT(nsEstEID, Init);
 //NS_GENERIC_FACTORY_SINGLETON_CONSTRUCTOR(nsEstEID,
 //                                         nsEstEID::getInstance);
 
-
-
 NS_DECL_CLASSINFO(nsEstEID);
 
 /* Module self registration */
@@ -42,9 +40,8 @@ nsEstEIDRegisterSelf(nsIComponentManager *compMgr,
                           PR_TRUE, PR_TRUE, nsnull);
 
 #if 0
-    rv = cat->AddCategoryEntry(JAVASCRIPT_GLOBAL_CONSTRUCTOR_CATEGORY,
+    rv = cat->AddCategoryEntry(JAVASCRIPT_GLOBAL_CONSTRUCTOR_CATEGORY
                           "EstEID",
-//                          "service," NS_ESTEID_CONTRACTID,
                           NS_ESTEID_CONTRACTID,
                           PR_TRUE, PR_TRUE, nsnull);
 #endif

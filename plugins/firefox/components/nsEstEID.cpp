@@ -78,7 +78,12 @@ nsEstEID::Init()
     if(NS_FAILED(rv))
     	return rv;
 
-	service = nsEstEIDService::getInstance();
+    try {
+    	service = nsEstEIDService::getInstance();
+    } catch(std::runtime_error err) {
+    	std::cout << err.what() << std::endl;
+    	return NS_ERROR_UNEXPECTED;
+    }
     return NS_OK;
 }
 
@@ -109,7 +114,7 @@ NS_IMETHODIMP nsEstEID::Observe( nsISupports *aSubject,
  */
 NS_IMETHODIMP nsEstEID::GetVersion(nsACString & _retval)
 {
-    _retval.Assign(NS_LITERAL_CSTRING("0.0.1"));
+    _retval.Assign(NS_LITERAL_CSTRING(ESTEID_MOZPLUG_VERSION));
     // PR_Sleep(PR_SecondsToInterval(15));
     return NS_OK;
 }
