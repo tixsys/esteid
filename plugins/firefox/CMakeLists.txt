@@ -83,6 +83,39 @@ IF(PKG_CONFIG_FOUND)
     set(pkgName libxul)
 
     pkg_check_modules(GECKO_SDK ${pkgName})
+    IF(GECKO_SDK_FOUND)
+        # Use a non-standard variable to find the real Gecko SDK directory
+        execute_process(
+          COMMAND ${PKG_CONFIG_EXECUTABLE} "--variable=sdkdir" ${pkgName}
+          OUTPUT_VARIABLE GECKO_SDK_DIR)
+        # Sanitize output
+        string(REGEX REPLACE "[\r\n]|^ +| +$" "" GECKO_SDK_DIR
+						${GECKO_SDK_DIR})
+        if(NOT GECKO_SDK_DIR)
+	        message(FATAL_ERROR "Unable to determine Gecko SDK path via pkg-config")
+        endif(NOT GECKO_SDK_DIR)
+    ENDIF(GECKO_SDK_FOUND)
+ELSE(PKG_CONFIG_FOUND)
+    set(NSPR_LIBRARIES plds4 plc4 nspr4)
+    set(GECKO_LIBRARIES xpcomglue_s xul xpcom)
+    if(MSVC)
+        set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES} )
+                        	# odbc32 odbccp32 shlwapi
+    else(MSVC)
+        set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES}
+	                        pthread dl)
+    endif(MSVC)
+    FIND_PATH(GECKO_SDK_DIR include/xpcom/nsCOMPtr.h
+        PATHS
+	    /src/xulrunner-sdk
+	    ${PROJECT_SOURCE_DIR}/xulrunner-sdk
+	    ${PROJECT_SOURCE_DIR}/../xulrunner-sdk
+	    ${PROJECT_BINARY_DIR}/xulrunner-sdk
+	    ${PROJECT_BINARY_DIR}/../xulrunner-sdk
+    )
+    if(GECKO_SDK_DIR)
+        set(GECKO_SDK_FOUND 1)
+    endif(GECKO_SDK_DIR)
 ENDIF(PKG_CONFIG_FOUND)
 
 IF(NOT GECKO_SDK_FOUND)
@@ -90,35 +123,32 @@ IF(NOT GECKO_SDK_FOUND)
 	message(FATAL_ERROR "Gecko SDK not found. Please download it.")
 ENDIF(NOT GECKO_SDK_FOUND)
 
-# Use a non-standard variable to find the real Gecko SDK directory
-execute_process(
-  COMMAND ${PKG_CONFIG_EXECUTABLE} "--variable=sdkdir" ${pkgName}
-  OUTPUT_VARIABLE GECKO_SDK_DIR)
-# Sanitize output
-string(REGEX REPLACE "[\r\n]|^ +| +$" "" GECKO_SDK_DIR ${GECKO_SDK_DIR})
-
-if(NOT GECKO_SDK_DIR)
-	message(FATAL_ERROR "Unable to determine Gecko SDK path via pkg-config")
-endif(NOT GECKO_SDK_DIR)
-
 set(XPIDL ${GECKO_SDK_DIR}/bin/xpidl)
 set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl)
-
-if(NOT EXISTS ${XPIDL})
-	message(FATAL_ERROR "${GECKO_SDK_DIR}/bin/xpidl does not exist")
-endif(NOT EXISTS ${XPIDL})
 
 message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 
 add_definitions(${GECKO_SDK_CFLAGS})
-link_directories(${GECKO_SDK_DIR}/lib)
+link_directories(${GECKO_SDK_DIR}/sdk/lib)
 link_directories(${GECKO_SDK_LIBRARY_DIRS})
-include_directories(${GECKO_SDK_DIR}/include)
+include_directories(${GECKO_SDK_DIR}/include/xpcom)
+include_directories(${GECKO_SDK_DIR}/include/dom)
+include_directories(${GECKO_SDK_DIR}/sdk/include)
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
 
+if(MSVC)
+set(XPCOM_CPP_FLAGS /FI xpcom-config.h /MT /D "XP_WIN" /D "_USRDLL" /Zc:wchar_t-)
+set(XPCOM_LINK_FLAGS )
+endif(MSVC)
+
+if(GCC)
 set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti -fshort-wchar")
 set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
+endif(GCC)
 
+if(NOT XPCOM_CPP_FLAGS)
+    message(WARNING "Could not recognize Your compiler. Please make sure it uses 2 byte wchars and NO RTTI")
+endif(NOT XPCOM_CPP_FLAGS)
 
 include_directories(${CARDLIB})
 
