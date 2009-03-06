@@ -76,7 +76,7 @@ std::string DynamicLibrary::getVersionStr() {
 #include <dlfcn.h>
 #include <sys/stat.h>
 
-std::string DynamicLibrary::arrPaths[] = { "","/lib/","/usr/local/lib/","/usr/lib/"};
+std::string DynamicLibrary::arrPaths[] = { "","/lib/","/usr/local/lib/","/usr/lib/","/lib64/","/usr/lib64/"};
 
 #include <iostream>
 
