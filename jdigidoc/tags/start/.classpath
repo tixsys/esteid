@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/iaikPkcs11Wrapper.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-log4j-1.2.6.jar"/>
+	<classpathentry kind="lib" path="lib/jce-1_2_2.zip"/>
+	<classpathentry kind="lib" path="lib/iaik_jce.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk14-133.jar"/>
+	<classpathentry kind="lib" path="lib/bctsp-jdk14-133.jar"/>
+	<classpathentry kind="lib" path="lib/xalan.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/xmlParserAPIs.jar"/>
+	<classpathentry kind="lib" path="lib/xmlsec.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

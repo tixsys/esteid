@@ -1,0 +1,27 @@
+http://www.w3.org/TR/xml-c14n
+
++ : supported
+- : not implemented
+
++ * The document is encoded in UTF-8
++ * Line breaks normalized to #xA on input, before parsing
++ * Attribute values are normalized, as if by a validating processor
++ * Character and parsed entity references are replaced
++ * CDATA sections are replaced with their character content
++ * The XML declaration and document type declaration (DTD) are removed
++ * Empty elements are converted to start-end tag pairs
++ * Whitespace outside of the document element and within start and end tags is normalized
++ * All whitespace in character content is retained (excluding characters removed during line feed normalization)
++ * Attribute value delimiters are set to quotation marks (double quotes)
++ * Special characters in attribute values and character content are replaced by character references
++ * Superfluous namespace declarations are removed from each element
+- * Default attributes are added to each element
+- * Lexicographic order is imposed on the namespace declarations and attributes of each element
+
+package jni should be removed from production - not in use
+package SKXMLPlugin should be removed from production - for testing only
+package javax.common contains some common functionality between projects
+package ee.sk.digidoc.c14n contains xml the canoicalizer 
+
+   date: 22.0.5.2006
+autohor: Arvo Sulakatko, Mindware Solutions OÜ
