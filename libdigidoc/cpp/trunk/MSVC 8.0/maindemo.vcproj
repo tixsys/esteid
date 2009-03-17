@@ -21,6 +21,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="0"
+			BuildLogFile="$(IntDir)\$(ProjectName) Log.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -46,6 +47,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(IntDir)\$(ProjectName)80.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4290"
@@ -101,7 +103,7 @@
 			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="1"
-			BuildLogFile="$(IntDir)\$(ProjectName) BuildLog.htm"
+			BuildLogFile="$(IntDir)\$(ProjectName) Log.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -127,6 +129,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(IntDir)\$(ProjectName)80.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4290"

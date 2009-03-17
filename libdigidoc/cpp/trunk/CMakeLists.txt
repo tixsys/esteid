@@ -17,5 +17,5 @@ set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
 add_subdirectory(etc)
 add_subdirectory(src)
 
-#add_subdirectory(test)
+add_subdirectory(test)
 #ENABLE_TESTING()

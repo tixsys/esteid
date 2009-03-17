@@ -50,7 +50,7 @@ set(libdigidoc_SRCS
     util/String.cpp
     util/File.cpp
     util/DateTime.cpp
-    xml/conf.cxx
+    xml/conf_parser.cxx
     xml/OpenDocument_manifest.cxx
     xml/xmldsig-core-schema.cxx
     xml/XAdES.cxx
@@ -155,6 +155,13 @@ install( FILES
     io/ZipSerialize.h
     DESTINATION include/digidoc/io
 )
+
+install( FILES
+    minizip/unzip.h
+    minizip/ioapi.h
+    DESTINATION include/digidoc/minizip
+)
+
 
 install( FILES
     util/File.h

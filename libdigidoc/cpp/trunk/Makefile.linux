@@ -1,5 +1,5 @@
 # Configuration.
-BUILD_FLAGS = -O3 # Set to "-g" for debug and "-O3" for release.
+BUILD_FLAGS =  # Set to "-g" for debug and "-O3" for release.
 LINK_FLAGS =      # Set to "-L/usr/lib/debug/usr/lib/" to link with debug libraries. 
 ROOT = .
 MINIZIP_ROOT = $(ROOT)/lib/zlib-1.2.3/contrib/minizip
@@ -24,14 +24,16 @@ PYTHON = python
 
 # Flags.
 CCFLAGS = $(BUILD_FLAGS) -Wall -fPIC
-LDFLAGS = $(LINK_FLAGS) -L$(MINIZIP_ROOT)
+LDFLAGS = $(LINK_FLAGS)#-L$(MINIZIP_ROOT)
 
 #Includes.
-INCLUDES= -I$(MINIZIP_ROOT)
+#INCLUDES= -I$(MINIZIP_ROOT)
+INCLUDES=
 
 # Libs.
-SYSLIBS = -lstdc++ -lxerces-c -lxml-security-c -lcrypto -lp11
-EXTERNALLIBS = -lminizip
+SYSLIBS = -lstdc++ -lxerces-c -lxml-security-c -lcrypto -lp11 -lz
+#EXTERNALLIBS = -lminizip
+EXTERNALLIBS =
 DEMOLIBS = -ldigidoc
 
 # Code and object files.
@@ -58,18 +60,22 @@ DIGIDOC_LIB_SRCS = BDoc.cpp \
 	crypto/signer/RSASigner.cpp\
 	crypto/signer/Signer.cpp\
 	crypto/signer/SignException.cpp\
+	minizip/ioapi.c\
+	minizip/unzip.c\
+	minizip/zip.c\
 	io/IOException.cpp\
 	io/ISerialize.cpp\
 	io/ZipSerialize.cpp\
 	util/String.cpp\
 	util/File.cpp\
 	util/DateTime.cpp\
-	xml/conf.cxx\
+	xml/conf_parser.cxx\
 	xml/OpenDocument_manifest.cxx\
 	xml/xmldsig-core-schema.cxx\
 	xml/XAdES.cxx
 DIGIDOC_LIB_OBJS := $(DIGIDOC_LIB_SRCS:%.cpp=$(OBJ)/%.o)
 DIGIDOC_LIB_OBJS := $(DIGIDOC_LIB_OBJS:%.cxx=$(OBJ)/%.o)
+DIGIDOC_LIB_OBJS := $(DIGIDOC_LIB_OBJS:%.c=$(OBJ)/%.o)
 
 
 
@@ -90,7 +96,7 @@ init:
 	    echo -e "\033[31mError\033[0m: Library libminizip.a does not exist in $(MINIZIP_ROOT) folder. Check that the parameter MINIZIP_ROOT points to minizip project root folder and the library (libminizip.a) is built."; \
 	    false; \
 	fi
-	$(MKDIR) $(OBJ)/crypto/cert $(OBJ)/crypto/ocsp $(OBJ)/crypto/crypt $(OBJ)/crypto/signer $(OBJ)/io $(OBJ)/util $(OBJ)/xml
+	$(MKDIR) $(OBJ)/crypto/cert $(OBJ)/crypto/ocsp $(OBJ)/crypto/crypt $(OBJ)/crypto/signer $(OBJ)/io $(OBJ)/util $(OBJ)/xml $(OBJ)/minizip
 	$(MKDIR) $(DIST)
 
 demo: init main_demo.cpp libdigidoc.so
@@ -107,6 +113,10 @@ libdigidoc.so: init $(DIGIDOC_LIB_SRCS)
 
 %.cpp:
 	$(CC) $(CCFLAGS) $(INCLUDES) -c $(SRC)/$*.cpp -o $(OBJ)/$*.o
+
+%.c:
+	$(CC) $(CCFLAGS) -xc $(INCLUDES) -c $(SRC)/$*.c -o $(OBJ)/$*.o
+
 
 %.cxx:
 	$(CC) $(CCFLAGS) $(INCLUDES) -c $(SRC)/$*.cxx -o $(OBJ)/$*.o

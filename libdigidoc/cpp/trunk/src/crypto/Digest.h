@@ -17,6 +17,7 @@ namespace digidoc
     {
 
       public:
+		  virtual ~Digest() {}
           void update(std::vector<unsigned char> data) throw(IOException);
           virtual void update(const unsigned char* data, unsigned long length) throw(IOException) = 0;
           virtual std::vector<unsigned char> getDigest() throw(IOException) = 0;
@@ -44,7 +45,7 @@ namespace digidoc
 
       public:
           SHA1Digest() throw(IOException);
-          ~SHA1Digest();
+          virtual ~SHA1Digest();
           void update(const unsigned char* data, unsigned long length) throw(IOException);
           std::vector<unsigned char> getDigest() throw(IOException);
           int getSize() const;
@@ -68,7 +69,7 @@ namespace digidoc
 
       public:
           SHA256Digest() throw(IOException);
-          ~SHA256Digest();
+          virtual ~SHA256Digest();
           void update(const unsigned char* data, unsigned long length) throw(IOException);
           std::vector<unsigned char> getDigest() throw(IOException);
           int getSize() const;

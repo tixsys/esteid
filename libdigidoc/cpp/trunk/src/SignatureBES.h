@@ -38,14 +38,10 @@ namespace digidoc
           void checkSignatureMethod() const throw(SignatureException);
           void checkReferences() const throw(SignatureException);
           void checkSignatureValue() const throw(SignatureException);
+		  void checkSigningCertificate() const throw(SignatureException);
           void checkKeyInfo() const throw(SignatureException); // RSAKeyValue and X509Certificate
           void checkQualifyingProperties() const throw(SignatureException);
-          void checkSignedProperties() const throw(SignatureException);
           void checkSignedSignatureProperties() const throw(SignatureException);
-          void checkSigningTime() const throw(SignatureException); // TODO: done in well-formed check?
-          void checkSigningCertificate() const throw(SignatureException);
-          void checkSignatureProductionPlace() const throw(SignatureException); // TODO: done in well-formed check?
-          void checkSignerRole() const throw(SignatureException); // TODO: done in well-formed check?
 
           bool isReferenceToSigProps(const digidoc::dsig::ReferenceType& refType) const throw(SignatureException);
           void checkReferenceToSigProps(const digidoc::dsig::ReferenceType& refType) const throw(SignatureException);

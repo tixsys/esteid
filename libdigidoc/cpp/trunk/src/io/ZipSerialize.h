@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <unzip.h>
+#include "../minizip/unzip.h"
 
 #include "ISerialize.h"
 

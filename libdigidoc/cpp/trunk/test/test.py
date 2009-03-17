@@ -222,7 +222,8 @@ class BDocTestCase(unittest.TestCase):
     def testUnitTests(self):
         """Run unit tests"""
         global g_projectDir
-        unittests_cmd = [g_projectDir+'build/dist/unittests', g_projectDir+'test/data']
+        global g_unittests
+        unittests_cmd = [g_unittests, g_projectDir+'test/data']
         output = execCmd(unittests_cmd)
         logging.info("Executing: "+str(unittests_cmd))
         logging.info(output)
@@ -258,14 +259,34 @@ else:
 
 print "Using Conf:", g_environment['BDOCLIB_CONF_XML']
 
-g_tool = g_projectDir+'build/dist/tool'
-g_demo = g_projectDir+'build/dist/demo'
-unittests = g_projectDir+'build/dist/unittests'
+#g_tool = g_projectDir+'build/dist/tool'
+#g_demo = g_projectDir+'build/dist/demo'
+#unittests = g_projectDir+'build/dist/unittests'
+
 
 if os.name == 'nt': #WIN32
-    g_tool = g_tool + '.exe'
-    g_demo = g_demo + '.exe'
-    unittests = unittests + '.exe' 
+    exe_suffix = '.exe'
+else:
+    exe_suffix = ''    
+
+if os.path.exists(g_projectDir+'build/dist/tool'+exe_suffix):
+    g_tool = g_projectDir+'build/dist/tool'+exe_suffix
+elif os.path.exists(g_projectDir+'src/digidoc-tool'+exe_suffix):
+    g_tool = g_projectDir+'src/digidoc-tool'+exe_suffix
+else:
+    print "Can't find digidoc-tool"+exe_suffix    
+
+if os.path.exists(g_projectDir+'build/dist/unittests'+exe_suffix):
+    g_unittests = g_projectDir+'build/dist/unittests'+exe_suffix
+elif os.path.exists(g_projectDir+'test/unittests'+exe_suffix):
+    g_unittests = g_projectDir+'test/unittests'+exe_suffix
+else:
+    print "Can't find unittests"+exe_suffix    
+
+
+#g_demo = g_projectDir+'src/digidoc-demo'
+
+
 
 logging.info("Using '"+g_environment['BDOCLIB_CONF_XML']+"' as configuration")
 f = open(g_environment['BDOCLIB_CONF_XML'])

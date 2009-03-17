@@ -4,6 +4,8 @@
 
 #include "XmlConf.h"
 #include <stdlib.h>//getenv
+
+
 #include "log.h"
 #include "util/String.h"
 #include "util/File.h"
@@ -28,6 +30,7 @@ const std::string digidoc::XmlConf::CERT_STORE_PATH    = "cert.store.path";
 const std::string digidoc::XmlConf::MANIFEST_XSD_PATH  = "manifest.xsd.path";
 const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
 const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
+
 
 /**
  * Use digidoc::XmlConf as configuration instance.

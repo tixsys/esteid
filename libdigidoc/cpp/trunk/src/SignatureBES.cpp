@@ -109,47 +109,9 @@ void digidoc::SignatureBES::validateOffline() const throw(SignatureException)
         resultException.addCause(e); // remember and proceed
     }
 
-
-    try
-    {
-        checkSignedProperties();
-    }
-    catch (digidoc::Exception& e)
-    {
-        resultException.addCause(e); // remember and proceed
-    }
-
-
-    try
-    {
-        checkSigningTime();
-    }
-    catch (digidoc::Exception& e)
-    {
-        resultException.addCause(e); // remember and proceed
-    }
-
     try
     {
         checkSigningCertificate();
-    }
-    catch (digidoc::Exception& e)
-    {
-        resultException.addCause(e); // remember and proceed
-    }
-
-    try
-    {
-        checkSignatureProductionPlace();
-    }
-    catch (digidoc::Exception& e)
-    {
-        resultException.addCause(e); // remember and proceed
-    }
-
-    try
-    {
-        checkSignerRole();
     }
     catch (digidoc::Exception& e)
     {
@@ -473,14 +435,6 @@ void digidoc::SignatureBES::checkQualifyingProperties() const throw(SignatureExc
 /// TODO: comment
 ///
 /// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkSignedProperties() const throw(SignatureException)
-{
-    // TODO
-}
-
-/// TODO: comment
-///
-/// @throws SignatureException on a problem in signature
 void digidoc::SignatureBES::checkSignedSignatureProperties() const throw(SignatureException)
 {
 	const xades::SignedSignaturePropertiesType& signedProps = getSignedSignatureProperties();
@@ -492,16 +446,6 @@ void digidoc::SignatureBES::checkSignedSignatureProperties() const throw(Signatu
 
 }
 
-/// TODO: comment
-///
-/// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkSigningTime() const throw(SignatureException)
-{
-    // TODO
-    // TODO: done in well-formed check?
-}
-
-
 /// Check if signing certificate was issued by trusted party.
 /// @throws SignatureException on a problem with signing certificate
 void digidoc::SignatureBES::checkSigningCertificate() const throw(SignatureException)
@@ -512,24 +456,6 @@ void digidoc::SignatureBES::checkSigningCertificate() const throw(SignatureExcep
     {
         THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
     }
-}
-
-/// TODO: comment
-///
-/// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkSignatureProductionPlace() const throw(SignatureException)
-{
-    // TODO
-    // TODO: done in well-formed check?
-}
-
-/// TODO: comment
-///
-/// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkSignerRole() const throw(SignatureException)
-{
-    // TODO
-    // TODO: done in well-formed check?
 }
 
 /// Check SignedInfo->Reference Type attribute is "http://uri.etsi.org/01903#SignedProperties"

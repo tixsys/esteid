@@ -21,6 +21,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="0"
+			BuildLogFile="$(IntDir)\$(ProjectName) Log.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -47,6 +48,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(IntDir)\$(ProjectName)80.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4290"
@@ -87,7 +89,7 @@
 			ConfigurationType="4"
 			CharacterSet="0"
 			WholeProgramOptimization="1"
-			BuildLogFile="$(IntDir)\$(ProjectName) BuildLog.htm"
+			BuildLogFile="$(IntDir)\$(ProjectName) Log.htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -113,6 +115,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(IntDir)\$(ProjectName)80.pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4290"
@@ -329,29 +332,11 @@
 			Name="xml"
 			>
 			<File
-				RelativePath="..\src\xml\conf.cxx"
+				RelativePath="..\src\xml\conf.hxx"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\xml\conf.hxx"
+				RelativePath="..\src\xml\conf_2.cxx"
 				>
 			</File>
 			<File

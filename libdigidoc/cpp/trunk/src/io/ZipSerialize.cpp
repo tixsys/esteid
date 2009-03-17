@@ -1,4 +1,4 @@
-#include <zip.h>
+#include "../minizip/zip.h"
 
 #include "../log.h"
 #include "../util/File.h"
