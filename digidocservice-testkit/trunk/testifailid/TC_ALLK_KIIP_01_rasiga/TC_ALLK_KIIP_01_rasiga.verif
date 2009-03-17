@@ -1,0 +1,50 @@
+.//Status	OK
+.//SignedDocInfo//Format	DIGIDOC-XML
+.//SignedDocInfo//Version	1.3
+.//SignedDocInfo//DataFileInfo[1]//Id	D0
+.//SignedDocInfo//DataFileInfo[1]//Filename	sa ära jahtu.txt
+.//SignedDocInfo//DataFileInfo[1]//MimeType	text/plain
+.//SignedDocInfo//DataFileInfo[1]//ContentType	HASHCODE
+.//SignedDocInfo//DataFileInfo[1]//Size	489
+.//SignedDocInfo//DataFileInfo[1]//DigestType	sha1
+.//SignedDocInfo//DataFileInfo[1]//DigestValue	7xaz1v8Y06HPP6IMahFr1q9Kw7U=
+.//SignedDocInfo//SignatureInfo[1]//Id	S0
+.//SignedDocInfo//SignatureInfo[1]//Status	OK
+matches(.//SignedDocInfo//SignatureInfo[1]//SigningTime,"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")	true
+.//SignedDocInfo//SignatureInfo[1]//Signer//CommonName	Testnumber,Seitsmes,14212128025
+.//SignedDocInfo//SignatureInfo[1]//Signer//IDCode	14212128025
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=Testsertifikaadid/CN=TEST-SK
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//Subject	C=EE/O=SK/OU=mobile signature/CN=Testnumber,Seitsmes,14212128025/SN=Testnumber/GN=Seitsmes/serialNumber=14212128025
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//ValidFrom	2007-03-29T15:06:07Z
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//ValidTo	2010-04-02T14:06:07Z
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//IssuerSerial	1196504403
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//Policies//OID	1.3.6.1.4.1.10015.10.1.1.1
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//Policies//URL	http://www.sk.ee/cps/
+.//SignedDocInfo//SignatureInfo[1]//Signer//Certificate//Policies//Description	Test certificate.
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderID	/C=EE/O=Testsertifikaadid/OU=OCSP/CN=TEST-SK OCSP RESPONDER 2005/emailAddress=pki@sk.ee
+matches(.//SignedDocInfo//SignatureInfo[1]//Confirmation//ProducedAt,"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")	true
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderCertificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=Testsertifikaadid/CN=TEST-SK
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderCertificate//Subject	C=EE/O=Testsertifikaadid/OU=OCSP/CN=TEST-SK OCSP RESPONDER 2005/emailAddress=pki@sk.ee
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderCertificate//ValidFrom	2005-03-08T09:14:10Z
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderCertificate//ValidTo	2012-04-06T21:00:00Z
+.//SignedDocInfo//SignatureInfo[1]//Confirmation//ResponderCertificate//IssuerSerial	1110273251
+.//SignedDocInfo//SignatureInfo[2]//Id	S1
+.//SignedDocInfo//SignatureInfo[2]//Status	OK
+matches(.//SignedDocInfo//SignatureInfo[2]//SigningTime,"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")	true
+.//SignedDocInfo//SignatureInfo[2]//Signer//CommonName	Testnumber,Viies,14212128023
+.//SignedDocInfo//SignatureInfo[2]//Signer//IDCode	14212128023
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=Testsertifikaadid/CN=TEST-SK
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//Subject	C=EE/O=SK/OU=mobile signature/CN=Testnumber,Viies,14212128023/SN=Testnumber/GN=Viies/serialNumber=14212128023
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//ValidFrom	2007-03-29T15:05:36Z
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//ValidTo	2010-04-02T14:05:36Z
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//IssuerSerial	1196504399
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//Policies//OID	1.3.6.1.4.1.10015.10.1.1.1
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//Policies//URL	http://www.sk.ee/cps/
+.//SignedDocInfo//SignatureInfo[2]//Signer//Certificate//Policies//Description	Test certificate.
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderID	/C=EE/O=Testsertifikaadid/OU=OCSP/CN=TEST-SK OCSP RESPONDER 2005/emailAddress=pki@sk.ee
+matches(.//SignedDocInfo//SignatureInfo[2]//Confirmation//ProducedAt,"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")	true
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderCertificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=Testsertifikaadid/CN=TEST-SK
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderCertificate//Subject	C=EE/O=Testsertifikaadid/OU=OCSP/CN=TEST-SK OCSP RESPONDER 2005/emailAddress=pki@sk.ee
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderCertificate//ValidFrom	2005-03-08T09:14:10Z
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderCertificate//ValidTo	2012-04-06T21:00:00Z
+.//SignedDocInfo//SignatureInfo[2]//Confirmation//ResponderCertificate//IssuerSerial	1110273251

@@ -1,0 +1,6 @@
+empty.cer
+tyhistatud.cer
+läbu.cer
+UTF-8.cer
+UCS-2.cer
+VeriSign.cer

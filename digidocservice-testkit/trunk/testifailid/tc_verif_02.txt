@@ -1,0 +1,6 @@
+Tartu_ja_tallinna_koostooleping.ddoc
+Eyp_maksekorraldus.ddoc
+Susisevad1_3.ddoc
+DigiDoc 1.0 hashcode.ddoc
+DigiDoc 1.2 hashcode.ddoc
+DigiDoc 1.3 hashcode.ddoc

@@ -1,0 +1,23 @@
+﻿VRK CA for Test Purposes.cer:://UserCountry>>FI::Country
+VRK CA for Test Purposes.cer:://IssuerCN>>VRK TEST Root CA::IssuerCN
+VeriSign::count(//faultcode)>0>>true::Unknown CA
+mobile.cer:://UserIDCode>>91000000401::
+mobile.cer:://UserGivenname>>EEŠŽNIMI::
+mobile.cer:://UserSurname>>PEREŠŽNIMI::
+mobile.cer:://UserCountry>>EE::
+mobile.cer:://UserOrganisation>>EMT::
+mobile.cer:://UserCN>>PEREŠŽNIMI,EEŠŽNIMI,91000000401::
+mobile.cer:://IssuerCN>>TEST-SK::
+mobile.cer:://KeyUsage>>Non Repudiation::
+empty.cer::count(//faultcode)>0>>true::Tühi fail
+empty.cer:://faultstring>>102::Veakood
+tyhistatud.cer:://Status>>GOOD::Tühistatud sertifikaat? (Muuta - REVOKED, kui staatuse tagastamine tööle hakkab)
+tyhistatud.cer:://KeyUsage>>Digital Signature, Key Encipherment, Data Encipherment::Autentimise sert?
+läbu.cer::count(//faultcode)>0>>true::Vigane sertifikaat?
+UTF-8.cer::count(//faultcode)>0>>false::utf-8
+UCS-2.cer::count(//faultcode)>0>>false::ucs-2
+VeriSign.cer:://Status>>UNKNOWN::commonName missing
+VeriSign.cer::count(//faultstring)>0>>false::No error
+pt-live-root.cer:://IssuerCN>>Cartão de Cidadão 001::Täpitähed Issuer nimes
+pt-live-root.cer:://UserOrganisation>>SCEE - Sistema de Certificação Electrónica do Estado::Täpitähed UserOrganisation nimes
+pt-live-root.cer::count(//faultstring)>0>>false::4kb võti (suur sert)

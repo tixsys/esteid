@@ -1,0 +1,33 @@
+.//SignedDocInfo[1]//DataFileInfo//ContentType	EMBEDDED_BASE64
+.//SignedDocInfo//DataFileInfo//DigestType	sha1
+.//SignedDocInfo//DataFileInfo//DigestValue	HZ4dQ8P7TKIRUI/6uSsIVKYtW+g=
+.//SignedDocInfo//DataFileInfo//Filename	test2007.txt
+.//SignedDocInfo//DataFileInfo//Id	D0
+.//SignedDocInfo//DataFileInfo//MimeType	text/plain
+.//SignedDocInfo//DataFileInfo//Size	4
+.//SignedDocInfo//Format	DIGIDOC-XML
+.//SignedDocInfo//SignatureInfo//Confirmation//ProducedAt	2007-01-08T21:23:22Z
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderCertificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=ESTEID/CN=ESTEID-SK 2007
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderCertificate//IssuerSerial	1167923826
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderCertificate//Subject	C=EE/O=ESTEID/OU=OCSP/CN=ESTEID-SK 2007 OCSP RESPONDER/emailAddress=pki@sk.ee
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderCertificate//ValidFrom	2007-01-04T15:17:06Z
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderCertificate//ValidTo	2010-01-08T15:17:06Z
+.//SignedDocInfo//SignatureInfo//Confirmation//ResponderID	/C=EE/O=ESTEID/OU=OCSP/CN=ESTEID-SK 2007 OCSP RESPONDER/emailAddress=pki@sk.ee
+.//SignedDocInfo//SignatureInfo//Id	S0
+.//SignedDocInfo//SignatureInfo//SignatureProductionPlace//City	Tallinn
+.//SignedDocInfo//SignatureInfo//SignatureProductionPlace//CountryName	Eesti
+.//SignedDocInfo//SignatureInfo//SignatureProductionPlace//PostalCode	10148
+.//SignedDocInfo//SignatureInfo//SignatureProductionPlace//StateOrProvince	Harju
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//Issuer	C=EE/O=AS Sertifitseerimiskeskus/OU=ESTEID/CN=ESTEID-SK 2007
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//IssuerSerial	1168286306
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//Policies//Description	none
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//Policies//OID	1.3.6.1.4.1.10015.1.1.1.1
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//Policies//URL	http://www.sk.ee/cps/
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//Subject	C=EE/O=ESTEID/OU=digital signature/CN=MILVA,TARMO,36801200230/SN=MILVA/GN=TARMO/serialNumber=36801200230
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//ValidFrom	2007-01-08T19:58:25Z
+.//SignedDocInfo//SignatureInfo//Signer//Certificate//ValidTo	2012-01-12T22:00:00Z
+.//SignedDocInfo//SignatureInfo//Signer//CommonName	MILVA,TARMO,36801200230
+.//SignedDocInfo//SignatureInfo//Signer//IDCode	36801200230
+.//SignedDocInfo//SignatureInfo//SignerRole//Certified	0
+.//SignedDocInfo//SignatureInfo//SignerRole//Role	Test
+.//SignedDocInfo//SignatureInfo//SigningTime	2007-01-08T21:23:10Z

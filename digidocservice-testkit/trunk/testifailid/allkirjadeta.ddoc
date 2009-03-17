@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SignedDoc format="DIGIDOC-XML" version="1.3" xmlns="http://www.sk.ee/DigiDoc/v1.3.0#">
+<DataFile ContentType="EMBEDDED_BASE64" Filename="read.txt" Id="D0" MimeType="text/plain" Size="33" xmlns="http://www.sk.ee/DigiDoc/v1.3.0#">cGFja2FnZSBjb20uZXlwLnNlY3VyaXR5Lm5jaXBoZXI7
+</DataFile>
+<DataFile ContentType="EMBEDDED_BASE64" Filename="DDoc.txt" Id="D1" MimeType="text/plain" Size="765" xmlns="http://www.sk.ee/DigiDoc/v1.3.0#">ZXlwX21ha3Nla29ycmFsZHVzLmRkb2MgLSBFZXN0aSD8aGlzcGFuZ2EgcG9vbHQg
+dG9vZGV0YXYgZGRvYy4gUHJvYmxlbWFhdGlsaW5lLCBrdW5hIGVpIG9sZSBq5HJn
+aXR1ZCBCQVNFNjQga29kZWVyaW5ndXQuDQp0YXJ0dV9qYV90YWxsaW5uYV9rb29z
+dG9vbGVwaW5nLmRkb2MgLSBTSy1YTUwgdmVyc2lvb24gMS4wDQpzdXNpc2V2YWQx
+XzMuZGRvYyAtIDEuMyBmYWlsaWZvcm1hYXQsIGtvb3Mg0CBqYSDeIHTkaHRlZGVn
+YQ0KanVzdCBmb3IgZnVuLmRkb2MgLSBBbGxraXJqYXN0YXR1ZCBFU1RFSUQtaSwg
+RUlELWkgamEgYXN1dHVzZSBkaWdpdGFhbHRlbXBsaWdhLg0KaWxtYV9rZWh0aXZ1
+c2tpbm5pdHVzZXRhLmRkb2MgLSBGYWlsLCBtaWxsZWwgcHV1ZHViIGtlaHRpdnVz
+a2lubml0dXMsIGFsbGtpcmkgZWkgb2xlIGtlaHRpdg0KZWxpb25fZmlsZV9pZF9u
+dWxsLmRkb2MgLSBEZG9jIGZhaWxpZCwgbWlsbGUga3VqdSBlaSB2YXN0YSBEaWdp
+RG9jIDEuMyBmb3JtYWFkaWxlLCBrdWlkIG1pcyB0dWxlYiBrZWh0aXZha3MgdHVu
+bmlzdGFkYQ0KWmhhaWtvdnNraV91dGY4X2NlcnQuZGRvYyAtIFN1c2lzZXZhdGUg
+dORodGVkZWdhIGZhaWwsIGFsbGtpcmphc3RhamEgc2VydGlmaWthYWRpcyBvbiBT
+dWJqZWN0IHbkbGkgdXRmLTgga29kZWVyaW5ndXMNClpoYWlrb3Zza2lfdXRmOF9j
+ZXJ0LmRkb2MgLSBTdXNpc2V2YXRlIHTkaHRlZGVnYSBmYWlsLCBhbGxraXJqYXN0
+YWphIHNlcnRpZmlrYWFkaXMgb24gU3ViamVjdCB25GxpIGtvZGVlcmluZ3Vz
+</DataFile>
+</SignedDoc>
