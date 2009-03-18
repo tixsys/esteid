@@ -397,10 +397,18 @@ void digidoc::util::File::moveFile(const std::string& srcPath, const std::string
     }
 
     int result = rename(srcPath.c_str(), destPath.c_str());
-    if(result != 0)
+    if ( result != 0 )
     {
-        THROW_IOEXCEPTION("Failed to move file '%s' to '%s'.", srcPath.c_str(), destPath.c_str());
+		// -=K=-: copy and remove source should work as move between different partitions
+		copyFile( srcPath, destPath, overwrite );
+		result = remove( srcPath.c_str() );
     }
+	if ( result != 0 )
+	{
+		// -=K=-: suceeded to copy, failed to remove. Should we throw or warn?
+		WARN( "Failed to remove source file '%s' when moving it to '%s'.", srcPath.c_str(), destPath.c_str() );
+	}
+
 }
 
 /**
