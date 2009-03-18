@@ -89,11 +89,11 @@ std::vector<unsigned char> digidoc::Document::calcDigest(Digest* calc) throw(IOE
 }
 
 /**
- * Saves a copy of the document to specified path.
+ * Saves a copy of the document as file specified by path.
  * @param path full file path, where the document should be saved to. If file exists, it is overwritten
  * throws IOException if part of path does not exist or path is existing directory (without file name)
  */
-void digidoc::Document::saveTo(const std::string& path) throw(IOException)
+void digidoc::Document::saveAs(const std::string& path) throw(IOException)
 {
     util::File::copyFile(this->path, path);
 }

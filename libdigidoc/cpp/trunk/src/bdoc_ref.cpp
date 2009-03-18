@@ -456,7 +456,7 @@ public:
 
 		int i = atoi( argv[1] );
 		Document doc = _bDoc->getDocument( i - 1 );
-		doc.saveTo( argv[2] );
+		doc.saveAs( argv[2] );
 		std::cout << "Document #" << i << " saved to \"" << argv[2] << "\"." << std::endl;
 		return OK;
 	}
