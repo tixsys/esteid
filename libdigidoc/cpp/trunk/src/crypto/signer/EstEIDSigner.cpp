@@ -109,15 +109,68 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
     size_t pinMax = 16;
 
 #if defined(_WIN32)
-    {
-        printf(prompt.c_str(), certificate.token.label.c_str());
-        size_t i = 0;
-        char c;
-        while(i < pinMax && (c = getch()) != '\r')
-        {
-            pin[i++] = c;
-        }
-    }
+	// something that acts wildly similarily with getpass()
+	{
+		printf( prompt.c_str(), certificate.token.label.c_str() );
+		size_t i = 0;
+		char c;
+		while ( (c = _getch()) != '\r' ) 
+		{
+			switch ( c )
+			{
+			default:
+				if ( i >= pinMax-1 || iscntrl( c ) ) 
+				{
+					// can't be a part of password
+					fputc( '\a', stdout );
+					break;
+				}
+				pin[i++] = c;
+				fputc( '*', stdout );
+				break;
+			case EOF:
+				fputs( "[EOF]\n", stdout );
+				THROW_SIGNEXCEPTION( "PIN acquisition canceled with [EOF]." );
+				break; 
+			case 0: 
+			case 0xE0:  // FN Keys (0 or E0) start of two-character FN code
+				c = ( c << 4 ) | _getch();
+				if ( c != 0xE53 && c != 0xE4B && c != 0x053 && c != 0x04b ) 
+				{
+					// not {DELETE}, {<--}, Num{DEL} and Num{<--}  
+					fputc( '\a', stdout );
+					break;
+				}
+				// NO BREAK, fall through to the one-character deletes  
+			case '\b':
+			case '127':
+				if ( i == 0 )
+				{
+					// nothing to delete
+					fputc( '\a', stdout );
+					break;
+				}
+				pin[--i] = '\0';
+				fputs( "\b \b", stdout );
+				break;
+			case  3: // CTRL+C 
+				fputs( "^C\n", stdout );
+				THROW_SIGNEXCEPTION( "PIN acquisition canceled with ^C." );
+				break;
+			case  26: // CTRL+Z
+				fputs( "^Z\n", stdout );
+				THROW_SIGNEXCEPTION( "PIN acquisition canceled with ^Z." );
+				break;
+			case  27: // ESC 
+				fputc('\n', stdout );
+				printf( prompt.c_str(), certificate.token.label.c_str() );
+				i = 0;
+				break;
+			}
+		}
+		fputc( '\n', stdout );
+		pin[i] = '\0';
+	}
 #else
     char* pwd = getpass(util::String::format(prompt.c_str(), certificate.token.label.c_str()).c_str());
     strncpy(pin, pwd, pinMax);
