@@ -171,7 +171,7 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
  * @param signer signer that signs the signature object.
  * @throws SignatureException exception is throws if signing failed.
  */
-void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException)
+void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignException)
 {
 	// Set required signature fields.
     setSigningCertificate(signer->getCert());

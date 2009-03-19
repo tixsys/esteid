@@ -125,7 +125,7 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
  * @param signer
  * @throws SignatureException
  */
-void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException)
+void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignException)
 {
     DEBUG("SignatureTM::sign()");
 

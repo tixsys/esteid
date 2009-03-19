@@ -35,7 +35,7 @@ namespace digidoc
       protected:
           Signature();
           Signature(const std::string& path) throw(SignatureException);
-          virtual void sign(Signer* signer) throw(SignatureException) = 0;
+          virtual void sign(Signer* signer) throw(SignatureException, SignException) = 0;
 
           void addReference(const std::string& uri, const std::string& digestUri, std::vector<unsigned char> digestValue,
                   const std::string& type = "") throw(SignatureException);

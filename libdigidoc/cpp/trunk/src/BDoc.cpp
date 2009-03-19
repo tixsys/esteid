@@ -663,6 +663,10 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
     {
         THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
     }
+    catch(const SignException& e)
+    {
+        THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
+    }
 
     // Add the created signature to the signatures list.
     addSignature(signature);

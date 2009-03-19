@@ -21,7 +21,7 @@ namespace digidoc
           static const std::string MEDIA_TYPE;
 
       protected:
-          virtual void sign(Signer* signer) throw(SignatureException);
+          virtual void sign(Signer* signer) throw(SignatureException, SignException);
 
           std::string id() const throw(SignatureException);
           digidoc::dsig::KeyInfoType& keyInfo() const throw(SignatureException);

@@ -26,7 +26,7 @@ public:
 
     static const std::string MEDIA_TYPE;
 protected:
-    virtual void sign(Signer* signer) throw(SignatureException);
+    virtual void sign(Signer* signer) throw(SignatureException, SignException);
     void addCertificateValue(const std::string& certId, const X509Cert& x509);
 private:
     void createTMProperties();
