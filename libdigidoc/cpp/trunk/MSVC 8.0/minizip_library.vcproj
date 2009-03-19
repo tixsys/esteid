@@ -149,66 +149,114 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="Files"
 			>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\ioapi.c"
+				RelativePath="..\..\Smartlink RIA\src\minizip\crypt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\iowin32.c"
+				RelativePath="..\..\Smartlink RIA\src\minizip\ioapi.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Smartlink RIA\src\minizip\ioapi.h"
 				>
 			</File>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\miniunz.c"
+				RelativePath="..\..\Smartlink RIA\src\minizip\iowin32.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Smartlink RIA\src\minizip\iowin32.h"
 				>
 			</File>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\minizip.c"
+				RelativePath="..\..\Smartlink RIA\src\minizip\unzip.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Smartlink RIA\src\minizip\unzip.h"
 				>
 			</File>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\mztools.c"
+				RelativePath="..\..\Smartlink RIA\src\minizip\zip.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\zip.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\crypt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\ioapi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\iowin32.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\mztools.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\unzip.h"
-				>
-			</File>
-			<File
-				RelativePath="..\lib\zlib-1.2.3\contrib\minizip\zip.h"
+				RelativePath="..\..\Smartlink RIA\src\minizip\zip.h"
 				>
 			</File>
 		</Filter>

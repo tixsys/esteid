@@ -336,7 +336,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\xml\conf_2.cxx"
+				RelativePath="..\src\xml\conf_parser.cxx"
 				>
 			</File>
 			<File
