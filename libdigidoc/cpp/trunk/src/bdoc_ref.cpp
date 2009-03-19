@@ -707,8 +707,8 @@ Commander::Command Commander::_commands[COMMAND_COUNT] =
 	                                                   "1) Number of the Document file (1-based).\n"
 	                                                   "2) Path where to save Document file." },
 	{"-sign",          7, &Commander::cmdSign,         "Signs current BDoc. Parameters:\n"
-	                                                   "1) Signing \"dummy\" or \"console\".\n"
-	                                                   "2) Type \"BES\" or \"TM\".\n"
+	                                                   "1) Path to signing certificate or \"id-kaart\".\n"
+	                                                   "2) Signature type \"BES\" or \"TM\".\n"
 	                                                   "3) Location city.\n"
 	                                                   "4) Location state or province.\n"
 	                                                   "5) Location postal code.\n"
