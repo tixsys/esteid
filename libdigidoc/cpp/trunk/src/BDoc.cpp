@@ -135,10 +135,10 @@ void digidoc::BDoc::save() throw(IOException, BDocException)
         THROW_BDOCEXCEPTION("You can not use save() method if you didn't open a container with readFrom() method. Use saveTo() method in case of new a BDoc container.");
     }
 
-    // Check that at least one document and signature is added to container.
-    if(documents.empty() || signatures.empty())
+    // Check that at least one document is in container.
+    if( documents.empty() )
     {
-        THROW_BDOCEXCEPTION("No documents or no signatures added to the BDoc container.");
+        THROW_BDOCEXCEPTION("Can not save, BDoc container is empty.");
     }
 
     // Create new container.
