@@ -8,10 +8,12 @@
   <script type="text/javascript" src="test.js"></script>
 </head>
 <body onload="inittest();">
+<div id="container">
 
-<p>
-Plugin Version: <span id="eidver">Not Available</span>
-</p>
+<div id="verdiv">
+Plugin Version:
+<div id="eidver">Not Available</div>
+</div>
 
 <div id="left">
 
@@ -35,7 +37,13 @@ Kaart sees?
 <div id="signstatus"></div>
 </div>
 
+<div id="crashdiv">
+<input type="button" value="Proovi Crashida" onclick="testCrash();" />
+<div id="crashstatus"></div>
+</div>
+
 </div> <!-- right -->
 
+</div> <!-- container -->
 </body>
 </html>

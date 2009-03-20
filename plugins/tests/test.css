@@ -1,3 +1,16 @@
+#container {
+    min-width: 60em;
+}
+#eidver {
+    text-align: center;
+    display: inline;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#statusdiv {
+    margin: 1em;
+}
 #cardstatus {
     width: 6em;
     border-style: double;
@@ -9,9 +22,8 @@
     float: left;
     margin: 2em;
 }
-
 #right {
-    float: right;
+    float: left;
     margin: 2em;
 }
 
@@ -21,6 +33,9 @@
     padding: 1em;
     margin: 1em;
 }
+#pdstatus {
+    margin: 1em;
+}
 
 #signdiv {
     border: solid;
@@ -28,15 +43,20 @@
     padding: 1em;
     margin: 1em;
 }
-
 #signstatus {
     margin: 1em;
 }
 
-#pdstatus {
+#crashdiv {
+    width: 20em;
+    padding: 1em;
     margin: 1em;
 }
-
-#statusdiv {
+#crashstatus {
     margin: 1em;
+    overflow: auto;
+}
+
+.red {
+    background: red;
 }
