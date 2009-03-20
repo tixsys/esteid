@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="test.css" />
+  <script type="text/javascript" src="test.js"></script>
+</head>
+<body onload="inittest();">
+
+<p>
+Plugin Version: <span id="eidver">Not Available</span>
+</p>
+
+<div id="left">
+
+<div id="pddiv">
+<table id="persData"></table>
+<input type="button" value="Loe Andmefail" onclick="testPersonalData();" />
+<div id="pdstatus"></div>
+</div>
+
+</div> <!-- left -->
+
+<div id="right">
+
+<div id="statusdiv">
+Kaart sees?
+<div id="cardstatus">Veel ei tea</div>
+</div>
+
+<div id="signdiv">
+<input type="button" value="Allkirjasta" onclick="testSign();" />
+<div id="signstatus"></div>
+</div>
+
+</div> <!-- right -->
+
+</body>
+</html>

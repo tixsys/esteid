@@ -1,0 +1,42 @@
+#cardstatus {
+    width: 6em;
+    border-style: double;
+    padding: 1em;
+    text-align: center;
+}
+
+#left {
+    float: left;
+    margin: 2em;
+}
+
+#right {
+    float: right;
+    margin: 2em;
+}
+
+#pddiv {
+    border: solid;
+    width: 20em;
+    padding: 1em;
+    margin: 1em;
+}
+
+#signdiv {
+    border: solid;
+    width: 20em;
+    padding: 1em;
+    margin: 1em;
+}
+
+#signstatus {
+    margin: 1em;
+}
+
+#pdstatus {
+    margin: 1em;
+}
+
+#statusdiv {
+    margin: 1em;
+}
