@@ -11,4 +11,5 @@ install(DIRECTORY
     certs
     schema
     DESTINATION ${CONF_DIR}
+    REGEX "\\.svn$|_svn$" EXCLUDE
 )
