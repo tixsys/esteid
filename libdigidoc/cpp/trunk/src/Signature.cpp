@@ -456,8 +456,15 @@ void digidoc::Signature::saveToXml(const std::string path) const throw(IOExcepti
     DEBUG("Serializing XML to '%s'", path.c_str());
 
     std::ofstream ofs(path.c_str());
-    dsig::signature(ofs, *signature, createNamespaceMap());
-    ofs.close();
+	try 
+	{
+		dsig::signature(ofs, *signature, createNamespaceMap());
+	}
+	catch ( xsd::cxx::xml::invalid_utf8_string )
+	{
+		THROW_IOEXCEPTION( "Failed to create signature XML file. Parameters must be in UTF-8." );
+	}
+    // ofs.close(); -=K=-: pointless close, destructor does it
 
     if(ofs.fail())
     {
