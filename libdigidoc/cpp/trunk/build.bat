@@ -14,9 +14,11 @@ set xmlsecurityc_include=C:\src\xml-security-c-1.5.0_pre20090310\include
 set xmlsecurityc_library=C:\src\xml-security-c-1.5.0_pre20090310\Build\Win32\VC9\Release No Xalan
 set xsd_include=C:\XSD-3.2\include
 set xsd_library=C:\XSD-3.2\lib\vc-9.0
+set cppunit_include=C:\src\cppunit-1.12.1\include
+set cppunit_library=C:\src\cppunit-1.12.1\lib
 
-set include_path=%openssl_include%;%zlib_include%;%libp11_include%;%xercesc_include%;%xmlsecurityc_include%;%xsd_include%
-set library_path=%openssl_library%;%zlib_library%;%libp11_library%;%xercesc_library%;%xmlsecurityc_library%;%xsd_library%
+set include_path=%openssl_include%;%zlib_include%;%libp11_include%;%xercesc_include%;%xmlsecurityc_include%;%xsd_include%;%cppunit_include%
+set library_path=%openssl_library%;%zlib_library%;%libp11_library%;%xercesc_library%;%xmlsecurityc_library%;%xsd_library%;%cppunit_library%
 
 IF EXIST build GOTO :BuildExists
 md build

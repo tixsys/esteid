@@ -1,5 +1,8 @@
+include_directories( ${CPPUNIT_INCLUDE_DIR} )
 include_directories( ${MINIZIP_INCLUDE_DIR} )
 include_directories( ${OPENSSL_INCLUDE_DIR} )
+include_directories( ${ZLIB_INCLUDE_DIR} )
+include_directories( ${XSD_INCLUDE_DIR} )
 
 set(unittests_SRCS
     src/crypto/DigestTest.cpp
@@ -8,25 +11,22 @@ set(unittests_SRCS
     src/SignatureBESTest.cpp
 )
 
-if(WIN32)
+if(MSVC)
+    # disable warning C4290: C++ exception specification ignored
+    add_definitions( -wd4290 )
     add_definitions(
-      -DNDEBUG
-      -DWIN32
-      -DXSEC_NO_XALAN
-      -D_CONSOLE
-      -D_CRT_SECURE_NO_DEPRECATE
-      -D_CRT_SECURE_NO_WARNINGS
+        -D_CRT_SECURE_NO_DEPRECATE
+        -D_CRT_SECURE_NO_WARNINGS
+        -D_SCL_SECURE_NO_WARNINGS
     )
-
-    target_link_libraries( unittests libeay32 ssleay32 zlib xerces-c_2D xsec_1D TestRunnerd cppunitd )
-endif(WIN32)
+endif(MSVC)
 
 include_directories(
     ../src
 )
 
-add_executable( unittests WIN32 ${unittests_SRCS} )
-target_link_libraries( unittests cppunit digidoc ${OPENSSL_LIBRARIES} )
+add_executable( unittests ${unittests_SRCS} )
+target_link_libraries( unittests digidoc ${CPPUNIT_LIBRARIES} )
 
 add_custom_target( test-stage
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data
