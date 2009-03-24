@@ -186,7 +186,22 @@ void DigiDoc::addFile( const QString &file )
 	{ setLastError( tr("Unknown error") ); }
 }
 
-QSslCertificate DigiDoc::authCert() { return QEstEIDSigner().cert(); }
+QSslCertificate DigiDoc::authCert()
+{
+	try
+	{
+		QEstEIDSigner signer;
+		signer.getCert();
+		return signer.cert();
+	}
+	catch( SignException &e )
+	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
+	catch( IOException &e )
+	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
+	catch(...)
+	{ setLastError( tr("Unknown error") ); }
+	return QSslCertificate();
+}
 
 QSslCertificate DigiDoc::signCert()
 {
@@ -271,6 +286,22 @@ void DigiDoc::removeDocument( unsigned int num )
 
 	try
 	{ b->removeDocument( num ); }
+	catch( BDocException &e )
+	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
+	catch(...)
+	{ setLastError( tr("Unknown error") ); }
+}
+
+void DigiDoc::removeSignature( unsigned int num )
+{
+	if( isNull() )
+		return setLastError( tr("Container is not open") );
+
+	if( num >= b->documentCount() )
+		return setLastError( tr("Missing signature") );
+
+	try
+	{ b->removeSignature( num ); }
 	catch( BDocException &e )
 	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
 	catch(...)
