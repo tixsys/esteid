@@ -296,8 +296,10 @@ void MainWindow::setCurrentPage( Pages page )
 		const QSslCertificate readerCert = bdoc->signCert();
 		Q_FOREACH( const DigiDocSignature &c, bdoc->signatures() )
 		{
-			viewBDocSignersContentLayout->insertWidget( i,
-				new SignatureWidget( c, viewBDocSignersContent ) );
+			SignatureWidget *signature = new SignatureWidget( c, i, viewBDocSignersContent );
+			viewBDocSignersContentLayout->insertWidget( i, signature );
+			connect( signature, SIGNAL(removeSignature(uint)),
+				SLOT(viewBDocSignersRemove(unsigned int)) );
 			if( !cardOwnerSignature )
 				cardOwnerSignature = c.cert().subjectInfo( "serialNumber") == readerCert.subjectInfo( "serialNumber" );
 			++i;
@@ -389,6 +391,13 @@ void MainWindow::addFile()
 void MainWindow::on_buttonSettings_clicked()
 { (new Settings( this ))->show(); }
 
+void MainWindow::viewBDocSignersRemove( unsigned int num )
+{
+	bdoc->removeSignature( num );
+	bdoc->save();
+	setCurrentPage( View );
+}
+
 
 
 DocumentWidget::DocumentWidget( const digidoc::Document &file, unsigned int docnum, QWidget *parent )
@@ -407,15 +416,15 @@ DocumentWidget::DocumentWidget( const digidoc::Document &file, unsigned int docn
 	QVBoxLayout *v = new QVBoxLayout( this );
 	v->addWidget( content );
 	v->addWidget( b, 0, Qt::AlignRight );
-	setLayout( v );
 }
 
 void DocumentWidget::clicked() { Q_EMIT removeDocument( num ); }
 
 
 
-SignatureWidget::SignatureWidget( const DigiDocSignature &signature, QWidget *parent )
+SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
 :	QWidget( parent )
+,	num( signnum )
 ,	s( signature )
 {
 	QLabel *c = new QLabel( this );
@@ -426,17 +435,25 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, QWidget *pa
 		.arg( s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) )
 		.arg( s.isValid() ? tr("valid") : tr("not valid") ) );
 
-	QPushButton *b = new QPushButton( this );
-	b->setText( tr("Show details") );
-	connect( b, SIGNAL(clicked()), SLOT(clicked()) );
+	QPushButton *b = new QPushButton( tr("Show details"), this );
+	connect( b, SIGNAL(clicked()), SLOT(showSignature()) );
+
+	QPushButton *r = new QPushButton( tr("Remove"), this );
+	connect( r, SIGNAL(clicked()), SLOT(removeSignature()) );
+
+	QHBoxLayout *h = new QHBoxLayout();
+	h->addItem( new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
+	h->addWidget( b );
+	h->addWidget( r );
 
 	QVBoxLayout *v = new QVBoxLayout( this );
 	v->addWidget( c );
-	v->addWidget( b, 0, Qt::AlignRight );
-	setLayout( v );
+	v->addLayout( h );
 }
 
-void SignatureWidget::clicked()
+void SignatureWidget::removeSignature() { Q_EMIT removeSignature( num ); }
+
+void SignatureWidget::showSignature()
 {
 	QMessageBox b( this );
 	b.setText( tr("<b>%1 %2 %3</b><br />%4<br />Signed on %5<br />Signature is %6")

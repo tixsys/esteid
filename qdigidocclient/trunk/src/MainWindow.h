@@ -52,6 +52,7 @@ private Q_SLOTS:
 	void on_viewBDocButtonGroup_buttonClicked( QAbstractButton *button );
 	void showWarning( const QString &msg );
 	void signBDocDocsRemove( unsigned int num );
+	void viewBDocSignersRemove( unsigned int num );
 
 private:
 	void addFile();
@@ -84,11 +85,16 @@ class SignatureWidget: public QWidget
 	Q_OBJECT
 
 public:
-	SignatureWidget( const DigiDocSignature &s, QWidget *parent = 0 );
+	SignatureWidget( const DigiDocSignature &s, unsigned int signnum, QWidget *parent = 0 );
+
+Q_SIGNALS:
+	void removeSignature( unsigned int num );
 
 private Q_SLOTS:
-	void clicked();
+	void removeSignature();
+	void showSignature();
 
 private:
+	unsigned int num;
 	DigiDocSignature s;
 };

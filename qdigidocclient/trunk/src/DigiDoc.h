@@ -67,6 +67,7 @@ public:
 	QString lastError() const;
 	void open( const QString &file );
 	void removeDocument( unsigned int num );
+	void removeSignature( unsigned int num );
 	void save();
 	void saveDocuments( const QString &path );
 	void sign(
