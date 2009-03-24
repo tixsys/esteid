@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Settings</class>
+ <widget class="QWidget" name="Settings">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>454</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#Settings { background: white; }
+QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt &quot;Arial Baltic&quot;; }
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Container default location</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="defaultDir">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="selectDefaultDir">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="addOwner">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Add card owner to crypted files as a default receiver</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="showIntro">
+     <property name="text">
+      <string>Show signing intro</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Default values</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="signRoleLabel">
+        <property name="text">
+         <string>Role</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="signRoleInput"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="signResolutionLabel">
+        <property name="text">
+         <string>Resolution</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="signResolutionInput"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="signLocationLabel">
+        <property name="text">
+         <string>Location</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="signCityLabel">
+        <property name="text">
+         <string>City</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="signCityInput"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="signStateLabel">
+        <property name="text">
+         <string>State</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="signStateInput"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="signCountryLabel">
+        <property name="text">
+         <string>Country</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="signCountryInput"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="signZipLabel">
+        <property name="text">
+         <string>Zip</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="signZipInput"/>
+      </item>
+      <item row="7" column="0" colspan="2">
+       <widget class="QCheckBox" name="signOverwrite">
+        <property name="text">
+         <string>Overwrite role, resolution, localtion values</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>defaultDir</tabstop>
+  <tabstop>selectDefaultDir</tabstop>
+  <tabstop>addOwner</tabstop>
+  <tabstop>showIntro</tabstop>
+  <tabstop>signRoleInput</tabstop>
+  <tabstop>signResolutionInput</tabstop>
+  <tabstop>signCityInput</tabstop>
+  <tabstop>signStateInput</tabstop>
+  <tabstop>signCountryInput</tabstop>
+  <tabstop>signZipInput</tabstop>
+  <tabstop>signOverwrite</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>showIntro</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOwner</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signRoleInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signResolutionInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signCityInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signStateInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signCountryInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signZipInput</sender>
+   <signal>editingFinished()</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>319</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signOverwrite</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>349</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>save()</slot>
+ </slots>
+</ui>

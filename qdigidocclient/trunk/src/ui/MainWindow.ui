@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>683</width>
+    <height>471</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DigiDoc client</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow,
+#stack
+{ background: white; }
+#frameSignSigners,
+#frameSignContent,
+#frameConteinerContent
+{ border: 1px solid gray; background: white; }
+QLabel,
+QToolButton,
+QPushButton,
+QComboBox,
+QCheckBox,
+QLineEdit
+{ font: 8pt &quot;Arial Baltic&quot;; }
+#labelCardInfo,
+#labelCardOwner,
+#homeCertInfo
+{ border: 1px solid gray; background: white; padding-left: 10px; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="MainLayout">
+   <item>
+    <layout class="QGridLayout" name="headerLayout">
+     <item row="0" column="0" rowspan="2">
+      <layout class="QVBoxLayout" name="headerLabelLayout">
+       <item>
+        <widget class="QLabel" name="labelCardInfo">
+         <property name="minimumSize">
+          <size>
+           <width>390</width>
+           <height>80</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCardOwner">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="headerButtonLayout">
+       <item>
+        <widget class="QToolButton" name="buttonSettings">
+         <property name="text">
+          <string>Settings</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/qdigidocclient.qrc">
+           <normaloff>:/images/images/environment.png</normaloff>:/images/images/environment.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonHelp">
+         <property name="text">
+          <string>Help</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/qdigidocclient.qrc">
+           <normaloff>:/images/images/help.png</normaloff>:/images/images/help.png</iconset>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboLanguages">
+         <property name="font">
+          <font>
+           <family>Arial Baltic</family>
+           <pointsize>8</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>Estonian</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_estonia.png</normaloff>:/images/images/flag_estonia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>English</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_united_kingdom.png</normaloff>:/images/images/flag_united_kingdom.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Russian</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_russia.png</normaloff>:/images/images/flag_russia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>German</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_germany.png</normaloff>:/images/images/flag_germany.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Latvian</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_latvia.png</normaloff>:/images/images/flag_latvia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Lithuanian</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../rc/qdigidocclient.qrc">
+            <normaloff>:/images/images/flag_lithuania.png</normaloff>:/images/images/flag_lithuania.png</iconset>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <spacer name="headerButtonSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>107</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stack">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="home">
+      <layout class="QGridLayout" name="homeLayout">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0" colspan="3">
+        <layout class="QHBoxLayout" name="homeCertInfoLayout">
+         <item>
+          <widget class="QLabel" name="homeCertInfo">
+           <property name="minimumSize">
+            <size>
+             <width>390</width>
+             <height>80</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="homeOpenUtility">
+           <property name="text">
+            <string>Run ID-card utility</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../rc/qdigidocclient.qrc">
+             <normaloff>:/images/images/sign_warning.png</normaloff>:/images/images/sign_warning.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle">
+            <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="homeCertInfoSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>107</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="2">
+        <spacer name="verticalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>47</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="homeActionLabel">
+         <property name="font">
+          <font>
+           <family>Arial Baltic</family>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>I want to</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QToolButton" name="homeSignBDoc">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>sign documents</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/qdigidocclient.qrc">
+           <normaloff>:/images/images/id_card_new.png</normaloff>:/images/images/id_card_new.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+         <attribute name="buttonGroup">
+          <string>signBDocButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>343</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="1">
+        <widget class="QToolButton" name="homeViewBDoc">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>view signed document content</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/qdigidocclient.qrc">
+           <normaloff>:/images/images/id_card_view.png</normaloff>:/images/images/id_card_view.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+         <attribute name="buttonGroup">
+          <string>viewBDocButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QToolButton" name="homeCryptDoc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>crypt documents for secure transfer</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../rc/qdigidocclient.qrc">
+           <normaloff>:/images/images/id_card_ok.png</normaloff>:/images/images/id_card_ok.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>47</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="introBDoc">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="introBDocContent">
+           <property name="minimumSize">
+            <size>
+             <width>390</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial Baltic'; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamine.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkirja andmiseks on vajalik interneti ühendus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="introBDocSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="introBDocCheck">
+           <property name="text">
+            <string>Skip this intro</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="introBDocButtonLayout">
+           <item>
+            <spacer name="introBDocButtonSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="introBDocBack">
+             <property name="text">
+              <string>Cancel</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string>signBDocButtonGroup</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="introBDocNext">
+             <property name="text">
+              <string>Next</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string>signBDocButtonGroup</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>268</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="signBDoc">
+      <layout class="QGridLayout" name="signBDocLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="signBDocDocsLabel">
+         <property name="text">
+          <string>Container content</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="signBDocSignersLabel">
+         <property name="text">
+          <string>Signature</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QFrame" name="signBDocDocsContent">
+         <property name="minimumSize">
+          <size>
+           <width>390</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="signBDocDocsContentLayout">
+          <item>
+           <spacer name="signBDocDocsSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>178</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="signBDocAddFileLayout">
+            <item>
+             <widget class="QToolButton" name="signBDocAddFile">
+              <property name="text">
+               <string>Add file</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../rc/qdigidocclient.qrc">
+                <normaloff>:/images/images/document_add.png</normaloff>:/images/images/document_add.png</iconset>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+              <attribute name="buttonGroup">
+               <string>signBDocButtonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item>
+             <spacer name="signBDocAddFileSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QFrame" name="signBDocSigners">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="signSignerLabel">
+            <property name="styleSheet">
+             <string>font-weight: bold;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="signRoleLabel">
+            <property name="text">
+             <string>Role</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="signRoleInput"/>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QLabel" name="signResolutionLabel">
+            <property name="text">
+             <string>Resolution</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="signResolutionInput"/>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QLabel" name="signLocationLabel">
+            <property name="text">
+             <string>Location</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QLabel" name="signCityLabel">
+            <property name="text">
+             <string>City</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="signCityInput"/>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="signStateLabel">
+            <property name="text">
+             <string>State</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="signStateInput"/>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="signCountryLabel">
+            <property name="text">
+             <string>Country</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="signCountryInput"/>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="signZipLabel">
+            <property name="text">
+             <string>Zip</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="signZipInput"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="signBDocButtonLayout">
+         <item>
+          <spacer name="signBDocButtonSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="signBDocCancel">
+           <property name="text">
+            <string>Cancel</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>signBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="signBDocSign">
+           <property name="text">
+            <string>Sign</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>signBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="viewBDoc">
+      <layout class="QGridLayout" name="viewBDocLayout">
+       <item row="4" column="0">
+        <layout class="QHBoxLayout" name="viewBDocEmailLayout">
+         <item>
+          <widget class="QPushButton" name="viewBDocEmail">
+           <property name="text">
+            <string>Send container to email</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>viewBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <spacer name="viewBDocEmailSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="1">
+        <layout class="QHBoxLayout" name="viewBDocPrintLayout">
+         <item>
+          <widget class="QPushButton" name="viewBDocPrint">
+           <property name="text">
+            <string>Print signature summary</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>viewBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <spacer name="viewBDocPrintSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="5" column="0">
+        <layout class="QHBoxLayout" name="viewBDocBrowseLayout">
+         <item>
+          <widget class="QPushButton" name="viewBDocBrowse">
+           <property name="text">
+            <string>Browse container location</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>viewBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <spacer name="viewBDocBrowseSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="viewBDocButtonsLayout">
+         <item>
+          <spacer name="viewBDocButtonsSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewBDocAddSignature">
+           <property name="text">
+            <string>Add signature</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>viewBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewBDocClose">
+           <property name="text">
+            <string>Close container</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string>viewBDocButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="viewBDocFile"/>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="viewBDocStatus"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="viewBDocDocsLabel">
+         <property name="text">
+          <string>Container content</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QFrame" name="viewBDocDocsFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>390</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLabel" name="viewBDocDocsContent">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="viewBDocCryptLayout">
+            <item>
+             <spacer name="viewBDocCryptSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewBDocCrypt">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Crypt files</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string>viewBDocButtonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="viewBDocSaveAsLayout">
+            <item>
+             <spacer name="viewBDocSaveAssSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewBDocSaveAs">
+              <property name="text">
+               <string>Save files to disk</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string>viewBDocButtonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="viewBDocSignersLabel">
+         <property name="text">
+          <string>Signature</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QFrame" name="viewBDocSignersContent">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="viewBDocSignersContentLayout">
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>223</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../rc/qdigidocclient.qrc"/>
+ </resources>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="signBDocButtonGroup"/>
+  <buttongroup name="viewBDocButtonGroup"/>
+ </buttongroups>
+</ui>
