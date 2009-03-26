@@ -28,6 +28,7 @@ namespace digidoc
 {
 	class BDoc;
 	class Document;
+	class Exception;
 	class Signature;
 }
 
@@ -84,6 +85,7 @@ Q_SIGNALS:
 	void error( const QString &err );
 
 private:
+	void setLastError( const digidoc::Exception &e );
 	void setLastError( const QString &err );
 
 	digidoc::BDoc	*b;

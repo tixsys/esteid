@@ -37,12 +37,7 @@
 using namespace digidoc;
 
 QSslCertificate createQSslCertificate( std::vector<unsigned char> data )
-{
-	QByteArray d;
-	for( std::vector<unsigned char>::iterator i = data.begin(); i != data.end(); ++i )
-		d.append( *i );
-	return QSslCertificate( d, QSsl::Der );
-}
+{ return QSslCertificate( QByteArray( (const char*)&data[0], data.size() ), QSsl::Der ); }
 
 class QEstEIDSigner: public EstEIDSigner
 {
@@ -121,10 +116,9 @@ bool DigiDocSignature::isValid() const
 {
 	try
 	{ return s->validateOnline() == OCSP::GOOD; }
-	catch( SignatureException & )
-	{ return false; }
-	catch(...)
-	{ return false; }
+	catch( SignatureException & ) {}
+	catch(...) {}
+	return false;
 }
 
 QString DigiDocSignature::location() const
@@ -180,10 +174,8 @@ void DigiDoc::addFile( const QString &file )
 
 	try
 	{ b->addDocument( Document( file.toStdString(), "file" ) ); }
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 QSslCertificate DigiDoc::authCert()
@@ -194,12 +186,9 @@ QSslCertificate DigiDoc::authCert()
 		signer.getCert();
 		return signer.cert();
 	}
-	catch( SignException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( IOException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( SignException &e ) { setLastError( e ); }
+	catch( IOException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 	return QSslCertificate();
 }
 
@@ -207,12 +196,9 @@ QSslCertificate DigiDoc::signCert()
 {
 	try
 	{ return createQSslCertificate( X509Cert( QEstEIDSigner().getCert() ).encodeDER() ); }
-	catch( SignException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( IOException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( SignException &e ) { setLastError( e ); }
+	catch( IOException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 	return QSslCertificate();
 }
 
@@ -247,10 +233,8 @@ QList<Document> DigiDoc::documents()
 		for( unsigned int i = 0; i < count; ++i )
 			list << b->getDocument( i );
 	}
-	catch( const BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( const BDocException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 
 	return list;
 }
@@ -268,12 +252,9 @@ void DigiDoc::open( const QString &file )
 		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toStdString()));
 		b = new BDoc( s );
 	}
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( IOException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch( IOException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 void DigiDoc::removeDocument( unsigned int num )
@@ -286,10 +267,8 @@ void DigiDoc::removeDocument( unsigned int num )
 
 	try
 	{ b->removeDocument( num ); }
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 void DigiDoc::removeSignature( unsigned int num )
@@ -302,10 +281,8 @@ void DigiDoc::removeSignature( unsigned int num )
 
 	try
 	{ b->removeSignature( num ); }
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 void DigiDoc::save()
@@ -318,12 +295,9 @@ void DigiDoc::save()
 		std::auto_ptr<ISerialize> s(new ZipSerialize(m_fileName.toStdString()));
 		b->saveTo( s );
 	}
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( IOException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch( IOException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 void DigiDoc::saveDocuments( const QString &path )
@@ -340,12 +314,18 @@ void DigiDoc::saveDocuments( const QString &path )
 			b->getDocument( i ).saveAs( QString( path + QDir::separator() + file.fileName() ).toStdString() );
 		}
 	}
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( IOException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch( IOException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
+}
+
+void DigiDoc::setLastError( const Exception &e )
+{
+	QStringList causes;
+	causes << QString::fromStdString( e.getMsg() );
+	Q_FOREACH( const Exception &c, e.getCauses() )
+		causes << QString::fromStdString( c.getMsg() );
+	setLastError( causes.join( "\n" ) );
 }
 
 void DigiDoc::setLastError( const QString &err )
@@ -373,14 +353,10 @@ void DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		signer.setSignerRole( sRole );
 		b->sign( &signer, profile == "BES" ? Signature::BES : Signature::TM );
 	}
-	catch( const BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( const SignException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch( const SignatureException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( const BDocException &e ) { setLastError( e ); }
+	catch( const SignException &e ) { setLastError( e ); }
+	catch( const SignatureException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
 
 QList<DigiDocSignature> DigiDoc::signatures()
@@ -398,9 +374,7 @@ QList<DigiDocSignature> DigiDoc::signatures()
 		for( unsigned int i = 0; i < count; ++i )
 			list << DigiDocSignature( b->getSignature( i ) );
 	}
-	catch( BDocException &e )
-	{ setLastError( QString::fromStdString( e.getMsg() ) ); }
-	catch(...)
-	{ setLastError( tr("Unknown error") ); }
+	catch( BDocException &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 	return list;
 }
