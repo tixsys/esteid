@@ -37,7 +37,6 @@ Settings::Settings( QWidget *parent )
 
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
 	showIntro->setChecked( !s.value( "Intro", true ).toBool() );
-	addOwner->setChecked( s.value( "CryptOwner", false ).toBool() );
 
 	signRoleInput->setText( s.value( "Role" ).toString() );
 	signResolutionInput->setText( s.value( "Resolution" ).toString() );
@@ -69,7 +68,6 @@ void Settings::save()
 	SettingsValues s;
 	s.beginGroup( "Main" );
 	s.setValue( "Intro", !showIntro->isChecked() );
-	s.setValue( "CryptOwner", addOwner->isChecked() );
 	s.setValue( "Overwrite", signOverwrite->isChecked() );
 	s.endGroup();
 

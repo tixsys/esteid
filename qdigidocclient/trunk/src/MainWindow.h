@@ -33,28 +33,40 @@ class MainWindow: public QWidget, private Ui::MainWindow
 	Q_OBJECT
 
 public:
-	enum Pages {
-		Home,
-		SignIntro,
-		Sign,
-		View,
-		Crypt,
-		Crypt2,
-	};
 	MainWindow( QWidget *parent = 0 );
 
 private Q_SLOTS:
+	void buttonClicked( int button );
 	void showCardStatus();
 	void on_buttonSettings_clicked();
 	void on_comboLanguages_activated( int index );
 	void on_introBDocCheck_stateChanged( int state );
-	void on_signBDocButtonGroup_buttonClicked( QAbstractButton *button );
-	void on_viewBDocButtonGroup_buttonClicked( QAbstractButton *button );
 	void showWarning( const QString &msg );
 	void signBDocDocsRemove( unsigned int num );
 	void viewBDocSignersRemove( unsigned int num );
 
 private:
+	enum Pages {
+		Home,
+		SignIntro,
+		Sign,
+		View,
+	};
+	enum Buttons {
+		HomeSignBDoc,
+		IntroBDocBack,
+		IntroBDocNext,
+		SignBDocAddFile,
+		SignBDocCancel,
+		SignBDocSign,
+		HomeViewBDoc,
+		ViewBDocAddSignature,
+		ViewBDocBrowse,
+		ViewBDocClose,
+		ViewBDocEmail,
+		ViewBDocPrint,
+		ViewBDocSaveAs,
+	};
 	void addFile();
 	void setCurrentPage( Pages page );
 

@@ -93,6 +93,23 @@ MainWindow::MainWindow( QWidget *parent )
 	setupUi( this );
 	homeOpenUtility->hide();
 
+	QButtonGroup *buttonGroup = new QButtonGroup( this );
+	buttonGroup->addButton( homeSignBDoc, HomeSignBDoc );
+	buttonGroup->addButton( introBDocBack, IntroBDocBack );
+	buttonGroup->addButton( introBDocNext, IntroBDocNext );
+	buttonGroup->addButton( signBDocAddFile, SignBDocAddFile );
+	buttonGroup->addButton( signBDocCancel, SignBDocCancel );
+	buttonGroup->addButton( signBDocSign, SignBDocSign );
+	buttonGroup->addButton( homeViewBDoc, HomeViewBDoc );
+	buttonGroup->addButton( viewBDocAddSignature, ViewBDocAddSignature );
+	buttonGroup->addButton( viewBDocBrowse, ViewBDocBrowse );
+	buttonGroup->addButton( viewBDocClose, ViewBDocClose );
+	buttonGroup->addButton( viewBDocEmail, ViewBDocEmail );
+	buttonGroup->addButton( viewBDocPrint, ViewBDocPrint );
+	buttonGroup->addButton( viewBDocSaveAs, ViewBDocSaveAs );
+	connect( buttonGroup, SIGNAL(buttonClicked(int)),
+		SLOT(buttonClicked(int)) );
+
 	appTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
 	QApplication::instance()->installTranslator( appTranslator );
@@ -112,44 +129,25 @@ MainWindow::MainWindow( QWidget *parent )
 	on_comboLanguages_activated( comboLanguages->currentIndex() );
 }
 
-void MainWindow::on_comboLanguages_activated( int index )
+void MainWindow::buttonClicked( int button )
 {
-	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
-
-	appTranslator->load( QString( ":/translations/%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
-	qtTranslator->load( QString( ":/translations/qt_%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
-
-	retranslateUi( this );
-	showCardStatus();
-	setCurrentPage( (MainWindow::Pages)stack->currentIndex() );
-}
-
-void MainWindow::on_introBDocCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
-
-void MainWindow::on_signBDocButtonGroup_buttonClicked( QAbstractButton *button )
-{
-	if( button == homeSignBDoc )
+	switch( button )
 	{
-		if( SettingsValues().value( "Main/Intro", true ).toBool() )
-			addFile();
-		else {
+	case HomeSignBDoc:
+		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
+		{
 			introBDocCheck->setChecked( false );
 			setCurrentPage( SignIntro );
+			break;
 		}
-	}
-	else if( button == introBDocBack )
-	{
-		setCurrentPage( Home );
-	}
-	else if( button == introBDocNext || button == signBDocAddFile )
-	{
+	case IntroBDocNext:
+	case SignBDocAddFile:
 		addFile();
-	}
-	else if( button == signBDocCancel )
-	{
+		break;
+	case IntroBDocBack:
+		setCurrentPage( Home );
+		break;
+	case SignBDocCancel:
 		if ( bdoc->documents().size() == 0 )
 		{
 			setCurrentPage( Home );
@@ -172,9 +170,8 @@ void MainWindow::on_signBDocButtonGroup_buttonClicked( QAbstractButton *button )
 			else if ( msgBox.clickedButton() == keep )
 				setCurrentPage( View );
 		}
-	}
-	else if( button == signBDocSign )
-	{
+		break;
+	case SignBDocSign:
 		bdoc->sign(
 			signCityInput->text(),
 			signStateInput->text(),
@@ -191,12 +188,8 @@ void MainWindow::on_signBDocButtonGroup_buttonClicked( QAbstractButton *button )
 			signZipInput->text(),
 			signCountryInput->text() );
 		setCurrentPage( View );
-	}
-}
-
-void MainWindow::on_viewBDocButtonGroup_buttonClicked( QAbstractButton *button )
-{
-	if( button == homeViewBDoc )
+		break;
+	case HomeViewBDoc:
 	{
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
@@ -206,40 +199,55 @@ void MainWindow::on_viewBDocButtonGroup_buttonClicked( QAbstractButton *button )
 			bdoc->open( file );
 			setCurrentPage( View );
 		}
+		break;
 	}
-	else if( button == viewBDocAddSignature )
-	{
+	case ViewBDocAddSignature:
 		setCurrentPage( Sign );
-	}
-	else if( button == viewBDocBrowse )
-	{
+		break;
+	case ViewBDocBrowse:
 		QDesktopServices::openUrl( QString( "file://%1" )
 			.arg( QFileInfo( bdoc->fileName() ).absolutePath() ) );
-	}
-	else if( button == viewBDocClose )
-	{
+		break;
+	case ViewBDocClose:
 		bdoc->clear();
 		setCurrentPage( Home );
-	}
-	else if( button == viewBDocCrypt )
-	{}
-	else if( button == viewBDocEmail )
-	{
+		break;
+	case ViewBDocEmail:
 		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
 			.arg( QFileInfo( bdoc->fileName() ).fileName() )
 			.arg( bdoc->fileName() ) );
-	}
-	else if( button == viewBDocPrint )
-	{}
-	else if( button == viewBDocSaveAs )
+		break;
+	case ViewBDocPrint:
+		break;
+	case ViewBDocSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
 			tr("Select folder where files will be stored"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !dir.isEmpty() )
 			bdoc->saveDocuments( dir );
+		break;
+	}
+	default: break;
 	}
 }
+
+void MainWindow::on_comboLanguages_activated( int index )
+{
+	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
+
+	appTranslator->load( QString( ":/translations/%1" )
+		.arg( comboLanguages->itemData( index ).toString() ) );
+	qtTranslator->load( QString( ":/translations/qt_%1" )
+		.arg( comboLanguages->itemData( index ).toString() ) );
+
+	retranslateUi( this );
+	showCardStatus();
+	setCurrentPage( (MainWindow::Pages)stack->currentIndex() );
+}
+
+void MainWindow::on_introBDocCheck_stateChanged( int state )
+{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
 
 void MainWindow::signBDocDocsRemove( unsigned int num )
 {
