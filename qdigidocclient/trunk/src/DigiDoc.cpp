@@ -173,11 +173,11 @@ DigiDoc::DigiDoc( QObject *parent )
 		m_signer = new QEstEIDSigner();
 		m_authCert = m_signer->authCert();
 		m_signCert = m_signer->signCert();
-		delete m_signer;
-		m_signer = 0;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	catch(...) { setLastError( tr("Unknown error") ); }
+	delete m_signer;
+	m_signer = 0;
 
 	startTimer( 5 * 1000 );
 }
@@ -351,12 +351,12 @@ void DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
 		m_signer->setSignerRole( sRole );
-		b->sign( m_signer, Signature::BES /*TM*/ );
-		delete m_signer;
-		m_signer = 0;
+		b->sign( m_signer, Signature::TM /*BES|TM*/ );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	catch(...) { setLastError( tr("Unknown error") ); }
+	delete m_signer;
+	m_signer = 0;
 }
 
 QList<DigiDocSignature> DigiDoc::signatures()
@@ -392,9 +392,9 @@ void DigiDoc::timerEvent( QTimerEvent * )
 			m_signCert = m_signer->signCert();
 			Q_EMIT dataChanged();
 		}
-		delete m_signer;
-		m_signer = 0;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	catch(...) { setLastError( tr("Unknown error") ); }
+	delete m_signer;
+	m_signer = 0;
 }
