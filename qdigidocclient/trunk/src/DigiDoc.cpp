@@ -168,11 +168,16 @@ DigiDoc::DigiDoc( QObject *parent )
 	Conf::init( new XmlConf( "/etc/libdigidoc/bdoclib.conf" ) );
 	X509CertStore::init( new DirectoryX509CertStore() );
 
-	m_signer = new QEstEIDSigner();
-	m_authCert = m_signer->authCert();
-	m_signCert = m_signer->signCert();
-	delete m_signer;
-	m_signer = 0;
+	try
+	{
+		m_signer = new QEstEIDSigner();
+		m_authCert = m_signer->authCert();
+		m_signCert = m_signer->signCert();
+		delete m_signer;
+		m_signer = 0;
+	}
+	catch( const Exception &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 
 	startTimer( 5 * 1000 );
 }
