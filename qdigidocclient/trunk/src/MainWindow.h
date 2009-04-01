@@ -68,6 +68,9 @@ private:
 		ViewBDocSaveAs,
 	};
 	void addFile();
+	void addFile( const QString &file );
+	void dragEnterEvent( QDragEnterEvent *e );
+	void dropEvent( QDropEvent *e );
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*bdoc;

@@ -29,6 +29,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSslCertificate>
@@ -127,6 +128,33 @@ MainWindow::MainWindow( QWidget *parent )
 	comboLanguages->setCurrentIndex(
 		comboLanguages->findData( SettingsValues().value( "Main/Language", "et" ) ) );
 	on_comboLanguages_activated( comboLanguages->currentIndex() );
+}
+
+void MainWindow::addFile()
+{
+	QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
+		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+	if( !list.isEmpty() )
+	{
+		Q_FOREACH( const QString &file, list )
+			addFile( file );
+		setCurrentPage( Sign );
+	}
+	else
+		setCurrentPage( Home );
+}
+
+void MainWindow::addFile( const QString &file )
+{
+	if( bdoc->isNull() )
+	{
+		QFileInfo info( file );
+		bdoc->create( QString( "%1%2%3.bdoc" )
+			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
+			.arg( QDir::separator() )
+			.arg( info.fileName() ) );
+	}
+	bdoc->addFile( file );
 }
 
 void MainWindow::buttonClicked( int button )
@@ -230,6 +258,26 @@ void MainWindow::buttonClicked( int button )
 	}
 	default: break;
 	}
+}
+
+void MainWindow::dragEnterEvent( QDragEnterEvent *e )
+{
+	if( e->mimeData()->hasUrls() &&
+		(stack->currentIndex() == Home ||
+		 stack->currentIndex() == SignIntro ||
+		 stack->currentIndex() == Sign) )
+		e->acceptProposedAction();
+}
+
+void MainWindow::dropEvent( QDropEvent *e )
+{
+	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
+	{
+		if( u.isRelative() || u.scheme() == "file" )
+			addFile( u.toString(
+				QUrl::RemoveScheme|QUrl::RemoveAuthority|QUrl::RemoveQuery|QUrl::RemoveFragment) );
+	}
+	setCurrentPage( Sign );
 }
 
 void MainWindow::on_comboLanguages_activated( int index )
@@ -370,31 +418,6 @@ void MainWindow::showCardStatus()
 
 void MainWindow::showWarning( const QString &msg )
 { QMessageBox::warning( this, "QDigDocClient", msg ); }
-
-void MainWindow::addFile()
-{
-	QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
-		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-	if( list.isEmpty() )
-	{
-		setCurrentPage( Home );
-		return;
-	}
-	QStringList::const_iterator i = list.constBegin();
-	for( ; i != list.constEnd(); ++i )
-	{
-		if( bdoc->isNull() )
-		{
-			QFileInfo info( *i );
-			bdoc->create( QString( "%1%2%3.bdoc" )
-				.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
-				.arg( QDir::separator() )
-				.arg( info.fileName() ) );
-		}
-		bdoc->addFile( *i );
-	}
-	setCurrentPage( Sign );
-}
 
 void MainWindow::on_buttonSettings_clicked()
 { (new Settings( this ))->show(); }
