@@ -35,6 +35,7 @@ namespace digidoc
 }
 
 class QDateTime;
+class QEstEIDSigner;
 
 class DigiDocSignature
 {
@@ -94,4 +95,5 @@ private:
 	QString			m_fileName;
 	QString			m_lastError;
 	QSslCertificate m_authCert, m_signCert;
+	QEstEIDSigner	*m_signer;
 };

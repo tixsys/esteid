@@ -168,9 +168,11 @@ DigiDoc::DigiDoc( QObject *parent )
 	Conf::init( new XmlConf( "/etc/libdigidoc/bdoclib.conf" ) );
 	X509CertStore::init( new DirectoryX509CertStore() );
 
-	QEstEIDSigner s;
-	m_authCert = s.authCert();
-	m_signCert = s.signCert();
+	m_signer = new QEstEIDSigner();
+	m_authCert = m_signer->authCert();
+	m_signCert = m_signer->signCert();
+	delete m_signer;
+	m_signer = 0;
 
 	startTimer( 5 * 1000 );
 }
@@ -334,8 +336,8 @@ void DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 
 	try
 	{
-		QEstEIDSigner signer;
-		signer.setSignatureProductionPlace( Signer::SignatureProductionPlace(
+		m_signer = new QEstEIDSigner();
+		m_signer->setSignatureProductionPlace( Signer::SignatureProductionPlace(
 			city.toUtf8().constData(),
 			state.toUtf8().constData(),
 			zip.toUtf8().constData(),
@@ -343,8 +345,10 @@ void DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		Signer::SignerRole sRole( role.toUtf8().constData() );
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
-		signer.setSignerRole( sRole );
-		b->sign( &signer, Signature::BES /*TM*/ );
+		m_signer->setSignerRole( sRole );
+		b->sign( m_signer, Signature::BES /*TM*/ );
+		delete m_signer;
+		m_signer = 0;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	catch(...) { setLastError( tr("Unknown error") ); }
@@ -372,11 +376,20 @@ QList<DigiDocSignature> DigiDoc::signatures()
 
 void DigiDoc::timerEvent( QTimerEvent * )
 {
-	QEstEIDSigner signer;
-	if( m_authCert != signer.authCert() || m_signCert != signer.signCert() )
+	try
 	{
-		m_authCert = signer.authCert();
-		m_signCert = signer.signCert();
-		Q_EMIT dataChanged();
+		if( m_signer != 0 )
+			return;
+		m_signer = new QEstEIDSigner();
+		if( m_authCert != m_signer->authCert() || m_signCert != m_signer->signCert() )
+		{
+			m_authCert = m_signer->authCert();
+			m_signCert = m_signer->signCert();
+			Q_EMIT dataChanged();
+		}
+		delete m_signer;
+		m_signer = 0;
 	}
+	catch( const Exception &e ) { setLastError( e ); }
+	catch(...) { setLastError( tr("Unknown error") ); }
 }
