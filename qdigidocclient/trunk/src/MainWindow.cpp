@@ -141,7 +141,7 @@ void MainWindow::addFile()
 			addFile( file );
 		setCurrentPage( Sign );
 	}
-	else
+	else if( bdoc->isNull() )
 		setCurrentPage( Home );
 }
 
