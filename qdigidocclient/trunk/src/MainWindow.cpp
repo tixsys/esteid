@@ -306,7 +306,7 @@ void MainWindow::signBDocDocsRemove( unsigned int num )
 
 void MainWindow::setCurrentPage( Pages page )
 {
-	Q_FOREACH( DocumentWidget *w, signBDocDocsContent->findChildren<DocumentWidget*>() )
+	Q_FOREACH( DocumentWidget *w, signBDocDocsScrollContent->findChildren<DocumentWidget*>() )
 		w->deleteLater();
 	Q_FOREACH( SignatureWidget *w, viewBDocSignersContent->findChildren<SignatureWidget*>() )
 		w->deleteLater();
@@ -328,8 +328,8 @@ void MainWindow::setCurrentPage( Pages page )
 		unsigned int i = 0;
 		Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
 		{
-			DocumentWidget *doc = new DocumentWidget( file, i, signBDocDocsContent );
-			signBDocDocsContentLayout->insertWidget( i, doc );
+			DocumentWidget *doc = new DocumentWidget( file, i, signBDocDocsScrollContent );
+			signBDocDocsScrollContentLayout->insertWidget( i, doc );
 			connect( doc, SIGNAL(removeDocument(unsigned int)), SLOT(signBDocDocsRemove(unsigned int)) );
 			++i;
 		}

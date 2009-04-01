@@ -18,6 +18,9 @@
   <property name="styleSheet" >
    <string notr="true" >#MainWindow,
 #stack
+#signBDocDocsScrollContent
+#viewBDocDocsContent
+#viewBDocSignersContent
 { background: white; }
 #frameSignSigners,
 #frameSignContent,
@@ -503,17 +506,39 @@ p, li { white-space: pre-wrap; }
          </property>
          <layout class="QVBoxLayout" name="signBDocDocsContentLayout" >
           <item>
-           <spacer name="signBDocDocsSpacer" >
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
+           <widget class="QScrollArea" name="signBDocDocsScroll" >
+            <property name="frameShape" >
+             <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>20</width>
-              <height>178</height>
-             </size>
+            <property name="widgetResizable" >
+             <bool>true</bool>
             </property>
-           </spacer>
+            <widget class="QWidget" name="signBDocDocsScrollContent" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="signBDocDocsScrollContentLayout" >
+              <item>
+               <spacer name="signBDocDocsSpacer" >
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0" >
+                 <size>
+                  <width>20</width>
+                  <height>152</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="signBDocAddFileLayout" >
@@ -808,16 +833,26 @@ p, li { white-space: pre-wrap; }
          </property>
          <layout class="QVBoxLayout" name="verticalLayout" >
           <item>
-           <widget class="QLabel" name="viewBDocDocsContent" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QScrollArea" name="viewBDocDocsContentScroll" >
+            <property name="frameShape" >
+             <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="alignment" >
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            <property name="widgetResizable" >
+             <bool>true</bool>
             </property>
+            <widget class="QLabel" name="viewBDocDocsContent" >
+             <property name="geometry" >
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>100</width>
+               <height>30</height>
+              </rect>
+             </property>
+             <property name="alignment" >
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+            </widget>
            </widget>
           </item>
           <item>
@@ -855,31 +890,41 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="3" column="1" >
-        <widget class="QFrame" name="viewBDocSignersContent" >
+        <widget class="QScrollArea" name="viewBDocSignersContentScroll" >
          <property name="frameShape" >
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow" >
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="viewBDocSignersContentLayout" >
-          <item>
-           <spacer name="verticalSpacer" >
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType" >
-             <enum>QSizePolicy::Preferred</enum>
-            </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>20</width>
-              <height>223</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+         <property name="widgetResizable" >
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="viewBDocSignersContent" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>98</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="viewBDocSignersContentLayout" >
+           <item>
+            <spacer name="signBDocDocsScrollContentSpacer" >
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>152</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
