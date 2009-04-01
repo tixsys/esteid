@@ -333,7 +333,7 @@ void MainWindow::setCurrentPage( Pages page )
 			connect( doc, SIGNAL(removeDocument(unsigned int)), SLOT(signBDocDocsRemove(unsigned int)) );
 			++i;
 		}
-		signBDocSign->setEnabled( i > 0 );
+		signBDocSign->setEnabled( i > 0 && bdoc->signCert().isValid() );
 		break;
 	}
 	case View:
@@ -350,7 +350,6 @@ void MainWindow::setCurrentPage( Pages page )
 
 		int i = 0;
 		bool cardOwnerSignature = false;
-		const QSslCertificate readerCert = bdoc->signCert();
 		Q_FOREACH( const DigiDocSignature &c, bdoc->signatures() )
 		{
 			SignatureWidget *signature = new SignatureWidget( c, i, viewBDocSignersContent );
@@ -358,7 +357,10 @@ void MainWindow::setCurrentPage( Pages page )
 			connect( signature, SIGNAL(removeSignature(uint)),
 				SLOT(viewBDocSignersRemove(unsigned int)) );
 			if( !cardOwnerSignature )
-				cardOwnerSignature = c.cert().subjectInfo( "serialNumber") == readerCert.subjectInfo( "serialNumber" );
+			{
+				cardOwnerSignature =
+					(c.cert().subjectInfo( "serialNumber") == bdoc->signCert().subjectInfo( "serialNumber" ));
+			}
 			++i;
 		}
 
@@ -376,7 +378,7 @@ void MainWindow::setCurrentPage( Pages page )
 		else
 			viewBDocStatus->setText( tr("Container is unsigned") );
 
-		viewBDocAddSignature->setEnabled( !readerCert.isNull() && !cardOwnerSignature );
+		viewBDocAddSignature->setEnabled( bdoc->signCert().isValid() && !cardOwnerSignature );
 		break;
 	}
 	default: break;
@@ -385,36 +387,33 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	QSslCertificate a = bdoc->authCert();
-	QSslCertificate c = bdoc->signCert();
-
 	labelCardInfo->setText( tr(
 		"Reader contains ID-Card <b></b><br />"
 		"Card is valid until <b></b><br />"
 		"This is <b></b> document" ) );
 
 	labelCardOwner->setText( tr( "Name: <b>%1 %2</b><br />SSID: <b>%3</b>" )
-		.arg( parseName( parseCertInfo( c.subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( c.subjectInfo( "SN" ) ) ) )
-		.arg( c.subjectInfo( "serialNumber") ) );
+		.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
+		.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) )
+		.arg( bdoc->signCert().subjectInfo( "serialNumber") ) );
 
-	bool auth = a.expiryDate() < QDateTime::currentDateTime();
-	bool sign = c.expiryDate() < QDateTime::currentDateTime();
 	homeCertInfo->setText( tr(
 		"Auth certificate is <b>%1</b><br />"
 		"Sign certificate is <b>%2</b><br />%3" )
-		.arg( auth ? tr("not valid") : tr("valid") )
-		.arg( sign ? tr("not valid") : tr("valid") )
-		.arg( sign ?
+		.arg( !bdoc->authCert().isValid() ? tr("not valid") : tr("valid") )
+		.arg( !bdoc->signCert().isValid() ? tr("not valid") : tr("valid") )
+		.arg( !bdoc->signCert().isValid() ?
 			tr("You cannot sign documents with this card") :
 			tr("You can sign documents with this card") ) );
 
-	homeOpenUtility->setVisible( auth || sign );
+	homeOpenUtility->setVisible(
+		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
+		(!bdoc->authCert().isValid() || !bdoc->signCert().isValid()) );
 
 	signSignerLabel->setText( QString( "%1 %2 (%3)" )
-		.arg( parseName( parseCertInfo( c.subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( c.subjectInfo( "SN" ) ) ) )
-		.arg( c.subjectInfo( "serialNumber") ) );
+		.arg( parseName( parseCertInfo( bdoc->signCert().subjectInfo( "GN" ) ) ) )
+		.arg( parseName( parseCertInfo( bdoc->signCert().subjectInfo( "SN" ) ) ) )
+		.arg( bdoc->signCert().subjectInfo( "serialNumber") ) );
 
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
