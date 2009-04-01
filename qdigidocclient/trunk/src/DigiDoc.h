@@ -24,6 +24,8 @@
 
 #include <QObject>
 
+#include <QSslCertificate>
+
 namespace digidoc
 {
 	class BDoc;
@@ -33,7 +35,6 @@ namespace digidoc
 }
 
 class QDateTime;
-class QSslCertificate;
 
 class DigiDocSignature
 {
@@ -77,18 +78,20 @@ public:
 		const QString &zip,
 		const QString &country,
 		const QString &role,
-		const QString &role2,
-		const QString &profile = "BES" );
+		const QString &role2 );
 	QList<DigiDocSignature> signatures();
 
 Q_SIGNALS:
+	void dataChanged();
 	void error( const QString &err );
 
 private:
 	void setLastError( const digidoc::Exception &e );
 	void setLastError( const QString &err );
+	void timerEvent( QTimerEvent *e );
 
 	digidoc::BDoc	*b;
 	QString			m_fileName;
 	QString			m_lastError;
+	QSslCertificate m_authCert, m_signCert;
 };

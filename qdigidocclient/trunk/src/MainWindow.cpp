@@ -118,6 +118,7 @@ MainWindow::MainWindow( QWidget *parent )
 
 	bdoc = new DigiDoc( this );
 	connect( bdoc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
+	connect( bdoc, SIGNAL(dataChanged()), SLOT(reload()) );
 
 	comboLanguages->setItemData( 0, "et" );
 	comboLanguages->setItemData( 1, "en" );
@@ -291,12 +292,12 @@ void MainWindow::on_comboLanguages_activated( int index )
 
 	retranslateUi( this );
 	showCardStatus();
-	setCurrentPage( (MainWindow::Pages)stack->currentIndex() );
 }
 
 void MainWindow::on_introBDocCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
 
+void MainWindow::reload() { showCardStatus(); }
 void MainWindow::signBDocDocsRemove( unsigned int num )
 {
 	bdoc->removeDocument( num );
@@ -414,6 +415,8 @@ void MainWindow::showCardStatus()
 		.arg( parseName( parseCertInfo( c.subjectInfo( "GN" ) ) ) )
 		.arg( parseName( parseCertInfo( c.subjectInfo( "SN" ) ) ) )
 		.arg( c.subjectInfo( "serialNumber") ) );
+
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::showWarning( const QString &msg )
