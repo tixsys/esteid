@@ -23,6 +23,10 @@
         <source>Cannot add signature to empty container</source>
         <translation>Ei saa lisada allkirja tühjale ümbrikule</translation>
     </message>
+    <message>
+        <source>Missing signature</source>
+        <translation>Allkiri puudub</translation>
+    </message>
 </context>
 <context>
     <name>DocumentWidget</name>
@@ -72,10 +76,6 @@
     <message>
         <source>sign documents</source>
         <translation>allkirjastada dokumenti</translation>
-    </message>
-    <message>
-        <source>crypt documents for secure transfer</source>
-        <translation>krüpteerida failid turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -150,32 +150,16 @@
         <translation>Sulge ümbrik</translation>
     </message>
     <message>
-        <source>Crypt files</source>
-        <translation>Krüpti failid</translation>
-    </message>
-    <message>
         <source>Save files to disk</source>
         <translation>Salvesta failid kettale</translation>
-    </message>
-    <message>
-        <source>font-weight: bold;</source>
-        <translation>font-weight: bold;</translation>
     </message>
     <message>
         <source>DigiDoc client</source>
         <translation>DigiDoc klient</translation>
     </message>
     <message>
-        <source>signBDocButtonGroup</source>
-        <translation>signBDocButtonGroup</translation>
-    </message>
-    <message>
         <source>view signed document content</source>
         <translation>vaadata allkirjastatud dokumendi sisu</translation>
-    </message>
-    <message>
-        <source>viewBDocButtonGroup</source>
-        <translation>viewBDocButtonGroup</translation>
     </message>
     <message>
         <source>Save container</source>
@@ -340,10 +324,6 @@ For using sign certificate enter PIN2</source>
         <translation>Vali kataloog</translation>
     </message>
     <message>
-        <source>Add card owner to crypted files as a default receiver</source>
-        <translation>Lisada lugejas oleva kaardi omanik krüptitud failide saajaks</translation>
-    </message>
-    <message>
         <source>Show signing intro</source>
         <translation>Näita allkirjastamisel sissejuhatust</translation>
     </message>
@@ -373,6 +353,10 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>Show details</source>
         <translation>Vaata üksikasju</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eemalda</translation>
     </message>
 </context>
 </TS>
