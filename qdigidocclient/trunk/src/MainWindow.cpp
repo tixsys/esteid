@@ -370,12 +370,7 @@ void MainWindow::setCurrentPage( Pages page )
 			++i;
 		}
 
-		viewBDocEmail->setEnabled( i > 0 );
-		viewBDocBrowse->setEnabled( i > 0 );
-		if( i > 0 )
-			viewBDocFile->setText( tr("Container: <b>%1</b>").arg( bdoc->fileName() ) );
-		else
-			viewBDocFile->setText( QString() );
+		viewBDocFile->setText( tr("Container: <b>%1</b>").arg( bdoc->fileName() ) );
 
 		if( i > 0 && cardOwnerSignature )
 			viewBDocStatus->setText( tr("This container is signed by you") );
