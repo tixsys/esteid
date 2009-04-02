@@ -322,9 +322,9 @@ void DigiDoc::saveDocuments( const QString &path )
 void DigiDoc::setLastError( const Exception &e )
 {
 	QStringList causes;
-	causes << QString::fromStdString( e.getMsg() );
+	causes << QString::fromUtf8( e.getMsg().data() );
 	Q_FOREACH( const Exception &c, e.getCauses() )
-		causes << QString::fromStdString( c.getMsg() );
+		causes << QString::fromUtf8( c.getMsg().data() );
 	setLastError( causes.join( "\n" ) );
 }
 
