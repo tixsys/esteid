@@ -5,7 +5,6 @@ project(qesteidutil)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 find_package(Qt4 REQUIRED)
-find_package(OpenSSL REQUIRED)
 if(UNIX)
     find_package(PCSCLite REQUIRED)
 endif(UNIX)
@@ -28,11 +27,6 @@ set(cardlib_SRCS
     cardlib/SmartCardManager.cpp
 )
 
-set(utility_SRCS
-    utility/asnCertificate.cpp
-    utility/asnObject.cpp
-)
-
 set(qesteidutil_SRCS
     jscardmanager.cpp
     jscertdata.cpp
@@ -52,7 +46,6 @@ include(${QT_USE_FILE})
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${OPENSSL_INCLUDE_DIR}
     ${PCSCLITE_INCLUDE_DIR}
 )
 
@@ -61,7 +54,6 @@ QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 
 add_executable(qesteidutil WIN32
     ${cardlib_SRCS}
-    ${utility_SRCS}
     ${qesteidutil_SRCS}
     ${qesteidutil_MOC_SRCS}
     ${qesteidutil_RCC_SRCS}
@@ -69,7 +61,6 @@ add_executable(qesteidutil WIN32
 
 target_link_libraries(qesteidutil
     ${QT_LIBRARIES}
-    ${OPENSSL_LIBRARIES}
 )
 
 install(TARGETS qesteidutil DESTINATION bin)

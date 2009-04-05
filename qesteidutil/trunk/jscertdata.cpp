@@ -1,5 +1,7 @@
 #include <iostream>
 #include <QDebug>
+#include <QDateTime>
+#include <QStringList>
 
 #include "jscertdata.h"
 
@@ -28,22 +30,7 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
         else
             certBytes = m_card->getSignCert();
 
-        std::stringstream dummy;
-        //              std::ofstream decodeLog("decode.log");
-        asnCertificate cert(certBytes,dummy);
-#ifndef QT_NO_OPENSSL
         m_qcert = new QSslCertificate(QByteArray((char *)&certBytes[0], certBytes.size()), QSsl::Der);
-#endif
-        if (ct == AuthCert)
-            email = cert.getSubjectAltName().c_str();
-        subjCN    = fromX509Data(cert.getSubjectCN());
-        subjO     = fromX509Data(cert.getSubjectO());
-        subjOU    = fromX509Data(cert.getSubjectOU());
-        validFrom = cert.getValidFrom().c_str();
-        validTo   = cert.getValidTo().c_str();
-        issuerCN  = fromX509Data(cert.getIssuerCN());
-        issuerO   = fromX509Data(cert.getIssuerO());
-        issuerOU  = fromX509Data(cert.getIssuerOU());
     } catch (runtime_error &err ) {
 //        doShowError(err);
         cout << "Error: " << err.what() << endl;
@@ -52,67 +39,86 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
 
 QString JsCertData::toPem()
 {
-#ifndef QT_NO_OPENSSL
-    return QString(m_qcert->toPem());
-#else
-    return "";
-#endif
-}
+    if (!m_qcert)
+        return "";
 
-QString JsCertData::fromX509Data(ByteVec val) {
-    QString ret;
-    if (val.end() != std::find(val.begin(), val.end(), 0)) { //contains zeroes, is bigendian UCS
-        for(ByteVec::iterator it = val.begin(); it < val.end(); it += 2)
-            iter_swap(it, it+1);
-        val.push_back(0);
-        val.push_back(0);
-        return QString((const char *)&val[0]);
-    } else {
-        return QString((const char *)&val[0]).left(val.size());
-    }
+    return QString(m_qcert->toPem());
 }
 
 QString JsCertData::getEmail()
 {
-    return email;
+    if (!m_qcert)
+        return "";
+
+    QStringList mailaddresses = m_qcert->alternateSubjectNames().values(QSsl::EmailEntry);
+
+    // return first email address
+    if (!mailaddresses.isEmpty())
+        return mailaddresses.first();
+    else
+        return "";
 }
 
 QString JsCertData::getSubjCN()
 {
-    return subjCN;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->subjectInfo(QSslCertificate::CommonName);
 }
 
 QString JsCertData::getSubjO()
 {
-    return subjO;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->subjectInfo(QSslCertificate::Organization);
 }
 
 QString JsCertData::getSubjOU()
 {
-    return subjOU;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->subjectInfo(QSslCertificate::OrganizationalUnitName);
 }
 
 QString JsCertData::getValidFrom()
 {
-    return validFrom;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->effectiveDate().toString("dd.MM.yyyy");
 }
 
 QString JsCertData::getValidTo()
 {
-    return validTo;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->expiryDate().toString("dd.MM.yyyy");
 }
 
 QString JsCertData::getIssuerCN()
 {
-    return issuerCN;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->issuerInfo(QSslCertificate::CommonName);
 }
 
 QString JsCertData::getIssuerO()
 {
-    return issuerO;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->issuerInfo(QSslCertificate::Organization);
 }
 
 QString JsCertData::getIssuerOU()
 {
-    return issuerOU;
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->issuerInfo(QSslCertificate::OrganizationalUnitName);
 }

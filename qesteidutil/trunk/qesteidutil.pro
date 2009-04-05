@@ -13,8 +13,6 @@ SOURCES += main.cpp \
     cardlib/DynamicLibrary.cpp \
     cardlib/CTAPIManager.cpp \
     cardlib/EstEidCard.cpp \
-    utility/asnObject.cpp \
-    utility/asnCertificate.cpp \
     jsextender.cpp \
     jsesteidcard.cpp \
     jscertdata.cpp \
@@ -28,8 +26,6 @@ HEADERS += mainwindow.h \
     cardlib/DynamicLibrary.h \
     cardlib/CTAPIManager.h \
     cardlib/EstEidCard.h \
-    utility/asnObject.h \
-    utility/asnCertificate.h \
     jsextender.h \
     jsesteidcard.h \
     jscertdata.h \

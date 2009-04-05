@@ -7,8 +7,6 @@
 
 #include "cardlib/common.h"
 #include "cardlib/EstEidCard.h"
-#include "utility/asnObject.h"
-#include "utility/asnCertificate.h"
 
 class JsCertData : public QObject
 {
@@ -24,22 +22,9 @@ public:
 
     void loadCert(EstEidCard *card, CertType ct);
 
-    QString email;
-    QString subjCN;
-    QString subjO;
-    QString subjOU;
-    QString validFrom;
-    QString validTo;
-    QString issuerCN;
-    QString issuerO;
-    QString issuerOU;
-
 private:
     EstEidCard *m_card;
-    QString fromX509Data(ByteVec val);
-#ifndef QT_NO_OPENSSL
     QSslCertificate *m_qcert;
-#endif
 
 public slots:
     QString toPem();
