@@ -2,10 +2,10 @@
 	\file		DynamicLibrary.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-16 08:49:10 +0200 (Mon, 16 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 195 $
 #include "precompiled.h"
 #include "DynamicLibrary.h"
 
@@ -76,7 +76,7 @@ std::string DynamicLibrary::getVersionStr() {
 #include <dlfcn.h>
 #include <sys/stat.h>
 
-std::string DynamicLibrary::arrPaths[] = { "","/lib/","/usr/local/lib/","/usr/lib/","/lib64/","/usr/lib64/"};
+std::string DynamicLibrary::arrPaths[] = { "","/lib/","/usr/local/lib/","/usr/lib/"};
 
 #include <iostream>
 
@@ -93,18 +93,19 @@ void DynamicLibrary::construct(int version) {
 		},search,qname;
 	mLibhandle = NULL;
 	for(j = 0;j < sizeof(arrPaths) / sizeof(*arrPaths);j++) {
-	for(i = 0;i < sizeof(arrStr) / sizeof(*arrStr);i++) {
-		qname = arrPaths[j] + arrStr[i];
+		for(i = 0;i < sizeof(arrStr) / sizeof(*arrStr);i++) {
+			qname = arrPaths[j] + arrStr[i];
 
-		search+= qname + ",";
-		mLibhandle=dlopen(qname.c_str(),RTLD_LAZY);
-		if (mLibhandle) break;
+			search+= qname + ",";
+			mLibhandle=dlopen(qname.c_str(),RTLD_LAZY);
+			if (mLibhandle) break;
 
-		qname = arrPaths[j] + m_pathHint + "/" + arrStr[i];
-		search+= qname + ",";
-		mLibhandle=dlopen(qname.c_str(),RTLD_LAZY);
+			qname = arrPaths[j] + m_pathHint + "/" + arrStr[i];
+			search+= qname + ",";
+			mLibhandle=dlopen(qname.c_str(),RTLD_LAZY);
+			if (mLibhandle) break;
+			}
 		if (mLibhandle) break;
-		}
 		}
 	if (!mLibhandle) {
 		buf.str("");

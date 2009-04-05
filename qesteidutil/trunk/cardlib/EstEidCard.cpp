@@ -2,10 +2,10 @@
 	\file		EstEidCard.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-06 16:56:19 +0200 (Fri, 06 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 187 $
 #include "precompiled.h"
 #include "EstEidCard.h"
 #include "helperMacro.h"
@@ -296,6 +296,15 @@ bool EstEidCard::getKeyUsageCounters(dword &authKey,dword &signKey) {
 	return true;
 	}
 
+ByteVec EstEidCard::readEFAndTruncate(unsigned int fileLen) {
+	ByteVec ret = readEF(fileLen);
+	if (ret.size() > 128) { //assume ASN sequence encoding with 2-byte length
+		size_t realSize = ret[2] * 256 + ret[3] + 4;
+		ret.resize(realSize);
+		}
+	return ret;
+	}
+
 ByteVec EstEidCard::getAuthCert() {
 	Transaction _m(mManager,mConnection);
 
@@ -303,7 +312,7 @@ ByteVec EstEidCard::getAuthCert() {
 	selectDF(FILEID_APP,true);
 	FCI fileInfo = selectEF(0xAACE);
 
-	return readEF(fileInfo.fileLength );
+	return readEFAndTruncate(fileInfo.fileLength );
 	}
 
 ByteVec EstEidCard::getSignCert() {
@@ -312,7 +321,7 @@ ByteVec EstEidCard::getSignCert() {
 	selectMF(true);
 	selectDF(FILEID_APP,true);
 	FCI fileInfo = selectEF(0xDDCE);
-	return readEF(fileInfo.fileLength );
+	return readEFAndTruncate(fileInfo.fileLength );
 	}
 
 ByteVec EstEidCard::calcSSL(ByteVec hash) {

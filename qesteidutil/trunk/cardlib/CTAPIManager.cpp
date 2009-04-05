@@ -2,13 +2,14 @@
 	\file		CTAPIManager.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 204 $
 #include "precompiled.h"
 #include "CTAPIManager.h"
 #include "helperMacro.h"
+#include "SCError.h" //for exceptions
 #include "CardBase.h" //for exceptions
 using std::string;
 using std::runtime_error;
@@ -48,14 +49,15 @@ const int  libVer[] =
 const unsigned char ports[LENOF(libNames)][MAXPORTS]={
 	{0,1,2,3,4,5},{0,30,35,60,70,75},{0,0,0,0,0,0},{0,0,0,0,0}};
 
-class CTAPIError : public CardError {
+class CTAPIError : public SCError {
 public:
+	CardError card_error;
 	CTAPIError(const char *d,byte res,size_t len,byte SW1,byte SW2) :
-			CardError(SW1,SW2) {
+		SCError(res),card_error(SW1,SW2) {
 		std::ostringstream buf;
 		buf << "CTAPI '" << d <<
 			"' res:" << ushort(res) << " len:" << len << " ";
-		desc = buf.str() + desc;
+		desc = buf.str() + card_error.desc;
 		}
 	};
 
@@ -186,7 +188,7 @@ CTAPIManager::~CTAPIManager(void)
 		mDrivers.pop_back();
 		}
 }
-uint CTAPIManager::getReaderCount()
+uint CTAPIManager::getReaderCount(bool )
 {
 	return uint(mPorts.size());
 }
@@ -202,9 +204,15 @@ struct initclose { //wrap init/close pairs to be safe
 		}
 	};
 
+void CTAPIManager::ensureReaders(uint index) {
+	if (index >= mPorts.size())
+		throw std::range_error("ensureReaders: Index out of bounds");
+	}
+
 string CTAPIManager::getReaderName(uint index)
 {
 	string retval;
+	ensureReaders(index);
 	cPort *dri = mPorts[index];
 	byte cmd[] = {0x20,INS_GETSTATUS,0x00,0x46,0x00};
 	initclose _i(dri);
@@ -226,6 +234,7 @@ string CTAPIManager::getReaderName(uint index)
 string CTAPIManager::getReaderState(uint index)
 {
 	string retval;
+	ensureReaders(index);
 	cPort *dri = mPorts[index];
 //	byte cmd[] = {0x20,INS_GETSTATUS,0x00,0x80,0x00}; //GET STATUS, CT, all ICC status
 //	byte cmd[] = {0x20,INS_GETSTATUS,0x00,0x81,0x00}; //GET STATUS, CT, functional spec
@@ -261,6 +270,7 @@ string CTAPIManager::getReaderState(uint index)
 string CTAPIManager::getATRHex(uint index)
 {
 	string retval;
+	ensureReaders(index);
 	cPort *dri = mPorts[index];
 
 	byte cmd[] = {0x20,INS_GETSTATUS,0x00,0x80,0x00};
@@ -293,6 +303,7 @@ CTAPIConnection * CTAPIManager::connect(uint index,bool forceT0)
 void CTAPIManager::makeConnection(ConnectionBase *c,uint index)
 {
 	CTAPIConnection *conn = (CTAPIConnection *) c;
+	ensureReaders(index);
 	cPort *dri = mPorts[index];
 	conn->wasConnected = dri->isConnected;
 	conn->dri = dri;

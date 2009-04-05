@@ -2,10 +2,10 @@
 	\file		PCSCManager.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 204 $
 #include "precompiled.h"
 #include "PCSCManager.h"
 #include "SCError.h"
@@ -124,8 +124,10 @@ void PCSCManager::ensureReaders(uint idx)
 		throw std::range_error("ensureReaders: Index out of bounds");
 }
 
-uint PCSCManager::getReaderCount()
+uint PCSCManager::getReaderCount(bool forceRefresh)
 {
+	if (forceRefresh) 
+		mReaders.clear();
 	try {
 		ensureReaders(0);
 	} catch(SCError &err) {

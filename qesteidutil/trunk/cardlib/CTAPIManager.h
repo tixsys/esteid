@@ -2,10 +2,10 @@
 	\file		CTAPIManager.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 204 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"
@@ -75,6 +75,7 @@ class CTAPIManager :
 private: //disable object copying
 	CTAPIManager(const CTAPIManager &);
 	CTAPIManager& operator=(const CTAPIManager &);
+	void ensureReaders(uint idx);
 
 	std::vector<CTDriver *> mDrivers;
 	std::vector<cPort *> mPorts;
@@ -95,7 +96,7 @@ protected:
 public:
 	CTAPIManager(std::ostream *log = NULL);
 	~CTAPIManager(void);
-	uint getReaderCount();
+	uint getReaderCount(bool forceRefresh = false);
 	std::string getReaderName(uint index);
 	std::string getReaderState(uint index);
 	std::string getATRHex(uint index);

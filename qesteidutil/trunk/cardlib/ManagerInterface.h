@@ -2,10 +2,10 @@
 	\file		ManagerInterface.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 23:12:12 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 207 $
 #pragma once
 
 typedef unsigned int uint;
@@ -32,7 +32,7 @@ public:
 	ManagerInterface(void): mLogger(NULL) {}
 	virtual ~ManagerInterface(void) {}
 	/// number of installed readers
-	virtual uint getReaderCount() = 0;
+	virtual uint getReaderCount(bool forceRefresh=true) = 0;
 	/// name of the reader at index
 	virtual std::string getReaderName(uint index)  = 0;
 	/// string form of reader status at index, EMPTY, POWERED etc
@@ -97,7 +97,7 @@ struct ConnectionBase {
 			mManager.deleteConnection(this);
 		}
 private:
-	const ConnectionBase operator=(const ConnectionBase &) {}
+	const ConnectionBase operator=(const ConnectionBase &);
 };
 
 /// Wraps a beginTransaction/endTransaction pair
@@ -114,5 +114,5 @@ struct Transaction {
 		mManager.endTransaction(mConnection);
 		}
 private:
-	const Transaction operator=(const Transaction &) {}
+	const Transaction operator=(const Transaction &);
 	};

@@ -2,10 +2,10 @@
 	\file		PCSCManager.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-30 01:03:04 +0300 (Mon, 30 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 208 $
 #include "precompiled.h"
 #include "SmartCardManager.h"
 #include "PCSCManager.h"
@@ -40,7 +40,7 @@ struct SmartCardConnectionPriv {
 };
 
 SmartCardConnection::SmartCardConnection(int manager,ManagerInterface &iface,unsigned int index,bool force
-										 ,ManagerInterface &orig) 
+										 ,ManagerInterface &orig)
 	:ConnectionBase(iface) {
 	d = new SmartCardConnectionPriv(manager,iface,index,force,orig);
 	}
@@ -56,12 +56,14 @@ struct SmartCardManagerPriv {
 	ManagerInterface *connIf;
 	uint pcscCount;
 	uint ctCount;
-	SmartCardManagerPriv() : connIf(&pcscMgr) {
-		pcscCount = pcscMgr.getReaderCount();
-		ctCount = ctMgr.getReaderCount();
+	SmartCardManagerPriv() : connIf(&pcscMgr), pcscCount(0),ctCount(0) {
+		try { // avoid throws from constructor
+			pcscCount = pcscMgr.getReaderCount();
+			ctCount = ctMgr.getReaderCount();
+		} catch(...) {}
 		}
 	ManagerInterface & getIndex(uint &i) {
-		if (i < pcscCount ) 
+		if (i < pcscCount )
 			return pcscMgr;
 		i-= pcscCount;
 		return ctMgr;
@@ -109,8 +111,10 @@ bool SmartCardManager::isT1Protocol(ConnectionBase *c) {
 	return pc->mManager.isT1Protocol(pc->d->getConnection());
 	}
 
-uint SmartCardManager::getReaderCount() {
-	return d->ctMgr.getReaderCount() + d->pcscMgr.getReaderCount();
+uint SmartCardManager::getReaderCount(bool forceRefresh) {
+	d->pcscCount = d->pcscMgr.getReaderCount(forceRefresh);
+	d->ctCount = d->ctMgr.getReaderCount(forceRefresh);
+	return d->pcscCount + d->ctCount;
 	}
 
 std::string SmartCardManager::getReaderName(uint idx) {

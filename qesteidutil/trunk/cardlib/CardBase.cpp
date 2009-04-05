@@ -2,10 +2,10 @@
 	\file		CardBase.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-02-05 14:51:28 +0200 (Thu, 05 Feb 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 158 $
 #include "precompiled.h"
 #include "CardBase.h"
 #include <algorithm>

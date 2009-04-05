@@ -2,10 +2,10 @@
 	\file		EstEidCard.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-06 16:56:19 +0200 (Fri, 06 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 187 $
 #pragma once
 #include "CardBase.h"
 
@@ -61,7 +61,8 @@ private:
 	void reconnectWithT0();
 	void checkProtocol();
 	bool getRetryCounts_internal(byte &puk,byte &pinAuth,byte &pinSign);
-
+	ByteVec readEFAndTruncate(unsigned int fileLen);
+	
 public:
 	EstEidCard(ManagerInterface &ref) : CardBase(ref) {}
 	EstEidCard(ManagerInterface &ref,unsigned int idx) : 

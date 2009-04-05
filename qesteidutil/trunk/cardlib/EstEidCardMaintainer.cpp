@@ -2,10 +2,10 @@
 	\file		EstEidCardMaintainer.cpp
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2008-07-11 09:10:20 +0300 (Fri, 11 Jul 2008) $
 */
-// Revision $Revision$
+// Revision $Revision: 89 $
 #include "precompiled.h"
 #include "EstEidCardMaintainer.h"
 

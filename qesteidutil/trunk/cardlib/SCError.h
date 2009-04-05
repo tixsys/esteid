@@ -2,10 +2,10 @@
 	\file		SCError.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 23:12:12 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 207 $
 #pragma once
 
 /// Exception class for smartcard subsystem errors
@@ -15,8 +15,9 @@
 class SCError :
 	public std::runtime_error
 {
+	const SCError operator=(const SCError &);
+protected:
 	std::string desc;
-	const SCError operator=(const SCError &) {};
 public:
 	const long error; //SC Api returns longs
 	SCError(long err);

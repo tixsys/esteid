@@ -2,10 +2,10 @@
 	\file		CardBase.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 23:12:12 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 207 $
 #pragma once
 #include "ManagerInterface.h"
 
@@ -13,7 +13,7 @@ using std::vector;
 
 /// Exception class for smart card errors, keeps the SW1 SW2 codes
 class CardError: public std::runtime_error {
-	const CardError operator=(const CardError &) {}
+	const CardError operator=(const CardError &);
 public:
 	const byte SW1,SW2;
 	std::string desc;
@@ -43,7 +43,7 @@ public:
  or it can be used directly with basic command set. */
 class CardBase
 {
-	const CardBase operator=(const CardBase &) {}
+	const CardBase operator=(const CardBase &);
 protected:
 	/// File Control Info structure, parsed
 	struct FCI {

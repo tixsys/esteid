@@ -2,14 +2,20 @@
 	\file		PCSCManager.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
 */
-// Revision $Revision$
+// Revision $Revision: 204 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"
+#ifndef WIN32
+#include <PCSC/wintypes.h>
+#include <PCSC/pcsclite.h>
+#include <PCSC/winscard.h>
+#else
 #include <winscard.h>
+#endif
 
 #ifdef WIN32
 #define SCAPI __stdcall
@@ -28,7 +34,6 @@ define CSTRTYPE LPCSTR
 #ifndef SCARD_E_NO_READERS_AVAILABLE
 #define SCARD_E_NO_READERS_AVAILABLE SCARD_E_READER_UNAVAILABLE
 #endif
-#include <wintypes.h>
 #endif
 
 /// Holds connection parameters for PCSC card connection
@@ -96,7 +101,7 @@ public:
 	/// construct with application-supplied card context
 	PCSCManager(SCARDCONTEXT existingContext);
 	~PCSCManager(void);
-	uint getReaderCount();
+	uint getReaderCount(bool forceRefresh = false);
 	std::string getReaderName(uint idx);
 	std::string getReaderState(uint idx);
 	std::string getATRHex(uint idx);

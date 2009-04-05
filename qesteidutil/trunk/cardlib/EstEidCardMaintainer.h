@@ -2,10 +2,10 @@
 	\file		EstEidCardMaintainer.h
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
-	\author		$Author$
-	\date		$Date$
+	\author		$Author: kaidokert $
+	\date		$Date: 2008-10-28 14:47:24 +0200 (Tue, 28 Oct 2008) $
 */
-// Revision $Revision$
+// Revision $Revision: 132 $
 #pragma once
 #include "EstEidCard.h"
 
