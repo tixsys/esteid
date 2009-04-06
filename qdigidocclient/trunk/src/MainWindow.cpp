@@ -276,12 +276,19 @@ void MainWindow::dropEvent( QDropEvent *e )
 	{
 		if( u.isRelative() || u.scheme() == "file" )
 		{
-			QString file = u.toString(
-				QUrl::RemoveScheme|QUrl::RemoveAuthority|QUrl::RemoveQuery|QUrl::RemoveFragment );
 #ifdef Q_OS_WIN32
-			file.remove( 0, 1 );
+			QString file = u.path().remove( 0, 1 );
+#else
+			QString file = u.path();
 #endif
-			addFile( file );
+			if( QFileInfo( file ).suffix().toLower() == "bdoc" && bdoc->isNull() )
+			{
+				bdoc->open( file );
+				setCurrentPage( View );
+				return;
+			}
+			else
+				addFile( file );
 		}
 	}
 	setCurrentPage( Sign );
