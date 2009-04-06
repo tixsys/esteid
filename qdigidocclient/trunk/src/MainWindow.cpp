@@ -339,6 +339,7 @@ void MainWindow::setCurrentPage( Pages page )
 			connect( doc, SIGNAL(removeDocument(unsigned int)), SLOT(signBDocDocsRemove(unsigned int)) );
 			++i;
 		}
+		signBDocAddFile->setEnabled( bdoc->signatures().count() == 0 );
 		signBDocSign->setEnabled( i > 0 && bdoc->signCert().isValid() );
 		break;
 	}
