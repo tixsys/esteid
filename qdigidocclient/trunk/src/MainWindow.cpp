@@ -245,7 +245,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case ViewBDocEmail:
 	{
-#if 1 /*def Q_OS_WIN32*/
+#ifdef Q_OS_WIN32
 		QFile c( bdoc->fileName() );
 		QTemporaryFile f( QDir::tempPath() + "/XXXXXX.eml" );
 		f.setAutoRemove( false );
