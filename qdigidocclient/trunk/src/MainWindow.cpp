@@ -33,6 +33,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSslCertificate>
+#include <QTemporaryFile>
+#include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
 
@@ -242,10 +244,41 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( Home );
 		break;
 	case ViewBDocEmail:
-		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( bdoc->fileName() ).fileName() )
-			.arg( bdoc->fileName() ) );
+	{
+#if 1 /*def Q_OS_WIN32*/
+		QFile c( bdoc->fileName() );
+		QTemporaryFile f( QDir::tempPath() + "/XXXXXX.eml" );
+		f.setAutoRemove( false );
+		if( f.open() && c.open( QIODevice::ReadOnly ) )
+		{
+			QTextStream s( &f );
+			s << "MIME-Version: 1.0\n";
+			s << "Subject: " + QFileInfo( bdoc->fileName() ).fileName() + "\n";
+			s << "Content-Type: multipart/mixed;\n";
+			s << " boundary=\"----12345678901234\"\n";
+			s << "\n";
+			s << "------12345678901234\n";
+			s << "Content-Type: application/octet-stream;\n";
+			s << " name=\"" + QFileInfo( bdoc->fileName() ).fileName() + "\"\n";
+			s << "Content-Transfer-Encoding: base64\n";
+			s << "Content-Disposition: attachment;\n";
+			s << " filename=\"" + QFileInfo( bdoc->fileName() ).fileName() + "\n";
+			s << "\n";
+			s << c.readAll().toBase64() + "\n";
+			s << "------12345678901234--\n";
+
+			QString fileName = f.fileName();
+			c.close();
+			f.close();
+			QDesktopServices::openUrl( fileName );
+		}
+		else
+#endif
+			QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
+				.arg( QFileInfo( bdoc->fileName() ).fileName() )
+				.arg( bdoc->fileName() ) );
 		break;
+	}
 	case ViewBDocPrint:
 		break;
 	case ViewBDocSaveAs:
