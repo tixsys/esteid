@@ -33,43 +33,21 @@ QComboBox,
 QCheckBox,
 QLineEdit
 { font: 8pt "Arial Baltic"; }
-#labelCardInfo,
-#labelCardOwner,
-#homeCertInfo
+#cardInfo
 { border: 1px solid gray; background: white; padding-left: 10px; }</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout" >
    <item>
     <layout class="QGridLayout" name="headerLayout" >
      <item rowspan="2" row="0" column="0" >
-      <layout class="QVBoxLayout" name="headerLabelLayout" >
-       <item>
-        <widget class="QLabel" name="labelCardInfo" >
-         <property name="minimumSize" >
-          <size>
-           <width>390</width>
-           <height>80</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="labelCardOwner" >
-         <property name="minimumSize" >
-          <size>
-           <width>0</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="maximumSize" >
-          <size>
-           <width>16777215</width>
-           <height>60</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="cardInfo" >
+       <property name="minimumSize" >
+        <size>
+         <width>390</width>
+         <height>80</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item row="0" column="1" >
       <layout class="QHBoxLayout" name="headerButtonLayout" >
@@ -177,17 +155,24 @@ QLineEdit
       </layout>
      </item>
      <item row="1" column="1" >
-      <spacer name="headerButtonSpacer" >
-       <property name="orientation" >
-        <enum>Qt::Vertical</enum>
+      <widget class="QToolButton" name="homeOpenUtility" >
+       <property name="text" >
+        <string>Run ID-card utility</string>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="icon" >
+        <iconset resource="../rc/qdigidocclient.qrc" >
+         <normaloff>:/images/images/sign_warning.png</normaloff>:/images/images/sign_warning.png</iconset>
+       </property>
+       <property name="iconSize" >
         <size>
-         <width>20</width>
-         <height>107</height>
+         <width>40</width>
+         <height>40</height>
         </size>
        </property>
-      </spacer>
+       <property name="toolButtonStyle" >
+        <enum>Qt::ToolButtonTextUnderIcon</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -198,57 +183,7 @@ QLineEdit
      </property>
      <widget class="QWidget" name="home" >
       <layout class="QGridLayout" name="homeLayout" >
-       <property name="margin" >
-        <number>0</number>
-       </property>
-       <item row="0" column="0" colspan="3" >
-        <layout class="QHBoxLayout" name="homeCertInfoLayout" >
-         <item>
-          <widget class="QLabel" name="homeCertInfo" >
-           <property name="minimumSize" >
-            <size>
-             <width>390</width>
-             <height>80</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="homeOpenUtility" >
-           <property name="text" >
-            <string>Run ID-card utility</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../rc/qdigidocclient.qrc" >
-             <normaloff>:/images/images/sign_warning.png</normaloff>:/images/images/sign_warning.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>40</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="toolButtonStyle" >
-            <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="homeCertInfoSpacer" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0" >
-            <size>
-             <width>107</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="2" >
+       <item row="0" column="2" >
         <spacer name="verticalSpacer_4" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -261,7 +196,7 @@ QLineEdit
          </property>
         </spacer>
        </item>
-       <item row="2" column="0" colspan="2" >
+       <item row="1" column="0" colspan="2" >
         <widget class="QLabel" name="homeActionLabel" >
          <property name="font" >
           <font>
@@ -280,7 +215,7 @@ QLineEdit
          </property>
         </widget>
        </item>
-       <item row="3" column="0" >
+       <item row="2" column="0" >
         <spacer name="horizontalSpacer_2" >
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
@@ -296,7 +231,7 @@ QLineEdit
          </property>
         </spacer>
        </item>
-       <item row="3" column="1" >
+       <item row="2" column="1" >
         <widget class="QToolButton" name="homeSignBDoc" >
          <property name="minimumSize" >
           <size>
@@ -322,7 +257,7 @@ QLineEdit
          </property>
         </widget>
        </item>
-       <item row="3" column="2" >
+       <item row="2" column="2" >
         <spacer name="horizontalSpacer_3" >
          <property name="orientation" >
           <enum>Qt::Horizontal</enum>
@@ -335,7 +270,7 @@ QLineEdit
          </property>
         </spacer>
        </item>
-       <item row="4" column="1" >
+       <item row="3" column="1" >
         <widget class="QToolButton" name="homeViewBDoc" >
          <property name="minimumSize" >
           <size>
@@ -361,7 +296,7 @@ QLineEdit
          </property>
         </widget>
        </item>
-       <item row="5" column="2" >
+       <item row="4" column="2" >
         <spacer name="verticalSpacer_3" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>

@@ -429,24 +429,27 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	labelCardInfo->setText( tr(
-		"Reader contains ID-Card <b></b><br />"
-		"Card is valid until <b></b><br />"
-		"This is <b></b> document" ) );
+	QString info;
+	if( !bdoc->authCert().isNull() )
+	{
+		info += tr("Kasutaja %1 %2 kaart on lugejas<br />")
+			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
+			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) );
+	}
+	else
+		info += tr("Kaarti pole lugejas<br />");
 
-	labelCardOwner->setText( tr( "Name: <b>%1 %2</b><br />SSID: <b>%3</b>" )
-		.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) )
-		.arg( bdoc->signCert().subjectInfo( "serialNumber") ) );
+	info += tr("Kasutaja isikukood: %1<br />").arg( bdoc->signCert().subjectInfo( "serialNumber") );
 
-	homeCertInfo->setText( tr(
-		"Auth certificate is <b>%1</b><br />"
-		"Sign certificate is <b>%2</b><br />%3" )
-		.arg( !bdoc->authCert().isValid() ? tr("not valid") : tr("valid") )
-		.arg( !bdoc->signCert().isValid() ? tr("not valid") : tr("valid") )
-		.arg( !bdoc->signCert().isValid() ?
-			tr("You cannot sign documents with this card") :
-			tr("You can sign documents with this card") ) );
+	info += tr("Sign certificate is valid until: %1<br />")
+		.arg( bdoc->signCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
+	if( !bdoc->signCert().isValid() ) info += tr("Sign certificate is expired<br />");
+
+	info += tr("Auth certificate is valid until: %4<br />")
+		.arg( bdoc->authCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
+	if( !bdoc->authCert().isValid() ) info += tr("Auth certificate is expired<br />");
+
+	cardInfo->setText( info );
 
 	homeOpenUtility->setVisible(
 		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
