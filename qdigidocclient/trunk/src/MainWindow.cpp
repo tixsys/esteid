@@ -473,20 +473,20 @@ void MainWindow::showCardStatus()
 	QString info;
 	if( !bdoc->authCert().isNull() )
 	{
-		info += tr("Kasutaja %1 %2 kaart on lugejas<br />")
+		info += tr("Person %1 %2 card in reader<br />")
 			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
 			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) );
 	}
 	else
-		info += tr("Kaarti pole lugejas<br />");
+		info += tr("No card in reader<br />");
 
-	info += tr("Kasutaja isikukood: %1<br />").arg( bdoc->signCert().subjectInfo( "serialNumber") );
+	info += tr("Person SSID: %1<br />").arg( bdoc->signCert().subjectInfo( "serialNumber") );
 
 	info += tr("Sign certificate is valid until: %1<br />")
 		.arg( bdoc->signCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
 	if( !bdoc->signCert().isValid() ) info += tr("Sign certificate is expired<br />");
 
-	info += tr("Auth certificate is valid until: %4<br />")
+	info += tr("Auth certificate is valid until: %1<br />")
 		.arg( bdoc->authCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
 	if( !bdoc->authCert().isValid() ) info += tr("Auth certificate is expired<br />");
 

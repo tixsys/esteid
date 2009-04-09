@@ -12,10 +12,6 @@
         <translation>Ei saa lisada faile allakirjutatud ümbrikule</translation>
     </message>
     <message>
-        <source>Unknown error</source>
-        <translation>Viga</translation>
-    </message>
-    <message>
         <source>Missing document</source>
         <translation>Puuduv dokument</translation>
     </message>
@@ -26,13 +22,6 @@
     <message>
         <source>Missing signature</source>
         <translation>Allkiri puudub</translation>
-    </message>
-</context>
-<context>
-    <name>DocumentWidget</name>
-    <message>
-        <source>Remove</source>
-        <translation>Eemalda</translation>
     </message>
 </context>
 <context>
@@ -202,26 +191,6 @@
         <translation>Ümbrik ei ole allakirjutatud</translation>
     </message>
     <message>
-        <source>Reader contains ID-Card &lt;b&gt;&lt;/b&gt;&lt;br /&gt;Card is valid until &lt;b&gt;&lt;/b&gt;&lt;br /&gt;This is &lt;b&gt;&lt;/b&gt; document</source>
-        <translation>Lugejas on ID-kaart &lt;b&gt;&lt;/b&gt;&lt;br /&gt;Kaart on kehtiv kuni &lt;b&gt;&lt;/b&gt;&lt;br /&gt;See on &lt;b&gt;&lt;/b&gt; dokument</translation>
-    </message>
-    <message>
-        <source>not valid</source>
-        <translation>kehtetu</translation>
-    </message>
-    <message>
-        <source>valid</source>
-        <translation>kehtiv</translation>
-    </message>
-    <message>
-        <source>You cannot sign documents with this card</source>
-        <translation>Selle kaardiga ei saa anda digitaalallkirja</translation>
-    </message>
-    <message>
-        <source>You can sign documents with this card</source>
-        <translation>Selle kaardiga saab anda digitaalallkirja</translation>
-    </message>
-    <message>
         <source>Select documents</source>
         <translation>Lisa failid</translation>
     </message>
@@ -229,10 +198,6 @@
         <source>You added %1 files to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
         <translation>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</translation>
-    </message>
-    <message>
-        <source>Name: &lt;b&gt;%1 %2&lt;/b&gt;&lt;br /&gt;SSID: &lt;b&gt;%3&lt;/b&gt;</source>
-        <translation>Nimi: &lt;b&gt;%1 %2&lt;/b&gt;&lt;br /&gt;Isikukood: &lt;b&gt;%3&lt;/b&gt;</translation>
     </message>
     <message>
         <source>I want to</source>
@@ -257,8 +222,36 @@ p, li { white-space: pre-wrap; }
         <translation>Ära rohkem mulle seda sissejuhatust näita</translation>
     </message>
     <message>
-        <source>Auth certificate is &lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Sign certificate is &lt;b&gt;%2&lt;/b&gt;&lt;br /&gt;%3</source>
-        <translation>Isikutuvastamise sertifikaat on &lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Allkirja sertifikaat on &lt;b&gt;%2&lt;/b&gt;&lt;br /&gt;%3</translation>
+        <source>Sign certificate is valid until: %1&lt;br /&gt;</source>
+        <translation>Allkirjastamise sertifikaat on kehtiv kuni %1&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Sign certificate is expired&lt;br /&gt;</source>
+        <translation>Allkirjastamise sertifikaat on aegunud&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Auth certificate is expired&lt;br /&gt;</source>
+        <translation>Isikutuvastuse sertifikaat on aegunud&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Remove checked files</source>
+        <translation>Eemalda valitud</translation>
+    </message>
+    <message>
+        <source>Person SSID: %1&lt;br /&gt;</source>
+        <translation>Kasutaja isikukood: %1&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Auth certificate is valid until: %1&lt;br /&gt;</source>
+        <translation>Isikutuvastuse sertifikaat on kehtiv kuni: %1&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>No card in reader&lt;br /&gt;</source>
+        <translation>Kaarti pole lugejas&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Person %1 %2 card in reader&lt;br /&gt;</source>
+        <translation>Kasutaja %1 %2 kaart on lugejas&lt;br /&gt;</translation>
     </message>
 </context>
 <context>
