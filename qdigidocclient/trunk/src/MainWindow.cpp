@@ -179,10 +179,23 @@ void MainWindow::addFile( const QString &file )
 	if( bdoc->isNull() )
 	{
 		QFileInfo info( file );
-		bdoc->create( QString( "%1%2%3.bdoc" )
+		QString doc = QString( "%1%2%3.bdoc" )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( QDir::separator() )
-			.arg( info.fileName() ) );
+			.arg( info.fileName() );
+		while( true )
+		{
+			QString newDoc = QFileDialog::getSaveFileName(
+				this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
+			if( newDoc.isEmpty() )
+				continue;
+
+			doc = newDoc;
+			if( QFile::exists( doc ) )
+				QFile::remove( doc );
+			break;
+		}
+		bdoc->create( doc );
 	}
 	bdoc->addFile( file );
 }
