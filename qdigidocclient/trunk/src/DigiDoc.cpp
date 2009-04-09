@@ -285,19 +285,18 @@ void DigiDoc::save()
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
-void DigiDoc::saveDocuments( const QString &path )
+void DigiDoc::saveDocument( unsigned int num, const QString &path )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
 
+	if( num >= b->documentCount() )
+		return setLastError( tr("Missing document") );
+
 	try
 	{
-		unsigned int count = b->documentCount();
-		for( unsigned int i = 0; i < count; ++i )
-		{
-			QFileInfo file( QString::fromStdString( b->getDocument( i ).getPath() ) );
-			b->getDocument( i ).saveAs( QString( path + QDir::separator() + file.fileName() ).toStdString() );
-		}
+		QFileInfo file( QString::fromStdString( b->getDocument( num ).getPath() ) );
+		b->getDocument( num ).saveAs( QString( path + QDir::separator() + file.fileName() ).toStdString() );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 }

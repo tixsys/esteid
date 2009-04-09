@@ -95,6 +95,10 @@ MainWindow::MainWindow( QWidget *parent )
 {
 	setupUi( this );
 	homeOpenUtility->hide();
+	signBDocDocsContentView->header()->setVisible( false );
+	signBDocDocsContentView->setColumnCount( 2 );
+	viewBDocDocsFrameView->header()->setVisible( false );
+	viewBDocDocsFrameView->setColumnCount( 2 );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 	buttonGroup->addButton( homeSignBDoc, HomeSignBDoc );
@@ -102,6 +106,8 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( introBDocNext, IntroBDocNext );
 	buttonGroup->addButton( signBDocAddFile, SignBDocAddFile );
 	buttonGroup->addButton( signBDocCancel, SignBDocCancel );
+	buttonGroup->addButton( signBDocRemoveFile, SignBDocRemoveFile );
+	buttonGroup->addButton( signBDocSaveAs, SignBDocSaveAs );
 	buttonGroup->addButton( signBDocSign, SignBDocSign );
 	buttonGroup->addButton( homeViewBDoc, HomeViewBDoc );
 	buttonGroup->addButton( viewBDocAddSignature, ViewBDocAddSignature );
@@ -202,6 +208,33 @@ void MainWindow::buttonClicked( int button )
 				setCurrentPage( View );
 		}
 		break;
+	case SignBDocRemoveFile:
+	{
+		QAbstractItemModel *m = signBDocDocsContentView->model();
+		for( int i = m->rowCount() - 1; i >= 0; --i )
+		{
+			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+				bdoc->removeDocument( i );
+		}
+		setCurrentPage( Sign );
+		break;
+	}
+	case SignBDocSaveAs:
+	{
+		QString dir = QFileDialog::getExistingDirectory( this,
+			tr("Select folder where files will be stored"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( !dir.isEmpty() )
+		{
+			QAbstractItemModel *m = signBDocDocsContentView->model();
+			for( int i = 0; i < m->rowCount(); ++i )
+			{
+				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+					bdoc->saveDocument( i, dir );
+			}
+		}
+		break;
+	}
 	case SignBDocSign:
 		bdoc->sign(
 			signCityInput->text(),
@@ -287,7 +320,14 @@ void MainWindow::buttonClicked( int button )
 			tr("Select folder where files will be stored"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !dir.isEmpty() )
-			bdoc->saveDocuments( dir );
+		{
+			QAbstractItemModel *m = viewBDocDocsFrameView->model();
+			for( int i = 0; i < m->rowCount(); ++i )
+			{
+				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+					bdoc->saveDocument( i, dir );
+			}
+		}
 		break;
 	}
 	default: break;
@@ -327,6 +367,24 @@ void MainWindow::dropEvent( QDropEvent *e )
 	setCurrentPage( Sign );
 }
 
+void MainWindow::loadDocuments( QTreeWidget *view )
+{
+	QList<QTreeWidgetItem*> items;
+	Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
+	{
+		QTreeWidgetItem *i = new QTreeWidgetItem( view );
+		QFileInfo info( QString::fromStdString( file.getPath() ) );
+		i->setText( 0, info.fileName() );
+		i->setText( 1, fileSize( info.size() ) );
+		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
+		i->setCheckState( 0, Qt::Unchecked );
+		items << i;
+	}
+	view->insertTopLevelItems( 0, items );
+	view->setColumnWidth( 0, view->width() - 70 );
+	view->setColumnWidth( 1, 70 );
+}
+
 void MainWindow::on_comboLanguages_activated( int index )
 {
 	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
@@ -344,18 +402,14 @@ void MainWindow::on_introBDocCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
 
 void MainWindow::reload() { showCardStatus(); }
-void MainWindow::signBDocDocsRemove( unsigned int num )
-{
-	bdoc->removeDocument( num );
-	setCurrentPage( Sign );
-}
 
 void MainWindow::setCurrentPage( Pages page )
 {
-	Q_FOREACH( DocumentWidget *w, signBDocDocsScrollContent->findChildren<DocumentWidget*>() )
-		w->deleteLater();
+	signBDocDocsContentView->clear();
+	viewBDocDocsFrameView->clear();
 	Q_FOREACH( SignatureWidget *w, viewBDocSignersContent->findChildren<SignatureWidget*>() )
 		w->deleteLater();
+
 	stack->setCurrentIndex( page );
 	switch( page )
 	{
@@ -371,29 +425,16 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		unsigned int i = 0;
-		Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
-		{
-			DocumentWidget *doc = new DocumentWidget( file, i, signBDocDocsScrollContent );
-			signBDocDocsScrollContentLayout->insertWidget( i, doc );
-			connect( doc, SIGNAL(removeDocument(unsigned int)), SLOT(signBDocDocsRemove(unsigned int)) );
-			++i;
-		}
-		signBDocAddFile->setEnabled( bdoc->signatures().count() == 0 );
-		signBDocSign->setEnabled( i > 0 && bdoc->signCert().isValid() );
+		loadDocuments( signBDocDocsContentView );
+
+		signBDocAddFile->setEnabled( bdoc->signatures().isEmpty() );
+		signBDocSign->setEnabled(
+			signBDocDocsContentView->model()->rowCount() > 0 && bdoc->signCert().isValid() );
 		break;
 	}
 	case View:
 	{
-		QString content;
-		Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
-		{
-			QFileInfo info( QString::fromStdString( file.getPath() ) );
-			content += QString( "<b>%1</b><br />%2<br />")
-				   .arg( info.fileName() )
-				   .arg( fileSize( info.size() ) );
-		}
-		viewBDocDocsContent->setText( content );
+		loadDocuments( viewBDocDocsFrameView );
 
 		int i = 0;
 		bool cardOwnerSignature = false;
@@ -475,28 +516,6 @@ void MainWindow::viewBDocSignersRemove( unsigned int num )
 	bdoc->save();
 	setCurrentPage( View );
 }
-
-
-
-DocumentWidget::DocumentWidget( const digidoc::Document &file, unsigned int docnum, QWidget *parent )
-:	QWidget( parent )
-,	num( docnum )
-{
-	QLabel *content = new QLabel( this );
-	QFileInfo info( QString::fromStdString( file.getPath() ) );
-	content->setText( QString( "<b>%1</b><br />%2<br />" )
-	   .arg( info.fileName() )
-	   .arg( fileSize( info.size() ) ) );
-
-	QPushButton *b = new QPushButton( tr("Remove"), this );
-	connect( b, SIGNAL(clicked()), SLOT(clicked()) );
-
-	QVBoxLayout *v = new QVBoxLayout( this );
-	v->addWidget( content );
-	v->addWidget( b, 0, Qt::AlignRight );
-}
-
-void DocumentWidget::clicked() { Q_EMIT removeDocument( num ); }
 
 
 

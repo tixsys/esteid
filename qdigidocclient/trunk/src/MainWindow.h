@@ -43,7 +43,6 @@ private Q_SLOTS:
 	void on_introBDocCheck_stateChanged( int state );
 	void reload();
 	void showWarning( const QString &msg );
-	void signBDocDocsRemove( unsigned int num );
 	void viewBDocSignersRemove( unsigned int num );
 
 private:
@@ -59,6 +58,8 @@ private:
 		IntroBDocNext,
 		SignBDocAddFile,
 		SignBDocCancel,
+		SignBDocRemoveFile,
+		SignBDocSaveAs,
 		SignBDocSign,
 		HomeViewBDoc,
 		ViewBDocAddSignature,
@@ -72,28 +73,12 @@ private:
 	void addFile( const QString &file );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
+	void loadDocuments( QTreeWidget *view );
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*bdoc;
 	QTranslator *appTranslator;
 	QTranslator *qtTranslator;
-};
-
-class DocumentWidget: public QWidget
-{
-	Q_OBJECT
-
-public:
-	DocumentWidget( const digidoc::Document &file, unsigned int docnum, QWidget *parent = 0 );
-
-Q_SIGNALS:
-	void removeDocument( unsigned int num );
-
-private Q_SLOTS:
-	void clicked();
-
-private:
-	unsigned int num;
 };
 
 class SignatureWidget: public QWidget
