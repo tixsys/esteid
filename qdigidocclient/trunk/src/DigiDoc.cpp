@@ -312,14 +312,21 @@ void DigiDoc::setLastError( const Exception &e )
 
 void DigiDoc::setLastError( const QString &err ) { Q_EMIT error( m_lastError = err ); }
 
-void DigiDoc::sign( const QString &city, const QString &state, const QString &zip,
+bool DigiDoc::sign( const QString &city, const QString &state, const QString &zip,
 	const QString &country, const QString &role, const QString &role2 )
 {
 	if( isNull() )
-		return setLastError( tr("Container is not open") );
+	{
+		setLastError( tr("Container is not open") );
+		return false;
+	}
 	if( b->documentCount() == 0 )
-		return setLastError( tr("Cannot add signature to empty container") );
+	{
+		setLastError( tr("Cannot add signature to empty container") );
+		return false;
+	}
 
+	bool result = false;
 	try
 	{
 		m_signer = new QEstEIDSigner();
@@ -333,10 +340,12 @@ void DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
 		m_signer->setSignerRole( sRole );
 		b->sign( m_signer, Signature::TM /*BES|TM*/ );
+		result = true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	delete m_signer;
 	m_signer = 0;
+	return result;
 }
 
 QList<DigiDocSignature> DigiDoc::signatures()

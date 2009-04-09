@@ -73,7 +73,7 @@ public:
 	void removeSignature( unsigned int num );
 	void save();
 	void saveDocument( unsigned int num, const QString &path );
-	void sign(
+	bool sign(
 		const QString &city,
 		const QString &state,
 		const QString &zip,

@@ -276,13 +276,14 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case SignBDocSign:
-		bdoc->sign(
-			signCityInput->text(),
-			signStateInput->text(),
-			signZipInput->text(),
-			signCountryInput->text(),
-			signRoleInput->text(),
-			signResolutionInput->text() );
+		if( !bdoc->sign(
+				signCityInput->text(),
+				signStateInput->text(),
+				signZipInput->text(),
+				signCountryInput->text(),
+				signRoleInput->text(),
+				signResolutionInput->text() ) )
+			break;
 		bdoc->save();
 		Settings::saveSignatureInfo(
 			signRoleInput->text(),
