@@ -232,6 +232,25 @@ void MainWindow::buttonClicked( int button )
 	case SignBDocRemoveFile:
 	{
 		QAbstractItemModel *m = signBDocDocsContentView->model();
+
+		QStringList files;
+		for( int i = 0; i < m->rowCount(); ++i )
+		{
+			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+				files << m->index( i, 0 ).data().toString();
+		}
+
+		if( files.empty() )
+			break;
+
+		QMessageBox::StandardButtons btn = QMessageBox::warning(
+			this, "QDigiDocClient",
+			tr("Are you sure you want remove files %1").arg( files.join(", ") ),
+			QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel );
+
+		if( btn == QMessageBox::Cancel )
+			break;
+
 		for( int i = m->rowCount() - 1; i >= 0; --i )
 		{
 			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
