@@ -137,6 +137,27 @@ MainWindow::MainWindow( QWidget *parent )
 	comboLanguages->setCurrentIndex(
 		comboLanguages->findData( SettingsValues().value( "Main/Language", "et" ) ) );
 	on_comboLanguages_activated( comboLanguages->currentIndex() );
+
+	QStringList args = qApp->arguments();
+	if( args.size() > 1 )
+	{
+		for( int i = 1; i < args.size(); ++i )
+		{
+			const QFileInfo f( args[i] );
+			if( !f.exists() )
+				continue;
+			if( bdoc->isNull() && f.suffix().toLower() == "bdoc" )
+			{
+				bdoc->open( f.absoluteFilePath() );
+				setCurrentPage( View );
+				return;
+			}
+			else
+				addFile( f.absoluteFilePath() );
+		}
+		if( !bdoc->isNull() )
+			setCurrentPage( Sign );
+	}
 }
 
 void MainWindow::addFile()
