@@ -69,8 +69,7 @@ private:
 		ViewBDocPrint,
 		ViewBDocSaveAs,
 	};
-	void addFile();
-	void addFile( const QString &file );
+	bool addFile( const QString &file );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	void loadDocuments( QTreeWidget *view );

@@ -152,29 +152,15 @@ MainWindow::MainWindow( QWidget *parent )
 				setCurrentPage( View );
 				return;
 			}
-			else
-				addFile( f.absoluteFilePath() );
+			else if( !addFile( f.absoluteFilePath() ) )
+				return;
 		}
 		if( !bdoc->isNull() )
 			setCurrentPage( Sign );
 	}
 }
 
-void MainWindow::addFile()
-{
-	QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
-		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-	if( !list.isEmpty() )
-	{
-		Q_FOREACH( const QString &file, list )
-			addFile( file );
-		setCurrentPage( Sign );
-	}
-	else if( bdoc->isNull() )
-		setCurrentPage( Home );
-}
-
-void MainWindow::addFile( const QString &file )
+bool MainWindow::addFile( const QString &file )
 {
 	if( bdoc->isNull() )
 	{
@@ -183,21 +169,17 @@ void MainWindow::addFile( const QString &file )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( QDir::separator() )
 			.arg( info.fileName() );
-		while( true )
-		{
-			QString newDoc = QFileDialog::getSaveFileName(
-				this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
-			if( newDoc.isEmpty() )
-				continue;
+		doc = QFileDialog::getSaveFileName(
+			this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
+		if( doc.isEmpty() )
+			return false;
 
-			doc = newDoc;
-			if( QFile::exists( doc ) )
-				QFile::remove( doc );
-			break;
-		}
+		if( QFile::exists( doc ) )
+			QFile::remove( doc );
 		bdoc->create( doc );
 	}
 	bdoc->addFile( file );
+	return true;
 }
 
 void MainWindow::buttonClicked( int button )
@@ -213,8 +195,22 @@ void MainWindow::buttonClicked( int button )
 		}
 	case IntroBDocNext:
 	case SignBDocAddFile:
-		addFile();
+	{
+		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( !list.isEmpty() )
+		{
+			Q_FOREACH( const QString &file, list )
+			{
+				if( !addFile( file ) )
+					return;
+			}
+			setCurrentPage( Sign );
+		}
+		else if( bdoc->isNull() )
+			setCurrentPage( Home );
 		break;
+	}
 	case IntroBDocBack:
 		setCurrentPage( Home );
 		break;
@@ -414,8 +410,8 @@ void MainWindow::dropEvent( QDropEvent *e )
 				setCurrentPage( View );
 				return;
 			}
-			else
-				addFile( file );
+			else if( !addFile( file ) )
+				return;
 		}
 	}
 	setCurrentPage( Sign );
