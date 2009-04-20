@@ -144,7 +144,7 @@ MainWindow::MainWindow( QWidget *parent )
 		for( int i = 1; i < args.size(); ++i )
 		{
 			const QFileInfo f( args[i] );
-			if( !f.exists() )
+			if( !f.isFile() )
 				continue;
 			if( bdoc->isNull() && f.suffix().toLower() == "bdoc" )
 			{
@@ -400,17 +400,19 @@ void MainWindow::dropEvent( QDropEvent *e )
 		if( u.isRelative() || u.scheme() == "file" )
 		{
 #ifdef Q_OS_WIN32
-			QString file = u.path().remove( 0, 1 );
+			QFileInfo file( u.path().remove( 0, 1 ) );
 #else
-			QString file = u.path();
+			QFileInfo file( u.path() );
 #endif
-			if( QFileInfo( file ).suffix().toLower() == "bdoc" && bdoc->isNull() )
+			if( !file.isFile() )
+				continue;
+			else if( file.suffix().toLower() == "bdoc" && bdoc->isNull() )
 			{
-				bdoc->open( file );
+				bdoc->open( file.filePath() );
 				setCurrentPage( View );
 				return;
 			}
-			else if( !addFile( file ) )
+			else if( !addFile( file.filePath() ) )
 				return;
 		}
 	}
