@@ -33,6 +33,10 @@
 #include <QFileInfo>
 #include <QInputDialog>
 
+#ifndef BDOCLIB_CONF_PATH
+#define BDOCLIB_CONF_PATH "bdoclib.conf"
+#endif
+
 using namespace digidoc;
 
 QSslCertificate createQSslCertificate( std::vector<unsigned char> data )
@@ -158,8 +162,13 @@ DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
 {
+	char *val = getenv( "BDOCLIB_CONF_XML" );
+	if( val == 0 )
+	{
+		char *conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
+		putenv( conf );
+	}
 	digidoc::initialize();
-	Conf::init( new XmlConf( "/etc/libdigidoc/bdoclib.conf" ) );
 	X509CertStore::init( new DirectoryX509CertStore() );
 
 	try
