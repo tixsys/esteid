@@ -100,6 +100,11 @@ MainWindow::MainWindow( QWidget *parent )
 	viewBDocDocsFrameView->header()->setVisible( false );
 	viewBDocDocsFrameView->setColumnCount( 2 );
 
+	connect( signBDocDocsContentView, SIGNAL(doubleClicked(QModelIndex)),
+		SLOT(openFile(QModelIndex)) );
+	connect( viewBDocDocsFrameView, SIGNAL(doubleClicked(QModelIndex)),
+		SLOT(openFile(QModelIndex)) );
+
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 	buttonGroup->addButton( homeSignBDoc, HomeSignBDoc );
 	buttonGroup->addButton( introBDocBack, IntroBDocBack );
@@ -437,6 +442,8 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 	view->setColumnWidth( 1, 70 );
 }
 
+void MainWindow::on_buttonSettings_clicked() { (new Settings( this ))->show(); }
+
 void MainWindow::on_comboLanguages_activated( int index )
 {
 	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
@@ -454,6 +461,19 @@ void MainWindow::on_introBDocCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
 
 void MainWindow::reload() { showCardStatus(); }
+
+void MainWindow::openFile( const QModelIndex &index )
+{
+	if( bdoc->isNull() )
+		return;
+
+	QList<digidoc::Document> list = bdoc->documents();
+	if( list.isEmpty() || index.row() >= list.size() )
+		return;
+
+	QDesktopServices::openUrl( QString( "file://" ).append(
+		QString::fromStdString( list[index.row()].getPath() ) ) );
+}
 
 void MainWindow::setCurrentPage( Pages page )
 {
@@ -558,9 +578,6 @@ void MainWindow::showCardStatus()
 
 void MainWindow::showWarning( const QString &msg )
 { QMessageBox::warning( this, "QDigDocClient", msg ); }
-
-void MainWindow::on_buttonSettings_clicked()
-{ (new Settings( this ))->show(); }
 
 void MainWindow::viewBDocSignersRemove( unsigned int num )
 {
