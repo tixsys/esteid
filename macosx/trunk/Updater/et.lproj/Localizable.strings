@@ -1,0 +1,47 @@
+/* Alert Panels */
+"Alert.Action.Restart" = "Alglaadimine kohe";
+"Alert.Action.RestartLater" = "Alglaadimine hiljem";
+"Alert.Action.Quit" = "Sulge";
+
+"Alert.Manifest.FetchError.Message" = "Uuenduste kontroll ebaõnnestus, sest ei õnnestunud andmeid allalaadida.";
+"Alert.Manifest.FetchError.Title" = "Uuenduste kontroll ebaõnnestus.";
+"Alert.Manifest.ParseError.Message" = "Uuenduste kontroll ebaõnnestus, sest andmed on vigased.";
+"Alert.Manifest.ParseError.Title" = "Uuenduste kontroll ebaõnnestus.";
+"Alert.Manifest.VerifyError.Message" = "Uuenduste kontroll ebaõnnestus, sest ei õnnestunud andmete õigsust kontrollida.";
+"Alert.Manifest.VerifyError.Title" = "Uuenduste kontroll ebaõnnestus.";
+"Alert.Manifest.GenericError.Message" = "Uuenduste kontroll ebaõnnestus teadmata probleemi tõttu.";
+"Alert.Manifest.GenericError.Title" = "Uuenduste kontroll ebaõnnestus.";
+"Alert.Package.FetchError.Message" = "Paigaldamine ebaõnnestus, sest ühte paketti ei õnnestunud allalaadida.";
+"Alert.Package.FetchError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Package.LengthError.Message" = "Paigaldamine ebaõnnestus, sest ühe paketi suurus on vale.";
+"Alert.Package.LengthError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Package.VerifyError.Message" = "Paigaldamine ebaõnnestus, sest ühte paketti ei õnnestunud verifitseerida.";
+"Alert.Package.VerifyError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Package.UncompressError.Message" = "Paigaldamine ebaõnnestus, sest ühte paketti ei õnnestunud lahti pakkida.";
+"Alert.Package.UncompressError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Package.InstallError.Message" = "Paigaldamine ebaõnnestus kettale paigaldamise käigus.";
+"Alert.Package.InstallError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Package.GenericError.Message" = "Paigaldamine ebaõnnestus teadmata probleemi tõttu.";
+"Alert.Package.GenericError.Title" = "Paigaldamine ebaõnnestus.";
+"Alert.Installer.Successful.Message" = "Paigaldamine õnnestus.";
+"Alert.Installer.SuccessfulAndRestart.Message" = "Paigaldamine õnnestus. Tee arvutile alglaadimine, et kõik muudatused jõustuks.";
+"Alert.Installer.Successful.Title" = "Paigaldamine õnnestus!";
+"Alert.Installer.SoftwareUpToDate.Message" = "Hetkel pole uuemat tarkvara saadaval!";
+"Alert.Installer.SoftwareUpToDate.Title" = "Tarkvara on uusim!";
+
+/* Progress Panel */
+"Progress.Label.CheckingForUpdates" = "Kontrollin uue tarkvara olemasolu...";
+"Progress.Label.Downloading" = "Laen alla uut tarkvara...";
+"Progress.Label.Installing" = "Paigaldan uut tarkvara...";
+"Progress.Action.Cancel" = "Katkesta";
+
+/* Window */
+"Window.Action.Install" = "Paigalda 1 uuendus";
+"Window.Action.Install.Plural" = "Paigalda %d uuendust";
+"Window.Action.Quit" = "Sulge";
+"Window.Label.Install" = "Paigalda";
+"Window.Label.Name" = "Nimetus";
+"Window.Label.RestartRequired" = "Nõuab arvuti alglaadimist.";
+"Window.Label.Size" = "Suurus";
+"Window.Label.Version" = "Versioon";
+"Window.Title" = "Eesti ID-kaardi uuendaja";

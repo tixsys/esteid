@@ -1,12 +1,12 @@
 /* Copyright (c) 2008 Janek Priimann */
 
 #import "EstEIDCMPlugIn.h"
+#import "NSMenu+Additions.h"
 
 // TODO: Must decide what commands should be available.
 
 typedef enum _EstEIDCMPlugInCommand {
-    EstEIDCMPlugInCommandDoSomethingUseful1 = 1,
-	EstEIDCMPlugInCommandDoSomethingUseful2
+    EstEIDCMPlugInCommandOpenDigiDoc = 1
 } EstEIDCMPlugInCommand;
 
 typedef enum _EstEIDCMPlugInFilter {
@@ -18,28 +18,6 @@ typedef enum _EstEIDCMPlugInFilter {
     EstEIDCMPlugInFilterDDOC = 0x10 | EstEIDCMPlugInFilterFile,
     EstEIDCMPlugInFilterAny = 0xFF
 } EstEIDCMPlugInFilter;
-
-@interface NSMenu(Extensions)
-
-- (void)addItemWithTitle:(NSString *)title tag:(int)tag;
-
-@end
-
-@implementation NSMenu(Extensions)
-
-- (void)addItemWithTitle:(NSString *)title tag:(int)tag
-{
-	NSMenuItem *item = [[NSMenuItem alloc] init];
-	
-    [item setTitle:title];
-    [item setTag:tag];
-    [self addItem:item];
-    [item release];
-}
-
-@end
-
-#pragma mark -
 
 @implementation EstEIDCMPlugIn
 
@@ -118,8 +96,7 @@ typedef enum _EstEIDCMPlugInFilter {
 {
     NSMenu *menu = [[NSMenu alloc] init];
     
-	[menu addItemWithTitle:NSLocalizedString(@"Do Something Useful 1", nil) tag:EstEIDCMPlugInCommandDoSomethingUseful1];
-    [menu addItemWithTitle:NSLocalizedString(@"Do Something Useful 2", nil) tag:EstEIDCMPlugInCommandDoSomethingUseful2];
+	[menu addItemWithTitle:NSLocalizedString(@"Open DigiDoc...", nil) tag:EstEIDCMPlugInCommandOpenDigiDoc];
     [menu addItem:[NSMenuItem separatorItem]];
     
     return [menu autorelease];
@@ -128,12 +105,10 @@ typedef enum _EstEIDCMPlugInFilter {
 - (void)contextMenu:(NSArray *)selection handleCommand:(int)command
 {
     switch(command) {
-        case EstEIDCMPlugInCommandDoSomethingUseful1:
+        case EstEIDCMPlugInCommandOpenDigiDoc:
 			// TODO: Just to test that it is working properly
             [[NSWorkspace sharedWorkspace] openFile:nil withApplication:@"TextEdit"];
             break;
-		case EstEIDCMPlugInCommandDoSomethingUseful2:
-			break;
     }
 }
 

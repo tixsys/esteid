@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<manifest signature="Manifest.sig">
+	<component priority="1">
+		<title xml:lang="en">Internet Plug-In</title>
+		<description xml:lang="en"><![CDATA[
+			<strong>Internet plug-in for Safari.</strong>
+			<p>This will install a <p color="#F00">web-plugin</p></p>
+			<a href="http://www.google.com/">Google.com</a>
+		]]></description>
+		<package id="org.esteid.webplugin" version="0.0.2" length="29333" sha1="bc26c2297690a15649c58e5d386ee5129d2348a3">
+			EstEIDWP.0.0.2.mpkg.zip
+		</package>
+	</component>
+</manifest>

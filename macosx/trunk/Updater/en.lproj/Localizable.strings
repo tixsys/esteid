@@ -1,0 +1,46 @@
+/* Alert Panels */
+"Alert.Action.Restart" = "Restart Now";
+"Alert.Action.RestartLater" = "Restart Later";
+"Alert.Action.Quit" = "Quit";
+"Alert.Manifest.FetchError.Message" = "Failed to check for updates because the data couldn't be downloaded.";
+"Alert.Manifest.FetchError.Title" = "Failed to check for updates.";
+"Alert.Manifest.ParseError.Message" = "Failed to check for updates because the data is scrambled.";
+"Alert.Manifest.ParseError.Title" = "Failed to check for updates.";
+"Alert.Manifest.VerifyError.Message" = "Failed to check for updates because the data couldn't be verified.";
+"Alert.Manifest.VerifyError.Title" = "Failed to check for updates.";
+"Alert.Manifest.GenericError.Message" = "Failed to check for updates because an unexpected error.";
+"Alert.Manifest.GenericError.Title" = "Failed to check for updates.";
+"Alert.Package.FetchError.Message" = "Failed to install updates because one or more packages couldn't be downloaded.";
+"Alert.Package.FetchError.Title" = "Failed to install updates.";
+"Alert.Package.LengthError.Message" = "Failed to install updates because one or more packages has invalid size.";
+"Alert.Package.LengthError.Title" = "Failed to install updates.";
+"Alert.Package.VerifyError.Message" = "Failed to install updates because one or more packages couldn't be verified.";
+"Alert.Package.VerifyError.Title" = "Failed to install updates.";
+"Alert.Package.UncompressError.Message" = "Failed to install updates because one or more packages couldn't be uncompressed.";
+"Alert.Package.UncompressError.Title" = "Failed to install updates.";
+"Alert.Package.InstallError.Message" = "Failed to install updates because an error occured during installation.";
+"Alert.Package.InstallError.Title" = "Failed to install updates.";
+"Alert.Package.GenericError.Message" = "Failed to install updates because an unexpected error.";
+"Alert.Package.GenericError.Title" = "Failed to install updates.";
+"Alert.Installer.Successful.Message" = "Installation was successful.";
+"Alert.Installer.SuccessfulAndRestart.Message" = "Installation was successful, but you must restart your computer in-order for changes to take effect.";
+"Alert.Installer.Successful.Title" = "Installation was successful!";
+"Alert.Installer.SoftwareUpToDate.Message" = "Software Update doesn't have any new software for your computer at this time.";
+"Alert.Installer.SoftwareUpToDate.Title" = "Your software is up to date.";
+
+/* Progress Panel */
+"Progress.Label.CheckingForUpdates" = "Checking for new software...";
+"Progress.Label.Downloading" = "Downloading new software...";
+"Progress.Label.Installing" = "Installing new software...";
+"Progress.Action.Cancel" = "Cancel";
+
+/* Window */
+"Window.Action.Install" = "Install 1 Item";
+"Window.Action.Install.Plural" = "Install %d Items";
+"Window.Action.Quit" = "Quit";
+"Window.Label.Install" = "Install";
+"Window.Label.Name" = "Name";
+"Window.Label.RestartRequired" = "Restart will be required.";
+"Window.Label.Size" = "Size";
+"Window.Label.Version" = "Version";
+"Window.Title" = "Estonian ID-card Software Update";

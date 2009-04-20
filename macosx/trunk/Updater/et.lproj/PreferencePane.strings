@@ -1,0 +1,5 @@
+"PreferencePane.Action.CheckNow" = "Kontrolli uuendusi";
+"PreferencePane.Label.CheckForUpdates" = "Kontrolli automaatselt tarkvarauuendusi";
+"PreferencePane.Label.InstalledSoftware" = "Paigaldatud tarkvara:";
+"PreferencePane.Label.NoInstalledSoftware" = "Ei leidnud paigaldatud tarkvara!";
+"PreferencePane.Label.Version" = "%@ (versioon %@)";

@@ -1,0 +1,3 @@
+"PreferencePane.Action.CheckNow" = "Kontrolli nüüd!";
+"PreferencePane.Label.CheckForUpdates" = "Kontrolli automaatselt tarkvarauuendusi";
+"PreferencePane.Label.Version" = "%@ (versioon %@)";

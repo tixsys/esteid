@@ -6,28 +6,180 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		81E4C8D90F9C452F00997F53 /* Tests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 81E4C8E60F9C457600997F53 /* Build configuration list for PBXAggregateTarget "Tests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				81E4CBBA0F9C756A00997F53 /* PBXTargetDependency */,
+				81E4CBCA0F9C75EE00997F53 /* PBXTargetDependency */,
+				81E4C8DD0F9C455E00997F53 /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = Test;
+		};
+		81E7C3C90F9B633000414C34 /* Main */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 81E7C3D40F9B638A00414C34 /* Build configuration list for PBXAggregateTarget "Main" */;
+			buildPhases = (
+			);
+			dependencies = (
+				81E7C3D70F9B642900414C34 /* PBXTargetDependency */,
+				81E7C3D90F9B643000414C34 /* PBXTargetDependency */,
+				81E7C3DB0F9B643300414C34 /* PBXTargetDependency */,
+				81E7C3DD0F9B643700414C34 /* PBXTargetDependency */,
+				81E7C3DF0F9B643A00414C34 /* PBXTargetDependency */,
+			);
+			name = Main;
+			productName = All;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
+		8104BF1E0F5A8C5600387224 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
+		8104C1160F5AE9C100387224 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
 		8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
 		8122F1230F55F78100FA51CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1210F55F78100FA51CD /* main.m */; };
 		8122F1280F55F79000FA51CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1240F55F79000FA51CD /* Localizable.strings */; };
 		8122F1290F55F79000FA51CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1260F55F79000FA51CD /* InfoPlist.strings */; };
 		8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+		813038D90F5930550029C4D7 /* Restart.png in Resources */ = {isa = PBXBuildFile; fileRef = 813038D80F5930550029C4D7 /* Restart.png */; };
+		8130395F0F5936EA0029C4D7 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8130395E0F5936EA0029C4D7 /* SecurityInterface.framework */; };
+		813039600F5936EA0029C4D7 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8130395E0F5936EA0029C4D7 /* SecurityInterface.framework */; };
+		8130396E0F5937710029C4D7 /* EstEIDManifest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8130396D0F5937710029C4D7 /* EstEIDManifest.m */; };
+		813039710F5937C60029C4D7 /* EstEIDManifestComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 813039700F5937C60029C4D7 /* EstEIDManifestComponent.m */; };
+		813039740F5937E40029C4D7 /* EstEIDManifestCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 813039730F5937E40029C4D7 /* EstEIDManifestCondition.m */; };
+		813039770F593A960029C4D7 /* EstEIDManifestChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 813039760F593A960029C4D7 /* EstEIDManifestChoice.m */; };
+		8130397C0F593D8B0029C4D7 /* EstEIDManifestNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8130397B0F593D8B0029C4D7 /* EstEIDManifestNode.m */; };
+		8130397F0F5942E00029C4D7 /* EstEIDConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8130397E0F5942E00029C4D7 /* EstEIDConfiguration.m */; };
+		813039810F5944D30029C4D7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
+		81303BA00F596C7E0029C4D7 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
+		81303BA30F596C970029C4D7 /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
+		81303CC90F597FCD0029C4D7 /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
+		81303D9A0F5998D30029C4D7 /* EstEIDManifestDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */; };
+		814F310A0F93F0C700A89C70 /* EstEIDManifestPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */; };
+		814F31F10F9407BE00A89C70 /* EstEIDInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */; };
+		814F34A60F94473500A89C70 /* EstEIDPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F34A50F94473500A89C70 /* EstEIDPackage.m */; };
+		817944E60F97407D007E0C96 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
+		817944E70F974084007E0C96 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
+		817944E80F97408A007E0C96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
+		8179469C0F975FE7007E0C96 /* agent in Resources */ = {isa = PBXBuildFile; fileRef = 817944A40F973E6F007E0C96 /* agent */; };
+		8197D1370F99F0AF002D8A1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D1360F99F0AF002D8A1D /* main.m */; };
+		8197D15C0F99F64C002D8A1D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+		8197D2A00F99FD80002D8A1D /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
+		8197D2E10F9A0176002D8A1D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
+		8197D3830F9A0C38002D8A1D /* PreferencePane.png in Resources */ = {isa = PBXBuildFile; fileRef = 8197D3820F9A0C38002D8A1D /* PreferencePane.png */; };
+		8197D3860F9A0C65002D8A1D /* EstEIDPreferencePane.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */; };
+		8197D3890F9A0C85002D8A1D /* EstEIDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */; };
+		8197D38A0F9A0C85002D8A1D /* EstEIDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */; };
+		8197D3A20F9A0D14002D8A1D /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */; };
+		8197D3A60F9A0D2D002D8A1D /* PreferencePane.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */; };
+		8197D3AC0F9A0F43002D8A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40B10F56ECB200F60FED /* InfoPlist.strings */; };
+		8197D3D40F9A1023002D8A1D /* EstEIDReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */; };
+		8197D3D50F9A1023002D8A1D /* EstEIDReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */; };
+		8197D48A0F9A1338002D8A1D /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
+		8197D48B0F9A14DC002D8A1D /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
+		8197D4940F9A1A36002D8A1D /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
+		81BF406A0F56E7FB00F60FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF40690F56E7FB00F60FED /* main.m */; };
+		81BF406D0F56E8CB00F60FED /* EstEIDApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */; };
+		81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40AF0F56ECB200F60FED /* Localizable.strings */; };
+		81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40B10F56ECB200F60FED /* InfoPlist.strings */; };
+		81BF40BD0F56ECFD00F60FED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40BB0F56ECFD00F60FED /* MainMenu.xib */; };
+		81C3CB210F95DBD400EDBB44 /* EstEIDPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */; };
+		81C3CE390F9625B100EDBB44 /* EstEIDAsynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CE380F9625B100EDBB44 /* EstEIDAsynchronousTask.m */; };
+		81C3CE3E0F9627B300EDBB44 /* NSThread+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CE3D0F9627B300EDBB44 /* NSThread+Additions.m */; };
+		81C3D0290F9639F300EDBB44 /* Manifest.pem in Resources */ = {isa = PBXBuildFile; fileRef = 81C3D0280F9639F300EDBB44 /* Manifest.pem */; };
+		81E4C8D50F9C44C100997F53 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E4C8A20F9C436700997F53 /* SenTestingKit.framework */; };
+		81E4C8E90F9C45D400997F53 /* NSString+Additions+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4C8E80F9C45D400997F53 /* NSString+Additions+Test.m */; };
+		81E4C9150F9C48FA00997F53 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
+		81E4CBD30F9C777D00997F53 /* EstEIDCMPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */; };
+		81E4CBD40F9C77E500997F53 /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
+		81E4CBD50F9C77E500997F53 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
+		81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
+		81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */; };
+		81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
 		81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
 		81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
-		81F875B30F560EC900FCAB5D /* EstEIDPreferencePane.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */; };
 		81F875B70F560F5900FCAB5D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */; };
-		81F875CA0F560F7F00FCAB5D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 81F875C90F560F7F00FCAB5D /* Icon.png */; };
-		81F875E30F56100400FCAB5D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F875DD0F56100400FCAB5D /* InfoPlist.strings */; };
-		81F875E40F56100400FCAB5D /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81F875DF0F56100400FCAB5D /* PreferencePane.nib */; };
-		81F875E50F56100400FCAB5D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F875E10F56100400FCAB5D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8179467D0F975E19007E0C96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 817944A30F973E6F007E0C96;
+			remoteInfo = Launcher;
+		};
+		81E4C8DC0F9C455E00997F53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81E4C8CB0F9C43F200997F53;
+			remoteInfo = "Updater Tests";
+		};
+		81E4CBB90F9C756A00997F53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81E4CB4C0F9C74F300997F53;
+			remoteInfo = "Finder Plug-In Tests";
+		};
+		81E4CBC90F9C75EE00997F53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81E4CBC30F9C75CB00997F53;
+			remoteInfo = "Internet Plug-In Tests";
+		};
+		81E7C3D60F9B642900414C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 817944A30F973E6F007E0C96;
+			remoteInfo = "Updater Agent";
+		};
+		81E7C3D80F9B643000414C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81BF40620F56E78000F60FED;
+			remoteInfo = "Updater Panel";
+		};
+		81E7C3DA0F9B643300414C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81F875990F560E9A00FCAB5D;
+			remoteInfo = "Updater Preference Pane";
+		};
+		81E7C3DC0F9B643700414C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8122F1110F55F75500FA51CD;
+			remoteInfo = "Finder plug-in";
+		};
+		81E7C3DE0F9B643A00414C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81F8748C0F56085100FCAB5D;
+			remoteInfo = "Internet Plug-in";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		8104BF1C0F5A8C5600387224 /* NSMenu+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMenu+Additions.h"; path = "CMPlugIn/Sources/NSMenu+Additions.h"; sourceTree = "<group>"; };
+		8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMenu+Additions.m"; path = "CMPlugIn/Sources/NSMenu+Additions.m"; sourceTree = "<group>"; };
+		8104C1150F5AE9C100387224 /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = /System/Library/Frameworks/SecurityFoundation.framework; sourceTree = "<absolute>"; };
 		8122F07A0F55F42800FA51CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		8122F07E0F55F43600FA51CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = /System/Library/Frameworks/PreferencePanes.framework; sourceTree = "<absolute>"; };
 		8122F1090F55F62700FA51CD /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		8122F1120F55F75500FA51CD /* EstEID.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEID.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		8122F1120F55F75500FA51CD /* EstEIDCM.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDCM.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8122F1190F55F77100FA51CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CMPlugIn/Info.plist; sourceTree = "<group>"; };
 		8122F11F0F55F78100FA51CD /* EstEIDCMPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDCMPlugIn.h; path = CMPlugIn/Sources/EstEIDCMPlugIn.h; sourceTree = "<group>"; };
 		8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDCMPlugIn.m; path = CMPlugIn/Sources/EstEIDCMPlugIn.m; sourceTree = "<group>"; };
@@ -39,24 +191,88 @@
 		8122F12D0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8122F12E0F55F7A200FA51CD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = CMPlugIn/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8122F17C0F55F95000FA51CD /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebPlugIn.webplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		813038D80F5930550029C4D7 /* Restart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Restart.png; path = Updater/Images/Restart.png; sourceTree = "<group>"; };
+		8130395E0F5936EA0029C4D7 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = /System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<absolute>"; };
+		8130396C0F5937710029C4D7 /* EstEIDManifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifest.h; path = Updater/Sources/EstEIDManifest.h; sourceTree = "<group>"; };
+		8130396D0F5937710029C4D7 /* EstEIDManifest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifest.m; path = Updater/Sources/EstEIDManifest.m; sourceTree = "<group>"; };
+		8130396F0F5937C60029C4D7 /* EstEIDManifestComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestComponent.h; path = Updater/Sources/EstEIDManifestComponent.h; sourceTree = "<group>"; };
+		813039700F5937C60029C4D7 /* EstEIDManifestComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestComponent.m; path = Updater/Sources/EstEIDManifestComponent.m; sourceTree = "<group>"; };
+		813039720F5937E40029C4D7 /* EstEIDManifestCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestCondition.h; path = Updater/Sources/EstEIDManifestCondition.h; sourceTree = "<group>"; };
+		813039730F5937E40029C4D7 /* EstEIDManifestCondition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestCondition.m; path = Updater/Sources/EstEIDManifestCondition.m; sourceTree = "<group>"; };
+		813039750F593A960029C4D7 /* EstEIDManifestChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestChoice.h; path = Updater/Sources/EstEIDManifestChoice.h; sourceTree = "<group>"; };
+		813039760F593A960029C4D7 /* EstEIDManifestChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestChoice.m; path = Updater/Sources/EstEIDManifestChoice.m; sourceTree = "<group>"; };
+		8130397A0F593D8B0029C4D7 /* EstEIDManifestNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestNode.h; path = Updater/Sources/EstEIDManifestNode.h; sourceTree = "<group>"; };
+		8130397B0F593D8B0029C4D7 /* EstEIDManifestNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestNode.m; path = Updater/Sources/EstEIDManifestNode.m; sourceTree = "<group>"; };
+		8130397D0F5942E00029C4D7 /* EstEIDConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDConfiguration.h; path = Updater/Sources/EstEIDConfiguration.h; sourceTree = "<group>"; };
+		8130397E0F5942E00029C4D7 /* EstEIDConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDConfiguration.m; path = Updater/Sources/EstEIDConfiguration.m; sourceTree = "<group>"; };
+		813039800F5944D30029C4D7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
+		81303B9E0F596C7E0029C4D7 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Additions.h"; path = "Updater/Sources/NSString+Additions.h"; sourceTree = "<group>"; };
+		81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Additions.m"; path = "Updater/Sources/NSString+Additions.m"; sourceTree = "<group>"; };
+		81303BA10F596C970029C4D7 /* NSObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Additions.h"; path = "Updater/Sources/NSObject+Additions.h"; sourceTree = "<group>"; };
+		81303BA20F596C970029C4D7 /* NSObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Additions.m"; path = "Updater/Sources/NSObject+Additions.m"; sourceTree = "<group>"; };
+		81303CC70F597FCD0029C4D7 /* NSBundle+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Additions.h"; path = "Updater/Sources/NSBundle+Additions.h"; sourceTree = "<group>"; };
+		81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Additions.m"; path = "Updater/Sources/NSBundle+Additions.m"; sourceTree = "<group>"; };
+		81303D980F5998D30029C4D7 /* EstEIDManifestDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestDownload.h; path = Updater/Sources/EstEIDManifestDownload.h; sourceTree = "<group>"; };
+		81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestDownload.m; path = Updater/Sources/EstEIDManifestDownload.m; sourceTree = "<group>"; };
+		814F31080F93F0C700A89C70 /* EstEIDManifestPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestPackage.h; path = Updater/Sources/EstEIDManifestPackage.h; sourceTree = "<group>"; };
+		814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestPackage.m; path = Updater/Sources/EstEIDManifestPackage.m; sourceTree = "<group>"; };
+		814F31EF0F9407BE00A89C70 /* EstEIDInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDInstaller.h; path = Updater/Sources/EstEIDInstaller.h; sourceTree = "<group>"; };
+		814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDInstaller.m; path = Updater/Sources/EstEIDInstaller.m; sourceTree = "<group>"; };
+		814F34A40F94473500A89C70 /* EstEIDPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPackage.h; path = Updater/Sources/EstEIDPackage.h; sourceTree = "<group>"; };
+		814F34A50F94473500A89C70 /* EstEIDPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackage.m; path = Updater/Sources/EstEIDPackage.m; sourceTree = "<group>"; };
+		817944A40F973E6F007E0C96 /* agent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = agent; sourceTree = BUILT_PRODUCTS_DIR; };
+		8197D1360F99F0AF002D8A1D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/Agent/main.m; sourceTree = "<group>"; };
+		8197D3810F9A0C14002D8A1D /* PreferencePane.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PreferencePane.plist; path = Updater/PreferencePane.plist; sourceTree = "<group>"; };
+		8197D3820F9A0C38002D8A1D /* PreferencePane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PreferencePane.png; path = Updater/Images/PreferencePane.png; sourceTree = "<group>"; };
+		8197D3840F9A0C65002D8A1D /* EstEIDPreferencePane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPreferencePane.h; path = Updater/Sources/PreferencePane/EstEIDPreferencePane.h; sourceTree = "<group>"; };
+		8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPreferencePane.m; path = Updater/Sources/PreferencePane/EstEIDPreferencePane.m; sourceTree = "<group>"; };
+		8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDAgent.m; path = Updater/Sources/EstEIDAgent.m; sourceTree = "<group>"; };
+		8197D3880F9A0C85002D8A1D /* EstEIDAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDAgent.h; path = Updater/Sources/EstEIDAgent.h; sourceTree = "<group>"; };
+		8197D3A10F9A0D14002D8A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = Updater/en.lproj/PreferencePane.nib; sourceTree = "<group>"; };
+		8197D3A50F9A0D2D002D8A1D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Updater/en.lproj/PreferencePane.strings; sourceTree = "<group>"; };
+		8197D3A80F9A0D3D002D8A1D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/PreferencePane.strings; sourceTree = "<group>"; };
+		8197D3AB0F9A0D46002D8A1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/PreferencePane.strings; sourceTree = "<group>"; };
+		8197D3D20F9A1023002D8A1D /* EstEIDReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDReceipt.h; path = Updater/Sources/EstEIDReceipt.h; sourceTree = "<group>"; };
+		8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDReceipt.m; path = Updater/Sources/EstEIDReceipt.m; sourceTree = "<group>"; };
+		81BF40630F56E78000F60FED /* EstEIDSU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EstEIDSU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81BF40690F56E7FB00F60FED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/main.m; sourceTree = "<group>"; };
+		81BF406B0F56E8CB00F60FED /* EstEIDApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDApplicationDelegate.h; path = Updater/Sources/EstEIDApplicationDelegate.h; sourceTree = "<group>"; };
+		81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDApplicationDelegate.m; path = Updater/Sources/EstEIDApplicationDelegate.m; sourceTree = "<group>"; };
+		81BF40A00F56ECA300F60FED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Updater/Info.plist; sourceTree = "<group>"; };
+		81BF40B00F56ECB200F60FED /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Updater/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81BF40B20F56ECB200F60FED /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Updater/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81BF40B50F56ECBB00F60FED /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81BF40B60F56ECBB00F60FED /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81BF40B90F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81BF40BA0F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81BF40BC0F56ECFD00F60FED /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = en; path = Updater/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		81C3CB1F0F95DBD400EDBB44 /* EstEIDPackageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPackageDownload.h; path = Updater/Sources/EstEIDPackageDownload.h; sourceTree = "<group>"; };
+		81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackageDownload.m; path = Updater/Sources/EstEIDPackageDownload.m; sourceTree = "<group>"; };
+		81C3CE370F9625B100EDBB44 /* EstEIDAsynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDAsynchronousTask.h; path = Updater/Sources/EstEIDAsynchronousTask.h; sourceTree = "<group>"; };
+		81C3CE380F9625B100EDBB44 /* EstEIDAsynchronousTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDAsynchronousTask.m; path = Updater/Sources/EstEIDAsynchronousTask.m; sourceTree = "<group>"; };
+		81C3CE3C0F9627B300EDBB44 /* NSThread+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSThread+Additions.h"; path = "Updater/Sources/NSThread+Additions.h"; sourceTree = "<group>"; };
+		81C3CE3D0F9627B300EDBB44 /* NSThread+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSThread+Additions.m"; path = "Updater/Sources/NSThread+Additions.m"; sourceTree = "<group>"; };
+		81C3D0280F9639F300EDBB44 /* Manifest.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Manifest.pem; path = Updater/Manifest.pem; sourceTree = "<group>"; };
+		81E4C8A20F9C436700997F53 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDSU.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E4C8D40F9C447C00997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = Updater/Tests.plist; sourceTree = "<group>"; };
+		81E4C8E70F9C45D400997F53 /* NSString+Additions+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Additions+Test.h"; path = "Updater/Sources/Tests/NSString+Additions+Test.h"; sourceTree = "<group>"; };
+		81E4C8E80F9C45D400997F53 /* NSString+Additions+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Additions+Test.m"; path = "Updater/Sources/Tests/NSString+Additions+Test.m"; sourceTree = "<group>"; };
+		81E4CB4D0F9C74F300997F53 /* EstEIDCM.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDCM.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E4CBC40F9C75CB00997F53 /* EstEIDWP.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		81E4CBD10F9C777D00997F53 /* EstEIDCMPlugIn+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDCMPlugIn+Test.h"; path = "CMPlugIn/Sources/Tests/EstEIDCMPlugIn+Test.h"; sourceTree = "<group>"; };
+		81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDCMPlugIn+Test.m"; path = "CMPlugIn/Sources/Tests/EstEIDCMPlugIn+Test.m"; sourceTree = "<group>"; };
+		81E4CC030F9C781C00997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = CMPlugIn/Tests.plist; sourceTree = "<group>"; };
+		81E4CC0A0F9C783700997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = WebPlugIn/Tests.plist; sourceTree = "<group>"; };
+		81E4CC0C0F9C786C00997F53 /* EstEIDWebPlugIn+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebPlugIn+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.h"; sourceTree = "<group>"; };
+		81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebPlugIn+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.m"; sourceTree = "<group>"; };
+		81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = org.esteid.updater.plist; path = Updater/org.esteid.updater.plist; sourceTree = "<group>"; };
+		81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.webplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F874BC0F560A5500FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WebPlugIn/Info.plist; sourceTree = "<group>"; };
 		81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebPlugIn.h; path = WebPlugIn/Sources/EstEIDWebPlugIn.h; sourceTree = "<group>"; };
 		81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebPlugIn.m; path = WebPlugIn/Sources/EstEIDWebPlugIn.m; sourceTree = "<group>"; };
 		81F874C10F560ABF00FCAB5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		81F875820F560BE000FCAB5D /* 1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = 1.html; path = WebPlugIn/Tests/1.html; sourceTree = "<group>"; };
-		81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEID.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
-		81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPreferencePane.m; path = PreferencePane/Sources/EstEIDPreferencePane.m; sourceTree = "<group>"; };
-		81F875B20F560EC900FCAB5D /* EstEIDPreferencePane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPreferencePane.h; path = PreferencePane/Sources/EstEIDPreferencePane.h; sourceTree = "<group>"; };
-		81F875C70F560F6C00FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PreferencePane/Info.plist; sourceTree = "<group>"; };
-		81F875C90F560F7F00FCAB5D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = PreferencePane/Images/Icon.png; sourceTree = "<group>"; };
-		81F875DE0F56100400FCAB5D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = PreferencePane/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		81F875E00F56100400FCAB5D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = PreferencePane/en.lproj/PreferencePane.nib; sourceTree = "<group>"; };
-		81F875E20F56100400FCAB5D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = PreferencePane/en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		81F875E60F56100E00FCAB5D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = PreferencePane/et.lproj/Localizable.strings; sourceTree = "<group>"; };
-		81F875E70F56100E00FCAB5D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = PreferencePane/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		81F875E90F56101800FCAB5D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = PreferencePane/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		81F875EA0F56101800FCAB5D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = PreferencePane/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDPP.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +281,49 @@
 			buildActionMask = 2147483647;
 			files = (
 				8122F17D0F55F95000FA51CD /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		817944A20F973E6F007E0C96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				817944E80F97408A007E0C96 /* Foundation.framework in Frameworks */,
+				817944E60F97407D007E0C96 /* Security.framework in Frameworks */,
+				817944E70F974084007E0C96 /* SecurityFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81BF40610F56E78000F60FED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8130395F0F5936EA0029C4D7 /* SecurityInterface.framework in Frameworks */,
+				813039810F5944D30029C4D7 /* Security.framework in Frameworks */,
+				8104C1160F5AE9C100387224 /* SecurityFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4C8C90F9C43F200997F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E4C8D50F9C44C100997F53 /* SenTestingKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CB4A0F9C74F300997F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CBC10F9C75CB00997F53 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +339,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8197D15C0F99F64C002D8A1D /* Carbon.framework in Frameworks */,
 				81F875B70F560F5900FCAB5D /* PreferencePanes.framework in Frameworks */,
+				8197D2E10F9A0176002D8A1D /* Security.framework in Frameworks */,
+				8197D2A00F99FD80002D8A1D /* SecurityFoundation.framework in Frameworks */,
+				813039600F5936EA0029C4D7 /* SecurityInterface.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +354,6 @@
 			isa = PBXGroup;
 			children = (
 				8122F0480F55F35400FA51CD /* CMPlugIn */,
-				8122F1060F55F5C300FA51CD /* PreferencePane */,
 				8122F0470F55F34E00FA51CD /* Updater */,
 				8122F04A0F55F36A00FA51CD /* WebPlugIn */,
 				8122F10A0F55F64000FA51CD /* Other */,
@@ -108,6 +370,10 @@
 				8122F17C0F55F95000FA51CD /* Carbon.framework */,
 				8122F07E0F55F43600FA51CD /* Foundation.framework */,
 				8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */,
+				813039800F5944D30029C4D7 /* Security.framework */,
+				8104C1150F5AE9C100387224 /* SecurityFoundation.framework */,
+				8130395E0F5936EA0029C4D7 /* SecurityInterface.framework */,
+				81E4C8A20F9C436700997F53 /* SenTestingKit.framework */,
 				81F874C10F560ABF00FCAB5D /* WebKit.framework */,
 			);
 			name = "External Frameworks and Libraries";
@@ -116,8 +382,11 @@
 		08FB77AFFE84173DC02AAC07 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				81E4C8D70F9C450900997F53 /* Tests */,
 				8122F11F0F55F78100FA51CD /* EstEIDCMPlugIn.h */,
 				8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */,
+				8104BF1C0F5A8C5600387224 /* NSMenu+Additions.h */,
+				8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */,
 				8122F1210F55F78100FA51CD /* main.m */,
 			);
 			name = Sources;
@@ -126,9 +395,14 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8122F1120F55F75500FA51CD /* EstEID.plugin */,
-				81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */,
-				81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */,
+				81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */,
+				8122F1120F55F75500FA51CD /* EstEIDCM.plugin */,
+				81E4CB4D0F9C74F300997F53 /* EstEIDCM.octest */,
+				81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */,
+				81E4CBC40F9C75CB00997F53 /* EstEIDWP.octest */,
+				81BF40630F56E78000F60FED /* EstEIDSU.app */,
+				81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */,
+				817944A40F973E6F007E0C96 /* agent */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,7 +410,18 @@
 		8122F0470F55F34E00FA51CD /* Updater */ = {
 			isa = PBXGroup;
 			children = (
+				813038C80F5930480029C4D7 /* Images */,
 				8122F1070F55F5D500FA51CD /* Sources */,
+				81BF40A00F56ECA300F60FED /* Info.plist */,
+				81BF40B10F56ECB200F60FED /* InfoPlist.strings */,
+				81BF40AF0F56ECB200F60FED /* Localizable.strings */,
+				81BF40BB0F56ECFD00F60FED /* MainMenu.xib */,
+				8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */,
+				8197D3810F9A0C14002D8A1D /* PreferencePane.plist */,
+				8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */,
+				81E4C8D40F9C447C00997F53 /* Tests.plist */,
+				81C3D0280F9639F300EDBB44 /* Manifest.pem */,
+				81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */,
 			);
 			name = Updater;
 			sourceTree = "<group>";
@@ -148,45 +433,66 @@
 				8122F1190F55F77100FA51CD /* Info.plist */,
 				8122F1260F55F79000FA51CD /* InfoPlist.strings */,
 				8122F1240F55F79000FA51CD /* Localizable.strings */,
+				81E4CC030F9C781C00997F53 /* Tests.plist */,
 			);
 			name = CMPlugIn;
-			sourceTree = "<group>";
-		};
-		8122F0490F55F35D00FA51CD /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				81F875B20F560EC900FCAB5D /* EstEIDPreferencePane.h */,
-				81F875B10F560EC900FCAB5D /* EstEIDPreferencePane.m */,
-			);
-			name = Sources;
 			sourceTree = "<group>";
 		};
 		8122F04A0F55F36A00FA51CD /* WebPlugIn */ = {
 			isa = PBXGroup;
 			children = (
-				81F874BC0F560A5500FCAB5D /* Info.plist */,
 				8122F1080F55F5DC00FA51CD /* Sources */,
-				81F875650F560BCC00FCAB5D /* Tests */,
+				81F874BC0F560A5500FCAB5D /* Info.plist */,
+				81E4CC0A0F9C783700997F53 /* Tests.plist */,
 			);
 			name = WebPlugIn;
-			sourceTree = "<group>";
-		};
-		8122F1060F55F5C300FA51CD /* PreferencePane */ = {
-			isa = PBXGroup;
-			children = (
-				81F875A00F560EAC00FCAB5D /* Images */,
-				8122F0490F55F35D00FA51CD /* Sources */,
-				81F875C70F560F6C00FCAB5D /* Info.plist */,
-				81F875DD0F56100400FCAB5D /* InfoPlist.strings */,
-				81F875E10F56100400FCAB5D /* Localizable.strings */,
-				81F875DF0F56100400FCAB5D /* PreferencePane.nib */,
-			);
-			name = PreferencePane;
 			sourceTree = "<group>";
 		};
 		8122F1070F55F5D500FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				817944290F973D79007E0C96 /* Agent */,
+				8197D3780F9A0986002D8A1D /* PreferencePane */,
+				81E4C8C50F9C438B00997F53 /* Tests */,
+				8197D3880F9A0C85002D8A1D /* EstEIDAgent.h */,
+				8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */,
+				81BF406B0F56E8CB00F60FED /* EstEIDApplicationDelegate.h */,
+				81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */,
+				81C3CE370F9625B100EDBB44 /* EstEIDAsynchronousTask.h */,
+				81C3CE380F9625B100EDBB44 /* EstEIDAsynchronousTask.m */,
+				8130397D0F5942E00029C4D7 /* EstEIDConfiguration.h */,
+				8130397E0F5942E00029C4D7 /* EstEIDConfiguration.m */,
+				814F31EF0F9407BE00A89C70 /* EstEIDInstaller.h */,
+				814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */,
+				8130396C0F5937710029C4D7 /* EstEIDManifest.h */,
+				8130396D0F5937710029C4D7 /* EstEIDManifest.m */,
+				813039750F593A960029C4D7 /* EstEIDManifestChoice.h */,
+				813039760F593A960029C4D7 /* EstEIDManifestChoice.m */,
+				8130396F0F5937C60029C4D7 /* EstEIDManifestComponent.h */,
+				813039700F5937C60029C4D7 /* EstEIDManifestComponent.m */,
+				813039720F5937E40029C4D7 /* EstEIDManifestCondition.h */,
+				813039730F5937E40029C4D7 /* EstEIDManifestCondition.m */,
+				81303D980F5998D30029C4D7 /* EstEIDManifestDownload.h */,
+				81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */,
+				814F31080F93F0C700A89C70 /* EstEIDManifestPackage.h */,
+				814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */,
+				8130397A0F593D8B0029C4D7 /* EstEIDManifestNode.h */,
+				8130397B0F593D8B0029C4D7 /* EstEIDManifestNode.m */,
+				814F34A40F94473500A89C70 /* EstEIDPackage.h */,
+				814F34A50F94473500A89C70 /* EstEIDPackage.m */,
+				81C3CB1F0F95DBD400EDBB44 /* EstEIDPackageDownload.h */,
+				81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */,
+				8197D3D20F9A1023002D8A1D /* EstEIDReceipt.h */,
+				8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */,
+				81303CC70F597FCD0029C4D7 /* NSBundle+Additions.h */,
+				81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */,
+				81303BA10F596C970029C4D7 /* NSObject+Additions.h */,
+				81303BA20F596C970029C4D7 /* NSObject+Additions.m */,
+				81303B9E0F596C7E0029C4D7 /* NSString+Additions.h */,
+				81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */,
+				81C3CE3C0F9627B300EDBB44 /* NSThread+Additions.h */,
+				81C3CE3D0F9627B300EDBB44 /* NSThread+Additions.m */,
+				81BF40690F56E7FB00F60FED /* main.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -194,6 +500,7 @@
 		8122F1080F55F5DC00FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				81E4CBBE0F9C75A700997F53 /* Tests */,
 				81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */,
 				81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */,
 			);
@@ -208,28 +515,65 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		81F875650F560BCC00FCAB5D /* Tests */ = {
+		813038C80F5930480029C4D7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				81F875820F560BE000FCAB5D /* 1.html */,
+				8197D3820F9A0C38002D8A1D /* PreferencePane.png */,
+				813038D80F5930550029C4D7 /* Restart.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		817944290F973D79007E0C96 /* Agent */ = {
+			isa = PBXGroup;
+			children = (
+				8197D1360F99F0AF002D8A1D /* main.m */,
+			);
+			name = Agent;
+			sourceTree = "<group>";
+		};
+		8197D3780F9A0986002D8A1D /* PreferencePane */ = {
+			isa = PBXGroup;
+			children = (
+				8197D3840F9A0C65002D8A1D /* EstEIDPreferencePane.h */,
+				8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */,
+			);
+			name = PreferencePane;
+			sourceTree = "<group>";
+		};
+		81E4C8C50F9C438B00997F53 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				81E4C8E70F9C45D400997F53 /* NSString+Additions+Test.h */,
+				81E4C8E80F9C45D400997F53 /* NSString+Additions+Test.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
 		};
-		81F875A00F560EAC00FCAB5D /* Images */ = {
+		81E4C8D70F9C450900997F53 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				81F875C90F560F7F00FCAB5D /* Icon.png */,
+				81E4CBD10F9C777D00997F53 /* EstEIDCMPlugIn+Test.h */,
+				81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */,
 			);
-			name = Images;
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		81E4CBBE0F9C75A700997F53 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				81E4CC0C0F9C786C00997F53 /* EstEIDWebPlugIn+Test.h */,
+				81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8122F1110F55F75500FA51CD /* CMPlugIn */ = {
+		8122F1110F55F75500FA51CD /* Finder Plug-In */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "CMPlugIn" */;
+			buildConfigurationList = 8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "Finder Plug-In" */;
 			buildPhases = (
 				8122F10E0F55F75500FA51CD /* Resources */,
 				8122F10F0F55F75500FA51CD /* Sources */,
@@ -239,14 +583,102 @@
 			);
 			dependencies = (
 			);
-			name = CMPlugIn;
+			name = "Finder Plug-In";
 			productName = CMPlugIn;
-			productReference = 8122F1120F55F75500FA51CD /* EstEID.plugin */;
+			productReference = 8122F1120F55F75500FA51CD /* EstEIDCM.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		81F8748C0F56085100FCAB5D /* WebPlugIn */ = {
+		817944A30F973E6F007E0C96 /* Updater Agent */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "WebPlugIn" */;
+			buildConfigurationList = 817944A80F973EA7007E0C96 /* Build configuration list for PBXNativeTarget "Updater Agent" */;
+			buildPhases = (
+				817944A10F973E6F007E0C96 /* Sources */,
+				817944A20F973E6F007E0C96 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Updater Agent";
+			productName = Launcher;
+			productReference = 817944A40F973E6F007E0C96 /* agent */;
+			productType = "com.apple.product-type.tool";
+		};
+		81BF40620F56E78000F60FED /* Updater */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81BF40680F56E78100F60FED /* Build configuration list for PBXNativeTarget "Updater" */;
+			buildPhases = (
+				81BF405F0F56E78000F60FED /* Resources */,
+				81BF40600F56E78000F60FED /* Sources */,
+				81BF40610F56E78000F60FED /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8179467E0F975E19007E0C96 /* PBXTargetDependency */,
+			);
+			name = Updater;
+			productName = Updater;
+			productReference = 81BF40630F56E78000F60FED /* EstEIDSU.app */;
+			productType = "com.apple.product-type.application";
+		};
+		81E4C8CB0F9C43F200997F53 /* Updater Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81E4C8D00F9C43F500997F53 /* Build configuration list for PBXNativeTarget "Updater Tests" */;
+			buildPhases = (
+				81E4C8C70F9C43F200997F53 /* Resources */,
+				81E4C8C80F9C43F200997F53 /* Sources */,
+				81E4C8C90F9C43F200997F53 /* Frameworks */,
+				81E4C8CA0F9C43F200997F53 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Updater Tests";
+			productName = "Updater Tests";
+			productReference = 81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		81E4CB4C0F9C74F300997F53 /* Finder Plug-In Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81E4CB510F9C74F400997F53 /* Build configuration list for PBXNativeTarget "Finder Plug-In Tests" */;
+			buildPhases = (
+				81E4CB480F9C74F300997F53 /* Resources */,
+				81E4CB490F9C74F300997F53 /* Sources */,
+				81E4CB4A0F9C74F300997F53 /* Frameworks */,
+				81E4CB4B0F9C74F300997F53 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Finder Plug-In Tests";
+			productName = "Finter Plug-In Tests";
+			productReference = 81E4CB4D0F9C74F300997F53 /* EstEIDCM.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		81E4CBC30F9C75CB00997F53 /* Internet Plug-In Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81E4CBC80F9C75CD00997F53 /* Build configuration list for PBXNativeTarget "Internet Plug-In Tests" */;
+			buildPhases = (
+				81E4CBBF0F9C75CB00997F53 /* Resources */,
+				81E4CBC00F9C75CB00997F53 /* Sources */,
+				81E4CBC10F9C75CB00997F53 /* Frameworks */,
+				81E4CBC20F9C75CB00997F53 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Internet Plug-In Tests";
+			productName = "Internet Plug-In Tests";
+			productReference = 81E4CBC40F9C75CB00997F53 /* EstEIDWP.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		81F8748C0F56085100FCAB5D /* Internet Plug-In */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "Internet Plug-In" */;
 			buildPhases = (
 				81F874890F56085100FCAB5D /* Resources */,
 				81F8748A0F56085100FCAB5D /* Sources */,
@@ -256,14 +688,14 @@
 			);
 			dependencies = (
 			);
-			name = WebPlugIn;
+			name = "Internet Plug-In";
 			productName = WebPlugIn;
-			productReference = 81F8748D0F56085100FCAB5D /* WebPlugIn.webplugin */;
+			productReference = 81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		81F875990F560E9A00FCAB5D /* PreferencePane */ = {
+		81F875990F560E9A00FCAB5D /* Updater Preference Pane */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "PreferencePane" */;
+			buildConfigurationList = 81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "Updater Preference Pane" */;
 			buildPhases = (
 				81F875960F560E9A00FCAB5D /* Resources */,
 				81F875970F560E9A00FCAB5D /* Sources */,
@@ -273,9 +705,9 @@
 			);
 			dependencies = (
 			);
-			name = PreferencePane;
+			name = "Updater Preference Pane";
 			productName = PreferencePane;
-			productReference = 81F8759A0F560E9A00FCAB5D /* EstEID.prefPane */;
+			productReference = 81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -299,9 +731,16 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8122F1110F55F75500FA51CD /* CMPlugIn */,
-				81F875990F560E9A00FCAB5D /* PreferencePane */,
-				81F8748C0F56085100FCAB5D /* WebPlugIn */,
+				817944A30F973E6F007E0C96 /* Updater Agent */,
+				81F875990F560E9A00FCAB5D /* Updater Preference Pane */,
+				81BF40620F56E78000F60FED /* Updater */,
+				81E4C8CB0F9C43F200997F53 /* Updater Tests */,
+				8122F1110F55F75500FA51CD /* Finder Plug-In */,
+				81E4CB4C0F9C74F300997F53 /* Finder Plug-In Tests */,
+				81F8748C0F56085100FCAB5D /* Internet Plug-In */,
+				81E4CBC30F9C75CB00997F53 /* Internet Plug-In Tests */,
+				81E7C3C90F9B633000414C34 /* Main */,
+				81E4C8D90F9C452F00997F53 /* Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -316,6 +755,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81BF405F0F56E78000F60FED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8179469C0F975FE7007E0C96 /* agent in Resources */,
+				81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */,
+				81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */,
+				81BF40BD0F56ECFD00F60FED /* MainMenu.xib in Resources */,
+				813038D90F5930550029C4D7 /* Restart.png in Resources */,
+				81C3D0290F9639F300EDBB44 /* Manifest.pem in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4C8C70F9C43F200997F53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CB480F9C74F300997F53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CBBF0F9C75CB00997F53 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81F874890F56085100FCAB5D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -327,14 +800,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F875CA0F560F7F00FCAB5D /* Icon.png in Resources */,
-				81F875E30F56100400FCAB5D /* InfoPlist.strings in Resources */,
-				81F875E40F56100400FCAB5D /* PreferencePane.nib in Resources */,
-				81F875E50F56100400FCAB5D /* Localizable.strings in Resources */,
+				8197D3AC0F9A0F43002D8A1D /* InfoPlist.strings in Resources */,
+				8197D3830F9A0C38002D8A1D /* PreferencePane.png in Resources */,
+				8197D3A20F9A0D14002D8A1D /* PreferencePane.nib in Resources */,
+				8197D3A60F9A0D2D002D8A1D /* PreferencePane.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		81E4C8CA0F9C43F200997F53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		81E4CB4B0F9C74F300997F53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		81E4CBC20F9C75CB00997F53 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8122F10F0F55F75500FA51CD /* Sources */ = {
@@ -343,6 +858,70 @@
 			files = (
 				8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */,
 				8122F1230F55F78100FA51CD /* main.m in Sources */,
+				8104BF1E0F5A8C5600387224 /* NSMenu+Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		817944A10F973E6F007E0C96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8197D1370F99F0AF002D8A1D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81BF40600F56E78000F60FED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81BF406A0F56E7FB00F60FED /* main.m in Sources */,
+				81BF406D0F56E8CB00F60FED /* EstEIDApplicationDelegate.m in Sources */,
+				8130396E0F5937710029C4D7 /* EstEIDManifest.m in Sources */,
+				813039710F5937C60029C4D7 /* EstEIDManifestComponent.m in Sources */,
+				813039740F5937E40029C4D7 /* EstEIDManifestCondition.m in Sources */,
+				813039770F593A960029C4D7 /* EstEIDManifestChoice.m in Sources */,
+				8130397C0F593D8B0029C4D7 /* EstEIDManifestNode.m in Sources */,
+				8130397F0F5942E00029C4D7 /* EstEIDConfiguration.m in Sources */,
+				81303BA00F596C7E0029C4D7 /* NSString+Additions.m in Sources */,
+				81303BA30F596C970029C4D7 /* NSObject+Additions.m in Sources */,
+				81303CC90F597FCD0029C4D7 /* NSBundle+Additions.m in Sources */,
+				81303D9A0F5998D30029C4D7 /* EstEIDManifestDownload.m in Sources */,
+				814F310A0F93F0C700A89C70 /* EstEIDManifestPackage.m in Sources */,
+				814F31F10F9407BE00A89C70 /* EstEIDInstaller.m in Sources */,
+				814F34A60F94473500A89C70 /* EstEIDPackage.m in Sources */,
+				81C3CB210F95DBD400EDBB44 /* EstEIDPackageDownload.m in Sources */,
+				81C3CE390F9625B100EDBB44 /* EstEIDAsynchronousTask.m in Sources */,
+				81C3CE3E0F9627B300EDBB44 /* NSThread+Additions.m in Sources */,
+				8197D38A0F9A0C85002D8A1D /* EstEIDAgent.m in Sources */,
+				8197D3D50F9A1023002D8A1D /* EstEIDReceipt.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4C8C80F9C43F200997F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E4C9150F9C48FA00997F53 /* NSString+Additions.m in Sources */,
+				81E4C8E90F9C45D400997F53 /* NSString+Additions+Test.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CB490F9C74F300997F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E4CBD40F9C77E500997F53 /* EstEIDCMPlugIn.m in Sources */,
+				81E4CBD30F9C777D00997F53 /* EstEIDCMPlugIn+Test.m in Sources */,
+				81E4CBD50F9C77E500997F53 /* NSMenu+Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81E4CBC00F9C75CB00997F53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */,
+				81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,11 +937,64 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F875B30F560EC900FCAB5D /* EstEIDPreferencePane.m in Sources */,
+				8197D3860F9A0C65002D8A1D /* EstEIDPreferencePane.m in Sources */,
+				8197D3890F9A0C85002D8A1D /* EstEIDAgent.m in Sources */,
+				8197D3D40F9A1023002D8A1D /* EstEIDReceipt.m in Sources */,
+				8197D4940F9A1A36002D8A1D /* NSBundle+Additions.m in Sources */,
+				8197D48B0F9A14DC002D8A1D /* NSObject+Additions.m in Sources */,
+				8197D48A0F9A1338002D8A1D /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8179467E0F975E19007E0C96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 817944A30F973E6F007E0C96 /* Updater Agent */;
+			targetProxy = 8179467D0F975E19007E0C96 /* PBXContainerItemProxy */;
+		};
+		81E4C8DD0F9C455E00997F53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81E4C8CB0F9C43F200997F53 /* Updater Tests */;
+			targetProxy = 81E4C8DC0F9C455E00997F53 /* PBXContainerItemProxy */;
+		};
+		81E4CBBA0F9C756A00997F53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81E4CB4C0F9C74F300997F53 /* Finder Plug-In Tests */;
+			targetProxy = 81E4CBB90F9C756A00997F53 /* PBXContainerItemProxy */;
+		};
+		81E4CBCA0F9C75EE00997F53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81E4CBC30F9C75CB00997F53 /* Internet Plug-In Tests */;
+			targetProxy = 81E4CBC90F9C75EE00997F53 /* PBXContainerItemProxy */;
+		};
+		81E7C3D70F9B642900414C34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 817944A30F973E6F007E0C96 /* Updater Agent */;
+			targetProxy = 81E7C3D60F9B642900414C34 /* PBXContainerItemProxy */;
+		};
+		81E7C3D90F9B643000414C34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81BF40620F56E78000F60FED /* Updater */;
+			targetProxy = 81E7C3D80F9B643000414C34 /* PBXContainerItemProxy */;
+		};
+		81E7C3DB0F9B643300414C34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81F875990F560E9A00FCAB5D /* Updater Preference Pane */;
+			targetProxy = 81E7C3DA0F9B643300414C34 /* PBXContainerItemProxy */;
+		};
+		81E7C3DD0F9B643700414C34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8122F1110F55F75500FA51CD /* Finder Plug-In */;
+			targetProxy = 81E7C3DC0F9B643700414C34 /* PBXContainerItemProxy */;
+		};
+		81E7C3DF0F9B643A00414C34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81F8748C0F56085100FCAB5D /* Internet Plug-In */;
+			targetProxy = 81E7C3DE0F9B643A00414C34 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8122F1240F55F79000FA51CD /* Localizable.strings */ = {
@@ -385,32 +1017,50 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		81F875DD0F56100400FCAB5D /* InfoPlist.strings */ = {
+		8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				81F875DE0F56100400FCAB5D /* en */,
-				81F875E70F56100E00FCAB5D /* et */,
-				81F875E90F56101800FCAB5D /* ru */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		81F875DF0F56100400FCAB5D /* PreferencePane.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				81F875E00F56100400FCAB5D /* en */,
+				8197D3A10F9A0D14002D8A1D /* en */,
 			);
 			name = PreferencePane.nib;
 			sourceTree = "<group>";
 		};
-		81F875E10F56100400FCAB5D /* Localizable.strings */ = {
+		8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				81F875E20F56100400FCAB5D /* en */,
-				81F875E60F56100E00FCAB5D /* et */,
-				81F875EA0F56101800FCAB5D /* ru */,
+				8197D3A50F9A0D2D002D8A1D /* en */,
+				8197D3A80F9A0D3D002D8A1D /* et */,
+				8197D3AB0F9A0D46002D8A1D /* ru */,
+			);
+			name = PreferencePane.strings;
+			sourceTree = "<group>";
+		};
+		81BF40AF0F56ECB200F60FED /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81BF40B00F56ECB200F60FED /* en */,
+				81BF40B50F56ECBB00F60FED /* et */,
+				81BF40BA0F56ECC700F60FED /* ru */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		81BF40B10F56ECB200F60FED /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81BF40B20F56ECB200F60FED /* en */,
+				81BF40B60F56ECBB00F60FED /* et */,
+				81BF40B90F56ECC700F60FED /* ru */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		81BF40BB0F56ECFD00F60FED /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81BF40BC0F56ECFD00F60FED /* en */,
+			);
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -466,7 +1116,7 @@
 					Carbon,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EstEID;
+				PRODUCT_NAME = EstEIDCM;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -495,9 +1145,324 @@
 					Carbon,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EstEID;
+				PRODUCT_NAME = EstEIDCM;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		817944A60F973E70007E0C96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = agent;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		817944A70F973E70007E0C96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = agent;
+				SDKROOT = macosx10.4;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81BF40660F56E78100F60FED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				INFOPLIST_FILE = Updater/Info.plist;
+				INSTALL_PATH = /Applications/Utilities;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AppKit,
+					"-framework",
+					Foundation,
+					"-lcrypto",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDSU;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		81BF40670F56E78100F60FED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INFOPLIST_FILE = Updater/Info.plist;
+				INSTALL_PATH = /Applications/Utilities;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AppKit,
+					"-framework",
+					Foundation,
+					"-lcrypto",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDSU;
+				SDKROOT = macosx10.4;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81E4C8CE0F9C43F400997F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = Updater/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDSU;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		81E4C8CF0F9C43F400997F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = Updater/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDSU;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81E4C8DA0F9C452F00997F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Test;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		81E4C8DB0F9C452F00997F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Test;
+				SDKROOT = macosx10.4;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81E4CB4F0F9C74F400997F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = CMPlugIn/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDCM;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		81E4CB500F9C74F400997F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = CMPlugIn/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDCM;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81E4CBC60F9C75CC00997F53 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = WebPlugIn/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDWP;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		81E4CBC70F9C75CC00997F53 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = WebPlugIn/Tests.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = EstEIDWP;
+				SDKROOT = macosx10.4;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81E7C3CA0F9B633100414C34 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = All;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		81E7C3CB0F9B633100414C34 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = All;
+				SDKROOT = macosx10.4;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -523,7 +1488,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = WebPlugIn;
+				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = webplugin;
 			};
@@ -549,7 +1514,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = WebPlugIn;
+				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = webplugin;
 				ZERO_LINK = NO;
@@ -567,7 +1532,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
-				INFOPLIST_FILE = PreferencePane/Info.plist;
+				INFOPLIST_FILE = Updater/PreferencePane.plist;
 				INSTALL_PATH = /Library/PreferencePanes;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -576,7 +1541,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EstEID;
+				PRODUCT_NAME = EstEIDPP;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = prefPane;
 			};
@@ -592,7 +1557,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
-				INFOPLIST_FILE = PreferencePane/Info.plist;
+				INFOPLIST_FILE = Updater/PreferencePane.plist;
 				INSTALL_PATH = /Library/PreferencePanes;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -601,7 +1566,7 @@
 					AppKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = EstEID;
+				PRODUCT_NAME = EstEIDPP;
 				SDKROOT = macosx10.4;
 				WRAPPER_EXTENSION = prefPane;
 				ZERO_LINK = NO;
@@ -620,7 +1585,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "CMPlugIn" */ = {
+		8122F1160F55F75700FA51CD /* Build configuration list for PBXNativeTarget "Finder Plug-In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8122F1140F55F75700FA51CD /* Debug */,
@@ -629,7 +1594,70 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "WebPlugIn" */ = {
+		817944A80F973EA7007E0C96 /* Build configuration list for PBXNativeTarget "Updater Agent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				817944A60F973E70007E0C96 /* Debug */,
+				817944A70F973E70007E0C96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81BF40680F56E78100F60FED /* Build configuration list for PBXNativeTarget "Updater" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81BF40660F56E78100F60FED /* Debug */,
+				81BF40670F56E78100F60FED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81E4C8D00F9C43F500997F53 /* Build configuration list for PBXNativeTarget "Updater Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E4C8CE0F9C43F400997F53 /* Debug */,
+				81E4C8CF0F9C43F400997F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81E4C8E60F9C457600997F53 /* Build configuration list for PBXAggregateTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E4C8DA0F9C452F00997F53 /* Debug */,
+				81E4C8DB0F9C452F00997F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81E4CB510F9C74F400997F53 /* Build configuration list for PBXNativeTarget "Finder Plug-In Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E4CB4F0F9C74F400997F53 /* Debug */,
+				81E4CB500F9C74F400997F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81E4CBC80F9C75CD00997F53 /* Build configuration list for PBXNativeTarget "Internet Plug-In Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E4CBC60F9C75CC00997F53 /* Debug */,
+				81E4CBC70F9C75CC00997F53 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81E7C3D40F9B638A00414C34 /* Build configuration list for PBXAggregateTarget "Main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81E7C3CA0F9B633100414C34 /* Debug */,
+				81E7C3CB0F9B633100414C34 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81F874910F56085200FCAB5D /* Build configuration list for PBXNativeTarget "Internet Plug-In" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81F8748F0F56085200FCAB5D /* Debug */,
@@ -638,7 +1666,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "PreferencePane" */ = {
+		81F8759F0F560E9C00FCAB5D /* Build configuration list for PBXNativeTarget "Updater Preference Pane" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81F8759D0F560E9B00FCAB5D /* Debug */,

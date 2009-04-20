@@ -5,6 +5,7 @@
 @interface EstEIDWebPlugIn : NSView
 {
     @private
+	NSDictionary *m_arguments;
 }
 
 @end

@@ -6,31 +6,31 @@
 	<string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string></string>
 	<key>CFBundleIdentifier</key>
-	<string>org.esteid.webplugin</string>
+	<string>org.esteid.updater.preferences</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
-	<string>WBPL</string>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFBundleGetInfoString</key>
-	<string>v1.0, Copyright 2009 __COMPANY_NAME__.</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2009, __COMPANY_NAME__.</string>
+	<key>EstEIDHelpWebsite</key>
+	<string>http://www.id.ee/</string>
+	<key>NSMainNibFile</key>
+	<string>PreferencePane</string>
+	<key>NSPrefPaneIconFile</key>
+	<string>PreferencePane.png</string>
+	<key>NSPrefPaneIconLabel</key>
+	<string>ID-card</string>
 	<key>NSPrincipalClass</key>
-	<string>EstEIDWebPlugIn</string>
-	<key>WebPluginMIMETypes</key>
-	<dict>
-		<key>application/x-esteid</key>
-		<dict>
-			<key>WebPluginTypeDescription</key>
-			<string>EstEID</string>
-		</dict>
-	</dict>
-	<key>WebPluginName</key>
-	<string>EstEID Plug-in</string>
+	<string>EstEIDPreferencePane</string>
 </dict>
 </plist>

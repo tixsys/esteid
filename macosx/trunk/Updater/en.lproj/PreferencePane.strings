@@ -1,0 +1,5 @@
+"PreferencePane.Action.CheckNow" = "Check For Updates";
+"PreferencePane.Label.CheckForUpdates" = "Automatically update";
+"PreferencePane.Label.InstalledSoftware" = "Installed software:";
+"PreferencePane.Label.NoInstalledSoftware" = "No installed software!";
+"PreferencePane.Label.Version" = "%@ (version %@)";
