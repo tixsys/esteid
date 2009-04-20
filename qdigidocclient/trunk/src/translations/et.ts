@@ -238,10 +238,6 @@ p, li { white-space: pre-wrap; }
         <translation>Eemalda valitud</translation>
     </message>
     <message>
-        <source>Person SSID: %1&lt;br /&gt;</source>
-        <translation>Kasutaja isikukood: %1&lt;br /&gt;</translation>
-    </message>
-    <message>
         <source>Auth certificate is valid until: %1&lt;br /&gt;</source>
         <translation>Isikutuvastuse sertifikaat on kehtiv kuni: %1&lt;br /&gt;</translation>
     </message>
@@ -250,8 +246,24 @@ p, li { white-space: pre-wrap; }
         <translation>Kaarti pole lugejas&lt;br /&gt;</translation>
     </message>
     <message>
-        <source>Person %1 %2 card in reader&lt;br /&gt;</source>
-        <translation>Kasutaja %1 %2 kaart on lugejas&lt;br /&gt;</translation>
+        <source>Save file</source>
+        <translation>Salvesta fail</translation>
+    </message>
+    <message>
+        <source>Are you sure you want remove files %1</source>
+        <translation>Oled sa kindel, et tahad eemaldada faile %1?</translation>
+    </message>
+    <message>
+        <source>Filename</source>
+        <translation>Faili nimi</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Suurus</translation>
+    </message>
+    <message>
+        <source>Person %1 %2 card in reader&lt;br /&gt;Person SSID: %3&lt;br /&gt;</source>
+        <translation>Kasutaja %1 %2 kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3&lt;br /&gt;</translation>
     </message>
 </context>
 <context>
@@ -266,7 +278,7 @@ For using sign certificate enter PIN2</source>
     <name>Settings</name>
     <message>
         <source>Settings</source>
-        <translation>Suvandid</translation>
+        <translation>Seaded</translation>
     </message>
     <message>
         <source>Container default location</source>
@@ -319,6 +331,14 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>Show signing intro</source>
         <translation>Näita allkirjastamisel sissejuhatust</translation>
+    </message>
+    <message>
+        <source>Same folder</source>
+        <translation>Samasse kataloogi</translation>
+    </message>
+    <message>
+        <source>Ask container name</source>
+        <translation>Küsi dokumendi nime</translation>
     </message>
 </context>
 <context>

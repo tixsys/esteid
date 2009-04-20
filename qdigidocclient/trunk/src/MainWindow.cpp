@@ -95,10 +95,6 @@ MainWindow::MainWindow( QWidget *parent )
 {
 	setupUi( this );
 	homeOpenUtility->hide();
-	signBDocDocsContentView->header()->setVisible( false );
-	signBDocDocsContentView->setColumnCount( 2 );
-	viewBDocDocsFrameView->header()->setVisible( false );
-	viewBDocDocsFrameView->setColumnCount( 2 );
 
 	connect( signBDocDocsContentView, SIGNAL(doubleClicked(QModelIndex)),
 		SLOT(openFile(QModelIndex)) );
@@ -131,7 +127,7 @@ MainWindow::MainWindow( QWidget *parent )
 
 	bdoc = new DigiDoc( this );
 	connect( bdoc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
-	connect( bdoc, SIGNAL(dataChanged()), SLOT(reload()) );
+	connect( bdoc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
 	comboLanguages->setItemData( 0, "et" );
 	comboLanguages->setItemData( 1, "en" );
@@ -426,6 +422,7 @@ void MainWindow::dropEvent( QDropEvent *e )
 
 void MainWindow::loadDocuments( QTreeWidget *view )
 {
+	view->clear();
 	QList<QTreeWidgetItem*> items;
 	Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
 	{
@@ -477,16 +474,13 @@ void MainWindow::openFile( const QModelIndex &index )
 
 void MainWindow::setCurrentPage( Pages page )
 {
-	signBDocDocsContentView->clear();
-	viewBDocDocsFrameView->clear();
-	Q_FOREACH( SignatureWidget *w, viewBDocSignersContent->findChildren<SignatureWidget*>() )
-		w->deleteLater();
-
 	stack->setCurrentIndex( page );
 	switch( page )
 	{
 	case Sign:
 	{
+		loadDocuments( signBDocDocsContentView );
+
 		SettingsValues s;
 		s.beginGroup( "Main" );
 		signRoleInput->setText( s.value( "Role" ).toString() );
@@ -497,8 +491,6 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		loadDocuments( signBDocDocsContentView );
-
 		signBDocAddFile->setEnabled( bdoc->signatures().isEmpty() );
 		signBDocSign->setEnabled(
 			signBDocDocsContentView->model()->rowCount() > 0 && bdoc->signCert().isValid() );
@@ -507,6 +499,9 @@ void MainWindow::setCurrentPage( Pages page )
 	case View:
 	{
 		loadDocuments( viewBDocDocsFrameView );
+
+		Q_FOREACH( SignatureWidget *w, viewBDocSignersContent->findChildren<SignatureWidget*>() )
+			w->deleteLater();
 
 		int i = 0;
 		bool cardOwnerSignature = false;
@@ -545,22 +540,21 @@ void MainWindow::showCardStatus()
 	QString info;
 	if( !bdoc->authCert().isNull() )
 	{
-		info += tr("Person %1 %2 card in reader<br />")
+		info += tr("Person %1 %2 card in reader<br />Person SSID: %3<br />")
 			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
-			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) );
+			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) )
+			.arg( bdoc->signCert().subjectInfo( "serialNumber") );
+
+		info += tr("Sign certificate is valid until: %1<br />")
+			.arg( bdoc->signCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
+		if( !bdoc->signCert().isValid() ) info += tr("Sign certificate is expired<br />");
+
+		info += tr("Auth certificate is valid until: %1<br />")
+			.arg( bdoc->authCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
+		if( !bdoc->authCert().isValid() ) info += tr("Auth certificate is expired<br />");
 	}
 	else
 		info += tr("No card in reader<br />");
-
-	info += tr("Person SSID: %1<br />").arg( bdoc->signCert().subjectInfo( "serialNumber") );
-
-	info += tr("Sign certificate is valid until: %1<br />")
-		.arg( bdoc->signCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
-	if( !bdoc->signCert().isValid() ) info += tr("Sign certificate is expired<br />");
-
-	info += tr("Auth certificate is valid until: %1<br />")
-		.arg( bdoc->authCert().expiryDate().date().toString( Qt::SystemLocaleShortDate ) );
-	if( !bdoc->authCert().isValid() ) info += tr("Auth certificate is expired<br />");
 
 	cardInfo->setText( info );
 
@@ -583,7 +577,7 @@ void MainWindow::viewBDocSignersRemove( unsigned int num )
 {
 	bdoc->removeSignature( num );
 	bdoc->save();
-	setCurrentPage( View );
+	setCurrentPage( bdoc->signatures().isEmpty() ? Sign : View );
 }
 
 

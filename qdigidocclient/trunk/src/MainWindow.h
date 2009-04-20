@@ -41,7 +41,6 @@ private Q_SLOTS:
 	void on_buttonSettings_clicked();
 	void on_comboLanguages_activated( int index );
 	void on_introBDocCheck_stateChanged( int state );
-	void reload();
 	void openFile( const QModelIndex &index );
 	void showWarning( const QString &msg );
 	void viewBDocSignersRemove( unsigned int num );

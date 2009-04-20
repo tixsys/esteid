@@ -153,6 +153,13 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
      </property>
     </spacer>
    </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Close</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -294,6 +301,22 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
     <hint type="destinationlabel" >
      <x>217</x>
      <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>Settings</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>226</x>
+     <y>394</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>226</x>
+     <y>207</y>
     </hint>
    </hints>
   </connection>

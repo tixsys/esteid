@@ -445,9 +445,28 @@ p, li { white-space: pre-wrap; }
             <property name="frameShape" >
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="horizontalScrollBarPolicy" >
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="rootIsDecorated" >
              <bool>false</bool>
             </property>
+            <property name="headerHidden" >
+             <bool>true</bool>
+            </property>
+            <property name="columnCount" >
+             <number>2</number>
+            </property>
+            <column>
+             <property name="text" >
+              <string>Filename</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Size</string>
+             </property>
+            </column>
            </widget>
           </item>
           <item>
@@ -580,6 +599,19 @@ p, li { white-space: pre-wrap; }
           </item>
           <item row="7" column="2" >
            <widget class="QLineEdit" name="signZipInput" />
+          </item>
+          <item row="8" column="2" >
+           <spacer name="verticalSpacer" >
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -761,9 +793,28 @@ p, li { white-space: pre-wrap; }
             <property name="frameShape" >
              <enum>QFrame::NoFrame</enum>
             </property>
+            <property name="horizontalScrollBarPolicy" >
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
             <property name="rootIsDecorated" >
              <bool>false</bool>
             </property>
+            <property name="headerHidden" >
+             <bool>true</bool>
+            </property>
+            <property name="columnCount" >
+             <number>2</number>
+            </property>
+            <column>
+             <property name="text" >
+              <string>Filename</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Size</string>
+             </property>
+            </column>
            </widget>
           </item>
           <item>
