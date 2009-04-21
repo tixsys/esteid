@@ -23,6 +23,7 @@
 #include "MainWindow.h"
 
 #include "Settings.h"
+#include "SignatureDialog.h"
 
 #include <digidoc/Document.h>
 
@@ -581,52 +582,4 @@ void MainWindow::viewBDocSignersRemove( unsigned int num )
 	bdoc->removeSignature( num );
 	bdoc->save();
 	setCurrentPage( bdoc->signatures().isEmpty() ? Sign : View );
-}
-
-
-
-SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
-:	QWidget( parent )
-,	num( signnum )
-,	s( signature )
-{
-	QLabel *c = new QLabel( this );
-	c->setText( tr("<b>%1 %2</b><br />%3<br />Signed on %4<br />Signature is %5")
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "SN" ) ) ) )
-		.arg( s.location() )
-		.arg( s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) )
-		.arg( s.isValid() ? tr("valid") : tr("not valid") ) );
-
-	QPushButton *b = new QPushButton( tr("Show details"), this );
-	connect( b, SIGNAL(clicked()), SLOT(showSignature()) );
-
-	QPushButton *r = new QPushButton( tr("Remove"), this );
-	connect( r, SIGNAL(clicked()), SLOT(removeSignature()) );
-
-	QHBoxLayout *h = new QHBoxLayout();
-	h->addItem( new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-	h->addWidget( b );
-	h->addWidget( r );
-
-	QVBoxLayout *v = new QVBoxLayout( this );
-	v->addWidget( c );
-	v->addLayout( h );
-}
-
-void SignatureWidget::removeSignature() { Q_EMIT removeSignature( num ); }
-
-void SignatureWidget::showSignature()
-{
-	QMessageBox b( this );
-	b.setText( tr("<b>%1 %2 %3</b><br />%4<br />Signed on %5<br />Signature is %6")
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "SN" ) ) ) )
-		.arg( s.cert().subjectInfo( "serialNumber") )
-		.arg( s.location() )
-		.arg( s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) )
-		.arg( s.isValid() ? tr("valid") : tr("not valid") ) );
-	b.setWindowTitle( tr("Signature info") );
-	b.setStandardButtons( QMessageBox::Close );
-	b.exec();
 }

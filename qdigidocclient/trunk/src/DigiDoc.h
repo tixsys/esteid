@@ -44,12 +44,18 @@ public:
 
 	QSslCertificate	cert() const;
 	QDateTime dateTime() const;
-	bool	isValid() const;
+	bool	isValid();
+	QString	lastError() const;
 	QString	location() const;
+	QStringList locations() const;
+	QString	mediaType() const;
 	QString	role() const;
 
 private:
+	void setLastError( const digidoc::Exception &e );
+
 	const digidoc::Signature *s;
+	QString m_lastError;
 };
 
 class DigiDoc: public QObject

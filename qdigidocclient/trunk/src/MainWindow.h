@@ -24,9 +24,11 @@
 
 #include "ui_MainWindow.h"
 
-#include "DigiDoc.h"
-
+class DigiDoc;
 class QTranslator;
+
+QString parseCertInfo( const QString &in );
+QString parseName( const QString &in );
 
 class MainWindow: public QWidget, private Ui::MainWindow
 {
@@ -78,23 +80,4 @@ private:
 	DigiDoc	*bdoc;
 	QTranslator *appTranslator;
 	QTranslator *qtTranslator;
-};
-
-class SignatureWidget: public QWidget
-{
-	Q_OBJECT
-
-public:
-	SignatureWidget( const DigiDocSignature &s, unsigned int signnum, QWidget *parent = 0 );
-
-Q_SIGNALS:
-	void removeSignature( unsigned int num );
-
-private Q_SLOTS:
-	void removeSignature();
-	void showSignature();
-
-private:
-	unsigned int num;
-	DigiDocSignature s;
 };

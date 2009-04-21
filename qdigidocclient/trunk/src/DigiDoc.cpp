@@ -123,28 +123,37 @@ QDateTime DigiDocSignature::dateTime() const
 	return QDateTime( t.date(), t.time(), Qt::UTC ).toLocalTime();
 }
 
-bool DigiDocSignature::isValid() const
+bool DigiDocSignature::isValid()
 {
 	try { return s->validateOnline() == OCSP::GOOD; }
-	catch( const Exception & ) {}
+	catch( const Exception &e ) { setLastError( e ); }
 	return false;
 }
+
+QString DigiDocSignature::lastError() const { return m_lastError; }
 
 QString DigiDocSignature::location() const
 {
 	QStringList l;
-	const Signer::SignatureProductionPlace p = s->getProductionPlace();
-	if( !p.city.empty() )
-		l << QString::fromUtf8( p.city.data() );
-	if( !p.stateOrProvince.empty() )
-		l << QString::fromUtf8( p.stateOrProvince.data() );
-	if( !p.postalCode.empty() )
-		l << QString::fromUtf8( p.postalCode.data() );
-	if( !p.countryName.empty() )
-		l << QString::fromUtf8( p.countryName.data() );
-
+	Q_FOREACH( const QString &item, locations() )
+		if( !item.isEmpty() )
+			l << item;
 	return l.join( ", " );
 }
+
+QStringList DigiDocSignature::locations() const
+{
+	QStringList l;
+	const Signer::SignatureProductionPlace p = s->getProductionPlace();
+	l << QString::fromUtf8( p.city.data() );
+	l << QString::fromUtf8( p.stateOrProvince.data() );
+	l << QString::fromUtf8( p.postalCode.data() );
+	l << QString::fromUtf8( p.countryName.data() );
+	return l;
+}
+
+QString DigiDocSignature::mediaType() const
+{ return QString::fromUtf8( s->getMediaType().data() ).remove( "signature/" ); }
 
 QString DigiDocSignature::role() const
 {
@@ -154,6 +163,15 @@ QString DigiDocSignature::role() const
 	for( ; i != roles.end(); ++i )
 		list << QString::fromUtf8( i->data() );
 	return list.join( ", " );
+}
+
+void DigiDocSignature::setLastError( const Exception &e )
+{
+	QStringList causes;
+	causes << QString::fromUtf8( e.getMsg().data() );
+	Q_FOREACH( const Exception &c, e.getCauses() )
+		causes << QString::fromUtf8( c.getMsg().data() );
+	m_lastError = causes.join( "\n" );
 }
 
 
