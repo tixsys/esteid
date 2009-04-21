@@ -170,10 +170,15 @@ bool MainWindow::addFile( const QString &file )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( QDir::separator() )
 			.arg( info.fileName() );
-		doc = QFileDialog::getSaveFileName(
-			this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
-		if( doc.isEmpty() )
-			return false;
+
+		if( SettingsValues().value( "Main/AskSaveAs", false ).toBool() ||
+			QFile::exists( doc ) )
+		{
+			doc = QFileDialog::getSaveFileName(
+				this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
+			if( doc.isEmpty() )
+				return false;
+		}
 
 		if( QFile::exists( doc ) )
 			QFile::remove( doc );
@@ -456,8 +461,6 @@ void MainWindow::on_comboLanguages_activated( int index )
 
 void MainWindow::on_introBDocCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
-
-void MainWindow::reload() { showCardStatus(); }
 
 void MainWindow::openFile( const QModelIndex &index )
 {

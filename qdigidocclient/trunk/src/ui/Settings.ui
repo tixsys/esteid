@@ -9,7 +9,7 @@
     <x>0</x>
     <y>0</y>
     <width>454</width>
-    <height>403</height>
+    <height>415</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -30,6 +30,16 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="defaultSameDir" >
+     <property name="text" >
+      <string>Same folder</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
       <widget class="QLineEdit" name="defaultDir" >
@@ -46,6 +56,13 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="askSaveAs" >
+     <property name="text" >
+      <string>Ask container name</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="showIntro" >
@@ -301,6 +318,38 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
     <hint type="destinationlabel" >
      <x>217</x>
      <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>askSaveAs</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>226</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>226</x>
+     <y>207</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>defaultSameDir</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>Settings</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>226</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>226</x>
+     <y>207</y>
     </hint>
    </hints>
   </connection>

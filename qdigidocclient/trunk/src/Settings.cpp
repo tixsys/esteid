@@ -35,8 +35,10 @@ Settings::Settings( QWidget *parent )
 	SettingsValues s;
 	s.beginGroup( "Main" );
 
+	defaultSameDir->setChecked( s.value( "SameDir", true ).toBool() );
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
 	showIntro->setChecked( !s.value( "Intro", true ).toBool() );
+	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
 
 	signRoleInput->setText( s.value( "Role" ).toString() );
 	signResolutionInput->setText( s.value( "Resolution" ).toString() );
@@ -61,6 +63,7 @@ void Settings::on_selectDefaultDir_clicked()
 		SettingsValues().setValue( "Main/DefaultDir", dir );
 		defaultDir->setText( dir );
 	}
+	defaultSameDir->setChecked( defaultDir->text().isEmpty() );
 }
 
 void Settings::save()
@@ -69,6 +72,13 @@ void Settings::save()
 	s.beginGroup( "Main" );
 	s.setValue( "Intro", !showIntro->isChecked() );
 	s.setValue( "Overwrite", signOverwrite->isChecked() );
+	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
+	s.setValue( "SameDir", defaultSameDir->isChecked() );
+	if( defaultSameDir->isChecked() )
+	{
+		defaultDir->clear();
+		s.remove( "DefaultDir" );
+	}
 	s.endGroup();
 
 	saveSignatureInfo(
