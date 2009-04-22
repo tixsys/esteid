@@ -14,6 +14,7 @@ SET( HEADERS
 	src/DigiDoc.h
 	src/MainWindow.h
 	src/Settings.h
+	src/SignatureDialog.h
 	)
 SET( SOURCES
 	${HEADERS}
@@ -21,10 +22,12 @@ SET( SOURCES
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
 	src/Settings.cpp
+	src/SignatureDialog.cpp
 	)
 SET( UIS
 	src/ui/MainWindow.ui
 	src/ui/Settings.ui
+	src/ui/SignatureDialog.ui
 	)
 SET( RCS src/rc/qdigidocclient.qrc )
 
