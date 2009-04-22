@@ -9,5 +9,6 @@
 + (SEL)selectorForSetProperty:(const char *)name;
 
 - (id)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments;
+- (void)invalidate:(NSTimer *)timer;
 
 @end

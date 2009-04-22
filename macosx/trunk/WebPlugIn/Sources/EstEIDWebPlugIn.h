@@ -2,7 +2,7 @@
 
 #import "EstEIDWebObject.h"
 
-@class EstEIDManager, EstEIDWebCertificate;
+@class EstEIDManager, EstEIDWebCertificate, EstEIDWebObjectProxy;
 
 extern NSString *EstEIDWebPlugInEventCardInsert;
 extern NSString *EstEIDWebPlugInEventCardRemove;
@@ -15,6 +15,9 @@ extern NSString *EstEIDWebPlugInEventCardError;
 	NSMutableDictionary *m_eventListeners;
 	EstEIDWebCertificate *m_authCertificate;
 	EstEIDWebCertificate *m_signCertificate;
+	EstEIDWebObjectProxy *m_proxy;
+	NSString *m_state;
+	NSTimer *m_timer;
 	NSDictionary *m_userInfo;
 }
 

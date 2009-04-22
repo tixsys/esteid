@@ -2,6 +2,7 @@
 
 #import "EstEIDManager.h"
 #import "EstEIDWebCertificate.h"
+#import "EstEIDWebObjectProxy.h"
 #import "EstEIDWebPlugIn.h"
 
 NSString *EstEIDWebPlugInEventCardInsert = @"cardInsert";
@@ -16,6 +17,16 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	NSArray *arguments = [NSArray arrayWithObject:[NSNumber numberWithInt:event]];
 	EstEIDWebObject *listener;
 	
+	// Remove cached results
+	[self->m_userInfo release];
+	self->m_userInfo = nil;
+	
+	[self->m_authCertificate release];
+	self->m_authCertificate = nil;
+	
+	[self->m_signCertificate release];
+	self->m_signCertificate = nil;
+	
 	while((listener = [enumerator nextObject]) != nil) {
 		[listener invokeMethod:@"handleEvent" withArguments:arguments];
 	}
@@ -28,6 +39,35 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	}
 	
 	return self->m_userInfo;
+}
+
+// TODO: Is this acceptable?
+- (void)invalidate:(NSTimer *)timer
+{
+	NSString *state = [self->m_manager readerState];
+	
+	// Don't send an event if it is reading something at the moment.
+	if(state && ![state hasSuffix:@"INUSE"] && ![self->m_state isEqualToString:state]) {
+		BOOL notify = (self->m_state) ? YES : NO;
+		
+		[self->m_state release];
+		self->m_state = [state retain];
+		
+		if(notify) {
+			if([state isEqualToString:@"PRESENT"]) {
+				[self handleEvent:0 listeners:[self->m_eventListeners objectForKey:EstEIDWebPlugInEventCardInsert]];
+			} else if([state isEqualToString:@"EMPTY"]) {
+				[self handleEvent:0 listeners:[self->m_eventListeners objectForKey:EstEIDWebPlugInEventCardRemove]];
+			// TODO: Really?
+			} else {
+				[self handleEvent:0 listeners:[self->m_eventListeners objectForKey:EstEIDWebPlugInEventCardError]];
+			}
+		}
+		
+#if DEBUG
+		NSLog(@"EstEID: State changed to %@", state);
+#endif
+	}
 }
 
 - (EstEIDWebCertificate *)authCertificate
@@ -171,6 +211,12 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 			if(![listeners containsObject:listener]) {
 				[listeners addObject:listener];
 			}
+			
+			if(!self->m_timer) {
+				self->m_proxy = [[EstEIDWebObjectProxy alloc] initWithObject:self];
+				self->m_timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0.1F] interval:0.5F target:self->m_proxy selector:@selector(invalidate:) userInfo:nil repeats:YES];
+				[[NSRunLoop currentRunLoop] addTimer:self->m_timer forMode:NSDefaultRunLoopMode];
+			}
 		}
 	}
 	
@@ -190,7 +236,18 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 				if([listeners containsObject:listener]) {
 					[listeners removeObject:listener];
 				}
+				
+				if([listeners count] == 0) {
+					[self->m_eventListeners removeObjectForKey:(NSString *)type];
+				}
 			}
+		}
+		
+		// No listeners left!
+		if([self->m_eventListeners count] == 0) {
+			[self->m_timer invalidate];
+			[self->m_timer release];
+			self->m_timer = nil;
 		}
 	}
 	
@@ -255,6 +312,14 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 
 - (void)dealloc
 {
+#if DEBUG
+	NSLog(@"%@: dealloc", NSStringFromClass([self class]));
+#endif
+	
+	[self->m_timer invalidate];
+	[self->m_timer release];
+	[self->m_state release];
+	[self->m_proxy release];
 	[self->m_manager release];
 	[self->m_eventListeners release];
 	[self->m_authCertificate release];

@@ -1,7 +1,47 @@
 /* Copyright (c) 2008 Janek Priimann */
 
-#import <Security/SecCertificate.h>
+#import <openssl/bio.h>
+#import <openssl/pem.h>
+#import <openssl/x509.h>
 #import "EstEIDWebCertificate.h"
+
+static NSString *X509NameToNSString(X509_NAME *name)
+{
+	NSString *result = nil;
+	
+	if(name) {
+		BIO *bio = BIO_new(BIO_s_mem());
+		char *data;
+		int length;
+		
+		X509_NAME_print_ex(bio, name, 0, 0);
+		length = BIO_get_mem_data(bio, &data);
+		result = [[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease];
+				
+		BIO_free(bio);
+	}
+	
+	return result;
+}
+
+static NSString *X509ToNSString(X509 *x509)
+{
+	BIO *bio = BIO_new(BIO_s_mem());
+	NSString *result = nil;
+	char *data;
+	int length;
+	
+	if(PEM_write_bio_X509(bio, x509)) {
+		length = BIO_get_mem_data(bio, &data);
+		result = [[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease];
+	}
+	
+	BIO_free(bio);
+	
+	return result;
+}
+
+#pragma mark -
 
 @implementation EstEIDWebCertificate
 
@@ -10,22 +50,25 @@
 	self = [super init];
 	
 	if(self) {
-		SecCertificateRef certificate;
-		CSSM_DATA cssm;
+		BIO *bio;
 		
-		cssm.Data = (UInt8 *)[data bytes];
-		cssm.Length = [data length];
-		
-		if(SecCertificateCreateFromData(&cssm, CSSM_CERT_X_509v3, CSSM_CERT_ENCODING_DER, &certificate) == noErr) {
-			// Only 10.5
-			//SecCertificateCopyCommonName(certificate, (CFStringRef *)&self->m_CN);
-			self->m_CN = [@"CN!" retain];
-			// TODO: 
-			//SecCertificateGetIssuer(SecCertificateRef certificate, const CSSM_X509_NAME **issuer);
-			CFRelease(certificate);
-		} else {
-			[self release];
-			self = nil;
+		if((bio = BIO_new_mem_buf((char *)[data bytes], [data length])) != NULL) {
+			X509 *x509 = NULL;
+			
+			if(d2i_X509_bio(bio, &x509) != NULL) {
+				// TODO: Figure this out
+				self->m_CN = [X509NameToNSString(X509_get_subject_name(x509)) retain];
+				self->m_validFrom = nil;
+				self->m_validTo = nil;
+				self->m_issuerCN = [X509NameToNSString(X509_get_issuer_name(x509)) retain];
+				self->m_keyUsage = nil;
+				self->m_certificate = [X509ToNSString(x509) retain];
+				self->m_identifier = nil;
+				
+				X509_free(x509);
+			}
+			
+			BIO_free(bio);
 		}
 	}
 	

@@ -191,7 +191,7 @@ static void EstEIDWebObjectContextInvalidate()
 static NPObject *EstEIDWebObjectContextAllocate(NPP npp, NPClass *klass)
 {
     EstEIDWebObjectContextRef ctx = malloc(sizeof(EstEIDWebObjectContext));
-    
+	
     ctx->obj = nil;
     ctx->npp = npp;
     
@@ -202,7 +202,7 @@ static void EstEIDWebObjectContextDeallocate(EstEIDWebObjectContextRef ctx)
 {
     if(ctx->obj != nil) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        
+		
         [ctx->obj release];
         ctx->obj = nil;
         
@@ -265,6 +265,10 @@ static NPObject *EstEIDWebObjectContextCreate(NPP npp, EstEIDWebObject *obj)
 	SEL selector = [[self class] selectorForMethod:[name UTF8String]];
 	
 	return (selector) ? [self performSelector:selector withObject:arguments] : nil;
+}
+
+- (void)invalidate:(NSTimer *)timer
+{
 }
 
 @end
@@ -411,10 +415,9 @@ NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, ch
 NPError NPP_Destroy(NPP instance, NPSavedData **save)
 {
     EstEIDWebObjectContextRef obj = instance->pdata;
-    
-    // Do nothing if browser didn't support NPN_CreateObject which would have created the EstEIDWebObjectContext.
+	
     if(obj != NULL) {
-        // release?
+		browser->releaseobject((NPObject *)instance->pdata);
     }
     
     return NPERR_NO_ERROR;
@@ -424,7 +427,6 @@ NPError NPP_SetWindow(NPP instance, NPWindow *window)
 {
     EstEIDWebObjectContextRef obj = instance->pdata;
     
-    // Do nothing if browser didn't support NPN_CreateObject which would have created the EstEIDWebObjectContext.
     if(obj != NULL) {
         obj->window = window;
     }
@@ -457,25 +459,6 @@ int32 NPP_Write(NPP instance, NPStream *stream, int32 offset, int32 len, void *b
 
 void NPP_StreamAsFile(NPP instance, NPStream *stream, const char *fname)
 {
-    EstEIDWebObjectContextRef obj = instance->pdata;
-    
-    // Do nothing if browser didn't support NPN_CreateObject which would have created the EstEIDWebObjectContextRef.
-    if(obj != NULL) {
-		/*
-		 MovieObject *movieObject = obj->movieObject;
-		 
-		 DestroyMovie(movieObject);
-		 
-		 if(!LoadMovieFromFile(&movieObject->movie, fname)) {
-		 return;
-		 }
-		 
-		 if(!CreateMovieController(movieObject, obj->window)) {
-		 return;
-		 }
-		 
-		 PlayMovie(movieObject);*/
-    }
 }
 
 void NPP_Print(NPP instance, NPPrint *platformPrint)
@@ -487,9 +470,8 @@ int16 NPP_HandleEvent(NPP instance, void *event)
 {
     EstEIDWebObjectContextRef obj = instance->pdata;
     
-    // Do nothing if browser didn't support NPN_CreateObject which would have created the EstEIDWebObjectContext.
     if(obj != NULL) {
-        return 0;//HandleMovieEvent(obj->movieObject, (EventRecord *)event);
+        return 0;
     }
     
     return 0;

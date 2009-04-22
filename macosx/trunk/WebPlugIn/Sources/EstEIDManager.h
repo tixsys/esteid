@@ -36,5 +36,6 @@ extern NSString *EstEIDManagerUserInfoComment4Key;
 - (NSData *)signCertificate;
 - (NSString *)nameForReader:(int)reader;
 - (NSDictionary *)userInfo;
+- (NSString *)readerState;
 
 @end

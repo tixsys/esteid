@@ -21,7 +21,7 @@ NSString *EstEIDManagerUserInfoComment4Key = @"COMMENT4";
 
 static inline NSData *CPlusDataToNSData(ByteVec bytes)
 {
-	return [NSData dataWithBytes:&bytes length:bytes.size()];
+	return [NSData dataWithBytes:&bytes[0] length:bytes.size()];
 }
 
 static inline NSString *CPlusStringToNSString(std::string str)
@@ -54,6 +54,17 @@ static inline NSString *CPlusStringToNSString(std::string str)
 		return CPlusDataToNSData(card.getSignCert());
 	} catch(std::runtime_error err) {
 		NSLog(@"EstEID: Couldn't read sign certificate");
+	}
+	
+	return nil;
+}
+
+- (NSString *)readerState
+{
+	try {
+		return CPlusStringToNSString(self->m_pcscManager->getReaderState(0));
+	} catch(std::runtime_error err) {
+		NSLog(@"EstEID: Couldn't read reader state");
 	}
 	
 	return nil;
