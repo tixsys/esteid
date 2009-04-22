@@ -6,7 +6,9 @@
 // TODO: Must decide what commands should be available.
 
 typedef enum _EstEIDCMPlugInCommand {
-    EstEIDCMPlugInCommandOpenDigiDoc = 1
+	EstEIDCMPlugInCommandSignWithMobile = 1,
+    EstEIDCMPlugInCommandSign,
+	EstEIDCMPlugInCommandCrypt
 } EstEIDCMPlugInCommand;
 
 typedef enum _EstEIDCMPlugInFilter {
@@ -96,19 +98,28 @@ typedef enum _EstEIDCMPlugInFilter {
 {
     NSMenu *menu = [[NSMenu alloc] init];
     
-	[menu addItemWithTitle:NSLocalizedString(@"Open DigiDoc...", nil) tag:EstEIDCMPlugInCommandOpenDigiDoc];
-    [menu addItem:[NSMenuItem separatorItem]];
-    
+	[menu addItemWithTitle:NSLocalizedString(@"Sign with Mobile", nil) tag:EstEIDCMPlugInCommandSignWithMobile];
+    [menu addItemWithTitle:NSLocalizedString(@"Sign with ID-card", nil) tag:EstEIDCMPlugInCommandSign];
+	[menu addItemWithTitle:NSLocalizedString(@"Crypt with ID-card", nil) tag:EstEIDCMPlugInCommandCrypt];
+	
     return [menu autorelease];
 }
 
 - (void)contextMenu:(NSArray *)selection handleCommand:(int)command
 {
     switch(command) {
-        case EstEIDCMPlugInCommandOpenDigiDoc:
+        case EstEIDCMPlugInCommandSignWithMobile:
 			// TODO: Just to test that it is working properly
             [[NSWorkspace sharedWorkspace] openFile:nil withApplication:@"TextEdit"];
             break;
+		case EstEIDCMPlugInCommandSign:
+			// TODO: 
+			NSBeep();
+			break;
+		case EstEIDCMPlugInCommandCrypt:
+			// TODO: 
+			NSBeep();
+			break;
     }
 }
 

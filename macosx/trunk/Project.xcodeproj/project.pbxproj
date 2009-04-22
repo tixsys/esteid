@@ -40,6 +40,36 @@
 /* Begin PBXBuildFile section */
 		8104BF1E0F5A8C5600387224 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
 		8104C1160F5AE9C100387224 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
+		810673620F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */; };
+		810673630F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */; };
+		810675A30F9E9415004BFEA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
+		810676360F9E9480004BFEA0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+		810677290F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */; };
+		8106772A0F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */; };
+		810679380F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 810679370F9EC0B1004BFEA0 /* PCSC.framework */; };
+		810679390F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 810679370F9EC0B1004BFEA0 /* PCSC.framework */; };
+		810679900F9EC5DB004BFEA0 /* EstEIDManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8106798F0F9EC5DB004BFEA0 /* EstEIDManager.mm */; };
+		810679910F9EC5DB004BFEA0 /* EstEIDManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8106798F0F9EC5DB004BFEA0 /* EstEIDManager.mm */; };
+		810679DE0F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679C80F9EC79D004BFEA0 /* SmartCardManager.cpp */; };
+		810679DF0F9EC79D004BFEA0 /* SCError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679CA0F9EC79D004BFEA0 /* SCError.cpp */; };
+		810679E00F9EC79D004BFEA0 /* SIMCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679CD0F9EC79D004BFEA0 /* SIMCard.cpp */; };
+		810679E10F9EC79D004BFEA0 /* PCSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */; };
+		810679E20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */; };
+		810679E30F9EC79D004BFEA0 /* CardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D50F9EC79D004BFEA0 /* CardBase.cpp */; };
+		810679E40F9EC79D004BFEA0 /* CTAPIManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */; };
+		810679E50F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */; };
+		810679E60F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */; };
+		810679E70F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679C80F9EC79D004BFEA0 /* SmartCardManager.cpp */; };
+		810679E80F9EC79D004BFEA0 /* SCError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679CA0F9EC79D004BFEA0 /* SCError.cpp */; };
+		810679E90F9EC79D004BFEA0 /* SIMCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679CD0F9EC79D004BFEA0 /* SIMCard.cpp */; };
+		810679EA0F9EC79D004BFEA0 /* PCSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */; };
+		810679EB0F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */; };
+		810679EC0F9EC79D004BFEA0 /* CardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D50F9EC79D004BFEA0 /* CardBase.cpp */; };
+		810679ED0F9EC79D004BFEA0 /* CTAPIManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */; };
+		810679EE0F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */; };
+		810679EF0F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */; };
+		81067B5A0F9EDFC0004BFEA0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07A0F55F42800FA51CD /* AppKit.framework */; };
+		81067C4F0F9EE197004BFEA0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
 		8122F1220F55F78100FA51CD /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
 		8122F1230F55F78100FA51CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1210F55F78100FA51CD /* main.m */; };
 		8122F1280F55F79000FA51CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8122F1240F55F79000FA51CD /* Localizable.strings */; };
@@ -97,10 +127,10 @@
 		81E4CBD30F9C777D00997F53 /* EstEIDCMPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */; };
 		81E4CBD40F9C77E500997F53 /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
 		81E4CBD50F9C77E500997F53 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
-		81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
+		81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.mm in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.mm */; };
 		81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */; };
 		81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
-		81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */; };
+		81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.mm in Sources */ = {isa = PBXBuildFile; fileRef = 81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.mm */; };
 		81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
 		81F875B70F560F5900FCAB5D /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */; };
 /* End PBXBuildFile section */
@@ -175,6 +205,35 @@
 		8104BF1C0F5A8C5600387224 /* NSMenu+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMenu+Additions.h"; path = "CMPlugIn/Sources/NSMenu+Additions.h"; sourceTree = "<group>"; };
 		8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMenu+Additions.m"; path = "CMPlugIn/Sources/NSMenu+Additions.m"; sourceTree = "<group>"; };
 		8104C1150F5AE9C100387224 /* SecurityFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityFoundation.framework; path = /System/Library/Frameworks/SecurityFoundation.framework; sourceTree = "<absolute>"; };
+		810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebObject.m; path = WebPlugIn/Sources/EstEIDWebObject.m; sourceTree = "<group>"; };
+		810673610F9E71C1004BFEA0 /* EstEIDWebObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebObject.h; path = WebPlugIn/Sources/EstEIDWebObject.h; sourceTree = "<group>"; };
+		810677270F9E9A0C004BFEA0 /* EstEIDWebCertificate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebCertificate.h; path = WebPlugIn/Sources/EstEIDWebCertificate.h; sourceTree = "<group>"; };
+		810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebCertificate.m; path = WebPlugIn/Sources/EstEIDWebCertificate.m; sourceTree = "<group>"; };
+		810679370F9EC0B1004BFEA0 /* PCSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PCSC.framework; path = /System/Library/Frameworks/PCSC.framework; sourceTree = "<absolute>"; };
+		8106798E0F9EC5DB004BFEA0 /* EstEIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManager.h; path = WebPlugIn/Sources/EstEIDManager.h; sourceTree = "<group>"; };
+		8106798F0F9EC5DB004BFEA0 /* EstEIDManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EstEIDManager.mm; path = WebPlugIn/Sources/EstEIDManager.mm; sourceTree = "<group>"; };
+		810679C80F9EC79D004BFEA0 /* SmartCardManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SmartCardManager.cpp; path = ../../qesteidutil/trunk/cardlib/SmartCardManager.cpp; sourceTree = SOURCE_ROOT; };
+		810679C90F9EC79D004BFEA0 /* SIMCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SIMCard.h; path = ../../qesteidutil/trunk/cardlib/SIMCard.h; sourceTree = SOURCE_ROOT; };
+		810679CA0F9EC79D004BFEA0 /* SCError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SCError.cpp; path = ../../qesteidutil/trunk/cardlib/SCError.cpp; sourceTree = SOURCE_ROOT; };
+		810679CB0F9EC79D004BFEA0 /* SCError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCError.h; path = ../../qesteidutil/trunk/cardlib/SCError.h; sourceTree = SOURCE_ROOT; };
+		810679CC0F9EC79D004BFEA0 /* precompiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = precompiled.h; path = ../../qesteidutil/trunk/cardlib/precompiled.h; sourceTree = SOURCE_ROOT; };
+		810679CD0F9EC79D004BFEA0 /* SIMCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SIMCard.cpp; path = ../../qesteidutil/trunk/cardlib/SIMCard.cpp; sourceTree = SOURCE_ROOT; };
+		810679CE0F9EC79D004BFEA0 /* SmartCardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartCardManager.h; path = ../../qesteidutil/trunk/cardlib/SmartCardManager.h; sourceTree = SOURCE_ROOT; };
+		810679CF0F9EC79D004BFEA0 /* ManagerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManagerInterface.h; path = ../../qesteidutil/trunk/cardlib/ManagerInterface.h; sourceTree = SOURCE_ROOT; };
+		810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PCSCManager.cpp; path = ../../qesteidutil/trunk/cardlib/PCSCManager.cpp; sourceTree = SOURCE_ROOT; };
+		810679D10F9EC79D004BFEA0 /* PCSCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCSCManager.h; path = ../../qesteidutil/trunk/cardlib/PCSCManager.h; sourceTree = SOURCE_ROOT; };
+		810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EstEidCardMaintainer.cpp; path = ../../qesteidutil/trunk/cardlib/EstEidCardMaintainer.cpp; sourceTree = SOURCE_ROOT; };
+		810679D30F9EC79D004BFEA0 /* EstEidCardMaintainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEidCardMaintainer.h; path = ../../qesteidutil/trunk/cardlib/EstEidCardMaintainer.h; sourceTree = SOURCE_ROOT; };
+		810679D40F9EC79D004BFEA0 /* helperMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helperMacro.h; path = ../../qesteidutil/trunk/cardlib/helperMacro.h; sourceTree = SOURCE_ROOT; };
+		810679D50F9EC79D004BFEA0 /* CardBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CardBase.cpp; path = ../../qesteidutil/trunk/cardlib/CardBase.cpp; sourceTree = SOURCE_ROOT; };
+		810679D60F9EC79D004BFEA0 /* CardBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardBase.h; path = ../../qesteidutil/trunk/cardlib/CardBase.h; sourceTree = SOURCE_ROOT; };
+		810679D70F9EC79D004BFEA0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../../qesteidutil/trunk/cardlib/common.h; sourceTree = SOURCE_ROOT; };
+		810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CTAPIManager.cpp; path = ../../qesteidutil/trunk/cardlib/CTAPIManager.cpp; sourceTree = SOURCE_ROOT; };
+		810679D90F9EC79D004BFEA0 /* CTAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CTAPIManager.h; path = ../../qesteidutil/trunk/cardlib/CTAPIManager.h; sourceTree = SOURCE_ROOT; };
+		810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DynamicLibrary.cpp; path = ../../qesteidutil/trunk/cardlib/DynamicLibrary.cpp; sourceTree = SOURCE_ROOT; };
+		810679DB0F9EC79D004BFEA0 /* DynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicLibrary.h; path = ../../qesteidutil/trunk/cardlib/DynamicLibrary.h; sourceTree = SOURCE_ROOT; };
+		810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EstEidCard.cpp; path = ../../qesteidutil/trunk/cardlib/EstEidCard.cpp; sourceTree = SOURCE_ROOT; };
+		810679DD0F9EC79D004BFEA0 /* EstEidCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEidCard.h; path = ../../qesteidutil/trunk/cardlib/EstEidCard.h; sourceTree = SOURCE_ROOT; };
 		8122F07A0F55F42800FA51CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		8122F07E0F55F43600FA51CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = /System/Library/Frameworks/PreferencePanes.framework; sourceTree = "<absolute>"; };
@@ -267,10 +326,10 @@
 		81E4CC0C0F9C786C00997F53 /* EstEIDWebPlugIn+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebPlugIn+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.h"; sourceTree = "<group>"; };
 		81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebPlugIn+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.m"; sourceTree = "<group>"; };
 		81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = org.esteid.updater.plist; path = Updater/org.esteid.updater.plist; sourceTree = "<group>"; };
-		81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.webplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F874BC0F560A5500FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WebPlugIn/Info.plist; sourceTree = "<group>"; };
 		81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebPlugIn.h; path = WebPlugIn/Sources/EstEIDWebPlugIn.h; sourceTree = "<group>"; };
-		81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebPlugIn.m; path = WebPlugIn/Sources/EstEIDWebPlugIn.m; sourceTree = "<group>"; };
+		81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EstEIDWebPlugIn.mm; path = WebPlugIn/Sources/EstEIDWebPlugIn.mm; sourceTree = "<group>"; };
 		81F874C10F560ABF00FCAB5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDPP.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -324,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */,
+				810679380F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +391,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81067B5A0F9EDFC0004BFEA0 /* AppKit.framework in Frameworks */,
+				810676360F9E9480004BFEA0 /* Carbon.framework in Frameworks */,
+				810675A30F9E9415004BFEA0 /* Foundation.framework in Frameworks */,
+				810679390F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */,
+				81067C4F0F9EE197004BFEA0 /* Security.framework in Frameworks */,
 				81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +434,7 @@
 				8122F07A0F55F42800FA51CD /* AppKit.framework */,
 				8122F17C0F55F95000FA51CD /* Carbon.framework */,
 				8122F07E0F55F43600FA51CD /* Foundation.framework */,
+				810679370F9EC0B1004BFEA0 /* PCSC.framework */,
 				8122F0FF0F55F44F00FA51CD /* PreferencePanes.framework */,
 				813039800F5944D30029C4D7 /* Security.framework */,
 				8104C1150F5AE9C100387224 /* SecurityFoundation.framework */,
@@ -398,13 +464,42 @@
 				81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */,
 				8122F1120F55F75500FA51CD /* EstEIDCM.plugin */,
 				81E4CB4D0F9C74F300997F53 /* EstEIDCM.octest */,
-				81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */,
+				81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */,
 				81E4CBC40F9C75CB00997F53 /* EstEIDWP.octest */,
 				81BF40630F56E78000F60FED /* EstEIDSU.app */,
 				81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */,
 				817944A40F973E6F007E0C96 /* agent */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		810679C00F9EC772004BFEA0 /* qesteidutil+cardlib */ = {
+			isa = PBXGroup;
+			children = (
+				810679D70F9EC79D004BFEA0 /* common.h */,
+				810679D40F9EC79D004BFEA0 /* helperMacro.h */,
+				810679CF0F9EC79D004BFEA0 /* ManagerInterface.h */,
+				810679CC0F9EC79D004BFEA0 /* precompiled.h */,
+				810679D60F9EC79D004BFEA0 /* CardBase.h */,
+				810679D50F9EC79D004BFEA0 /* CardBase.cpp */,
+				810679D90F9EC79D004BFEA0 /* CTAPIManager.h */,
+				810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */,
+				810679DB0F9EC79D004BFEA0 /* DynamicLibrary.h */,
+				810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */,
+				810679DD0F9EC79D004BFEA0 /* EstEidCard.h */,
+				810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */,
+				810679D30F9EC79D004BFEA0 /* EstEidCardMaintainer.h */,
+				810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */,
+				810679D10F9EC79D004BFEA0 /* PCSCManager.h */,
+				810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */,
+				810679CB0F9EC79D004BFEA0 /* SCError.h */,
+				810679CA0F9EC79D004BFEA0 /* SCError.cpp */,
+				810679C90F9EC79D004BFEA0 /* SIMCard.h */,
+				810679CD0F9EC79D004BFEA0 /* SIMCard.cpp */,
+				810679CE0F9EC79D004BFEA0 /* SmartCardManager.h */,
+				810679C80F9EC79D004BFEA0 /* SmartCardManager.cpp */,
+			);
+			name = "qesteidutil+cardlib";
 			sourceTree = "<group>";
 		};
 		8122F0470F55F34E00FA51CD /* Updater */ = {
@@ -500,9 +595,16 @@
 		8122F1080F55F5DC00FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				810679C00F9EC772004BFEA0 /* qesteidutil+cardlib */,
 				81E4CBBE0F9C75A700997F53 /* Tests */,
+				8106798E0F9EC5DB004BFEA0 /* EstEIDManager.h */,
+				8106798F0F9EC5DB004BFEA0 /* EstEIDManager.mm */,
+				810677270F9E9A0C004BFEA0 /* EstEIDWebCertificate.h */,
+				810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */,
+				810673610F9E71C1004BFEA0 /* EstEIDWebObject.h */,
+				810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */,
 				81F874BE0F560A7100FCAB5D /* EstEIDWebPlugIn.h */,
-				81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.m */,
+				81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.mm */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -690,7 +792,7 @@
 			);
 			name = "Internet Plug-In";
 			productName = WebPlugIn;
-			productReference = 81F8748D0F56085100FCAB5D /* EstEIDWP.webplugin */;
+			productReference = 81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		81F875990F560E9A00FCAB5D /* Updater Preference Pane */ = {
@@ -921,7 +1023,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */,
-				81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.m in Sources */,
+				81E4CC120F9C792000997F53 /* EstEIDWebPlugIn.mm in Sources */,
+				810673630F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */,
+				810677290F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */,
+				810679900F9EC5DB004BFEA0 /* EstEIDManager.mm in Sources */,
+				810679DE0F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */,
+				810679DF0F9EC79D004BFEA0 /* SCError.cpp in Sources */,
+				810679E00F9EC79D004BFEA0 /* SIMCard.cpp in Sources */,
+				810679E10F9EC79D004BFEA0 /* PCSCManager.cpp in Sources */,
+				810679E20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp in Sources */,
+				810679E30F9EC79D004BFEA0 /* CardBase.cpp in Sources */,
+				810679E40F9EC79D004BFEA0 /* CTAPIManager.cpp in Sources */,
+				810679E50F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */,
+				810679E60F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,7 +1043,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.m in Sources */,
+				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.mm in Sources */,
+				810673620F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */,
+				8106772A0F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */,
+				810679910F9EC5DB004BFEA0 /* EstEIDManager.mm in Sources */,
+				810679E70F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */,
+				810679E80F9EC79D004BFEA0 /* SCError.cpp in Sources */,
+				810679E90F9EC79D004BFEA0 /* SIMCard.cpp in Sources */,
+				810679EA0F9EC79D004BFEA0 /* PCSCManager.cpp in Sources */,
+				810679EB0F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp in Sources */,
+				810679EC0F9EC79D004BFEA0 /* CardBase.cpp in Sources */,
+				810679ED0F9EC79D004BFEA0 /* CTAPIManager.cpp in Sources */,
+				810679EE0F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */,
+				810679EF0F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1484,13 +1610,11 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
-					"-framework",
-					AppKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
-				WRAPPER_EXTENSION = webplugin;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
 		};
@@ -1510,13 +1634,11 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
-					"-framework",
-					AppKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
-				WRAPPER_EXTENSION = webplugin;
+				WRAPPER_EXTENSION = bundle;
 				ZERO_LINK = NO;
 			};
 			name = Release;

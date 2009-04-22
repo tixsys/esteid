@@ -11,17 +11,33 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
-	<string>WBPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>BRPL</string>
 	<key>CFBundleGetInfoString</key>
 	<string>v1.0, Copyright 2009 __COMPANY_NAME__.</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2009, __COMPANY_NAME__.</string>
-	<key>NSPrincipalClass</key>
-	<string>EstEIDWebPlugIn</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.1</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<false/>
+	<key>CFPlugInDynamicRegistrationFunction</key>
+	<string></string>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>00000000-0000-0000-0000-000000000000</key>
+		<string>MyFactoryFunction</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>00000000-0000-0000-0000-000000000000</key>
+		<array>
+			<string>00000000-0000-0000-0000-000000000000</string>
+		</array>
+	</dict>
+	<key>CFPlugInUnloadFunction</key>
+	<string></string>
 	<key>WebPluginMIMETypes</key>
 	<dict>
 		<key>application/x-esteid</key>
@@ -32,5 +48,7 @@
 	</dict>
 	<key>WebPluginName</key>
 	<string>EstEID Plug-in</string>
+	<key>WebPluginDescription</key>
+	<string>Estonian Electronic Identification Card Plug-in</string>
 </dict>
 </plist>
