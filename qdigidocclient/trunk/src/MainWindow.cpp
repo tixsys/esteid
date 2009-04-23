@@ -39,6 +39,11 @@
 #include <QTranslator>
 #include <QUrl>
 
+#ifdef Q_OS_WIN32
+#include <QLibrary>
+#include <windows.h>
+#include <mapi.h>
+#endif
 
 
 QString fileSize( qint64 size )
@@ -336,37 +341,47 @@ void MainWindow::buttonClicked( int button )
 	case ViewBDocEmail:
 	{
 #ifdef Q_OS_WIN32
-		QFile c( bdoc->fileName() );
-		QTemporaryFile f( QDir::tempPath() + "/XXXXXX.eml" );
-		f.setAutoRemove( false );
-		if( f.open() && c.open( QIODevice::ReadOnly ) )
-		{
-			QTextStream s( &f );
-			s << "MIME-Version: 1.0\n";
-			s << "Subject: " + QFileInfo( bdoc->fileName() ).fileName() + "\n";
-			s << "Content-Type: multipart/mixed;\n";
-			s << " boundary=\"----12345678901234\"\n";
-			s << "\n";
-			s << "------12345678901234\n";
-			s << "Content-Type: application/octet-stream;\n";
-			s << " name=\"" + QFileInfo( bdoc->fileName() ).fileName() + "\"\n";
-			s << "Content-Transfer-Encoding: base64\n";
-			s << "Content-Disposition: attachment;\n";
-			s << " filename=\"" + QFileInfo( bdoc->fileName() ).fileName() + "\n";
-			s << "\n";
-			s << c.readAll().toBase64() + "\n";
-			s << "------12345678901234--\n";
+		QByteArray filePath = bdoc->fileName().toLatin1();
+		QByteArray fileName = QFileInfo( bdoc->fileName() ).fileName().toLatin1();
 
-			QString fileName = f.fileName();
-			c.close();
-			f.close();
-			QDesktopServices::openUrl( fileName );
+		MapiFileDesc doc[1];
+		doc[0].ulReserved = 0;
+		doc[0].flFlags = 0;
+		doc[0].nPosition = -1;
+		doc[0].lpszPathName = filePath.data();
+		doc[0].lpszFileName = fileName.data();
+		doc[0].lpFileType = NULL;
+
+		// Create message
+		MapiMessage message;
+		message.ulReserved = 0;
+		message.lpszSubject = "";
+		message.lpszNoteText = "";
+		message.lpszMessageType = NULL;
+		message.lpszDateReceived = NULL;
+		message.lpszConversationID = NULL;
+		message.flFlags = 0;
+		message.lpOriginator = NULL;
+		message.nRecipCount = 0;
+		message.lpRecips = NULL;
+		message.nFileCount = 1;
+		message.lpFiles = (lpMapiFileDesc)&doc;
+
+		QLibrary lib("mapi32");
+		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
+		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
+		if( mapi )
+		{
+			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
+			if( status == SUCCESS_SUCCESS )
+				break;
 		}
-		else
+		showWarning( tr("Failed to send email") );
+#else
+		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
+			.arg( QFileInfo( bdoc->fileName() ).fileName() )
+			.arg( bdoc->fileName() ) );
 #endif
-			QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-				.arg( QFileInfo( bdoc->fileName() ).fileName() )
-				.arg( bdoc->fileName() ) );
 		break;
 	}
 	case ViewBDocPrint:
