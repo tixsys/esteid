@@ -62,7 +62,9 @@ static void EstEIDWebObjectContextVariantToObject(NPP npp, const NPVariant *vari
 
 static void EstEIDWebObjectContextObjectToVariant(NPP npp, id object, NPVariant *variant)
 {
-	if(object == nil || [object isKindOfClass:[NSNull class]]) {
+	if(object == nil) {
+		variant->type = NPVariantType_Void;
+	} else if([object isKindOfClass:[NSNull class]]) {
 		variant->type = NPVariantType_Null;
 	} else if([object isKindOfClass:[NSString class]]) {
 		variant->type = NPVariantType_String;
@@ -78,7 +80,14 @@ static void EstEIDWebObjectContextObjectToVariant(NPP npp, id object, NPVariant 
 	} else if([object isKindOfClass:[EstEIDWebObject class]]) {
 		variant->type = NPVariantType_Object;
 		variant->value.objectValue = EstEIDWebObjectContextCreate(npp, object);
+	} else if([object isKindOfClass:[NSDate class]]) {
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		
+		[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+		EstEIDWebObjectContextObjectToVariant(npp, [dateFormatter stringFromDate:(NSDate *)object], variant);
+		[dateFormatter release];
 	} else {
+		NSLog(@"EstEID: The %@ class instance couldn't be converted.", [object class]);
 		variant->type = NPVariantType_Void;
 	}
 }
@@ -102,13 +111,20 @@ static void EstEIDWebObjectContextMsgSend(EstEIDWebObjectContextRef ctx, SEL sel
 		result_objc = [ctx->obj	performSelector:selector withObject:args_objc];
 		
 		if(result) {
-			EstEIDWebObjectContextObjectToVariant(ctx->npp, result_objc, result);
+			if(result_objc && [result_objc isKindOfClass:[NSException class]]) {
+				browser->setexception((NPObject *)ctx, (const NPUTF8 *)[[(NSException *)result_objc name] UTF8String]);
+				result->type = NPVariantType_Void;
+			} else {
+				EstEIDWebObjectContextObjectToVariant(ctx->npp, result_objc, result);
+			}
 		}
 		
 		[args_objc release];
 		[pool release];
 	} else {
-		result->type = NPVariantType_Void;
+		if(result) {
+			result->type = NPVariantType_Void;
+		}
 	}
 }
 
@@ -119,7 +135,7 @@ static bool EstEIDWebObjectContextHasProperty(EstEIDWebObjectContextRef ctx, NPI
 	if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
-		result = [[ctx->obj class] selectorForGetProperty:(const char *)str];
+		result = [[ctx->obj class] selectorForProperty:(const char *)str];
 		
 		free(str);
 	}
@@ -147,7 +163,7 @@ static void EstEIDWebObjectContextGetProperty(EstEIDWebObjectContextRef ctx, NPI
     if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
-		EstEIDWebObjectContextMsgSend(ctx, [[ctx->obj class] selectorForGetProperty:(const char *)str], nil, 0, result);
+		EstEIDWebObjectContextMsgSend(ctx, [[ctx->obj class] selectorForProperty:(const char *)str], nil, 0, result);
 		
 		free(str);
 	} else {
@@ -159,8 +175,14 @@ static void EstEIDWebObjectContextSetProperty(EstEIDWebObjectContextRef ctx, NPI
 {
     if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
+		unsigned int length = strlen(str);
+		char buffer[length + 2];
 		
-		EstEIDWebObjectContextMsgSend(ctx, [[ctx->obj class] selectorForSetProperty:(const char *)str], value, (value) ? 1 : 0, nil);
+		strcpy(buffer, (const char *)str);
+		buffer[length + 0] = '=';
+		buffer[length + 1] = 0x00;
+		
+		EstEIDWebObjectContextMsgSend(ctx, [[ctx->obj class] selectorForProperty:buffer], value, (value) ? 1 : 0, nil);
 		
 		free(str);
 	}
@@ -250,25 +272,26 @@ static NPObject *EstEIDWebObjectContextCreate(NPP npp, EstEIDWebObject *obj)
 	return NULL;
 }
 
-+ (SEL)selectorForGetProperty:(const char *)name
++ (SEL)selectorForProperty:(const char *)name
 {
 	return NULL;
 }
 
-+ (SEL)selectorForSetProperty:(const char *)name
-{
-	return NULL;
-}
-
-- (id)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments
+- (BOOL)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments result:(id *)result_1
 {
 	SEL selector = [[self class] selectorForMethod:[name UTF8String]];
 	
-	return (selector) ? [self performSelector:selector withObject:arguments] : nil;
-}
-
-- (void)invalidate:(NSTimer *)timer
-{
+	if(selector) {
+		id result = [self performSelector:selector withObject:arguments];
+		
+		if(result_1) {
+			*result_1 = result;
+		}
+		
+		return YES;
+	}
+	
+	return NO;
 }
 
 @end
@@ -297,7 +320,7 @@ static NPObject *EstEIDWebObjectContextCreate(NPP npp, EstEIDWebObject *obj)
 
 #pragma mark EstEIDWebObject
 
-- (id)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments
+- (BOOL)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments result:(id *)result_1
 {
 	uint32_t argi, argc = [arguments count];
 	NPVariant *args = malloc(sizeof(NPVariant) * argc);
@@ -307,18 +330,20 @@ static NPObject *EstEIDWebObjectContextCreate(NPP npp, EstEIDWebObject *obj)
 		EstEIDWebObjectContextObjectToVariant(self->m_npp, [arguments objectAtIndex:argi], args + argi);
 	}
 	
-	// FIXME: Add a NSError parameter to method arguments?
-	if((name && browser->invoke(self->m_npp, self->m_object, browser->getstringidentifier((NPUTF8 *)[name UTF8String]), args, argc, &result)) ||
-	   browser->invokeDefault(self->m_npp, self->m_object, args, argc, &result)) {
-		id object;
+	if((name) ? browser->invoke(self->m_npp, self->m_object, browser->getstringidentifier((NPUTF8 *)[name UTF8String]), args, argc, &result) : browser->invokeDefault(self->m_npp, self->m_object, args, argc, &result)) {
+		if(result_1) {
+			id object;
+			
+			EstEIDWebObjectContextVariantToObject(self->m_npp, &result, &object);
+			*result_1 = object;
+		}
 		
-		EstEIDWebObjectContextVariantToObject(self->m_npp, &result, &object);
 		browser->releasevariantvalue(&result);
 		
-		return object;
+		return YES;
 	}
 	
-	return nil;
+	return NO;
 }
 
 #pragma mark NSObject
@@ -417,7 +442,7 @@ NPError NPP_Destroy(NPP instance, NPSavedData **save)
     EstEIDWebObjectContextRef obj = instance->pdata;
 	
     if(obj != NULL) {
-		browser->releaseobject((NPObject *)instance->pdata);
+		//browser->releaseobject((NPObject *)instance->pdata);
     }
     
     return NPERR_NO_ERROR;
@@ -429,6 +454,10 @@ NPError NPP_SetWindow(NPP instance, NPWindow *window)
     
     if(obj != NULL) {
         obj->window = window;
+		
+		if(window && window->type == NPWindowTypeWindow) {
+			//WindowRef GetWindowFromPort(((NP_Port *)window->window)->port);
+		}
     }
     
     return NPERR_NO_ERROR;

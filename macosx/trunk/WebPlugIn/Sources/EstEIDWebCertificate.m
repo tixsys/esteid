@@ -1,24 +1,27 @@
 /* Copyright (c) 2008 Janek Priimann */
 
+#import <openssl/asn1.h>
 #import <openssl/bio.h>
 #import <openssl/pem.h>
 #import <openssl/x509.h>
 #import "EstEIDWebCertificate.h"
 
-static NSString *X509NameToNSString(X509_NAME *name)
+static NSString *X509NameEntryToNSString(X509_NAME *name, int nid)
 {
+	int index = (name) ? X509_NAME_get_index_by_NID(name, nid, -1) : -1;
+	X509_NAME_ENTRY *entry = (index >= 0) ? X509_NAME_get_entry(name, index) : NULL;
+	ASN1_STRING *asnstr = (entry) ? X509_NAME_ENTRY_get_data(entry) : NULL;
 	NSString *result = nil;
 	
-	if(name) {
-		BIO *bio = BIO_new(BIO_s_mem());
-		char *data;
-		int length;
+	if(asnstr) {
+		unsigned char *data = NULL;
+		int length = ASN1_STRING_to_UTF8(&data, asnstr);
 		
-		X509_NAME_print_ex(bio, name, 0, 0);
-		length = BIO_get_mem_data(bio, &data);
-		result = [[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease];
-				
-		BIO_free(bio);
+		if(length >= 0) {
+			result = [[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease];
+		}
+		
+		OPENSSL_free(data);
 	}
 	
 	return result;
@@ -41,6 +44,28 @@ static NSString *X509ToNSString(X509 *x509)
 	return result;
 }
 
+static NSDate *X509DateToNSDate(ASN1_TIME *date)
+{
+	NSDate *result = nil;
+	
+	// YYMMDDHHMMSSZ
+	if(date != NULL && date->data != NULL) {
+		int length = strlen((char *)date->data);
+		
+		if(length == 13 || length == 15) {
+			NSString *str = [[NSString alloc] initWithBytes:date->data length:length encoding:NSASCIIStringEncoding];
+			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+			
+			[dateFormatter setDateFormat:(length == 13) ? @"yyMMddHHmmss" : @"yyyyMMddHHmmss"];
+			result = [dateFormatter dateFromString:str];
+			[dateFormatter release];
+			[str release];
+		}
+	}
+	
+	return result;
+}
+
 #pragma mark -
 
 @implementation EstEIDWebCertificate
@@ -56,16 +81,25 @@ static NSString *X509ToNSString(X509 *x509)
 			X509 *x509 = NULL;
 			
 			if(d2i_X509_bio(bio, &x509) != NULL) {
-				// TODO: Figure this out
-				self->m_CN = [X509NameToNSString(X509_get_subject_name(x509)) retain];
-				self->m_validFrom = nil;
-				self->m_validTo = nil;
-				self->m_issuerCN = [X509NameToNSString(X509_get_issuer_name(x509)) retain];
-				self->m_keyUsage = nil;
-				self->m_certificate = [X509ToNSString(x509) retain];
-				self->m_identifier = nil;
+				unsigned char identifier[EVP_MAX_MD_SIZE];
+				unsigned int index, length;
 				
-				X509_free(x509);
+				self->m_CN = [X509NameEntryToNSString(X509_get_subject_name(x509), NID_commonName) retain];
+				self->m_keyUsage = [X509NameEntryToNSString(X509_get_subject_name(x509), NID_organizationalUnitName) retain];
+				self->m_validFrom = [X509DateToNSDate(X509_get_notBefore(x509)) retain];
+				self->m_validTo = [X509DateToNSDate(X509_get_notAfter(x509)) retain];
+				self->m_issuerCN = [X509NameEntryToNSString(X509_get_issuer_name(x509), NID_commonName) retain];
+				self->m_certificate = [X509ToNSString(x509) retain];
+				
+				if(X509_digest(x509, EVP_sha1(), identifier, &length)) {
+					self->m_identifier = [[NSMutableString alloc] init];
+					
+					for(index = 0; index < length; index++) {
+						[(NSMutableString *)self->m_identifier appendFormat:@"%02X", identifier[index]];
+					}
+				}
+				
+				self->m_x509 = x509;
 			}
 			
 			BIO_free(bio);
@@ -80,12 +114,12 @@ static NSString *X509ToNSString(X509 *x509)
 	return self->m_CN;
 }
 
-- (NSString *)validFrom
+- (NSDate *)validFrom
 {
 	return self->m_validFrom;
 }
 
-- (NSString *)validTo
+- (NSDate *)validTo
 {
 	return self->m_validTo;
 }
@@ -112,7 +146,7 @@ static NSString *X509ToNSString(X509 *x509)
 
 #pragma mark EstEIDWebObject
 
-+ (SEL)selectorForGetProperty:(const char *)name
++ (SEL)selectorForProperty:(const char *)name
 {
 	if(strcmp(name, "CN") == 0) return @selector(CN);
 	if(strcmp(name, "validFrom") == 0) return @selector(validFrom);
@@ -122,13 +156,15 @@ static NSString *X509ToNSString(X509 *x509)
 	if(strcmp(name, "cert") == 0) return @selector(certificate);
 	if(strcmp(name, "id") == 0) return @selector(identifier);
 	
-	return [super selectorForGetProperty:name];
+	return [super selectorForProperty:name];
 }
 
 #pragma mark NSObject
 
 - (void)dealloc
 {
+	X509_free((X509 *)self->m_x509);
+	
 	[self->m_CN release];
 	[self->m_validFrom release];
 	[self->m_validTo release];

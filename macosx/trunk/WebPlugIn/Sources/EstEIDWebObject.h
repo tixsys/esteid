@@ -5,10 +5,8 @@
 @interface EstEIDWebObject : NSObject
 
 + (SEL)selectorForMethod:(const char *)name;
-+ (SEL)selectorForGetProperty:(const char *)name;
-+ (SEL)selectorForSetProperty:(const char *)name;
++ (SEL)selectorForProperty:(const char *)name;
 
-- (id)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments;
-- (void)invalidate:(NSTimer *)timer;
+- (BOOL)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments result:(id *)result;
 
 @end

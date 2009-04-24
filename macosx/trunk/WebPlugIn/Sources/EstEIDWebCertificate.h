@@ -6,12 +6,13 @@
 {
 	@private
 	NSString *m_CN;
-	NSString *m_validFrom;
-	NSString *m_validTo;
+	NSDate *m_validFrom;
+	NSDate *m_validTo;
 	NSString *m_issuerCN;
 	NSString *m_keyUsage;
 	NSString *m_certificate;
 	NSString *m_identifier;
+	void *m_x509;
 }
 
 - (id)initWithData:(NSData *)data;
@@ -21,8 +22,8 @@
  */
 
 - (NSString *)CN;
-- (NSString *)validFrom;
-- (NSString *)validTo;
+- (NSDate *)validFrom;
+- (NSDate *)validTo;
 - (NSString *)issuerCN;
 - (NSString *)keyUsage;
 - (NSString *)certificate;

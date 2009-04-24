@@ -43,12 +43,14 @@
 		<key>application/x-esteid</key>
 		<dict>
 			<key>WebPluginTypeDescription</key>
-			<string>EstEID</string>
+			<string>EstEID Module</string>
 		</dict>
 	</dict>
 	<key>WebPluginName</key>
 	<string>EstEID Plug-in</string>
 	<key>WebPluginDescription</key>
 	<string>Estonian Electronic Identification Card Plug-in</string>
+	<key>EstEIDHelpWebsite</key>
+	<string>https://id.eesti.ee/</string>
 </dict>
 </plist>

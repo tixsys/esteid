@@ -2,7 +2,7 @@
 
 #import "EstEIDWebObject.h"
 
-@class EstEIDManager, EstEIDWebCertificate, EstEIDWebObjectProxy;
+@class EstEIDReaderManager, EstEIDWebCertificate, EstEIDWebPlugInProxy;
 
 extern NSString *EstEIDWebPlugInEventCardInsert;
 extern NSString *EstEIDWebPlugInEventCardRemove;
@@ -11,15 +11,17 @@ extern NSString *EstEIDWebPlugInEventCardError;
 @interface EstEIDWebPlugIn : EstEIDWebObject
 {
     @private
-	EstEIDManager *m_manager;
 	NSMutableDictionary *m_eventListeners;
 	EstEIDWebCertificate *m_authCertificate;
 	EstEIDWebCertificate *m_signCertificate;
-	EstEIDWebObjectProxy *m_proxy;
-	NSString *m_state;
+	EstEIDReaderManager *m_readerManager;
+	NSString *m_readerState;
+	EstEIDWebPlugInProxy *m_proxy;
 	NSTimer *m_timer;
 	NSDictionary *m_userInfo;
 }
+
+- (void)invalidate:(NSTimer *)timer;
 
 /**
  * @name JavaScript Properties
@@ -50,7 +52,7 @@ extern NSString *EstEIDWebPlugInEventCardError;
 
 - (NSString *)version;
 - (NSString *)readerName:(NSArray *)arguments;
-- (NSString *)sign:(NSArray *)arguments;
+- (NSObject *)sign:(NSArray *)arguments;
 - (id)addEventListener:(NSArray *)arguments;
 - (id)removeEventListener:(NSArray *)arguments;
 
