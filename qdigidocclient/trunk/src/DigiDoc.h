@@ -34,13 +34,14 @@ namespace digidoc
 	class Signature;
 }
 
+class DigiDoc;
 class QDateTime;
 class QEstEIDSigner;
 
 class DigiDocSignature
 {
 public:
-	DigiDocSignature( const digidoc::Signature *signature );
+	DigiDocSignature( const digidoc::Signature *signature, DigiDoc *parent );
 
 	QSslCertificate	cert() const;
 	QDateTime dateTime() const;
@@ -49,6 +50,7 @@ public:
 	QString	location() const;
 	QStringList locations() const;
 	QString	mediaType() const;
+	DigiDoc *parent() const;
 	QString	role() const;
 
 private:
@@ -56,6 +58,7 @@ private:
 
 	const digidoc::Signature *s;
 	QString m_lastError;
+	DigiDoc *m_parent;
 };
 
 class DigiDoc: public QObject

@@ -24,6 +24,8 @@
 
 #include "MainWindow.h"
 
+#include <digidoc/Document.h>
+
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
@@ -74,10 +76,12 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	setWindowFlags( Qt::Dialog );
 
 	QSslCertificate c = s.cert();
-	title->setText( QString("%1 %2 %3")
+	QString titleText = QString("%1 %2 %3")
 		.arg( parseName( parseCertInfo( c.subjectInfo( "GN" ) ) ) )
 		.arg( parseName( parseCertInfo( c.subjectInfo( "SN" ) ) ) )
-		.arg( c.subjectInfo( "serialNumber") ) );
+		.arg( c.subjectInfo( "serialNumber") );
+	title->setText( titleText );
+	setWindowTitle( titleText );
 	title->setStyleSheet( QString( "background-color: %1" ).arg( s.isValid() ? "green" : "red" ) );
 	error->setVisible( !s.lastError().isEmpty() );
 	error->setText( s.lastError() );
@@ -109,12 +113,12 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 
 	i = new QTreeWidgetItem( signatureView );
 	i->setText( 0, tr("Signed file count") );
-	i->setText( 1, QString() );
+	i->setText( 1, QString::number( s.parent()->documents().size() ) );
 	signatureView->addTopLevelItem( i );
 
 	i = new QTreeWidgetItem( signatureView );
 	i->setText( 0, tr("Certificate serialnumber") );
-	i->setText( 1, c.serialNumber()  );
+	i->setText( 1, c.serialNumber() );
 	signatureView->addTopLevelItem( i );
 
 	i = new QTreeWidgetItem( signatureView );

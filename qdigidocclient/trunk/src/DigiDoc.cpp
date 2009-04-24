@@ -107,7 +107,10 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 
 
 
-DigiDocSignature::DigiDocSignature( const digidoc::Signature *signature ): s(signature) {}
+DigiDocSignature::DigiDocSignature( const digidoc::Signature *signature, DigiDoc *parent )
+:	s(signature)
+,	m_parent(parent)
+{}
 
 QSslCertificate DigiDocSignature::cert() const
 {
@@ -154,6 +157,8 @@ QStringList DigiDocSignature::locations() const
 
 QString DigiDocSignature::mediaType() const
 { return QString::fromUtf8( s->getMediaType().data() ).remove( "signature/" ); }
+
+DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 
 QString DigiDocSignature::role() const
 {
@@ -388,7 +393,7 @@ QList<DigiDocSignature> DigiDoc::signatures()
 	{
 		unsigned int count = b->signatureCount();
 		for( unsigned int i = 0; i < count; ++i )
-			list << DigiDocSignature( b->getSignature( i ) );
+			list << DigiDocSignature( b->getSignature( i ), this );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	return list;
