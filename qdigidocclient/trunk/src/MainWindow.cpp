@@ -89,8 +89,18 @@ QString parseCertInfo( const QString &in )
 QString parseName( const QString &in )
 {
 	QString ret = in.toLower();
-	if( ret.size() > 0 )
-		ret[0] = ret[0].toUpper();
+	bool firstChar = true;
+	for( QString::iterator i = ret.begin(); i != ret.end(); ++i )
+	{
+		if( !firstChar && !i->isLetter() )
+			firstChar = true;
+
+		if( firstChar && i->isLetter() )
+		{
+			*i = i->toUpper();
+			firstChar = false;
+		}
+	}
 	return ret;
 }
 
