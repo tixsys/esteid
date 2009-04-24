@@ -463,11 +463,14 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		i->setText( 1, fileSize( info.size() ) );
 		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
 		i->setCheckState( 0, Qt::Unchecked );
+		i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
+		i->setData( 0, Qt::ToolTipRole, info.fileName() );
 		items << i;
 	}
 	view->insertTopLevelItems( 0, items );
-	view->setColumnWidth( 0, view->width() - 70 );
-	view->setColumnWidth( 1, 70 );
+	view->header()->setStretchLastSection( false );
+	view->header()->setResizeMode( 0, QHeaderView::Stretch );
+	view->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 }
 
 void MainWindow::on_buttonSettings_clicked() { (new Settings( this ))->show(); }
@@ -543,7 +546,7 @@ void MainWindow::setCurrentPage( Pages page )
 			if( !cardOwnerSignature )
 			{
 				cardOwnerSignature =
-					(c.cert().subjectInfo( "serialNumber") == bdoc->signCert().subjectInfo( "serialNumber" ));
+					(c.cert().subjectInfo( "serialNumber" ) == bdoc->signCert().subjectInfo( "serialNumber" ));
 			}
 			++i;
 		}
