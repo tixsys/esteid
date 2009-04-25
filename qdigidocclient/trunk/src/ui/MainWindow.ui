@@ -296,7 +296,7 @@ QLineEdit
          </property>
         </widget>
        </item>
-       <item row="4" column="2" >
+       <item row="5" column="2" >
         <spacer name="verticalSpacer_3" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
@@ -308,6 +308,19 @@ QLineEdit
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="4" column="1" >
+        <widget class="QToolButton" name="homeCryptBDoc" >
+         <property name="minimumSize" >
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string>crypt document</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -645,6 +658,13 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="signBDocSignMobile" >
+           <property name="text" >
+            <string>Sign with Mobile-ID</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -749,6 +769,13 @@ p, li { white-space: pre-wrap; }
           <widget class="QPushButton" name="viewBDocClose" >
            <property name="text" >
             <string>Close container</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewBDocCrypt" >
+           <property name="text" >
+            <string>Crypt document</string>
            </property>
           </widget>
          </item>
