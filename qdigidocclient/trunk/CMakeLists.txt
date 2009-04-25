@@ -5,15 +5,17 @@ project( qdigidocclient )
 
 find_package( Qt4 REQUIRED )
 find_package( OpenSSL REQUIRED )
-find_package( OpenSSLCrypto REQUIRED )
-find_package( ZLIB REQUIRED )
-find_package( LibP11 REQUIRED )
-find_package( XercesC REQUIRED )
-find_package( XmlSecurityC REQUIRED )
-find_package( XSD REQUIRED )
+if( WIN32 )
+	find_package( OpenSSLCrypto REQUIRED )
+	find_package( ZLIB REQUIRED )
+	find_package( LibP11 REQUIRED )
+	find_package( XercesC REQUIRED )
+	find_package( XmlSecurityC REQUIRED )
+	find_package( XSD REQUIRED )
+endif( WIN32 )
 if( UNIX )
 	find_package( PCSCLite REQUIRED )
-ENDIF( UNIX )
+endif( UNIX )
 find_package( LibDigiDoc REQUIRED )
 
 SET( HEADERS
@@ -58,8 +60,8 @@ QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP( MOC_SOURCES ${HEADERS} )
 
 if(MSVC)
-    # disable warning C4290: C++ exception specification ignored
-    add_definitions( -wd4290 )
+	# disable warning C4290: C++ exception specification ignored
+	add_definitions( -wd4290 )
 endif(MSVC)
 
 add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
