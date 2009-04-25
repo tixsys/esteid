@@ -265,6 +265,22 @@ p, li { white-space: pre-wrap; }
         <source>Person %1 %2 card in reader&lt;br /&gt;Person SSID: %3&lt;br /&gt;</source>
         <translation>Kasutaja %1 %2 kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3&lt;br /&gt;</translation>
     </message>
+    <message>
+        <source>Failed to send email</source>
+        <translation>Ekirja koostamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>crypt document</source>
+        <translation>krüpteerida dokumenti</translation>
+    </message>
+    <message>
+        <source>Sign with Mobile-ID</source>
+        <translation>Kirjutan alla Mobiil-ID-ga</translation>
+    </message>
+    <message>
+        <source>Crypt document</source>
+        <translation>Krüpteeri dokument</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -342,11 +358,90 @@ For using sign certificate enter PIN2</source>
     </message>
 </context>
 <context>
-    <name>SignatureWidget</name>
+    <name>SignatureDialog</name>
     <message>
-        <source>&lt;b&gt;%1 %2 %3&lt;/b&gt;&lt;br /&gt;%4&lt;br /&gt;Signed on %5&lt;br /&gt;Signature is %6</source>
-        <translation>&lt;b&gt;%1 %2 %3&lt;/b&gt;&lt;br /&gt;%4&lt;br /&gt;Kirjutatud alla %5&lt;br /&gt;Allkiri on %6</translation>
+        <source>Signing time</source>
+        <translation>Allkirjastamise aeg</translation>
     </message>
+    <message>
+        <source>Signature type</source>
+        <translation>Allkirja tüüp</translation>
+    </message>
+    <message>
+        <source>Signature format</source>
+        <translation>Allkirja formaat</translation>
+    </message>
+    <message>
+        <source>Signed file count</source>
+        <translation>Allkirjastatud failide arv</translation>
+    </message>
+    <message>
+        <source>Certificate serialnumber</source>
+        <translation>Sertifikaadi seerianumber</translation>
+    </message>
+    <message>
+        <source>Certificate valid at</source>
+        <translation>Sertifikaat kehtib alates</translation>
+    </message>
+    <message>
+        <source>Certificate valid until</source>
+        <translation>Sertifikaat kehtib kuni</translation>
+    </message>
+    <message>
+        <source>Certificate issuer</source>
+        <translation>Sertifikaadi väljaandja</translation>
+    </message>
+    <message>
+        <source>Signer</source>
+        <translation>Allkirjastaja</translation>
+    </message>
+    <message>
+        <source>Signer location</source>
+        <translation>Allkirjastaja asukoht</translation>
+    </message>
+    <message>
+        <source>City</source>
+        <translation>Linn</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Maakond</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation>Riik</translation>
+    </message>
+    <message>
+        <source>Zip</source>
+        <translation>Indeks</translation>
+    </message>
+    <message>
+        <source>Role / resolution</source>
+        <translation>Roll / resolutsioon</translation>
+    </message>
+    <message>
+        <source>Show certificate</source>
+        <translation>Näita sertifikaati</translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation>Allkiri</translation>
+    </message>
+    <message>
+        <source>Attribute</source>
+        <translation>Atribuut</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Väärtus</translation>
+    </message>
+    <message>
+        <source>Verify</source>
+        <translation>Kehtivuskinnitus</translation>
+    </message>
+</context>
+<context>
+    <name>SignatureWidget</name>
     <message>
         <source>valid</source>
         <translation>kehtiv</translation>
@@ -354,10 +449,6 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>not valid</source>
         <translation>kehtetu</translation>
-    </message>
-    <message>
-        <source>Signature info</source>
-        <translation>Allkirja info</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1 %2&lt;/b&gt;&lt;br /&gt;%3&lt;br /&gt;Signed on %4&lt;br /&gt;Signature is %5</source>
