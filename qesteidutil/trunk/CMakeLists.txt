@@ -60,6 +60,7 @@ add_executable(qesteidutil WIN32
 )
 
 target_link_libraries(qesteidutil
+    ${QT_QTMAIN_LIBRARY}
     ${QT_LIBRARIES}
 )
 
