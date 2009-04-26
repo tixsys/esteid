@@ -1,13 +1,44 @@
 /* Copyright (c) 2009 Janek Priimann */
 
-#import <Carbon/Carbon.h>
+#import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
+
+@class EstEIDPINPanel;
+
+@protocol EstEIDPINPanelDelegate <NSObject>
+
+- (BOOL)pinPanelShouldEnd:(EstEIDPINPanel *)pinPanel;
+
+@end
 
 @interface EstEIDPINPanel : NSObject
 {
 	@private
-	WindowRef m_window;
+	id <EstEIDPINPanelDelegate> m_delegate;
+	IBOutlet NSWindow *m_window;
+	IBOutlet NSButton *m_cancelButton;
+	IBOutlet NSButton *m_detailsButton;
+	IBOutlet NSBox *m_detailsBox;
+	IBOutlet NSTextField *m_detailsLabel;
+	IBOutlet NSTextField *m_hashLabel;
+	IBOutlet NSTextField *m_hashTextField;
+	IBOutlet NSTextField *m_messageLabel;
+	IBOutlet NSTextField *m_nameLabel;
+	IBOutlet NSTextField *m_nameTextField;
+	IBOutlet NSButton *m_okButton;
+	IBOutlet NSTextField *m_pinLabel;
+	IBOutlet NSSecureTextField *m_pinTextField;
+	IBOutlet NSTextField *m_urlLabel;
+	IBOutlet NSTextField *m_urlTextField;
 }
+
+- (NSWindow *)window;
+
+- (id <EstEIDPINPanelDelegate>)delegate;
+- (void)setDelegate:(id <EstEIDPINPanelDelegate>)delegate;
+
+- (BOOL)showsDetails;
+- (void)setShowsDetails:(BOOL)flag animate:(BOOL)animate;
 
 - (NSString *)hash;
 - (void)setHash:(NSString *)hash;
@@ -15,20 +46,19 @@
 - (void)setName:(NSString *)name;
 - (NSString *)PIN;
 - (void)setPIN:(NSString *)PIN;
-- (NSString *)title;
-- (void)setTitle:(NSString *)title;
-- (NSString *)website;
-- (void)setWebsite:(NSString *)website;
+- (NSString *)URL;
+- (void)setURL:(NSString *)url;
 
-- (WindowRef)windowRef;
-- (BOOL)isVisible;
-- (void)runModal;
+- (void)beginSheetForWindow:(NSWindow *)window modalDelegate:(id)delegate didEndSelector:(SEL)selector contextInfo:(void *)info;
 
 /**
  * @name Actions
  */
 
-- (IBAction)orderOut:(id)sender;
-- (IBAction)orderFront:(id)sender;
+- (IBAction)cancel:(id)sender;
+- (IBAction)ok:(id)sender;
+- (IBAction)showHelp:(id)sender;
+- (IBAction)showOptions:(id)sender;
+- (IBAction)toggleDetails:(id)sender;
 
 @end

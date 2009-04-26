@@ -1,1 +1,9 @@
-"" = "";
+/* PIN Panel */
+"PINPanel.Label.URL" = "Asukoht:";
+"PINPanel.Label.Hash" = "Räsi:";
+"PINPanel.Label.Name" = "Nimi:";
+"PINPanel.Label.PIN2" = "PIN2:";
+"PINPanel.Message.PIN2" = "Palun sisesta digitaalseks allkirjastamiseks oma PIN2.";
+"PINPanel.Label.Details" = "Detailid";
+"PINPanel.Action.Cancel" = "Tühista";
+"PINPanel.Action.OK" = "Allkirjasta";

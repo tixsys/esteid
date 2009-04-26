@@ -2,210 +2,166 @@
 
 #import "EstEIDPINPanel.h"
 
-#define kEstEIDPINPanelCommandGetDocument 'Evdo'
-#define kEstEIDPINPanelControlIDNameKey 'enak'
-
-const ControlID kEstEIDPINPanelControlIDImageView = { 'eimg', 0 };
-//const ControlID kEstEIDPINPanelControlIDNameKey = { 'enak', 0 };
-const ControlID kEstEIDPINPanelControlIDNameValue = { 'enav', 0 };
-//const ControlID kEstEIDPINPanelControlIDHashKey = { 'ehak', 0 };
-const ControlID kEstEIDPINPanelControlIDHashValue = { 'ehav', 0 };
-//const ControlID kEstEIDPINPanelControlIDPINKey = { 'epik', 0 };
-const ControlID kEstEIDPINPanelControlIDPINValue = { 'epiv', 0 };
-//const ControlID kEstEIDPINPanelControlIDWebsiteKey = { 'ewsk', 0 };
-const ControlID kEstEIDPINPanelControlIDWebsiteValue = { 'ewsv', 0 };
-
-static OSStatus EstEIDPINPanelEventHandler(EventHandlerCallRef inHandlerCallRef, EventRef inEvent, void *userData)
-{
-	EstEIDPINPanel *self = (EstEIDPINPanel *)userData;
-	UInt32 eventClass = GetEventClass(inEvent);
-	UInt32 eventKind = GetEventKind(inEvent);
-	OSStatus err = noErr;
-	
-	if(eventClass == kEventClassCommand && eventKind == kEventProcessCommand) {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		HICommand hiCommand;
-		
-		err = GetEventParameter(inEvent, kEventParamDirectObject, typeHICommand, NULL, sizeof(HICommand), NULL, &hiCommand);
-		
-		switch(hiCommand.commandID) {
-			case kHICommandOK:
-				NSLog(@"OK!");
-				
-				break;
-			case kHICommandCancel:
-				[self orderOut:nil];
-				break;
-			case kEstEIDPINPanelCommandGetDocument:
-				NSLog(@"Get document");
-				break;
-			default:
-				err = eventNotHandledErr;
-				break;
-		}
-		
-		[pool release];
-	} else if(eventClass == kEventClassWindow && eventKind == kEventWindowBoundsChanged) {
-		// Do nothing at the moment
-		NSLog(@"Bounds changed!");
-	}
-	
-	return err;
-}
-
-DEFINE_ONE_SHOT_HANDLER_GETTER(EstEIDPINPanelEventHandler);
-
-#pragma mark -
+static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 
 @implementation EstEIDPINPanel
 
-- (NSString *)hash
-{
-	return nil;
-}
-
-- (void)setHash:(NSString *)hash
-{
-	ControlRef control;
-	
-	if(GetControlByID(self->m_window, &kEstEIDPINPanelControlIDHashValue, &control) == noErr) {
-		HIViewSetText(control, (hash) ? (CFStringRef)hash : CFSTR(""));
-	}
-}
-
-- (NSString *)name
-{
-	return nil;
-}
-
-- (void)setName:(NSString *)name
-{
-	ControlRef control;
-	
-	if(GetControlByID(self->m_window, &kEstEIDPINPanelControlIDNameValue, &control) == noErr) {
-		HIViewSetText(control, (name) ? (CFStringRef)name : CFSTR(""));
-	}
-}
-
-- (NSString *)PIN
-{
-	return nil;
-}
-
-- (void)setPIN:(NSString *)PIN
-{
-	ControlRef control;
-	
-	if(GetControlByID(self->m_window, &kEstEIDPINPanelControlIDPINValue, &control) == noErr) {
-		HIViewSetText(control, (PIN) ? (CFStringRef)PIN : CFSTR(""));
-	}
-}
-
-- (NSString *)title
-{
-	return nil;
-}
-
-- (void)setTitle:(NSString *)title
-{
-	SetWindowTitleWithCFString(self->m_window, (title) ? (CFStringRef)title : CFSTR(""));
-}
-
-- (NSString *)website
-{
-	return nil;
-}
-
-- (void)setWebsite:(NSString *)website
-{
-	ControlRef control;
-	
-	if(GetControlByID(self->m_window, &kEstEIDPINPanelControlIDWebsiteValue, &control) == noErr) {
-		HIViewSetText(control, (website) ? (CFStringRef)website : CFSTR(""));
-	}
-}
-
-- (WindowRef)windowRef
+- (NSWindow *)window
 {
 	return self->m_window;
 }
 
-- (BOOL)isVisible
+- (id <EstEIDPINPanelDelegate>)delegate
 {
-	return (IsWindowVisible(self->m_window)) ? YES : NO;
+	return self->m_delegate;
 }
 
-- (void)runModal
+- (void)setDelegate:(id <EstEIDPINPanelDelegate>)delegate
 {
-	EventTargetRef theTarget = GetEventDispatcherTarget();
-	EventRef theEvent;
-	
-	while(IsWindowVisible(self->m_window) && ReceiveNextEvent(0, NULL, kEventDurationForever, true, &theEvent) == noErr) {
-		SendEventToEventTarget(theEvent, theTarget);
-		ReleaseEvent(theEvent);
+	self->m_delegate = delegate;
+}
+
+- (BOOL)showsDetails
+{
+	return ([self->m_detailsBox isHidden] == NO) ? YES : NO;
+}
+
+- (void)setShowsDetails:(BOOL)flag animate:(BOOL)animate
+{
+	if([self showsDetails] != flag) {
+		float height = [self->m_detailsBox frame].size.height;
+		NSRect frame = [self->m_window frame];
+		
+		if([self->m_detailsBox isHidden]) {
+			frame.origin.y -= height;
+			frame.size.height += height;
+			
+			[self->m_window setFrame:frame display:animate animate:animate];
+			[self->m_detailsBox setHidden:NO];
+			[self->m_detailsButton setState:NSOnState];
+		} else {
+			frame.origin.y += height;
+			frame.size.height -= height;
+			
+			[self->m_detailsBox setHidden:YES];
+			[self->m_detailsButton setState:NSOffState];
+			[self->m_window setFrame:frame display:animate animate:animate];
+		}
+		
+		[[NSUserDefaults standardUserDefaults] setBool:flag forKey:EstEIDPINPanelShowsDetailsKey];
 	}
 }
 
-- (IBAction)orderOut:(id)sender
+- (void)beginSheetForWindow:(NSWindow *)window modalDelegate:(id)delegate didEndSelector:(SEL)selector contextInfo:(void *)info
 {
-	HideWindow(self->m_window);
+	[[NSApplication sharedApplication] beginSheet:[self window] modalForWindow:window modalDelegate:delegate didEndSelector:selector contextInfo:info];
 }
 
-- (IBAction)orderFront:(id)sender
+- (NSString *)hash
 {
-	ShowWindow(self->m_window);
+	return [self->m_hashTextField stringValue];
+}
+
+- (void)setHash:(NSString *)hash
+{
+	[self->m_hashTextField setStringValue:(hash) ? hash : @""];
+}
+
+- (NSString *)name
+{
+	return [self->m_nameTextField stringValue];
+}
+
+- (void)setName:(NSString *)name
+{
+	[self->m_nameTextField setStringValue:(name) ? name : @""];
+}
+
+- (NSString *)PIN
+{
+	return [self->m_pinTextField stringValue];
+}
+
+- (void)setPIN:(NSString *)PIN
+{
+	[self->m_pinTextField setStringValue:(PIN) ? PIN : @""];
+}
+
+- (NSString *)URL
+{
+	return [self->m_urlTextField stringValue];
+}
+
+- (void)setURL:(NSString *)URL
+{
+	[self->m_urlTextField setStringValue:(URL) ? URL : @""];
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[[self window] orderOut:sender];
+	[[NSApplication sharedApplication] endSheet:[self window] returnCode:NSRunAbortedResponse];
+}
+
+- (IBAction)ok:(id)sender
+{
+	if(![self->m_delegate respondsToSelector:@selector(pinPanelShouldEnd:)] || [self->m_delegate pinPanelShouldEnd:self]) {
+		[[self window] orderOut:sender];
+		[[NSApplication sharedApplication] endSheet:[self window] returnCode:NSRunStoppedResponse];
+	}
+}
+
+- (IBAction)showHelp:(id)sender
+{
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	id site = [[bundle localizedInfoDictionary] objectForKey:@"EstEIDHelpWebsite"];
+	
+	if(!site) {
+		site = [[bundle infoDictionary] objectForKey:@"EstEIDHelpWebsite"];
+	}
+	
+	if(!([site isKindOfClass:[NSString class]] && [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:(NSString *)site]])) {
+		NSLog(@"%@: Couldn't open help site (%@)!", NSStringFromClass([self class]), site);
+		NSBeep();
+	}
+}
+
+- (IBAction)showOptions:(id)sender
+{
+	// TODO: Download the document? Display a contextual menu?
+}
+
+- (IBAction)toggleDetails:(id)sender
+{
+	[self setShowsDetails:![self showsDetails] animate:YES];
+}
+
+#pragma mark NSWindowController
+
+- (void)awakeFromNib
+{
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	
+	[self->m_urlLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Label.URL" value:nil table:nil]];
+	[self->m_hashLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Label.Hash" value:nil table:nil]];
+	[self->m_nameLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Label.Name" value:nil table:nil]];
+	[self->m_pinLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Label.PIN2" value:nil table:nil]];
+	[self->m_messageLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Message.PIN2" value:nil table:nil]];
+	[self->m_detailsLabel setStringValue:[bundle localizedStringForKey:@"PINPanel.Label.Details" value:nil table:nil]];
+	[self->m_cancelButton setStringValue:[bundle localizedStringForKey:@"PINPanel.Action.Cancel" value:nil table:nil]];
+	[self->m_okButton setStringValue:[bundle localizedStringForKey:@"PINPanel.Action.OK" value:nil table:nil]];
+	
+	[self setShowsDetails:[[NSUserDefaults standardUserDefaults] boolForKey:EstEIDPINPanelShowsDetailsKey] animate:NO];
 }
 
 #pragma mark NSObject
 
 - (id)init
 {
-	WindowRef window = NULL;
-	IBNibRef nib = NULL;
+	self = [super init];
 	
-	if(CreateNibReferenceWithCFBundle(CFBundleGetBundleWithIdentifier(CFSTR("org.esteid.webplugin")), CFSTR("PINPanel"), &nib) == noErr) {
-		CreateWindowFromNib(nib, CFSTR("Panel"), &window);		
-		DisposeNibReference(nib);
-	}
-	
-	if(!window) {
-		[self release];
-		self = nil;
-	}
-	
-	if(self) {//, { kEventClassWindow, kEventWindowBoundsChanged }
-		EventTypeSpec windowEventList[] = { { kEventClassCommand, kEventProcessCommand } };
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		ControlRef control;
-		
-		self->m_window = window;
-		
-		if(GetControlByID(self->m_window, &kEstEIDPINPanelControlIDImageView, &control) == noErr) {
-			NSString *path = [bundle pathForResource:@"Icon" ofType:@"png"];
-			
-			if(path) {
-				CGDataProviderRef dataProvider = CGDataProviderCreateWithFilename([path fileSystemRepresentation]);
-				
-				if(dataProvider) {
-					CGImageRef image = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
-					
-					if(image) {
-						HIImageViewSetImage(control, image);
-						HIViewSetNeedsDisplay(control, TRUE);
-						CGImageRelease(image);
-					}
-					
-					CGDataProviderRelease(dataProvider);
-				}
-			}
-		}
-		
-		// TODO: Localize UI here
-		
-		if(InstallWindowEventHandler(window, GetEstEIDPINPanelEventHandlerUPP(), GetEventTypeCount(windowEventList), windowEventList, self, NULL) != noErr) {
-			[self release];
-			self = nil;
-		}
+	if(self) {
+		[NSBundle loadNibNamed:@"PINPanel" owner:self];
 	}
 	
 	return self;
@@ -213,9 +169,7 @@ DEFINE_ONE_SHOT_HANDLER_GETTER(EstEIDPINPanelEventHandler);
 
 - (void)dealloc
 {
-	if(self->m_window) {
-		ReleaseWindow(self->m_window);
-	}
+	[self->m_window release];
 	
 	[super dealloc];
 }

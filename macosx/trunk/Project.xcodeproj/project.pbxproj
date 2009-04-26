@@ -43,7 +43,6 @@
 		810673620F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */; };
 		810673630F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 810673600F9E71C1004BFEA0 /* EstEIDWebObject.m */; };
 		810675A30F9E9415004BFEA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
-		810676360F9E9480004BFEA0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
 		810677290F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */; };
 		8106772A0F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */ = {isa = PBXBuildFile; fileRef = 810677280F9E9A0C004BFEA0 /* EstEIDWebCertificate.m */; };
 		810679380F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 810679370F9EC0B1004BFEA0 /* PCSC.framework */; };
@@ -90,6 +89,14 @@
 		814F310A0F93F0C700A89C70 /* EstEIDManifestPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */; };
 		814F31F10F9407BE00A89C70 /* EstEIDInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */; };
 		814F34A60F94473500A89C70 /* EstEIDPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F34A50F94473500A89C70 /* EstEIDPackage.m */; };
+		815DBD730FA32961000531D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
+		815DBE0C0FA329B1000531D0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E4C8A20F9C436700997F53 /* SenTestingKit.framework */; };
+		815DBE0D0FA329B6000531D0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E4C8A20F9C436700997F53 /* SenTestingKit.framework */; };
+		815DBFD00FA33D53000531D0 /* EstEIDWebRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */; };
+		81793D770FA391F00068F85B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
+		81793F720FA3950D0068F85B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
+		817940B10FA3A11A0068F85B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
+		817940B20FA3A11D0068F85B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
 		817944E60F97407D007E0C96 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
 		817944E70F974084007E0C96 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
 		817944E80F97408A007E0C96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
@@ -136,7 +143,6 @@
 		81F871AC0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F871AB0FA0FB8A00832B54 /* EstEIDPINPanel.m */; };
 		81F871AD0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F871AB0FA0FB8A00832B54 /* EstEIDPINPanel.m */; };
 		81F871F20FA1209100832B54 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 81F871F10FA1209100832B54 /* Icon.png */; };
-		81F873B30FA13A7500832B54 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
 		81F873B40FA13A7500832B54 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
 		81F873B50FA13A7500832B54 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
 		81F873B60FA13A7500832B54 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
@@ -290,6 +296,8 @@
 		814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDInstaller.m; path = Updater/Sources/EstEIDInstaller.m; sourceTree = "<group>"; };
 		814F34A40F94473500A89C70 /* EstEIDPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPackage.h; path = Updater/Sources/EstEIDPackage.h; sourceTree = "<group>"; };
 		814F34A50F94473500A89C70 /* EstEIDPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackage.m; path = Updater/Sources/EstEIDPackage.m; sourceTree = "<group>"; };
+		815DBFCE0FA33D53000531D0 /* EstEIDWebRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebRuntime.h; path = WebPlugIn/Sources/EstEIDWebRuntime.h; sourceTree = "<group>"; };
+		815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebRuntime.m; path = WebPlugIn/Sources/EstEIDWebRuntime.m; sourceTree = "<group>"; };
 		817944A40F973E6F007E0C96 /* agent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = agent; sourceTree = BUILT_PRODUCTS_DIR; };
 		81867DB60FA1867A00475BCE /* PINPanel.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PINPanel.nib; path = WebPlugIn/PINPanel.nib; sourceTree = "<group>"; };
 		8197D1360F99F0AF002D8A1D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/Agent/main.m; sourceTree = "<group>"; };
@@ -393,8 +401,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E4C8D50F9C44C100997F53 /* SenTestingKit.framework in Frameworks */,
 				81F873B60FA13A7500832B54 /* AppKit.framework in Frameworks */,
+				81E4C8D50F9C44C100997F53 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81F873B80FA13A7500832B54 /* AppKit.framework in Frameworks */,
+				815DBE0C0FA329B1000531D0 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,9 +419,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */,
+				81793F720FA3950D0068F85B /* AppKit.framework in Frameworks */,
+				817940B20FA3A11D0068F85B /* Carbon.framework in Frameworks */,
+				815DBD730FA32961000531D0 /* Foundation.framework in Frameworks */,
 				810679380F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */,
-				81F873B30FA13A7500832B54 /* AppKit.framework in Frameworks */,
+				815DBE0D0FA329B6000531D0 /* SenTestingKit.framework in Frameworks */,
+				81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,7 +432,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				810676360F9E9480004BFEA0 /* Carbon.framework in Frameworks */,
+				81793D770FA391F00068F85B /* AppKit.framework in Frameworks */,
+				817940B10FA3A11A0068F85B /* Carbon.framework in Frameworks */,
 				810675A30F9E9415004BFEA0 /* Foundation.framework in Frameworks */,
 				810679390F9EC0B1004BFEA0 /* PCSC.framework in Frameworks */,
 				81F874C20F560ABF00FCAB5D /* WebKit.framework in Frameworks */,
@@ -641,6 +654,8 @@
 				81F874BF0F560A7100FCAB5D /* EstEIDWebPlugIn.mm */,
 				81F86DCE0FA063B500832B54 /* EstEIDWebPlugInProxy.h */,
 				81F86DCD0FA063B500832B54 /* EstEIDWebPlugInProxy.m */,
+				815DBFCE0FA33D53000531D0 /* EstEIDWebRuntime.h */,
+				815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -1093,9 +1108,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.mm in Sources */,
-				810673620F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */,
+				81F871AD0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */,
+				810680E80F9F511C004BFEA0 /* EstEIDReaderManager.mm in Sources */,
 				8106772A0F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */,
+				810673620F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */,
+				815DBFD00FA33D53000531D0 /* EstEIDWebRuntime.m in Sources */,
+				81F874C00F560A7100FCAB5D /* EstEIDWebPlugIn.mm in Sources */,
+				81F86DD00FA063B500832B54 /* EstEIDWebPlugInProxy.m in Sources */,
 				810679E70F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */,
 				810679E80F9EC79D004BFEA0 /* SCError.cpp in Sources */,
 				810679E90F9EC79D004BFEA0 /* SIMCard.cpp in Sources */,
@@ -1105,9 +1124,6 @@
 				810679ED0F9EC79D004BFEA0 /* CTAPIManager.cpp in Sources */,
 				810679EE0F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */,
 				810679EF0F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */,
-				810680E80F9F511C004BFEA0 /* EstEIDReaderManager.mm in Sources */,
-				81F86DD00FA063B500832B54 /* EstEIDWebPlugInProxy.m in Sources */,
-				81F871AD0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1598,15 +1614,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
+				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
@@ -1625,15 +1636,10 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_PREFIX_HEADER = Prefix.pch;
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
+				OTHER_LDFLAGS = "-lcrypto";
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;

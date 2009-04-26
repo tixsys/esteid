@@ -2,7 +2,8 @@
 
 #import "EstEIDWebObject.h"
 
-@class EstEIDReaderManager, EstEIDWebCertificate, EstEIDWebPlugInProxy;
+@class EstEIDReaderManager, EstEIDPINPanel, EstEIDWebCertificate, EstEIDWebPlugInProxy;
+@class NSWindow;
 
 extern NSString *EstEIDWebPlugInEventCardInsert;
 extern NSString *EstEIDWebPlugInEventCardRemove;
@@ -19,6 +20,8 @@ extern NSString *EstEIDWebPlugInEventCardError;
 	EstEIDWebPlugInProxy *m_proxy;
 	NSTimer *m_timer;
 	NSDictionary *m_userInfo;
+	EstEIDPINPanel *m_panel;
+	NSWindow *m_window;
 }
 
 - (void)invalidate:(NSTimer *)timer;
@@ -52,7 +55,7 @@ extern NSString *EstEIDWebPlugInEventCardError;
 
 - (NSString *)version;
 - (NSString *)readerName:(NSArray *)arguments;
-- (NSObject *)sign:(NSArray *)arguments;
+- (NSString *)sign:(NSArray *)arguments;
 - (id)addEventListener:(NSArray *)arguments;
 - (id)removeEventListener:(NSArray *)arguments;
 

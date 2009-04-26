@@ -6,6 +6,7 @@
 #import "EstEIDWebPlugIn.h"
 #import "EstEIDWebPlugInProxy.h"
 #import <Carbon/Carbon.h>
+#import <AppKit/AppKit.h>
 
 NSString *EstEIDWebPlugInEventCardInsert = @"cardInsert";
 NSString *EstEIDWebPlugInEventCardRemove = @"cardRemove";
@@ -33,6 +34,25 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	}
 	
 	return self->m_userInfo;
+}
+
+- (NSWindow *)window
+{
+	return self->m_window;
+}
+
+- (void)setWindow:(NSWindow *)window
+{
+	if(self->m_window != window) {
+		[self->m_window release];
+		self->m_window = [window retain];
+	}
+}
+
+- (void)pinSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	[self->m_panel autorelease];
+	self->m_panel = nil;
 }
 
 // TODO: ok?
@@ -191,8 +211,9 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	return [self->m_readerManager readerName:([reader isKindOfClass:[NSNumber class]]) ? [reader intValue] : [self->m_readerManager selectedReader]];
 }
 
-- (NSObject *)sign:(NSArray *)arguments
+- (NSString *)sign:(NSArray *)arguments
 {
+	// TODO: 
 	if([arguments count] == 2) {
 		NSString *hash = [arguments objectAtIndex:0];
 		NSString *url = [arguments objectAtIndex:1];
@@ -200,17 +221,16 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 		if([hash isKindOfClass:[NSString class]] && [url isKindOfClass:[NSString class]]) {
 			EstEIDWebCertificate *certificate = [self signCertificate];
 			
-			// TODO: Cleanup
-			
-			if(certificate) {
-				EstEIDPINPanel *panel = [[EstEIDPINPanel alloc] init];
+			if(certificate && !self->m_panel) {
+				self->m_panel = [[EstEIDPINPanel alloc] init];
 				
-				[panel setName:[NSString stringWithFormat:@"%@ %@", [[self firstName] capitalizedString], [[self lastName] capitalizedString]]];
-				[panel setHash:[hash uppercaseString]];
-				//[panel setURL:url];
-				[panel orderFront:nil];
-				[panel runModal];
-				[panel release];
+				[self->m_panel setDelegate:(id <EstEIDPINPanelDelegate>)self];
+				[self->m_panel setHash:[hash uppercaseString]];
+				[self->m_panel setURL:url];
+				[self->m_panel setName:[NSString stringWithFormat:@"%@ %@", [[self firstName] capitalizedString], [[self lastName] capitalizedString]]];
+				[self->m_panel beginSheetForWindow:[self window] modalDelegate:self didEndSelector:@selector(pinSheetDidEnd: returnCode: contextInfo:) contextInfo:NULL];
+				
+				return nil;
 			} else {
 				return nil;
 			}
@@ -220,7 +240,7 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 		}
 	}
 	
-	return [NSException exceptionWithName:@"SigningError!" reason:nil userInfo:nil];
+	@throw @"Some exception?";
 }
 
 - (id)addEventListener:(NSArray *)arguments
@@ -282,6 +302,13 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	return nil;
 }
 
+#pragma mark EstEIDPINPanelDelegate
+
+- (BOOL)pinPanelShouldEnd:(EstEIDPINPanel *)pinPanel
+{
+	return YES;
+}
+
 #pragma mark EstEIDWebObject
 
 + (SEL)selectorForMethod:(const char *)name
@@ -321,6 +348,23 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 
 #pragma mark NSObject
 
+#if DEBUG
+- (id)retain
+{
+	NSLog(@"EstEID: Plug-in retained %d++ (address=0x%X)", [self retainCount], self);
+	
+	return [super retain];
+}
+
+- (void)release
+{
+	NSLog(@"EstEID: Plug-in released %d-- (address=0x%X)", [self retainCount], self);
+	
+	[super release];
+}
+
+#endif
+
 - (id)init
 {
 #if DEBUG
@@ -353,6 +397,8 @@ NSString *EstEIDWebPlugInEventCardError = @"cardError";
 	[self->m_authCertificate release];
 	[self->m_signCertificate release];
 	[self->m_userInfo release];
+	[self->m_panel release];
+	[self->m_window release];
 	
 	[super dealloc];
 }

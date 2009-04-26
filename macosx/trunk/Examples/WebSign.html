@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>ID-card Signing Example</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="-1" />
+	   <script type="text/javascript">
+			function reloadData() {
+				document.getElementById("firstName").innerHTML = esteid.firstName;
+				document.getElementById("lastName").innerHTML = esteid.lastName;
+				document.getElementById("expiryDate").innerHTML = esteid.expiryDate;
+			}
+			
+			function sign() {
+				var location = window.location.href;
+				
+				// openssl sha1 Document.txt 
+				// SHA1(Document.txt)= 408fc8f744713e54fee3d1fb45b75be433998562
+				esteid.sign('408fc8f744713e54fee3d1fb45b75be433998562', location.substring(0, location.lastIndexOf('/') + 1) + 'Document.txt');
+			}
+			
+			function cardInserted(reader) {
+				reloadData();
+			}
+			
+			function cardRemoved(reader) {
+				reloadData();
+			}
+			
+			function load()
+			{
+				esteid.addEventListener("cardInsert", cardInserted);
+				esteid.addEventListener("cardRemove", cardRemoved);
+				
+				reloadData();
+			}
+		</script>
+	</head>
+	<body onload="load();">
+		<div>
+			<object style="visibility:hidden; display:none;" id="esteid" type="application/x-esteid">ID-Kaardi tugi ei tööta :(</object>
+		</div>
+		<div id="firstName"></div>
+		<div id="lastName"></div>
+		<div id="expiryDate"></div>
+		<div id="error" style="color: red;"></div>
+		<input type="button" onclick="sign()" value="Sign!" />
+	</body>
+</html>

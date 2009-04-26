@@ -19,7 +19,12 @@
 
 - (IBAction)help:(id)sender
 {
-	id site = [[[NSBundle bundleForClass:[self class]] infoDictionary] objectForKey:@"EstEIDHelpWebsite"];
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	id site = [[bundle localizedInfoDictionary] objectForKey:@"EstEIDHelpWebsite"];
+	
+	if(!site) {
+		site = [[bundle infoDictionary] objectForKey:@"EstEIDHelpWebsite"];
+	}
 	
 	if(!([site isKindOfClass:[NSString class]] && [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:(NSString *)site]])) {
 		NSLog(@"%@: Couldn't open help site!", NSStringFromClass([self class]));
