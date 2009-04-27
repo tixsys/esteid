@@ -39,10 +39,10 @@
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
 	<key>NSPrincipalClass</key>
-	<string>EstEIDWebPlugIn</string>
+	<string>EstEIDWebService</string>
 	<key>WebPluginMIMETypes</key>
 	<dict>
-		<key>application/x-esteid</key>
+		<key>application/esteid-plugin</key>
 		<dict>
 			<key>WebPluginTypeDescription</key>
 			<string>EstEID Module</string>

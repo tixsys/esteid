@@ -330,7 +330,23 @@ bool EstEIDWebRuntimeMsgSend(NPP npp, id self, SEL selector, const NPVariant *ar
 		}
 		
 		@try {
-			object = [self performSelector:selector withObject:arguments];
+			NSMethodSignature *signature = [self methodSignatureForSelector:selector];
+			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+			
+			[invocation setTarget:self];
+			[invocation setSelector:selector];
+			
+			if([signature numberOfArguments] == 3) {
+				[invocation setArgument:&arguments atIndex:2];
+			}
+			
+			[invocation invoke];
+			
+			if([signature methodReturnLength] == sizeof(id)) {
+				[invocation getReturnValue:&object];
+			} else {
+				object = nil;
+			}
 		}
 		@catch(NSException *e) {
 			object = e;
@@ -421,25 +437,47 @@ void NP_Shutdown(void);
 int main(NPNetscapeFuncs *browserFuncs, NPPluginFuncs *pluginFuncs, NPP_ShutdownProcPtr *shutdown);
 #pragma export off
 
-NPError NPP_New(NPMIMEType pluginType, NPP npp, uint16 mode, int16 argc, char *argn[], char *argv[], NPSavedData *saved)
+NPError NPP_New(NPMIMEType pluginType, NPP plugin, uint16 mode, int16 argc, char *argn[], char *argv[], NPSavedData *saved)
 {
     if(browser->version >= 14) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		EstEIDWebObject *object = [[NSClassFromString([[[NSBundle bundleForClass:[EstEIDWebObject class]] infoDictionary] objectForKey:@"NSPrincipalClass"]) alloc] init];
-		void *value = NULL;
+		Class class = NSClassFromString([[[NSBundle bundleForClass:[EstEIDWebObject class]] infoDictionary] objectForKey:@"NSPrincipalClass"]);
+		EstEIDWebObject *object = ([(NSObject *)class conformsToProtocol:@protocol(EstEIDWebService)]) ? [[(id)class alloc] init] : nil;
+		NPObject *value = NULL;
 		
-        npp->pdata = EstEIDWebObjectContextCreate(npp, object);
+        plugin->pdata = EstEIDWebObjectContextCreate(plugin, object);
 		
 		// The style attribute is ignored by Safari, so manually set width and height to 0 in order to make it invisible.
-		if(browser->getvalue(npp, NPNVPluginElementNPObject, (void *)&value) == NPERR_NO_ERROR) {
+		if(browser->getvalue(plugin, NPNVPluginElementNPObject, (void *)&value) == NPERR_NO_ERROR) {
 			NPVariant variant;
 			
 			variant.type = NPVariantType_Int32;
 			variant.value.intValue = 0;
 			
-			browser->setproperty(npp, (NPObject *)value, browser->getstringidentifier((NPUTF8 *)"width"), &variant);
-			browser->setproperty(npp, (NPObject *)value, browser->getstringidentifier((NPUTF8 *)"height"), &variant);
+			browser->setproperty(plugin, (NPObject *)value, browser->getstringidentifier((NPUTF8 *)"width"), &variant);
+			browser->setproperty(plugin, (NPObject *)value, browser->getstringidentifier((NPUTF8 *)"height"), &variant);
 			browser->releaseobject((NPObject *)value);
+		}
+		
+		if(browser->getvalue(plugin, NPNVWindowNPObject, (void *)&value) == NPERR_NO_ERROR) {
+			NPVariant variant;
+			
+			if(browser->getproperty(plugin, value, browser->getstringidentifier("location"), &variant)) {
+				NPVariant location;
+				
+				if(browser->getproperty(plugin, variant.value.objectValue, browser->getstringidentifier("href"), &location)) {
+					if(location.type == NPVariantType_String) {
+						NSString *result = nil;
+						
+						EstEIDWebRuntimeVariantToObject(plugin, &location, &result);
+						[(id <EstEIDWebService>)object setURL:(result) ? [NSURL URLWithString:result] : nil];
+					}
+					
+					browser->releasevariantvalue(&location);
+				}
+				
+				browser->releasevariantvalue(&variant);
+			}
 		}
 		
         [object release];
@@ -470,7 +508,7 @@ NPError NPP_SetWindow(NPP plugin, NPWindow *window)
 		if(window && window->type == NPWindowTypeWindow) {
 			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 			
-			[obj->obj setWindow:[[[NSWindow alloc] initWithWindowRef:GetWindowFromPort(((NP_Port *)window->window)->port)] autorelease]];
+			[(id <EstEIDWebService>)obj->obj setWindow:[[[NSWindow alloc] initWithWindowRef:GetWindowFromPort(((NP_Port *)window->window)->port)] autorelease]];
 			
 			[pool release];
 		}
@@ -482,6 +520,7 @@ NPError NPP_SetWindow(NPP plugin, NPWindow *window)
 
 NPError NPP_NewStream(NPP plugin, NPMIMEType type, NPStream *stream, NPBool seekable, uint16 *stype)
 {
+	NSLog(@"wwwww");
     *stype = NP_ASFILEONLY;
     
     return NPERR_NO_ERROR;

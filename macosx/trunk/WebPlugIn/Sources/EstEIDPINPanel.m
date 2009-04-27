@@ -52,9 +52,32 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 	}
 }
 
+- (void)beginSheetForWindow:(NSWindow *)window
+{
+	[self beginSheetForWindow:window modalDelegate:nil didEndSelector:nil contextInfo:NULL];
+}
+
 - (void)beginSheetForWindow:(NSWindow *)window modalDelegate:(id)delegate didEndSelector:(SEL)selector contextInfo:(void *)info
 {
 	[[NSApplication sharedApplication] beginSheet:[self window] modalForWindow:window modalDelegate:delegate didEndSelector:selector contextInfo:info];
+}
+
+- (void)runModal
+{
+	NSApplication *application = [NSApplication sharedApplication];
+	
+	while([self->m_window isVisible]) {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0.1F];
+		NSEvent *event = [application nextEventMatchingMask:NSAnyEventMask untilDate:date inMode:NSDefaultRunLoopMode dequeue:YES];
+		
+		if(event) {
+			[application sendEvent:event];
+		}
+		
+		[date release];
+		[pool release];
+	}
 }
 
 - (NSString *)hash
@@ -99,6 +122,7 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 
 - (IBAction)cancel:(id)sender
 {
+	[[self retain] autorelease];
 	[[self window] orderOut:sender];
 	[[NSApplication sharedApplication] endSheet:[self window] returnCode:NSRunAbortedResponse];
 }
@@ -106,6 +130,7 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 - (IBAction)ok:(id)sender
 {
 	if(![self->m_delegate respondsToSelector:@selector(pinPanelShouldEnd:)] || [self->m_delegate pinPanelShouldEnd:self]) {
+		[[self retain] autorelease];
 		[[self window] orderOut:sender];
 		[[NSApplication sharedApplication] endSheet:[self window] returnCode:NSRunStoppedResponse];
 	}

@@ -6,6 +6,6 @@
 
 extern NPNetscapeFuncs *browser;
 
-void EstEIDWebRuntimeObjectToVariant(NPP npp, id object, NPVariant *variant);
-void EstEIDWebRuntimeVariantToObject(NPP npp, const NPVariant *variant, id *object);
-bool EstEIDWebRuntimeMsgSend(NPP npp, id object, SEL selector, const NPVariant *args, int argc, NPVariant *result);
+void EstEIDWebRuntimeObjectToVariant(NPP plugin, id object, NPVariant *variant);
+void EstEIDWebRuntimeVariantToObject(NPP plugin, const NPVariant *variant, id *object);
+bool EstEIDWebRuntimeMsgSend(NPP plugin, id object, SEL selector, const NPVariant *args, int argc, NPVariant *result);

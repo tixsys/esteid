@@ -49,7 +49,9 @@
 - (NSString *)URL;
 - (void)setURL:(NSString *)url;
 
+- (void)beginSheetForWindow:(NSWindow *)window;
 - (void)beginSheetForWindow:(NSWindow *)window modalDelegate:(id)delegate didEndSelector:(SEL)selector contextInfo:(void *)info;
+- (void)runModal;
 
 /**
  * @name Actions

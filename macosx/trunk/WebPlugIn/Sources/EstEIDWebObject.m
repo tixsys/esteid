@@ -28,10 +28,24 @@
 	SEL selector = [[self class] selectorForMethod:[name UTF8String]];
 	
 	if(selector) {
-		id result_1 = [self performSelector:selector withObject:arguments];
+		NSMethodSignature *signature = [self methodSignatureForSelector:selector];
+		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+		
+		[invocation setTarget:self];
+		[invocation setSelector:selector];
+		
+		if([signature numberOfArguments] == 3) {
+			[invocation setArgument:&arguments atIndex:2];
+		}
+		
+		[invocation invoke];
 		
 		if(result) {
-			*result = result_1;
+			if([signature methodReturnLength] == sizeof(id)) {
+				[invocation getReturnValue:result];
+			} else {
+				*result = nil;
+			}
 		}
 		
 		return YES;

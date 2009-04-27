@@ -1,30 +1,21 @@
-/* Copyright (c) 2008 Janek Priimann */
+/* Copyright (c) 2009 Janek Priimann */
 
 #import "EstEIDWebObject.h"
 
-@class EstEIDReaderManager, EstEIDPINPanel, EstEIDWebCertificate, EstEIDWebPlugInProxy;
-@class NSWindow;
+@class EstEIDReaderManager, EstEIDWebCertificate;
 
-extern NSString *EstEIDWebPlugInEventCardInsert;
-extern NSString *EstEIDWebPlugInEventCardRemove;
-extern NSString *EstEIDWebPlugInEventCardError;
+extern NSString *EstEIDWebServiceEventCardInsert;
+extern NSString *EstEIDWebServiceEventCardRemove;
+extern NSString *EstEIDWebServiceEventCardError;
 
-@interface EstEIDWebPlugIn : EstEIDWebObject
+@interface EstEIDWebService : EstEIDWebObject <EstEIDWebService>
 {
-    @private
-	NSMutableDictionary *m_eventListeners;
-	EstEIDWebCertificate *m_authCertificate;
-	EstEIDWebCertificate *m_signCertificate;
-	EstEIDReaderManager *m_readerManager;
-	NSString *m_readerState;
-	EstEIDWebPlugInProxy *m_proxy;
-	NSTimer *m_timer;
-	NSDictionary *m_userInfo;
-	EstEIDPINPanel *m_panel;
+	@private
+	NSURL *m_url;
 	NSWindow *m_window;
+	NSMutableDictionary *m_eventListeners;
+	EstEIDReaderManager *m_readerManager;
 }
-
-- (void)invalidate:(NSTimer *)timer;
 
 /**
  * @name JavaScript Properties
@@ -56,7 +47,7 @@ extern NSString *EstEIDWebPlugInEventCardError;
 - (NSString *)version;
 - (NSString *)readerName:(NSArray *)arguments;
 - (NSString *)sign:(NSArray *)arguments;
-- (id)addEventListener:(NSArray *)arguments;
-- (id)removeEventListener:(NSArray *)arguments;
+- (void)addEventListener:(NSArray *)arguments;
+- (void)removeEventListener:(NSArray *)arguments;
 
 @end
