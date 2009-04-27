@@ -35,7 +35,7 @@ void JsCardManager::pollCard()
                 reader.connected = false;
             }
             tmp.append(reader);
-            if (cardReaders.at(i).connected != reader.connected) {
+            if (cardReaders.value(i).connected != reader.connected) {
                 if (reader.connected == true)
                     emit cardEvent(m_jsCardInsertFunc, i);
                 else
@@ -43,7 +43,7 @@ void JsCardManager::pollCard()
             }
         }
         cardReaders = tmp;
-    } catch (std::runtime_error &err) {
+    } catch (std::runtime_error &) {
         // For now ignore any errors that might have happened during polling.
         // We don't want to spam users too often.
     }
@@ -102,6 +102,7 @@ bool JsCardManager::selectReader(int i)
     } catch (std::runtime_error &err) {
         handleError(err.what());
     }
+	return false;
 }
 
 int JsCardManager::getReaderCount()

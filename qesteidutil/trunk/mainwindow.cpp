@@ -25,8 +25,9 @@ MainWindow::MainWindow()
 
     m_jsExtender->registerObject("esteidData", jsEsteidCard);
     m_jsExtender->registerObject("cardManager", jsCardManager);
-//    webView->load(QUrl(QDir::currentPath() + "/html/index.html"));
-    webView->load(QUrl("qrc:/html/index.html"));
+
+	webView->load(QUrl("qrc:/html/index.html"));
 
     setWindowTitle(tr("ID-card utility"));
+	setFixedSize( 601, 520 );
 }

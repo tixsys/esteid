@@ -2,216 +2,113 @@
 	<head>
 		<title>ID kaardi utiliit</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	</head>
-<body>
-
-Lugejas on ID kaart <span id="documentId"></span>
-<br>Kaart on kehtiv kuni <span id="expiry"></span>
-<br>Nimi: <span id="firstName"></span>
-          <span id="middleName"></span>
-          <span id="surName"></span>
-<br>Isikukood: <span id="id"></span>
-<br>Sündinud: <span id="birthDate"></span>,
-              <span id="birthPlace"></span>
-<br>Kodakondsus: <span id="citizen"></span>
-<br>E-post: <span id="email"></span>
-
-<p>
-	<b>Isikutuvastamise sertifikaat</b>
-	<br>subjCN: <span id="authCertSubjCN"></span>
-	<br>subjO: <span id="authCertSubjO"></span>
-	<br>subjOU: <span id="authCertSubjOU"></span>
-	<br>validFrom: <span id="authCertValidFrom"></span>
-	<br>validTo: <span id="authCertValidTo"></span>
-	<br>issuerCN: <span id="authCertIssuerCN"></span>
-	<br>issuerO: <span id="authCertIssuerO"></span>
-	<br>issuerOU: <span id="authCertIssuerOU"></span>
-	<br><input type="button" onclick="authCertToPem()" value="PEM formaat" />
-</p>
-
-<p>
-	<b>Allkirja sertifikaat</b>
-	<br>subjCN: <span id="signCertSubjCN"></span>
-	<br>subjO: <span id="signCertSubjO"></span>
-	<br>subjOU: <span id="signCertSubjOU"></span>
-	<br>validFrom: <span id="signCertValidFrom"></span>
-	<br>validTo: <span id="signCertValidTo"></span>
-	<br>issuerCN: <span id="signCertIssuerCN"></span>
-	<br>issuerO: <span id="signCertIssuerO"></span>
-	<br>issuerOU: <span id="signCertIssuerOU"></span>
-	<br><input type="button" onclick="signCertToPem()" value="PEM formaat" />
-</p>
-
-<input type="button" onclick="changePin1()" value="Muuda PIN1" />
-<input type="button" onclick="changePin2()" value="Muuda PIN2" />
-<input type="button" onclick="changePuk()" value="Muuda PUK" />
-<br>
-<input type="button" onclick="unblockPin1()" value="Lukusta lahti PIN1" />
-<input type="button" onclick="unblockPin2()" value="Lukusta lahti PIN2" />
+		<link rel="stylesheet" href="qrc:/html/style.css" type="text/css" />
+		<script type="text/javascript" src="qrc:/html/script.js"></script>
+    </head>
+<body onSelectStart="return false;">
+  <div id="top">
+    <div id="headerBackground">
+      <div style="display: none;">
+        <select id="headerSelect">
+          <option value="et">Estonian</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div id="headerMenus">
+        <ul>
+          <li class="first">Diagnostika</li>
+          <li>Suvandid</li>
+          <li>Abi</li>
+        </ul>        
+      </div>
+    </div>
+    <div id="topBackground">&nbsp;</div>
+    <div id="logo">&nbsp;</div>
+    <div id="logotext">&nbsp;</div>
+    <div id="linegray">&nbsp;</div>
+    <div id="personalInfo">
+      <ul>
+        <li>Nimi: <span id="firstName"></span> <span id="middleName"></span> <span id="surName"></span></li>
+        <li>Isikukood: <span id="id"></span></li>
+        <li>Sündinud: <span id="birthDate"></span>, <span id="birthPlace"></span></li>
+        <li>Kodakondsus: <span id="citizen"></span></li>
+        <li>E-post: <span id="email"></span></li>
+      </ul>
+    </div>
+    <div id="photo">
+      <div style="padding-top:50px;">
+        Lae pilt
+      </div>
+    </div>
+    <div id="leftMenus">
+      <ul>
+        <li><input type="button" value="Sertifikaadid" class="buttonSelected" /></li>
+        <li><input type="button" value="@eesti.ee e-post" class="button" /></li>
+        <li><input type="button" value="Mobiil-ID" class="button" /></li>
+        <li><input type="button" value="PUK kood" class="button" /></li>
+      </ul>
+    </div>
+    <div id="cardInfo">
+      <ul>
+        <li>Lugejas on ID kaart <span id="documentId" style="color: #355670;"></span></li>
+        <li>See on <span style="color: #509b00;">kehtiv</span> dokument</li>
+        <li><span style="font-size:12px; font-weight: normal; color: #355670;">Kaart on kehtiv kuni <span id="expiry" style="color: #355670;"></span></span></li>
+      </ul>
+    </div>
+  </div>
+  <div id="content">
+    <div id="authContent">
+      <span class="contentHeader">Isikutuvastamise sertifikaat</span>
+      <p>
+        Sertifikaat on <span id="authCertStatus"></span><br />
+        Sertifikaat kehtib kuni <span id="authCertValidTo"></span>
+      </p>
+      <p id="authKeyText">
+        Isikutuvastamise privaatvõtit on edukalt kasutatud <span id="authKeyUsage"></span> korda
+      </p>
+      <div id="authKeyBlocked" class="keyBlocked">
+        Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.
+      </div>
+      <div id="authBottomButtons">
+        <div id="authValidButtons">
+          <input type="button" value="Muuda PIN1" onclick="changePin1()" class="buttonBottom" />
+          <input type="button" value="Vaata üksikasju" class="buttonBottom" />
+        </div>
+        <div id="authBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
+          <input type="button" value="Tühista blokeering" onclick="unblockPin1()" class="buttonBottom" />
+        </div>
+      </div>
+    </div>
+    <div id="signContent">
+      <span class="contentHeader">Allkirja sertifikaat</span>
+      <p>
+        Sertifikaat on <span id="signCertStatus"></span><br />
+        Sertifikaat kehtib kuni <span id="signCertValidTo"></span>
+      </p>
+      <p id="signKeyText">
+        Allkirjastamise privaatvõtit on edukalt kasutatud <span id="signKeyUsage"></span> korda
+      </p>
+      <div id="signKeyBlocked" class="keyBlocked">
+        Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.
+      </div>
+      <div id="signBottomButtons" style="padding-left: 30px;">
+        <div id="signValidButtons">
+          <input type="button" value="Muuda PIN2" onclick="changePin2()" class="buttonBottom" />
+          <input type="button" value="Vaata üksikasju" class="buttonBottom" />
+        </div>
+        <div id="signBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
+          <input type="button" value="Tühista blokeering" onclick="unblockPin2()" class="buttonBottom" />
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script type="text/javascript">
-
-function changePin1()
-{
-	var oldVal=prompt("Vana PIN1:");
-	var newVal=prompt("Uus PIN1:");
-	if (oldVal!=null && oldVal!="" && newVal!=null && newVal!="") {
-		ret = esteidData.changePin1(newVal, oldVal);
-		if (ret) {
-			alert("PIN1 kood muudetud!");
-		} else {
-			var pin1RetryCount = esteidData.getPin1RetryCount();
-			alert("Vale PIN. Saad veel proovida " + pin1RetryCount + " korda.");
-		}
-	}
-}
-
-function changePin2()
-{
-	var oldVal=prompt("Vana PIN2:");
-	var newVal=prompt("Uus PIN2:");
-	if (oldVal!=null && oldVal!="" && newVal!=null && newVal!="") {
-		ret = esteidData.changePin2(newVal, oldVal);
-		if (ret) {
-			alert("PIN2 kood muudetud!");
-		} else {
-			var pin2RetryCount = esteidData.getPin2RetryCount();
-			alert("Vale PIN. Saad veel proovida " + pin2RetryCount + " korda.");
-		}
-	}
-}
-
-function changePuk()
-{
-	var oldVal=prompt("Vana PUK:");
-	var newVal=prompt("Uus PUK:");
-	if (oldVal!=null && oldVal!="" && newVal!=null && newVal!="") {
-		ret = esteidData.changePuk(newVal, oldVal);
-		if (ret) {
-			alert("PUK kood muudetud!");
-		} else {
-			var pukRetryCount = esteidData.getPukRetryCount();
-			alert("Vale PUK. Saad veel proovida " + pukRetryCount + " korda.");
-		}
-	}
-}
-
-function unblockPin1()
-{
-	var puk=prompt("PUK:");
-	var newVal=prompt("Uus PIN1:");
-	if (puk!=null && puk!="" && newVal!=null && newVal!="") {
-		ret = esteidData.unblockPin1(newVal, puk);
-		if (ret) {
-			alert("PIN1 kood muudetud!");
-		} else {
-			var pukRetryCount = esteidData.getPukRetryCount();
-			alert("Vale PUK. Saad veel proovida " + pukRetryCount + " korda.");
-		}
-	}
-}
-
-function unblockPin2()
-{
-	var puk=prompt("PUK:");
-	var newVal=prompt("Uus PIN2:");
-	if (puk!=null && puk!="" && newVal!=null && newVal!="") {
-		ret = esteidData.unblockPin2(newVal, puk);
-		if (ret) {
-			alert("PIN2 kood muudetud!");
-		} else {
-			var pukRetryCount = esteidData.getPukRetryCount();
-			alert("Vale PUK. Saad veel proovida " + pukRetryCount + " korda.");
-		}
-	}
-}
-
-function cardInserted(i)
-{
-	alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
-	cardManager.selectReader(i);
-	readCardData();
-}
-
-function cardRemoved(i)
-{
-	alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i))
-}
-
-function handleError(msg)
-{
-	alert("Tekkis viga: " + msg)
-}
-
-function authCertToPem()
-{
-	alert(esteidData.authCert.toPem());
-}
-
-function signCertToPem()
-{
-	alert(esteidData.signCert.toPem());
-}
-
-function readCardData()
-{
-	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
-	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
-	document.getElementById('firstName').innerHTML = esteidData.getFirstName();
-	document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
-	document.getElementById('surName').innerHTML = esteidData.getSurName();
-	document.getElementById('id').innerHTML = esteidData.getId();
-	document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
-	document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
-	document.getElementById('citizen').innerHTML = esteidData.getCitizen();
-
-	document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
-
-	document.getElementById('authCertSubjCN').innerHTML = esteidData.authCert.getSubjCN();
-	document.getElementById('authCertSubjO').innerHTML = esteidData.authCert.getSubjO();
-	document.getElementById('authCertSubjOU').innerHTML = esteidData.authCert.getSubjOU();
-	document.getElementById('authCertValidFrom').innerHTML = esteidData.authCert.getValidFrom();
-	document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
-	document.getElementById('authCertIssuerCN').innerHTML = esteidData.authCert.getIssuerCN();
-	document.getElementById('authCertIssuerO').innerHTML = esteidData.authCert.getIssuerO();
-	document.getElementById('authCertIssuerOU').innerHTML = esteidData.authCert.getIssuerOU();
-
-	document.getElementById('signCertSubjCN').innerHTML = esteidData.signCert.getSubjCN();
-	document.getElementById('signCertSubjO').innerHTML = esteidData.signCert.getSubjO();
-	document.getElementById('signCertSubjOU').innerHTML = esteidData.signCert.getSubjOU();
-	document.getElementById('signCertValidFrom').innerHTML = esteidData.signCert.getValidFrom();
-	document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
-	document.getElementById('signCertIssuerCN').innerHTML = esteidData.signCert.getIssuerCN();
-	document.getElementById('signCertIssuerO').innerHTML = esteidData.signCert.getIssuerO();
-	document.getElementById('signCertIssuerOU').innerHTML = esteidData.signCert.getIssuerOU();
-}
-
 window.cardManager.registerCallBack("cardInsert", "cardInserted");
 window.cardManager.registerCallBack("cardRemove", "cardRemoved");
 window.cardManager.registerCallBack("handleError", "handleError");
 
-var readerCount = cardManager.getReaderCount();
-if(readerCount == 0) {
-	alert("Ühtegi kiipkaardi lugejat pole ühendatud.")
-}
-
-var pin1RetryCount = esteidData.getPin1RetryCount();
-if(pin1RetryCount == 0) {
-	alert("PIN1 on lukus.")
-}
-
-var pin2RetryCount = esteidData.getPin2RetryCount();
-if(pin2RetryCount == 0) {
-	alert("PIN2 on lukus.")
-}
-
-var pukRetryCount = esteidData.getPukRetryCount();
-if(pukRetryCount == 0) {
-	alert("PUK on lukus.")
-}
-
 readCardData();
-
 </script>
 
 </body>

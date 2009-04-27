@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QDebug>
+#include <QDate>
 
 #include "jsesteidcard.h"
 
@@ -10,6 +11,8 @@ JsEsteidCard::JsEsteidCard()
     m_card = NULL;
     m_authCert = new JsCertData();
     m_signCert = new JsCertData();
+	authUsageCount = 0;
+	signUsageCount = 0;
 }
 
 void JsEsteidCard::setCard(EstEidCard *card)
@@ -39,16 +42,16 @@ void JsEsteidCard::reloadData() {
         // Read all personal data
         m_card->readPersonalData(tmp,EstEidCard::SURNAME,EstEidCard::COMMENT4);
 
-        surName = tmp[EstEidCard::SURNAME].c_str();
-        firstName = tmp[EstEidCard::FIRSTNAME].c_str();
-        middleName = tmp[EstEidCard::MIDDLENAME].c_str();
+        surName = parseName( tmp[EstEidCard::SURNAME].c_str() );
+        firstName = parseName( tmp[EstEidCard::FIRSTNAME].c_str() );
+        middleName = parseName( tmp[EstEidCard::MIDDLENAME].c_str() );
         sex = tmp[EstEidCard::SEX].c_str();
         citizen = tmp[EstEidCard::CITIZEN].c_str();
         birthDate = tmp[EstEidCard::BIRTHDATE].c_str();
         id = tmp[EstEidCard::ID].c_str();
         documentId = tmp[EstEidCard::DOCUMENTID].c_str();
         expiry = tmp[EstEidCard::EXPIRY].c_str();
-        birthPlace = tmp[EstEidCard::BIRTHPLACE].c_str();
+        birthPlace = parseName( tmp[EstEidCard::BIRTHPLACE].c_str() );
         issueDate = tmp[EstEidCard::ISSUEDATE].c_str();
         residencePermit = tmp[EstEidCard::RESIDENCEPERMIT].c_str();
         comment1 = tmp[EstEidCard::COMMENT1].c_str();
@@ -59,8 +62,29 @@ void JsEsteidCard::reloadData() {
 //        doShowError(err);
         cout << "Error: " << err.what() << endl;
     }
+	
+	m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
 }
 
+bool JsEsteidCard::validatePin1(QString oldVal)
+{
+    if (!m_card) {
+        qDebug("No card");
+        return false;
+    }
+
+    byte retriesLeft = 0;
+
+    try {
+        return m_card->validateAuthPin(oldVal.toStdString(),
+                                     retriesLeft);
+    } catch(AuthError &) {
+        return false;
+    } catch (std::runtime_error &err) {
+        handleError(err.what());
+        return false;
+    }
+}
 
 bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
 {
@@ -75,7 +99,27 @@ bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
         return m_card->changeAuthPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
-    } catch(AuthError &err) {
+    } catch(AuthError &) {
+        return false;
+    } catch (std::runtime_error &err) {
+        handleError(err.what());
+        return false;
+    }
+}
+
+bool JsEsteidCard::validatePin2(QString oldVal)
+{
+    if (!m_card) {
+        qDebug("No card");
+        return false;
+    }
+
+    byte retriesLeft = 0;
+
+    try {
+        return m_card->validateSignPin(oldVal.toStdString(),
+										retriesLeft);
+    } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -96,7 +140,27 @@ bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
         return m_card->changeSignPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
-    } catch(AuthError &err) {
+    } catch(AuthError &) {
+        return false;
+    } catch (std::runtime_error &err) {
+        handleError(err.what());
+        return false;
+    }
+}
+
+bool JsEsteidCard::validatePuk(QString oldVal)
+{
+    if (!m_card) {
+        qDebug("No card");
+        return false;
+    }
+
+    byte retriesLeft = 0;
+
+    try {
+        return m_card->validatePuk(oldVal.toStdString(),
+                                     retriesLeft);
+    } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -117,7 +181,7 @@ bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
         return m_card->changePUK(newVal.toStdString(),
                                  oldVal.toStdString(),
                                  retriesLeft);
-    } catch(AuthError &err) {
+    } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -138,7 +202,7 @@ bool JsEsteidCard::unblockPin1(QString newVal, QString puk)
         return m_card->unblockAuthPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
-    } catch(AuthError &err) {
+    } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -159,7 +223,7 @@ bool JsEsteidCard::unblockPin2(QString newVal, QString puk)
         return m_card->unblockSignPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
-    } catch(AuthError &err) {
+    } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -194,7 +258,7 @@ QString JsEsteidCard::getCitizen()
 
 QString JsEsteidCard::getBirthDate()
 {
-    return birthDate;
+    return QDate::fromString( birthDate, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );;
 }
 
 QString JsEsteidCard::getId()
@@ -209,17 +273,17 @@ QString JsEsteidCard::getDocumentId()
 
 QString JsEsteidCard::getExpiry()
 {
-    return expiry;
+	return QDate::fromString( expiry, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );
 }
 
 QString JsEsteidCard::getBirthPlace()
 {
-    return birthPlace;
+	return birthPlace;
 }
 
 QString JsEsteidCard::getIssueDate()
 {
-    return issueDate;
+    return QDate::fromString( issueDate, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );;
 }
 
 QString JsEsteidCard::getResidencePermit()
@@ -275,4 +339,32 @@ int JsEsteidCard::getPukRetryCount()
     byte puk,pinAuth,pinSign;
     m_card->getRetryCounts(puk,pinAuth,pinSign);
     return puk;
+}
+
+int JsEsteidCard::getAuthUsageCount()
+{
+	return authUsageCount;
+}
+
+int JsEsteidCard::getSignUsageCount()
+{
+	return signUsageCount;
+}
+
+QString JsEsteidCard::parseName( const QString &in )
+{
+	QString ret = in.toLower();
+	bool firstChar = true;
+	for( QString::iterator i = ret.begin(); i != ret.end(); ++i )
+	{
+		if( !firstChar && !i->isLetter() )
+			firstChar = true;
+
+		if( firstChar && i->isLetter() )
+		{
+			*i = i->toUpper();
+			firstChar = false;
+		}
+	}
+	return ret;
 }

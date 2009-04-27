@@ -37,6 +37,7 @@ public slots:
     QString getIssuerCN();
     QString getIssuerO();
     QString getIssuerOU();
+	bool	isValid();
 };
 
 #endif // JSCERTDATA_H

@@ -10,6 +10,7 @@ using namespace std;
 JsCertData::JsCertData()
 {
     m_card = NULL;
+	m_qcert = NULL;
 }
 
 void JsCertData::loadCert(EstEidCard *card, CertType ct)
@@ -88,7 +89,7 @@ QString JsCertData::getValidFrom()
     if (!m_qcert)
         return "";
 
-    return m_qcert->effectiveDate().toString("dd.MM.yyyy");
+    return m_qcert->effectiveDate().toString("dd. MMMM yyyy");
 }
 
 QString JsCertData::getValidTo()
@@ -96,7 +97,7 @@ QString JsCertData::getValidTo()
     if (!m_qcert)
         return "";
 
-    return m_qcert->expiryDate().toString("dd.MM.yyyy");
+    return m_qcert->expiryDate().toString("dd. MMMM yyyy");
 }
 
 QString JsCertData::getIssuerCN()
@@ -121,4 +122,12 @@ QString JsCertData::getIssuerOU()
         return "";
 
     return m_qcert->issuerInfo(QSslCertificate::OrganizationalUnitName);
+}
+
+bool JsCertData::isValid()
+{
+    if (!m_qcert)
+        return false;
+
+	return m_qcert->expiryDate() >= QDateTime::currentDateTime();
 }

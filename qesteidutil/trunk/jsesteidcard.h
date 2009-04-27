@@ -58,6 +58,8 @@ private:
     SmartCardManager *m_cardManager;
     EstEidCard *m_card;
     void handleError(QString msg);
+	dword authUsageCount;
+	dword signUsageCount;
 
 public slots:
     QString getSurName();
@@ -80,12 +82,20 @@ public slots:
     int getPin1RetryCount();
     int getPin2RetryCount();
     int getPukRetryCount();
+	
+	int getAuthUsageCount();
+	int getSignUsageCount();
 
     bool changePin1(QString newVal, QString oldVal);
     bool changePin2(QString newVal, QString oldVal);
     bool changePuk(QString newVal, QString oldVal);
     bool unblockPin1(QString newVal, QString puk);
     bool unblockPin2(QString newVal, QString puk);
+	bool validatePin1(QString oldVal);
+	bool validatePin2(QString oldVal);
+	bool validatePuk(QString oldVal);
+
+	QString parseName( const QString &in );
 
 signals:
     void cardError(QString func, QString err);
