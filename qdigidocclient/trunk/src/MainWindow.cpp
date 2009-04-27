@@ -236,11 +236,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case SignBDocCancel:
-		if ( bdoc->documents().size() == 0 )
-		{
-			setCurrentPage( Home );
-		}
-		else
+		if( !bdoc->documents().isEmpty() )
 		{
 			QMessageBox msgBox( QMessageBox::Question, tr("Save container"),
 				tr("You added %1 files to container, but these are not signed yet.\n"
@@ -250,14 +246,16 @@ void MainWindow::buttonClicked( int button )
 			QPushButton *keep = msgBox.addButton( tr("Keep"), QMessageBox::ActionRole );
 			msgBox.exec();
 
-			if ( msgBox.clickedButton() == cancel )
+			if( msgBox.clickedButton() == keep )
 			{
-				bdoc->clear();
-				setCurrentPage( Home );
-			}
-			else if ( msgBox.clickedButton() == keep )
 				setCurrentPage( View );
+				break;
+			}
 		}
+	case IntroBDocBack:
+	case ViewBDocClose:
+		bdoc->clear();
+		setCurrentPage( Home );
 		break;
 	case SignBDocRemoveFile:
 	{
@@ -326,11 +324,6 @@ void MainWindow::buttonClicked( int button )
 	case ViewBDocBrowse:
 		QDesktopServices::openUrl( QString( "file://" )
 			.append( QFileInfo( bdoc->fileName() ).absolutePath() ) );
-		break;
-	case IntroBDocBack:
-	case ViewBDocClose:
-		bdoc->clear();
-		setCurrentPage( Home );
 		break;
 	case ViewBDocEmail:
 	{
