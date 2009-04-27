@@ -39,11 +39,11 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
-	void showCardStatus();
 	void on_buttonSettings_clicked();
 	void on_comboLanguages_activated( int index );
 	void on_introBDocCheck_stateChanged( int state );
 	void openFile( const QModelIndex &index );
+	void showCardStatus();
 	void showWarning( const QString &msg );
 	void viewBDocSignersRemove( unsigned int num );
 

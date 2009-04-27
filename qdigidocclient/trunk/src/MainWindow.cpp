@@ -22,6 +22,7 @@
 
 #include "MainWindow.h"
 
+#include "PrintSheet.h"
 #include "Settings.h"
 #include "SignatureDialog.h"
 
@@ -33,11 +34,12 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QSslCertificate>
-#include <QTemporaryFile>
-#include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
+#include <QWebView>
 
 #ifdef Q_OS_WIN32
 #include <QLibrary>
@@ -233,9 +235,6 @@ void MainWindow::buttonClicked( int button )
 			setCurrentPage( Home );
 		break;
 	}
-	case IntroBDocBack:
-		setCurrentPage( Home );
-		break;
 	case SignBDocCancel:
 		if ( bdoc->documents().size() == 0 )
 		{
@@ -344,6 +343,7 @@ void MainWindow::buttonClicked( int button )
 		QDesktopServices::openUrl( QString( "file://%1" )
 			.arg( QFileInfo( bdoc->fileName() ).absolutePath() ) );
 		break;
+	case IntroBDocBack:
 	case ViewBDocClose:
 		bdoc->clear();
 		setCurrentPage( Home );
@@ -395,7 +395,19 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case ViewBDocPrint:
+	{
+		QPrinter printer;
+		QPrintDialog *dialog = new QPrintDialog( &printer, this );
+		dialog->setWindowTitle( tr("Print verification sheet") );
+		if( dialog->exec() != QDialog::Accepted )
+			break;
+		QWebView *view = new QWebView();
+		PrintSheet doc( bdoc );
+		view->setHtml( doc.html() );
+		view->print( &printer );
+		view->deleteLater();
 		break;
+	}
 	case ViewBDocSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,

@@ -21,6 +21,7 @@ find_package( LibDigiDoc REQUIRED )
 SET( HEADERS
 	src/DigiDoc.h
 	src/MainWindow.h
+	src/PrintSheet.h
 	src/Settings.h
 	src/SignatureDialog.h
 	)
@@ -29,6 +30,7 @@ SET( SOURCES
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
+	src/PrintSheet.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
 	)
@@ -40,6 +42,7 @@ SET( UIS
 SET( RCS src/rc/qdigidocclient.qrc )
 
 SET( QT_USE_QTNETWORK true )
+SET( QT_USE_QTWEBKIT true )
 INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
@@ -69,15 +72,15 @@ add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
 ADD_EXECUTABLE( qdigidocclient WIN32 ${SOURCES} ${MOC_SOURCES} ${RC_SOURCES} ${UI_HEADERS} )
 
 TARGET_LINK_LIBRARIES( qdigidocclient
-    ${QT_QTMAIN_LIBRARY}
-    ${QT_LIBRARIES}
-    ${LIBDIGIDOC_LIBRARY}
-    ${OPENSSL_LIBRARIES}
-    ${OPENSSLCRYPTO_LIBRARIES}
-    ${ZLIB_LIBRARIES}
-    ${LIBP11_LIBRARIES}
-    ${XERCESC_LIBRARIES}
-    ${XMLSECURITYC_LIBRARIES}
+	${QT_QTMAIN_LIBRARY}
+	${QT_LIBRARIES}
+	${LIBDIGIDOC_LIBRARY}
+	${OPENSSL_LIBRARIES}
+	${OPENSSLCRYPTO_LIBRARIES}
+	${ZLIB_LIBRARIES}
+	${LIBP11_LIBRARIES}
+	${XERCESC_LIBRARIES}
+	${XMLSECURITYC_LIBRARIES}
 )
 
 if(UNIX AND NOT APPLE)
