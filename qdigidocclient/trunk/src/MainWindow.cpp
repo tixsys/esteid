@@ -289,22 +289,6 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( Sign );
 		break;
 	}
-	case SignBDocSaveAs:
-	{
-		QString dir = QFileDialog::getExistingDirectory( this,
-			tr("Select folder where files will be stored"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !dir.isEmpty() )
-		{
-			QAbstractItemModel *m = signBDocDocsContentView->model();
-			for( int i = 0; i < m->rowCount(); ++i )
-			{
-				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-					bdoc->saveDocument( i, dir );
-			}
-		}
-		break;
-	}
 	case SignBDocSign:
 		if( !bdoc->sign(
 				signCityInput->text(),
@@ -340,8 +324,8 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( Sign );
 		break;
 	case ViewBDocBrowse:
-		QDesktopServices::openUrl( QString( "file://%1" )
-			.arg( QFileInfo( bdoc->fileName() ).absolutePath() ) );
+		QDesktopServices::openUrl( QString( "file://" )
+			.append( QFileInfo( bdoc->fileName() ).absolutePath() ) );
 		break;
 	case IntroBDocBack:
 	case ViewBDocClose:
@@ -408,6 +392,7 @@ void MainWindow::buttonClicked( int button )
 		view->deleteLater();
 		break;
 	}
+	case SignBDocSaveAs:
 	case ViewBDocSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
@@ -415,7 +400,8 @@ void MainWindow::buttonClicked( int button )
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !dir.isEmpty() )
 		{
-			QAbstractItemModel *m = viewBDocDocsFrameView->model();
+			QAbstractItemModel *m = button == SignBDocSaveAs ?
+				signBDocDocsContentView->model() : viewBDocDocsFrameView->model();
 			for( int i = 0; i < m->rowCount(); ++i )
 			{
 				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
