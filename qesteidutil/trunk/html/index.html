@@ -58,7 +58,7 @@
   </div>
   <!-- sertifikaatide sisu algus-->
   <div id="certContent" class="content">
-    <div id="authContent">
+    <div class="leftContent">
       <span class="contentHeader">Isikutuvastamise sertifikaat</span>
       <p>
         Sertifikaat on <span id="authCertStatus"></span><br />
@@ -72,7 +72,7 @@
       </div>
       <div id="authBottomButtons">
         <div id="authValidButtons">
-          <input type="button" value="Muuda PIN1" onclick="changePin1()" class="buttonBottom" />
+          <input type="button" value="Muuda PIN1" onClick="setActive('pin1','');" class="buttonBottom" />
           <input type="button" value="Vaata üksikasju" class="buttonBottom" />
         </div>
         <div id="authBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div id="signContent">
+    <div class="rightContent">
       <span class="contentHeader">Allkirja sertifikaat</span>
       <p>
         Sertifikaat on <span id="signCertStatus"></span><br />
@@ -94,7 +94,7 @@
       </div>
       <div id="signBottomButtons" style="padding-left: 30px;">
         <div id="signValidButtons">
-          <input type="button" value="Muuda PIN2" onclick="changePin2()" class="buttonBottom" />
+          <input type="button" value="Muuda PIN2" onclick="setActive('pin2','');" class="buttonBottom" />
           <input type="button" value="Vaata üksikasju" class="buttonBottom" />
         </div>
         <div id="signBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
@@ -104,6 +104,72 @@
     </div>
   </div>
   <!-- sertifikaatide sisu l6pp -->
+
+  <!-- PIN1 muutmine algus -->
+  <div id="pin1Content" class="content" style="display: none;">
+	<span class="contentHeader">PIN1 koodi vahetus</span>
+	<div class="leftContent">
+		<p>
+			PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.
+		</p>
+		<p>
+			Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			Vana PIN1 kood
+			<input type="password" name="pin1OldPin" id="pin1OldPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN1 kood
+			<input type="password" name="pin1NewPin" id="pin1NewPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN1 kood uuesti
+			<input type="password" name="pin1NewPin2" id="pin1NewPin2">
+		</label>
+		<br />
+        <input type="button" value="Muuda" onClick="changePin1();" class="buttonBottom" />
+        <input type="button" value="Tühista" onClick="setActive('cert','');" class="buttonBottom" />		
+	</div>
+  </div>
+  <!-- PIN1 muutmine l6pp -->
+  
+  <!-- PIN2 muutmine algus -->
+  <div id="pin2Content" class="content" style="display: none;">
+	<span class="contentHeader">PIN2 koodi vahetus</span>
+	<div class="leftContent">
+		<p>
+			PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.
+		</p>
+		<p>
+			Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			Vana PIN2 kood
+			<input type="password" name="pin2OldPin" id="pin2OldPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN2 kood
+			<input type="password" name="pin2NewPin" id="pin2NewPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN2 kood uuesti
+			<input type="password" name="pin2NewPin2" id="pin2NewPin2">
+		</label>
+		<br />
+        <input type="button" value="Muuda" onClick="changePin2();" class="buttonBottom" />
+        <input type="button" value="Tühista" onClick="setActive('cert','');" class="buttonBottom" />		
+	</div>
+  </div>
+  <!-- PIN2 muutmine l6pp -->
   
   <!-- Eposti sisu algus -->
   <div id="emailContent" class="content" style="display: none;">
@@ -143,10 +209,40 @@
 		PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.
     </p>
 	<p>
-		<input type="button" value="Muuda PUK" onclick="changePuk()" class="buttonBottom" />
+		<input type="button" value="Muuda PUK" onclick="setActive('cpuk','');" class="buttonBottom" />
 	</p>
   </div>
   <!-- PUK sisu l6pp -->
+  
+  <!-- PUK muutmine algus -->
+  <div id="cpukContent" class="content" style="display: none;">
+	<span class="contentHeader">PUK koodi vahetus</span>
+	<div class="leftContent">
+		<p>
+			Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			Vana PUK kood
+			<input type="password" name="pukOldPin" id="pukOldPin">
+		</label>
+		<br />
+		<label>
+			Uus PUK kood
+			<input type="password" name="pukNewPin" id="pukNewPin">
+		</label>
+		<br />
+		<label>
+			Uus PUK kood uuesti
+			<input type="password" name="pukNewPin2" id="pukNewPin2">
+		</label>
+		<br />
+        <input type="button" value="Muuda" onClick="changePuk();" class="buttonBottom" />
+        <input type="button" value="Tühista" onClick="setActive('puk','');" class="buttonBottom" />		
+	</div>
+  </div>
+  <!-- PUK muutmine l6pp -->
   
 <script type="text/javascript">
 window.cardManager.registerCallBack("cardInsert", "cardInserted");
