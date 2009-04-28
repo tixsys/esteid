@@ -520,7 +520,6 @@ NPError NPP_SetWindow(NPP plugin, NPWindow *window)
 
 NPError NPP_NewStream(NPP plugin, NPMIMEType type, NPStream *stream, NPBool seekable, uint16 *stype)
 {
-	NSLog(@"wwwww");
     *stype = NP_ASFILEONLY;
     
     return NPERR_NO_ERROR;

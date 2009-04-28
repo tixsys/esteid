@@ -361,6 +361,10 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 				}
 				
 				self->m_state->readers.count = count;
+				
+				if(self->m_state->selection >= self->m_state->readers.count) {
+					self->m_state->selection = NSNotFound;
+				}
 			}
 		} catch(std::runtime_error &err) {
 #if DEBUG

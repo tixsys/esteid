@@ -2,6 +2,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface EstEIDWebPlugInTest : SenTestCase
+@interface EstEIDWebServiceTest : SenTestCase
 
 @end

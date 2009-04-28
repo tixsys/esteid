@@ -135,7 +135,7 @@
 		81E4CBD30F9C777D00997F53 /* EstEIDCMPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */; };
 		81E4CBD40F9C77E500997F53 /* EstEIDCMPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 8122F1200F55F78100FA51CD /* EstEIDCMPlugIn.m */; };
 		81E4CBD50F9C77E500997F53 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
-		81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */; };
+		81E4CC130F9C792700997F53 /* EstEIDWebService+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */; };
 		81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
 		81F86EF70FA08E1100832B54 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F86EF30FA08E1100832B54 /* Localizable.strings */; };
 		81F86EF80FA08E1100832B54 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F86EF50FA08E1100832B54 /* InfoPlist.strings */; };
@@ -343,8 +343,8 @@
 		81E4CBD20F9C777D00997F53 /* EstEIDCMPlugIn+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDCMPlugIn+Test.m"; path = "CMPlugIn/Sources/Tests/EstEIDCMPlugIn+Test.m"; sourceTree = "<group>"; };
 		81E4CC030F9C781C00997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = CMPlugIn/Tests.plist; sourceTree = "<group>"; };
 		81E4CC0A0F9C783700997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = WebPlugIn/Tests.plist; sourceTree = "<group>"; };
-		81E4CC0C0F9C786C00997F53 /* EstEIDWebPlugIn+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebPlugIn+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.h"; sourceTree = "<group>"; };
-		81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebPlugIn+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebPlugIn+Test.m"; sourceTree = "<group>"; };
+		81E4CC0C0F9C786C00997F53 /* EstEIDWebService+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebService+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.h"; sourceTree = "<group>"; };
+		81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebService+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.m"; sourceTree = "<group>"; };
 		81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = org.esteid.updater.plist; path = Updater/org.esteid.updater.plist; sourceTree = "<group>"; };
 		81F86EF40FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81F86EF60FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -709,8 +709,8 @@
 		81E4CBBE0F9C75A700997F53 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				81E4CC0C0F9C786C00997F53 /* EstEIDWebPlugIn+Test.h */,
-				81E4CC0D0F9C786C00997F53 /* EstEIDWebPlugIn+Test.m */,
+				81E4CC0C0F9C786C00997F53 /* EstEIDWebService+Test.h */,
+				81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -1079,7 +1079,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E4CC130F9C792700997F53 /* EstEIDWebPlugIn+Test.m in Sources */,
+				81E4CC130F9C792700997F53 /* EstEIDWebService+Test.m in Sources */,
 				810673630F9E71C1004BFEA0 /* EstEIDWebObject.m in Sources */,
 				810677290F9E9A0C004BFEA0 /* EstEIDWebCertificate.m in Sources */,
 				810679DE0F9EC79D004BFEA0 /* SmartCardManager.cpp in Sources */,
