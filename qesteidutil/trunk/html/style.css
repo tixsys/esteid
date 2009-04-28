@@ -1,6 +1,6 @@
 #headerBackground {position: relative; background: #00355f; height: 30px;}
 #headerSelect { margin-left: 10px; background: #00355f; border: 0px; color: #ffffff;}
-#headerMenus {position: absolute; right: 20px; top: -5px; color: #afc6d1; font-face: Arial; font-weight: bold; font-size: 12px;}
+#headerMenus {position: absolute; right: 20px; top: -5px; color: #afc6d1; font-family: Arial; font-weight: bold; font-size: 12px;}
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}
 
@@ -13,31 +13,31 @@
 
 #leftMenus { position: absolute; top:140px; left: 5px; width:146; z-index: 1; }
 #leftMenus ul {list-style: none; text-indent:-1.7em; line-height: 31px; }
-.buttonSelected, .button { width: 146px; height: 25px; text-align: left; -webkit-border-radius: 3px; font-face: Arial; font-weight: bold; font-size: 14px; }
+.buttonSelected, .button { width: 146px; height: 25px; text-align: left; -webkit-border-radius: 3px; font-family: Arial; font-weight: bold; font-size: 14px; }
 .buttonSelected { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
 .button { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
 
 #personalInfo { position: absolute; top:66px; left:180px; width:390; height:138px;
 				background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
-				color: #668696; font-weight: bold; font-face: Arial; font-size: 12px; line-height: 18px;}
+				color: #668696; font-weight: bold; font-family: Arial; font-size: 12px; line-height: 18px;}
 #personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px;}
 
 #photo {position: absolute; top:75px; left:470px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
 
 #cardInfo { position: absolute; top:211px; left:180px; width:390; height:72px;
 			background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
-			color: #54859b; font-weight: bold; font-face: Arial; font-size: 16px;}
+			color: #54859b; font-weight: bold; font-family: Arial; font-size: 16px;}
 #cardInfo ul {list-style: none; text-indent:-1.7em; margin-top: 7px;}
 
-#content {position: relative; top: 70px;}
-#content .contentHeader {color: #54859b; font-face: Arial; font-weight: bold; font-size: 16px; }
-#content p {color: #355670; font-face: Arial; font-size: 12px;}
-#content .statusValid {color: #509b00; font-weight: bold;}
-#content .statusBlocked, .certBlocked {color: #e80303; font-weight: bold; }
-#content .certValid {font-weight: bold;}
+.content {position: relative; top: 70px; padding-left: 35px; padding-right: 35px;}
+.contentHeader {color: #54859b; font-family: Arial; font-weight: bold; font-size: 16px; }
+.content p {color: #355670; font-family: Arial; font-size: 12px;}
+.statusValid {color: #509b00; font-weight: bold;}
+.statusBlocked, .certBlocked {color: #e80303; font-weight: bold; }
+.certValid {font-weight: bold;}
 
 #authContent {position: absolute; left: 40px; width: 250px; height: 180px; border-right: 1px solid #dfdfdf; margin-top: 10px;}
-.buttonSelectedBottom, .buttonBottom { height: 25px; -webkit-border-radius: 3px; font-face: Arial; font-size: 12px; }
+.buttonSelectedBottom, .buttonBottom { height: 25px; -webkit-border-radius: 3px; font-family: Arial; font-size: 12px; }
 .buttonSelectedBottom { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
 .buttonBottom { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
 
@@ -45,4 +45,6 @@
 #signBottomButtons, #authBottomButtons { position: absolute; bottom:0px; left: 0px; height: 30px; width:260; z-index: 1; }
 
 .keyBlocked { position: absolute; bottom: 35px; width: 220px; padding: 5px;
-				font-face: Arial; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }
+				font-family: Arial; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }
+				
+a:link {color: #509b00; text-decoration: underline;}				

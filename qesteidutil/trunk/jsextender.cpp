@@ -1,4 +1,5 @@
 #include <QtWebKit>
+#include <QDesktopServices>
 
 #include "jsextender.h"
 
@@ -52,4 +53,9 @@ QVariant JsExtender::jsCall(const QString &function, const QString &argument)
     statement += ")";
 
     return m_webFrame->evaluateJavaScript(statement);
+}
+
+void JsExtender::openUrl( const QString &url )
+{
+	QDesktopServices::openUrl( QUrl( url ) );
 }

@@ -1,10 +1,10 @@
 <html>
-	<head>
-		<title>ID kaardi utiliit</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<link rel="stylesheet" href="qrc:/html/style.css" type="text/css" />
-		<script type="text/javascript" src="qrc:/html/script.js"></script>
-    </head>
+<head>
+	<title>ID kaardi utiliit</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="qrc:/html/style.css" type="text/css" />
+	<script type="text/javascript" src="qrc:/html/script.js" />
+</head>
 <body onSelectStart="return false;">
   <div id="top">
     <div id="headerBackground">
@@ -42,10 +42,10 @@
     </div>
     <div id="leftMenus">
       <ul>
-        <li><input type="button" value="Sertifikaadid" class="buttonSelected" /></li>
-        <li><input type="button" value="@eesti.ee e-post" class="button" /></li>
-        <li><input type="button" value="Mobiil-ID" class="button" /></li>
-        <li><input type="button" value="PUK kood" class="button" /></li>
+        <li><input type="button" value="Sertifikaadid" onClick="setActive('cert',this);" class="buttonSelected" /></li>
+        <li><input type="button" value="@eesti.ee e-post" onClick="setActive('email',this);" class="button" /></li>
+        <li><input type="button" value="Mobiil-ID" onClick="setActive('mobile',this);" class="button" /></li>
+        <li><input type="button" value="PUK kood" onClick="setActive('puk',this);" class="button" /></li>
       </ul>
     </div>
     <div id="cardInfo">
@@ -56,7 +56,8 @@
       </ul>
     </div>
   </div>
-  <div id="content">
+  <!-- sertifikaatide sisu algus-->
+  <div id="certContent" class="content">
     <div id="authContent">
       <span class="contentHeader">Isikutuvastamise sertifikaat</span>
       <p>
@@ -102,7 +103,51 @@
       </div>
     </div>
   </div>
-
+  <!-- sertifikaatide sisu l6pp -->
+  
+  <!-- Eposti sisu algus -->
+  <div id="emailContent" class="content" style="display: none;">
+	<span class="contentHeader">@eesti.ee e-post</span>
+	<p>
+		&nbsp;
+	</p>
+	<p>
+		Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">portaalist eesti.ee</a>
+	</p>
+  </div>
+  <!-- Eposti sisu l6pp -->
+  
+  <!-- Mobiil-ID sisu algus -->
+  <div id="mobileContent" class="content" style="display: none;">
+	<span class="contentHeader">Mobiil-ID</span>
+	<p>
+		Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.<br />
+		<a href="#" onClick="extender.openUrl('http://id.ee/?id=10971');">Loe täpsemalt id.ee kodulehelt</a>
+	</p>
+	<p>
+		Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.
+	</p>
+	<p>
+		<input type="button" value="Aktiveeri Mobiil-ID teenus" onclick="activateMobile()" class="buttonBottom" />
+	</p>
+  </div>
+  <!-- Mobiil-ID sisu l6pp -->
+  
+  <!-- PUK sisu algus -->
+  <div id="pukContent" class="content" style="display: none;">
+	<span class="contentHeader">PUK kood</span>
+    <p>
+		PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.
+	</p>
+	<p>
+		PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.
+    </p>
+	<p>
+		<input type="button" value="Muuda PUK" onclick="changePuk()" class="buttonBottom" />
+	</p>
+  </div>
+  <!-- PUK sisu l6pp -->
+  
 <script type="text/javascript">
 window.cardManager.registerCallBack("cardInsert", "cardInserted");
 window.cardManager.registerCallBack("cardRemove", "cardRemoved");

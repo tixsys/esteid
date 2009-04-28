@@ -21,6 +21,7 @@ public slots:
     void javaScriptWindowObjectCleared();
     QVariant jsCall(const QString &function, int argument);
     QVariant jsCall(const QString &function, const QString &argument);
+	void openUrl( const QString &url );
 };
 
 #endif // JSEXTENDER_H

@@ -175,17 +175,17 @@ function readCardData()
 	{
 		document.getElementById('authCertStatus').className='statusValid';
 		document.getElementById('authCertStatus').innerHTML='kehtiv ja kasutatav';
-		document.getElementById('authKeyText').style.visibility='visible';
-		document.getElementById('authKeyBlocked').style.visibility='hidden';
-		document.getElementById('authValidButtons').style.visibility='visible';
-		document.getElementById('authBlockedButtons').style.visibility='hidden';
+		document.getElementById('authKeyText').style.display='block';
+		document.getElementById('authKeyBlocked').style.display='none';
+		document.getElementById('authValidButtons').style.display='block';
+		document.getElementById('authBlockedButtons').style.display='none';
 	} else {
 		document.getElementById('authCertStatus').className='statusBlocked';
 		document.getElementById('authCertStatus').innerHTML='kehtiv kuid blokeeritud';
-		document.getElementById('authKeyText').style.visibility='hidden';
-		document.getElementById('authKeyBlocked').style.visibility='visible';
-		document.getElementById('authValidButtons').style.visibility='hidden';
-		document.getElementById('authBlockedButtons').style.visibility='visible';
+		document.getElementById('authKeyText').style.display='none';
+		document.getElementById('authKeyBlocked').style.display='block';
+		document.getElementById('authValidButtons').style.display='none';
+		document.getElementById('authBlockedButtons').style.display='block';
 	}
 	document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
 
@@ -193,20 +193,37 @@ function readCardData()
 	{
 		document.getElementById('signCertStatus').className='statusValid';
 		document.getElementById('signCertStatus').innerHTML='kehtiv ja kasutatav';
-		document.getElementById('signKeyText').style.visibility='visible';
-		document.getElementById('signKeyBlocked').style.visibility='hidden';
-		document.getElementById('signValidButtons').style.visibility='visible';
-		document.getElementById('signBlockedButtons').style.visibility='hidden';
+		document.getElementById('signKeyText').style.display='block';
+		document.getElementById('signKeyBlocked').style.display='none';
+		document.getElementById('signValidButtons').style.display='block';
+		document.getElementById('signBlockedButtons').style.display='none';
 	} else {
 		document.getElementById('signCertStatus').className='statusBlocked';
 		document.getElementById('signCertStatus').innerHTML='kehtiv kuid blokeeritud';
-		document.getElementById('signKeyText').style.visibility='hidden';
-		document.getElementById('signKeyBlocked').style.visibility='visible';
-		document.getElementById('signValidButtons').style.visibility='hidden';
-		document.getElementById('signBlockedButtons').style.visibility='visible';
+		document.getElementById('signKeyText').style.display='none';
+		document.getElementById('signKeyBlocked').style.display='block';
+		document.getElementById('signValidButtons').style.display='none';
+		document.getElementById('signBlockedButtons').style.display='block';
 	}
 	document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
 	if(esteidData.getPukRetryCount() == 0)
 		alert("PUK on lukus.")
+}
+
+function setActive( content, el )
+{
+	var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
+	for( var i in buttons )
+		buttons[i].className = 'button';
+	el.className = 'buttonSelected';
+	
+	var divs = document.getElementsByClassName('content');
+	for( var i in divs )
+	{
+		if ( divs[i].id.indexOf( content ) )
+			divs[i].style.display = 'none';
+		else
+			divs[i].style.display = 'block';
+	}
 }
