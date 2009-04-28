@@ -76,7 +76,7 @@
           <input type="button" value="Vaata üksikasju" class="buttonBottom" />
         </div>
         <div id="authBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
-          <input type="button" value="Tühista blokeering" onclick="unblockPin1()" class="buttonBottom" />
+          <input type="button" value="Tühista blokeering" onclick="setActive('bpin1','');" class="buttonBottom" />
         </div>
       </div>
     </div>
@@ -98,13 +98,49 @@
           <input type="button" value="Vaata üksikasju" class="buttonBottom" />
         </div>
         <div id="signBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
-          <input type="button" value="Tühista blokeering" onclick="unblockPin2()" class="buttonBottom" />
+          <input type="button" value="Tühista blokeering" onclick="setActive('bpin2','');" class="buttonBottom" />
         </div>
       </div>
     </div>
   </div>
   <!-- sertifikaatide sisu l6pp -->
 
+  <!-- PIN1 blokeeringu algus -->
+  <div id="bpin1Content" class="content" style="display: none;">
+	<span class="contentHeader">Isikutuvastamise sertifikaat on blokeeritud.</span>
+	<div class="leftContent">
+		<p>
+			Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.
+		</p>
+		<p>
+			PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.
+		</p>
+		<p>
+			Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			PUK kood<br />
+			<input type="password" name="bpin1OldPin" id="bpin1OldPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN1 kood
+			<input type="password" name="bpin1NewPin" id="bpin1NewPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN1 kood uuesti
+			<input type="password" name="bpin1NewPin2" id="bpin1NewPin2">
+		</label>
+		<br />
+        <input type="button" value="Muuda" onClick="unblockPin1();" class="buttonBottom" />
+        <input type="button" value="Tühista" onClick="setActive('cert','');" class="buttonBottom" />		
+	</div>
+  </div>
+  <!-- PIN1 blokeeringu l6pp -->
+  
   <!-- PIN1 muutmine algus -->
   <div id="pin1Content" class="content" style="display: none;">
 	<span class="contentHeader">PIN1 koodi vahetus</span>
@@ -137,6 +173,42 @@
 	</div>
   </div>
   <!-- PIN1 muutmine l6pp -->
+  
+  <!-- PIN2 blokeeringu algus -->
+  <div id="bpin2Content" class="content" style="display: none;">
+	<span class="contentHeader">Allkirja sertifikaat on blokeeritud.</span>
+	<div class="leftContent">
+		<p>
+			Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.
+		</p>
+		<p>
+			PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.
+		</p>
+		<p>
+			Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			PUK kood<br />
+			<input type="password" name="bpin2OldPin" id="bpin2OldPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN2 kood
+			<input type="password" name="bpin2NewPin" id="bpin2NewPin">
+		</label>
+		<br />
+		<label>
+			Uus PIN2 kood uuesti
+			<input type="password" name="bpin2NewPin2" id="bpin2NewPin2">
+		</label>
+		<br />
+        <input type="button" value="Muuda" onClick="unblockPin2();" class="buttonBottom" />
+        <input type="button" value="Tühista" onClick="setActive('cert','');" class="buttonBottom" />		
+	</div>
+  </div>
+  <!-- PIN2 blokeeringu l6pp -->
   
   <!-- PIN2 muutmine algus -->
   <div id="pin2Content" class="content" style="display: none;">

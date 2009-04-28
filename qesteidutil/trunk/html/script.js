@@ -12,7 +12,11 @@
 		ret = esteidData.getPin1RetryCount();
 		alert("Vale PIN1 kood. Saad veel proovida " + ret + " korda.");
 		if ( ret == 0 )
+		{
 			readCardData();
+			setActive('cert','');
+			return;
+		}
 		document.getElementById('pin1OldPin').focus();
 		return;
 	}
@@ -59,7 +63,11 @@ function changePin2()
 		ret = esteidData.getPin2RetryCount();
 		alert("Vale PIN2 kood. Saad veel proovida " + ret + " korda.");
 		if ( ret == 0 )
+		{
 			readCardData();
+			setActive('cert','');
+			return;
+		}
 		document.getElementById('pin2OldPin').focus();
 		return;
 	}
@@ -106,7 +114,11 @@ function changePuk()
 		ret = esteidData.getPukRetryCount();
 		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
 		if ( ret == 0 )
+		{
 			readCardData();
+			setActive('cert','');
+			return;
+		}
 		document.getElementById('pukOldPin').focus();
 		return;
 	}
@@ -141,58 +153,106 @@ function changePuk()
 
 function unblockPin1()
 {
-	var puk=prompt("PUK:");
-	if (puk!=null && puk.length>=4)
+	var oldVal=document.getElementById('bpin1OldPin').value;
+	if (oldVal==null || oldVal.length < 4)
 	{
-		if ( !esteidData.validatePuk(puk) )
+		alert('Sisesta PUK kood');
+		document.getElementById('bpin1OldPin').focus();
+		return;
+	}		
+	if ( !esteidData.validatePuk(oldVal) )
+	{
+		ret = esteidData.getPukRetryCount();
+		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
+		if ( ret == 0 )
 		{
-			ret = esteidData.getPukRetryCount();
-			alert("Vale PUK. Saad veel proovida " + ret + " korda.");
-			if ( ret == 0 )
-				readCardData();
+			readCardData();
+			setActive('cert','');
 			return;
 		}
-	} else
+		document.getElementById('bpin1OldPin').focus();
 		return;
-	var newVal=prompt("Uus PIN1:");
-	if (newVal!=null && newVal.length>=4)
-	{
-		ret = esteidData.unblockPin1(newVal, puk);
-		if (ret)
-		{
-			alert("PIN1 kood muudetud!");
-			readCardData();
-		} else
-			alert("Blokeeringu tühistamine ebaõnnestus.");
 	}
+	
+	var newVal=document.getElementById('bpin1NewPin').value;
+	var newVal2=document.getElementById('bpin1NewPin2').value;
+	if (newVal==null || newVal.length<4) 
+	{
+		alert('Sisesta uus PIN1 kood');
+		document.getElementById('bpin1NewPin').focus();
+		return;
+	}		
+	if (newVal2==null || newVal2.length<4)
+	{
+		alert('Korda uut PIN1 koodi');
+		document.getElementById('bpin1NewPin2').focus();
+		return;
+	}
+	if ( newVal != newVal2 )
+	{
+		alert('Uued PIN1 koodid on erinevad');
+		document.getElementById('bpin1NewPin2').focus();
+		return;		
+	}
+	if (esteidData.unblockPin1(newVal, oldVal))
+	{
+		alert("PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!");
+		readCardData();
+		setActive('cert','');
+	} else
+		alert("Blokeeringu tühistamine ebaõnnestus.");
 }
 
 function unblockPin2()
 {
-	var puk=prompt("PUK:");
-	if (puk!=null && puk.length>=4)
+	var oldVal=document.getElementById('bpin2OldPin').value;
+	if (oldVal==null || oldVal.length < 4)
 	{
-		if ( !esteidData.validatePuk(puk) )
+		alert('Sisesta PUK kood');
+		document.getElementById('bpin2OldPin').focus();
+		return;
+	}		
+	if ( !esteidData.validatePuk(oldVal) )
+	{
+		ret = esteidData.getPukRetryCount();
+		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
+		if ( ret == 0 )
 		{
-			ret = esteidData.getPukRetryCount();
-			alert("Vale PUK. Saad veel proovida " + ret + " korda.");
-			if ( ret == 0 )
-				readCardData();
+			readCardData();
+			setActive('cert','');
 			return;
 		}
-	} else
+		document.getElementById('bpin2OldPin').focus();
 		return;
-	var newVal=prompt("Uus PIN1:");
-	if (newVal!=null && newVal.length>=4)
-	{
-		ret = esteidData.unblockPin2(newVal, puk);
-		if (ret)
-		{
-			alert("PIN2 kood muudetud!");
-			readCardData();
-		} else
-			alert("Blokeeringu tühistamine ebaõnnestus.");
 	}
+	
+	var newVal=document.getElementById('bpin2NewPin').value;
+	var newVal2=document.getElementById('bpin2NewPin2').value;
+	if (newVal==null || newVal.length<4) 
+	{
+		alert('Sisesta uus PIN2 kood');
+		document.getElementById('bpin2NewPin').focus();
+		return;
+	}		
+	if (newVal2==null || newVal2.length<4)
+	{
+		alert('Korda uut PIN2 koodi');
+		document.getElementById('bpin2NewPin2').focus();
+		return;
+	}
+	if ( newVal != newVal2 )
+	{
+		alert('Uued PIN2 koodid on erinevad');
+		document.getElementById('bpin2NewPin2').focus();
+		return;		
+	}
+	if (esteidData.unblockPin2(newVal, oldVal))
+	{
+		alert("PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!");
+		readCardData();
+		setActive('cert','');
+	} else
+		alert("Blokeeringu tühistamine ebaõnnestus.");
 }
 
 function cardInserted(i)
