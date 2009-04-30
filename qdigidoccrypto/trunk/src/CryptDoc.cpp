@@ -44,7 +44,11 @@ CryptDoc::CryptDoc( QObject *parent )
 	initConfigStore( NULL );
 }
 
-CryptDoc::~CryptDoc() { finalizeDigiDocLib(); }
+CryptDoc::~CryptDoc()
+{
+	cleanupConfigStore( NULL );
+	finalizeDigiDocLib();
+}
 
 void CryptDoc::addFile( const QString &file, const QString &mime )
 {
@@ -315,10 +319,10 @@ QList<CKey> CryptDoc::keys()
 		if( p )
 			free(p);*/
 
-		ckey.id = m_enc->arrEncryptedKeys[i]->szId;
-		ckey.name = m_enc->arrEncryptedKeys[i]->szKeyName;
-		ckey.recipient = m_enc->arrEncryptedKeys[i]->szRecipient;
-		ckey.type = m_enc->arrEncryptedKeys[i]->szEncryptionMethod;
+		ckey.id = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szId );
+		ckey.name = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szKeyName );
+		ckey.recipient = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szRecipient );
+		ckey.type = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szEncryptionMethod );
 
 		list << ckey;
 	}
