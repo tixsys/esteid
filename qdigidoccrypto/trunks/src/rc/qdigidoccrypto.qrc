@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="images" >
+    <file>../images/id_card_view.png</file>
+    <file>../images/id_card_new.png</file>
+    <file>../images/id_card_ok.png</file>
+    <file>../images/flag_united_kingdom.png</file>
+    <file>../images/flag_estonia.png</file>
+    <file>../images/flag_germany.png</file>
+    <file>../images/flag_latvia.png</file>
+    <file>../images/flag_lithuania.png</file>
+    <file>../images/flag_russia.png</file>
+    <file>../images/sign_warning.png</file>
+  </qresource>
+  <qresource prefix="translations" >
+    <file alias="et" >../translations/et.qm</file>
+    <file alias="qt_et" >../translations/qt_et.qm</file>
+  </qresource>
+</RCC>

@@ -1,0 +1,85 @@
+/*
+ * QDigiDocCrypto
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+#pragma once
+
+#include "ui_KeyAddDialog.h"
+#include "ui_KeyDialog.h"
+
+#include "CryptDoc.h"
+
+class LdapSearch;
+
+class KeyWidget: public QWidget
+{
+	Q_OBJECT
+
+public:
+	KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent = 0 );
+
+Q_SIGNALS:
+	void remove( int id );
+
+private Q_SLOTS:
+	void remove();
+	void showDetails();
+
+private:
+	int m_id;
+	CKey m_key;
+};
+
+class KeyDialog: public QWidget, private Ui::KeyDialog
+{
+	Q_OBJECT
+
+public:
+	KeyDialog( const CKey &key, QWidget *parent = 0 );
+
+private Q_SLOTS:
+	void showCertificate();
+
+private:
+	CKey k;
+};
+
+
+class KeyAddDialog: public QWidget, private Ui::KeyAddDialog
+{
+	Q_OBJECT
+
+public:
+	KeyAddDialog( QWidget *parent = 0 );
+
+Q_SIGNALS:
+	void selected( const QList<CKey> &keys );
+
+private Q_SLOTS:
+	void on_add_clicked();
+	void on_search_clicked();
+	void showError( const QString &msg, int err );
+	void showResult( const CKey &key );
+
+private:
+	LdapSearch *ldap;
+	QList<CKey> skKeys;
+};

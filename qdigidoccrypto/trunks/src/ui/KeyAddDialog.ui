@@ -1,0 +1,154 @@
+<ui version="4.0" >
+ <class>KeyAddDialog</class>
+ <widget class="QWidget" name="KeyAddDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>506</width>
+    <height>275</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Add Recipient</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="skCerts" >
+      <attribute name="title" >
+       <string>SK Certificates</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="skCertsLayout" >
+       <item>
+        <layout class="QHBoxLayout" name="searchLayout" >
+         <item>
+          <widget class="QLabel" name="sscodeLabel" >
+           <property name="text" >
+            <string>SS number:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="sscode" />
+         </item>
+         <item>
+          <widget class="QPushButton" name="search" >
+           <property name="text" >
+            <string>Search</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QTreeWidget" name="skView" >
+         <property name="horizontalScrollBarPolicy" >
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <column>
+          <property name="text" >
+           <string>Owner</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Issuer</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Expiry date</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="store" >
+      <attribute name="title" >
+       <string>Cert store</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="storeLayout" >
+       <item>
+        <widget class="QTreeWidget" name="storeView" >
+         <property name="horizontalScrollBarPolicy" >
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <column>
+          <property name="text" >
+           <string>Owner</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Issuer</string>
+          </property>
+         </column>
+         <column>
+          <property name="text" >
+           <string>Expiry date</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="buttonsLayout" >
+     <item>
+      <spacer name="buttonsSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add" >
+       <property name="text" >
+        <string>Add to recipies list</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="close" >
+       <property name="text" >
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>close</sender>
+   <signal>clicked()</signal>
+   <receiver>KeyAddDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>458</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>252</x>
+     <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

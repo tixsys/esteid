@@ -1,0 +1,625 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QWidget" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>683</width>
+    <height>471</height>
+   </rect>
+  </property>
+  <property name="acceptDrops" >
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle" >
+   <string>DigiDoc crypt</string>
+  </property>
+  <property name="styleSheet" >
+   <string notr="true" >#MainWindow,&#xd;
+#stack&#xd;
+#viewCDocDocsContent&#xd;
+#viewCDocSignersContent&#xd;
+{ background: white; }&#xd;
+#frameSignSigners,&#xd;
+#frameSignContent,&#xd;
+#frameConteinerContent&#xd;
+{ border: 1px solid gray; background: white; }&#xd;
+QLabel,&#xd;
+QToolButton,&#xd;
+QPushButton,&#xd;
+QComboBox,&#xd;
+QCheckBox,&#xd;
+QLineEdit&#xd;
+{ font: 8pt "Arial Baltic"; }&#xd;
+#cardInfo&#xd;
+{ border: 1px solid gray; background: white; padding-left: 10px; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="MainLayout" >
+   <item>
+    <layout class="QGridLayout" name="headerLayout" >
+     <item rowspan="2" row="0" column="0" >
+      <widget class="QLabel" name="cardInfo" >
+       <property name="minimumSize" >
+        <size>
+         <width>390</width>
+         <height>80</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <layout class="QHBoxLayout" name="headerButtonLayout" >
+       <item>
+        <widget class="QPushButton" name="buttonSettings" >
+         <property name="text" >
+          <string>Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonHelp" >
+         <property name="text" >
+          <string>Help</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboLanguages" >
+         <property name="font" >
+          <font>
+           <family>Arial Baltic</family>
+           <pointsize>8</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
+         <item>
+          <property name="text" >
+           <string>Estonian</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_estonia.png</normaloff>:/images/images/flag_estonia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>English</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_united_kingdom.png</normaloff>:/images/images/flag_united_kingdom.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Russian</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_russia.png</normaloff>:/images/images/flag_russia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>German</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_germany.png</normaloff>:/images/images/flag_germany.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Latvian</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_latvia.png</normaloff>:/images/images/flag_latvia.png</iconset>
+          </property>
+         </item>
+         <item>
+          <property name="text" >
+           <string>Lithuanian</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../rc/qdigidoccrypto.qrc" >
+            <normaloff>:/images/images/flag_lithuania.png</normaloff>:/images/images/flag_lithuania.png</iconset>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1" >
+      <widget class="QToolButton" name="homeOpenUtility" >
+       <property name="text" >
+        <string>Run ID-card utility</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../rc/qdigidoccrypto.qrc" >
+         <normaloff>:/images/images/sign_warning.png</normaloff>:/images/images/sign_warning.png</iconset>
+       </property>
+       <property name="iconSize" >
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="toolButtonStyle" >
+        <enum>Qt::ToolButtonTextUnderIcon</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stack" >
+     <property name="currentIndex" >
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="home" >
+      <layout class="QGridLayout" name="homeLayout" >
+       <item row="0" column="2" >
+        <spacer name="verticalSpacer_4" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>47</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0" colspan="2" >
+        <widget class="QLabel" name="homeActionLabel" >
+         <property name="font" >
+          <font>
+           <family>Arial Baltic</family>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet" >
+          <string notr="true" >font-weight: bold;</string>
+         </property>
+         <property name="text" >
+          <string>I want to</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <spacer name="horizontalSpacer_2" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType" >
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QToolButton" name="homeCreateCDoc" >
+         <property name="minimumSize" >
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string>crypt documents</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../rc/qdigidoccrypto.qrc" >
+           <normaloff>:/images/images/id_card_new.png</normaloff>:/images/images/id_card_new.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" >
+        <spacer name="horizontalSpacer_3" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>343</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="1" >
+        <widget class="QToolButton" name="homeViewCDoc" >
+         <property name="minimumSize" >
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string>view crypted document content</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../rc/qdigidoccrypto.qrc" >
+           <normaloff>:/images/images/id_card_view.png</normaloff>:/images/images/id_card_view.png</iconset>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" >
+        <spacer name="verticalSpacer_3" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>47</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="introCDoc" >
+      <layout class="QHBoxLayout" name="horizontalLayout_3" >
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_4" >
+         <item>
+          <widget class="QLabel" name="introCDocContent" >
+           <property name="minimumSize" >
+            <size>
+             <width>390</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text" >
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Arial Baltic'; font-size:8pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Arial';">&lt;a name="u0">&lt;/a>&lt;span style=" color:#000000;">D&lt;/span>&lt;span style=" color:#000000;">o&lt;/span>&lt;span style=" font-family:'Arial Baltic'; color:#000000;">kumentide krüptimine&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Arial';">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Arial'; color:#000000;">&lt;a name="u2">&lt;/a>Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br />&lt;br />Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br />&lt;br />Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+           <property name="wordWrap" >
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="introCDocSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="introCDocCheck" >
+           <property name="text" >
+            <string>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="introCDocButtonLayout" >
+           <item>
+            <spacer name="introCDocButtonSpacer" >
+             <property name="orientation" >
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="introCDocBack" >
+             <property name="text" >
+              <string>Cancel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="introCDocNext" >
+             <property name="text" >
+              <string>Next</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4" >
+         <property name="orientation" >
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>268</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="viewCDoc" >
+      <layout class="QGridLayout" name="viewCDocLayout" >
+       <item row="1" column="0" >
+        <widget class="QLabel" name="viewCDocDocsLabel" >
+         <property name="text" >
+          <string>Container content</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" >
+        <widget class="QLabel" name="viewCDocKeysLabel" >
+         <property name="text" >
+          <string>Keys</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QFrame" name="viewCDocDocsContent" >
+         <property name="minimumSize" >
+          <size>
+           <width>390</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="viewCDocDocsContentLayout" >
+          <item>
+           <widget class="QTreeWidget" name="viewCDocDocsContentView" >
+            <property name="frameShape" >
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy" >
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="rootIsDecorated" >
+             <bool>false</bool>
+            </property>
+            <property name="headerHidden" >
+             <bool>true</bool>
+            </property>
+            <property name="columnCount" >
+             <number>2</number>
+            </property>
+            <column>
+             <property name="text" >
+              <string>Filename</string>
+             </property>
+            </column>
+            <column>
+             <property name="text" >
+              <string>Size</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="viewCDocDocsLayout" >
+            <item>
+             <spacer name="viewCDocDocsSpacer" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewCDocAddFile" >
+              <property name="text" >
+               <string>Add file</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewCDocSaveAs" >
+              <property name="text" >
+               <string>Save files to disk</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewCDocRemoveFile" >
+              <property name="text" >
+               <string>Remove checked files</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="5" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="viewCDocButtonLayout" >
+         <item>
+          <spacer name="viewCDocButtonSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewCDocClose" >
+           <property name="text" >
+            <string>Close</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewCDocAddRecipient" >
+           <property name="text" >
+            <string>Add recipient</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="viewCDocCrypt" >
+           <property name="text" >
+            <string>Encrypt</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="1" >
+        <widget class="QScrollArea" name="viewCDocKeys" >
+         <property name="frameShape" >
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow" >
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="widgetResizable" >
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="viewCDocKeysContent" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>249</width>
+            <height>191</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="viewCDocKeysContentLayout" >
+           <item>
+            <spacer name="viewCDocKeysContentSpacer" >
+             <property name="orientation" >
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0" >
+              <size>
+               <width>20</width>
+               <height>152</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="viewCDocBrowseLayout" >
+         <item>
+          <widget class="QPushButton" name="viewCDocBrowse" >
+           <property name="text" >
+            <string>Browse container location</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="viewCDocBrowseSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0" colspan="2" >
+        <layout class="QHBoxLayout" name="viewCDocEmailLayout" >
+         <item>
+          <widget class="QPushButton" name="viewCDocEmail" >
+           <property name="text" >
+            <string>Send container to email</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="viewCDocEmailSpacer" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0" colspan="2" >
+        <widget class="QLabel" name="viewCDocLocation" />
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../rc/qdigidoccrypto.qrc" />
+ </resources>
+ <connections/>
+</ui>
