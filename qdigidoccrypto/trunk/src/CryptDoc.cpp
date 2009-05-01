@@ -35,6 +35,24 @@
 #include <QInputDialog>
 #include <QTemporaryFile>
 
+
+QString fileSize( quint64 bytes )
+{
+	const quint64 kb = 1024;
+	const quint64 mb = 1024 * kb;
+	const quint64 gb = 1024 * mb;
+	const quint64 tb = 1024 * gb;
+	if( bytes >= tb )
+		return QString( "%1TB" ).arg( qreal(bytes) / tb, 0, 'f', 3 );
+	if( bytes >= gb )
+		return QString( "%1GB" ).arg( qreal(bytes) / gb, 0, 'f', 2 );
+	if( bytes >= mb )
+		return QString( "%1MB" ).arg( qreal(bytes) / mb, 0, 'f', 2 );
+	if( bytes >= kb )
+		return QString( "%1KB" ).arg( bytes / kb );
+	return QString::number( bytes );
+}
+
 CryptDoc::CryptDoc( QObject *parent )
 :	QObject( parent )
 ,	m_enc(0)
@@ -204,7 +222,7 @@ QList<CDocument> CryptDoc::documents()
 			CDocument doc;
 			doc.filename = QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName();
 			doc.mime = QString::fromUtf8( data->szMimeType );
-			doc.size = QString::number( data->nSize );
+			doc.size = fileSize( data->nSize );
 			list << doc;
 		}
 	}
@@ -242,11 +260,10 @@ bool CryptDoc::encrypt()
 	{
 		DataFile *data = m_doc->pDataFiles[i];
 		qsnprintf( id, 50, "orig_file%d", i );
-		qsnprintf( size, 100, "%ld", data->nSize );
 		int err = dencOrigContent_add( m_enc,
 			id,
 			QFileInfo( data->szFileName ).fileName().toUtf8(),
-			size,
+			fileSize( data->nSize ).toUtf8(),
 			data->szMimeType,
 			data->szId );
 		if( err != ERR_OK )
