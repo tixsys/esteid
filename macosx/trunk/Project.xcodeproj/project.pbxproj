@@ -345,7 +345,6 @@
 		81E4CC0A0F9C783700997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = WebPlugIn/Tests.plist; sourceTree = "<group>"; };
 		81E4CC0C0F9C786C00997F53 /* EstEIDWebService+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebService+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.h"; sourceTree = "<group>"; };
 		81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebService+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.m"; sourceTree = "<group>"; };
-		81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = org.esteid.updater.plist; path = Updater/org.esteid.updater.plist; sourceTree = "<group>"; };
 		81F86EF40FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81F86EF60FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81F86EF90FA08E1800832B54 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = WebPlugIn/et.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -553,7 +552,6 @@
 				8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */,
 				81E4C8D40F9C447C00997F53 /* Tests.plist */,
 				81C3D0280F9639F300EDBB44 /* Manifest.pem */,
-				81E7C27B0F9B3C7D00414C34 /* org.esteid.updater.plist */,
 			);
 			name = Updater;
 			sourceTree = "<group>";
@@ -1607,9 +1605,14 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = "-lcrypto";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-ldigidoc",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
@@ -1629,9 +1632,14 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = "-lcrypto";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lcrypto",
+					"-ldigidoc",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
@@ -1676,12 +1684,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = WebPlugIn/Info.plist;
 				INSTALL_PATH = "/Library/Internet Plug-ins";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-lcrypto",
+					"-ldigidoc",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
@@ -1701,12 +1712,15 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = WebPlugIn/Info.plist;
 				INSTALL_PATH = "/Library/Internet Plug-ins";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-lcrypto",
+					"-ldigidoc",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Set BDOCLIB_CONF_XML env variable?
+#export BDOCLIB_CONF_XML=/usr/local/etc/libdigidoc/bdoclib.conf
+
+# Configure launchd
+#/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable
+
+echo "You have succesfully installed the Estonian ID-card software!"
+exit 0

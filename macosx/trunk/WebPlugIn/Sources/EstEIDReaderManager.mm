@@ -1,6 +1,6 @@
 /* Copyright (c) 2009 Janek Priimann */
 
-// FIXME: Okay... ?!?
+// Oh cool!
 #define __COREFOUNDATION_CFPLUGINCOM__
 
 #import "common.h"
