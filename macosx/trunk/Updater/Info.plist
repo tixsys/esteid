@@ -32,7 +32,7 @@
 	<string></string>
 	<key>EstEIDWebService</key>
 	<array>
-		<string>file:///Users/janekp/Documents/Smartlink/ID/macosx/trunk/Examples/WebService/Manifest.xml</string>
+		<string>file:///Users/janekp/Documents/Smartlink/ID/macosx/trunk/build/Components/Manifest.xml</string>
 	</array>
 </dict>
 </plist>
