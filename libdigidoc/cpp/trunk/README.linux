@@ -36,6 +36,18 @@ Tools
 * python 2.5 or 2.6 for running tests
 * Codesynthesis xsd 3.2.0 for XML tree generation
 
+Install xsd tools and library from Code Synthesis:
+
+  1. Install required libraries
+     The following section is for Debian distribution, other distributions may have different package names.
+     NOTE: Hope that all the needed libraries are listed here.
+     a) Install Xerces-C++
+        'apt-get install libxerces-c28 libxerces-c2-dev'
+  2. dowload binary version of xsd from following URL: http://www.codesynthesis.com/products/xsd/download.xhtml
+     For example for i686 arch debian download binary with command:
+     'wget http://www.codesynthesis.com/download/xsd/3.2/linux-gnu/i686/xsd_3.2.0-1_i386.deb'
+  3. install xsd tools and library with command:
+     'dpkg -i xsd_3.2.0-1_i386.deb'
 
 BUILDING
 
