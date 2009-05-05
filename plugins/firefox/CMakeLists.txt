@@ -205,7 +205,7 @@ set(esteid_module_SRCS
 
 # TODO: Find a better way to pass special CFLAGS to targets
 add_definitions(${XPCOM_CPP_FLAGS})
-add_library(esteid SHARED ${esteid_module_SRCS})
+add_library(esteid MODULE ${esteid_module_SRCS})
 add_dependencies(esteid xpi-stage)
 target_link_libraries(esteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(esteid PROPERTIES
