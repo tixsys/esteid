@@ -23,6 +23,7 @@ endif(WIN32)
 set(libdigidoc_SRCS
     BDoc.cpp
     BDocException.cpp
+    DDoc.cpp
     log.cpp
     Conf.cpp
     XmlConf.cpp
@@ -32,6 +33,7 @@ set(libdigidoc_SRCS
     SignatureBES.cpp
     SignatureTM.cpp
     SignatureException.cpp
+    WDoc.cpp
     crypto/Digest.cpp
     crypto/cert/X509Cert.cpp
     crypto/cert/X509CertStore.cpp
