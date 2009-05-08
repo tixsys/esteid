@@ -36,6 +36,7 @@ namespace digidoc
           virtual ~PKCS11Signer();
           X509* getCert() throw(SignException);
           void sign(const Digest& digest, Signature& signature) throw(SignException);
+          void unloadDriver();
 
       protected:
 
@@ -51,6 +52,7 @@ namespace digidoc
            */
           virtual PKCS11Cert selectSigningCertificate(std::vector<PKCS11Cert> certificates) throw(SignException) = 0;
 
+      public:
           /**
            * Abstract method that returns PIN code for the selected signing certificate.
            * If PIN code is not needed this method is never called. To cancel the login

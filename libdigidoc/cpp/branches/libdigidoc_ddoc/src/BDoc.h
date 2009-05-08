@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "ADoc.h"
 #include "BDocException.h"
 #include "Document.h"
 #include "Signature.h"
@@ -31,7 +32,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class BDoc
+    class BDoc: public ADoc
     {
 
       public:

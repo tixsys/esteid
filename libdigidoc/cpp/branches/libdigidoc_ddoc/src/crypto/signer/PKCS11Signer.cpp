@@ -52,16 +52,25 @@ digidoc::PKCS11Signer::PKCS11Signer(const std::string& driver) throw(SignExcepti
 digidoc::PKCS11Signer::~PKCS11Signer()
 {
     DEBUG("~PKCS11Signer()");
+    unloadDriver();
+}
+
+void digidoc::PKCS11Signer::unloadDriver()
+{
+    if(ctx == NULL)
+        return;
 
     if(slots != NULL)
     {
         // Release all slots.
         PKCS11_release_all_slots(ctx, slots, numberOfSlots);
+        slots = NULL;
     }
 
     // Release PKCS #11 context.
     PKCS11_CTX_unload(ctx);
     PKCS11_CTX_free(ctx);
+    ctx = NULL;
 }
 
 /**
