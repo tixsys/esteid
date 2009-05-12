@@ -66,6 +66,9 @@ if(MSVC)
 	# disable warning C4290: C++ exception specification ignored
 	add_definitions( -wd4290 )
 endif(MSVC)
+IF(WIN32)
+	SET( SOURCES ${SOURCES} src/rc/qdigidocclient.rc )
+ENDIF(WIN32)
 
 add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
 
@@ -85,6 +88,7 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 
 if(UNIX AND NOT APPLE)
 	INSTALL(FILES QDigiDocClient.desktop DESTINATION share/applications)
+	INSTALL(FILES src/images/digidoc_icon_48x48.png DESTINATION share/pixmaps )
 endif(UNIX AND NOT APPLE)
 
 install(TARGETS qdigidocclient DESTINATION bin)
