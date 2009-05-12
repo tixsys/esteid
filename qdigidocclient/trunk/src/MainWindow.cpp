@@ -193,7 +193,7 @@ bool MainWindow::addFile( const QString &file )
 			QFile::exists( doc ) )
 		{
 			doc = QFileDialog::getSaveFileName(
-				this, tr("Save file"), doc, tr("Documents (*.bdoc)") );
+				this, tr("Save file"), doc, tr("Documents (*.bdoc, *.ddoc)") );
 			if( doc.isEmpty() )
 				return false;
 		}
@@ -310,7 +310,7 @@ void MainWindow::buttonClicked( int button )
 	{
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
-			tr("Documents (*.bdoc)") );
+			tr("Documents (*.bdoc *.ddoc)") );
 		if( !file.isEmpty() )
 		{
 			bdoc->open( file );

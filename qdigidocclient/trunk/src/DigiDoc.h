@@ -28,7 +28,7 @@
 
 namespace digidoc
 {
-	class BDoc;
+	class WDoc;
 	class Document;
 	class Exception;
 	class Signature;
@@ -100,7 +100,7 @@ private:
 	void setLastError( const QString &err );
 	void timerEvent( QTimerEvent *e );
 
-	digidoc::BDoc	*b;
+	digidoc::WDoc	*b;
 	QString			m_fileName;
 	QString			m_lastError;
 	QSslCertificate m_authCert, m_signCert;

@@ -23,6 +23,7 @@
 #include "DigiDoc.h"
 
 #include <digidoc/BDoc.h>
+#include <digidoc/WDoc.h>
 #include <digidoc/XmlConf.h>
 #include <digidoc/crypto/cert/DirectoryX509CertStore.h>
 #include <digidoc/crypto/signer/EstEIDSigner.h>
@@ -240,7 +241,7 @@ void DigiDoc::clear()
 void DigiDoc::create( const QString &file )
 {
 	clear();
-	b = new BDoc();
+	b = new WDoc();
 	m_fileName = file;
 }
 
@@ -275,7 +276,7 @@ void DigiDoc::open( const QString &file )
 	try
 	{
 		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toStdString()));
-		b = new BDoc( s );
+		b = new WDoc( s );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 }
