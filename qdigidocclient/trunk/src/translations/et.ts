@@ -59,24 +59,12 @@
         <translation>Lithuanian</translation>
     </message>
     <message>
-        <source>Run ID-card utility</source>
-        <translation>Käivita ID-kaardi utiliit</translation>
-    </message>
-    <message>
-        <source>sign documents</source>
-        <translation>allkirjastada dokumenti</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Katkesta</translation>
     </message>
     <message>
         <source>Next</source>
         <translation>Edasi</translation>
-    </message>
-    <message>
-        <source>Container content</source>
-        <translation>Ümbriku sisu</translation>
     </message>
     <message>
         <source>Signature</source>
@@ -147,10 +135,6 @@
         <translation>DigiDoc klient</translation>
     </message>
     <message>
-        <source>view signed document content</source>
-        <translation>vaadata allkirjastatud dokumendi sisu</translation>
-    </message>
-    <message>
         <source>Save container</source>
         <translation>Salvesta Ümbrik</translation>
     </message>
@@ -165,10 +149,6 @@
     <message>
         <source>Open container</source>
         <translation>Ava ümbrik</translation>
-    </message>
-    <message>
-        <source>Documents (*.bdoc)</source>
-        <translation>Dokumendid (*.bdoc)</translation>
     </message>
     <message>
         <source>Select folder where files will be stored</source>
@@ -199,11 +179,7 @@
 Should I keep unsigned documents or remove these?</source>
         <translation>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</translation>
     </message>
-    <message>
-        <source>I want to</source>
-        <translation>Ma tahan</translation>
-    </message>
-    <message>
+    <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -222,28 +198,8 @@ p, li { white-space: pre-wrap; }
         <translation>Ära rohkem mulle seda sissejuhatust näita</translation>
     </message>
     <message>
-        <source>Sign certificate is valid until: %1&lt;br /&gt;</source>
-        <translation>Allkirjastamise sertifikaat on kehtiv kuni %1&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>Sign certificate is expired&lt;br /&gt;</source>
-        <translation>Allkirjastamise sertifikaat on aegunud&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>Auth certificate is expired&lt;br /&gt;</source>
-        <translation>Isikutuvastuse sertifikaat on aegunud&lt;br /&gt;</translation>
-    </message>
-    <message>
         <source>Remove checked files</source>
         <translation>Eemalda valitud</translation>
-    </message>
-    <message>
-        <source>Auth certificate is valid until: %1&lt;br /&gt;</source>
-        <translation>Isikutuvastuse sertifikaat on kehtiv kuni: %1&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>No card in reader&lt;br /&gt;</source>
-        <translation>Kaarti pole lugejas&lt;br /&gt;</translation>
     </message>
     <message>
         <source>Save file</source>
@@ -262,16 +218,8 @@ p, li { white-space: pre-wrap; }
         <translation>Suurus</translation>
     </message>
     <message>
-        <source>Person %1 %2 card in reader&lt;br /&gt;Person SSID: %3&lt;br /&gt;</source>
-        <translation>Kasutaja %1 %2 kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3&lt;br /&gt;</translation>
-    </message>
-    <message>
         <source>Failed to send email</source>
         <translation>Ekirja koostamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>crypt document</source>
-        <translation>krüpteerida dokumenti</translation>
     </message>
     <message>
         <source>Sign with Mobile-ID</source>
@@ -279,7 +227,63 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Crypt document</source>
-        <translation>Krüpteeri dokument</translation>
+        <translation>Krüpteerida dokumenti</translation>
+    </message>
+    <message>
+        <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
+        <translation>Protsessi &apos;qdigidoccrypto&apos; käivitamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Failed to start process &apos;qesteidutil&apos;</source>
+        <translation>Protsessi &apos;qesteidutil&apos; käivitamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Documents (*.bdoc *.ddoc)</source>
+        <translation>Dokumendid (*.bdoc *.ddoc)</translation>
+    </message>
+    <message>
+        <source>Person &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; card in reader&lt;br /&gt;Person SSID: %3</source>
+        <translation>Kasutaja &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3</translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;Sign certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
+        <translation>&lt;br /&gt;Allkirjastamise sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
+        <translation>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Allkirjastamise sertifikaat on aegunud&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
+        <translation>&lt;br /&gt;Isikutuvastuse sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
+        <translation>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Isikutuvastuse sertifikaat on aegunud&lt;/font&gt;</translation>
+    </message>
+    <message>
+        <source>No card in reader</source>
+        <translation>Kaarti pole lugejas</translation>
+    </message>
+    <message>
+        <source>I want to:</source>
+        <translation>Ma tahan:</translation>
+    </message>
+    <message>
+        <source>Sign documents</source>
+        <translation>Allkirjastada dokumenti</translation>
+    </message>
+    <message>
+        <source>View signed document content</source>
+        <translation>Vaadata allkirjastatud dokumendi sisu</translation>
+    </message>
+    <message>
+        <source>Container content:</source>
+        <translation>Ümbriku sisu:</translation>
+    </message>
+    <message>
+        <source>Signatures</source>
+        <translation>Allkirjad</translation>
     </message>
 </context>
 <context>
@@ -288,6 +292,10 @@ p, li { white-space: pre-wrap; }
         <source>Selected action requires sign certificate.
 For using sign certificate enter PIN2</source>
         <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati. Sertifikaadi kasutamiseks sisesta PIN2</translation>
+    </message>
+    <message>
+        <source>PIN acquisition canceled.</source>
+        <translation>PIN koodi sisestamine katkestati</translation>
     </message>
 </context>
 <context>

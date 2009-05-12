@@ -39,13 +39,13 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
-	void on_buttonSettings_clicked();
-	void on_comboLanguages_activated( int index );
-	void on_introBDocCheck_stateChanged( int state );
+	void on_introCheck_stateChanged( int state );
+	void on_languages_activated( int index );
+	void on_settings_clicked();
 	void openFile( const QModelIndex &index );
 	void showCardStatus();
 	void showWarning( const QString &msg );
-	void viewBDocSignersRemove( unsigned int num );
+	void viewSignaturesRemove( unsigned int num );
 
 private:
 	enum Pages {
@@ -55,24 +55,24 @@ private:
 		View,
 	};
 	enum Buttons {
-		HomeCryptBDoc,
+		HomeCrypt,
 		HomeOpenUtility,
-		HomeSignBDoc,
-		IntroBDocBack,
-		IntroBDocNext,
-		SignBDocAddFile,
-		SignBDocCancel,
-		SignBDocRemoveFile,
-		SignBDocSaveAs,
-		SignBDocSign,
-		HomeViewBDoc,
-		ViewBDocAddSignature,
-		ViewBDocBrowse,
-		ViewBDocClose,
-		ViewBDocCrypt,
-		ViewBDocEmail,
-		ViewBDocPrint,
-		ViewBDocSaveAs,
+		HomeSign,
+		IntroBack,
+		IntroNext,
+		SignAddFile,
+		SignCancel,
+		SignRemoveFile,
+		SignSaveAs,
+		SignSign,
+		HomeView,
+		ViewAddSignature,
+		ViewBrowse,
+		ViewClose,
+		ViewCrypt,
+		ViewEmail,
+		ViewPrint,
+		ViewSaveAs,
 	};
 	bool addFile( const QString &file );
 	void dragEnterEvent( QDragEnterEvent *e );
