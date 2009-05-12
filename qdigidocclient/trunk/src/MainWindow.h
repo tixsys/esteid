@@ -50,7 +50,7 @@ private Q_SLOTS:
 private:
 	enum Pages {
 		Home,
-		SignIntro,
+		Intro,
 		Sign,
 		View,
 	};
@@ -81,6 +81,5 @@ private:
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*bdoc;
-	QTranslator *appTranslator;
-	QTranslator *qtTranslator;
+	QTranslator *appTranslator, *qtTranslator;
 };

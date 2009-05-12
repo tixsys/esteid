@@ -29,6 +29,7 @@
 #include <digidoc/crypto/signer/EstEIDSigner.h>
 #include <digidoc/io/ZipSerialize.h>
 
+#include <QApplication>
 #include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
@@ -72,13 +73,14 @@ QEstEIDSigner::QEstEIDSigner() throw(SignException)
 std::string QEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
 {
 	bool ok;
-	QString pin = QInputDialog::getText( 0, "QDigiDocClient",
+	QString pin = QInputDialog::getText( qApp->activeWindow(), "QDigiDocClient",
 		QObject::tr("Selected action requires sign certificate.\n"
 			"For using sign certificate enter PIN2"),
 		QLineEdit::Password,
 		QString(), &ok );
 	if( !ok )
-		throw SignException( __FILE__, __LINE__, "PIN acquisition canceled.");
+		throw SignException( __FILE__, __LINE__,
+			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
 	return pin.toStdString();
 }
 

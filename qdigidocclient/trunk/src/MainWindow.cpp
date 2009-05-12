@@ -227,7 +227,7 @@ void MainWindow::buttonClicked( int button )
 		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
 		{
 			introBDocCheck->setChecked( false );
-			setCurrentPage( SignIntro );
+			setCurrentPage( Intro );
 			break;
 		}
 	case IntroBDocNext:
@@ -422,10 +422,7 @@ void MainWindow::buttonClicked( int button )
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
-	if( e->mimeData()->hasUrls() &&
-		(stack->currentIndex() == Home ||
-		 stack->currentIndex() == SignIntro ||
-		 stack->currentIndex() == Sign) )
+	if( e->mimeData()->hasUrls() && stack->currentIndex() != View )
 		e->acceptProposedAction();
 }
 
@@ -481,13 +478,10 @@ void MainWindow::on_buttonSettings_clicked() { (new Settings( this ))->show(); }
 
 void MainWindow::on_comboLanguages_activated( int index )
 {
-	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
-
-	appTranslator->load( QString( ":/translations/%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
-	qtTranslator->load( QString( ":/translations/qt_%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
-
+	const QString lang = comboLanguages->itemData( index ).toString();
+	SettingsValues().setValue( "Main/Language", lang );
+	appTranslator->load( ":/translations/" + lang );
+	qtTranslator->load( ":/translations/qt_" + lang );
 	retranslateUi( this );
 	showCardStatus();
 }
@@ -497,9 +491,6 @@ void MainWindow::on_introBDocCheck_stateChanged( int state )
 
 void MainWindow::openFile( const QModelIndex &index )
 {
-	if( bdoc->isNull() )
-		return;
-
 	QList<digidoc::Document> list = bdoc->documents();
 	if( list.isEmpty() || index.row() >= list.size() )
 		return;
