@@ -55,6 +55,8 @@ private:
 		View,
 	};
 	enum Buttons {
+		HomeCryptBDoc,
+		HomeOpenUtility,
 		HomeSignBDoc,
 		IntroBDocBack,
 		IntroBDocNext,
@@ -67,6 +69,7 @@ private:
 		ViewBDocAddSignature,
 		ViewBDocBrowse,
 		ViewBDocClose,
+		ViewBDocCrypt,
 		ViewBDocEmail,
 		ViewBDocPrint,
 		ViewBDocSaveAs,

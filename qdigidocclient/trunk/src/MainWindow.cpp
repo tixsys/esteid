@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QProcess>
 #include <QSslCertificate>
 #include <QTranslator>
 #include <QUrl>
@@ -120,6 +121,8 @@ MainWindow::MainWindow( QWidget *parent )
 		SLOT(openFile(QModelIndex)) );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
+	buttonGroup->addButton( homeCryptBDoc, HomeCryptBDoc );
+	buttonGroup->addButton( homeOpenUtility, HomeOpenUtility );
 	buttonGroup->addButton( homeSignBDoc, HomeSignBDoc );
 	buttonGroup->addButton( introBDocBack, IntroBDocBack );
 	buttonGroup->addButton( introBDocNext, IntroBDocNext );
@@ -132,6 +135,7 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( viewBDocAddSignature, ViewBDocAddSignature );
 	buttonGroup->addButton( viewBDocBrowse, ViewBDocBrowse );
 	buttonGroup->addButton( viewBDocClose, ViewBDocClose );
+	buttonGroup->addButton( viewBDocCrypt, ViewBDocCrypt );
 	buttonGroup->addButton( viewBDocEmail, ViewBDocEmail );
 	buttonGroup->addButton( viewBDocPrint, ViewBDocPrint );
 	buttonGroup->addButton( viewBDocSaveAs, ViewBDocSaveAs );
@@ -210,6 +214,15 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
+	case HomeCryptBDoc:
+	case ViewBDocCrypt:
+		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << bdoc->fileName() ) )
+			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
+		break;
+	case HomeOpenUtility:
+		if( !QProcess::startDetached( "qesteidutil" ) )
+			showWarning( tr("Failed to start process 'qesteidutil'") );
+		break;
 	case HomeSignBDoc:
 		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
 		{
