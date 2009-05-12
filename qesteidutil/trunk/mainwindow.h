@@ -1,29 +1,21 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
-#include <QMainWindow>
+#include <QWebView>
 
 #include "jsextender.h"
 #include "jscardmanager.h"
 #include "jsesteidcard.h"
 #include "jscertdata.h"
 
-class QActionGroup;
-class QWebView;
-
-class MainWindow : public QMainWindow
+class MainWindow : public QWebView
 {
     Q_OBJECT
 
 public:
-    MainWindow();
+    MainWindow( QWidget *parent = 0 );
 
 private:
     JsExtender *m_jsExtender;
     JsCardManager *jsCardManager;
     JsEsteidCard *jsEsteidCard;
-
-    QWebView *webView;
 };
-
-#endif // MAINWINDOW_H

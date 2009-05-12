@@ -3,6 +3,7 @@
 	<title>ID kaardi utiliit</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="qrc:/html/style.css" type="text/css" />
+	<script type="text/javascript" src="qrc:/html/lang.js" />
 	<script type="text/javascript" src="qrc:/html/script.js" />
 </head>
 <body onSelectStart="return false;">
@@ -36,24 +37,27 @@
       </ul>
     </div>
     <div id="photo">
-      <div style="padding-top:50px;">
-        Lae pilt
+      <div id="photoContent" style="padding-top:50px;">
+        <a href="#" onClick="loadPicture();">Lae pilt</a>
       </div>
     </div>
     <div id="leftMenus">
       <ul>
-        <li><input type="button" value="Sertifikaadid" onClick="setActive('cert',this);" class="buttonSelected" /></li>
-        <li><input type="button" value="@eesti.ee e-post" onClick="setActive('email',this);" class="button" /></li>
-        <li><input type="button" value="Mobiil-ID" onClick="setActive('mobile',this);" class="button" /></li>
-        <li><input type="button" value="PUK kood" onClick="setActive('puk',this);" class="button" /></li>
+        <li><input type="button" value="Sertifikaadid" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
+        <li><input type="button" value="@eesti.ee e-post" name="email" onClick="setActive('email',this);" class="button" /></li>
+        <li><input type="button" value="Mobiil-ID" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
+        <li><input type="button" value="PUK kood" name="puk" onClick="setActive('puk',this);" class="button" /></li>
       </ul>
     </div>
-    <div id="cardInfo">
+    <div id="cardInfo" class="cardInfo">
       <ul>
         <li>Lugejas on ID kaart <span id="documentId" style="color: #355670;"></span></li>
         <li>See on <span style="color: #509b00;">kehtiv</span> dokument</li>
         <li><span style="font-size:12px; font-weight: normal; color: #355670;">Kaart on kehtiv kuni <span id="expiry" style="color: #355670;"></span></span></li>
       </ul>
+    </div>
+    <div id="cardInfoNoCard" class="cardInfo" style="display:none; text-align:center;">
+        <p class="noCard">Ei leitud ID-kaarti</p>
     </div>
   </div>
   <!-- sertifikaatide sisu algus-->
@@ -246,8 +250,16 @@
   <!-- Eposti sisu algus -->
   <div id="emailContent" class="content" style="display: none;">
 	<span class="contentHeader">@eesti.ee e-post</span>
-	<p>
+	<p id="emailsContent">
 		&nbsp;
+	</p>
+	<p id="emailsContentActivate" style="display:none;">
+		<label>
+			E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad
+			<input type="text" name="emailAddress" id="emailAddress">
+		</label>
+		<br />
+		<input type="button" value="Aktiveeri @eesti.ee e-post" onclick="activateEmail()" class="buttonBottom" />
 	</p>
 	<p>
 		Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">portaalist eesti.ee</a>

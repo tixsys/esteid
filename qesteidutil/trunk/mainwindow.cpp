@@ -1,17 +1,16 @@
-#include <QtGui>
 #include <QtWebKit>
 
 #include "mainwindow.h"
 
-
-MainWindow::MainWindow()
+MainWindow::MainWindow( QWidget *parent )
+:	QWebView( parent )
 {
-    webView = new QWebView;
-    webView->setContextMenuPolicy(Qt::PreventContextMenu);
-    setCentralWidget(webView);
-    m_jsExtender = new JsExtender(webView->page()->mainFrame());
+    setContextMenuPolicy(Qt::PreventContextMenu);
+	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
 
-    jsEsteidCard = new JsEsteidCard();
+    m_jsExtender = new JsExtender( page()->mainFrame() );
+
+    jsEsteidCard = new JsEsteidCard( this );
     jsCardManager = new JsCardManager(jsEsteidCard);
 
     connect(jsCardManager, SIGNAL(cardEvent(QString, int)),
@@ -26,7 +25,7 @@ MainWindow::MainWindow()
     m_jsExtender->registerObject("esteidData", jsEsteidCard);
     m_jsExtender->registerObject("cardManager", jsCardManager);
 
-	webView->load(QUrl("qrc:/html/index.html"));
+	load(QUrl("qrc:/html/index.html"));
 
     setWindowTitle(tr("ID-card utility"));
 	setFixedSize( 601, 520 );

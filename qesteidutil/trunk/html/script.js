@@ -1,16 +1,18 @@
-﻿function changePin1()
+﻿var emailsLoaded = false;
+
+function changePin1()
 {
 	var oldVal=document.getElementById('pin1OldPin').value;
 	if (oldVal==null || oldVal.length < 4)
 	{
-		alert('Sisesta vana PIN1 kood');
+		alert( _( 'PIN1Enter' ) );
 		document.getElementById('pin1OldPin').focus();
 		return;
 	}		
 	if ( !esteidData.validatePin1(oldVal) )
 	{
 		ret = esteidData.getPin1RetryCount();
-		alert("Vale PIN1 kood. Saad veel proovida " + ret + " korda.");
+		alert( _( 'PIN1InvalidRetry' ).replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
 			readCardData();
@@ -25,28 +27,28 @@
 	var newVal2=document.getElementById('pin1NewPin2').value;
 	if (newVal==null || newVal.length<4) 
 	{
-		alert('Sisesta uus PIN1 kood');
+		alert( _( 'PIN1EnterNew' ) );
 		document.getElementById('pin1NewPin').focus();
 		return;
 	}		
 	if (newVal2==null || newVal2.length<4)
 	{
-		alert('Korda uut PIN1 koodi');
+		alert( _( 'PIN1Retry' ) );
 		document.getElementById('pin1NewPin2').focus();
 		return;
 	}
 	if ( newVal != newVal2 )
 	{
-		alert('Uued PIN1 koodid on erinevad');
+		alert( _( 'PIN1Different' ) );
 		document.getElementById('pin1NewPin2').focus();
 		return;		
 	}
 	if (esteidData.changePin1(newVal, oldVal))
 	{
-		alert("PIN1 kood muudetud!");
+		alert( _( 'PIN1Changed' ) );
 		setActive('cert','');
 	} else
-		alert("PIN1 muutmine ebaõnnestus.");
+		alert( _( 'PIN1Unsuccess' ) );
 }
 
 function changePin2()
@@ -54,14 +56,14 @@ function changePin2()
 	var oldVal=document.getElementById('pin2OldPin').value;
 	if (oldVal==null || oldVal.length < 4)
 	{
-		alert('Sisesta vana PIN2 kood');
+		alert( _( 'PIN2Enter' ) );
 		document.getElementById('pin2OldPin').focus();
 		return;
 	}		
 	if ( !esteidData.validatePin2(oldVal) )
 	{
 		ret = esteidData.getPin2RetryCount();
-		alert("Vale PIN2 kood. Saad veel proovida " + ret + " korda.");
+		alert( _( 'PIN2InvalidRetry' ).replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
 			readCardData();
@@ -76,28 +78,28 @@ function changePin2()
 	var newVal2=document.getElementById('pin2NewPin2').value;
 	if (newVal==null || newVal.length<4) 
 	{
-		alert('Sisesta uus PIN2 kood');
+		alert( _( 'PIN2EnterNew' ) );
 		document.getElementById('pin2NewPin').focus();
 		return;
 	}		
 	if (newVal2==null || newVal2.length<4)
 	{
-		alert('Korda uut PIN2 koodi');
+		alert( _( 'PIN2Retry' ) );
 		document.getElementById('pin2NewPin2').focus();
 		return;
 	}
 	if ( newVal != newVal2 )
 	{
-		alert('Uued PIN2 koodid on erinevad');
+		alert( _( 'PIN2Different' ) );
 		document.getElementById('pin2NewPin2').focus();
 		return;		
 	}
 	if (esteidData.changePin2(newVal, oldVal))
 	{
-		alert("PIN2 kood muudetud!");
+		alert( _( 'PIN2Changed' ) );
 		setActive('cert','');
 	} else
-		alert("PIN2 muutmine ebaõnnestus.");
+		alert( _( 'PIN2Unsuccess' ) );
 }
 
 function changePuk()
@@ -105,14 +107,14 @@ function changePuk()
 	var oldVal=document.getElementById('pukOldPin').value;
 	if (oldVal==null || oldVal.length < 4)
 	{
-		alert('Sisesta vana PUK kood');
+		alert( _('PUKEnterOld') );
 		document.getElementById('pukOldPin').focus();
 		return;
 	}		
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
+		alert( _('PUKInvalidRetry').replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
 			readCardData();
@@ -127,28 +129,28 @@ function changePuk()
 	var newVal2=document.getElementById('pukNewPin2').value;
 	if (newVal==null || newVal.length<4) 
 	{
-		alert('Sisesta uus PUK kood');
+		alert( _('PUKEnterNew') );
 		document.getElementById('pukNewPin').focus();
 		return;
 	}		
 	if (newVal2==null || newVal2.length<4)
 	{
-		alert('Korda uut PUK koodi');
+		alert( _('PUKRetry') );
 		document.getElementById('pukNewPin2').focus();
 		return;
 	}
 	if ( newVal != newVal2 )
 	{
-		alert('Uued PUK koodid on erinevad');
+		alert( _('PUKDifferent') );
 		document.getElementById('pukNewPin2').focus();
 		return;		
 	}
 	if (esteidData.changePuk(newVal, oldVal))
 	{
-		alert("PUK kood muudetud!");
+		alert( _('PUKChanged') );
 		setActive('puk','');
 	} else
-		alert("PUK koodi muutmine ebaõnnestus.");
+		alert( _('PUKUnsuccess') );
 }
 
 function unblockPin1()
@@ -156,14 +158,14 @@ function unblockPin1()
 	var oldVal=document.getElementById('bpin1OldPin').value;
 	if (oldVal==null || oldVal.length < 4)
 	{
-		alert('Sisesta PUK kood');
+		alert( _('PUKEnter') );
 		document.getElementById('bpin1OldPin').focus();
 		return;
 	}		
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
+		alert( _("PUKInvalidRetry").replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
 			readCardData();
@@ -178,29 +180,29 @@ function unblockPin1()
 	var newVal2=document.getElementById('bpin1NewPin2').value;
 	if (newVal==null || newVal.length<4) 
 	{
-		alert('Sisesta uus PIN1 kood');
+		alert( _('PIN1EnterNew') );
 		document.getElementById('bpin1NewPin').focus();
 		return;
 	}		
 	if (newVal2==null || newVal2.length<4)
 	{
-		alert('Korda uut PIN1 koodi');
+		alert( _('PIN1Retry') );
 		document.getElementById('bpin1NewPin2').focus();
 		return;
 	}
 	if ( newVal != newVal2 )
 	{
-		alert('Uued PIN1 koodid on erinevad');
+		alert( _('PIN1Different') );
 		document.getElementById('bpin1NewPin2').focus();
 		return;		
 	}
 	if (esteidData.unblockPin1(newVal, oldVal))
 	{
-		alert("PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!");
+		alert( _tr('PIN1UnblockSuccess') );
 		readCardData();
 		setActive('cert','');
 	} else
-		alert("Blokeeringu tühistamine ebaõnnestus.");
+		alert( _('PIN1UnblockFailed') );
 }
 
 function unblockPin2()
@@ -208,14 +210,14 @@ function unblockPin2()
 	var oldVal=document.getElementById('bpin2OldPin').value;
 	if (oldVal==null || oldVal.length < 4)
 	{
-		alert('Sisesta PUK kood');
+		alert( _('PUKEnter') );
 		document.getElementById('bpin2OldPin').focus();
 		return;
 	}		
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		alert("Vale PUK kood. Saad veel proovida " + ret + " korda.");
+		alert( _("PUKInvalidRetry").replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
 			readCardData();
@@ -230,50 +232,105 @@ function unblockPin2()
 	var newVal2=document.getElementById('bpin2NewPin2').value;
 	if (newVal==null || newVal.length<4) 
 	{
-		alert('Sisesta uus PIN2 kood');
+		alert( _('PIN2EnterNew') );
 		document.getElementById('bpin2NewPin').focus();
 		return;
 	}		
 	if (newVal2==null || newVal2.length<4)
 	{
-		alert('Korda uut PIN2 koodi');
+		alert( _('PIN2Retry') );
 		document.getElementById('bpin2NewPin2').focus();
 		return;
 	}
 	if ( newVal != newVal2 )
 	{
-		alert('Uued PIN2 koodid on erinevad');
+		alert( _('PIN2NewDifferent') );
 		document.getElementById('bpin2NewPin2').focus();
 		return;		
 	}
 	if (esteidData.unblockPin2(newVal, oldVal))
 	{
-		alert("PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!");
+		alert( _('PIN2UnblockSuccess') );
 		readCardData();
 		setActive('cert','');
 	} else
-		alert("Blokeeringu tühistamine ebaõnnestus.");
+		alert( _('PIN2UnblockFailed') );
 }
 
 function cardInserted(i)
 {
-	alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
+	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
 	cardManager.selectReader(i);
 	readCardData();
 }
 
 function cardRemoved(i)
 {
-	alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i))
+	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i))
+	readCardData();
 }
 
 function handleError(msg)
 {
-	alert("Tekkis viga: " + msg)
+	alert( _('errorFound') + _( msg ) )
+}
+
+function disableFields()
+{
+	document.getElementById('documentId').innerHTML = "";
+	document.getElementById('expiry').innerHTML = "";
+	document.getElementById('firstName').innerHTML = "";
+	document.getElementById('middleName').innerHTML = "";
+	document.getElementById('surName').innerHTML = "";
+	document.getElementById('id').innerHTML = "";
+	document.getElementById('birthDate').innerHTML = "";
+	document.getElementById('birthPlace').innerHTML = "";
+	document.getElementById('citizen').innerHTML = "";
+	document.getElementById('email').innerHTML = "";
+
+	document.getElementById('cardInfo').style.display='none';
+	document.getElementById('cardInfoNoCard').style.display='block';
+	var divs = document.getElementsByClassName('content');
+	for( var i in divs )
+		divs[i].style.display = 'none';
+}
+
+function enableFields()
+{
+	document.getElementById('cardInfo').style.display='block';
+	document.getElementById('cardInfoNoCard').style.display='none';
+	var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
+	var selected = "";
+	for( var i in buttons )
+		if ( !buttons[i].className.indexOf( "buttonSelected" ) )
+		{
+			selected = buttons[i].name;
+			break;
+		}
+	if ( selected != "" )
+	{
+		var divs = document.getElementsByClassName('content');
+		for( var i in divs )
+		{
+			if ( typeof divs[i].id == "undefined" )
+				continue;
+			if ( !divs[i].id.indexOf( selected ) )
+				divs[i].style.display = 'block';
+		}
+	}
 }
 
 function readCardData()
 {
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+	{
+		if(cardManager.getReaderCount() == 0)
+			alert( _('noReaders') );
+		disableFields();
+		return;
+	} else
+		enableFields();
+		
 	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
 	document.getElementById('firstName').innerHTML = esteidData.getFirstName();
@@ -291,20 +348,17 @@ function readCardData()
 	document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
 	document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
 
-	if(cardManager.getReaderCount() == 0)
-		alert("Ühtegi kiipkaardi lugejat pole ühendatud.")
-
 	if ( esteidData.getPin1RetryCount() != 0 )
 	{
 		document.getElementById('authCertStatus').className='statusValid';
-		document.getElementById('authCertStatus').innerHTML='kehtiv ja kasutatav';
+		document.getElementById('authCertStatus').innerHTML=_('certValid');
 		document.getElementById('authKeyText').style.display='block';
 		document.getElementById('authKeyBlocked').style.display='none';
 		document.getElementById('authValidButtons').style.display='block';
 		document.getElementById('authBlockedButtons').style.display='none';
 	} else {
 		document.getElementById('authCertStatus').className='statusBlocked';
-		document.getElementById('authCertStatus').innerHTML='kehtiv kuid blokeeritud';
+		document.getElementById('authCertStatus').innerHTML=_('validBlocked');
 		document.getElementById('authKeyText').style.display='none';
 		document.getElementById('authKeyBlocked').style.display='block';
 		document.getElementById('authValidButtons').style.display='none';
@@ -315,14 +369,14 @@ function readCardData()
 	if (esteidData.getPin2RetryCount() != 0 )
 	{
 		document.getElementById('signCertStatus').className='statusValid';
-		document.getElementById('signCertStatus').innerHTML='kehtiv ja kasutatav';
+		document.getElementById('signCertStatus').innerHTML=_('certValid');
 		document.getElementById('signKeyText').style.display='block';
 		document.getElementById('signKeyBlocked').style.display='none';
 		document.getElementById('signValidButtons').style.display='block';
 		document.getElementById('signBlockedButtons').style.display='none';
 	} else {
 		document.getElementById('signCertStatus').className='statusBlocked';
-		document.getElementById('signCertStatus').innerHTML='kehtiv kuid blokeeritud';
+		document.getElementById('signCertStatus').innerHTML=_('validBlocked');
 		document.getElementById('signKeyText').style.display='none';
 		document.getElementById('signKeyBlocked').style.display='block';
 		document.getElementById('signValidButtons').style.display='none';
@@ -331,11 +385,19 @@ function readCardData()
 	document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
 	if(esteidData.getPukRetryCount() == 0)
-		alert("PUK on lukus.")
+		alert( _('PUKLocked') )
 }
 
 function setActive( content, el )
 {
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		return;
+	if ( content == "email" )
+	{
+		if ( !emailsLoaded )
+			extender.loadEmails();
+		emailsLoaded = true;
+	}
 	if ( el != '' )
 	{
 		var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
@@ -352,4 +414,55 @@ function setActive( content, el )
 		else
 			divs[i].style.display = 'block';
 	}
+}
+
+function loadPicture()
+{
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		return;
+	document.getElementById('photoContent').innerHTML = _("loadPic");
+	extender.loadPicture();
+}
+
+function setPicture( img )
+{
+	if ( img == "" )
+		document.getElementById('photo').innerHTML = _("loadPicFailed");
+	else
+		document.getElementById('photo').innerHTML = "<img src=\"" + img + "\">";
+}
+
+function setEmailActivate( msg )
+{
+	if ( msg == "0" )
+	{
+		document.getElementById('emailsContentActivate').style.display = "none"
+		extender.loadEmails();
+		return;
+	}
+	document.getElementById('emailsContent').innerHTML = _(msg);
+}
+
+function setEmails( code, msg )
+{
+	if ( code == "0" && msg.indexOf( ' - ' ) == -1 )
+		code = "20";
+	//not activated
+	if ( code == "20" )
+		document.getElementById('emailsContentActivate').style.display = "block";
+	//success
+	if ( code == "0" )
+		code = _(code) + "<BR>" + msg;
+	document.getElementById('emailsContent').innerHTML = _(code);
+}
+
+function activateEmail()
+{
+	if ( document.getElementById('emailAddress').value == "" )
+	{
+		alert( _('emailEnter') );
+		document.getElementById('emailAddress').focus();
+		return;
+	}
+	extender.activateEmail( document.getElementById('emailAddress').value );
 }

@@ -7,7 +7,8 @@
 
 using namespace std;
 
-JsCertData::JsCertData()
+JsCertData::JsCertData( QObject *parent )
+:	QObject( parent )
 {
     m_card = NULL;
 	m_qcert = NULL;

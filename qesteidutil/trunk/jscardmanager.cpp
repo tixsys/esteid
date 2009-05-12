@@ -7,6 +7,7 @@
 using namespace std;
 
 JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
+:	QObject( jsEsteidCard )
 {
     m_jsEsteidCard = jsEsteidCard;
     cardMgr = NULL;
@@ -38,8 +39,10 @@ void JsCardManager::pollCard()
             if (cardReaders.value(i).connected != reader.connected) {
                 if (reader.connected == true)
                     emit cardEvent(m_jsCardInsertFunc, i);
-                else
+				else {
+					m_jsEsteidCard->setCard( 0 );
                     emit cardEvent(m_jsCardRemoveFunc, i);
+				}
             }
         }
         cardReaders = tmp;

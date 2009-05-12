@@ -6,11 +6,12 @@
 
 using namespace std;
 
-JsEsteidCard::JsEsteidCard()
+JsEsteidCard::JsEsteidCard( QObject *parent )
+:	QObject( parent )
 {
     m_card = NULL;
-    m_authCert = new JsCertData();
-    m_signCert = new JsCertData();
+    m_authCert = new JsCertData( this );
+    m_signCert = new JsCertData( this );
 	authUsageCount = 0;
 	signUsageCount = 0;
 }
@@ -18,8 +19,8 @@ JsEsteidCard::JsEsteidCard()
 void JsEsteidCard::setCard(EstEidCard *card)
 {
     m_card = card;
-    m_authCert->loadCert(card, JsCertData::AuthCert);
-    m_signCert->loadCert(card, JsCertData::SignCert);
+	m_authCert->loadCert(card, JsCertData::AuthCert);
+	m_signCert->loadCert(card, JsCertData::SignCert);
     reloadData();
 }
 
@@ -64,6 +65,11 @@ void JsEsteidCard::reloadData() {
     }
 	
 	m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
+}
+
+bool JsEsteidCard::canReadCard()
+{
+	return m_card;
 }
 
 bool JsEsteidCard::validatePin1(QString oldVal)

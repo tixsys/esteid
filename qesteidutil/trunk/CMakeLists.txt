@@ -15,6 +15,7 @@ set(qesteidutil_MOC_HDRS
     jsesteidcard.h
     jsextender.h
     mainwindow.h
+    sslConnect.h
 )
 
 set(cardlib_SRCS
@@ -34,6 +35,7 @@ set(qesteidutil_SRCS
     jsextender.cpp
     main.cpp
     mainwindow.cpp
+    sslConnect.cpp
 )
 
 set(qesteidutil_RCS qesteidutil.qrc)

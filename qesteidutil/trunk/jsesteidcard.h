@@ -14,7 +14,7 @@ class JsEsteidCard : public QObject
     Q_OBJECT
 
 public:
-    JsEsteidCard();
+    JsEsteidCard( QObject *parent );
 
     void setCard(EstEidCard *card);
     void reloadData();
@@ -36,12 +36,14 @@ public:
     QString comment3;
     QString comment4;
 
-    JsCertData *m_authCert;
+    EstEidCard *m_card;
+
+	JsCertData *m_authCert;
     Q_PROPERTY(QObject* authCert READ getAuthCert)
     QObject *getAuthCert()
     {
         if (m_authCert == NULL)
-            m_authCert = new JsCertData();
+            m_authCert = new JsCertData( this );
         return m_authCert;
     }
 
@@ -50,13 +52,12 @@ public:
     QObject *getSignCert()
     {
         if (m_signCert == NULL)
-            m_signCert = new JsCertData();
+            m_signCert = new JsCertData( this );
         return m_signCert;
     }
 
 private:
     SmartCardManager *m_cardManager;
-    EstEidCard *m_card;
     void handleError(QString msg);
 	dword authUsageCount;
 	dword signUsageCount;
@@ -78,6 +79,8 @@ public slots:
     QString getComment2();
     QString getComment3();
     QString getComment4();
+
+	bool canReadCard();
 
     int getPin1RetryCount();
     int getPin2RetryCount();

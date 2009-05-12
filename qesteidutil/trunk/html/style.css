@@ -24,10 +24,11 @@
 
 #photo {position: absolute; top:75px; left:470px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
 
-#cardInfo { position: absolute; top:211px; left:180px; width:390; height:72px;
+.cardInfo { position: absolute; top:211px; left:180px; width:390; height:72px;
 			background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
 			color: #54859b; font-weight: bold; font-family: Arial; font-size: 16px;}
-#cardInfo ul {list-style: none; text-indent:-1.7em; margin-top: 7px;}
+.cardInfo ul {list-style: none; text-indent:-1.7em; margin-top: 7px;}
+.noCard { padding-top:5px; font-size:18px; font-weight: bold; color:#ec2b2b; }
 
 .content {position: relative; top: 70px; padding-left: 35px; padding-right: 35px;}
 .contentHeader {color: #54859b; font-family: Arial; font-weight: bold; font-size: 16px; }
