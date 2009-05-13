@@ -47,7 +47,7 @@ QString fileSize( quint64 bytes )
 	if( bytes >= gb )
 		return QString( "%1GB" ).arg( qreal(bytes) / gb, 0, 'f', 2 );
 	if( bytes >= mb )
-		return QString( "%1MB" ).arg( qreal(bytes) / mb, 0, 'f', 2 );
+		return QString( "%1MB" ).arg( qreal(bytes) / mb, 0, 'f', 1 );
 	if( bytes >= kb )
 		return QString( "%1KB" ).arg( bytes / kb );
 	return QString::number( bytes );
@@ -93,14 +93,9 @@ void CryptDoc::addKey( const CKey &key )
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
-	X509 *cert = (X509*)decodeCert( key.certPem );
-	char *id = NULL;
-	char *recipient = key.recipient.toUtf8().data();
-	char *keyname = NULL;
-	char *carriedkeyname = NULL;
 	DEncEncryptedKey *pkey;
-	int err = dencEncryptedKey_new( m_enc, &pkey, cert,
-		DENC_ENC_METHOD_RSA1_5, id, recipient, keyname, carriedkeyname );
+	int err = dencEncryptedKey_new( m_enc, &pkey, (X509*)decodeCert( key.certPem ),
+		DENC_ENC_METHOD_RSA1_5, NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to add key"), err );
 }
@@ -127,12 +122,10 @@ void CryptDoc::create( const QString &file )
 	clear();
 	const char *format = ConfigItem_lookup("DIGIDOC_FORMAT");
 	const char *version = "1.3"; //ConfigItem_lookup("DIGIDOC_VERSION");
+
 	int err = SignedDoc_new( &m_doc, format, version );
 	if( err != ERR_OK )
-	{
-		setLastError( tr("Failed to create document"), err );
-		return;
-	}
+		return setLastError( tr("Failed to create document"), err );
 
 	err = dencEncryptedData_new( &m_enc, DENC_XMLNS_XMLENC, DENC_ENC_METHOD_AES128, 0, 0, 0 );
 	if( err != ERR_OK )

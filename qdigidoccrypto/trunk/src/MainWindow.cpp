@@ -107,24 +107,24 @@ MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
 	setupUi( this );
-	homeOpenUtility->hide();
-	viewCDocDocsContentView->header()->setStretchLastSection( false );
-	viewCDocDocsContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
-	viewCDocDocsContentView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+	//homeOpenUtility->hide();
+	viewContentView->header()->setStretchLastSection( false );
+	viewContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
+	viewContentView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
-	buttonGroup->addButton( homeCreateCDoc, HomeCreateCDoc );
-	buttonGroup->addButton( homeViewCDoc, HomeViewCDoc );
-	buttonGroup->addButton( introCDocBack, IntroCDocBack );
-	buttonGroup->addButton( introCDocNext, IntroCDocNext );
-	buttonGroup->addButton( viewCDocAddFile, ViewCDocAddFile );
-	buttonGroup->addButton( viewCDocAddRecipient, ViewCDocAddRecipient );
-	buttonGroup->addButton( viewCDocBrowse, ViewCDocBrowse );
-	buttonGroup->addButton( viewCDocClose, ViewCDocClose );
-	buttonGroup->addButton( viewCDocCrypt, ViewCDocCrypt );
-	buttonGroup->addButton( viewCDocEmail, ViewCDocEmail );
-	buttonGroup->addButton( viewCDocRemoveFile, ViewCDocRemoveFile );
-	buttonGroup->addButton( viewCDocSaveAs, ViewCDocSaveAs );
+	buttonGroup->addButton( homeCreate, HomeCreate );
+	buttonGroup->addButton( homeView, HomeView );
+	buttonGroup->addButton( introBack, IntroBack );
+	buttonGroup->addButton( introNext, IntroNext );
+	buttonGroup->addButton( viewAddFile, ViewAddFile );
+	buttonGroup->addButton( viewAddRecipient, ViewAddRecipient );
+	buttonGroup->addButton( viewBrowse, ViewBrowse );
+	buttonGroup->addButton( viewClose, ViewClose );
+	buttonGroup->addButton( viewCrypt, ViewCrypt );
+	buttonGroup->addButton( viewEmail, ViewEmail );
+	buttonGroup->addButton( viewRemoveFile, ViewRemoveFile );
+	buttonGroup->addButton( viewSaveAs, ViewSaveAs );
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
@@ -137,15 +137,15 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(error(QString,int)), SLOT(showWarning(QString,int)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
-	comboLanguages->setItemData( 0, "et" );
-	comboLanguages->setItemData( 1, "en" );
-	comboLanguages->setItemData( 2, "ru" );
-	comboLanguages->setItemData( 3, "de" );
-	comboLanguages->setItemData( 4, "lv" );
-	comboLanguages->setItemData( 5, "lt" );
-	comboLanguages->setCurrentIndex(
-		comboLanguages->findData( SettingsValues().value( "Main/Language", "et" ) ) );
-	on_comboLanguages_activated( comboLanguages->currentIndex() );
+	languages->setItemData( 0, "et" );
+	languages->setItemData( 1, "en" );
+	languages->setItemData( 2, "ru" );
+	languages->setItemData( 3, "de" );
+	languages->setItemData( 4, "lv" );
+	languages->setItemData( 5, "lt" );
+	languages->setCurrentIndex( languages->findData(
+		SettingsValues().value( "Main/Language", "et" ) ) );
+	on_languages_activated( languages->currentIndex() );
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
@@ -208,15 +208,15 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
-	case HomeCreateCDoc:
+	case HomeCreate:
 		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
 		{
-			introCDocCheck->setChecked( false );
+			introCheck->setChecked( false );
 			setCurrentPage( Intro );
 			break;
 		}
-	case IntroCDocNext:
-	case ViewCDocAddFile:
+	case IntroNext:
+	case ViewAddFile:
 	{
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
@@ -233,7 +233,7 @@ void MainWindow::buttonClicked( int button )
 			setCurrentPage( Home );
 		break;
 	}
-	case ViewCDocAddRecipient:
+	case ViewAddRecipient:
 	{
 		if( doc->isEncrypted() )
 			return;
@@ -243,7 +243,7 @@ void MainWindow::buttonClicked( int button )
 		key->show();
 		break;
 	}
-	case ViewCDocCrypt:
+	case ViewCrypt:
 		if( doc->isEncrypted() )
 		{
 			bool ok;
@@ -263,9 +263,9 @@ void MainWindow::buttonClicked( int button )
 		}
 		setCurrentPage( View );
 		break;
-	case ViewCDocRemoveFile:
+	case ViewRemoveFile:
 	{
-		QAbstractItemModel *m = viewCDocDocsContentView->model();
+		QAbstractItemModel *m = viewContentView->model();
 
 		QStringList files;
 		for( int i = 0; i < m->rowCount(); ++i )
@@ -293,11 +293,11 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( View );
 		break;
 	}
-	case ViewCDocBrowse:
+	case ViewBrowse:
 		QDesktopServices::openUrl( QString( "file://" )
 			.append( QFileInfo( doc->fileName() ).absolutePath() ) );
 		break;
-	case ViewCDocEmail:
+	case ViewEmail:
 	{
 #ifdef Q_OS_WIN32
 		QByteArray filePath = doc->fileName().toLatin1();
@@ -343,7 +343,7 @@ void MainWindow::buttonClicked( int button )
 #endif
 		break;
 	}
-	case HomeViewCDoc:
+	case HomeView:
 	{
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
@@ -355,19 +355,19 @@ void MainWindow::buttonClicked( int button )
 		}
 		break;
 	}
-	case IntroCDocBack:
-	case ViewCDocClose:
+	case IntroBack:
+	case ViewClose:
 		doc->clear();
 		setCurrentPage( Home );
 		break;
-	case ViewCDocSaveAs:
+	case ViewSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
 			tr("Select folder where files will be stored"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !dir.isEmpty() )
 		{
-			QAbstractItemModel *m = viewCDocDocsContentView->model();
+			QAbstractItemModel *m = viewContentView->model();
 			for( int i = 0; i < m->rowCount(); ++i )
 			{
 				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
@@ -416,23 +416,23 @@ void MainWindow::dropEvent( QDropEvent *e )
 
 void MainWindow::on_buttonSettings_clicked() { (new Settings( this ))->show(); }
 
-void MainWindow::on_comboLanguages_activated( int index )
+void MainWindow::on_introCheck_stateChanged( int state )
+{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
+
+void MainWindow::on_languages_activated( int index )
 {
-	SettingsValues().setValue( "Main/Language", comboLanguages->itemData( index ).toString() );
+	SettingsValues().setValue( "Main/Language", languages->itemData( index ).toString() );
 
 	appTranslator->load( QString( ":/translations/%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
+		.arg( languages->itemData( index ).toString() ) );
 	qtTranslator->load( QString( ":/translations/qt_%1" )
-		.arg( comboLanguages->itemData( index ).toString() ) );
+		.arg( languages->itemData( index ).toString() ) );
 
 	retranslateUi( this );
 	showCardStatus();
 }
 
-void MainWindow::on_introCDocCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
-
-void MainWindow::on_viewCDocDocsContentView_doubleClicked( const QModelIndex &index )
+void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 {
 	if( doc->isNull() || doc->isEncrypted() )
 		return;
@@ -461,38 +461,38 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 	case View:
 	{
-		viewCDocLocation->setText( tr("Container: <b>%1</b>").arg( doc->fileName() ) );
-		viewCDocAddFile->setDisabled( doc->isEncrypted() );
-		viewCDocSaveAs->setDisabled( doc->isEncrypted() );
-		viewCDocRemoveFile->setDisabled( doc->isEncrypted() );
-		viewCDocAddRecipient->setDisabled( doc->isEncrypted() );
+		viewFileName->setText( tr("Container: <b>%1</b>").arg( doc->fileName() ) );
+		viewAddFile->setDisabled( doc->isEncrypted() );
+		viewSaveAs->setDisabled( doc->isEncrypted() );
+		viewRemoveFile->setDisabled( doc->isEncrypted() );
+		viewAddRecipient->setDisabled( doc->isEncrypted() );
 
-		viewCDocCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
+		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
 
-		viewCDocDocsContentView->clear();
+		viewContentView->clear();
 		Qt::ItemFlags flags;
 		if( !doc->isEncrypted() )
 			flags = Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
 		Q_FOREACH( const CDocument &file, doc->documents() )
 		{
-			QTreeWidgetItem *i = new QTreeWidgetItem( viewCDocDocsContentView );
+			QTreeWidgetItem *i = new QTreeWidgetItem( viewContentView );
 			i->setText( 0, file.filename );
 			i->setText( 1, file.size );
 			i->setFlags( flags );
 			i->setCheckState( 0, Qt::Unchecked );
 			i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
 			i->setData( 0, Qt::ToolTipRole, file.filename );
-			viewCDocDocsContentView->addTopLevelItem( i );
+			viewContentView->addTopLevelItem( i );
 		}
 
-		Q_FOREACH( KeyWidget *w, viewCDocKeysContent->findChildren<KeyWidget*>() )
+		Q_FOREACH( KeyWidget *w, viewKeys->findChildren<KeyWidget*>() )
 			w->deleteLater();
 		int i = 0;
 		Q_FOREACH( const CKey &k, doc->keys() )
 		{
-			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewCDocKeysContent );
+			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewKeys );
 			connect( key, SIGNAL(remove(int)), SLOT(removeKey(int)) );
-			viewCDocKeysContentLayout->insertWidget( i, key );
+			viewKeysLayout->insertWidget( i, key );
 			++i;
 		}
 		break;

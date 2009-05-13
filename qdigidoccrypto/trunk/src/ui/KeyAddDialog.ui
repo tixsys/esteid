@@ -49,6 +49,9 @@
          <property name="horizontalScrollBarPolicy" >
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
+         </property>
          <column>
           <property name="text" >
            <string>Owner</string>
@@ -77,6 +80,9 @@
         <widget class="QTreeWidget" name="storeView" >
          <property name="horizontalScrollBarPolicy" >
           <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="rootIsDecorated" >
+          <bool>false</bool>
          </property>
          <column>
           <property name="text" >

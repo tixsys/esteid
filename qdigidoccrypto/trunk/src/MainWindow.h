@@ -43,9 +43,9 @@ private Q_SLOTS:
 	void buttonClicked( int button );
 	void showCardStatus();
 	void on_buttonSettings_clicked();
-	void on_comboLanguages_activated( int index );
-	void on_introCDocCheck_stateChanged( int state );
-	void on_viewCDocDocsContentView_doubleClicked( const QModelIndex &index );
+	void on_introCheck_stateChanged( int state );
+	void on_languages_activated( int index );
+	void on_viewContentView_doubleClicked( const QModelIndex &index );
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err );
 
@@ -56,18 +56,18 @@ private:
 		View,
 	};
 	enum Buttons {
-		HomeCreateCDoc,
-		HomeViewCDoc,
-		IntroCDocBack,
-		IntroCDocNext,
-		ViewCDocAddFile,
-		ViewCDocAddRecipient,
-		ViewCDocBrowse,
-		ViewCDocClose,
-		ViewCDocCrypt,
-		ViewCDocEmail,
-		ViewCDocRemoveFile,
-		ViewCDocSaveAs,
+		HomeCreate,
+		HomeView,
+		IntroBack,
+		IntroNext,
+		ViewAddFile,
+		ViewAddRecipient,
+		ViewBrowse,
+		ViewClose,
+		ViewCrypt,
+		ViewEmail,
+		ViewRemoveFile,
+		ViewSaveAs,
 	};
 	bool addFile( const QString &file );
 	void dragEnterEvent( QDragEnterEvent *e );
@@ -75,6 +75,5 @@ private:
 	void setCurrentPage( Pages page );
 
 	CryptDoc	*doc;
-	QTranslator *appTranslator;
-	QTranslator *qtTranslator;
+	QTranslator *appTranslator, *qtTranslator;
 };
