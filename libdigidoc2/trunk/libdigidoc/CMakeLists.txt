@@ -27,11 +27,24 @@ set( libdigidoc2_SRCS
 add_definitions( -DSYSCONFDIR="${SYSCONF_INSTALL_DIR}" )
 add_definitions( -DDIGIDOC_VERSION="${DIGIDOC_VERSION}" )
 add_definitions( -DWITH_SOAPDEFS_H )
+if( WIN32 )
+    add_definitions( -DBUILDINGDLL )
+endif( WIN32 )
+if( MSVC )
+    add_definitions(
+        -D_CRT_NONSTDC_NO_DEPRECATE
+        -D_CRT_SECURE_NO_DEPRECATE
+        -D_CRT_SECURE_NO_WARNINGS
+        -D_SCL_SECURE_NO_WARNINGS
+    )
+endif( MSVC )
 
 add_library( digidoc2 SHARED ${libdigidoc2_SRCS} )
 target_link_libraries( digidoc2
     ${LIBXML2_LIBRARIES}
     ${OPENSSL_LIBRARIES}
+    ${OPENSSLCRYPTO_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 set_target_properties( digidoc2 PROPERTIES VERSION ${DIGIDOC_VERSION} SOVERSION 2 )
 install( TARGETS digidoc2 DESTINATION lib )

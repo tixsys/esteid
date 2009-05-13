@@ -1,6 +1,9 @@
 cmake_minimum_required( VERSION 2.6 )
 project( libdigidoc2 )
 
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+
 set( SYSCONF_INSTALL_DIR
     "${CMAKE_INSTALL_PREFIX}/etc"
     CACHE PATH "Configuration files directory"
@@ -18,6 +21,8 @@ set( DIGIDOC_VERSION "2.6.0" )
 
 find_package( LibXml2 REQUIRED )
 find_package( OpenSSL REQUIRED )
+find_package( OpenSSLCrypto REQUIRED )
+find_package( ZLIB REQUIRED )
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/libdigidoc2.pc.cmake
@@ -30,6 +35,8 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${LIBXML2_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
+    ${OPENSSLCRYPTO_INCLUDE_DIR}
+    ${ZLIB_INCLUDE_DIR}
 )
 
 add_subdirectory( etc )
