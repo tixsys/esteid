@@ -78,7 +78,11 @@ QPushButton:hover
 #languages::down-arrow
 { image: url(&quot;:/images/images/languages_button.png&quot;); }
 #info
-{ padding: 10px; }</string>
+{
+border-radius: 3px;
+background-color: rgba( 255, 255, 255, 153 );
+padding: 10px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
    <property name="spacing">
@@ -223,34 +227,25 @@ QPushButton:hover
          </spacer>
         </item>
         <item>
-         <widget class="InfoBackground" name="infoBackground" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <property name="margin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="info">
-             <property name="minimumSize">
-              <size>
-               <width>387</width>
-               <height>95</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>387</width>
-               <height>95</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-            </widget>
-           </item>
-          </layout>
+         <widget class="QLabel" name="info">
+          <property name="minimumSize">
+           <size>
+            <width>387</width>
+            <height>95</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>387</width>
+            <height>95</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
          </widget>
         </item>
        </layout>
@@ -973,14 +968,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>InfoBackground</class>
-   <extends>QWidget</extends>
-   <header>InfoBackground.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../rc/qdigidocclient.qrc"/>
  </resources>

@@ -20,7 +20,6 @@ find_package( LibDigiDoc REQUIRED )
 
 SET( HEADERS
 	src/DigiDoc.h
-	src/InfoBackground.h
 	src/MainWindow.h
 	src/PrintSheet.h
 	src/Settings.h
@@ -30,7 +29,6 @@ SET( SOURCES
 	${HEADERS}
 	src/main.cpp
 	src/DigiDoc.cpp
-	src/InfoBackground.cpp
 	src/MainWindow.cpp
 	src/PrintSheet.cpp
 	src/Settings.cpp
@@ -47,8 +45,6 @@ SET( QT_USE_QTNETWORK true )
 SET( QT_USE_QTWEBKIT true )
 INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
-
-SET( CMAKE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src" )
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
