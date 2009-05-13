@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libdigidoc
+Description: libdigidoc
+Version: @VERSION@
+Libs: @DIGIDOC_LIBS@ -L${libdir} -ldigidoc
+Cflags: -I${includedir}/libdigidoc

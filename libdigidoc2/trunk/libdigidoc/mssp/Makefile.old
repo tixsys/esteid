@@ -1,0 +1,52 @@
+# makefile for MSSP submodule
+
+
+#GSOAP_HOME=/opt/gsoap-linux-2.7
+#GSOAP_HOME=/usr/local
+GSOAP_HOME=/home/veiko
+SERVICE_HOME=/home/veiko/MSSP_GW
+WSDL2H=$(GSOAP_HOME)/bin/wsdl2h
+SOAP2CPP=$(GSOAP_HOME)/bin/soapcpp2
+AR=ar
+ARFLAGS=rcs
+CLIENTLIB_GENFLAGS=-2 -c
+CFLAGS=-DWITH_SOAPDEFS_H -D_POSIX_THREADS -I$(GSOAP_HOME)/include -g -I. -I..
+
+CLIENT_CLIB_OBJS=stdsoap2.o soapC.o \
+	soapClient.o soapClientLib.o \
+	DigiDocMsspGw.o
+
+CLIENTLIB_GENSRC=soapStub.h soapH.h \
+	soapC.c soapClient.c soapClientLib.c
+
+MSSP_CLIENT_CLIB=libMsspClient.a
+
+
+all: $(MSSP_CLIENT_CLIB)
+
+
+$(CLIENTLIB_GENSRC): soapdefs.h stdsoap2.h MsspErrors.h
+	$(SOAP2CPP) $(CLIENTLIB_GENFLAGS) $(SERVICE_HOME)/src/MSSP_GW.h
+	rm -f soapServer* *.xml *.xsd *.wsdl
+
+%o : %c
+	gcc -g -c $(CFLAGS) $< -o $@
+
+soapdefs.h:
+	cp $(SERVICE_HOME)/src/soapdefs.h .
+
+MsspErrors.h:
+	cp $(SERVICE_HOME)/src/MsspErrors.h .
+
+stdsoap2.c:
+	cp $(GSOAP_HOME)/stdsoap2.c .
+
+stdsoap2.h:
+	cp $(GSOAP_HOME)/stdsoap2.h .
+
+$(MSSP_CLIENT_CLIB): $(CLIENTLIB_GENSRC) $(CLIENT_CLIB_OBJS) 
+	$(AR) $(ARFLAGS) $(MSSP_CLIENT_CLIB) $(CLIENT_CLIB_OBJS)
+	ranlib $(MSSP_CLIENT_CLIB)
+
+clean: 
+	rm -f *~ *.xml *.wsdl *.nsmap *.o *.xsd soap* stdsoap2.* *.a

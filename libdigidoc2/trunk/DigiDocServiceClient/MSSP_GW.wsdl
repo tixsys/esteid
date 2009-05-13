@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="MSSP_GW"
+ targetNamespace="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+ xmlns:tns="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:d="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl"
+ xmlns:mss="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:d="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl"
+  xmlns:mss="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="qualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <complexType name="DataFileAttribute">
+   <sequence>
+     <element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Value" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="DataFileInfo">
+   <sequence>
+     <element name="Id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Filename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="MimeType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ContentType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Size" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="DigestType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DigestValue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Attributes" type="d:DataFileAttribute" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignerRole">
+   <sequence>
+     <element name="Certified" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Role" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignatureProductionPlace">
+   <sequence>
+     <element name="City" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="StateOrProvince" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="PostalCode" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="CountryName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CertificatePolicy">
+   <sequence>
+     <element name="OID" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="URL" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CertificateInfo">
+   <sequence>
+     <element name="Issuer" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Subject" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ValidFrom" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ValidTo" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="IssuerSerial" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Policies" type="d:CertificatePolicy" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignerInfo">
+   <sequence>
+     <element name="CommonName" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="IDCode" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Certificate" type="d:CertificateInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="ConfirmationInfo">
+   <sequence>
+     <element name="ResponderID" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ProducedAt" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ResponderCertificate" type="d:CertificateInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="TstInfo">
+   <sequence>
+     <element name="Id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SerialNumber" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="CreationTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Policy" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ErrorBound" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Ordered" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+     <element name="TSA" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Certificate" type="d:CertificateInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="RevokedInfo">
+   <sequence>
+     <element name="Sequence" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1"/>
+     <element name="SerialNumber" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="RevocationDate" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="CRLInfo">
+   <sequence>
+     <element name="Issuer" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="LastUpdate" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="NextUpdate" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Revocations" type="d:RevokedInfo" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="Error">
+   <sequence>
+     <element name="Code" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Category" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignatureInfo">
+   <sequence>
+     <element name="Id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Status" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Error" type="d:Error" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SigningTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="SignerRole" type="d:SignerRole" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="SignatureProductionPlace" type="d:SignatureProductionPlace" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Signer" type="d:SignerInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Confirmation" type="d:ConfirmationInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Timestamps" type="d:TstInfo" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="CRLInfo" type="d:CRLInfo" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignedDocInfo">
+   <sequence>
+     <element name="Format" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Version" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DataFileInfo" type="d:DataFileInfo" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="SignatureInfo" type="d:SignatureInfo" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="DataFileData">
+   <sequence>
+     <element name="Id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Filename" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="MimeType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ContentType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DigestType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DigestValue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Size" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+     <element name="Attributes" type="d:DataFileAttribute" minOccurs="0" maxOccurs="unbounded"/>
+     <element name="DfData" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignatureModule">
+   <sequence>
+     <element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Type" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Location" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="ContentType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="Content" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="SignatureModulesArray">
+   <sequence>
+     <element name="Modules" type="d:SignatureModule" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+  <complexType name="DataFileDigest">
+   <sequence>
+     <element name="Id" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DigestType" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+     <element name="DigestValue" type="xsd:string" minOccurs="0" maxOccurs="1" nillable="true"/>
+   </sequence>
+  </complexType>
+  <complexType name="DataFileDigestList">
+   <sequence>
+     <element name="DataFileDigest" type="d:DataFileDigest" minOccurs="0" maxOccurs="unbounded"/>
+   </sequence>
+  </complexType>
+ </schema>
+
+ <schema targetNamespace="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:d="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl"
+  xmlns:mss="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"
+  attributeFormDefault="qualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+  <!-- operation response element -->
+  <element name="str" type="xsd:string"/>
+ </schema>
+
+</types>
+
+<message name="MSS_SignatureDummy">
+</message>
+
+<message name="mss-DummyResp">
+ <part name="str" element="mss:str"/>
+</message>
+
+<portType name="MSSP_GWPortType">
+ <operation name="MSS_SignatureDummy">
+  <documentation>Service definition of function mss__MSS_USCORESignatureDummy</documentation>
+  <input message="tns:MSS_SignatureDummy"/>
+  <output message="tns:mss-DummyResp"/>
+ </operation>
+</portType>
+
+<binding name="MSSP_GW" type="tns:MSSP_GWPortType">
+ <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="MSS_SignatureDummy">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body parts="parameters" use="literal" namespace="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"/>
+  </input>
+  <output>
+     <SOAP:body parts="parameters" use="literal" namespace="http://www.sk.ee:8096/MSSP_GW/MSSP_GW.wsdl"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="MSSP_GW">
+ <documentation>MSSP Gateway Service</documentation>
+ <port name="MSSP_GW" binding="tns:MSSP_GW">
+  <SOAP:address location="http://www.sk.ee:8096/MSSP_GW"/>
+ </port>
+</service>
+
+</definitions>
