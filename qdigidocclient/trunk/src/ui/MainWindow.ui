@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWindow</class>
- <widget class="QWidget" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QWidget" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,36 +10,36 @@
     <height>540</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>650</width>
     <height>540</height>
    </size>
   </property>
-  <property name="maximumSize" >
+  <property name="maximumSize">
    <size>
     <width>650</width>
     <height>540</height>
    </size>
   </property>
-  <property name="acceptDrops" >
+  <property name="acceptDrops">
    <bool>true</bool>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>DigiDoc client</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../rc/qdigidocclient.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../rc/qdigidocclient.qrc">
     <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
   </property>
-  <property name="styleSheet" >
-   <string notr="true" >/* fonts */
+  <property name="styleSheet">
+   <string notr="true">/* fonts */
 QWidget
 { color: #355670; }
 QPushButton, #languages
@@ -73,87 +74,82 @@ QPushButton:hover
 {}
 /* customization */
 #background
-{ background-image: url(":/images/background.png"); }
+{ background-image: url(&quot;:/images/background.png&quot;); }
 #languages::down-arrow
-{ image: url(":/images/images/languages_button.png"); }
+{ image: url(&quot;:/images/images/languages_button.png&quot;); }
 #info
-{
-opacity: 0.6;
-border-radius: 3px;
-background: white;
-padding: 10px;
-}</string>
+{ padding: 10px; }</string>
   </property>
-  <layout class="QVBoxLayout" name="MainLayout" >
-   <property name="spacing" >
+  <layout class="QVBoxLayout" name="MainLayout">
+   <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin" >
+   <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="background" >
-     <layout class="QVBoxLayout" name="backgroundLayout" >
-      <property name="spacing" >
+    <widget class="QFrame" name="background">
+     <layout class="QVBoxLayout" name="backgroundLayout">
+      <property name="spacing">
        <number>0</number>
       </property>
-      <property name="leftMargin" >
+      <property name="leftMargin">
        <number>20</number>
       </property>
-      <property name="topMargin" >
+      <property name="topMargin">
        <number>0</number>
       </property>
-      <property name="rightMargin" >
+      <property name="rightMargin">
        <number>20</number>
       </property>
-      <property name="bottomMargin" >
+      <property name="bottomMargin">
        <number>20</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="headerLayout" >
+       <layout class="QHBoxLayout" name="headerLayout">
         <item>
-         <widget class="QComboBox" name="languages" >
-          <property name="sizeAdjustPolicy" >
+         <widget class="QComboBox" name="languages">
+          <property name="sizeAdjustPolicy">
            <enum>QComboBox::AdjustToContents</enum>
           </property>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Estonian</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>English</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Russian</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>German</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Latvian</string>
            </property>
           </item>
           <item>
-           <property name="text" >
+           <property name="text">
             <string>Lithuanian</string>
            </property>
           </item>
          </widget>
         </item>
         <item>
-         <spacer name="headerFrameSpacer" >
-          <property name="orientation" >
+         <spacer name="headerFrameSpacer">
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>0</width>
             <height>45</height>
@@ -162,43 +158,43 @@ padding: 10px;
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="settings" >
-          <property name="font" >
+         <widget class="QPushButton" name="settings">
+          <property name="font">
            <font>
             <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Settings</string>
           </property>
-          <property name="flat" >
+          <property name="flat">
            <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="Line" name="headerLine" >
-          <property name="frameShadow" >
+         <widget class="Line" name="headerLine">
+          <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
-          <property name="orientation" >
+          <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="help" >
-          <property name="font" >
+         <widget class="QPushButton" name="help">
+          <property name="font">
            <font>
             <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
-          <property name="text" >
+          <property name="text">
            <string>Help</string>
           </property>
-          <property name="flat" >
+          <property name="flat">
            <bool>true</bool>
           </property>
          </widget>
@@ -206,19 +202,19 @@ padding: 10px;
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="infoLayout" >
-        <property name="topMargin" >
+       <layout class="QHBoxLayout" name="infoLayout">
+        <property name="topMargin">
          <number>20</number>
         </property>
-        <property name="bottomMargin" >
+        <property name="bottomMargin">
          <number>20</number>
         </property>
         <item>
-         <spacer name="infoSpacer" >
-          <property name="orientation" >
+         <spacer name="infoSpacer">
+          <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0" >
+          <property name="sizeHint" stdset="0">
            <size>
             <width>0</width>
             <height>0</height>
@@ -227,54 +223,63 @@ padding: 10px;
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="info" >
-          <property name="minimumSize" >
-           <size>
-            <width>387</width>
-            <height>95</height>
-           </size>
-          </property>
-          <property name="maximumSize" >
-           <size>
-            <width>387</width>
-            <height>95</height>
-           </size>
-          </property>
-          <property name="font" >
-           <font>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
+         <widget class="InfoBackground" name="infoBackground" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="info">
+             <property name="minimumSize">
+              <size>
+               <width>387</width>
+               <height>95</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>387</width>
+               <height>95</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QStackedWidget" name="stack" >
-        <property name="currentIndex" >
+       <widget class="QStackedWidget" name="stack">
+        <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="home" >
-         <layout class="QVBoxLayout" name="homeLayout" >
-          <property name="leftMargin" >
+        <widget class="QWidget" name="home">
+         <layout class="QVBoxLayout" name="homeLayout">
+          <property name="leftMargin">
            <number>75</number>
           </property>
-          <property name="topMargin" >
+          <property name="topMargin">
            <number>0</number>
           </property>
-          <property name="rightMargin" >
+          <property name="rightMargin">
            <number>75</number>
           </property>
-          <property name="bottomMargin" >
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <spacer name="homeBottomlSpacer" >
-            <property name="orientation" >
+           <spacer name="homeBottomlSpacer">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>0</width>
               <height>0</height>
@@ -283,26 +288,26 @@ padding: 10px;
            </spacer>
           </item>
           <item>
-           <layout class="QGridLayout" name="homeButtonLayout" >
-            <item row="0" column="0" >
-             <widget class="QLabel" name="homeButtonLabel" >
-              <property name="styleSheet" >
-               <string notr="true" >font-weight: bold;</string>
+           <layout class="QGridLayout" name="homeButtonLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="homeButtonLabel">
+              <property name="styleSheet">
+               <string notr="true">font-weight: bold;</string>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>I want to:</string>
               </property>
-              <property name="alignment" >
+              <property name="alignment">
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" >
-             <spacer name="homeButtonSpacer" >
-              <property name="orientation" >
+            <item row="0" column="1">
+             <spacer name="homeButtonSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -310,41 +315,41 @@ padding: 10px;
               </property>
              </spacer>
             </item>
-            <item row="1" column="0" >
-             <widget class="QPushButton" name="homeSign" >
-              <property name="font" >
+            <item row="1" column="0">
+             <widget class="QPushButton" name="homeSign">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Sign documents</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="0" >
-             <widget class="QPushButton" name="homeView" >
-              <property name="font" >
+            <item row="2" column="0">
+             <widget class="QPushButton" name="homeView">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>View signed document content</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0" >
-             <widget class="QPushButton" name="homeCrypt" >
-              <property name="font" >
+            <item row="3" column="0">
+             <widget class="QPushButton" name="homeCrypt">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Crypt document</string>
               </property>
              </widget>
@@ -352,11 +357,11 @@ padding: 10px;
            </layout>
           </item>
           <item>
-           <spacer name="homeTopSpacer" >
-            <property name="orientation" >
+           <spacer name="homeTopSpacer">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>0</width>
               <height>0</height>
@@ -366,37 +371,37 @@ padding: 10px;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="intro" >
-         <layout class="QVBoxLayout" name="introLayout" >
-          <property name="margin" >
+        <widget class="QWidget" name="intro">
+         <layout class="QVBoxLayout" name="introLayout">
+          <property name="margin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="introContent" >
-            <property name="text" >
-             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">&#xd;
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">&#xd;
-p, li { white-space: pre-wrap; }&#xd;
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Arial Baltic'; font-weight:400; font-style:normal;">&#xd;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Dokumendi allakirjutamine.&lt;/p>&#xd;
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&#xd;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;/p>&#xd;
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&#xd;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;/p>&#xd;
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&#xd;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Digitaalallkirja andmiseks on vajalik interneti ühendus.&lt;/p>&lt;/body>&lt;/html></string>
+           <widget class="QLabel" name="introContent">
+            <property name="text">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial Baltic'; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamine.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkirja andmiseks on vajalik interneti ühendus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="introSpacer" >
-            <property name="orientation" >
+           <spacer name="introSpacer">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>0</width>
               <height>0</height>
@@ -405,20 +410,20 @@ p, li { white-space: pre-wrap; }&#xd;
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="introButtonLayout" >
+           <layout class="QHBoxLayout" name="introButtonLayout">
             <item>
-             <widget class="QCheckBox" name="introCheck" >
-              <property name="text" >
+             <widget class="QCheckBox" name="introCheck">
+              <property name="text">
                <string>Skip this intro</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="introButtonSpacer" >
-              <property name="orientation" >
+             <spacer name="introButtonSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -427,15 +432,15 @@ p, li { white-space: pre-wrap; }&#xd;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="introBack" >
-              <property name="text" >
+             <widget class="QPushButton" name="introBack">
+              <property name="text">
                <string>Cancel</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="introNext" >
-              <property name="text" >
+             <widget class="QPushButton" name="introNext">
+              <property name="text">
                <string>Next</string>
               </property>
              </widget>
@@ -444,40 +449,40 @@ p, li { white-space: pre-wrap; }&#xd;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="sign" >
-         <layout class="QGridLayout" name="signLayout" >
-          <property name="margin" >
+        <widget class="QWidget" name="sign">
+         <layout class="QGridLayout" name="signLayout">
+          <property name="margin">
            <number>0</number>
           </property>
-          <item row="0" column="0" >
-           <layout class="QHBoxLayout" name="signContentButtonsLayout" >
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="signContentButtonsLayout">
             <item>
-             <widget class="QPushButton" name="signAddFile" >
-              <property name="text" >
+             <widget class="QPushButton" name="signAddFile">
+              <property name="text">
                <string>Add file</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="signSaveAs" >
-              <property name="text" >
+             <widget class="QPushButton" name="signSaveAs">
+              <property name="text">
                <string>Save files to disk</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="signRemoveFile" >
-              <property name="text" >
+             <widget class="QPushButton" name="signRemoveFile">
+              <property name="text">
                <string>Remove checked files</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="signDocsSpacer" >
-              <property name="orientation" >
+             <spacer name="signDocsSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -487,188 +492,188 @@ p, li { white-space: pre-wrap; }&#xd;
             </item>
            </layout>
           </item>
-          <item row="0" column="1" >
-           <widget class="QLabel" name="signSignerLabel" >
-            <property name="font" >
+          <item row="0" column="1">
+           <widget class="QLabel" name="signSignerLabel">
+            <property name="font">
              <font>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Signature</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="signContentLabel" >
-            <property name="font" >
+          <item row="1" column="0">
+           <widget class="QLabel" name="signContentLabel">
+            <property name="font">
              <font>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Container content:</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" >
-           <widget class="QLabel" name="signSigner" >
-            <property name="styleSheet" >
-             <string notr="true" >font-weight: bold;</string>
+          <item row="1" column="1">
+           <widget class="QLabel" name="signSigner">
+            <property name="styleSheet">
+             <string notr="true">font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0" >
-           <widget class="QTreeWidget" name="signContentView" >
-            <property name="frameShape" >
+          <item row="2" column="0">
+           <widget class="QTreeWidget" name="signContentView">
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="horizontalScrollBarPolicy" >
+            <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
-            <property name="rootIsDecorated" >
+            <property name="rootIsDecorated">
              <bool>false</bool>
             </property>
-            <property name="headerHidden" >
+            <property name="headerHidden">
              <bool>true</bool>
             </property>
-            <property name="columnCount" >
+            <property name="columnCount">
              <number>2</number>
             </property>
             <column>
-             <property name="text" >
+             <property name="text">
               <string>Filename</string>
              </property>
             </column>
             <column>
-             <property name="text" >
+             <property name="text">
               <string>Size</string>
              </property>
             </column>
            </widget>
           </item>
-          <item row="2" column="1" >
-           <layout class="QGridLayout" name="signSignerLayout" >
-            <item row="0" column="0" >
-             <widget class="QLabel" name="signRoleLabel" >
-              <property name="font" >
+          <item row="2" column="1">
+           <layout class="QGridLayout" name="signSignerLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="signRoleLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Role</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" >
-             <widget class="QLineEdit" name="signRoleInput" />
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="signRoleInput"/>
             </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="signResolutionLabel" >
-              <property name="font" >
+            <item row="1" column="0">
+             <widget class="QLabel" name="signResolutionLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Resolution</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1" >
-             <widget class="QLineEdit" name="signResolutionInput" />
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="signResolutionInput"/>
             </item>
-            <item row="2" column="0" >
-             <widget class="QLabel" name="signLocationLabel" >
-              <property name="font" >
+            <item row="2" column="0">
+             <widget class="QLabel" name="signLocationLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Location</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0" >
-             <widget class="QLabel" name="signCityLabel" >
-              <property name="font" >
+            <item row="3" column="0">
+             <widget class="QLabel" name="signCityLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>City</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="1" >
-             <widget class="QLineEdit" name="signCityInput" />
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="signCityInput"/>
             </item>
-            <item row="4" column="0" >
-             <widget class="QLabel" name="signStateLabel" >
-              <property name="font" >
+            <item row="4" column="0">
+             <widget class="QLabel" name="signStateLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>State</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1" >
-             <widget class="QLineEdit" name="signStateInput" />
+            <item row="4" column="1">
+             <widget class="QLineEdit" name="signStateInput"/>
             </item>
-            <item row="5" column="0" >
-             <widget class="QLabel" name="signCountryLabel" >
-              <property name="font" >
+            <item row="5" column="0">
+             <widget class="QLabel" name="signCountryLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Country</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1" >
-             <widget class="QLineEdit" name="signCountryInput" />
+            <item row="5" column="1">
+             <widget class="QLineEdit" name="signCountryInput"/>
             </item>
-            <item row="6" column="0" >
-             <widget class="QLabel" name="signZipLabel" >
-              <property name="font" >
+            <item row="6" column="0">
+             <widget class="QLabel" name="signZipLabel">
+              <property name="font">
                <font>
                 <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
-              <property name="text" >
+              <property name="text">
                <string>Zip</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="1" >
-             <widget class="QLineEdit" name="signZipInput" />
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="signZipInput"/>
             </item>
-            <item row="7" column="1" >
-             <spacer name="signSignerSpacer" >
-              <property name="orientation" >
+            <item row="7" column="1">
+             <spacer name="signSignerSpacer">
+              <property name="orientation">
                <enum>Qt::Vertical</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -678,14 +683,14 @@ p, li { white-space: pre-wrap; }&#xd;
             </item>
            </layout>
           </item>
-          <item row="3" column="0" colspan="2" >
-           <layout class="QHBoxLayout" name="signButtonLayout" >
+          <item row="3" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="signButtonLayout">
             <item>
-             <spacer name="signButtonSpacer" >
-              <property name="orientation" >
+             <spacer name="signButtonSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -694,22 +699,22 @@ p, li { white-space: pre-wrap; }&#xd;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="signCancel" >
-              <property name="text" >
+             <widget class="QPushButton" name="signCancel">
+              <property name="text">
                <string>Cancel</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="signSign" >
-              <property name="text" >
+             <widget class="QPushButton" name="signSign">
+              <property name="text">
                <string>Sign</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="signSignMobile" >
-              <property name="text" >
+             <widget class="QPushButton" name="signSignMobile">
+              <property name="text">
                <string>Sign with Mobile-ID</string>
               </property>
              </widget>
@@ -718,26 +723,26 @@ p, li { white-space: pre-wrap; }&#xd;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="view" >
-         <layout class="QGridLayout" name="viewLayout" >
-          <property name="margin" >
+        <widget class="QWidget" name="view">
+         <layout class="QGridLayout" name="viewLayout">
+          <property name="margin">
            <number>0</number>
           </property>
-          <item row="8" column="1" >
-           <layout class="QHBoxLayout" name="viewPrintLayout" >
+          <item row="8" column="1">
+           <layout class="QHBoxLayout" name="viewPrintLayout">
             <item>
-             <widget class="QPushButton" name="viewPrint" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewPrint">
+              <property name="text">
                <string>Print signature summary</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="viewPrintSpacer" >
-              <property name="orientation" >
+             <spacer name="viewPrintSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -747,14 +752,14 @@ p, li { white-space: pre-wrap; }&#xd;
             </item>
            </layout>
           </item>
-          <item row="10" column="0" colspan="2" >
-           <layout class="QHBoxLayout" name="viewButtonsLayout" >
+          <item row="10" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="viewButtonsLayout">
             <item>
-             <spacer name="viewButtonsSpacer" >
-              <property name="orientation" >
+             <spacer name="viewButtonsSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -763,49 +768,49 @@ p, li { white-space: pre-wrap; }&#xd;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="viewAddSignature" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewAddSignature">
+              <property name="text">
                <string>Add signature</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="viewClose" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewClose">
+              <property name="text">
                <string>Close container</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="viewCrypt" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewCrypt">
+              <property name="text">
                <string>Crypt document</string>
               </property>
              </widget>
             </item>
            </layout>
           </item>
-          <item row="0" column="0" colspan="2" >
-           <widget class="QLabel" name="viewFileName" />
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="viewFileName"/>
           </item>
-          <item row="1" column="0" colspan="2" >
-           <widget class="QLabel" name="viewFileStatus" />
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="viewFileStatus"/>
           </item>
-          <item row="8" column="0" >
-           <layout class="QHBoxLayout" name="viewEmailLayout" >
+          <item row="8" column="0">
+           <layout class="QHBoxLayout" name="viewEmailLayout">
             <item>
-             <widget class="QPushButton" name="viewEmail" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewEmail">
+              <property name="text">
                <string>Send container to email</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="viewEmailSpacer" >
-              <property name="orientation" >
+             <spacer name="viewEmailSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -815,21 +820,21 @@ p, li { white-space: pre-wrap; }&#xd;
             </item>
            </layout>
           </item>
-          <item row="4" column="0" >
-           <layout class="QHBoxLayout" name="viewSaveAsLayout" >
+          <item row="4" column="0">
+           <layout class="QHBoxLayout" name="viewSaveAsLayout">
             <item>
-             <widget class="QPushButton" name="viewSaveAs" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewSaveAs">
+              <property name="text">
                <string>Save files to disk</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="viewSaveAsSpacer" >
-              <property name="orientation" >
+             <spacer name="viewSaveAsSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>0</width>
                 <height>0</height>
@@ -839,48 +844,48 @@ p, li { white-space: pre-wrap; }&#xd;
             </item>
            </layout>
           </item>
-          <item row="6" column="0" >
-           <widget class="QTreeWidget" name="viewContentView" >
-            <property name="frameShape" >
+          <item row="6" column="0">
+           <widget class="QTreeWidget" name="viewContentView">
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="horizontalScrollBarPolicy" >
+            <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
-            <property name="rootIsDecorated" >
+            <property name="rootIsDecorated">
              <bool>false</bool>
             </property>
-            <property name="headerHidden" >
+            <property name="headerHidden">
              <bool>true</bool>
             </property>
-            <property name="columnCount" >
+            <property name="columnCount">
              <number>2</number>
             </property>
             <column>
-             <property name="text" >
+             <property name="text">
               <string>Filename</string>
              </property>
             </column>
             <column>
-             <property name="text" >
+             <property name="text">
               <string>Size</string>
              </property>
             </column>
            </widget>
           </item>
-          <item rowspan="2" row="5" column="1" >
-           <widget class="QScrollArea" name="viewSignaturesScroll" >
-            <property name="frameShape" >
+          <item row="5" column="1" rowspan="2">
+           <widget class="QScrollArea" name="viewSignaturesScroll">
+            <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
-            <property name="horizontalScrollBarPolicy" >
+            <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
-            <property name="widgetResizable" >
+            <property name="widgetResizable">
              <bool>true</bool>
             </property>
-            <widget class="QWidget" name="viewSignatures" >
-             <property name="geometry" >
+            <widget class="QWidget" name="viewSignatures">
+             <property name="geometry">
               <rect>
                <x>0</x>
                <y>0</y>
@@ -888,13 +893,13 @@ p, li { white-space: pre-wrap; }&#xd;
                <height>178</height>
               </rect>
              </property>
-             <layout class="QVBoxLayout" name="viewSignaturesLayout" >
+             <layout class="QVBoxLayout" name="viewSignaturesLayout">
               <item>
-               <spacer name="viewSignaturesSpacer" >
-                <property name="orientation" >
+               <spacer name="viewSignaturesSpacer">
+                <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" stdset="0" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>0</width>
                   <height>0</height>
@@ -906,50 +911,50 @@ p, li { white-space: pre-wrap; }&#xd;
             </widget>
            </widget>
           </item>
-          <item row="5" column="0" >
-           <widget class="QLabel" name="viewContentLabel" >
-            <property name="font" >
+          <item row="5" column="0">
+           <widget class="QLabel" name="viewContentLabel">
+            <property name="font">
              <font>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Container content:</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="4" column="1" >
-           <widget class="QLabel" name="viewSignaturesLabel" >
-            <property name="font" >
+          <item row="4" column="1">
+           <widget class="QLabel" name="viewSignaturesLabel">
+            <property name="font">
              <font>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>Signatures</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0" >
-           <layout class="QHBoxLayout" name="viewBrowseLayout" >
+          <item row="9" column="0">
+           <layout class="QHBoxLayout" name="viewBrowseLayout">
             <item>
-             <widget class="QPushButton" name="viewBrowse" >
-              <property name="text" >
+             <widget class="QPushButton" name="viewBrowse">
+              <property name="text">
                <string>Browse container location</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="viewBrowseSpacer" >
-              <property name="orientation" >
+             <spacer name="viewBrowseSpacer">
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="sizeHint" stdset="0" >
+              <property name="sizeHint" stdset="0">
                <size>
                 <width>40</width>
                 <height>20</height>
@@ -968,8 +973,16 @@ p, li { white-space: pre-wrap; }&#xd;
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>InfoBackground</class>
+   <extends>QWidget</extends>
+   <header>InfoBackground.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../rc/qdigidocclient.qrc" />
+  <include location="../rc/qdigidocclient.qrc"/>
  </resources>
  <connections/>
 </ui>
