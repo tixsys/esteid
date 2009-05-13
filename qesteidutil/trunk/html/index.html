@@ -1,6 +1,5 @@
 <html>
 <head>
-	<title>ID kaardi utiliit</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="qrc:/html/style.css" type="text/css" />
 	<script type="text/javascript" src="qrc:/html/lang.js" />
@@ -9,7 +8,7 @@
 <body onSelectStart="return false;">
   <div id="top">
     <div id="headerBackground">
-      <div style="display: none;">
+      <div>
         <select id="headerSelect">
           <option value="et">Estonian</option>
           <option value="en">English</option>
@@ -17,9 +16,9 @@
       </div>
       <div id="headerMenus">
         <ul>
-          <li class="first">Diagnostika</li>
-          <li>Suvandid</li>
-          <li>Abi</li>
+          <li class="first"><trtag code="test">Diagnostika</trtag></li>
+          <li><trtag>Suvandid</trtag></li>
+          <li><trtag>Abi</trtag></li>
         </ul>        
       </div>
     </div>
@@ -29,16 +28,16 @@
     <div id="linegray">&nbsp;</div>
     <div id="personalInfo">
       <ul>
-        <li>Nimi: <span id="firstName"></span> <span id="middleName"></span> <span id="surName"></span></li>
-        <li>Isikukood: <span id="id"></span></li>
-        <li>Sündinud: <span id="birthDate"></span>, <span id="birthPlace"></span></li>
-        <li>Kodakondsus: <span id="citizen"></span></li>
-        <li>E-post: <span id="email"></span></li>
+        <li><trtag>Nimi:</trtag> <span id="firstName"></span> <span id="middleName"></span> <span id="surName"></span></li>
+        <li><trtag>Isikukood:</trtag> <span id="id"></span></li>
+        <li><trtag>Sündinud:</trtag> <span id="birthDate"></span>, <span id="birthPlace"></span></li>
+        <li><trtag>Kodakondsus:</trtag> <span id="citizen"></span></li>
+        <li><trtag>E-post:</trtag> <span id="email"></span></li>
       </ul>
     </div>
     <div id="photo">
       <div id="photoContent" style="padding-top:50px;">
-        <a href="#" onClick="loadPicture();">Lae pilt</a>
+        <a href="#" onClick="loadPicture();"><trtag>Lae pilt</trtag></a>
       </div>
     </div>
     <div id="leftMenus">
@@ -51,28 +50,28 @@
     </div>
     <div id="cardInfo" class="cardInfo">
       <ul>
-        <li>Lugejas on ID kaart <span id="documentId" style="color: #355670;"></span></li>
-        <li>See on <span style="color: #509b00;">kehtiv</span> dokument</li>
-        <li><span style="font-size:12px; font-weight: normal; color: #355670;">Kaart on kehtiv kuni <span id="expiry" style="color: #355670;"></span></span></li>
+        <li><trtag>Lugejas on ID kaart</trtag> <span id="documentId" style="color: #355670;"></span></li>
+        <li><trtag>See on</trtag> <span style="color: #509b00;"><trtag>kehtiv</trtag></span> <trtag>dokument</trtag></li>
+        <li><span style="font-size:12px; font-weight: normal; color: #355670;"><trtag>Kaart on kehtiv kuni</trtag> <span id="expiry" style="color: #355670;"></span></span></li>
       </ul>
     </div>
     <div id="cardInfoNoCard" class="cardInfo" style="display:none; text-align:center;">
-        <p class="noCard">Ei leitud ID-kaarti</p>
+        <p class="noCard"><trtag>Ei leitud ID-kaarti</trtag></p>
     </div>
   </div>
   <!-- sertifikaatide sisu algus-->
   <div id="certContent" class="content">
     <div class="leftContent">
-      <span class="contentHeader">Isikutuvastamise sertifikaat</span>
+      <span class="contentHeader"><trtag>Isikutuvastamise sertifikaat</trtag></span>
       <p>
-        Sertifikaat on <span id="authCertStatus"></span><br />
-        Sertifikaat kehtib kuni <span id="authCertValidTo"></span>
+        <trtag>Sertifikaat on</trtag> <span id="authCertStatus"></span><br />
+        <trtag>Sertifikaat kehtib kuni</trtag> <span id="authCertValidTo"></span>
       </p>
       <p id="authKeyText">
-        Isikutuvastamise privaatvõtit on edukalt kasutatud <span id="authKeyUsage"></span> korda
+        <trtag>Isikutuvastamise privaatvõtit on edukalt kasutatud</trtag> <span id="authKeyUsage"></span> <trtag>korda</trtag>
       </p>
       <div id="authKeyBlocked" class="keyBlocked">
-        Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.
+        <trtag>Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>
       </div>
       <div id="authBottomButtons">
         <div id="authValidButtons">
@@ -85,16 +84,16 @@
       </div>
     </div>
     <div class="rightContent">
-      <span class="contentHeader">Allkirja sertifikaat</span>
+      <span class="contentHeader"><trtag>Allkirja sertifikaat</trtag></span>
       <p>
-        Sertifikaat on <span id="signCertStatus"></span><br />
-        Sertifikaat kehtib kuni <span id="signCertValidTo"></span>
+        <trtag>Sertifikaat on</trtag> <span id="signCertStatus"></span><br />
+        <trtag>Sertifikaat kehtib kuni</trtag> <span id="signCertValidTo"></span>
       </p>
       <p id="signKeyText">
-        Allkirjastamise privaatvõtit on edukalt kasutatud <span id="signKeyUsage"></span> korda
+        <trtag>Allkirjastamise privaatvõtit on edukalt kasutatud</trtag> <span id="signKeyUsage"></span> <trtag>korda</trtag>
       </p>
       <div id="signKeyBlocked" class="keyBlocked">
-        Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.
+        <trtag>Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>
       </div>
       <div id="signBottomButtons" style="padding-left: 30px;">
         <div id="signValidButtons">
@@ -111,31 +110,31 @@
 
   <!-- PIN1 blokeeringu algus -->
   <div id="bpin1Content" class="content" style="display: none;">
-	<span class="contentHeader">Isikutuvastamise sertifikaat on blokeeritud.</span>
+	<span class="contentHeader"><trtag>Isikutuvastamise sertifikaat on blokeeritud.</trtag></span>
 	<div class="leftContent">
 		<p>
-			Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.
+			<trtag>Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.</trtag>
 		</p>
 		<p>
-			PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.
+			<trtag>PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.</trtag>
 		</p>
 		<p>
-			Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.
+			<trtag>Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.</trtag>
 		</p>
 	</div>
 	<div class="rightContent">
 		<label>
-			PUK kood<br />
+			<trtag>PUK kood</trtag><br />
 			<input type="password" name="bpin1OldPin" id="bpin1OldPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN1 kood
+			<trtag>Uus PIN1 kood</trtag>
 			<input type="password" name="bpin1NewPin" id="bpin1NewPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN1 kood uuesti
+			<trtag>Uus PIN1 kood uuesti</trtag>
 			<input type="password" name="bpin1NewPin2" id="bpin1NewPin2">
 		</label>
 		<br />
@@ -147,28 +146,28 @@
   
   <!-- PIN1 muutmine algus -->
   <div id="pin1Content" class="content" style="display: none;">
-	<span class="contentHeader">PIN1 koodi vahetus</span>
+	<span class="contentHeader"><trtag>PIN1 koodi vahetus</trtag></span>
 	<div class="leftContent">
 		<p>
-			PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.
+			<trtag>PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.</trtag>
 		</p>
 		<p>
-			Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.
+			<trtag>Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.</trtag>
 		</p>
 	</div>
 	<div class="rightContent">
 		<label>
-			Vana PIN1 kood
+			<trtag>Vana PIN1 kood</trtag>
 			<input type="password" name="pin1OldPin" id="pin1OldPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN1 kood
+			<trtag>Uus PIN1 kood</trtag>
 			<input type="password" name="pin1NewPin" id="pin1NewPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN1 kood uuesti
+			<trtag>Uus PIN1 kood uuesti</trtag>
 			<input type="password" name="pin1NewPin2" id="pin1NewPin2">
 		</label>
 		<br />
@@ -180,31 +179,31 @@
   
   <!-- PIN2 blokeeringu algus -->
   <div id="bpin2Content" class="content" style="display: none;">
-	<span class="contentHeader">Allkirja sertifikaat on blokeeritud.</span>
+	<span class="contentHeader"><trtag>Allkirja sertifikaat on blokeeritud.</trtag></span>
 	<div class="leftContent">
 		<p>
-			Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.
+			<trtag>Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.</trtag>
 		</p>
 		<p>
-			PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.
+			<trtag>PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.</trtag>
 		</p>
 		<p>
-			Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.
+			<trtag>Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.</trtag>
 		</p>
 	</div>
 	<div class="rightContent">
 		<label>
-			PUK kood<br />
+			<trtag>PUK kood</trtag><br />
 			<input type="password" name="bpin2OldPin" id="bpin2OldPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN2 kood
+			<trtag>Uus PIN2 kood</trtag>
 			<input type="password" name="bpin2NewPin" id="bpin2NewPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN2 kood uuesti
+			<trtag>Uus PIN2 kood uuesti</trtag>
 			<input type="password" name="bpin2NewPin2" id="bpin2NewPin2">
 		</label>
 		<br />
@@ -216,28 +215,28 @@
   
   <!-- PIN2 muutmine algus -->
   <div id="pin2Content" class="content" style="display: none;">
-	<span class="contentHeader">PIN2 koodi vahetus</span>
+	<span class="contentHeader"><trtag>PIN2 koodi vahetus</trtag></span>
 	<div class="leftContent">
 		<p>
-			PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.
+			<trtag>PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.</trtag>
 		</p>
 		<p>
-			Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.
+			<trtag>Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.</trtag>
 		</p>
 	</div>
 	<div class="rightContent">
 		<label>
-			Vana PIN2 kood
+			<trtag>Vana PIN2 kood</trtag>
 			<input type="password" name="pin2OldPin" id="pin2OldPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN2 kood
+			<trtag>Uus PIN2 kood</trtag>
 			<input type="password" name="pin2NewPin" id="pin2NewPin">
 		</label>
 		<br />
 		<label>
-			Uus PIN2 kood uuesti
+			<trtag>Uus PIN2 kood uuesti</trtag>
 			<input type="password" name="pin2NewPin2" id="pin2NewPin2">
 		</label>
 		<br />
@@ -249,33 +248,33 @@
   
   <!-- Eposti sisu algus -->
   <div id="emailContent" class="content" style="display: none;">
-	<span class="contentHeader">@eesti.ee e-post</span>
+	<span class="contentHeader"><trtag>@eesti.ee e-post</trtag></span>
 	<p id="emailsContent">
 		&nbsp;
 	</p>
 	<p id="emailsContentActivate" style="display:none;">
 		<label>
-			E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad
+			<trtag>E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad</trtag>
 			<input type="text" name="emailAddress" id="emailAddress">
 		</label>
 		<br />
 		<input type="button" value="Aktiveeri @eesti.ee e-post" onclick="activateEmail()" class="buttonBottom" />
 	</p>
 	<p>
-		Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">portaalist eesti.ee</a>
+		<trtag>Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist</trtag> <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">eesti.ee</a>
 	</p>
   </div>
   <!-- Eposti sisu l6pp -->
   
   <!-- Mobiil-ID sisu algus -->
   <div id="mobileContent" class="content" style="display: none;">
-	<span class="contentHeader">Mobiil-ID</span>
+	<span class="contentHeader"><trtag>Mobiil-ID</trtag></span>
 	<p>
-		Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.<br />
-		<a href="#" onClick="extender.openUrl('http://id.ee/?id=10971');">Loe täpsemalt id.ee kodulehelt</a>
+		<trtag>Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.</trtag><br />
+		<a href="#" onClick="extender.openUrl('http://id.ee/?id=10971');"><trtag>Loe täpsemalt id.ee kodulehelt</trtag></a>
 	</p>
 	<p>
-		Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.
+		<trtag>Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.</trtag>
 	</p>
 	<p>
 		<input type="button" value="Aktiveeri Mobiil-ID teenus" onclick="activateMobile()" class="buttonBottom" />
@@ -285,12 +284,12 @@
   
   <!-- PUK sisu algus -->
   <div id="pukContent" class="content" style="display: none;">
-	<span class="contentHeader">PUK kood</span>
+	<span class="contentHeader"><trtag>PUK kood</trtag></span>
     <p>
-		PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.
+		<trtag>PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.</trtag>
 	</p>
 	<p>
-		PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.
+		<trtag>PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.</trtag>
     </p>
 	<p>
 		<input type="button" value="Muuda PUK" onclick="setActive('cpuk','');" class="buttonBottom" />
@@ -300,25 +299,25 @@
   
   <!-- PUK muutmine algus -->
   <div id="cpukContent" class="content" style="display: none;">
-	<span class="contentHeader">PUK koodi vahetus</span>
+	<span class="contentHeader"><trtag>PUK koodi vahetus</trtag></span>
 	<div class="leftContent">
 		<p>
-			Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.
+			<trtag>Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.</trtag>
 		</p>
 	</div>
 	<div class="rightContent">
 		<label>
-			Vana PUK kood
+			<trtag>Vana PUK kood</trtag>
 			<input type="password" name="pukOldPin" id="pukOldPin">
 		</label>
 		<br />
 		<label>
-			Uus PUK kood
+			<trtag>Uus PUK kood</trtag>
 			<input type="password" name="pukNewPin" id="pukNewPin">
 		</label>
 		<br />
 		<label>
-			Uus PUK kood uuesti
+			<trtag>Uus PUK kood uuesti</trtag>
 			<input type="password" name="pukNewPin2" id="pukNewPin2">
 		</label>
 		<br />
@@ -327,11 +326,16 @@
 	</div>
   </div>
   <!-- PUK muutmine l6pp -->
-  
+
+  <!-- Loading text -->
+  <div id="loading" style="display: none;">
+  </div>
 <script type="text/javascript">
 window.cardManager.registerCallBack("cardInsert", "cardInserted");
 window.cardManager.registerCallBack("cardRemove", "cardRemoved");
 window.cardManager.registerCallBack("handleError", "handleError");
+
+translateHTML();
 
 readCardData();
 </script>

@@ -65,11 +65,19 @@ function tr( est, eng, rus )
 	this.rus = rus;
 }
 
-function _( code )
+function _( code, defaultString )
 {
 	if ( typeof eestiStrings[code] != "undefined" )
 		return eval( "eestiStrings[\"" + code + "\"]." + language );
 	else if ( typeof eidStrings[code] != "undefined" )
 		return eval( "eidStrings[\"" + code + "\"]." + language );
-	return code;
+	return (typeof defaultString != "undefined" ) ? defaultString : code;
+}
+
+function translateHTML()
+{
+	var trTags = document.getElementsByTagName('trtag');
+	for( var i in trTags )
+		if ( (typeof trTags[i].getAttribute != "undefined") && trTags[i].getAttribute('code') != null )
+			trTags[i].innerHTML = _( trTags[i].getAttribute('code'), trTags[i].innerHTML );
 }

@@ -198,7 +198,7 @@ function unblockPin1()
 	}
 	if (esteidData.unblockPin1(newVal, oldVal))
 	{
-		alert( _tr('PIN1UnblockSuccess') );
+		alert( _('PIN1UnblockSuccess') );
 		readCardData();
 		setActive('cert','');
 	} else
@@ -272,6 +272,14 @@ function cardRemoved(i)
 
 function handleError(msg)
 {
+	if ( msg == "PIN1InvalidRetry" )
+	{
+		var ret = esteidData.getPin1RetryCount();
+		alert( _( msg ).replace( /%d/, ret ) );
+		if ( ret == 0 )
+			readCardData();
+		return;
+	}
 	alert( _('errorFound') + _( msg ) )
 }
 
@@ -396,7 +404,6 @@ function setActive( content, el )
 	{
 		if ( !emailsLoaded )
 			extender.loadEmails();
-		emailsLoaded = true;
 	}
 	if ( el != '' )
 	{
@@ -420,20 +427,23 @@ function loadPicture()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	document.getElementById('photoContent').innerHTML = _("loadPic");
+	document.getElementById('loading').style.display = 'block';
+	document.getElementById('loading').innerHTML = _("loadPic");
 	extender.loadPicture();
 }
 
 function setPicture( img )
 {
 	if ( img == "" )
-		document.getElementById('photo').innerHTML = _("loadPicFailed");
+		alert( _("loadPicFailed") );
 	else
 		document.getElementById('photo').innerHTML = "<img src=\"" + img + "\">";
+	document.getElementById('loading').style.display = 'none';
 }
 
 function setEmailActivate( msg )
 {
+	//emails activated, lets load again
 	if ( msg == "0" )
 	{
 		document.getElementById('emailsContentActivate').style.display = "none"
@@ -454,6 +464,8 @@ function setEmails( code, msg )
 	if ( code == "0" )
 		code = _(code) + "<BR>" + msg;
 	document.getElementById('emailsContent').innerHTML = _(code);
+	if ( code != "loadFailed" )
+		emailsLoaded = true;	
 }
 
 function activateEmail()

@@ -13,6 +13,7 @@ class MainWindow : public QWebView
 
 public:
     MainWindow( QWidget *parent = 0 );
+	JsEsteidCard* eidCard() { return jsEsteidCard; }
 
 private:
     JsExtender *m_jsExtender;

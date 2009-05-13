@@ -2,14 +2,14 @@
 #include <QDesktopServices>
 #include <QInputDialog>
 
+#include "mainwindow.h"
 #include "jsextender.h"
 
-JsExtender::JsExtender(QWebFrame *frame)
-:	QObject( frame )
+JsExtender::JsExtender( MainWindow *main )
+:	QObject( main->page()->mainFrame() )
+,	m_mainWindow( main )
 {
-    connectSignals(frame);
-    m_webFrame = frame;
-
+    connectSignals();
 	jsSSL = new SSLConnect();
 }
 
@@ -19,54 +19,47 @@ JsExtender::~JsExtender()
 		QFile::remove( m_tempFile );
 }
 
-void JsExtender::connectSignals(QWebFrame *frame)
+void JsExtender::connectSignals()
 {
-    connect(frame, SIGNAL(javaScriptWindowObjectCleared()),
+	connect( m_mainWindow->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(javaScriptWindowObjectCleared()));
 }
 
-void JsExtender::registerObject(const QString &name, QObject *object)
+void JsExtender::registerObject( const QString &name, QObject *object )
 {
-    m_webFrame->addToJavaScriptWindowObject(name, object);
+    m_mainWindow->page()->mainFrame()->addToJavaScriptWindowObject( name, object );
 
     m_registeredObjects[name] = object;
 }
 
 void JsExtender::javaScriptWindowObjectCleared()
 {
-    for (QMap<QString, QObject *>::Iterator it =
-                               m_registeredObjects.begin();
-                               it != m_registeredObjects.end(); ++it) {
-        QString name = it.key();
-        QObject *object = it.value();
-        m_webFrame->addToJavaScriptWindowObject(name, object);
-    }
+    for (QMap<QString, QObject *>::Iterator it = m_registeredObjects.begin(); it != m_registeredObjects.end(); ++it)
+        m_mainWindow->page()->mainFrame()->addToJavaScriptWindowObject( it.key(), it.value() );
 
-    m_webFrame->addToJavaScriptWindowObject("extender", this);
+    m_mainWindow->page()->mainFrame()->addToJavaScriptWindowObject( "extender", this );
 }
 
-QVariant JsExtender::jsCall(const QString &function, int argument)
+QVariant JsExtender::jsCall( const QString &function, int argument )
 {
-    QString statement = QString( "%1(%2)" ).arg( function ).arg( argument );
-    return m_webFrame->evaluateJavaScript(statement);
+    return m_mainWindow->page()->mainFrame()->evaluateJavaScript(
+		QString( "%1(%2)" ).arg( function ).arg( argument ) );
 }
 
-QVariant JsExtender::jsCall(const QString &function, const QString &argument)
+QVariant JsExtender::jsCall( const QString &function, const QString &argument )
 {
-    QString statement = QString( "%1(\"%2\")" ).arg( function ).arg( argument );
-    return m_webFrame->evaluateJavaScript(statement);
+    return m_mainWindow->page()->mainFrame()->evaluateJavaScript(
+		QString( "%1(\"%2\")" ).arg( function ).arg( argument ) );
 }
 
-QVariant JsExtender::jsCall(const QString &function, const QString &argument, const QString &argument2 )
+QVariant JsExtender::jsCall( const QString &function, const QString &argument, const QString &argument2 )
 {
-    QString statement = QString( "%1(\"%2\",\"%3\")" ).arg( function ).arg( argument ).arg( argument2 );
-    return m_webFrame->evaluateJavaScript(statement);
+    return  m_mainWindow->page()->mainFrame()->evaluateJavaScript(
+		QString( "%1(\"%2\",\"%3\")" ).arg( function ).arg( argument ).arg( argument2 ) );
 }
 
 void JsExtender::openUrl( const QString &url )
-{
-	QDesktopServices::openUrl( QUrl( url ) );
-}
+{ QDesktopServices::openUrl( QUrl( url ) ); }
 
 QString JsExtender::checkPin()
 {
@@ -74,9 +67,13 @@ QString JsExtender::checkPin()
 	if ( !jsSSL->isLoaded() )
 	{
 		bool ok;
-		pin = QInputDialog::getText( 0, tr("Isikutuvastus"), tr("Sisesta PIN1"), QLineEdit::Password, QString(), &ok );
+		pin = QInputDialog::getText( m_mainWindow, tr("Isikutuvastus"), tr("Sisesta PIN1"), QLineEdit::Password, QString(), &ok );
 		if( !ok )
 			pin = "";
+		else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
+			jsCall( "handleError", "PIN1InvalidRetry" );
+			pin = "";
+		}
 	}
 	return pin;
 }

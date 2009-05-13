@@ -8,10 +8,10 @@ MainWindow::MainWindow( QWidget *parent )
     setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
 
-    m_jsExtender = new JsExtender( page()->mainFrame() );
+	m_jsExtender = new JsExtender( this );
 
     jsEsteidCard = new JsEsteidCard( this );
-    jsCardManager = new JsCardManager(jsEsteidCard);
+    jsCardManager = new JsCardManager( jsEsteidCard );
 
     connect(jsCardManager, SIGNAL(cardEvent(QString, int)),
             m_jsExtender, SLOT(jsCall(QString, int)));
