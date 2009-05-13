@@ -1,0 +1,166 @@
+# Project: GvUtilMM
+# Makefile written by Veiko Sinivee for MinGW 1.0.1
+
+GCC_HOME=c:\MinGW
+CPP  = $(GCC_HOME)\bin\g++.exe
+CC   = $(GCC_HOME)\bin\gcc.exe
+WINDRES = $(GCC_HOME)\bin\windres.exe
+GTK_HOME = C:/GTK
+GTK_INCS = -I"$(GTK_HOME)/INCLUDE" -I"$(GTK_HOME)/INCLUDE/GTK-2.0"  \
+	-I"$(GTK_HOME)/INCLUDE/GLIB-2.0" -I"$(GTK_HOME)/INCLUDE/PANGO-1.0" \
+	-I"$(GTK_HOME)/INCLUDE/ATK-1.0" -I"$(GTK_HOME)/INCLUDE/GTKGLEXT-1.0" \
+	-I"$(GTK_HOME)/LIB/GTK-2.0/INCLUDE" -I"$(GTK_HOME)/LIB/GLIB-2.0/INCLUDE" \
+	-I"$(GTK_HOME)/LIB/GTKGLEXT-1.0/INCLUDE" -I"$(GTK_HOME)/INCLUDE/LIBGLADE-2.0" \
+	-I"$(GTK_HOME)/INCLUDE/LIBXML2"  
+GTK_LIBS = -L"$(GTK_HOME)/LIB" 
+
+GCC_INCS = -I"$(GCC_HOME)\INCLUDE"
+GCC_LIBS = -L"$(GCC_HOME)\LIB"
+
+GTKMM_HOME = $(GTK_HOME)
+GTKMM_INCS = -I"$(GTKMM_HOME)/include/gdkmm-2.4" -I"$(GTKMM_HOME)/include/atkmm-1.6" \
+	-I"$(GTKMM_HOME)/include/gtkmm-2.4" -I"$(GTKMM_HOME)/include/libglademm-2.4" \
+	-I"$(GTKMM_HOME)/include/pangomm-1.4" -I"$(GTKMM_HOME)/include/sigc++-2.0" \
+	-I"$(GTKMM_HOME)/lib/gdkmm-2.4/include" -I"$(GTKMM_HOME)/lib/glibmm-2.4/include" \
+	-I"$(GTKMM_HOME)/lib/gtkmm-2.4/include" -I"$(GTKMM_HOME)/lib/libglademm-2.4/include" \
+	-I"$(GTKMM_HOME)/include/glibmm-2.4" -I"$(GTKMM_HOME)/lib/sigc++-2.0/include"  
+GTKMM_LIBS = -L"$(GTKMM_HOME)/lib" \
+	-lgtkmm-2.4 -lgdkmm-2.4 -latkmm-1.6 -lgtk-win32-2.0 -lpangomm-1.4 -lglibmm-2.4 \
+	-lsigc-2.0 -lgdk-win32-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lpangowin32-1.0 -lgdi32 \
+	-lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lintl -liconv -mwindows -lxml2 -lz
+
+OPENSSL_HOME = C:/Toolkits/openssl-0.9.7c.win32
+OPENSSL_INCS = -I"$(OPENSSL_HOME)/include" 
+OPENSSL_LIBS = -L"$(OPENSSL_HOME)/lib" -leay32 -lssleay32
+
+DIGIDOC_HOME = C:\veiko\DigiDocLib
+DIGIDOC_INCS = -I"$(DIGIDOC_HOME)"
+DIGIDOC_LIBS = -L"$(DIGIDOC_HOME)/Release" -lDigiDocLib
+
+GDIGIDOC_HOME = C:\\Programs\\GDigiDoc
+gnomelocaledir=$(GTK_HOME)/share/locale
+PACKAGE = gdigidoc
+VERSION = 0.1.0
+GDIGIDOC_DEFS = -DGNOMELOCALEDIR=\""$(gnomelocaledir)"\" \
+	-DGETTEXT_PACKAGE=\""$(PACKAGE)"\" \
+	-DGDIGIDOC_VERSION=\""$(VERSION)"\" \
+	-DGDIGIDOC_PIXMAPDIR=\""$(GDIGIDOC_HOME)\\pixmaps"\" \
+	-DGDIGIDOC_ICONDIR=\""$(GDIGIDOC_HOME)"\" \
+	-DSYSCONFDIR=\""$(GDIGIDOC_HOME)"\" -DWIN32
+
+RES  = 
+OBJ  = DataFileView.o TokenInfoDlg.o SignatureView.o SignatureInfoList.o \
+	DriverInfoDlg.o DigiDocWindow.o DataFileInfoDlg.o NotaryInfoList.o \
+	RoleAndAdrPage.o ConfigManager.o InfoDlg.o CardInfoList.o PinDlg.o \
+	CertsInfoList.o SignatureInfoDlg.o ProgressDlg.o DriversInfoView.o \
+	TokenInfoList.o SettingsDlg.o RoleAndAdrDlg.o GDigiDoc.o ProxyAndOcspPage.o \
+	DataFileInfoList.o DigiDocInfoList.o CertificateInfoDlg.o SignatureInfoTab.o \
+	CertificateInfoList.o NotaryInfoTab.o $(RES)
+LINKOBJ  = $(OBJ)
+
+LIBS = $(GTK_LIBS) $(GTKMM_LIBS) $(GCC_LIBS) $(OPENSSL_LIBS) $(DIGIDOC_LIBS)
+INCS = $(GTK_INCS) $(GCC_INCS)
+CXXINCS = $(GTK_INCS) $(GCC_INCS) $(GTKMM_INCS) $(OPENSSL_INCS) $(DIGIDOC_INCS)
+
+
+BIN  = gdigidoc.exe
+CXXFLAGS = $(CXXINCS) $(GDIGIDOC_DEFS)
+CFLAGS = $(INCS)  
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+
+clean: clean-custom
+	rm -f $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+GDigiDoc.o: GDigiDoc.cc
+	$(CPP) -c GDigiDoc.cc -o GDigiDoc.o $(CXXFLAGS)
+
+DataFileView.o: DataFileView.cc
+	$(CPP) -c DataFileView.cc -o DataFileView.o $(CXXFLAGS)
+
+MessageInfoPanel.o: MessageInfoPanel.cc
+	$(CPP) -c MessageInfoPanel.cc -o MessageInfoPanel.o $(CXXFLAGS)
+
+SignatureView.o: SignatureView.cc
+	$(CPP) -c SignatureView.cc -o SignatureView.o $(CXXFLAGS)
+
+TokenInfoDlg.o: TokenInfoDlg.cc
+	$(CPP) -c TokenInfoDlg.cc -o TokenInfoDlg.o $(CXXFLAGS)
+
+SignatureInfoList.o: SignatureInfoList.cc
+	$(CPP) -c SignatureInfoList.cc -o SignatureInfoList.o $(CXXFLAGS)
+
+DigiDocWindow.o: DigiDocWindow.cc
+	$(CPP) -c DigiDocWindow.cc -o DigiDocWindow.o $(CXXFLAGS)
+
+DriverInfoDlg.o: DriverInfoDlg.cc
+	$(CPP) -c DriverInfoDlg.cc -o DriverInfoDlg.o $(CXXFLAGS)
+
+DataFileInfoDlg.o: DataFileInfoDlg.cc
+	$(CPP) -c DataFileInfoDlg.cc -o DataFileInfoDlg.o $(CXXFLAGS)
+
+NotaryInfoList.o: NotaryInfoList.cc
+	$(CPP) -c NotaryInfoList.cc -o NotaryInfoList.o $(CXXFLAGS)
+
+RoleAndAdrPage.o: RoleAndAdrPage.cc
+	$(CPP) -c RoleAndAdrPage.cc -o RoleAndAdrPage.o $(CXXFLAGS)
+
+ConfigManager.o: ConfigManager.cc
+	$(CPP) -c ConfigManager.cc -o ConfigManager.o $(CXXFLAGS)
+
+InfoDlg.o: InfoDlg.cc
+	$(CPP) -c InfoDlg.cc -o InfoDlg.o $(CXXFLAGS)
+
+CardInfoList.o: CardInfoList.cc
+	$(CPP) -c CardInfoList.cc -o CardInfoList.o $(CXXFLAGS)
+
+PinDlg.o: PinDlg.cc
+	$(CPP) -c PinDlg.cc -o PinDlg.o $(CXXFLAGS)
+
+CertsInfoList.o: CertsInfoList.cc
+	$(CPP) -c CertsInfoList.cc -o CertsInfoList.o $(CXXFLAGS)
+
+SignatureInfoDlg.o: SignatureInfoDlg.cc
+	$(CPP) -c SignatureInfoDlg.cc -o SignatureInfoDlg.o $(CXXFLAGS)
+
+ProgressDlg.o: ProgressDlg.cc
+	$(CPP) -c ProgressDlg.cc -o ProgressDlg.o $(CXXFLAGS)
+
+DriversInfoView.o: DriversInfoView.cc
+	$(CPP) -c DriversInfoView.cc -o DriversInfoView.o $(CXXFLAGS)
+
+TokenInfoList.o: TokenInfoList.cc
+	$(CPP) -c TokenInfoList.cc -o TokenInfoList.o $(CXXFLAGS)
+
+SettingsDlg.o: SettingsDlg.cc
+	$(CPP) -c SettingsDlg.cc -o SettingsDlg.o $(CXXFLAGS)
+
+RoleAndAdrDlg.o: RoleAndAdrDlg.cc
+	$(CPP) -c RoleAndAdrDlg.cc -o RoleAndAdrDlg.o $(CXXFLAGS)
+
+ProxyAndOcspPage.o: ProxyAndOcspPage.cc
+	$(CPP) -c ProxyAndOcspPage.cc -o ProxyAndOcspPage.o $(CXXFLAGS)
+
+DataFileInfoList.o: DataFileInfoList.cc
+	$(CPP) -c DataFileInfoList.cc -o DataFileInfoList.o $(CXXFLAGS)
+
+DigiDocInfoList.o: DigiDocInfoList.cc
+	$(CPP) -c DigiDocInfoList.cc -o DigiDocInfoList.o $(CXXFLAGS)
+
+CertificateInfoDlg.o: CertificateInfoDlg.cc
+	$(CPP) -c CertificateInfoDlg.cc -o CertificateInfoDlg.o $(CXXFLAGS)
+
+SignatureInfoTab.o: SignatureInfoTab.cc
+	$(CPP) -c SignatureInfoTab.cc -o SignatureInfoTab.o $(CXXFLAGS)
+
+CertificateInfoList.o: CertificateInfoList.cc
+	$(CPP) -c CertificateInfoList.cc -o CertificateInfoList.o $(CXXFLAGS)
+
+NotaryInfoTab.o: NotaryInfoTab.cc
+	$(CPP) -c NotaryInfoTab.cc -o NotaryInfoTab.o $(CXXFLAGS)
