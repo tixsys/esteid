@@ -5,7 +5,7 @@ project( qdigidoccrypto )
 
 find_package( Qt4 REQUIRED )
 find_package( OpenSSL REQUIRED )
-find_package( LibDigiDoc REQUIRED )
+find_package( LibDigiDoc2 REQUIRED )
 find_package( Ldap REQUIRED )
 
 SET( HEADERS
@@ -40,7 +40,7 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}
 	${OPENSSL_INCLUDE_DIR}
-	${LIBDIGIDOC_INCLUDE_DIR}
+	${LIBDIGIDOC2_INCLUDE_DIR}
 	${LDAP_INCLUDE_DIR}
 	)
 
@@ -54,7 +54,7 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 	${QT_QTMAIN_LIBRARY}
 	${QT_LIBRARIES}
 	${OPENSSL_LIBRARIES}
-	${LIBDIGIDOC_LIBRARY}
+	${LIBDIGIDOC2_LIBRARY}
 	${LDAP_LIBRARIES}
 )
 
