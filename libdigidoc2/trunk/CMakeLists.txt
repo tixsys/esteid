@@ -23,6 +23,7 @@ find_package( LibXml2 REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
+find_package( Iconv REQUIRED )
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/libdigidoc2.pc.cmake
@@ -37,6 +38,7 @@ include_directories(
     ${OPENSSL_INCLUDE_DIR}
     ${OPENSSLCRYPTO_INCLUDE_DIR}
     ${ZLIB_INCLUDE_DIR}
+	${ICONV_INCLUDE_DIR}
 )
 
 add_subdirectory( etc )
