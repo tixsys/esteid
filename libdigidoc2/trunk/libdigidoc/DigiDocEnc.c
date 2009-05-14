@@ -604,8 +604,8 @@ EXP_OPTION int dencEncryptedData_DeleteEncryptedKey(DEncEncryptedData* pEncData,
   for(i = nIdx; i < pEncData->nEncryptedKeys-1; i++) 
     pEncData->arrEncryptedKeys[i] =
       pEncData->arrEncryptedKeys[i+1];
-  pEncData->nEncryptedKeys--;
   pEncData->arrEncryptedKeys[pEncData->nEncryptedKeys - 1] = 0;
+  pEncData->nEncryptedKeys--;
   return err;
 }
 
