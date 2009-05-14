@@ -2,9 +2,10 @@
 
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocGen.h>
-#include <libdigidoc/DigiDocObj.h>
 
-#ifdef __WIN32__
+#include "Signature.h"
+
+#ifdef WIN32
 #include <Windows.h>
 #else
 #include <dlfcn.h>
@@ -44,11 +45,11 @@ public:
 	DDocLibrary( const char *filename );
 	~DDocLibrary();
 	void *resolve( const char *symbol );
-	bool isOpen() const { return h; }
+	bool isOpen() const { return h == NULL; }
 
 private:
-#ifdef __WIN32__
-	HINSTANCE *h
+#ifdef WIN32
+	HINSTANCE h;
 #else
 	void *h;
 #endif

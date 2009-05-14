@@ -1,11 +1,11 @@
-#include "DDoc.h"
 #include "DDoc_p.h"
+#include "DDoc.h"
 
 #include "crypto/signer/PKCS11Signer.h"
 
 using namespace digidoc;
 
-#ifdef __WIN32__
+#ifdef WIN32
 
 #define LIBDIGIDOC_NAME "digidoclib2.dll"
 
@@ -13,7 +13,7 @@ DDocLibrary::DDocLibrary( const char *filename )
 { h = LoadLibrary( filename ); }
 
 DDocLibrary::~DDocLibrary()
-{ if( isOpen() ) FreeLibrary( f ); }
+{ if( isOpen() ) FreeLibrary( h ); }
 
 void* DDocLibrary::resolve( const char *symbol )
 { return isOpen() ? (void*)GetProcAddress( h, symbol ) : NULL; }
@@ -102,6 +102,8 @@ bool DDocPrivate::loadSymbols()
 		!(f_SignedDoc_free = (sym_SignedDoc_free)lib.resolve("SignedDoc_free")) ||
 		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) )
 		return false;
+	else
+		return true;
 }
 
 
