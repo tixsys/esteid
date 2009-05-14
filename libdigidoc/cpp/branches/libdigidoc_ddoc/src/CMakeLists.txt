@@ -106,6 +106,7 @@ target_link_libraries(digidoc-tool digidoc)
 install(TARGETS digidoc-tool DESTINATION bin)
 
 install( FILES
+    ADoc.h
     BDocException.h
     BDoc.h
     Conf.h
@@ -115,6 +116,7 @@ install( FILES
     SignatureException.h
     Signature.h
     SignatureTM.h
+    WDoc.h
     XmlConf.h
     DESTINATION include/digidoc
 )
