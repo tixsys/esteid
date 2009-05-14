@@ -584,7 +584,12 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     hSession = OpenSession(slId, passwd);
     ddocDebug(3, "calculateSignatureWithEstID", 
 	      "Open sess for slot: %d sess = %uld\n", slId, hSession);
-    if (hSession == CK_INVALID_HANDLE) { err = ERR_PKCS_LOGIN; SET_LAST_ERROR(err); return err; }
+    if (hSession == CK_INVALID_HANDLE) {
+      closePKCS11Library(pLibrary, hSession);
+      err = ERR_PKCS_LOGIN;
+      SET_LAST_ERROR(err);
+      return err;
+    }
     ddocDebug(3, "calculateSignatureWithEstID", "OpenSession ok, hSession = %d\n", (int)hSession);
 
     // get private key
@@ -604,7 +609,13 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     ddocDebug(3, "calculateSignatureWithEstID", "selected priv-key: %ld pos %d id: %s", hPrivateKey, nKey, keyId[nKey]);
     ddocDebug(3, "calculateSignatureWithEstID", "Cert-len: %ld", certLen);
     //printf("Cert: %s", certData);
-    if (hCert == (CK_OBJECT_HANDLE)-1) { err = ERR_PKCS_CERT_LOC; SET_LAST_ERROR(err); return err; }
+    if (hCert == (CK_OBJECT_HANDLE)-1)
+    {
+      closePKCS11Library(pLibrary, hSession);
+      err = ERR_PKCS_CERT_LOC;
+      SET_LAST_ERROR(err);
+      return err;
+    }
 
     // set cert data
     err = ddocDecodeX509Data(&x509, certData, certLen);
@@ -619,6 +630,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     buf1 = createXMLSignedProperties(pSigDoc, pSigInfo, 0);
     //dumpInFile("sigprop-sign1.txt", buf1);
     if (!buf1) { 
+      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER; 
       SET_LAST_ERROR(err);
       return err;
@@ -631,6 +643,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     free(buf1);
     ddocMemBuf_free(&mbuf1);
     if (err != ERR_OK) {
+      closePKCS11Library(pLibrary, hSession);
       SET_LAST_ERROR(err);			
       return err;
     }
@@ -639,6 +652,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     // create signed info
     buf1 = createXMLSignedInfo(pSigDoc, pSigInfo);     
     if (!buf1) {
+      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER;
       SET_LAST_ERROR(err);
       return err ;
@@ -649,6 +663,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
 			  DIGEST_SHA1, sigDig, &l2);
     free(buf1);
     if (err != ERR_OK) {
+      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER;
       SET_LAST_ERROR(err);
       return err;
@@ -669,6 +684,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     rv = SignData(hSession, hPrivateKey, 
 		  signature, &sigLen, padDig, padDigLen);    
     if (rv != CKR_OK) { 
+      closePKCS11Library(pLibrary, hSession);
       err = ERR_PKCS_SIGN_DATA;
       SET_LAST_ERROR(err);
       return err;
