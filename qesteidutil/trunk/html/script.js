@@ -358,8 +358,8 @@ function readCardData()
 
 	if ( esteidData.getPin1RetryCount() != 0 )
 	{
-		document.getElementById('authCertStatus').className='statusValid';
-		document.getElementById('authCertStatus').innerHTML=_('certValid');
+		document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
+		document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'certValid' : 'certBlocked' );
 		document.getElementById('authKeyText').style.display='block';
 		document.getElementById('authKeyBlocked').style.display='none';
 		document.getElementById('authValidButtons').style.display='block';
@@ -376,8 +376,8 @@ function readCardData()
 
 	if (esteidData.getPin2RetryCount() != 0 )
 	{
-		document.getElementById('signCertStatus').className='statusValid';
-		document.getElementById('signCertStatus').innerHTML=_('certValid');
+		document.getElementById('signCertStatus').className=esteidData.signCert.isValid() ? 'statusValid' : 'statusBlocked';
+		document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'certValid' : 'certBlocked' );
 		document.getElementById('signKeyText').style.display='block';
 		document.getElementById('signKeyBlocked').style.display='none';
 		document.getElementById('signValidButtons').style.display='block';

@@ -76,7 +76,8 @@ std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, cons
 		catch( std::runtime_error & ) { return std::vector<unsigned char>(); }
 	}
 
-	obj->connectToHost( site );
+	if ( !obj->connectToHost( site ) )
+		return std::vector<unsigned char>();
 	return obj->getUrl( url );
 }
 
@@ -170,11 +171,11 @@ SSLObj::~SSLObj()
 	pSSL_free(s);
 }
 
-void SSLObj::connectToHost( const std::string &site )
+bool SSLObj::connectToHost( const std::string &site )
 {
 	struct hostent *ent;
-	ent = gethostbyname(site.c_str());
-	if (!ent->h_length) throw std::runtime_error("name resolution failed");
+	if ( !(ent = gethostbyname(site.c_str()) ) )
+		return false;
 
 	unsigned long address = *((unsigned int *)*ent->h_addr_list);
 
@@ -189,6 +190,7 @@ void SSLObj::connectToHost( const std::string &site )
 
 	pSSL_set_fd(s, sock);
 	sslError::check("SSL_connect", pSSL_connect(s) );
+	return true;
 }
 
 std::vector<unsigned char> SSLObj::getUrl( const std::string &url )

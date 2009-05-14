@@ -16,7 +16,7 @@ public:
 	SSLObj( const std::string &pin );
 	~SSLObj();
 
-	void connectToHost( const std::string &site );
+	bool connectToHost( const std::string &site );
 	std::vector<unsigned char> getUrl( const std::string &type );
 
 private:

@@ -15,7 +15,7 @@ var eestiStrings = {
 	"22": new tr( "Vigane e-posti aadress.", "", "" ),
 	"23": new tr( "Suunamine on salvestatud, ning Teile on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "", "" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "", "" ),
-	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestu.", "", "" ),
+	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "", "" ),
 	"emailEnter": new tr( "E-post aadress sisestamata!", "", "" ),
 	"loadPic": new tr( "Laen pilti", "", "" ),
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus", "", "" )
@@ -25,6 +25,7 @@ var eidStrings = {
 	"errorFound": new tr( "Tekkis viga: ", "", "" ),
 	"noReaders": new tr( "Ühtegi kiipkaardi lugejat pole ühendatud.", "", "" ),
 	"certValid": new tr( "kehtiv ja kasutatav", "", "" ),
+	"certBlocked": new tr( "kehtetu", "", "" ),
 	"validBlocked": new tr( "kehtiv kuid blokeeritud", "", "" ),
 	"PIN1Enter": new tr( "Sisesta vana PIN1 kood", "", "" ),
 	"PIN1InvalidRetry": new tr( "Vale PIN1 kood. Saad veel proovida %d korda.", "", "" ),
