@@ -16,7 +16,7 @@ set( SHARE_INSTALL_PREFIX
 set( PKCS11_PROVIDER "/usr/lib/opensc-pkcs11.so.1" )
 set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
 set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc2/certs" )
-set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/libdigidoc2" )
+set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include/libdigidoc2" )
 set( DIGIDOC_VERSION "2.6.0" )
 
 find_package( LibXml2 REQUIRED )
