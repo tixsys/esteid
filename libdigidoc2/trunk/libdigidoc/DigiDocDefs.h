@@ -26,7 +26,7 @@
   #include <windows.h>
 #endif
 #ifdef WIN32
-  #define WITH_TS      // not automatically defined on win32
+  //#define WITH_TS      // not automatically defined on win32
   #ifdef  BUILDINGDLL
 	#ifdef _MSC_VER
 		#pragma warning( disable: 4100 4706 4204 4221 )
