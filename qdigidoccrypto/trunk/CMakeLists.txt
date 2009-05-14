@@ -9,6 +9,7 @@ find_package( LibDigiDoc2 REQUIRED )
 find_package( Ldap REQUIRED )
 
 SET( HEADERS
+	src/Common.h
 	src/CryptDoc.h
 	src/KeyDialog.h
 	src/LdapSearch.h
@@ -18,6 +19,7 @@ SET( HEADERS
 SET( SOURCES
 	${HEADERS}
 	src/main.cpp
+	src/Common.cpp
 	src/CryptDoc.cpp
 	src/KeyDialog.cpp
 	src/LdapSearch.cpp

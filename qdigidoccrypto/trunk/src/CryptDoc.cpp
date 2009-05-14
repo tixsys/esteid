@@ -22,6 +22,8 @@
 
 #include "CryptDoc.h"
 
+#include "Common.h"
+
 #include <libdigidoc/DigiDocCert.h>
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocGen.h>
@@ -34,24 +36,6 @@
 #include <QFileInfo>
 #include <QInputDialog>
 #include <QTemporaryFile>
-
-
-QString fileSize( quint64 bytes )
-{
-	const quint64 kb = 1024;
-	const quint64 mb = 1024 * kb;
-	const quint64 gb = 1024 * mb;
-	const quint64 tb = 1024 * gb;
-	if( bytes >= tb )
-		return QString( "%1TB" ).arg( qreal(bytes) / tb, 0, 'f', 3 );
-	if( bytes >= gb )
-		return QString( "%1GB" ).arg( qreal(bytes) / gb, 0, 'f', 2 );
-	if( bytes >= mb )
-		return QString( "%1MB" ).arg( qreal(bytes) / mb, 0, 'f', 1 );
-	if( bytes >= kb )
-		return QString( "%1KB" ).arg( bytes / kb );
-	return QString::number( bytes );
-}
 
 CryptDoc::CryptDoc( QObject *parent )
 :	QObject( parent )
@@ -215,7 +199,7 @@ QList<CDocument> CryptDoc::documents()
 			CDocument doc;
 			doc.filename = QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName();
 			doc.mime = QString::fromUtf8( data->szMimeType );
-			doc.size = fileSize( data->nSize );
+			doc.size = Common::fileSize( data->nSize );
 			list << doc;
 		}
 	}
@@ -256,7 +240,7 @@ bool CryptDoc::encrypt()
 		int err = dencOrigContent_add( m_enc,
 			id,
 			QFileInfo( data->szFileName ).fileName().toUtf8(),
-			fileSize( data->nSize ).toUtf8(),
+			Common::fileSize( data->nSize ).toUtf8(),
 			data->szMimeType,
 			data->szId );
 		if( err != ERR_OK )
@@ -306,8 +290,9 @@ QString CryptDoc::fileName() const { return m_fileName; }
 
 bool CryptDoc::isEncrypted() const
 {
-	return m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_COMPRESSED ||
-		m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED;
+	return m_enc &&
+		(m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_COMPRESSED ||
+		m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED);
 }
 
 bool CryptDoc::isNull() const { return m_enc == 0; }

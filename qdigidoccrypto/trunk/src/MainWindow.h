@@ -42,9 +42,9 @@ private Q_SLOTS:
 	void addKeys( const QList<CKey> &keys );
 	void buttonClicked( int button );
 	void showCardStatus();
-	void on_buttonSettings_clicked();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
+	void on_settings_clicked();
 	void on_viewContentView_doubleClicked( const QModelIndex &index );
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err );

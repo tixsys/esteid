@@ -42,67 +42,6 @@
 #include <mapi.h>
 #endif
 
-
-QString fileSize( qint64 size )
-{
-	double sizeStr = (double)size/1024;
-	return QString( "%1 %2" )
-		.arg( QString::number( sizeStr > 1024 ? sizeStr/ 1024 : sizeStr, 'f', 2 ) )
-		.arg( sizeStr > 1024 ? "MB" : "KB" );
-}
-
-QString parseCertInfo( const QString &in )
-{
-	if( !in.contains( "\\x" ) )
-		return in;
-
-	QString res;
-	bool firstByte = true;
-	ushort data;
-	int i = 0;
-	while( i < in.size() )
-	{
-		if( in.mid( i, 2 ) == "\\x" )
-		{
-			if( firstByte )
-				data = in.mid( i+2, 2 ).toUShort( 0, 16 );
-			else
-				res += QChar( (data<<8) + in.mid( i+2, 2 ).toUShort( 0, 16 ) );
-			i += 4;
-		}
-		else
-		{
-			if( firstByte )
-				data = in[i].unicode();
-			else
-				res += QChar( (data<<8) + in[i].unicode() );
-			++i;
-		}
-		firstByte = !firstByte;
-	}
-	return res;
-}
-
-QString parseName( const QString &in )
-{
-	QString ret = in.toLower();
-	bool firstChar = true;
-	for( QString::iterator i = ret.begin(); i != ret.end(); ++i )
-	{
-		if( !firstChar && !i->isLetter() )
-			firstChar = true;
-
-		if( firstChar && i->isLetter() )
-		{
-			*i = i->toUpper();
-			firstChar = false;
-		}
-	}
-	return ret;
-}
-
-
-
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
@@ -414,8 +353,6 @@ void MainWindow::dropEvent( QDropEvent *e )
 	setCurrentPage( View );
 }
 
-void MainWindow::on_buttonSettings_clicked() { (new Settings( this ))->show(); }
-
 void MainWindow::on_introCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
 
@@ -431,6 +368,8 @@ void MainWindow::on_languages_activated( int index )
 	retranslateUi( this );
 	showCardStatus();
 }
+
+void MainWindow::on_settings_clicked() { (new Settings( this ))->show(); }
 
 void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 {
