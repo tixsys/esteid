@@ -96,7 +96,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
     char inbuf[MAX_LANG_LENGTH] = {0}; 
     char outbuf[MAX_LANG_LENGTH] = {0};
     strncpy( inbuf, str_in.c_str(), MAX_LANG_LENGTH-1 );
-    char const* inptr( inbuf );
+    char* inptr( inbuf );
     char* outptr( outbuf );
     size_t inleft = strlen( inbuf ) + 1;
     size_t outleft = MAX_LANG_LENGTH-1;
