@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+<table name="ACTION_DICT" schema="public">
+	<primary-key>
+		
+	</primary-key>
+</table>
+<table name="SESSION" schema="public">
+		<primary-key>
+			
+			<column name="ID"></column>
+		</primary-key>
+	</table>
+	<table name="EVENT" schema="public">
+		<primary-key>
+			
+		</primary-key>
+	</table>
+	<table name="DOCUMENT" schema="public">
+    <primary-key>
+      
+    </primary-key>
+  </table>
+</hibernate-reverse-engineering>

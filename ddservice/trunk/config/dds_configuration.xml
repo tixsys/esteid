@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds>
+
+	<property name="jdigidoc.config" value="jar://JDigiDoc.cfg"/>
+	<property name="modules.path" value="/home/dds/"/>
+
+	<!-- Signature modules -->
+	
+	<signature-module 	phase="PREPARE,FINALIZE" 
+					  	platform="WIN32_MOZILLA" 
+					  	name="esteid_pkcs11.dll" 
+					  	location="LIBDIR" 
+					  	type="FILE" 
+					  	content_type="BASE64"
+					  	file="modules/esteid_pkcs11.dll"/>
+
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="WIN32_MOZILLA" 
+						name="PKCS11Wrapper.dll" 
+						location="LIBDIR" 
+						type="FILE" 
+						content_type="BASE64"
+						file="modules/PKCS11Wrapper.dll"/>		
+
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="iaikPkcs11Wrapper_sig.jar" 
+						location="LIBDIR" 
+						type="FILE" 
+						content_type="BASE64"
+						file="modules/iaikPkcs11Wrapper_sig.jar"/>		
+
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="SignApplet_sig.jar" 
+						location="LIBDIR" 
+						type="FILE" 
+						content_type="BASE64"
+						file="modules/SignApplet_sig.jar"/>		
+
+	<signature-module	phase="PREPARE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="prepare_header_mozilla.html" 
+						location="HTML_HEAD" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/prepare_header_mozilla.html"/>		
+
+	<signature-module	phase="PREPARE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA,WIN32_IE" 
+						name="prepare_form_vars.html" 
+						location="HTML_FORM_BEGIN" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/prepare_form_vars.html"/>		
+
+	<signature-module	phase="PREPARE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="prepare_submit_mozilla.html" 
+						location="HTML_FORM_END" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/prepare_submit_mozilla.html"/>		
+
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA,WIN32_IE" 
+						name="other_forms.html" 
+						location="HTML_BODY" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/other_forms.html"/>		
+
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="WIN32_IE" 
+						name="EIDCard.cab" 
+						location="LIBDIR" 
+						type="FILE" 
+						content_type="BASE64"
+						file="modules/EIDCard.cab"/>		
+						
+	<signature-module	phase="PREPARE"  	
+						platform="WIN32_IE" 
+						name="prepare_header_ie.html" 
+						location="HTML_HEAD" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/prepare_header_ie.html"/>	
+						
+	<signature-module	phase="PREPARE"  	
+						platform="WIN32_IE" 
+						name="prepare_submit_ie.html" 
+						location="HTML_FORM_END" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/prepare_submit_ie.html"/>	
+						
+	<signature-module 	phase="PREPARE,FINALIZE" 
+					  	platform="LINUX_MOZILLA" 
+					  	name="libesteid_pkcs11.so" 
+					  	location="LIBDIR" 
+					  	type="FILE" 
+					  	content_type="BASE64"
+					  	file="modules/libesteid_pkcs11.so"/>
+					  	
+	<signature-module	phase="PREPARE,FINALIZE"  	
+						platform="LINUX_MOZILLA" 
+						name="libpkcs11wrapper.so" 
+						location="LIBDIR" 
+						type="FILE" 
+						content_type="BASE64"
+						file="modules/libpkcs11wrapper.so"/>	
+						
+	<signature-module	phase="FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="finalize_header_mozilla.html" 
+						location="HTML_HEAD" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/finalize_header_mozilla.html"/>		
+
+	<signature-module	phase="FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA,WIN32_IE" 
+						name="finalize_form_vars.html" 
+						location="HTML_FORM_BEGIN" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/finalize_form_vars.html"/>		
+
+	<signature-module	phase="FINALIZE"  	
+						platform="WIN32_MOZILLA,LINUX_MOZILLA" 
+						name="finalize_submit_mozilla.html" 
+						location="HTML_FORM_END" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/finalize_submit_mozilla.html"/>		
+						
+	<signature-module	phase="FINALIZE"  	
+						platform="WIN32_IE" 
+						name="finalize_header_ie.html" 
+						location="HTML_HEAD" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/finalize_header_ie.html"/>	
+						
+	<signature-module	phase="FINALIZE"  	
+						platform="WIN32_IE" 
+						name="finalize_submit_ie.html" 
+						location="HTML_FORM_END" 
+						type="HTML" 
+						content_type="BASE64"
+						file="modules/finalize_submit_ie.html"/>	
+
+
+</dds>

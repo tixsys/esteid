@@ -1,0 +1,37 @@
+Needs ,
+0. JDK >=1.5
+1. Tomcat >=5.5
+2. PostgreSQL >=8.x
+
+Install and config, 
+-- DB --
+Create schema named 'ddservice'
+Run script DDS.sql to create tables and sequnces
+
+-- WebServices --
+0. Run Tomcat.
+1. Copy DigiDocService.war to Tomcat webapps folder.
+2. After deploing edit DigiDocService/WEB-INF/classes/dds_configuration.xml file to set JDigiDoc config and dignature modules config
+3. Edit DigiDocService/WEB-INF/classes/log4.xml to configure logging if neeeds (default log writes to /home/dds/logs/dds.log and console)
+4. Edit DigiDocService/WEB-INF/classes/hibernate.cfg.xml to configure DB Connection, need to change next properties 
+	connection.password
+	connection.username
+	connection.url
+5. Restart Tomcat
+
+Go to http://<tomcat_host>[:<tomcatport>]/DigiDocService/
+
+How to test,
+0. For compatibility it is taken WSDL from DigiDocService sk.ee. Now it is enough to re-configure DigiDoc Portal on new 
+deployed DigiDocService url (http://<tomcat_host>[:<tomcatport>]/DigiDocService/services/DigiDocService)
+1. from java: ant build.xml test (test runs on independent JettyServer and DB data in memory, no data added to DB)
+
+SVN repository : 
+repository : svn://172.25.200.22/svnrepo/ddservice
+user : give_me_dds 
+password : g1v3_m3_ddz
+
+SSH tunnel : 
+host : headoffice.itp.ee
+login : tunnel
+password : 63wkn7L

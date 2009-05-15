@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/webflow-config
+           http://www.springframework.org/schema/webflow-config/spring-webflow-config-1.0.xsd">
+
+	<!-- Configuration bean -->
+	<bean name="configuration" class="ee.itp.dds.core.Configuration">
+	  <property name="location" value="classpath:dds_configuration.xml"/>
+	</bean>
+
+	<!--  Hibernate -->
+	<bean id="sessionFactory" class="ee.itp.dds.hibernate.HibernateSessionFactory" lazy-init="false"/>
+	
+	<bean id="eventDAO" class="ee.itp.dds.hibernate.EventDAO" />
+	<bean id="actionDAO" class="ee.itp.dds.hibernate.ActionDAO" />
+	<bean id="sessionDAO" class="ee.itp.dds.hibernate.SessionDAO" />
+	<bean id="documentDAO" class="ee.itp.dds.hibernate.DocumentDAO" />
+
+	<bean id="sessionHolderComponent" class="ee.itp.dds.core.SessionHolderComponentImpl">
+	   <property name="sessionDAO" ref="sessionDAO"/>
+	   <property name="actionDAO" ref="actionDAO"/>
+	   <property name="eventDAO" ref="eventDAO"/>
+	   <property name="documentDAO" ref="documentDAO"/>
+	</bean>
+
+
+</beans>

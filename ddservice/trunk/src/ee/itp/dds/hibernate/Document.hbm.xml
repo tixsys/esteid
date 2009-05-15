@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ee.itp.dds.hibernate.Document" table="document" schema="ddservice" lazy="false">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="sequence" > 
+                <param name="sequence"><![CDATA[ddservice.seq_document]]></param>
+            </generator>
+        </id>
+        <property name="signedDocByteArray" type="byte[]" update="true" insert="true" lazy="false">
+            <column name="data" sql-type="BYTEA"/>
+        </property>
+        <property name="comment" type="java.lang.String">
+            <column name="comment" >
+                <comment>Comment</comment>
+            </column>
+        </property>
+        
+    </class>
+</hibernate-mapping>

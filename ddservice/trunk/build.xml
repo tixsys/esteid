@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="main" name="DigiDocService">
+    <property name="dist" value="dist" />
+    <property name="lib" value="libs" />
+    <property name="test-lib" value="lib-test" />
+
+    <property name="src" value="src" />
+    <property name="jdigidoc" value="src_jdigidoc" />
+    <property name="test" value="tests" />
+    <property name="config" value="config" />
+    <property name="cert" value="certs" />
+
+    <property name="javadoc" value="javadoc" />
+    <property name="testresults" value="testresults" />
+    <property name="source.encoding" value="UTF-8" />
+    <property name="source.java.version" value="1.5" />
+
+    <patternset id="classpath.resources">
+        <include name="build.number" />
+        <include name="config/*.xml" />
+        <include name="config/*.cfg" />
+        <include name="config/*.properties" />
+        <include name="**/*.xml" />
+        <include name="**/*.properties" />
+        <include name="**/*.crt" />
+        <include name="**/*.pkcs12" />
+        <include name="**/*.pem" />
+    </patternset>
+
+    <macrodef name="compile">
+        <attribute name="path" />
+        <attribute name="dest" default="@{path}" />
+        <attribute name="deprecation" default="off" />
+        <sequential>
+            <mkdir dir="classes-@{dest}" />
+            <javac srcdir="@{path}" destdir="classes-@{dest}" debug="true" optimize="true" encoding="${source.encoding}" target="${source.java.version}" source="${source.java.version}" deprecation="@{deprecation}">
+                <classpath>
+                    <fileset dir="${lib}" includes="*.jar">
+                        <include name="*.zip" />
+                    </fileset>
+                    <fileset dir="${test-lib}" includes="*.jar">
+                        <include name="*.zip" />
+                    </fileset>
+                </classpath>
+            </javac>
+            <copy todir="classes-@{dest}">
+                <fileset dir="@{path}">
+                    <patternset refid="classpath.resources" />
+                </fileset>
+            </copy>
+        </sequential>
+    </macrodef>
+
+    <target name="main" depends="cleanup, compile, package" />
+
+    <target name="package" depends="test, buildno">
+        <delete dir="${dist}" />
+        <mkdir dir="${dist}" />
+
+        <copy todir="classes-${src}">
+            <fileset dir="${basedir}">
+                <include name="build.number" />
+            </fileset>
+        </copy>
+
+        <war destfile="${dist}/${ant.project.name}.war" webxml="web/WEB-INF/web.xml">
+            <manifest>
+            </manifest>
+            <fileset dir="web" />
+            <fileset dir="${basedir}">
+                <include name="build.number" />
+            </fileset>
+            <lib dir="${lib}" />
+            <classes dir="classes-${src}" />
+        </war>
+
+    </target>
+
+    <target name="buildno">
+        <buildnumber file="build.number" />
+    </target>
+
+    <target name="compile">
+        <copy todir="classes-${src}">
+            <fileset dir="${config}" includes="**/*" />
+            <fileset dir="${cert}" includes="**/*" />
+        </copy>
+        <mkdir dir="classes-${src}" />
+        <compile path="${jdigidoc}" dest="${src}"/>
+        <compile path="${src}" />
+    </target>
+
+    <target name="compile-tests">
+        <copy todir="classes-${test}">
+            <fileset dir="${config}" includes="**/*" />
+            <fileset dir="${cert}" includes="**/*" />
+        </copy>
+        <compile path="${jdigidoc}" dest="${test}"/>        
+        <compile path="${src}" dest="${test}" />
+        <compile path="${test}" />
+    </target>
+
+    <target name="test" depends="compile-tests">
+        <delete dir="${testresults}" />
+        <mkdir dir="${testresults}" />
+        <junit haltonfailure="true" dir="${basedir}" fork="on" forkmode="perTest" maxmemory="512M">
+            <jvmarg value="-Djava.awt.headless=true" />
+            <classpath>
+                <!--<pathelement location="${config}"/>-->
+                <fileset dir="${lib}" includes="*.jar" />
+                <fileset dir="${test-lib}" includes="*.jar" />
+                <dirset dir="classes-${test}" />
+            </classpath>
+            <formatter type="xml" />
+            <batchtest todir="${testresults}">
+                <fileset dir="classes-${test}" includes="**/*Test.class" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="cleanup">
+        <!-- clean up -->
+        <delete dir="classes-${src}" />
+        <delete dir="classes-${test}" />
+        <delete dir="${dist}" />
+    </target>
+
+    <target name="javadoc">
+        <javadoc sourcepath="${src}" author="false" windowtitle="DigiDocService application" destdir="${javadoc}" overview="yes">
+            <classpath>
+                <fileset dir="${lib}" includes="*.jar" />
+                <fileset dir="${test-lib}" includes="*.jar" />
+            </classpath>
+        </javadoc>
+    </target>
+
+
+
+
+</project>

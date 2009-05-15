@@ -1,0 +1,1 @@
+The \\Bquick\\I brown\\B fox jumps\\COLOR=RGB(255,0,0) over\\COLOR the lazy dog.

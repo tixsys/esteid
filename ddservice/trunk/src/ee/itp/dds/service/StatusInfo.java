@@ -1,0 +1,17 @@
+package ee.itp.dds.service;
+
+public enum StatusInfo {
+  
+  REQEST_OK,
+  EXPIRED_TRANSACTION,
+  USER_CANCEL,
+  SIGNATURE,
+  NOT_VALID,
+  OUTSTANDING_TRANSACTION,
+  MID_NOT_READY,
+  PHONE_ABSENT,
+  SENDING_ERROR,
+  SIM_ERROR,
+  INTERNAL_ERROR
+  
+}

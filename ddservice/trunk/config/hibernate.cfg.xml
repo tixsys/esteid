@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="connection.url">jdbc:postgresql://172.25.200.27:5432/DDS</property>
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="connection.password">ddu</property>
+		<property name="connection.username">dduser</property>
+		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.autocommit">true</property>
+
+		<property name="jdbc.use_getGeneratedKeys">true</property>
+		
+  		<property name="show_sql">false</property>
+		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+		<property name="current_session_context_class">thread</property>
+        <property name="jdbc.fetch_size">16</property>
+        <property name="jdbc.batch_size">16</property>
+        <property name="format_sql">false</property>
+        <property name="max_fetch_depth">2</property>        
+        <property name="default_batch_fetch_size">8</property>        
+        <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+        <property name="bytecode.use_reflection_optimizer">false</property>
+	    <property name="query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+	    <property name="query.substitutions">TRUE=1, FALSE=0</property>
+	    <property name="cache.use_query_cache">false</property>
+	    <property name="cache.use_second_level_cache">false</property>		
+		
+		<mapping resource="ee/itp/dds/hibernate/Session.hbm.xml" />
+		<mapping resource="ee/itp/dds/hibernate/Event.hbm.xml" />
+		<mapping resource="ee/itp/dds/hibernate/Action.hbm.xml" />
+		<mapping resource="ee/itp/dds/hibernate/Document.hbm.xml" />
+
+	</session-factory>
+
+</hibernate-configuration>

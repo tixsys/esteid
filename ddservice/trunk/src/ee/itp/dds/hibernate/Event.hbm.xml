@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<typedef name="CustomBlobType" class="ee.itp.dds.hibernate.CustomBlobType"></typedef>
+
+    <class name="ee.itp.dds.hibernate.Event" table="event" schema="ddservice" lazy="false">
+        <comment>Sesssion event</comment>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+           	<generator class="sequence" > 
+      			<param name="sequence"><![CDATA[ddservice.seq_event]]></param>
+		    </generator>
+        </id>
+        <many-to-one name="event" class="ee.itp.dds.hibernate.Event" fetch="select" cascade="save-update">
+            <column name="parent_ref_event_id" />
+        </many-to-one>
+        <many-to-one name="action" class="ee.itp.dds.hibernate.Action" fetch="select" cascade="save-update">
+            <column name="action_id" />
+        </many-to-one>
+        <many-to-one name="session" class="ee.itp.dds.hibernate.Session" fetch="select" cascade="save-update">
+            <column name="session_id" />
+        </many-to-one>
+        <property name="eventTime" type="java.lang.Long">
+            <column name="event_time"/>
+        </property>
+        <property name="comment" type="java.lang.String">
+            <column name="comment" />
+        </property>
+        <set name="events" inverse="true">
+            <key>
+                <column name="parent_ref_event_id" />
+            </key>
+            <one-to-many class="ee.itp.dds.hibernate.Event" />
+        </set>
+    </class>
+</hibernate-mapping>
