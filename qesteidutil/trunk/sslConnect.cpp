@@ -25,7 +25,6 @@ void (*pERR_error_string_n)(unsigned long e,char *buf,size_t len);
 
 class sslError:public std::runtime_error {
 public:
-    int code;
     std::string desc;
     sslError(std::string op) : std::runtime_error("openssl error") {
 		char buff[128] = "";
@@ -73,7 +72,10 @@ std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, cons
 	if ( !obj )
 	{
 		try { obj = new SSLObj( pin ); }
-		catch( std::runtime_error & ) { return std::vector<unsigned char>(); }
+		catch( std::runtime_error &e ) {
+			throw sslError( e.what() );
+			return std::vector<unsigned char>();
+		}
 	}
 
 	if ( !obj->connectToHost( site ) )

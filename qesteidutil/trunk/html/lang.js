@@ -23,6 +23,7 @@ var eestiStrings = {
 
 var eidStrings = {
 	"errorFound": new tr( "Tekkis viga: ", "", "" ),
+	"noCard": new tr( "Ei leitud ühtegi ID-kaarti.", "", "" ),
 	"noReaders": new tr( "Ühtegi kiipkaardi lugejat pole ühendatud.", "", "" ),
 	"certValid": new tr( "kehtiv ja kasutatav", "", "" ),
 	"certBlocked": new tr( "kehtetu", "", "" ),

@@ -25,26 +25,41 @@ void JsCardManager::pollCard()
         EstEidCard *card = new EstEidCard(*cardMgr);
 
         int numReaders = cardMgr->getReaderCount();
-        QVector<ReaderState> tmp;
+        QHash<QString,ReaderState> tmp;
 
         for (int i = 0; i < numReaders; i++) {
             ReaderState reader;
             reader.name = QString::fromStdString(cardMgr->getReaderName(i));
             if (card->isInReader(i)) {
                 reader.connected = true;
+				card->connect( i, true );
+				reader.cardId = QString::fromStdString( card->readCardID() );
             } else {
                 reader.connected = false;
             }
-            tmp.append(reader);
-            if (cardReaders.value(i).connected != reader.connected) {
-                if (reader.connected == true)
-                    emit cardEvent(m_jsCardInsertFunc, i);
-				else {
-					m_jsEsteidCard->setCard( 0 );
-                    emit cardEvent(m_jsCardRemoveFunc, i);
+			reader.id = i;
+			tmp.insert( reader.name, reader );
+			if ( cardReaders.contains( reader.name ) )
+			{
+				if ( cardReaders.value( reader.name ).connected != reader.connected )
+				{
+					cardReaders[reader.name] = reader;
+					if (reader.connected)
+					    emit cardEvent(m_jsCardInsertFunc, i);
+					else
+					    emit cardEvent(m_jsCardRemoveFunc, i);
 				}
-            }
+			} else if ( cardReaders.value( reader.name ).cardId != reader.cardId && reader.connected ) { //new reader inserted
+				cardReaders[reader.name] = reader;
+				emit cardEvent(m_jsCardInsertFunc, i);
+			}
         }
+		if ( cardReaders.size() > numReaders )
+		{
+			m_jsEsteidCard->setCard( 0 );
+			cardReaders = tmp;
+			emit cardEvent( m_jsCardRemoveFunc, 0 );
+		}
         cardReaders = tmp;
     } catch (std::runtime_error &) {
         // For now ignore any errors that might have happened during polling.
@@ -57,13 +72,14 @@ void JsCardManager::findCard()
     // Valime välja ühe kaardi, mis on sisse pistetud. Hiljem saab kaarti
     // selectReader() funktsiooniga vahetada.
 
+	cardReaders.clear();
+	bool cardFound = false;
     try {
         if (!cardMgr)
             cardMgr = new SmartCardManager();
         EstEidCard *card = new EstEidCard(*cardMgr);
 
         int numReaders = cardMgr->getReaderCount();
-        cardReaders.clear();
 
         for (int i = 0; i < numReaders; i++) {
             ReaderState reader;
@@ -71,15 +87,32 @@ void JsCardManager::findCard()
             if (card->isInReader(i)) {
                 card->connect(i);
                 reader.connected = true;
-                m_jsEsteidCard->setCard(card);
+				reader.cardId = QString::fromStdString( card->readCardID() );
+				if ( !cardFound )
+				{
+					m_jsEsteidCard->setCard(card);
+					cardFound = true;
+				}
             } else {
                 reader.connected = false;
             }
-            cardReaders.append(reader);
+			cardReaders.insert( reader.name, reader );
         }
     } catch (std::runtime_error &err) {
         handleError(err.what());
     }
+	if ( !cardFound )
+		m_jsEsteidCard->setCard( 0 );
+}
+
+bool JsCardManager::isInReader( QString cardId )
+{
+	if ( cardId == "" )
+		return false;
+	for ( QHash<QString, ReaderState>::const_iterator i = cardReaders.constBegin(); i != cardReaders.constEnd(); ++i )
+		if ( i.value().cardId == cardId )
+			return true;
+	return false;
 }
 
 bool JsCardManager::selectReader(int i)
@@ -89,14 +122,11 @@ bool JsCardManager::selectReader(int i)
             cardMgr = new SmartCardManager();
         EstEidCard *card = new EstEidCard(*cardMgr);
 
-        int numReaders = cardMgr->getReaderCount();
+		int numReaders = cardMgr->getReaderCount();
 
-        if (i < numReaders) {
-            ReaderState reader;
-            reader.name = QString::fromStdString(cardMgr->getReaderName(i));
+        if ( i < numReaders ) {
             if (card->isInReader(i)) {
                 card->connect(i);
-                reader.connected = true;
                 m_jsEsteidCard->setCard(card);
                 return true;
             }
@@ -113,13 +143,18 @@ int JsCardManager::getReaderCount()
     if (!cardMgr)
         return 0;
 
-    return cardMgr->getReaderCount();
+	int readers = 0;
+	try {
+		readers = cardMgr->getReaderCount();
+	} catch( std::runtime_error & ) {}
+
+    return readers;
 }
 
 QString JsCardManager::getReaderName(int i)
 {
     if (!cardMgr)
-        return 0;
+        return "";
 
     return QString::fromStdString(cardMgr->getReaderName(i));
 }

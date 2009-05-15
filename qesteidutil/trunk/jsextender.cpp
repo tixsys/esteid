@@ -80,7 +80,14 @@ QString JsExtender::checkPin()
 
 void JsExtender::activateEmail( const QString &email )
 {
-	std::vector<unsigned char> buffer = jsSSL->getUrl( "activateEmail", checkPin().toStdString(), email.toStdString() );
+	std::vector<unsigned char> buffer;
+	try {
+		buffer = jsSSL->getUrl( "activateEmail", checkPin().toStdString(), email.toStdString() );
+	} catch( std::runtime_error &e ) {
+		jsCall( "setEmails", "forwardFailed", "" );
+		jsCall( "handleError", e.what() );
+		return;
+	}
 	if ( !buffer.size() )
 	{
 		jsCall( "setEmails", "forwardFailed", "" );
@@ -103,7 +110,15 @@ void JsExtender::activateEmail( const QString &email )
 
 void JsExtender::loadEmails()
 {
-	std::vector<unsigned char> buffer = jsSSL->getUrl( "emails", checkPin().toStdString() );
+	std::vector<unsigned char> buffer;
+	try {
+		buffer = jsSSL->getUrl( "emails", checkPin().toStdString() );
+	} catch( std::runtime_error &e ) {
+		jsCall( "setEmails", "loadFailed", "" );
+		jsCall( "handleError", e.what() );
+		return;
+	}
+
 	if ( !buffer.size() )
 	{
 		jsCall( "setEmails", "loadFailed", "" );
@@ -179,7 +194,14 @@ QString JsExtender::readForwards()
 
 void JsExtender::loadPicture()
 {
-	std::vector<unsigned char> buffer = jsSSL->getUrl( "picture", checkPin().toStdString() );
+	std::vector<unsigned char> buffer;
+	try {
+		buffer = jsSSL->getUrl( "picture", checkPin().toStdString() );
+	} catch( std::runtime_error &e ) {
+		jsCall( "setPicture", "" );
+		jsCall( "handleError", e.what() );
+		return;
+	}
 	if ( !buffer.size() )
 	{
 		jsCall( "setPicture", "" );
