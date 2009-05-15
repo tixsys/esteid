@@ -54,6 +54,10 @@ include_directories(
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 
+IF(WIN32)
+	SET( qesteidutil_SRCS ${qesteidutil_SRCS} qesteidutil.rc )
+ENDIF(WIN32)
+
 add_executable(qesteidutil WIN32
     ${cardlib_SRCS}
     ${qesteidutil_SRCS}
