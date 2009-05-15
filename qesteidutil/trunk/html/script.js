@@ -385,10 +385,10 @@ function loadPicture()
 	extender.loadPicture();
 }
 
-function setPicture( img )
+function setPicture( img, code )
 {
-	if ( img == "" )
-		alert( _("loadPicFailed") );
+	if ( code != "" )
+		alert( _(code) );
 	else
 		document.getElementById('photo').innerHTML = "<img src=\"" + img + "\">";
 	document.getElementById('loading').style.display = 'none';
@@ -416,7 +416,10 @@ function setEmails( code, msg )
 	//success
 	if ( code == "0" )
 		code = _(code) + "<BR>" + msg;
-	document.getElementById('emailsContent').innerHTML = _(code);
+	if ( code != "0" && code != "20" )
+		alert( _(code) );
+	else
+		document.getElementById('emailsContent').innerHTML = _(code);
 	if ( code != "loadFailed" )
 		emailsLoaded = true;	
 }

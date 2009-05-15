@@ -194,17 +194,18 @@ QString JsExtender::readForwards()
 
 void JsExtender::loadPicture()
 {
+	QString result = "loadPicFailed";
 	std::vector<unsigned char> buffer;
 	try {
 		buffer = jsSSL->getUrl( "picture", checkPin().toStdString() );
 	} catch( std::runtime_error &e ) {
-		jsCall( "setPicture", "" );
+		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );
 		return;
 	}
 	if ( !buffer.size() )
 	{
-		jsCall( "setPicture", "" );
+		jsCall( "setPicture", "", result );
 		return;
 	}
 
@@ -225,11 +226,22 @@ void JsExtender::loadPicture()
 #else
 				QString url = QString( "file://" ).append( m_tempFile );
 #endif
-				jsCall( "setPicture", url );
+				jsCall( "setPicture", url, "" );
 				return;
 			}
 		}
+	} else { //probably got xml error string
+		xml.clear();
+		xml.addData( QByteArray( (char *)&buffer[0], buffer.size() ) );		
+		while ( !xml.atEnd() )
+		{
+			xml.readNext();
+			if ( xml.isStartElement() && xml.name() == "fault_code" )
+			{
+				result = xml.readElementText();
+				break;
+			}
+		}
 	}
-
-	jsCall( "setPicture", "" );
+	jsCall( "setPicture", "", result );
 }
