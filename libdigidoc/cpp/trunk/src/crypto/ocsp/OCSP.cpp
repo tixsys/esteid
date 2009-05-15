@@ -429,12 +429,15 @@ digidoc::OCSP::CertStatus digidoc::OCSP::validateResponse(OCSP_REQUEST* req, OCS
     // Return certificate status.
     switch(certStatus)
     {
-      case V_OCSP_CERTSTATUS_GOOD:    { return GOOD;    } break;
-      case V_OCSP_CERTSTATUS_REVOKED: { return REVOKED; } break;
-      case V_OCSP_CERTSTATUS_UNKNOWN: { return UNKNOWN; } break;
+    default: 
+        THROW_OCSPEXCEPTION(respStatus, "OCSP response contains unknown certificate status code.");
+    case V_OCSP_CERTSTATUS_UNKNOWN:
+        return UNKNOWN;
+    case V_OCSP_CERTSTATUS_GOOD:    
+        return GOOD;
+    case V_OCSP_CERTSTATUS_REVOKED:
+        return REVOKED;
     }
-
-    THROW_OCSPEXCEPTION(respStatus, "OCSP response contains unknown certificate status code.");
 }
 
 /**

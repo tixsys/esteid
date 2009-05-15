@@ -11,15 +11,11 @@ find_package(LibP11 REQUIRED)
 find_package(XercesC REQUIRED)
 find_package(XmlSecurityC REQUIRED)
 find_package(XSD REQUIRED)
-find_package(CppUnit)
 
 set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
 
 add_subdirectory(etc)
 add_subdirectory(src)
 
-# Disable tests if CppUnit wasn't found.
-if(CPPUNIT_FOUND)
-    add_subdirectory(test)
-    enable_testing()
-endif(CPPUNIT_FOUND)
+add_subdirectory(test)
+#ENABLE_TESTING()

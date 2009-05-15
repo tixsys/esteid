@@ -31,9 +31,9 @@ LDFLAGS = $(LINK_FLAGS)#-L$(MINIZIP_ROOT)
 INCLUDES=
 
 # Libs.
-SYSLIBS = -lstdc++ -lxerces-c -lxml-security-c -lcrypto -lp11 -lz
+SYSLIBS = -lstdc++ -lxerces-c -lxml-security-c -lcrypto -lp11 -lz -liconv
 #EXTERNALLIBS = -lminizip
-EXTERNALLIBS =
+EXTERNALLIBS = 
 DEMOLIBS = -ldigidoc
 
 # Code and object files.
@@ -99,7 +99,7 @@ init:
 	$(MKDIR) $(OBJ)/crypto/cert $(OBJ)/crypto/ocsp $(OBJ)/crypto/crypt $(OBJ)/crypto/signer $(OBJ)/io $(OBJ)/util $(OBJ)/xml $(OBJ)/minizip
 	$(MKDIR) $(DIST)
 
-demo: init main_demo.cpp libdigidoc.so
+demo: init main_demo.cpp libdigidoc.so 
 	$(LD) $(CCFLAGS) $(LDFLAGS) -L$(DIST) $(OBJ)/main_demo.o $(DEMOLIBS) -o $(DIST)/$@
 
 tool: init bdoc_ref.cpp libdigidoc.so

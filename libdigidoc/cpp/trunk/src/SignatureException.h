@@ -24,7 +24,7 @@ namespace digidoc
     };
 }
 
-#define THROW_SIGNATUREEXCEPTION(...) do {std::string _msg(digidoc::util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw SignatureException(__FILE__, __LINE__, _msg);} while(0)
-#define THROW_SIGNATUREEXCEPTION_CAUSE(_cause, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw SignatureException(__FILE__, __LINE__, _msg, _cause);} while(0)
+#define THROW_SIGNATUREEXCEPTION(...) do {std::string _msg(digidoc::util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw SignatureException(__FILE__, __LINE__, _msg);} while(fix::never())
+#define THROW_SIGNATUREEXCEPTION_CAUSE(_cause, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw SignatureException(__FILE__, __LINE__, _msg, _cause);} while(fix::never())
 
 #endif // !defined(__SIGNATUREEXCEPTION_H_INCLUDED__)

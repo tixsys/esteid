@@ -329,14 +329,11 @@ std::string digidoc::X509Cert::toString(X509_NAME* name) throw(IOException)
 EVP_PKEY* digidoc::X509Cert::getPublicKey() const throw(IOException)
 {
     EVP_PKEY* pubKey = X509_get_pubkey(cert);
-    if((pubKey != NULL) && (pubKey->type == EVP_PKEY_RSA))
-    {
-        return pubKey;
-    }
-    else
+    if((pubKey == NULL) || (pubKey->type != EVP_PKEY_RSA))
     {
         THROW_IOEXCEPTION("Unable to load RSA public Key: %s", ERR_reason_error_string(ERR_get_error()));
     }
+    return pubKey;
 }
 
 /**
@@ -359,14 +356,12 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaModulus() const throw(IOExce
     std::vector<unsigned char> rsaModulus(bufSize, 0);
 
     // Extract RSA modulus.
-    if(BN_bn2bin(pubKey->pkey.rsa->n, &rsaModulus[0]) > 0)
-    {
-        return rsaModulus;
-    }
-    else
+    if(BN_bn2bin(pubKey->pkey.rsa->n, &rsaModulus[0]) <= 0)
     {
         THROW_IOEXCEPTION("Failed to extract RSA modulus.");
     }
+
+	return rsaModulus;
 }
 
 /**
@@ -389,14 +384,12 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaExponent() const throw(IOExc
     std::vector<unsigned char> rsaExponent(bufSize, 0);
 
     // Extract RSA exponent.
-    if(BN_bn2bin(pubKey->pkey.rsa->e, &rsaExponent[0]) > 0)
-    {
-        return rsaExponent;
-    }
-    else
+    if(BN_bn2bin(pubKey->pkey.rsa->e, &rsaExponent[0]) <= 0)
     {
         THROW_IOEXCEPTION("Failed to extract RSA exponent.");
     }
+
+	return rsaExponent;
 }
 
 /**

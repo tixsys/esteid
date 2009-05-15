@@ -137,6 +137,7 @@ digidoc::dsig::SignatureType* digidoc::Signature::parseSignature(const std::stri
     {
         THROW_IOEXCEPTION("Failed to parse signature XML: %s", e.what());
     }
+	return NULL;
 }
 
 /**
@@ -423,6 +424,7 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
     {
         THROW_IOEXCEPTION("Failed to parse signature XML.");
     }
+	return std::auto_ptr<xercesc::DOMDocument>(NULL);
 }
 
 /**

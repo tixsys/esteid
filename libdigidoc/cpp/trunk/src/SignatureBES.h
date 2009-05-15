@@ -29,6 +29,8 @@ namespace digidoc
           BDoc& bdoc;
 
       private:
+          SignatureBES& operator=( SignatureBES const& that ); // undefine default
+
           void checkIfWellFormed() throw(SignatureException);
 
           // offline checks

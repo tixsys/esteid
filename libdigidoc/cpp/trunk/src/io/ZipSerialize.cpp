@@ -1,5 +1,6 @@
 #include "../minizip/zip.h"
 
+#include <iostream>
 #include "../log.h"
 #include "../util/File.h"
 #include "../util/String.h"
@@ -49,7 +50,7 @@ std::string digidoc::ZipSerialize::extract() throw(IOException)
 
 
     // Extract all files inside the ZIP container.
-    while(true)
+    for( ;; )
     {
         try
         {
@@ -119,6 +120,7 @@ void digidoc::ZipSerialize::extractCurrentFile(unzFile zipFile, const std::strin
     {
         THROW_IOEXCEPTION("Failed to open current file inside ZIP container. ZLib error: %d", unzResult);
     }
+    std::cout << "Extracted file " << fileName << " into the temp directory." << std::endl;
 
 	if(fileName[fileName.size()-1] == '/')
 	{
@@ -136,7 +138,7 @@ void digidoc::ZipSerialize::extractCurrentFile(unzFile zipFile, const std::strin
 
     // Extract current file inside ZIP container.
     char buf[10240];
-    while(true)
+    for( ;; )
     {
         unzResult = unzReadCurrentFile(zipFile, buf, 10240);
 
@@ -259,7 +261,7 @@ void digidoc::ZipSerialize::save() throw(IOException)
 
         // Archive file.
         char buf[10240];
-        while(true)
+        for( ;; )
         {
             unsigned int bytesRead = fread(buf, 1, 10240, pFile);
             if(bytesRead == 0)

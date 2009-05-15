@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <string>
+#include "../io/IOException.h"
+#include "../BDocException.h"
 
 namespace digidoc
 {
@@ -18,10 +20,16 @@ namespace digidoc
         {
           public:
               static std::string format(const char *fmt, ...);
+              static std::string convertUTF8(const std::string& str_in, bool to_UTF);
+              static std::string toUriFormat(const std::string& str_in);
+
 
           private:
-              static std::string formatArgList(const char *fmt, va_list args);
+              static const int MAX_LANG_LENGTH = 64; //should be enough to hold the LANG value
 
+              static std::string formatArgList(const char *fmt, va_list args);
+              static std::string getSystemEncoding();
+              
         };
 
     }

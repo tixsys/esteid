@@ -1,5 +1,5 @@
 #include "Signer.h"
-
+#include "../../util/String.h"
 
 /**
  * Initialized empty SignatureProductionPlace.
@@ -69,12 +69,26 @@ void digidoc::Signer::setSignatureProductionPlace(const SignatureProductionPlace
     this->signatureProductionPlace = signatureProductionPlace;
 }
 
+
 /**
  * @return returns signature production place info.
  */
 digidoc::Signer::SignatureProductionPlace digidoc::Signer::getSignatureProductionPlace() const
 {
     return signatureProductionPlace;
+}
+
+/**
+ * @return returns signature production place info in UTF-8 (XML data must be saved in this format regardless of the system encoding).
+ */
+digidoc::Signer::SignatureProductionPlace digidoc::Signer::getSignatureProductionPlaceUtf8() const
+{
+    // convert non-utf8 to utf8 if necessary
+    std::string cityUtf8 = digidoc::util::String::convertUTF8(signatureProductionPlace.city, true);    
+    std::string stateOrProvinceUtf8 = digidoc::util::String::convertUTF8(signatureProductionPlace.stateOrProvince, true);
+    std::string postalCodeUtf8 = digidoc::util::String::convertUTF8(signatureProductionPlace.postalCode, true);
+    std::string countryNameUtf8 = digidoc::util::String::convertUTF8(signatureProductionPlace.countryName, true);
+    return SignatureProductionPlace(cityUtf8, stateOrProvinceUtf8, postalCodeUtf8, countryNameUtf8);
 }
 
 /**
@@ -91,4 +105,18 @@ void digidoc::Signer::setSignerRole(const SignerRole& signerRole)
 digidoc::Signer::SignerRole digidoc::Signer::getSignerRole() const
 {
     return signerRole;
+}
+
+
+/**
+ * @return returns signer role in UTF-8 (XML data must be saved in this format regardless of the system encoding).
+ */
+digidoc::Signer::SignerRole digidoc::Signer::getSignerRoleUtf8() const
+{
+    SignerRole signerRoleUtf;
+    for( size_t i=0; i < signerRole.claimedRoles.size(); i++ )
+    {
+        signerRoleUtf.claimedRoles.push_back(digidoc::util::String::convertUTF8(signerRole.claimedRoles[i], true));
+    }
+    return signerRoleUtf;
 }

@@ -44,11 +44,13 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(int method) throw(IOExcep
 {
     switch(method)
     {
-        case NID_sha1:   { return std::auto_ptr<Digest>(new SHA1Digest);   } break;
-        case NID_sha256: { return std::auto_ptr<Digest>(new SHA256Digest); } break;
+    default:
+        THROW_IOEXCEPTION("Digest method '%s' is not supported.", OBJ_nid2sn(method));
+    case NID_sha1:   
+		return std::auto_ptr<Digest>(new SHA1Digest);
+    case NID_sha256: 
+		return std::auto_ptr<Digest>(new SHA256Digest);
     }
-
-    THROW_IOEXCEPTION("Digest method '%s' is not supported.", OBJ_nid2sn(method));
 }
 
 /**
@@ -83,10 +85,14 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(const std::string& method
  */
 int digidoc::Digest::toMethod(const std::string& methodUri) throw(IOException)
 {
-    if(methodUri == URI_SHA1)        { return NID_sha1;   }
-    else if(methodUri == URI_SHA256) { return NID_sha256; }
+    if ( methodUri == URI_SHA1 )
+		return NID_sha1;
+    else if ( methodUri == URI_SHA256 ) 
+		return NID_sha256;
+	else
+        THROW_IOEXCEPTION( "Digest method URI '%s' is not supported.", methodUri.c_str() );
 
-    THROW_IOEXCEPTION("Digest method URI '%s' is not supported.", methodUri.c_str());
+	return 0;
 }
 
 /**
@@ -106,7 +112,7 @@ bool digidoc::Digest::isSupported(const std::string& methodUri)
         toMethod(methodUri);
         return true;
     }
-    catch (IOException& e)
+    catch (IOException& )
     {
         return false;
     }

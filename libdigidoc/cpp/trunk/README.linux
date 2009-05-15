@@ -26,9 +26,13 @@ Libary dependencies
 * xml-security-c 1.3.1
 * openssl 0.9.8g
 * libopensc2 (runtime PKCS#15 driver)
+* libiconv 1.13
 
 On Ubuntu you can install the libs by running:
 sudo apt-get install libopensc2 libp11-dev libssl-dev libxerces28-dev libxml-security-c-dev
+
+GNU libiconv can be downloaded from http://www.gnu.org/software/libiconv/ .
+
 
 Tools
 
@@ -36,18 +40,6 @@ Tools
 * python 2.5 or 2.6 for running tests
 * Codesynthesis xsd 3.2.0 for XML tree generation
 
-Install xsd tools and library from Code Synthesis:
-
-  1. Install required libraries
-     The following section is for Debian distribution, other distributions may have different package names.
-     NOTE: Hope that all the needed libraries are listed here.
-     a) Install Xerces-C++
-        'apt-get install libxerces-c28 libxerces-c2-dev'
-  2. dowload binary version of xsd from following URL: http://www.codesynthesis.com/products/xsd/download.xhtml
-     For example for i686 arch debian download binary with command:
-     'wget http://www.codesynthesis.com/download/xsd/3.2/linux-gnu/i686/xsd_3.2.0-1_i386.deb'
-  3. install xsd tools and library with command:
-     'dpkg -i xsd_3.2.0-1_i386.deb'
 
 BUILDING
 
@@ -75,13 +67,33 @@ Configuration file is first searched from environment variable
 BDOCLIB_CONF_XML. If not defined, it searches for file bdoc.conf from
 running directory.
 
+The LANG environment variable is read (and must be set properly) to determine the system encoding which is passed to libiconv for converting XML data to UTF-8.
+Please refer to '$iconv --list' for the supported encodings.
+
+
 DOCUMENTATION
 
-generate documentation by running 
+Generate class documentation by running 
 
 make doxygen
 
-see src/main_demo.cpp and src/ref_tool.cpp for examples
+
+Example usage of the library can be seen in  src/main_demo.cpp and src/ref_tool.cpp.
+
+Sample command lines:
+
+insert and sign:
+$./tool -create -insert bdoc_test.odt -sign /home/user/devel/digidoc/head/test/data/cert/cert+priv_key.pemBES Tallinn Harjumaa 13424 Estonia test -save_as test_out.bdoc
+
+open the bdoc and verifiy the signature:
+$./tool -open test_out.bdoc -valid_offline 1
+
+
+
+
+
+
+
 
 
 

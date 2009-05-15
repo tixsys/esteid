@@ -119,7 +119,6 @@ install( FILES
 
 install( FILES
     crypto/Digest.h
-    crypto/OpenSSLHelpers.h
     DESTINATION include/digidoc/crypto
 )
 
@@ -168,11 +167,4 @@ install( FILES
     util/File.h
     util/String.h
     DESTINATION include/digidoc/util
-)
-
-install( FILES
-    xml/OpenDocument_manifest.hxx
-    xml/XAdES.hxx
-    xml/xmldsig-core-schema.hxx
-    DESTINATION include/digidoc/xml
 )

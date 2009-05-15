@@ -32,6 +32,6 @@ namespace digidoc
     };
 }
 
-#define THROW_OCSPEXCEPTION(rsc, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw OCSPException(__FILE__, __LINE__, _msg, rsc);} while(0)
+#define THROW_OCSPEXCEPTION(rsc, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw OCSPException(__FILE__, __LINE__, _msg, rsc);} while(fix::never())
 
 #endif // !defined(__OCSPEXCEPTION_H_INCLUDED__)

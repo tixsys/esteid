@@ -58,15 +58,15 @@ namespace digidoc
 
             xml_schema::DateTime makeDateTime(const struct tm& lt)
             {
-
-                xml_schema::DateTime dateTime(lt.tm_year + 1900,
-                        lt.tm_mon + 1,
-                        lt.tm_mday,
-                        lt.tm_hour,
-                        lt.tm_min,
-                        lt.tm_sec,
-                        0, //zone +0h
-                        0); //zone +0min
+ 
+                xml_schema::DateTime dateTime( lt.tm_year + 1900
+                                             , static_cast<unsigned short>( lt.tm_mon + 1 )
+                                             , static_cast<unsigned short>( lt.tm_mday )
+                                             , static_cast<unsigned short>( lt.tm_hour )
+                                             , static_cast<unsigned short>( lt.tm_min )
+                                             , lt.tm_sec
+                                             , 0 //zone +0h
+                                             , 0 ); //zone +0min
 
                 //DEBUG("%d-%d-%dT%d:%d:%dZ",lt.tm_year + 1900, lt.tm_mday + 1, lt.tm_mday, lt.tm_hour,lt.tm_min, lt.tm_sec);
                 /*
