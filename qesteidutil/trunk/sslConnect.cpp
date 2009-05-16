@@ -9,7 +9,7 @@
 #define SSL_LIB "ssleay32"
 #define CRYPTO_LIB "libeay32"
 #define PKCS11_ENGINE "engine_pkcs11"
-#define PKCS11_MODULE "opensc-pkcs11"
+#define PKCS11_MODULE "opensc-pkcs11.dll"
 #else
 #include <netdb.h>
 #define SSL_LIB "ssl"
