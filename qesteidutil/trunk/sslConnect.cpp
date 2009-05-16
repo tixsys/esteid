@@ -224,6 +224,6 @@ std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
     size_t pos = pageStr.find("\r\n\r\n");
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
-	//qDebug() << QByteArray((char *)&buffer[0], buffer.size() );
+	qDebug() << QByteArray((char *)&buffer[0], buffer.size() );
 	return buffer;
 }

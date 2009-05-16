@@ -14,6 +14,8 @@ JsCertData::JsCertData( QObject *parent )
 	m_qcert = NULL;
 }
 
+QSslCertificate JsCertData::cert() const { return *m_qcert; }
+
 void JsCertData::loadCert(EstEidCard *card, CertType ct)
 {
     m_card = card;

@@ -20,6 +20,7 @@ public:
         SignCert
     };
 
+	QSslCertificate cert() const;
     void loadCert(EstEidCard *card, CertType ct);
 
 private:

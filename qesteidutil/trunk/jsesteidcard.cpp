@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QDate>
 
+#include "CertificateWidget.h"
 #include "jsesteidcard.h"
 
 using namespace std;
@@ -375,4 +376,16 @@ QString JsEsteidCard::parseName( const QString &in )
 
 void JsEsteidCard::showCert( int type )
 {
+	CertificateWidget *w = new CertificateWidget( qApp->activeWindow() );
+	if( type == 1 )
+	{
+		getAuthCert();
+		w->setCertificate( m_authCert->cert() );
+	}
+	else
+	{
+		getSignCert();
+		w->setCertificate( m_signCert->cert() );
+	}
+	w->show();
 }
