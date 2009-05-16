@@ -12,6 +12,7 @@
         <select id="headerSelect">
           <option value="et">Estonian</option>
           <option value="en">English</option>
+		  <option value="ru">Russian</option>
         </select>
       </div>
       <div id="headerMenus">
@@ -68,7 +69,7 @@
         <trtag>Sertifikaat kehtib kuni</trtag> <span id="authCertValidTo"></span>
       </p>
       <p id="authKeyText">
-        <trtag>Isikutuvastamise privaatvõtit on edukalt kasutatud</trtag> <span id="authKeyUsage"></span> <trtag>korda</trtag>
+        <trtag>ID-kaarti on kasutatud isikutuvastamiseks</trtag> <span id="authKeyUsage"></span> <trtag>korda</trtag>
       </p>
       <div id="authKeyBlocked" class="keyBlocked">
         <trtag>Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>
@@ -76,7 +77,7 @@
       <div id="authBottomButtons">
         <div id="authValidButtons">
           <input type="button" value="Muuda PIN1" onClick="setActive('pin1','');" class="buttonBottom" />
-          <input type="button" value="Vaata üksikasju" class="buttonBottom" />
+          <input type="button" value="Vaata üksikasju" onClick="esteidData.showCert(1)" class="buttonBottom" />
         </div>
         <div id="authBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
           <input type="button" value="Tühista blokeering" onclick="setActive('bpin1','');" class="buttonBottom" />
@@ -84,13 +85,13 @@
       </div>
     </div>
     <div class="rightContent">
-      <span class="contentHeader"><trtag>Allkirja sertifikaat</trtag></span>
+      <span class="contentHeader"><trtag>Allkirjastamise sertifikaat</trtag></span>
       <p>
         <trtag>Sertifikaat on</trtag> <span id="signCertStatus"></span><br />
         <trtag>Sertifikaat kehtib kuni</trtag> <span id="signCertValidTo"></span>
       </p>
       <p id="signKeyText">
-        <trtag>Allkirjastamise privaatvõtit on edukalt kasutatud</trtag> <span id="signKeyUsage"></span> <trtag>korda</trtag>
+        <trtag>ID-kaarti on kasutatud allkirjastamiseks</trtag> <span id="signKeyUsage"></span> <trtag>korda</trtag>
       </p>
       <div id="signKeyBlocked" class="keyBlocked">
         <trtag>Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>
@@ -335,6 +336,7 @@ window.cardManager.registerCallBack("cardInsert", "cardInserted");
 window.cardManager.registerCallBack("cardRemove", "cardRemoved");
 window.cardManager.registerCallBack("handleError", "handleError");
 
+language = extender.locale();
 translateHTML();
 
 readCardData();

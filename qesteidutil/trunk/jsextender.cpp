@@ -9,6 +9,7 @@ JsExtender::JsExtender( MainWindow *main )
 :	QObject( main->page()->mainFrame() )
 ,	m_mainWindow( main )
 {
+	m_locale = QLocale::system().name().left( 2 );
     connectSignals();
 	jsSSL = new SSLConnect();
 }

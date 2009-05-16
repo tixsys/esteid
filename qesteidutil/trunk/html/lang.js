@@ -1,4 +1,4 @@
-﻿var language = "est";
+﻿var language = "et";
 
 //code: (est, eng, rus)
 var eestiStrings = {
@@ -14,9 +14,10 @@ var eestiStrings = {
 	"21": new tr( "Teie e-posti konto on suletud. Avamiseks saatke palun e-kiri aadressil toimetaja@eesti.ee või helistage telefonil 663 0215.", "", "" ),
 	"22": new tr( "Vigane e-posti aadress.", "", "" ),
 	"23": new tr( "Suunamine on salvestatud, ning Teile on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "", "" ),
+	"loadEmail": new tr( "Laen e-posti seadeid", "", "" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "", "" ),
 	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "", "" ),
-	"emailEnter": new tr( "E-post aadress sisestamata!", "", "" ),
+	"emailEnter": new tr( "E-posti aadress sisestamata!", "", "" ),
 	"loadPic": new tr( "Laen pilti", "", "" ),
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus", "", "" )
 };
@@ -62,9 +63,9 @@ var eidStrings = {
 
 function tr( est, eng, rus )
 {
-	this.est = est;
-	this.eng = eng;
-	this.rus = rus;
+	this.et = est;
+	this.en = eng;
+	this.ru = rus;
 }
 
 function _( code, defaultString )

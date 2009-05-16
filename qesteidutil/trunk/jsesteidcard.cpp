@@ -27,8 +27,6 @@ void JsEsteidCard::setCard(EstEidCard *card)
 void JsEsteidCard::handleError(QString msg)
 {
     qDebug() << "Error: " << msg << endl;
-    // XXX
-//    emit cardError(m_jsHandleErrorFunc, msg);
     emit cardError("handleError", msg);
 }
 
@@ -373,4 +371,8 @@ QString JsEsteidCard::parseName( const QString &in )
 		}
 	}
 	return ret;
+}
+
+void JsEsteidCard::showCert( int type )
+{
 }

@@ -61,7 +61,8 @@ void JsCardManager::pollCard()
 			emit cardEvent( m_jsCardRemoveFunc, 0 );
 		}
         cardReaders = tmp;
-    } catch (std::runtime_error &) {
+    } catch (std::runtime_error &e) {
+		qDebug() << e.what();
         // For now ignore any errors that might have happened during polling.
         // We don't want to spam users too often.
     }

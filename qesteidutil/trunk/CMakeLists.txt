@@ -5,6 +5,7 @@ project(qesteidutil)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 find_package(Qt4 REQUIRED)
+find_package(OpenSSL REQUIRED)
 if(UNIX)
     find_package(PCSCLite REQUIRED)
 endif(UNIX)
@@ -49,6 +50,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
     ${PCSCLITE_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
 )
 
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
@@ -63,11 +65,13 @@ add_executable(qesteidutil WIN32
     ${qesteidutil_SRCS}
     ${qesteidutil_MOC_SRCS}
     ${qesteidutil_RCC_SRCS}
+    ${qesteidutil_MOC_HDRS}
 )
 
 target_link_libraries(qesteidutil
     ${QT_QTMAIN_LIBRARY}
     ${QT_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
 )
 
 install(TARGETS qesteidutil DESTINATION bin)

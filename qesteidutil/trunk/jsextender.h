@@ -25,6 +25,7 @@ private:
 	SSLConnect *jsSSL;
 	QString m_tempFile;
 	QXmlStreamReader xml;
+	QString m_locale;
 
 public slots:
     void javaScriptWindowObjectCleared();
@@ -38,6 +39,7 @@ public slots:
 	QString readEmailAddresses();
 	QString readForwards();
 	void loadPicture();
+	QString locale() { return m_locale; }
 };
 
 #endif // JSEXTENDER_H

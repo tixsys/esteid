@@ -264,6 +264,7 @@ function cardInserted(i)
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		activeCardId = "";
+		emailsLoaded = false;
 		cardManager.selectReader( i );
 		if ( esteidData.canReadCard() )
 			activeCardId = esteidData.getId();
@@ -275,7 +276,10 @@ function cardRemoved(i)
 {
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i));
 	if ( !cardManager.isInReader( activeCardId ) )
+	{
 		activeCardId = "";
+		emailsLoaded = false;
+	}
 	if ( cardManager.getReaderCount() > 0 )
 		cardManager.findCard();
 	readCardData();
@@ -353,11 +357,7 @@ function setActive( content, el )
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	if ( content == "email" )
-	{
-		if ( !emailsLoaded )
-			extender.loadEmails();
-	}
+
 	if ( el != '' )
 	{
 		var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
@@ -369,11 +369,32 @@ function setActive( content, el )
 	var divs = document.getElementsByClassName('content');
 	for( var i in divs )
 	{
+		if ( typeof divs[i].style == "undefined" )
+			continue;
 		if ( divs[i].id.indexOf( content ) )
 			divs[i].style.display = 'none';
 		else
 			divs[i].style.display = 'block';
 	}
+
+	switch( content )
+	{
+		case "cpuk": document.getElementById('pukOldPin').focus(); break;
+		case "pin1": document.getElementById('pin1OldPin').focus(); break;
+		case "pin2": document.getElementById('pin2OldPin').focus(); break;
+		case "bpin1": document.getElementById('bpin1OldPin').focus(); break;
+		case "bpin2": document.getElementById('bpin2OldPin').focus(); break;
+		case "email": if ( !emailsLoaded ) loadEmails(); break;
+	}
+}
+
+function loadEmails()
+{
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		return;
+	document.getElementById('loading').style.display = 'block';
+	document.getElementById('loading').innerHTML = _("loadEmail");
+	extender.loadEmails();
 }
 
 function loadPicture()
@@ -408,18 +429,20 @@ function setEmailActivate( msg )
 
 function setEmails( code, msg )
 {
+	document.getElementById('loading').style.display = 'none';
 	if ( code == "0" && msg.indexOf( ' - ' ) == -1 )
 		code = "20";
 	//not activated
 	if ( code == "20" )
 		document.getElementById('emailsContentActivate').style.display = "block";
 	//success
-	if ( code == "0" )
-		code = _(code) + "<BR>" + msg;
 	if ( code != "0" && code != "20" )
 		alert( _(code) );
-	else
+	else {
+		if ( code == "0" )
+			code = msg;
 		document.getElementById('emailsContent').innerHTML = _(code);
+	}
 	if ( code != "loadFailed" )
 		emailsLoaded = true;	
 }

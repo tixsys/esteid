@@ -100,6 +100,8 @@ public slots:
 
 	QString parseName( const QString &in );
 
+	void showCert( int type );
+
 signals:
     void cardError(QString func, QString err);
 };
