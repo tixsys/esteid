@@ -53,5 +53,5 @@ class SettingsValues: public QSettings
 
 public:
 	SettingsValues( QObject *parent = 0 )
-	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Eesti", "DigiDoc", parent ) {}
+	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Estonian ID Card", "QDigiDoc", parent ) {}
 };
