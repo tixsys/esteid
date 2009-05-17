@@ -1,4 +1,5 @@
-﻿var language = "et";
+﻿var defaultLanguage = "et";
+var language = defaultLanguage;
 
 //code: (est, eng, rus)
 var eestiStrings = {
@@ -71,9 +72,15 @@ function tr( est, eng, rus )
 function _( code, defaultString )
 {
 	if ( typeof eestiStrings[code] != "undefined" )
+	{
+		if ( eval( "eestiStrings[\"" + code + "\"]." + language ) == "undefined" )
+			return eval( "eestiStrings[\"" + code + "\"]." + defaultLanguage );
 		return eval( "eestiStrings[\"" + code + "\"]." + language );
-	else if ( typeof eidStrings[code] != "undefined" )
+	} else if ( typeof eidStrings[code] != "undefined" ) {
+		if ( eval( "eidStrings[\"" + code + "\"]." + language ) == "undefined" )
+			return eval( "eidStrings[\"" + code + "\"]." + defaultLanguage );
 		return eval( "eidStrings[\"" + code + "\"]." + language );
+	}
 	return (typeof defaultString != "undefined" ) ? defaultString : code;
 }
 

@@ -18,8 +18,11 @@ set(qesteidutil_MOC_HDRS
     jsesteidcard.h
     jsextender.h
     mainwindow.h
-    SslCertificate.h
     sslConnect.h
+)
+
+set(qesteidutil_HDRS
+    SslCertificate.h
 )
 
 set(cardlib_SRCS
@@ -73,6 +76,7 @@ ENDIF(WIN32)
 add_executable(qesteidutil WIN32
     ${cardlib_SRCS}
     ${qesteidutil_SRCS}
+    ${qesteidutil_HDRS}
     ${qesteidutil_MOC_SRCS}
     ${qesteidutil_RCC_SRCS}
     ${qesteidutil_MOC_HDRS}
@@ -83,7 +87,7 @@ target_link_libraries(qesteidutil
     ${QT_QTMAIN_LIBRARY}
     ${QT_LIBRARIES}
     ${OPENSSL_LIBRARIES}
-	${OPENSSLCRYPTO_LIBRARIES}
+    ${OPENSSLCRYPTO_LIBRARIES}
 )
 
 install(TARGETS qesteidutil DESTINATION bin)

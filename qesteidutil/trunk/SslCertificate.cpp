@@ -85,8 +85,8 @@ QStringList SslCertificate::keyUsage() const
 QByteArray SslCertificate::serialNumber() const
 {
 	if( !handle() )
-		return false;
-	return QByteArray::number( ASN1_INTEGER_get( ((X509*)handle())->cert_info->serialNumber ) );
+		return QByteArray();
+	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->serialNumber )) );
 }
 
 QString SslCertificate::subjectInfoUtf8( SubjectInfo subject ) const
@@ -130,6 +130,6 @@ QString SslCertificate::toUtf8( const QString &in ) const
 QByteArray SslCertificate::versionNumber() const
 {
 	if( !handle() )
-		return false;
-	return QByteArray::number( ASN1_INTEGER_get( ((X509*)handle())->cert_info->version ) + 1 );
+		return QByteArray();
+	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->version )) + 1 );
 }

@@ -109,7 +109,7 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	foreach( const QString &ext, c.keyUsage() )
 		s << "<li>" << ext << "</li>";
 	s << "</ul><br /><br /><br /><br />";
-	s << tr("* Refer to the certification authority's statement for details.") << "<br />";
+	//s << tr("* Refer to the certification authority's statement for details.") << "<br />";
 	s << "<hr>";
 	s << "<p style='margin-left: 30px;'>";
 	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName ) << "<br /><br /><br />";
@@ -138,14 +138,19 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	t->setText( 1, "sha1RSA" );
 	parameters->addTopLevelItem( t );
 
-	QString issuer;
-	issuer += c.issuerInfo( "CN" ) + ", ";
-	issuer += c.issuerInfo( "OU" ) + ", ";
-	issuer += c.issuerInfo( "O" ) + ", ";
-	issuer += c.issuerInfo( "C" );
+	QStringList text, textExt;
+	QList<QByteArray> subjects;
+	subjects << "CN" << "OU" << "O" << "C";
+	foreach( const QByteArray &subject, subjects )
+	{
+		text << c.issuerInfo( subject );
+		textExt << QString( "%1 = %2" )
+			.arg( subject.constData() ).arg( c.issuerInfo( subject ) );
+	}
 	t = new QTreeWidgetItem( parameters );
 	t->setText( 0, tr("Issuer") );
-	t->setText( 1, issuer );
+	t->setText( 1, text.join( ", " ) );
+	t->setData( 1, Qt::UserRole, textExt.join( "\n" ) );
 	parameters->addTopLevelItem( t );
 
 	t = new QTreeWidgetItem( parameters );
@@ -158,17 +163,21 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	t->setText( 1, c.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
 	parameters->addTopLevelItem( t );
 
-	QString subject;
-	subject += c.subjectInfo( "serialNumber" ) + ", ";
-	subject += c.subjectInfoUtf8( "GN" ) + ", ";
-	subject += c.subjectInfoUtf8( "SN" ) + ", ";
-	subject += c.subjectInfoUtf8( "CN" ) + ", ";
-	subject += c.subjectInfo( "OU" ) + ", ";
-	subject += c.subjectInfo( "O" ) + ", ";
-	subject += c.subjectInfo( "C" );
+	subjects.clear();
+	text.clear();
+	textExt.clear();
+	subjects << "serialNumber" << "GN" << "SN" << "CN" << "OU" << "O" << "C";
+	foreach( const QByteArray &subject, subjects )
+	{
+		text << c.subjectInfoUtf8( subject );
+		textExt << QString( "%1 = %2" )
+			.arg( subject.constData() ).arg( c.subjectInfoUtf8( subject ) );
+	}
+
 	t = new QTreeWidgetItem( parameters );
 	t->setText( 0, tr("Subject") );
-	t->setText( 1, subject );
+	t->setText( 1, text.join( ", " ) );
+	t->setData( 1, Qt::UserRole, textExt.join( "\n" ) );
 	parameters->addTopLevelItem( t );
 
 	t = new QTreeWidgetItem( parameters );

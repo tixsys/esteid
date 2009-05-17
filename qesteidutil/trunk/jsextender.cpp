@@ -10,6 +10,8 @@ JsExtender::JsExtender( MainWindow *main )
 ,	m_mainWindow( main )
 {
 	m_locale = QLocale::system().name().left( 2 );
+	if ( m_locale == "C" )
+		m_locale = "en";
     connectSignals();
 	jsSSL = new SSLConnect();
 }
@@ -76,6 +78,7 @@ QString JsExtender::checkPin()
 			pin = "";
 		}
 	}
+	QCoreApplication::processEvents();
 	return pin;
 }
 
