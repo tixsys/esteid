@@ -23,7 +23,7 @@ namespace digidoc
     };
 }
 
-#define THROW_BDOCEXCEPTION(...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw BDocException(__FILE__, __LINE__, _msg);} while(0)
-#define THROW_BDOCEXCEPTION_CAUSE(_cause, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw BDocException(__FILE__, __LINE__, _msg, _cause);} while(0)
+#define THROW_BDOCEXCEPTION(...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw BDocException(__FILE__, __LINE__, _msg);} while(fix::never())
+#define THROW_BDOCEXCEPTION_CAUSE(_cause, ...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw BDocException(__FILE__, __LINE__, _msg, _cause);} while(fix::never())
 
 #endif // !defined(__BDOCEXCEPTION_H_INCLUDED__)

@@ -1,5 +1,6 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
+
 import sys
 import os
 import string
@@ -182,7 +183,7 @@ class BDocTestCase(unittest.TestCase):
         bdocFile = 'invalid/BDocTM_invalid_OCSPRefValue_r423.bdoc'
         self.validateSignature(bdocFile, "OCSPRef value doesn't match with hash of OCSP response", validateOnline=False)
 
-    def createValidateBDoc(self, profile='TM'):
+    def createValidateBDoc(self, profile='TM', cmd=[]):
         """Test sign bdoc"""
         bdocFile = os.tmpnam()+ '.bdoc'
         #os.remove(bdocFile)
@@ -190,14 +191,14 @@ class BDocTestCase(unittest.TestCase):
         global g_projectDir
         tool = g_tool
         # ./tool -create -insert build.properties -sign test/data/cert/cert+priv_key.pem BES Tallinn Harjumaa 11213 Estonia tester -save_as out.bdoc
-        cmd = [tool, 
-               '-create', 
-               '-insert', tool, 
-               '-sign', g_projectDir+'test/data/cert/cert+priv_key.pem',
-               profile, 'Tallinn', 'Harjumaa', '13417', 'Estonia', 'automated_test',
-               '-save_as', bdocFile 
-              ]
-
+        if len(cmd) == 0: #no command parameter given
+            cmd = [tool, 
+                '-create', 
+                '-insert', tool, #the file to be inserted, in this context
+                '-sign', g_projectDir+'test/data/cert/cert+priv_key.pem',
+                profile, 'Tallinn', 'Harjumaa', '13417', 'Estonia', 'automated_test',
+                '-save_as', bdocFile 
+                ]
         output = execCmd(cmd)
         logging.info("Executing: "+str(cmd))
         logging.info(output)
@@ -208,7 +209,26 @@ class BDocTestCase(unittest.TestCase):
             errmsg =  output[start:]
         self.assert_( r > 0, "Signing of "+bdocFile+" failed "+errmsg )
         
-        self.validateOffline(bdocFile)
+        self.validateOffline(cmd[-1:][0]) #the output file
+
+    def testValidateLocaleSpecificChars(self):
+	""" Test sign bdoc with non-ascii characters included in the xml data.
+        Note: files to be inserted can have non-ascii characters in the filename
+        too but this is not covered here in the automated tests yet. """
+        global g_tool
+        global g_projectDir
+        tool = g_tool
+        bdocFile = os.tmpnam()+ '.bdoc'
+        bdocFile += 'õõääööüü'
+        toolcmd = [tool,
+                '-create',
+                '-insert', g_projectDir+'test/testdoc.odt',
+                '-sign', g_projectDir+'test/data/cert/cert+priv_key.pem',
+                'BES', 'Tällinn', 'Härjumaa', '13417', 'Estünia', 'ütomated_test',
+                '-save_as', bdocFile
+                ]
+        self.createValidateBDoc('BES', toolcmd)
+        self.createValidateBDoc('TM', toolcmd)
 
     def testCreateBDocBES(self):
         """Create Bdoc BES and validate it offline"""
@@ -218,7 +238,6 @@ class BDocTestCase(unittest.TestCase):
         """Create Bdoc TM and validate it offline"""
         self.createValidateBDoc(profile='TM')
         
-
     def testUnitTests(self):
         """Run unit tests"""
         global g_projectDir
@@ -229,7 +248,6 @@ class BDocTestCase(unittest.TestCase):
         logging.info(output)
         r = output.rfind("OK")
         self.assert_( r > 0, "Some unittests failed" )
-    
     
 
 
@@ -276,10 +294,10 @@ elif os.path.exists(g_projectDir+'src/digidoc-tool'+exe_suffix):
 else:
     print "Can't find digidoc-tool"+exe_suffix    
 
-if os.path.exists(g_projectDir+'build/dist/unittests'+exe_suffix):
-    g_unittests = g_projectDir+'build/dist/unittests'+exe_suffix
-elif os.path.exists(g_projectDir+'test/unittests'+exe_suffix):
-    g_unittests = g_projectDir+'test/unittests'+exe_suffix
+#if os.path.exists(g_projectDir+'build/dist/unittests'+exe_suffix):
+#    g_unittests = g_projectDir+'build/dist/unittests'+exe_suffix
+if os.path.exists(g_projectDir+'test/src'+exe_suffix):
+    g_unittests = g_projectDir+'test/src'+exe_suffix
 else:
     print "Can't find unittests"+exe_suffix    
 
@@ -309,6 +327,7 @@ if __name__ == '__main__':
     #suite.addTest(BDocTestCase('testUnknownCACertNotFoundTMFails'))
     #suite.addTest(BDocTestCase('testValidateSHA256'))
     #suite.addTest(BDocTestCase('testUnknownSignatureMethodMustFail'))
+    #suite.addTest(BDocTestCase('testValidateLocaleSpecificChars'))
     unittest.TextTestRunner(verbosity=2,descriptions=1).run(suite)
 
 

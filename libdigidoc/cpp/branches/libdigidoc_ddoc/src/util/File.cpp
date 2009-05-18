@@ -97,11 +97,23 @@ bool digidoc::util::File::directoryExists(const std::string& path)
  * Parses file path and returns file name from file full path.
  *
  * @param path full path of the file.
- * @return returns file name from the file full path.
+ * @return returns file name from the file full path in UTF-8.
  */
 std::string digidoc::util::File::fileName(const std::string& path)
 {
     return path.substr(path.find_last_of("/\\") + 1);
+}
+
+/**
+ * Parses file path and returns file name from file full path in UTF-8.
+ *
+ * @param path full path of the file.
+ * @return returns file name from the file full path in UTF-8.
+ */
+std::string digidoc::util::File::fileNameUtf8(const std::string& path)
+{
+    std::string filename = path.substr(path.find_last_of("/\\") + 1);
+    return util::String::convertUTF8(filename, true);
 }
 
 /**

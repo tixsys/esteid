@@ -175,8 +175,8 @@ void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignE
 {
 	// Set required signature fields.
     setSigningCertificate(signer->getCert());
-    setSignatureProductionPlace(signer->getSignatureProductionPlace());
-    setSignerRole(signer->getSignerRole());
+    setSignatureProductionPlace(signer->getSignatureProductionPlaceUtf8());
+    setSignerRole(signer->getSignerRoleUtf8());
     setSigningTime(util::date::currentTime());
 
     // Calculate digest of the Signature->Object->SignedProperties node.
@@ -383,12 +383,12 @@ void digidoc::SignatureBES::checkKeyInfo() const throw(SignatureException)
     certDigestCalc->update(&derEncodedX509[0], derEncodedX509.size());
 	std::vector<unsigned char> calcDigest = certDigestCalc->getDigest();
 
-	if ( certDigestValue.size() != certDigestCalc->getSize() )
+	if ( certDigestValue.size() != static_cast<size_t>( certDigestCalc->getSize() ) )
     {
         THROW_SIGNATUREEXCEPTION("Wrong length for signing certificate digest");
     }
 
-	for ( size_t i = 0; i < certDigestCalc->getSize(); ++i )
+	for ( size_t i = 0; i < static_cast<size_t>( certDigestCalc->getSize() ); ++i )
 	{
 		if ( calcDigest[i] != static_cast<unsigned char>(certDigestValue.data()[i]) )
 		{
@@ -524,7 +524,7 @@ const throw(SignatureException)
     //xml_schema::dom::auto_ptr<xercesc::DOMDocument> dom = createDom();
     //xercesc::DOMNode* signedPropsNode = dom->getFirstChild()->getLastChild()->getFirstChild()->getFirstChild();
 
-	xercesc::DOMNode* idNode(NULL);
+	// xercesc::DOMNode* idNode(NULL);
 // FIXME: Äkki oleks parem kasutada olemasolevat signature puud, mitte Xercese oma?
 //	if (!signedPropsNode->hasAttributes()
 //	   || (idNode = signedPropsNode->getAttributes()->getNamedItem(xercesc::XMLString::transcode("Id"))) == NULL )
@@ -602,8 +602,7 @@ const throw(SignatureException)
                 Document doc = bdoc.getDocument( *itDocs );
 
                 std::string documentFileName = util::File::fileName( doc.getPath() );
-
-                if ( documentFileName == docRefUri )
+                if ( digidoc::util::String::toUriFormat(documentFileName) == docRefUri )
                 {
                     foundDoc = true;
                     docNumberList.erase( itDocs ); // remove from list to detect duplicate refs

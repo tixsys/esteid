@@ -156,6 +156,7 @@ void digidoc::BDoc::save() throw(IOException, BDocException)
     for(std::vector<Document>::const_iterator iter = documents.begin(); iter != documents.end(); iter++)
     {
         serializer->addFile(util::File::fileName(iter->getPath()), iter->getPath());
+        std::cout << "added file " << util::File::fileName(iter->getPath()) << " to documents." << std::endl;
     }
 
     // Add all signatures to container.
@@ -230,12 +231,12 @@ void digidoc::BDoc::addDocument(const Document& document) throw(BDocException)
  */
 digidoc::Document digidoc::BDoc::getDocument(unsigned int id) const throw(BDocException)
 {
-    if(documents.size() > id)
+    if( id >= documents.size() )
     {
-        return documents[id];
+        THROW_BDOCEXCEPTION("Incorrect document id %u, there are only %u documents in container.", id, documents.size());
     }
 
-    THROW_BDOCEXCEPTION("Incorrect document id %u, there are only %u documents in container.", id, documents.size());
+    return documents[id];
 }
 
 /**
@@ -302,12 +303,12 @@ void digidoc::BDoc::addSignature(Signature* signature) throw(BDocException)
  */
 const digidoc::Signature* digidoc::BDoc::getSignature(unsigned int id) const throw(BDocException)
 {
-    if(signatures.size() > id)
+    if( id >= signatures.size() )
     {
-        return signatures[id];
+        THROW_BDOCEXCEPTION("Incorrect signature id %u, there are only %u signatures in container.", id, signatures.size());
     }
 
-    THROW_BDOCEXCEPTION("Incorrect signature id %u, there are only %u signatures in container.", id, signatures.size());
+    return signatures[id];
 }
 
 /**
@@ -402,7 +403,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         // Add documents with mimetypes.
         for(std::vector<Document>::const_iterator iter = documents.begin(); iter != documents.end(); iter++)
         {
-            manifest::File_entry fileEntry(util::File::fileName(iter->getPath()), iter->getMediaType());
+            manifest::File_entry fileEntry(util::File::fileNameUtf8(iter->getPath()), iter->getMediaType());
             manifest.file_entry().push_back(fileEntry);
         }
 
@@ -418,7 +419,8 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         xml_schema::NamespaceInfomap map;
         map["manifest"].name = MANIFEST_NAMESPACE;
         DEBUG("Serializing manifest XML to '%s'", fileName.c_str());
-        std::ofstream ofs(fileName.c_str());
+        // all XML data must be in UTF-8
+        std::ofstream ofs(digidoc::util::String::convertUTF8(fileName, true).c_str());
         manifest::manifest(ofs, manifest, map, "", xml_schema::Flags::dont_initialize);
         ofs.close();
 
@@ -447,7 +449,6 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
 void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocException)
 {
     DEBUG("BDoc::readMimetype(path = '%s')", path.c_str());
-
     // Read mimetype from file.
     std::string fileName = util::File::path(path, "mimetype");
     std::ifstream ifs(fileName.c_str());
@@ -472,6 +473,7 @@ void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocExcept
  * Parses manifest file and checks that files described in manifest exist, also
  * checks that no extra file do exist that are not described in manifest.xml.
  *
+
  * @param path directory on disk of the BDOC container.
  * @throws IOException exception is thrown if the manifest.xml file parsing failed.
  * @throws BDocException
@@ -494,7 +496,6 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
         for(manifest::Manifest::File_entrySequence::const_iterator iter = manifest->file_entry().begin(); iter != manifest->file_entry().end(); iter++)
         {
             DEBUG("full_path = '%s', media_type = '%s'", iter->full_path().c_str(), iter->media_type().c_str());
-
             // Check container mimetype.
             if(std::string("/").compare(iter->full_path()) == 0)
             {
@@ -520,37 +521,37 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
             }
             manifestFiles.insert(iter->full_path());
 
-            // Add document to documents list.
+            // Add document to documents list. Convert back from UTF-8 if the system encoding is different
             if(iter->full_path().find_first_of("/") == std::string::npos)
             {
-                if(!util::File::fileExists(util::File::path(path, iter->full_path())))
+                if(!util::File::fileExists(digidoc::util::String::convertUTF8(util::File::path(path, iter->full_path()), false)))
                 {
                     THROW_BDOCEXCEPTION("File described in manifest '%s' does not exist in BDOC container.", iter->full_path().c_str());
                 }
-
-                documents.push_back(Document(util::File::path(path, iter->full_path()), iter->media_type()));
+                documents.push_back(Document(digidoc::util::String::convertUTF8(util::File::path(path, iter->full_path()),false), iter->media_type()));
                 continue;
             }
 
             // Add signature to signatures list.
             DEBUG("%s :: %u", iter->full_path().c_str(), iter->full_path().find_first_of("META-INF/"));
+            std::string signatureFileName = (iter->full_path().substr((iter->full_path().find('/'))+1));
+
             if(iter->full_path().find_first_of("META-INF/") == 0)
             {
-                std::string fileName(iter->full_path().substr(9));
-                DEBUG("signature filename :: '%s'", fileName.c_str());
+                DEBUG("signature filename :: '%s'", signatureFileName.c_str());
 
-                if(fileName.find_first_of("/") != std::string::npos)
+                if(signatureFileName.find_first_of("/") != std::string::npos)
                 {
                     THROW_BDOCEXCEPTION("Unexpected file described in manifest '%s'.", iter->full_path().c_str());
                 }
 
-                if(!util::File::fileExists(util::File::path(util::File::path(path, "META-INF"), fileName)))
+                if(!util::File::fileExists(util::File::path(util::File::path(path, "META-INF"), signatureFileName)))
                 {
                     THROW_BDOCEXCEPTION("File described in manifest '%s' does not exist in BDOC container.", iter->full_path().c_str());
                 }
 
-                // Parse signature from XML file.
-                std::string signaturePath = util::File::path(util::File::path(path, "META-INF"), fileName);
+                std::string signaturePath = util::File::path(util::File::path(path, "META-INF"), signatureFileName);    
+
                 try
                 {
                     if(SignatureBES::MEDIA_TYPE == iter->media_type())
@@ -587,6 +588,7 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
         std::vector<std::string> containerFiles = util::File::listFiles(path, true, true, true);
         for(std::vector<std::string>::const_iterator iter = containerFiles.begin(); iter != containerFiles.end(); iter++)
         {
+
             std::string containerFile = *iter;
             if(std::string("mimetype").compare(containerFile) == 0
             || std::string("META-INF/manifest.xml").compare(containerFile) == 0)
@@ -595,8 +597,8 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
             }
 
             std::replace(containerFile.begin(), containerFile.end(), '\\', '/');
-
-            if(manifestFiles.find(containerFile) == manifestFiles.end())
+            // compare against the file name in UTF-8
+            if(manifestFiles.find(digidoc::util::String::convertUTF8(containerFile, true)) == manifestFiles.end())
             {
                 THROW_BDOCEXCEPTION("File '%s' found in BDOC container is not described in manifest.", containerFile.c_str());
             }
@@ -642,7 +644,8 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
         try
         {
             DEBUG("Adding document '%s', '%s' to the signature references.", iter->getPath().c_str(), iter->getMediaType().c_str());
-            std::string uri = std::string("/") + util::File::fileName(iter->getPath());
+            // URIs must encode non-ASCII characters in the format %HH where HH is the hex representation of the character
+            std::string uri = std::string("/") + digidoc::util::String::toUriFormat(digidoc::util::File::fileName(iter->getPath()));
             std::auto_ptr<Digest> calc = Digest::create();
             std::vector<unsigned char> digest = iter->calcDigest(calc.get());
             DEBUGMEM("digest", &digest[0], digest.size());

@@ -230,13 +230,7 @@ void digidoc::SignatureTM::setCompleteRevocationRefs(const std::string& responde
     xades::ResponderIDType responderId;
     responderId.byName(xml_schema::String(responderName.c_str()));
 
-    xml_schema::DateTime dateTime(
-            producedAt.tm_year + 1900,
-            producedAt.tm_mon + 1,
-            producedAt.tm_mday,
-            producedAt.tm_hour,
-            producedAt.tm_min,
-            producedAt.tm_sec, 0,0);
+	xml_schema::DateTime dateTime( util::date::makeDateTime( producedAt ) );
     xades::OCSPIdentifierType ocspId(responderId, dateTime);
     ocspId.uRI(xml_schema::Uri("#N0"));
 

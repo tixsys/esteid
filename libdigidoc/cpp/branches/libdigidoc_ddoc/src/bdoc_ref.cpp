@@ -1,6 +1,16 @@
-//#if defined(_WIN32)
-//#include <stdio>
-//#endif
+#if defined(_WIN32)
+// for converting between DOS and Windows code pages with OemToChar()
+#include <windows.h> 
+#else
+namespace 
+{
+inline bool	OemToChar( char const*, char* )
+{
+	// other platforms do not have special console code pages?
+	return true;
+}
+}
+#endif
 
 #include <iostream>
 #include <algorithm>
@@ -139,6 +149,8 @@ public:
 		std::string line;
 		std::list<std::string> elements; // list, since vector.push_back() may relocate it
 		std::getline( std::cin, line );
+		OemToChar( &line[0], &line[0] ); // fix console code page
+
 		char* argv[MAX_ARGUMENT_COUNT];
 		int argc( 0 );
 

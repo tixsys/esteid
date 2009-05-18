@@ -22,6 +22,6 @@ namespace digidoc
     };
 }
 
-#define THROW_IOEXCEPTION(...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); throw IOException(__FILE__, __LINE__, _msg);} while(0)
+#define THROW_IOEXCEPTION(...) do {std::string _msg(util::String::format(__VA_ARGS__)); ERR(_msg.c_str()); if(fix::always()) throw IOException(__FILE__, __LINE__, _msg);} while(fix::never())
 
 #endif // !defined(__IOEXCEPTION_H_INCLUDED__)

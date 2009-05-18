@@ -50,6 +50,7 @@ digidoc::PKCS11Signer::PKCS11Cert digidoc::EstEIDSigner::selectSigningCertificat
     }
 
     THROW_SIGNEXCEPTION("Could not find certificate with label 'Allkirjastamine'.");
+	return certificates[0];
 }
 
 /**
@@ -113,7 +114,7 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 	{
 		printf( prompt.c_str(), certificate.token.label.c_str() );
 		size_t i = 0;
-		char c;
+		int c;
 		while ( (c = _getch()) != '\r' ) 
 		{
 			switch ( c )
@@ -125,7 +126,7 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 					fputc( '\a', stdout );
 					break;
 				}
-				pin[i++] = c;
+				pin[i++] = static_cast<char>(c);
 				fputc( '*', stdout );
 				break;
 			case EOF:
