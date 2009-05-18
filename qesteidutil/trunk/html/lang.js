@@ -1,6 +1,10 @@
 ﻿var defaultLanguage = "et";
 var language = defaultLanguage;
 
+var helpUrlet = "http://support.sk.ee/";
+var helpUrlen = "http://support.sk.ee/eng/";
+var helpUrlru = "http://support.sk.ee/ru/";
+
 //code: (est, eng, rus)
 var eestiStrings = {
 	"0":  new tr( "Toiming õnnestus", "", "" ),
@@ -95,3 +99,6 @@ function translateHTML()
 		if ( (typeof trTags[i].getAttribute != "undefined") && trTags[i].getAttribute('code') != null )
 			trTags[i].innerHTML = _( trTags[i].getAttribute('code'), trTags[i].innerHTML );
 }
+
+function openHelp()
+{ extender.openUrl( eval( 'helpUrl' + language ) ); }

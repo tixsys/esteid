@@ -1,9 +1,13 @@
+body { cursor: default; }
+input[type="button"] { cursor: hand; }
+
 #headerBackground {position: relative; background: #00355f; height: 30px;}
 #headerSelect { margin-top: 5px; margin-left: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: Arial; font-size: 12px;}
 
 #headerMenus {position: absolute; right: 20px; top: -5px; color: #afc6d1; font-family: Arial; font-weight: bold; font-size: 12px;}
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}
+#headerMenus a:link {color: #afc6d1; text-decoration: none;}	
 
 #topBackground {position: relative; background: #c6ddfa; height: 200px; z-index: -10;}
 
