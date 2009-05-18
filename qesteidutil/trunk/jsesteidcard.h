@@ -97,6 +97,7 @@ public slots:
 	bool validatePin1(QString oldVal);
 	bool validatePin2(QString oldVal);
 	bool validatePuk(QString oldVal);
+	bool checkPin( const QString &pin );
 
 	QString parseName( const QString &in );
 

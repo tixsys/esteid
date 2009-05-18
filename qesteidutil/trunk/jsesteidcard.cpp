@@ -356,6 +356,16 @@ int JsEsteidCard::getSignUsageCount()
 	return signUsageCount;
 }
 
+bool JsEsteidCard::checkPin( const QString &pin )
+{
+	QDate date( QDate::fromString( birthDate, "dd.MM.yyyy" ) );
+    if ( pin.contains( date.toString( "yyyy" ) ) || 
+			pin.contains( date.toString( "ddMM" ) ) ||
+			pin.contains( date.toString( "MMdd" ) ) )
+		return false;
+	return true;
+}
+
 QString JsEsteidCard::parseName( const QString &in )
 {
 	QString ret = in.toLower();
