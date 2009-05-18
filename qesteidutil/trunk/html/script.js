@@ -331,7 +331,7 @@ function setActive( content, el )
 		case "pin2": document.getElementById('pin2OldPin').focus(); break;
 		case "bpin1": document.getElementById('bpin1OldPin').focus(); break;
 		case "bpin2": document.getElementById('bpin2OldPin').focus(); break;
-		case "email": if ( !emailsLoaded ) loadEmails(); break;
+		case "email": if ( !emailsLoaded ) document.getElementById('emailsContentCheck').style.display = 'block'; break;
 	}
 }
 
@@ -391,7 +391,9 @@ function setEmails( code, msg )
 		document.getElementById('emailsContent').innerHTML = _(code);
 	}
 	if ( code != "loadFailed" )
-		emailsLoaded = true;	
+		emailsLoaded = true;
+	if ( emailsLoaded )
+		document.getElementById('emailsContentCheck').style.display = 'none';
 }
 
 function activateEmail()

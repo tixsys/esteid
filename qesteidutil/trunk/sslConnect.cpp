@@ -18,7 +18,7 @@
 #define PKCS11_MODULE "/usr/lib/opensc-pkcs11.so"
 #endif
 
-#define EESTI "sisene.teine.eesti.ee"
+#define EESTI "sisene.www.eesti.ee"
 
 unsigned long (*pERR_get_error)(void);
 void (*pERR_error_string_n)(unsigned long e,char *buf,size_t len);
