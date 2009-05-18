@@ -20,8 +20,6 @@ MainWindow::MainWindow( QWidget *parent )
     connect(jsEsteidCard, SIGNAL(cardError(QString, QString)),
             m_jsExtender, SLOT(jsCall(QString, QString)));
 
-    jsCardManager->findCard();
-
     m_jsExtender->registerObject("esteidData", jsEsteidCard);
     m_jsExtender->registerObject("cardManager", jsCardManager);
 

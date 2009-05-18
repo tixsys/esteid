@@ -24,7 +24,8 @@ var eestiStrings = {
 	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "", "" ),
 	"emailEnter": new tr( "E-posti aadress sisestamata!", "", "" ),
 	"loadPic": new tr( "Laen pilti", "", "" ),
-	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus", "", "" )
+	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus", "", "" ),
+	"loadCardData": new tr( "Loen andmeid", "", "" )
 };
 
 var eidStrings = {

@@ -84,43 +84,43 @@ std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, cons
 }
 
 SSLObj::SSLObj( const std::string &pin )
+:	ssl( new DynamicLibrary( SSL_LIB ) )
+,	e( new DynamicLibrary( CRYPTO_LIB ) )
 {
 	EVP_PKEY *m_pkey;
 	engine = NULL;
 	pENGINE_finish = NULL;
-	DynamicLibrary ssl( SSL_LIB );
-    pSSL_library_init = (int (*)(void)) ssl.getProc("SSL_library_init");
-	pSSL_load_error_strings = (void (*)(void)) ssl.getProc("SSL_load_error_strings");
-    pSSL_CTX_new = (SSL_CTX * (*)(SSL_METHOD *meth)) ssl.getProc("SSL_CTX_new");
-    pSSL_CTX_free = (void (*)(SSL_CTX *)) ssl.getProc("SSL_CTX_free");
-    pSSL_CTX_use_PrivateKey = (int (*)(SSL_CTX *ctx, EVP_PKEY *pkey)) ssl.getProc("SSL_CTX_use_PrivateKey");
-    pSSL_CTX_use_certificate = (int (*)(SSL_CTX *ctx, X509 *x)) ssl.getProc("SSL_CTX_use_certificate");
-    pSSL_CTX_check_private_key = (int (*)(const SSL_CTX *ctx)) ssl.getProc("SSL_CTX_check_private_key");
-	pSSL_CTX_ctrl = (long (*)( SSL_CTX *ctx, int cmd, long, void *)) ssl.getProc("SSL_CTX_ctrl");
 
-	pSSLv3_method = (SSL_METHOD * (*)(void)) ssl.getProc("SSLv3_method");
-	pSSL_new=(SSL * (*)(SSL_CTX *ctx)) ssl.getProc("SSL_new");
-    pSSL_free=(void (*)(SSL *ssl)) ssl.getProc("SSL_free");
-    pSSL_set_fd=(int (*)(SSL *s, int fd)) ssl.getProc("SSL_set_fd");
-    pSSL_connect=(int (*)(SSL *ssl)) ssl.getProc("SSL_connect");
-    pSSL_read=(int (*)(SSL *ssl,void *buf,int num)) ssl.getProc("SSL_read");
-    pSSL_write=(int (*)(SSL *ssl,const void *buf,int num)) ssl.getProc("SSL_write");
-    pSSL_shutdown=(int (*)(SSL *s)) ssl.getProc("SSL_shutdown");
-	pSSL_get_error = (int (*)(const SSL *s,int ret_code)) ssl.getProc("SSL_get_error");
+    pSSL_library_init = (int (*)(void)) ssl->getProc("SSL_library_init");
+	pSSL_load_error_strings = (void (*)(void)) ssl->getProc("SSL_load_error_strings");
+    pSSL_CTX_new = (SSL_CTX * (*)(SSL_METHOD *meth)) ssl->getProc("SSL_CTX_new");
+    pSSL_CTX_free = (void (*)(SSL_CTX *)) ssl->getProc("SSL_CTX_free");
+    pSSL_CTX_use_PrivateKey = (int (*)(SSL_CTX *ctx, EVP_PKEY *pkey)) ssl->getProc("SSL_CTX_use_PrivateKey");
+    pSSL_CTX_use_certificate = (int (*)(SSL_CTX *ctx, X509 *x)) ssl->getProc("SSL_CTX_use_certificate");
+    pSSL_CTX_check_private_key = (int (*)(const SSL_CTX *ctx)) ssl->getProc("SSL_CTX_check_private_key");
+	pSSL_CTX_ctrl = (long (*)( SSL_CTX *ctx, int cmd, long, void *)) ssl->getProc("SSL_CTX_ctrl");
 
-	DynamicLibrary e( CRYPTO_LIB );
+	pSSLv3_method = (SSL_METHOD * (*)(void)) ssl->getProc("SSLv3_method");
+	pSSL_new=(SSL * (*)(SSL_CTX *ctx)) ssl->getProc("SSL_new");
+    pSSL_free=(void (*)(SSL *ssl)) ssl->getProc("SSL_free");
+    pSSL_set_fd=(int (*)(SSL *s, int fd)) ssl->getProc("SSL_set_fd");
+    pSSL_connect=(int (*)(SSL *ssl)) ssl->getProc("SSL_connect");
+    pSSL_read=(int (*)(SSL *ssl,void *buf,int num)) ssl->getProc("SSL_read");
+    pSSL_write=(int (*)(SSL *ssl,const void *buf,int num)) ssl->getProc("SSL_write");
+    pSSL_shutdown=(int (*)(SSL *s)) ssl->getProc("SSL_shutdown");
+	pSSL_get_error = (int (*)(const SSL *s,int ret_code)) ssl->getProc("SSL_get_error");
 
-	pERR_get_error = (unsigned long (*)(void)) e.getProc("ERR_get_error");
-    pERR_error_string_n = (void (*)(unsigned long e,char *buf,size_t len)) e.getProc("ERR_error_string_n");
+	pERR_get_error = (unsigned long (*)(void)) e->getProc("ERR_get_error");
+    pERR_error_string_n = (void (*)(unsigned long e,char *buf,size_t len)) e->getProc("ERR_error_string_n");
 
-	pENGINE_load_builtin_engines=(void (*)(void)) e.getProc("ENGINE_load_builtin_engines");
-	pENGINE_by_id=(ENGINE * (*)(const char *id)) e.getProc("ENGINE_by_id");
-    pENGINE_init=(int (*)(ENGINE *e)) e.getProc("ENGINE_init");
-    pENGINE_finish=(int (*)(ENGINE *e)) e.getProc("ENGINE_finish");
-    pENGINE_ctrl_cmd_string=(int (*)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional)) e.getProc("ENGINE_ctrl_cmd_string");
-	pENGINE_ctrl_cmd=(int (*)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional)) e.getProc("ENGINE_ctrl_cmd");
+	pENGINE_load_builtin_engines=(void (*)(void)) e->getProc("ENGINE_load_builtin_engines");
+	pENGINE_by_id=(ENGINE * (*)(const char *id)) e->getProc("ENGINE_by_id");
+    pENGINE_init=(int (*)(ENGINE *e)) e->getProc("ENGINE_init");
+    pENGINE_finish=(int (*)(ENGINE *e)) e->getProc("ENGINE_finish");
+    pENGINE_ctrl_cmd_string=(int (*)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional)) e->getProc("ENGINE_ctrl_cmd_string");
+	pENGINE_ctrl_cmd=(int (*)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional)) e->getProc("ENGINE_ctrl_cmd");
 
-    pENGINE_load_private_key=(EVP_PKEY * (*)(ENGINE *e, const char *key_id, UI_METHOD *ui_method, void *callback_data)) e.getProc("ENGINE_load_private_key");
+    pENGINE_load_private_key=(EVP_PKEY * (*)(ENGINE *e, const char *key_id, UI_METHOD *ui_method, void *callback_data)) e->getProc("ENGINE_load_private_key");
 
     pSSL_library_init();
     pSSL_load_error_strings();
@@ -171,6 +171,8 @@ SSLObj::~SSLObj()
 	pSSL_CTX_free(ctx);
 	pSSL_shutdown(s);
 	pSSL_free(s);
+	delete e;
+	delete ssl;
 }
 
 bool SSLObj::connectToHost( const std::string &site )

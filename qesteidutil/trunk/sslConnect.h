@@ -9,6 +9,8 @@
 #include <vector>
 #include <QDebug>
 
+struct DynamicLibrary;
+
 class SSLObj
 {
 
@@ -23,6 +25,7 @@ private:
 	ENGINE *engine;
 	SSL_CTX *ctx;
 	SSL		*s;
+	DynamicLibrary *ssl, *e;
 
 	int     (*pSSL_library_init)(void );
     void    (*pSSL_load_error_strings)(void);

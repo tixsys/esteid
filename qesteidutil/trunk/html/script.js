@@ -210,11 +210,13 @@ function cardInserted(i)
 	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
+		extender.showLoading( _('loadCardData') );
 		activeCardId = "";
 		emailsLoaded = false;
 		cardManager.selectReader( i );
 		if ( esteidData.canReadCard() )
 			activeCardId = esteidData.getId();
+		extender.closeLoading();
 	}
 	readCardData();
 }
@@ -227,8 +229,6 @@ function cardRemoved(i)
 		activeCardId = "";
 		emailsLoaded = false;
 	}
-	if ( cardManager.getReaderCount() > 0 )
-		cardManager.findCard();
 	readCardData();
 }
 
@@ -259,7 +259,7 @@ function readCardData()
 
 	document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
 	document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
-
+	
 	if ( esteidData.getPin1RetryCount() != 0 )
 	{
 		document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
@@ -339,8 +339,7 @@ function loadEmails()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	document.getElementById('loading').style.display = 'block';
-	document.getElementById('loading').innerHTML = _("loadEmail");
+	extender.showLoading( _('loadEmail') );
 	extender.loadEmails();
 }
 
@@ -348,8 +347,7 @@ function loadPicture()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	document.getElementById('loading').style.display = 'block';
-	document.getElementById('loading').innerHTML = _("loadPic");
+	extender.showLoading( _('loadPic') );
 	extender.loadPicture();
 }
 
@@ -359,7 +357,7 @@ function setPicture( img, code )
 		alert( _(code) );
 	else
 		document.getElementById('photo').innerHTML = "<img src=\"" + img + "\">";
-	document.getElementById('loading').style.display = 'none';
+	extender.closeLoading();
 }
 
 function setEmailActivate( msg )
@@ -376,7 +374,7 @@ function setEmailActivate( msg )
 
 function setEmails( code, msg )
 {
-	document.getElementById('loading').style.display = 'none';
+	extender.closeLoading();
 	if ( code == "0" && msg.indexOf( ' - ' ) == -1 )
 		code = "20";
 	//not activated

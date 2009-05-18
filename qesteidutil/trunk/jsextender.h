@@ -1,6 +1,7 @@
 #ifndef JSEXTENDER_H
 #define JSEXTENDER_H
 
+#include <QLabel>
 #include <QObject>
 #include <QtWebKit>
 #include <QXmlStreamReader>
@@ -26,6 +27,7 @@ private:
 	QString m_tempFile;
 	QXmlStreamReader xml;
 	QString m_locale;
+	QLabel *m_loading;
 
 public slots:
     void javaScriptWindowObjectCleared();
@@ -40,6 +42,9 @@ public slots:
 	QString readForwards();
 	void loadPicture();
 	QString locale() { return m_locale; }
+	void showSettings();
+	void showLoading( const QString & );
+	void closeLoading();
 };
 
 #endif // JSEXTENDER_H

@@ -1,13 +1,15 @@
-#include <QtWebKit>
+#include <QApplication>
 #include <QDesktopServices>
 #include <QInputDialog>
+#include <QtWebKit>
 
 #include "mainwindow.h"
 #include "jsextender.h"
 
 JsExtender::JsExtender( MainWindow *main )
-:	QObject( main->page()->mainFrame() )
+:	QObject( main )
 ,	m_mainWindow( main )
+,	m_loading( 0 )
 {
 	m_locale = QLocale::system().name().left( 2 );
 	if ( m_locale == "C" )
@@ -248,4 +250,37 @@ void JsExtender::loadPicture()
 		}
 	}
 	jsCall( "setPicture", "", result );
+}
+
+void JsExtender::showLoading( const QString &str )
+{
+	if ( !m_loading )
+	{
+		m_loading = new QLabel( m_mainWindow );
+		m_loading->setStyleSheet( "background-color: rgba(255,255,255,180); border: 1px solid #cddbeb; border-radius: 3px;"
+									"color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px;" );
+		m_loading->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+		m_loading->setFixedSize( 200, 100 );
+	}
+	m_loading->move( 200, 290 );
+	m_loading->setText( str );
+	m_loading->show();
+	QCoreApplication::processEvents();
+}
+
+void JsExtender::closeLoading()
+{
+	if ( m_loading )
+		m_loading->close();
+}
+
+void JsExtender::showSettings()
+{
+	QWidget *widget = new QWidget( m_mainWindow );
+	widget->setAttribute( Qt::WA_DeleteOnClose );
+	widget->setWindowFlags( Qt::Dialog );
+	widget->setStyleSheet( "background: #F5F5F5;" );
+	widget->setWindowTitle( tr("Settings") );
+	widget->setFixedSize( 300, 300 );
+	widget->show();
 }

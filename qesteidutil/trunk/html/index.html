@@ -17,8 +17,8 @@
       </div>
       <div id="headerMenus">
         <ul>
-          <li class="first"><a href="#"><trtag code="test">Diagnostika</trtag></a></li>
-          <li><a href="#"><trtag>Seaded</trtag></a></li>
+          <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag code="test">Diagnostika</trtag></a></li>
+          <li><a href="#" onClick="extender.showSettings();"><trtag>Seaded</trtag></a></li>
           <li><a href="#" onClick="openHelp();"><trtag>Abi</trtag></a></li>
         </ul>        
       </div>
@@ -331,13 +331,10 @@
   </div>
   <!-- PUK muutmine l6pp -->
 
-  <!-- Loading text -->
-  <div id="loading" style="display: none;">
-  </div>
 <script type="text/javascript">
-window.cardManager.registerCallBack("cardInsert", "cardInserted");
-window.cardManager.registerCallBack("cardRemove", "cardRemoved");
-window.cardManager.registerCallBack("handleError", "handleError");
+cardManager.registerCallBack("cardInsert", "cardInserted");
+cardManager.registerCallBack("cardRemove", "cardRemoved");
+cardManager.registerCallBack("handleError", "handleError");
 
 language = extender.locale();
 translateHTML();

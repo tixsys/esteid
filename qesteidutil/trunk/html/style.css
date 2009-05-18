@@ -8,6 +8,7 @@ input[type="button"] { cursor: hand; }
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}
 #headerMenus a:link {color: #afc6d1; text-decoration: none;}	
+#headerMenus a:hover {color: #afc6d1; text-decoration: underline;}	
 
 #topBackground {position: relative; background: #c6ddfa; height: 200px; z-index: -10;}
 
@@ -20,7 +21,9 @@ input[type="button"] { cursor: hand; }
 #leftMenus ul {list-style: none; text-indent:-1.7em; line-height: 31px; }
 .buttonSelected, .button { width: 146px; height: 25px; text-align: left; -webkit-border-radius: 3px; font-family: Arial; font-weight: bold; font-size: 14px; }
 .buttonSelected { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
+
 .button { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
+.button:hover, .buttonBottom:hover { background-image: url('qrc:/html/images/button_hover.png'); border: 1px solid #99AEBF; color: #ffffff;}
 
 #personalInfo { position: absolute; top:66px; left:180px; width:390; height:138px;
 				background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
@@ -53,9 +56,7 @@ input[type="button"] { cursor: hand; }
 .keyBlocked { position: absolute; bottom: 35px; width: 220px; padding: 5px;
 				font-family: Arial; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }
 				
-a:link {color: #509b00; text-decoration: underline;}	
+a:link {color: #509b00; text-decoration: none;}	
+a:hover {color: #509b00; text-decoration: underline;}	
 
 label	 {color: #355670; font-weight: bold;}
-
-#loading { position: absolute; left: 180px; bottom: 140px; background-color: rgba(255,255,255,0.85); border: 1px solid #cddbeb; width: 250px; height: 60px; 
-			color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px; text-align: center; z-index: 10; padding-top: 30px;}

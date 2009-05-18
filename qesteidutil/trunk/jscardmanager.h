@@ -18,6 +18,7 @@ class JsCardManager : public QObject
         bool connected;
 		QString cardId;
 		int id;
+		QString state;
     };
 
 public:
@@ -36,12 +37,13 @@ private:
     void handleError(QString msg);
 
 public slots:
-    void findCard();
     int getReaderCount();
     QString getReaderName( int i );
     bool selectReader( int i );
+	bool selectReader( const ReaderState &reader );
     void registerCallBack( QString event, QString function );
-	bool isInReader( QString cardId );
+	bool isInReader( const QString &cardId );
+	void showDiagnostics();
 
 private slots:
     void pollCard();

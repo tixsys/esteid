@@ -16,7 +16,7 @@ class JsEsteidCard : public QObject
 public:
     JsEsteidCard( QObject *parent );
 
-    void setCard(EstEidCard *card);
+    void setCard(EstEidCard *card, int reader = 0);
     void reloadData();
 
     QString surName;
@@ -37,6 +37,7 @@ public:
     QString comment4;
 
     EstEidCard *m_card;
+	int			m_reader;
 
 	JsCertData *m_authCert;
     Q_PROPERTY(QObject* authCert READ getAuthCert)
@@ -98,8 +99,6 @@ public slots:
 	bool validatePin2(QString oldVal);
 	bool validatePuk(QString oldVal);
 	bool checkPin( const QString &pin );
-
-	QString parseName( const QString &in );
 
 	void showCert( int type );
 

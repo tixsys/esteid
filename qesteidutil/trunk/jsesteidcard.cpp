@@ -4,6 +4,7 @@
 
 #include "CertificateWidget.h"
 #include "jsesteidcard.h"
+#include "SslCertificate.h"
 
 using namespace std;
 
@@ -17,8 +18,9 @@ JsEsteidCard::JsEsteidCard( QObject *parent )
 	signUsageCount = 0;
 }
 
-void JsEsteidCard::setCard(EstEidCard *card)
+void JsEsteidCard::setCard(EstEidCard *card, int reader)
 {
+	m_reader = reader;
     m_card = card;
 	m_authCert->loadCert(card, JsCertData::AuthCert);
 	m_signCert->loadCert(card, JsCertData::SignCert);
@@ -42,16 +44,16 @@ void JsEsteidCard::reloadData() {
         // Read all personal data
         m_card->readPersonalData(tmp,EstEidCard::SURNAME,EstEidCard::COMMENT4);
 
-        surName = parseName( tmp[EstEidCard::SURNAME].c_str() );
-        firstName = parseName( tmp[EstEidCard::FIRSTNAME].c_str() );
-        middleName = parseName( tmp[EstEidCard::MIDDLENAME].c_str() );
+        surName = SslCertificate::formatName( tmp[EstEidCard::SURNAME].c_str() );
+        firstName = SslCertificate::formatName( tmp[EstEidCard::FIRSTNAME].c_str() );
+        middleName = SslCertificate::formatName( tmp[EstEidCard::MIDDLENAME].c_str() );
         sex = tmp[EstEidCard::SEX].c_str();
         citizen = tmp[EstEidCard::CITIZEN].c_str();
         birthDate = tmp[EstEidCard::BIRTHDATE].c_str();
         id = tmp[EstEidCard::ID].c_str();
         documentId = tmp[EstEidCard::DOCUMENTID].c_str();
         expiry = tmp[EstEidCard::EXPIRY].c_str();
-        birthPlace = parseName( tmp[EstEidCard::BIRTHPLACE].c_str() );
+        birthPlace = SslCertificate::formatName( tmp[EstEidCard::BIRTHPLACE].c_str() );
         issueDate = tmp[EstEidCard::ISSUEDATE].c_str();
         residencePermit = tmp[EstEidCard::RESIDENCEPERMIT].c_str();
         comment1 = tmp[EstEidCard::COMMENT1].c_str();
@@ -62,7 +64,7 @@ void JsEsteidCard::reloadData() {
 //        doShowError(err);
         cout << "Error: " << err.what() << endl;
     }
-	
+
 	m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
 }
 
@@ -81,6 +83,7 @@ bool JsEsteidCard::validatePin1(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->validateAuthPin(oldVal.toStdString(),
                                      retriesLeft);
     } catch(AuthError &) {
@@ -101,6 +104,7 @@ bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->changeAuthPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
@@ -122,6 +126,7 @@ bool JsEsteidCard::validatePin2(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->validateSignPin(oldVal.toStdString(),
 										retriesLeft);
     } catch(AuthError &) {
@@ -142,6 +147,7 @@ bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->changeSignPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
@@ -163,6 +169,7 @@ bool JsEsteidCard::validatePuk(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->validatePuk(oldVal.toStdString(),
                                      retriesLeft);
     } catch(AuthError &) {
@@ -183,6 +190,7 @@ bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->changePUK(newVal.toStdString(),
                                  oldVal.toStdString(),
                                  retriesLeft);
@@ -204,6 +212,7 @@ bool JsEsteidCard::unblockPin1(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->unblockAuthPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
@@ -225,6 +234,7 @@ bool JsEsteidCard::unblockPin2(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader, true );
         return m_card->unblockSignPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
@@ -288,7 +298,7 @@ QString JsEsteidCard::getBirthPlace()
 
 QString JsEsteidCard::getIssueDate()
 {
-    return QDate::fromString( issueDate, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );;
+    return QDate::fromString( issueDate, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );
 }
 
 QString JsEsteidCard::getResidencePermit()
@@ -320,9 +330,16 @@ int JsEsteidCard::getPin1RetryCount()
 {
     if (!m_card)
         return -1;
+    
+	byte puk,pinAuth,pinSign;
 
-    byte puk,pinAuth,pinSign;
-    m_card->getRetryCounts(puk,pinAuth,pinSign);
+	try {
+		m_card->connect( m_reader, true );
+		m_card->getRetryCounts(puk,pinAuth,pinSign);
+	} catch ( std::runtime_error &e ) {
+		qDebug() << e.what();
+	}
+
     return pinAuth;
 }
 
@@ -332,7 +349,14 @@ int JsEsteidCard::getPin2RetryCount()
         return -1;
 
     byte puk,pinAuth,pinSign;
-    m_card->getRetryCounts(puk,pinAuth,pinSign);
+	
+	try {
+		m_card->connect( m_reader, true );
+		m_card->getRetryCounts(puk,pinAuth,pinSign);
+	} catch ( std::runtime_error &e ) {
+		qDebug() << e.what();
+	}
+
     return pinSign;
 }
 
@@ -342,7 +366,13 @@ int JsEsteidCard::getPukRetryCount()
         return -1;
 
     byte puk,pinAuth,pinSign;
-    m_card->getRetryCounts(puk,pinAuth,pinSign);
+
+	try {
+		m_card->connect( m_reader, true );
+		m_card->getRetryCounts(puk,pinAuth,pinSign);
+	} catch ( std::runtime_error &e ) {
+		qDebug() << e.what();
+	}
     return puk;
 }
 
@@ -364,24 +394,6 @@ bool JsEsteidCard::checkPin( const QString &pin )
 			pin.contains( date.toString( "MMdd" ) ) )
 		return false;
 	return true;
-}
-
-QString JsEsteidCard::parseName( const QString &in )
-{
-	QString ret = in.toLower();
-	bool firstChar = true;
-	for( QString::iterator i = ret.begin(); i != ret.end(); ++i )
-	{
-		if( !firstChar && !i->isLetter() )
-			firstChar = true;
-
-		if( firstChar && i->isLetter() )
-		{
-			*i = i->toUpper();
-			firstChar = false;
-		}
-	}
-	return ret;
 }
 
 void JsEsteidCard::showCert( int type )
