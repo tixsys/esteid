@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include <stdarg.h>
 #include "../io/IOException.h"
 #include "../BDocException.h"
 
@@ -29,7 +30,7 @@ namespace digidoc
 
               static std::string formatArgList(const char *fmt, va_list args);
               static std::string getSystemEncoding();
-              
+
         };
 
     }

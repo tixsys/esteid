@@ -2,6 +2,8 @@
 #define __LOG_H_INCLUDED__
 #pragma once
 
+#include <stdio.h>
+
 #undef LOG_LEVEL_ERROR
 #undef LOG_LEVEL_WARN
 #undef LOG_LEVEL_INFO
