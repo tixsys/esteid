@@ -9,7 +9,7 @@
   <div id="top">
     <div id="headerBackground">
       <div>
-        <select id="headerSelect">
+        <select id="headerSelect" onChange="selectLanguage();">
           <option value="et">Estonian</option>
           <option value="en">English</option>
 		  <option value="ru">Russian</option>
@@ -337,6 +337,8 @@ cardManager.registerCallBack("cardRemove", "cardRemoved");
 cardManager.registerCallBack("handleError", "handleError");
 
 language = extender.locale();
+document.getElementById('headerSelect').value = language;
+
 translateHTML();
 
 readCardData();

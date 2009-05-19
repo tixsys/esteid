@@ -1,3 +1,25 @@
+/*
+ * QEstEidUtil
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
 #include <QApplication>
 #include <QDesktopServices>
 #include <QInputDialog>
@@ -5,17 +27,20 @@
 
 #include "mainwindow.h"
 #include "jsextender.h"
+#include "Settings.h"
+#include "SettingsDialog.h"
 
 JsExtender::JsExtender( MainWindow *main )
 :	QObject( main )
 ,	m_mainWindow( main )
 ,	m_loading( 0 )
 {
-	m_locale = QLocale::system().name().left( 2 );
-	if ( m_locale == "C" )
-		m_locale = "en";
-    connectSignals();
-	jsSSL = new SSLConnect();
+	m_locale = Settings().value( "language" ).toString();
+	if ( m_locale.isEmpty() )
+		setLanguage( QLocale::system().name().left( 2 ) );
+
+	connect( m_mainWindow->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
+            this, SLOT(javaScriptWindowObjectCleared()));
 }
 
 JsExtender::~JsExtender()
@@ -24,10 +49,12 @@ JsExtender::~JsExtender()
 		QFile::remove( m_tempFile );
 }
 
-void JsExtender::connectSignals()
+void JsExtender::setLanguage( const QString &lang )
 {
-	connect( m_mainWindow->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
-            this, SLOT(javaScriptWindowObjectCleared()));
+	m_locale = lang;
+	if ( m_locale == "C" )
+		m_locale = "en";
+	Settings().setValue( "language", m_locale );
 }
 
 void JsExtender::registerObject( const QString &name, QObject *object )
@@ -68,17 +95,20 @@ void JsExtender::openUrl( const QString &url )
 
 QString JsExtender::checkPin()
 {
+	if ( !m_mainWindow->cardManager()->ssl() )
+		throw std::runtime_error( "" );
+
 	QString pin;
-	if ( !jsSSL->isLoaded() )
+	if ( !m_mainWindow->cardManager()->ssl()->isLoaded() || Settings().value( "sessionTime").toInt() == 0 || 
+		!m_dateTime.isValid() || m_dateTime.addSecs( Settings().value( "sessionTime").toInt() * 60 ) < QDateTime::currentDateTime() )
 	{
+		m_dateTime = QDateTime::currentDateTime();
 		bool ok;
 		pin = QInputDialog::getText( m_mainWindow, tr("Isikutuvastus"), tr("Sisesta PIN1"), QLineEdit::Password, QString(), &ok );
 		if( !ok )
-			pin = "";
-		else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
-			jsCall( "handleError", "PIN1InvalidRetry" );
-			pin = "";
-		}
+			throw std::runtime_error( "" );
+		else if ( !m_mainWindow->eidCard()->validatePin1( pin ) )
+			throw std::runtime_error( "PIN1InvalidRetry" );
 	}
 	QCoreApplication::processEvents();
 	return pin;
@@ -88,7 +118,7 @@ void JsExtender::activateEmail( const QString &email )
 {
 	std::vector<unsigned char> buffer;
 	try {
-		buffer = jsSSL->getUrl( "activateEmail", checkPin().toStdString(), email.toStdString() );
+		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "activateEmail", checkPin().toStdString(), email.toStdString() );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "forwardFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -118,7 +148,7 @@ void JsExtender::loadEmails()
 {
 	std::vector<unsigned char> buffer;
 	try {
-		buffer = jsSSL->getUrl( "emails", checkPin().toStdString() );
+		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "emails", checkPin().toStdString() );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "loadFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -203,7 +233,7 @@ void JsExtender::loadPicture()
 	QString result = "loadPicFailed";
 	std::vector<unsigned char> buffer;
 	try {
-		buffer = jsSSL->getUrl( "picture", checkPin().toStdString() );
+		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "picture", checkPin().toStdString() );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );
@@ -276,11 +306,6 @@ void JsExtender::closeLoading()
 
 void JsExtender::showSettings()
 {
-	QWidget *widget = new QWidget( m_mainWindow );
-	widget->setAttribute( Qt::WA_DeleteOnClose );
-	widget->setWindowFlags( Qt::Dialog );
-	widget->setStyleSheet( "background: #F5F5F5;" );
-	widget->setWindowTitle( tr("Settings") );
-	widget->setFixedSize( 300, 300 );
-	widget->show();
+	SettingsDialog *s = new SettingsDialog( m_mainWindow );
+	s->show();
 }

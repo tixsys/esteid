@@ -22,42 +22,13 @@
 
 #pragma once
 
-#include <QString>
-#include <QObject>
-#include <QSslCertificate>
+#include <QSettings>
 
-#include "cardlib/common.h"
-#include "cardlib/EstEidCard.h"
-
-class JsCertData : public QObject
+class Settings : public QSettings
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    JsCertData( QObject *parent );
-
-    enum CertType {
-        AuthCert,
-        SignCert
-    };
-
-	QSslCertificate cert() const;
-    void loadCert(EstEidCard *card, CertType ct);
-
-private:
-    EstEidCard *m_card;
-    QSslCertificate *m_qcert;
-
-public slots:
-    QString toPem();
-    QString getEmail();
-    QString getSubjCN();
-    QString getSubjO();
-    QString getSubjOU();
-    QString getValidFrom();
-    QString getValidTo();
-    QString getIssuerCN();
-    QString getIssuerO();
-    QString getIssuerOU();
-	bool	isValid();
+	Settings( QObject *parent = 0 )
+	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Estonian ID Card", "QEstEIDUtil", parent ) {};
 };

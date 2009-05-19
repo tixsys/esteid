@@ -1,5 +1,26 @@
-#ifndef JSCARDMANAGER_H
-#define JSCARDMANAGER_H
+/*
+ * QEstEidUtil
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+#pragma once
 
 #include <QObject>
 #include <QHash>
@@ -8,6 +29,7 @@
 #include "cardlib/common.h"
 #include "cardlib/SmartCardManager.h"
 #include "jsesteidcard.h"
+#include "sslConnect.h"
 
 class JsCardManager : public QObject
 {
@@ -23,10 +45,12 @@ class JsCardManager : public QObject
 
 public:
     JsCardManager(JsEsteidCard *jsEsteidCard);
+	SSLConnect* ssl() { return jsSSL; }
 
 private:
     SmartCardManager *cardMgr;
-    JsEsteidCard *m_jsEsteidCard;
+	SSLConnect *jsSSL;
+	JsEsteidCard *m_jsEsteidCard;
     QTimer pollTimer;
 
     QHash<QString,ReaderState> cardReaders;
@@ -52,5 +76,3 @@ signals:
     void cardEvent(QString func, int i);
     void cardError(QString func, QString err);
 };
-
-#endif // JSCARDMANAGER_H

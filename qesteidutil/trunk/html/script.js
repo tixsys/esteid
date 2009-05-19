@@ -428,6 +428,8 @@ function activateEmail()
 
 function handleError(msg)
 {
+	if ( msg == "" )
+		return;
 	if ( msg == "PIN1InvalidRetry" )
 	{
 		var ret = esteidData.getPin1RetryCount();

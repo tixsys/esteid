@@ -1,3 +1,25 @@
+/*
+ * QEstEidUtil
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
 #include "sslConnect.h"
 
 #include "cardlib/DynamicLibrary.h"
@@ -43,10 +65,17 @@ public:
         }
 };
 
-SSLConnect::SSLConnect( QObject *parent )
+SSLConnect::SSLConnect( int reader, QObject *parent )
 :	QObject( parent )
 ,	obj( 0 )
+,	m_reader( reader )
 {}
+
+SSLConnect::~SSLConnect()
+{
+	if ( obj )
+		delete obj;
+}
 
 bool SSLConnect::isLoaded()
 {
@@ -71,7 +100,7 @@ std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, cons
 {
 	if ( !obj )
 	{
-		try { obj = new SSLObj( pin ); }
+		try { obj = new SSLObj( m_reader, pin ); }
 		catch( std::runtime_error &e ) {
 			throw sslError( e.what() );
 			return std::vector<unsigned char>();
@@ -83,14 +112,12 @@ std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, cons
 	return obj->getUrl( url );
 }
 
-SSLObj::SSLObj( const std::string &pin )
-:	ssl( new DynamicLibrary( SSL_LIB ) )
+SSLObj::SSLObj( int reader, const std::string &pin )
+:	engine( NULL )
+,	ssl( new DynamicLibrary( SSL_LIB ) )
 ,	e( new DynamicLibrary( CRYPTO_LIB ) )
+,	m_reader( reader )
 {
-	EVP_PKEY *m_pkey;
-	engine = NULL;
-	pENGINE_finish = NULL;
-
     pSSL_library_init = (int (*)(void)) ssl->getProc("SSL_library_init");
 	pSSL_load_error_strings = (void (*)(void)) ssl->getProc("SSL_load_error_strings");
     pSSL_CTX_new = (SSL_CTX * (*)(SSL_METHOD *meth)) ssl->getProc("SSL_CTX_new");
@@ -113,10 +140,12 @@ SSLObj::SSLObj( const std::string &pin )
 	pERR_get_error = (unsigned long (*)(void)) e->getProc("ERR_get_error");
     pERR_error_string_n = (void (*)(unsigned long e,char *buf,size_t len)) e->getProc("ERR_error_string_n");
 
-	pENGINE_load_builtin_engines=(void (*)(void)) e->getProc("ENGINE_load_builtin_engines");
+	pENGINE_load_dynamic=(void (*)(void)) e->getProc("ENGINE_load_dynamic");
 	pENGINE_by_id=(ENGINE * (*)(const char *id)) e->getProc("ENGINE_by_id");
+	pENGINE_cleanup=(void (*)(void)) e->getProc("ENGINE_cleanup");
     pENGINE_init=(int (*)(ENGINE *e)) e->getProc("ENGINE_init");
     pENGINE_finish=(int (*)(ENGINE *e)) e->getProc("ENGINE_finish");
+	pENGINE_free=(int (*)(ENGINE *e)) e->getProc("ENGINE_free");
     pENGINE_ctrl_cmd_string=(int (*)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional)) e->getProc("ENGINE_ctrl_cmd_string");
 	pENGINE_ctrl_cmd=(int (*)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional)) e->getProc("ENGINE_ctrl_cmd");
 
@@ -124,7 +153,7 @@ SSLObj::SSLObj( const std::string &pin )
 
     pSSL_library_init();
     pSSL_load_error_strings();
-	pENGINE_load_builtin_engines();
+	pENGINE_load_dynamic();
 
     //load and initialize pkcs11 engine
 	sslError::check("get dynamic engine",engine = pENGINE_by_id("dynamic"));
@@ -135,7 +164,9 @@ SSLObj::SSLObj( const std::string &pin )
 	sslError::check("cmd MODULE_PATH",pENGINE_ctrl_cmd_string(engine,"MODULE_PATH",PKCS11_MODULE,0));
 	sslError::check("init engine",  pENGINE_init(engine));
 
-	std::string slotid = "0:01";
+	std::ostringstream strm;
+	strm << m_reader * 4 << ":01";
+	std::string slotid = strm.str();
 	struct {
 		const char *slot_id;
 		X509 *cert;
@@ -149,7 +180,8 @@ SSLObj::SSLObj( const std::string &pin )
 		const char *prompt_info;
 	} cb_data = { pin.c_str(), NULL };
 
-	sslError::check("wrong pin ?", m_pkey = pENGINE_load_private_key(engine,parms.slot_id,NULL, &cb_data));
+	EVP_PKEY *m_pkey = pENGINE_load_private_key(engine,parms.slot_id,NULL, &cb_data);
+	sslError::check("wrong pin ?", m_pkey );
 
     ctx = pSSL_CTX_new( pSSLv3_method() );
 	sslError::check("CTX_use_cert", pSSL_CTX_use_certificate(ctx, parms.cert ) );
@@ -168,9 +200,12 @@ SSLObj::SSLObj( const std::string &pin )
 
 SSLObj::~SSLObj()
 {
-	pSSL_CTX_free(ctx);
 	pSSL_shutdown(s);
 	pSSL_free(s);
+	pSSL_CTX_free(ctx);
+	pENGINE_finish(engine);
+	pENGINE_free(engine);
+	pENGINE_cleanup();
 	delete e;
 	delete ssl;
 }

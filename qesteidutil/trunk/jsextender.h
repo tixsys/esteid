@@ -1,12 +1,31 @@
-#ifndef JSEXTENDER_H
-#define JSEXTENDER_H
+/*
+ * QEstEidUtil
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+#pragma once
 
 #include <QLabel>
 #include <QObject>
 #include <QtWebKit>
 #include <QXmlStreamReader>
-
-#include "sslConnect.h"
 
 class MainWindow;
 
@@ -17,19 +36,19 @@ class JsExtender : public QObject
 public:
     JsExtender( MainWindow* );
 	~JsExtender();
-    void connectSignals();
     void registerObject( const QString &name, QObject *object );
 
 private:
 	MainWindow *m_mainWindow;
     QMap<QString, QObject *> m_registeredObjects;
-	SSLConnect *jsSSL;
 	QString m_tempFile;
 	QXmlStreamReader xml;
 	QString m_locale;
 	QLabel *m_loading;
+	QDateTime m_dateTime;
 
 public slots:
+	void setLanguage( const QString &lang );
     void javaScriptWindowObjectCleared();
     QVariant jsCall( const QString &function, int argument );
     QVariant jsCall( const QString &function, const QString &argument );
@@ -46,5 +65,3 @@ public slots:
 	void showLoading( const QString & );
 	void closeLoading();
 };
-
-#endif // JSEXTENDER_H

@@ -1,19 +1,42 @@
+/*
+ * QEstEidUtil
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
 #include <iostream>
 #include <QApplication>
 #include <QDebug>
 #include <QTextEdit>
 
 #include "jscardmanager.h"
+#include "DiagnosticsDialog.h"
 #include "cardlib/EstEidCard.h"
 
 using namespace std;
 
 JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 :	QObject( jsEsteidCard )
-{
-    m_jsEsteidCard = jsEsteidCard;
-    
-	cardMgr = NULL;
+,	cardMgr( 0 )
+,	jsSSL( 0 )
+,	m_jsEsteidCard( jsEsteidCard )
+{   
 	try {
 		cardMgr = new SmartCardManager();
 	} catch ( std::runtime_error &e ) {
@@ -144,6 +167,9 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 		card = new EstEidCard(*cardMgr);
 		card->connect( reader.id, true );
 		m_jsEsteidCard->setCard(card, reader.id);
+		if ( jsSSL )
+			jsSSL->deleteLater();
+		jsSSL = new SSLConnect( reader.id, this );
         return true;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -194,11 +220,6 @@ void JsCardManager::registerCallBack(QString event, QString function)
 
 void JsCardManager::showDiagnostics()
 {
-	QTextEdit *edit = new QTextEdit( qApp->activeWindow() );
-	edit->setAttribute( Qt::WA_DeleteOnClose );
-	edit->setWindowFlags( Qt::Dialog );
-	edit->setStyleSheet( "background: #F5F5F5;" );
-	edit->setWindowTitle( tr("Diagnostics") );
-	edit->setFixedSize( 300, 200 );
-	edit->show();
+	DiagnosticsDialog *d = new DiagnosticsDialog( qApp->activeWindow() );
+	d->show();
 }

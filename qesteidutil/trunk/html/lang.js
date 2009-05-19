@@ -73,6 +73,15 @@ var eidStrings = {
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "", "" )
 };
 
+function selectLanguage()
+{
+	var select = document.getElementById('headerSelect'); 
+	language = select.options[select.selectedIndex].value;
+	translateHTML();
+	readCardData();
+	extender.setLanguage( language );
+}
+
 function tr( est, eng, rus )
 {
 	this.et = est;

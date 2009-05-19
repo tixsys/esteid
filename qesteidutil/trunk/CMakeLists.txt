@@ -13,6 +13,9 @@ endif(UNIX)
 
 set(qesteidutil_MOC_HDRS
     CertificateWidget.h
+    DiagnosticsDialog.h
+    Settings.h
+    SettingsDialog.h
     jscardmanager.h
     jscertdata.h
     jsesteidcard.h
@@ -37,6 +40,8 @@ set(cardlib_SRCS
 
 set(qesteidutil_SRCS
     CertificateWidget.cpp
+    DiagnosticsDialog.cpp
+    SettingsDialog.cpp
     jscardmanager.cpp
     jscertdata.cpp
     jsesteidcard.cpp
@@ -49,6 +54,8 @@ set(qesteidutil_SRCS
 
 set( UIS
     CertificateWidget.ui
+    DiagnosticsDialog.ui
+    SettingsDialog.ui
 )
 
 set(qesteidutil_RCS qesteidutil.qrc)
