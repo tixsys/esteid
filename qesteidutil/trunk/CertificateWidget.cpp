@@ -59,6 +59,15 @@ CertificateWidget::CertificateWidget( const QSslCertificate &cert, QWidget *pare
 
 CertificateWidget::~CertificateWidget() { delete d; }
 
+void CertificateWidget::addItem( const QString &variable, const QString &value, const QVariant &valueext )
+{
+	QTreeWidgetItem *t = new QTreeWidgetItem( parameters );
+	t->setText( 0, variable );
+	t->setText( 1, value );
+	t->setData( 1, Qt::UserRole, valueext );
+	parameters->addTopLevelItem( t );
+}
+
 QByteArray CertificateWidget::addHexSeparators( const QByteArray &data ) const
 {
 	QByteArray ret = data;
@@ -119,24 +128,11 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	s << "</p>";
 	info->setHtml( i );
 
-	QTreeWidgetItem *t;
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Version") );
-	t->setText( 1, "V" + c.versionNumber() );
-	parameters->addTopLevelItem( t );
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Serial number") );
-	t->setText( 1, QString( "%1 (0x%2)" )
+	addItem( tr("Version"), "V" + c.versionNumber() );
+	addItem( tr("Serial number"), QString( "%1 (0x%2)" )
 		.arg( c.serialNumber().constData() )
 		.arg( QString::number( c.serialNumber().toInt(), 16 ) ) );
-	parameters->addTopLevelItem( t );
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Signature algorithm") );
-	t->setText( 1, "sha1RSA" );
-	parameters->addTopLevelItem( t );
+	addItem( tr("Signature algorithm"), "sha1RSA" );
 
 	QStringList text, textExt;
 	QList<QByteArray> subjects;
@@ -147,21 +143,9 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 		textExt << QString( "%1 = %2" )
 			.arg( subject.constData() ).arg( c.issuerInfo( subject ) );
 	}
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Issuer") );
-	t->setText( 1, text.join( ", " ) );
-	t->setData( 1, Qt::UserRole, textExt.join( "\n" ) );
-	parameters->addTopLevelItem( t );
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Valid from") );
-	t->setText( 1, c.effectiveDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
-	parameters->addTopLevelItem( t );
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Vaild to") );
-	t->setText( 1, c.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
-	parameters->addTopLevelItem( t );
+	addItem( tr("Issuer"), text.join( ", " ), textExt.join( "\n" ) );
+	addItem( tr("Valid from"), c.effectiveDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
+	addItem( tr("Vaild to"), c.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
 
 	subjects.clear();
 	text.clear();
@@ -173,16 +157,8 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 		textExt << QString( "%1 = %2" )
 			.arg( subject.constData() ).arg( c.subjectInfoUtf8( subject ) );
 	}
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Subject") );
-	t->setText( 1, text.join( ", " ) );
-	t->setData( 1, Qt::UserRole, textExt.join( "\n" ) );
-	parameters->addTopLevelItem( t );
-
-	t = new QTreeWidgetItem( parameters );
-	t->setText( 0, tr("Public key") );
-	t->setText( 1, tr("RSA (%1)").arg( c.publicKey().length() ) );
-	t->setData( 1, Qt::UserRole, addHexSeparators( c.publicKey().toDer().toHex() ) );
-	parameters->addTopLevelItem( t );
+	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
+	addItem( tr("Public key"), QString("RSA (%1)").arg( c.publicKey().length() ),
+		addHexSeparators( c.publicKey().toDer().toHex() ) );
+	addItem( tr("Certificate policies"), c.policies().join( ", " ) );
 }

@@ -29,6 +29,14 @@
 SslCertificate::SslCertificate( const QSslCertificate &cert )
 : QSslCertificate( cert ) {}
 
+void* SslCertificate::getExtension( int nid ) const
+{
+	X509 *c = (X509*)handle();
+	if( c != NULL )
+		NULL;
+	return X509_get_ext_d2i( c, nid, NULL, NULL );
+}
+
 QString SslCertificate::formatName( const QString &name )
 {
 	QString ret = name.toLower();
@@ -50,36 +58,58 @@ QString SslCertificate::formatName( const QString &name )
 QStringList SslCertificate::keyUsage() const
 {
 	QStringList list;
-	X509 *c = (X509*)handle();
-	if( c != NULL )
+
+	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
+	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
 	{
-		int pos = X509_get_ext_by_NID( c, NID_ext_key_usage, -1 );
-		if( pos != -1 )
+		ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
+		switch( OBJ_obj2nid( obj ) )
 		{
-			X509_EXTENSION *ex = X509_get_ext( c, pos );
-			if( ex != NULL )
-			{
-				EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE *)X509V3_EXT_d2i( ex );
-				for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
-				{
-					ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
-					switch( OBJ_obj2nid( obj ) )
-					{
-					case NID_client_auth:
-						list << QObject::tr("Proves your identity to a remote computer"); break;
-					case NID_email_protect:
-						list << QObject::tr("Protects e-mail messages"); break;
-					default: break;
-					}
-				}
-				sk_ASN1_OBJECT_pop_free( usage, ASN1_OBJECT_free );
-			}
+		case NID_client_auth:
+			list << QObject::tr("Proves your identity to a remote computer"); break;
+		case NID_email_protect:
+			list << QObject::tr("Protects e-mail messages"); break;
+		default: break;
 		}
 	}
+	sk_ASN1_OBJECT_pop_free( usage, ASN1_OBJECT_free );
 
 	if( list.isEmpty() )
 		list << QObject::tr("All application policies");
 	return list;
+}
+
+QStringList SslCertificate::policies() const
+{
+	QStringList list;
+
+	CERTIFICATEPOLICIES *cp = (CERTIFICATEPOLICIES*)getExtension( NID_certificate_policies );
+	for( int i = 0; i < sk_POLICYINFO_num( cp ); ++i )
+	{
+		POLICYINFO *pi = sk_POLICYINFO_value( cp, i );
+		char buf[50];
+		memset( buf, 0, 50 );
+		int len = OBJ_obj2txt( buf, 50, pi->policyid, 1 );
+		list << buf;
+	}
+	sk_POLICYINFO_pop_free( cp, POLICYINFO_free );
+
+	return list;
+}
+
+QString SslCertificate::policyInfo( const QString &index ) const
+{
+#if 0
+	for( int j = 0; j < sk_POLICYQUALINFO_num( pi->qualifiers ); ++j )
+	{
+		POLICYQUALINFO *pqi = sk_POLICYQUALINFO_value( pi->qualifiers, j );
+
+		memset( buf, 0, 50 );
+		int len = OBJ_obj2txt( buf, 50, pqi->pqualid, 1 );
+		qDebug() << buf;
+	}
+#endif
+	return QString();
 }
 
 QByteArray SslCertificate::serialNumber() const

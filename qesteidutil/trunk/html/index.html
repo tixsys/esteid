@@ -17,9 +17,9 @@
       </div>
       <div id="headerMenus">
         <ul>
-          <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag code="test">Diagnostika</trtag></a></li>
-          <li><a href="#" onClick="extender.showSettings();"><trtag>Seaded</trtag></a></li>
-          <li><a href="#" onClick="openHelp();"><trtag>Abi</trtag></a></li>
+          <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag code="linkDiagnostics"></trtag></a></li>
+          <li><a href="#" onClick="extender.showSettings();"><trtag code="linkSettings"></trtag></a></li>
+          <li><a href="#" onClick="openHelp();"><trtag code="linkHelp"></trtag></a></li>
         </ul>        
       </div>
     </div>
@@ -29,31 +29,29 @@
     <div id="linegray">&nbsp;</div>
     <div id="personalInfo">
       <ul>
-        <li><trtag>Nimi:</trtag> <span id="firstName"></span> <span id="middleName"></span> <span id="surName"></span></li>
-        <li><trtag>Isikukood:</trtag> <span id="id"></span></li>
-        <li><trtag>Sündinud:</trtag> <span id="birthDate"></span>, <span id="birthPlace"></span></li>
-        <li><trtag>Kodakondsus:</trtag> <span id="citizen"></span></li>
-        <li><trtag>E-post:</trtag> <span id="email"></span></li>
+        <li><trtag code="personName"></trtag>: <span id="firstName"></span> <span id="middleName"></span> <span id="surName"></span></li>
+        <li><trtag code="personCode"></trtag>: <span id="id"></span></li>
+        <li><trtag code="personBirth"></trtag>: <span id="birthDate"></span>, <span id="birthPlace"></span></li>
+        <li><trtag code="personCitizen"></trtag>: <span id="citizen"></span></li>
+        <li><trtag code="personEmail"></trtag>: <span id="email"></span></li>
       </ul>
     </div>
     <div id="photo">
-      <div id="photoContent" style="padding-top:50px;">
-        <a href="#" onClick="loadPicture();"><trtag>Lae pilt</trtag></a>
-      </div>
+      <div id="photoContent" style="padding-top:50px;"></div>
     </div>
     <div id="leftMenus">
       <ul>
-        <li><input type="button" value="Sertifikaadid" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
-        <li><input type="button" value="@eesti.ee e-post" name="email" onClick="setActive('email',this);" class="button" /></li>
-        <li><input type="button" value="Mobiil-ID" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
-        <li><input type="button" value="PUK kood" name="puk" onClick="setActive('puk',this);" class="button" /></li>
+        <li><input type="button" code="inputCert" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
+        <li><input type="button" code="inputEmail" name="email" onClick="setActive('email',this);" class="button" /></li>
+        <li><input type="button" code="inputMobile" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
+        <li><input type="button" code="inputPUK" name="puk" onClick="setActive('puk',this);" class="button" /></li>
       </ul>
     </div>
     <div id="cardInfo" class="cardInfo">
       <ul>
-        <li><trtag>Lugejas on ID kaart</trtag> <span id="documentId" style="color: #355670;"></span></li>
-        <li><trtag>See on</trtag> <span style="color: #509b00;"><trtag>kehtiv</trtag></span> <trtag>dokument</trtag></li>
-        <li><span style="font-size:12px; font-weight: normal; color: #355670;"><trtag>Kaart on kehtiv kuni</trtag> <span id="expiry" style="color: #355670;"></span></span></li>
+        <li><trtag code="cardInReaderID"></trtag> <span id="documentId" style="color: #355670;"></span></li>
+        <li><trtag code="thisIs"></trtag> <span style="color: #509b00;"><trtag code="isValid"></trtag></span> <trtag code="document"></trtag></li>
+        <li><span style="font-size:12px; font-weight: normal; color: #355670;"><trtag code="cardValidTill"></trtag> <span id="expiry" style="color: #355670;"></span></span></li>
       </ul>
     </div>
     <div id="cardInfoNoCard" class="cardInfo" style="display:none; text-align:center;">
@@ -63,13 +61,13 @@
   <!-- sertifikaatide sisu algus-->
   <div id="certContent" class="content" style="display: none;">
     <div class="leftContent">
-      <span class="contentHeader"><trtag>Isikutuvastamise sertifikaat</trtag></span>
+      <span class="contentHeader"><trtag code="labelAuthCert"></trtag></span>
       <p>
-        <trtag>Sertifikaat on</trtag> <span id="authCertStatus"></span><br />
-        <trtag>Sertifikaat kehtib kuni</trtag> <span id="authCertValidTo"></span>
+        <trtag code="labelCertIs"></trtag> <span id="authCertStatus"></span><br />
+        <trtag code="labelCertIsValidTill"></trtag> <span id="authCertValidTo"></span>
       </p>
       <p id="authKeyText">
-        <trtag>ID-kaarti on kasutatud isikutuvastamiseks</trtag> <span id="authKeyUsage"></span> <trtag>korda</trtag>
+        <trtag code="labelAuthUsed"></trtag> <span id="authKeyUsage"></span> <trtag code="labelTimes"></trtag>
       </p>
       <div id="authKeyBlocked" class="keyBlocked">
         <trtag>Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>
@@ -85,13 +83,13 @@
       </div>
     </div>
     <div class="rightContent">
-      <span class="contentHeader"><trtag>Allkirjastamise sertifikaat</trtag></span>
+      <span class="contentHeader"><trtag code="labelSignCert"></trtag></span>
       <p>
-        <trtag>Sertifikaat on</trtag> <span id="signCertStatus"></span><br />
-        <trtag>Sertifikaat kehtib kuni</trtag> <span id="signCertValidTo"></span>
+        <trtag code="labelCertIs"></trtag> <span id="signCertStatus"></span><br />
+        <trtag code="labelCertIsValidTill"></trtag> <span id="signCertValidTo"></span>
       </p>
       <p id="signKeyText">
-        <trtag>ID-kaarti on kasutatud allkirjastamiseks</trtag> <span id="signKeyUsage"></span> <trtag>korda</trtag>
+        <trtag code="labelSignUsed"></trtag> <span id="signKeyUsage"></span> <trtag code="labelTimes"></trtag>
       </p>
       <div id="signKeyBlocked" class="keyBlocked">
         <trtag>Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.<br />Sertifikaat on blokeeritud.</trtag>

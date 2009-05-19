@@ -31,11 +31,14 @@ public:
 
 	static QString formatName( const QString &name );
 	QStringList keyUsage() const;
+	QStringList policies() const;
+	QString		policyInfo( const QString &oid ) const;
 	QString subjectInfoUtf8( SubjectInfo subject ) const;
 	QString subjectInfoUtf8( const QByteArray &tag ) const;
 	QByteArray serialNumber() const;
 	QByteArray versionNumber() const;
 
 private:
+	void *getExtension( int nid ) const;
 	QString toUtf8( const QString &data ) const;
 };

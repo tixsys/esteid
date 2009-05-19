@@ -25,11 +25,8 @@
 #include <QObject>
 
 #include <openssl/ssl.h>
-#include <openssl/ui.h>
 
-#include <sstream>
 #include <vector>
-#include <QDebug>
 
 struct DynamicLibrary;
 

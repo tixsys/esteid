@@ -25,6 +25,7 @@
 #include "cardlib/DynamicLibrary.h"
 
 #include <stdexcept>
+#include <sstream>
 
 #ifdef WIN32
 #include <winsock2.h>
@@ -219,12 +220,12 @@ bool SSLObj::connectToHost( const std::string &site )
 	unsigned long address = *((unsigned int *)*ent->h_addr_list);
 
 	struct sockaddr_in server_addr;
-    int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	memset (&server_addr, '\0', sizeof(server_addr));
 	server_addr.sin_family      = AF_INET;
  	server_addr.sin_port        = htons(443);
 	server_addr.sin_addr.s_addr = address;
 
+    int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	int err = connect(sock, (struct sockaddr*) &server_addr, sizeof(server_addr));
 
 	pSSL_set_fd(s, sock);
@@ -244,12 +245,12 @@ std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
 	do {
 	    if (bytesTotal > (buffer.size() - readChunk))
             buffer.resize(buffer.size() + (readChunk * 4));
-
-            bytesRead = pSSL_read(s, &buffer[bytesTotal], readChunk);
-            if (bytesRead != -1) bytesTotal+= bytesRead;
+        bytesRead = pSSL_read(s, &buffer[bytesTotal], readChunk);
+        if (bytesRead != -1)
+			bytesTotal+= bytesRead;
     } while(bytesRead > 0 );
+
     int lastErr = pSSL_get_error(s,bytesRead);
-	//qDebug() << QByteArray((char *)&buffer[0], buffer.size() );
     if (lastErr != SSL_ERROR_NONE && lastErr != SSL_ERROR_ZERO_RETURN)
         throw std::runtime_error("SSL_write /GET failed");
 
@@ -261,6 +262,5 @@ std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
     size_t pos = pageStr.find("\r\n\r\n");
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
-	qDebug() << QByteArray((char *)&buffer[0], buffer.size() );
 	return buffer;
 }

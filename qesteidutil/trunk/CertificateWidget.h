@@ -42,6 +42,7 @@ private slots:
 	void on_save_clicked();
 
 private:
+	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
 	QByteArray addHexSeparators( const QByteArray &data ) const;
 
 	CertificateWidgetPrivate *d;
