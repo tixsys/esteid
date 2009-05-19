@@ -67,6 +67,9 @@ function changePin( type )
 	}
 	if (eval("esteidData.changePin" + type + "(newVal, oldVal)"))
 	{
+		document.getElementById('pin' + type + 'OldPin').value = "";
+		document.getElementById('pin' + type + 'NewPin').value = "";
+		document.getElementById('pin' + type + 'NewPin2').value = "";
 		alert( _( 'PIN' + type + 'Changed' ) );
 		setActive('cert','');
 	} else
@@ -126,6 +129,9 @@ function changePuk()
 	}
 	if (esteidData.changePuk(newVal, oldVal))
 	{
+		document.getElementById('pukOldPin').value = "";
+		document.getElementById('pukNewPin').value = "";
+		document.getElementById('pukNewPin2').value = "";
 		alert( _('PUKChanged') );
 		setActive('puk','');
 	} else
@@ -198,6 +204,9 @@ function unblockPin( type )
 	}
 	if (eval('esteidData.unblockPin' + type + '(newVal, oldVal)'))
 	{
+		document.getElementById('bpin' + type + 'OldPin').value = "";
+		document.getElementById('bpin' + type + 'NewPin').value = "";
+		document.getElementById('bpin' + type + 'NewPin2').value = "";
 		alert( _('PIN' + type + 'UnblockSuccess') );
 		readCardData();
 		setActive('cert','');
