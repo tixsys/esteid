@@ -139,7 +139,9 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 std::string digidoc::util::String::getSystemEncoding()
 {
     std::string encoding("");
-    encoding.append(getenv("LANG"));   
+    const char *lang = getenv("LANG");
+    if( lang )
+        encoding.append(lang);   
 
     if(encoding.length() == 0)
     {   
