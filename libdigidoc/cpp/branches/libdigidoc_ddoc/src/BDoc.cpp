@@ -383,6 +383,10 @@ std::string digidoc::BDoc::createMimetype() throw(IOException)
 
 /**
  * Creates BDoc container manifest file and returns its path.
+ * 
+ * Note: If non-ascii characters are present in XML data, we depend on the LANG variable to be set properly
+ * (see iconv --list for the list of supported encoding values for libiconv).
+ *
  *
  * @return returns created manifest file path.
  * @throws IOException exception is thrown if manifest file creation failed.
@@ -473,7 +477,9 @@ void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocExcept
  * Parses manifest file and checks that files described in manifest exist, also
  * checks that no extra file do exist that are not described in manifest.xml.
  *
-
+ * Note: If non-ascii characters are present in XML data, we depend on the LANG variable to be set properly 
+ * (see iconv --list for the list of supported encoding values for libiconv).
+ *
  * @param path directory on disk of the BDOC container.
  * @throws IOException exception is thrown if the manifest.xml file parsing failed.
  * @throws BDocException

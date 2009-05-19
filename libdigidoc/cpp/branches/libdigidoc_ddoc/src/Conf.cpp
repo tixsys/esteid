@@ -9,7 +9,7 @@ digidoc::Conf* digidoc::Conf::getInstance()
 {
     if(INSTANCE == NULL)
     {
-        ERR("Conf not initialized");
+        //ERR("Conf not initialized");
     }
     return INSTANCE;
 }

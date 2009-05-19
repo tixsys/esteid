@@ -61,64 +61,93 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
 /**
  * Helper method for converting from non-UTF-8 encoded strings to UTF-8.
  * Supported LANG values for Linux: see /usr/share/i18n/SUPPORTED.
+ * Supported encodings for libiconv: see iconv --list .
+ * 
+ * Note! If non-ASCII characters are used we assume a proper LANG value!!! 
  *
  * @param str_in The string to be converted.
  * @return Returns the input string in UTF-8.
  */
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)
 {
-    std::string charset(getSystemEncoding());
-    // XXX do we need additional formatting of the charset string? (iso8859-1 vs. ISO-8859-1)
-
+    std::string charset("");
     iconv_t ic_descr;
-    if( (charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0) )
-    {
-		// no conversion needed
-		return str_in;
-	}
 
-    if(to_UTF)
+    try
     {
-        //direction of conversion: from platform specific encoding to UTF-8
-        ic_descr = iconv_open("UTF-8", charset.c_str()); // to_encoding, from_encoding
+        charset.append(getSystemEncoding());  
+    
+        if( (charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0) )
+        {
+	    	// no conversion needed for UTF-8 
+		    return str_in;
+	    }
+          
+        if(charset.compare("C") == 0)
+        {
+            INFO("System locale is C, continuing without conversion.");
+            return str_in;
+        }
+
+        if(to_UTF)
+        {
+            //direction of conversion: from platform specific encoding to UTF-8
+            ic_descr = iconv_open("UTF-8", charset.c_str()); // to_encoding, from_encoding
+        }
+        else
+        {
+            //direction of conversion: from UTF-8 to platform specific encoding
+            ic_descr = iconv_open(charset.c_str(), "UTF-8");
+        }
     }
-    else
+
+    catch(std::exception& e)
     {
-        //direction of conversion: from UTF-8 to platform specific encoding
-        ic_descr = iconv_open(charset.c_str(), "UTF-8");
+        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
+        return str_in;
     }
 
     if( ic_descr == (iconv_t)(-1))
     {
-        THROW_BDOCEXCEPTION("Unsupported character encoding.");
+        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
+        return str_in; 
     }
 
     char inbuf[MAX_LANG_LENGTH] = {0}; 
     char outbuf[MAX_LANG_LENGTH] = {0};
     strncpy( inbuf, str_in.c_str(), MAX_LANG_LENGTH-1 );
-    char* inptr( inbuf );
+    char const* inptr( inbuf );
     char* outptr( outbuf );
     size_t inleft = strlen( inbuf ) + 1;
     size_t outleft = MAX_LANG_LENGTH-1;
     size_t conversion_result = iconv(ic_descr, &inptr, &inleft, &outptr, &outleft);
-
+    
     if(conversion_result == -1)
-    { 
+    {    
         THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
     }
+
     return std::string(outbuf);
 }
 
 
 /**
- * Helper method for getting the platform specific encoding.
- * This is necessary for converting data that is written to XML into UTF-8.
- * 
- * @return Returns the system encoding read from the LANG environment variable. 
+ * Helper method for getting the platform encoding.
+ *
+ * @return Returns the platform encoding read from the LANG environment variable. 
  */
 std::string digidoc::util::String::getSystemEncoding()
 {
-    std::string encoding(getenv("LANG"));   
+    std::string encoding("");
+    encoding.append(getenv("LANG"));   
+
+    if(encoding.length() == 0)
+    {   
+        INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
+        return encoding;
+    }
+
+    // Is LANG in a format such as en_US.ISO-8859-1 ?
     size_t locale_start = encoding.rfind(".");
 
     if(locale_start != std::string::npos)
@@ -126,10 +155,8 @@ std::string digidoc::util::String::getSystemEncoding()
         size_t newline = encoding.find("\n");
         encoding = encoding.substr(locale_start+1, newline);
     }
-    else
-    {
-        THROW_BDOCEXCEPTION("Failed to extract the charset."); 
-    }
+
+    // else just return what was read from LANG
     return encoding;
 }
 
@@ -162,6 +189,5 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
             j++;
         }
     }
-    std::cout << "url string: " << std::string(dst) << std::endl;
     return std::string(dst);
 }

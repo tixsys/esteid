@@ -47,7 +47,7 @@ void digidoc::XmlConf::initialize()
         catch(const digidoc::IOException& e)
         {
             ERR("%s\n", e.getMsg().c_str());
-            exit(-1);
+            exit(-1); 
         }
     }
 }
