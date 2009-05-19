@@ -28,7 +28,7 @@ input[type="button"] { cursor: hand; }
 #personalInfo { position: absolute; top:66px; left:180px; width:390; height:138px;
 				background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
 				color: #668696; font-weight: bold; font-family: Arial; font-size: 12px; line-height: 18px;}
-#personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px;}
+#personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:250; word-wrap: break-word; }
 
 #photo {position: absolute; top:75px; left:470px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
 
