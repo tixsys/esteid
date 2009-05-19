@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=QEstEIDUtil
+Exec=qesteidutil %F
+Categories=Qt;Office;
+Icon=id_icon_48x48.png

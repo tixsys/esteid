@@ -90,4 +90,9 @@ target_link_libraries(qesteidutil
     ${OPENSSLCRYPTO_LIBRARIES}
 )
 
+if(UNIX AND NOT APPLE)
+        INSTALL(FILES QEstEIDUtil.desktop DESTINATION share/applications)
+        INSTALL(FILES html/images/id_icon_48x48.png DESTINATION share/pixmaps )
+endif(UNIX AND NOT APPLE)
+
 install(TARGETS qesteidutil DESTINATION bin)
