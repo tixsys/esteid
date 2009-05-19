@@ -80,6 +80,10 @@ digidoc::Signer::SignatureProductionPlace digidoc::Signer::getSignatureProductio
 
 /**
  * @return returns signature production place info in UTF-8 (XML data must be saved in this format regardless of the system encoding).
+ *
+ * Note: If non-ascii characters are present in XML data, we depend on the LANG variable to be set properly
+ * (see iconv --list for the list of supported encoding values for libiconv).
+ *
  */
 digidoc::Signer::SignatureProductionPlace digidoc::Signer::getSignatureProductionPlaceUtf8() const
 {
@@ -110,6 +114,10 @@ digidoc::Signer::SignerRole digidoc::Signer::getSignerRole() const
 
 /**
  * @return returns signer role in UTF-8 (XML data must be saved in this format regardless of the system encoding).
+ *
+ * Note: If non-ascii characters are present in XML data, we depend on the LANG variable to be set properly
+ * (see iconv --list for the list of supported encoding values for libiconv).
+ *
  */
 digidoc::Signer::SignerRole digidoc::Signer::getSignerRoleUtf8() const
 {

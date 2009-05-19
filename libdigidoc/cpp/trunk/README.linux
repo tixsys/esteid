@@ -69,6 +69,7 @@ running directory.
 
 The LANG environment variable is read (and must be set properly) to determine the system encoding which is passed to libiconv for converting XML data to UTF-8.
 Please refer to '$iconv --list' for the supported encodings.
+If the LANG variable cannot be determined the fallback action is to continue without converting (which will fail if non-ascii characters are present).
 
 
 DOCUMENTATION

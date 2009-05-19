@@ -29,6 +29,9 @@ namespace digidoc
      * not signed. To add or remove documents from signed container remove all the
      * signatures before modifying documents list in container.
      *
+     * Note: If non-ascii characters are present in XML data, we depend on the LANG variable to be set properly
+     * (see iconv --list for the list of supported encoding values for libiconv).
+     *
      * @author Janari Põld
      */
     class BDoc
