@@ -19,13 +19,17 @@ function changePin( type )
 	if ( !eval("esteidData.validatePin" + type + "(oldVal)") )
 	{
 		ret = eval("esteidData.getPin" + type + "RetryCount() ");
-		alert( _( 'PIN' + type + 'InvalidRetry' ).replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
+			document.getElementById('pin' + type + 'OldPin').value = "";
+			document.getElementById('pin' + type + 'NewPin').value = "";
+			document.getElementById('pin' + type + 'NewPin2').value = "";
+			alert( _("PIN" + type + "Blocked") );
 			readCardData();
 			setActive('cert','');
 			return;
 		}
+		alert( _( 'PIN' + type + 'InvalidRetry' ).replace( /%d/, ret ) );
 		document.getElementById('pin' + type + 'OldPin').focus();
 		return;
 	}
@@ -88,13 +92,17 @@ function changePuk()
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		alert( _('PUKInvalidRetry').replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
+			document.getElementById('pukOldPin').value = "";
+			document.getElementById('pukNewPin').value = "";
+			document.getElementById('pukNewPin2').value = "";
+			alert( _("PUKBlocked") );
 			readCardData();
 			setActive('cert','');
 			return;
 		}
+		alert( _('PUKInvalidRetry').replace( /%d/, ret ) );
 		document.getElementById('pukOldPin').focus();
 		return;
 	}
@@ -156,13 +164,17 @@ function unblockPin( type )
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		alert( _("PUKInvalidRetry").replace( /%d/, ret ) );
 		if ( ret == 0 )
 		{
+			document.getElementById('bpin' + type + 'OldPin').value = "";
+			document.getElementById('bpin' + type + 'NewPin').value = "";
+			document.getElementById('bpin' + type + 'NewPin2').value = "";
+			alert( _("PUKBlocked") );
 			readCardData();
 			setActive('cert','');
 			return;
 		}
+		alert( _("PUKInvalidRetry").replace( /%d/, ret ) );
 		document.getElementById('bpin' + type + 'OldPin').focus();
 		return;
 	}
@@ -306,7 +318,7 @@ function readCardData()
 	document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
 	if(esteidData.getPukRetryCount() == 0)
-		alert( _('PUKLocked') )
+		alert( _('PUKBlocked') )
 }
 
 function setActive( content, el )

@@ -46,6 +46,7 @@ var eidStrings = {
 	"PIN1Unsuccess": new tr( "PIN1 muutmine ebaõnnestus.", "", "" ),
 	"PIN1UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "", "" ),
 	"PIN1UnblockSuccess": new tr( "PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!", "", "" ),
+	"PIN1Blocked": new tr( "PIN1 blokeeritud.", "", "" ),
 
 	"PIN2Enter": new tr( "Sisesta vana PIN2 kood", "", "" ),
 	"PIN2Length": new tr( "PIN2 pikkus peab olema 5-12 numbrit", "", "" ),
@@ -58,6 +59,7 @@ var eidStrings = {
 	"PIN2Unsuccess": new tr( "PIN2 muutmine ebaõnnestus.", "", "" ),
 	"PIN2UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "", "" ),
 	"PIN2UnblockSuccess": new tr( "PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!", "", "" ),
+	"PIN2Blocked": new tr( "PIN2 blokeeritud.", "", "" ),
 
 	"PUKEnter": new tr( "Sisesta PUK kood.", "", "" ),
 	"PUKLength": new tr( "PUK koodi pikkus peab olema 8-12 numbrit", "", "" ),
@@ -68,7 +70,7 @@ var eidStrings = {
 	"PUKChanged": new tr( "PUK kood muudetud!", "", "" ),
 	"PUKUnsuccess": new tr( "PUK koodi muutmine ebaõnnestus.", "", "" ),
 	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida 2 korda.", "", "" ),
-	"PUKLocked": new tr( "PUK on lukus.", "", "" )
+	"PUKBlocked": new tr( "PUK kood blokeeritud.", "", "" )
 };
 
 function tr( est, eng, rus )
