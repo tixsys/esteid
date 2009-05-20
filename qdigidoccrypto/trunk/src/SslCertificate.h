@@ -30,6 +30,7 @@ public:
 	SslCertificate( const QSslCertificate &cert );
 
 	static QString formatName( const QString &name );
+	static QSslCertificate fromX509( const Qt::HANDLE *x509 );
 	bool		isTempel() const;
 	QStringList keyUsage() const;
 	QStringList policies() const;

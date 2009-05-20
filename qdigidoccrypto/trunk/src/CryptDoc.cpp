@@ -23,6 +23,7 @@
 #include "CryptDoc.h"
 
 #include "Common.h"
+#include "SslCertificate.h"
 
 #include <libdigidoc/DigiDocCert.h>
 #include <libdigidoc/DigiDocConfig.h>
@@ -78,7 +79,7 @@ void CryptDoc::addKey( const CKey &key )
 		return setLastError( tr("Container is encrypted") );
 
 	DEncEncryptedKey *pkey;
-	int err = dencEncryptedKey_new( m_enc, &pkey, (X509*)decodeCert( key.certPem ),
+	int err = dencEncryptedKey_new( m_enc, &pkey, (X509*)decodeCert( key.cert.toPem() ),
 		DENC_ENC_METHOD_RSA1_5, NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to add key"), err );
@@ -305,14 +306,7 @@ QList<CKey> CryptDoc::keys()
 	for( int i = 0; i < m_enc->nEncryptedKeys; ++i )
 	{
 		CKey ckey;
-
-		/*char *p = 0;
-		int err = getCertPEM( m_enc->arrEncryptedKeys[i]->pCert, 1, &p );
-		if( !err )
-			ckey.certPem = p;
-		if( p )
-			free(p);*/
-
+		ckey.cert = SslCertificate::fromX509( (Qt::HANDLE*)m_enc->arrEncryptedKeys[i]->pCert );
 		ckey.id = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szId );
 		ckey.name = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szKeyName );
 		ckey.recipient = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szRecipient );

@@ -42,7 +42,7 @@ public:
 class CKey
 {
 public:
-	QByteArray certPem;
+	QSslCertificate cert;
 	QString id;
 	QString name;
 	QString recipient;

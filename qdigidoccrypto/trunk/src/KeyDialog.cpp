@@ -69,12 +69,11 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 	title->setText( k.recipient );
 	title->setStyleSheet( QString( "background-color: green" ) );
 
-	QSslCertificate cert( key.certPem, QSsl::Pem );
 	addItem( tr("Recipient"), k.recipient );
 	addItem( tr("Crypt method"), k.type );
 	addItem( tr("ID"), k.id );
-	addItem( tr("Expires"), cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
-	addItem( tr("Issuer"), cert.issuerInfo( QSslCertificate::CommonName ) );
+	addItem( tr("Expires"), key.cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
+	addItem( tr("Issuer"), key.cert.issuerInfo( QSslCertificate::CommonName ) );
 	view->resizeColumnToContents( 0 );
 }
 
@@ -87,7 +86,7 @@ void KeyDialog::addItem( const QString &parameter, const QString &value )
 }
 
 void KeyDialog::showCertificate()
-{ (new CertificateWidget( QSslCertificate( k.certPem ), this ))->show(); }
+{ (new CertificateWidget( k.cert, this ))->show(); }
 
 KeyAddDialog::KeyAddDialog( QWidget *parent )
 :	QWidget( parent )
@@ -128,11 +127,9 @@ void KeyAddDialog::showResult( const CKey &key )
 	skKeys.clear();
 	skKeys << key;
 
-	QSslCertificate cert( key.certPem, QSsl::Pem );
-
 	QTreeWidgetItem *i = new QTreeWidgetItem( skView );
 	i->setText( 0, key.recipient );
-	i->setText( 1, cert.issuerInfo( QSslCertificate::CommonName ) );
-	i->setText( 2, cert.effectiveDate().toString( "dd.MM.yyyy" ) );
+	i->setText( 1, key.cert.issuerInfo( QSslCertificate::CommonName ) );
+	i->setText( 2, key.cert.effectiveDate().toString( "dd.MM.yyyy" ) );
 	skView->addTopLevelItem( i );
 }

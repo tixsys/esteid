@@ -54,6 +54,17 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
+QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
+{
+	unsigned char *cert = NULL;
+	int res = i2d_X509( (X509*)x509, &cert );
+	QByteArray der;
+	if( res > 0 )
+		der = QByteArray( (char*)cert, res );
+	free( cert );
+	return QSslCertificate( der, QSsl::Der );
+}
+
 bool SslCertificate::isTempel() const
 {
 	Q_FOREACH( const QString &p, policies() )

@@ -92,7 +92,7 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 	while( (attr = ldap_next_attribute( ldap, entry, pos ) ) );
 
 	CKey key;
-	key.certPem = QSslCertificate( QByteArray( cert[0]->bv_val, cert[0]->bv_len ), QSsl::Der ).toPem();
+	key.cert = QSslCertificate( QByteArray( cert[0]->bv_val, cert[0]->bv_len ), QSsl::Der );
 	key.recipient = QString::fromUtf8( name[0] );
 	Q_EMIT searchResult( key );
 
