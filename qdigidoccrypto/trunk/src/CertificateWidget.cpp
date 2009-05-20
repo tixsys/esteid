@@ -115,15 +115,19 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	QTextStream s( &i );
 	s << "<b>" << tr("Certificate Information:") << "</b><br />";
 	s << "<hr>";
-	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b><ul>";
+	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b>";
+	s << "<ul>";
 	Q_FOREACH( const QString &ext, c.keyUsage() )
 		s << "<li>" << ext << "</li>";
-	s << "</ul><br /><br /><br /><br />";
+	s << "</ul>";
+	s << "<br /><br /><br /><br />";
 	//s << tr("* Refer to the certification authority's statement for details.") << "<br />";
 	s << "<hr>";
 	s << "<p style='margin-left: 30px;'>";
-	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName ) << "<br /><br /><br />";
-	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName ) << "<br /><br /><br />";
+	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName );
+	s << "<br /><br /><br />";
+	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName );
+	s << "<br /><br /><br />";
 	s << "<b>" << tr("Valid from") << "</b> " << c.effectiveDate().toString( "dd.MM.yyyy" ) << " ";
 	s << "<b>" << tr("to") << "</b> "<< c.expiryDate().toString( "dd.MM.yyyy" );
 	s << "</p>";

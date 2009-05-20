@@ -28,9 +28,6 @@
 
 class QTranslator;
 
-QString parseCertInfo( const QString &in );
-QString parseName( const QString &in );
-
 class MainWindow: public QWidget, private Ui::MainWindow
 {
 	Q_OBJECT
@@ -41,11 +38,11 @@ public:
 private Q_SLOTS:
 	void addKeys( const QList<CKey> &keys );
 	void buttonClicked( int button );
-	void showCardStatus();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
 	void on_settings_clicked();
 	void on_viewContentView_doubleClicked( const QModelIndex &index );
+	void showCardStatus();
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err );
 

@@ -130,6 +130,6 @@ void KeyAddDialog::showResult( const CKey &key )
 	QTreeWidgetItem *i = new QTreeWidgetItem( skView );
 	i->setText( 0, key.recipient );
 	i->setText( 1, key.cert.issuerInfo( QSslCertificate::CommonName ) );
-	i->setText( 2, key.cert.effectiveDate().toString( "dd.MM.yyyy" ) );
+	i->setText( 2, key.cert.expiryDate().toString( "dd.MM.yyyy" ) );
 	skView->addTopLevelItem( i );
 }
