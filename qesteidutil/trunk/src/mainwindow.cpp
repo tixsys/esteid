@@ -20,6 +20,7 @@
  *
  */
 
+#include <QApplication>
 #include <QtWebKit>
 
 #include "mainwindow.h"
@@ -27,13 +28,17 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )
 {
-    setContextMenuPolicy(Qt::PreventContextMenu);
+	setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
-    setWindowTitle(tr("ID-card utility"));
 	setFixedSize( 601, 520 );
 
-	m_jsExtender = new JsExtender( this );
+	appTranslator = new QTranslator( this );
+	qtTranslator = new QTranslator( this );
+	QApplication::instance()->installTranslator( appTranslator );
+	QApplication::instance()->installTranslator( qtTranslator );
 
+	m_jsExtender = new JsExtender( this );
+	
     jsEsteidCard = new JsEsteidCard( this );
     jsCardManager = new JsCardManager( jsEsteidCard );
 
@@ -48,4 +53,11 @@ MainWindow::MainWindow( QWidget *parent )
     m_jsExtender->registerObject("cardManager", jsCardManager);
 
 	load(QUrl("qrc:/html/index.html"));
+}
+
+void MainWindow::retranslate( const QString &lang )
+{
+	appTranslator->load( ":/translations/" + lang );
+	qtTranslator->load( ":/translations/qt_" + lang );
+	setWindowTitle(QApplication::translate("MainWindow", "ID-card utility", 0, QApplication::UnicodeUTF8));
 }

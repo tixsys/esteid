@@ -23,6 +23,7 @@
 #pragma once
 
 #include <QWebView>
+#include <QTranslator>
 
 #include "jsextender.h"
 #include "jscardmanager.h"
@@ -37,9 +38,11 @@ public:
     MainWindow( QWidget *parent = 0 );
 	JsEsteidCard* eidCard() { return jsEsteidCard; }
 	JsCardManager* cardManager() { return jsCardManager; }
+	void retranslate( const QString &lang );
 
 private:
     JsExtender *m_jsExtender;
     JsCardManager *jsCardManager;
     JsEsteidCard *jsEsteidCard;
+	QTranslator *appTranslator, *qtTranslator;
 };

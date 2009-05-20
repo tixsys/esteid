@@ -37,7 +37,8 @@ JsExtender::JsExtender( MainWindow *main )
 {
 	m_locale = Settings().value( "language" ).toString();
 	if ( m_locale.isEmpty() )
-		setLanguage( QLocale::system().name().left( 2 ) );
+		m_locale = QLocale::system().name().left( 2 );
+	setLanguage( m_locale );
 
 	connect( m_mainWindow->page()->mainFrame(), SIGNAL(javaScriptWindowObjectCleared()),
             this, SLOT(javaScriptWindowObjectCleared()));
@@ -55,6 +56,7 @@ void JsExtender::setLanguage( const QString &lang )
 	if ( m_locale == "C" )
 		m_locale = "en";
 	Settings().setValue( "language", m_locale );
+	m_mainWindow->retranslate( m_locale );
 }
 
 void JsExtender::registerObject( const QString &name, QObject *object )
@@ -104,7 +106,7 @@ QString JsExtender::checkPin()
 	{
 		m_dateTime = QDateTime::currentDateTime();
 		bool ok;
-		pin = QInputDialog::getText( m_mainWindow, tr("Isikutuvastus"), tr("Sisesta PIN1"), QLineEdit::Password, QString(), &ok );
+		pin = QInputDialog::getText( m_mainWindow, tr("Authentication"), tr("This action needs authentication\nEnter PIN1"), QLineEdit::Password, QString(), &ok );
 		if( !ok )
 			throw std::runtime_error( "" );
 		else if ( !m_mainWindow->eidCard()->validatePin1( pin ) )
@@ -225,7 +227,7 @@ QString JsExtender::readForwards()
 				forwardActive = true;
 		}
 	}
-	return (emailActive && forwardActive ) ? tr( " - %1 (aktiivne)" ).arg( email ) : tr( " - %1 (mitteaktiivne)" ).arg( email );
+	return (emailActive && forwardActive ) ? tr( " - %1 (active)" ).arg( email ) : tr( " - %1 (not active)" ).arg( email );
 }
 
 void JsExtender::loadPicture()

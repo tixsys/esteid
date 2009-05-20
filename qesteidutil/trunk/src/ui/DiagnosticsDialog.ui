@@ -49,7 +49,7 @@ QPushButton::hover { background-image: url(:/html/images/button_hover.png); bord
   </layout>
  </widget>
  <resources>
-  <include location="qesteidutil.qrc"/>
+  <include location="../qesteidutil.qrc"/>
  </resources>
  <connections>
   <connection>

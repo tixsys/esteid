@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
-<qresource>
+  <qresource>
     <file>html/index.html</file>
     <file>html/lang.js</file>
     <file>html/script.js</file>
@@ -14,5 +14,9 @@
     <file>html/images/flag_estonian.png</file>
     <file>html/images/flag_english.png</file>
     <file>html/images/flag_russian.png</file>
-</qresource>
+  </qresource>
+  <qresource prefix="translations" >
+    <file alias="et" >translations/et.qm</file>
+    <file alias="qt_et" >translations/qt_et.qm</file>
+  </qresource>
 </RCC>

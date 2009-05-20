@@ -460,7 +460,7 @@ function disableFields()
 	document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
 	
 	document.getElementById('emailsContent').innerHTML = "";
-	document.getElementById('photoContent').innerHTML = '<a href="#" onClick="loadPicture();"><trtag code="loadPicture">' + _('loadPicture') + '</trtag></a>';
+	document.getElementById('photoContent').innerHTML = '<a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a>';
 	
 	var divs = document.getElementsByClassName('content');
 	for( var i in divs )
