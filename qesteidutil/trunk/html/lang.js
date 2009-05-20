@@ -1,9 +1,9 @@
 ﻿var defaultLanguage = "et";
 var language = defaultLanguage;
 
-var helpUrlet = "http://support.sk.ee/";
-var helpUrlen = "http://support.sk.ee/eng/";
-var helpUrlru = "http://support.sk.ee/ru/";
+var helpUrl_et = "http://support.sk.ee/";
+var helpUrl_en = "http://support.sk.ee/eng/";
+var helpUrl_ru = "http://support.sk.ee/ru/";
 
 //code: (est, eng, rus)
 var htmlStrings = {
@@ -17,11 +17,11 @@ var htmlStrings = {
 	"personCitizen": new tr( "Kodakondsus", "Citizenship", "" ),
 	"personEmail": new tr( "E-post", "E-mail", "" ),
 
-	"cardInReaderID": new tr( "Lugejas on ID kaart", "Card in reader", "" ),
-	"thisIs": new tr( "See on", "This is a", "" ),
-	"isValid": new tr( "kehtiv", "valid", "" ),
-	"document": new tr( "dokument", "document", "" ),
-	"cardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "" ),
+	"labelCardInReaderID": new tr( "Lugejas on ID kaart", "Card in reader", "" ),
+	"labelThisIs": new tr( "See on", "This is a", "" ),
+	"labelIsValid": new tr( "kehtiv", "valid", "" ),
+	"labelDocument": new tr( "dokument", "document", "" ),
+	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "" ),
 	
 	"labelAuthCert": new tr( "Isikutuvastamise sertifikaat", "Authentication certificate", "" ),
 	"labelSignCert": new tr( "Allkirjastamise sertifikaat", "Signature certificate", "" ),
@@ -31,10 +31,33 @@ var htmlStrings = {
 	"labelSignUsed": new tr( "ID-kaarti on kasutatud allkirjastamiseks", "Signature key has been used", "" ),
 	"labelTimes": new tr( "korda", "times", "" ),
 	
+	"labelCertBlocked": new tr( "Sertifikaat on blokeeritud.", "Certificate is blocked.", "" ),
+	"labelAuthKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.", "", "" ),
+	"labelSignKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.", "", "" ),
+	
 	"inputCert": new tr( "Sertifikaadid", "Certificates", "" ),
 	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "" ),
 	"inputMobile": new tr( "Mobiil-ID", "Mobile-ID", "" ),
 	"inputPUK": new tr( "PUK kood", "PUK code", "" ),
+	
+	"inputChange": new tr( "Muuda", "Change", "" ),
+	"inputCancel": new tr( "Tühista", "Cancel", "" ),
+	"inputChangePIN1": new tr( "Muuda PIN1", "Change PIN1", "" ),
+	"inputChangePIN2": new tr( "Muuda PIN2", "Change PIN2", "" ),
+	"inputChangePUK": new tr( "Muuda PUK", "Change PUK", "" ),
+	"inputCertDetails": new tr( "Vaata üksikasju", "View details", "" ),
+	"inputUnblock": new tr ( "Tühista blokeering", "Revoke blocking", "" ),
+	
+	"labelCurrentPIN1": new tr( "Vana PIN1 kood", "Current PIN1 code", "" ),
+	"labelNewPIN1": new tr( "Uus PIN1 kood", "New PIN1 code", "" ),
+	"labelNewPIN12": new tr( "Uus PIN1 kood uuesti", "Repeat new PIN1 code", "" ),
+	"labelCurrentPIN2": new tr( "Vana PIN2 kood", "Current PIN2 code", "" ),
+	"labelNewPIN2": new tr( "Uus PIN2 kood", "New PIN2 code", "" ),
+	"labelNewPIN22": new tr( "Uus PIN2 kood uuesti", "Repeat new PIN2 code", "" ),
+	"labelCurrentPUK": new tr( "Vana PUK kood", "Current PUK code", "" ),
+	"labelNewPUK": new tr( "Uus PUK kood", "New PUK code", "" ),
+	"labelNewPUK2": new tr( "Uus PUK kood uuesti", "Repeat new PUK code", "" ),
+	"labelPUK": new tr( "PUK kood", "PUK code", "" ),
 	
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "" ),
@@ -147,14 +170,19 @@ function translateHTML()
 {
 	var trTags = document.getElementsByTagName('trtag');
 	for( var i in trTags )
-		if ( (typeof trTags[i].getAttribute != "undefined") && trTags[i].getAttribute('code') != null )
-			trTags[i].innerHTML = _( trTags[i].getAttribute('code'), trTags[i].innerHTML );
+		if ( (typeof trTags[i].getAttribute != "undefined") && trTags[i].getAttribute('trcode') != null )
+			trTags[i].innerHTML = _( trTags[i].getAttribute('trcode'), trTags[i].innerHTML );
 
 	var iTags = document.getElementsByTagName('input');
 	for( var i in iTags )
-		if ( iTags[i].type == "button" && (typeof iTags[i].getAttribute != "undefined") && iTags[i].getAttribute('code') != null )
-			iTags[i].value = _( iTags[i].getAttribute('code'), iTags[i].value );
+		if ( iTags[i].type == "button" && (typeof iTags[i].getAttribute != "undefined") && iTags[i].getAttribute('trcode') != null )
+			iTags[i].value = _( iTags[i].getAttribute('trcode'), iTags[i].value );
 }
 
 function openHelp()
-{ extender.openUrl( eval( 'helpUrl' + language ) ); }
+{
+	if ( typeof eval( 'helpUrl_' + language ) != "undefined" )
+		extender.openUrl( eval( 'helpUrl_' + language ) );
+	else
+		extender.openUrl( eval( 'helpUrl_' + defaultLanguage ) );
+}
