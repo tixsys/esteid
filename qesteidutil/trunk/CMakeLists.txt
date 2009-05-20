@@ -12,20 +12,20 @@ if(UNIX)
 endif(UNIX)
 
 set(qesteidutil_MOC_HDRS
-    CertificateWidget.h
-    DiagnosticsDialog.h
-    Settings.h
-    SettingsDialog.h
-    jscardmanager.h
-    jscertdata.h
-    jsesteidcard.h
-    jsextender.h
-    mainwindow.h
-    sslConnect.h
+    src/CertificateWidget.h
+    src/DiagnosticsDialog.h
+    src/Settings.h
+    src/SettingsDialog.h
+    src/jscardmanager.h
+    src/jscertdata.h
+    src/jsesteidcard.h
+    src/jsextender.h
+    src/mainwindow.h
+    src/sslConnect.h
 )
 
 set(qesteidutil_HDRS
-    SslCertificate.h
+    src/SslCertificate.h
 )
 
 set(cardlib_SRCS
@@ -39,26 +39,26 @@ set(cardlib_SRCS
 )
 
 set(qesteidutil_SRCS
-    CertificateWidget.cpp
-    DiagnosticsDialog.cpp
-    SettingsDialog.cpp
-    jscardmanager.cpp
-    jscertdata.cpp
-    jsesteidcard.cpp
-    jsextender.cpp
-    main.cpp
-    mainwindow.cpp
-    SslCertificate.cpp
-    sslConnect.cpp
+    src/CertificateWidget.cpp
+    src/DiagnosticsDialog.cpp
+    src/SettingsDialog.cpp
+    src/jscardmanager.cpp
+    src/jscertdata.cpp
+    src/jsesteidcard.cpp
+    src/jsextender.cpp
+    src/main.cpp
+    src/mainwindow.cpp
+    src/SslCertificate.cpp
+    src/sslConnect.cpp
 )
 
 set( UIS
-    CertificateWidget.ui
-    DiagnosticsDialog.ui
-    SettingsDialog.ui
+    src/ui/CertificateWidget.ui
+    src/ui/DiagnosticsDialog.ui
+    src/ui/SettingsDialog.ui
 )
 
-set(qesteidutil_RCS qesteidutil.qrc)
+set(qesteidutil_RCS src/qesteidutil.qrc)
 
 set(QT_USE_QTNETWORK true)
 set(QT_USE_QTWEBKIT true)
@@ -77,7 +77,7 @@ QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 
 IF(WIN32)
-	SET( qesteidutil_SRCS ${qesteidutil_SRCS} qesteidutil.rc )
+	SET( qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc )
 ENDIF(WIN32)
 
 add_executable(qesteidutil WIN32

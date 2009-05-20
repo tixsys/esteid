@@ -55,6 +55,14 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
+bool SslCertificate::isTempel() const
+{
+	Q_FOREACH( const QString &p, policies() )
+		if( p.contains( "1.3.6.1.4.1.10015.7" ) )
+			return true;
+	return false;
+}
+
 QStringList SslCertificate::keyUsage() const
 {
 	QStringList list;
