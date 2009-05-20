@@ -76,4 +76,5 @@ private:
 
 	CryptDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
+	QHash<int,QString> lang;
 };
