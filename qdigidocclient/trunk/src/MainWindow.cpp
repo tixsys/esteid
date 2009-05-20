@@ -154,6 +154,28 @@ bool MainWindow::addFile( const QString &file )
 			QFile::remove( doc );
 		bdoc->create( doc );
 	}
+
+	// Check if file exist and ask confirmation to overwrite
+	QList<digidoc::Document> docs = bdoc->documents();
+	for( int i = 0; i < docs.size(); ++i )
+	{
+		if( QFileInfo( QString::fromStdString( docs[i].getPath() ) ).fileName() ==
+			QFileInfo( file ).fileName() )
+		{
+			QMessageBox::StandardButton btn = QMessageBox::warning( this,
+				"QDigiDocClient",
+				tr("Container contains file with same name, ovewrite?"),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+			if( btn == QMessageBox::Yes )
+			{
+				bdoc->removeDocument( i );
+				break;
+			}
+			else
+				return true;
+		}
+	}
+
 	bdoc->addFile( file );
 	return true;
 }
