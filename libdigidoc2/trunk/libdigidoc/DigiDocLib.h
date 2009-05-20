@@ -75,7 +75,7 @@ EXP_OPTION void finalizeDigiDocLib();
 EXP_OPTION char* trim(char* src);
 
 // Sets a string element of a struct to a new value
-int setString(char** dest, const char* value, int valLen);
+EXP_OPTION int setString(char** dest, const char* value, int valLen);
 
 EXP_OPTION int checkFileExists(const char* szFileName);
 
