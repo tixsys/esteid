@@ -187,6 +187,7 @@ void DigiDocSignature::setLastError( const Exception &e )
 DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
+,	modified( false )
 {
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
@@ -226,6 +227,7 @@ void DigiDoc::addFile( const QString &file )
 
 	try { b->addDocument( Document( file.toStdString(), "file" ) ); }
 	catch( const Exception &e ) { setLastError( e ); }
+	modified = true;
 }
 
 QSslCertificate DigiDoc::authCert() { return m_authCert; }
@@ -238,6 +240,7 @@ void DigiDoc::clear()
 	b = 0;
 	m_fileName.clear();
 	m_lastError.clear();
+	modified = false;
 }
 
 void DigiDoc::create( const QString &file )
@@ -268,6 +271,7 @@ QList<Document> DigiDoc::documents()
 }
 
 QString DigiDoc::fileName() const { return m_fileName; }
+bool DigiDoc::isModified() const { return modified; }
 bool DigiDoc::isNull() const { return b == 0; }
 QString DigiDoc::lastError() const { return m_lastError; }
 
@@ -293,6 +297,7 @@ void DigiDoc::removeDocument( unsigned int num )
 
 	try { b->removeDocument( num ); }
 	catch( const Exception &e ) { setLastError( e ); }
+	modified = true;
 }
 
 void DigiDoc::removeSignature( unsigned int num )
@@ -305,6 +310,7 @@ void DigiDoc::removeSignature( unsigned int num )
 
 	try { b->removeSignature( num ); }
 	catch( const Exception &e ) { setLastError( e ); }
+	modified = true;
 }
 
 void DigiDoc::save()
@@ -318,6 +324,7 @@ void DigiDoc::save()
 		b->saveTo( s );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
+	modified = false;
 }
 
 void DigiDoc::saveDocument( unsigned int num, const QString &path )
@@ -376,6 +383,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		m_signer->setSignerRole( sRole );
 		b->sign( m_signer, Signature::TM /*BES|TM*/ );
 		result = true;
+		modified = true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	delete m_signer;

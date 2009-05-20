@@ -72,9 +72,11 @@ private:
 		ViewSaveAs,
 	};
 	bool addFile( const QString &file );
+	void closeEvent( QCloseEvent *e );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	void loadDocuments( QTreeWidget *view );
+	bool saveDocument();
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*bdoc;

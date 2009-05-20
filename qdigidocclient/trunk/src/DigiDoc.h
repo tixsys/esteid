@@ -75,6 +75,7 @@ public:
 	void clear();
 	QList<digidoc::Document> documents();
 	QString fileName() const;
+	bool isModified() const;
 	bool isNull() const;
 	QString lastError() const;
 	void open( const QString &file );
@@ -105,4 +106,5 @@ private:
 	QString			m_lastError;
 	QSslCertificate m_authCert, m_signCert;
 	QEstEIDSigner	*m_signer;
+	bool			modified;
 };

@@ -164,6 +164,8 @@ void MainWindow::buttonClicked( int button )
 	{
 	case HomeCrypt:
 	case ViewCrypt:
+		if( !saveDocument() )
+			break;
 		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << bdoc->fileName() ) )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
@@ -215,6 +217,8 @@ void MainWindow::buttonClicked( int button )
 		}
 	case IntroBack:
 	case ViewClose:
+		if( !saveDocument() )
+			break;
 		bdoc->clear();
 		setCurrentPage( Home );
 		break;
@@ -257,7 +261,6 @@ void MainWindow::buttonClicked( int button )
 				signRoleInput->text(),
 				signResolutionInput->text() ) )
 			break;
-		bdoc->save();
 		Settings::saveSignatureInfo(
 			signRoleInput->text(),
 			signResolutionInput->text(),
@@ -363,6 +366,9 @@ void MainWindow::buttonClicked( int button )
 	}
 }
 
+void MainWindow::closeEvent( QCloseEvent *e )
+{ e->setAccepted( saveDocument() ); }
+
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
 	if( e->mimeData()->hasUrls() && stack->currentIndex() != View )
@@ -440,6 +446,24 @@ void MainWindow::openFile( const QModelIndex &index )
 
 	QDesktopServices::openUrl( QString( "file://" ).append(
 		QString::fromStdString( list[index.row()].getPath() ) ) );
+}
+
+bool MainWindow::saveDocument()
+{
+	if( !bdoc->isModified() )
+		return true;
+
+	QMessageBox::StandardButton btn = QMessageBox::warning( this,
+		"QDigiDocClient", tr("Document has changed. Save changes?"),
+		QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Close,
+		QMessageBox::Save );
+	switch( btn )
+	{
+	case QMessageBox::Save: bdoc->save();
+	case QMessageBox::Close: return true;
+	case QMessageBox::Cancel:
+	default: return false;
+	}
 }
 
 void MainWindow::setCurrentPage( Pages page )
