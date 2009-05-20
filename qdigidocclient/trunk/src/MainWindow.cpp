@@ -95,9 +95,9 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( appTranslator );
 	QApplication::instance()->installTranslator( qtTranslator );
 
-	bdoc = new DigiDoc( this );
-	connect( bdoc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
-	connect( bdoc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
+	doc = new DigiDoc( this );
+	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
+	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
 	lang[0] = "et";
@@ -117,46 +117,46 @@ MainWindow::MainWindow( QWidget *parent )
 			const QFileInfo f( args[i] );
 			if( !f.isFile() )
 				continue;
-			if( bdoc->isNull() && f.suffix().toLower() == "bdoc" )
+			if( doc->isNull() && f.suffix().toLower() == "bdoc" )
 			{
-				bdoc->open( f.absoluteFilePath() );
+				doc->open( f.absoluteFilePath() );
 				setCurrentPage( View );
 				return;
 			}
 			else if( !addFile( f.absoluteFilePath() ) )
 				return;
 		}
-		if( !bdoc->isNull() )
+		if( !doc->isNull() )
 			setCurrentPage( Sign );
 	}
 }
 
 bool MainWindow::addFile( const QString &file )
 {
-	if( bdoc->isNull() )
+	if( doc->isNull() )
 	{
 		QFileInfo info( file );
-		QString doc = QString( "%1%2%3.bdoc" )
+		QString docname = QString( "%1%2%3.bdoc" )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( QDir::separator() )
 			.arg( info.fileName() );
 
 		if( SettingsValues().value( "Main/AskSaveAs", false ).toBool() ||
-			QFile::exists( doc ) )
+			QFile::exists( docname ) )
 		{
-			doc = QFileDialog::getSaveFileName(
-				this, tr("Save file"), doc, tr("Documents (*.bdoc *.ddoc)") );
-			if( doc.isEmpty() )
+			docname = QFileDialog::getSaveFileName(
+				this, tr("Save file"), docname, tr("Documents (*.bdoc *.ddoc)") );
+			if( docname.isEmpty() )
 				return false;
 		}
 
-		if( QFile::exists( doc ) )
-			QFile::remove( doc );
-		bdoc->create( doc );
+		if( QFile::exists( docname ) )
+			QFile::remove( docname );
+		doc->create( docname );
 	}
 
 	// Check if file exist and ask confirmation to overwrite
-	QList<digidoc::Document> docs = bdoc->documents();
+	QList<digidoc::Document> docs = doc->documents();
 	for( int i = 0; i < docs.size(); ++i )
 	{
 		if( QFileInfo( QString::fromStdString( docs[i].getPath() ) ).fileName() ==
@@ -168,7 +168,7 @@ bool MainWindow::addFile( const QString &file )
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			if( btn == QMessageBox::Yes )
 			{
-				bdoc->removeDocument( i );
+				doc->removeDocument( i );
 				break;
 			}
 			else
@@ -176,7 +176,7 @@ bool MainWindow::addFile( const QString &file )
 		}
 	}
 
-	bdoc->addFile( file );
+	doc->addFile( file );
 	return true;
 }
 
@@ -188,7 +188,7 @@ void MainWindow::buttonClicked( int button )
 	case ViewCrypt:
 		if( !saveDocument() )
 			break;
-		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << bdoc->fileName() ) )
+		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeOpenUtility:
@@ -216,17 +216,17 @@ void MainWindow::buttonClicked( int button )
 			}
 			setCurrentPage( Sign );
 		}
-		else if( bdoc->isNull() )
+		else if( doc->isNull() )
 			setCurrentPage( Home );
 		break;
 	}
 	case SignCancel:
-		if( !bdoc->documents().isEmpty() )
+		if( !doc->documents().isEmpty() )
 		{
 			QMessageBox msgBox( QMessageBox::Question, tr("Save container"),
 				tr("You added %1 files to container, but these are not signed yet.\n"
 					"Should I keep unsigned documents or remove these?")
-				.arg( bdoc->documents().size() ) );
+				.arg( doc->documents().size() ) );
 			QPushButton *cancel = msgBox.addButton( tr("Remove"), QMessageBox::ActionRole );
 			QPushButton *keep = msgBox.addButton( tr("Keep"), QMessageBox::ActionRole );
 			msgBox.exec();
@@ -241,7 +241,7 @@ void MainWindow::buttonClicked( int button )
 	case ViewClose:
 		if( !saveDocument() )
 			break;
-		bdoc->clear();
+		doc->clear();
 		setCurrentPage( Home );
 		break;
 	case SignRemoveFile:
@@ -269,13 +269,13 @@ void MainWindow::buttonClicked( int button )
 		for( int i = m->rowCount() - 1; i >= 0; --i )
 		{
 			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-				bdoc->removeDocument( i );
+				doc->removeDocument( i );
 		}
 		setCurrentPage( Sign );
 		break;
 	}
 	case SignSign:
-		if( !bdoc->sign(
+		if( !doc->sign(
 				signCityInput->text(),
 				signStateInput->text(),
 				signZipInput->text(),
@@ -299,7 +299,7 @@ void MainWindow::buttonClicked( int button )
 			tr("Documents (*.bdoc *.ddoc)") );
 		if( !file.isEmpty() )
 		{
-			bdoc->open( file );
+			doc->open( file );
 			setCurrentPage( View );
 		}
 		break;
@@ -308,14 +308,20 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( Sign );
 		break;
 	case ViewBrowse:
-		QDesktopServices::openUrl( QString( "file://" )
-			.append( QFileInfo( bdoc->fileName() ).absolutePath() ) );
+	{
+#ifdef Q_OS_WIN32
+		QString url( "file:///" );
+#else
+		QString url( "file://" );
+#endif
+		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
 		break;
+	}
 	case ViewEmail:
 	{
 #ifdef Q_OS_WIN32
-		QByteArray filePath = bdoc->fileName().toLatin1();
-		QByteArray fileName = QFileInfo( bdoc->fileName() ).fileName().toLatin1();
+		QByteArray filePath = doc->fileName().toLatin1();
+		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
 
 		MapiFileDesc doc[1];
 		doc[0].ulReserved = 0;
@@ -352,17 +358,17 @@ void MainWindow::buttonClicked( int button )
 		showWarning( tr("Failed to send email") );
 #else
 		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( bdoc->fileName() ).fileName() )
-			.arg( bdoc->fileName() ) );
+			.arg( QFileInfo( doc->fileName() ).fileName() )
+			.arg( doc->fileName() ) );
 #endif
 		break;
 	}
 	case ViewPrint:
 	{
 		QPrintPreviewDialog *dialog = new QPrintPreviewDialog( this );
-		PrintSheet *doc = new PrintSheet( bdoc, dialog );
-		doc->setVisible( false );
-		connect( dialog, SIGNAL(paintRequested(QPrinter*)), doc, SLOT(print(QPrinter*)) );
+		PrintSheet *p = new PrintSheet( doc, dialog );
+		p->setVisible( false );
+		connect( dialog, SIGNAL(paintRequested(QPrinter*)), p, SLOT(print(QPrinter*)) );
 		dialog->exec();
 		break;
 	}
@@ -379,7 +385,7 @@ void MainWindow::buttonClicked( int button )
 			for( int i = 0; i < m->rowCount(); ++i )
 			{
 				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-					bdoc->saveDocument( i, dir );
+					doc->saveDocument( i, dir );
 			}
 		}
 		break;
@@ -410,9 +416,9 @@ void MainWindow::dropEvent( QDropEvent *e )
 #endif
 			if( !file.isFile() )
 				continue;
-			else if( file.suffix().toLower() == "bdoc" && bdoc->isNull() )
+			else if( file.suffix().toLower() == "bdoc" && doc->isNull() )
 			{
-				bdoc->open( file.filePath() );
+				doc->open( file.filePath() );
 				setCurrentPage( View );
 				return;
 			}
@@ -427,7 +433,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 {
 	view->clear();
 	QList<QTreeWidgetItem*> items;
-	Q_FOREACH( const digidoc::Document &file, bdoc->documents() )
+	Q_FOREACH( const digidoc::Document &file, doc->documents() )
 	{
 		QTreeWidgetItem *i = new QTreeWidgetItem( view );
 		QFileInfo info( QString::fromStdString( file.getPath() ) );
@@ -462,7 +468,7 @@ void MainWindow::on_settings_clicked() { (new Settings( this ))->show(); }
 
 void MainWindow::openFile( const QModelIndex &index )
 {
-	QList<digidoc::Document> list = bdoc->documents();
+	QList<digidoc::Document> list = doc->documents();
 	if( list.isEmpty() || index.row() >= list.size() )
 		return;
 
@@ -472,7 +478,7 @@ void MainWindow::openFile( const QModelIndex &index )
 
 bool MainWindow::saveDocument()
 {
-	if( !bdoc->isModified() )
+	if( !doc->isModified() )
 		return true;
 
 	QMessageBox::StandardButton btn = QMessageBox::warning( this,
@@ -481,7 +487,7 @@ bool MainWindow::saveDocument()
 		QMessageBox::Save );
 	switch( btn )
 	{
-	case QMessageBox::Save: bdoc->save();
+	case QMessageBox::Save: doc->save();
 	case QMessageBox::Close: return true;
 	case QMessageBox::Cancel:
 	default: return false;
@@ -507,9 +513,9 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		signAddFile->setEnabled( bdoc->signatures().isEmpty() );
+		signAddFile->setEnabled( doc->signatures().isEmpty() );
 		signSign->setEnabled(
-			signContentView->model()->rowCount() > 0 && bdoc->signCert().isValid() );
+			signContentView->model()->rowCount() > 0 && doc->signCert().isValid() );
 		break;
 	}
 	case View:
@@ -521,7 +527,7 @@ void MainWindow::setCurrentPage( Pages page )
 
 		int i = 0;
 		bool cardOwnerSignature = false;
-		Q_FOREACH( const DigiDocSignature &c, bdoc->signatures() )
+		Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
 		{
 			SignatureWidget *signature = new SignatureWidget( c, i, viewSignatures );
 			viewSignaturesLayout->insertWidget( i, signature );
@@ -530,12 +536,12 @@ void MainWindow::setCurrentPage( Pages page )
 			if( !cardOwnerSignature )
 			{
 				cardOwnerSignature =
-					(c.cert().subjectInfo( "serialNumber" ) == bdoc->signCert().subjectInfo( "serialNumber" ));
+					(c.cert().subjectInfo( "serialNumber" ) == doc->signCert().subjectInfo( "serialNumber" ));
 			}
 			++i;
 		}
 
-		viewFileName->setText( tr("Container: <b>%1</b>").arg( bdoc->fileName() ) );
+		viewFileName->setText( tr("Container: <b>%1</b>").arg( doc->fileName() ) );
 
 		if( i > 0 && cardOwnerSignature )
 			viewFileStatus->setText( tr("This container is signed by you") );
@@ -544,7 +550,7 @@ void MainWindow::setCurrentPage( Pages page )
 		else
 			viewFileStatus->setText( tr("Container is unsigned") );
 
-		viewAddSignature->setEnabled( bdoc->signCert().isValid() && !cardOwnerSignature );
+		viewAddSignature->setEnabled( doc->signCert().isValid() && !cardOwnerSignature );
 		break;
 	}
 	default: break;
@@ -554,9 +560,9 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !bdoc->authCert().isNull() )
+	if( !doc->authCert().isNull() )
 	{
-		const SslCertificate c = bdoc->authCert();
+		const SslCertificate c = doc->authCert();
 		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
@@ -564,13 +570,13 @@ void MainWindow::showCardStatus()
 
 		QLocale l;
 		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( bdoc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !bdoc->signCert().isValid() )
+			.arg( l.toString( doc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
+		if( !doc->signCert().isValid() )
 			content += tr("<br /><font color=\"red\">Sign certificate is expired</font>");
 
 		content += tr("<br />Auth certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( bdoc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !bdoc->authCert().isValid() )
+			.arg( l.toString( doc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
+		if( !doc->authCert().isValid() )
 			content += tr("<br /><font color=\"red\">Auth certificate is expired</font>");
 	}
 	else
@@ -582,7 +588,7 @@ void MainWindow::showCardStatus()
 		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
 		(!bdoc->authCert().isValid() || !bdoc->signCert().isValid()) );*/
 
-	const SslCertificate s = bdoc->signCert();
+	const SslCertificate s = doc->signCert();
 	signSignerLabel->setText( QString( "%1 %2 (%3)" )
 		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
 		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
@@ -596,7 +602,7 @@ void MainWindow::showWarning( const QString &msg )
 
 void MainWindow::viewSignaturesRemove( unsigned int num )
 {
-	bdoc->removeSignature( num );
-	bdoc->save();
-	setCurrentPage( bdoc->signatures().isEmpty() ? Sign : View );
+	doc->removeSignature( num );
+	doc->save();
+	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
 }

@@ -79,7 +79,7 @@ private:
 	bool saveDocument();
 	void setCurrentPage( Pages page );
 
-	DigiDoc	*bdoc;
+	DigiDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
 	QHash<int,QString> lang;
 };
