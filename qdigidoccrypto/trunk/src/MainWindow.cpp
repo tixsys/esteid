@@ -127,7 +127,7 @@ bool MainWindow::addFile( const QString &file )
 
 		if( QFile::exists( docname ) )
 			QFile::remove( docname );
-		doc->create( QDir::toNativeSeparators( docname ) );
+		doc->create( docname );
 	}
 	doc->addFile( file, "" );
 	return true;
@@ -232,13 +232,19 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case ViewBrowse:
-		QDesktopServices::openUrl( QString( "file://" )
-			.append( QFileInfo( doc->fileName() ).absolutePath() ) );
+	{
+#ifdef Q_OS_WIN32
+		QString url( "file:///" );
+#else
+		QString url( "file://" );
+#endif
+		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
 		break;
+	}
 	case ViewEmail:
 	{
 #ifdef Q_OS_WIN32
-		QByteArray filePath = doc->fileName().toLatin1();
+		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
 
 		MapiFileDesc doc[1];
@@ -399,7 +405,8 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 	case View:
 	{
-		viewFileName->setText( tr("Container: <b>%1</b>").arg( doc->fileName() ) );
+		viewFileName->setText( tr("Container: <b>%1</b>")
+			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
 		viewAddFile->setDisabled( doc->isEncrypted() );
 		viewSaveAs->setDisabled( doc->isEncrypted() );
 		viewRemoveFile->setDisabled( doc->isEncrypted() );
