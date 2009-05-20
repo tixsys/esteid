@@ -58,6 +58,7 @@ void KeyWidget::remove() { Q_EMIT remove( m_id ); }
 void KeyWidget::showDetails() { (new KeyDialog( m_key, this ))->show(); }
 
 
+
 KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 :	QWidget( parent )
 ,	k( key )
@@ -88,6 +89,8 @@ void KeyDialog::addItem( const QString &parameter, const QString &value )
 void KeyDialog::showCertificate()
 { (new CertificateWidget( k.cert, this ))->show(); }
 
+
+
 KeyAddDialog::KeyAddDialog( QWidget *parent )
 :	QWidget( parent )
 {
@@ -99,6 +102,7 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	skView->header()->setResizeMode( 0, QHeaderView::Stretch );
 	skView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 	skView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+	connect( skView, SIGNAL(doubleClicked(QModelIndex)), SLOT(on_add_clicked()) );
 
 	ldap = new LdapSearch( this );
 	connect( ldap, SIGNAL(searchResult(CKey)), SLOT(showResult(CKey)) );
@@ -110,8 +114,16 @@ void KeyAddDialog::on_add_clicked()
 
 void KeyAddDialog::on_search_clicked()
 {
-	skView->clear();
-	ldap->search( QString( "(serialNumber=%1)" ).arg( sscode->text() ) );
+	if( sscode->text().size() != 11 )
+	{
+		QMessageBox::warning( this, "QDigiDocCrypto",
+			tr("Social security number is not valid!") );
+	}
+	else
+	{
+		skView->clear();
+		ldap->search( QString( "(serialNumber=%1)" ).arg( sscode->text() ) );
+	}
 }
 
 void KeyAddDialog::showError( const QString &msg, int err )

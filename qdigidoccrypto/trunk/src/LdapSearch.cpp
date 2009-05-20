@@ -53,20 +53,19 @@ void LdapSearch::search( const QString &search )
 		search.toLatin1().data(), NULL, 0, NULL, NULL, NULL, 1, &msg_id );
 	if( err )
 		Q_EMIT error( tr("Failed to init ldap search"), err );
-
-	startTimer( 5000 );
+	else
+		startTimer( 5000 );
 }
 
 void LdapSearch::timerEvent( QTimerEvent *e )
 {
 	LDAPMessage *result;
-	LDAP_TIMEVAL t;
-	t.tv_sec = 5;
-	t.tv_usec = 0;
+	LDAP_TIMEVAL t = { 5, 0 };
 	int err = ldap_result( ldap, msg_id, LDAP_MSG_ONE, &t, &result );
 	if( err != LDAP_RES_SEARCH_ENTRY && err != LDAP_RES_SEARCH_RESULT )
 	{
-		Q_EMIT error( tr("Failed to get result"), err);
+		Q_EMIT error( tr("Failed to get result"), err );
+		killTimer( e->timerId() );
 		return;
 	}
 

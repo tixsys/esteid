@@ -37,20 +37,6 @@
    <item>
     <layout class="QHBoxLayout" name="buttonsLayout">
      <item>
-      <widget class="QPushButton" name="decrypt">
-       <property name="text">
-        <string>Decrypt</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="cert">
-       <property name="text">
-        <string>Show certificate</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="buttonsSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -64,9 +50,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel">
+      <widget class="QPushButton" name="cert">
        <property name="text">
-        <string>Cancel</string>
+        <string>Show certificate</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="close">
+       <property name="text">
+        <string>Close</string>
        </property>
       </widget>
      </item>
@@ -93,7 +86,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>cancel</sender>
+   <sender>close</sender>
    <signal>clicked()</signal>
    <receiver>KeyDialog</receiver>
    <slot>close()</slot>
