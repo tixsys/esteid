@@ -232,7 +232,6 @@ bool CryptDoc::encrypt()
 	}
 #else // To avoid full file path
 	char id[50];
-	char size[100];
 	for( int i = 0; i < m_doc->nDataFiles; ++i )
 	{
 		DataFile *data = m_doc->pDataFiles[i];

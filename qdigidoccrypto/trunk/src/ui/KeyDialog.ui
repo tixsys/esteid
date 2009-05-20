@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>KeyDialog</class>
- <widget class="QWidget" name="KeyDialog" >
-  <property name="geometry" >
+ <widget class="QWidget" name="KeyDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,52 +10,52 @@
     <height>222</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Crypt recipient</string>
   </property>
-  <layout class="QVBoxLayout" name="KeyDialogLayout" >
+  <layout class="QVBoxLayout" name="KeyDialogLayout">
    <item>
-    <widget class="QLabel" name="title" />
+    <widget class="QLabel" name="title"/>
    </item>
    <item>
-    <widget class="QTreeWidget" name="view" >
-     <property name="rootIsDecorated" >
+    <widget class="QTreeWidget" name="view">
+     <property name="rootIsDecorated">
       <bool>false</bool>
      </property>
      <column>
-      <property name="text" >
+      <property name="text">
        <string>Attribute</string>
       </property>
      </column>
      <column>
-      <property name="text" >
+      <property name="text">
        <string>Value</string>
       </property>
      </column>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="buttonsLayout" >
+    <layout class="QHBoxLayout" name="buttonsLayout">
      <item>
-      <widget class="QPushButton" name="decrypt" >
-       <property name="text" >
+      <widget class="QPushButton" name="decrypt">
+       <property name="text">
         <string>Decrypt</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cert" >
-       <property name="text" >
+      <widget class="QPushButton" name="cert">
+       <property name="text">
         <string>Show certificate</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="buttonsSpacer" >
-       <property name="orientation" >
+      <spacer name="buttonsSpacer">
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>264</width>
          <height>20</height>
@@ -63,8 +64,8 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="cancel" >
-       <property name="text" >
+      <widget class="QPushButton" name="cancel">
+       <property name="text">
         <string>Cancel</string>
        </property>
       </widget>
@@ -72,15 +73,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>title</zorder>
-  <zorder>error</zorder>
-  <zorder>buttonBox</zorder>
-  <zorder>tabWidget</zorder>
-  <zorder>view</zorder>
-  <zorder>cert</zorder>
-  <zorder>buttonsSpacer</zorder>
-  <zorder></zorder>
-  <zorder>cancel</zorder>
  </widget>
  <resources/>
  <connections>
@@ -90,11 +82,11 @@
    <receiver>KeyDialog</receiver>
    <slot>showCertificate()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>335</x>
      <y>272</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>167</y>
     </hint>
@@ -106,11 +98,11 @@
    <receiver>KeyDialog</receiver>
    <slot>close()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>352</x>
      <y>200</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>110</y>
     </hint>
