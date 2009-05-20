@@ -152,15 +152,14 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( bdoc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
-	languages->setItemData( 0, "et" );
-	languages->setItemData( 1, "en" );
-	languages->setItemData( 2, "ru" );
-	languages->setItemData( 3, "de" );
-	languages->setItemData( 4, "lv" );
-	languages->setItemData( 5, "lt" );
-	languages->setCurrentIndex( languages->findData(
-		SettingsValues().value( "Main/Language", "et" ) ) );
-	on_languages_activated( languages->currentIndex() );
+	lang[0] = "et";
+	lang[1] = "en";
+	lang[2] = "ru";
+	lang[3] = "de";
+	lang[4] = "lv";
+	lang[5] = "lt";
+	on_languages_activated( lang.key(
+		SettingsValues().value( "Main/Language", "et" ).toString() ) );
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
@@ -480,11 +479,11 @@ void MainWindow::on_introCheck_stateChanged( int state )
 
 void MainWindow::on_languages_activated( int index )
 {
-	const QString lang = languages->itemData( index ).toString();
-	SettingsValues().setValue( "Main/Language", lang );
-	appTranslator->load( ":/translations/" + lang );
-	qtTranslator->load( ":/translations/qt_" + lang );
+	SettingsValues().setValue( "Main/Language", lang[index] );
+	appTranslator->load( ":/translations/" + lang[index] );
+	qtTranslator->load( ":/translations/qt_" + lang[index] );
 	retranslateUi( this );
+	languages->setCurrentIndex( index );
 	showCardStatus();
 }
 

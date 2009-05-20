@@ -82,4 +82,5 @@ private:
 
 	DigiDoc	*bdoc;
 	QTranslator *appTranslator, *qtTranslator;
+	QHash<int,QString> lang;
 };
