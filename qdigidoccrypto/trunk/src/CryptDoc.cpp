@@ -104,7 +104,7 @@ void CryptDoc::clear()
 void CryptDoc::create( const QString &file )
 {
 	clear();
-	const char *format = ConfigItem_lookup("DIGIDOC_FORMAT");
+	const char *format = "DIGIDOC-XML"; //ConfigItem_lookup("DIGIDOC_FORMAT");
 	const char *version = "1.3"; //ConfigItem_lookup("DIGIDOC_VERSION");
 
 	int err = SignedDoc_new( &m_doc, format, version );

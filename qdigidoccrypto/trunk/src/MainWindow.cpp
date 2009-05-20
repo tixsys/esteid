@@ -112,9 +112,8 @@ bool MainWindow::addFile( const QString &file )
 	if( doc->isNull() )
 	{
 		QFileInfo info( file );
-		QString docname = QString( "%1%2%3.cdoc" )
+		QString docname = QString( "%1/%3.cdoc" )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
-			.arg( QDir::separator() )
 			.arg( info.fileName() );
 
 		if( SettingsValues().value( "Main/AskSaveAs", false ).toBool() ||
@@ -128,7 +127,7 @@ bool MainWindow::addFile( const QString &file )
 
 		if( QFile::exists( docname ) )
 			QFile::remove( docname );
-		doc->create( docname );
+		doc->create( QDir::toNativeSeparators( docname ) );
 	}
 	doc->addFile( file, "" );
 	return true;
