@@ -32,6 +32,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QProcess>
 #include <QSslCertificate>
 #include <QTranslator>
 #include <QUrl>
@@ -128,6 +129,28 @@ bool MainWindow::addFile( const QString &file )
 			QFile::remove( docname );
 		doc->create( docname );
 	}
+
+	// Check if file exist and ask confirmation to overwrite
+	QList<CDocument> docs = doc->documents();
+	for( int i = 0; i < docs.size(); ++i )
+	{
+		if( QFileInfo( docs[i].filename ).fileName() ==
+			QFileInfo( file ).fileName() )
+		{
+			QMessageBox::StandardButton btn = QMessageBox::warning( this,
+				"QDigiDocClient",
+				tr("Container contains file with same name, ovewrite?"),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+			if( btn == QMessageBox::Yes )
+			{
+				doc->removeDocument( i );
+				break;
+			}
+			else
+				return true;
+		}
+	}
+
 	doc->addFile( file, "" );
 	return true;
 }
@@ -145,6 +168,10 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
+	case HomeOpenUtility:
+		if( !QProcess::startDetached( "qesteidutil" ) )
+			showWarning( tr("Failed to start process 'qesteidutil'"), -1 );
+		break;
 	case HomeCreate:
 		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
 		{
@@ -180,25 +207,12 @@ void MainWindow::buttonClicked( int button )
 		key->show();
 		break;
 	}
-	case ViewCrypt:
-		if( doc->isEncrypted() )
-		{
-			bool ok;
-			QString pin = QInputDialog::getText( 0, "QDigiDocCrypto",
-				QObject::tr("Selected action requires auth certificate.\n"
-					"For using auth certificate enter PIN1"),
-				QLineEdit::Password,
-				QString(), &ok );
-			if( !ok )
-				break;
-			doc->decrypt( pin );
-		}
-		else
-		{
-			if( doc->encrypt() )
-				doc->save();
-		}
-		setCurrentPage( View );
+	case IntroBack:
+	case ViewClose:
+		if( !saveDocument() )
+			break;
+		doc->clear();
+		setCurrentPage( Home );
 		break;
 	case ViewRemoveFile:
 	{
@@ -228,6 +242,35 @@ void MainWindow::buttonClicked( int button )
 				doc->removeDocument( i );
 		}
 		setCurrentPage( View );
+		break;
+	}
+	case ViewCrypt:
+		if( doc->isEncrypted() )
+		{
+			bool ok;
+			QString pin = QInputDialog::getText( 0, "QDigiDocCrypto",
+				QObject::tr("Selected action requires auth certificate.\n"
+					"For using auth certificate enter PIN1"),
+				QLineEdit::Password,
+				QString(), &ok );
+			if( !ok )
+				break;
+			doc->decrypt( pin );
+		}
+		else
+			doc->encrypt();
+		setCurrentPage( View );
+		break;
+	case HomeView:
+	{
+		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
+			tr("Documents (*.cdoc)") );
+		if( !file.isEmpty() )
+		{
+			doc->open( file );
+			setCurrentPage( View );
+		}
 		break;
 	}
 	case ViewBrowse:
@@ -286,23 +329,6 @@ void MainWindow::buttonClicked( int button )
 #endif
 		break;
 	}
-	case HomeView:
-	{
-		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
-			tr("Documents (*.cdoc)") );
-		if( !file.isEmpty() )
-		{
-			doc->open( file );
-			setCurrentPage( View );
-		}
-		break;
-	}
-	case IntroBack:
-	case ViewClose:
-		doc->clear();
-		setCurrentPage( Home );
-		break;
 	case ViewSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
@@ -323,12 +349,12 @@ void MainWindow::buttonClicked( int button )
 	}
 }
 
+void MainWindow::closeEvent( QCloseEvent *e )
+{ e->setAccepted( saveDocument() ); }
+
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
-	if( e->mimeData()->hasUrls() &&
-		(stack->currentIndex() == Home ||
-		 stack->currentIndex() == Intro ||
-		 (stack->currentIndex() == View && !doc->isEncrypted()) ) )
+	if( e->mimeData()->hasUrls() && !doc->isEncrypted() )
 		e->acceptProposedAction();
 }
 
@@ -363,8 +389,8 @@ void MainWindow::on_introCheck_stateChanged( int state )
 void MainWindow::on_languages_activated( int index )
 {
 	SettingsValues().setValue( "Main/Language", lang[index] );
-	appTranslator->load( QString( ":/translations/" ).append( lang[index] ) );
-	qtTranslator->load( QString( ":/translations/qt_" ).append( lang[index] ) );
+	appTranslator->load( ":/translations/" + lang[index] );
+	qtTranslator->load( ":/translations/qt_" + lang[index] );
 	retranslateUi( this );
 	languages->setCurrentIndex( index );
 	showCardStatus();
@@ -392,6 +418,24 @@ void MainWindow::removeKey( int id )
 {
 	doc->removeKey( id );
 	setCurrentPage( View );
+}
+
+bool MainWindow::saveDocument()
+{
+	if( !doc->isModified() )
+		return true;
+
+	QMessageBox::StandardButton btn = QMessageBox::warning( this,
+		"QDigiDocCrypto", tr("Document has changed. Save changes?"),
+		QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Close,
+		QMessageBox::Save );
+	switch( btn )
+	{
+	case QMessageBox::Save: doc->save();
+	case QMessageBox::Close: return true;
+	case QMessageBox::Cancel:
+	default: return false;
+	}
 }
 
 void MainWindow::setCurrentPage( Pages page )
