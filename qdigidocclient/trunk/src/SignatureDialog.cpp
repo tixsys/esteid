@@ -22,26 +22,24 @@
 
 #include "SignatureDialog.h"
 
-#include "MainWindow.h"
+#include "CertificateWidget.h"
+#include "SslCertificate.h"
 
 #include <digidoc/Document.h>
 
 #include <QDateTime>
-#include <QDesktopServices>
-#include <QDir>
 #include <QSslKey>
-#include <QTemporaryFile>
-#include <QUrl>
 
 SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
 :	QWidget( parent )
 ,	num( signnum )
 ,	s( signature )
 {
+	const SslCertificate cert = s.cert();
 	QLabel *c = new QLabel( this );
 	c->setText( tr("<b>%1 %2</b><br />%3<br />Signed on %4<br />Signature is %5")
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( s.cert().subjectInfo( "SN" ) ) ) )
+		.arg( SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) )
 		.arg( s.location() )
 		.arg( s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) )
 		.arg( s.isValid() ? tr("valid") : tr("not valid") ) );
@@ -75,11 +73,11 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
 
-	QSslCertificate c = s.cert();
+	const SslCertificate c = s.cert();
 	QString titleText = QString("%1 %2 %3")
-		.arg( parseName( parseCertInfo( c.subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( c.subjectInfo( "SN" ) ) ) )
-		.arg( c.subjectInfo( "serialNumber") );
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+		.arg( c.subjectInfo( "serialNumber" ) );
 	title->setText( titleText );
 	setWindowTitle( titleText );
 	title->setStyleSheet( QString( "background-color: %1" ).arg( s.isValid() ? "green" : "red" ) );
@@ -142,16 +140,4 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 }
 
 void SignatureDialog::showCertificate()
-{
-	QTemporaryFile cert( QString( "%1%2XXXXXX.cer" )
-		.arg( QDir::tempPath() )
-		.arg( QDir::separator() ) );
-	cert.setAutoRemove( false );
-	if( !cert.open() )
-		false;
-	cert.write( s.cert().toDer() );
-	QString file = cert.fileName();
-	cert.close();
-
-	QDesktopServices::openUrl( file.prepend( "file://" ) );
-}
+{ (new CertificateWidget( s.cert(), this ))->show(); }

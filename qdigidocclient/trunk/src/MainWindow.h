@@ -27,9 +27,6 @@
 class DigiDoc;
 class QTranslator;
 
-QString parseCertInfo( const QString &in );
-QString parseName( const QString &in );
-
 class MainWindow: public QWidget, private Ui::MainWindow
 {
 	Q_OBJECT

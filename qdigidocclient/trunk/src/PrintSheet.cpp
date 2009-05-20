@@ -23,7 +23,7 @@
 #include "PrintSheet.h"
 
 #include "DigiDoc.h"
-#include "MainWindow.h"
+#include "SslCertificate.h"
 
 #include <digidoc/Document.h>
 
@@ -31,14 +31,12 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-PrintSheet::PrintSheet( DigiDoc *doc )
-:	d( doc )
-{}
-
-QString PrintSheet::html() const
+PrintSheet::PrintSheet( DigiDoc *doc, QWidget *parent )
+:	QWebView( parent )
+,	d( doc )
 {
-	QString c;
-	QTextStream s( &c );
+	QString html;
+	QTextStream s( &html );
 	s
 	<< "<html>"
 	<< "<head>"
@@ -99,7 +97,7 @@ QString PrintSheet::html() const
 	int i = 1;
 	Q_FOREACH( DigiDocSignature sig, d->signatures() )
 	{
-		const QSslCertificate cert = sig.cert();
+		const SslCertificate cert = sig.cert();
 		s
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
@@ -111,11 +109,11 @@ QString PrintSheet::html() const
 		<< "<tr>"
 		<< "<td class=\"textborder\">" << i << "</td>"
 		<< "<td class=\"textborderright\">"
-		<< parseName( parseCertInfo( cert.subjectInfo( "GN" ) ) ) << " "
-		<< parseName( parseCertInfo( cert.subjectInfo( "SN" ) ) )
+		<< SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
+		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) )
 		<< "</td>"
 		<< "<td class=\"textborderright\">"
-		<< cert.subjectInfo( "serialNumber")
+		<< cert.subjectInfo( "serialNumber" )
 		<< "</td>"
 		<< "<td class=\"textborderright\">"
 		<< sig.dateTime().toString( "dd.MM.yyyy hh:mm:ss" )
@@ -161,5 +159,5 @@ QString PrintSheet::html() const
 	<< "</body>"
 	<< "</html>";
 
-	return c;
+	setHtml( html );
 }

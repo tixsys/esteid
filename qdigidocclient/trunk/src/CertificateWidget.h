@@ -1,7 +1,7 @@
 /*
- * QDigiDocCrypt
+ * QDigiDocClient
  *
- * Copyright (C) 2009 Jargo Kster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -22,17 +22,28 @@
 
 #pragma once
 
-#include <QWebView>
+#include "ui_CertificateWidget.h"
 
-class DigiDoc;
+class CertificateWidgetPrivate;
+class QSslCertificate;
 
-class PrintSheet: public QWebView
+class CertificateWidget: public QWidget, private Ui::CertificateWidget
 {
 	Q_OBJECT
-
 public:
-	PrintSheet( DigiDoc *doc, QWidget *parent = 0 );
+	CertificateWidget( QWidget *parent = 0 );
+	CertificateWidget( const QSslCertificate &cert, QWidget *parent = 0 );
+	~CertificateWidget();
+
+	void setCertificate( const QSslCertificate &cert );
+
+private Q_SLOTS:
+	void on_parameters_itemClicked( QTreeWidgetItem *item, int column );
+	void on_save_clicked();
 
 private:
-	DigiDoc *d;
+	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
+	QByteArray addHexSeparators( const QByteArray &data ) const;
+
+	CertificateWidgetPrivate *d;
 };

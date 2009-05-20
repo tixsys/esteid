@@ -25,6 +25,7 @@
 #include "PrintSheet.h"
 #include "Settings.h"
 #include "SignatureDialog.h"
+#include "SslCertificate.h"
 
 #include <digidoc/Document.h>
 
@@ -34,13 +35,11 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QPrinter>
-#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QProcess>
 #include <QSslCertificate>
 #include <QTranslator>
 #include <QUrl>
-#include <QWebView>
 
 #ifdef Q_OS_WIN32
 #include <QLibrary>
@@ -48,63 +47,12 @@
 #include <mapi.h>
 #endif
 
-
-QString fileSize( qint64 size )
+static QString fileSize( qint64 size )
 {
 	double sizeStr = (double)size/1024;
 	return QString( "%1 %2" )
 		.arg( QString::number( sizeStr > 1024 ? sizeStr/ 1024 : sizeStr, 'f', 2 ) )
 		.arg( sizeStr > 1024 ? "MB" : "KB" );
-}
-
-QString parseCertInfo( const QString &in )
-{
-	if( !in.contains( "\\x" ) )
-		return in;
-
-	QString res;
-	bool firstByte = true;
-	ushort data;
-	int i = 0;
-	while( i < in.size() )
-	{
-		if( in.mid( i, 2 ) == "\\x" )
-		{
-			if( firstByte )
-				data = in.mid( i+2, 2 ).toUShort( 0, 16 );
-			else
-				res += QChar( (data<<8) + in.mid( i+2, 2 ).toUShort( 0, 16 ) );
-			i += 4;
-		}
-		else
-		{
-			if( firstByte )
-				data = in[i].unicode();
-			else
-				res += QChar( (data<<8) + in[i].unicode() );
-			++i;
-		}
-		firstByte = !firstByte;
-	}
-	return res;
-}
-
-QString parseName( const QString &in )
-{
-	QString ret = in.toLower();
-	bool firstChar = true;
-	for( QString::iterator i = ret.begin(); i != ret.end(); ++i )
-	{
-		if( !firstChar && !i->isLetter() )
-			firstChar = true;
-
-		if( firstChar && i->isLetter() )
-		{
-			*i = i->toUpper();
-			firstChar = false;
-		}
-	}
-	return ret;
 }
 
 
@@ -386,16 +334,11 @@ void MainWindow::buttonClicked( int button )
 	}
 	case ViewPrint:
 	{
-		QPrinter printer;
-		QPrintDialog *dialog = new QPrintDialog( &printer, this );
-		dialog->setWindowTitle( tr("Print signature summary") );
-		if( dialog->exec() != QDialog::Accepted )
-			break;
-		QWebView *view = new QWebView();
-		PrintSheet doc( bdoc );
-		view->setHtml( doc.html() );
-		view->print( &printer );
-		view->deleteLater();
+		QPrintPreviewDialog *dialog = new QPrintPreviewDialog( this );
+		PrintSheet *doc = new PrintSheet( bdoc, dialog );
+		doc->setVisible( false );
+		connect( dialog, SIGNAL(paintRequested(QPrinter*)), doc, SLOT(print(QPrinter*)) );
+		dialog->exec();
 		break;
 	}
 	case SignSaveAs:
@@ -567,10 +510,11 @@ void MainWindow::showCardStatus()
 	QString content;
 	if( !bdoc->authCert().isNull() )
 	{
+		const SslCertificate c = bdoc->authCert();
 		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
-			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "GN" ) ) ) )
-			.arg( parseName( parseCertInfo( bdoc->authCert().subjectInfo( "SN" ) ) ) )
-			.arg( bdoc->signCert().subjectInfo( "serialNumber") );
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+			.arg( c.subjectInfo( "serialNumber" ) );
 
 		QLocale l;
 		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
@@ -592,10 +536,11 @@ void MainWindow::showCardStatus()
 		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
 		(!bdoc->authCert().isValid() || !bdoc->signCert().isValid()) );*/
 
+	const SslCertificate s = bdoc->signCert();
 	signSignerLabel->setText( QString( "%1 %2 (%3)" )
-		.arg( parseName( parseCertInfo( bdoc->signCert().subjectInfo( "GN" ) ) ) )
-		.arg( parseName( parseCertInfo( bdoc->signCert().subjectInfo( "SN" ) ) ) )
-		.arg( bdoc->signCert().subjectInfo( "serialNumber") ) );
+		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
+		.arg( s.subjectInfo( "serialNumber" ) ) );
 
 	setCurrentPage( (Pages)stack->currentIndex() );
 }

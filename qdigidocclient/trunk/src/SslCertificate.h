@@ -1,7 +1,7 @@
 /*
- * QDigiDocCrypt
+ * QDigiDocClient
  *
- * Copyright (C) 2009 Jargo Kster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -22,17 +22,25 @@
 
 #pragma once
 
-#include <QWebView>
+#include <QSslCertificate>
 
-class DigiDoc;
-
-class PrintSheet: public QWebView
+class SslCertificate: public QSslCertificate
 {
-	Q_OBJECT
-
 public:
-	PrintSheet( DigiDoc *doc, QWidget *parent = 0 );
+	SslCertificate( const QSslCertificate &cert );
+
+	static QString formatName( const QString &name );
+	static QSslCertificate fromX509( const Qt::HANDLE *x509 );
+	bool		isTempel() const;
+	QStringList keyUsage() const;
+	QStringList policies() const;
+	QString		policyInfo( const QString &oid ) const;
+	QString		subjectInfoUtf8( SubjectInfo subject ) const;
+	QString		subjectInfoUtf8( const QByteArray &tag ) const;
+	QByteArray	serialNumber() const;
+	QByteArray	versionNumber() const;
 
 private:
-	DigiDoc *d;
+	void*	getExtension( int nid ) const;
+	QString	toUtf8( const QString &data ) const;
 };

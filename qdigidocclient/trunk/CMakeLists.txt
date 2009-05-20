@@ -19,23 +19,31 @@ if( UNIX )
 endif( UNIX )
 find_package( LibDigiDoc REQUIRED )
 
-SET( HEADERS
+SET( MOC_HEADERS
+	src/CertificateWidget.h
 	src/DigiDoc.h
 	src/MainWindow.h
 	src/PrintSheet.h
 	src/Settings.h
 	src/SignatureDialog.h
 	)
+SET( HEADERS
+	${MOC_HEADERS}
+	src/SslCertificate.h
+	)
 SET( SOURCES
 	${HEADERS}
+	src/CertificateWidget.cpp
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
 	src/PrintSheet.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
+	src/SslCertificate.cpp
 	)
 SET( UIS
+	src/ui/CertificateWidget.ui
 	src/ui/MainWindow.ui
 	src/ui/Settings.ui
 	src/ui/SignatureDialog.ui
@@ -62,7 +70,7 @@ INCLUDE_DIRECTORIES(
 
 QT4_ADD_RESOURCES( RC_SOURCES ${RCS} )
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
-QT4_WRAP_CPP( MOC_SOURCES ${HEADERS} )
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 
 if(MSVC)
 	# disable warning C4290: C++ exception specification ignored
