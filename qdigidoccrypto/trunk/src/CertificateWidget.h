@@ -1,5 +1,5 @@
 /*
- * QDigiDocCrypto
+ * QEstEidUtil
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -22,10 +22,28 @@
 
 #pragma once
 
-#include <QString>
+#include "ui_CertificateWidget.h"
 
-class Common
+class CertificateWidgetPrivate;
+class QSslCertificate;
+
+class CertificateWidget: public QWidget, private Ui::CertificateWidget
 {
+	Q_OBJECT
 public:
-	static QString fileSize( quint64 bytes );
+	CertificateWidget( QWidget *parent = 0 );
+	CertificateWidget( const QSslCertificate &cert, QWidget *parent = 0 );
+	~CertificateWidget();
+
+	void setCertificate( const QSslCertificate &cert );
+
+private Q_SLOTS:
+	void on_parameters_itemClicked( QTreeWidgetItem *item, int column );
+	void on_save_clicked();
+
+private:
+	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
+	QByteArray addHexSeparators( const QByteArray &data ) const;
+
+	CertificateWidgetPrivate *d;
 };

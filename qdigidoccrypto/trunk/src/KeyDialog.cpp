@@ -22,14 +22,11 @@
 
 #include "KeyDialog.h"
 
+#include "CertificateWidget.h"
 #include "LdapSearch.h"
 
 #include <QDateTime>
-#include <QDesktopServices>
-#include <QDir>
 #include <QMessageBox>
-#include <QTemporaryFile>
-#include <QUrl>
 
 KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
 :	QWidget( parent )
@@ -73,50 +70,24 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 	title->setStyleSheet( QString( "background-color: green" ) );
 
 	QSslCertificate cert( key.certPem, QSsl::Pem );
-	// Recipient
-	QTreeWidgetItem *i;
-	i = new QTreeWidgetItem( view );
-	i->setText( 0, tr("Recipient") );
-	i->setText( 1, k.recipient );
-	view->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( view );
-	i->setText( 0, tr("Crypt method") );
-	i->setText( 1, k.type );
-	view->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( view );
-	i->setText( 0, tr("ID") );
-	i->setText( 1, k.id );
-	view->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( view );
-	i->setText( 0, tr("Expires") );
-	i->setText( 1, cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
-	view->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( view );
-	i->setText( 0, tr("Issuer") );
-	i->setText( 1, cert.issuerInfo( QSslCertificate::CommonName ) );
-	view->addTopLevelItem( i );
-
+	addItem( tr("Recipient"), k.recipient );
+	addItem( tr("Crypt method"), k.type );
+	addItem( tr("ID"), k.id );
+	addItem( tr("Expires"), cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
+	addItem( tr("Issuer"), cert.issuerInfo( QSslCertificate::CommonName ) );
 	view->resizeColumnToContents( 0 );
 }
 
-void KeyDialog::showCertificate()
+void KeyDialog::addItem( const QString &parameter, const QString &value )
 {
-	QTemporaryFile cert( QString( "%1%2XXXXXX.cer" )
-		.arg( QDir::tempPath() )
-		.arg( QDir::separator() ) );
-	cert.setAutoRemove( false );
-	if( !cert.open() )
-		false;
-	cert.write( QSslCertificate( k.certPem, QSsl::Pem ).toDer() );
-	QString file = cert.fileName();
-	cert.close();
-
-	QDesktopServices::openUrl( file.prepend( "file://" ) );
+	QTreeWidgetItem *i = new QTreeWidgetItem( view );
+	i->setText( 0, parameter );
+	i->setText( 1, value );
+	view->addTopLevelItem( i );
 }
+
+void KeyDialog::showCertificate()
+{ (new CertificateWidget( QSslCertificate( k.certPem ), this ))->show(); }
 
 KeyAddDialog::KeyAddDialog( QWidget *parent )
 :	QWidget( parent )

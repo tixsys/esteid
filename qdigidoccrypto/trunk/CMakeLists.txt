@@ -5,28 +5,37 @@ project( qdigidoccrypto )
 
 find_package( Qt4 REQUIRED )
 find_package( OpenSSL REQUIRED )
+find_package( OpenSSLCrypto REQUIRED )
 find_package( LibDigiDoc2 REQUIRED )
 find_package( Ldap REQUIRED )
 
-SET( HEADERS
-	src/Common.h
+SET( MOC_HEADERS
+	src/CertificateWidget.h
 	src/CryptDoc.h
 	src/KeyDialog.h
 	src/LdapSearch.h
 	src/MainWindow.h
 	src/Settings.h
 	)
+SET( HEADERS
+	${MOC_HEADERS}
+	src/Common.h
+	src/SslCertificate.h
+	)
 SET( SOURCES
 	${HEADERS}
 	src/main.cpp
+	src/CertificateWidget.cpp
 	src/Common.cpp
 	src/CryptDoc.cpp
 	src/KeyDialog.cpp
 	src/LdapSearch.cpp
 	src/MainWindow.cpp
 	src/Settings.cpp
+	src/SslCertificate.cpp
 	)
 SET( UIS
+	src/ui/CertificateWidget.ui
 	src/ui/KeyAddDialog.ui
 	src/ui/KeyDialog.ui
 	src/ui/MainWindow.ui
@@ -48,7 +57,7 @@ INCLUDE_DIRECTORIES(
 
 QT4_ADD_RESOURCES( RC_SOURCES ${RCS} )
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
-QT4_WRAP_CPP( MOC_SOURCES ${HEADERS} )
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 
 ADD_EXECUTABLE( qdigidoccrypto WIN32 ${SOURCES} ${MOC_SOURCES} ${RC_SOURCES} ${UI_HEADERS} )
 
@@ -56,6 +65,7 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 	${QT_QTMAIN_LIBRARY}
 	${QT_LIBRARIES}
 	${OPENSSL_LIBRARIES}
+	${OPENSSLCRYPTO_LIBRARIES}
 	${LIBDIGIDOC2_LIBRARY}
 	${LDAP_LIBRARIES}
 )

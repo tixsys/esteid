@@ -59,6 +59,8 @@ private Q_SLOTS:
 	void showCertificate();
 
 private:
+	void addItem( const QString &parameter, const QString &value );
+
 	CKey k;
 };
 

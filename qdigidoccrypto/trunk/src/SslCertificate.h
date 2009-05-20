@@ -1,5 +1,5 @@
 /*
- * QDigiDocCrypto
+ * QEstEidUtil
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -22,10 +22,24 @@
 
 #pragma once
 
-#include <QString>
+#include <QSslCertificate>
 
-class Common
+class SslCertificate: public QSslCertificate
 {
 public:
-	static QString fileSize( quint64 bytes );
+	SslCertificate( const QSslCertificate &cert );
+
+	static QString formatName( const QString &name );
+	bool		isTempel() const;
+	QStringList keyUsage() const;
+	QStringList policies() const;
+	QString		policyInfo( const QString &oid ) const;
+	QString		subjectInfoUtf8( SubjectInfo subject ) const;
+	QString		subjectInfoUtf8( const QByteArray &tag ) const;
+	QByteArray	serialNumber() const;
+	QByteArray	versionNumber() const;
+
+private:
+	void*	getExtension( int nid ) const;
+	QString	toUtf8( const QString &data ) const;
 };
