@@ -35,9 +35,6 @@
          </item>
          <item>
           <widget class="QLineEdit" name="sscode">
-           <property name="inputMask">
-            <string>99999999999; </string>
-           </property>
            <property name="maxLength">
             <number>11</number>
            </property>
@@ -77,15 +74,39 @@
          </column>
         </widget>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="skCertsAddLayout">
+         <item>
+          <spacer name="skCertsAddSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add">
+           <property name="text">
+            <string>Add cert</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="store">
+     <widget class="QWidget" name="used">
       <attribute name="title">
-       <string>Cert store</string>
+       <string>Used certificates</string>
       </attribute>
       <layout class="QVBoxLayout" name="storeLayout">
        <item>
-        <widget class="QTreeWidget" name="storeView">
+        <widget class="QTreeWidget" name="usedView">
          <property name="horizontalScrollBarPolicy">
           <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
@@ -132,13 +153,6 @@
       <widget class="QPushButton" name="addCard">
        <property name="text">
         <string>Add cert from card</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="add">
-       <property name="text">
-        <string>Add to recipies list</string>
        </property>
       </widget>
      </item>

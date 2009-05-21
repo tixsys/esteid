@@ -415,9 +415,8 @@ void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 		return;
 
 	doc->saveDocument( index.row(), QDir::tempPath() );
-	QDesktopServices::openUrl( QString( "file://%1%2%3" )
+	QDesktopServices::openUrl( QString( "file://%1/%2" )
 		.arg( QDir::tempPath() )
-		.arg( QDir::separator() )
 		.arg( list[index.row()].filename ) );
 }
 

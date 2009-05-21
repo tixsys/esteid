@@ -79,10 +79,14 @@ Q_SIGNALS:
 private Q_SLOTS:
 	void on_add_clicked();
 	void on_search_clicked();
+	void on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int column );
 	void showError( const QString &msg, int err );
 	void showResult( const CKey &key );
 
 private:
+	void loadHistory();
+	void saveHistory();
+
 	LdapSearch *ldap;
 	QList<CKey> skKeys;
 };

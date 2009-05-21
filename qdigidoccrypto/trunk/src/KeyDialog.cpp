@@ -26,7 +26,12 @@
 #include "LdapSearch.h"
 
 #include <QDateTime>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFile>
 #include <QMessageBox>
+#include <QRegExpValidator>
+#include <QTextStream>
 
 KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
 :	QWidget( parent )
@@ -102,16 +107,55 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	skView->header()->setStretchLastSection( false );
 	skView->header()->setResizeMode( 0, QHeaderView::Stretch );
 	skView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
-	skView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+	skView->header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 	connect( skView, SIGNAL(doubleClicked(QModelIndex)), SLOT(on_add_clicked()) );
+
+	usedView->header()->setStretchLastSection( false );
+	usedView->header()->setResizeMode( 0, QHeaderView::Stretch );
+	usedView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+	usedView->header()->setResizeMode( 2, QHeaderView::ResizeToContents );
+	loadHistory();
 
 	ldap = new LdapSearch( this );
 	connect( ldap, SIGNAL(searchResult(CKey)), SLOT(showResult(CKey)) );
 	connect( ldap, SIGNAL(error(QString,int)), SLOT(showError(QString,int)) );
+
+	sscode->setValidator( new QRegExpValidator( QRegExp( "[0-9]{11}" ), this ) );
+	sscode->setFocus();
+}
+
+void KeyAddDialog::loadHistory()
+{
+	QFile f( QString( "%1/certhistory.txt" )
+		.arg( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) ) );
+	if( !f.open( QIODevice::ReadOnly ) )
+		return;
+
+	QTextStream s( &f );
+	while( true )
+	{
+		QString line = s.readLine();
+		if( line.isEmpty() )
+			break;
+		QStringList list = line.split( ';' );
+
+		QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
+		i->setText( 0, list.value( 0 ) );
+		i->setText( 1, list.value( 1 ) );
+		i->setText( 2, list.value( 2 ) );
+		usedView->addTopLevelItem( i );
+	}
+	f.close();
 }
 
 void KeyAddDialog::on_add_clicked()
-{ if( !skKeys.isEmpty() ) Q_EMIT selected( skKeys ); }
+{
+	if( skKeys.isEmpty() )
+		return;
+
+	saveHistory();
+	Q_EMIT selected( skKeys );
+}
 
 void KeyAddDialog::on_search_clicked()
 {
@@ -123,8 +167,48 @@ void KeyAddDialog::on_search_clicked()
 	else
 	{
 		skView->clear();
+		add->setEnabled( false );
 		ldap->search( QString( "(serialNumber=%1)" ).arg( sscode->text() ) );
 	}
+}
+
+void KeyAddDialog::on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int )
+{
+	sscode->setText( item->text( 0 ).split( ',' ).value( 2 ) );
+	tabWidget->setCurrentIndex( 0 );
+	on_search_clicked();
+}
+
+void KeyAddDialog::saveHistory()
+{
+	Q_FOREACH( const CKey &k, skKeys )
+	{
+		if( usedView->findItems( k.recipient, Qt::MatchExactly ).isEmpty() )
+		{
+			QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
+			i->setText( 0, k.recipient );
+			i->setText( 1, k.cert.issuerInfo( "CN" ) );
+			i->setText( 2, k.cert.expiryDate().toString( "dd.MM.yyyy" ) );
+			usedView->addTopLevelItem( i );
+		}
+	}
+
+	QString path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
+	QDir().mkpath( path );
+	QFile f( path.append( "/certhistory.txt" ) );
+	if( !f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
+		return;
+
+	QTextStream s( &f );
+	QTreeWidgetItem *top = usedView->invisibleRootItem();
+	for( int i = 0; i < top->childCount(); ++i )
+	{
+		QTreeWidgetItem *child = top->child( i );
+		s << child->text( 0 ) << ';';
+		s << child->text( 1 ) << ';';
+		s << child->text( 2 ) << '\n';
+	}
+	f.close();
 }
 
 void KeyAddDialog::showError( const QString &msg, int err )
@@ -145,4 +229,5 @@ void KeyAddDialog::showResult( const CKey &key )
 	i->setText( 1, key.cert.issuerInfo( QSslCertificate::CommonName ) );
 	i->setText( 2, key.cert.expiryDate().toString( "dd.MM.yyyy" ) );
 	skView->addTopLevelItem( i );
+	add->setEnabled( true );
 }
