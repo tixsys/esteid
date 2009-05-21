@@ -122,6 +122,7 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 
 	sscode->setValidator( new QRegExpValidator( QRegExp( "[0-9]{11}" ), this ) );
 	sscode->setFocus();
+	add->setEnabled( false );
 }
 
 void KeyAddDialog::loadHistory()

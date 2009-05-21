@@ -2,6 +2,7 @@
   <qresource prefix="images" >
     <file alias="background.png" >../images/background.png</file>
     <file alias="languages_button.png" >../images/languages_button.png</file>
+    <file alias="crypto_icon_48x48.png" >../images/crypto_icon_48x48.png</file>
   </qresource>
   <qresource prefix="translations" >
     <file alias="et" >../translations/et.qm</file>

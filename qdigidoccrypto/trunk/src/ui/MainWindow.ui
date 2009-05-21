@@ -35,8 +35,8 @@
    <string>DigiDoc crypt</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
+   <iconset resource="../rc/qdigidoccrypto.qrc">
+    <normaloff>:/images/crypto_icon_48x48.png</normaloff>:/images/crypto_icon_48x48.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/* fonts */
@@ -625,8 +625,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>303</width>
-               <height>198</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewKeysLayout">
