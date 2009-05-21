@@ -129,6 +129,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="addCard">
+       <property name="text">
+        <string>Add cert from card</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="add">
        <property name="text">
         <string>Add to recipies list</string>

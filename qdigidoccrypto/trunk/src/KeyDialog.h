@@ -73,6 +73,7 @@ public:
 	KeyAddDialog( QWidget *parent = 0 );
 
 Q_SIGNALS:
+	void addCardCert();
 	void selected( const QList<CKey> &keys );
 
 private Q_SLOTS:

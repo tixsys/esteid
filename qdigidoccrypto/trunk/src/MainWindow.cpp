@@ -107,6 +107,12 @@ MainWindow::MainWindow( QWidget *parent )
 	}
 }
 
+void MainWindow::addCardCert()
+{
+	doc->addCardCert();
+	setCurrentPage( View );
+}
+
 bool MainWindow::addFile( const QString &file )
 {
 	if( doc->isNull() )
@@ -203,6 +209,7 @@ void MainWindow::buttonClicked( int button )
 			return;
 
 		KeyAddDialog *key = new KeyAddDialog( this );
+		connect( key, SIGNAL(addCardCert()), SLOT(addCardCert()) );
 		connect( key, SIGNAL(selected(QList<CKey>)), SLOT(addKeys(QList<CKey>)) );
 		key->show();
 		break;

@@ -36,6 +36,7 @@ public:
 	MainWindow( QWidget *parent = 0 );
 
 private Q_SLOTS:
+	void addCardCert();
 	void addKeys( const QList<CKey> &keys );
 	void buttonClicked( int button );
 	void on_introCheck_stateChanged( int state );

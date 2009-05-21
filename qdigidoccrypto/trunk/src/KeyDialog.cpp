@@ -97,6 +97,7 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
+	connect( addCard, SIGNAL(clicked()), SIGNAL(addCardCert()) );
 
 	skView->header()->setStretchLastSection( false );
 	skView->header()->setResizeMode( 0, QHeaderView::Stretch );

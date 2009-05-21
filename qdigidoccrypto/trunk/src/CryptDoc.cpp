@@ -30,6 +30,7 @@
 #include <libdigidoc/DigiDocGen.h>
 #include <libdigidoc/DigiDocEncGen.h>
 #include <libdigidoc/DigiDocEncSAXParser.h>
+#include <libdigidoc/DigiDocPKCS11.h>
 #include <libdigidoc/DigiDocSAXParser.h>
 
 #include <QDateTime>
@@ -52,6 +53,27 @@ CryptDoc::~CryptDoc()
 {
 	cleanupConfigStore( NULL );
 	finalizeDigiDocLib();
+}
+
+void CryptDoc::addCardCert()
+{
+	if( isNull() )
+		return setLastError( tr("Container is not open") );
+	if( isEncrypted() )
+		return setLastError( tr("Container is encrypted") );
+
+	X509 *cert;
+	int err = findUsersCertificate( 0, &cert );
+	if( err != ERR_OK )
+		return setLastError( tr("Din't find card certificate") );
+
+	SslCertificate c = SslCertificate::fromX509( (Qt::HANDLE*)cert );
+	free( cert );
+
+	CKey key;
+	key.cert = c;
+	key.recipient = c.subjectInfoUtf8( "CN" );
+	addKey( key );
 }
 
 void CryptDoc::addFile( const QString &file, const QString &mime )

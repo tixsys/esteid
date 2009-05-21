@@ -56,6 +56,7 @@ public:
 	CryptDoc( QObject *parent = 0 );
 	~CryptDoc();
 
+	void addCardCert();
 	void addFile( const QString &file, const QString &mime );
 	void addKey( const CKey &key );
 	void create( const QString &file );
