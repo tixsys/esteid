@@ -49,6 +49,8 @@ public:
 	QString type;
 };
 
+class Poller;
+
 class CryptDoc: public QObject
 {
 	Q_OBJECT
@@ -59,6 +61,8 @@ public:
 	void addCardCert();
 	void addFile( const QString &file, const QString &mime );
 	void addKey( const CKey &key );
+	QSslCertificate authCert() const;
+	QSslCertificate signCert() const;
 	void create( const QString &file );
 	void clear();
 	bool decrypt( const QString &pin );
@@ -80,13 +84,18 @@ Q_SIGNALS:
 	void dataChanged();
 	void error( const QString &err, int errCode );
 
+private Q_SLOTS:
+	void dataChanged( const QSslCertificate &auth, const QSslCertificate &sign );
+
 private:
 	void setLastError( const QString &err, int errCode = -1 );
 
+	QSslCertificate	m_authCert, m_signCert;
 	QString			m_ddocTemp;
 	QString			m_fileName;
 	QString			m_lastError;
 	DEncEncryptedData *m_enc;
 	SignedDoc		*m_doc;
 	bool			modified;
+	Poller			*poller;
 };

@@ -23,6 +23,7 @@
 #include "CryptDoc.h"
 
 #include "Common.h"
+#include "Poller.h"
 #include "SslCertificate.h"
 
 #include <libdigidoc/DigiDocCert.h>
@@ -47,6 +48,11 @@ CryptDoc::CryptDoc( QObject *parent )
 {
 	initDigiDocLib();
 	initConfigStore( NULL );
+
+	poller = new Poller();
+	connect( poller, SIGNAL(dataChanged(QSslCertificate,QSslCertificate)),
+		SLOT(dataChanged(QSslCertificate,QSslCertificate)) );
+	poller->start();
 }
 
 CryptDoc::~CryptDoc()
@@ -111,6 +117,8 @@ void CryptDoc::addKey( const CKey &key )
 		modified = true;
 }
 
+QSslCertificate CryptDoc::authCert() const { return m_authCert; }
+
 void CryptDoc::clear()
 {
 	if( m_enc != 0 )
@@ -149,6 +157,13 @@ void CryptDoc::create( const QString &file )
 	m_fileName = file;
 }
 
+void CryptDoc::dataChanged( const QSslCertificate &auth, const QSslCertificate &sign )
+{
+	m_authCert = auth;
+	m_signCert = sign;
+	Q_EMIT dataChanged();
+}
+
 bool CryptDoc::decrypt( const QString &pin )
 {
 	if( isNull() )
@@ -159,15 +174,18 @@ bool CryptDoc::decrypt( const QString &pin )
 	if( !isEncrypted() )
 		return true;
 
+	poller->lock();
 	DEncEncryptedKey *key;
 	int err = dencEncryptedData_findEncryptedKeyByPKCS11( m_enc, &key );
 	if( err != ERR_OK || !key )
 	{
 		setLastError( tr("Recipient does not exist in document recipient list"), err );
+		poller->unlock();
 		return false;
 	}
 
 	err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
+	poller->unlock();
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed decrypt data"), err );
@@ -440,3 +458,5 @@ void CryptDoc::saveDocument( int id, const QString &path )
 
 void CryptDoc::setLastError( const QString &err, int errCode )
 { Q_EMIT error( m_lastError = err, errCode ); }
+
+QSslCertificate CryptDoc::signCert() const { return m_signCert; }

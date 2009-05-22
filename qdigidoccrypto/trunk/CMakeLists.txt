@@ -15,6 +15,7 @@ SET( MOC_HEADERS
 	src/KeyDialog.h
 	src/LdapSearch.h
 	src/MainWindow.h
+	src/Poller.h
 	src/Settings.h
 	)
 SET( HEADERS
@@ -31,6 +32,7 @@ SET( SOURCES
 	src/KeyDialog.cpp
 	src/LdapSearch.cpp
 	src/MainWindow.cpp
+	src/Poller.cpp
 	src/Settings.cpp
 	src/SslCertificate.cpp
 	)

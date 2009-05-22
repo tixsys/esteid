@@ -24,6 +24,7 @@
 
 #include "KeyDialog.h"
 #include "Settings.h"
+#include "SslCertificate.h"
 
 #include <QApplication>
 #include <QDateTime>
@@ -46,6 +47,8 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
+	qRegisterMetaType<QSslCertificate>("QSslCertificate");
+
 	setupUi( this );
 	//homeOpenUtility->hide();
 	viewContentView->header()->setStretchLastSection( false );
@@ -494,6 +497,30 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
+	QString content;
+	if( !doc->authCert().isNull() )
+	{
+		const SslCertificate c = doc->authCert();
+		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+			.arg( c.subjectInfo( "serialNumber" ) );
+
+		QLocale l;
+		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
+			.arg( l.toString( doc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
+		if( !doc->signCert().isValid() )
+			content += tr("<br /><font color=\"red\">Sign certificate is expired</font>");
+
+		content += tr("<br />Auth certificate is valid until <font color=\"black\">%1</font>")
+			.arg( l.toString( doc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
+		if( !doc->authCert().isValid() )
+			content += tr("<br /><font color=\"red\">Auth certificate is expired</font>");
+	}
+	else
+		content += tr("No card in reader");
+
+	info->setText( content );
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
