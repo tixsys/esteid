@@ -418,9 +418,13 @@ void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 		return;
 
 	doc->saveDocument( index.row(), QDir::tempPath() );
-	QDesktopServices::openUrl( QString( "file://%1/%2" )
-		.arg( QDir::tempPath() )
-		.arg( list[index.row()].filename ) );
+#ifdef Q_OS_WIN32
+	QString url( "file:///" );
+#else
+	QString url( "file://" );
+#endif
+	url += QString( "%1/%2" ).arg( QDir::tempPath() ).arg( list[index.row()].filename );
+	QDesktopServices::openUrl( url );
 }
 
 void MainWindow::removeKey( int id )
