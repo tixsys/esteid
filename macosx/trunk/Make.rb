@@ -31,8 +31,9 @@ class Application
 		@options.verbose = false
 		@options.quiet = false
 		@options.name = 'Installer'
+		@options.volname = nil
 		@options.binaries = 'build/Release'
-		@options.components = 'build/Components'
+		@options.repository = 'build/Repository'
 		@options.libraries = 'build/Libraries'
 		@options.packages = 'build/Packages'
 		@options.prerequisites = '/usr/local'
@@ -49,8 +50,8 @@ class Application
 					run_binaries
 				elsif @arguments.last == 'clean'
 					run_clean
-				elsif @arguments.last == 'components'
-					run_components
+				elsif @arguments.last == 'repository'
+					run_repository
 				elsif @arguments.last == 'packages'
 					run_packages
 				elsif @arguments.last == 'installer'
@@ -58,7 +59,7 @@ class Application
 					run_prerequisites
 					run_binaries
 					run_packages
-					run_components
+					run_repository
 				else
 					run_usage
 				end
@@ -87,25 +88,27 @@ class Application
 		puts "Building tokend..." if @options.verbose
 		`xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world`
 		
+		FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
+		
 		puts "\n" if @options.verbose
 	end
 	
 	def run_clean
 		puts "Cleaning installer..." if @options.verbose
 		
-		if File.exists? File.join(@path, @options.binaries)
-			puts "Cleaning #{File.join(@path, @options.binaries)}" if @options.verbose
-			FileUtils.rm_rf(File.join(@path, @options.binaries))
-		end
-		
 		if File.exists? File.join(@path, @options.packages)
 			puts "Cleaning #{File.join(@path, @options.packages)}" if @options.verbose
 			FileUtils.rm_rf(File.join(@path, @options.packages))
 		end
 		
-		if File.exists? File.join(@path, @options.components) and @options.force
-			puts "Cleaning #{File.join(@path, @options.components)}" if @options.verbose
-			FileUtils.rm_rf(File.join(@path, @options.components))
+		if File.exists? File.join(@path, @options.binaries) and @options.force
+			puts "Cleaning #{File.join(@path, @options.binaries)}" if @options.verbose
+			FileUtils.rm_rf(File.join(@path, @options.binaries))
+		end
+		
+		if File.exists? File.join(@path, @options.repository) and @options.force
+			puts "Cleaning #{File.join(@path, @options.repository)}" if @options.verbose
+			FileUtils.rm_rf(File.join(@path, @options.repository))
 		end
 		
 		puts "\n" if @options.verbose
@@ -120,15 +123,15 @@ class Application
 		puts "\n" if @options.verbose
 	end
 	
-	def run_components
-		puts "Creating installer components..." if @options.verbose
+	def run_repository
+		puts "Creating installer repository..." if @options.verbose
 		
-		cpkgroot = Pathname.new(@path).join(@options.components, 'Packages').to_s
+		cpkgroot = Pathname.new(@path).join(@options.repository, 'Packages').to_s
 		FileUtils.mkdir_p(cpkgroot) unless File.exists? cpkgroot
 		
 		puts "Creating Manifest.xml..." if @options.verbose
 		
-		manifest = Pathname.new(@path).join(@options.components, 'Manifest.xml').to_s
+		manifest = Pathname.new(@path).join(@options.repository, 'Manifest.xml').to_s
 		file = File.new(manifest, 'w')
 		file.puts "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
 		file.puts "<manifest#{(@options.sign.nil?) ? '' : ' signature=\'Manifest.sig\'' }>"
@@ -179,7 +182,7 @@ class Application
 		unless @options.sign.nil?
 			puts "Signing Manifest.xml..." if @options.verbose
 			
-			signature = Pathname.new(@path).join(@options.components, 'Manifest.sig').to_s
+			signature = Pathname.new(@path).join(@options.repository, 'Manifest.sig').to_s
 			key = Pathname.new(@path).join(@options.sign).to_s
 			FileUtils.rm(signature) if File.exists? signature
 			
@@ -418,7 +421,8 @@ class Application
 			if extension == '.mpkg'
 				FileUtils.cd(Pathname.new(@path).join(@options.packages).to_s) do
 					`tar -czf #{dstname + '.tar.gz'} #{dstname + extension}`
-					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{dstname}" "#{dstname + '.dmg'}"`
+					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{(@options.volname.nil?) ? dstname : @options.volname}" "#{dstname + '.dmg'}"`
+					`setfile -a E #{dstname + '.dmg'}`
 				end
 			end
 		end
@@ -464,10 +468,11 @@ class Application
 		opts.on('-q', '--quiet', 'Run quietly') { @options.quiet = true }
 		opts.on('-f', '--force', 'Perform additional actions that are normally skipped') { @options.force = true }
 		opts.on('-a', '--arch [ppc|x86|universal]', 'Use architecture. The default is universsal') { |arch| @options.arch = arch }
-		opts.on('-n', '--name [NAME]', 'Filename for the installer') { |name| @options.name = name }
+		opts.on('-n', '--name [NAME]', 'File name for the installer') { |name| @options.name = name }
+		opts.on('-N', '--volname [VOLNAME]', 'Volume name for the installer') { |volname| @options.volname = volname }
 		opts.on('-b', '--binaries [DIR]', 'Use directory for the binaries') { |dir| @options.binaries = dir }
-		opts.on('-c', '--components [DIR]', 'Use directory for the components') { |dir| @options.components = dir }
-		opts.on('-l', '--prerequisites [DIR]', 'Use directory for the prerequisites') { |dir| @options.prerequisites = dir }
+		opts.on('-c', '--repository [DIR]', 'Use directory for the repository') { |dir| @options.repository = dir }
+		opts.on('-r', '--prerequisites [DIR]', 'Use directory for the prerequisites') { |dir| @options.prerequisites = dir }
 		opts.on('-p', '--packages [DIR]', 'Use directory for the packages') { |dir| @options.packages = dir }
 		opts.on('-s', '--sign [KEY]', 'Use key for signing the components') { |key| @options.sign = key }
 		
@@ -518,6 +523,10 @@ class Application
 				:name => 'EstEIDWP',
 				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
 				:location => '/Library/Internet Plug-Ins'
+			}, {
+				:name => 'EstEIDTokend',
+				:files => File.join(@options.binaries, 'OpenSC.tokend'),
+				:location => '/System/Library/Security/tokend'
 			}, {
 				:name => 'EstEIDInstaller',
 				:files => File.join(@options.packages, '*.pkg'),

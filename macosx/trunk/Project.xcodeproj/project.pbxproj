@@ -110,7 +110,6 @@
 		8197D3860F9A0C65002D8A1D /* EstEIDPreferencePane.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */; };
 		8197D3890F9A0C85002D8A1D /* EstEIDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */; };
 		8197D38A0F9A0C85002D8A1D /* EstEIDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */; };
-		8197D3A20F9A0D14002D8A1D /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */; };
 		8197D3A60F9A0D2D002D8A1D /* PreferencePane.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */; };
 		8197D3AC0F9A0F43002D8A1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40B10F56ECB200F60FED /* InfoPlist.strings */; };
 		8197D3D40F9A1023002D8A1D /* EstEIDReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */; };
@@ -118,11 +117,13 @@
 		8197D48A0F9A1338002D8A1D /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
 		8197D48B0F9A14DC002D8A1D /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
 		8197D4940F9A1A36002D8A1D /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
+		81B0FB860FC70A0700B24817 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
+		81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC760FC70E7400B24817 /* PreferencePane.nib */; };
+		81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC780FC70E8800B24817 /* MainMenu.xib */; };
 		81BF406A0F56E7FB00F60FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF40690F56E7FB00F60FED /* main.m */; };
 		81BF406D0F56E8CB00F60FED /* EstEIDApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */; };
 		81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40AF0F56ECB200F60FED /* Localizable.strings */; };
 		81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40B10F56ECB200F60FED /* InfoPlist.strings */; };
-		81BF40BD0F56ECFD00F60FED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40BB0F56ECFD00F60FED /* MainMenu.xib */; };
 		81C3CB210F95DBD400EDBB44 /* EstEIDPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */; };
 		81C3CE390F9625B100EDBB44 /* EstEIDAsynchronousTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CE380F9625B100EDBB44 /* EstEIDAsynchronousTask.m */; };
 		81C3CE3E0F9627B300EDBB44 /* NSThread+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81C3CE3D0F9627B300EDBB44 /* NSThread+Additions.m */; };
@@ -305,12 +306,14 @@
 		8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPreferencePane.m; path = Updater/Sources/PreferencePane/EstEIDPreferencePane.m; sourceTree = "<group>"; };
 		8197D3870F9A0C85002D8A1D /* EstEIDAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDAgent.m; path = Updater/Sources/EstEIDAgent.m; sourceTree = "<group>"; };
 		8197D3880F9A0C85002D8A1D /* EstEIDAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDAgent.h; path = Updater/Sources/EstEIDAgent.h; sourceTree = "<group>"; };
-		8197D3A10F9A0D14002D8A1D /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = Updater/en.lproj/PreferencePane.nib; sourceTree = "<group>"; };
 		8197D3A50F9A0D2D002D8A1D /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Updater/en.lproj/PreferencePane.strings; sourceTree = "<group>"; };
 		8197D3A80F9A0D3D002D8A1D /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/PreferencePane.strings; sourceTree = "<group>"; };
 		8197D3AB0F9A0D46002D8A1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/PreferencePane.strings; sourceTree = "<group>"; };
 		8197D3D20F9A1023002D8A1D /* EstEIDReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDReceipt.h; path = Updater/Sources/EstEIDReceipt.h; sourceTree = "<group>"; };
 		8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDReceipt.m; path = Updater/Sources/EstEIDReceipt.m; sourceTree = "<group>"; };
+		81B0FB850FC70A0700B24817 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Updater/Images/Icon.icns; sourceTree = "<group>"; };
+		81B0FC760FC70E7400B24817 /* PreferencePane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PreferencePane.nib; path = Updater/PreferencePane.nib; sourceTree = "<group>"; };
+		81B0FC780FC70E8800B24817 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Updater/MainMenu.xib; sourceTree = "<group>"; };
 		81BF40630F56E78000F60FED /* EstEIDSU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EstEIDSU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BF40690F56E7FB00F60FED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/main.m; sourceTree = "<group>"; };
 		81BF406B0F56E8CB00F60FED /* EstEIDApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDApplicationDelegate.h; path = Updater/Sources/EstEIDApplicationDelegate.h; sourceTree = "<group>"; };
@@ -322,7 +325,6 @@
 		81BF40B60F56ECBB00F60FED /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81BF40B90F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81BF40BA0F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		81BF40BC0F56ECFD00F60FED /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = en; path = Updater/en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		81C3CB1F0F95DBD400EDBB44 /* EstEIDPackageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPackageDownload.h; path = Updater/Sources/EstEIDPackageDownload.h; sourceTree = "<group>"; };
 		81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackageDownload.m; path = Updater/Sources/EstEIDPackageDownload.m; sourceTree = "<group>"; };
 		81C3CE370F9625B100EDBB44 /* EstEIDAsynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDAsynchronousTask.h; path = Updater/Sources/EstEIDAsynchronousTask.h; sourceTree = "<group>"; };
@@ -546,8 +548,8 @@
 				81BF40A00F56ECA300F60FED /* Info.plist */,
 				81BF40B10F56ECB200F60FED /* InfoPlist.strings */,
 				81BF40AF0F56ECB200F60FED /* Localizable.strings */,
-				81BF40BB0F56ECFD00F60FED /* MainMenu.xib */,
-				8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */,
+				81B0FC780FC70E8800B24817 /* MainMenu.xib */,
+				81B0FC760FC70E7400B24817 /* PreferencePane.nib */,
 				8197D3810F9A0C14002D8A1D /* PreferencePane.plist */,
 				8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */,
 				81E4C8D40F9C447C00997F53 /* Tests.plist */,
@@ -665,6 +667,7 @@
 			children = (
 				8197D3820F9A0C38002D8A1D /* PreferencePane.png */,
 				813038D80F5930550029C4D7 /* Restart.png */,
+				81B0FB850FC70A0700B24817 /* Icon.icns */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -915,9 +918,10 @@
 				8179469C0F975FE7007E0C96 /* agent in Resources */,
 				81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */,
 				81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */,
-				81BF40BD0F56ECFD00F60FED /* MainMenu.xib in Resources */,
 				813038D90F5930550029C4D7 /* Restart.png in Resources */,
 				81C3D0290F9639F300EDBB44 /* Manifest.pem in Resources */,
+				81B0FB860FC70A0700B24817 /* Icon.icns in Resources */,
+				81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -959,8 +963,8 @@
 			files = (
 				8197D3AC0F9A0F43002D8A1D /* InfoPlist.strings in Resources */,
 				8197D3830F9A0C38002D8A1D /* PreferencePane.png in Resources */,
-				8197D3A20F9A0D14002D8A1D /* PreferencePane.nib in Resources */,
 				8197D3A60F9A0D2D002D8A1D /* PreferencePane.strings in Resources */,
+				81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,14 +1205,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		8197D3A00F9A0D14002D8A1D /* PreferencePane.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8197D3A10F9A0D14002D8A1D /* en */,
-			);
-			name = PreferencePane.nib;
-			sourceTree = "<group>";
-		};
 		8197D3A40F9A0D2D002D8A1D /* PreferencePane.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1237,14 +1233,6 @@
 				81BF40B90F56ECC700F60FED /* ru */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		81BF40BB0F56ECFD00F60FED /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				81BF40BC0F56ECFD00F60FED /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		81F86EF30FA08E1100832B54 /* Localizable.strings */ = {

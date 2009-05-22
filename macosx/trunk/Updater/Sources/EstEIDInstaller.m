@@ -70,7 +70,10 @@
 - (void)main
 {
 	NSEnumerator *enumerator = [self->m_packages objectEnumerator];
+#ifndef NO_OP
 	NSString *targetVolume = [EstEIDConfiguration targetVolume];
+#endif
+	
 	EstEIDAgent *agent = [EstEIDAgent sharedAgent];
 	EstEIDPackage *package;
 	int count = 0;
