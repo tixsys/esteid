@@ -11,6 +11,7 @@ class Poller: public QThread
 
 public:
     Poller( QObject *parent = 0 );
+	~Poller();
 
 	void lock();
 	void run();
@@ -20,6 +21,7 @@ Q_SIGNALS:
 	void dataChanged( const QSslCertificate &auth, const QSslCertificate &sign );
 
 private:
+	bool terminate;
 	QMutex m;
 	QString selectedCard;
 };

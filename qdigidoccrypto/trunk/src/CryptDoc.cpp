@@ -57,6 +57,7 @@ CryptDoc::CryptDoc( QObject *parent )
 
 CryptDoc::~CryptDoc()
 {
+	delete poller;
 	cleanupConfigStore( NULL );
 	finalizeDigiDocLib();
 }

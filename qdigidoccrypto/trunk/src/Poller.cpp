@@ -9,7 +9,16 @@
 
 Poller::Poller( QObject *parent )
 :	QThread( parent )
+,	terminate( false )
 {}
+
+Poller::~Poller()
+{
+	m.lock();
+	terminate = true;
+	m.unlock();
+	wait();
+}
 
 void Poller::lock() { m.lock(); }
 
@@ -20,6 +29,9 @@ void Poller::run()
 		sleep( 5 );
 		if( !m.tryLock() )
 			continue;
+
+		if( terminate )
+			return;
 
 		CK_BYTE driver[200];
 		snprintf( (char*)driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
