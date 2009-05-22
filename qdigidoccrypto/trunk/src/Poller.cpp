@@ -55,10 +55,10 @@ void Poller::run()
 		if( terminate )
 			return;
 
-		CK_BYTE driver[200];
-		snprintf( (char*)driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
-		  ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
-		LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( (const char*)driver ) );
+		char driver[200];
+		snprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
+			ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
+		LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( driver ) );
 
 		if( !lib )
 		{

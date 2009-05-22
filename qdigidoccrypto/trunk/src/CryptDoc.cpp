@@ -69,10 +69,15 @@ void CryptDoc::addCardCert()
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
+	poller->lock();
 	X509 *cert;
 	int err = findUsersCertificate( 0, &cert );
 	if( err != ERR_OK )
+	{
+		poller->unlock();
 		return setLastError( tr("Din't find card certificate") );
+	}
+	poller->unlock();
 
 	SslCertificate c = SslCertificate::fromX509( (Qt::HANDLE*)cert );
 	free( cert );
@@ -239,7 +244,7 @@ QList<CDocument> CryptDoc::documents()
 			list << doc;
 		}
 	}
-	else
+	else if( m_doc )
 	{
 		for( int i = 0; i < m_doc->nDataFiles; ++i )
 		{
@@ -265,7 +270,7 @@ bool CryptDoc::encrypt()
 		return true;
 	if( m_enc->nEncryptedKeys < 1 )
 	{
-		setLastError( tr("No recipiest keys") );
+		setLastError( tr("No recipient keys") );
 		return false;
 	}
 
