@@ -139,6 +139,26 @@
         <source>Diagnostics</source>
         <translation>Diagnostika</translation>
     </message>
+    <message>
+        <location filename="../DiagnosticsDialog.cpp" line="43"/>
+        <source>&lt;b&gt;Version:&lt;/b&gt; %1&lt;br /&gt;</source>
+        <translation>&lt;b&gt;Versioon:&lt;/b&gt; %1&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <location filename="../DiagnosticsDialog.cpp" line="44"/>
+        <source>&lt;b&gt;Library paths:&lt;/b&gt; %1&lt;br /&gt;</source>
+        <translation>&lt;b&gt;Teegi otsing:&lt;/b&gt; %1&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <location filename="../DiagnosticsDialog.cpp" line="66"/>
+        <source>&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;&amp;#160;ID - %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../DiagnosticsDialog.cpp" line="70"/>
+        <source>&lt;b&gt;Card readers&lt;/b&gt;&lt;br /&gt;&amp;#160;&amp;#160;&amp;#160;%1</source>
+        <translation>&lt;b&gt;Kaardilugejad&lt;/b&gt;&lt;br /&gt;&amp;#160;&amp;#160;&amp;#160;%1</translation>
+    </message>
 </context>
 <context>
     <name>JsExtender</name>
@@ -176,17 +196,22 @@ Sisesta PIN1</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../SslCertificate.cpp" line="77"/>
+        <location filename="../SslCertificate.cpp" line="87"/>
         <source>Proves your identity to a remote computer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SslCertificate.cpp" line="79"/>
+        <location filename="../SslCertificate.cpp" line="89"/>
         <source>Protects e-mail messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SslCertificate.cpp" line="86"/>
+        <location filename="../SslCertificate.cpp" line="91"/>
+        <source>OCSP signing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SslCertificate.cpp" line="98"/>
         <source>All application policies</source>
         <translation type="unfinished"></translation>
     </message>
@@ -199,7 +224,7 @@ Sisesta PIN1</translation>
         <translation>Seaded</translation>
     </message>
     <message>
-        <location filename="../ui/SettingsDialog.ui" line="43"/>
+        <location filename="../ui/SettingsDialog.ui" line="44"/>
         <source>Save password for specified period in minutes
 0 - always ask</source>
         <translation>Salvesta parool määratud minutiteks

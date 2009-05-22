@@ -31,7 +31,8 @@ QLabel { color: #355670; font-family: Arial; font-size: 14px; }
 QSpinBox { border: 1px solid #cddbeb; }
 
 QPushButton { height: 25px; border-radius: 3px; font-family: Arial; font-size: 12px; width: 80px; border: 1px solid #1a4b79; color: #ffffff; background-image: url(:/html/images/button.png); }
-QPushButton::hover { background-image: url(:/html/images/button_hover.png); border: 1px solid #99AEBF; }
+QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/buttonSelected.png); border: 1px solid #ce911b; color: #00355f } 
+
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">

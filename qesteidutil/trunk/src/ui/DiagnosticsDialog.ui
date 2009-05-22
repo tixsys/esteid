@@ -29,12 +29,16 @@
    <string notr="true">#DiagnosticsDialog { background: #F5F5F5; }
 
 QPushButton { height: 25px; border-radius: 3px; font-family: Arial; font-size: 12px; width: 80px; border: 1px solid #1a4b79; color: #ffffff; background-image: url(:/html/images/button.png); }
-QPushButton::hover { background-image: url(:/html/images/button_hover.png); border: 1px solid #99AEBF; }
+QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/buttonSelected.png); border: 1px solid #ce911b; color: #00355f }
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTextEdit" name="diagnosticsText"/>
+    <widget class="QTextEdit" name="diagnosticsText">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">

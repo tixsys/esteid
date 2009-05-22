@@ -29,4 +29,8 @@ class DiagnosticsDialog: public QDialog, private Ui::DiagnosticsDialog
 	Q_OBJECT
 public:
 	DiagnosticsDialog( QWidget *parent = 0 );
+
+private:
+	void getDiagnosticDetails();
+	QStringList getReaderInfo() const;
 };

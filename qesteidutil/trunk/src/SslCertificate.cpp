@@ -31,10 +31,9 @@ SslCertificate::SslCertificate( const QSslCertificate &cert )
 
 void* SslCertificate::getExtension( int nid ) const
 {
-	X509 *c = (X509*)handle();
-	if( c != NULL )
-		NULL;
-	return X509_get_ext_d2i( c, nid, NULL, NULL );
+	if( !handle() )
+		return NULL;
+	return X509_get_ext_d2i( (X509*)handle(), nid, NULL, NULL );
 }
 
 QString SslCertificate::formatName( const QString &name )
@@ -55,10 +54,21 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
+QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
+{
+	unsigned char *cert = NULL;
+	int res = i2d_X509( (X509*)x509, &cert );
+	QByteArray der;
+	if( res > 0 )
+		der = QByteArray( (char*)cert, res );
+	free( cert );
+	return QSslCertificate( der, QSsl::Der );
+}
+
 bool SslCertificate::isTempel() const
 {
 	Q_FOREACH( const QString &p, policies() )
-		if( p.contains( "1.3.6.1.4.1.10015.7" ) )
+		if( p.left( 11 ) == "1.3.6.1.4.1.10015.7" )
 			return true;
 	return false;
 }
@@ -77,6 +87,8 @@ QStringList SslCertificate::keyUsage() const
 			list << QObject::tr("Proves your identity to a remote computer"); break;
 		case NID_email_protect:
 			list << QObject::tr("Protects e-mail messages"); break;
+		case NID_OCSP_sign:
+			list << QObject::tr("OCSP signing"); break;
 		default: break;
 		}
 	}

@@ -8,19 +8,19 @@
 <body onSelectStart="return false;">
   <div id="top">
     <div id="headerBackground">
-      <div>
-        <select id="headerSelect" onChange="selectLanguage();">
-          <option value="et">Estonian</option>
-          <option value="en">English</option>
-		  <option value="ru">Russian</option>
-        </select>
-      </div>
       <div id="headerMenus">
         <ul>
           <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag trcode="linkDiagnostics"></trtag></a></li>
           <li><a href="#" onClick="extender.showSettings();"><trtag trcode="linkSettings"></trtag></a></li>
           <li><a href="#" onClick="openHelp();"><trtag trcode="linkHelp"></trtag></a></li>
         </ul>        
+      </div>
+      <div>
+        <select id="headerSelect" onChange="selectLanguage();">
+          <option value="et">Estonian</option>
+          <option value="en">English</option>
+		  <option value="ru">Russian</option>
+        </select>
       </div>
     </div>
     <div id="topBackground">&nbsp;</div>
