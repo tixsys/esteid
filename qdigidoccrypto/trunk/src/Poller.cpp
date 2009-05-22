@@ -60,6 +60,12 @@ void Poller::run()
 		  ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
 		LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( (const char*)driver ) );
 
+		if( !lib )
+		{
+			m.unlock();
+			continue;
+		}
+
 		CK_ULONG count = 20;
 		CK_SLOT_ID slotids[20];
 		int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
