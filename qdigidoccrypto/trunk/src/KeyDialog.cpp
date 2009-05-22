@@ -30,6 +30,7 @@
 #include <QDir>
 #include <QFile>
 #include <QMessageBox>
+#include <QProgressBar>
 #include <QRegExpValidator>
 #include <QTextStream>
 
@@ -123,6 +124,15 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	sscode->setValidator( new QRegExpValidator( QRegExp( "[0-9]{11}" ), this ) );
 	sscode->setFocus();
 	add->setEnabled( false );
+	progress->setVisible( false );
+}
+
+void KeyAddDialog::disableSearch( bool disable )
+{
+	progress->setVisible( disable );
+	search->setDisabled( disable );
+	skView->setDisabled( disable );
+	sscode->setDisabled( disable );
 }
 
 void KeyAddDialog::loadHistory()
@@ -169,6 +179,7 @@ void KeyAddDialog::on_search_clicked()
 	{
 		skView->clear();
 		add->setEnabled( false );
+		disableSearch( true );
 		ldap->search( QString( "(serialNumber=%1)" ).arg( sscode->text() ) );
 	}
 }
@@ -217,6 +228,7 @@ void KeyAddDialog::showError( const QString &msg, int err )
 	QString s( msg );
 	if( err != -1 )
 		s.append( tr("\nError code: %1").arg( err ) );
+	disableSearch( false );
 	QMessageBox::warning( this, "QDigDocCrypto", s );
 }
 
@@ -230,5 +242,7 @@ void KeyAddDialog::showResult( const CKey &key )
 	i->setText( 1, key.cert.issuerInfo( QSslCertificate::CommonName ) );
 	i->setText( 2, key.cert.expiryDate().toString( "dd.MM.yyyy" ) );
 	skView->addTopLevelItem( i );
+
 	add->setEnabled( true );
+	disableSearch( false );
 }

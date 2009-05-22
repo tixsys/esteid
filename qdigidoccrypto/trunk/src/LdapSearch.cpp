@@ -54,7 +54,7 @@ void LdapSearch::search( const QString &search )
 	if( err )
 		Q_EMIT error( tr("Failed to init ldap search"), err );
 	else
-		startTimer( 1000 );
+		startTimer( 1 * 000 );
 }
 
 void LdapSearch::timerEvent( QTimerEvent *e )

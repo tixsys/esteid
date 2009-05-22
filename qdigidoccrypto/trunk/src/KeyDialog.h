@@ -84,6 +84,7 @@ private Q_SLOTS:
 	void showResult( const CKey &key );
 
 private:
+	void disableSearch( bool disable );
 	void loadHistory();
 	void saveHistory();
 

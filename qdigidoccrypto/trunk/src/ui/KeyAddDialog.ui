@@ -77,6 +77,13 @@
        <item>
         <layout class="QHBoxLayout" name="skCertsAddLayout">
          <item>
+          <widget class="QProgressBar" name="progress">
+           <property name="maximum">
+            <number>0</number>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="skCertsAddSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
