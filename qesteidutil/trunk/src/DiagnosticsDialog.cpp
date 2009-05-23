@@ -23,10 +23,12 @@
 #include "DiagnosticsDialog.h"
 
 #include "cardlib/common.h"
+#include "cardlib/DynamicLibrary.h"
 #include "cardlib/SmartCardManager.h"
 #include "cardlib/EstEidCard.h"
 
 #include <QDebug>
+#include <QTextStream>
 
 DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 :	QDialog( parent )
@@ -34,45 +36,85 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose );
 
-	getDiagnosticDetails();
+	QString info;
+	QTextStream s( &info );
+
+	s << "<b>" << tr("Version:") << "</b> ";
+	s << QCoreApplication::applicationVersion() << "<br />";
+	s << "<br />";
+	s << "<b>" << tr("Library paths:") << "</b> ";
+	s << QCoreApplication::libraryPaths().join( ";" ) << "<br />";
+	s << "<br />";
+	s << tr("<b>Libraries</b>") << "<br />";
+#ifdef WIN32
+	s << getLibVersion( "advapi32") << "<br />";
+#else
+	s << getLibVersion( "pcsclite" ) << "<br />";
+#endif
+	s << getLibVersion( "opensc-pkcs11" ) << "<br />";
+	s << getLibVersion( "engine_pkcs11" ) << "<br />";
+	s << "<br />";
+
+	s << "<b>" << tr("Card readers") << "</b><br />";
+	s << getReaderInfo();
+	s << "<br />";
+
+	diagnosticsText->setHtml( info );
 }
 
-void DiagnosticsDialog::getDiagnosticDetails()
+QString DiagnosticsDialog::getLibVersion( const QString &lib ) const
 {
-	QStringList d;
-	d << tr("<b>Version:</b> %1<br />").arg( QCoreApplication::applicationVersion() );
-	d << tr( "<b>Library paths:</b> %1<br />" ).arg( QCoreApplication::libraryPaths().join( ";" ) );
+	QString r = lib;
+	try
+	{
+		DynamicLibrary l( lib.toLatin1() );
+		r += " (" + QString::fromStdString( l.getVersionStr() ) + ")";
+	}
+	catch( const std::runtime_error & ) {}
 
-	d << getReaderInfo();
-	diagnosticsText->setHtml( d.join( "<br />" ) );
+	return r;
 }
 
-QStringList DiagnosticsDialog::getReaderInfo() const
+QString DiagnosticsDialog::getReaderInfo() const
 {
-	QStringList d;
+	QString d;
+	QTextStream s( &d );
+
+	QHash<QString,QString> readers;
+	SmartCardManager *m = 0;
+	EstEidCard *card = 0;
 	try {
-		SmartCardManager *m = new SmartCardManager();
-		QStringList readers;
+		m = new SmartCardManager();
 		int readersCount = m->getReaderCount( true );
-		EstEidCard *card = 0;
 		for( int i = 0; i < readersCount; i++ )
 		{
-			readers << QString::fromStdString( m->getReaderName( i ) );
+			QString reader = QString::fromStdString( m->getReaderName( i ) );
 			if ( !QString::fromStdString( m->getReaderState( i ) ).contains( "EMPTY" ) )
 			{
 				if ( !card )
 					card = new EstEidCard( *m );
 				card->connect( i, true );
-				readers << tr( "&#160;&#160;&#160;&#160;&#160;&#160;ID - %1" ).arg( QString::fromStdString( card->readCardID() ) );
+				readers[reader] = tr( "ID - %1" ).arg( QString::fromStdString( card->readCardID() ) );
 			}
+			else
+				readers[reader] = "";
 		}
-		if ( readers.size() > 0 )
-			d << tr( "<b>Card readers</b><br />&#160;&#160;&#160;%1" ).arg( readers.join( "<br />&#160;&#160;&#160;" ) );
-		if ( card )
-			delete card;
-		delete m;
 	} catch( std::runtime_error &e ) {
-		qDebug() << e.what();
+		s << "<br /><b>" << tr("Error reading card data: ") << "</b>" << e.what();
 	}
+	if ( card )
+		delete card;
+	delete m;
+
+	for( QHash<QString,QString>::const_iterator i = readers.constBegin();
+		i != readers.constEnd(); ++i )
+	{
+		s << "* " << i.key();
+		if( !i.value().isEmpty() )
+			s << "<p style='margin-left: 10px; margin-top: 0px; margin-bottom: 0px; margin-right: 0px;'>" << i.value() << "</p>";
+		else
+			s << "<br />";
+	}
+
 	return d;
 }

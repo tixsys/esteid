@@ -31,6 +31,6 @@ public:
 	DiagnosticsDialog( QWidget *parent = 0 );
 
 private:
-	void getDiagnosticDetails();
-	QStringList getReaderInfo() const;
+	QString getLibVersion( const QString &lib ) const;
+	QString getReaderInfo() const;
 };
