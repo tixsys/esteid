@@ -36,17 +36,23 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 ,	cardMgr( 0 )
 ,	jsSSL( 0 )
 ,	m_jsEsteidCard( jsEsteidCard )
-{   
+{
 	try {
 		cardMgr = new SmartCardManager();
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
 	}
-    
+
 	connect(&pollTimer, SIGNAL(timeout()),
             this, SLOT(pollCard()));
 	//one quick single shot
 	QTimer::singleShot( 1000, this, SLOT(pollCard()) );
+}
+
+JsCardManager::~JsCardManager()
+{
+	if( cardMgr )
+		delete cardMgr;
 }
 
 void JsCardManager::pollCard()
@@ -172,7 +178,7 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 		card->connect( reader.id, true );
 		m_jsEsteidCard->setCard(card, reader.id);
 		if ( jsSSL )
-			jsSSL->deleteLater();
+			delete jsSSL;
 		jsSSL = new SSLConnect( reader.id, this );
         return true;
     } catch (std::runtime_error &err) {

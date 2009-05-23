@@ -42,6 +42,12 @@ JsEsteidCard::JsEsteidCard( QObject *parent )
 
 void JsEsteidCard::setCard(EstEidCard *card, int reader)
 {
+	if ( m_card )
+	{
+		delete m_card;
+		m_card = 0;
+	}
+
 	m_reader = reader;
     m_card = card;
 	m_authCert->loadCert(card, JsCertData::AuthCert);

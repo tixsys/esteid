@@ -36,6 +36,12 @@ JsCertData::JsCertData( QObject *parent )
 	m_qcert = NULL;
 }
 
+JsCertData::~JsCertData()
+{
+	if( m_qcert )
+		delete m_qcert;
+}
+
 QSslCertificate JsCertData::cert() const { return *m_qcert; }
 
 void JsCertData::loadCert(EstEidCard *card, CertType ct)
@@ -56,6 +62,11 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
         else
             certBytes = m_card->getSignCert();
 
+		if( m_qcert )
+		{
+			delete m_qcert;
+			m_qcert = 0;
+		}
         m_qcert = new QSslCertificate(QByteArray((char *)&certBytes[0], certBytes.size()), QSsl::Der);
     } catch (runtime_error &err ) {
 //        doShowError(err);

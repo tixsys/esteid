@@ -8,6 +8,9 @@
 <body onSelectStart="return false;">
   <div id="top">
     <div id="headerBackground">
+	  <div id="headerLogo">
+		&nbsp;
+	  </div>
       <div id="headerMenus">
         <ul>
           <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag trcode="linkDiagnostics"></trtag></a></li>
@@ -37,7 +40,7 @@
       </ul>
     </div>
     <div id="photo">
-      <div id="photoContent" style="padding-top:50px;"></div>
+	
     </div>
     <div id="leftMenus">
       <ul>
@@ -109,16 +112,16 @@
 
   <!-- PIN1 blokeeringu algus -->
   <div id="bpin1Content" class="content" style="display: none;">
-	<span class="contentHeader"><trtag trcode="">Isikutuvastamise sertifikaat on blokeeritud.</trtag></span>
+	<span class="contentHeader"><trtag trcode="labelAuthCertBlocked"></trtag></span>
 	<div class="leftContent">
 		<p>
-			<trtag trcode="">Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.</trtag>
+			<trtag trcode="labelCertUnblock"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.</trtag>
+			<trtag trcode="labelCertUnblock1"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.</trtag>
+			<trtag trcode="labelCertUnblock2"></trtag>
 		</p>
 	</div>
 	<div class="rightContent">
@@ -145,13 +148,13 @@
   
   <!-- PIN1 muutmine algus -->
   <div id="pin1Content" class="content" style="display: none;">
-	<span class="contentHeader"><trtag trcode="">PIN1 koodi vahetus</trtag></span>
+	<span class="contentHeader"><trtag trcode="labelChangingPIN1"></trtag></span>
 	<div class="leftContent">
 		<p>
-			<trtag trcode="">PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.</trtag>
+			<trtag trcode="labelChangingPIN11"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.</trtag>
+			<trtag trcode="labelChangingPIN12"></trtag>
 		</p>
 	</div>
 	<div class="rightContent">
@@ -178,16 +181,16 @@
   
   <!-- PIN2 blokeeringu algus -->
   <div id="bpin2Content" class="content" style="display: none;">
-	<span class="contentHeader"><trtag trcode="">Allkirjastamise sertifikaat on blokeeritud.</trtag></span>
+	<span class="contentHeader"><trtag trcode="labelSignCertBlocked"></trtag></span>
 	<div class="leftContent">
 		<p>
-			<trtag trcode="">Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.</trtag>
+			<trtag trcode="labelCertUnblock"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.</trtag>
+			<trtag trcode="labelCertUnblock1"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.</trtag>
+			<trtag trcode="labelCertUnblock2"></trtag>
 		</p>
 	</div>
 	<div class="rightContent">
@@ -214,13 +217,13 @@
   
   <!-- PIN2 muutmine algus -->
   <div id="pin2Content" class="content" style="display: none;">
-	<span class="contentHeader"><trtag trcode="">PIN2 koodi vahetus</trtag></span>
+	<span class="contentHeader"><trtag trcode="labelChangingPIN2"></trtag></span>
 	<div class="leftContent">
 		<p>
-			<trtag trcode="">PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.</trtag>
+			<trtag trcode="labelChangingPIN21"></trtag>
 		</p>
 		<p>
-			<trtag trcode="">Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.</trtag>
+			<trtag trcode="labelChangingPIN22"></trtag>
 		</p>
 	</div>
 	<div class="rightContent">
@@ -253,17 +256,17 @@
 	</p>
 	<p id="emailsContentActivate" style="display:none;">
 		<label>
-			<trtag trcode="">E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad</trtag>
+			<trtag trcode="labelEmailAddress"></trtag>
 			<input type="text" name="emailAddress" id="emailAddress">
 		</label>
 		<br />
-		<input type="button" value="Aktiveeri @eesti.ee e-post" onclick="activateEmail()" class="buttonBottom" />
+		<input type="button" trcode="inputActivateEmail" onclick="activateEmail()" class="buttonBottom" />
 	</p>
 	<p id="emailsContentCheck" style="display:none;">
-		<input type="button" value="Kontrolli @eesti.ee e-posti seadistust" onclick="loadEmails()" class="buttonBottom" />
+		<input type="button" trcode="inputCheckEmails" onclick="loadEmails()" class="buttonBottom" />
 	</p>
 	<p>
-		<trtag trcode="">Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist</trtag> <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">eesti.ee</a>
+		<trtag trcode="labelEmailUrl"></trtag> <a href="#" onClick="extender.openUrl('http://www.eesti.ee/est/');">eesti.ee</a>
 	</p>
   </div>
   <!-- Eposti sisu l6pp -->
@@ -272,14 +275,14 @@
   <div id="mobileContent" class="content" style="display: none;">
 	<span class="contentHeader"><trtag trcode="inputMobile"></trtag></span>
 	<p>
-		<trtag trcode="">Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.</trtag><br />
-		<a href="#" onClick="extender.openUrl('http://id.ee/?id=10971');"><trtag trcode="">Loe täpsemalt id.ee kodulehelt</trtag></a>
+		<trtag trcode="labelMobile"></trtag><br />
+		<a href="#" onClick="extender.openUrl('http://id.ee/?id=10971');"><trtag trcode="labelMobileReadMore"></trtag></a>
 	</p>
 	<p>
-		<trtag trcode="">Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.</trtag>
+		<trtag trcode="labelMobile2"></trtag>
 	</p>
 	<p>
-		<input type="button" value="Aktiveeri Mobiil-ID teenus" onclick="activateMobile()" class="buttonBottom" />
+		<input type="button" trcode="inputActivateMobile" onclick="activateMobile()" class="buttonBottom" />
 	</p>
   </div>
   <!-- Mobiil-ID sisu l6pp -->
@@ -288,10 +291,10 @@
   <div id="pukContent" class="content" style="display: none;">
 	<span class="contentHeader"><trtag trcode="inputPUK"></trtag></span>
     <p>
-		<trtag trcode="">PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.</trtag>
+		<trtag trcode="labelInputPUK"></trtag>
 	</p>
 	<p>
-		<trtag trcode="">PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.</trtag>
+		<trtag trcode="labelInputPUK2"></trtag>
     </p>
 	<p>
 		<input type="button" trcode="inputChangePUK" onclick="setActive('cpuk','');" class="buttonBottom" />
@@ -301,10 +304,10 @@
   
   <!-- PUK muutmine algus -->
   <div id="cpukContent" class="content" style="display: none;">
-	<span class="contentHeader"><trtag trcode="">PUK koodi vahetus</trtag></span>
+	<span class="contentHeader"><trtag trcode="labelChangingPUK"></trtag></span>
 	<div class="leftContent">
 		<p>
-			<trtag trcode="">Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.</trtag>
+			<trtag trcode="labelChangingPUK2"></trtag>
 		</p>
 	</div>
 	<div class="rightContent">

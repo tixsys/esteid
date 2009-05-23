@@ -289,12 +289,12 @@ void JsExtender::showLoading( const QString &str )
 	if ( !m_loading )
 	{
 		m_loading = new QLabel( m_mainWindow );
-		m_loading->setStyleSheet( "background-color: rgba(255,255,255,180); border: 1px solid #cddbeb; border-radius: 3px;"
+		m_loading->setStyleSheet( "background-color: rgba(255,255,255,200); border: 1px solid #cddbeb; border-radius: 5px;"
 									"color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px;" );
 		m_loading->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-		m_loading->setFixedSize( 200, 100 );
+		m_loading->setFixedSize( 250, 100 );
 	}
-	m_loading->move( 200, 290 );
+	m_loading->move( 180, 305 );
 	m_loading->setText( str );
 	m_loading->show();
 	QCoreApplication::processEvents();

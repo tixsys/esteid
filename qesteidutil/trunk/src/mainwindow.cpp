@@ -30,7 +30,7 @@ MainWindow::MainWindow( QWidget *parent )
 {
 	setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
-	setFixedSize( 601, 520 );
+	setFixedSize( 601, 535 );
 
 	appTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );

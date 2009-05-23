@@ -45,6 +45,7 @@ class JsCardManager : public QObject
 
 public:
     JsCardManager(JsEsteidCard *jsEsteidCard);
+	~JsCardManager();
 	SSLConnect* ssl() { return jsSSL; }
 
 private:

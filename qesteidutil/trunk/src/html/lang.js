@@ -34,10 +34,32 @@ var htmlStrings = {
 	"labelCertBlocked": new tr( "Sertifikaat on blokeeritud.", "Certificate is blocked.", "" ),
 	"labelAuthKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.", "", "" ),
 	"labelSignKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.", "", "" ),
+	"labelAuthCertBlocked": new tr( "Isikutuvastamise sertifikaat on blokeeritud.", "Authentication certificate is blocked." , "" ),
+	"labelSignCertBlocked": new tr( "Allkirjastamise sertifikaat on blokeeritud.", "Signing certificate is blocked.", "" ),
+	"labelCertUnblock": new tr( "Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.", "To unblock certificate you have to enter PUK code.", "" ),
+	"labelCertUnblock1": new tr( "PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.", "You can find your PUK code inside ID-card codes envelope.", "" ),
+	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.", "", "" ),
+	
+	"labelChangingPIN1": new tr( "PIN1 koodi vahetus", "Change PIN1 code", "" ),
+	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "", "" ),
+	"labelChangingPIN12": new tr( "Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "" ),
+
+	"labelChangingPIN2": new tr( "PIN2 koodi vahetus", "Change PIN2 code", "" ),
+	"labelChangingPIN21": new tr( "PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.", "", "" ),
+	"labelChangingPIN22": new tr( "Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "" ),
+	
+	"labelChangingPUK": new tr( "PUK koodi vahetus", "Change PUK code", "" ),
+	"labelChangingPUK2": new tr( "Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.", "", "" ),
+	
+	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "", "" ),
+	"labelInputPUK2": new tr( "PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "", "" ),
 	
 	"inputCert": new tr( "Sertifikaadid", "Certificates", "" ),
 	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "" ),
+	"inputActivateEmail": new tr( "Aktiveeri @eesti.ee e-post", "Activate @eesti.ee email", "" ),
+	"inputCheckEmails": new tr( "Kontrolli @eesti.ee e-posti seadistust", "Check your @eesti.ee email settings", "" ),
 	"inputMobile": new tr( "Mobiil-ID", "Mobile-ID", "" ),
+	"inputActivateMobile": new tr( "Aktiveeri Mobiil-ID teenus", "Activate Mobile-ID", "" ),
 	"inputPUK": new tr( "PUK kood", "PUK code", "" ),
 	
 	"inputChange": new tr( "Muuda", "Change", "" ),
@@ -58,6 +80,13 @@ var htmlStrings = {
 	"labelNewPUK": new tr( "Uus PUK kood", "New PUK code", "" ),
 	"labelNewPUK2": new tr( "Uus PUK kood uuesti", "Repeat new PUK code", "" ),
 	"labelPUK": new tr( "PUK kood", "PUK code", "" ),
+	
+	"labelEmailAddress": new tr( "E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad", "Email addres where your @eesti.ee emails will be forwarded", "" ),
+	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "", "" ),
+	
+	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "", "" ),
+	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "", "" ),
+	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "", "" ),
 	
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "" ),

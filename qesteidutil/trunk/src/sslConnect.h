@@ -22,13 +22,12 @@
 
 #pragma once
 
+#include <QLibrary>
 #include <QObject>
 
 #include <openssl/ssl.h>
 
 #include <vector>
-
-struct DynamicLibrary;
 
 class SSLObj
 {
@@ -44,7 +43,7 @@ private:
 	ENGINE *engine;
 	SSL_CTX *ctx;
 	SSL		*s;
-	DynamicLibrary *ssl, *e;
+	QLibrary *ssl, *e;
 	int		m_reader;
 
 	int     (*pSSL_library_init)(void );

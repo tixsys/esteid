@@ -35,6 +35,7 @@ class JsCertData : public QObject
 
 public:
     JsCertData( QObject *parent );
+	~JsCertData();
 
     enum CertType {
         AuthCert,
