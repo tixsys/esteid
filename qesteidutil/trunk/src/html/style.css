@@ -1,4 +1,4 @@
-body { cursor: default; }
+body { cursor: default; margin: 0px; }
 input[type="button"] { cursor: hand; }
 
 #headerBackground {position: relative; background: #00355f; height: 45px;}
@@ -25,14 +25,14 @@ input[type="button"] { cursor: hand; }
 
 .button { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
 
-#personalInfo { position: absolute; top:81px; left:180px; width:390; height:138px;
+#personalInfo { position: absolute; top:81px; left:180px; width:385; height:138px;
 				background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
 				color: #668696; font-weight: bold; font-family: Arial; font-size: 12px; line-height: 18px;}
 #personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:250; word-wrap: break-word; }
 
-#photo {position: absolute; top:90px; left:470px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
+#photo {position: absolute; top:90px; left:467px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
 
-.cardInfo { position: absolute; top:226px; left:180px; width:390; height:72px;
+.cardInfo { position: absolute; top:226px; left:180px; width:385; height:72px;
 			background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
 			color: #54859b; font-weight: bold; font-family: Arial; font-size: 16px;}
 .cardInfo ul {list-style: none; text-indent:-1.7em; margin-top: 7px;}
@@ -45,13 +45,13 @@ input[type="button"] { cursor: hand; }
 .statusBlocked, .certBlocked {color: #e80303; font-weight: bold; }
 .certValid {font-weight: bold;}
 
-.leftContent {position: absolute; left: 40px; width: 250px; height: 180px; border-right: 1px solid #dfdfdf; margin-top: 10px;}
+.leftContent {position: absolute; left: 40px; width: 245px; height: 180px; border-right: 1px solid #dfdfdf; margin-top: 10px;}
 .buttonSelectedBottom, .buttonBottom { height: 25px; -webkit-border-radius: 3px; font-family: Arial; font-size: 12px; margin-left: 0px;}
 .buttonSelectedBottom { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
 .buttonBottom { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
 
-.rightContent {position: absolute; left: 300px; margin-top: 10px; height: 180px; padding-left: 30px;}
-#signBottomButtons, #authBottomButtons { position: absolute; bottom:0px; left: 0px; height: 30px; width:260; z-index: 1; }
+.rightContent {position: absolute; left: 290px; margin-top: 10px; height: 180px; padding-left: 30px;}
+#signBottomButtons, #authBottomButtons { position: absolute; bottom:0px; left: 0px; height: 30px; width:250; z-index: 1; }
 
 .keyBlocked { position: absolute; bottom: 35px; width: 220px; padding: 5px;
 				font-family: Arial; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }

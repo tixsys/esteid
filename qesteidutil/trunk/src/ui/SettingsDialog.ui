@@ -6,21 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>150</height>
+    <width>401</width>
+    <height>315</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>360</width>
-    <height>150</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>360</width>
-    <height>150</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
@@ -35,34 +23,27 @@ QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/but
 
 </string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="SettingsDialogLayout">
    <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Save password for specified period in minutes
+    <widget class="QLabel" name="sessionLabel">
+     <property name="text">
+      <string>Save password for specified period in minutes
 0 - always ask</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="sessionTime">
-       <property name="maximumSize">
-        <size>
-         <width>50</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
-    <spacer name="verticalSpacer">
+    <widget class="QLabel" name="updateIntervalLabel">
+     <property name="text">
+      <string>Check updates</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <spacer name="SettingsDialogSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -74,7 +55,7 @@ QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/but
      </property>
     </spacer>
    </item>
-   <item row="2" column="0">
+   <item row="5" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -83,6 +64,156 @@ QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/but
       <set>QDialogButtonBox::Close|QDialogButtonBox::Save</set>
      </property>
     </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="autoUpdateLabel">
+     <property name="text">
+      <string>Update automatically</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="autoUpdate"/>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="useProxy">
+     <property name="title">
+      <string>Proxy settings</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="proxyHostLabel">
+        <property name="text">
+         <string>Hostname</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="proxyPortLabel">
+        <property name="text">
+         <string>Port number</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="proxyUserLabel">
+        <property name="text">
+         <string>Username</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="proxyPassLabel">
+        <property name="text">
+         <string>Password</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="proxyHost"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="proxyPort"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="proxyUser"/>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="proxyPass"/>
+      </item>
+      <item row="4" column="1">
+       <widget class="QComboBox" name="proxyType">
+        <item>
+         <property name="text">
+          <string>HTTP</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SOCKS5</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="proxyTypeLabel">
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="sessionTimeLayout">
+     <item>
+      <widget class="QSpinBox" name="sessionTime"/>
+     </item>
+     <item>
+      <spacer name="sessionTimeSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QComboBox" name="updateInterval">
+       <item>
+        <property name="text">
+         <string>Once a day</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Once a week</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Once a month</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Never</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
