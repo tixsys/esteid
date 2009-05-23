@@ -229,6 +229,7 @@ function unblockPin( type )
 function cardInserted(i)
 {
 	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
+	checkReaderCount();
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		document.getElementById('cardInfoNoCard').style.display='none';	
@@ -245,13 +246,55 @@ function cardInserted(i)
 
 function cardRemoved(i)
 {
+	checkReaderCount();
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i));
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		activeCardId = "";
 		emailsLoaded = false;
+		cardManager.findCard();
 	}
 	readCardData();
+}
+
+function selectReader()
+{
+	extender.showLoading( _('loadCardData') );
+	var select = document.getElementById('readerSelect'); 
+	cardManager.selectReader( select.options[select.selectedIndex].value );
+	if ( esteidData.canReadCard() )
+		activeCardId = esteidData.getId();
+	extender.closeLoading();
+	readCardData();
+}
+
+function checkReaderCount()
+{
+	var cards = 0;
+	var reader = document.getElementById( 'readerSelect' );
+	while ( reader.options.length > 0 )
+		reader.remove(0);
+	for( var i = 0; i < cardManager.getReaderCount(); i++ )
+	{
+		if ( cardManager.isInReader( i ) )
+		{
+			var el = document.createElement( 'option' );
+			el.text = cardManager.cardId( i );
+			el.value = i;
+			if ( activeCardId != "" && el.text == activeCardId )
+				el.selected = true;
+			reader.add( el, null );
+			cards++;
+		}
+	}
+	if ( cards < 2 )
+	{
+		document.getElementById( 'headerMenus' ).style.right = '90px';
+		reader.style.display = 'none';
+	} else {
+		document.getElementById( 'headerMenus' ).style.right = '210px';
+		reader.style.display = 'block';
+	}
 }
 
 function readCardData()

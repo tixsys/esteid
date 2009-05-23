@@ -3,7 +3,10 @@ input[type="button"] { cursor: hand; }
 
 #headerBackground {position: relative; background: #00355f; height: 45px;}
 #headerLogo { position: absolute; left: 20px; top: 8px; background-image: url('qrc:/html/images/topLogo.png'); z-index: 20; width: 92px; height: 28px; }
+
+#readerSelect { position: absolute; right: 90px; top: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: Arial; font-size: 12px;}
 #headerSelect { position: absolute; right: 5px; top: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: Arial; font-size: 12px;}
+
 #headerMenus {position: absolute; right: 90px; top: 2px; color: #afc6d1; font-family: Arial; font-weight: bold; font-size: 12px;}
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}

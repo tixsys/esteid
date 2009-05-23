@@ -117,12 +117,12 @@ void JsCardManager::pollCard()
 			}
 		}
 
+		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
 			m_jsEsteidCard->setCard( 0 );
 			emit cardEvent( m_jsCardRemoveFunc, cardReaders[remove].id );
 		}
-		cardReaders = tmp;
 		if ( !insert.isEmpty() )
 			emit cardEvent( m_jsCardInsertFunc, cardReaders[insert].id );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
@@ -156,6 +156,34 @@ bool JsCardManager::isInReader( const QString &cardId )
 		if ( r.cardId == cardId )
 			return true;
 	return false;
+}
+
+bool JsCardManager::isInReader( int readerNum )
+{
+	foreach( const ReaderState &r, cardReaders )
+		if ( r.id == readerNum && !r.state.contains( "EMPTY") )
+			return true;
+	return false;
+}
+
+QString JsCardManager::cardId( int readerNum )
+{
+	foreach( const ReaderState &r, cardReaders )
+		if ( r.id == readerNum && !r.state.contains( "EMPTY") )
+			return r.cardId;
+	return "";
+}
+
+void JsCardManager::findCard()
+{
+	foreach( const ReaderState &reader, cardReaders )
+	{
+		if( reader.connected )
+		{
+			selectReader( reader );
+			return;
+		}
+	}
 }
 
 bool JsCardManager::selectReader(int i)

@@ -68,7 +68,10 @@ public slots:
 	bool selectReader( const ReaderState &reader );
     void registerCallBack( QString event, QString function );
 	bool isInReader( const QString &cardId );
+	bool isInReader( int readerNum );
+	QString cardId( int readerNum );
 	void showDiagnostics();
+	void findCard();
 
 private slots:
     void pollCard();
