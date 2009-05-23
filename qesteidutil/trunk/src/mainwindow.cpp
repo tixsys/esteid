@@ -28,6 +28,7 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )
 {
+	setWindowFlags( windowFlags() & ~Qt::WindowMaximizeButtonHint );
 	setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
 	setFixedSize( 585, 535 );
