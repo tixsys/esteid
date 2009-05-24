@@ -1,4 +1,5 @@
 include_directories( ${ICONV_INCLUDE_DIR} )
+include_directories( ${LIBDIGIDOC2_INCLUDE_DIR} )
 include_directories( ${MINIZIP_INCLUDE_DIR} )
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 include_directories( ${OPENSSLCRYPTO_INCLUDE_DIR} )
