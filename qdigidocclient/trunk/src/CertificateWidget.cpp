@@ -144,12 +144,12 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	subjects << "CN" << "OU" << "O" << "C";
 	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		text << c.issuerInfo( subject );
-		textExt << QString( "%1 = %2" )
-			.arg( subject.constData() ).arg( c.issuerInfo( subject ) );
+		const QString &data = c.subjectInfoUtf8( subject );
+		if( data.isEmpty() )
+			continue;
+		text << data;
+		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
-	text.removeDuplicates();
-	textExt.removeDuplicates();
 	addItem( tr("Issuer"), text.join( ", " ), textExt.join( "\n" ) );
 	addItem( tr("Valid from"), c.effectiveDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
 	addItem( tr("Vaild to"), c.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
@@ -160,12 +160,12 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	subjects << "serialNumber" << "GN" << "SN" << "CN" << "OU" << "O" << "C";
 	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		text << c.subjectInfoUtf8( subject );
-		textExt << QString( "%1 = %2" )
-			.arg( subject.constData() ).arg( c.subjectInfoUtf8( subject ) );
+		const QString &data = c.subjectInfoUtf8( subject );
+		if( data.isEmpty() )
+			continue;
+		text << data;
+		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
-	text.removeDuplicates();
-	textExt.removeDuplicates();
 	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
 	addItem( tr("Public key"), QString("RSA (%1)").arg( c.publicKey().length() ),
 		addHexSeparators( c.publicKey().toDer().toHex() ) );
