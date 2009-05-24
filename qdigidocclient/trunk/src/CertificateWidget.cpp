@@ -144,7 +144,7 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	subjects << "CN" << "OU" << "O" << "C";
 	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		const QString &data = c.subjectInfoUtf8( subject );
+		const QString &data = c.issuerInfo( subject );
 		if( data.isEmpty() )
 			continue;
 		text << data;
