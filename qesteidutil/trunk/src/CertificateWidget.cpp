@@ -55,6 +55,7 @@ CertificateWidget::CertificateWidget( const QSslCertificate &cert, QWidget *pare
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
 	setCertificate( cert );
+	tabWidget->removeTab( 2 );
 }
 
 CertificateWidget::~CertificateWidget() { delete d; }
@@ -114,15 +115,19 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	QTextStream s( &i );
 	s << "<b>" << tr("Certificate Information:") << "</b><br />";
 	s << "<hr>";
-	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b><ul>";
-	foreach( const QString &ext, c.keyUsage() )
+	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b>";
+	s << "<ul>";
+	Q_FOREACH( const QString &ext, c.keyUsage() )
 		s << "<li>" << ext << "</li>";
-	s << "</ul><br /><br /><br /><br />";
+	s << "</ul>";
+	s << "<br /><br /><br /><br />";
 	//s << tr("* Refer to the certification authority's statement for details.") << "<br />";
 	s << "<hr>";
 	s << "<p style='margin-left: 30px;'>";
-	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName ) << "<br /><br /><br />";
-	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName ) << "<br /><br /><br />";
+	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName );
+	s << "<br /><br /><br />";
+	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName );
+	s << "<br /><br /><br />";
 	s << "<b>" << tr("Valid from") << "</b> " << c.effectiveDate().toString( "dd.MM.yyyy" ) << " ";
 	s << "<b>" << tr("to") << "</b> "<< c.expiryDate().toString( "dd.MM.yyyy" );
 	s << "</p>";
@@ -137,11 +142,13 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	QStringList text, textExt;
 	QList<QByteArray> subjects;
 	subjects << "CN" << "OU" << "O" << "C";
-	foreach( const QByteArray &subject, subjects )
+	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		text << c.issuerInfo( subject );
-		textExt << QString( "%1 = %2" )
-			.arg( subject.constData() ).arg( c.issuerInfo( subject ) );
+		const QString &data = c.issuerInfo( subject );
+		if( data.isEmpty() )
+			continue;
+		text << data;
+		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
 	addItem( tr("Issuer"), text.join( ", " ), textExt.join( "\n" ) );
 	addItem( tr("Valid from"), c.effectiveDate().toString( "dd.MM.yyyy hh:mm:ss" ) );
@@ -151,11 +158,13 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	text.clear();
 	textExt.clear();
 	subjects << "serialNumber" << "GN" << "SN" << "CN" << "OU" << "O" << "C";
-	foreach( const QByteArray &subject, subjects )
+	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		text << c.subjectInfoUtf8( subject );
-		textExt << QString( "%1 = %2" )
-			.arg( subject.constData() ).arg( c.subjectInfoUtf8( subject ) );
+		const QString &data = c.subjectInfoUtf8( subject );
+		if( data.isEmpty() )
+			continue;
+		text << data;
+		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
 	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
 	addItem( tr("Public key"), QString("RSA (%1)").arg( c.publicKey().length() ),

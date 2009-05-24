@@ -34,6 +34,7 @@ input[type="button"] { cursor: hand; }
 #personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:250; word-wrap: break-word; }
 
 #photo {position: absolute; top:90px; left:467px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
+#savePhoto {position: absolute; top:194px; left:468px; width: 90px; height:16px; border-top: 1px solid black; z-index:2; background: #FFFFFF; text-align: center; display: none;}
 
 .cardInfo { position: absolute; top:226px; left:180px; width:385; height:72px;
 			background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;

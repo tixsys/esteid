@@ -94,6 +94,8 @@ var htmlStrings = {
 	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "Failed loading e-mail settings.", "" ),
 	"emailEnter": new tr( "E-posti aadress sisestamata!", "Enter e-mail address!", "" ),
 	"loadPicture": new tr( "Lae pilt", "Load picture", "" ),
+	"savePicture": new tr( "salvesta", "save", "" ),
+	"savePicFailed": new tr( "Pildi salvestamine ebaõnnestus!", "Saving picture failed!", "" ),
 	"loadPic": new tr( "Laen pilti", "Loading picture", "" ),
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus!", "Loading picture failed!", "" ),
 	"loadCardData": new tr( "Loen andmeid", "Reading data", "" )

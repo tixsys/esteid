@@ -22,6 +22,7 @@
 
 #include <QApplication>
 #include <QDesktopServices>
+#include <QFileDialog>
 #include <QInputDialog>
 #include <QtWebKit>
 
@@ -248,7 +249,7 @@ void JsExtender::loadPicture()
 	}
 
 	QPixmap pix;
-	if ( pix.loadFromData( (uchar *)&buffer[0], buffer.size(), "jpeg" ) )
+	if ( pix.loadFromData( (uchar *)&buffer[0], buffer.size() ) )
 	{
 		QTemporaryFile file( QString( "%1%2XXXXXX.jpg" )
 			.arg( QDir::tempPath() ).arg( QDir::separator() ) );
@@ -256,7 +257,6 @@ void JsExtender::loadPicture()
 		if ( file.open() )
 		{
 			m_tempFile = file.fileName();
-			pix = pix.scaled( 90, 120, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 			if ( pix.save( &file ) )
 			{
 #ifdef WIN32
@@ -282,6 +282,31 @@ void JsExtender::loadPicture()
 		}
 	}
 	jsCall( "setPicture", "", result );
+}
+
+void JsExtender::savePicture()
+{
+	if ( !QFile::exists( m_tempFile ) )
+	{
+		jsCall( "handleError", "savePicFailed" );
+		return;
+	}
+	QString pFile;
+	if ( m_mainWindow->eidCard() )
+		pFile = QString( "%1.jpg" ).arg( m_mainWindow->eidCard()->getId() );
+	QString file = QFileDialog::getSaveFileName( m_mainWindow, tr( "Save picture" ), pFile, tr( "JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)" ) );
+	if( file.isEmpty() )
+		return;
+	QString ext = QFileInfo( file ).suffix();
+	if( ext != "png" && ext != "jpg" && ext != "jpeg" && ext != "tiff" && ext != "bmp" )
+		file.append( ".jpg" );
+	QPixmap pix;
+	if ( !pix.load( m_tempFile ) )
+	{
+		jsCall( "handleError", "savePicFailed" );
+		return;
+	}
+	pix.save( file );
 }
 
 void JsExtender::showLoading( const QString &str )

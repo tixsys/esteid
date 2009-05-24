@@ -416,12 +416,17 @@ function loadPicture()
 	extender.loadPicture();
 }
 
+function savePicture()
+{ extender.savePicture(); }
+
 function setPicture( img, code )
 {
 	if ( code != "" )
 		alert( _(code) );
-	else
-		document.getElementById('photo').innerHTML = "<img src=\"" + img + "\">";
+	else {
+		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="' + img + '">';
+		document.getElementById('savePhoto').style.display = 'block';
+	}
 	extender.closeLoading();
 }
 
@@ -505,6 +510,7 @@ function disableFields()
 	
 	document.getElementById('emailsContent').innerHTML = "";
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
+	document.getElementById('savePhoto').style.display = 'none';
 	
 	var divs = document.getElementsByClassName('content');
 	for( var i in divs )

@@ -198,6 +198,7 @@ bool JsCardManager::selectReader(int i)
 
 bool JsCardManager::selectReader( const ReaderState &reader )
 {
+	QCoreApplication::processEvents();
     EstEidCard *card = 0;
     try {
         if (!cardMgr)

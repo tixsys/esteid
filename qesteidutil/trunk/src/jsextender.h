@@ -55,11 +55,15 @@ public slots:
 	QVariant jsCall( const QString &function, const QString &argument, const QString &argument2 );
 	QString checkPin();
 	void openUrl( const QString &url );
-	void activateEmail( const QString &email );
+	
 	void loadEmails();
+	void activateEmail( const QString &email );
 	QString readEmailAddresses();
 	QString readForwards();
+	
 	void loadPicture();
+	void savePicture();
+
 	QString locale() { return m_locale; }
 	void showSettings();
 	void showLoading( const QString & );
