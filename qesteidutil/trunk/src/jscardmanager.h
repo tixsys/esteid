@@ -31,6 +31,8 @@
 #include "jsesteidcard.h"
 #include "sslConnect.h"
 
+class DiagnosticsDialog;
+
 class JsCardManager : public QObject
 {
     Q_OBJECT
@@ -53,6 +55,7 @@ private:
 	SSLConnect *jsSSL;
 	JsEsteidCard *m_jsEsteidCard;
     QTimer pollTimer;
+	DiagnosticsDialog *diagnosticsDialog;
 
     QHash<QString,ReaderState> cardReaders;
     QString m_jsCardInsertFunc;

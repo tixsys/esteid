@@ -36,6 +36,7 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 ,	cardMgr( 0 )
 ,	jsSSL( 0 )
 ,	m_jsEsteidCard( jsEsteidCard )
+,	diagnosticsDialog( 0 )
 {
 	try {
 		cardMgr = new SmartCardManager();
@@ -259,6 +260,7 @@ void JsCardManager::registerCallBack(QString event, QString function)
 
 void JsCardManager::showDiagnostics()
 {
-	DiagnosticsDialog *d = new DiagnosticsDialog( qApp->activeWindow() );
-	d->show();
+	if ( !diagnosticsDialog )
+		diagnosticsDialog = new DiagnosticsDialog( qApp->activeWindow() );
+	diagnosticsDialog->show();
 }

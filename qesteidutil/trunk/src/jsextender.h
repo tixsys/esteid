@@ -28,6 +28,7 @@
 #include <QXmlStreamReader>
 
 class MainWindow;
+class SettingsDialog;
 
 class JsExtender : public QObject
 {
@@ -46,6 +47,7 @@ private:
 	QString m_locale;
 	QLabel *m_loading;
 	QDateTime m_dateTime;
+	SettingsDialog *settingsDialog;
 
 public slots:
 	void setLanguage( const QString &lang );

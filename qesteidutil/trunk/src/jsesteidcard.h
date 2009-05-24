@@ -30,6 +30,8 @@
 #include "cardlib/EstEidCard.h"
 #include "jscertdata.h"
 
+class CertificateWidget;
+
 class JsEsteidCard : public QObject
 {
     Q_OBJECT
@@ -83,6 +85,7 @@ private:
     void handleError(QString msg);
 	dword authUsageCount;
 	dword signUsageCount;
+	CertificateWidget *certificateWidget;
 
 public slots:
     QString getSurName();

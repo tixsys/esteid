@@ -32,6 +32,7 @@ using namespace std;
 
 JsEsteidCard::JsEsteidCard( QObject *parent )
 :	QObject( parent )
+,	certificateWidget( 0 )
 {
     m_card = NULL;
     m_authCert = new JsCertData( this );
@@ -426,16 +427,17 @@ bool JsEsteidCard::checkPin( const QString &pin )
 
 void JsEsteidCard::showCert( int type )
 {
-	CertificateWidget *w = new CertificateWidget( qApp->activeWindow() );
+	if ( !certificateWidget )
+		certificateWidget = new CertificateWidget( qApp->activeWindow() );
 	if( type == 1 )
 	{
 		getAuthCert();
-		w->setCertificate( m_authCert->cert() );
+		certificateWidget->setCertificate( m_authCert->cert() );
 	}
 	else
 	{
 		getSignCert();
-		w->setCertificate( m_signCert->cert() );
+		certificateWidget->setCertificate( m_signCert->cert() );
 	}
-	w->show();
+	certificateWidget->show();
 }

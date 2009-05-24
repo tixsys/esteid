@@ -262,15 +262,15 @@ Sisesta PIN1</translation>
     </message>
     <message>
         <source>Once a day</source>
-        <translation>Korra päevas</translation>
+        <translation>Kord päevas</translation>
     </message>
     <message>
         <source>Once a week</source>
-        <translation>Korra nädalas</translation>
+        <translation>Kord nädalas</translation>
     </message>
     <message>
         <source>Once a month</source>
-        <translation>Korra kuus</translation>
+        <translation>Kord kuus</translation>
     </message>
     <message>
         <source>Never</source>

@@ -35,6 +35,7 @@ JsExtender::JsExtender( MainWindow *main )
 :	QObject( main )
 ,	m_mainWindow( main )
 ,	m_loading( 0 )
+,	settingsDialog( 0 )
 {
 	m_locale = Settings().value( "language" ).toString();
 	if ( m_locale.isEmpty() )
@@ -333,6 +334,7 @@ void JsExtender::closeLoading()
 
 void JsExtender::showSettings()
 {
-	SettingsDialog *s = new SettingsDialog( m_mainWindow );
-	s->show();
+	if ( !settingsDialog )
+		settingsDialog = new SettingsDialog( m_mainWindow );
+	settingsDialog->show();
 }

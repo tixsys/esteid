@@ -34,7 +34,6 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
 
 	QString info;
 	QTextStream s( &info );
