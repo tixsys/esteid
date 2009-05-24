@@ -29,6 +29,7 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
+#include <QHeaderView>
 #include <QMessageBox>
 #include <QProgressBar>
 #include <QRegExpValidator>
