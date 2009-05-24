@@ -34,6 +34,7 @@
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QFileDialog>
+#include <QHeaderView>
 #include <QMessageBox>
 #include <QPrintPreviewDialog>
 #include <QProcess>
