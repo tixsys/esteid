@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QDigiDocCrypto
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>

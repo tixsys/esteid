@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QDigiDocCrypto
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -144,7 +144,7 @@ void CertificateWidget::setCertificate( const QSslCertificate &cert )
 	subjects << "CN" << "OU" << "O" << "C";
 	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		const QString &data = c.subjectInfoUtf8( subject );
+		const QString &data = c.issuerInfo( subject );
 		if( data.isEmpty() )
 			continue;
 		text << data;
