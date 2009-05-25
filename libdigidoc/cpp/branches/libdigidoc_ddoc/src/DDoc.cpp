@@ -217,7 +217,7 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	if( !d->doc || id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 		return;
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
@@ -226,7 +226,7 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	if( !d->doc || id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
 		return;
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
@@ -235,14 +235,14 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 void DDoc::save() throw(IOException, BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	int err = d->f_createSignedDoc( d->doc, d->filename, d->filename );
 }
 
 void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	d->filename = serializer->getPath().c_str();
 	save();
 }
@@ -250,7 +250,7 @@ void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	SignatureInfo *info;
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
 	err = d->f_addAllDocInfos( d->doc, info );
