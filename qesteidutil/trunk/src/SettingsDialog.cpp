@@ -28,10 +28,36 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 {
 	setupUi( this );
 	sessionTime->setValue( Settings().value( "sessionTime", 0 ).toInt() );
+	
+	int interval = updateInterval->findText( Settings().value( "updateInterval" ).toString() );
+	if ( interval == -1 )
+		interval = 0;
+	updateInterval->setCurrentIndex( interval );
+	autoUpdate->setChecked( Settings().value( "autoUpdate", true ).toBool() );
+
+	useProxy->setChecked( Settings().value( "useProxy", false ).toBool() );
+	proxyHost->setText( Settings().value( "proxyHost" ).toString() );
+	proxyPort->setText( Settings().value( "proxyPort" ).toString() );
+	proxyUser->setText( Settings().value( "proxyUser" ).toString() );
+	proxyPass->setText( Settings().value( "proxyPass" ).toString() );
+	int type = proxyType->findText( Settings().value( "proxyType" ).toString() );
+	if ( type == -1 )
+		type = 0;
+	proxyType->setCurrentIndex( type );
 }
 
 void SettingsDialog::accept()
 {
 	Settings().setValue( "sessionTime", sessionTime->value() );
+	
+	Settings().setValue( "updateInterval", updateInterval->currentText() );
+	Settings().setValue( "autoUpdate", autoUpdate->isChecked() );
+
+	Settings().setValue( "useProxy", useProxy->isChecked() );
+	Settings().setValue( "proxyHost", proxyHost->text() );
+	Settings().setValue( "proxyPort", proxyPort->text() );
+	Settings().setValue( "proxyUser", proxyUser->text() );
+	Settings().setValue( "proxyPass", proxyPass->text() );
+	Settings().setValue( "proxyType", proxyType->currentText() );
 	done( 1 );
 }
