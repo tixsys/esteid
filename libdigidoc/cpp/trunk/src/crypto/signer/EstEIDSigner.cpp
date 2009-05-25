@@ -2,6 +2,10 @@
 #include <conio.h>
 #endif
 
+#if !defined(_WIN32)
+#include <unistd.h>
+#endif 
+
 #include <string.h>
 
 #include "../../log.h"

@@ -7,10 +7,6 @@ digidoc::Conf* digidoc::Conf::INSTANCE = NULL;
 
 digidoc::Conf* digidoc::Conf::getInstance()
 {
-    if(INSTANCE == NULL)
-    {
-        //ERR("Conf not initialized");
-    }
     return INSTANCE;
 }
 

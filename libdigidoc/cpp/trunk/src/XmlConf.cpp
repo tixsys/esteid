@@ -5,7 +5,6 @@
 #include "XmlConf.h"
 #include <stdlib.h>//getenv
 
-
 #include "log.h"
 #include "util/String.h"
 #include "util/File.h"
@@ -34,7 +33,6 @@ const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
 
 /**
  * Use digidoc::XmlConf as configuration instance.
- * If configuration loading fails, this method calls exit(-1);
  */
 void digidoc::XmlConf::initialize()
 {
@@ -47,7 +45,7 @@ void digidoc::XmlConf::initialize()
         catch(const digidoc::IOException& e)
         {
             ERR("%s\n", e.getMsg().c_str());
-            exit(-1); 
+            THROW_IOEXCEPTION("Could not initialize XmlConf");
         }
     }
 }
@@ -175,17 +173,23 @@ std::string digidoc::XmlConf::getDigestUri() const
 
 std::string digidoc::XmlConf::getManifestXsdPath() const
 {
-    return manifestXsdPath;
+    // the file path in conf is relative to the conf file's location
+    std::string confpath(getenv(CONF_ENV.c_str()));
+    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), manifestXsdPath);
 }
 
 std::string digidoc::XmlConf::getXadesXsdPath() const
 {
-    return xadesXsdPath;
+    // the file path in conf is relative to the conf file's location 
+    std::string confpath(getenv(CONF_ENV.c_str()));
+    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), xadesXsdPath);
 }
 
 std::string digidoc::XmlConf::getDsigXsdPath() const
 {
-    return dsigXsdPath;
+    // the file path in conf is relative to the conf file's location
+    std::string confpath(getenv(CONF_ENV.c_str()));
+    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), dsigXsdPath);
 }
 
 std::string digidoc::XmlConf::getPKCS11DriverPath() const
@@ -200,10 +204,18 @@ std::string digidoc::XmlConf::getOCSPUrl() const
 
 std::string digidoc::XmlConf::getOCSPCertPath() const
 {
-    return ocspCertsFile;
+    // the file path in conf is relative to the conf file's location
+    std::string conf_fullpath(getenv(CONF_ENV.c_str()));
+    std::string ocspCertPath(digidoc::util::File::directory(conf_fullpath));
+    ocspCertPath.append("/" + ocspCertsFile);
+    return ocspCertPath;
 }
 
 std::string digidoc::XmlConf::getCertStorePath() const
 {
-    return certStorePath;
+    // the file path in conf is relative to the conf file's location
+    std::string conf_fullpath(getenv(CONF_ENV.c_str()));
+    std::string certStoreFullPath(digidoc::util::File::directory(conf_fullpath));
+    certStoreFullPath.append("/" + certStorePath);
+    return certStoreFullPath;
 }

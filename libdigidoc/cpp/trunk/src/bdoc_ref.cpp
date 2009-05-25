@@ -761,34 +761,56 @@ int main( int argc, char* argv[] )
 	++argv;
 	--argc;
 	size_t increment( 0 );
-	digidoc::Commander commander( progName );
 
-	if ( isInteractive )
-	{
-		std::cout << "Hello! Working with you in interactive mode." << std::endl;
-		for ( ;; )
-		{
-			std::cout << ret << ">";
-			ret = commander.interact( returning );
-			if ( returning )
-			{
-				return ret;
-			}
-		}
-	}
-	else
-	{
-		while ( argc >= 1 )
-		{
-			ret = commander.execute( argc, argv, returning, increment );
-			if ( returning )
-			{
-				return ret;
-			}
-			argv += increment;
-			argc -= increment;
-		}
-	}
+    try
+    {
+	    digidoc::Commander commander( progName );
+
+    	if ( isInteractive )
+	    {
+		    std::cout << "Hello! Working with you in interactive mode." << std::endl;
+		    for ( ;; )
+		    {
+			    std::cout << ret << ">";
+			    ret = commander.interact( returning );
+			    if ( returning )
+			    {
+				    return ret;
+			    }
+		    }
+	    }
+	    else
+	    {
+		    while ( argc >= 1 )
+		    {
+			    ret = commander.execute( argc, argv, returning, increment );
+			    if ( returning )
+			    {
+			    	return ret;
+			    }
+			    argv += increment;
+			    argc -= increment;
+		    }
+	    }
+    }
+    catch(const digidoc::BDocException e)
+    {
+        ERR("Caught BDocException: %s; exiting.", e.getMsg().c_str());
+        return 1; 
+    }
+
+    catch(const digidoc::IOException e)
+    {
+        ERR("Caught IOException: %s; exiting.", e.getMsg().c_str());
+        return 1; 
+    }
+
+    catch(...)
+    {
+        ERR("Caught an unknown exception, exiting.");
+        return 1;
+    }
+
 	return 0;
 }
 

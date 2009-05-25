@@ -15,34 +15,32 @@ import warnings
 from subprocess import *
 
 #Create conf file
-def createTempConf(bdoc_lib_home_path, cert_store_path="/etc/certs"):
+def createTempConf(bdoc_lib_home_path, cert_store_path="certs"):
     conf_template = string.Template(
 """<?xml version="1.0" encoding="UTF-8"?>
 <!--Auto generated configuration for bdoc lib-->
-<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="${bdoc_lib_home}/etc/schema/conf.xsd">
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/conf.xsd">
     <!--algorithm to use for digest calculation when creating new Bdoc
         see http://www.ietf.org/rfc/rfc4051.txt-->
     <!--http://www.w3.org/2000/09/xmldsig#sha1-->
     <!--http://www.w3.org/2001/04/xmlenc#sha256-->
     <param name="digest.uri">http://www.w3.org/2000/09/xmldsig#sha1</param>
     <!--pkcs11 driver location-->
-    <param name="pkcs11.driver.path">/usr/lib/opensc-pkcs11.so</param>
+    <param name="pkcs11.driver.path">opensc-pkcs11.so</param>
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
     <param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>
     <!--Trusted CA certs in PEM format-->
-    <param name="cert.store.path">${bdoc_lib_home}${cert_store}</param>
+    <param name="cert.store.path">{cert_store}</param>
     <!--OCSP responder public certificate for validating OCSP response-->
-    <param name="ocsp.certs.file">${bdoc_lib_home}/etc/certs/sk-test-ocsp-responder-2005.pem</param>
+    <param name="ocsp.certs.file">{cert_store}/sk-test-ocsp-responder-2005.pem</param>
 
-    <param name="manifest.xsd.path">file:///${bdoc_lib_home}/etc/schema/OpenDocument_manifest.xsd</param>
-    <param name="xades.xsd.path">file:///${bdoc_lib_home}/etc/schema/XAdES.xsd</param>
-    <param name="dsig.xsd.path">file:///${bdoc_lib_home}/etc/schema/xmldsig-core-schema.xsd</param>
+    <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
+    <param name="xades.xsd.path">schema/XAdES.xsd</param>
+    <param name="dsig.xsd.path">schema/xmldsig-core-schema.xsd</param>
 </configuration>
 """
 )
     conf_str = conf_template.substitute(bdoc_lib_home=bdoc_lib_home_path, cert_store=cert_store_path)
-    
-    
     f, conf_name = tempfile.mkstemp(suffix='.conf') 
     conf_file = os.fdopen(f, 'w')
     conf_file.write(conf_str)
@@ -85,6 +83,11 @@ class BDocTestCase(unittest.TestCase):
         else: #full
             fullBdocPath = bdocFile
         cmd = [g_tool, '-open', fullBdocPath, '-valid_offline', '1']
+        print "validating: "
+        print cmd
+        print "conf is located at "
+        print g_environment['BDOCLIB_CONF_XML']
+
         if(validateOnline):
             cmd[len(cmd):] = ['-valid_online', '1']
         output = execCmd(cmd)
@@ -160,7 +163,7 @@ class BDocTestCase(unittest.TestCase):
         global g_projectDir
         conf = g_environment['BDOCLIB_CONF_XML']
         #set invalid cert store
-        tempConf = createTempConf(g_projectDir[0:-1], cert_store_path='/test/data/bdoc')
+        tempConf = createTempConf(g_projectDir[0:-1], cert_store_path='test/data/bdoc')
         g_environment['BDOCLIB_CONF_XML'] = tempConf
         try:
             self.validateSignature(bdoc, "Signature is invalid",validateOnline=False)
@@ -222,7 +225,7 @@ class BDocTestCase(unittest.TestCase):
         bdocFile += 'õõääööüü'
         toolcmd = [tool,
                 '-create',
-                '-insert', g_projectDir+'test/testdoc.odt',
+                '-insert', tool,
                 '-sign', g_projectDir+'test/data/cert/cert+priv_key.pem',
                 'BES', 'Tällinn', 'Härjumaa', '13417', 'Estünia', 'ütomated_test',
                 '-save_as', bdocFile
