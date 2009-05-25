@@ -144,7 +144,27 @@
     </message>
     <message>
         <source>Error reading card data: </source>
+        <translation type="obsolete">Kaardilt andmete lugemine ebaõnnestus:</translation>
+    </message>
+    <message>
+        <source>Error reading card data:</source>
         <translation>Kaardilt andmete lugemine ebaõnnestus:</translation>
+    </message>
+    <message>
+        <source>Save as</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt)</source>
+        <translation>Teksti failid (*.txt)</translation>
+    </message>
+    <message>
+        <source>Error occured</source>
+        <translation>Tekkis viga</translation>
+    </message>
+    <message>
+        <source>Failed write to file!</source>
+        <translation>Faili kirjutamine ebaõnnestus!</translation>
     </message>
 </context>
 <context>

@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include <QLabel>
 #include <QObject>
 #include <QtWebKit>
 #include <QXmlStreamReader>
@@ -45,7 +44,6 @@ private:
 	QString m_tempFile;
 	QXmlStreamReader xml;
 	QString m_locale;
-	QLabel *m_loading;
 	QDateTime m_dateTime;
 	SettingsDialog *settingsDialog;
 
@@ -68,6 +66,4 @@ public slots:
 
 	QString locale() { return m_locale; }
 	void showSettings();
-	void showLoading( const QString & );
-	void closeLoading();
 };

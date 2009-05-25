@@ -46,21 +46,19 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 
 	connect(&pollTimer, SIGNAL(timeout()),
             this, SLOT(pollCard()));
-	//one quick single shot
-	QTimer::singleShot( 1000, this, SLOT(pollCard()) );
+	pollTimer.start( 2000 );
 }
 
 JsCardManager::~JsCardManager()
 {
+	if ( diagnosticsDialog )
+		diagnosticsDialog->deleteLater();
 	if( cardMgr )
 		delete cardMgr;
 }
 
 void JsCardManager::pollCard()
 {
-	if ( !pollTimer.isActive() )
-		pollTimer.start( 3000 );
-
     EstEidCard *card = 0;
     try {
 		QString insert,remove;
@@ -177,6 +175,7 @@ QString JsCardManager::cardId( int readerNum )
 
 void JsCardManager::findCard()
 {
+	QCoreApplication::processEvents();
 	foreach( const ReaderState &reader, cardReaders )
 	{
 		if( reader.connected )
@@ -189,6 +188,7 @@ void JsCardManager::findCard()
 
 bool JsCardManager::selectReader(int i)
 {
+	QCoreApplication::processEvents();
 	foreach( const ReaderState &reader, cardReaders )
 	{
 		if( reader.id == i && reader.connected )
@@ -206,6 +206,7 @@ bool JsCardManager::selectReader( const ReaderState &reader )
             cardMgr = new SmartCardManager();
 		card = new EstEidCard(*cardMgr);
 		card->connect( reader.id, true );
+		QCoreApplication::processEvents();
 		m_jsEsteidCard->setCard(card, reader.id);
 		if ( jsSSL )
 			delete jsSSL;
@@ -261,6 +262,6 @@ void JsCardManager::registerCallBack(QString event, QString function)
 void JsCardManager::showDiagnostics()
 {
 	if ( !diagnosticsDialog )
-		diagnosticsDialog = new DiagnosticsDialog( qApp->activeWindow() );
+		diagnosticsDialog = new DiagnosticsDialog;
 	diagnosticsDialog->show();
 }

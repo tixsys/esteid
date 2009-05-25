@@ -98,6 +98,8 @@ var htmlStrings = {
 	"savePicFailed": new tr( "Pildi salvestamine ebaõnnestus!", "Saving picture failed!", "" ),
 	"loadPic": new tr( "Laen pilti", "Loading picture", "" ),
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus!", "Loading picture failed!", "" ),
+	"loadPicFailed2": new tr( "Pildi laadimine ebaõnnestus - tundmatu pildiformaat!", "Loading picture failed - unknown picture format!", "" ),
+	"loadPicFailed3": new tr( "Pildi laadimine ebaõnnestus - viga salvestamisel!", "Loading picture failed - error saving file!", "" ),
 	"loadCardData": new tr( "Loen andmeid", "Reading data", "" )
 };
 

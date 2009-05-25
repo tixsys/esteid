@@ -41,6 +41,12 @@ JsEsteidCard::JsEsteidCard( QObject *parent )
 	signUsageCount = 0;
 }
 
+JsEsteidCard::~JsEsteidCard()
+{
+	if ( certificateWidget )
+		certificateWidget->deleteLater();
+}
+
 void JsEsteidCard::setCard(EstEidCard *card, int reader)
 {
 	if ( m_card )
@@ -428,7 +434,7 @@ bool JsEsteidCard::checkPin( const QString &pin )
 void JsEsteidCard::showCert( int type )
 {
 	if ( !certificateWidget )
-		certificateWidget = new CertificateWidget( qApp->activeWindow() );
+		certificateWidget = new CertificateWidget;
 	if( type == 1 )
 	{
 		getAuthCert();

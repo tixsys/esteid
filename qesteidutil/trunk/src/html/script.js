@@ -233,13 +233,13 @@ function cardInserted(i)
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		document.getElementById('cardInfoNoCard').style.display='none';	
-		extender.showLoading( _('loadCardData') );
+		showLoading( _('loadCardData') );
 		activeCardId = "";
 		emailsLoaded = false;
 		cardManager.selectReader( i );
 		if ( esteidData.canReadCard() )
 			activeCardId = esteidData.getId();
-		extender.closeLoading();
+		closeLoading();
 	}
 	readCardData();
 }
@@ -259,12 +259,12 @@ function cardRemoved(i)
 
 function selectReader()
 {
-	extender.showLoading( _('loadCardData') );
+	showLoading( _('loadCardData') );
 	var select = document.getElementById('readerSelect'); 
 	cardManager.selectReader( select.options[select.selectedIndex].value );
 	if ( esteidData.canReadCard() )
 		activeCardId = esteidData.getId();
-	extender.closeLoading();
+	closeLoading();
 	readCardData();
 }
 
@@ -404,7 +404,7 @@ function loadEmails()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	extender.showLoading( _('loadEmail') );
+	showLoading( _('loadEmail') );
 	extender.loadEmails();
 }
 
@@ -412,7 +412,7 @@ function loadPicture()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	extender.showLoading( _('loadPic') );
+	showLoading( _('loadPic') );
 	extender.loadPicture();
 }
 
@@ -427,7 +427,7 @@ function setPicture( img, code )
 		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="' + img + '">';
 		document.getElementById('savePhoto').style.display = 'block';
 	}
-	extender.closeLoading();
+	closeLoading();
 }
 
 function setEmailActivate( msg )
@@ -444,7 +444,7 @@ function setEmailActivate( msg )
 
 function setEmails( code, msg )
 {
-	extender.closeLoading();
+	closeLoading();
 	if ( code == "0" && msg.indexOf( ' - ' ) == -1 )
 		code = "20";
 	//not activated
@@ -542,3 +542,12 @@ function enableFields()
 		}
 	}
 }
+
+function showLoading( text )
+{
+	document.getElementById('loading').style.display='block';
+	document.getElementById('loading').innerHTML=text;
+}
+
+function closeLoading()
+{ document.getElementById('loading').style.display='none'; }

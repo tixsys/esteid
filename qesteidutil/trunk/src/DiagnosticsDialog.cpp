@@ -27,7 +27,11 @@
 #include "cardlib/SmartCardManager.h"
 #include "cardlib/EstEidCard.h"
 
-#include <QDebug>
+#include <QDesktopServices>
+#include <QFile>
+#include <QFileDialog>
+#include <QHash>
+#include <QMessageBox>
 #include <QTextStream>
 
 DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
@@ -98,8 +102,8 @@ QString DiagnosticsDialog::getReaderInfo() const
 			else
 				readers[reader] = "";
 		}
-	} catch( std::runtime_error &e ) {
-		s << "<br /><b>" << tr("Error reading card data: ") << "</b>" << e.what();
+	} catch( const std::runtime_error &e ) {
+		s << "<br /><b>" << tr("Error reading card data:") << "</b> " << e.what();
 	}
 	if ( card )
 		delete card;
@@ -116,4 +120,22 @@ QString DiagnosticsDialog::getReaderInfo() const
 	}
 
 	return d;
+}
+
+void DiagnosticsDialog::save()
+{
+	QString filename = QFileDialog::getSaveFileName( this, tr("Save as"), QString( "%1/qesteidutil_diagnostics.txt" )
+		.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) ),
+		tr("Text files (*.txt)") );
+	if( filename.isEmpty() )
+		return;
+	QFile f( filename );
+	if( !f.open( QIODevice::WriteOnly ) )
+	{
+		QMessageBox::warning( this, tr("Error occured"), tr("Failed write to file!") );
+		return;
+	}
+	QTextStream s( &f );
+	s << diagnosticsText->toPlainText();
+	f.close();
 }

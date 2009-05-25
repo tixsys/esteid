@@ -34,7 +34,6 @@
 JsExtender::JsExtender( MainWindow *main )
 :	QObject( main )
 ,	m_mainWindow( main )
-,	m_loading( 0 )
 ,	settingsDialog( 0 )
 {
 	m_locale = Settings().value( "language" ).toString();
@@ -48,6 +47,8 @@ JsExtender::JsExtender( MainWindow *main )
 
 JsExtender::~JsExtender()
 {
+	if ( settingsDialog )
+		settingsDialog->deleteLater();
 	if ( QFile::exists( m_tempFile ) )
 		QFile::remove( m_tempFile );
 }
@@ -269,7 +270,9 @@ void JsExtender::loadPicture()
 				return;
 			}
 		}
+		jsCall( "setPicture", "", "loadPicFailed3" );
 	} else { //probably got xml error string
+		QString result2 = "loadPicFailed2";
 		xml.clear();
 		xml.addData( QByteArray( (char *)&buffer[0], buffer.size() ) );		
 		while ( !xml.atEnd() )
@@ -277,12 +280,12 @@ void JsExtender::loadPicture()
 			xml.readNext();
 			if ( xml.isStartElement() && xml.name() == "fault_code" )
 			{
-				result = xml.readElementText();
+				result2 = xml.readElementText();
 				break;
 			}
 		}
+		jsCall( "setPicture", "", result2 );
 	}
-	jsCall( "setPicture", "", result );
 }
 
 void JsExtender::savePicture()
@@ -310,31 +313,9 @@ void JsExtender::savePicture()
 	pix.save( file );
 }
 
-void JsExtender::showLoading( const QString &str )
-{
-	if ( !m_loading )
-	{
-		m_loading = new QLabel( m_mainWindow );
-		m_loading->setStyleSheet( "background-color: rgba(255,255,255,200); border: 1px solid #cddbeb; border-radius: 5px;"
-									"color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px;" );
-		m_loading->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-		m_loading->setFixedSize( 250, 100 );
-	}
-	m_loading->move( 180, 305 );
-	m_loading->setText( str );
-	m_loading->show();
-	QCoreApplication::processEvents();
-}
-
-void JsExtender::closeLoading()
-{
-	if ( m_loading )
-		m_loading->close();
-}
-
 void JsExtender::showSettings()
 {
 	if ( !settingsDialog )
-		settingsDialog = new SettingsDialog( m_mainWindow );
+		settingsDialog = new SettingsDialog;
 	settingsDialog->show();
 }

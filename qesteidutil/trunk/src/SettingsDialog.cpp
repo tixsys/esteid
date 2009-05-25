@@ -27,7 +27,6 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
 	sessionTime->setValue( Settings().value( "sessionTime", 0 ).toInt() );
 }
 

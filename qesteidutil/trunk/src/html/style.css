@@ -64,3 +64,6 @@ a:link {color: #509b00; text-decoration: none;}
 a:hover {color: #509b00; text-decoration: underline;}	
 
 label	 {color: #355670; font-weight: bold;}
+
+#loading { position: absolute; left: 180px; bottom: 140px; background-color: rgba(255,255,255,0.85); border: 1px solid #cddbeb; width: 250px; height: 60px; 
+			color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px; text-align: center; z-index: 10; padding-top: 30px; display: none; }

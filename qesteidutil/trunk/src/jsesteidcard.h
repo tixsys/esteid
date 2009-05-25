@@ -38,6 +38,7 @@ class JsEsteidCard : public QObject
 
 public:
     JsEsteidCard( QObject *parent );
+	~JsEsteidCard();
 
     void setCard(EstEidCard *card, int reader = 0);
     void reloadData();

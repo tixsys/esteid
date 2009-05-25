@@ -30,6 +30,9 @@ class DiagnosticsDialog: public QDialog, private Ui::DiagnosticsDialog
 public:
 	DiagnosticsDialog( QWidget *parent = 0 );
 
+private slots:
+	void save();
+
 private:
 	QString getLibVersion( const QString &lib ) const;
 	QString getReaderInfo() const;
