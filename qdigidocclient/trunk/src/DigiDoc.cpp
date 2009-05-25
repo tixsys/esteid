@@ -275,7 +275,7 @@ bool DigiDoc::isModified() const { return modified; }
 bool DigiDoc::isNull() const { return b == 0; }
 QString DigiDoc::lastError() const { return m_lastError; }
 
-void DigiDoc::open( const QString &file )
+bool DigiDoc::open( const QString &file )
 {
 	clear();
 	m_fileName = file;
@@ -283,8 +283,10 @@ void DigiDoc::open( const QString &file )
 	{
 		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toStdString()));
 		b = new WDoc( s );
+		return true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
+	return false;
 }
 
 void DigiDoc::removeDocument( unsigned int num )

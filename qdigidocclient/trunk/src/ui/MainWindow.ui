@@ -42,17 +42,23 @@
    <string notr="true">/* fonts */
 QWidget
 { color: #355670; }
-QPushButton, #languages
+QPushButton,
+#cards, #cards QAbstractItemView,
+#languages, #languages QAbstractItemView
 { color: white; }
 #homeButtonLabel,
 #viewContentLabel, #viewSignaturesLabel,
 #signContentLabel, #signSigner, #signSignerLabel
-{ color: rgba(0, 53, 95, 255); }
+{ color: #00355F; }
 #settings, #help
 { color: #afc6d1; }
 
 /* backgrounds */
-#languages, #settings, #help, #headerLine,
+#languages, #languages QAbstractItemView,
+#cards, #cards QAbstractItemView,
+#settings, #help, #headerLine, #headerLine2
+{ background-color: #00355F; }
+
 #home, #intro, #sign, #view,
 #signContentView, #viewContentView,
 #viewSignatures, #viewSignaturesScroll
@@ -62,7 +68,7 @@ QPushButton, #languages
 QPushButton
 {
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
- stop: 0 rgba(64, 106, 158, 255), stop: 0.75 rgba(0, 53, 95, 255));
+ stop: 0 #406A9E, stop: 0.75 #00355F);
 border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
@@ -75,8 +81,13 @@ QPushButton:hover
 /* customization */
 #background
 { background-image: url(&quot;:/images/background.png&quot;); }
-#languages::down-arrow
-{ image: url(&quot;:/images/images/languages_button.png&quot;); }
+#cards, #languages
+{ padding-right: 5px; }
+#cards::down-arrow, #languages::down-arrow
+{ image: url(&quot;:/images/languages_button.png&quot;); }
+#cards::drop-down, #cards QAbstractItemView,
+#languages::drop-down, #languages QAbstractItemView
+{ border: 0px; }
 #info
 {
 border-radius: 3px;
@@ -112,44 +123,7 @@ padding: 10px;
       <item>
        <layout class="QHBoxLayout" name="headerLayout">
         <item>
-         <widget class="QComboBox" name="languages">
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToContents</enum>
-          </property>
-          <item>
-           <property name="text">
-            <string>Estonian</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>English</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Russian</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>German</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Latvian</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Lithuanian</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <spacer name="headerFrameSpacer">
+         <spacer name="headerSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -172,13 +146,16 @@ padding: 10px;
           <property name="text">
            <string>Settings</string>
           </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="Line" name="headerLine">
+          <property name="maximumSize">
+           <size>
+            <width>2</width>
+            <height>20</height>
+           </size>
+          </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
@@ -198,9 +175,44 @@ padding: 10px;
           <property name="text">
            <string>Help</string>
           </property>
-          <property name="flat">
-           <bool>true</bool>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="headerLine2">
+          <property name="maximumSize">
+           <size>
+            <width>2</width>
+            <height>20</height>
+           </size>
           </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cards"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="languages">
+          <item>
+           <property name="text">
+            <string>Estonian</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>English</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Russian</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -270,7 +282,7 @@ padding: 10px;
            <number>0</number>
           </property>
           <item>
-           <spacer name="homeBottomlSpacer">
+           <spacer name="homeTopSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -286,8 +298,11 @@ padding: 10px;
            <layout class="QGridLayout" name="homeButtonLayout">
             <item row="0" column="0">
              <widget class="QLabel" name="homeButtonLabel">
-              <property name="styleSheet">
-               <string notr="true">font-weight: bold;</string>
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
               </property>
               <property name="text">
                <string>I want to:</string>
@@ -352,7 +367,7 @@ padding: 10px;
            </layout>
           </item>
           <item>
-           <spacer name="homeTopSpacer">
+           <spacer name="homeBottomSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -884,8 +899,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>302</width>
-               <height>178</height>
+               <width>48</width>
+               <height>16</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

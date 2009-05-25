@@ -78,7 +78,7 @@ public:
 	bool isModified() const;
 	bool isNull() const;
 	QString lastError() const;
-	void open( const QString &file );
+	bool open( const QString &file );
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();

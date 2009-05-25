@@ -62,6 +62,9 @@ MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
 	setupUi( this );
+	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
+		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+	cards->hide();
 	//homeOpenUtility->hide();
 
 	connect( signContentView, SIGNAL(doubleClicked(QModelIndex)),
@@ -104,9 +107,6 @@ MainWindow::MainWindow( QWidget *parent )
 	lang[0] = "et";
 	lang[1] = "en";
 	lang[2] = "ru";
-	lang[3] = "de";
-	lang[4] = "lv";
-	lang[5] = "lt";
 	on_languages_activated( lang.key(
 		SettingsValues().value( "Main/Language", "et" ).toString() ) );
 
@@ -120,8 +120,8 @@ MainWindow::MainWindow( QWidget *parent )
 				continue;
 			if( doc->isNull() && f.suffix().toLower() == "bdoc" )
 			{
-				doc->open( f.absoluteFilePath() );
-				setCurrentPage( View );
+				if( doc->open( f.absoluteFilePath() ) )
+					setCurrentPage( View );
 				return;
 			}
 			else if( !addFile( f.absoluteFilePath() ) )
@@ -300,8 +300,8 @@ void MainWindow::buttonClicked( int button )
 			tr("Documents (*.bdoc *.ddoc)") );
 		if( !file.isEmpty() )
 		{
-			doc->open( file );
-			setCurrentPage( View );
+			if( doc->open( file ) )
+				setCurrentPage( View );
 		}
 		break;
 	}
@@ -419,8 +419,8 @@ void MainWindow::dropEvent( QDropEvent *e )
 				continue;
 			else if( file.suffix().toLower() == "bdoc" && doc->isNull() )
 			{
-				doc->open( file.filePath() );
-				setCurrentPage( View );
+				if( doc->open( file.filePath() ) )
+					setCurrentPage( View );
 				return;
 			}
 			else if( !addFile( file.filePath() ) )
