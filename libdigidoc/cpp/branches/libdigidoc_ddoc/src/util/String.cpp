@@ -143,6 +143,16 @@ std::string digidoc::util::String::getSystemEncoding()
     if( lang )
         encoding.append(lang);   
 
+    if(env_lang)
+    {
+        encoding.append(env_lang);   
+    }
+    else
+    {
+        INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
+        return encoding;
+    }
+
     if(encoding.length() == 0)
     {   
         INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
@@ -165,7 +175,11 @@ std::string digidoc::util::String::getSystemEncoding()
 
 /**
  * Helper method for converting strings with non-ascii characters to the URI format (%HH for each non-ascii character).
- *
+ * 
+ * Not converting:
+ * (From RFC 2396 "URI Generic Syntax")
+ * reserved = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" | "$" | ","
+ * mark     = "-" | "_" | "." | "!" | "~" | "*" | "'" | "(" | ")"
  * @param str_in the string to be converted
  * @return the string converted to the URI format
  */
@@ -173,7 +187,8 @@ std::string digidoc::util::String::getSystemEncoding()
 std::string digidoc::util::String::toUriFormat(const std::string& str_in)
 {
     char dst[1024] = {0}; 
-    std::string legal_chars = "-_.!~*'()";
+
+    std::string legal_chars = "-_.!~*'();/?:@&=+$,";
 
     for(size_t i=0, j=0; i<str_in.length(); i++)
     {

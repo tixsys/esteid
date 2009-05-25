@@ -157,10 +157,20 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
 	OCSP ocsp(conf->getOCSPUrl());
 	ocsp.setSkew(120);//XXX: load from conf
 	ocsp.setOCSPCerts(ocspCerts);
-	// FIXME: checkCert() throws IOExceptionand OCSPException, catch and handle these
 	std::auto_ptr<Digest> calc = Digest::create();
 	calc->update(getSignatureValue());
-	return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
+    try
+    {
+	    return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
+    }
+    catch(const IOException& e)
+    {
+       THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
+    }
+    catch(const OCSPException& e)
+    {
+        THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
+    }
 }
 
 /**

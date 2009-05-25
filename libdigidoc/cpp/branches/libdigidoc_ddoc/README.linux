@@ -56,8 +56,8 @@ make -f Makefile.linux tool
 
 CONFIGURATION
 
-BDoc lib needs configuration file that defines trusted CA certificates, OCSP 
-responder certificate, PKCS11 driver location, XML schemas and so.
+BDoc lib needs a configuration file that defines trusted CA certificates, OCSP 
+responder certificate, PKCS11 driver location, XML schemas and so on.
 
 Example configuration and example directory structure is provided in etc 
 directory. Also test/test.py tries to generate configuration file for your
@@ -66,6 +66,8 @@ environment.
 Configuration file is first searched from environment variable 
 BDOCLIB_CONF_XML. If not defined, it searches for file bdoc.conf from
 running directory.
+
+All file names in the configuration file, except for URI-s and .so paths are interpreted as relative to the configuration file's location.
 
 The LANG environment variable is read (and must be set properly) to determine the system encoding which is passed to libiconv for converting XML data to UTF-8.
 Please refer to '$iconv --list' for the supported encodings.

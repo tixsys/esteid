@@ -24,6 +24,7 @@ namespace digidoc
               static std::string fileNameUtf8(const std::string& path);  
               static std::string directory(const std::string& path);
               static std::string path(const std::string& directory, const std::string& relativePath, bool unixStyle = false);
+              static std::string fullPathUrl(const std::string& fullDirectory, const std::string& relativeFilePath);
               static std::string tempFileName();
               static std::string tempDirectory();
               static void createDirectory(const std::string& path) throw(IOException);

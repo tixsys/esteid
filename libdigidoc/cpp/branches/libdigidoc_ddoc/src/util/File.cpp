@@ -1,21 +1,14 @@
 
 // This file has platform-specific implementations.
-// Let's group them as necessary for us.
-#if defined(__linux__) // Linux
-    #define BDOC_LINUX // TODO: Consider either posix or make linux default.
-#elif defined _WIN32 // Windows 32-bit
-    #define BDOC_WIN32
-#else
-    #error Unknown platform - please implement it here
-#endif
-
+// Treat all POSIX systems (Linux, MAC) the same way. Treat non-POSIX as Windows.
 
 #include <algorithm>
+#include <unistd.h>
 
 // platform-specific includes
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
     #include <dirent.h>
-#elif defined(BDOC_WIN32)
+#else
     #include <windows.h>
     #include <direct.h>
 #endif
@@ -29,9 +22,9 @@
 #include "String.h"
 
 // platform-specific path delimiters
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
     #define PATH_DELIMITER '/'
-#elif defined(BDOC_WIN32)
+#else
     #define PATH_DELIMITER '\\'
 #endif
 
@@ -70,7 +63,7 @@ bool digidoc::util::File::directoryExists(const std::string& path)
 {
     struct stat fileInfo;
     std::string adjustedPath(path);
-#if defined(BDOC_WIN32)
+#ifndef _POSIX_VERSION
     // stat will fail on win32 if path ends with backslash
     if(!adjustedPath.empty() && (adjustedPath[adjustedPath.size() - 1] == '/'
         || adjustedPath[adjustedPath.size() - 1] == '\\'))
@@ -124,7 +117,9 @@ std::string digidoc::util::File::fileNameUtf8(const std::string& path)
  */
 std::string digidoc::util::File::directory(const std::string& path)
 {
-    return path.substr(0, path.find_last_of("/\\"));
+    //return path.substr(0, path.find_last_of("/\\"));
+    return path.substr(0, path.find_last_of(PATH_DELIMITER));
+
 }
 
 /**
@@ -152,9 +147,9 @@ std::string digidoc::util::File::path(const std::string& directory, const std::s
     }
     else
     {
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
         std::replace(path.begin(), path.end(), '\\', '/');
-#elif defined(BDOC_WIN32)
+#else
         std::replace(path.begin(), path.end(), '/', '\\');
 #endif
     }
@@ -167,11 +162,11 @@ std::string digidoc::util::File::path(const std::string& directory, const std::s
  */
 std::string digidoc::util::File::tempFileName()
 {
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
     char fileName[L_tmpnam];
     tmpnam(fileName);
     return fileName;
-#elif defined(BDOC_WIN32)
+#else
     // requires TMP environment variable to be set
     char* fileName = _tempnam(NULL, NULL); // TODO: static buffer, not thread-safe
     if ( fileName == NULL )
@@ -223,12 +218,12 @@ void digidoc::util::File::createDirectory(const std::string& path) throw(IOExcep
 
     bool createFailed = true;
 
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
     umask(0);
     int result = mkdir(path.c_str(), 0700);
     DEBUG("Created directory '%s' with result = %d", path.c_str(), result);
     createFailed = (result != 0);
-#elif defined(BDOC_WIN32)
+#else
     int result = _mkdir(path.c_str());
     createFailed = (result != 0);
     if ( createFailed )
@@ -439,7 +434,7 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
 {
     std::vector<std::string> files;
 
-#if defined(BDOC_LINUX)
+#ifdef _POSIX_VERSION
 
     DIR* pDir = opendir(directory.c_str());
     if(!pDir)
@@ -468,7 +463,7 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
 
     closedir(pDir);
 
-#elif defined (BDOC_WIN32)
+#else
 
     WIN32_FIND_DATA findFileData;
     HANDLE hFind = NULL;
@@ -524,4 +519,24 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
 #endif
 
     return files;
+}
+
+
+/**
+ * Constructs the full file path in the format "file:///fullpath" in URI encoding. 
+ *
+ * @param fullDirectory full directory path to the relativeFilePath
+ * @param relativeFilePath file name to be appended to the full path
+ * @return full file path in the format "file:///fullpath" in URI encoding.
+ */
+
+std::string digidoc::util::File::fullPathUrl(const std::string& fullDirectory, const std::string& relativeFilePath)
+{
+    std::string result(fullDirectory);
+    // Under windows replace the path delimiters
+#ifndef _POSIX_VERSION
+    std::replace(result.begin(), result.end(), '\\', '/');
+    return digidoc::util::String::toUriFormat("file:///" + result + "/" + relativeFilePath);
+#endif
+    return digidoc::util::String::toUriFormat("file://" + result + "/" + relativeFilePath);
 }
