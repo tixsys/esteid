@@ -51,6 +51,9 @@ MainWindow::MainWindow( QWidget *parent )
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
 	setupUi( this );
+	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
+		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+	cards->hide();
 	//homeOpenUtility->hide();
 	viewContentView->header()->setStretchLastSection( false );
 	viewContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
@@ -84,9 +87,6 @@ MainWindow::MainWindow( QWidget *parent )
 	lang[0] = "et";
 	lang[1] = "en";
 	lang[2] = "ru";
-	lang[3] = "de";
-	lang[4] = "lv";
-	lang[5] = "lt";
 	on_languages_activated( lang.key(
 		SettingsValues().value( "Main/Language", "et" ).toString() ) );
 
