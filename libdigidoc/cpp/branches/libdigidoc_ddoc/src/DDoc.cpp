@@ -39,6 +39,7 @@ DDocPrivate::DDocPrivate()
 :	lib(LIBDIGIDOC_NAME)
 ,	doc(0)
 ,	filename(0)
+,	ready(false)
 ,	f_addAllDocInfos(0)
 ,	f_addSignerRole(0)
 ,	f_calculateDataFileSizeAndDigest(0)
@@ -67,6 +68,7 @@ DDocPrivate::DDocPrivate()
 
 	f_initDigiDocLib();
 	f_initConfigStore( NULL );
+	ready = true;
 }
 
 DDocPrivate::~DDocPrivate()
@@ -77,6 +79,7 @@ DDocPrivate::~DDocPrivate()
 	f_finalizeDigiDocLib();
 }
 
+bool DDocPrivate::isLoaded() const { return ready; }
 bool DDocPrivate::loadSymbols()
 {
 	if( !(f_addAllDocInfos = (sym_addAllDocInfos)lib.resolve("addAllDocInfos")) ||
@@ -173,12 +176,16 @@ DDoc::~DDoc() { delete d; }
 DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	d = new DDocPrivate();
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	d->filename = serializer->getPath().c_str();
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
 }
 
 void DDoc::addDocument( const Document &document ) throw(BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	DataFile *data;
 	int err = d->f_DataFile_new( &data, d->doc, NULL, document.getPath().c_str(),
 		CONTENT_EMBEDDED_BASE64, document.getMediaType().c_str(), 0, NULL, 0,
@@ -209,6 +216,8 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 
 void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
 	if( !d->doc || id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 		return;
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
@@ -216,6 +225,8 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 
 void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
 	if( !d->doc || id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
 		return;
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
@@ -223,17 +234,23 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 
 void DDoc::save() throw(IOException, BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
 	int err = d->f_createSignedDoc( d->doc, d->filename, d->filename );
 }
 
 void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
 	d->filename = serializer->getPath().c_str();
 	save();
 }
 
 void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "Library not loaded" );
 	SignatureInfo *info;
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
 	err = d->f_addAllDocInfos( d->doc, info );

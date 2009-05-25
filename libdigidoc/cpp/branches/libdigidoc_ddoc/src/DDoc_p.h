@@ -61,11 +61,13 @@ public:
 	DDocPrivate();
 	~DDocPrivate();
 
+	bool isLoaded() const;
 	bool loadSymbols();
 
 	DDocLibrary lib;
 	SignedDoc *doc;
 	const char *filename;
+	bool ready;
 
 	sym_addAllDocInfos			f_addAllDocInfos;
 	sym_addSignerRole			f_addSignerRole;
