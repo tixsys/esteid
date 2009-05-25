@@ -26,11 +26,9 @@
 #include <QFileDialog>
 
 Settings::Settings( QWidget *parent )
-:	QWidget( parent )
+:	QDialog( parent )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
-	setWindowFlags( Qt::Dialog );
 
 	SettingsValues s;
 	s.beginGroup( "Main" );

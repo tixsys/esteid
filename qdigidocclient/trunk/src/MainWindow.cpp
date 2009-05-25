@@ -465,7 +465,7 @@ void MainWindow::on_languages_activated( int index )
 	showCardStatus();
 }
 
-void MainWindow::on_settings_clicked() { (new Settings( this ))->show(); }
+void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
 void MainWindow::openFile( const QModelIndex &index )
 {

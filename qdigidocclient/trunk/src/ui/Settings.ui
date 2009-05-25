@@ -1,9 +1,6 @@
 <ui version="4.0" >
  <class>Settings</class>
- <widget class="QWidget" name="Settings" >
-  <property name="windowModality" >
-   <enum>Qt::WindowModal</enum>
-  </property>
+ <widget class="QDialog" name="Settings" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -18,7 +15,6 @@
   <property name="styleSheet" >
    <string notr="true" >#Settings { background: white; }
 QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
-
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" >
@@ -357,7 +353,7 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
    <receiver>Settings</receiver>
-   <slot>close()</slot>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
      <x>226</x>

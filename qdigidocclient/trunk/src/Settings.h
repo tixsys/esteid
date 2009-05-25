@@ -26,7 +26,7 @@
 
 #include <QSettings>
 
-class Settings: public QWidget, private Ui::Settings
+class Settings: public QDialog, private Ui::Settings
 {
 	Q_OBJECT
 
