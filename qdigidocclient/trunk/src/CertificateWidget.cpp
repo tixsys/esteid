@@ -31,36 +31,32 @@
 #include <QTextStream>
 #include <QSslKey>
 
-class CertificateWidgetPrivate
+class CertificateDialogPrivate
 {
 public:
 	QSslCertificate cert;
 };
 
-CertificateWidget::CertificateWidget( QWidget *parent )
-:	QWidget( parent )
-,	d( new CertificateWidgetPrivate )
+CertificateDialog::CertificateDialog( QWidget *parent )
+:	QDialog( parent )
+,	d( new CertificateDialogPrivate )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
-	setWindowFlags( Qt::Dialog );
 	tabWidget->removeTab( 2 );
 }
 
-CertificateWidget::CertificateWidget( const QSslCertificate &cert, QWidget *parent )
-:	QWidget( parent )
-,	d( new CertificateWidgetPrivate )
+CertificateDialog::CertificateDialog( const QSslCertificate &cert, QWidget *parent )
+:	QDialog( parent )
+,	d( new CertificateDialogPrivate )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
-	setWindowFlags( Qt::Dialog );
 	setCertificate( cert );
 	tabWidget->removeTab( 2 );
 }
 
-CertificateWidget::~CertificateWidget() { delete d; }
+CertificateDialog::~CertificateDialog() { delete d; }
 
-void CertificateWidget::addItem( const QString &variable, const QString &value, const QVariant &valueext )
+void CertificateDialog::addItem( const QString &variable, const QString &value, const QVariant &valueext )
 {
 	QTreeWidgetItem *t = new QTreeWidgetItem( parameters );
 	t->setText( 0, variable );
@@ -69,7 +65,7 @@ void CertificateWidget::addItem( const QString &variable, const QString &value, 
 	parameters->addTopLevelItem( t );
 }
 
-QByteArray CertificateWidget::addHexSeparators( const QByteArray &data ) const
+QByteArray CertificateDialog::addHexSeparators( const QByteArray &data ) const
 {
 	QByteArray ret = data;
 	for( int i = 2; i < ret.size(); i += 3 )
@@ -77,7 +73,7 @@ QByteArray CertificateWidget::addHexSeparators( const QByteArray &data ) const
 	return ret;
 }
 
-void CertificateWidget::on_parameters_itemClicked( QTreeWidgetItem *item, int )
+void CertificateDialog::on_parameters_itemClicked( QTreeWidgetItem *item, int )
 {
 	if( !item->data( 1, Qt::UserRole ).isNull() )
 		parameterContent->setPlainText( item->data( 1, Qt::UserRole ).toString() );
@@ -85,7 +81,7 @@ void CertificateWidget::on_parameters_itemClicked( QTreeWidgetItem *item, int )
 		parameterContent->setPlainText( item->text( 1 ) );
 }
 
-void CertificateWidget::on_save_clicked()
+void CertificateDialog::on_save_clicked()
 {
 	QString file = QFileDialog::getSaveFileName( this,
 		tr("Save certificate"),
@@ -107,7 +103,7 @@ void CertificateWidget::on_save_clicked()
 		QMessageBox::warning( this, tr("Save certificate"), tr("Failed to save file") );
 }
 
-void CertificateWidget::setCertificate( const QSslCertificate &cert )
+void CertificateDialog::setCertificate( const QSslCertificate &cert )
 {
 	d->cert = cert;
 	SslCertificate c = cert;

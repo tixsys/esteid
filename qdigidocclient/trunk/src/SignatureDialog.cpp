@@ -140,4 +140,4 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 }
 
 void SignatureDialog::showCertificate()
-{ (new CertificateWidget( s.cert(), this ))->show(); }
+{ CertificateDialog( s.cert(), this ).exec(); }
