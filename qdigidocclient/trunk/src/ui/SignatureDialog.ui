@@ -1,6 +1,6 @@
 <ui version="4.0" >
  <class>SignatureDialog</class>
- <widget class="QWidget" name="SignatureDialog" >
+ <widget class="QDialog" name="SignatureDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -247,7 +247,7 @@
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
    <receiver>SignatureDialog</receiver>
-   <slot>close()</slot>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
      <x>199</x>

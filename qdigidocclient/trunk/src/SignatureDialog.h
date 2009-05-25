@@ -45,7 +45,7 @@ private:
 	DigiDocSignature s;
 };
 
-class SignatureDialog: public QWidget, private Ui::SignatureDialog
+class SignatureDialog: public QDialog, private Ui::SignatureDialog
 {
 	Q_OBJECT
 
@@ -56,5 +56,7 @@ private Q_SLOTS:
 	void showCertificate();
 
 private:
+	void addItem( const QString &variable, const QString &value );
+
 	DigiDocSignature s;
 };

@@ -61,17 +61,15 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 }
 
 void SignatureWidget::removeSignature() { Q_EMIT removeSignature( num ); }
-void SignatureWidget::showSignature() { (new SignatureDialog( s, this ))->show(); }
+void SignatureWidget::showSignature() { SignatureDialog( s, this ).exec(); }
 
 
 
 SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *parent )
-:	QWidget( parent )
+:	QDialog( parent )
 ,	s( signature )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
-	setWindowFlags( Qt::Dialog );
 
 	const SslCertificate c = s.cert();
 	QString titleText = QString("%1 %2 %3")
@@ -93,50 +91,25 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	signerRole->setText( s.role() );
 
 	// Certificate info
-	QTreeWidgetItem *i;
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Signing time") );
-	i->setText( 1, s.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Signature type") );
-	i->setText( 1, c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Signature format") );
-	i->setText( 1, s.mediaType() );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Signed file count") );
-	i->setText( 1, QString::number( s.parent()->documents().size() ) );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Certificate serialnumber") );
-	i->setText( 1, c.serialNumber() );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Certificate valid at") );
-	i->setText( 1, c.effectiveDate().toString( "dd.MM.yyyy" ) );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Certificate valid until") );
-	i->setText( 1, c.expiryDate().toString( "dd.MM.yyyy" ) );
-	signatureView->addTopLevelItem( i );
-
-	i = new QTreeWidgetItem( signatureView );
-	i->setText( 0, tr("Certificate issuer") );
-	i->setText( 1, c.issuerInfo( QSslCertificate::CommonName ) );
-	signatureView->addTopLevelItem( i );
-
+	addItem( tr("Signing time"), s.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
+	addItem( tr("Signature type"), c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" );
+	addItem( tr("Signature format"), s.mediaType() );
+	addItem( tr("Signed file count"), QString::number( s.parent()->documents().size() ) );
+	addItem( tr("Certificate serialnumber"), c.serialNumber() );
+	addItem( tr("Certificate valid at"), c.effectiveDate().toString( "dd.MM.yyyy" ) );
+	addItem( tr("Certificate valid until"), c.expiryDate().toString( "dd.MM.yyyy" ) );
+	addItem( tr("Certificate issuer"), c.issuerInfo( QSslCertificate::CommonName ) );
 	signatureView->resizeColumnToContents( 0 );
 
 	// OCSP info
+}
+
+void SignatureDialog::addItem( const QString &variable, const QString &value )
+{
+	QTreeWidgetItem *i = new QTreeWidgetItem( signatureView );
+	i->setText( 0, variable );
+	i->setText( 1, value );
+	signatureView->addTopLevelItem( i );
 }
 
 void SignatureDialog::showCertificate()
