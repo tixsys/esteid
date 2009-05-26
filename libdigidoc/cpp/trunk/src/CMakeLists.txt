@@ -1,3 +1,4 @@
+include_directories( ${ICONV_INCLUDE_DIR} )
 include_directories( ${MINIZIP_INCLUDE_DIR} )
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 include_directories( ${OPENSSLCRYPTO_INCLUDE_DIR} )
@@ -81,6 +82,7 @@ endif(WIN32)
 add_library(digidoc ${DIGIDOC_LIB_TYPE} ${libdigidoc_SRCS} ${minizip_SRCS})
 target_link_libraries(digidoc
     ${EXTERNAL_LIBRARIES}
+    ${ICONV_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${ZLIB_LIBRARIES}

@@ -4,6 +4,7 @@ project(libdigidoc)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+find_package(Iconv REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(ZLIB REQUIRED)

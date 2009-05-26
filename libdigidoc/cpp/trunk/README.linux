@@ -54,6 +54,30 @@ or
 
 make -f Makefile.linux tool
 
+Note! There is a known issue with libiconv: the signature of the 'iconv' function will differ across systems, 
+depending on whether an older version of iconv is present or not.
+BDoc Lib supports the officially documented format
+
+size_t iconv (iconv_t cd,
+              const char* * inbuf, size_t * inbytesleft,
+              char* * outbuf, size_t * outbytesleft);
+
+described at http://www.gnu.org/software/libiconv/ .
+
+If your system has the other flavour of this function (with 'char* * inbuf' or the like) and you are using GNU make,
+
+edit the file src/util/String.cpp:
+
+in the function
+std::string digidoc::util::String::convertUTF8((const std::string& str_in, bool to_UTF)
+
+remove the 'const' from line 119, so that it will be:
+
+char* inptr( inbuf );
+
+For cmake users there is a module for cmake (FindIconv.cmake) that will sort out this problem.
+
+
 CONFIGURATION
 
 BDoc lib needs a configuration file that defines trusted CA certificates, OCSP 
