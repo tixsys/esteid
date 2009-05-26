@@ -3,11 +3,11 @@
 // Treat all POSIX systems (Linux, MAC) the same way. Treat non-POSIX as Windows.
 
 #include <algorithm>
-#include <unistd.h>
 
 // platform-specific includes
 #ifdef _POSIX_VERSION
     #include <dirent.h>
+    #include <unistd.h>
 #else
     #include <windows.h>
     #include <direct.h>
