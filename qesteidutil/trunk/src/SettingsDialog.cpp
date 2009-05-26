@@ -27,6 +27,8 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
+	setAttribute( Qt::WA_DeleteOnClose, true );
+
 	sessionTime->setValue( Settings().value( "sessionTime", 0 ).toInt() );
 	
 	int interval = updateInterval->findText( Settings().value( "updateInterval" ).toString() );

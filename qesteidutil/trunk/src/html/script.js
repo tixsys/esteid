@@ -233,13 +233,13 @@ function cardInserted(i)
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		document.getElementById('cardInfoNoCard').style.display='none';	
-		showLoading( _('loadCardData') );
+		extender.showLoading( _('loadCardData') );
 		activeCardId = "";
 		emailsLoaded = false;
 		cardManager.selectReader( i );
 		if ( esteidData.canReadCard() )
-			activeCardId = esteidData.getId();
-		closeLoading();
+			activeCardId = esteidData.getDocumentId();
+		extender.closeLoading();
 	}
 	readCardData();
 }
@@ -259,12 +259,12 @@ function cardRemoved(i)
 
 function selectReader()
 {
-	showLoading( _('loadCardData') );
+	extender.showLoading( _('loadCardData') );
 	var select = document.getElementById('readerSelect'); 
 	cardManager.selectReader( select.options[select.selectedIndex].value );
 	if ( esteidData.canReadCard() )
-		activeCardId = esteidData.getId();
-	closeLoading();
+		activeCardId = esteidData.getDocumentId();
+	extender.closeLoading();
 	readCardData();
 }
 
@@ -292,7 +292,7 @@ function checkReaderCount()
 		document.getElementById( 'headerMenus' ).style.right = '90px';
 		reader.style.display = 'none';
 	} else {
-		document.getElementById( 'headerMenus' ).style.right = '210px';
+		document.getElementById( 'headerMenus' ).style.right = '180px';
 		reader.style.display = 'block';
 	}
 }
@@ -306,7 +306,7 @@ function readCardData()
 	} else
 		enableFields();
 	if ( activeCardId == "" )
-		activeCardId = esteidData.getId();
+		activeCardId = esteidData.getDocumentId();
 		
 	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
@@ -404,7 +404,7 @@ function loadEmails()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	showLoading( _('loadEmail') );
+	extender.showLoading( _('loadEmail') );
 	extender.loadEmails();
 }
 
@@ -412,7 +412,7 @@ function loadPicture()
 {
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 		return;
-	showLoading( _('loadPic') );
+	extender.showLoading( _('loadPic') );
 	extender.loadPicture();
 }
 
@@ -427,7 +427,7 @@ function setPicture( img, code )
 		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="' + img + '">';
 		document.getElementById('savePhoto').style.display = 'block';
 	}
-	closeLoading();
+	extender.closeLoading();
 }
 
 function setEmailActivate( msg )
@@ -444,7 +444,7 @@ function setEmailActivate( msg )
 
 function setEmails( code, msg )
 {
-	closeLoading();
+	extender.closeLoading();
 	if ( code == "0" && msg.indexOf( ' - ' ) == -1 )
 		code = "20";
 	//not activated
@@ -542,12 +542,3 @@ function enableFields()
 		}
 	}
 }
-
-function showLoading( text )
-{
-	document.getElementById('loading').style.display='block';
-	document.getElementById('loading').innerHTML=text;
-}
-
-function closeLoading()
-{ document.getElementById('loading').style.display='none'; }

@@ -33,17 +33,21 @@ class SSLObj
 {
 
 public:
-	SSLObj( int reader, const std::string &pin );
+	SSLObj();
 	~SSLObj();
 
-	bool connectToHost( const std::string &site );
+	bool connectToHost( const std::string &site, const std::string &pin, int reader );
 	std::vector<unsigned char> getUrl( const std::string &type );
+	void disconnect();
 
 private:
+	bool resolveCrypto();
+	bool resolveSsl();
+
 	ENGINE *engine;
 	SSL_CTX *ctx;
 	SSL		*s;
-	QLibrary *ssl, *e;
+	QLibrary *e, *ssl;
 	int		m_reader;
 
 	int     (*pSSL_library_init)(void );
@@ -65,6 +69,8 @@ private:
     int     (*pSSL_CTX_use_certificate)(SSL_CTX *ctx, X509 *x);
     int     (*pSSL_CTX_check_private_key)(const SSL_CTX *ctx);
 
+	int		(*pENGINE_add)(ENGINE*);
+	int		(*pENGINE_remove)(ENGINE*);
 	void    (*pENGINE_load_dynamic)(void);
 	ENGINE * (*pENGINE_by_id)(const char *id);
 	void	(*pENGINE_cleanup)(void);
@@ -74,6 +80,7 @@ private:
     int     (*pENGINE_ctrl_cmd_string)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional);
 	int     (*pENGINE_ctrl_cmd)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional);
 	EVP_PKEY * (*pENGINE_load_private_key)(ENGINE *e, const char *key_id, UI_METHOD *ui_method, void *callback_data);
+	int		(*pENGINE_set_default)(ENGINE *e, unsigned int flags );
 };
 
 class SSLConnect: public QObject
@@ -81,14 +88,14 @@ class SSLConnect: public QObject
 	Q_OBJECT
 
 public:
-	SSLConnect( int reader, QObject *parent = 0 );
+	SSLConnect( QObject *parent = 0 );
 	~SSLConnect();
 
 	bool isLoaded();
-	std::vector<unsigned char> getUrl( const std::string &type, const std::string &pin = "", const std::string &value = "" );
+	std::vector<unsigned char> getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value = "" );
 
 private:
+	void clear();
+
 	SSLObj	*obj;
-	int		m_reader;
-	std::vector<unsigned char> getSiteUrl( const std::string &site, const std::string &url, const std::string &pin );
 };

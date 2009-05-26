@@ -30,15 +30,12 @@
 #include "cardlib/EstEidCard.h"
 #include "jscertdata.h"
 
-class CertificateWidget;
-
 class JsEsteidCard : public QObject
 {
     Q_OBJECT
 
 public:
     JsEsteidCard( QObject *parent );
-	~JsEsteidCard();
 
     void setCard(EstEidCard *card, int reader = 0);
     void reloadData();
@@ -86,7 +83,6 @@ private:
     void handleError(QString msg);
 	dword authUsageCount;
 	dword signUsageCount;
-	CertificateWidget *certificateWidget;
 
 public slots:
     QString getSurName();

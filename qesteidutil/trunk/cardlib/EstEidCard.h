@@ -74,6 +74,8 @@ public:
 
 	/// Reads the card holder identification code from personal data file
 	std::string readCardID();
+	/// Reads the card holder card number from personal data file
+	std::string readDocumentID();
 	/// Reads the card holder name from personal data file
 	std::string readCardName();
 	/// Reads entire or parts of personal data file from firstRecord to LastRecord

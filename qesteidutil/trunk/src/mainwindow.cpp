@@ -28,7 +28,13 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )
 {
-	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
+#if QT_VERSION >= 0x040500
+	setWindowFlags( windowFlags() | Qt::WindowCloseButtonHint );
+#else
+	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
+#endif
+	
 	setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
 	setFixedSize( 585, 535 );

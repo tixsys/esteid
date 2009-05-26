@@ -29,9 +29,6 @@
 #include "cardlib/common.h"
 #include "cardlib/SmartCardManager.h"
 #include "jsesteidcard.h"
-#include "sslConnect.h"
-
-class DiagnosticsDialog;
 
 class JsCardManager : public QObject
 {
@@ -48,14 +45,12 @@ class JsCardManager : public QObject
 public:
     JsCardManager(JsEsteidCard *jsEsteidCard);
 	~JsCardManager();
-	SSLConnect* ssl() { return jsSSL; }
+	int activeReaderNum();
 
 private:
     SmartCardManager *cardMgr;
-	SSLConnect *jsSSL;
 	JsEsteidCard *m_jsEsteidCard;
     QTimer pollTimer;
-	DiagnosticsDialog *diagnosticsDialog;
 
     QHash<QString,ReaderState> cardReaders;
     QString m_jsCardInsertFunc;

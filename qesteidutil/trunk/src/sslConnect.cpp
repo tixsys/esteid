@@ -64,93 +64,50 @@ public:
         }
 };
 
-SSLConnect::SSLConnect( int reader, QObject *parent )
+SSLConnect::SSLConnect( QObject *parent )
 :	QObject( parent )
 ,	obj( 0 )
-,	m_reader( reader )
-{}
+{
+	try { obj = new SSLObj(); }
+	catch( sslError &e ) { clear(); throw e; }
+	catch( std::runtime_error &e ) { clear(); throw e; }
+}
 
-SSLConnect::~SSLConnect()
+SSLConnect::~SSLConnect() { clear(); }
+
+void SSLConnect::clear()
 {
 	if ( obj )
 		delete obj;
 }
 
-bool SSLConnect::isLoaded()
-{
-	return obj ? true : false;
-}
+bool SSLConnect::isLoaded() { return obj; }
 
-std::vector<unsigned char> SSLConnect::getUrl( const std::string &type, const std::string &pin, const std::string &value )
+std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value )
 {
-	if ( !isLoaded() && !pin.length() )
+	if ( !isLoaded() )
 		return std::vector<unsigned char>();
 
-	if ( type == "picture" )
-		return getSiteUrl( EESTI, "/idportaal/portaal.idpilt", pin );
-	else if ( type == "emails" )
-		return getSiteUrl( EESTI, "/idportaal/postisysteem.naita_suunamised", pin );
-	else if ( type == "activateEmail" )
-		return getSiteUrl( EESTI, "/idportaal/postisysteem.lisa_suunamine?" + value, pin );
+	if ( obj->connectToHost( EESTI, pin, readerNum ) )
+	{
+		if ( type == "picture" )
+			return obj->getUrl( "/idportaal/portaal.idpilt" );
+		if ( type == "emails" )
+			return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+		if ( type == "activateEmail" )
+			return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+	}
 	return std::vector<unsigned char>();
 }
 
-std::vector<unsigned char> SSLConnect::getSiteUrl( const std::string &site, const std::string &url, const std::string &pin )
-{
-	if ( !obj )
-	{
-		try { obj = new SSLObj( m_reader, pin ); }
-		catch( std::runtime_error &e ) {
-			if( obj )
-				delete obj;
-			obj = 0;
-			throw sslError( e.what() );
-		}
-	}
-
-	if ( !obj->connectToHost( site ) )
-		return std::vector<unsigned char>();
-	return obj->getUrl( url );
-}
-
-SSLObj::SSLObj( int reader, const std::string &pin )
-:	engine( NULL )
+SSLObj::SSLObj()
+:	e( new QLibrary( CRYPTO_LIB ) )
 ,	ssl( new QLibrary( SSL_LIB ) )
-,	e( new QLibrary( CRYPTO_LIB ) )
-,	m_reader( reader )
 {
-    pSSL_library_init = (int (*)(void)) ssl->resolve("SSL_library_init");
-	pSSL_load_error_strings = (void (*)(void)) ssl->resolve("SSL_load_error_strings");
-    pSSL_CTX_new = (SSL_CTX * (*)(SSL_METHOD *meth)) ssl->resolve("SSL_CTX_new");
-    pSSL_CTX_free = (void (*)(SSL_CTX *)) ssl->resolve("SSL_CTX_free");
-    pSSL_CTX_use_PrivateKey = (int (*)(SSL_CTX *ctx, EVP_PKEY *pkey)) ssl->resolve("SSL_CTX_use_PrivateKey");
-    pSSL_CTX_use_certificate = (int (*)(SSL_CTX *ctx, X509 *x)) ssl->resolve("SSL_CTX_use_certificate");
-    pSSL_CTX_check_private_key = (int (*)(const SSL_CTX *ctx)) ssl->resolve("SSL_CTX_check_private_key");
-	pSSL_CTX_ctrl = (long (*)( SSL_CTX *ctx, int cmd, long, void *)) ssl->resolve("SSL_CTX_ctrl");
+	if( !resolveCrypto() || !resolveSsl() )
+		throw std::runtime_error( QObject::tr("Failed to load ssl").toStdString() );
 
-	pSSLv3_method = (SSL_METHOD * (*)(void)) ssl->resolve("SSLv3_method");
-	pSSL_new=(SSL * (*)(SSL_CTX *ctx)) ssl->resolve("SSL_new");
-    pSSL_free=(void (*)(SSL *ssl)) ssl->resolve("SSL_free");
-    pSSL_set_fd=(int (*)(SSL *s, int fd)) ssl->resolve("SSL_set_fd");
-    pSSL_connect=(int (*)(SSL *ssl)) ssl->resolve("SSL_connect");
-    pSSL_read=(int (*)(SSL *ssl,void *buf,int num)) ssl->resolve("SSL_read");
-    pSSL_write=(int (*)(SSL *ssl,const void *buf,int num)) ssl->resolve("SSL_write");
-    pSSL_shutdown=(int (*)(SSL *s)) ssl->resolve("SSL_shutdown");
-	pSSL_get_error = (int (*)(const SSL *s,int ret_code)) ssl->resolve("SSL_get_error");
-
-	pERR_get_error = (unsigned long (*)(void)) e->resolve("ERR_get_error");
-    pERR_error_string_n = (void (*)(unsigned long e,char *buf,size_t len)) e->resolve("ERR_error_string_n");
-
-	pENGINE_load_dynamic=(void (*)(void)) e->resolve("ENGINE_load_dynamic");
-	pENGINE_by_id=(ENGINE * (*)(const char *id)) e->resolve("ENGINE_by_id");
-	pENGINE_cleanup=(void (*)(void)) e->resolve("ENGINE_cleanup");
-    pENGINE_init=(int (*)(ENGINE *e)) e->resolve("ENGINE_init");
-    pENGINE_finish=(int (*)(ENGINE *e)) e->resolve("ENGINE_finish");
-	pENGINE_free=(int (*)(ENGINE *e)) e->resolve("ENGINE_free");
-    pENGINE_ctrl_cmd_string=(int (*)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional)) e->resolve("ENGINE_ctrl_cmd_string");
-	pENGINE_ctrl_cmd=(int (*)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional)) e->resolve("ENGINE_ctrl_cmd");
-
-    pENGINE_load_private_key=(EVP_PKEY * (*)(ENGINE *e, const char *key_id, UI_METHOD *ui_method, void *callback_data)) e->resolve("ENGINE_load_private_key");
+	engine = (ENGINE*)malloc( sizeof( ENGINE* ) );
 
     pSSL_library_init();
     pSSL_load_error_strings();
@@ -159,8 +116,8 @@ SSLObj::SSLObj( int reader, const std::string &pin )
     //load and initialize pkcs11 engine
 	sslError::check("get dynamic engine",engine = pENGINE_by_id("dynamic"));
     sslError::check("cmd SO_PATH",  pENGINE_ctrl_cmd_string(engine,"SO_PATH",PKCS11_ENGINE,0));
-	sslError::check("cmd ID",       pENGINE_ctrl_cmd_string(engine,"ID","pkcs11",0));
-	sslError::check("cmd LIST_ADD", pENGINE_ctrl_cmd_string(engine,"LIST_ADD","0",0));
+	//sslError::check("cmd ID",       pENGINE_ctrl_cmd_string(engine,"ID","pkcs11"),0));
+	sslError::check("cmd LIST_ADD", pENGINE_ctrl_cmd_string(engine,"LIST_ADD","1",0));
 
 	int result = pENGINE_ctrl_cmd_string(engine,"LOAD",NULL,0);
 	if( !result )
@@ -168,13 +125,37 @@ SSLObj::SSLObj( int reader, const std::string &pin )
 	sslError::check("cmd LOAD", result );
 
 	sslError::check("cmd MODULE_PATH",pENGINE_ctrl_cmd_string(engine,"MODULE_PATH",PKCS11_MODULE,0));
+
+	sslError::check("set_default", pENGINE_set_default(engine, (unsigned int)0xFFF) );
+
 	result = pENGINE_init(engine);
 	if( !result )
 		pENGINE_free( engine );
 	sslError::check("init engine", result );
+	result = pENGINE_add( engine );
+}
 
+void SSLObj::disconnect()
+{
+	pSSL_shutdown(s);
+	pSSL_free(s);
+	pSSL_CTX_free(ctx);
+}
+
+SSLObj::~SSLObj()
+{
+	pENGINE_free(engine);
+	pENGINE_finish(engine);
+	pENGINE_cleanup();
+	pENGINE_remove(engine);
+	delete e;
+	delete ssl;
+}
+
+bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int reader )
+{
 	std::ostringstream strm;
-	strm << m_reader * 4 << ":01";
+	strm << reader * 4 << ":01";
 	std::string slotid = strm.str();
 	struct {
 		const char *slot_id;
@@ -205,23 +186,7 @@ SSLObj::SSLObj( int reader, const std::string &pin )
 	WORD wVersionRequested = MAKEWORD(2, 2);
 	WSAStartup( wVersionRequested, &wsaData );
 #endif
-}
 
-SSLObj::~SSLObj()
-{
-	pSSL_shutdown(s);
-	pSSL_free(s);
-	pSSL_CTX_free(ctx);
-	//crash
-	//pENGINE_finish(engine);
-	pENGINE_free(engine);
-	pENGINE_cleanup();
-	delete e;
-	delete ssl;
-}
-
-bool SSLObj::connectToHost( const std::string &site )
-{
 	struct hostent *ent;
 	if ( !(ent = gethostbyname(site.c_str()) ) )
 		return false;
@@ -272,4 +237,53 @@ std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
 	return buffer;
+}
+
+bool SSLObj::resolveCrypto()
+{
+	if(
+	(pENGINE_load_dynamic=(void (*)(void)) e->resolve("ENGINE_load_dynamic")) &&
+	(pENGINE_add=(int (*)(ENGINE*)) e->resolve("ENGINE_add")) &&
+	(pENGINE_remove=(int (*)(ENGINE*)) e->resolve("ENGINE_remove")) &&
+	(pENGINE_set_default=(int (*)(ENGINE *e, unsigned int flags)) e->resolve("ENGINE_set_default")) &&
+	(pENGINE_by_id=(ENGINE * (*)(const char *id)) e->resolve("ENGINE_by_id")) &&
+	(pENGINE_cleanup=(void (*)(void)) e->resolve("ENGINE_cleanup")) &&
+	(pENGINE_init=(int (*)(ENGINE *e)) e->resolve("ENGINE_init")) &&
+	(pENGINE_finish=(int (*)(ENGINE *e)) e->resolve("ENGINE_finish")) &&
+	(pENGINE_free=(int (*)(ENGINE *e)) e->resolve("ENGINE_free")) &&
+	(pENGINE_ctrl_cmd_string=(int (*)(ENGINE *e, const char *cmd_name, const char *arg,int cmd_optional)) e->resolve("ENGINE_ctrl_cmd_string")) &&
+	(pENGINE_ctrl_cmd=(int (*)(ENGINE *e, const char *cmd_name, long i, void *p, void (*f)(void), int cmd_optional)) e->resolve("ENGINE_ctrl_cmd")) &&
+	(pENGINE_load_private_key=(EVP_PKEY * (*)(ENGINE *e, const char *key_id, UI_METHOD *ui_method, void *callback_data)) e->resolve("ENGINE_load_private_key")) &&
+	(pERR_get_error = (unsigned long (*)(void)) e->resolve("ERR_get_error")) &&
+	(pERR_error_string_n = (void (*)(unsigned long e,char *buf,size_t len)) e->resolve("ERR_error_string_n"))
+	)
+		return true;
+	else
+		return false;
+}
+
+bool SSLObj::resolveSsl()
+{
+	if(
+	(pSSL_library_init = (int (*)(void)) ssl->resolve("SSL_library_init")) &&
+	(pSSL_load_error_strings = (void (*)(void)) ssl->resolve("SSL_load_error_strings")) &&
+	(pSSL_CTX_new = (SSL_CTX * (*)(SSL_METHOD *meth)) ssl->resolve("SSL_CTX_new")) &&
+	(pSSL_CTX_free = (void (*)(SSL_CTX *)) ssl->resolve("SSL_CTX_free")) &&
+	(pSSL_CTX_use_PrivateKey = (int (*)(SSL_CTX *ctx, EVP_PKEY *pkey)) ssl->resolve("SSL_CTX_use_PrivateKey")) &&
+	(pSSL_CTX_use_certificate = (int (*)(SSL_CTX *ctx, X509 *x)) ssl->resolve("SSL_CTX_use_certificate")) &&
+	(pSSL_CTX_check_private_key = (int (*)(const SSL_CTX *ctx)) ssl->resolve("SSL_CTX_check_private_key")) &&
+	(pSSL_CTX_ctrl = (long (*)( SSL_CTX *ctx, int cmd, long, void *)) ssl->resolve("SSL_CTX_ctrl")) &&
+	(pSSLv3_method = (SSL_METHOD * (*)(void)) ssl->resolve("SSLv3_method")) &&
+	(pSSL_new=(SSL * (*)(SSL_CTX *ctx)) ssl->resolve("SSL_new")) &&
+	(pSSL_free=(void (*)(SSL *ssl)) ssl->resolve("SSL_free")) &&
+	(pSSL_set_fd=(int (*)(SSL *s, int fd)) ssl->resolve("SSL_set_fd")) &&
+	(pSSL_connect=(int (*)(SSL *ssl)) ssl->resolve("SSL_connect")) &&
+	(pSSL_read=(int (*)(SSL *ssl,void *buf,int num)) ssl->resolve("SSL_read")) &&
+	(pSSL_write=(int (*)(SSL *ssl,const void *buf,int num)) ssl->resolve("SSL_write")) &&
+	(pSSL_shutdown=(int (*)(SSL *s)) ssl->resolve("SSL_shutdown")) &&
+	(pSSL_get_error = (int (*)(const SSL *s,int ret_code)) ssl->resolve("SSL_get_error"))
+	)
+		return true;
+	else
+		return false;
 }

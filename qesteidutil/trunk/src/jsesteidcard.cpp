@@ -32,19 +32,12 @@ using namespace std;
 
 JsEsteidCard::JsEsteidCard( QObject *parent )
 :	QObject( parent )
-,	certificateWidget( 0 )
 {
     m_card = NULL;
     m_authCert = new JsCertData( this );
     m_signCert = new JsCertData( this );
 	authUsageCount = 0;
 	signUsageCount = 0;
-}
-
-JsEsteidCard::~JsEsteidCard()
-{
-	if ( certificateWidget )
-		certificateWidget->deleteLater();
 }
 
 void JsEsteidCard::setCard(EstEidCard *card, int reader)
@@ -433,17 +426,16 @@ bool JsEsteidCard::checkPin( const QString &pin )
 
 void JsEsteidCard::showCert( int type )
 {
-	if ( !certificateWidget )
-		certificateWidget = new CertificateWidget;
+	CertificateWidget *c = new CertificateWidget;
 	if( type == 1 )
 	{
 		getAuthCert();
-		certificateWidget->setCertificate( m_authCert->cert() );
+		c->setCertificate( m_authCert->cert() );
 	}
 	else
 	{
 		getSignCert();
-		certificateWidget->setCertificate( m_signCert->cert() );
+		c->setCertificate( m_signCert->cert() );
 	}
-	certificateWidget->show();
+	c->show();
 }

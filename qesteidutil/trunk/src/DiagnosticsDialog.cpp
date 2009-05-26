@@ -34,29 +34,84 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#if defined Q_OS_WIN32
+#include <Windows.h>
+#elif defined Q_OS_LINUX
+#include <QProcess>
+#endif
+
 DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
+	setAttribute( Qt::WA_DeleteOnClose, true );
 
 	QString info;
 	QTextStream s( &info );
 
 	s << "<b>" << tr("Version:") << "</b> ";
 	s << QCoreApplication::applicationVersion() << "<br />";
-	s << "<br />";
+
+	s << "<b>" << tr("OS:") << "</b> ";
+#if defined Q_OS_WIN32
+	switch( QSysInfo::WindowsVersion )
+	{
+	case QSysInfo::WV_2000: s << "Windows 2000"; break;
+	case QSysInfo::WV_XP: s << "Windows XP"; break;
+	case QSysInfo::WV_2003: s << "Windows 2003"; break;
+	case QSysInfo::WV_VISTA: s << "Windows Vista"; break;
+	case QSysInfo::WV_WINDOWS7: s << "Windows 7"; break;
+	default: s << "Unknown version (" << QSysInfo::WindowsVersion << ")";
+	}
+#elif defined Q_OS_LINUX
+	QProcess p;
+	p.start( "lsb_release", QStringList() << "-s" << "-d" );
+	p.waitForReadyRead();
+	s << p.readAll();
+#elif defined Q_OS_MAC
+	switch( QSysInfo::MacVersion )
+	{
+	case QSysInfo::MV_9: s << "Mac OS 9"; break;
+	case QSysInfo::MV_10_0: s << "Mac OS 10.0"; break;
+	case QSysInfo::MV_10_1: s << "Mac OS 10.1"; break;
+	case QSysInfo::MV_10_2: s << "Mac OS 10.2"; break;
+	case QSysInfo::MV_10_3: s << "Mac OS 10.3"; break;
+	case QSysInfo::MV_10_4: s << "Mac OS 10.4"; break;
+	case QSysInfo::MV_10_5: s << "Mac OS 10.5"; break;
+	case QSysInfo::MV_10_6: s << "Mac OS 10.6"; break;
+	default: s << "Unknown version (" << QSysInfo::MacVersion << ")";
+	}
+#endif
+	s << " (" << QSysInfo::WordSize << ")<br /><br />";
+
 	s << "<b>" << tr("Library paths:") << "</b> ";
 	s << QCoreApplication::libraryPaths().join( ";" ) << "<br />";
-	s << "<br />";
-	s << tr("<b>Libraries</b>") << "<br />";
-#ifdef WIN32
+
+	s << "<b>" << tr("Libraries") << "</b><br />";
+#ifdef Q_OS_WIN32
 	s << getLibVersion( "advapi32") << "<br />";
+	s << getLibVersion( "libeay32" ) << "<br />";
+	s << getLibVersion( "ssleay32" ) << "<br />";
 #else
 	s << getLibVersion( "pcsclite" ) << "<br />";
+	s << getLibVersion( "ssl" ) << "<br />";
+	s << getLibVersion( "crypto" ) << "<br />";
 #endif
 	s << getLibVersion( "opensc-pkcs11" ) << "<br />";
 	s << getLibVersion( "engine_pkcs11" ) << "<br />";
+	s << getLibVersion( "QtCore4" ) << "<br />";
+	s << getLibVersion( "QtGui4" ) << "<br />";
+	s << getLibVersion( "QtNetwork4" ) << "<br />";
+	s << getLibVersion( "QtWebkit4" ) << "<br />";
 	s << "<br />";
+
+#ifdef Q_OS_WIN32
+	s << "<b>" << tr("Smart Card service status: ") << "</b>";
+#else
+	s << "<b>" << tr("PCSC service status: ") << "</b>";
+#endif
+	s << (isPCSCRunning() ? tr("Running") : tr("Not running"));
+	s << "<br /><br />";
 
 	s << "<b>" << tr("Card readers") << "</b><br />";
 	s << getReaderInfo();
@@ -67,15 +122,13 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 
 QString DiagnosticsDialog::getLibVersion( const QString &lib ) const
 {
-	QString r = lib;
 	try
 	{
 		DynamicLibrary l( lib.toLatin1() );
-		r += " (" + QString::fromStdString( l.getVersionStr() ) + ")";
+		return QString( "%1 (%2)" ).arg( lib ).arg( QString::fromStdString( l.getVersionStr() ) );
 	}
-	catch( const std::runtime_error & ) {}
-
-	return r;
+	catch( const std::runtime_error & )
+	{ return tr("%1 - failed to get version info").arg( lib ); }
 }
 
 QString DiagnosticsDialog::getReaderInfo() const
@@ -121,6 +174,29 @@ QString DiagnosticsDialog::getReaderInfo() const
 
 	return d;
 }
+
+#ifdef WIN32
+bool DiagnosticsDialog::isPCSCRunning() const
+{
+	bool result = false;
+	SC_HANDLE h = OpenSCManager( NULL, NULL, SC_MANAGER_CONNECT );
+	if( h )
+	{
+		SC_HANDLE s = OpenService( h, "SCardSvr", SERVICE_QUERY_STATUS );
+		if( s )
+		{
+			SERVICE_STATUS status;
+			QueryServiceStatus( s, &status );
+			result = (status.dwCurrentState == SERVICE_RUNNING);
+			CloseServiceHandle( s );
+		}
+		CloseServiceHandle( h );
+	}
+	return result;
+}
+#else
+bool DiagnosticsDialog::isPCSCRunning() const { return true; }
+#endif
 
 void DiagnosticsDialog::save()
 {

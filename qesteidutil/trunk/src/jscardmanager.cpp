@@ -34,9 +34,7 @@ using namespace std;
 JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 :	QObject( jsEsteidCard )
 ,	cardMgr( 0 )
-,	jsSSL( 0 )
 ,	m_jsEsteidCard( jsEsteidCard )
-,	diagnosticsDialog( 0 )
 {
 	try {
 		cardMgr = new SmartCardManager();
@@ -51,8 +49,6 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 
 JsCardManager::~JsCardManager()
 {
-	if ( diagnosticsDialog )
-		diagnosticsDialog->deleteLater();
 	if( cardMgr )
 		delete cardMgr;
 }
@@ -86,7 +82,7 @@ void JsCardManager::pollCard()
 					if ( card->isInReader(i) )
 					{
 						card->connect( i, true );
-						reader.cardId = QString::fromStdString( card->readCardID() );
+						reader.cardId = QString::fromStdString( card->readDocumentID() );
 						reader.connected = true;
 						if ( !foundConnected )
 						{
@@ -208,17 +204,24 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 		card->connect( reader.id, true );
 		QCoreApplication::processEvents();
 		m_jsEsteidCard->setCard(card, reader.id);
-		if ( jsSSL )
-			delete jsSSL;
-		jsSSL = new SSLConnect( reader.id, this );
         return true;
     } catch (std::runtime_error &err) {
+		//ignore Another application is using
+		if ( QString::fromStdString( err.what() ).contains( "Another " ) )
+			return false;
         handleError(err.what());
     }
-	if( card )
-        delete card;
+	if ( card )
+		delete card;
 	m_jsEsteidCard->setCard( 0 );
 	return false;
+}
+
+int JsCardManager::activeReaderNum()
+{
+	if ( !m_jsEsteidCard || !m_jsEsteidCard->m_card )
+		return -1;
+	return m_jsEsteidCard->m_reader;
 }
 
 int JsCardManager::getReaderCount()
@@ -260,8 +263,4 @@ void JsCardManager::registerCallBack(QString event, QString function)
 }
 
 void JsCardManager::showDiagnostics()
-{
-	if ( !diagnosticsDialog )
-		diagnosticsDialog = new DiagnosticsDialog;
-	diagnosticsDialog->show();
-}
+{ (new DiagnosticsDialog( 0 ) )->show(); }

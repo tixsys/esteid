@@ -22,12 +22,14 @@
 
 #pragma once
 
+#include <QLabel>
 #include <QObject>
 #include <QtWebKit>
 #include <QXmlStreamReader>
 
 class MainWindow;
 class SettingsDialog;
+class SSLConnect;
 
 class JsExtender : public QObject
 {
@@ -45,7 +47,11 @@ private:
 	QXmlStreamReader xml;
 	QString m_locale;
 	QDateTime m_dateTime;
-	SettingsDialog *settingsDialog;
+	QLabel *m_loading;
+	QByteArray getUrl( const QString &type, const QString &def );
+	QString pin;
+	SSLConnect *sslConnect;
+	QString activeDocument;
 
 public slots:
 	void setLanguage( const QString &lang );
@@ -66,4 +72,7 @@ public slots:
 
 	QString locale() { return m_locale; }
 	void showSettings();
+
+	void showLoading( const QString & );
+	void closeLoading();
 };

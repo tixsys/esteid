@@ -251,6 +251,16 @@ string EstEidCard::readCardID() {
 	return ret;
 	}
 
+string EstEidCard::readDocumentID() {
+	vector<string> temp;
+	Transaction _m(mManager,mConnection);
+	checkProtocol();
+	readPersonalData_internal(temp,DOCUMENTID,DOCUMENTID);
+
+	string ret = temp[DOCUMENTID];
+	return ret;
+	}
+
 string EstEidCard::readCardName() {
 	vector<string> temp;
 	Transaction _m(mManager,mConnection);

@@ -28,13 +28,15 @@
 
 #include "mainwindow.h"
 #include "jsextender.h"
+#include "sslconnect.h"
 #include "Settings.h"
 #include "SettingsDialog.h"
 
 JsExtender::JsExtender( MainWindow *main )
 :	QObject( main )
 ,	m_mainWindow( main )
-,	settingsDialog( 0 )
+,	m_loading( 0 )
+,	sslConnect( 0 )
 {
 	m_locale = Settings().value( "language" ).toString();
 	if ( m_locale.isEmpty() )
@@ -47,8 +49,8 @@ JsExtender::JsExtender( MainWindow *main )
 
 JsExtender::~JsExtender()
 {
-	if ( settingsDialog )
-		settingsDialog->deleteLater();
+	if ( m_loading )
+		m_loading->deleteLater();
 	if ( QFile::exists( m_tempFile ) )
 		QFile::remove( m_tempFile );
 }
@@ -100,30 +102,52 @@ void JsExtender::openUrl( const QString &url )
 
 QString JsExtender::checkPin()
 {
-	if ( !m_mainWindow->cardManager()->ssl() )
-		throw std::runtime_error( "" );
-
-	QString pin;
-	if ( !m_mainWindow->cardManager()->ssl()->isLoaded() || Settings().value( "sessionTime").toInt() == 0 || 
+	if ( !m_mainWindow->eidCard() || !m_mainWindow->eidCard()->m_card )
+		throw std::runtime_error( "noCard" );
+	if ( activeDocument.isEmpty() || activeDocument != m_mainWindow->eidCard()->getDocumentId() || pin.isEmpty() || 
+		Settings().value( "sessionTime").toInt() == 0 || 
 		!m_dateTime.isValid() || m_dateTime.addSecs( Settings().value( "sessionTime").toInt() * 60 ) < QDateTime::currentDateTime() )
 	{
+		activeDocument = m_mainWindow->eidCard()->getDocumentId();
 		m_dateTime = QDateTime::currentDateTime();
 		bool ok;
 		pin = QInputDialog::getText( m_mainWindow, tr("Authentication"), tr("This action needs authentication\nEnter PIN1"), QLineEdit::Password, QString(), &ok );
 		if( !ok )
+		{
+			pin = "";
 			throw std::runtime_error( "" );
-		else if ( !m_mainWindow->eidCard()->validatePin1( pin ) )
+		} else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
+			pin = "";
 			throw std::runtime_error( "PIN1InvalidRetry" );
+		}
 	}
 	QCoreApplication::processEvents();
 	return pin;
 }
 
-void JsExtender::activateEmail( const QString &email )
+QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 {
 	std::vector<unsigned char> buffer;
+
+	if ( !sslConnect )
+		sslConnect = new SSLConnect( this );
+	if ( !sslConnect->isLoaded() )
+	{
+		delete sslConnect;
+		sslConnect = 0;
+		return QByteArray();
+	}
+
+	buffer = sslConnect->getUrl( checkPin().toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type.toStdString(), def.toStdString() );
+
+	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
+}
+
+void JsExtender::activateEmail( const QString &email )
+{
+	QByteArray buffer;
 	try {
-		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "activateEmail", checkPin().toStdString(), email.toStdString() );
+		buffer = getUrl( "activateEmail", email );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "forwardFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -135,7 +159,7 @@ void JsExtender::activateEmail( const QString &email )
 		return;
 	}
 	xml.clear();
-	xml.addData( QByteArray( (char *)&buffer[0], buffer.size() ) );
+	xml.addData( buffer );
 	QString result = "forwardFailed";
 	while ( !xml.atEnd() )
 	{
@@ -151,9 +175,9 @@ void JsExtender::activateEmail( const QString &email )
 
 void JsExtender::loadEmails()
 {
-	std::vector<unsigned char> buffer;
+	QByteArray buffer;
 	try {
-		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "emails", checkPin().toStdString() );
+		buffer = getUrl( "emails", checkPin() );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "loadFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -166,7 +190,7 @@ void JsExtender::loadEmails()
 		return;
 	}
 	xml.clear();
-	xml.addData( QByteArray( (char *)&buffer[0], buffer.size() ) );
+	xml.addData( buffer );
 	bool error = false, notActivated = false;
 	QString result = "loadFailed", emails;
 	while ( !xml.atEnd() )
@@ -236,9 +260,9 @@ QString JsExtender::readForwards()
 void JsExtender::loadPicture()
 {
 	QString result = "loadPicFailed";
-	std::vector<unsigned char> buffer;
+	QByteArray buffer;
 	try {
-		buffer = m_mainWindow->cardManager()->ssl()->getUrl( "picture", checkPin().toStdString() );
+		buffer = getUrl( "picture", checkPin() );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );
@@ -251,7 +275,7 @@ void JsExtender::loadPicture()
 	}
 
 	QPixmap pix;
-	if ( pix.loadFromData( (uchar *)&buffer[0], buffer.size() ) )
+	if ( pix.loadFromData( buffer ) )
 	{
 		QTemporaryFile file( QString( "%1%2XXXXXX.jpg" )
 			.arg( QDir::tempPath() ).arg( QDir::separator() ) );
@@ -274,7 +298,7 @@ void JsExtender::loadPicture()
 	} else { //probably got xml error string
 		QString result2 = "loadPicFailed2";
 		xml.clear();
-		xml.addData( QByteArray( (char *)&buffer[0], buffer.size() ) );		
+		xml.addData( buffer );		
 		while ( !xml.atEnd() )
 		{
 			xml.readNext();
@@ -314,8 +338,26 @@ void JsExtender::savePicture()
 }
 
 void JsExtender::showSettings()
+{ (new SettingsDialog( m_mainWindow ) )->show(); }
+
+void JsExtender::showLoading( const QString &str )
 {
-	if ( !settingsDialog )
-		settingsDialog = new SettingsDialog;
-	settingsDialog->show();
+	if ( !m_loading )
+	{
+		m_loading = new QLabel( m_mainWindow );
+		m_loading->setStyleSheet( "background-color: rgba(255,255,255,200); border: 1px solid #cddbeb; border-radius: 5px;"
+									"color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px;" );
+		m_loading->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+		m_loading->setFixedSize( 250, 100 );
+	}
+	m_loading->move( 180, 305 );
+	m_loading->setText( str );
+	m_loading->show();
+	QCoreApplication::processEvents();
+}
+
+void JsExtender::closeLoading()
+{
+	if ( m_loading )
+		m_loading->close();
 }

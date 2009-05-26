@@ -42,6 +42,7 @@ CertificateWidget::CertificateWidget( QWidget *parent )
 ,	d( new CertificateWidgetPrivate )
 {
 	setupUi( this );
+	setAttribute( Qt::WA_DeleteOnClose, true );
 	setWindowFlags( Qt::Dialog );
 	tabWidget->removeTab( 2 );
 }
@@ -51,6 +52,7 @@ CertificateWidget::CertificateWidget( const QSslCertificate &cert, QWidget *pare
 ,	d( new CertificateWidgetPrivate )
 {
 	setupUi( this );
+	setAttribute( Qt::WA_DeleteOnClose, true );
 	setWindowFlags( Qt::Dialog );
 	setCertificate( cert );
 	tabWidget->removeTab( 2 );
