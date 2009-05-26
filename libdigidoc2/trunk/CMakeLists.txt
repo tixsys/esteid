@@ -12,8 +12,10 @@ set( SHARE_INSTALL_PREFIX
     "${CMAKE_INSTALL_PREFIX}/share"
     CACHE PATH "Base directory for files which go to share/"
 )
-
-set( PKCS11_PROVIDER "/usr/lib/opensc-pkcs11.so.1" )
+set( PKCS11_PROVIDER
+    "/usr/lib/opensc-pkcs11.so"
+    CACHE FILEPATH "pkcs11 module"
+)
 set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
 set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc2/certs" )
 set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include/libdigidoc2" )
