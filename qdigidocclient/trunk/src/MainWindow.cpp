@@ -65,6 +65,8 @@ MainWindow::MainWindow( QWidget *parent )
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
 		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
 	cards->hide();
+	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	//homeOpenUtility->hide();
 
 	connect( signContentView, SIGNAL(doubleClicked(QModelIndex)),
