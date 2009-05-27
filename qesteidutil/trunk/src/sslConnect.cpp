@@ -178,7 +178,8 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 	sslError::check("CTX_use_privkey", pSSL_CTX_use_PrivateKey(ctx,m_pkey) );
     sslError::check("CTX_check_privkey", pSSL_CTX_check_private_key(ctx) );
 	sslError::check("CTX_ctrl", pSSL_CTX_ctrl( ctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
-
+	if ( m_pkey )
+		EVP_PKEY_free(m_pkey); 
 	s = pSSL_new(ctx);
 
 #ifdef WIN32

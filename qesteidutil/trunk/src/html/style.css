@@ -6,12 +6,13 @@ input[type="button"] { cursor: hand; }
 
 #readerSelect { position: absolute; right: 90px; top: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: Arial; font-size: 12px;}
 #headerSelect { position: absolute; right: 5px; top: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: Arial; font-size: 12px;}
+#readerSelect:focus, #readerSelect:hover, #headerSelect:focus, #headerSelect:hover { text-decoration: underline; }
 
 #headerMenus {position: absolute; right: 90px; top: 2px; color: #afc6d1; font-family: Arial; font-weight: bold; font-size: 12px;}
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}
 #headerMenus a:link {color: #afc6d1; text-decoration: none;}	
-#headerMenus a:hover {color: #afc6d1; text-decoration: underline;}	
+#headerMenus a:hover, #headerMenus a:focus {color: #afc6d1; text-decoration: underline;}	
 
 #topBackground {position: relative; background: #c6ddfa; height: 200px; z-index: -10;}
 
@@ -61,6 +62,6 @@ input[type="button"] { cursor: hand; }
 				font-family: Arial; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }
 				
 a:link {color: #509b00; text-decoration: none;}	
-a:hover {color: #509b00; text-decoration: underline;}	
+a:hover, a:focus {color: #509b00; text-decoration: underline;}	
 
 label	 {color: #355670; font-weight: bold;}
