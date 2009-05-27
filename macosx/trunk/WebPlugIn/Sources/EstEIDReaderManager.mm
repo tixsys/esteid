@@ -250,7 +250,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			self->m_signCertificate = [CPlusDataToNSData(card.getSignCert()) retain];
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read auth certificate");
+			NSLog(@"EstEID: Couldn't read sign certificate");
 		}
 	}
 	
@@ -357,7 +357,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			if(self->m_state->readers.count > count) {
 				for(index = count; index < self->m_state->readers.count; index++) {
 					((EstEIDReader *)self->m_state->readers.data[index])->m_state = NULL;
-					[self->m_state->readers.data[index] release];
+					[self->m_state->readers.data[index] autorelease];
 				}
 				
 				self->m_state->readers.count = count;
