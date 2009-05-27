@@ -26,6 +26,7 @@
 #include <QStringList>
 
 #include "jscertdata.h"
+#include "SslCertificate.h"
 
 using namespace std;
 
@@ -158,6 +159,14 @@ QString JsCertData::getIssuerOU()
         return "";
 
     return m_qcert->issuerInfo(QSslCertificate::OrganizationalUnitName);
+}
+
+bool JsCertData::isTempel()
+{
+	if (!m_qcert)
+		return false;
+
+	return SslCertificate( *m_qcert ).isTempel();
 }
 
 bool JsCertData::isValid()

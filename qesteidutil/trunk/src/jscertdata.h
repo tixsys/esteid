@@ -60,5 +60,6 @@ public slots:
     QString getIssuerCN();
     QString getIssuerO();
     QString getIssuerOU();
+	bool	isTempel();
 	bool	isValid();
 };

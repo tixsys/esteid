@@ -252,6 +252,7 @@ function cardRemoved(i)
 	{
 		activeCardId = "";
 		emailsLoaded = false;
+		disableFields();
 		cardManager.findCard();
 	}
 	readCardData();
@@ -260,6 +261,7 @@ function cardRemoved(i)
 function selectReader()
 {
 	extender.showLoading( _('loadCardData') );
+	disableFields();
 	var select = document.getElementById('readerSelect'); 
 	cardManager.selectReader( select.options[select.selectedIndex].value );
 	if ( esteidData.canReadCard() )
@@ -307,6 +309,12 @@ function readCardData()
 		enableFields();
 	if ( activeCardId == "" )
 		activeCardId = esteidData.getDocumentId();
+
+	if ( esteidData.authCert.isTempel() )
+	{
+		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
+		document.getElementById('photo').style.background = '#abadb0';
+	}
 		
 	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
@@ -505,11 +513,14 @@ function disableFields()
 	document.getElementById('email').innerHTML = "";
 
 	document.getElementById('cardInfo').style.display='none';
-	document.getElementById('cardInfoNoCard').style.display='block';
-	document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
-	
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+	{
+		document.getElementById('cardInfoNoCard').style.display='block';
+		document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
+	}
 	document.getElementById('emailsContent').innerHTML = "";
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
+	document.getElementById('photo').style.background = '#FFFFFF';
 	document.getElementById('savePhoto').style.display = 'none';
 	
 	var divs = document.getElementsByClassName('content');
