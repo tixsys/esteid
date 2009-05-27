@@ -148,7 +148,7 @@ endif(WIN32)
 # In addition, when compiling with MSVC, we link VC Runtime statically.
 # TODO: generate version_script
 if(MSVC)
-  set(XPCOM_CPP_FLAGS /FI xpcom-config.h /MT /Zc:wchar_t-)
+  set(XPCOM_CPP_FLAGS "/FI xpcom-config.h /MT /Zc:wchar_t-")
   set(XPCOM_LINK_FLAGS )
   set(NPAPI_LINK_FLAGS )
 else(MSVC)
@@ -222,16 +222,20 @@ set(esteid_plugin_SRCS
     ${PLUGINGATE}/npp_gate.cpp
 )
 
+set(esteid_plugin_WIN
+    plugins/npesteid.rc
+    plugins/npesteid.def
+)
+
 # TODO: Find a better way to pass special CFLAGS to targets
 # add_definitions(${XPCOM_CPP_FLAGS})
 
-set(idioot ${esteid_module_SRCS} ${esteid_plugin_SRCS})
-set_source_files_properties(${idioot}
+set_source_files_properties(${esteid_module_SRCS} ${esteid_plugin_SRCS}
   PROPERTIES
   COMPILE_FLAGS "${XPCOM_CPP_FLAGS}")
 
 add_library(esteid MODULE ${esteid_module_SRCS})
-add_library(npesteid MODULE ${esteid_plugin_SRCS} plugins/plugin.rc)
+add_library(npesteid MODULE ${esteid_plugin_SRCS} ${esteid_plugin_WIN})
 add_dependencies(esteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
 target_link_libraries(esteid ${GECKO_SDK_LIBRARIES})
