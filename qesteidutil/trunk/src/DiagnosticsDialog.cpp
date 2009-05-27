@@ -38,6 +38,8 @@
 #include <Windows.h>
 #elif defined Q_OS_LINUX
 #include <QProcess>
+#elif defined Q_OS_MAC
+#include <Carbon/Carbon.h>
 #endif
 
 DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
@@ -69,17 +71,12 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	p.waitForReadyRead();
 	s << p.readAll();
 #elif defined Q_OS_MAC
-	switch( QSysInfo::MacVersion )
-	{
-	case QSysInfo::MV_9: s << "Mac OS 9"; break;
-	case QSysInfo::MV_10_0: s << "Mac OS 10.0"; break;
-	case QSysInfo::MV_10_1: s << "Mac OS 10.1"; break;
-	case QSysInfo::MV_10_2: s << "Mac OS 10.2"; break;
-	case QSysInfo::MV_10_3: s << "Mac OS 10.3"; break;
-	case QSysInfo::MV_10_4: s << "Mac OS 10.4"; break;
-	case QSysInfo::MV_10_5: s << "Mac OS 10.5"; break;
-	case QSysInfo::MV_10_6: s << "Mac OS 10.6"; break;
-	default: s << "Unknown version (" << QSysInfo::MacVersion << ")";
+	SInt32 major, minor, bugfix;
+	
+	if(Gestalt(gestaltSystemVersionMajor, &major) == noErr && Gestalt(gestaltSystemVersionMinor, &minor) == noErr && Gestalt(gestaltSystemVersionBugFix, &bugfix) == noErr) {
+		s << "Mac OS " << major << "." << minor << "." << bugfix;
+	} else {
+		s << "Mac OS 10.3";
 	}
 #endif
 	s << " (" << QSysInfo::WordSize << ")<br /><br />";
