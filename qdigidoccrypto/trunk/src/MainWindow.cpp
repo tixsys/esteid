@@ -83,6 +83,7 @@ MainWindow::MainWindow( QWidget *parent )
 	doc = new CryptDoc( this );
 	connect( doc, SIGNAL(error(QString,int)), SLOT(showWarning(QString,int)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
+	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 
 	lang[0] = "et";
 	lang[1] = "en";
@@ -405,6 +406,7 @@ void MainWindow::on_languages_activated( int index )
 	retranslateUi( this );
 	languages->setCurrentIndex( index );
 	showCardStatus();
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::on_settings_clicked() { (new Settings( this ))->show(); }
@@ -503,7 +505,7 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->authCert().isNull() )
+	if( !doc->activeCard().isEmpty() )
 	{
 		const SslCertificate c = doc->authCert();
 		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
@@ -526,7 +528,10 @@ void MainWindow::showCardStatus()
 		content += tr("No card in reader");
 
 	info->setText( content );
-	setCurrentPage( (Pages)stack->currentIndex() );
+	cards->clear();
+	cards->addItems( doc->presentCards() );
+	cards->setVisible( doc->presentCards().size() > 1 );
+	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 }
 
 void MainWindow::showWarning( const QString &msg, int err )

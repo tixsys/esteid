@@ -24,6 +24,7 @@
 
 #include <QThread>
 
+#include <QHash>
 #include <QMutex>
 #include <QSslCertificate>
 
@@ -36,14 +37,20 @@ public:
 	~Poller();
 
 	void lock();
-	void run();
+	void selectCard( const QString &card );
 	void unlock();
 
 Q_SIGNALS:
-	void dataChanged( const QSslCertificate &auth, const QSslCertificate &sign );
+	void dataChanged( const QStringList &cards, const QString &card,
+		const QSslCertificate &auth, const QSslCertificate &sign );
 
 private:
+	void readCerts();
+	void run();
+
 	bool terminate;
 	QMutex m;
+	QHash<QString,int> cards;
 	QString selectedCard;
+	QSslCertificate auth, sign;
 };

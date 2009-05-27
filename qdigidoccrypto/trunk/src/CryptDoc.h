@@ -25,6 +25,7 @@
 #include <QObject>
 
 #include <QSslCertificate>
+#include <QStringList>
 
 #include <libdigidoc/DigiDocDefs.h>
 #include <libdigidoc/DigiDocLib.h>
@@ -58,6 +59,7 @@ public:
 	CryptDoc( QObject *parent = 0 );
 	~CryptDoc();
 
+	QString activeCard() const;
 	void addCardCert();
 	void addFile( const QString &file, const QString &mime );
 	void addKey( const CKey &key );
@@ -75,6 +77,7 @@ public:
 	QList<CKey> keys();
 	QString lastError() const;
 	void open( const QString &file );
+	QStringList presentCards() const;
 	void removeDocument( int id );
 	void removeKey( int id );
 	void save();
@@ -85,12 +88,16 @@ Q_SIGNALS:
 	void error( const QString &err, int errCode );
 
 private Q_SLOTS:
-	void dataChanged( const QSslCertificate &auth, const QSslCertificate &sign );
+	void dataChanged( const QStringList &cards, const QString &card,
+		const QSslCertificate &auth, const QSslCertificate &sign );
+	void selectCard( const QString &card );
 
 private:
 	void setLastError( const QString &err, int errCode = -1 );
 
 	QSslCertificate	m_authCert, m_signCert;
+	QStringList		m_cards;
+	QString			m_card;
 	QString			m_ddocTemp;
 	QString			m_fileName;
 	QString			m_lastError;

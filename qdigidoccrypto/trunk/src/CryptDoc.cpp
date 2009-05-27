@@ -50,8 +50,8 @@ CryptDoc::CryptDoc( QObject *parent )
 	initConfigStore( NULL );
 
 	poller = new Poller();
-	connect( poller, SIGNAL(dataChanged(QSslCertificate,QSslCertificate)),
-		SLOT(dataChanged(QSslCertificate,QSslCertificate)) );
+	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)),
+		SLOT(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)) );
 	poller->start();
 }
 
@@ -61,6 +61,8 @@ CryptDoc::~CryptDoc()
 	cleanupConfigStore( NULL );
 	finalizeDigiDocLib();
 }
+
+QString CryptDoc::activeCard() const { return m_card; }
 
 void CryptDoc::addCardCert()
 {
@@ -163,11 +165,24 @@ void CryptDoc::create( const QString &file )
 	m_fileName = file;
 }
 
-void CryptDoc::dataChanged( const QSslCertificate &auth, const QSslCertificate &sign )
+void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
+	const QSslCertificate &auth, const QSslCertificate &sign )
 {
-	m_authCert = auth;
-	m_signCert = sign;
-	Q_EMIT dataChanged();
+	bool changed = false;
+	if( m_cards != cards )
+	{
+		changed = true;
+		m_cards = cards;
+	}
+	if( m_card != card )
+	{
+		changed = true;
+		m_card = card;
+		m_authCert = auth;
+		m_signCert = sign;
+	}
+	if( changed )
+		Q_EMIT dataChanged();
 }
 
 bool CryptDoc::decrypt( const QString &pin )
@@ -383,6 +398,8 @@ void CryptDoc::open( const QString &file )
 		setLastError( tr("Failed to open crypted document"), err );
 }
 
+QStringList CryptDoc::presentCards() const { return m_cards; }
+
 void CryptDoc::removeDocument( int id )
 {
 	if( isNull() )
@@ -461,6 +478,9 @@ void CryptDoc::saveDocument( int id, const QString &path )
 			return setLastError( tr("Failed to save file"), err );
 	}
 }
+
+void CryptDoc::selectCard( const QString &card )
+{ poller->selectCard( card ); }
 
 void CryptDoc::setLastError( const QString &err, int errCode )
 { Q_EMIT error( m_lastError = err, errCode ); }

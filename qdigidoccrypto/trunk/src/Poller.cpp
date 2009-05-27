@@ -27,7 +27,7 @@
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocPKCS11.h>
 
-#include <QHash>
+#include <QStringList>
 
 Poller::Poller( QObject *parent )
 :	QThread( parent )
@@ -44,11 +44,23 @@ Poller::~Poller()
 
 void Poller::lock() { m.lock(); }
 
+void Poller::readCerts()
+{
+	int slot = cards[selectedCard];
+	X509 *cert;
+	findUsersCertificate( slot, &cert );
+	auth = SslCertificate::fromX509( (Qt::HANDLE*)cert );
+	free( cert );
+	findUsersCertificate( slot + 1, &cert );
+	sign = SslCertificate::fromX509( (Qt::HANDLE*)cert );
+	free( cert );
+	Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+}
+
 void Poller::run()
 {
 	Q_FOREVER
 	{
-		sleep( 5 );
 		if( !m.tryLock() )
 			continue;
 
@@ -76,37 +88,56 @@ void Poller::run()
 			continue;
 		}
 
-		QHash<QString,int> cards;
+		cards.clear();
 		for( int i = 0; i < count; ++i )
 		{
 			CK_TOKEN_INFO tokeninfo;
 			err = GetTokenInfo( &tokeninfo, slotids[i] );
-			QString serialNumber = (char*)tokeninfo.serialNumber;
+			QString serialNumber;
+			int len = sizeof(tokeninfo.serialNumber);
+			for( int j = 0; j < len; ++j )
+			{
+				if( tokeninfo.serialNumber[j] == ' ' )
+					break;
+				serialNumber.append( tokeninfo.serialNumber[j] );
+			}
 			if( !cards.contains( serialNumber ) )
 				cards[serialNumber] = i;
 		}
 		closePKCS11Library( lib, 0 );
+		Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 
 		if( selectedCard.isEmpty() && !cards.isEmpty() )
 		{
 			selectedCard = cards.begin().key();
-			int slot = cards.begin().value();
-			X509 *cert;
-			findUsersCertificate( slot, &cert );
-			QSslCertificate auth = SslCertificate::fromX509( (Qt::HANDLE*)cert );
-			free( cert );
-			findUsersCertificate( slot + 1, &cert );
-			QSslCertificate sign = SslCertificate::fromX509( (Qt::HANDLE*)cert );
-			free( cert );
-			Q_EMIT dataChanged( auth, sign );
+			readCerts();
 		}
 		else if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
 		{
-			selectedCard.clear();
-			Q_EMIT dataChanged( QSslCertificate(), QSslCertificate() );
+			if( !cards.isEmpty() )
+			{
+				selectedCard = cards.begin().key();
+				readCerts();
+			}
+			else
+			{
+				selectedCard.clear();
+				auth = QSslCertificate();
+				sign = QSslCertificate();
+				Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+			}
 		}
 		m.unlock();
+		sleep( 5 );
 	}
+}
+
+void Poller::selectCard( const QString &card )
+{
+	m.lock();
+	selectedCard = card;
+	readCerts();
+	m.unlock();
 }
 
 void Poller::unlock() { m.unlock(); }
