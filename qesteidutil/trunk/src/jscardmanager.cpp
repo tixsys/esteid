@@ -65,7 +65,7 @@ void JsCardManager::pollCard()
 
 		// Build current device list with statuses
         QHash<QString,ReaderState> tmp;
-        int numReaders = cardMgr->getReaderCount();
+        int numReaders = cardMgr->getReaderCount( true );
         for (int i = 0; i < numReaders; i++) {
             ReaderState reader;
 			reader.id = i;
@@ -200,6 +200,10 @@ bool JsCardManager::selectReader( const ReaderState &reader )
     try {
         if (!cardMgr)
             cardMgr = new SmartCardManager();
+		else {
+			//refresh reader states
+			cardMgr->getReaderCount( true );
+		}
 		card = new EstEidCard(*cardMgr);
 		card->connect( reader.id, true );
 		QCoreApplication::processEvents();
@@ -231,7 +235,7 @@ int JsCardManager::getReaderCount()
 
 	int readers = 0;
 	try {
-		readers = cardMgr->getReaderCount();
+		readers = cardMgr->getReaderCount( true );
 	} catch( std::runtime_error & ) {}
 
     return readers;
@@ -241,6 +245,11 @@ QString JsCardManager::getReaderName(int i)
 {
     if (!cardMgr)
         return "";
+
+	//refresh reader states
+	try {
+		cardMgr->getReaderCount( true );
+	} catch( std::runtime_error & ) {}
 
     return QString::fromStdString(cardMgr->getReaderName(i));
 }
