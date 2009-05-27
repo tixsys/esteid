@@ -50,10 +50,16 @@ QPushButton,
 
 #homeButtonLabel,
 #viewContentLabel, #viewKeysLabel
-{ color: #00355F; }
+{
+color: #00355F;
+font: bold;
+}
 
 #settings, #help
-{ color: #afc6d1; }
+{
+color: #afc6d1;
+font: bold;
+}
 
 /* backgrounds */
 #background
@@ -61,7 +67,7 @@ QPushButton,
 
 #languages, #languages QAbstractItemView,
 #cards, #cards QAbstractItemView,
-#settings, #help, #headerLine
+#settings, #help, #headerLine, #headerLine2
 { background-color: #00355F; }
 
 #home, #intro, #view,
@@ -97,6 +103,7 @@ QPushButton:hover
 
 #info
 {
+font: bold;
 border-radius: 3px;
 background-color: rgba( 255, 255, 255, 153 );
 padding: 10px;
