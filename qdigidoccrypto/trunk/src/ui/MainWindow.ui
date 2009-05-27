@@ -42,17 +42,23 @@
    <string notr="true">/* fonts */
 QWidget
 { color: #355670; }
+
 QPushButton,
 #cards, #cards QAbstractItemView,
 #languages, #languages QAbstractItemView
 { color: white; }
+
 #homeButtonLabel,
 #viewContentLabel, #viewKeysLabel
 { color: #00355F; }
+
 #settings, #help
 { color: #afc6d1; }
 
 /* backgrounds */
+#background
+{ background-image: url(&quot;:/images/background.png&quot;); }
+
 #languages, #languages QAbstractItemView,
 #cards, #cards QAbstractItemView,
 #settings, #help, #headerLine
@@ -71,19 +77,24 @@ border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
 }
+
 QComboBox
 { border: 0px; }
 
 QPushButton:hover
 {}
+
 /* customization */
-#background
-{ background-image: url(&quot;:/images/background.png&quot;); }
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
+
+#cards, #languages
+{ padding-right: 5px; }
+
 #cards::drop-down, #cards QAbstractItemView,
 #languages::drop-down, #languages QAbstractItemView
 { border: 0px; }
+
 #info
 {
 border-radius: 3px;
@@ -146,6 +157,12 @@ padding: 10px;
         </item>
         <item>
          <widget class="Line" name="headerLine">
+          <property name="maximumSize">
+           <size>
+            <width>2</width>
+            <height>20</height>
+           </size>
+          </property>
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
@@ -164,6 +181,22 @@ padding: 10px;
           </property>
           <property name="text">
            <string>Help</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="headerLine2">
+          <property name="maximumSize">
+           <size>
+            <width>2</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
          </widget>
         </item>
@@ -622,8 +655,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>31</width>
-               <height>16</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewKeysLayout">
