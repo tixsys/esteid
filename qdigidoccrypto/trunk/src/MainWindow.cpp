@@ -54,6 +54,8 @@ MainWindow::MainWindow( QWidget *parent )
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
 		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
 	cards->hide();
+	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	//homeOpenUtility->hide();
 	viewContentView->header()->setStretchLastSection( false );
 	viewContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
