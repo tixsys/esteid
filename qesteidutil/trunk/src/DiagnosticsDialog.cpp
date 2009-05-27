@@ -89,6 +89,10 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << getLibVersion( "advapi32") << "<br />";
 	s << getLibVersion( "libeay32" ) << "<br />";
 	s << getLibVersion( "ssleay32" ) << "<br />";
+#elif defined Q_OS_MAC
+	s << getLibVersion( "PCSC" ) << "<br />";
+	s << getLibVersion( "ssl" ) << "<br />";
+	s << getLibVersion( "crypto" ) << "<br />";
 #else
 	s << getLibVersion( "pcsclite" ) << "<br />";
 	s << getLibVersion( "ssl" ) << "<br />";
@@ -96,10 +100,17 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 #endif
 	s << getLibVersion( "opensc-pkcs11" ) << "<br />";
 	s << getLibVersion( "engine_pkcs11" ) << "<br />";
+#ifdef Q_OS_MAC
+	s << getLibVersion( "QtCore" ) << "<br />";
+	s << getLibVersion( "QtGui" ) << "<br />";
+	s << getLibVersion( "QtNetwork" ) << "<br />";
+	s << getLibVersion( "QtWebkit" ) << "<br />";
+#else
 	s << getLibVersion( "QtCore4" ) << "<br />";
 	s << getLibVersion( "QtGui4" ) << "<br />";
 	s << getLibVersion( "QtNetwork4" ) << "<br />";
 	s << getLibVersion( "QtWebkit4" ) << "<br />";
+#endif
 	s << "<br />";
 
 #ifdef Q_OS_WIN32
