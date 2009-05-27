@@ -20,15 +20,12 @@
  *
  */
 
-#include <iostream>
 #include <QDebug>
 #include <QDateTime>
 #include <QStringList>
 
 #include "jscertdata.h"
 #include "SslCertificate.h"
-
-using namespace std;
 
 JsCertData::JsCertData( QObject *parent )
 :	QObject( parent )
@@ -64,14 +61,15 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
             certBytes = m_card->getSignCert();
 
 		if( m_qcert )
-		{
 			delete m_qcert;
-			m_qcert = 0;
-		}
-        m_qcert = new QSslCertificate(QByteArray((char *)&certBytes[0], certBytes.size()), QSsl::Der);
-    } catch (runtime_error &err ) {
+
+		if( certBytes.size() )
+			m_qcert = new QSslCertificate(QByteArray((char *)&certBytes[0], certBytes.size()), QSsl::Der);
+		else
+			m_qcert = new QSslCertificate();
+	} catch ( std::runtime_error &err ) {
 //        doShowError(err);
-        cout << "Error: " << err.what() << endl;
+		qDebug() << "Error: " << err.what();
     }
 }
 

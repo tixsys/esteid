@@ -68,7 +68,7 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
 bool SslCertificate::isTempel() const
 {
 	Q_FOREACH( const QString &p, policies() )
-		if( p.left( 11 ) == "1.3.6.1.4.1.10015.7" )
+		if( p.left( 19 ) == "1.3.6.1.4.1.10015.7" )
 			return true;
 	return false;
 }
