@@ -3,3 +3,10 @@
 * pcsc_stringify_error
 * Reconnect to manager on "no readers found" error
 * investigate no-rtti flag effect on virtual functions
+* investigate possible memory leak in getAuthCert and co.
+* Fix those errors: 
+  (firefox:12365): Gtk-CRITICAL **: gtk_widget_destroy: assertion `GTK_IS_WIDGET (widget)' failed
+* clean up EstEIDServiceBase and ditch reader arguments.
+  Look at esteidutil.sf.net/EstEIDSigningPluginBHO/SmartCardSigner.cpp
+* Make sure VERSION and MIME info is correct in plugin.rc Create separate
+  plugininfo.h or something.

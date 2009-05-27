@@ -6,6 +6,7 @@
 #include "PCSCManager.h"
 #include "EstEidCard.h"
 #include "SCError.h"
+#include "helperMacro.h" // MAKEVECTOR
 #include <vector>
 #include <string>
 

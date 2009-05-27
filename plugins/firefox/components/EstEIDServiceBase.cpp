@@ -1,4 +1,5 @@
 #include "EstEIDServiceBase.h"
+#include "converters.h"
 
 void EstEIDServiceBase::FindEstEID(vector <readerID> & readers) {
     readers.clear();
@@ -6,6 +7,17 @@ void EstEIDServiceBase::FindEstEID(vector <readerID> & readers) {
 
     for (readerID i = 0; i < cardPresent.size(); i++ )
         if(cardPresent[i]) readers.push_back(i);
+}
+
+readerID EstEIDServiceBase::findFirstEstEID() {
+    vector <readerID> readers;
+    FindEstEID(readers);
+
+    // FIXME: Define a more sane exception to throw from here
+    if(readers.size() <= 0)
+        throw std::runtime_error("No cards found");
+    else
+    	return readers[0];
 }
 
 void EstEIDServiceBase::Worker() {
@@ -21,7 +33,10 @@ void EstEIDServiceBase::Poll() {
 		}
 
 		EstEidCard card(mgr);
-		cardPresent.resize(nReaders);
+		if(cardPresent.size() != nReaders) {
+			cardPresent.resize(nReaders);
+			PostMessage(MSG_READERS_CHANGED, nReaders);
+		}
 		_Poll(card);
 	}
 	catch(std::runtime_error err) {
@@ -56,20 +71,59 @@ void EstEIDServiceBase::_Poll(EstEidCard & card) {
 }
 
 void EstEIDServiceBase::readPersonalData(vector <std::string> & data) {
-    vector <readerID> readers;
-    FindEstEID(readers);
-
-    // FIXME: Define a more sane exception to throw from here
-    if(readers.size() <= 0)
-        throw std::runtime_error("No cards found");
-    else
-        readPersonalData(data, readers[0]);
+	readPersonalData(data, findFirstEstEID());
 }
 
 void EstEIDServiceBase::readPersonalData(vector <std::string> & data,
-                                           unsigned int reader) {
+                                           readerID reader) {
 	idAutoLock lock(this);
 
     EstEidCard card(mgr, reader);
     card.readPersonalData(data, PDATA_MIN, PDATA_MAX);
+}
+
+#define ESTEIDSERVICEBASE_GETCERTIMPL(id) \
+	ByteVec EstEIDServiceBase::get##id##Cert() { \
+        return get##id##Cert(findFirstEstEID()); \
+    }\
+    \
+	ByteVec EstEIDServiceBase::get##id##Cert(readerID reader) { \
+	    idAutoLock lock(this); \
+        EstEidCard card(mgr, reader); \
+        return card.get##id##Cert(); \
+    }
+
+ESTEIDSERVICEBASE_GETCERTIMPL(Auth)
+ESTEIDSERVICEBASE_GETCERTIMPL(Sign)
+
+std::string EstEIDServiceBase::signSHA1(std::string hash,
+		    EstEidCard::KeyType keyId, std::string pin) {
+	return signSHA1(hash, keyId, pin, findFirstEstEID());
+}
+
+std::string EstEIDServiceBase::signSHA1(std::string hash,
+		    EstEidCard::KeyType keyId, std::string pin, readerID reader) {
+	idAutoLock lock(this);
+
+	ByteVec bhash = fromHex(hash);
+	if (bhash.size() != 20) {
+		throw std::runtime_error("Invalid SHA1 hash");
+	}
+
+    EstEidCard card(mgr, reader);
+
+    return toHex(card.calcSignSHA1(bhash, keyId, pin));
+}
+
+bool EstEIDServiceBase::getRetryCounts(byte &puk,
+		byte &pinAuth,byte &pinSign) {
+	return getRetryCounts(puk, pinAuth, pinSign, findFirstEstEID());
+}
+bool EstEIDServiceBase::getRetryCounts(byte &puk,
+		byte &pinAuth,byte &pinSign, readerID reader) {
+
+	idAutoLock lock(this);
+
+    EstEidCard card(mgr, reader);
+	return card.getRetryCounts(puk, pinAuth, pinSign);
 }

@@ -8,17 +8,6 @@
 
 #include <iostream>
 
-#if 0
-class huinja : public nsSupportsWeakReference {
-public:
-    NS_DECL_ISUPPORTS
-//private:
-    //~TestObserver() {}
-};
-
-NS_IMPL_ISUPPORTS1( huinja, nsISupportsWeakReference );
-#endif
-
 NS_IMPL_ISUPPORTS1( nsEstEIDService, nsITimerCallback );
 
 NS_IMETHODIMP nsEstEIDService::Notify(nsITimer *timer) {
@@ -30,8 +19,9 @@ void nsEstEIDService::PostMessage(msgType type,
 		readerID reader, std::string msg) {
 
 	nsString types[] = {
-			NS_LITERAL_STRING("cardInsert"),
-			NS_LITERAL_STRING("cardRemove"),
+			NS_LITERAL_STRING("cardInserted"),
+			NS_LITERAL_STRING("cardRemoved"),
+			NS_LITERAL_STRING("readersChanged"),
 			NS_LITERAL_STRING("cardError")
 	};
 
@@ -39,9 +29,6 @@ void nsEstEIDService::PostMessage(msgType type,
 		std::cout << "Unknown message type:" << type << std::endl;
 		return;
 	}
-
-	//huinja *hui = new huinja();
-	//NS_ADDREF(hui);
 
 	nsresult rv = anObserverService->NotifyObservers(nsnull,
 			NS_LITERAL_CSTRING("esteid-card-changed").get(),

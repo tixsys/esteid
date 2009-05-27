@@ -1,6 +1,9 @@
 #ifndef nsEstEID_h
 #define nsEstEID_h
 
+#define ESTEID_DEBUG printf
+#define ESTEID_ERROR printf
+
 #include "cardlib.h"
 
 #include "nsIEstEID.h"
@@ -11,8 +14,6 @@
 #include <nsWeakReference.h>
 #include <nsIObserver.h>
 #include <nsStringAPI.h>
-
-#define NS_ESTEID_CONTRACTID "@id.eesti.ee/esteid;1"
 
 typedef nsCOMPtr<nsIEstEIDListener> ListenerPtr;
 
@@ -34,29 +35,37 @@ public:
 
 private:
   enum ListenerType {
-	     INSERT_LISTENERS, REMOVE_LISTENERS, MAX_LISTENERS
+	     INSERT_LISTENERS, REMOVE_LISTENERS,
+	     READER_LISTENERS, MAX_LISTENERS
+  };
+  enum CertId {
+	  AUTH, SIGN, MAX_CERT
   };
 
   nsresult _UpdatePersonalData();
+  nsresult _UpdateCertData(CertId);
+  nsresult _GetCert(nsIEstEIDCertificate **, CertId);
   void _FireListeners(ListenerType, PRUint16);
 
   // Dynamic data
   vector <std::string> _PersonalData;
   vector <ListenerPtr> _Listeners[MAX_LISTENERS];
+  ByteVec _CertData[MAX_CERT];
 
   //static PRLock *mLock;
 
-  EstEIDServiceBase* service;
-
   // Pointer to the service singleton
-  static nsEstEID* sEstEID;
+  EstEIDServiceBase* service;
 };
 
 static const nsCString ListenerNames[] = {
-			NS_LITERAL_CSTRING("cardInsert"),
-			NS_LITERAL_CSTRING("cardRemove"),
-			NS_LITERAL_CSTRING("cardError")
+			NS_LITERAL_CSTRING("OnCardInserted"),
+			NS_LITERAL_CSTRING("OnCardRemoved"),
+			NS_LITERAL_CSTRING("OnReadersChanged")
 };
 
+#define SETNRET(a, b) return b;
+#define ESTEID_OK                     SETNRET(0, NS_OK)
+#define ESTEID_ERROR_INVALID_ARG      SETNRET(4, NS_ERROR_INVALID_ARG)
 
 #endif // nsEstEID_h

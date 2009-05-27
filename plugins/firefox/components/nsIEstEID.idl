@@ -1,4 +1,5 @@
 #include "nsISupports.idl"
+#include "nsISecurityCheckedComponent.idl"
 
 /**
  * Event handler callback for card events
@@ -19,19 +20,19 @@ interface nsIEstEIDListener : nsISupports {
 [scriptable, uuid(cb06122f-0f2b-4665-8063-76a05ced742a)]
 interface nsIEstEIDCertificate : nsISupports {
   /** Subject CN */
-  readonly attribute string CN;
+  readonly attribute AString CN;
   /** Date and time in format dd.mm.yyyy hh:mm:ss */
-  readonly attribute string validFrom;
+  readonly attribute AString validFrom;
   /** Date and time in format dd.mm.yyyy hh:mm:ss */
-  readonly attribute string validTo;
+  readonly attribute AString validTo;
   /** Issuer CN */
-  readonly attribute string issuerCN;
+  readonly attribute AString issuerCN;
   /** security, Non-Repudiation, digital signing etc. */
-  readonly attribute string keyUsage;
+  readonly attribute AString keyUsage;
   /** Certificate in PEM format */
-  readonly attribute string cert;
-  /** A unique identifier for this certificate */ 
-  readonly attribute string id;
+  readonly attribute ACString cert;
+  /** A unique serial number for this certificate */ 
+  readonly attribute AString serial;
 };
 
 /**
@@ -47,8 +48,9 @@ interface nsIEstEID : nsISupports
 
   /** register callback for card events.
    * @param type Event to listen for.
-   *        - cardInsert
-   *        - cardRemove
+   *        - OnCardInserted
+   *        - OnCardRemoved
+   *        - OnReadersChanged
    * @param listener Event handler function
    */
   void addEventListener(in string type, in nsIEstEIDListener listener);
@@ -64,22 +66,20 @@ interface nsIEstEID : nsISupports
    */
    /*
    string getReaderName(in unsigned short reader);
+   void selectReader(in unsigned short reader);
+   attribute unsigned short readerCount;
    */
 
   /** Sign hash with digital signature certificate
    * Browser will automatically prompt for PIN2
-   * @param hash a document hash to sign
+   * @param hash HEX encoded document hash to sign
    * @param url an URL to the document itself
    */
-   /*
-   string sign(in string hash, in string url);
-   */
+  string sign(in string hash, in string url);
   
   /** Certificates */
-  /*
   readonly attribute nsIEstEIDCertificate authCert;
   readonly attribute nsIEstEIDCertificate signCert;
-  */
 
   /** Personal data file attributes */
   readonly attribute ACString lastName;
@@ -98,4 +98,27 @@ interface nsIEstEID : nsISupports
   readonly attribute ACString comment2;
   readonly attribute ACString comment3;
   readonly attribute ACString comment4;
+  
+  /** Error code
+   * Will be set after a function or property read throws
+   * This allows you to detect what type of error occurred
+   * and handle it intelligently.
+   * 0 - Success (No Error)
+   * 1 - Operation canceled (by user)
+   * 2 - No card available
+   * 3 - No readers available
+   * 4 - Invalid argument
+   * 5 - Card error
+   * 6 - Manager error
+   * 7 - Unknown error
+   */
+  /* readonly attribute int errorCode; */
+  /** Error message  */
+  /* readonly attribute AString errorMessage; */ 
 };
+
+%{C++
+
+#define NS_ESTEID_CONTRACTID "@id.eesti.ee/esteid;1"
+
+%}

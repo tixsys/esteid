@@ -7,13 +7,14 @@
 cmake_minimum_required(VERSION 2.6)
 project(xpi)
 
-# FIXME: Ugly son of a bitch!
-set(CARDLIB ../../qesteidutil/trunk/cardlib)
-
 # set( CMAKE_VERBOSE_MAKEFILE TRUE)
 
 # Define directories
 # set( CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/build)
+set(PLUGINGATE plugins/plugingate)
+
+# FIXME: Ugly son of a bitch!
+set(CARDLIB ../../qesteidutil/trunk/cardlib)
 
 # Build type
 #if( CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -52,6 +53,7 @@ CONFIGURE_FILE(install.rdf.in install.rdf)
 add_custom_target( xpi-stage
 	COMMAND ${MKDIR} chrome
 	COMMAND ${MKDIR} components
+	COMMAND ${MKDIR} plugins
 )
 
 set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
@@ -66,9 +68,10 @@ add_dependencies( xpi-jar xpi-stage)
 add_custom_target( xpi ALL
 	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
 	DEPENDS esteid
+	DEPENDS npesteid
 	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
 	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
-                chrome/ components/ install.rdf
+                chrome/ components/ plugins/ install.rdf
 	VERBATIM
 )
 add_dependencies( xpi xpi-jar)
@@ -145,9 +148,12 @@ endif(WIN32)
 if(MSVC)
   set(XPCOM_CPP_FLAGS /FI xpcom-config.h /MT /Zc:wchar_t-)
   set(XPCOM_LINK_FLAGS )
+  set(NPAPI_LINK_FLAGS )
 else(MSVC)
   set(XPCOM_CPP_FLAGS "-include xpcom-config.h -fno-rtti -fshort-wchar")
-  set(XPCOM_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
+  set(LIB_LINK_FLAGS "-Wl,--discard-all -Wl,-Bsymbolic -Wl,-z,defs")
+  set(XPCOM_LINK_FLAGS "${LIB_LINK_FLAGS} -Wl,--version-script=${CMAKE_SOURCE_DIR}/components/xpcom.version_script")
+  set(NPAPI_LINK_FLAGS "${LIB_LINK_FLAGS} -Wl,--version-script=${CMAKE_SOURCE_DIR}/plugins/npapi.version_script")
 endif(MSVC)
 
 include_directories(${CARDLIB})
@@ -190,8 +196,10 @@ set(esteid_module_SRCS
     components/nsEstEID.cpp
     components/EstEIDServiceBase.cpp
     components/nsEstEIDService.cpp
+    components/nsEstEIDCertificate.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
 
+    components/converters.cpp
     ${CARDLIB}/CardBase.cpp
     ${CARDLIB}/CTAPIManager.cpp
     ${CARDLIB}/DynamicLibrary.cpp
@@ -203,15 +211,33 @@ set(esteid_module_SRCS
     ${CARDLIB}/SmartCardManager.cpp
 )
 
+set(esteid_plugin_SRCS
+    plugins/plugin.cpp
+    plugins/plugin.rc
+    ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
+
+    ${PLUGINGATE}/np_entry.cpp
+    ${PLUGINGATE}/npn_gate.cpp
+    ${PLUGINGATE}/npp_gate.cpp
+)
+
 # TODO: Find a better way to pass special CFLAGS to targets
 add_definitions(${XPCOM_CPP_FLAGS})
 add_library(esteid MODULE ${esteid_module_SRCS})
+add_library(npesteid MODULE ${esteid_plugin_SRCS})
 add_dependencies(esteid xpi-stage)
+add_dependencies(npesteid xpi-stage)
 target_link_libraries(esteid ${GECKO_SDK_LIBRARIES})
+target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(esteid PROPERTIES
 				PREFIX ""
 				LINK_FLAGS "${XPCOM_LINK_FLAGS}"
 				SKIP_BUILD_RPATH true
 				LIBRARY_OUTPUT_DIRECTORY "components")
+set_target_properties(npesteid PROPERTIES
+				PREFIX ""
+				LINK_FLAGS "${NPAPI_LINK_FLAGS}"
+				SKIP_BUILD_RPATH true
+				LIBRARY_OUTPUT_DIRECTORY "plugins")
 
 # install(TARGETS pkcs11 DESTINATION lib)
