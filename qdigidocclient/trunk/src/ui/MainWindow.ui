@@ -42,18 +42,24 @@
    <string notr="true">/* fonts */
 QWidget
 { color: #355670; }
+
 QPushButton,
 #cards, #cards QAbstractItemView,
 #languages, #languages QAbstractItemView
 { color: white; }
+
 #homeButtonLabel,
 #viewContentLabel, #viewSignaturesLabel,
 #signContentLabel, #signSigner, #signSignerLabel
 { color: #00355F; }
+
 #settings, #help
 { color: #afc6d1; }
 
 /* backgrounds */
+#background
+{ background-image: url(&quot;:/images/background.png&quot;); }
+
 #languages, #languages QAbstractItemView,
 #cards, #cards QAbstractItemView,
 #settings, #help, #headerLine, #headerLine2
@@ -73,21 +79,24 @@ border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
 }
+
 QComboBox
 { border: 0px; }
 
 QPushButton:hover
 {}
+
 /* customization */
-#background
-{ background-image: url(&quot;:/images/background.png&quot;); }
-#cards, #languages
-{ padding-right: 5px; }
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
+
+#cards, #languages
+{ padding-right: 5px; }
+
 #cards::drop-down, #cards QAbstractItemView,
 #languages::drop-down, #languages QAbstractItemView
 { border: 0px; }
+
 #info
 {
 border-radius: 3px;
@@ -899,8 +908,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>48</width>
-               <height>16</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
