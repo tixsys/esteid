@@ -107,7 +107,7 @@ ELSE(PKG_CONFIG_FOUND)
     set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES} )
     FIND_PATH(GECKO_SDK_DIR include/xpcom/nsCOMPtr.h
         PATHS
-	    /src/xulrunner-sdk
+	    /build/Win32/xulrunner-sdk
 	    ${PROJECT_SOURCE_DIR}/xulrunner-sdk
 	    ${PROJECT_SOURCE_DIR}/../xulrunner-sdk
 	    ${PROJECT_BINARY_DIR}/xulrunner-sdk
@@ -134,6 +134,8 @@ link_directories(${GECKO_SDK_LIBRARY_DIRS})
 include_directories(${GECKO_SDK_DIR}/include)
 include_directories(${GECKO_SDK_DIR}/include/xpcom)
 include_directories(${GECKO_SDK_DIR}/include/dom)
+include_directories(${GECKO_SDK_DIR}/include/caps)
+include_directories(${GECKO_SDK_DIR}/include/necko)
 include_directories(${GECKO_SDK_DIR}/sdk/include)
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
 
@@ -213,7 +215,6 @@ set(esteid_module_SRCS
 
 set(esteid_plugin_SRCS
     plugins/plugin.cpp
-    plugins/plugin.rc
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
 
     ${PLUGINGATE}/np_entry.cpp
@@ -222,9 +223,15 @@ set(esteid_plugin_SRCS
 )
 
 # TODO: Find a better way to pass special CFLAGS to targets
-add_definitions(${XPCOM_CPP_FLAGS})
+# add_definitions(${XPCOM_CPP_FLAGS})
+
+set(idioot ${esteid_module_SRCS} ${esteid_plugin_SRCS})
+set_source_files_properties(${idioot}
+  PROPERTIES
+  COMPILE_FLAGS "${XPCOM_CPP_FLAGS}")
+
 add_library(esteid MODULE ${esteid_module_SRCS})
-add_library(npesteid MODULE ${esteid_plugin_SRCS})
+add_library(npesteid MODULE ${esteid_plugin_SRCS} plugins/plugin.rc)
 add_dependencies(esteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
 target_link_libraries(esteid ${GECKO_SDK_LIBRARIES})
