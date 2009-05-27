@@ -20,7 +20,11 @@ void* DDocLibrary::resolve( const char *symbol )
 
 #else
 
+#if defined(__APPLE__)
+#define LIBDIGIDOC_NAME "libdigidoc2.dylib"
+#else
 #define LIBDIGIDOC_NAME "libdigidoc.so.2"
+#endif
 
 DDocLibrary::DDocLibrary( const char *filename )
 { h = dlopen( filename, RTLD_LAZY ); }
