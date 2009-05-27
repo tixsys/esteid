@@ -35,7 +35,7 @@ Settings::Settings( QWidget *parent )
 
 	defaultSameDir->setChecked( s.value( "SameDir", true ).toBool() );
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
-	showIntro->setChecked( !s.value( "Intro", true ).toBool() );
+	showIntro->setChecked( s.value( "Intro", true ).toBool() );
 	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
 
 	signRoleInput->setText( s.value( "Role" ).toString() );
@@ -68,7 +68,7 @@ void Settings::save()
 {
 	SettingsValues s;
 	s.beginGroup( "Main" );
-	s.setValue( "Intro", !showIntro->isChecked() );
+	s.setValue( "Intro", showIntro->isChecked() );
 	s.setValue( "Overwrite", signOverwrite->isChecked() );
 	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
 	s.setValue( "SameDir", defaultSameDir->isChecked() );

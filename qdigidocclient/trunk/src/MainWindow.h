@@ -24,6 +24,8 @@
 
 #include "ui_MainWindow.h"
 
+#include <QStringList>
+
 class DigiDoc;
 class QTranslator;
 
@@ -76,10 +78,12 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	void loadDocuments( QTreeWidget *view );
+	void parseParams();
 	bool saveDocument();
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
 	QHash<int,QString> lang;
+	QStringList params;
 };

@@ -120,22 +120,12 @@ MainWindow::MainWindow( QWidget *parent )
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
-		for( int i = 1; i < args.size(); ++i )
-		{
-			const QFileInfo f( args[i] );
-			if( !f.isFile() )
-				continue;
-			if( doc->isNull() && f.suffix().toLower() == "bdoc" )
-			{
-				if( doc->open( f.absoluteFilePath() ) )
-					setCurrentPage( View );
-				return;
-			}
-			else if( !addFile( f.absoluteFilePath() ) )
-				return;
-		}
-		if( !doc->isNull() )
-			setCurrentPage( Sign );
+		args.removeAt( 0 );
+		params = args;
+		if( SettingsValues().showIntro() )
+			setCurrentPage( Intro );
+		else
+			parseParams();
 	}
 }
 
@@ -204,13 +194,18 @@ void MainWindow::buttonClicked( int button )
 			showWarning( tr("Failed to start process 'qesteidutil'") );
 		break;
 	case HomeSign:
-		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
+		if( SettingsValues().showIntro() )
 		{
 			introCheck->setChecked( false );
 			setCurrentPage( Intro );
 			break;
 		}
 	case IntroNext:
+		if( !params.isEmpty() )
+		{
+			parseParams();
+			break;
+		}
 	case SignAddFile:
 	{
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
@@ -416,25 +411,16 @@ void MainWindow::dropEvent( QDropEvent *e )
 	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
 	{
 		if( u.isRelative() || u.scheme() == "file" )
-		{
 #ifdef Q_OS_WIN32
-			QFileInfo file( u.path().remove( 0, 1 ) );
+			params << u.path().remove( 0, 1 );
 #else
-			QFileInfo file( u.path() );
+			params << u.path();
 #endif
-			if( !file.isFile() )
-				continue;
-			else if( file.suffix().toLower() == "bdoc" && doc->isNull() )
-			{
-				if( doc->open( file.filePath() ) )
-					setCurrentPage( View );
-				return;
-			}
-			else if( !addFile( file.filePath() ) )
-				return;
-		}
 	}
-	setCurrentPage( Sign );
+	if( stack->currentIndex() == Home && SettingsValues().showIntro() )
+		setCurrentPage( Intro );
+	else
+		parseParams();
 }
 
 void MainWindow::loadDocuments( QTreeWidget *view )
@@ -460,7 +446,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
+{ SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
 
 void MainWindow::on_languages_activated( int index )
 {
@@ -482,6 +468,28 @@ void MainWindow::openFile( const QModelIndex &index )
 
 	QDesktopServices::openUrl( QString( "file://" ).append(
 		QString::fromStdString( list[index.row()].getPath() ) ) );
+}
+
+void MainWindow::parseParams()
+{
+	Q_FOREACH( const QString &param, params )
+	{
+		const QFileInfo f( param );
+		if( !f.isFile() )
+			continue;
+		if( doc->isNull() && f.suffix().toLower() == "bdoc" )
+		{
+			if( doc->open( f.absoluteFilePath() ) )
+				setCurrentPage( View );
+			params.clear();
+			return;
+		}
+		else if( !addFile( f.absoluteFilePath() ) )
+			break;
+	}
+	if( !doc->isNull() )
+		setCurrentPage( Sign );
+	params.clear();
 }
 
 bool MainWindow::saveDocument()
