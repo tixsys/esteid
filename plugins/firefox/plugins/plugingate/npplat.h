@@ -38,9 +38,6 @@
 #ifndef _NPPLAT_H_
 #define _NPPLAT_H_
 
-#include "npapi.h"
-#include "npupp.h"
-
 /**************************************************/
 /*                                                */
 /*                   Windows                      */
@@ -138,6 +135,9 @@ NPError Private_GetValue(NPP instance, NPPVariable variable, void *result);
 NPError Private_SetValue(NPP instance, NPNVariable variable, void *value);
 
 #endif //XP_MAC
+
+#include "npapi.h"
+#include "npupp.h"
 
 #ifndef HIBYTE
 #define HIBYTE(i) (i >> 8)
