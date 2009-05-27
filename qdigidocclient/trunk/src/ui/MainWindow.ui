@@ -51,10 +51,16 @@ QPushButton,
 #homeButtonLabel,
 #viewContentLabel, #viewSignaturesLabel,
 #signContentLabel, #signSigner, #signSignerLabel
-{ color: #00355F; }
+{
+color: #00355F;
+font: bold;
+}
 
 #settings, #help
-{ color: #afc6d1; }
+{
+color: #afc6d1;
+font: bold;
+}
 
 /* backgrounds */
 #background
@@ -99,6 +105,7 @@ QPushButton:hover
 
 #info
 {
+font: bold;
 border-radius: 3px;
 background-color: rgba( 255, 255, 255, 153 );
 padding: 10px;

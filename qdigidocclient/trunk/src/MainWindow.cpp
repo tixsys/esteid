@@ -64,6 +64,11 @@ MainWindow::MainWindow( QWidget *parent )
 	setupUi( this );
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
 		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
+#ifdef Q_OS_LINUX
+	setStyleSheet( "* { font: 12pt \"Liberation Sans\";}\n\n" + styleSheet() );
+#else
+	setStyleSheet( "* { font: 12pt \"Arial\";}\n\n" + styleSheet() );
+#endif
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
