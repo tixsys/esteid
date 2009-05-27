@@ -100,16 +100,16 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 #endif
 	s << getLibVersion( "opensc-pkcs11" ) << "<br />";
 	s << getLibVersion( "engine_pkcs11" ) << "<br />";
-#ifdef Q_OS_MAC
-	s << getLibVersion( "QtCore" ) << "<br />";
-	s << getLibVersion( "QtGui" ) << "<br />";
-	s << getLibVersion( "QtNetwork" ) << "<br />";
-	s << getLibVersion( "QtWebkit" ) << "<br />";
-#else
+#ifdef Q_OS_WIN32
 	s << getLibVersion( "QtCore4" ) << "<br />";
 	s << getLibVersion( "QtGui4" ) << "<br />";
 	s << getLibVersion( "QtNetwork4" ) << "<br />";
-	s << getLibVersion( "QtWebkit4" ) << "<br />";
+	s << getLibVersion( "QtWebKit4" ) << "<br />";
+#else
+	s << getLibVersion( "QtCore" ) << "<br />";
+	s << getLibVersion( "QtGui" ) << "<br />";
+	s << getLibVersion( "QtNetwork" ) << "<br />";
+	s << getLibVersion( "QtWebKit" ) << "<br />";
 #endif
 	s << "<br />";
 
