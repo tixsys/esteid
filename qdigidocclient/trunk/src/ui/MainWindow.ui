@@ -86,11 +86,17 @@ border-radius: 2px;
 padding: 4px 7px;
 }
 
-QComboBox
-{ border: 0px; }
-
 QPushButton:hover
 {}
+
+QPushButton:disabled
+{
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+ stop: 0 #A3AFC0, stop: 0.75 #80909D);
+}
+
+QComboBox
+{ border: 0px; }
 
 /* customization */
 #cards::down-arrow, #languages::down-arrow
