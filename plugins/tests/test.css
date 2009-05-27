@@ -1,3 +1,8 @@
+html,body,#container {
+    margin: 0px;
+    padding: 0px;
+}
+
 #container {
     min-width: 60em;
 }
@@ -8,9 +13,11 @@
     padding-right: 1em;
 }
 
-#statusdiv {
+#verdiv, #statusdiv {
+    height: 4.5em;
     margin: 1em;
 }
+
 #cardstatus {
     width: 6em;
     border-style: double;
@@ -18,13 +25,8 @@
     text-align: center;
 }
 
-#left {
+#left, #right {
     float: left;
-    margin: 2em;
-}
-#right {
-    float: left;
-    margin: 2em;
 }
 
 #pddiv {
@@ -32,9 +34,18 @@
     width: 20em;
     padding: 1em;
     margin: 1em;
+    overflow: auto;
 }
 #pdstatus {
     margin: 1em;
+}
+
+#authcertdiv, #signcertdiv {
+    border: solid;
+    width: 25em;
+    padding: 1em;
+    margin: 1em;
+    overflow: auto;
 }
 
 #signdiv {
@@ -44,6 +55,10 @@
     margin: 1em;
 }
 #signstatus {
+    margin: 1em;
+}
+
+#hashdiv {
     margin: 1em;
 }
 

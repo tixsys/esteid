@@ -1,10 +1,14 @@
+var esteid = null;
+var bgok = "rgb(50, 255, 50)";
+var bgerr = "rgb(255, 50, 50)";
+
 var names = [ "firstName", "lastName", "middleName", "sex",
               "citizenship", "birthDate", "personalID", "documentID",
               "expiryDate", "placeOfBirth", "issuedDate", "residencePermit",
               "comment1", "comment2", "comment3", "comment4"
 ];
 
-function inittest() {
+function initpdatatable() {
     var e = document.getElementById("persData");
     for(var i in names) {
         var r = e.insertRow(e.rows.length);
@@ -13,43 +17,76 @@ function inittest() {
 	r.insertCell(0).innerHTML = names[i];
 	r.insertCell(1).appendChild(el);
     }
+}
 
-    // FIXME: Seda jama ei peaks vaja olema!
+var cnames = [ "CN", "issuerCN", "validFrom", "validTo",
+              "keyUsage", "serial" // , "thumbPrint"
+];
+
+function initcerttable(n) {
+    var e = document.getElementById(n + "CertData");
+    for(var i in cnames) {
+        var r = e.insertRow(e.rows.length);
+        var el = document.createElement('span');
+        el.id = n + "Cert" + cnames[i];
+        r.insertCell(0).innerHTML = cnames[i];
+        r.insertCell(1).appendChild(el);
+    }
+}
+
+
+function inittest() {
+    initpdatatable();
+    initcerttable("auth");
+    initcerttable("sign");
+
+/*
     if(typeof(esteid) == 'undefined') {
         if(!window.external) return;
         esteid = window.external;
     }
+*/
+
+    esteid = document.getElementById("esteid");
 
     var e = document.getElementById("eidver");
     try {
         e.innerHTML = esteid.getVersion();
-	e.style.background = "green";
+	e.style.background = bgok;
     }
     catch(err) {
         e.innerHTML = "Error: " + err.message;
-	e.style.background = "red";
+	e.style.background = bgerr;
     }
     try {
-        esteid.addEventListener("cardInsert", cardInserted);
-        esteid.addEventListener("cardRemove", cardRemoved);
+        esteid.addEventListener("OnCardInserted", cardInserted);
+        esteid.addEventListener("OnCardRemoved", cardRemoved);
     }
     catch(err) {
         var e = document.getElementById("cardstatus");
         e.innerHTML = "Error: " + err.message;
-        e.style.background = "red";
+        e.style.background = bgerr;
     }
 }
 
 function cardInserted(reader) {
     var e = document.getElementById("cardstatus");
     e.innerHTML = "Sees";
-    e.style.background = "green";
+    e.style.background = bgok;
+    var c = document.getElementById("autoload");
+    if(c.checked) {
+        readPersonalData();
+        readCertificateData("auth");
+        readCertificateData("sign");
+    }
 }
 function cardRemoved(reader) {
     var e = document.getElementById("cardstatus");
     e.innerHTML = "Väljas";
     e.style.background = "yellow";
     clearPersonalData();
+    clearCertificateData("auth");
+    clearCertificateData("sign");
 }
 
 function readPersonalData() {
@@ -65,7 +102,7 @@ function readPersonalData() {
     catch(err) {
         clearPersonalData();
         stat.innerHTML = "Error: " + err.message;
-        stat.style.background = "red";
+        stat.style.background = bgerr;
     }
 }
 
@@ -76,24 +113,54 @@ function clearPersonalData() {
     }
 }
 
+function readCertificateData(n) {
+    var stat = document.getElementById(n + "CertStatus");
+    try {
+        var cert = esteid[n + "Cert"];
+        for(var i in cnames) {
+            var e = document.getElementById(n + "Cert" + cnames[i]);
+            e.innerHTML = cert[cnames[i]];
+        }
+        stat.innerHTML = "OK";
+        stat.style.background = "";
+    }
+    catch(err) {
+        clearCertificateData(n);
+        stat.innerHTML = "Error: " + err.message;
+        stat.style.background = bgerr;
+    }
+}
+
+function clearCertificateData(n) {
+    for(var i in cnames) {
+        var e = document.getElementById(n + "Cert" + cnames[i]);
+        e.innerHTML = "Not Available";
+    }
+}
+
 function testPersonalData() {
     readPersonalData();
 }
 
-function testSign() {
-    var e = document.getElementById("signstatus");
+function testSign(n) {
+    var e = document.getElementById(n + "CertStatus");
+    var hash = document.getElementById("testhash").value;
+    var url = "https://id.smartlink.ee/plugin_tests/test.txt";
     try {
+        /* 
         var certList = esteid.getCertificateList();
         var certArr = certList.split(",");
         var cert= esteid.getCertificateByThumbprint(certArr[1]);
         signedData = esteid.sign("0A0B0C0D",cert);
         //signedData = esteid.sign("0A0B0C0D",0);
+        */
+        signedData = esteid.sign(hash,url);
         e.innerHTML = "OK: " + signedData;
         e.style.background = "";
     }
     catch(err) {
         e.innerHTML = "Error: " + err.message;
-        e.style.background = "red";
+        e.style.background = bgerr;
     }
 }
 
@@ -115,9 +182,9 @@ function testCrash() {
     runCrashCode('esteid.addEventListener(null, null);');
     runCrashCode('esteid.addEventListener("huinamuina", null);');
     runCrashCode('esteid.addEventListener("", null);');
-    runCrashCode('esteid.addEventListener("cardInsert", null);');
-    runCrashCode('esteid.addEventListener("cardRemove", "");');
-    runCrashCode('esteid.addEventListener("cardRemove", 0);');
+    runCrashCode('esteid.addEventListener("OnCardInserted", null);');
+    runCrashCode('esteid.addEventListener("OnCardRemoved", "");');
+    runCrashCode('esteid.addEventListener("OnCardRemoved", 0);');
     runCrashCode('esteid.getCertificateByThumbprint(null);');
     runCrashCode('esteid.getCertificateByThumbprint(0);');
     runCrashCode('esteid.getCertificateByThumbprint("");');
