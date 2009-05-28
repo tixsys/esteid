@@ -312,6 +312,8 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case ViewBrowse:
 	{
+		if( !saveDocument() )
+			break;
 #ifdef Q_OS_WIN32
 		QString url( "file:///" );
 #else
@@ -322,6 +324,8 @@ void MainWindow::buttonClicked( int button )
 	}
 	case ViewEmail:
 	{
+		if( !saveDocument() )
+			break;
 #ifdef Q_OS_WIN32
 		QByteArray filePath = doc->fileName().toLatin1();
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
