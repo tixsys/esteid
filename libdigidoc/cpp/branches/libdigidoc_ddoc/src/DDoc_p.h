@@ -34,6 +34,7 @@ typedef int (*sym_setSignatureProductionPlace)( SignatureInfo*,
 typedef int (*sym_SignatureInfo_delete)( SignedDoc*, const char* );
 typedef int (*sym_SignatureInfo_new)( SignatureInfo**, SignedDoc*, const char* );
 typedef int (*sym_SignedDoc_free)( SignedDoc* );
+typedef int (*sym_SignedDoc_new)( SignedDoc**, const char*, const char* );
 typedef int (*sym_verifySignatureAndNotary)( SignedDoc*, SignatureInfo *, const char* );
 
 namespace digidoc
@@ -45,7 +46,7 @@ public:
 	DDocLibrary();
 	~DDocLibrary();
 	void *resolve( const char *symbol );
-	bool isOpen() const { return h == NULL; }
+	bool isOpen() const { return h; }
 
 private:
 #ifdef WIN32
@@ -90,6 +91,7 @@ public:
 	sym_SignatureInfo_delete	f_SignatureInfo_delete;
 	sym_SignatureInfo_new		f_SignatureInfo_new;
 	sym_SignedDoc_free			f_SignedDoc_free;
+	sym_SignedDoc_new			f_SignedDoc_new;
 	sym_verifySignatureAndNotary f_verifySignatureAndNotary;
 };
 

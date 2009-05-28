@@ -26,6 +26,9 @@ public:
 	void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
 
 private:
+	void throwError( const std::string &msg, int line ) throw(BDocException);
+	void throwError( int err, const std::string &msg, int line ) throw(BDocException);
+
 	DDocPrivate *d;
 };
 

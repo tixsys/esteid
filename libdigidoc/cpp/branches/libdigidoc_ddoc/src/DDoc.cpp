@@ -23,7 +23,7 @@ void* DDocLibrary::resolve( const char *symbol )
 #if defined(__APPLE__)
 #define LIBDIGIDOC_NAME "libdigidoc2.dylib"
 #else
-#define LIBDIGIDOC_NAME "libdigidoc.so.2"
+#define LIBDIGIDOC_NAME "libdigidoc2.so"
 #endif
 
 DDocLibrary::DDocLibrary()
@@ -64,6 +64,7 @@ DDocPrivate::DDocPrivate()
 ,	f_SignatureInfo_delete(0)
 ,	f_SignatureInfo_new(0)
 ,	f_SignedDoc_free(0)
+,	f_SignedDoc_new(0)
 ,	f_verifySignatureAndNotary(0)
 {
 	if( !loadSymbols() )
@@ -108,6 +109,7 @@ bool DDocPrivate::loadSymbols()
 		!(f_SignatureInfo_delete = (sym_SignatureInfo_delete)lib.resolve("SignatureInfo_delete")) ||
 		!(f_SignatureInfo_new = (sym_SignatureInfo_new)lib.resolve("SignatureInfo_new")) ||
 		!(f_SignedDoc_free = (sym_SignedDoc_free)lib.resolve("SignedDoc_free")) ||
+		!(f_SignedDoc_new = (sym_SignedDoc_new)lib.resolve("SignedDoc_new")) ||
 		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) )
 		return false;
 	else
@@ -175,29 +177,41 @@ void DSignature::sign(Signer* signer) throw(SignatureException, SignException) {
 
 
 
-DDoc::DDoc() { d = new DDocPrivate(); }
+DDoc::DDoc()
+{
+	d = new DDocPrivate();
+	int err = d->f_SignedDoc_new( &d->doc, "DIGIDOC-XML", "1.3" );
+	throwError( err, "Failed to create new document", __LINE__ );
+}
 DDoc::~DDoc() { delete d; }
 
 DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	d = new DDocPrivate();
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
+
 	d->filename = serializer->getPath().c_str();
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
+	throwError( err, "Failed to open ddoc file", __LINE__ );
 }
 
 void DDoc::addDocument( const Document &document ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
 	DataFile *data;
 	int err = d->f_DataFile_new( &data, d->doc, NULL, document.getPath().c_str(),
 		CONTENT_EMBEDDED_BASE64, document.getMediaType().c_str(), 0, NULL, 0,
 		NULL, CHARSET_UTF_8 );
+	throwError( err, "Failed to add file '" + document.getPath() + "'" , __LINE__ );
 
 	err = d->f_calculateDataFileSizeAndDigest(
 		d->doc, data->szId, document.getPath().c_str(), DIGEST_SHA1 );
+	throwError( err, "Failed calculate file digest and size", __LINE__ );
 }
 
 unsigned int DDoc::documentCount() const
@@ -205,7 +219,9 @@ unsigned int DDoc::documentCount() const
 
 Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 {
-	if( !d->doc || id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	if( !d->doc )
+		throw BDocException( __FILE__, __LINE__, "Document not open" );
+	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 		return Document( "", "" );
 
 	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
@@ -213,7 +229,9 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
 {
-	if( !d->doc || id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
+	if( !d->doc )
+		throw BDocException( __FILE__, __LINE__, "Document not open" );
+	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
 		return new DSignature();
 
 	return new DSignature( d->doc->pSignatures[id], d );
@@ -222,32 +240,49 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
-	if( !d->doc || id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
+	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 		return;
+
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
+	throwError( err, "Failed to delete file", __LINE__ );
 }
 
 void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
-	if( !d->doc || id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
+	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
 		return;
+
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
+	throwError( err, "Failed to remove signature", __LINE__ );
 }
 
 void DDoc::save() throw(IOException, BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
 	int err = d->f_createSignedDoc( d->doc, d->filename, d->filename );
+	throwError( err, "Filed to save document", __LINE__ );
 }
 
 void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
 	d->filename = serializer->getPath().c_str();
 	save();
 }
@@ -255,18 +290,27 @@ void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
 	SignatureInfo *info;
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
+	throwError( err, "Failed to sign document", __LINE__ );
 	err = d->f_addAllDocInfos( d->doc, info );
+	throwError( err, "Failed to sign document", __LINE__ );
 
 	Signer::SignatureProductionPlace l = signer->getSignatureProductionPlace();
 	err = d->f_setSignatureProductionPlace( info, l.city.c_str(), l.stateOrProvince.c_str(),
 		l.postalCode.c_str(), l.countryName.c_str() );
+	throwError( err, "Failed to sign document", __LINE__ );
 
 	Signer::SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
 	for( int i = 0; i < r.size(); ++i )
+	{
 		err = d->f_addSignerRole( info, 0, r[i].c_str(), -1, 0 );
+		throwError( err, "Failed to sign document", __LINE__ );
+	}
 
 	std::string pin;
 	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
@@ -278,53 +322,30 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	}
 	err = d->f_calculateSignatureWithEstID( d->doc, info,
 		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
+	throwError( err, "Failed to sign document", __LINE__ );
 
 	if( err != ERR_OK )
 	{
 		d->f_SignatureInfo_delete( d->doc, info->szId );
-		throw BDocException( __FILE__, __LINE__, d->f_getErrorString( err ) );
+		throwError( d->f_getErrorString( err ), __LINE__ );
 	}
 
-#ifdef WITH_TS
-  if(!strcmp(pSigDoc->szFormatVer, DIGIDOC_XML_1_4_VER)) {
-	if(ConfigItem_lookup("TSA_CERT")) {
-#ifdef WIN32
-	  snprintf(buf1, sizeof(buf1), "%s\\%s", ConfigItem_lookup("CA_CERT_PATH"), ConfigItem_lookup("TSA_CERT"));
-#else
-	  snprintf(buf1, sizeof(buf1), "%s/%s", ConfigItem_lookup("CA_CERT_PATH"), ConfigItem_lookup("TSA_CERT"));
-#endif
-	  err = ReadCertificate(&pTsaCert, buf1);
-	  if(err) return err;
-	}
-	err = ddocGetSignatureTimeStamp(*ppSigInfo, &pTsaCert, ConfigItem_lookup("TSA_POLICY"),
-					ConfigItem_lookup("TSA_URL"),
-					ConfigItem_lookup("DIGIDOC_PROXY_HOST"),
-					ConfigItem_lookup("DIGIDOC_PROXY_PORT"));
-	if(pTsaCert)
-	  X509_free(pTsaCert);
-	RETURN_IF_NOT(err == ERR_OK, err);
-  }
-#endif
 	err = d->f_notarizeSignature( d->doc, info );
-#ifdef WITH_TS
-  if(!strcmp(pSigDoc->szFormatVer, DIGIDOC_XML_1_4_VER)) {
-	if(ConfigItem_lookup("TSA_CERT")) {
-#ifdef WIN32
-	  snprintf(buf1, sizeof(buf1), "%s\\%s", ConfigItem_lookup("CA_CERT_PATH"), ConfigItem_lookup("TSA_CERT"));
-#else
-	  snprintf(buf1, sizeof(buf1), "%s/%s", ConfigItem_lookup("CA_CERT_PATH"), ConfigItem_lookup("TSA_CERT"));
-#endif
-	  err = ReadCertificate(&pTsaCert, buf1);
-	  if(err) return err;
-	}
-	err = ddocGetSigAndRefsTimeStamp(pSigDoc, *ppSigInfo, &pTsaCert, ConfigItem_lookup("TSA_POLICY"),
-					 ConfigItem_lookup("TSA_URL"),
-					 ConfigItem_lookup("DIGIDOC_PROXY_HOST"),
-					 ConfigItem_lookup("DIGIDOC_PROXY_PORT"));
-	RETURN_IF_NOT(err == ERR_OK, err);
-  }
-#endif
+	throwError( err, "Failed to sign document", __LINE__ );
 }
 
 unsigned int DDoc::signatureCount() const
 { return !d->doc || d->doc->nSignatures < 0 ? 0 : d->doc->nSignatures; }
+
+void DDoc::throwError( const std::string &msg, int line ) throw(BDocException)
+{ throw BDocException( __FILE__, line, msg ); }
+
+void DDoc::throwError( int err, const std::string &msg, int line ) throw(BDocException)
+{
+	if( err != ERR_OK )
+	{
+		std::ostringstream s;
+		s << msg << " (error: " << err << ")";
+		throwError( s.str(), line );
+	}
+}
