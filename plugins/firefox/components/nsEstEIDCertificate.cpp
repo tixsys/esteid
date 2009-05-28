@@ -33,7 +33,7 @@ nsEstEIDCertificate::~nsEstEIDCertificate()
 nsresult nsEstEIDCertificate::Decode(ByteVec der) {
 	ESTEID_DEBUG("nsEstEIDCertificate:Decode");
 	if(mCert) NS_RELEASE(mCert);
-	CRTFREEIF(mBase64);
+	if(mBase64) PL_strfree(mBase64);
 
 	nsCOMPtr<nsIX509CertDB> cdb =
 		do_GetService(NS_X509CERTDB_CONTRACTID);
