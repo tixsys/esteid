@@ -34,9 +34,10 @@ class Application
 		@options.volname = nil
 		@options.binaries = 'build/Release'
 		@options.repository = 'build/Repository'
-		@options.libraries = 'build/Libraries'
+		@options.digidoc = '/usr/local'
+		@options.qt = '/Library/Frameworks'
+		@options.opensc = '/Library/OpenSC'
 		@options.packages = 'build/Packages'
-		@options.prerequisites = '/usr/local'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.sign = nil
 	end
@@ -44,8 +45,8 @@ class Application
 	def run
 		if parsed_options?
 			begin
-				if @arguments.last == 'prerequisites'
-					run_prerequisites
+				if @arguments.last == 'digidoc'
+					run_digidoc
 				elsif @arguments.last == 'binaries'
 					run_binaries
 				elsif @arguments.last == 'clean'
@@ -56,7 +57,7 @@ class Application
 					run_packages
 				elsif @arguments.last == 'installer'
 					run_clean
-					run_prerequisites
+					run_digidoc
 					run_binaries
 					run_packages
 					run_repository
@@ -78,16 +79,101 @@ class Application
 	
 	protected
 	
+	def run_digidoc
+		puts "Creating digidoc..." if @options.verbose
+		
+		puts "Creating libdigidoc2..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc2/tags/2.6.0.17').to_s) do
+			
+		end
+		
+		puts "Creating libdigidoc..."if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/cpp/branches/libdigidoc_ddoc').to_s) do
+			cmd = `rm CMakeCache.txt`
+			puts cmd if @options.verbose
+			cmd = `rm -R CMakeFiles`
+			puts cmd if @options.verbose
+			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
+			puts cmd if @options.verbose
+			cmd = `make clean`
+			puts cmd if @options.verbose
+			cmd = `make`
+			puts cmd if @options.verbose
+			cmd = `sudo make install`
+			puts cmd if @options.verbose
+		end
+		
+		puts "\n" if @options.verbose
+	end
+	
 	def run_binaries
 		puts "Creating installer binaries..." if @options.verbose
 		
+		# Build cross-platform Qt-based components
+		puts "Creating qesteidutil..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
+			cmd = `rm CMakeCache.txt`
+			puts cmd if @options.verbose
+			cmd = `rm -R CMakeFiles`
+			puts cmd if @options.verbose
+			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
+			puts cmd if @options.verbose
+			cmd = `make clean`
+			puts cmd if @options.verbose
+			cmd = `make`
+			puts cmd if @options.verbose
+		end
+		
+		cmd = `Skeleton/Make.rb -V -i ../../../qesteidutil/trunk/qesteidutil`
+		puts cmd if @options.verbose
+		
+		puts "Creating qdigidocclient..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../qdigidocclient/trunk').to_s) do
+			cmd = `rm CMakeCache.txt`
+			puts cmd if @options.verbose
+			cmd = `rm -R CMakeFiles`
+			puts cmd if @options.verbose
+			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
+			puts cmd if @options.verbose
+			cmd = `make clean`
+			puts cmd if @options.verbose
+			cmd = `make`
+			puts cmd if @options.verbose
+		end
+		
+		cmd = `Skeleton/Make.rb -V -i ../../../qdigidocclient/trunk/qdigidocclient`
+		puts cmd if @options.verbose
+		
+		puts "Creating qdigidoccrypto..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../qdigidoccrypto/trunk').to_s) do
+			cmd = `rm CMakeCache.txt`
+			puts cmd if @options.verbose
+			cmd = `rm -R CMakeFiles`
+			puts cmd if @options.verbose
+			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
+			puts cmd if @options.verbose
+			cmd = `make clean`
+			puts cmd if @options.verbose
+			cmd = `make`
+			puts cmd if @options.verbose
+		end
+		
+		cmd = `Skeleton/Make.rb -V -i ../../../qdigidoccrypto/trunk/qdigidoccrypto`
+		puts cmd if @options.verbose
+		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
-		`xcodebuild -project Project.xcodeproj -configuration Release -target Main`
+		cmd = `xcodebuild -project Project.xcodeproj -configuration Release -target Main`
+		puts cmd if @options.verbose
 		
 		puts "Building tokend..." if @options.verbose
-		`xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world`
-		
+		cmd = `xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world`
+		puts cmd if @options.verbose
 		FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
 		
 		puts "\n" if @options.verbose
@@ -110,15 +196,6 @@ class Application
 			puts "Cleaning #{File.join(@path, @options.repository)}" if @options.verbose
 			FileUtils.rm_rf(File.join(@path, @options.repository))
 		end
-		
-		puts "\n" if @options.verbose
-	end
-	
-	def run_prerequisites
-		puts "Creating installer prerequisites..." if @options.verbose
-		
-		# TODO: Should !!!CORRECTLY!!! build libraries for the specified architecture(s).
-		# TODO: Move stuff from Build.sh here, some prerequisites compile on OS X only after some tweaking.
 		
 		puts "\n" if @options.verbose
 	end
@@ -271,13 +348,39 @@ class Application
 				files.each do |file|
 					puts "Archiving file #{file} for package #{name + extension}" if @options.verbose
 					
-					if root.nil?
-						FileUtils.cp_r(file, archive)
-					else
-						dir = File.join(archive, File.dirname(file[root.length, file.length - 1]))
-						
-						FileUtils.mkdir_p dir
+					dir = (root.nil?) ? archive : File.join(archive, File.dirname(file[root.length, file.length - 1]))	
+					FileUtils.mkdir_p dir unless File.exists? dir
+					
+					if @options.arch != 'universal' and (File.extname(file) == '.dylib' or File.extname(file) == '.so')
+						puts "Thinning #{File.basename(file)}..." if @options.verbose;
+						cmd = `ditto -arch #{@options.arch} #{file} #{File.join(dir, File.basename(file))}`
+						puts cmd if @options.verbose
+					elsif @options.arch != 'universal' and File.exists? File.join(file, 'Contents/MacOS')
 						FileUtils.cp_r(file, dir)
+						
+						exe_in = File.join(file, 'Contents/MacOS', File.basename(file, File.extname(file)))
+						exe_out = File.join(dir, File.basename(file), 'Contents/MacOS', File.basename(file, File.extname(file)))
+						
+						if File.exists? exe_in
+							puts "Thinning #{File.basename(file)}..." if @options.verbose;
+							FileUtils.rm_rf(exe_out) if File.exists? exe_out
+							cmd = `ditto -arch #{@options.arch} #{exe_in} #{exe_out}`
+							puts cmd if @options.verbose
+						end	
+					elsif File.exists? File.join(file, File.basename(file, '.framework'))
+						FileUtils.cp_r(file, dir)
+						
+						exe_in = Pathname.new(@path).join(file, File.readlink(File.join(file, File.basename(file, '.framework')))).to_s
+						exe_out = Pathname.new(dir).join(File.basename(file), File.readlink(File.join(file, File.basename(file, '.framework')))).to_s
+						
+						if File.exists? exe_in
+							puts "Thinning #{File.basename(file)}..." if @options.verbose;
+							FileUtils.rm_rf(exe_out) if File.exists? exe_out
+							cmd = `ditto -arch #{@options.arch} #{exe_in} #{exe_out}`
+							puts cmd if @options.verbose
+						end	
+					else 
+						FileUtils.cp_r(file, dir) unless File.exists? File.join(dir, File.basename(file))
 					end
 				end
 				
@@ -420,9 +523,12 @@ class Application
 			# Finally create .dmg and .tar.gz files
 			if extension == '.mpkg'
 				FileUtils.cd(Pathname.new(@path).join(@options.packages).to_s) do
+					dmg = dstname + '.dmg'
+					
 					`tar -czf #{dstname + '.tar.gz'} #{dstname + extension}`
-					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{(@options.volname.nil?) ? dstname : @options.volname}" "#{dstname + '.dmg'}"`
-					`setfile -a E #{dstname + '.dmg'}`
+					`rm #{dmg}` if File.exists? dmg
+					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{(@options.volname.nil?) ? dstname : @options.volname}" #{dmg}`
+					`setfile -a E #{dmg}`
 				end
 			end
 		end
@@ -434,11 +540,11 @@ class Application
 		puts options.to_s
 		puts ""
 		puts "Available commands:"
+		puts "\tdigidoc"
 		puts "\tbinaries"
 		puts "\tclean"
 		puts "\tcomponents"
 		puts "\tinstaller"
-		puts "\tprerequisites"
 		puts "\tpackages"
 		puts ""
 		puts "Example:"
@@ -472,7 +578,9 @@ class Application
 		opts.on('-N', '--volname [VOLNAME]', 'Volume name for the installer') { |volname| @options.volname = volname }
 		opts.on('-b', '--binaries [DIR]', 'Use directory for the binaries') { |dir| @options.binaries = dir }
 		opts.on('-c', '--repository [DIR]', 'Use directory for the repository') { |dir| @options.repository = dir }
-		opts.on('-r', '--prerequisites [DIR]', 'Use directory for the prerequisites') { |dir| @options.prerequisites = dir }
+		opts.on('-d', '--digidoc [DIR]', 'Look for libdigidoc stuff at this path') { |dir| @options.digidoc = dir }
+		opts.on('-q', '--qt [DIR]', 'Look for Qt frameworks at this path') { |dir| @options.qt = dir }
+		opts.on('-o', '--opensc [DIR]', 'Look for OpenSC files at this path') { |dir| @options.opensc = dir }
 		opts.on('-p', '--packages [DIR]', 'Use directory for the packages') { |dir| @options.packages = dir }
 		opts.on('-s', '--sign [KEY]', 'Use key for signing the components') { |key| @options.sign = key }
 		
@@ -485,50 +593,104 @@ class Application
 				:title => 'Core components',
 				:description => 'Core components description',
 				:version => '1.0',
-				:priority => 1,
-				:packages => [ 'EstEIDCore', 'EstEIDSU', 'EstEIDPP', 'EstEIDCM' ]
+				:priority => 2,
+				:packages => [ 'esteid-digidoc',
+							   'esteid-opensc',
+							   'esteid-qt',
+							   'esteid-updater',
+							   'esteid-preferences' ]
 			}, {
-				:title => 'Internet plug-in',
-				:description => 'Internet plug-in description',
+				:title => 'Internet Plug-in',
+				:description => 'Internet Plug-in description',
 				:priority => 1,
-				:packages => [ 'EstEIDWP' ]
+				:packages => [ 'esteid-webplugin', 'esteid-tokend' ]
+			}, {
+				:title => 'Finder Plug-in',
+				:description => 'Finder Plug-in description',
+				:priority => 1,
+				:packages => [ 'esteid-contextmenu' ]
+			}, {
+				:title => 'ID-card Utility',
+				:description => 'ID-card Utility description',
+				:priority => 1,
+				:packages => [ 'esteid-qesteidutil' ]
+			}, {
+				:title => 'ID-card DigiDoc',
+				:description => 'ID-card DigiDoc description',
+				:priority => 1,
+				:packages => [ 'esteid-qdigidocclient' ]
+			}, {
+				:title => 'ID-card Crypto',
+				:description => 'ID-card Crypto description',
+				:priority => 1,
+				:packages => [ 'esteid-qdigidoccrypto' ]
 			} ]
 	end
 	
 	def packages
 		return [
 			{
-				:name => 'EstEIDCore',
+				:name => 'esteid-digidoc',
 				:files => [
-				File.join(@options.prerequisites, 'lib', '*.dylib'),
-				File.join(@options.prerequisites, 'include'),
-				File.join(@options.prerequisites, 'etc', 'libdigidoc') ],
-				:froot => @options.prerequisites,
-				:location => '/usr/local',
-				:identifier => 'org.esteid.core',
+					File.join(@options.digidoc, 'lib/libp11*.dylib'),
+					File.join(@options.digidoc, 'lib/libxerces-c*.dylib'),
+					File.join(@options.digidoc, 'lib/libxml-security-c*.dylib'),
+					File.join(@options.digidoc, 'lib/libdigidoc*.dylib'),
+					File.join(@options.digidoc, 'etc/libdigidoc') ],
+				:froot => '/',
+				:location => '/',
+				:identifier => 'org.esteid.digidoc',
 				:version => '1.0'
 			}, {
-				:name => 'EstEIDSU',
+				:name => 'esteid-opensc',
+				:files => [ File.join(@options.opensc, '*/**') ],
+				:location => '/Library/OpenSC',
+				:identifier => 'org.esteid.opensc',
+				:version => '1.0'
+			}, {
+				:name => 'esteid-qt',
+				:files => [
+					File.join(@options.qt, 'QtCore.framework'),
+					File.join(@options.qt, 'QtGui.framework'),
+					File.join(@options.qt, 'QtNetwork.framework'),
+					File.join(@options.qt, 'QtWebKit.framework') ],
+				:location => '/Library/Frameworks',
+				:identifier => 'org.esteid.qt',
+				:version => '1.0'
+			}, {
+				:name => 'esteid-updater',
 				:files => File.join(@options.binaries, 'EstEIDSU.app'),
 				:location => '/Applications/Utilities'
 			}, {
-				:name => 'EstEIDPP',
+				:name => 'esteid-preferences',
 				:files => File.join(@options.binaries, 'EstEIDPP.prefPane'),
 				:location => '/Library/PreferencePanes'
 			}, {
-				:name => 'EstEIDCM',
+				:name => 'esteid-qesteidutil',
+				:files => File.join(@options.binaries, 'qesteidutil.app'),
+				:location => '/Applications'
+			}, {
+				:name => 'esteid-qdigidocclient',
+				:files => File.join(@options.binaries, 'qdigidocclient.app'),
+				:location => '/Applications'
+			}, {
+				:name => 'esteid-qdigidoccrypto',
+				:files => File.join(@options.binaries, 'qdigidoccrypto.app'),
+				:location => '/Applications'
+			}, {
+				:name => 'esteid-contextmenu',
 				:files => File.join(@options.binaries, 'EstEIDCM.plugin'),
 				:location => '/Library/Contextual Menu Items'
 			}, {
-				:name => 'EstEIDWP',
+				:name => 'esteid-webplugin',
 				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
 				:location => '/Library/Internet Plug-Ins'
 			}, {
-				:name => 'EstEIDTokend',
+				:name => 'esteid-tokend',
 				:files => File.join(@options.binaries, 'OpenSC.tokend'),
 				:location => '/System/Library/Security/tokend'
 			}, {
-				:name => 'EstEIDInstaller',
+				:name => 'esteid',
 				:files => File.join(@options.packages, '*.pkg'),
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:identifier => 'org.esteid.installer',
