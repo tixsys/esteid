@@ -111,18 +111,6 @@
         <translation>Diagnostika</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Version:&lt;/b&gt; %1&lt;br /&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Versioon:&lt;/b&gt; %1&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Library paths:&lt;/b&gt; %1&lt;br /&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Teegi otsing:&lt;/b&gt; %1&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Card readers&lt;/b&gt;&lt;br /&gt;&amp;#160;&amp;#160;&amp;#160;%1</source>
-        <translation type="obsolete">&lt;b&gt;Kaardilugejad&lt;/b&gt;&lt;br /&gt;&amp;#160;&amp;#160;&amp;#160;%1</translation>
-    </message>
-    <message>
         <source>Version:</source>
         <translation>Versioon:</translation>
     </message>
@@ -131,20 +119,12 @@
         <translation>Teegi otsing:</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Libraries&lt;/b&gt;</source>
-        <translation type="obsolete">Teegid</translation>
-    </message>
-    <message>
         <source>Card readers</source>
         <translation>Kaardilugejad</translation>
     </message>
     <message>
         <source>ID - %1</source>
         <translation>ID - %1</translation>
-    </message>
-    <message>
-        <source>Error reading card data: </source>
-        <translation type="obsolete">Kaardilt andmete lugemine ebaõnnestus:</translation>
     </message>
     <message>
         <source>Error reading card data:</source>
@@ -267,50 +247,12 @@ Sisesta PIN1</translation>
 0 - küsi iga kord</translation>
     </message>
     <message>
-        <source>Save password for specified period in minuts
-0 - always ask</source>
-        <translation type="obsolete">Salvesta parool määratud minutiteks
-0 - küsi iga kord</translation>
-    </message>
-    <message>
         <source>Check updates</source>
         <translation>Kontrolli uuendusi</translation>
     </message>
     <message>
         <source>Update automatically</source>
         <translation>Uuenda automaatselt</translation>
-    </message>
-    <message>
-        <source>Proxy settings</source>
-        <translation>Proxy seaded</translation>
-    </message>
-    <message>
-        <source>Hostname</source>
-        <translation>Aadress</translation>
-    </message>
-    <message>
-        <source>Port number</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Kasutajanimi</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Parool</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Tüüp</translation>
     </message>
     <message>
         <source>Once a day</source>
