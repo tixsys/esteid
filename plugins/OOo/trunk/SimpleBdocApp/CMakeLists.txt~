@@ -1,0 +1,72 @@
+cmake_minimum_required( VERSION 2.6 )
+set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
+
+project( simplebdocapp )
+
+find_package( OpenSSL REQUIRED )
+find_package( OpenSSLCrypto REQUIRED )
+find_package( ZLIB REQUIRED )
+find_package( LibP11 REQUIRED )
+find_package( XercesC REQUIRED )
+find_package( XmlSecurityC REQUIRED )
+find_package( XSD REQUIRED )
+find_package( LibDigiDoc REQUIRED )
+
+
+
+
+SET( HEADERS
+	src/SimpleBdocApp.h
+	)
+SET( SOURCES
+	${HEADERS}
+	src/SimpleBdocApp.cpp
+	)
+#SET( UIS
+#	src/ui/MainWindow.ui
+#	src/ui/Settings.ui
+#	src/ui/SignatureDialog.ui
+#	)
+#SET( RCS src/rc/qdigidocclient.qrc )
+
+INCLUDE_DIRECTORIES(
+	${CMAKE_SOURCE_DIR}
+	${CMAKE_BINARY_DIR}
+	${OPENSSL_INCLUDE_DIR}
+	${ZLIB_INCLUDE_DIR}
+	${LIBP11_INCLUDE_DIR}
+	${XERCESC_INCLUDE_DIR}
+	${XSD_INCLUDE_DIR}
+	${PCSCLITE_INCLUDE_DIR}
+	${LIBDIGIDOC_INCLUDE_DIR}
+	)
+
+#if(MSVC)
+	# disable warning C4290: C++ exception specification ignored
+#	add_definitions( -wd4290 )
+	
+#	STRING(REPLACE "/MD"  "/MT"  CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
+#	STRING(REPLACE "/MD"  "/MT"  CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
+#	STRING(REPLACE "/MDd"  "/MT"  CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+#	STRING(REPLACE "/MDd"  "/MT"  CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+#	STRING(REPLACE "/MD"  "/MT"  CMAKE_C_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+#	STRING(REPLACE "/MD"  "/MT"  CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+#endif(MSVC)
+add_definitions(-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH})
+add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
+
+#ADD_EXECUTABLE( simplebdocapp ${SOURCES} )#${MOC_SOURCES} )
+add_library(simplebdocapp MODULE ${SOURCES})
+
+TARGET_LINK_LIBRARIES( simplebdocapp 
+
+	${LIBDIGIDOC_LIBRARY}
+	${OPENSSL_LIBRARIES}
+	${OPENSSLCRYPTO_LIBRARIES}
+	${ZLIB_LIBRARIES}
+	${LIBP11_LIBRARIES}
+	${XERCESC_LIBRARIES}
+	${XMLSECURITYC_LIBRARIES}
+)
+
+#install(TARGETS simplebdocapp DESTINATION bin)
