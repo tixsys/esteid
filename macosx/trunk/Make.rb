@@ -637,8 +637,7 @@ class Application
 					File.join(@options.digidoc, 'lib/libxml-security-c*.dylib'),
 					File.join(@options.digidoc, 'lib/libdigidoc*.dylib'),
 					File.join(@options.digidoc, 'etc/libdigidoc') ],
-				:froot => '/',
-				:location => '/',
+				:location => '/usr/local',
 				:identifier => 'org.esteid.digidoc',
 				:version => '1.0'
 			}, {
