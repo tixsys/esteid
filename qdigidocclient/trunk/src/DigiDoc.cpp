@@ -246,8 +246,17 @@ void DigiDoc::clear()
 void DigiDoc::create( const QString &file )
 {
 	clear();
-	b = new WDoc();
-	m_fileName = file;
+	QString type = QFileInfo( file ).suffix().toLower();
+	if( type == "bdoc" )
+	{
+		b = new WDoc( WDoc::BDocType );
+		m_fileName = file;
+	}
+	else if( type == "ddoc" )
+	{
+		b = new WDoc( WDoc::DDocType );
+		m_fileName = file;
+	}
 }
 
 QList<Document> DigiDoc::documents()
