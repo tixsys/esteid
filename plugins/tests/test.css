@@ -48,6 +48,11 @@ html,body,#container {
     overflow: auto;
 }
 
+#authCertDump, #signCertDump {
+    font-size: 50%;
+    width: 64em;
+}
+
 #signdiv {
     border: solid;
     width: 20em;

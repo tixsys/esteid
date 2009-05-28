@@ -114,6 +114,7 @@ function clearPersonalData() {
 }
 
 function readCertificateData(n) {
+    showCert(n);
     var stat = document.getElementById(n + "CertStatus");
     try {
         var cert = esteid[n + "Cert"];
@@ -121,6 +122,8 @@ function readCertificateData(n) {
             var e = document.getElementById(n + "Cert" + cnames[i]);
             e.innerHTML = cert[cnames[i]];
         }
+        var e = document.getElementById(n + "CertDump");
+        e.innerHTML = cert.cert;
         stat.innerHTML = "OK";
         stat.style.background = "";
     }
@@ -132,10 +135,26 @@ function readCertificateData(n) {
 }
 
 function clearCertificateData(n) {
+    showCert(n);
     for(var i in cnames) {
         var e = document.getElementById(n + "Cert" + cnames[i]);
         e.innerHTML = "Not Available";
     }
+}
+
+function showCert(n) {
+    var tbl = document.getElementById(n + "CertData");
+    var dmp = document.getElementById(n + "CertDump");
+    tbl.style.display = "block";
+    dmp.style.display = "none";
+}
+
+function showDump(n) {
+    readCertificateData(n);
+    var tbl = document.getElementById(n + "CertData");
+    var dmp = document.getElementById(n + "CertDump");
+    tbl.style.display = "none";
+    dmp.style.display = "block";
 }
 
 function testPersonalData() {

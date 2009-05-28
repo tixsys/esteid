@@ -169,10 +169,10 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		tmp1 += tmp2;
 		rv = GetLastName(tmp2);
 		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
-		tmp1 += " "; tmp1 += tmp2; tmp1 += " (PIN2) "; tmp1 += "\n";
+		tmp1 += " "; tmp1 += tmp2; tmp1 += " (PIN2)\n";
 
 		prompter->PromptPassword(nsnull,
-				NS_ConvertUTF8toUTF16(tmp1).get(),
+				NS_ConvertASCIItoUTF16(tmp1).get(),
 				&pass, 0, 0, &ok);
 
 		if(!ok)	return NS_ERROR_ABORT;

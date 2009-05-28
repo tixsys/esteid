@@ -22,8 +22,8 @@ ID-Kaardi tugi ei tööta :(
   Plugin Version:
   <div id="eidver">Not Available</div>
   <br />
-  <!-- <label for="autoload">Load data on card insert</label>
-  <input type="checkbox" id="autoload" /> -->
+  <label for="autoload" style="visibility: hidden">Load data on card insert</label>
+  <input type="checkbox" style="visibility: hidden" id="autoload" />
 </div>
 
 <div id="pddiv">
@@ -48,15 +48,21 @@ ID-Kaardi tugi ei tööta :(
 
 <div id="authcertdiv">
   <table id="authCertData"></table>
+  <pre id="authCertDump" style="display: none;"></pre>
   <input type="button" value="Loe Isikutuvastuse Sertifikaat"
          onclick="readCertificateData('auth');" />
+  <input type="button" value="PEM"
+         onclick="showDump('auth');" />
   <div id="authCertStatus">&nbsp;</div>
 </div>
 
 <div id="signcertdiv">
   <table id="signCertData"></table>
+  <pre id="signCertDump" style="display: none; width: 64em;"></pre>
   <input type="button" value="Loe Allkirjastamise Sertifikaat"
          onclick="readCertificateData('sign');" />
+  <input type="button" value="PEM"
+         onclick="showDump('sign');" />
   <input type="button" value="Allkirjasta" onclick="testSign('sign');" />
   <div id="signCertStatus">&nbsp;</div>
 </div>

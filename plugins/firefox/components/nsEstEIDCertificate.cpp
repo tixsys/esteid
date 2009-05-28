@@ -45,7 +45,7 @@ nsresult nsEstEIDCertificate::Decode(ByteVec der) {
     // FIXME: This hack will break if std::vector begins to use
     //        some other container besides an internal array.
     //        This is not likely going to happen though.
-    char *mBase64 = PL_Base64Encode((char *)&der[0], der.size(), nsnull);
+    mBase64 = PL_Base64Encode((char *)&der[0], der.size(), nsnull);
     if(!mBase64)
     	return NS_ERROR_OUT_OF_MEMORY;
 
@@ -91,8 +91,15 @@ NS_IMETHODIMP nsEstEIDCertificate::GetValidTo(nsAString & _retval) {
 }
 
 NS_IMETHODIMP nsEstEIDCertificate::GetCert(nsACString & _retval) {
+	const nsCString s1 = NS_LITERAL_CSTRING("-----BEGIN CERTIFICATE-----\n");
+	const nsCString s2 = NS_LITERAL_CSTRING("\n-----END CERTIFICATE-----\n");
 	if(mBase64) {
 	    _retval.Assign(mBase64, PL_strlen(mBase64));
+	    for(unsigned int i = 64; i < _retval.Length(); i += 65)
+	    	_retval.Insert('\n', i);
+	    _retval.Insert(s1, 0);
+	    _retval.Append(s2);
+
 	    return NS_OK;
 	} else
 		return NS_ERROR_NULL_POINTER;
