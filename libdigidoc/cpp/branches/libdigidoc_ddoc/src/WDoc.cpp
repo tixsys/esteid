@@ -5,14 +5,8 @@
 
 using namespace digidoc;
 
-WDoc::WDoc()
-{
-	m_doc = new BDoc();
-	m_type = BDocType;
-}
-
-WDoc::~WDoc() { delete m_doc; }
-
+WDoc::WDoc(): m_doc(NULL) { setType( BDocType ); }
+WDoc::WDoc( DocumentType type ): m_doc(NULL) { setType( type ); }
 WDoc::WDoc( ADoc *doc )
 {
 	BDoc *bdoc = static_cast<BDoc*>( doc );
@@ -27,6 +21,8 @@ WDoc::WDoc( ADoc *doc )
 
 	m_doc = doc;
 }
+
+WDoc::~WDoc() { delete m_doc; }
 
 WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
@@ -112,6 +108,18 @@ void WDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
 
 	m_doc->saveTo( serializer );
+}
+
+void WDoc::setType( DocumentType type )
+{
+	m_type = BDocType;
+	if( m_doc ) delete m_doc;
+	switch( type )
+	{
+	case BDocType: m_doc = new BDoc(); break;
+	case DDocType: m_doc = new DDoc(); break;
+	default: m_doc = 0;
+	}
 }
 
 void WDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)

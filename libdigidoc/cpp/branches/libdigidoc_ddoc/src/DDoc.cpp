@@ -9,8 +9,8 @@ using namespace digidoc;
 
 #define LIBDIGIDOC_NAME "digidoclib2.dll"
 
-DDocLibrary::DDocLibrary( const char *filename )
-{ h = LoadLibrary( filename ); }
+DDocLibrary::DDocLibrary()
+{ h = LoadLibrary( LIBDIGIDOC_NAME ); }
 
 DDocLibrary::~DDocLibrary()
 { if( isOpen() ) FreeLibrary( h ); }
@@ -26,8 +26,8 @@ void* DDocLibrary::resolve( const char *symbol )
 #define LIBDIGIDOC_NAME "libdigidoc.so.2"
 #endif
 
-DDocLibrary::DDocLibrary( const char *filename )
-{ h = dlopen( filename, RTLD_LAZY ); }
+DDocLibrary::DDocLibrary()
+{ h = dlopen( LIBDIGIDOC_NAME, RTLD_LAZY ); }
 
 DDocLibrary::~DDocLibrary()
 { if( isOpen() ) dlclose( h ); }
@@ -40,8 +40,7 @@ void* DDocLibrary::resolve( const char *symbol )
 
 
 DDocPrivate::DDocPrivate()
-:	lib(LIBDIGIDOC_NAME)
-,	doc(0)
+:	doc(0)
 ,	filename(0)
 ,	ready(false)
 ,	f_addAllDocInfos(0)
@@ -77,6 +76,8 @@ DDocPrivate::DDocPrivate()
 
 DDocPrivate::~DDocPrivate()
 {
+	if( !f_SignedDoc_free || !f_cleanupConfigStore || !f_finalizeDigiDocLib )
+		return;
 	if( doc )
 		f_SignedDoc_free( doc );
 	f_cleanupConfigStore( NULL );

@@ -16,6 +16,7 @@ public:
 	};
 
 	WDoc();
+	WDoc( DocumentType type );
 	WDoc( ADoc *doc );
 	WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
 	~WDoc();
@@ -32,6 +33,7 @@ public:
 	void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
 
 	DocumentType type() const;
+	void setType( DocumentType type );
 
 private:
 	ADoc *m_doc;

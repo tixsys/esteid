@@ -42,7 +42,7 @@ namespace digidoc
 class DDocLibrary
 {
 public:
-	DDocLibrary( const char *filename );
+	DDocLibrary();
 	~DDocLibrary();
 	void *resolve( const char *symbol );
 	bool isOpen() const { return h == NULL; }
