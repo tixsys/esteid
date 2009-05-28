@@ -48,7 +48,7 @@ nsEstEID::Init()
 
     try {
     	service = nsEstEIDService::getInstance();
-    } catch(std::runtime_error e) {
+    } catch(std::runtime_error &e) {
     	ESTEID_ERROR("Card Error %s\n", e.what());
     	return NS_ERROR_UNEXPECTED;
     }
@@ -185,7 +185,7 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 				    service->signSHA1(hash,EstEidCard::SIGN,pin).c_str());
 				return NS_OK;
 			}
-			catch(AuthError e) {
+			catch(AuthError &e) {
 				byte puk, pin1, pin2;
 
 				ESTEID_ERROR("Sign failure: %s\n", e.what());
@@ -199,7 +199,7 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 				warn.Assign("!! VALE PIN !!\nKatseid jäänud: ");
 				warn.AppendInt(pin2); warn.Append("\n");
 			}
-		} catch(std::runtime_error e) {
+		} catch(std::runtime_error &e) {
 			ESTEID_ERROR("Card Error %s\n", e.what());
 			return NS_ERROR_FAILURE;
 		}

@@ -39,7 +39,7 @@ void EstEIDServiceBase::Poll() {
 		}
 		_Poll(card);
 	}
-	catch(std::runtime_error err) {
+	catch(std::runtime_error &err) {
 		// FIXME: We should throw when called from FindEstEID
 		PostMessage(MSG_CARD_ERROR, 0, err.what());
 		return;
@@ -64,7 +64,7 @@ void EstEIDServiceBase::_Poll(EstEidCard & card) {
 				PostMessage(MSG_CARD_REMOVED, i);
 			}
 		}
-		catch(std::runtime_error err) {
+		catch(std::runtime_error &err) {
 			PostMessage(MSG_CARD_ERROR, i, err.what());
 		}
 	}
