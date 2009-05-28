@@ -29,27 +29,9 @@
  ************************************************************************/
 #include <stdio.h>
 #include <iostream.h>
-//#include "SimpleBdocApp.h"
-//================================
-/*/By Mark for test of libdigidoc
-#include <digidoc/BDoc.h>
-#include <digidoc/BDoc.h>
-#include <digidoc/log.h>
-#include <digidoc/Conf.h>
-#include <digidoc/SignatureBES.h>//###
-#include <digidoc/crypto/cert/DirectoryX509CertStore.h>
-#include <digidoc/crypto/cert/X509Cert.h>
-#include <digidoc/io/ZipSerialize.h>
-#include <digidoc/crypto/signer/PKCS11Signer.h>
-#include <digidoc/crypto/signer/EstEIDSigner.h>
+#include "MyBdocBridge.h"
 
-#ifndef BDOCLIB_CONF_PATH
-#define BDOCLIB_CONF_PATH "bdoclib.conf"
-#endif
 
-*/
-using namespace std;
-//================================
 #include "ListenerHelper.h"
 #include "MyProtocolHandler.h"
 #include <com/sun/star/beans/PropertyValue.hpp>
@@ -78,6 +60,7 @@ using namespace std;
 
 #include <osl/file.hxx>
 
+using namespace std;
 
 using namespace com::sun::star::uno;
 using namespace com::sun::star::frame;
@@ -293,6 +276,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 	{
 		if ( !aURL.Path.compareToAscii("Command1" ) )
 		{
+
+		MyBdocBridge * samm = MyBdocBridge::getInstance();
+		samm->teemingilollus1();
 
 		printf("MUNN\n");
 			
@@ -625,17 +611,5 @@ BaseDispatch::~BaseDispatch()
 	mxMSF.clear();
 }
 
-
-/*/================================================
-My1EstEIDSigner::My1EstEIDSigner() throw(digidoc::SignException)
-:	digidoc::EstEIDSigner( digidoc::Conf::getInstance()->getPKCS11DriverPath() )
-{	
-	//cardSignCert = NULL;
-	try	
-	{
-		digidoc::PKCS11Signer::getCert();	
-	}
-	catch( const Exception & ) {}	
-}
-*///================================================
+///================================================
 

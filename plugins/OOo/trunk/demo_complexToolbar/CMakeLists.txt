@@ -100,6 +100,15 @@ ADD_CUSTOM_COMMAND(
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}
+)
+
+set(UNO_INCLUDES 
+	${OO_SDK_HOME}/include
+	${OO_SDK_HOME}/include/stl
+	${OUT_INC}
+)
+
+set(BDOC_INCLUDES
 	${OPENSSL_INCLUDE_DIR}
 	${ZLIB_INCLUDE_DIR}
 	${LIBP11_INCLUDE_DIR}
@@ -107,16 +116,21 @@ INCLUDE_DIRECTORIES(
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
 	${LIBDIGIDOC_INCLUDE_DIR}
-	${OO_SDK_HOME}/include
-	${OO_SDK_HOME}/include/stl
-	${OUT_INC}
-	)
+)
+
+# FIXME: Find a sane way to construct these!!
+FOREACH(iDir ${UNO_INCLUDES})
+	set(UNO_INCLUDE_FLAGS "${UNO_INCLUDE_FLAGS} -I${iDir}")
+ENDFOREACH(iDir)
+FOREACH(iDir ${BDOC_INCLUDES})
+	set(BDOC_INCLUDE_FLAGS "${BDOC_INCLUDE_FLAGS} -I${iDir}")
+ENDFOREACH(iDir)
 
 #-------------------------------------------------
 #----------------Set Output-----------------------
-SET(CXXFILES
+SET(UNOFILES
 	${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp    
-	SimpleBdocApp.cpp
+#	SimpleBdocApp.cpp
 	MyProtocolHandler.cxx
 	MyJob.cxx
 	MyListener.cxx
@@ -125,6 +139,10 @@ SET(CXXFILES
 	ListenerHelper.cxx
 	exports.cxx
 	)
+
+SET(BDOCFILES
+        MyBdocBridge.cpp
+)
    
 #TODO:add all definitions from settinks mk
 #IF (WIN32)
@@ -133,10 +151,10 @@ SET(CXXFILES
 #	add_definitions(${CC_DEFINES} ${CC_FLAGS})
 #ENDIF (WIN32)
 #IF (LINUX)
-	add_definitions(-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH})
+        set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
 #ENDIF (LINUX)
 
-add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
+set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\"${LIBDIGIDOC_CONF}\"" )
 
 #if(MSVC)
 #	STRING(REPLACE "/MD"  "/MT"  CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
@@ -147,8 +165,18 @@ add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC_CONF}" )
 #	STRING(REPLACE "/MD"  "/MT"  CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
 #endif(MSVC)
 
+set(UNO_CPP_FLAGS "${UNO_DEFINITIONS} ${UNO_INCLUDE_FLAGS}")
+set(BDOC_CPP_FLAGS "${BDOC_DEFINITIONS} ${BDOC_INCLUDE_FLAGS}")
 
-add_library(${COMP_NAME}.uno MODULE ${CXXFILES})
+set_source_files_properties(${UNOFILES}
+  PROPERTIES
+  COMPILE_FLAGS "${UNO_CPP_FLAGS}")
+
+set_source_files_properties(${BDOCFILES}
+  PROPERTIES
+  COMPILE_FLAGS "${BDOC_CPP_FLAGS}")
+
+add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
 
 #-------------------------------------------------
 #---------------Link to the Libraries-------------

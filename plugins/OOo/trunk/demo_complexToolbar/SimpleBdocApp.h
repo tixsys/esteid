@@ -1,5 +1,6 @@
 #include <digidoc/crypto/signer/EstEIDSigner.h>
 #include <digidoc/crypto/signer/PKCS11Signer.h>
+
 #include <digidoc/BDoc.h>
 
 namespace digidoc

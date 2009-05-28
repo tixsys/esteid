@@ -1,9 +1,6 @@
 #ifndef _MyProtocolHandler_HXX
 #define _MyProtocolHandler_HXX
-/*/===================================
-#include <digidoc/crypto/signer/EstEIDSigner.h>
-#include <digidoc/crypto/signer/PKCS11Signer.h>
-*///===================================
+
 #include <com/sun/star/lang/XInitialization.hpp>
 #include <com/sun/star/frame/XDispatchProvider.hpp>
 #include <com/sun/star/frame/XControlNotificationListener.hpp>
@@ -32,21 +29,6 @@ namespace com
 		}
 	}
 }
-
-/*/============================================
-class My1EstEIDSigner: public digidoc::EstEIDSigner
-{
-	public:
-		My1EstEIDSigner() throw(digidoc::SignException);
-		virtual ~My1EstEIDSigner();
-		//digidoc::X509 *cardSignCert;
-		std::string pin;
-		
-	protected:
-		virtual std::string getPin( digidoc::PKCS11Signer::PKCS11Cert certificate ) throw(digidoc::SignException);
-		
-};
-*///============================================
 
 class MyProtocolHandler : public cppu::WeakImplHelper3
 <
