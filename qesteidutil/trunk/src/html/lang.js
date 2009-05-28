@@ -201,13 +201,14 @@ function _( code, defaultString )
 
 function translateHTML()
 {
-	var trTags = document.getElementsByTagName('trtag');
-	for( var i in trTags )
+	var trTags = document.getElementsByTagName('trTag');
+	for( i=0;i<trTags.length;i++)
+	{
 		if ( (typeof trTags[i].getAttribute != "undefined") && trTags[i].getAttribute('trcode') != null )
 			trTags[i].innerHTML = _( trTags[i].getAttribute('trcode'), trTags[i].innerHTML );
-
+	}
 	var iTags = document.getElementsByTagName('input');
-	for( var i in iTags )
+	for( i=0;i<iTags.length;i++)
 		if ( iTags[i].type == "button" && (typeof iTags[i].getAttribute != "undefined") && iTags[i].getAttribute('trcode') != null )
 			iTags[i].value = _( iTags[i].getAttribute('trcode'), iTags[i].value );
 }

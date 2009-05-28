@@ -98,7 +98,7 @@ void JsEsteidCard::reloadData() {
 
 bool JsEsteidCard::canReadCard()
 {
-	return m_card;
+	return m_card && m_authCert && m_signCert;
 }
 
 bool JsEsteidCard::validatePin1(QString oldVal)
@@ -428,14 +428,8 @@ void JsEsteidCard::showCert( int type )
 {
 	CertificateWidget *c = new CertificateWidget;
 	if( type == 1 )
-	{
-		getAuthCert();
 		c->setCertificate( m_authCert->cert() );
-	}
 	else
-	{
-		getSignCert();
 		c->setCertificate( m_signCert->cert() );
-	}
 	c->show();
 }

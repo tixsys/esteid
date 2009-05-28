@@ -315,7 +315,7 @@ function readCardData()
 		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
 		document.getElementById('photo').style.background = '#abadb0';
 	}
-		
+	
 	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
 	document.getElementById('firstName').innerHTML = esteidData.getFirstName();
@@ -381,15 +381,15 @@ function setActive( content, el )
 	if ( el != '' )
 	{
 		var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
-		for( var i in buttons )
+		for( i=0;i<buttons.length;i++)
 			buttons[i].className = 'button';
 		el.className = 'buttonSelected';
 	}
 	
-	var divs = document.getElementsByClassName('content');
-	for( var i in divs )
+	var divs = document.getElementsByTagName('div');
+	for( i=0;i<divs.length;i++)
 	{
-		if ( typeof divs[i].style == "undefined" )
+		if ( (typeof divs[i].className == "undefined") || (typeof divs[i].style == "undefined") || divs[i].className != "content" )
 			continue;
 		if ( divs[i].id.indexOf( content ) )
 			divs[i].style.display = 'none';
@@ -523,9 +523,9 @@ function disableFields()
 	document.getElementById('photo').style.background = '#FFFFFF';
 	document.getElementById('savePhoto').style.display = 'none';
 	
-	var divs = document.getElementsByClassName('content');
-	for( var i in divs )
-		if ( typeof divs[i] != "undefined" && typeof divs[i].style != "undefined" )
+	var divs = document.getElementsByTagName('div');
+	for( i=0;i<divs.length;i++ )
+		if ( (typeof divs[i] != "undefined") && (typeof divs[i].style != "undefined") && (typeof divs[i].className != "undefined") && divs[i].className == "content" )
 			divs[i].style.display = 'none';
 }
 
@@ -535,18 +535,20 @@ function enableFields()
 	document.getElementById('cardInfoNoCard').style.display='none';
 	var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
 	var selected = "";
-	for( var i in buttons )
+	for( i=0;i<buttons.length;i++ )
+	{
 		if ( !buttons[i].className.indexOf( "buttonSelected" ) )
 		{
 			selected = buttons[i].name;
 			break;
 		}
+	}
 	if ( selected != "" )
 	{
-		var divs = document.getElementsByClassName('content');
-		for( var i in divs )
+		var divs = document.getElementsByTagName('div');
+		for( i=0;i<divs.length;i++ )
 		{
-			if ( typeof divs[i].id == "undefined" )
+			if ( (typeof divs[i].className == "undefined") || ( typeof divs[i].id == "undefined" ) || divs[i].className != "content" )
 				continue;
 			if ( !divs[i].id.indexOf( selected ) )
 				divs[i].style.display = 'block';

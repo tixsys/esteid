@@ -62,21 +62,11 @@ public:
 
 	JsCertData *m_authCert;
     Q_PROPERTY(QObject* authCert READ getAuthCert)
-    QObject *getAuthCert()
-    {
-        if (m_authCert == NULL)
-            m_authCert = new JsCertData( this );
-        return m_authCert;
-    }
+		QObject *getAuthCert() { return m_authCert; }
 
     JsCertData *m_signCert;
     Q_PROPERTY(QObject* signCert READ getSignCert)
-    QObject *getSignCert()
-    {
-        if (m_signCert == NULL)
-            m_signCert = new JsCertData( this );
-        return m_signCert;
-    }
+		QObject *getSignCert() { return m_signCert; }
 
 private:
     SmartCardManager *m_cardManager;
