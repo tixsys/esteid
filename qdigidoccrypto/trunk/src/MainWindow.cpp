@@ -275,6 +275,18 @@ void MainWindow::buttonClicked( int button )
 			if( !ok )
 				break;
 			doc->decrypt( pin );
+
+			if( doc->isSigned() )
+			{
+				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+					tr("This container contains signature! Open with QDigiDocClient?"),
+					QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes );
+				if( b != QMessageBox::Yes )
+					break;
+				QString file = QString( doc->fileName() ).append( ".ddoc" );
+				if( doc->saveDDoc( file ) )
+					QProcess::startDetached( "qdigidocclient", QStringList() << file );
+			}
 		}
 		else
 			doc->encrypt();

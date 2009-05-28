@@ -74,6 +74,7 @@ public:
 	bool isEncrypted() const;
 	bool isModified() const;
 	bool isNull() const;
+	bool isSigned() const;
 	QList<CKey> keys();
 	QString lastError() const;
 	void open( const QString &file );
@@ -81,6 +82,7 @@ public:
 	void removeDocument( int id );
 	void removeKey( int id );
 	void save();
+	bool saveDDoc( const QString &filename );
 	void saveDocument( int id, const QString &path );
 
 Q_SIGNALS:

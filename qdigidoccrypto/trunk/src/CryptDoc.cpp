@@ -365,6 +365,7 @@ bool CryptDoc::isEncrypted() const
 
 bool CryptDoc::isModified() const { return modified; }
 bool CryptDoc::isNull() const { return m_enc == 0; }
+bool CryptDoc::isSigned() const { return m_doc && m_doc->nSignatures; }
 
 QList<CKey> CryptDoc::keys()
 {
@@ -448,6 +449,20 @@ void CryptDoc::save()
 		setLastError( tr("Failed to save encrpyted file"), err );
 	else
 		modified = false;
+}
+
+bool CryptDoc::saveDDoc( const QString &filename )
+{
+	if( !m_doc )
+	{
+		setLastError( tr("Document not open") );
+		return false;
+	}
+
+	int err = createSignedDoc( m_doc, NULL, filename.toUtf8() );
+	if( err != ERR_OK )
+		setLastError( tr("Failed to save file"), err );
+	return err == ERR_OK;
 }
 
 void CryptDoc::saveDocument( int id, const QString &path )
