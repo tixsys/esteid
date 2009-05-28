@@ -133,7 +133,7 @@ QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 		sslConnect = new SSLConnect( this );
 	if ( !sslConnect->isLoaded() )
 	{
-		delete sslConnect;
+		sslConnect->deleteLater();
 		sslConnect = 0;
 		return QByteArray();
 	}
