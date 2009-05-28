@@ -78,9 +78,12 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 		.arg( c.subjectInfo( "serialNumber" ) );
 	title->setText( titleText );
 	setWindowTitle( titleText );
-	title->setStyleSheet( QString( "background-color: %1" ).arg( s.isValid() ? "green" : "red" ) );
-	error->setVisible( !s.lastError().isEmpty() );
-	error->setText( s.lastError() );
+
+	if( s.isValid() )
+		error->setText( tr("Signature is valid") );
+	else
+		error->setText( tr("Signature is not valid (%1)")
+			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
 
 	const QStringList l = s.locations();
 	signerCity->setText( l.value( 0 ) );
