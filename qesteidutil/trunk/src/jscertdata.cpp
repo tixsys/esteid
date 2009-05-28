@@ -95,12 +95,28 @@ QString JsCertData::getEmail()
         return "";
 }
 
+QString JsCertData::getSerialNum()
+{
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->subjectInfo("serialNumber");
+}
+
 QString JsCertData::getSubjCN()
 {
     if (!m_qcert)
         return "";
 
     return m_qcert->subjectInfo(QSslCertificate::CommonName);
+}
+
+QString JsCertData::getSubjSN()
+{
+    if (!m_qcert)
+        return "";
+
+    return m_qcert->subjectInfo("SN");
 }
 
 QString JsCertData::getSubjO()

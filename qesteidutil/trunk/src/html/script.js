@@ -310,23 +310,35 @@ function readCardData()
 	if ( activeCardId == "" )
 		activeCardId = esteidData.getDocumentId();
 
+	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
+	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
+	document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
+
 	if ( esteidData.authCert.isTempel() )
 	{
 		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
 		document.getElementById('photo').style.background = '#abadb0';
+		document.getElementById('id').innerHTML = esteidData.authCert.getSerialNum();
+		document.getElementById('personCode').innerHTML = _('regcode');
+		document.getElementById('firstName').innerHTML = esteidData.authCert.getSubjSN();
+		document.getElementById('department').innerHTML = esteidData.authCert.getSubjOU();
+		document.getElementById('liPersonBirth').style.display = 'none';
+		document.getElementById('liPersonCitizen').style.display = 'none';
+		document.getElementById('liDepartment').style.display = 'block';
+	} else {
+		document.getElementById('personCode').innerHTML = _('personCode');
+		document.getElementById('liPersonBirth').style.display = 'block';
+		document.getElementById('liPersonCitizen').style.display = 'block';
+		document.getElementById('liDepartment').style.display = 'none';
+		document.getElementById('firstName').innerHTML = esteidData.getFirstName();
+		document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
+		document.getElementById('surName').innerHTML = esteidData.getSurName();
+		document.getElementById('id').innerHTML = esteidData.getId();
+		document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
+		document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
+		document.getElementById('citizen').innerHTML = esteidData.getCitizen();
 	}
 	
-	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
-	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
-	document.getElementById('firstName').innerHTML = esteidData.getFirstName();
-	document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
-	document.getElementById('surName').innerHTML = esteidData.getSurName();
-	document.getElementById('id').innerHTML = esteidData.getId();
-	document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
-	document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
-	document.getElementById('citizen').innerHTML = esteidData.getCitizen();
-	document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
-
 	document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
 	document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
 
@@ -511,7 +523,8 @@ function disableFields()
 	document.getElementById('birthPlace').innerHTML = "";
 	document.getElementById('citizen').innerHTML = "";
 	document.getElementById('email').innerHTML = "";
-
+	document.getElementById('department').innerHTML = "";
+	
 	document.getElementById('cardInfo').style.display='none';
 	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
 	{

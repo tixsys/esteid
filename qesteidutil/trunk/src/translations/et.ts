@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>Issued to:</source>
-        <translation>Väljaantud kellel:</translation>
+        <translation>Väljastatud kellel:</translation>
     </message>
     <message>
         <source>Issued by:</source>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Libraries&lt;/b&gt;</source>
-        <translation>Teegid</translation>
+        <translation type="obsolete">Teegid</translation>
     </message>
     <message>
         <source>Card readers</source>
@@ -165,6 +165,34 @@
     <message>
         <source>Failed write to file!</source>
         <translation>Faili kirjutamine ebaõnnestus!</translation>
+    </message>
+    <message>
+        <source>OS:</source>
+        <translation>Operatsioonisüsteem:</translation>
+    </message>
+    <message>
+        <source>Libraries</source>
+        <translation>Teegid</translation>
+    </message>
+    <message>
+        <source>Smart Card service status: </source>
+        <translation>Smart Card service staatus:</translation>
+    </message>
+    <message>
+        <source>PCSC service status: </source>
+        <translation>PCSC service staatus:</translation>
+    </message>
+    <message>
+        <source>Running</source>
+        <translation>Töötab</translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <translation>Ei tööta</translation>
+    </message>
+    <message>
+        <source>%1 - failed to get version info</source>
+        <translation>%1 - viga versiooniinfo lugemisel</translation>
     </message>
 </context>
 <context>
@@ -220,6 +248,10 @@ Sisesta PIN1</translation>
     <message>
         <source>All application policies</source>
         <translation>Kõik rakenduste reeglid</translation>
+    </message>
+    <message>
+        <source>Failed to load ssl</source>
+        <translation>Viga SSL laadimisel</translation>
     </message>
 </context>
 <context>

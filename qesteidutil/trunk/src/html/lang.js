@@ -12,7 +12,9 @@ var htmlStrings = {
 	"linkHelp": new tr( "Abi", "Help", "" ),
 
 	"personName": new tr( "Nimi", "Name", "" ),
+	"personDepartment": new tr( "Osakond", "Department", "" ),
 	"personCode": new tr( "Isikukood", "Personal Code", "" ),
+	"regcode": new tr( "Registrikood", "Reg nr", "" ),
 	"personBirth": new tr( "Sündinud", "Birth", "" ),
 	"personCitizen": new tr( "Kodakondsus", "Citizenship", "" ),
 	"personEmail": new tr( "E-post", "E-mail", "" ),

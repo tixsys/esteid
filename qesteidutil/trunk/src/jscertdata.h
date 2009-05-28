@@ -53,6 +53,7 @@ public slots:
     QString toPem();
     QString getEmail();
     QString getSubjCN();
+    QString getSubjSN();
     QString getSubjO();
     QString getSubjOU();
     QString getValidFrom();
@@ -60,6 +61,8 @@ public slots:
     QString getIssuerCN();
     QString getIssuerO();
     QString getIssuerOU();
+	QString getSerialNum();
+
 	bool	isTempel();
 	bool	isValid();
 };
