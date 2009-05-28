@@ -79,7 +79,7 @@ private:
 	void dropEvent( QDropEvent *e );
 	void loadDocuments( QTreeWidget *view );
 	void parseParams();
-	bool saveDocument();
+	bool saveDocument( bool close = true );
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*doc;

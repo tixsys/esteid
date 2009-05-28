@@ -312,7 +312,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case ViewBrowse:
 	{
-		if( !saveDocument() )
+		if( !saveDocument( false ) )
 			break;
 #ifdef Q_OS_WIN32
 		QString url( "file:///" );
@@ -324,7 +324,7 @@ void MainWindow::buttonClicked( int button )
 	}
 	case ViewEmail:
 	{
-		if( !saveDocument() )
+		if( !saveDocument( false ) )
 			break;
 #ifdef Q_OS_WIN32
 		QByteArray filePath = doc->fileName().toLatin1();
@@ -373,6 +373,7 @@ void MainWindow::buttonClicked( int button )
 	case ViewPrint:
 	{
 		QPrintPreviewDialog *dialog = new QPrintPreviewDialog( this );
+		dialog->setWindowFlags( dialog->windowFlags() | Qt::WindowMinMaxButtonsHint );
 		PrintSheet *p = new PrintSheet( doc, dialog );
 		p->setVisible( false );
 		connect( dialog, SIGNAL(paintRequested(QPrinter*)), p, SLOT(print(QPrinter*)) );
@@ -496,15 +497,17 @@ void MainWindow::parseParams()
 	params.clear();
 }
 
-bool MainWindow::saveDocument()
+bool MainWindow::saveDocument( bool close )
 {
 	if( !doc->isModified() )
 		return true;
 
+	QMessageBox::StandardButtons b = QMessageBox::Save | QMessageBox::Cancel;
+	if( close )
+		b |= QMessageBox::Close;
 	QMessageBox::StandardButton btn = QMessageBox::warning( this,
 		"QDigiDocClient", tr("Document has changed. Save changes?"),
-		QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Close,
-		QMessageBox::Save );
+		b, QMessageBox::Save );
 	switch( btn )
 	{
 	case QMessageBox::Save: doc->save();
