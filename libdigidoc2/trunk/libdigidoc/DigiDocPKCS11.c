@@ -754,7 +754,11 @@ EXP_OPTION int decryptWithEstID(int slot, const char* pin,
   }
   // open session
   hSession = OpenSession(slId, pin);
-  if (hSession == CK_INVALID_HANDLE) { SET_LAST_ERROR(ERR_PKCS_LOGIN); return ERR_PKCS_LOGIN; }
+  if (hSession == CK_INVALID_HANDLE) {
+	  closePKCS11Library(pLibrary, hSession);
+	  SET_LAST_ERROR(ERR_PKCS_LOGIN);
+	  return ERR_PKCS_LOGIN;
+  }
   ddocDebug(3, "decryptWithEstID", "OpenSession ok, hSession = %d", (int)hSession);
   
   // get private key
@@ -769,7 +773,10 @@ EXP_OPTION int decryptWithEstID(int slot, const char* pin,
   // init decrypt
   rv = (*ckFunc->C_DecryptInit)(hSession, &Mechanism, hPrivateKey);
   ddocDebug(3, "decryptWithEstID", "DecryptInit: %d", (int)rv);
-  if(rv != CKR_OK) SET_LAST_ERROR_RETURN(ERR_DENC_DECRYPT, ERR_DENC_DECRYPT)
+  if(rv != CKR_OK) {
+	  closePKCS11Library(pLibrary, hSession);
+	  SET_LAST_ERROR_RETURN(ERR_DENC_DECRYPT, ERR_DENC_DECRYPT);
+  }
   // decrypt data
   outlen = *decLen;
   rv = (*ckFunc->C_Decrypt)(hSession, (CK_BYTE_PTR)encData, (CK_ULONG)encLen, (CK_BYTE_PTR)decData, (CK_ULONG_PTR)&outlen);
