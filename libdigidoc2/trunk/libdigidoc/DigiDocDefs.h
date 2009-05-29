@@ -77,7 +77,8 @@
 #endif
 
 #ifdef __APPLE__
-#define __FreeBSD__ 1
+// WHY???
+//#define __FreeBSD__ 1
 #endif
 
 
