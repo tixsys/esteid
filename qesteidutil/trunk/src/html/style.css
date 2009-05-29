@@ -34,6 +34,9 @@ input[type="button"] { cursor: hand; }
 				color: #668696; font-weight: bold; font-family: "Arial, Liberation Sans"; font-size: 12px; line-height: 18px;}
 #personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:250; word-wrap: break-word; }
 
+#smobileContent ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:500px; word-wrap: break-word; }
+#smobileContent {color: #355670; font-family: "Arial, Liberation Sans"; font-size: 12px;}
+
 #photo {position: absolute; top:90px; left:467px; width:90px; height:120px; border: 1px solid black; z-index:1; background: #FFFFFF; text-align: center;}
 #savePhoto {position: absolute; top:194px; left:468px; width: 90px; height:16px; border-top: 1px solid black; z-index:2; background: rgba(255,255,255,0.8); text-align: center; display: none;}
 

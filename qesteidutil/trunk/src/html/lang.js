@@ -7,6 +7,13 @@ var helpUrl_ru = "http://support.sk.ee/ru/";
 
 //code: (est, eng, rus)
 var htmlStrings = {
+	"Active": new tr( "sertifikaadid on aktiivsed ja Mobiil-ID kasutamine on võimalik.", "Active", "" ),
+	"Not Active": new tr( "sertifikaadid on aktiveerimata, Mobiil-ID kasutamiseks on vajalik sertifikaatide aktiveerimine.", "", "" ),
+	"Suspended": new tr( "sertifikaadid on peatatud, Mobiil-ID kasutamiseks on vajalik peatatuse lõpetamine.", "", "" ),
+	"Revoked": new tr( "sertifikaadid on tunnistatud kehtetuks. Mobiil-ID kasutamiseks on vajalik hankida operaatorilt uus Mobiil-ID SIM kaart.", "", "" ),
+	"Unknown": new tr( "sertifikaadi olek teadmata.", "", "" ),
+	"Expired": new tr( "sertifikaadid on aegunud. Vajalik on operaatorilt uue SIM kaardi hankimine.", "", "" ),
+	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "" ),
 	"linkSettings": new tr( "Seaded", "Settings", "" ),
 	"linkHelp": new tr( "Abi", "Help", "" ),
@@ -62,6 +69,7 @@ var htmlStrings = {
 	"inputCheckEmails": new tr( "Kontrolli @eesti.ee e-posti seadistust", "Check your @eesti.ee email settings", "" ),
 	"inputMobile": new tr( "Mobiil-ID", "Mobile-ID", "" ),
 	"inputActivateMobile": new tr( "Aktiveeri Mobiil-ID teenus", "Activate Mobile-ID", "" ),
+	"inputCheckMobile": new tr( "Kontrolli Mobiil-ID staatust", "Check Mobile-ID status", "" ),
 	"inputPUK": new tr( "PUK kood", "PUK code", "" ),
 	
 	"inputChange": new tr( "Muuda", "Change", "" ),
@@ -89,7 +97,11 @@ var htmlStrings = {
 	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "", "" ),
 	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "", "" ),
 	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "", "" ),
-	
+	"mobileNumber": new tr( "Mobiili number", "Mobile number", "" ),
+	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "" ),
+	"mobileStatus": new tr( "Staatus", "Mobile status", "" ),
+	"mobileUrl": new tr( "Url", "Mobile url", "" ),
+			
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "Failed activating e-mail forwards.", "" ),

@@ -44,7 +44,8 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 
 	connect(&pollTimer, SIGNAL(timeout()),
             this, SLOT(pollCard()));
-	pollTimer.start( 2000 );
+	//wait javascript/html to initialize correctly
+	QTimer::singleShot( 2000, this, SLOT(pollCard()) );
 }
 
 JsCardManager::~JsCardManager()
@@ -55,6 +56,10 @@ JsCardManager::~JsCardManager()
 
 void JsCardManager::pollCard()
 {
+
+	if ( !pollTimer.isActive() )
+		pollTimer.start( 500 );
+
     EstEidCard *card = 0;
     try {
 		QString insert,remove;

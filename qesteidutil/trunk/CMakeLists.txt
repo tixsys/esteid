@@ -62,6 +62,7 @@ set(qesteidutil_RCS src/qesteidutil.qrc)
 
 set(QT_USE_QTNETWORK true)
 set(QT_USE_QTWEBKIT true)
+set(QT_USE_QTXML true)
 
 include(${QT_USE_FILE})
 

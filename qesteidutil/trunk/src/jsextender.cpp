@@ -22,6 +22,7 @@
 
 #include <QApplication>
 #include <QDesktopServices>
+#include <QDomDocument>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QtWebKit>
@@ -335,6 +336,68 @@ void JsExtender::savePicture()
 		return;
 	}
 	pix.save( file );
+}
+
+void JsExtender::getMidStatus()
+{
+	QByteArray data = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> "
+						"<SOAP-ENV:Body> "
+						"<m:GetMIDTokens xmlns:m=\"urn:GetMIDTokens\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"/> "
+						"</SOAP-ENV:Body> "
+						"</SOAP-ENV:Envelope>";
+
+	QHttpRequestHeader header( "POST", "/midstatusdemo/", 1, 1 );
+	header.setValue( "host", "demo.digidoc.ee" );
+	header.setContentType( "text/xml" );
+	header.setContentLength( data.length() );
+	m_http.setHost( "demo.digidoc.ee" );
+	m_http.request( header, data );
+	connect( &m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
+}
+
+void JsExtender::httpRequestFinished( int, bool error )
+{
+	if ( error)
+		qDebug() << "Download failed: " << m_http.errorString();
+
+	QByteArray result = m_http.readAll();
+	if ( !result.isEmpty() )
+	{
+		QDomDocument doc;
+		if ( !doc.setContent( result ) )
+		{
+			jsCall( "handleError", "mobileFailed" );
+			return;
+		}
+		QDomElement e = doc.documentElement();
+		if ( !e.elementsByTagName( "ResponseStatus" ).size() )
+		{
+			jsCall( "handleError", "mobileFailed" );
+			return;
+		}
+		MobileResult mRes = (MobileResult)e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt();
+		QString mResString;
+		switch( mRes )
+		{
+			case NoCert: mResString = "mobileNoCert"; break;
+			case NotActive: mResString = "mobileNotActive"; break;
+			case InternalError: mResString = "mobileInternalError"; break;
+			case InterfaceNotReady: mResString = "mobileInterfaceNotReady"; break;
+			case OK:
+			default: break;
+		}
+		if ( !mResString.isEmpty() )
+		{
+			jsCall( "handleError", mResString );
+			return;
+		}
+		mResString = QString( "%1;%2;%3;%4" )
+						.arg( e.elementsByTagName( "MSISDN" ).item(0).toElement().text() )
+						.arg( e.elementsByTagName( "Operator" ).item(0).toElement().text() )
+						.arg( e.elementsByTagName( "Status" ).item(0).toElement().text() )
+						.arg( e.elementsByTagName( "URL" ).item(0).toElement().text() );
+		jsCall( "setMobile", mResString );
+	}
 }
 
 void JsExtender::showSettings()

@@ -229,10 +229,6 @@ Sisesta PIN1</translation>
         <source>All application policies</source>
         <translation>Kõik rakenduste reeglid</translation>
     </message>
-    <message>
-        <source>Failed to load ssl</source>
-        <translation>Viga SSL laadimisel</translation>
-    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

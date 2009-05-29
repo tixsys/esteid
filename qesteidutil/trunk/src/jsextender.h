@@ -36,6 +36,13 @@ class JsExtender : public QObject
     Q_OBJECT
 
 public:
+	enum MobileResult {
+		OK = 0,
+		NoCert = 1,
+		NotActive = 2,
+		InternalError = 100,
+		InterfaceNotReady = 101
+	};
     JsExtender( MainWindow* );
 	~JsExtender();
     void registerObject( const QString &name, QObject *object );
@@ -52,6 +59,7 @@ private:
 	QString pin;
 	SSLConnect *sslConnect;
 	QString activeDocument;
+	QHttp m_http;
 
 public slots:
 	void setLanguage( const QString &lang );
@@ -75,4 +83,7 @@ public slots:
 
 	void showLoading( const QString & );
 	void closeLoading();
+
+	void getMidStatus();
+	void httpRequestFinished( int, bool error );
 };
