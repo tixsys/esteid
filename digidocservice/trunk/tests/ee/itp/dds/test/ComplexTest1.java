@@ -4,6 +4,7 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.holders.IntHolder;
 import javax.xml.rpc.holders.StringHolder;
 
+import org.apache.axis.message.SOAPHeaderElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -90,8 +91,18 @@ public class ComplexTest1 extends JettyServerTestServer {
       assertNull(retFile.value);
 
       binding.closeSession(sesscode.value);
-      binding.createSignedDoc(sesscode.value, SignedDoc.FORMAT_DIGIDOC_XML, SignedDoc.VERSION_1_4, status, signedDocInfo);
-      assertEquals(status.value, ResponseStatus.WRONG_SESSION_CODE.name());
+      try {
+        binding.createSignedDoc(sesscode.value, SignedDoc.FORMAT_DIGIDOC_XML, SignedDoc.VERSION_1_4, status, signedDocInfo);
+      } catch (Exception e) {
+        assertEquals(ResponseStatus.WRONG_SESSION_CODE.name(), binding.getFaultString() );
+      }
+      
+      try {
+        binding.closeSession(1234);
+      } catch (Exception e) {
+        assertEquals(true, binding.hasResponseFaultString());
+      }
+      
       
     }//testBigComplexTest
     

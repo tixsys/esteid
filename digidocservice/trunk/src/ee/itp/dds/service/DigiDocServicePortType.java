@@ -34,8 +34,9 @@ public interface DigiDocServicePortType extends java.rmi.Remote {
 
     /**
      * Service definition of function d__CreateSignedDoc
+     * @throws Exception 
      */
-    public void createSignedDoc(int sesscode, String format, String version, StringHolder status, SignedDocInfoHolder signedDocInfo) throws IOException;
+    public void createSignedDoc(int sesscode, String format, String version, StringHolder status, SignedDocInfoHolder signedDocInfo) throws Exception;
 
     /**
      * Service definition of function d__AddDataFile

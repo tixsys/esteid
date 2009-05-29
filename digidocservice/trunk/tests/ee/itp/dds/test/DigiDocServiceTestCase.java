@@ -1,6 +1,7 @@
 package ee.itp.dds.test;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
@@ -250,175 +251,253 @@ public class DigiDocServiceTestCase extends JettyServerTestServer {
     }
 
     
-    public void testCreateSignedDoc() throws Exception {
+    public void testCreateSignedDoc()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.createSignedDoc(0, new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.createSignedDoc(0, new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+        }
         // TBD - validate results
     }
 
-    public void testAddDataFile() throws Exception {
+    public void testAddDataFile()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.addDataFile(0, new String(), new String(), new String(), 0, new String(), new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.addDataFile(0, new String(), new String(), new String(), 0, new String(), new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testRemoveDataFile() throws Exception {
+    public void testRemoveDataFile()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.removeDataFile(0, "D0", new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.removeDataFile(0, "D0", new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetSignedDoc() throws Exception {
+    public void testGetSignedDoc()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getSignedDoc(0, new StringHolder(), new StringHolder());
+        try {
+          binding.getSignedDoc(0, new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetSignedDocInfo() throws Exception {
+    public void testGetSignedDocInfo()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getSignedDocInfo(0, new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.getSignedDocInfo(0, new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetDataFile() throws Exception {
+    public void testGetDataFile()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getDataFile(0, "D0", new StringHolder(), new DataFileDataHolder());
+        try {
+          binding.getDataFile(0, "D0", new StringHolder(), new DataFileDataHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetSignersCertificate() throws Exception {
+    public void testGetSignersCertificate()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getSignersCertificate(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getSignersCertificate(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+        }
         // TBD - validate results
     }
 
-    public void testGetNotarysCertificate() throws Exception {
+    public void testGetNotarysCertificate()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getNotarysCertificate(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getNotarysCertificate(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetNotary() throws Exception {
+    public void testGetNotary()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getNotary(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getNotary(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetTSACertificate() throws Exception {
+    public void testGetTSACertificate()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getTSACertificate(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getTSACertificate(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetTimestamp() throws Exception {
+    public void testGetTimestamp()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getTimestamp(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getTimestamp(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetCRL() throws Exception {
+    public void testGetCRL()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getCRL(0, new String(), new StringHolder(), new StringHolder());
+        try {
+          binding.getCRL(0, new String(), new StringHolder(), new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testGetSignatureModules() throws Exception {
+    public void testGetSignatureModules()  {
         assertNotNull("binding is null", binding);
         binding.setTimeout(60000);
-        binding.getSignatureModules(0, new String(), new String(), new String(), new StringHolder(), new SignatureModulesArrayHolder());
+        try {
+          binding.getSignatureModules(0, new String(), new String(), new String(), new StringHolder(), new SignatureModulesArrayHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
     }
 
-    public void testPrepareSignature() throws Exception {
+    public void testPrepareSignature()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.prepareSignature(0, new String(), new String(), new String(), new String(), new String(), new String(), new String(), new String(), new StringHolder(), new StringHolder(),
-                new StringHolder());
+        try {
+          binding.prepareSignature(0, new String(), new String(), new String(), new String(), new String(), new String(), new String(), new String(), new StringHolder(), new StringHolder(),
+                  new StringHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testFinalizeSignature() throws Exception {
+    public void testFinalizeSignature()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.finalizeSignature(0, new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.finalizeSignature(0, new String(), new String(), new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
-    public void testRemoveSignature() throws Exception {
+    public void testRemoveSignature()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.removeSignature(0, new String(), new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.removeSignature(0, new String(), new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+
+        }
         // TBD - validate results
     }
 
@@ -433,14 +512,18 @@ public class DigiDocServiceTestCase extends JettyServerTestServer {
         // TBD - validate results
     }
 
-    public void testGetStatusInfo() throws Exception {
+    public void testGetStatusInfo()  {
         assertNotNull("binding is null", binding);
 
         // Time out after a minute
         binding.setTimeout(60000);
 
         // Test operation
-        binding.getStatusInfo(0, true, true, new StringHolder(), new StringHolder(), new SignedDocInfoHolder());
+        try {
+          binding.getStatusInfo(0, true, true, new StringHolder(), new StringHolder(), new SignedDocInfoHolder());
+        } catch (RemoteException e) {
+          assertEquals("WRONG_SESSION_CODE", binding.getFaultString());
+        }
         // TBD - validate results
     }
 

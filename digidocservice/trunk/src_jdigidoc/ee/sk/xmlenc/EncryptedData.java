@@ -48,7 +48,7 @@ import java.util.zip.InflaterInputStream;
 
 /**
  * Contains the data of an <EncryptedData> object
- *
+ * 
  * @author Veiko Sinivee
  * @version 1.0
  */
@@ -193,7 +193,8 @@ public class EncryptedData {
    */
   public static final String ENCPROP_ORIG_FILE = "orig_file";
   /**
-   * <EnryptionProperty> Name atribute for storing library version that generated it
+   * <EnryptionProperty> Name atribute for storing library version that
+   * generated it
    */
   public static final String ENCPROP_LIB_VER = "LibraryVersion";
   /**
@@ -212,18 +213,23 @@ public class EncryptedData {
 
   /**
    * Constructor for EncryptedData
-   *
-   * @param id Id atribute value (optional)
-   * @param type Type atribute value (optional)
-   * @param mimeType MimeType atribute value (optional)
-   * @param xmlns xmlns atribute value. Must be http://www.w3.org/2001/04/xmlenc#
-   * @param encryptionMethod EncryptionMethod> sublements atribute Algorithm value (required)
-   *
-   * @throws DigiDocException for validation errors
+   * 
+   * @param id
+   *          Id atribute value (optional)
+   * @param type
+   *          Type atribute value (optional)
+   * @param mimeType
+   *          MimeType atribute value (optional)
+   * @param xmlns
+   *          xmlns atribute value. Must be http://www.w3.org/2001/04/xmlenc#
+   * @param encryptionMethod
+   *          EncryptionMethod> sublements atribute Algorithm value (required)
+   * 
+   * @throws DigiDocException
+   *           for validation errors
    */
-  public EncryptedData(String id, String type, String mimeType,
-                       String xmlns, String encryptionMethod)
-    throws DigiDocException {
+  public EncryptedData(String id, String type, String mimeType, String xmlns,
+      String encryptionMethod) throws DigiDocException {
     m_logger = Logger.getLogger(EncryptedData.class);
     setId(id);
     setType(type);
@@ -241,15 +247,16 @@ public class EncryptedData {
   }
 
   /**
-   * Constructor for EncryptedData without parameters This is to be used only in SAX parser because it initializes instance
-   * variables to default values.
-   *
-   * @param xmlns xmlns atribute value. Must be http://www.w3.org/2001/04/xmlenc#
-   *
-   * @throws DigiDocException for validation errors
+   * Constructor for EncryptedData without parameters This is to be used only in
+   * SAX parser because it initializes instance variables to default values.
+   * 
+   * @param xmlns
+   *          xmlns atribute value. Must be http://www.w3.org/2001/04/xmlenc#
+   * 
+   * @throws DigiDocException
+   *           for validation errors
    */
-  public EncryptedData(String xmlns)
-    throws DigiDocException {
+  public EncryptedData(String xmlns) throws DigiDocException {
     m_logger = Logger.getLogger(EncryptedData.class);
     m_id = null;
     m_type = null;
@@ -265,7 +272,7 @@ public class EncryptedData {
 
   /**
    * Returns the data's current status
-   *
+   * 
    * @return data's current status
    */
   public int getDataStatus() {
@@ -274,8 +281,9 @@ public class EncryptedData {
 
   /**
    * sets data status
-   *
-   * @param status new status for data
+   * 
+   * @param status
+   *          new status for data
    */
   public void setDataStatus(int status) {
     m_nDataStatus = status;
@@ -283,7 +291,7 @@ public class EncryptedData {
 
   /**
    * Retrieves data
-   *
+   * 
    * @return data
    */
   public byte[] getData() {
@@ -292,8 +300,9 @@ public class EncryptedData {
 
   /**
    * sets data
-   *
-   * @param data new data
+   * 
+   * @param data
+   *          new data
    */
   public void setData(byte[] data) {
     m_data = data;
@@ -301,7 +310,7 @@ public class EncryptedData {
 
   /**
    * Accessor for secret key
-   *
+   * 
    * @return SecretKey object
    */
   public SecretKey getTransportKey() {
@@ -310,8 +319,9 @@ public class EncryptedData {
 
   /**
    * Mutator for secret key
-   *
-   * @param key new secret key
+   * 
+   * @param key
+   *          new secret key
    */
   public void setTransportKey(SecretKey key) {
     m_transportKey = key;
@@ -319,7 +329,7 @@ public class EncryptedData {
 
   /**
    * Accessor for id attribute
-   *
+   * 
    * @return value of Id attribute
    */
   public String getId() {
@@ -328,8 +338,9 @@ public class EncryptedData {
 
   /**
    * Mutator for Id attribute
-   *
-   * @param str new value for Id attribute
+   * 
+   * @param str
+   *          new value for Id attribute
    */
   public void setId(String str) {
     m_id = str;
@@ -337,7 +348,7 @@ public class EncryptedData {
 
   /**
    * Accessor for Type attribute
-   *
+   * 
    * @return value of Type attribute
    */
   public String getType() {
@@ -346,8 +357,9 @@ public class EncryptedData {
 
   /**
    * Mutator for Type attribute
-   *
-   * @param str new value for Type attribute
+   * 
+   * @param str
+   *          new value for Type attribute
    */
   public void setType(String str) {
     m_type = str;
@@ -355,7 +367,7 @@ public class EncryptedData {
 
   /**
    * Accessor for MimeType attribute
-   *
+   * 
    * @return value of MimeType attribute
    */
   public String getMimeType() {
@@ -364,8 +376,9 @@ public class EncryptedData {
 
   /**
    * Mutator for MimeType attribute
-   *
-   * @param str new value for MimeType attribute
+   * 
+   * @param str
+   *          new value for MimeType attribute
    */
   public void setMimeType(String str) {
     m_mimeType = str;
@@ -373,7 +386,7 @@ public class EncryptedData {
 
   /**
    * Accessor for EncryptionMethod attribute
-   *
+   * 
    * @return value of EncryptionMethod attribute
    */
   public String getEncryptionMethod() {
@@ -382,13 +395,14 @@ public class EncryptedData {
 
   /**
    * Mutator for EncryptionMethod attribute
-   *
-   * @param str new value for EncryptionMethod attribute
-   *
-   * @throws DigiDocException for validation errors
+   * 
+   * @param str
+   *          new value for EncryptionMethod attribute
+   * 
+   * @throws DigiDocException
+   *           for validation errors
    */
-  public void setEncryptionMethod(String str)
-    throws DigiDocException {
+  public void setEncryptionMethod(String str) throws DigiDocException {
     DigiDocException ex = validateEncryptionMethod(str);
     if (ex != null) {
       throw ex;
@@ -398,24 +412,26 @@ public class EncryptedData {
 
   /**
    * Helper method to validate EncryptionMethod atribute
-   *
-   * @param str input data
-   *
+   * 
+   * @param str
+   *          input data
+   * 
    * @return exception or null for ok
    */
   private DigiDocException validateEncryptionMethod(String str) {
     DigiDocException ex = null;
     if (str == null || !str.equals(EncryptedData.DENC_ENC_METHOD_AES128)) {
-      ex = new DigiDocException(DigiDocException.ERR_XMLENC_ENCDATA_ENCRYPTION_METHOD,
-                                "EncryptionMethod atribute is required and currently the only supported value is: "
-                                + EncryptedData.DENC_ENC_METHOD_AES128, null);
+      ex = new DigiDocException(
+          DigiDocException.ERR_XMLENC_ENCDATA_ENCRYPTION_METHOD,
+          "EncryptionMethod atribute is required and currently the only supported value is: "
+              + EncryptedData.DENC_ENC_METHOD_AES128, null);
     }
     return ex;
   }
 
   /**
    * Accessor for Xmlns attribute
-   *
+   * 
    * @return value of Xmlns attribute
    */
   public String getXmlns() {
@@ -424,13 +440,14 @@ public class EncryptedData {
 
   /**
    * Mutator for Xmlns attribute
-   *
-   * @param str new value for Xmlns attribute
-   *
-   * @throws DigiDocException for validation errors
+   * 
+   * @param str
+   *          new value for Xmlns attribute
+   * 
+   * @throws DigiDocException
+   *           for validation errors
    */
-  public void setXmlns(String str)
-    throws DigiDocException {
+  public void setXmlns(String str) throws DigiDocException {
     DigiDocException ex = validateXmlns(str);
     if (ex != null) {
       throw ex;
@@ -440,53 +457,54 @@ public class EncryptedData {
 
   /**
    * Helper method to validate Xmlns atribute
-   *
-   * @param str input data
-   *
+   * 
+   * @param str
+   *          input data
+   * 
    * @return exception or null for ok
    */
   private DigiDocException validateXmlns(String str) {
     DigiDocException ex = null;
     if (str == null || !str.equals(EncryptedData.DENC_XMLNS_XMLENC)) {
       ex = new DigiDocException(DigiDocException.ERR_XMLENC_ENCDATA_XMLNS,
-                                "xmlns atribute is required and currently the only supported value is: "
-                                + EncryptedData.DENC_XMLNS_XMLENC, null);
+          "xmlns atribute is required and currently the only supported value is: "
+              + EncryptedData.DENC_XMLNS_XMLENC, null);
     }
     return ex;
   }
 
   /**
    * Retrieves the Id atribute value on <EncryptionProperties> child element
-   *
+   * 
    * @return id value of Id atribute
    */
   public String getEncryptionPropertiesId() {
     if (m_encProperties != null) {
       return m_encProperties.getId();
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   /**
    * Sets the Id atribute value on <EncryptionProperties> child element
-   *
-   * @param id value of Id atribute
+   * 
+   * @param id
+   *          value of Id atribute
    */
   public void setEncryptionPropertiesId(String id) {
     if (m_encProperties == null) {
       m_encProperties = new EncryptionProperties(id);
-    }
-    else {
+    } else {
       m_encProperties.setId(id);
     }
   }
 
   /**
    * Adds an <EncryptionProperty> object to the array of properties
-   *
-   * @param prop new property object to be added
+   * 
+   * @param prop
+   *          new property object to be added
    */
   public void addProperty(EncryptionProperty prop) {
     if (m_encProperties == null) {
@@ -496,13 +514,15 @@ public class EncryptedData {
   }
 
   /**
-   * Simply adds an <EncryptionProperty> object with the given Name atribute and content to the list
-   *
-   * @param name <EncryptionProperty> object's Name atribute value
-   * @param content <EncryptionProperty> object's content
+   * Simply adds an <EncryptionProperty> object with the given Name atribute and
+   * content to the list
+   * 
+   * @param name
+   *          <EncryptionProperty> object's Name atribute value
+   * @param content
+   *          <EncryptionProperty> object's content
    */
-  public void addProperty(String name, String content)
-    throws DigiDocException {
+  public void addProperty(String name, String content) throws DigiDocException {
     if (m_encProperties == null) {
       m_encProperties = new EncryptionProperties(null);
     }
@@ -511,7 +531,7 @@ public class EncryptedData {
 
   /**
    * Rturns the number of <EncryptionProperty> objects in the list
-   *
+   * 
    * @return number of <EncryptionProperty> objects
    */
   public int getNumProperties() {
@@ -520,91 +540,91 @@ public class EncryptedData {
 
   /**
    * Returns the n-th <EncryptionProperty> object
-   *
-   * @param nIdx index of the property
-   *
+   * 
+   * @param nIdx
+   *          index of the property
+   * 
    * @return the desired <EncryptionProperty> object or null
    */
   public EncryptionProperty getProperty(int nIdx) {
     if (nIdx < getNumProperties()) {
       return m_encProperties.getProperty(nIdx);
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   /**
    * Returns the <EncryptionProperty> object with the given Id atribute
-   *
-   * @param id the desired objects Id atribute value
-   *
+   * 
+   * @param id
+   *          the desired objects Id atribute value
+   * 
    * @return the desired <EncryptionProperty> object or null
    */
   public EncryptionProperty findPropertyById(String id) {
     if (m_encProperties != null) {
       return m_encProperties.findPropertyById(id);
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   /**
    * Returns the <EncryptionProperty> object with the given Id atribute
-   *
-   * @param name the desired objects Name atribute value
-   *
+   * 
+   * @param name
+   *          the desired objects Name atribute value
+   * 
    * @return the desired <EncryptionProperty> object or null
    */
   public EncryptionProperty findPropertyByName(String name) {
     if (m_encProperties != null) {
       return m_encProperties.findPropertyByName(name);
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   /**
    * Returns the last <EncryptionProperty> object
-   *
+   * 
    * @return the desired <EncryptionProperty> object or null
    */
   public EncryptionProperty getLastProperty() {
     if (m_encProperties != null && m_encProperties.getNumProperties() > 0) {
-      return m_encProperties.getProperty(m_encProperties.getNumProperties() - 1);
-    }
-    else {
+      return m_encProperties
+          .getProperty(m_encProperties.getNumProperties() - 1);
+    } else {
       return null;
     }
   }
 
   /**
-   * Returns the content of the <EncryptionProperty> object with the gine Name atribute value
-   *
-   * @param name Name atribute value
-   *
+   * Returns the content of the <EncryptionProperty> object with the gine Name
+   * atribute value
+   * 
+   * @param name
+   *          Name atribute value
+   * 
    * @return content of the <EncryptionProperty> object or null
    */
   public String findPropertyContentByName(String name) {
     EncryptionProperty prop = findPropertyByName(name);
     if (prop != null) {
       return prop.getContent();
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   /**
-   * Creates a new <EncryptionProperty> or uses and existing one to store the library namd and version used to create this encrypted
-   * document
-   *
+   * Creates a new <EncryptionProperty> or uses and existing one to store the
+   * library namd and version used to create this encrypted document
+   * 
    * @throws DigiDocException
    */
-  public void setPropLibraryNameAndVersion()
-    throws DigiDocException {
+  public void setPropLibraryNameAndVersion() throws DigiDocException {
     EncryptionProperty prop = findPropertyByName(ENCPROP_LIB_VER);
     StringBuffer sb = new StringBuffer();
     sb.append(SignedDoc.LIB_NAME);
@@ -613,15 +633,15 @@ public class EncryptedData {
     if (prop == null) {
       prop = new EncryptionProperty(ENCPROP_LIB_VER, sb.toString());
       addProperty(prop);
-    }
-    else {
+    } else {
       prop.setContent(sb.toString());
     }
   }
 
   /**
-   * Returns the library name that created this document. This is stored in an <EncryptionProperty> element
-   *
+   * Returns the library name that created this document. This is stored in an
+   * <EncryptionProperty> element
+   * 
    * @throws DigiDocException
    */
   public String getPropLibraryName() {
@@ -630,8 +650,7 @@ public class EncryptedData {
     if (prop != null) {
       String content = prop.getContent();
       int nIdx1 = 0;
-      if ((content != null) &&
-          ((nIdx1 = content.indexOf("|")) != -1)) {
+      if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)) {
         sb.append(content.substring(0, nIdx1));
       }
     }
@@ -639,8 +658,9 @@ public class EncryptedData {
   }
 
   /**
-   * Returns the library version that created this document. This is stored in an <EncryptionProperty> element
-   *
+   * Returns the library version that created this document. This is stored in
+   * an <EncryptionProperty> element
+   * 
    * @throws DigiDocException
    */
   public String getPropLibraryVersion() {
@@ -649,8 +669,7 @@ public class EncryptedData {
     if (prop != null) {
       String content = prop.getContent();
       int nIdx1 = 0;
-      if ((content != null) &&
-          ((nIdx1 = content.indexOf("|")) != -1)) {
+      if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)) {
         sb.append(content.substring(nIdx1 + 1));
       }
     }
@@ -658,12 +677,12 @@ public class EncryptedData {
   }
 
   /**
-   * Creates a new <EncryptionProperty> or uses and existing one to store the encrypted document format name and version
-   *
+   * Creates a new <EncryptionProperty> or uses and existing one to store the
+   * encrypted document format name and version
+   * 
    * @throws DigiDocException
    */
-  public void setPropFormatNameAndVersion()
-    throws DigiDocException {
+  public void setPropFormatNameAndVersion() throws DigiDocException {
     EncryptionProperty prop = findPropertyByName(ENCPROP_FORMAT_VER);
     StringBuffer sb = new StringBuffer();
     sb.append(FORMAT_ENCDOC_XML);
@@ -672,15 +691,15 @@ public class EncryptedData {
     if (prop == null) {
       prop = new EncryptionProperty(ENCPROP_FORMAT_VER, sb.toString());
       addProperty(prop);
-    }
-    else {
+    } else {
       prop.setContent(sb.toString());
     }
   }
 
   /**
-   * Returns the encrypted document format name. This is stored in an <EncryptionProperty> element
-   *
+   * Returns the encrypted document format name. This is stored in an
+   * <EncryptionProperty> element
+   * 
    * @throws DigiDocException
    */
   public String getPropFormatName() {
@@ -689,8 +708,7 @@ public class EncryptedData {
     if (prop != null) {
       String content = prop.getContent();
       int nIdx1 = 0;
-      if ((content != null) &&
-          ((nIdx1 = content.indexOf("|")) != -1)) {
+      if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)) {
         sb.append(content.substring(0, nIdx1));
       }
     }
@@ -698,8 +716,9 @@ public class EncryptedData {
   }
 
   /**
-   * Returns the encrypted document format version. This is stored in an <EncryptionProperty> element
-   *
+   * Returns the encrypted document format version. This is stored in an
+   * <EncryptionProperty> element
+   * 
    * @throws DigiDocException
    */
   public String getPropFormatVersion() {
@@ -708,8 +727,7 @@ public class EncryptedData {
     if (prop != null) {
       String content = prop.getContent();
       int nIdx1 = 0;
-      if ((content != null) &&
-          ((nIdx1 = content.indexOf("|")) != -1)) {
+      if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)) {
         sb.append(content.substring(nIdx1 + 1));
       }
     }
@@ -717,12 +735,12 @@ public class EncryptedData {
   }
 
   /**
-   * Creates a number of <EncryptionProperty> objects to store the meta info about the contents of this digidoc
-   *
+   * Creates a number of <EncryptionProperty> objects to store the meta info
+   * about the contents of this digidoc
+   * 
    * @throws DigiDocException
    */
-  public void setPropRegisterDigiDoc(SignedDoc sdoc)
-    throws DigiDocException {
+  public void setPropRegisterDigiDoc(SignedDoc sdoc) throws DigiDocException {
     for (int i = 0; i < sdoc.countDataFiles(); i++) {
       DataFile df = sdoc.getDataFile(i);
       StringBuffer sb = new StringBuffer();
@@ -738,15 +756,17 @@ public class EncryptedData {
   }
 
   /**
-   * counts the number of <EncryptionProperty> objects used for stroring digidoc meta info
-   *
+   * counts the number of <EncryptionProperty> objects used for stroring digidoc
+   * meta info
+   * 
    * @return count of such <EncryptionProperty> objects
-   *
+   * 
    * @throws DigiDocException
    */
   public int getPropOrigFileCount() {
     int n = 0;
-    for (int i = 0; (m_encProperties != null) && (i < m_encProperties.getNumProperties()); i++) {
+    for (int i = 0; (m_encProperties != null)
+        && (i < m_encProperties.getNumProperties()); i++) {
       EncryptionProperty prop = m_encProperties.getProperty(i);
       if (prop.getName() != null && prop.getName().equals(ENCPROP_ORIG_FILE)) {
         n++;
@@ -757,24 +777,25 @@ public class EncryptedData {
 
   /**
    * Returns the filename part of the given embedded digidoc metadata item.
-   *
-   * @param nProp index of digidoc metadata properties
-   *
+   * 
+   * @param nProp
+   *          index of digidoc metadata properties
+   * 
    * @return filename part of the given property
-   *
+   * 
    * @throws DigiDocException
    */
   public String getPropOrigFileName(int nProp) {
     String str = null;
     int n = 0, nIdx1 = 0;
-    for (int i = 0; (m_encProperties != null) && (i < m_encProperties.getNumProperties()); i++) {
+    for (int i = 0; (m_encProperties != null)
+        && (i < m_encProperties.getNumProperties()); i++) {
       EncryptionProperty prop = m_encProperties.getProperty(i);
       if (prop.getName() != null && prop.getName().equals(ENCPROP_ORIG_FILE)) {
         n++;
         if (n == nProp) {// the right property
           String content = prop.getContent();
-          if ((content != null) &&
-              ((nIdx1 = content.indexOf("|")) != -1)) {
+          if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)) {
             str = content.substring(0, nIdx1);
           }
           break;
@@ -786,25 +807,26 @@ public class EncryptedData {
 
   /**
    * Returns the filesize part of the given embedded digidoc metadata item.
-   *
-   * @param nProp index of digidoc metadata properties
-   *
+   * 
+   * @param nProp
+   *          index of digidoc metadata properties
+   * 
    * @return filesize part of the given property
-   *
+   * 
    * @throws DigiDocException
    */
   public String getPropOrigFileSize(int nProp) {
     String str = null;
     int n = 0, nIdx1 = 0, nIdx2 = 0;
-    for (int i = 0; (m_encProperties != null) && (i < m_encProperties.getNumProperties()); i++) {
+    for (int i = 0; (m_encProperties != null)
+        && (i < m_encProperties.getNumProperties()); i++) {
       EncryptionProperty prop = m_encProperties.getProperty(i);
       if (prop.getName() != null && prop.getName().equals(ENCPROP_ORIG_FILE)) {
         n++;
         if (n == nProp) {// the right property
           String content = prop.getContent();
-          if ((content != null) &&
-              ((nIdx1 = content.indexOf("|")) != -1) &&
-              ((nIdx2 = content.indexOf("|", nIdx1 + 1)) != -1)) {
+          if ((content != null) && ((nIdx1 = content.indexOf("|")) != -1)
+              && ((nIdx2 = content.indexOf("|", nIdx1 + 1)) != -1)) {
             str = content.substring(nIdx1 + 1, nIdx2);
           }
           break;
@@ -816,26 +838,27 @@ public class EncryptedData {
 
   /**
    * Returns the mimetype part of the given embedded digidoc metadata item.
-   *
-   * @param nProp index of digidoc metadata properties
-   *
+   * 
+   * @param nProp
+   *          index of digidoc metadata properties
+   * 
    * @return mimetype part of the given property
-   *
+   * 
    * @throws DigiDocException
    */
   public String getPropOrigFileMime(int nProp) {
     String str = null;
     int n = 0, nIdx1 = 0, nIdx2 = 0, nIdx3 = 0;
-    for (int i = 0; (m_encProperties != null) && (i < m_encProperties.getNumProperties()); i++) {
+    for (int i = 0; (m_encProperties != null)
+        && (i < m_encProperties.getNumProperties()); i++) {
       EncryptionProperty prop = m_encProperties.getProperty(i);
       if (prop.getName() != null && prop.getName().equals(ENCPROP_ORIG_FILE)) {
         n++;
         if (n == nProp) {// the right property
           String content = prop.getContent();
-          if ((content != null) &&
-              ((nIdx3 = content.indexOf("|")) != -1) &&
-              ((nIdx1 = content.indexOf("|", nIdx3 + 1)) != -1) &&
-              ((nIdx2 = content.indexOf("|", nIdx1 + 1)) != -1)) {
+          if ((content != null) && ((nIdx3 = content.indexOf("|")) != -1)
+              && ((nIdx1 = content.indexOf("|", nIdx3 + 1)) != -1)
+              && ((nIdx2 = content.indexOf("|", nIdx1 + 1)) != -1)) {
             str = content.substring(nIdx1 + 1, nIdx2);
           }
           break;
@@ -847,24 +870,25 @@ public class EncryptedData {
 
   /**
    * Returns the id part of the given embedded digidoc metadata item.
-   *
-   * @param nProp index of digidoc metadata properties
-   *
+   * 
+   * @param nProp
+   *          index of digidoc metadata properties
+   * 
    * @return id part of the given property
-   *
+   * 
    * @throws DigiDocException
    */
   public String getPropOrigFileId(int nProp) {
     String str = null;
     int n = 0, nIdx1 = 0;
-    for (int i = 0; (m_encProperties != null) && (i < m_encProperties.getNumProperties()); i++) {
+    for (int i = 0; (m_encProperties != null)
+        && (i < m_encProperties.getNumProperties()); i++) {
       EncryptionProperty prop = m_encProperties.getProperty(i);
       if (prop.getName() != null && prop.getName().equals(ENCPROP_ORIG_FILE)) {
         n++;
         if (n == nProp) {// the right property
           String content = prop.getContent();
-          if ((content != null) &&
-              ((nIdx1 = content.lastIndexOf("|")) != -1)) {
+          if ((content != null) && ((nIdx1 = content.lastIndexOf("|")) != -1)) {
             str = content.substring(nIdx1 + 1);
           }
           break;
@@ -876,8 +900,9 @@ public class EncryptedData {
 
   /**
    * Adds an <EncryptedKey> object to the array of keys
-   *
-   * @param prop new property object to be added
+   * 
+   * @param prop
+   *          new property object to be added
    */
   public void addEncryptedKey(EncryptedKey key) {
     if (m_arrEncryptedKeys == null) {
@@ -888,7 +913,7 @@ public class EncryptedData {
 
   /**
    * Rturns the number of <EncryptedKey> objects in the list
-   *
+   * 
    * @return number of <EncryptedKey> objects
    */
   public int getNumKeys() {
@@ -897,45 +922,46 @@ public class EncryptedData {
 
   /**
    * Returns the n-th <EncryptedKey> object
-   *
-   * @param nIdx index of the key
-   *
+   * 
+   * @param nIdx
+   *          index of the key
+   * 
    * @return the desired <EncryptedKey> object or null
    */
   public EncryptedKey getEncryptedKey(int nIdx) {
     if (nIdx < getNumKeys()) {
-      return (EncryptedKey)m_arrEncryptedKeys.get(nIdx);
-    }
-    else {
+      return (EncryptedKey) m_arrEncryptedKeys.get(nIdx);
+    } else {
       return null;
     }
   }
 
   /**
    * Returns the last <EncryptedKey> object
-   *
+   * 
    * @return the last <EncryptedKey> object or null
    */
   public EncryptedKey getLastEncryptedKey() {
     if (m_arrEncryptedKeys != null && m_arrEncryptedKeys.size() > 0) {
-      return (EncryptedKey)m_arrEncryptedKeys.get(m_arrEncryptedKeys.size() - 1);
-    }
-    else {
+      return (EncryptedKey) m_arrEncryptedKeys
+          .get(m_arrEncryptedKeys.size() - 1);
+    } else {
       return null;
     }
   }
 
-
   /**
    * Returns the <EncryptedKey> object with the given Id atribute
-   *
-   * @param id the desired objects Id atribute value
-   *
+   * 
+   * @param id
+   *          the desired objects Id atribute value
+   * 
    * @return the desired <EncryptedKey> object or null
    */
   public EncryptedKey findKeyById(String id) {
-    for (int i = 0; (m_arrEncryptedKeys != null) && (i < m_arrEncryptedKeys.size()); i++) {
-      EncryptedKey key = (EncryptedKey)m_arrEncryptedKeys.get(i);
+    for (int i = 0; (m_arrEncryptedKeys != null)
+        && (i < m_arrEncryptedKeys.size()); i++) {
+      EncryptedKey key = (EncryptedKey) m_arrEncryptedKeys.get(i);
       if (key.getId() != null && key.getId().equals(id)) {
         return key;
       }
@@ -945,14 +971,16 @@ public class EncryptedData {
 
   /**
    * Returns the <EncryptedKey> object with the given Recipient atribute
-   *
-   * @param recv the desired objects Recipient atribute value
-   *
+   * 
+   * @param recv
+   *          the desired objects Recipient atribute value
+   * 
    * @return the desired <EncryptedKey> object or null
    */
   public EncryptedKey findKeyByRecipient(String recv) {
-    for (int i = 0; (m_arrEncryptedKeys != null) && (i < m_arrEncryptedKeys.size()); i++) {
-      EncryptedKey key = (EncryptedKey)m_arrEncryptedKeys.get(i);
+    for (int i = 0; (m_arrEncryptedKeys != null)
+        && (i < m_arrEncryptedKeys.size()); i++) {
+      EncryptedKey key = (EncryptedKey) m_arrEncryptedKeys.get(i);
       if (key.getRecipient() != null && key.getRecipient().equals(recv)) {
         return key;
       }
@@ -961,135 +989,138 @@ public class EncryptedData {
   }
 
   /**
-   * Returns the <EncryptedKey> object with the given
-   * recipients cert that has this subject DN atribute
-   * @param subjectDN the desired objects cert's subject DN
+   * Returns the <EncryptedKey> object with the given recipients cert that has
+   * this subject DN atribute
+   * 
+   * @param subjectDN
+   *          the desired objects cert's subject DN
    * @return the desired <EncryptedKey> object or null
    */
-  /*public EncryptedKey findKeyByCertSubjectDN(String subjectDN)
-    throws IOException
-  {
-    X509CertSelector certSelector = new X509CertSelector();
-    certSelector.setSubject(subjectDN);
-    for(int i = 0; (m_arrEncryptedKeys != null) && (i < m_arrEncryptedKeys.size()); i++) {
-      EncryptedKey key = (EncryptedKey)m_arrEncryptedKeys.get(i);
-      if(key.getRecipientsCertificate() != null && certSelector.match(key.getRecipientsCertificate()))
-        return key;
-    }
-    return null;
-  }*/
+  /*
+   * public EncryptedKey findKeyByCertSubjectDN(String subjectDN) throws
+   * IOException { X509CertSelector certSelector = new X509CertSelector();
+   * certSelector.setSubject(subjectDN); for(int i = 0; (m_arrEncryptedKeys !=
+   * null) && (i < m_arrEncryptedKeys.size()); i++) { EncryptedKey key =
+   * (EncryptedKey)m_arrEncryptedKeys.get(i); if(key.getRecipientsCertificate()
+   * != null && certSelector.match(key.getRecipientsCertificate())) return key;
+   * } return null; }
+   */
 
   /**
    * Generates the session key
-   *
-   * @throws DigiDocException for all initialization errors
+   * 
+   * @throws DigiDocException
+   *           for all initialization errors
    */
-  private void initKey()
-    throws DigiDocException {
+  private void initKey() throws DigiDocException {
     // add BouncyCastle provider if not done yet
     try {
-      Security.addProvider((Provider)Class.forName(
-        ConfigManager.instance().getProperty("DIGIDOC_SECURITY_PROVIDER")).newInstance());
-    }
-    catch (Exception ex) {
+      Security.addProvider((Provider) Class.forName(
+          ConfigManager.instance().getProperty("DIGIDOC_SECURITY_PROVIDER"))
+          .newInstance());
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_NO_PROVIDER);
     }
     // check key status first
     if (m_transportKey != null) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_KEY_STATUS,
-                                 "Transport key allready initialized!", null);
+          "Transport key allready initialized!", null);
     }
     try {
-      SecureRandom random = SecureRandom.getInstance(
-        ConfigManager.instance().getProperty("DIGIDOC_SECRANDOM_ALGORITHM"));
-      KeyGenerator keygen = KeyGenerator.getInstance(
-        ConfigManager.instance().getProperty("DIGDOC_ENCRYPT_KEY_ALG"),
-        ConfigManager.instance().getProperty("DIGIDOC_SECURITY_PROVIDER_NAME"));
+      SecureRandom random = SecureRandom.getInstance(ConfigManager.instance()
+          .getProperty("DIGIDOC_SECRANDOM_ALGORITHM"));
+      KeyGenerator keygen = KeyGenerator.getInstance(ConfigManager.instance()
+          .getProperty("DIGDOC_ENCRYPT_KEY_ALG"), ConfigManager.instance()
+          .getProperty("DIGIDOC_SECURITY_PROVIDER_NAME"));
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Keygen:" + keygen.getClass().getName() + " algorithm: " + keygen.getAlgorithm());
+        m_logger.debug("Keygen:" + keygen.getClass().getName() + " algorithm: "
+            + keygen.getAlgorithm());
       }
       keygen.init(128, random);
       m_transportKey = keygen.generateKey();
       if (m_logger.isDebugEnabled()) {
         m_logger.debug("key0: " + m_transportKey.getEncoded().length);
       }
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_KEY_GEN);
     }
     // check the result
     if (m_transportKey == null) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_KEY_GEN,
-                                 "Failure to initialize the transport key!", null);
+          "Failure to initialize the transport key!", null);
     }
   }
 
   /**
    * Helper method to convert secret key to a Cipher
-   *
-   * @param mode ciphers mode: encrypt or decrypt
-   * @param transportKey secret key. Use null for default
-   * @param iv init vector data. Use null for no IV
-   *
+   * 
+   * @param mode
+   *          ciphers mode: encrypt or decrypt
+   * @param transportKey
+   *          secret key. Use null for default
+   * @param iv
+   *          init vector data. Use null for no IV
+   * 
    * @return Cipher object
    */
   public Cipher getCipher(int mode, SecretKey transportKey, byte[] iv)
-    throws DigiDocException {
+      throws DigiDocException {
     Cipher cip = null;
     byte[] ivdata = null;
     // check key status first - nothing to encrypt?
     if (m_transportKey == null && transportKey == null) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_KEY_STATUS,
-                                 "Transport key has not been initialized!", null);
+          "Transport key has not been initialized!", null);
     }
     try {
-      cip = Cipher.getInstance(
-        ConfigManager.instance().getProperty("DIGIDOC_ENCRYPTION_ALOGORITHM"),
-        ConfigManager.instance().getProperty("DIGIDOC_SECURITY_PROVIDER_NAME"));
+      cip = Cipher.getInstance(ConfigManager.instance().getProperty(
+          "DIGIDOC_ENCRYPTION_ALOGORITHM"), ConfigManager.instance()
+          .getProperty("DIGIDOC_SECURITY_PROVIDER_NAME"));
       if (mode == Cipher.DECRYPT_MODE) {
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        cip.init(mode, ((transportKey == null) ? m_transportKey : transportKey), ivSpec);
-      }
-      else {
-        cip.init(mode, ((transportKey == null) ? m_transportKey : transportKey));
+        cip.init(mode,
+            ((transportKey == null) ? m_transportKey : transportKey), ivSpec);
+      } else {
+        cip
+            .init(mode,
+                ((transportKey == null) ? m_transportKey : transportKey));
         ivdata = cip.getIV();
         System.arraycopy(ivdata, 0, iv, 0, 16);// copy the iv used
       }
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Cipher: " + cip.getAlgorithm() + " provider: " + cip.getProvider().getName());
+        m_logger.debug("Cipher: " + cip.getAlgorithm() + " provider: "
+            + cip.getProvider().getName());
         ivdata = cip.getIV();
-        //for(int i = 0; i < ivdata.length; i++)
-        //	System.out.println("IV pos: " + i + " = " + ivdata[i]);
-        //cip.getProvider().list(System.out);
+        // for(int i = 0; i < ivdata.length; i++)
+        // System.out.println("IV pos: " + i + " = " + ivdata[i]);
+        // cip.getProvider().list(System.out);
       }
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_ENCRYPT);
     }
     return cip;
   }
 
-
   /**
    * Encrypts the data with the given
-   *
-   * @param nCompressOption compression option: allways, never or best effort
-   *
-   * @throws DigiDocException for encryption errors
+   * 
+   * @param nCompressOption
+   *          compression option: allways, never or best effort
+   * 
+   * @throws DigiDocException
+   *           for encryption errors
    */
-  public void encrypt(int nCompressOption)
-    throws DigiDocException {
+  public void encrypt(int nCompressOption) throws DigiDocException {
     byte[] ivdata = new byte[16];
     // check the transport key
     if (m_transportKey == null) {
       initKey();
     }
     // check data
-    if (m_data == null ||
-        (m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED &&
-         m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_NOT_COMPRESSED)) {
+    if (m_data == null
+        || (m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED && m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_NOT_COMPRESSED)) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_DATA_STATUS,
-                                 "Invalid data status for encryption operation!", null);
+          "Invalid data status for encryption operation!", null);
     }
     int nTotalInput = m_data.length, nTotalCompressed = 0, nTotalEncrypted = 0;
     // compress data if necessary
@@ -1101,7 +1132,8 @@ public class EncryptedData {
 
       // get the cipher
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Encrypt - algorithm: " + cipher.getAlgorithm() + " blocksize: " + cipher.getBlockSize());
+        m_logger.debug("Encrypt - algorithm: " + cipher.getAlgorithm()
+            + " blocksize: " + cipher.getBlockSize());
       }
       int nBlockSize = cipher.getBlockSize();
       // encrypt full data blocks
@@ -1110,16 +1142,19 @@ public class EncryptedData {
       bos.write(m_data, 0, m_data.length - nLastBlockSize);
       int nOrigLen = m_data.length;
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Encrypt - body: " + m_data.length + " full-data: " + (m_data.length - nLastBlockSize) + " left: " + nLastBlockSize);
+        m_logger.debug("Encrypt - body: " + m_data.length + " full-data: "
+            + (m_data.length - nLastBlockSize) + " left: " + nLastBlockSize);
       }
       // compose the last block
       byte[] cdata = new byte[nBlockSize];
-      System.arraycopy(m_data, m_data.length - nLastBlockSize, cdata, 0, nLastBlockSize);
+      System.arraycopy(m_data, m_data.length - nLastBlockSize, cdata, 0,
+          nLastBlockSize);
       for (int i = nLastBlockSize; i < nBlockSize; i++) {
         cdata[i] = 0;// pad with zeros
       }
       // last byte contains the amount of pad-bytes in this block
-      cdata[nBlockSize - 1] = new Integer(nBlockSize - nLastBlockSize).byteValue();
+      cdata[nBlockSize - 1] = new Integer(nBlockSize - nLastBlockSize)
+          .byteValue();
       bos.write(cdata);
       if (m_logger.isDebugEnabled()) {
         for (int i = 0; i < nBlockSize; i++) {
@@ -1130,49 +1165,51 @@ public class EncryptedData {
       cdata = cipher.doFinal(bos.toByteArray());
       nTotalEncrypted = cdata.length;
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Encrypt - orig: " + nOrigLen + " input: " + (nOrigLen - nLastBlockSize + nBlockSize) + " encrypted: " + cdata.length);
+        m_logger.debug("Encrypt - orig: " + nOrigLen + " input: "
+            + (nOrigLen - nLastBlockSize + nBlockSize) + " encrypted: "
+            + cdata.length);
       }
       // encrypted data
       m_data = new byte[cdata.length + 16];
       System.arraycopy(ivdata, 0, m_data, 0, 16);
       System.arraycopy(cdata, 0, m_data, 16, cdata.length);
       m_nDataStatus = DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED;
-      //	encrypt transport key for all recipients
+      // encrypt transport key for all recipients
       for (int i = 0; i < getNumKeys(); i++) {
         EncryptedKey ekey = getEncryptedKey(i);
         ekey.encryptKey(this);
       }
       if (m_logger.isInfoEnabled()) {
-        m_logger.info("Encrypt total - input: " + nTotalInput + " compressed: " + nTotalCompressed + " encrypted: " + nTotalEncrypted);
+        m_logger.info("Encrypt total - input: " + nTotalInput + " compressed: "
+            + nTotalCompressed + " encrypted: " + nTotalEncrypted);
       }
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_ENCRYPT);
     }
   }
 
   /**
    * Decrypts the data with the given
-   *
-   * @throws DigiDocException for decryption errors
+   * 
+   * @throws DigiDocException
+   *           for decryption errors
    */
-  public void decrypt(int nKey, int token, String pin)
-    throws DigiDocException {
+  public void decrypt(int nKey, int token, String pin) throws DigiDocException {
     byte[] ivdata = new byte[16];
     // check data
-    if (m_data == null ||
-        (m_nDataStatus != DENC_DATA_STATUS_ENCRYPTED_AND_COMPRESSED &&
-         m_nDataStatus != DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED)) {
+    if (m_data == null
+        || (m_nDataStatus != DENC_DATA_STATUS_ENCRYPTED_AND_COMPRESSED && m_nDataStatus != DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED)) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_DATA_STATUS,
-                                 "Invalid data status for decryption operation!", null);
+          "Invalid data status for decryption operation!", null);
     }
     if (m_logger.isDebugEnabled()) {
-      m_logger.debug("Decrypting " + m_data.length + " using iv " + ivdata.length + " left: " + (m_data.length - ivdata.length));
+      m_logger.debug("Decrypting " + m_data.length + " using iv "
+          + ivdata.length + " left: " + (m_data.length - ivdata.length));
     }
     // use the first 16 bytes as IV value and remove it from decryption process
     System.arraycopy(m_data, 0, ivdata, 0, ivdata.length);
-    //for(int i = 0; i < ivdata.length; i++)
-    //	System.out.println("IV pos: " + i + " = " + ivdata[i]);
+    // for(int i = 0; i < ivdata.length; i++)
+    // System.out.println("IV pos: " + i + " = " + ivdata[i]);
     EncryptedKey ekey = getEncryptedKey(nKey);
     try {
       // decrypt transport key
@@ -1181,15 +1218,15 @@ public class EncryptedData {
         m_logger.debug("Decrypting key: " + nKey + " with token: " + token);
       }
       byte[] decdata = sfac.decrypt(ekey.getTransportKeyData(), token, pin);
-      m_transportKey = (SecretKey)new SecretKeySpec(decdata,
-                                                    ConfigManager.instance().getProperty("DIGIDOC_ENCRYPTION_ALOGORITHM"));
+      m_transportKey = (SecretKey) new SecretKeySpec(decdata, ConfigManager
+          .instance().getProperty("DIGIDOC_ENCRYPTION_ALOGORITHM"));
       // decrypt data
       Cipher cipher = getCipher(Cipher.DECRYPT_MODE, m_transportKey, ivdata);
       if (m_logger.isDebugEnabled()) {
         m_logger.debug("Decrypting: " + m_data.length + " bytes");
       }
       m_data = cipher.update(m_data, 16, m_data.length - 16);
-      //m_data = cipher.doFinal(m_data, 16, m_data.length - 16);
+      // m_data = cipher.doFinal(m_data, 16, m_data.length - 16);
       if (m_logger.isDebugEnabled()) {
         m_logger.debug("Decrypted data: " + m_data.length + " bytes");
       }
@@ -1206,14 +1243,16 @@ public class EncryptedData {
       }
       int nPadLen = new Integer(m_data[m_data.length - 1]).intValue();
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("Decrypted: " + m_data.length + " bytes, check padding: " + nPadLen);
+        m_logger.debug("Decrypted: " + m_data.length
+            + " bytes, check padding: " + nPadLen);
       }
       // remove padding
       boolean bPadOk = true;
       for (int i = m_data.length - nPadLen; i < m_data.length - 1; i++) {
         if (m_data[i] != 0) {
           if (m_logger.isDebugEnabled()) {
-            m_logger.debug("Data at: " + i + " = " + m_data[i] + " cancel padding");
+            m_logger.debug("Data at: " + i + " = " + m_data[i]
+                + " cancel padding");
           }
           bPadOk = false;
           break;
@@ -1230,29 +1269,30 @@ public class EncryptedData {
       if (m_nDataStatus == DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED) {
         decompress();
       }
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_DECRYPT);
     }
   }
 
   /**
    * Compresses the unencrypted data using ZLIB algorithm
-   *
-   * @param nCompressOption compression option: allways, never or best effort
-   *
-   * @throws DigiDocException for compression errors
+   * 
+   * @param nCompressOption
+   *          compression option: allways, never or best effort
+   * 
+   * @throws DigiDocException
+   *           for compression errors
    */
-  private void compress(int nCompressOption)
-    throws DigiDocException {
+  private void compress(int nCompressOption) throws DigiDocException {
     // check the flag
     if (nCompressOption == DENC_COMPRESS_NEVER) {
       return;// nothing to do
     }
     // check data
-    if (m_data == null || m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_NOT_COMPRESSED) {
+    if (m_data == null
+        || m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_NOT_COMPRESSED) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_DATA_STATUS,
-                                 "Invalid data status for compression operation!", null);
+          "Invalid data status for compression operation!", null);
     }
     try {
       int nOldSize = m_data.length;
@@ -1267,8 +1307,8 @@ public class EncryptedData {
       bout.close();
       byte[] n_data = bout.toByteArray();
       int nNewSize = n_data.length;
-      if (nCompressOption == DENC_COMPRESS_ALLWAYS ||
-          (nCompressOption == DENC_COMPRESS_BEST_EFFORT && nNewSize < nOldSize)) {
+      if (nCompressOption == DENC_COMPRESS_ALLWAYS
+          || (nCompressOption == DENC_COMPRESS_BEST_EFFORT && nNewSize < nOldSize)) {
         m_nDataStatus = DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED;
         m_data = n_data;
         // store original size and mime type
@@ -1281,29 +1321,29 @@ public class EncryptedData {
         if (m_logger.isDebugEnabled()) {
           m_logger.debug("Keeping compressed: " + m_data.length + " bytes");
         }
-      }
-      else {
+      } else {
         if (m_logger.isDebugEnabled()) {
           m_logger.debug("Discarding compressed: " + m_data.length + " bytes");
         }
       }
-    }
-    catch (Exception ex) {
-      DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_COMPRESS);
+    } catch (Exception ex) {
+      DigiDocException
+          .handleException(ex, DigiDocException.ERR_XMLENC_COMPRESS);
     }
   }
 
   /**
    * Decompresses the unencrypted data using ZLIB algorithm
-   *
-   * @throws DigiDocException for decompression errors
+   * 
+   * @throws DigiDocException
+   *           for decompression errors
    */
-  private void decompress()
-    throws DigiDocException {
-    //	check data
-    if (m_data == null || m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED) {
+  private void decompress() throws DigiDocException {
+    // check data
+    if (m_data == null
+        || m_nDataStatus != DENC_DATA_STATUS_UNENCRYPTED_AND_COMPRESSED) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_DATA_STATUS,
-                                 "Invalid data status for decompression operation!", null);
+          "Invalid data status for decompression operation!", null);
     }
     try {
       if (m_logger.isDebugEnabled()) {
@@ -1325,28 +1365,34 @@ public class EncryptedData {
       if (m_logger.isDebugEnabled()) {
         m_logger.debug("Decompressed: " + m_data.length + " bytes");
       }
-    }
-    catch (Exception ex) {
-      DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_DECOMPRESS);
+    } catch (Exception ex) {
+      DigiDocException.handleException(ex,
+          DigiDocException.ERR_XMLENC_DECOMPRESS);
     }
   }
 
-
   /**
-   * Encrypts all input data coming from this stream, compresses it if necessary converts to base64 and writes as an XML encrypted
-   * document to output stream. Use this method to encrypt big amunts of data. Please note that you must first inittialize the
-   * recipients (e.g. EncryptedKey objects) but not the data. Data comes from the input stream, thus data status should be
+   * Encrypts all input data coming from this stream, compresses it if necessary
+   * converts to base64 and writes as an XML encrypted document to output
+   * stream. Use this method to encrypt big amunts of data. Please note that you
+   * must first inittialize the recipients (e.g. EncryptedKey objects) but not
+   * the data. Data comes from the input stream, thus data status should be
    * UNINITIALIZED when you call this method.
-   *
-   * @param in stream with data to encrypt
-   * @param out output stream for encrypted data
-   * @param nCompressOption compression option: allways, never. Best-effort is not supported here because we don't know it before we
-   * have encrypted eveything end then we don't want to redo this.
-   *
-   * @throws DigiDocException for encryption errors
+   * 
+   * @param in
+   *          stream with data to encrypt
+   * @param out
+   *          output stream for encrypted data
+   * @param nCompressOption
+   *          compression option: allways, never. Best-effort is not supported
+   *          here because we don't know it before we have encrypted eveything
+   *          end then we don't want to redo this.
+   * 
+   * @throws DigiDocException
+   *           for encryption errors
    */
-  public void encryptStream(InputStream in, OutputStream out, int nCompressOption)
-    throws DigiDocException {
+  public void encryptStream(InputStream in, OutputStream out,
+      int nCompressOption) throws DigiDocException {
     byte[] ivdata = new byte[16];
     // check the transport key
     if (m_transportKey == null) {
@@ -1355,7 +1401,7 @@ public class EncryptedData {
     // check data
     if (m_data != null || m_nDataStatus != DENC_DATA_STATUS_UNINITIALIZED) {
       throw new DigiDocException(DigiDocException.ERR_XMLENC_DATA_STATUS,
-                                 "Invalid data status for encryption operation!", null);
+          "Invalid data status for encryption operation!", null);
     }
     // get cipher to encrypt the data
     Cipher cipher = getCipher(Cipher.ENCRYPT_MODE, null, ivdata);
@@ -1378,9 +1424,10 @@ public class EncryptedData {
     try {
       // get the cipher
       if (m_logger.isDebugEnabled()) {
-        m_logger.debug("EncryptStream - algorithm: " + cipher.getAlgorithm() + " blocksize: " + nCiphBlockSize);
+        m_logger.debug("EncryptStream - algorithm: " + cipher.getAlgorithm()
+            + " blocksize: " + nCiphBlockSize);
       }
-      //	encrypt transport key for all recipients
+      // encrypt transport key for all recipients
       for (int i = 0; i < getNumKeys(); i++) {
         EncryptedKey ekey = getEncryptedKey(i);
         ekey.encryptKey(this);
@@ -1409,8 +1456,7 @@ public class EncryptedData {
               compressor.finish();
               nLen2 = compressor.deflate(data2);
               isReadFromFile = compressor.finished();
-            }
-            else {
+            } else {
               nLen2 = compressor.deflate(data2);
               if (nLen2 > 0) {
                 isReadFromFile = false;
@@ -1418,21 +1464,20 @@ public class EncryptedData {
             }
             nTotalCompressed += nLen2;
             if (m_logger.isDebugEnabled()) {
-              m_logger.debug("EncryptStream - input: " + nLen1 + " compressed: " + nLen2 + " needin: " + compressor.needsInput());
+              m_logger.debug("EncryptStream - input: " + nLen1
+                  + " compressed: " + nLen2 + " needin: "
+                  + compressor.needsInput());
             }
-          }
-          else {// don't compress
+          } else {// don't compress
             System.arraycopy(data1, 0, data2, 0, nLen1);
             nLen2 = nLen1;
           }
-        }
-        else {
+        } else {
           nLen1 = 0;
           nLen2 = compressor.deflate(data2);
           if (isLastBlock) {
             isReadFromFile = compressor.finished();
-          }
-          else {
+          } else {
             isReadFromFile = (nLen2 == 0);
           }
           nTotalCompressed += nLen2;
@@ -1441,7 +1486,8 @@ public class EncryptedData {
         byte[] encdata = null;
 
         if (m_logger.isDebugEnabled()) {
-          m_logger.debug("EncryptStream - input: " + nLen1 + " enc-input: " + nLen2);
+          m_logger.debug("EncryptStream - input: " + nLen1 + " enc-input: "
+              + nLen2);
         }
         if (isReadFromFile && isLastBlock) {// last block
           ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -1457,7 +1503,8 @@ public class EncryptedData {
           // calculate padding
           int nLastBlockSize = nCiphBlockSize - (nTotalEncInp % nCiphBlockSize);
           if (m_logger.isDebugEnabled()) {
-            m_logger.debug("EncryptStream - total-data: " + nTotalEncInp + " padding: " + nLastBlockSize);
+            m_logger.debug("EncryptStream - total-data: " + nTotalEncInp
+                + " padding: " + nLastBlockSize);
           }
           byte[] ldata = new byte[nLastBlockSize];
           for (int i = 0; i < nLastBlockSize; i++) {
@@ -1469,16 +1516,17 @@ public class EncryptedData {
           bos.write(encdata);
           encdata = bos.toByteArray();
           if (m_logger.isDebugEnabled()) {
-            m_logger.debug("EncryptStream - encrypted: " + ((encdata != null) ? encdata.length : 0));
+            m_logger.debug("EncryptStream - encrypted: "
+                + ((encdata != null) ? encdata.length : 0));
           }
 
-        }
-        else {// not the last block
+        } else {// not the last block
           if (nLen2 > 0) {
             encdata = cipher.update(data2, 0, nLen2);
             nTotalEncInp += nLen2;
             if (m_logger.isDebugEnabled()) {
-              m_logger.debug("EncryptStream - norm input: " + nLen2 + " encrypted: " + ((encdata != null) ? encdata.length : 0));
+              m_logger.debug("EncryptStream - norm input: " + nLen2
+                  + " encrypted: " + ((encdata != null) ? encdata.length : 0));
             }
           }
         }
@@ -1491,35 +1539,41 @@ public class EncryptedData {
             System.arraycopy(encdata, 0, tdata, 16, encdata.length);
             nTotalEncrypted += encdata.length;
             encdata = tdata;
-          }
-          else {
+          } else {
             nTotalEncrypted += encdata.length;
           }
           // use also data left over from last block
           if (nB64left > 0) {
             if (m_logger.isDebugEnabled()) {
-              m_logger.debug("EncryptStream - input: " + encdata.length + " left: " + nB64left);
+              m_logger.debug("EncryptStream - input: " + encdata.length
+                  + " left: " + nB64left);
             }
             byte[] data3 = new byte[encdata.length + nB64left];
             System.arraycopy(b64leftover, 0, data3, 0, nB64left);
             System.arraycopy(encdata, 0, data3, nB64left, encdata.length);
             encdata = data3;
           }
-          int nUsed = Base64Util.encodeToStream(encdata, out, (isLastBlock && isReadFromFile));
+          int nUsed = Base64Util.encodeToStream(encdata, out,
+              (isLastBlock && isReadFromFile));
           nB64left = encdata.length - nUsed;
           if (m_logger.isDebugEnabled()) {
-            m_logger.debug("EncryptStream - input: " + encdata.length + " used: " + nUsed + " copy: " + nB64left + " pos: " + nUsed);
+            m_logger.debug("EncryptStream - input: " + encdata.length
+                + " used: " + nUsed + " copy: " + nB64left + " pos: " + nUsed);
           }
           if (nB64left > 0) {
             System.arraycopy(encdata, nUsed, b64leftover, 0, nB64left);
             nTotalBase64 += (nUsed / 3) * 4;
             if (m_logger.isDebugEnabled()) {
-              m_logger.debug("EncryptStream - input: " + encdata.length + " used: " + nUsed + " base64: " + ((nUsed / 3) * 4) + " left: " + nB64left);
+              m_logger.debug("EncryptStream - input: " + encdata.length
+                  + " used: " + nUsed + " base64: " + ((nUsed / 3) * 4)
+                  + " left: " + nB64left);
             }
           }
         }
-      }
-      while (!isLastBlock || (nLen1 == nBlockSize || !isReadFromFile));// end reading input data
+      } while (!isLastBlock || (nLen1 == nBlockSize || !isReadFromFile));// end
+                                                                         // reading
+                                                                         // input
+                                                                         // data
 
       addProperty(ENCPROP_ORIG_SIZE, new Integer(nTotalInput).toString());
 
@@ -1527,24 +1581,22 @@ public class EncryptedData {
       out.write(xmlTrailer());
       out.flush();
       if (m_logger.isInfoEnabled()) {
-        m_logger.info("EncryptStream total - input: " + nTotalInput + " compressed: " + nTotalCompressed + " encrypted: " + nTotalEncrypted + " base64: " + nTotalBase64);
+        m_logger.info("EncryptStream total - input: " + nTotalInput
+            + " compressed: " + nTotalCompressed + " encrypted: "
+            + nTotalEncrypted + " base64: " + nTotalBase64);
       }
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XMLENC_ENCRYPT);
     }
   }
 
-
   /**
    * Converts the EncryptedData to XML form
-   *
+   * 
    * @return XML representation of EncryptedData
    */
-  public byte[] toXML()
-    throws DigiDocException {
-    ByteArrayOutputStream bos =
-      new ByteArrayOutputStream();
+  public byte[] toXML() throws DigiDocException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
     try {
       bos.write(xmlHeader());
       byte[] b64data = ConvertUtils.str2data(Base64Util.encode(m_data, 64));
@@ -1554,8 +1606,7 @@ public class EncryptedData {
         m_logger.info("Encrypt total - base64: " + nTotalBase64);
       }
       bos.write(xmlTrailer());
-    }
-    catch (IOException ex) {
+    } catch (IOException ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XML_CONVERT);
     }
     return bos.toByteArray();
@@ -1563,16 +1614,16 @@ public class EncryptedData {
 
   /**
    * Converts the EncryptedData header (until payload data) to XML form
-   *
+   * 
    * @return XML representation of EncryptedData header
    */
-  private byte[] xmlHeader()
-    throws DigiDocException {
-    ByteArrayOutputStream bos =
-      new ByteArrayOutputStream();
+  private byte[] xmlHeader() throws DigiDocException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
     try {
-      bos.write(ConvertUtils.str2data("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
-      bos.write(ConvertUtils.str2data("<denc:EncryptedData xmlns:denc=\"" + m_xmlns + "\""));
+      bos.write(ConvertUtils
+          .str2data("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"));
+      bos.write(ConvertUtils.str2data("<denc:EncryptedData xmlns:denc=\""
+          + m_xmlns + "\""));
       if (m_id != null) {
         bos.write(ConvertUtils.str2data(" Id=\"" + m_id + "\""));
       }
@@ -1587,7 +1638,8 @@ public class EncryptedData {
       bos.write(ConvertUtils.str2data("<denc:EncryptionMethod Algorithm=\""));
       bos.write(ConvertUtils.str2data(m_encryptionMethod));
       bos.write(ConvertUtils.str2data("\"></denc:EncryptionMethod>"));
-      bos.write(ConvertUtils.str2data("<ds:KeyInfo xmlns:ds=\"" + DENC_XMLNS_XMLDSIG + "\">"));
+      bos.write(ConvertUtils.str2data("<ds:KeyInfo xmlns:ds=\""
+          + DENC_XMLNS_XMLDSIG + "\">"));
       for (int i = 0; i < getNumKeys(); i++) {
         EncryptedKey key = getEncryptedKey(i);
         bos.write(key.toXML());
@@ -1595,8 +1647,7 @@ public class EncryptedData {
       bos.write(ConvertUtils.str2data("</ds:KeyInfo>"));
       bos.write(ConvertUtils.str2data("<denc:CipherData><denc:CipherValue>"));
       // after this comes payload data
-    }
-    catch (IOException ex) {
+    } catch (IOException ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XML_CONVERT);
     }
     return bos.toByteArray();
@@ -1604,20 +1655,19 @@ public class EncryptedData {
 
   /**
    * Converts the EncryptedData header (until payload data) to XML form
-   *
+   * 
    * @return XML representation of EncryptedData header
    */
-  private byte[] xmlTrailer()
-    throws DigiDocException {
-    ByteArrayOutputStream bos =
-      new ByteArrayOutputStream();
+  private byte[] xmlTrailer() throws DigiDocException {
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
     try {
       // header and encrypted data comes before this
       bos.write(ConvertUtils.str2data("</denc:CipherValue></denc:CipherData>"));
       if (getNumProperties() > 0) {
         bos.write(ConvertUtils.str2data("<denc:EncryptionProperties"));
         if (getEncryptionPropertiesId() != null) {
-          bos.write(ConvertUtils.str2data(" Id=\"" + getEncryptionPropertiesId() + "\""));
+          bos.write(ConvertUtils.str2data(" Id=\""
+              + getEncryptionPropertiesId() + "\""));
         }
         bos.write(ConvertUtils.str2data(">"));
         for (int i = 0; i < getNumProperties(); i++) {
@@ -1627,8 +1677,7 @@ public class EncryptedData {
         bos.write(ConvertUtils.str2data("</denc:EncryptionProperties>"));
       }
       bos.write(ConvertUtils.str2data("</denc:EncryptedData>"));
-    }
-    catch (IOException ex) {
+    } catch (IOException ex) {
       DigiDocException.handleException(ex, DigiDocException.ERR_XML_CONVERT);
     }
     return bos.toByteArray();
@@ -1636,7 +1685,7 @@ public class EncryptedData {
 
   /**
    * Helper method to validate the whole EncryptedData object
-   *
+   * 
    * @return a possibly empty list of DigiDocException objects
    */
   public ArrayList validate() {
@@ -1667,15 +1716,14 @@ public class EncryptedData {
 
   /**
    * Returns the stringified form of KeyInfo
-   *
+   * 
    * @return KeyInfo string representation
    */
   public String toString() {
     String str = null;
     try {
       str = new String(toXML());
-    }
-    catch (Exception ex) {
+    } catch (Exception ex) {
     }
     return str;
   }

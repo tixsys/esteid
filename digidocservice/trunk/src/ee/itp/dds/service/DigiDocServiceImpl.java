@@ -157,7 +157,9 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         }
         boolean ret = sessionHolder.closeSession("" + sesscode);
         log.info((ret ? "session closed, code : " : "Session not found for closing :") + sesscode);
-        return ret ? ResponseStatus.OK.name() : ResponseStatus.WRONG_SESSION_CODE.name();
+        if (!ret)
+           throw new java.rmi.RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
+        return ResponseStatus.OK.name();
     }
 
     /**
@@ -165,13 +167,11 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
      * 
      * @throws IOException
      */
-    public void createSignedDoc(int sesscode, String format, String version, StringHolder status, SignedDocInfoHolder signedDocInfo) throws IOException {
+    public void createSignedDoc(int sesscode, String format, String version, StringHolder status, SignedDocInfoHolder signedDocInfo) throws RemoteException , IOException {
 
         Session session = sessionHolder.loadSession("" + sesscode);
-        if (session == null) {
-            status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
-        }
+        if (session == null) 
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
 
         status.value = ResponseStatus.OK.name();
 
@@ -188,17 +188,15 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
             } catch (DigiDocException e) {
 
-                status.value = ResponseStatus.ERROR.name();
                 log.error(this.getClass().getName() + "#createSignedDoc", e);
-
+                throw new RemoteException("Invalid format & version combination!"); //fix to compotable with old version
+                
             }// catch
 
         }// if
         else {
-
-            status.value = ResponseStatus.INPUT_DATA_ERROR.name();
             log.error(this.getClass().getName() + "#createSignedDoc " + ResponseStatus.INPUT_DATA_ERROR.name());
-
+            throw new RemoteException("Invalid format & version combination!"); //fix to compotable with old DDS version
         }
 
         signedDocInfo.value = new ee.itp.dds.service.SignedDocInfo();
@@ -220,8 +218,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
-            status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+          throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         if (fileName != null) {
@@ -287,24 +284,22 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                     getSignedDocInfo(sesscode, status, signedDocInfo);
 
                 } catch (DigiDocException e) {
-
-                    status.value = ResponseStatus.ERROR.name();
-                    log.error(this.getClass().getName() + "#addDataFile " + ResponseStatus.ERROR.name());
+                  log.error(this.getClass().getName() + "#addDataFile " + ResponseStatus.ERROR.name() + " message : " + e.getMessage());
+                  throw new RemoteException(e.getMessage());
 
                 }// catch
 
             }// if sdocBean
             else {
-
-                status.value = ResponseStatus.ERROR.name();
-                log.error(this.getClass().getName() + "#addDataFile " + ResponseStatus.ERROR.name());
-
+              log.error(this.getClass().getName() + "#addDataFile " + ResponseStatus.ERROR.name());
+              throw new RemoteException(ResponseStatus.ERROR.name());
             }// else
 
         } else {
 
             status.value = ResponseStatus.INPUT_DATA_ERROR.name();
             log.error(this.getClass().getName() + "#addDataFile " + ResponseStatus.INPUT_DATA_ERROR.name());
+            throw new RemoteException(ResponseStatus.ERROR.name());
 
         }// else
 
@@ -314,7 +309,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -349,10 +344,10 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                     getSignedDocInfo(sesscode, status, signedDocInfo);
 
                 } catch (DigiDocException e) {
-
-                    status.value = ResponseStatus.ERROR.name();
-                    log.error(this.getClass().getName() + "#removeDataFile " + ResponseStatus.ERROR.name());
-
+                  log.error(this.getClass().getName() + "#removeDataFile " + ResponseStatus.ERROR.name() + " message : " + e.getMessage());
+                  status.value = ResponseStatus.ERROR.name();
+                  throw new RemoteException(e.getMessage());
+                    
                 }// catch
 
             }// if sdocBean
@@ -360,6 +355,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
                 status.value = ResponseStatus.ERROR.name();
                 log.error(this.getClass().getName() + "#removeDataFile " + ResponseStatus.ERROR.name());
+                throw new RemoteException(ResponseStatus.ERROR.name());                
 
             }// else
 
@@ -367,17 +363,18 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
             status.value = ResponseStatus.INPUT_DATA_ERROR.name();
             log.error(this.getClass().getName() + "#removeDataFile " + ResponseStatus.INPUT_DATA_ERROR.name());
+            throw new RemoteException(ResponseStatus.INPUT_DATA_ERROR.name());                
 
         }// else
 
     }// removeDataFile
 
-    public void getSignedDoc(int sesscode, StringHolder status, StringHolder signedDocData) throws IOException, ClassNotFoundException, DigiDocException {
+    public void getSignedDoc(int sesscode, StringHolder status, StringHolder signedDocData) throws RemoteException, IOException, ClassNotFoundException, DigiDocException {
 
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -395,7 +392,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -437,7 +434,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -467,9 +464,9 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                     }// for
 
                 } catch (DigiDocException e) {
-
                     status.value = ResponseStatus.ERROR.name();
-                    log.error(this.getClass().getName() + "#getDataFile " + ResponseStatus.ERROR.name());
+                    log.error(this.getClass().getName() + "#getDataFile " + ResponseStatus.ERROR.name() + " message : " + e.getMessage());
+                    throw new RemoteException(e.getMessage());
 
                 }// catch
 
@@ -478,6 +475,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
                 status.value = ResponseStatus.ERROR.name();
                 log.error(this.getClass().getName() + "#getDataFile " + ResponseStatus.ERROR.name());
+                throw new RemoteException(ResponseStatus.ERROR.name());
 
             }// else
 
@@ -485,7 +483,8 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
             status.value = ResponseStatus.INPUT_DATA_ERROR.name();
             log.error(this.getClass().getName() + "#getDataFile " + ResponseStatus.INPUT_DATA_ERROR.name());
-
+            throw new RemoteException(ResponseStatus.INPUT_DATA_ERROR.name());
+            
         }// else
         
         sessionHolder.saveSessionWithAction(session, ActionEnum.GET_DATA_FILE);
@@ -497,7 +496,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
         sessionHolder.saveSessionWithAction(session, ActionEnum.GET_SIGNERS_CERTIFICATE);
         
@@ -516,6 +515,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                         certificateData.value = Base64Util.encode(cv.getCert().getEncoded());
                     } catch (CertificateEncodingException e) {
                         status.value = ResponseStatus.CANT_READ_SIGNER_CERT.name();
+                        throw new RemoteException("Must supply Signature id!");
                     };
                     break;
                 }// if
@@ -524,6 +524,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
             
         } else {
             status.value = ResponseStatus.NO_SIGNATURE_ID.name();
+            throw new RemoteException("No such Signature!");
         }
 
     }
@@ -532,7 +533,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
         sessionHolder.saveSessionWithAction(session, ActionEnum.GET_NOTARYS_CERTIFICATE);
         
@@ -551,6 +552,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                         certificateData.value = Base64Util.encode(cv.getCert().getEncoded());
                     } catch (CertificateEncodingException e) {
                         status.value = ResponseStatus.CANT_READ_NOTARYS_CERT.name();
+                        throw new RemoteException("No notary for this Signature!");
                     };
                     break;
                 }// if
@@ -558,6 +560,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
             
         } else {
             status.value = ResponseStatus.NO_SIGNATURE_ID.name();
+            throw new RemoteException("No such Signature!");
         }
     }
 
@@ -565,7 +568,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -590,8 +593,10 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
             }// for
             status.value = ResponseStatus.WRONG_SIGNATURE_ID.name();
+            throw new RemoteException("No notary for this Signature!");
         } else  { 
             status.value = ResponseStatus.NO_SIGNATURE_ID.name();
+            throw new RemoteException("No such Signature!");
             // if
         }
 
@@ -601,7 +606,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -613,7 +618,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -625,7 +630,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -638,7 +643,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
         Platform _platform = Platform.valueOf(platform);
         if (_platform == null) {
@@ -677,7 +682,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         Document sdocBean = session.getDocument();
@@ -708,7 +713,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -743,11 +748,11 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
 
     }// finalizeSignature
 
-    public void removeSignature(int sesscode, String signatureId, StringHolder status, SignedDocInfoHolder signedDocInfo) throws IOException, ClassNotFoundException, DigiDocException {
+    public void removeSignature(int sesscode, String signatureId, StringHolder status, SignedDocInfoHolder signedDocInfo) throws IOException {
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         status.value = ResponseStatus.OK.name();
@@ -756,7 +761,12 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         if (signatureId != null) {
 
             Document sdocBean = session.getDocument();
-            SignedDoc sdoc = sdocBean.getSignedDoc();
+            SignedDoc sdoc = null;
+            try {
+              sdoc = sdocBean.getSignedDoc();
+            } catch (ClassNotFoundException e) {
+              throw new RemoteException(e.getMessage());
+            }
 
             for (int j = 0; sdoc.countSignatures() > j; j++) {
 
@@ -765,7 +775,11 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
                 if (signatureId.trim().equals(theSig.getId())) {
 
                     sdoc.removeSignature(j);
-                    sdocBean.setSignedDoc(sdoc);
+                    try {
+                      sdocBean.setSignedDoc(sdoc);
+                    } catch (DigiDocException e) {
+                      throw new RemoteException(e.getMessage());
+                    }
                     session.setDocument(sdocBean);
                     sessionHolder.saveSession(session);
                     // sessionHolder.saveDocument(sesscode, sdocBean);
@@ -776,7 +790,13 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
             }// for
 
             // fills signedDocInfo
-            getSignedDocInfo(sesscode, status, signedDocInfo);
+            try {
+              getSignedDocInfo(sesscode, status, signedDocInfo);
+            } catch (ClassNotFoundException e) {
+              throw new RemoteException(e.getMessage());            
+            } catch (DigiDocException e) {
+              throw new RemoteException(e.getMessage());            
+            }
 
         }// if
 
@@ -792,7 +812,7 @@ public class DigiDocServiceImpl implements DigiDocServicePortType, DigiDocServic
         Session session = sessionHolder.loadSession("" + sesscode);
         if (session == null) {
             status.value = ResponseStatus.WRONG_SESSION_CODE.name();
-            return;
+            throw new RemoteException(ResponseStatus.WRONG_SESSION_CODE.name());
         }
 
         // NOT USED status.value = StatusInfo.PHONE_ABSENT.name();// TODO ??? 7.6 in documentation

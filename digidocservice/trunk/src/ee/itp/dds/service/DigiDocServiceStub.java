@@ -9,7 +9,10 @@ package ee.itp.dds.service;
 
 import java.util.Vector;
 
+import javax.xml.soap.SOAPException;
+
 import org.apache.axis.description.OperationDesc;
+import org.apache.axis.message.SOAPFault;
 
 public class DigiDocServiceStub extends org.apache.axis.client.Stub implements ee.itp.dds.service.DigiDocServicePortType {
     private Vector cachedSerClasses = new Vector();
@@ -1469,5 +1472,27 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
             throw axisFaultException;
         }
     }
+    
+    public boolean hasResponseFaultString() {
+      try {
+        return _call.getMessageContext().getResponseMessage().getSOAPPart().getEnvelope().getBody().hasFault();
+      } catch (SOAPException e) {
+        return false;
+      }
+    }
+
+    public String getFaultString() {
+      try {
+        javax.xml.soap.SOAPFault fault = _call.getMessageContext().getResponseMessage().getSOAPBody().getFault();
+        String fs = fault.getFaultString();
+        if (fs.startsWith("java.rmi.RemoteException:")) 
+          return fs.substring("java.rmi.RemoteException:".length()+1);
+        return fs;
+      } catch (SOAPException e) {
+        return null;
+      }
+    }
+    
+    
 
 }

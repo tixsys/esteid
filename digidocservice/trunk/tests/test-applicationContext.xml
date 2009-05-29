@@ -73,6 +73,10 @@
     <property name="dataSource" ref="dataSource"/>
   </bean>
 
+	<!-- Configuration bean -->
+	<bean name="configuration" class="ee.itp.dds.core.Configuration">
+	  <property name="location" value="classpath:dds_configuration.xml"/>
+	</bean>
 
 	
 	<bean id="eventDAO" class="ee.itp.dds.hibernate.EventDAO" />

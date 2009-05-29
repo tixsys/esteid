@@ -38,7 +38,7 @@ public class ReceivedDataHolder {
 
   public static String getContextConfigLocation() {
       String ret = (String) data.get().get(CONTEXT_CONFIGURATION);
-      return ret != null? ret : "classpath*:applicationContext*.xml" ;
+      return ret != null? ret : "classpath*:test-applicationContext*.xml" ;
   }
   
   
