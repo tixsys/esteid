@@ -51,6 +51,12 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
         return;
     }
 
+	if( m_qcert )
+	{
+		delete m_qcert;
+		m_qcert = 0;
+	}
+
     std::vector<std::string> tmp;
     ByteVec certBytes;
     try {
@@ -59,9 +65,6 @@ void JsCertData::loadCert(EstEidCard *card, CertType ct)
             certBytes = m_card->getAuthCert();
         else
             certBytes = m_card->getSignCert();
-
-		if( m_qcert )
-			delete m_qcert;
 
 		if( certBytes.size() )
 			m_qcert = new QSslCertificate(QByteArray((char *)&certBytes[0], certBytes.size()), QSsl::Der);

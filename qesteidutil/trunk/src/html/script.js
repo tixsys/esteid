@@ -247,13 +247,16 @@ function cardInserted(i)
 function cardRemoved(i)
 {
 	checkReaderCount();
-	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i));
+	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i) + " " + activeCardId );
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
-		activeCardId = "";
 		emailsLoaded = false;
+		activeCardId = "";
 		disableFields();
 		cardManager.findCard();
+		if ( esteidData.canReadCard() )
+			activeCardId = esteidData.getDocumentId();
+		alert( activeCardId );
 	}
 	readCardData();
 }

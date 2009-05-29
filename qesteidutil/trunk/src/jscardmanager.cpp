@@ -44,7 +44,7 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 
 	connect(&pollTimer, SIGNAL(timeout()),
             this, SLOT(pollCard()));
-	//wait javascript/html to initialize correctly
+	//wait javascript/html to initialize
 	QTimer::singleShot( 2000, this, SLOT(pollCard()) );
 }
 
@@ -58,7 +58,7 @@ void JsCardManager::pollCard()
 {
 
 	if ( !pollTimer.isActive() )
-		pollTimer.start( 500 );
+		pollTimer.start( 1000 );
 
     EstEidCard *card = 0;
     try {
@@ -116,11 +116,7 @@ void JsCardManager::pollCard()
 				}
 			}
 		}
-		if( card )
-		{
-			delete card;
-			card = 0;
-		}
+
 		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
@@ -130,26 +126,12 @@ void JsCardManager::pollCard()
 		if ( !insert.isEmpty() )
 			emit cardEvent( m_jsCardInsertFunc, cardReaders[insert].id );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
-		{
-			foreach( const ReaderState &r, cardReaders )
-			{
-				if( !r.cardId.isEmpty() )
-				{
-					emit cardEvent( m_jsCardInsertFunc, r.id );
-					foundConnected = true;
-					break;
-				}
-			}
-			if ( !foundConnected )
-				emit cardEvent( m_jsCardRemoveFunc, 0 );
-		}
+			findCard();
     } catch (std::runtime_error &e) {
 		qDebug() << e.what();
         // For now ignore any errors that might have happened during polling.
         // We don't want to spam users too often.
     }
-    if( card )
-        delete card;
 }
 
 bool JsCardManager::isInReader( const QString &cardId )
@@ -180,6 +162,7 @@ QString JsCardManager::cardId( int readerNum )
 
 void JsCardManager::findCard()
 {
+	m_jsEsteidCard->setCard( 0 );
 	QCoreApplication::processEvents();
 	foreach( const ReaderState &reader, cardReaders )
 	{
@@ -224,7 +207,6 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 			return false;
         handleError(err.what());
     }
-	m_jsEsteidCard->setCard( 0 );
 	return false;
 }
 

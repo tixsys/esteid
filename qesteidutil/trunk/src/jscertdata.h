@@ -44,10 +44,10 @@ public:
 
 	QSslCertificate cert() const;
     void loadCert(EstEidCard *card, CertType ct);
+	QSslCertificate *m_qcert;
 
 private:
     EstEidCard *m_card;
-    QSslCertificate *m_qcert;
 
 public slots:
     QString toPem();
