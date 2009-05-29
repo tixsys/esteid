@@ -142,6 +142,9 @@ padding: 10px;
       </property>
       <item>
        <layout class="QHBoxLayout" name="headerLayout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <item>
          <spacer name="headerSpacer">
           <property name="orientation">
@@ -539,7 +542,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QPushButton" name="viewBrowse">
               <property name="text">
-               <string>Browse container location</string>
+               <string>Browse location</string>
               </property>
              </widget>
             </item>
@@ -563,7 +566,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QPushButton" name="viewEmail">
               <property name="text">
-               <string>Send container to email</string>
+               <string>Send to email</string>
               </property>
              </widget>
             </item>
@@ -668,8 +671,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>259</width>
+               <height>168</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewKeysLayout">

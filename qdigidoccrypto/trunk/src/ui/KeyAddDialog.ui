@@ -164,6 +164,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="addFile">
+       <property name="text">
+        <string>Add cert from file</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="close">
        <property name="text">
         <string>Close</string>
@@ -189,6 +196,22 @@
     <hint type="destinationlabel">
      <x>252</x>
      <y>137</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sscode</sender>
+   <signal>returnPressed()</signal>
+   <receiver>search</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>51</y>
     </hint>
    </hints>
   </connection>

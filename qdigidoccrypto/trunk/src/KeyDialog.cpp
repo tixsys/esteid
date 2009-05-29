@@ -24,11 +24,13 @@
 
 #include "CertificateWidget.h"
 #include "LdapSearch.h"
+#include "SslCertificate.h"
 
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
+#include <QFileDialog>
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QProgressBar>
@@ -167,6 +169,36 @@ void KeyAddDialog::on_add_clicked()
 
 	saveHistory();
 	Q_EMIT selected( skKeys );
+}
+
+void KeyAddDialog::on_addFile_clicked()
+{
+	QString file = QFileDialog::getOpenFileName( this, "QDigiDocCrypto",
+		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
+		tr("Certificates (*.pem *.cer *.crt)") );
+	if( file.isEmpty() )
+		return;
+
+	QFile f( file );
+	if( !f.open( QIODevice::ReadOnly ) )
+	{
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to open certifiacte") );
+		return;
+	}
+
+	CKey k;
+	k.cert = QSslCertificate( &f, QSsl::Pem );
+	if( k.cert.isNull() )
+		k.cert = QSslCertificate( &f, QSsl::Der );
+	if( !k.cert.isNull() )
+	{
+		k.recipient = SslCertificate( k.cert ).subjectInfoUtf8( QSslCertificate::CommonName );
+		Q_EMIT selected( QList<CKey>() << k );
+	}
+	else
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
+
+	f.close();
 }
 
 void KeyAddDialog::on_search_clicked()

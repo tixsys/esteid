@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Faili salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Din&apos;t find card certificate</source>
@@ -196,7 +196,7 @@
     <message>
         <source>
 Error code: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veakood: %1</translation>
     </message>
     <message>
         <source>Add Recipient</source>
@@ -220,7 +220,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Väljaandja</translation>
     </message>
     <message>
         <source>Expiry date</source>
@@ -246,6 +246,22 @@ Error code: %1</source>
         <source>Add cert from card</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Certificates (*.pem *.cer *.crt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to open certifiacte</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to read certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add cert from file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyDialog</name>
@@ -267,7 +283,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Väljaandja</translation>
     </message>
     <message>
         <source>Crypt recipient</source>
@@ -372,11 +388,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Send container to email</source>
-        <translation>Saada allkirjutatud ümbrik e-postiga</translation>
+        <translation type="obsolete">Saada allkirjutatud ümbrik e-postiga</translation>
     </message>
     <message>
         <source>Browse container location</source>
-        <translation>Näita allkirjutatud ümbriku asukohta kettal</translation>
+        <translation type="obsolete">Näita allkirjutatud ümbriku asukohta kettal</translation>
     </message>
     <message>
         <source>Save files to disk</source>
@@ -529,6 +545,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>No card in reader</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send to email</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

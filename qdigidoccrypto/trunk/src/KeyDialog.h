@@ -78,6 +78,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 	void on_add_clicked();
+	void on_addFile_clicked();
 	void on_search_clicked();
 	void on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int column );
 	void showError( const QString &msg, int err );
