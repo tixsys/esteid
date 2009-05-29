@@ -235,6 +235,12 @@ bool CryptDoc::decrypt( const QString &pin )
 		return false;
 	}
 
+	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
+	{
+		DEncEncryptionProperty *p = m_enc->encProperties.arrEncryptionProperties[i];
+		if( qstrncmp( p->szName, "orig_file", 9 ) == 0 )
+			dencEncryptedData_DeleteEncryptionProperty( m_enc, i );
+	}
 	modified = true;
 	return !isEncrypted();
 }
