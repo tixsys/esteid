@@ -9,11 +9,11 @@
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
     <param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>
     <!--Trusted CA certs in PEM format-->
-    <param name="cert.store.path">@CONF_DIR@/certs</param>
+    <param name="cert.store.path">certs</param>
     <!--OCSP responder public certificate for validating OCSP response-->
-    <param name="ocsp.certs.file">@CONF_DIR@/certs/sk-test-ocsp-responder-2005.pem</param>
+    <param name="ocsp.certs.file">certs/sk-test-ocsp-responder-2005.pem</param>
 
-    <param name="manifest.xsd.path">file://@CONF_DIR@/schema/OpenDocument_manifest.xsd</param>
-    <param name="xades.xsd.path">file://@CONF_DIR@/schema/XAdES.xsd</param>
-    <param name="dsig.xsd.path">file://@CONF_DIR@/schema/xmldsig-core-schema.xsd</param>
+    <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
+    <param name="xades.xsd.path">schema/XAdES.xsd</param>
+    <param name="dsig.xsd.path">schema/xmldsig-core-schema.xsd</param>
 </configuration>
