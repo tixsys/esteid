@@ -56,7 +56,7 @@ public class GetNotaryTestCase extends JettyServerTestServer {
 
     }    
         
-    public void _testGetNotary() throws Exception {
+    public void testGetNotary() throws Exception {
         //TODO: Config first DigiDoc for run this test
         assertNotNull("binding is null", binding);
         binding.setTimeout(600000);
