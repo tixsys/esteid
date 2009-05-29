@@ -36,9 +36,7 @@ Poller::Poller( QObject *parent )
 
 Poller::~Poller()
 {
-	m.lock();
 	terminate = true;
-	m.unlock();
 	wait();
 }
 
@@ -61,11 +59,15 @@ void Poller::run()
 {
 	Q_FOREVER
 	{
+		for( int i = 0; i < 5; ++i )
+		{
+			if( terminate )
+				return;
+			sleep( 1 );
+		}
+
 		if( !m.tryLock() )
 			continue;
-
-		if( terminate )
-			return;
 
 		char driver[200];
 		snprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
@@ -128,15 +130,6 @@ void Poller::run()
 			}
 		}
 		m.unlock();
-
-		for( int i = 0; i < 5; ++i )
-		{
-			m.lock();
-			if( terminate )
-				return;
-			m.unlock();
-			sleep( 1 );
-		}
 	}
 }
 

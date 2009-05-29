@@ -48,7 +48,7 @@ private:
 	void readCerts();
 	void run();
 
-	bool terminate;
+	volatile bool terminate;
 	QMutex m;
 	QHash<QString,int> cards;
 	QString selectedCard;
