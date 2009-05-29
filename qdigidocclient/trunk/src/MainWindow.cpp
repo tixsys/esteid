@@ -436,7 +436,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 	Q_FOREACH( const digidoc::Document &file, doc->documents() )
 	{
 		QTreeWidgetItem *i = new QTreeWidgetItem( view );
-		QFileInfo info( QString::fromStdString( file.getPath() ) );
+		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
 		i->setText( 0, info.fileName() );
 		i->setText( 1, fileSize( info.size() ) );
 		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
@@ -483,7 +483,8 @@ void MainWindow::parseParams()
 		const QFileInfo f( param );
 		if( !f.isFile() )
 			continue;
-		if( doc->isNull() && f.suffix().toLower() == "bdoc" )
+		const QString suffix = f.suffix().toLower();
+		if( doc->isNull() && (suffix == "bdoc" || suffix == "ddoc") )
 		{
 			if( doc->open( f.absoluteFilePath() ) )
 				setCurrentPage( View );

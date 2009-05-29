@@ -205,7 +205,7 @@ void DigiDoc::addFile( const QString &file )
 	if( b->signatureCount() > 0 )
 		return setLastError( tr("Cannot add files to signed container") );
 
-	try { b->addDocument( Document( file.toStdString(), "file" ) ); }
+	try { b->addDocument( Document( file.toUtf8().constData(), "file" ) ); }
 	catch( const Exception &e ) { setLastError( e ); }
 	modified = true;
 }
