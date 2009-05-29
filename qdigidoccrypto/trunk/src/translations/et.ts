@@ -5,43 +5,43 @@
     <name>CertificateWidget</name>
     <message>
         <source>Save certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi info</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Selle sertifikaadi otstarve on:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kellele väljastatud:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehtiv alates:</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>kuni</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
@@ -49,51 +49,51 @@
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Signatuuri algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehtiv kuni:</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"></translation>
+        <translation>Avalik võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Üldine</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detilid</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Väli</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Väärtus</translation>
+        <translation>Väärtus</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta</translation>
     </message>
     <message>
         <source>Certification Path</source>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi staatus:</translation>
     </message>
 </context>
 <context>
@@ -424,20 +424,20 @@ Error code: %1</source>
     </message>
     <message>
         <source>Documents (*.cdoc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüptoümbrikud (*.cdoc)</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekrüpteeri</translation>
     </message>
     <message>
         <source>Encrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüpteeri</translation>
     </message>
     <message>
         <source>
 Error code: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veakood: %1</translation>
     </message>
     <message>
         <source>DigiDoc crypt</source>
@@ -445,15 +445,15 @@ Error code: %1</source>
     </message>
     <message>
         <source>I want to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ma tahan:</translation>
     </message>
     <message>
         <source>Crypt documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüpteerida dokument</translation>
     </message>
     <message>
         <source>View crypted document content</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaata krüpteeritud dokumendi sisu</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -463,7 +463,13 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumente nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks jm ülesannete lahendamiseks. See on ainult viis dokumentide turvaliseks edastamiseks läbi ebaturvalise kanali.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult saaja(te) ID-kaardil.&lt;br /&gt;&lt;br /&gt;Kuna dekrüpteerimist võimaldavav sertifikaat on salvestatud ainult ID-kaardile pole peale ID-kaardi kaotamist, aegumist või tühistamist pole dekrüpteerimine tehniliselt võimalik.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message utf8="true">
         <source>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</source>
