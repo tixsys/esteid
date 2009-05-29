@@ -187,29 +187,9 @@ void DigiDocSignature::setLastError( const Exception &e )
 DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
+,	m_signer(0)
 ,	modified( false )
-{
-	char *val = getenv( "BDOCLIB_CONF_XML" );
-	if( val == 0 )
-	{
-		char *conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
-		putenv( conf );
-	}
-	digidoc::initialize();
-	X509CertStore::init( new DirectoryX509CertStore() );
-
-	try
-	{
-		m_signer = new QEstEIDSigner();
-		m_authCert = m_signer->authCert();
-		m_signCert = m_signer->signCert();
-	}
-	catch( const Exception &e ) { setLastError( e ); }
-	delete m_signer;
-	m_signer = 0;
-
-	startTimer( 5 * 1000 );
-}
+{}
 
 DigiDoc::~DigiDoc()
 {
@@ -280,6 +260,33 @@ QList<Document> DigiDoc::documents()
 }
 
 QString DigiDoc::fileName() const { return m_fileName; }
+
+void DigiDoc::init()
+{
+	char *val = getenv( "BDOCLIB_CONF_XML" );
+	if( val == 0 )
+	{
+		char *conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
+		putenv( conf );
+	}
+
+	try
+	{
+		digidoc::initialize();
+		X509CertStore::init( new DirectoryX509CertStore() );
+
+		m_signer = new QEstEIDSigner();
+		m_authCert = m_signer->authCert();
+		m_signCert = m_signer->signCert();
+
+		startTimer( 5 * 1000 );
+	}
+	catch( const Exception &e ) { setLastError( e ); }
+	if( m_signer )
+		delete m_signer;
+	m_signer = 0;
+}
+
 bool DigiDoc::isModified() const { return modified; }
 bool DigiDoc::isNull() const { return b == 0; }
 QString DigiDoc::lastError() const { return m_lastError; }

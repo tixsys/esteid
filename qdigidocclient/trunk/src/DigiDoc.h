@@ -75,6 +75,7 @@ public:
 	void clear();
 	QList<digidoc::Document> documents();
 	QString fileName() const;
+	void init();
 	bool isModified() const;
 	bool isNull() const;
 	QString lastError() const;

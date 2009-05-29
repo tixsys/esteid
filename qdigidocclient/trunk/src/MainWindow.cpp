@@ -109,6 +109,7 @@ MainWindow::MainWindow( QWidget *parent )
 	doc = new DigiDoc( this );
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
+	doc->init();
 
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
 	lang[0] = "et";
