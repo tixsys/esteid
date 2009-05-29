@@ -128,7 +128,15 @@ void Poller::run()
 			}
 		}
 		m.unlock();
-		sleep( 5 );
+
+		for( int i = 0; i < 5; ++i )
+		{
+			m.lock();
+			if( terminate )
+				return;
+			m.unlock();
+			sleep( 1 );
+		}
 	}
 }
 
