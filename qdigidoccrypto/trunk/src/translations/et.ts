@@ -2,6 +2,109 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
+    <name>CertificateWidget</name>
+    <message>
+        <source>Save certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificates (*.pem *.crt *.cer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate Information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This certificate is intended for following purpose(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issued to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issued by:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signature algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issuer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vaild to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate policies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Väärtus</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certification Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CryptDoc</name>
     <message>
         <source>Container is not open</source>
@@ -40,10 +143,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No recipiest keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to encrypt data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,6 +176,18 @@
     </message>
     <message>
         <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Din&apos;t find card certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No recipient keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document not open</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -116,15 +227,23 @@ Error code: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cert store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to recipies list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Social security number is not valid!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add cert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Used certificates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add cert from card</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -163,16 +282,16 @@ Error code: %1</source>
         <translation type="unfinished">Väärtus</translation>
     </message>
     <message>
-        <source>Decrypt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show certificate</source>
         <translation type="unfinished">Näita sertifikaati</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Katkesta</translation>
+        <translation type="obsolete">Katkesta</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -229,15 +348,15 @@ Error code: %1</source>
     </message>
     <message>
         <source>German</source>
-        <translation>German</translation>
+        <translation type="obsolete">German</translation>
     </message>
     <message>
         <source>Latvian</source>
-        <translation>Latvian</translation>
+        <translation type="obsolete">Latvian</translation>
     </message>
     <message>
         <source>Lithuanian</source>
-        <translation>Lithuanian</translation>
+        <translation type="obsolete">Lithuanian</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -336,7 +455,7 @@ Error code: %1</source>
         <source>View crypted document content</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -346,7 +465,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -366,12 +485,68 @@ p, li { white-space: pre-wrap; }
         <source>Add recipient</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Container contains file with same name, ovewrite?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start process &apos;qesteidutil&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This container contains signature! Open with QDigiDocClient?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document has changed. Save changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Person &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; card in reader&lt;br /&gt;Person SSID: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;Sign certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No card in reader</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Selected action requires auth certificate.
 For using auth certificate enter PIN1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proves your identity to a remote computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Protects e-mail messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP signing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All application policies</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
