@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation>Sertifikaadi info</translation>
+        <translation>Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Valid from</source>
-        <translation>Kehtiv alates:</translation>
+        <translation>Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi seerianumber</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Vaild to</source>
-        <translation>Kehtiv kuni:</translation>
+        <translation>Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
@@ -112,19 +112,19 @@
     </message>
     <message>
         <source>Container is encrypted</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbrik on krüpteeritud</translation>
     </message>
     <message>
         <source>Failed to add file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili lisamine ebaõnestus</translation>
     </message>
     <message>
         <source>Failed to calculate digest</source>
-        <translation type="unfinished"></translation>
+        <translation>Räsi arvutamine ei õnnestunud</translation>
     </message>
     <message>
         <source>Failed to add key</source>
-        <translation type="unfinished"></translation>
+        <translation>Võtme lisamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to create document</source>
@@ -136,19 +136,19 @@
     </message>
     <message>
         <source>Failed decrypt data</source>
-        <translation type="unfinished"></translation>
+        <translation>Andmete dekrüpteerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to read decrypted data</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekrüpteeritud andmete lugemine ebaõnnstus</translation>
     </message>
     <message>
         <source>Failed to encrypt data</source>
-        <translation type="unfinished"></translation>
+        <translation>Andmete krüpteerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to open crypted document</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbriku avamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Missing document</source>
@@ -156,39 +156,39 @@
     </message>
     <message>
         <source>Failed to remove file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili eemaldamine ebaõnestus</translation>
     </message>
     <message>
         <source>Missing key</source>
-        <translation type="unfinished"></translation>
+        <translation>Puuduv võti</translation>
     </message>
     <message>
         <source>Failed to remove key</source>
-        <translation type="unfinished"></translation>
+        <translation>Võtme eemaldamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Container is not crypted</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbrik pole krüpteeritud</translation>
     </message>
     <message>
         <source>Failed to save encrpyted file</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüpteeritud faili salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished">Faili salvestamine ebaõnnestus</translation>
+        <translation>Faili salvestamine ebaõnestus</translation>
     </message>
     <message>
         <source>Din&apos;t find card certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei leidnud kaardi sertifikaate</translation>
     </message>
     <message>
         <source>No recipient keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Puuduvad vastuvõtja võtmed</translation>
     </message>
     <message>
         <source>Document not open</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbrik pole avatud</translation>
     </message>
 </context>
 <context>
@@ -196,11 +196,11 @@
     <message>
         <source>
 Error code: %1</source>
-        <translation type="unfinished">Veakood: %1</translation>
+        <translation>Veakood: %1</translation>
     </message>
     <message>
         <source>Add Recipient</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa sertifikaat</translation>
     </message>
     <message>
         <source>SK Certificates</source>
@@ -208,43 +208,43 @@ Error code: %1</source>
     </message>
     <message>
         <source>SS number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Isikukood:</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Otsi</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation type="unfinished"></translation>
+        <translation>Omanik</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished">Väljaandja</translation>
+        <translation>Väljaandja</translation>
     </message>
     <message>
         <source>Expiry date</source>
-        <translation type="unfinished"></translation>
+        <translation>Aegumiskuupäev</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
     <message>
         <source>Social security number is not valid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Isikukood pole korrektne!</translation>
     </message>
     <message>
         <source>Add cert</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa sertifikaat</translation>
     </message>
     <message>
         <source>Used certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutatud sertifikaadid</translation>
     </message>
     <message>
         <source>Add cert from card</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa sertifikaat kaardilt</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.cer *.crt)</source>
@@ -267,39 +267,39 @@ Error code: %1</source>
     <name>KeyDialog</name>
     <message>
         <source>Recipient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vastuvõtja</translation>
     </message>
     <message>
         <source>Crypt method</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüpteerimismeetod</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation type="unfinished"></translation>
+        <translation>Aegub</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished">Väljaandja</translation>
+        <translation>Väljaandja</translation>
     </message>
     <message>
         <source>Crypt recipient</source>
-        <translation type="unfinished"></translation>
+        <translation>Krüpteerida vastuvõtjale</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished">Atribuut</translation>
+        <translation>Atribuut</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Väärtus</translation>
+        <translation>Väärtus</translation>
     </message>
     <message>
         <source>Show certificate</source>
-        <translation type="unfinished">Näita sertifikaati</translation>
+        <translation>Näita sertifikaati</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -307,18 +307,18 @@ Error code: %1</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
 </context>
 <context>
     <name>KeyWidget</name>
     <message>
         <source>Show details</source>
-        <translation type="unfinished">Vaata üksikasju</translation>
+        <translation>Vaata üksikasju</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda</translation>
     </message>
 </context>
 <context>
@@ -388,7 +388,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Send container to email</source>
-        <translation type="obsolete">Saada allkirjutatud ümbrik e-postiga</translation>
+        <translation>Saada turvaümbrik e-postiga</translation>
     </message>
     <message>
         <source>Browse container location</source>
@@ -400,7 +400,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Open container</source>
-        <translation>Ava ümbrik</translation>
+        <translation>Ava turvaümbrik</translation>
     </message>
     <message>
         <source>Select folder where files will be stored</source>
@@ -408,7 +408,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Container: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Ümbrik: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Turvaümbrik: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Select documents</source>
@@ -424,7 +424,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Are you sure you want remove files %1</source>
-        <translation>Oled sa kindel, et tahad eemaldada faile %1?</translation>
+        <translation>Oled kindel, et soovid eemaldada faile %1 ?</translation>
     </message>
     <message>
         <source>Filename</source>
@@ -436,7 +436,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Failed to send email</source>
-        <translation>Ekirja koostamine ebaõnnestus</translation>
+        <translation>E-kirja koostamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Documents (*.cdoc)</source>
@@ -489,31 +489,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</source>
-        <translation type="unfinished"></translation>
+        <translation>Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Container content:</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbriku sisu:</translation>
     </message>
     <message>
         <source>Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Võtmed</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
     <message>
         <source>Add recipient</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa adressaat</translation>
     </message>
     <message>
         <source>Container contains file with same name, ovewrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Turvaümbrik sisaldab juba sellise nimega faili, kas kirjutada üle?</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Protsessi &apos;qesteidutil&apos; loomine ebaõnnestus</translation>
     </message>
     <message>
         <source>This container contains signature! Open with QDigiDocClient?</source>
