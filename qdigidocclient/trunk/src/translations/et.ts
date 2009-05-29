@@ -291,7 +291,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Selected action requires sign certificate.
 For using sign certificate enter PIN2</source>
-        <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati. Sertifikaadi kasutamiseks sisesta PIN2</translation>
+        <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.\nSertifikaadi kasutamiseks sisesta PIN2</translation>
     </message>
     <message>
         <source>PIN acquisition canceled.</source>
