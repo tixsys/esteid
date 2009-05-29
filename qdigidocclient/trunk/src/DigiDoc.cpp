@@ -34,6 +34,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QInputDialog>
+#include <QSettings>
 
 #ifndef BDOCLIB_CONF_PATH
 #define BDOCLIB_CONF_PATH "bdoclib.conf"
@@ -263,11 +264,17 @@ QString DigiDoc::fileName() const { return m_fileName; }
 
 void DigiDoc::init()
 {
+	QByteArray env( "BDOCLIB_CONF_XML=" );
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		char *conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
-		putenv( conf );
+		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,
+			"Estonian ID Card", "libdigidoc" ).value( "ConfigFile" ).toByteArray();
+		if( !path.isEmpty() )
+			env.append( path );
+		else
+			env.append( BDOCLIB_CONF_PATH );
+		putenv( env.data() );
 	}
 
 	try
