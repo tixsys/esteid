@@ -2,6 +2,109 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
+    <name>CertificateDialog</name>
+    <message>
+        <source>Save certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificates (*.pem *.crt *.cer)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate Information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This certificate is intended for following purpose(s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issued to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issued by:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signature algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issuer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vaild to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate policies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Väärtus</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certification Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -48,15 +151,15 @@
     </message>
     <message>
         <source>German</source>
-        <translation>German</translation>
+        <translation type="obsolete">German</translation>
     </message>
     <message>
         <source>Latvian</source>
-        <translation>Latvian</translation>
+        <translation type="obsolete">Latvian</translation>
     </message>
     <message>
         <source>Lithuanian</source>
-        <translation>Lithuanian</translation>
+        <translation type="obsolete">Lithuanian</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -285,6 +388,14 @@ p, li { white-space: pre-wrap; }
         <source>Signatures</source>
         <translation>Allkirjad</translation>
     </message>
+    <message>
+        <source>Container contains file with same name, ovewrite?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document has changed. Save changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -296,6 +407,22 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>PIN acquisition canceled.</source>
         <translation>PIN koodi sisestamine katkestati</translation>
+    </message>
+    <message>
+        <source>Proves your identity to a remote computer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Protects e-mail messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP signing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All application policies</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -446,6 +573,18 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>Verify</source>
         <translation>Kehtivuskinnitus</translation>
+    </message>
+    <message>
+        <source>Signature is valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signature is not valid (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
