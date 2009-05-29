@@ -13,6 +13,10 @@ var htmlStrings = {
 	"Revoked": new tr( "sertifikaadid on tunnistatud kehtetuks. Mobiil-ID kasutamiseks on vajalik hankida operaatorilt uus Mobiil-ID SIM kaart.", "", "" ),
 	"Unknown": new tr( "sertifikaadi olek teadmata.", "", "" ),
 	"Expired": new tr( "sertifikaadid on aegunud. Vajalik on operaatorilt uue SIM kaardi hankimine.", "", "" ),
+	"mobileNoCert": new tr( "Kasutajal puuduvad Mobiil-ID sertifikaadid!", "", "" ),
+	"mobileNotActive": new tr( "Kasutaja ID-kaardi sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "", "" ),
+	"mobileInternalError": new tr( "Teenuse sisemine viga!", "", "" ),
+	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "", "" ),
 	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "" ),
 	"linkSettings": new tr( "Seaded", "Settings", "" ),
