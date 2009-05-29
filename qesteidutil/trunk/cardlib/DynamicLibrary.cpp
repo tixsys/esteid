@@ -79,7 +79,7 @@ std::string DynamicLibrary::getVersionStr() {
 std::string DynamicLibrary::arrPaths[] = {
 	"","/lib/","/usr/local/lib/","/usr/lib/","/usr/lib/engines/"
 #if defined(__APPLE__)
-	, "/Library/Frameworks/", "/System/Library/Frameworks/"
+	, "/Library/OpenSC/lib/engines/", "/Library/Frameworks/", "/System/Library/Frameworks/"
 #endif
 };
 

@@ -31,6 +31,12 @@
 #define CRYPTO_LIB "libeay32"
 #define PKCS11_ENGINE "engine_pkcs11"
 #define PKCS11_MODULE "opensc-pkcs11.dll"
+#elif defined(__APPLE__)
+#include <netdb.h>
+#define SSL_LIB "ssl"
+#define CRYPTO_LIB "crypto"
+#define PKCS11_ENGINE "/Library/OpenSC/lib/engines/engine_pkcs11.so"
+#define PKCS11_MODULE "/Library/OpenSC/lib/opensc-pkcs11.so"
 #else
 #include <netdb.h>
 #define SSL_LIB "ssl"
