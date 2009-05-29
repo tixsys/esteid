@@ -256,7 +256,6 @@ function cardRemoved(i)
 		cardManager.findCard();
 		if ( esteidData.canReadCard() )
 			activeCardId = esteidData.getDocumentId();
-		alert( activeCardId );
 	}
 	readCardData();
 }
