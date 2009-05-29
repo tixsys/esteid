@@ -116,7 +116,11 @@ void JsCardManager::pollCard()
 				}
 			}
 		}
-
+		if( card )
+		{
+			delete card;
+			card = 0;
+		}
 		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
@@ -220,8 +224,6 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 			return false;
         handleError(err.what());
     }
-	if ( card )
-		delete card;
 	m_jsEsteidCard->setCard( 0 );
 	return false;
 }

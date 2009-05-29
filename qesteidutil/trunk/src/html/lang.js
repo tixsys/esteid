@@ -17,6 +17,7 @@ var htmlStrings = {
 	"mobileNotActive": new tr( "Kasutaja ID-kaardi sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "", "" ),
 	"mobileInternalError": new tr( "Teenuse sisemine viga!", "", "" ),
 	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "", "" ),
+	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
 	"linkHelp": new tr( "Abi", "Help", "Настройки" ),
@@ -100,6 +101,9 @@ var htmlStrings = {
 	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "", "Mobiil-ID это возможность идентифицировать личность и давать подпись мобильным телефоном, вместо ID- карты." ),
 	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "", "Для использования Mobiil-ID нужна новая SIM- карта, которую можно получить у мобильного оператора. Если такая карта уже есть, то услугу следует активировать." ),
 	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "", "Более подробно на страничке id.ee" ),
+	"mobileNumber": new tr( "Mobiili number", "Mobile number", "" ),
+	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "" ),
+	"mobileStatus": new tr( "Staatus", "Mobile status", "" ),
 	
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "Возникла ошибка:" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "Загружаю настройки эл. почты" ),
