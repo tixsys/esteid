@@ -274,172 +274,99 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 
 	if ( !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
 	{
-		if ( !aURL.Path.compareToAscii("Command1" ) )
+		if ( !aURL.Path.compareToAscii("Command1" ))
 		{
-
-		MyBdocBridge * samm = MyBdocBridge::getInstance();
-		samm->teemingilollus1();
-
-		printf("MUNN\n");
+			MyBdocBridge * m_BdocBridge = MyBdocBridge::getInstance();
+			m_BdocBridge->teemingilollus1();
 			
-			//digidoc::SimpleBdocApp cl_MyBdocApp;
-			//cl_MyBdocApp.str_bdocpath = "/home/mark/Desktop/Juhan.bdoc";
-			//cl_MyBdocApp.str_filepath = "/home/mark/Desktop/Juhan.txt";
-		printf("2MUNNI\n");
-//==================================//cl_MyBdocApp.initData();
-			
-/*			digidoc::BDoc *locBdoc;
-			bool validateOnline;
-			digidoc::Signature::Type profile;
-			
-			//using namespace digidoc;
-
-			//***set installed BDoc library path
-			char *val = getenv( "BDOCLIB_CONF_XML" );
-		
-			if( val == 0 )
-			{
-				std::string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;//
- 
-				putenv((char*)&conf );
-				val = getenv( "BDOCLIB_CONF_XML" );		
-			}
-
-			digidoc::initialize();
-			profile = digidoc::Signature::TM;//BES
-			validateOnline = true;
-	
-			locBdoc = 0;
-*//*/==================================			
-			
-		printf("3MUNNI\n");
-			cl_MyBdocApp.signPlace.str_city = "Linn";
-			cl_MyBdocApp.signPlace.str_stateOrProvince = "Maakond";
-			cl_MyBdocApp.signPlace.str_postalCode = "99999";
-			cl_MyBdocApp.signPlace.str_countryName = "Riik";			
-			cl_MyBdocApp.signerRoles.str_role = "pealik";
-			cl_MyBdocApp.signerRoles.str_additionalRole = "orjaosakond";			
-			cl_MyBdocApp.str_pin = "01497";
-//====================================//cl_MyBdocApp.signFile(); 
-			digidoc::EstEIDSigner *m_signer;
-			digidoc::PKCS11Signer m_PKCS11Signer;
-			//m_signer.pin = cl_MyBdocApp.str_pin;
-			// Init certificate store.
-			m_signer = new digidoc::EstEIDSigner( digidoc::Conf::getInstance()->getPKCS11DriverPath() );
-			m_PKCS11Signer.getCert();
-			digidoc::X509CertStore::init( new DirectoryX509CertStore() );
-			locBdoc = new BDoc();
-			locBdoc->addDocument(digidoc::Document(cl_MyBdocApp.str_filepath, "file"));
-			
-			// Add signature production place.
-			digidoc::Signer::SignatureProductionPlace spp(cl_MyBdocApp.signPlace.str_city, cl_MyBdocApp.signPlace.str_stateOrProvince, cl_MyBdocApp.signPlace.str_postalCode, cl_MyBdocApp.signPlace.str_countryName);
-       			m_signer.setSignatureProductionPlace(spp);
-
-			// Add signer role(s).
-			dgidoc::Signer::SignerRole role(cl_MyBdocApp.signerRoles.str_role);
-			// Add additional roles.
-			role.claimedRoles.push_back(cl_MyBdocApp.signerRoles.str_additionalRole);
-			m_signer.setSignerRole(role);
-
-			// Sign the BDOC container.
-			locBdoc->sign(&m_signer, profile);
-		
-			// Save the BDOC container.
-			std::auto_ptr<ISerialize> serializer(new ZipSerialize(str_bdocpath));
-			locBdoc->saveTo(serializer);
-
-			// Destroy certificate store.
-			X509CertStore::destroy();
-		//	}
-//====================================
-*****/		printf("4MUNNI\n");	
-
+			m_BdocBridge->DigiInit();
+			m_BdocBridge->DigiOpen();			
 		}
 		
-	else if ( !aURL.Path.compareToAscii("Command2" ) )
-	{
-            // remove the text if it's in our list
-            Sequence< NamedValue > aRemoveArgs( 1 );
-            aRemoveArgs[0].Name  = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Text" ));
-            aRemoveArgs[0].Value <<= maComboBoxText;
-            SendCommand( aURL, ::rtl::OUString::createFromAscii( "RemoveEntryText" ), aRemoveArgs, sal_True );
-
-            // add the new text to the start of the list
-            Sequence< NamedValue > aInsertArgs( 2 );
-            aInsertArgs[0].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Pos" ));
-            aInsertArgs[0].Value <<= sal_Int32( 0 );
-            aInsertArgs[1].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Text" ));
-            aInsertArgs[1].Value <<= maComboBoxText;
-            SendCommand( aURL, ::rtl::OUString::createFromAscii( "InsertEntry" ), aInsertArgs, sal_True );
-        }
-	
-	else if ( !aURL.Path.compareToAscii("Command3" ) )
-	{
-            // Retrieve the text argument from the sequence property value
-            rtl::OUString aText;
-            for ( sal_Int32 i = 0; i < lArgs.getLength(); i++ )
-            {
-                if ( lArgs[i].Name.equalsAsciiL( "Text", 4 ))
-                {
-                    lArgs[i].Value >>= aText;
-                    break;
-                }
-            }
-
-            // create new URL to address the combox box
-            URL aCmdURL;
-            aCmdURL.Path = rtl::OUString::createFromAscii( "Command2" );
-            aCmdURL.Protocol = rtl::OUString::createFromAscii( "vnd.demo.complextoolbarcontrols.demoaddon:" );
-            aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
-            
-            // set the selected item as text into the combobox
-            Sequence< NamedValue > aArgs( 1 );
-            aArgs[0].Name = rtl::OUString::createFromAscii( "Text" );
-            aArgs[0].Value <<= aText;
-            SendCommand( aCmdURL, ::rtl::OUString::createFromAscii( "SetText" ), aArgs, sal_True );
-		}
-		else if ( !aURL.Path.compareToAscii("Command4" ) )
+		else if ( !aURL.Path.compareToAscii("Command2" ) )
 		{
-            // Retrieve the text argument from the sequence property value
-            rtl::OUString aText;
-            for ( sal_Int32 i = 0; i < lArgs.getLength(); i++ )
-            {
-                if ( lArgs[i].Name.equalsAsciiL( "Text", 4 ))
-                {
-                    lArgs[i].Value >>= aText;
-                    break;
-                }
-            }
-			
-            // just enable this command
+		    // remove the text if it's in our list
+		    Sequence< NamedValue > aRemoveArgs( 1 );
+		    aRemoveArgs[0].Name  = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Text" ));
+		    aRemoveArgs[0].Value <<= maComboBoxText;
+		    SendCommand( aURL, ::rtl::OUString::createFromAscii( "RemoveEntryText" ), aRemoveArgs, sal_True );
+
+		    // add the new text to the start of the list
+		    Sequence< NamedValue > aInsertArgs( 2 );
+		    aInsertArgs[0].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Pos" ));
+		    aInsertArgs[0].Value <<= sal_Int32( 0 );
+		    aInsertArgs[1].Name = rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Text" ));
+		    aInsertArgs[1].Value <<= maComboBoxText;
+		    SendCommand( aURL, ::rtl::OUString::createFromAscii( "InsertEntry" ), aInsertArgs, sal_True );
+		}
+	
+		else if ( !aURL.Path.compareToAscii("Command3" ) )
+		{
+		    // Retrieve the text argument from the sequence property value
+		    rtl::OUString aText;
+		    for ( sal_Int32 i = 0; i < lArgs.getLength(); i++ )
+		    {
+		        if ( lArgs[i].Name.equalsAsciiL( "Text", 4 ))
+		        {
+		            lArgs[i].Value >>= aText;
+		            break;
+		        }
+		    }
+
+		    // create new URL to address the combox box
+		    URL aCmdURL;
+		    aCmdURL.Path = rtl::OUString::createFromAscii( "Command2" );
+		    aCmdURL.Protocol = rtl::OUString::createFromAscii( "vnd.demo.complextoolbarcontrols.demoaddon:" );
+		    aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
 		    
-            // set enable flag according to selection
-            if ( aText.equalsAscii( "Button Disabled" ))
-                mbButtonEnabled = sal_False;
-            else
-                mbButtonEnabled = sal_True;
+		    // set the selected item as text into the combobox
+		    Sequence< NamedValue > aArgs( 1 );
+		    aArgs[0].Name = rtl::OUString::createFromAscii( "Text" );
+		    aArgs[0].Value <<= aText;
+		    SendCommand( aCmdURL, ::rtl::OUString::createFromAscii( "SetText" ), aArgs, sal_True );
+			}
+			else if ( !aURL.Path.compareToAscii("Command4" ) )
+			{
+		    // Retrieve the text argument from the sequence property value
+		    rtl::OUString aText;
+		    for ( sal_Int32 i = 0; i < lArgs.getLength(); i++ )
+		    {
+		        if ( lArgs[i].Name.equalsAsciiL( "Text", 4 ))
+		        {
+		            lArgs[i].Value >>= aText;
+		            break;
+		        }
+		    }
+			
+		    // just enable this command
+			    
+		    // set enable flag according to selection
+		    if ( aText.equalsAscii( "Button Disabled" ))
+		        mbButtonEnabled = sal_False;
+		    else
+		        mbButtonEnabled = sal_True;
 
-            // create new URL to address the image button
-            URL aCmdURL;
-            aCmdURL.Path = rtl::OUString::createFromAscii( "Command1" );
-            aCmdURL.Protocol = rtl::OUString::createFromAscii( "vnd.demo.complextoolbarcontrols.demoaddon:" );
-            aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
-            
-            // create and initialize FeatureStateEvent with IsEnabled
-            ::com::sun::star::frame::FeatureStateEvent aEvent;
-			aEvent.FeatureURL = aCmdURL;
-		    aEvent.Source = (::com::sun::star::frame::XDispatch*) this;
-			aEvent.IsEnabled = mbButtonEnabled;
-			aEvent.Requery = sal_False;
-			aEvent.State <<= Any();
-            
-            // Notify listener about new state
-            Reference < XDispatch > xDispatch = aListenerHelper.GetDispatch( mxFrame, aURL.Path );
-            aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
-        }
-        else if ( !aURL.Path.compareToAscii("Command5" ) )
-        {
-        }
+		    // create new URL to address the image button
+		    URL aCmdURL;
+		    aCmdURL.Path = rtl::OUString::createFromAscii( "Command1" );
+		    aCmdURL.Protocol = rtl::OUString::createFromAscii( "vnd.demo.complextoolbarcontrols.demoaddon:" );
+		    aCmdURL.Complete = aCmdURL.Path + aCmdURL.Protocol;
+		    
+		    // create and initialize FeatureStateEvent with IsEnabled
+		    ::com::sun::star::frame::FeatureStateEvent aEvent;
+				aEvent.FeatureURL = aCmdURL;
+			    aEvent.Source = (::com::sun::star::frame::XDispatch*) this;
+				aEvent.IsEnabled = mbButtonEnabled;
+				aEvent.Requery = sal_False;
+				aEvent.State <<= Any();
+		    
+		    // Notify listener about new state
+		    Reference < XDispatch > xDispatch = aListenerHelper.GetDispatch( mxFrame, aURL.Path );
+		    aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
+		}
+		else if ( !aURL.Path.compareToAscii("Command5" ) )
+		{
+		}
 	}
 }
 
