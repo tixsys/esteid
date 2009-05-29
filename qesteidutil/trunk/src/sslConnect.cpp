@@ -106,6 +106,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 		if ( type == "activateEmail" )
 			return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
 	}
+	obj->disconnect();
 	return std::vector<unsigned char>();
 }
 
@@ -138,11 +139,15 @@ SSLObj::SSLObj()
 	sslError::check("init engine", result );
 }
 
-SSLObj::~SSLObj()
+void SSLObj::disconnect()
 {
 	SSL_shutdown(s);
 	SSL_free(s);
 	SSL_CTX_free(ctx);
+}
+
+SSLObj::~SSLObj()
+{
 	ENGINE_finish(engine);
 	ENGINE_free(engine);
 	ENGINE_cleanup();

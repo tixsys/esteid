@@ -113,7 +113,7 @@ QString JsExtender::checkPin()
 		m_dateTime = QDateTime::currentDateTime();
 		bool ok;
 		pin = QInputDialog::getText( m_mainWindow, tr("Authentication"), tr("This action needs authentication\nEnter PIN1"), QLineEdit::Password, QString(), &ok );
-		if( !ok )
+		if( !ok || pin.size() < 4 )
 		{
 			pin = "";
 			throw std::runtime_error( "" );
@@ -128,6 +128,10 @@ QString JsExtender::checkPin()
 
 QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 {
+	QString pin = checkPin();
+	if ( pin.isEmpty() || pin.size() < 4 )
+		throw std::runtime_error( "" );
+
 	std::vector<unsigned char> buffer;
 
 	if ( !sslConnect )
@@ -139,7 +143,7 @@ QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 		return QByteArray();
 	}
 
-	buffer = sslConnect->getUrl( checkPin().toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type.toStdString(), def.toStdString() );
+	buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type.toStdString(), def.toStdString() );
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }
@@ -178,7 +182,7 @@ void JsExtender::loadEmails()
 {
 	QByteArray buffer;
 	try {
-		buffer = getUrl( "emails", checkPin() );
+		buffer = getUrl( "emails", "" );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "loadFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -263,7 +267,7 @@ void JsExtender::loadPicture()
 	QString result = "loadPicFailed";
 	QByteArray buffer;
 	try {
-		buffer = getUrl( "picture", checkPin() );
+		buffer = getUrl( "picture", "" );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );

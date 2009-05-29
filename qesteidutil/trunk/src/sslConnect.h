@@ -37,6 +37,7 @@ public:
 
 	bool connectToHost( const std::string &site, const std::string &pin, int reader );
 	std::vector<unsigned char> getUrl( const std::string &type );
+	void disconnect();
 
 private:
 	ENGINE *engine;
