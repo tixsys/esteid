@@ -208,8 +208,8 @@ bool DiagnosticsDialog::isPCSCRunning() const { return true; }
 
 void DiagnosticsDialog::save()
 {
-	QString filename = QFileDialog::getSaveFileName( this, tr("Save as"), QString( "%1/qesteidutil_diagnostics.txt" )
-		.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) ),
+	QString filename = QFileDialog::getSaveFileName( this, tr("Save as"), QString( "%1%2qesteidutil_diagnostics.txt" )
+		.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) ).arg( QDir::separator() ),
 		tr("Text files (*.txt)") );
 	if( filename.isEmpty() )
 		return;

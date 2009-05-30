@@ -318,9 +318,9 @@ void JsExtender::savePicture()
 		jsCall( "handleError", "savePicFailed" );
 		return;
 	}
-	QString pFile;
+	QString pFile = QDesktopServices::storageLocation( QDesktopServices::PicturesLocation );
 	if ( m_mainWindow->eidCard() )
-		pFile = QString( "%1.jpg" ).arg( m_mainWindow->eidCard()->getId() );
+		pFile += QString( "%1%2.jpg" ).arg( QDir::separator() ).arg( m_mainWindow->eidCard()->getId() );
 	QString file = QFileDialog::getSaveFileName( m_mainWindow, tr( "Save picture" ), pFile, tr( "JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)" ) );
 	if( file.isEmpty() )
 		return;

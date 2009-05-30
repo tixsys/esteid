@@ -107,6 +107,7 @@ var htmlStrings = {
 	
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "Возникла ошибка:" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "Загружаю настройки эл. почты" ),
+	"activatingEmail": new tr( "Aktiveerin e-posti seadeid", "Activating e-mail settings", "настройки эл. почты" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "Failed activating e-mail forwards.", "Активация перенаправления с эл. почты провалилась." ),
 	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "Failed loading e-mail settings.", "Активация перенаправления с эл. почты провалилась" ),
 	"emailEnter": new tr( "E-posti aadress sisestamata!", "Enter e-mail address!", "Введите адрес эл. почты!" ),

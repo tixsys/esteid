@@ -136,20 +136,20 @@
 	<div class="rightContent">
 		<label>
 			<trtag trcode="labelPUK"></trtag><br />
-			<input type="password" name="bpin1OldPin" id="bpin1OldPin">
+			<input type="password" name="bpin1OldPin" id="bpin1OldPin" onKeyPress="handlekey('bpin1NewPin'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN1"></trtag>
-			<input type="password" name="bpin1NewPin" id="bpin1NewPin">
+			<input type="password" name="bpin1NewPin" id="bpin1NewPin" onKeyPress="handlekey('bpin1NewPin2'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN12"></trtag>
-			<input type="password" name="bpin1NewPin2" id="bpin1NewPin2">
+			<input type="password" name="bpin1NewPin2" id="bpin1NewPin2"  onKeyPress="handlekey('inputUnblockPin1'); return true;">
 		</label>
 		<br />
-        <input type="button" trcode="inputChange" onClick="unblockPin1();" class="buttonBottom" />
+        <input type="button" trcode="inputChange" onClick="unblockPin1();" class="buttonBottom" id="inputUnblockPin1" />
         <input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />		
 	</div>
   </div>
@@ -169,20 +169,20 @@
 	<div class="rightContent">
 		<label>
 			<trtag trcode="labelCurrentPIN1"></trtag>
-			<input type="password" name="pin1OldPin" id="pin1OldPin">
+			<input type="password" name="pin1OldPin" id="pin1OldPin" onKeyPress="handlekey('pin1NewPin'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN1"></trtag>
-			<input type="password" name="pin1NewPin" id="pin1NewPin">
+			<input type="password" name="pin1NewPin" id="pin1NewPin" onKeyPress="handlekey('pin1NewPin2'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN12"></trtag>
-			<input type="password" name="pin1NewPin2" id="pin1NewPin2">
+			<input type="password" name="pin1NewPin2" id="pin1NewPin2" onKeyPress="handlekey('inputChangePin1'); return true;">
 		</label>
 		<br />
-        <input type="button" trcode="inputChange" onClick="changePin1();" class="buttonBottom" />
+        <input type="button" trcode="inputChange" onClick="changePin1();" class="buttonBottom" id="inputChangePin1" />
         <input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />		
 	</div>
   </div>
@@ -205,20 +205,20 @@
 	<div class="rightContent">
 		<label>
 			<trtag trcode="labelPUK"></trtag><br />
-			<input type="password" name="bpin2OldPin" id="bpin2OldPin">
+			<input type="password" name="bpin2OldPin" id="bpin2OldPin" onKeyPress="handlekey('bpin2NewPin'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN2"></trtag>
-			<input type="password" name="bpin2NewPin" id="bpin2NewPin">
+			<input type="password" name="bpin2NewPin" id="bpin2NewPin" onKeyPress="handlekey('bpin2NewPin2'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN22"></trtag>
-			<input type="password" name="bpin2NewPin2" id="bpin2NewPin2">
+			<input type="password" name="bpin2NewPin2" id="bpin2NewPin2" onKeyPress="handlekey('inputUnblockPin2'); return true;">
 		</label>
 		<br />
-        <input type="button" trcode="inputChange" onClick="unblockPin2();" class="buttonBottom" />
+        <input type="button" trcode="inputChange" onClick="unblockPin2();" class="buttonBottom" id="inputUnblockPin2" />
         <input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />		
 	</div>
   </div>
@@ -238,20 +238,20 @@
 	<div class="rightContent">
 		<label>
 			<trtag trcode="labelCurrentPIN2"></trtag>
-			<input type="password" name="pin2OldPin" id="pin2OldPin">
+			<input type="password" name="pin2OldPin" id="pin2OldPin" onKeyPress="handlekey('pin2NewPin'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN2"></trtag>
-			<input type="password" name="pin2NewPin" id="pin2NewPin">
+			<input type="password" name="pin2NewPin" id="pin2NewPin" onKeyPress="handlekey('pin2NewPin2'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPIN22"></trtag>
-			<input type="password" name="pin2NewPin2" id="pin2NewPin2">
+			<input type="password" name="pin2NewPin2" id="pin2NewPin2" onKeyPress="handlekey('inputChangePin2'); return true;">
 		</label>
 		<br />
-        <input type="button" trcode="inputChange" onClick="changePin2();" class="buttonBottom" />
+        <input type="button" trcode="inputChange" onClick="changePin2();" class="buttonBottom" id="inputChangePin2" />
         <input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />		
 	</div>
   </div>
@@ -266,10 +266,10 @@
 	<p id="emailsContentActivate" style="display:none;">
 		<label>
 			<trtag trcode="labelEmailAddress"></trtag>
-			<input type="text" name="emailAddress" id="emailAddress">
+			<input type="text" name="emailAddress" id="emailAddress" onKeyPress="handlekey('buttonActivateEmail'); return true;">
 		</label>
 		<br />
-		<input type="button" trcode="inputActivateEmail" onclick="activateEmail()" class="buttonBottom" />
+		<input type="button" trcode="inputActivateEmail" onclick="activateEmail()" class="buttonBottom" id="buttonActivateEmail" />
 	</p>
 	<p id="emailsContentCheck" style="display:none;">
 		<input type="button" trcode="inputCheckEmails" onclick="loadEmails()" class="buttonBottom" />
@@ -341,20 +341,20 @@
 	<div class="rightContent">
 		<label>
 			<trtag trcode="labelCurrentPUK"></trtag>
-			<input type="password" name="pukOldPin" id="pukOldPin">
+			<input type="password" name="pukOldPin" id="pukOldPin" onKeyPress="handlekey('pukNewPin'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPUK"></trtag>
-			<input type="password" name="pukNewPin" id="pukNewPin">
+			<input type="password" name="pukNewPin" id="pukNewPin" onKeyPress="handlekey('pukNewPin2'); return true;">
 		</label>
 		<br />
 		<label>
 			<trtag trcode="labelNewPUK2"></trtag>
-			<input type="password" name="pukNewPin2" id="pukNewPin2">
+			<input type="password" name="pukNewPin2" id="pukNewPin2" onKeyPress="handlekey('buttonChangePuk'); return true;">
 		</label>
 		<br />
-        <input type="button" trcode="inputChange" onClick="changePuk();" class="buttonBottom" />
+        <input type="button" trcode="inputChange" onClick="changePuk();" class="buttonBottom" id="buttonChangePuk" />
         <input type="button" trcode="inputCancel" onClick="setActive('puk','');" class="buttonBottom" />		
 	</div>
   </div>
