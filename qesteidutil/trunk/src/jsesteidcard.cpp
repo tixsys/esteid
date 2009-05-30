@@ -111,6 +111,7 @@ bool JsEsteidCard::validatePin1(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->validateAuthPin(oldVal.toStdString(),
                                      retriesLeft);
     } catch(AuthError &) {
@@ -131,6 +132,7 @@ bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->changeAuthPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
@@ -152,6 +154,7 @@ bool JsEsteidCard::validatePin2(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->validateSignPin(oldVal.toStdString(),
 										retriesLeft);
     } catch(AuthError &) {
@@ -172,6 +175,7 @@ bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->changeSignPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
@@ -193,6 +197,7 @@ bool JsEsteidCard::validatePuk(QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->validatePuk(oldVal.toStdString(),
                                      retriesLeft);
     } catch(AuthError &) {
@@ -213,6 +218,7 @@ bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->changePUK(newVal.toStdString(),
                                  oldVal.toStdString(),
                                  retriesLeft);
@@ -234,6 +240,7 @@ bool JsEsteidCard::unblockPin1(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->unblockAuthPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
@@ -255,6 +262,7 @@ bool JsEsteidCard::unblockPin2(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
+		m_card->connect( m_reader );
         return m_card->unblockSignPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
@@ -354,6 +362,7 @@ int JsEsteidCard::getPin1RetryCount()
 	byte puk,pinAuth,pinSign;
 
 	try {
+		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
@@ -370,6 +379,7 @@ int JsEsteidCard::getPin2RetryCount()
     byte puk,pinAuth,pinSign;
 	
 	try {
+		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
@@ -386,6 +396,7 @@ int JsEsteidCard::getPukRetryCount()
     byte puk,pinAuth,pinSign;
 
 	try {
+		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
