@@ -40,6 +40,10 @@ Settings::Settings( QWidget *parent )
 	showIntro->setChecked( s.value( "Intro", true ).toBool() );
 	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
 
+	const QString type = s.value( "type", "bdoc" ).toString();
+	typeBDoc->setChecked( type == "bdoc" );
+	typeDDoc->setChecked( type == "ddoc" );
+
 	signRoleInput->setText( s.value( "Role" ).toString() );
 	signResolutionInput->setText( s.value( "Resolution" ).toString() );
 	signCityInput->setText( s.value( "City" ).toString() );
@@ -74,6 +78,7 @@ void Settings::save()
 	s.setValue( "Overwrite", signOverwrite->isChecked() );
 	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
 	s.setValue( "SameDir", defaultSameDir->isChecked() );
+	s.setValue( "type", typeBDoc->isChecked() ? "bdoc" : "ddoc" );
 	if( defaultSameDir->isChecked() )
 	{
 		defaultDir->clear();
