@@ -472,8 +472,13 @@ void MainWindow::openFile( const QModelIndex &index )
 	if( list.isEmpty() || index.row() >= list.size() )
 		return;
 
-	QDesktopServices::openUrl( QString( "file://" ).append(
-		QString::fromStdString( list[index.row()].getPath() ) ) );
+#ifdef Q_OS_WIN32
+	QString url( "file:///" );
+#else
+	QString url( "file://" );
+#endif
+	url += QString::fromStdString( list[index.row()].getPath() );
+	QDesktopServices::openUrl( url );
 }
 
 void MainWindow::parseParams()

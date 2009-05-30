@@ -57,11 +57,13 @@ QString SslCertificate::formatName( const QString &name )
 QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
 {
 	unsigned char *cert = NULL;
-	int res = i2d_X509( (X509*)x509, &cert );
+	int len = i2d_X509( (X509*)x509, &cert );
 	QByteArray der;
-	if( res > 0 )
-		der = QByteArray( (char*)cert, res );
-	free( cert );
+	if( len >= 0 )
+	{
+		der = QByteArray( (char*)cert, len );
+		free( cert );
+	}
 	return QSslCertificate( der, QSsl::Der );
 }
 
