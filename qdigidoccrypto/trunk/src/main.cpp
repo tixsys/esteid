@@ -31,7 +31,7 @@ int main( int argc, char *argv[] )
 	QApplication a( argc, argv );
 	a.setApplicationName( APP );
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
-	a.setOrganizationDomain( DOMAIN );
+	a.setOrganizationDomain( DOMAINURL );
 	a.setOrganizationName( ORG );
 
 	MainWindow m;

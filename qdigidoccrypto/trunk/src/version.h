@@ -1,14 +1,6 @@
-#ifndef MAJOR_VER
 #define MAJOR_VER	0
-#endif
-
-#ifndef MINOR_VER
-#define MINOR_VER	0
-#endif
-
-#ifdef RELEASE_VER
+#define MINOR_VER	1
 #define RELEASE_VER	0
-#endif
 
 #ifndef BUILD_VER
 #define BUILD_VER	0
