@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation>Detilid</translation>
+        <translation>Detailid</translation>
     </message>
     <message>
         <source>Field</source>
@@ -108,7 +108,7 @@
     <name>CryptDoc</name>
     <message>
         <source>Container is not open</source>
-        <translation type="unfinished">Ümbrik ei ole avatud</translation>
+        <translation>Turvaümbrik ei ole avatud</translation>
     </message>
     <message>
         <source>Container is encrypted</source>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresaat ei ole turvaümbriku adresaatide nimekirjas</translation>
     </message>
     <message>
         <source>Failed decrypt data</source>
@@ -204,7 +204,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>SK Certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>SK sertifikaadihoidla</translation>
     </message>
     <message>
         <source>SS number:</source>
@@ -248,19 +248,19 @@ Error code: %1</source>
     </message>
     <message>
         <source>Certificates (*.pem *.cer *.crt)</source>
-        <translation type="unfinished"></translation>
+        <translation>sertifikaadid (*.pem *.cer *.crt)</translation>
     </message>
     <message>
         <source>Failed to open certifiacte</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi avamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to read certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi lugemine ebaõnnestus</translation>
     </message>
     <message>
         <source>Add cert from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa sertifikaat failist</translation>
     </message>
 </context>
 <context>
