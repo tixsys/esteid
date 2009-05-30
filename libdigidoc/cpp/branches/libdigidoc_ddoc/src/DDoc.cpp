@@ -327,7 +327,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	if( err != ERR_OK )
 	{
 		d->f_SignatureInfo_delete( d->doc, info->szId );
-		throwError( d->f_getErrorString( err ), __LINE__ );
+		throwError( err, "Failed to sign document", __LINE__ );
 	}
 
 	err = d->f_notarizeSignature( d->doc, info );
@@ -345,7 +345,10 @@ void DDoc::throwError( int err, const std::string &msg, int line ) throw(BDocExc
 	if( err != ERR_OK )
 	{
 		std::ostringstream s;
-		s << msg << " (error: " << err << ")";
+		s << msg << " (error: " << err;
+		if( d->f_getErrorString )
+			s << "; message: " << d->f_getErrorString( err );
+		s << ")";
 		throwError( s.str(), line );
 	}
 }
