@@ -26,17 +26,16 @@
 #include <QFileDialog>
 
 Settings::Settings( QWidget *parent )
-:	QWidget( parent )
+:	QDialog( parent )
 {
 	setupUi( this );
-	setAttribute( Qt::WA_DeleteOnClose );
-	setWindowFlags( Qt::Dialog );
 
 	SettingsValues s;
 	s.beginGroup( "Main" );
+
 	defaultSameDir->setChecked( s.value( "SameDir", true ).toBool() );
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
-	showIntro->setChecked( !s.value( "Intro", true ).toBool() );
+	showIntro->setChecked( s.value( "Intro", true ).toBool() );
 	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
 	s.endGroup();
 }
@@ -59,7 +58,7 @@ void Settings::save()
 {
 	SettingsValues s;
 	s.beginGroup( "Main" );
-	s.setValue( "Intro", !showIntro->isChecked() );
+	s.setValue( "Intro", showIntro->isChecked() );
 	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
 	s.setValue( "SameDir", defaultSameDir->isChecked() );
 	if( defaultSameDir->isChecked() )

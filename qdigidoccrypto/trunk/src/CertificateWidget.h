@@ -24,16 +24,16 @@
 
 #include "ui_CertificateWidget.h"
 
-class CertificateWidgetPrivate;
+class CertificateDialogPrivate;
 class QSslCertificate;
 
-class CertificateWidget: public QWidget, private Ui::CertificateWidget
+class CertificateDialog: public QDialog, private Ui::CertificateDialog
 {
 	Q_OBJECT
 public:
-	CertificateWidget( QWidget *parent = 0 );
-	CertificateWidget( const QSslCertificate &cert, QWidget *parent = 0 );
-	~CertificateWidget();
+	CertificateDialog( QWidget *parent = 0 );
+	CertificateDialog( const QSslCertificate &cert, QWidget *parent = 0 );
+	~CertificateDialog();
 
 	void setCertificate( const QSslCertificate &cert );
 
@@ -45,5 +45,5 @@ private:
 	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
 	QByteArray addHexSeparators( const QByteArray &data ) const;
 
-	CertificateWidgetPrivate *d;
+	CertificateDialogPrivate *d;
 };

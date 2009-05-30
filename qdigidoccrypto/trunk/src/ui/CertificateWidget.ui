@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CertificateWidget</class>
- <widget class="QWidget" name="CertificateWidget">
+ <class>CertificateDialog</class>
+ <widget class="QDialog" name="CertificateDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -143,12 +143,12 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
-   <receiver>CertificateWidget</receiver>
-   <slot>close()</slot>
+   <receiver>CertificateDialog</receiver>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>199</x>
-     <y>432</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>

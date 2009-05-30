@@ -101,21 +101,12 @@ MainWindow::MainWindow( QWidget *parent )
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
-		for( int i = 1; i < args.size(); ++i )
-		{
-			const QFileInfo f( args[i] );
-			if( !f.isFile() )
-				continue;
-			if( doc->isNull() && f.suffix().toLower() == "cdoc" )
-			{
-				doc->open( f.absoluteFilePath() );
-				break;
-			}
-			else if( !addFile( f.absoluteFilePath() ) )
-				break;
-		}
-		if( !doc->isNull() )
-			setCurrentPage( View );
+		args.removeAt( 0 );
+		params = args;
+		if( SettingsValues().showIntro() )
+			setCurrentPage( Intro );
+		else
+			parseParams();
 	}
 }
 
@@ -299,13 +290,15 @@ void MainWindow::buttonClicked( int button )
 			tr("Documents (*.cdoc)") );
 		if( !file.isEmpty() )
 		{
-			doc->open( file );
-			setCurrentPage( View );
+			if( doc->open( file ) )
+				setCurrentPage( View );
 		}
 		break;
 	}
 	case ViewBrowse:
 	{
+		if( !saveDocument( false ) )
+			break;
 #ifdef Q_OS_WIN32
 		QString url( "file:///" );
 #else
@@ -316,6 +309,8 @@ void MainWindow::buttonClicked( int button )
 	}
 	case ViewEmail:
 	{
+		if( !saveDocument( false ) )
+			break;
 #ifdef Q_OS_WIN32
 		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
@@ -394,28 +389,22 @@ void MainWindow::dropEvent( QDropEvent *e )
 	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
 	{
 		if( u.isRelative() || u.scheme() == "file" )
-		{
 #ifdef Q_OS_WIN32
-			QFileInfo file( u.path().remove( 0, 1 ) );
+			params << u.path().remove( 0, 1 );
 #else
-			QFileInfo file( u.path() );
+			params << u.path();
 #endif
-			if( !file.isFile() )
-				continue;
-			else if( file.suffix().toLower() == "cdoc" && doc->isNull() )
-			{
-				doc->open( file.filePath() );
-				break;
-			}
-			else if( !addFile( file.filePath() ) )
-				break;
-		}
 	}
-	setCurrentPage( View );
+	if( stack->currentIndex() == Home && SettingsValues().showIntro() )
+		setCurrentPage( Intro );
+	else
+		parseParams();
+}
+
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Checked ); }
+{ SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
 
 void MainWindow::on_languages_activated( int index )
 {
@@ -449,21 +438,43 @@ void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 	QDesktopServices::openUrl( url );
 }
 
+void MainWindow::parseParams()
+{
+	Q_FOREACH( const QString &param, params )
+	{
+		const QFileInfo f( param );
+		if( !f.isFile() )
+			continue;
+		if( doc->isNull() && f.suffix().toLower() == "cdoc" )
+		{
+			doc->open( f.absoluteFilePath() );
+			break;
+		}
+		else if( !addFile( f.absoluteFilePath() ) )
+			break;
+	}
+	if( !doc->isNull() )
+		setCurrentPage( View );
+	params.clear();
+}
+
 void MainWindow::removeKey( int id )
 {
 	doc->removeKey( id );
 	setCurrentPage( View );
 }
 
-bool MainWindow::saveDocument()
+bool MainWindow::saveDocument( bool close )
 {
 	if( !doc->isModified() )
 		return true;
 
+	QMessageBox::StandardButtons b = QMessageBox::Save | QMessageBox::Cancel;
+	if( close )
+		b |= QMessageBox::Close;
 	QMessageBox::StandardButton btn = QMessageBox::warning( this,
-		"QDigiDocCrypto", tr("Document has changed. Save changes?"),
-		QMessageBox::Save | QMessageBox::Cancel | QMessageBox::Close,
-		QMessageBox::Save );
+		"QDigiDocClient", tr("Document has changed. Save changes?"),
+		b, QMessageBox::Save );
 	switch( btn )
 	{
 	case QMessageBox::Save: doc->save();

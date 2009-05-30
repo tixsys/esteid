@@ -72,10 +72,12 @@ private:
 	void closeEvent( QCloseEvent *e );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
-	bool saveDocument();
+	void parseParams();
+	bool saveDocument( bool close = true );
 	void setCurrentPage( Pages page );
 
 	CryptDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
 	QHash<int,QString> lang;
+	QStringList params;
 };

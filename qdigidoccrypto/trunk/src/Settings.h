@@ -26,7 +26,7 @@
 
 #include <QSettings>
 
-class Settings: public QWidget, private Ui::Settings
+class Settings: public QDialog, private Ui::Settings
 {
 	Q_OBJECT
 
@@ -45,4 +45,6 @@ class SettingsValues: public QSettings
 public:
 	SettingsValues( QObject *parent = 0 )
 	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Estonian ID Card", "QDigiDoc", parent ) {}
+
+	bool showIntro() const { return value( "Main/Intro", true ).toBool(); }
 };
