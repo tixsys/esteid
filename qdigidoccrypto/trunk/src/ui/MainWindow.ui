@@ -430,7 +430,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QCheckBox" name="introCheck">
               <property name="text">
-               <string>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</string>
+               <string>Yes, I will use ID-card certificate only for secure transfer</string>
               </property>
              </widget>
             </item>
@@ -671,8 +671,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>259</width>
-               <height>168</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewKeysLayout">

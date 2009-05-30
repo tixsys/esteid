@@ -182,9 +182,10 @@ void MainWindow::buttonClicked( int button )
 			showWarning( tr("Failed to start process 'qesteidutil'"), -1 );
 		break;
 	case HomeCreate:
-		if( !SettingsValues().value( "Main/Intro", true ).toBool() )
+		if( SettingsValues().showIntro() )
 		{
 			introCheck->setChecked( false );
+			introNext->setEnabled( false );
 			setCurrentPage( Intro );
 			break;
 		}
@@ -293,11 +294,8 @@ void MainWindow::buttonClicked( int button )
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
 			tr("Documents (*.cdoc)") );
-		if( !file.isEmpty() )
-		{
-			if( doc->open( file ) )
-				setCurrentPage( View );
-		}
+		if( !file.isEmpty() && doc->open( file ) )
+			setCurrentPage( View );
 		break;
 	}
 	case ViewBrowse:
@@ -407,7 +405,10 @@ void MainWindow::dropEvent( QDropEvent *e )
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
+{
+	SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked );
+	introNext->setEnabled( state == Qt::Checked );
+}
 
 void MainWindow::on_languages_activated( int index )
 {
