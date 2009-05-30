@@ -60,6 +60,7 @@ void JsCardManager::pollCard()
 	if ( !pollTimer.isActive() )
 		pollTimer.start( 1000 );
 
+	int numReaders = 0;
     EstEidCard *card = 0;
     try {
 		QString insert,remove;
@@ -70,14 +71,14 @@ void JsCardManager::pollCard()
 
 		// Build current device list with statuses
         QHash<QString,ReaderState> tmp;
-        int numReaders = cardMgr->getReaderCount( true );
+        numReaders = cardMgr->getReaderCount( true );
         for (int i = 0; i < numReaders; i++) {
             ReaderState reader;
 			reader.id = i;
             reader.name = QString::fromStdString(cardMgr->getReaderName(i));
 			reader.state = QString::fromStdString( cardMgr->getReaderState( i ) );
 			reader.connected = false;
-			if ( cardReaders[reader.name].state != reader.state )
+			if ( cardReaders.value(reader.name).state != reader.state )
 			{
 				//card in use
 				if ( !reader.state.contains( "EMPTY" ) )
@@ -95,12 +96,12 @@ void JsCardManager::pollCard()
 							insert = reader.name;
 						}
 					}
-				} else if ( !cardReaders[reader.name].cardId.isEmpty() && cardReaders[reader.name].connected )
+				} else if ( !cardReaders.value(reader.name).cardId.isEmpty() && cardReaders.value(reader.name).connected )
 					remove = reader.name;
-			} else if ( cardReaders[reader.name].connected ) {
+			} else if ( cardReaders.value(reader.name).connected ) {
 				foundConnected = true;
 				reader.connected = true;
-				reader.cardId = cardReaders[reader.name].cardId;
+				reader.cardId = cardReaders.value(reader.name).cardId;
 			}
 			tmp[reader.name] = reader;
         }
@@ -115,20 +116,28 @@ void JsCardManager::pollCard()
 					break;
 				}
 			}
-		}
+			if ( remove.isEmpty() )
+				remove = "empty";
+		} else if ( cardReaders.size() < tmp.size() && insert.isEmpty() )
+			insert = "empty";
 
 		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
 			m_jsEsteidCard->setCard( 0 );
-			emit cardEvent( m_jsCardRemoveFunc, cardReaders[remove].id );
+			emit cardEvent( m_jsCardRemoveFunc, remove != "empty" ? cardReaders[remove].id : -1 );
 		}
 		if ( !insert.isEmpty() )
-			emit cardEvent( m_jsCardInsertFunc, cardReaders[insert].id );
+			emit cardEvent( m_jsCardInsertFunc, insert != "empty" ? cardReaders[insert].id : -1 );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
 			findCard();
     } catch (std::runtime_error &e) {
 		qDebug() << e.what();
+		if ( cardReaders.size() > 0 && numReaders == 0 )
+		{
+			cardReaders = QHash<QString,ReaderState>();
+			emit cardEvent( m_jsCardRemoveFunc, cardReaders.value(0).id );
+		}
         // For now ignore any errors that might have happened during polling.
         // We don't want to spam users too often.
     }

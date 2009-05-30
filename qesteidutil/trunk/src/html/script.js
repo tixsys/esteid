@@ -23,14 +23,17 @@ function cardInserted(i)
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		document.getElementById('cardInfoNoCard').style.display='none';	
-		extender.showLoading( _('loadCardData') );
 		activeCardId = "";
 		emailsLoaded = false;
-		cardManager.selectReader( i );
-		if ( esteidData.canReadCard() )
+		if ( i != -1 )
 		{
-			activeCardId = esteidData.getDocumentId();
-			extender.closeLoading();
+			extender.showLoading( _('loadCardData') );
+			cardManager.selectReader( i );
+			if ( esteidData.canReadCard() )
+			{
+				activeCardId = esteidData.getDocumentId();
+				extender.closeLoading();
+			}		
 		}
 	}
 	readCardData();
