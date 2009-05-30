@@ -68,16 +68,6 @@ set(QT_USE_QTXML true)
 
 include(${QT_USE_FILE})
 
-if( MAJOR_VER )
-	add_definitions(-DMAJOR_VER=${MAJOR_VER})
-endif( MAJOR_VER )
-if( MINOR_VER )
-	add_definitions(-DMINOR_VER=${MINOR_VER})
-endif( MINOR_VER )
-if( RELEASE_VER )
-	add_definitons(-DRELEASE_VER=${RELEASE_VER})
-endif( RELEASE_VER )
-
 find_package(Subversion)
 if (Subversion_FOUND)
   if (EXISTS ${PROJECT_SOURCE_DIR}/.svn)

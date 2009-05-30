@@ -17,17 +17,18 @@ VS_VERSION_INFO VERSIONINFO
 #else
 	FILEFLAGS 0x0L
 #endif
-	FILEOS VOS__WINDOWS32
+	FILEOS VOS_NT_WINDOWS32
 	FILETYPE VFT_APP
 	FILESUBTYPE 0x0L
 	BEGIN
 		BLOCK "StringFileInfo"
 		BEGIN
-			BLOCK "040904B0"
+			BLOCK "040904E4"
 			BEGIN
 				VALUE "CompanyName", ORG "\0"
 				VALUE "FileDescription", APP "\0"
 				VALUE "FileVersion", VER_STR(FILE_VER) "\0"
+				VALUE "InternalName", "QEstEidUtil\0"
 				VALUE "OriginalFilename", "QEstEidUtil.exe\0"
 				VALUE "ProductName", APP "\0"
 				VALUE "ProductVersion", VER_STR(FILE_VER) "\0"
