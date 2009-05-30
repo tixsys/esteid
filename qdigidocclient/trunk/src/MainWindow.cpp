@@ -139,7 +139,7 @@ bool MainWindow::addFile( const QString &file )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( QDir::separator() )
 			.arg( info.fileName() )
-			.arg( SettingsValues().value("Main/type").toString() );
+			.arg( SettingsValues().value( "Main/type" ,"bdoc" ).toString() );
 
 		if( SettingsValues().value( "Main/AskSaveAs", false ).toBool() ||
 			QFile::exists( docname ) )
