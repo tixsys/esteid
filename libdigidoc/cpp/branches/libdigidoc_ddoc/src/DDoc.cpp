@@ -7,7 +7,7 @@ using namespace digidoc;
 
 #ifdef WIN32
 
-#define LIBDIGIDOC_NAME "digidoclib2.dll"
+#define LIBDIGIDOC_NAME "digidoc2.dll"
 
 DDocLibrary::DDocLibrary()
 { h = LoadLibrary( LIBDIGIDOC_NAME ); }
@@ -151,11 +151,9 @@ DSignature::DSignature( SignatureInfo *sig, DDocPrivate *doc )
 
 std::string DSignature::getMediaType() const
 {
-	std::string v;
-	v += m_doc->doc->szFormat;
-	v += "/";
-	v += m_doc->doc->szFormatVer;
-	return v;
+	std::ostringstream s;
+	s << m_doc->doc->szFormat << "/" << m_doc->doc->szFormatVer;
+	return s.str();
 }
 
 void DSignature::validateOffline() const throw(SignatureException)
@@ -180,8 +178,10 @@ void DSignature::sign(Signer* signer) throw(SignatureException, SignException) {
 DDoc::DDoc()
 {
 	d = new DDocPrivate();
+	if( !d->isLoaded() )
+		return;
 	int err = d->f_SignedDoc_new( &d->doc, "DIGIDOC-XML", "1.3" );
-	throwError( err, "Failed to create new document", __LINE__ );
+	//throwError( err, "Failed to create new document", __LINE__ );
 }
 DDoc::~DDoc() { delete d; }
 
