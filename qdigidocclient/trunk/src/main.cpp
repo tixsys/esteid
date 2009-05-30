@@ -21,17 +21,18 @@
  */
 
 #include "MainWindow.h"
-#include "Settings.h"
+
+#include "version.h"
 
 #include <QApplication>
 
 int main( int argc, char *argv[] )
 {
 	QApplication a( argc, argv );
-	a.setApplicationName( "QDigiDocClient" );
-	a.setApplicationVersion( "0.0.1" );
-	a.setOrganizationDomain( "eesti.ee" );
-	a.setOrganizationName( "Eesti" );
+	a.setApplicationName( APP );
+	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
+	a.setOrganizationDomain( DOMAIN );
+	a.setOrganizationName( ORG );
 
 	MainWindow m;
 	m.show();

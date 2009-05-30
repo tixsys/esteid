@@ -22,6 +22,8 @@
 
 #include "Settings.h"
 
+#include "version.h"
+
 #include <QDesktopServices>
 #include <QFileDialog>
 
@@ -111,3 +113,7 @@ void Settings::saveSignatureInfo(
 	}
 	s.endGroup();
 }
+
+SettingsValues::SettingsValues( QObject *parent )
+:	QSettings( QSettings::NativeFormat, QSettings::UserScope, ORG, APP, parent )
+{}
