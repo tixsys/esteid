@@ -13,4 +13,4 @@
 
 #define ORG "Estonian ID Card"
 #define APP "DigiDoc"
-#define DOMAIN "eesti.ee"
+#define DOMAINURL "eesti.ee"
