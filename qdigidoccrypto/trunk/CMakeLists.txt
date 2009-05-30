@@ -22,6 +22,7 @@ SET( HEADERS
 	${MOC_HEADERS}
 	src/Common.h
 	src/SslCertificate.h
+	src/version.h
 	)
 SET( SOURCES
 	${HEADERS}
@@ -49,8 +50,32 @@ SET( QT_USE_QTNETWORK true )
 INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
+if( MAJOR_VER )
+	add_definitions(-DMAJOR_VER=${MAJOR_VER})
+endif( MAJOR_VER )
+if( MINOR_VER )
+	add_definitions(-DMINOR_VER=${MINOR_VER})
+endif( MINOR_VER )
+if( RELEASE_VER )
+	add_definitons(-DRELEASE_VER=${RELEASE_VER})
+endif( RELEASE_VER )
+
+find_package(Subversion)
+if (Subversion_FOUND)
+  if (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+	  Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
+	  message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
+	  add_definitions(-DBUILD_VER=${PROJECT_WC_REVISION})
+	  set(SVN_BUILD ${PROJECT_WC_REVISION})
+  else (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+	  add_definitions(-DBUILD_VER=0)
+  endif (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+else (Subversion_FOUND)
+  add_definitions(-DBUILD_VER=0)
+endif (Subversion_FOUND)
+
 INCLUDE_DIRECTORIES(
-	${CMAKE_SOURCE_DIR}
+	${CMAKE_SOURCE_DIR}/src
 	${CMAKE_BINARY_DIR}
 	${OPENSSL_INCLUDE_DIR}
 	${LIBDIGIDOC2_INCLUDE_DIR}

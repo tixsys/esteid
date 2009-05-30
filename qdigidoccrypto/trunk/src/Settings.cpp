@@ -22,6 +22,8 @@
 
 #include "Settings.h"
 
+#include "version.h"
+
 #include <QDesktopServices>
 #include <QFileDialog>
 
@@ -68,3 +70,7 @@ void Settings::save()
 	}
 	s.endGroup();
 }
+
+SettingsValues::SettingsValues( QObject *parent )
+:	QSettings( QSettings::NativeFormat, QSettings::UserScope, ORG, APP, parent )
+{}

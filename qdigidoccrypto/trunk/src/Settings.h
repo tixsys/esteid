@@ -43,8 +43,7 @@ class SettingsValues: public QSettings
 	Q_OBJECT
 
 public:
-	SettingsValues( QObject *parent = 0 )
-	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Estonian ID Card", "QDigiDoc", parent ) {}
+	SettingsValues( QObject *parent = 0 );
 
 	bool showIntro() const { return value( "Main/Intro", true ).toBool(); }
 };
