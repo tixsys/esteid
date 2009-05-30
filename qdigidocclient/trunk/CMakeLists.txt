@@ -30,6 +30,7 @@ SET( MOC_HEADERS
 SET( HEADERS
 	${MOC_HEADERS}
 	src/SslCertificate.h
+	src/version.h
 	)
 SET( SOURCES
 	${HEADERS}
@@ -70,7 +71,7 @@ if (Subversion_FOUND)
   if (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
       Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
       message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
-      add_definitions(-DRELEASE_VER=${PROJECT_WC_REVISION})
+	  add_definitions(-DBUILD_VER=${PROJECT_WC_REVISION})
       set(SVN_BUILD ${PROJECT_WC_REVISION})
   else (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
       add_definitions(-DBUILD_VER=0)
