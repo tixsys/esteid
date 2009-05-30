@@ -21,11 +21,18 @@
  */
 
 #include <QtGui/QApplication>
+
 #include "mainwindow.h"
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+	app.setApplicationName( APP );
+	app.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
+	app.setOrganizationDomain( DOMAINURL );
+	app.setOrganizationName( ORG );
+
     MainWindow w;
     w.show();
     return app.exec();
