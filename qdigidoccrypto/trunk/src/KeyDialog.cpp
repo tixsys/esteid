@@ -77,7 +77,6 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 	setWindowFlags( Qt::Dialog );
 
 	title->setText( k.recipient );
-	title->setStyleSheet( QString( "background-color: green" ) );
 
 	addItem( tr("Recipient"), k.recipient );
 	addItem( tr("Crypt method"), k.type );
