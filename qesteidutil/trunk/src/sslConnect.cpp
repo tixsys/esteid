@@ -1,7 +1,7 @@
-/*
+﻿/*
  * QEstEidUtil
  *
- * Copyright (C) 2009 Jargo K�ster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -27,21 +27,12 @@
 
 #ifdef WIN32
 #include <winsock2.h>
-#define SSL_LIB "ssleay32"
-#define CRYPTO_LIB "libeay32"
-#define PKCS11_ENGINE "engine_pkcs11"
 #define PKCS11_MODULE "opensc-pkcs11.dll"
 #elif defined(__APPLE__)
 #include <netdb.h>
-#define SSL_LIB "ssl"
-#define CRYPTO_LIB "crypto"
-#define PKCS11_ENGINE "/Library/OpenSC/lib/engines/engine_pkcs11.so"
 #define PKCS11_MODULE "/Library/OpenSC/lib/opensc-pkcs11.so"
 #else
 #include <netdb.h>
-#define SSL_LIB "ssl"
-#define CRYPTO_LIB "crypto"
-#define PKCS11_ENGINE "/usr/lib/engines/engine_pkcs11.so"
 #define PKCS11_MODULE "/usr/lib/opensc-pkcs11.so"
 #endif
 
@@ -55,7 +46,6 @@
 #endif 
 
 #include <openssl/ssl.h>
-#include <openssl/engine.h>
 
 #define EESTI "sisene.www.eesti.ee"
 
@@ -84,110 +74,100 @@ SSLConnect::SSLConnect( QObject *parent )
 ,	obj( 0 )
 {
 	try { obj = new SSLObj(); }
-	catch( sslError &e ) { clear(); throw e; }
-	catch( std::runtime_error &e ) { clear(); throw e; }
+	catch( sslError &e ) { throw e; }
+	catch( std::runtime_error &e ) { throw e; }
 }
 
-SSLConnect::~SSLConnect() { clear(); }
-
-void SSLConnect::clear()
+SSLConnect::~SSLConnect()
 {
 	if ( obj )
+	{
 		delete obj;
+		obj = 0;
+	}
 }
 
-bool SSLConnect::isLoaded() { return obj; }
+bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
 std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value )
 {
+	if ( !obj )
+		obj = new SSLObj();
+
+	std::vector<unsigned char> result;
+
 	if ( !isLoaded() )
-		return std::vector<unsigned char>();
+		return result;
 
 	if ( obj->connectToHost( EESTI, pin, readerNum ) )
 	{
 		if ( type == "picture" )
-			return obj->getUrl( "/idportaal/portaal.idpilt" );
+			result =  obj->getUrl( "/idportaal/portaal.idpilt" );
 		if ( type == "emails" )
-			return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+			result = obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
 		if ( type == "activateEmail" )
-			return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+			result = obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
 	}
-	obj->disconnect();
-	return std::vector<unsigned char>();
+	return result;
 }
 
 SSLObj::SSLObj()
 {
-	engine = (ENGINE*)malloc( sizeof( ENGINE* ) );
-
-    SSL_library_init();
-    SSL_load_error_strings();
-	ENGINE_load_dynamic();
-
-    //load and initialize pkcs11 engine
-	sslError::check("get dynamic engine",engine = ENGINE_by_id("dynamic"));
-    sslError::check("cmd SO_PATH",  ENGINE_ctrl_cmd_string(engine,"SO_PATH",PKCS11_ENGINE,0));
-	sslError::check("cmd ID",       ENGINE_ctrl_cmd_string(engine,"ID","pkcs11",0));
-	sslError::check("cmd LIST_ADD", ENGINE_ctrl_cmd_string(engine,"LIST_ADD","1",0));
-
-	int result = ENGINE_ctrl_cmd_string(engine,"LOAD",NULL,0);
-	if( !result )
-		ENGINE_free( engine );
-	sslError::check("cmd LOAD", result );
-
-	sslError::check("cmd MODULE_PATH",ENGINE_ctrl_cmd_string(engine,"MODULE_PATH",PKCS11_MODULE,0));
-
-	sslError::check("set_default", ENGINE_set_default(engine, (unsigned int)0xFFF) );
-
-	result = ENGINE_init(engine);
-	if( !result )
-		ENGINE_free( engine );
-	sslError::check("init engine", result );
-}
-
-void SSLObj::disconnect()
-{
-	SSL_shutdown(s);
-	SSL_free(s);
-	SSL_CTX_free(ctx);
+	ctx = PKCS11_CTX_new();
+	PKCS11_CTX_load(ctx, PKCS11_MODULE);
 }
 
 SSLObj::~SSLObj()
 {
-	ENGINE_finish(engine);
-	ENGINE_free(engine);
-	ENGINE_cleanup();
+	SSL_shutdown(s);
+	SSL_free(s);
+	PKCS11_release_all_slots(ctx, pslots, nslots);
+	PKCS11_CTX_unload(ctx);
+	PKCS11_CTX_free(ctx);
 }
 
 bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int reader )
 {
-	std::ostringstream strm;
-	strm << reader * 4 << ":01";
-	std::string slotid = strm.str();
-	struct {
-		const char *slot_id;
-		X509 *cert;
-	} parms = {slotid.c_str(),NULL};
+	PKCS11_SLOT *slot;
+	PKCS11_CERT *certs;
+	PKCS11_KEY *authkey;
+	PKCS11_CERT *authcert;
+	EVP_PKEY *pubkey = NULL;
+	unsigned int ncerts;
 
-	sslError::check("cmd LOAD_CERT_CTRL",ENGINE_ctrl_cmd(engine, "LOAD_CERT_CTRL", 0, &parms, NULL, 0));
+	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
 
-	struct
+	if ( (unsigned int)reader*4 > nslots )
+		throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );
+
+	slot = &pslots[reader*4];
+	if (!slot || !slot->token)
 	{
-		const void *password;
-		const char *prompt_info;
-	} cb_data = { pin.c_str(), NULL };
+		PKCS11_release_all_slots(ctx, pslots, nslots);
+		throw std::runtime_error( QObject::tr("no token available").toStdString() );
+	}
 
-	EVP_PKEY *m_pkey = ENGINE_load_private_key(engine,parms.slot_id,NULL, &cb_data);
-	sslError::check("wrong pin ?", m_pkey );
+	result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
+	authcert=&certs[0];
+	result = PKCS11_login(slot, 0, pin.c_str());
+	authkey = PKCS11_find_key(authcert);
+	if ( !authkey )
+	{
+		PKCS11_release_all_slots(ctx, pslots, nslots);
+		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
+	}
 
-    ctx = SSL_CTX_new( SSLv3_method() );
-	sslError::check("CTX_use_cert", SSL_CTX_use_certificate(ctx, parms.cert ) );
-	sslError::check("CTX_use_privkey", SSL_CTX_use_PrivateKey(ctx,m_pkey) );
-    sslError::check("CTX_check_privkey", SSL_CTX_check_private_key(ctx) );
-	sslError::check("CTX_ctrl", SSL_CTX_ctrl( ctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
-	if ( m_pkey )
-		EVP_PKEY_free(m_pkey); 
-	s = SSL_new(ctx);
+	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
+
+	SSL_CTX *sctx = SSL_CTX_new( SSLv3_method() );
+	sslError::check("CTX_use_cert", SSL_CTX_use_certificate(sctx, authcert->x509 ) );
+	sslError::check("CTX_use_privkey", SSL_CTX_use_PrivateKey(sctx,pkey) );
+    sslError::check("CTX_check_privkey", SSL_CTX_check_private_key(sctx) );
+	sslError::check("CTX_ctrl", SSL_CTX_ctrl( sctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
+	if ( pkey != NULL )
+		EVP_PKEY_free(pkey); 
+
+	s = SSL_new(sctx);
 
 #ifdef WIN32
     WSADATA wsaData;

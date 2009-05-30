@@ -238,16 +238,18 @@ function cardInserted(i)
 		emailsLoaded = false;
 		cardManager.selectReader( i );
 		if ( esteidData.canReadCard() )
+		{
 			activeCardId = esteidData.getDocumentId();
-		extender.closeLoading();
+			extender.closeLoading();
+		}
 	}
 	readCardData();
 }
 
 function cardRemoved(i)
 {
-	checkReaderCount();
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i) + " " + activeCardId );
+	checkReaderCount();
 	if ( !cardManager.isInReader( activeCardId ) )
 	{
 		emailsLoaded = false;

@@ -37,7 +37,6 @@ JsExtender::JsExtender( MainWindow *main )
 :	QObject( main )
 ,	m_mainWindow( main )
 ,	m_loading( 0 )
-,	sslConnect( 0 )
 {
 	m_locale = Settings().value( "language" ).toString();
 	if ( m_locale.isEmpty() )
@@ -134,16 +133,11 @@ QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 
 	std::vector<unsigned char> buffer;
 
-	if ( !sslConnect )
-		sslConnect = new SSLConnect( this );
-	if ( !sslConnect->isLoaded() )
-	{
-		sslConnect->deleteLater();
-		sslConnect = 0;
-		return QByteArray();
-	}
+	SSLConnect *sslConnect = new SSLConnect( this );
 
 	buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type.toStdString(), def.toStdString() );
+	
+	sslConnect->deleteLater();
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }

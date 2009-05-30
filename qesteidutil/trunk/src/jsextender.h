@@ -29,7 +29,6 @@
 
 class MainWindow;
 class SettingsDialog;
-class SSLConnect;
 
 class JsExtender : public QObject
 {
@@ -57,7 +56,6 @@ private:
 	QLabel *m_loading;
 	QByteArray getUrl( const QString &type, const QString &def );
 	QString pin;
-	SSLConnect *sslConnect;
 	QString activeDocument;
 	QHttp m_http;
 

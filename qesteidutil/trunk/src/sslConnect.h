@@ -24,6 +24,7 @@
 
 #include <QObject>
 
+#include <libp11.h>
 #include <openssl/ssl.h>
 
 #include <vector>
@@ -37,13 +38,15 @@ public:
 
 	bool connectToHost( const std::string &site, const std::string &pin, int reader );
 	std::vector<unsigned char> getUrl( const std::string &type );
-	void disconnect();
+	PKCS11_CTX *ctx;
 
 private:
-	ENGINE *engine;
-	SSL_CTX *ctx;
+	SSL_CTX *sctx;
 	SSL		*s;
 	int		m_reader;
+
+	unsigned int nslots;
+	PKCS11_SLOT *pslots;
 };
 
 class SSLConnect: public QObject
@@ -58,7 +61,5 @@ public:
 	std::vector<unsigned char> getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value = "" );
 
 private:
-	void clear();
-
 	SSLObj	*obj;
 };

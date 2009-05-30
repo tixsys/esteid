@@ -7,6 +7,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(Qt4 REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
+find_package(LibP11 REQUIRED)
 if(UNIX)
     find_package(PCSCLite REQUIRED)
 endif(UNIX)
@@ -71,6 +72,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}
     ${PCSCLITE_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
+    ${LIBP11_INCLUDE_DIR}
 )
 
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
@@ -96,6 +98,7 @@ target_link_libraries(qesteidutil
     ${QT_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
+    ${LIBP11_LIBRARY}
 )
 
 if(UNIX AND NOT APPLE)
