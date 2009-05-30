@@ -15,6 +15,7 @@
 {
 	@private
 	id <EstEIDPINPanelDelegate> m_delegate;
+	id m_userInfo;
 	IBOutlet NSWindow *m_window;
 	IBOutlet NSButton *m_cancelButton;
 	IBOutlet NSButton *m_detailsButton;
@@ -36,6 +37,8 @@
 
 - (id <EstEIDPINPanelDelegate>)delegate;
 - (void)setDelegate:(id <EstEIDPINPanelDelegate>)delegate;
+- (id)userInfo;
+- (void)setUserInfo:(id)userInfo;
 
 - (BOOL)showsDetails;
 - (void)setShowsDetails:(BOOL)flag animate:(BOOL)animate;

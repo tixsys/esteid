@@ -7,11 +7,13 @@
 #import <Carbon/Carbon.h>
 #import <AppKit/AppKit.h>
 
-NSString *EstEIDWebServiceEventCardInsert = @"cardInsert";
-NSString *EstEIDWebServiceEventCardRemove = @"cardRemove";
-NSString *EstEIDWebServiceEventCardError = @"cardError";
+NSString *EstEIDWebServiceEventCardInserted = @"OnCardInserted";
+NSString *EstEIDWebServiceEventCardRemoved = @"OnCardRemoved";
+NSString *EstEIDWebServiceEventReadersChanged = @"OnReadersChanged";
 
 NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
+NSString *EstEIDWebServiceExceptionInvalidEvent = @"InvalidEvent";
+NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 @implementation EstEIDWebService
 
@@ -145,11 +147,16 @@ NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 		NSString *url = [arguments objectAtIndex:1];
 		
 		if([hash isKindOfClass:[NSString class]] && [url isKindOfClass:[NSString class]]) {
-			EstEIDWebCertificate *certificate = [self signCertificate];
+			if([hash length] != 40) {
+				@throw EstEIDWebServiceExceptionInvalidHash;
+			}
 			
 			@synchronized(self) {
+				EstEIDWebCertificate *certificate = [self signCertificate];
+				
 				if(certificate) {
 					EstEIDPINPanel *panel = [[EstEIDPINPanel alloc] init];
+					NSString *result;
 					
 					[panel setDelegate:(id <EstEIDPINPanelDelegate>)self];
 					[panel setHash:[hash uppercaseString]];
@@ -157,17 +164,14 @@ NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 					[panel setName:[[self->m_readerManager selectedReader] personName]];
 					[panel beginSheetForWindow:[self window]];
 					[panel runModal];
-					
+					result = [panel userInfo];
 					[panel release];
 					
-					return nil;
+					return result;
 				} else {
 					return nil;
 				}
 			}
-		} else {
-			
-			return nil;
 		}
 	}
 	
@@ -177,13 +181,17 @@ NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 - (void)addEventListener:(NSArray *)arguments
 {
 	if([arguments count] == 2) {
-		id type = [arguments objectAtIndex:0];
-		id listener = [arguments objectAtIndex:1];
+		NSString *type = [arguments objectAtIndex:0];
+		EstEIDWebObject *listener = [arguments objectAtIndex:1];
 		
 		if([type isKindOfClass:[NSString class]] && [listener isKindOfClass:[EstEIDWebObject class]]) {
-			NSMutableArray *listeners = [self->m_eventListeners objectForKey:(NSString *)type];
+			NSMutableArray *listeners;
 			
-			if(!listeners) {
+			if(![type isEqualToString:EstEIDWebServiceEventCardInserted] && ![type isEqualToString:EstEIDWebServiceEventCardRemoved] && ![type isEqualToString:EstEIDWebServiceEventReadersChanged]) {
+				@throw EstEIDWebServiceExceptionInvalidEvent;
+			}
+			
+			if(!(listeners = [self->m_eventListeners objectForKey:type])) {
 				listeners = [NSMutableArray array];
 				[self->m_eventListeners setObject:listeners forKey:type];
 			}
@@ -195,33 +203,45 @@ NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 			if([self->m_eventListeners count] > 0) {
 				[self->m_readerManager setDelegate:(id <EstEIDReaderManagerDelegate>)self];
 			}
+		} else {
+			@throw EstEIDWebServiceExceptionInvalidArguments;
 		}
+	} else {
+		@throw EstEIDWebServiceExceptionInvalidArguments;
 	}
 }
 
 - (void)removeEventListener:(NSArray *)arguments
 {
 	if([arguments count] == 2) {
-		id type = [arguments objectAtIndex:0];
-		id listener = [arguments objectAtIndex:1];
+		NSString *type = [arguments objectAtIndex:0];
+		EstEIDWebObject *listener = [arguments objectAtIndex:1];
 		
 		if([type isKindOfClass:[NSString class]] && [listener isKindOfClass:[EstEIDWebObject class]]) {
-			NSMutableArray *listeners = [self->m_eventListeners objectForKey:(NSString *)type];
+			NSMutableArray *listeners;
 			
-			if(listeners) {
+			if(![type isEqualToString:EstEIDWebServiceEventCardInserted] && ![type isEqualToString:EstEIDWebServiceEventCardRemoved] && ![type isEqualToString:EstEIDWebServiceEventReadersChanged]) {
+				@throw EstEIDWebServiceExceptionInvalidEvent;
+			}
+			
+			if((listeners = [self->m_eventListeners objectForKey:type]) != nil) {
 				if([listeners containsObject:listener]) {
 					[listeners removeObject:listener];
 				}
 				
 				if([listeners count] == 0) {
-					[self->m_eventListeners removeObjectForKey:(NSString *)type];
+					[self->m_eventListeners removeObjectForKey:type];
 				}
 			}
 			
 			if(![self->m_eventListeners count] == 0) {
 				[self->m_readerManager setDelegate:nil];
 			}
+		} else {
+			@throw EstEIDWebServiceExceptionInvalidArguments;
 		}
+	} else {
+		@throw EstEIDWebServiceExceptionInvalidArguments;
 	}
 }
 
@@ -229,24 +249,28 @@ NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 
 - (void)readerManager:(EstEIDReaderManager *)readerManager didInsertCard:(id <EstEIDReader>)reader
 {
-	[self handleEvent:[reader index] listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventCardInsert]];
+	[self handleEvent:[reader index] listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventCardInserted]];
 }
 
 - (void)readerManager:(EstEIDReaderManager *)readerManager didRemoveCard:(id <EstEIDReader>)reader
 {
-	[self handleEvent:[reader index] listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventCardRemove]];
+	[self handleEvent:[reader index] listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventCardRemoved]];
 }
 
-- (void)readerManager:(EstEIDReaderManager *)readerManager didFailCard:(id <EstEIDReader>)reader withError:(NSError *)error
+- (void)readerManagerDidChange:(EstEIDReaderManager *)readerManager
 {
-	[self handleEvent:[reader index] listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventCardError]];
+	[self handleEvent:-1 listeners:[self->m_eventListeners objectForKey:EstEIDWebServiceEventReadersChanged]];
 }
 
 #pragma mark EstEIDPINPanelDelegate
 
 - (BOOL)pinPanelShouldEnd:(EstEIDPINPanel *)pinPanel
 {
-	return YES;
+	NSError *error;
+	
+	[pinPanel setUserInfo:[[[self->m_readerManager selectedReader] sign:[pinPanel hash] pin:[pinPanel PIN] error:&error] uppercaseString]]; 
+	
+	return ([pinPanel userInfo]) ? YES : NO;
 }
 
 #pragma mark EstEIDWebService

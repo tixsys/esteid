@@ -9,6 +9,15 @@ typedef enum _EstEIDReaderState {
 	EstEIDReaderStateInUse = 0x10
 } EstEIDReaderState;
 
+typedef enum _EstEIDReaderError {
+	EstEIDReaderErrorUnknown = 0,
+	EstEIDReaderErrorInvalidPIN,
+	EstEIDReaderErrorInvalidHash,
+	EstEIDReaderErrorState
+} EstEIDReaderError;
+
+extern NSString *EstEIDReaderErrorDomain;
+
 extern NSString *EstEIDReaderPersonDataLastNameKey;
 extern NSString *EstEIDReaderPersonDataFirstNameKey;
 extern NSString *EstEIDReaderPersonDataMiddleNameKey;
@@ -25,6 +34,10 @@ extern NSString *EstEIDReaderPersonDataComment1Key;
 extern NSString *EstEIDReaderPersonDataComment2Key;
 extern NSString *EstEIDReaderPersonDataComment3Key;
 extern NSString *EstEIDReaderPersonDataComment4Key;
+
+extern NSString *EstEIDReaderRetryCounterPUK;
+extern NSString *EstEIDReaderRetryCounterPIN1;
+extern NSString *EstEIDReaderRetryCounterPIN2;
 
 /**
  * The EstEIDReader protocol groups methods that are essential for card readers.
@@ -60,6 +73,12 @@ extern NSString *EstEIDReaderPersonDataComment4Key;
 - (EstEIDReaderState)state;
 
 /**
+ * Returns the retry counters from the card. All the fields are included.
+ * @return The retry counters;
+ */
+- (NSDictionary *)retryCounters;
+
+/**
  * Returns the personal information from the card. All the fields are included.
  * @return The personal information.
  */
@@ -82,6 +101,15 @@ extern NSString *EstEIDReaderPersonDataComment4Key;
  * @return The signature certificate or nil.
  */
 - (NSData *)signCertificate;
+
+/**
+ * Returns the signed hash or nil if there was an error.
+ * @param hash The hash to be signed.
+ * @param pin The pin to be used during signing.
+ * @param error The error that is set and returned if the signing failed.
+ * @return The signature or nil.
+ */
+- (NSString *)sign:(NSString *)hash pin:(NSString *)pin error:(NSError **)error;
 
 @end
 
@@ -111,12 +139,10 @@ extern NSString *EstEIDReaderPersonDataComment4Key;
 - (void)readerManager:(EstEIDReaderManager *)readerManager didRemoveCard:(id <EstEIDReader>)reader;
 
 /**
- * Informs the delegate that an error occured with one of the readers.
+ * Informs the delegate that the number of readers has changed.
  * @param readerManager The reader manager sending this information.
- * @param reader The reader in question.
- * @param error The error.
  */
-- (void)readerManager:(EstEIDReaderManager *)readerManager didFailCard:(id <EstEIDReader>)reader withError:(NSError *)error;
+- (void)readerManagerDidChange:(EstEIDReaderManager *)readerManager;
 
 @end
 

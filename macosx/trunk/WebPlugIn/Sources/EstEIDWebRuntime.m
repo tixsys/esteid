@@ -171,7 +171,6 @@ static bool EstEIDWebObjectContextInvoke(EstEIDWebObjectContextRef ctx, NPIdenti
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
 		EstEIDWebRuntimeMsgSend(ctx->npp, ctx->obj, [[ctx->obj class] selectorForMethod:(const char *)str], args, argc, result);
-		
 		free(str);
 		
 		return true;

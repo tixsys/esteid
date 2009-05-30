@@ -21,6 +21,19 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 	self->m_delegate = delegate;
 }
 
+- (id)userInfo
+{
+	return self->m_userInfo;
+}
+
+- (void)setUserInfo:(id)userInfo
+{
+	if(self->m_userInfo != userInfo) {
+		[self->m_userInfo release];
+		self->m_userInfo = [userInfo retain];
+	}
+}
+
 - (BOOL)showsDetails
 {
 	return ([self->m_detailsBox isHidden] == NO) ? YES : NO;
@@ -129,6 +142,21 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 
 - (IBAction)ok:(id)sender
 {
+	//NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSString *pin = [self PIN];
+	
+	if([pin length] == 0) {
+		//[bundle localizedStringForKey:@"PINPanel.Error.PIN.None" value:nil table:nil];
+		NSBeep();
+		return;
+	}
+	
+	if([pin length] < 5 || [pin length] > 12) {
+		//[bundle localizedStringForKey:@"PINPanel.Error.PIN.Length" value:nil table:nil];
+		NSBeep();
+		return;
+	}
+	
 	if(![self->m_delegate respondsToSelector:@selector(pinPanelShouldEnd:)] || [self->m_delegate pinPanelShouldEnd:self]) {
 		[[self retain] autorelease];
 		[[self window] orderOut:sender];
@@ -194,6 +222,7 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 
 - (void)dealloc
 {
+	[self->m_userInfo autorelease];
 	[self->m_window release];
 	
 	[super dealloc];

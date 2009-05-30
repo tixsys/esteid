@@ -4,9 +4,9 @@
 
 @class EstEIDReaderManager, EstEIDWebCertificate;
 
-extern NSString *EstEIDWebServiceEventCardInsert;
-extern NSString *EstEIDWebServiceEventCardRemove;
-extern NSString *EstEIDWebServiceEventCardError;
+extern NSString *EstEIDWebServiceEventCardInserted;
+extern NSString *EstEIDWebServiceEventCardRemoved;
+extern NSString *EstEIDWebServiceEventReadersChanged;
 
 @interface EstEIDWebService : EstEIDWebObject <EstEIDWebService>
 {

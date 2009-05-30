@@ -34,6 +34,47 @@ typedef struct _EstEIDReaderManagerState {
 
 #pragma mark -
 
+std::string toHex(const std::vector<unsigned char> &byteVec) {
+	std::ostringstream buf;
+	for(ByteVec::const_iterator it = byteVec.begin();it!=byteVec.end();it++)
+		buf << std::setfill('0') << std::setw(2) <<std::hex <<
+		(short) *it;
+	return buf.str();
+}
+
+bool getOneChar(ByteVec &hexStr,int &c) {
+	if (hexStr.empty()) return false;
+	int ch = hexStr.back();
+	hexStr.pop_back();
+	while (ch == ' ' || ch == '\r' || ch == '\t' || ch == '\n') {
+		if (hexStr.empty()) return false;
+		ch = hexStr.back();
+		hexStr.pop_back();
+	}
+	if (ch >= '0' && ch <= '9')
+		c = ch - '0';
+	else if (ch >= 'A' && ch <= 'F')
+		c = ch - 'A' + 10;
+	else if (ch >= 'a' && ch <= 'f')
+		c = ch - 'a' + 10;
+	return true;
+}
+
+ByteVec fromHex(const std::string &hexStr) {
+	ByteVec retVal,inpVal(hexStr.length(),'\0');
+	copy(hexStr.begin(),hexStr.end(),inpVal.begin());
+	reverse(inpVal.begin(),inpVal.end());
+	int c1,c2;
+	while(getOneChar(inpVal,c1) && getOneChar(inpVal,c2)) {
+		retVal.push_back( 	(c1 << 4)  | c2 );
+	}
+	return retVal;
+}
+
+#pragma mark -
+
+NSString *EstEIDReaderErrorDomain = @"EstEIDReaderError";
+
 NSString *EstEIDReaderPersonDataLastNameKey = @"SURNAME";
 NSString *EstEIDReaderPersonDataFirstNameKey = @"FIRSTNAME";
 NSString *EstEIDReaderPersonDataMiddleNameKey = @"MIDDLENAME";
@@ -50,6 +91,10 @@ NSString *EstEIDReaderPersonDataComment1Key = @"COMMENT1";
 NSString *EstEIDReaderPersonDataComment2Key = @"COMMENT2";
 NSString *EstEIDReaderPersonDataComment3Key = @"COMMENT3";
 NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
+
+NSString *EstEIDReaderRetryCounterPUK = @"puk";
+NSString *EstEIDReaderRetryCounterPIN1 = @"pin1";
+NSString *EstEIDReaderRetryCounterPIN2 = @"pin2";
 
 @interface EstEIDReader : NSObject <EstEIDReader>
 {
@@ -134,7 +179,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 		}
 		catch(std::runtime_error err) {
 #if DEBUG
-			NSLog(@"EstEID: Couldn't read reader state");
+			NSLog(@"%@: Couldn't read reader state", NSStringFromClass([self class]));
 #endif
 		}
 	}
@@ -149,7 +194,29 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			return [CPlusStringToNSString(self->m_state->internal->getReaderName([self index])) retain];
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read reader name (reader=%d)", [self index]);
+			NSLog(@"%@: Couldn't read reader name (reader=%d)", NSStringFromClass([self class]), [self index]);
+		}
+	}
+	
+	return nil;
+}
+
+- (NSDictionary *)retryCounters
+{
+	if(EstEIDReaderManagerStateIsValid(self->m_state)) {
+		try {
+			EstEidCard card(*self->m_state->internal, [self index]);
+			byte puk, pin1, pin2;
+			
+			if(card.getRetryCounts(puk, pin1, pin2)) {
+				return [NSDictionary dictionaryWithObjectsAndKeys:
+						[NSNumber numberWithUnsignedChar:puk], EstEIDReaderRetryCounterPUK,
+						[NSNumber numberWithUnsignedChar:pin1], EstEIDReaderRetryCounterPIN1, 
+						[NSNumber numberWithUnsignedChar:pin2], EstEIDReaderRetryCounterPIN2, nil];
+			}
+		}
+		catch(std::runtime_error err) {
+			NSLog(@"%@: Couldn't get retry counters (reader=%d)", NSStringFromClass([self class]), [self index]);
 		}
 	}
 	
@@ -187,7 +254,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			}
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read person data");
+			NSLog(@"%@: Couldn't read person data", NSStringFromClass([self class]));
 		}
 	}
 	
@@ -216,7 +283,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			}
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read person name");
+			NSLog(@"%@: Couldn't read person name", NSStringFromClass([self class]));
 		}
 		
 		
@@ -234,7 +301,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			self->m_authCertificate = [CPlusDataToNSData(card.getAuthCert()) retain];
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read auth certificate");
+			NSLog(@"%@: Couldn't read auth certificate", NSStringFromClass([self class]));
 		}
 	}
 	
@@ -250,11 +317,49 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			self->m_signCertificate = [CPlusDataToNSData(card.getSignCert()) retain];
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't read sign certificate");
+			NSLog(@"%@: Couldn't read sign certificate", NSStringFromClass([self class]));
 		}
 	}
 	
 	return self->m_signCertificate;
+}
+
+- (NSString *)sign:(NSString *)hash pin:(NSString *)pin error:(NSError **)error
+{
+	if(error) {
+		*error = nil;
+	}
+	
+	if(EstEIDReaderManagerStateIsValid(self->m_state)) {
+		try {
+			EstEidCard card(*(self->m_state->internal), [self index]);
+			ByteVec bytes = fromHex([hash UTF8String]);
+			std::string cpin = [pin UTF8String];
+			
+			if(bytes.size() != 20) {
+				if(error) {
+					*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorInvalidHash userInfo:nil];
+				}
+				
+				return nil;
+			}
+			
+			return CPlusStringToNSString(toHex(card.calcSignSHA1(bytes, EstEidCard::SIGN, cpin)));
+		}
+		catch(std::runtime_error err) {
+			if(error) {
+				*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorUnknown userInfo:nil];
+			}
+			
+			NSLog(@"%@: Couldn't sign hash %@ because of '%s'", NSStringFromClass([self class]), hash, err.what());
+		}
+	} else {
+		if(error) {
+			*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorState userInfo:nil];
+		}
+	}
+	
+	return nil;
 }
 
 #pragma mark NSObject
@@ -314,6 +419,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			EstEidCard card = EstEidCard(*(self->m_state->internal));
 			unsigned int count = 0;
 			unsigned int index;
+			BOOL changed;
 			
 			try {
 				count = self->m_state->internal->getReaderCount();
@@ -324,6 +430,8 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 					throw err;
 				}
 			}
+			
+			changed = (self->m_state->readers.count != count);
 			
 			// Added readers
 			if(self->m_state->readers.count < count) {
@@ -366,9 +474,13 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 					self->m_state->selection = NSNotFound;
 				}
 			}
+			
+			if(changed) {
+				[self->m_delegate readerManagerDidChange:self];
+			}
 		} catch(std::runtime_error &err) {
 #if DEBUG
-			NSLog(@"EstEID: %s", err.what());
+			NSLog(@"%@: %s", NSStringFromClass([self class]), err.what());
 #endif
 			// Notify delegate here?
 		}
@@ -464,7 +576,7 @@ NSString *EstEIDReaderPersonDataComment4Key = @"COMMENT4";
 			[[NSRunLoop currentRunLoop] addTimer:self->m_state->timer forMode:NSDefaultRunLoopMode];
 		}
 		catch(std::runtime_error err) {
-			NSLog(@"EstEID: Couldn't initialize SmartCardManager");
+			NSLog(@"%@: Couldn't initialize SmartCardManager", NSStringFromClass([self class]));
 		}
 	}
 	

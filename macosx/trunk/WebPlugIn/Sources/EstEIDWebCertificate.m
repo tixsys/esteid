@@ -27,6 +27,23 @@ static NSString *X509NameEntryToNSString(X509_NAME *name, int nid)
 	return result;
 }
 
+static NSString *X509IntegerToNSString(ASN1_INTEGER *integer)
+{
+	BIO *bio = BIO_new(BIO_s_mem());
+	NSString *result = nil;
+	char *data;
+	int length;
+	
+	if(i2a_ASN1_INTEGER(bio, integer)) {
+		length = BIO_get_mem_data(bio, &data);
+		result = [[[NSString alloc] initWithBytes:data length:length encoding:NSUTF8StringEncoding] autorelease];
+	}
+	
+	BIO_free(bio);
+	
+	return result;
+}
+
 static NSString *X509ToNSString(X509 *x509)
 {
 	BIO *bio = BIO_new(BIO_s_mem());
@@ -81,24 +98,13 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 			X509 *x509 = NULL;
 			
 			if(d2i_X509_bio(bio, &x509) != NULL) {
-				unsigned char identifier[EVP_MAX_MD_SIZE];
-				unsigned int index, length;
-				
 				self->m_CN = [X509NameEntryToNSString(X509_get_subject_name(x509), NID_commonName) retain];
 				self->m_keyUsage = [X509NameEntryToNSString(X509_get_subject_name(x509), NID_organizationalUnitName) retain];
 				self->m_validFrom = [X509DateToNSDate(X509_get_notBefore(x509)) retain];
 				self->m_validTo = [X509DateToNSDate(X509_get_notAfter(x509)) retain];
 				self->m_issuerCN = [X509NameEntryToNSString(X509_get_issuer_name(x509), NID_commonName) retain];
 				self->m_certificate = [X509ToNSString(x509) retain];
-				
-				if(X509_digest(x509, EVP_sha1(), identifier, &length)) {
-					self->m_identifier = [[NSMutableString alloc] init];
-					
-					for(index = 0; index < length; index++) {
-						[(NSMutableString *)self->m_identifier appendFormat:@"%02X", identifier[index]];
-					}
-				}
-				
+				self->m_serial = [X509IntegerToNSString(X509_get_serialNumber(x509)) retain];
 				self->m_x509 = x509;
 			}
 			
@@ -139,9 +145,9 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 	return self->m_certificate;
 }
 
-- (NSString *)identifier
+- (NSString *)serial
 {
-	return self->m_identifier;
+	return self->m_serial;
 }
 
 #pragma mark EstEIDWebObject
@@ -154,7 +160,7 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 	if(strcmp(name, "issuerCN") == 0) return @selector(issuerCN);
 	if(strcmp(name, "keyUsage") == 0) return @selector(keyUsage);
 	if(strcmp(name, "cert") == 0) return @selector(certificate);
-	if(strcmp(name, "id") == 0) return @selector(identifier);
+	if(strcmp(name, "serial") == 0) return @selector(serial);
 	
 	return [super selectorForProperty:name];
 }
@@ -171,7 +177,7 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 	[self->m_issuerCN release];
 	[self->m_keyUsage release];
 	[self->m_certificate release];
-	[self->m_identifier release];
+	[self->m_serial release];
 	
 	[super dealloc];
 }
