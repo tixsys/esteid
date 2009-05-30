@@ -396,13 +396,14 @@ QList<CKey> CryptDoc::keys()
 
 QString CryptDoc::lastError() const { return m_lastError; }
 
-void CryptDoc::open( const QString &file )
+bool CryptDoc::open( const QString &file )
 {
 	clear();
 	m_fileName = file;
 	int err = dencSaxReadEncryptedData( &m_enc, file.toUtf8() );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to open crypted document"), err );
+	return err == ERR_OK;
 }
 
 QStringList CryptDoc::presentCards() const { return m_cards; }

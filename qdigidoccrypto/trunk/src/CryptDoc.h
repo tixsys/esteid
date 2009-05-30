@@ -77,7 +77,7 @@ public:
 	bool isSigned() const;
 	QList<CKey> keys();
 	QString lastError() const;
-	void open( const QString &file );
+	bool open( const QString &file );
 	QStringList presentCards() const;
 	void removeDocument( int id );
 	void removeKey( int id );

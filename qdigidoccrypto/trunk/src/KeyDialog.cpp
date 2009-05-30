@@ -96,7 +96,7 @@ void KeyDialog::addItem( const QString &parameter, const QString &value )
 }
 
 void KeyDialog::showCertificate()
-{ (new CertificateWidget( k.cert, this ))->show(); }
+{ CertificateDialog( k.cert, this ).exec(); }
 
 
 

@@ -189,6 +189,11 @@ void MainWindow::buttonClicked( int button )
 			break;
 		}
 	case IntroNext:
+		if( !params.isEmpty() )
+		{
+			parseParams();
+			break;
+		}
 	case ViewAddFile:
 	{
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
@@ -401,8 +406,6 @@ void MainWindow::dropEvent( QDropEvent *e )
 		parseParams();
 }
 
-}
-
 void MainWindow::on_introCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
 
@@ -417,7 +420,7 @@ void MainWindow::on_languages_activated( int index )
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
-void MainWindow::on_settings_clicked() { (new Settings( this ))->show(); }
+void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
 void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 {
@@ -473,7 +476,7 @@ bool MainWindow::saveDocument( bool close )
 	if( close )
 		b |= QMessageBox::Close;
 	QMessageBox::StandardButton btn = QMessageBox::warning( this,
-		"QDigiDocClient", tr("Document has changed. Save changes?"),
+		"QDigiDocCrypto", tr("Document has changed. Save changes?"),
 		b, QMessageBox::Save );
 	switch( btn )
 	{
