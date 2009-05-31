@@ -187,11 +187,19 @@ void MainWindow::buttonClicked( int button )
 	case ViewCrypt:
 		if( !saveDocument() )
 			break;
+#ifdef Q_OS_MAC
+		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qdigidoccrypto" << doc->fileName() ) )
+#else
 		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
+#endif
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeOpenUtility:
+#ifdef Q_OS_MAC
+		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
+#else
 		if( !QProcess::startDetached( "qesteidutil" ) )
+#endif
 			showWarning( tr("Failed to start process 'qesteidutil'") );
 		break;
 	case HomeSign:
