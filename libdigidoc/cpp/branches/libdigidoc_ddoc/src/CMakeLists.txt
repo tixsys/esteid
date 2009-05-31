@@ -82,6 +82,17 @@ else(WIN32)
     set(DIGIDOC_LIB_TYPE SHARED)
 endif(WIN32)
 
+# xCode and static linking hacks
+if(APPLE)
+	include_directories(/Library/OpenSC/include)
+	include_directories(/usr/local/include/../include)
+	find_library(CARBON_LIBRARY Carbon)
+	find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+	find_library(LTDL_LIBRARY ltdl)
+	mark_as_advanced(CARBON_LIBRARY COREFOUNDATION_LIBRARY LTDL_LIBRARY)
+	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY} ${LTDL_LIBRARY})
+endif(APPLE)
+
 add_library(digidoc ${DIGIDOC_LIB_TYPE} ${libdigidoc_SRCS} ${minizip_SRCS})
 target_link_libraries(digidoc
     ${ICONV_LIBRARIES}
@@ -91,6 +102,7 @@ target_link_libraries(digidoc
     ${LIBP11_LIBRARIES}
     ${XERCESC_LIBRARIES}
     ${XMLSECURITYC_LIBRARIES}
+    ${EXTRA_LIBS}
 )
 set_target_properties(digidoc PROPERTIES
                               VERSION 0.0.8
