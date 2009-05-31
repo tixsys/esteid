@@ -20,7 +20,7 @@ var htmlStrings = {
 	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
-	"linkHelp": new tr( "Abi", "Help", "Настройки" ),
+	"linkHelp": new tr( "Abi", "Help", "Help" ),
 
 	"personName": new tr( "Nimi", "Name", "Имя" ),
 	"personDepartment": new tr( "Osakond", "Department", "" ),

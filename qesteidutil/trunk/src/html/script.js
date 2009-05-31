@@ -1,6 +1,36 @@
 ﻿var emailsLoaded = false;
 var activeCardId = "";
 
+document.onkeyup = checkAccessKeys;
+
+function checkAccessKeys(e)
+{
+	if ( !e.altKey )
+		return;
+	var letter = String.fromCharCode(e.keyCode);
+	
+	var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
+	for( i=0;i<buttons.length;i++)
+	{
+		if ( (typeof buttons[i].attributes["accesskey"] != "undefined") && buttons[i].attributes["accesskey"].value.indexOf(letter) >= 0 )
+		{
+			buttons[i].focus();
+			buttons[i].click();
+			return;
+		}
+	}	
+	var ahrefs = document.getElementById('headerMenus').getElementsByTagName('a');
+	for( i=0;i<ahrefs.length;i++)
+	{
+		if ( (typeof ahrefs[i].attributes["accesskey"] != "undefined") && ahrefs[i].attributes["accesskey"].value.indexOf(letter) >= 0 )
+		{
+			ahrefs[i].focus();
+			ahrefs[i].onclick();
+			return;
+		}
+	}		
+}
+
 function handlekey(nextItem)
 {
 	if ( window.event.keyCode != 13 )
@@ -89,10 +119,10 @@ function checkReaderCount()
 	}
 	if ( cards < 2 )
 	{
-		document.getElementById( 'headerMenus' ).style.right = '90px';
+		document.getElementById( 'headerMenus' ).style.right = '95px';
 		reader.style.display = 'none';
 	} else {
-		document.getElementById( 'headerMenus' ).style.right = '180px';
+		document.getElementById( 'headerMenus' ).style.right = '185px';
 		reader.style.display = 'block';
 	}
 }

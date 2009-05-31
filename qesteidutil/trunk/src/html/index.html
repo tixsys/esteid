@@ -13,9 +13,9 @@
 	  </div>
       <div id="headerMenus">
         <ul>
-          <li class="first"><a href="#" onClick="cardManager.showDiagnostics();"><trtag trcode="linkDiagnostics"></trtag></a></li>
-          <li><a href="#" onClick="extender.showSettings();"><trtag trcode="linkSettings"></trtag></a></li>
-          <li><a href="#" onClick="openHelp();"><trtag trcode="linkHelp"></trtag></a></li>
+          <li class="first"><a href="#" onClick="cardManager.showDiagnostics();" accesskey="D"><trtag trcode="linkDiagnostics"></trtag></a></li>
+          <li><a href="#" onClick="extender.showSettings();" accesskey="DT"><trtag trcode="linkSettings"></trtag></a></li>
+          <li><a href="#" onClick="openHelp();" accesskey="AH"><trtag trcode="linkHelp"></trtag></a></li>
         </ul>        
       </div>
       <div>
@@ -52,10 +52,10 @@
     </div>	
     <div id="leftMenus">
       <ul>
-        <li><input type="button" trcode="inputCert" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
-        <li><input type="button" trcode="inputEmail" name="email" onClick="setActive('email',this);" class="button" /></li>
-        <li><input type="button" trcode="inputMobile" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
-        <li><input type="button" trcode="inputPUK" name="puk" onClick="setActive('puk',this);" class="button" /></li>
+        <li><input type="button" accesskey="C" trcode="inputCert" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
+        <li><input type="button" accesskey="E" trcode="inputEmail" name="email" onClick="setActive('email',this);" class="button" /></li>
+        <li><input type="button" accesskey="M" trcode="inputMobile" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
+        <li><input type="button" accesskey="P" trcode="inputPUK" name="puk" onClick="setActive('puk',this);" class="button" /></li>
       </ul>
     </div>
     <div id="cardInfo" class="cardInfo">

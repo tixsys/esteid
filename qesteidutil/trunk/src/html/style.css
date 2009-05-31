@@ -8,7 +8,7 @@ input[type="button"] { cursor: hand; }
 #headerSelect { position: absolute; right: 5px; top: 10px; background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: "Arial, Liberation Sans"; font-size: 12px;}
 #readerSelect:focus, #readerSelect:hover, #headerSelect:focus, #headerSelect:hover { text-decoration: underline; }
 
-#headerMenus {position: absolute; right: 90px; top: 2px; color: #afc6d1; font-family: "Arial, Liberation Sans"; font-weight: bold; font-size: 12px;}
+#headerMenus {position: absolute; right: 95px; top: 2px; color: #afc6d1; font-family: "Arial, Liberation Sans"; font-weight: bold; font-size: 12px;}
 #headerMenus ul li { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: 1px solid #325e80; padding-left: 10px; padding-right: 5px;}
 #headerMenus ul li.first { list-style: none; padding: 0px; margin: 0px; display: inline; border-left: none; padding-right: 5px;}
 #headerMenus a:link {color: #afc6d1; text-decoration: none;}	
@@ -18,7 +18,7 @@ input[type="button"] { cursor: hand; }
 
 #linegray {position: absolute; top:145px; width:585; height:165px; background-image: url('qrc:/html/images/linegray.png'); z-index: -1;}
 
-#logo {position: absolute; top:65px; left:45px; width:90; height:84px; background-image: url('qrc:/html/images/logo.png');}
+#logo {position: absolute; top:65px; left:45px; width:90px; height:84px; background-image: url('qrc:/html/images/logo.png');}
 #logotext {position: absolute; top:72px; left:155px; width:176px; height:35px; background-image: url('qrc:/html/images/logotext.png'); background-repeat: no-repeat;}
 
 #leftMenus { position: absolute; top:155px; left: 5px; width:146; z-index: 1; }
