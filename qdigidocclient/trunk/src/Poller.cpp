@@ -49,48 +49,28 @@ void Poller::run()
 {
 	Q_FOREVER
 	{
+		if( m.tryLock() )
+		{
+			QEstEIDSigner *s;
+			try { s = new QEstEIDSigner(); }
+			catch( const Exception & ) {}
+
+			if( !selectedCard.isEmpty() && !s->cards().contains( selectedCard ) )
+				selectedCard.clear();
+			if( selectedCard.isEmpty() && !s->cards().isEmpty() )
+				selectedCard = s->cards().first();
+			Q_EMIT dataChanged( s->cards(), selectedCard,
+				s->authCert( selectedCard ), s->signCert( selectedCard ) );
+
+			delete s;
+			m.unlock();
+		}
 		for( int i = 0; i < 5; ++i )
 		{
 			if( terminate )
 				return;
 			sleep( 1 );
 		}
-
-		if( !m.tryLock() )
-			continue;
-
-		QEstEIDSigner *s;
-		try { s = new QEstEIDSigner(); }
-		catch( const Exception & ) {}
-
-		Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
-
-		if( selectedCard.isEmpty() && !s->cards().isEmpty() )
-		{
-			selectedCard = s->cards().first();
-			auth = s->authCert( selectedCard );
-			sign = s->authCert( selectedCard );
-			Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
-		}
-		else if( !selectedCard.isEmpty() && !s->cards().contains( selectedCard ) )
-		{
-			if( !s->cards().isEmpty() )
-			{
-				selectedCard = s->cards().first();
-				auth = s->authCert( selectedCard );
-				sign = s->authCert( selectedCard );
-				Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
-			}
-			else
-			{
-				selectedCard.clear();
-				auth = QSslCertificate();
-				sign = QSslCertificate();
-				Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
-			}
-		}
-		delete s;
-		m.unlock();
 	}
 }
 
@@ -98,16 +78,6 @@ void Poller::selectCard( const QString &card )
 {
 	m.lock();
 	selectedCard = card;
-	QEstEIDSigner *s;
-	try
-	{
-		s = new QEstEIDSigner();
-		auth = s->authCert( selectedCard );
-		sign = s->authCert( selectedCard );
-		Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
-	}
-	catch( const Exception & ) {}
-	delete s;
 	m.unlock();
 }
 
