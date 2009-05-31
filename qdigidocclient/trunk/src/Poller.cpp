@@ -96,14 +96,19 @@ QSslCertificate QEstEIDSigner::authCert( const QString &card ) const { return au
 QStringList	QEstEIDSigner::cards() const { return auth.keys(); }
 QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return sign.value(card); }
 
-std::string QEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
+std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
 {
+	SslCertificate s = SslCertificate::fromX509( (Qt::HANDLE*)c.cert );
+	QString title = QString( "%1 %2 %3" )
+		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
+		.arg( s.subjectInfo( "serialNumber" ) );
 	bool ok;
-	QString pin = QInputDialog::getText( qApp->activeWindow(), "QDigiDocClient",
-		QObject::tr("Selected action requires sign certificate.\n"
-			"For using sign certificate enter PIN2"),
-		QLineEdit::Password,
-		QString(), &ok );
+	QString pin = QInputDialog::getText( qApp->activeWindow(), title,
+		QObject::tr( "<b>%1</b><br />"
+			"Selected action requires sign certificate.<br />"
+			"For using sign certificate enter PIN2" ).arg( title ),
+		QLineEdit::Password, QString(), &ok );
 	if( !ok )
 		throw SignException( __FILE__, __LINE__,
 			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
