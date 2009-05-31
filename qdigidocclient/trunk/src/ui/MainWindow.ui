@@ -85,6 +85,8 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
+margin-left: 5px;
+margin-right: 5px;
 min-width: 75px;
 }
 
@@ -834,8 +836,8 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
              </spacer>
@@ -913,7 +915,7 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>296</width>
+               <width>276</width>
                <height>232</height>
               </rect>
              </property>
@@ -1072,7 +1074,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="2" margin="2"/>
  <resources>
   <include location="../rc/qdigidocclient.qrc"/>
  </resources>
