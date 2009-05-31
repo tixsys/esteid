@@ -82,11 +82,15 @@ background-color: #00355F;
 }
 
 #cards QAbstractItemView,
-#languages QAbstractItemView,
+#languages QAbstractItemView
+{
+color
+background-color: white;
+}
+
 #headerLine, #headerLine2
 {
 color: white;
-padding: 10px;
 background-color: #00355F;
 }
 
