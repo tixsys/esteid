@@ -215,7 +215,7 @@
     </message>
     <message>
         <source>Print signature summary</source>
-        <translation>Trüki kinnistusleht</translation>
+        <translation type="obsolete">Trüki kinnistusleht</translation>
     </message>
     <message>
         <source>Browse container location</source>
@@ -354,7 +354,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
-        <translation>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Allkirjastamise sertifikaat on aegunud&lt;/font&gt;</translation>
+        <translation type="obsolete">&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Allkirjastamise sertifikaat on aegunud&lt;/font&gt;</translation>
     </message>
     <message>
         <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
@@ -362,7 +362,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
-        <translation>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Isikutuvastuse sertifikaat on aegunud&lt;/font&gt;</translation>
+        <translation type="obsolete">&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Isikutuvastuse sertifikaat on aegunud&lt;/font&gt;</translation>
     </message>
     <message>
         <source>No card in reader</source>
@@ -396,13 +396,25 @@ p, li { white-space: pre-wrap; }
         <source>Document has changed. Save changes?</source>
         <translation>Dokumenti on muudetud. Kas soovite salvestada muudatused?</translation>
     </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;#E80303&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;&lt;font color=&quot;#E80303&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print summary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Selected action requires sign certificate.
 For using sign certificate enter PIN2</source>
-        <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.\nSertifikaadi kasutamiseks sisesta PIN2</translation>
+        <translation type="obsolete">Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.\nSertifikaadi kasutamiseks sisesta PIN2</translation>
     </message>
     <message>
         <source>PIN acquisition canceled.</source>
@@ -423,6 +435,10 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>All application policies</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
     </message>
 </context>
 <context>
@@ -490,6 +506,18 @@ For using sign certificate enter PIN2</source>
     <message>
         <source>Ask container name</source>
         <translation>Küsi dokumendi nime</translation>
+    </message>
+    <message>
+        <source>Default file type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BDoc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DDoc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
