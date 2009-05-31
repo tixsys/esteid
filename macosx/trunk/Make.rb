@@ -93,13 +93,19 @@ class Application
 		
 		conf_root = Pathname.new(@path).join(@options.digidoc, 'etc', 'libdigidoc')
 		conf = File.join(conf_root, 'bdoclib.conf')
-		FileUtils.rm_rf(conf_root) if File.exists? conf_root
-		FileUtils.mkdir_p(conf_root) unless File.exists? conf_root
+		conf_certs = File.join(conf_root, 'certs')
+		conf_schema = File.join(conf_root, 'schema')
+		
+		FileUtils.rm_rf(conf) if File.exists? conf
+		FileUtils.rm_rf(conf_certs) if File.exists? conf_certs
+		FileUtils.rm_rf(conf_schema) if File.exists? conf_schema
+		FileUtils.mkdir_p(conf_certs) unless File.exists? conf_certs
+		FileUtils.mkdir_p(conf_schema) unless File.exists? conf_schema
 		
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc2/trunk').to_s) do	
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
 			run_command 'install_name_tool -id libdigidoc2.dylib libdigidoc/Release/libdigidoc2.dylib'
 			FileUtils.cp_r('libdigidoc/Release/libdigidoc2.dylib', digidoc2)
@@ -114,13 +120,36 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/cpp/branches/libdigidoc_ddoc').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
 			run_command 'install_name_tool -id libdigidoc.dylib src/Release/libdigidoc.dylib'
+			puts "Copying file libdigidoc.dylib" if @options.verbose
 			FileUtils.cp_r('src/Release/libdigidoc.dylib', digidoc)
+					
+			puts "Copying file bdoclib.conf" if @options.verbose
 			FileUtils.cp_r('bdoclib.conf', conf)
-			FileUtils.cp_r('etc/certs', conf_root)
-			FileUtils.cp_r('etc/schema', conf_root)
+			
+			Dir.glob(File.join('etc/certs', '**/*')).each do |path|
+				rpath = File.join(conf_certs, path['etc/certs'.length, path.length - 1])
+				
+				if File.directory? path
+					Dir.mkdir(rpath)
+				else
+					puts "Copying file #{path['etc/certs'.length, path.length - 1]}" if @options.verbose
+					FileUtils.cp(path, rpath)
+				end
+			end
+			
+			Dir.glob(File.join('etc/schema', '**/*')).each do |path|
+				rpath = File.join(conf_schema, path['etc/schema'.length, path.length - 1])
+				
+				if File.directory? path
+					Dir.mkdir(rpath)
+				else
+					puts "Copying file #{path['etc/schema'.length, path.length - 1]}" if @options.verbose
+					FileUtils.cp(path, rpath)
+				end
+			end
 			
 			if @options.force
 				run_command 'sudo xcodebuild -project libdigidoc.xcodeproj -configuration Release -target install -sdk macosx10.4'
@@ -140,7 +169,7 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidocclient/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project qdigidocclient.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
 		end
 		
@@ -151,7 +180,7 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project qesteidutil.xcodeproj -configuration Release -target qesteidutil -sdk macosx10.4'
 		end
 		
@@ -162,7 +191,7 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidoccrypto/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project qdigidoccrypto.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
 		end
 		
@@ -635,9 +664,7 @@ class Application
 		return [
 			{
 				:name => 'esteid-digidoc',
-				:files => [
-					File.join(@options.digidoc, 'lib/*.dylib'),
-					File.join(@options.digidoc, 'etc/libdigidoc') ],
+				:files => [ File.join(@options.digidoc, '*/**') ],
 				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.digidoc',
@@ -696,6 +723,7 @@ class Application
 			}, {
 				:name => 'esteid-webplugin',
 				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
 			}, {
@@ -706,7 +734,6 @@ class Application
 			}, {
 				:name => 'esteid',
 				:files => File.join(@options.packages, '*.pkg'),
-				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:identifier => 'org.esteid.installer',
 				#:restart => 'RequiredRestart',
 				:version => '1.0'
