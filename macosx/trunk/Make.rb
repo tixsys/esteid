@@ -120,7 +120,7 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/cpp/branches/libdigidoc_ddoc').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
 			run_command 'install_name_tool -id libdigidoc.dylib src/Release/libdigidoc.dylib'
 			puts "Copying file libdigidoc.dylib" if @options.verbose
