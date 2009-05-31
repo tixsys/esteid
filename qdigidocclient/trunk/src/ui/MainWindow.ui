@@ -39,49 +39,21 @@
     <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">* { font: 12px &quot;Arial, Liberation Sans&quot;; }
-
-/* fonts */
-QWidget, #signContentView, #viewContentView
-{ color: #355670; }
-
-#viewSignatures
-{ color: #71889A; }
-
-QPushButton,
-#cards, #cards QAbstractItemView,
-#languages, #languages QAbstractItemView
-{ color: white; }
-
-#homeButtonLabel,
-#viewContentLabel, #viewSignaturesLabel,
-#signContentLabel, #signSigner, #signSignerLabel
-{
-color: #00355F;
-font: bold;
+   <string notr="true">* {
+font: 12px &quot;Arial, Liberation Sans&quot;;
+color: #355670;
 }
 
-/* backgrounds */
 #background
 { background-image: url(&quot;:/images/background.png&quot;); }
-
-#languages, #languages QAbstractItemView,
-#cards, #cards QAbstractItemView,
-#headerLine, #headerLine2
-{ background-color: #00355F; }
-
-#home, #intro, #sign, #view,
-#signContentView, #viewContentView,
-#viewSignatures, #viewSignaturesScroll
-{ background-color: transparent; }
 
 /* widgets */
 QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }
 
 QPushButton
 {
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
- stop: 0 #406A9E, stop: 0.75 #00355F);
+color: white;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #406A9E, stop: 0.75 #00355F);
 border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
@@ -95,26 +67,34 @@ QPushButton:hover
 
 QPushButton:disabled
 {
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
- stop: 0 #A3AFC0, stop: 0.75 #80909D);
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D);
 }
 
-QComboBox
-{ border: 0px; }
+/* header */
+#cards, #languages
+{
+color: white;
+border: 0px;
+padding-right: 5px;
+margin-left: 1px;
+margin-right: 1px;
+background-color: #00355F;
+}
 
-/* customization */
+#cards QAbstractItemView,
+#languages QAbstractItemView,
+#headerLine, #headerLine2
+{
+color: white;
+background-color: #00355F;
+}
+
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
-
-#cards, #languages
-{ padding-right: 5px; }
 
 #cards::drop-down, #cards QAbstractItemView,
 #languages::drop-down, #languages QAbstractItemView
 { border: 0px; }
-
-#viewSignatures
-{ border-left: 1px solid #DFDFDF; }
 
 #settings, #help
 {
@@ -131,7 +111,32 @@ font: bold;
 border-radius: 3px;
 background-color: rgba( 255, 255, 255, 153 );
 padding: 10px;
-}</string>
+}
+
+/* content */
+#viewSignatures
+{
+color: #71889A; 
+border-left: 1px solid #DFDFDF;
+}
+
+#homeButtonLabel,
+#viewContentLabel, #viewSignaturesLabel,
+#signContentLabel, #signSigner, #signSignerLabel
+{
+color: #00355F;
+font: bold;
+}
+
+#signContentView, #viewContentView
+{
+color: #355670;
+background-color: transparent;
+}
+
+#home, #intro, #sign, #view,
+#viewSignatures, #viewSignaturesScroll
+{ background-color: transparent; }</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
    <property name="spacing">
