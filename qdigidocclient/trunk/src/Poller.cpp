@@ -1,0 +1,169 @@
+/*
+ * QDigiDocClient
+ *
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ */
+
+#include "Poller.h"
+
+#include "SslCertificate.h"
+
+#include <digidoc/XmlConf.h>
+
+#include <QApplication>
+#include <QInputDialog>
+#include <QStringList>
+
+using namespace digidoc;
+
+Poller::Poller( QObject *parent )
+:	QThread( parent )
+,	terminate( false )
+{}
+
+Poller::~Poller()
+{
+	terminate = true;
+	wait();
+}
+
+void Poller::lock() { m.lock(); }
+
+void Poller::run()
+{
+	Q_FOREVER
+	{
+		for( int i = 0; i < 5; ++i )
+		{
+			if( terminate )
+				return;
+			sleep( 1 );
+		}
+
+		if( !m.tryLock() )
+			continue;
+
+		QEstEIDSigner *s;
+		try { s = new QEstEIDSigner(); }
+		catch( const Exception & ) {}
+
+		Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
+
+		if( selectedCard.isEmpty() && !s->cards().isEmpty() )
+		{
+			selectedCard = s->cards().first();
+			auth = s->authCert( selectedCard );
+			sign = s->authCert( selectedCard );
+			Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
+		}
+		else if( !selectedCard.isEmpty() && !s->cards().contains( selectedCard ) )
+		{
+			if( !s->cards().isEmpty() )
+			{
+				selectedCard = s->cards().first();
+				auth = s->authCert( selectedCard );
+				sign = s->authCert( selectedCard );
+				Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
+			}
+			else
+			{
+				selectedCard.clear();
+				auth = QSslCertificate();
+				sign = QSslCertificate();
+				Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
+			}
+		}
+		delete s;
+		m.unlock();
+	}
+}
+
+void Poller::selectCard( const QString &card )
+{
+	m.lock();
+	selectedCard = card;
+	QEstEIDSigner *s;
+	try
+	{
+		s = new QEstEIDSigner();
+		auth = s->authCert( selectedCard );
+		sign = s->authCert( selectedCard );
+		Q_EMIT dataChanged( s->cards(), selectedCard, auth, sign );
+	}
+	catch( const Exception & ) {}
+	delete s;
+	m.unlock();
+}
+
+void Poller::unlock() { m.unlock(); }
+
+
+QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
+:	PKCS11Signer( Conf::getInstance()->getPKCS11DriverPath() )
+,	selectedCard( card )
+{
+	try	{ getCert(); }
+	catch( const Exception & ) {}
+}
+
+QSslCertificate QEstEIDSigner::authCert( const QString &card ) const { return auth.value(card); }
+QStringList	QEstEIDSigner::cards() const { return auth.keys(); }
+QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return sign.value(card); }
+
+std::string QEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
+{
+	bool ok;
+	QString pin = QInputDialog::getText( qApp->activeWindow(), "QDigiDocClient",
+		QObject::tr("Selected action requires sign certificate.\n"
+			"For using sign certificate enter PIN2"),
+		QLineEdit::Password,
+		QString(), &ok );
+	if( !ok )
+		throw SignException( __FILE__, __LINE__,
+			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
+	return pin.toStdString();
+}
+
+PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
+	std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException)
+{
+	PKCS11Signer::PKCS11Cert signCert;
+	Q_FOREACH( const PKCS11Signer::PKCS11Cert &cert, certificates )
+	{
+		try
+		{
+			const QString card = QString::fromStdString( cert.token.serialNr );
+			if( selectedCard.isEmpty() )
+				selectedCard = card;
+			if( cert.label == std::string("Isikutuvastus") )
+				auth[card] = SslCertificate::fromX509( (Qt::HANDLE*)cert.cert );
+			else if( cert.label == std::string("Allkirjastamine") )
+			{
+				sign[card] = SslCertificate::fromX509( (Qt::HANDLE*)cert.cert );
+				if( selectedCard == card )
+					signCert = cert;
+			}
+		}
+		catch( const Exception & ) {}
+	}
+	if( signCert.label != std::string("Allkirjastamine") )
+		SignException( __FILE__, __LINE__, "Could not find certificate with label 'Allkirjastamine'." );
+
+	return signCert;
+}

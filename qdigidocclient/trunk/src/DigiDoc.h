@@ -25,6 +25,7 @@
 #include <QObject>
 
 #include <QSslCertificate>
+#include <QStringList>
 
 namespace digidoc
 {
@@ -36,7 +37,7 @@ namespace digidoc
 
 class DigiDoc;
 class QDateTime;
-class QEstEIDSigner;
+class Poller;
 
 class DigiDocSignature
 {
@@ -68,6 +69,7 @@ public:
 	DigiDoc( QObject *parent = 0 );
 	~DigiDoc();
 
+	QString activeCard() const;
 	void addFile( const QString &file );
 	QSslCertificate authCert();
 	QSslCertificate signCert();
@@ -80,6 +82,7 @@ public:
 	bool isNull() const;
 	QString lastError() const;
 	bool open( const QString &file );
+	QStringList presentCards() const;
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();
@@ -97,15 +100,21 @@ Q_SIGNALS:
 	void dataChanged();
 	void error( const QString &err );
 
+private Q_SLOTS:
+	void dataChanged( const QStringList &cards, const QString &card,
+		const QSslCertificate &auth, const QSslCertificate &sign );
+	void selectCard( const QString &card );
+
 private:
 	void setLastError( const digidoc::Exception &e );
 	void setLastError( const QString &err );
-	void timerEvent( QTimerEvent *e );
 
 	digidoc::WDoc	*b;
+	QSslCertificate	m_authCert, m_signCert;
+	QStringList		m_cards;
+	QString			m_card;
 	QString			m_fileName;
 	QString			m_lastError;
-	QSslCertificate m_authCert, m_signCert;
-	QEstEIDSigner	*m_signer;
 	bool			modified;
+	Poller			*poller;
 };

@@ -23,6 +23,7 @@ SET( MOC_HEADERS
 	src/CertificateWidget.h
 	src/DigiDoc.h
 	src/MainWindow.h
+	src/Poller.h
 	src/PrintSheet.h
 	src/Settings.h
 	src/SignatureDialog.h
@@ -38,6 +39,7 @@ SET( SOURCES
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
+	src/Poller.cpp
 	src/PrintSheet.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp

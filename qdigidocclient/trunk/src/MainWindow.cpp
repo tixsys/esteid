@@ -61,6 +61,8 @@ static QString fileSize( qint64 size )
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
+	qRegisterMetaType<QSslCertificate>("QSslCertificate");
+
 	setupUi( this );
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint |
 		Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint );
@@ -107,6 +109,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new DigiDoc( this );
+	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)), Qt::QueuedConnection );
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	doc->init();
@@ -591,9 +594,9 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->authCert().isNull() )
+	if( !doc->activeCard().isEmpty() )
 	{
-		const SslCertificate c = doc->authCert();
+		const SslCertificate c = doc->signCert();
 		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
@@ -603,15 +606,23 @@ void MainWindow::showCardStatus()
 		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
 			.arg( l.toString( doc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
 		if( !doc->signCert().isValid() )
-			content += tr("<br /><font color=\"red\">Sign certificate is expired</font>");
+			content += tr("<br /><font color=\"#E80303\">Sign certificate is expired</font>");
 
 		content += tr("<br />Auth certificate is valid until <font color=\"black\">%1</font>")
 			.arg( l.toString( doc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
 		if( !doc->authCert().isValid() )
-			content += tr("<br /><font color=\"red\">Auth certificate is expired</font>");
+			content += tr("<br /><font color=\"#E80303\">Auth certificate is expired</font>");
+
+		signSignerLabel->setText( QString( "%1 %2 (%3)" )
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+			.arg( c.subjectInfo( "serialNumber" ) ) );
 	}
 	else
-		content += tr("No card in reader");
+	{
+		content = tr("No card in reader");
+		signSignerLabel->setText( QString() );
+	}
 
 	info->setText( content );
 
@@ -619,11 +630,10 @@ void MainWindow::showCardStatus()
 		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
 		(!bdoc->authCert().isValid() || !bdoc->signCert().isValid()) );*/
 
-	const SslCertificate s = doc->signCert();
-	signSignerLabel->setText( QString( "%1 %2 (%3)" )
-		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
-		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
-		.arg( s.subjectInfo( "serialNumber" ) ) );
+	cards->clear();
+	cards->addItems( doc->presentCards() );
+	cards->setVisible( doc->presentCards().size() > 1 );
+	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
