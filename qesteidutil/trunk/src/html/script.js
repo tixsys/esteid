@@ -52,6 +52,7 @@ function cardRemoved(i)
 		if ( esteidData.canReadCard() )
 			activeCardId = esteidData.getDocumentId();
 	}
+	extender.closeLoading();
 	readCardData();
 }
 
