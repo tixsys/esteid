@@ -32,11 +32,12 @@ class Application
 		@options.quiet = false
 		@options.name = 'Installer'
 		@options.volname = nil
+		@options.build = 'build'
 		@options.binaries = 'build/Release'
 		@options.repository = 'build/Repository'
-		@options.digidoc = '/usr/local'
-		@options.qt = '/Library/Frameworks'
-		@options.opensc = '/Library/OpenSC'
+		@options.digidoc = 'build/Digidoc'
+		@options.qt = 'build/Qt'
+		@options.opensc = 'build/OpenSC'
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.sign = nil
@@ -80,29 +81,50 @@ class Application
 	protected
 	
 	def run_digidoc
-		puts "Creating digidoc..." if @options.verbose
-		
 		puts "Creating libdigidoc2..." if @options.verbose
 		
-		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc2/tags/2.6.0.17').to_s) do
+		release = Pathname.new(@path).join(@options.digidoc, 'lib').to_s
+		digidoc2 = File.join(release, 'libdigidoc2.dylib')
+		digidoc = File.join(release, 'libdigidoc.dylib')
+		
+		FileUtils.mkdir_p(release) unless File.exists? release
+		FileUtils.rm_rf(digidoc2) if File.exists? digidoc2
+		FileUtils.rm_rf(digidoc) if File.exists? digidoc
+		
+		conf_root = Pathname.new(@path).join(@options.digidoc, 'etc', 'libdigidoc')
+		conf = File.join(conf_root, 'bdoclib.conf')
+		FileUtils.rm_rf(conf_root) if File.exists? conf_root
+		FileUtils.mkdir_p(conf_root) unless File.exists? conf_root
+		
+		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc2/trunk').to_s) do	
+			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
+			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+			run_command 'install_name_tool -id libdigidoc2.dylib libdigidoc/Release/libdigidoc2.dylib'
+			FileUtils.cp_r('libdigidoc/Release/libdigidoc2.dylib', digidoc2)
 			
+			if @options.force
+				run_command 'sudo xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target install -sdk macosx10.4'
+			end
 		end
 		
 		puts "Creating libdigidoc..."if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/cpp/branches/libdigidoc_ddoc').to_s) do
-			cmd = `rm CMakeCache.txt`
-			puts cmd if @options.verbose
-			cmd = `rm -R CMakeFiles`
-			puts cmd if @options.verbose
-			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
-			puts cmd if @options.verbose
-			cmd = `make clean`
-			puts cmd if @options.verbose
-			cmd = `make`
-			puts cmd if @options.verbose
-			cmd = `sudo make install`
-			puts cmd if @options.verbose
+			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
+			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+			run_command 'install_name_tool -id libdigidoc.dylib src/Release/libdigidoc.dylib'
+			FileUtils.cp_r('src/Release/libdigidoc.dylib', digidoc)
+			FileUtils.cp_r('bdoclib.conf', conf)
+			FileUtils.cp_r('etc/certs', conf_root)
+			FileUtils.cp_r('etc/schema', conf_root)
+			
+			if @options.force
+				run_command 'sudo xcodebuild -project libdigidoc.xcodeproj -configuration Release -target install -sdk macosx10.4'
+			end
 		end
 		
 		puts "\n" if @options.verbose
@@ -112,68 +134,48 @@ class Application
 		puts "Creating installer binaries..." if @options.verbose
 		
 		# Build cross-platform Qt-based components
-		puts "Creating qesteidutil..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
-			cmd = `rm CMakeCache.txt`
-			puts cmd if @options.verbose
-			cmd = `rm -R CMakeFiles`
-			puts cmd if @options.verbose
-			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
-			puts cmd if @options.verbose
-			cmd = `make clean`
-			puts cmd if @options.verbose
-			cmd = `make`
-			puts cmd if @options.verbose
-		end
-		
-		cmd = `Skeleton/Make.rb -V -i ../../../qesteidutil/trunk/qesteidutil`
-		puts cmd if @options.verbose
 		
 		puts "Creating qdigidocclient..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidocclient/trunk').to_s) do
-			cmd = `rm CMakeCache.txt`
-			puts cmd if @options.verbose
-			cmd = `rm -R CMakeFiles`
-			puts cmd if @options.verbose
-			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
-			puts cmd if @options.verbose
-			cmd = `make clean`
-			puts cmd if @options.verbose
-			cmd = `make`
-			puts cmd if @options.verbose
+			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
+			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'xcodebuild -project qdigidocclient.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
 		end
 		
-		cmd = `Skeleton/Make.rb -V -i ../../../qdigidocclient/trunk/qdigidocclient`
-		puts cmd if @options.verbose
+		run_command 'Skeleton/Make.rb -V -i ../../../qdigidocclient/trunk/Release/qdigidocclient'
+		
+		puts "Creating qesteidutil..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
+			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
+			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'xcodebuild -project qesteidutil.xcodeproj -configuration Release -target qesteidutil -sdk macosx10.4'
+		end
+		
+		run_command 'Skeleton/Make.rb -V -i ../../../qesteidutil/trunk/Release/qesteidutil'
 		
 		puts "Creating qdigidoccrypto..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidoccrypto/trunk').to_s) do
-			cmd = `rm CMakeCache.txt`
-			puts cmd if @options.verbose
-			cmd = `rm -R CMakeFiles`
-			puts cmd if @options.verbose
-			cmd = `cmake -G "Unix Makefiles" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/`
-			puts cmd if @options.verbose
-			cmd = `make clean`
-			puts cmd if @options.verbose
-			cmd = `make`
-			puts cmd if @options.verbose
+			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
+			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBP11_INCLUDE_DIR=/Library/OpenSC/include -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARY=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'xcodebuild -project qdigidoccrypto.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
 		end
 		
-		cmd = `Skeleton/Make.rb -V -i ../../../qdigidoccrypto/trunk/qdigidoccrypto`
-		puts cmd if @options.verbose
+		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoccrypto/trunk/Release/qdigidoccrypto'
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
-		cmd = `xcodebuild -project Project.xcodeproj -configuration Release -target Main`
-		puts cmd if @options.verbose
+		run_command 'xcodebuild -project Project.xcodeproj -configuration Release -target Main'
 		
 		puts "Building tokend..." if @options.verbose
-		cmd = `xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world`
-		puts cmd if @options.verbose
+		
+		# FIXME: Broken build (10.4)?
+		#run_command 'xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world'
 		FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
 		
 		puts "\n" if @options.verbose
@@ -353,8 +355,7 @@ class Application
 					
 					if @options.arch != 'universal' and (File.extname(file) == '.dylib' or File.extname(file) == '.so')
 						puts "Thinning #{File.basename(file)}..." if @options.verbose;
-						cmd = `ditto -arch #{@options.arch} #{file} #{File.join(dir, File.basename(file))}`
-						puts cmd if @options.verbose
+						run_command "ditto -arch #{@options.arch} #{file} #{File.join(dir, File.basename(file))}"
 					elsif @options.arch != 'universal' and File.exists? File.join(file, 'Contents/MacOS')
 						FileUtils.cp_r(file, dir)
 						
@@ -364,10 +365,9 @@ class Application
 						if File.exists? exe_in
 							puts "Thinning #{File.basename(file)}..." if @options.verbose;
 							FileUtils.rm_rf(exe_out) if File.exists? exe_out
-							cmd = `ditto -arch #{@options.arch} #{exe_in} #{exe_out}`
-							puts cmd if @options.verbose
+							run_command "ditto -arch #{@options.arch} #{exe_in} #{exe_out}"
 						end	
-					elsif File.exists? File.join(file, File.basename(file, '.framework'))
+					elsif @options.arch != 'universal' and File.exists? File.join(file, File.basename(file, '.framework'))
 						FileUtils.cp_r(file, dir)
 						
 						exe_in = Pathname.new(@path).join(file, File.readlink(File.join(file, File.basename(file, '.framework')))).to_s
@@ -376,8 +376,7 @@ class Application
 						if File.exists? exe_in
 							puts "Thinning #{File.basename(file)}..." if @options.verbose;
 							FileUtils.rm_rf(exe_out) if File.exists? exe_out
-							cmd = `ditto -arch #{@options.arch} #{exe_in} #{exe_out}`
-							puts cmd if @options.verbose
+							run_command "ditto -arch #{@options.arch} #{exe_in} #{exe_out}"
 						end	
 					else 
 						FileUtils.cp_r(file, dir) unless File.exists? File.join(dir, File.basename(file))
@@ -557,6 +556,11 @@ class Application
 		puts "#{File.basename(__FILE__)} version #{VERSION}"
 	end
 	
+	def run_command(cmd)
+		out = `#{cmd}`
+		puts out if @options.verbose
+	end
+	
 	def parsed_options?		
 		options.parse!(@arguments) rescue return false
 		
@@ -632,61 +636,72 @@ class Application
 			{
 				:name => 'esteid-digidoc',
 				:files => [
-					File.join(@options.digidoc, 'lib/libp11*.dylib'),
-					File.join(@options.digidoc, 'lib/libxerces-c*.dylib'),
-					File.join(@options.digidoc, 'lib/libxml-security-c*.dylib'),
-					File.join(@options.digidoc, 'lib/libdigidoc*.dylib'),
+					File.join(@options.digidoc, 'lib/*.dylib'),
 					File.join(@options.digidoc, 'etc/libdigidoc') ],
+				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.digidoc',
 				:version => '1.0'
 			}, {
 				:name => 'esteid-opensc',
 				:files => [ File.join(@options.opensc, '*/**') ],
-				:location => '/Library/OpenSC',
+				:froot => @options.opensc,
+				:location => '/',
 				:identifier => 'org.esteid.opensc',
 				:version => '1.0'
 			}, {
 				:name => 'esteid-qt',
 				:files => [
+					File.join(@options.qt, 'QtDBus.framework'),
 					File.join(@options.qt, 'QtCore.framework'),
 					File.join(@options.qt, 'QtGui.framework'),
 					File.join(@options.qt, 'QtNetwork.framework'),
-					File.join(@options.qt, 'QtWebKit.framework') ],
+					File.join(@options.qt, 'QtWebKit.framework'),
+					File.join(@options.qt, 'QtXml.framework'),
+					File.join(@options.qt, 'phonon.framework') ],
+				:froot => @options.qt,
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.qt',
 				:version => '1.0'
 			}, {
 				:name => 'esteid-updater',
 				:files => File.join(@options.binaries, 'EstEIDSU.app'),
+				:froot => @options.binaries,
 				:location => '/Applications/Utilities'
 			}, {
 				:name => 'esteid-preferences',
 				:files => File.join(@options.binaries, 'EstEIDPP.prefPane'),
+				:froot => @options.binaries,
 				:location => '/Library/PreferencePanes'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
+				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
 				:name => 'esteid-qdigidocclient',
 				:files => File.join(@options.binaries, 'qdigidocclient.app'),
+				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
 				:name => 'esteid-qdigidoccrypto',
 				:files => File.join(@options.binaries, 'qdigidoccrypto.app'),
+				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
 				:name => 'esteid-contextmenu',
 				:files => File.join(@options.binaries, 'EstEIDCM.plugin'),
+				:froot => @options.binaries,
 				:location => '/Library/Contextual Menu Items'
 			}, {
 				:name => 'esteid-webplugin',
 				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
+				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
 			}, {
 				:name => 'esteid-tokend',
 				:files => File.join(@options.binaries, 'OpenSC.tokend'),
+				:froot => @options.binaries,
 				:location => '/System/Library/Security/tokend'
 			}, {
 				:name => 'esteid',
