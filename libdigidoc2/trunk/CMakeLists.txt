@@ -43,6 +43,11 @@ include_directories(
 	${ICONV_INCLUDE_DIR}
 )
 
+if(APPLE)
+	include_directories(/Library/OpenSC/include)
+	include_directories(/usr/local/include/../include)
+endif(APPLE)
+
 add_subdirectory( etc )
 add_subdirectory( libdigidoc )
 
