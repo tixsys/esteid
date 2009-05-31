@@ -39,14 +39,11 @@
     <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">* {font: 12px &quot;Arial, Liberation Sans&quot;; }
+   <string notr="true">* { font: 12px &quot;Arial, Liberation Sans&quot;; }
 
 /* fonts */
 QWidget, #signContentView, #viewContentView
-{
-color: #355670;
-font: 12px;
-}
+{ color: #355670; }
 
 #viewSignatures
 { color: #71889A; }
@@ -527,9 +524,6 @@ p, li { white-space: pre-wrap; }
           <property name="margin">
            <number>0</number>
           </property>
-          <property name="spacing">
-           <number>2</number>
-          </property>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="signContentButtonsLayout">
             <item>
@@ -831,9 +825,6 @@ p, li { white-space: pre-wrap; }
           <property name="margin">
            <number>0</number>
           </property>
-          <property name="spacing">
-           <number>2</number>
-          </property>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="viewSaveAsLayout">
             <item>
@@ -922,8 +913,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>298</width>
-               <height>240</height>
+               <width>296</width>
+               <height>232</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -1081,6 +1072,7 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <layoutdefault spacing="2" margin="2"/>
  <resources>
   <include location="../rc/qdigidocclient.qrc"/>
  </resources>
