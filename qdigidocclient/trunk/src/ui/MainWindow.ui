@@ -42,8 +42,14 @@
    <string notr="true">* {font: 12px &quot;Arial, Liberation Sans&quot;; }
 
 /* fonts */
-QWidget
-{ color: #355670; }
+QWidget, #signContentView, #viewContentView
+{
+color: #355670;
+font: 12px;
+}
+
+#viewSignatures
+{ color: #71889A; }
 
 QPushButton,
 #cards, #cards QAbstractItemView,
@@ -58,19 +64,13 @@ color: #00355F;
 font: bold;
 }
 
-#settings, #help
-{
-color: #afc6d1;
-font: bold;
-}
-
 /* backgrounds */
 #background
 { background-image: url(&quot;:/images/background.png&quot;); }
 
 #languages, #languages QAbstractItemView,
 #cards, #cards QAbstractItemView,
-#settings, #help, #headerLine, #headerLine2
+#headerLine, #headerLine2
 { background-color: #00355F; }
 
 #home, #intro, #sign, #view,
@@ -79,6 +79,8 @@ font: bold;
 { background-color: transparent; }
 
 /* widgets */
+QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }
+
 QPushButton
 {
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -86,6 +88,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 border: 0px;
 border-radius: 2px;
 padding: 4px 7px;
+min-width: 75px;
 }
 
 QPushButton:hover
@@ -111,8 +114,20 @@ QComboBox
 #languages::drop-down, #languages QAbstractItemView
 { border: 0px; }
 
+#viewSignatures
+{ border-left: 1px solid #DFDFDF; }
+
+#settings, #help
+{
+background-color: #00355F;
+color: #afc6d1;
+font: bold;
+min-width: 0px;
+}
+
 #info
 {
+color: #668696;
 font: bold;
 border-radius: 3px;
 background-color: rgba( 255, 255, 255, 153 );
@@ -146,6 +161,9 @@ padding: 10px;
       </property>
       <item>
        <layout class="QHBoxLayout" name="headerLayout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <item>
          <spacer name="headerSpacer">
           <property name="orientation">
@@ -509,6 +527,9 @@ p, li { white-space: pre-wrap; }
           <property name="margin">
            <number>0</number>
           </property>
+          <property name="spacing">
+           <number>2</number>
+          </property>
           <item row="0" column="0">
            <layout class="QHBoxLayout" name="signContentButtonsLayout">
             <item>
@@ -810,100 +831,24 @@ p, li { white-space: pre-wrap; }
           <property name="margin">
            <number>0</number>
           </property>
-          <item row="8" column="1">
-           <layout class="QHBoxLayout" name="viewPrintLayout">
-            <item>
-             <widget class="QPushButton" name="viewPrint">
-              <property name="text">
-               <string>Print signature summary</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewPrintSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="10" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="viewButtonsLayout">
-            <item>
-             <spacer name="viewButtonsSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewAddSignature">
-              <property name="text">
-               <string>Add signature</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewClose">
-              <property name="text">
-               <string>Close container</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewCrypt">
-              <property name="text">
-               <string>Crypt document</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="viewFileName"/>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="viewFileStatus"/>
-          </item>
-          <item row="8" column="0">
-           <layout class="QHBoxLayout" name="viewEmailLayout">
-            <item>
-             <widget class="QPushButton" name="viewEmail">
-              <property name="text">
-               <string>Send container to email</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewEmailSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="4" column="0">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item row="0" column="0">
            <layout class="QHBoxLayout" name="viewSaveAsLayout">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
             <item>
              <widget class="QPushButton" name="viewSaveAs">
               <property name="text">
@@ -926,7 +871,80 @@ p, li { white-space: pre-wrap; }
             </item>
            </layout>
           </item>
-          <item row="6" column="0">
+          <item row="0" column="1">
+           <widget class="QLabel" name="viewSignaturesLabel">
+            <property name="font">
+             <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Signatures</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="viewContentLabel">
+            <property name="font">
+             <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Container content:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="2">
+           <widget class="QScrollArea" name="viewSignaturesScroll">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="viewSignatures">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>298</width>
+               <height>240</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="viewSignaturesLayout">
+              <item>
+               <spacer name="viewSignaturesSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+          <item row="2" column="0">
            <widget class="QTreeWidget" name="viewContentView">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
@@ -955,81 +973,52 @@ p, li { white-space: pre-wrap; }
             </column>
            </widget>
           </item>
-          <item row="5" column="1" rowspan="2">
-           <widget class="QScrollArea" name="viewSignaturesScroll">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="widgetResizable">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="viewSignatures">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="viewSignaturesLayout">
-              <item>
-               <spacer name="viewSignaturesSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
-           </widget>
+          <item row="3" column="0" colspan="2">
+           <widget class="QLabel" name="viewFileName"/>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="viewContentLabel">
-            <property name="font">
-             <font>
-              <family>Arial, Liberation Sans</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Container content:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
+          <item row="4" column="0">
+           <widget class="QLabel" name="viewFileStatus"/>
           </item>
           <item row="4" column="1">
-           <widget class="QLabel" name="viewSignaturesLabel">
-            <property name="font">
-             <font>
-              <family>Arial, Liberation Sans</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Signatures</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="viewPrintLayout">
+            <item>
+             <widget class="QPushButton" name="viewPrint">
+              <property name="text">
+               <string>Print summary</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewCrypt">
+              <property name="text">
+               <string>Crypt document</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="viewPrintSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
-          <item row="9" column="0">
+          <item row="5" column="0">
            <layout class="QHBoxLayout" name="viewBrowseLayout">
+            <item>
+             <widget class="QPushButton" name="viewEmail">
+              <property name="text">
+               <string>Send container to email</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QPushButton" name="viewBrowse">
               <property name="text">
@@ -1044,8 +1033,39 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="5" column="1">
+           <layout class="QHBoxLayout" name="viewButtonsLayout">
+            <item>
+             <widget class="QPushButton" name="viewAddSignature">
+              <property name="text">
+               <string>Add signature</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="viewClose">
+              <property name="text">
+               <string>Close container</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="viewButtonsSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
                </size>
               </property>
              </spacer>
