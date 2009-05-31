@@ -85,6 +85,11 @@ INCLUDE_DIRECTORIES(
 	${LIBDIGIDOC_INCLUDE_DIR}
 	)
 
+# xCode hacks
+if(APPLE)
+	include_directories(/usr/local/include/../include)
+endif(APPLE)
+
 QT4_ADD_RESOURCES( RC_SOURCES ${RCS} )
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
