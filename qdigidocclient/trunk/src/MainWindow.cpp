@@ -548,6 +548,7 @@ void MainWindow::setCurrentPage( Pages page )
 		s.endGroup();
 
 		signAddFile->setEnabled( doc->signatures().isEmpty() );
+		signRemoveFile->setEnabled( doc->signatures().isEmpty() );
 		signSign->setEnabled(
 			signContentView->model()->rowCount() > 0 && doc->signCert().isValid() );
 		break;

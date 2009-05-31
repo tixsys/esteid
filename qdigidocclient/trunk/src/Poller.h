@@ -50,7 +50,6 @@ private:
 
 	volatile bool terminate;
 	QMutex m;
-	QSslCertificate auth, sign;
 	QString selectedCard;
 };
 
