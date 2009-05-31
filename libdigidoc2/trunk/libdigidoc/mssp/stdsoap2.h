@@ -266,7 +266,7 @@ A commercial use license is available from Genivia, Inc., contact@genivia.com
 #  define HAVE_LOCALTIME_R
 #  define HAVE_WCTOMB
 #  define HAVE_MBTOWC
-# elif defined(FREEBSD) || defined(__FreeBSD__)
+# elif defined(FREEBSD) || defined(__FreeBSD__) || defined(__APPLE__)
 #  define HAVE_STRRCHR
 #  define HAVE_STRTOD
 #  define HAVE_SSCANF
@@ -596,7 +596,7 @@ extern "C" {
 # define SOAP_SOCKLEN_T socklen_t
 #elif defined(SOCKLEN_T)
 # define SOAP_SOCKLEN_T SOCKLEN_T
-#elif defined(__socklen_t_defined) || defined(_SOCKLEN_T) || defined(CYGWIN) || defined(FREEBSD) || defined(__FreeBSD__) || defined(__QNX__) || defined(QNX)
+#elif defined(__socklen_t_defined) || defined(_SOCKLEN_T) || defined(CYGWIN) || defined(FREEBSD) || defined(__FreeBSD__) || defined(__APPLE__) || defined(__QNX__) || defined(QNX)
 # define SOAP_SOCKLEN_T socklen_t
 #elif defined(IRIX) || defined(WIN32) || defined(__APPLE__) || defined(HP_UX) || defined(SUN_OS) || defined(OPENSERVER) || defined(TRU64) || defined(VXWORKS)
 # define SOAP_SOCKLEN_T int

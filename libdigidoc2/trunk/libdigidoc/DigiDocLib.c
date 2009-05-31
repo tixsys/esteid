@@ -275,7 +275,7 @@ int ddocCheckFormatAndVer(const char* format, const char* version)
 EXP_OPTION void initDigiDocLib() 
 {
   memset(g_szGUIVersion, 0, sizeof(g_szGUIVersion));
-#ifdef __FreeBSD__
+#if defined(__FreeBSD__) || defined(__APPLE__)
   struct tm local_tm;
   time_t t;
   time(&t);
