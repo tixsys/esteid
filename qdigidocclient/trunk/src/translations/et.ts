@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Send container to email</source>
-        <translation>Saada allkirjutatud ümbrik e-postiga</translation>
+        <translation>Saada e-postiga</translation>
     </message>
     <message>
         <source>Print signature summary</source>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Browse container location</source>
-        <translation>Näita allkirjutatud ümbriku asukohta kettal</translation>
+        <translation>Näita asukohta kettal</translation>
     </message>
     <message>
         <source>Add signature</source>
@@ -394,7 +394,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Document has changed. Save changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenti on muudetud. Kas soovite salvestada muudatused?</translation>
     </message>
 </context>
 <context>
