@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-ln -s /Library/OpenSC/lib/opensc-pkcs11.so /usr/lib/opensc-pkcs11.so
-exit 0
