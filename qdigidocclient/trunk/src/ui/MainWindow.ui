@@ -39,7 +39,9 @@
     <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">/* fonts */
+   <string notr="true">* {font: 12px &quot;Arial, Liberation Sans&quot;; }
+
+/* fonts */
 QWidget
 { color: #355670; }
 
@@ -161,7 +163,10 @@ padding: 10px;
          <widget class="QPushButton" name="settings">
           <property name="font">
            <font>
+            <family>Arial, Liberation Sans</family>
+            <pointsize>-1</pointsize>
             <weight>75</weight>
+            <italic>false</italic>
             <bold>true</bold>
            </font>
           </property>
@@ -190,7 +195,10 @@ padding: 10px;
          <widget class="QPushButton" name="help">
           <property name="font">
            <font>
+            <family>Arial, Liberation Sans</family>
+            <pointsize>-1</pointsize>
             <weight>75</weight>
+            <italic>false</italic>
             <bold>true</bold>
            </font>
           </property>
@@ -276,7 +284,10 @@ padding: 10px;
           </property>
           <property name="font">
            <font>
+            <family>Arial, Liberation Sans</family>
+            <pointsize>-1</pointsize>
             <weight>75</weight>
+            <italic>false</italic>
             <bold>true</bold>
            </font>
           </property>
@@ -322,7 +333,10 @@ padding: 10px;
              <widget class="QLabel" name="homeButtonLabel">
               <property name="font">
                <font>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
                 <weight>75</weight>
+                <italic>false</italic>
                 <bold>true</bold>
                </font>
               </property>
@@ -351,8 +365,11 @@ padding: 10px;
              <widget class="QPushButton" name="homeSign">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -364,8 +381,11 @@ padding: 10px;
              <widget class="QPushButton" name="homeView">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -377,8 +397,11 @@ padding: 10px;
              <widget class="QPushButton" name="homeCrypt">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -528,7 +551,10 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="signSignerLabel">
             <property name="font">
              <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
               <weight>75</weight>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
@@ -541,7 +567,10 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="signContentLabel">
             <property name="font">
              <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
               <weight>75</weight>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
@@ -595,8 +624,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signRoleLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -611,8 +643,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signResolutionLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -627,8 +662,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signLocationLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -640,8 +678,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signCityLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -656,8 +697,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signStateLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -672,8 +716,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signCountryLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -688,8 +735,11 @@ p, li { white-space: pre-wrap; }
              <widget class="QLabel" name="signZipLabel">
               <property name="font">
                <font>
-                <weight>75</weight>
-                <bold>true</bold>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -947,7 +997,10 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="viewContentLabel">
             <property name="font">
              <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
               <weight>75</weight>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
@@ -963,7 +1016,10 @@ p, li { white-space: pre-wrap; }
            <widget class="QLabel" name="viewSignaturesLabel">
             <property name="font">
              <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
               <weight>75</weight>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
