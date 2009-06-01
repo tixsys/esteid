@@ -100,10 +100,11 @@ typedef enum _EstEIDCMPlugInFilter {
 - (NSMenu *)contextMenu:(NSArray *)selection
 {
 	if([self filterForSelection:selection] == EstEIDCMPlugInFilterFile) {
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 		NSMenu *menu = [[NSMenu alloc] init];
 		
-		[menu addItemWithTitle:NSLocalizedString(@"Menu.Action.Sign", nil) tag:EstEIDCMPlugInCommandSign];
-		[menu addItemWithTitle:NSLocalizedString(@"Menu.Action.Crypt", nil) tag:EstEIDCMPlugInCommandCrypt];
+		[menu addItemWithTitle:[bundle localizedStringForKey:@"Menu.Action.Sign" value:nil table:nil] tag:EstEIDCMPlugInCommandSign];
+		[menu addItemWithTitle:[bundle localizedStringForKey:@"Menu.Action.Crypt" value:nil table:nil] tag:EstEIDCMPlugInCommandCrypt];
 		
 		return [menu autorelease];
 	}
@@ -115,16 +116,12 @@ typedef enum _EstEIDCMPlugInFilter {
 {
     switch(command) {
 		case EstEIDCMPlugInCommandSign:
-			if([selection count] > 0) {
-				[[NSWorkspace sharedWorkspace] openFile:[selection objectAtIndex:0] withApplication:@"qdigidocclient"];
-			} else {
+			if(!([selection count] == 1 && [[NSWorkspace sharedWorkspace] openFile:[[selection objectAtIndex:0] path] withApplication:@"qdigidocclient"])) {
 				NSBeep();
 			}
 			break;
 		case EstEIDCMPlugInCommandCrypt:
-			if([selection count] > 0) {
-				[[NSWorkspace sharedWorkspace] openFile:[selection objectAtIndex:0] withApplication:@"qdigidoccrypto"];
-			} else {
+			if(!([selection count] == 1 && [[NSWorkspace sharedWorkspace] openFile:[[selection objectAtIndex:0] path] withApplication:@"qdigidoccrypto"])) {
 				NSBeep();
 			}
 			break;
