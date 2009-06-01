@@ -6,6 +6,12 @@
 #include "../log.h"
 #include "String.h"
 
+#ifdef ICONV_SECOND_ARGUMENT_IS_CONST
+     #define ICONV_CONST const
+#else
+     #define ICONV_CONST
+#endif
+
 
 /**
  * Formats string, use same syntax as <code>printf()</code> function.
@@ -116,7 +122,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
     char inbuf[MAX_LANG_LENGTH] = {0}; 
     char outbuf[MAX_LANG_LENGTH] = {0};
     strncpy( inbuf, str_in.c_str(), MAX_LANG_LENGTH-1 );
-    char* inptr( inbuf );
+    ICONV_CONST char* inptr( inbuf );
     char* outptr( outbuf );
     size_t inleft = strlen( inbuf ) + 1;
     size_t outleft = MAX_LANG_LENGTH-1;

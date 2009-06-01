@@ -60,6 +60,10 @@ set(libdigidoc_SRCS
     xml/XAdES.cxx
 )
 
+if(ICONV_SECOND_ARGUMENT_IS_CONST)
+    add_definitions( -DICONV_SECOND_ARGUMENT_IS_CONST )
+endif(ICONV_SECOND_ARGUMENT_IS_CONST)
+
 if(CMAKE_COMPILER_IS_GNUCC)
     add_definitions( -Wno-format )
 endif(CMAKE_COMPILER_IS_GNUCC)
