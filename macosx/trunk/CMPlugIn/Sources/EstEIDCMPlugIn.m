@@ -6,8 +6,7 @@
 // TODO: Must decide what commands should be available.
 
 typedef enum _EstEIDCMPlugInCommand {
-	EstEIDCMPlugInCommandSignWithMobile = 1,
-    EstEIDCMPlugInCommandSign,
+    EstEIDCMPlugInCommandSign = 1,
 	EstEIDCMPlugInCommandCrypt
 } EstEIDCMPlugInCommand;
 
@@ -17,7 +16,9 @@ typedef enum _EstEIDCMPlugInFilter {
     EstEIDCMPlugInFilterMultiple = 0x02,
     EstEIDCMPlugInFilterFile = 0x04,
     EstEIDCMPlugInFilterFolder = 0x08,
-    EstEIDCMPlugInFilterDDOC = 0x10 | EstEIDCMPlugInFilterFile,
+    EstEIDCMPlugInFilterBDOC = 0x10 | EstEIDCMPlugInFilterFile,
+	EstEIDCMPlugInFilterCDOC = 0x20 | EstEIDCMPlugInFilterFile,
+	EstEIDCMPlugInFilterDDOC = 0x30 | EstEIDCMPlugInFilterFile,
     EstEIDCMPlugInFilterAny = 0xFF
 } EstEIDCMPlugInFilter;
 
@@ -39,10 +40,10 @@ typedef enum _EstEIDCMPlugInFilter {
             if([fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
                 filter |= (isDirectory) ? EstEIDCMPlugInFilterFolder : EstEIDCMPlugInFilterFile;
                 
-                if([path hasSuffix:@".ddoc"]) {
-                    filter |= EstEIDCMPlugInFilterDDOC;
-                }
-                
+				if([path hasSuffix:@".bdoc"]) filter |= EstEIDCMPlugInFilterBDOC;
+                if([path hasSuffix:@".cdoc"]) filter |= EstEIDCMPlugInFilterCDOC;
+                if([path hasSuffix:@".ddoc"]) filter |= EstEIDCMPlugInFilterDDOC;
+				
                 count++;
             } else {
                 filter |= EstEIDCMPlugInFilterInvalid;
@@ -74,7 +75,9 @@ typedef enum _EstEIDCMPlugInFilter {
             if([fileManager fileExistsAtPath:path isDirectory:&isDirectory]) {
                 filter |= (isDirectory) ? EstEIDCMPlugInFilterFolder : EstEIDCMPlugInFilterFile;
                 
-                if(((filter & EstEIDCMPlugInFilterDDOC) != 0 && [path hasSuffix:@".ddoc"]) ||
+                if(((filter & EstEIDCMPlugInFilterBDOC) != 0 && [path hasSuffix:@".bdoc"]) ||
+				   ((filter & EstEIDCMPlugInFilterCDOC) != 0 && [path hasSuffix:@".cdoc"]) ||
+				   ((filter & EstEIDCMPlugInFilterDDOC) != 0 && [path hasSuffix:@".ddoc"]) ||
                    ((filter & EstEIDCMPlugInFilterFile) != 0 && !isDirectory) ||
                    ((filter & EstEIDCMPlugInFilterFolder) != 0 && isDirectory)) {
                     [_selection addObject:url];
@@ -96,29 +99,34 @@ typedef enum _EstEIDCMPlugInFilter {
 
 - (NSMenu *)contextMenu:(NSArray *)selection
 {
-    NSMenu *menu = [[NSMenu alloc] init];
-    
-	[menu addItemWithTitle:NSLocalizedString(@"Sign with Mobile", nil) tag:EstEIDCMPlugInCommandSignWithMobile];
-    [menu addItemWithTitle:NSLocalizedString(@"Sign with ID-card", nil) tag:EstEIDCMPlugInCommandSign];
-	[menu addItemWithTitle:NSLocalizedString(@"Crypt with ID-card", nil) tag:EstEIDCMPlugInCommandCrypt];
+	if([self filterForSelection:selection] == EstEIDCMPlugInFilterFile) {
+		NSMenu *menu = [[NSMenu alloc] init];
+		
+		[menu addItemWithTitle:NSLocalizedString(@"Menu.Action.Sign", nil) tag:EstEIDCMPlugInCommandSign];
+		[menu addItemWithTitle:NSLocalizedString(@"Menu.Action.Crypt", nil) tag:EstEIDCMPlugInCommandCrypt];
+		
+		return [menu autorelease];
+	}
 	
-    return [menu autorelease];
+	return nil;
 }
 
 - (void)contextMenu:(NSArray *)selection handleCommand:(int)command
 {
     switch(command) {
-        case EstEIDCMPlugInCommandSignWithMobile:
-			// TODO: Just to test that it is working properly
-            [[NSWorkspace sharedWorkspace] openFile:nil withApplication:@"TextEdit"];
-            break;
 		case EstEIDCMPlugInCommandSign:
-			// TODO: 
-			NSBeep();
+			if([selection count] > 0) {
+				[[NSWorkspace sharedWorkspace] openFile:[selection objectAtIndex:0] withApplication:@"qdigidocclient"];
+			} else {
+				NSBeep();
+			}
 			break;
 		case EstEIDCMPlugInCommandCrypt:
-			// TODO: 
-			NSBeep();
+			if([selection count] > 0) {
+				[[NSWorkspace sharedWorkspace] openFile:[selection objectAtIndex:0] withApplication:@"qdigidoccrypto"];
+			} else {
+				NSBeep();
+			}
 			break;
     }
 }
