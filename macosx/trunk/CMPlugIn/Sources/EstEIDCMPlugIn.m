@@ -3,8 +3,6 @@
 #import "EstEIDCMPlugIn.h"
 #import "NSMenu+Additions.h"
 
-// TODO: Must decide what commands should be available.
-
 typedef enum _EstEIDCMPlugInCommand {
     EstEIDCMPlugInCommandSign = 1,
 	EstEIDCMPlugInCommandCrypt
