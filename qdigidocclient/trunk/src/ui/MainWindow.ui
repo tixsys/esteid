@@ -62,13 +62,11 @@ margin-right: 1px;
 min-width: 75px;
 }
 
-QPushButton:hover
-{}
+QPushButton:hover, QPushButton:focus
+{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927); }
 
 QPushButton:disabled
-{
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D);
-}
+{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }
 
 /* header */
 #cards, #languages
@@ -76,29 +74,25 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, s
 color: white;
 border: 0px;
 padding-right: 5px;
-margin-left: 1px;
-margin-right: 1px;
 background-color: #00355F;
 }
 
 #cards QAbstractItemView,
 #languages QAbstractItemView
 {
-color: #355670;
 background-color: white;
+border: 0px;
+color: #355670;
 }
 
 #headerLine, #headerLine2
-{
-color: white;
-background-color: #00355F;
-}
+{ background-color: #00355F; }
 
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
 
-#cards::drop-down, #cards QAbstractItemView,
-#languages::drop-down, #languages QAbstractItemView
+#cards::drop-down,
+#languages::drop-down
 { border: 0px; }
 
 #settings, #help

@@ -65,6 +65,7 @@ void Poller::run()
 			delete s;
 			m.unlock();
 		}
+
 		for( int i = 0; i < 5; ++i )
 		{
 			if( terminate )

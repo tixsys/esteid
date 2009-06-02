@@ -45,6 +45,7 @@ public:
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth, const QSslCertificate &sign );
+
 private:
 	void run();
 
