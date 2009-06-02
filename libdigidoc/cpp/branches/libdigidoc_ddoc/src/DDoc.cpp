@@ -235,7 +235,15 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		throw BDocException( __FILE__, __LINE__, s.str() );
 	}
 
-	return Document( file.str(), data->szMimeType );
+	DataFile *data = d->doc->pDataFiles[id];
+	std::ostringstream file;
+	file << d->tmpFolder << data->szFileName;
+	int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename,
+		file.str().data(), data->szId, CHARSET_UTF_8 );
+	if( err == ERR_OK )
+		return Document( file.str(), data->szMimeType );
+	else
+		return Document( data->szFileName, data->szMimeType );
 }
 
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
