@@ -33,7 +33,7 @@ class Poller: public QThread
 	Q_OBJECT
 
 public:
-    Poller( QObject *parent = 0 );
+	Poller( QObject *parent = 0 );
 	~Poller();
 
 	void lock();
