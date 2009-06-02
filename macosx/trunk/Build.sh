@@ -8,7 +8,7 @@ if test -n "$1"; then
 	ARCH=$1 # universal, ppc or i386
 fi
 
-#./make.rb -V --arch ${ARCH} installer
+./make.rb -V --arch ${ARCH} installer
 
 hdiutil create -fs HFS+ -srcfolder build/Packages/esteid-dev.mpkg -volname esteid-dev ${FILE}
 setfile -a E ${FILE}
