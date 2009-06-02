@@ -59,77 +59,77 @@ void Poller::run()
 {
 	Q_FOREVER
 	{
+		if( m.tryLock() )
+		{
+			char driver[200];
+			snprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
+				ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
+			LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( driver ) );
+
+			if( !lib )
+			{
+				m.unlock();
+				continue;
+			}
+
+			CK_ULONG count = 20;
+			CK_SLOT_ID slotids[20];
+			int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
+			if( err != ERR_OK )
+			{
+				m.unlock();
+				closePKCS11Library( lib, 0 );
+				continue;
+			}
+
+			cards.clear();
+			for( int i = 0; i < count; ++i )
+			{
+				CK_TOKEN_INFO tokeninfo;
+				err = GetTokenInfo( &tokeninfo, slotids[i] );
+				QString serialNumber;
+				int len = sizeof(tokeninfo.serialNumber);
+				for( int j = 0; j < len; ++j )
+				{
+					if( tokeninfo.serialNumber[j] == ' ' )
+						break;
+					serialNumber.append( tokeninfo.serialNumber[j] );
+				}
+				if( !cards.contains( serialNumber ) )
+					cards[serialNumber] = i;
+			}
+			closePKCS11Library( lib, 0 );
+			Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+
+			if( selectedCard.isEmpty() && !cards.isEmpty() )
+			{
+				selectedCard = cards.begin().key();
+				readCerts();
+			}
+			else if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
+			{
+				if( !cards.isEmpty() )
+				{
+					selectedCard = cards.begin().key();
+					readCerts();
+				}
+				else
+				{
+					selectedCard.clear();
+					auth = QSslCertificate();
+					sign = QSslCertificate();
+					Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+				}
+			}
+			m.unlock();
+		}
+
 		for( int i = 0; i < 5; ++i )
 		{
 			if( terminate )
 				return;
 			sleep( 1 );
 		}
-
-		if( !m.tryLock() )
-			continue;
-
-		char driver[200];
-		snprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
-			ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
-		LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( driver ) );
-
-		if( !lib )
-		{
-			m.unlock();
-			continue;
-		}
-
-		CK_ULONG count = 20;
-		CK_SLOT_ID slotids[20];
-		int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
-		if( err != ERR_OK )
-		{
-			m.unlock();
-			closePKCS11Library( lib, 0 );
-			continue;
-		}
-
-		cards.clear();
-		for( int i = 0; i < count; ++i )
-		{
-			CK_TOKEN_INFO tokeninfo;
-			err = GetTokenInfo( &tokeninfo, slotids[i] );
-			QString serialNumber;
-			int len = sizeof(tokeninfo.serialNumber);
-			for( int j = 0; j < len; ++j )
-			{
-				if( tokeninfo.serialNumber[j] == ' ' )
-					break;
-				serialNumber.append( tokeninfo.serialNumber[j] );
-			}
-			if( !cards.contains( serialNumber ) )
-				cards[serialNumber] = i;
-		}
-		closePKCS11Library( lib, 0 );
-		Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
-
-		if( selectedCard.isEmpty() && !cards.isEmpty() )
-		{
-			selectedCard = cards.begin().key();
-			readCerts();
-		}
-		else if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
-		{
-			if( !cards.isEmpty() )
-			{
-				selectedCard = cards.begin().key();
-				readCerts();
-			}
-			else
-			{
-				selectedCard.clear();
-				auth = QSslCertificate();
-				sign = QSslCertificate();
-				Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
-			}
-		}
-		m.unlock();
 	}
 }
 
