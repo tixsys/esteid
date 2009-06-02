@@ -45,7 +45,7 @@ private Q_SLOTS:
 	void on_viewContentView_doubleClicked( const QModelIndex &index );
 	void showCardStatus();
 	void removeKey( int id );
-	void showWarning( const QString &msg, int err );
+	void showWarning( const QString &msg, int err, const QString &errmsg = QString() );
 
 private:
 	enum Pages {

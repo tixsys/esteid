@@ -84,7 +84,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new CryptDoc( this );
-	connect( doc, SIGNAL(error(QString,int)), SLOT(showWarning(QString,int)) );
+	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 
@@ -574,10 +574,12 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 }
 
-void MainWindow::showWarning( const QString &msg, int err )
+void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
 {
 	QString s( msg );
 	if( err != -1 )
-		s.append( tr("<br />Error code: %1").arg( err ) );
+		s += tr("<br />Error code: %1").arg( err );
+	if( !errmsg.isEmpty() )
+		s += QString(" (%1)").arg( errmsg );
 	QMessageBox::warning( this, "QDigDocCrypto", s );
 }

@@ -508,7 +508,11 @@ void CryptDoc::saveDocument( int id, const QString &path )
 void CryptDoc::selectCard( const QString &card )
 { poller->selectCard( card ); }
 
-void CryptDoc::setLastError( const QString &err, int errCode )
-{ Q_EMIT error( m_lastError = err, errCode ); }
+void CryptDoc::setLastError( const QString &err, int code )
+{
+	QString errMsg;
+	if( err > 0 ) errMsg = getErrorString( code );
+	Q_EMIT error( m_lastError = err, code, errMsg );
+}
 
 QSslCertificate CryptDoc::signCert() const { return m_signCert; }

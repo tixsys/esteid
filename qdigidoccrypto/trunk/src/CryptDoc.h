@@ -87,7 +87,7 @@ public:
 
 Q_SIGNALS:
 	void dataChanged();
-	void error( const QString &err, int errCode );
+	void error( const QString &err, int code, const QString &msg );
 
 private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
@@ -95,7 +95,7 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
-	void setLastError( const QString &err, int errCode = -1 );
+	void setLastError( const QString &err, int code = -1 );
 
 	QSslCertificate	m_authCert, m_signCert;
 	QStringList		m_cards;
