@@ -260,11 +260,16 @@ void MainWindow::buttonClicked( int button )
 		if( doc->isEncrypted() )
 		{
 			bool ok;
-			QString pin = QInputDialog::getText( 0, "QDigiDocCrypto",
-				QObject::tr("Selected action requires auth certificate.\n"
-					"For using auth certificate enter PIN1"),
-				QLineEdit::Password,
-				QString(), &ok );
+			SslCertificate c = doc->authCert();
+			QString title = QString( "%1 %2 %3" )
+				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+				.arg( c.subjectInfo( "serialNumber" ) );
+			QString pin = QInputDialog::getText( this, title,
+				QObject::tr("<b>%1</b><br />"
+					"Selected action requires auth certificate.<br />"
+					"For using auth certificate enter PIN1").arg( title ),
+				QLineEdit::Password, QString(), &ok );
 			if( !ok )
 				break;
 			doc->decrypt( pin );
@@ -499,6 +504,7 @@ void MainWindow::setCurrentPage( Pages page )
 		viewAddRecipient->setDisabled( doc->isEncrypted() );
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
+		viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
 
 		viewContentView->clear();
 		Qt::ItemFlags flags;
@@ -560,6 +566,7 @@ void MainWindow::showCardStatus()
 	else
 		content += tr("No card in reader");
 
+	viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
 	info->setText( content );
 	cards->clear();
 	cards->addItems( doc->presentCards() );
@@ -571,6 +578,6 @@ void MainWindow::showWarning( const QString &msg, int err )
 {
 	QString s( msg );
 	if( err != -1 )
-		s.append( tr("\nError code: %1").arg( err ) );
+		s.append( tr("<br />Error code: %1").arg( err ) );
 	QMessageBox::warning( this, "QDigDocCrypto", s );
 }
