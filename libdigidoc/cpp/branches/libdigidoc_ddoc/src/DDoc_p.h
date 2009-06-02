@@ -29,6 +29,8 @@ typedef char* (*sym_getErrorString)( int );
 typedef void (*sym_initDigiDocLib)();
 typedef int (*sym_initConfigStore)( const char* );
 typedef int (*sym_notarizeSignature)( SignedDoc*, SignatureInfo* );
+typedef int (*sym_ddocSaxExtractDataFile)( SignedDoc*, const char*,
+	const char*, const char*, const char* );
 typedef int (*sym_setSignatureProductionPlace)( SignatureInfo*,
 	const char*, const char*, const char*, const char* );
 typedef int (*sym_SignatureInfo_delete)( SignedDoc*, const char* );
@@ -68,6 +70,7 @@ public:
 	DDocLibrary lib;
 	SignedDoc *doc;
 	const char *filename;
+	std::string tmpFolder;
 	bool ready;
 
 	sym_addAllDocInfos			f_addAllDocInfos;
@@ -87,6 +90,7 @@ public:
 	sym_initDigiDocLib			f_initDigiDocLib;
 	sym_initConfigStore			f_initConfigStore;
 	sym_notarizeSignature		f_notarizeSignature;
+	sym_ddocSaxExtractDataFile	f_ddocSaxExtractDataFile;
 	sym_setSignatureProductionPlace f_setSignatureProductionPlace;
 	sym_SignatureInfo_delete	f_SignatureInfo_delete;
 	sym_SignatureInfo_new		f_SignatureInfo_new;

@@ -2,6 +2,7 @@
 #include "DDoc.h"
 
 #include "crypto/signer/PKCS11Signer.h"
+#include "util/File.h"
 
 using namespace digidoc;
 
@@ -60,6 +61,7 @@ DDocPrivate::DDocPrivate()
 ,	f_initDigiDocLib(0)
 ,	f_initConfigStore(0)
 ,	f_notarizeSignature(0)
+,	f_ddocSaxExtractDataFile(0)
 ,	f_setSignatureProductionPlace(0)
 ,	f_SignatureInfo_delete(0)
 ,	f_SignatureInfo_new(0)
@@ -105,6 +107,7 @@ bool DDocPrivate::loadSymbols()
 		!(f_initDigiDocLib = (sym_initDigiDocLib)lib.resolve("initDigiDocLib")) ||
 		!(f_initConfigStore = (sym_initConfigStore)lib.resolve("initConfigStore")) ||
 		!(f_notarizeSignature = (sym_notarizeSignature)lib.resolve("notarizeSignature")) ||
+		!(f_ddocSaxExtractDataFile = (sym_ddocSaxExtractDataFile)lib.resolve("ddocSaxExtractDataFile")) ||
 		!(f_setSignatureProductionPlace = (sym_setSignatureProductionPlace)lib.resolve("setSignatureProductionPlace")) ||
 		!(f_SignatureInfo_delete = (sym_SignatureInfo_delete)lib.resolve("SignatureInfo_delete")) ||
 		!(f_SignatureInfo_new = (sym_SignatureInfo_new)lib.resolve("SignatureInfo_new")) ||
@@ -192,6 +195,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		throwError( "DDoc library not loaded", __LINE__ );
 
 	d->filename = serializer->getPath().c_str();
+	util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
 	throwError( err, "Failed to open ddoc file", __LINE__ );
 }
@@ -219,6 +223,8 @@ unsigned int DDoc::documentCount() const
 
 Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 {
+	if( !d->isLoaded() )
+		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	if( !d->doc )
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
 	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
@@ -229,7 +235,7 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		throw BDocException( __FILE__, __LINE__, s.str() );
 	}
 
-	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
+	return Document( file.str(), data->szMimeType );
 }
 
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
