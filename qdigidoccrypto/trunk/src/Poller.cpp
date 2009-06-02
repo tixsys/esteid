@@ -44,6 +44,8 @@ void Poller::lock() { m.lock(); }
 
 void Poller::readCerts()
 {
+	Q_EMIT dataChanged( cards.keys(), selectedCard, QSslCertificate(), QSslCertificate() );
+
 	int slot = cards[selectedCard];
 	X509 *cert;
 	findUsersCertificate( slot, &cert );
@@ -52,6 +54,7 @@ void Poller::readCerts()
 	findUsersCertificate( slot + 1, &cert );
 	sign = SslCertificate::fromX509( (Qt::HANDLE*)cert );
 	free( cert );
+
 	Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 }
 
@@ -77,8 +80,8 @@ void Poller::run()
 			int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
 			if( err != ERR_OK )
 			{
-				m.unlock();
 				closePKCS11Library( lib, 0 );
+				m.unlock();
 				continue;
 			}
 
@@ -99,27 +102,19 @@ void Poller::run()
 					cards[serialNumber] = i;
 			}
 			closePKCS11Library( lib, 0 );
-			Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 
+			if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
+				selectedCard.clear();
 			if( selectedCard.isEmpty() && !cards.isEmpty() )
 			{
 				selectedCard = cards.begin().key();
 				readCerts();
 			}
-			else if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
+			if( selectedCard.isEmpty() )
 			{
-				if( !cards.isEmpty() )
-				{
-					selectedCard = cards.begin().key();
-					readCerts();
-				}
-				else
-				{
-					selectedCard.clear();
-					auth = QSslCertificate();
-					sign = QSslCertificate();
-					Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
-				}
+				auth = QSslCertificate();
+				sign = QSslCertificate();
+				Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 			}
 			m.unlock();
 		}

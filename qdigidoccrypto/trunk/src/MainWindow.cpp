@@ -535,7 +535,8 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->activeCard().isEmpty() )
+	if( !doc->activeCard().isEmpty() &&
+		(!doc->authCert().isNull() || !doc->signCert().isNull()) )
 	{
 		const SslCertificate c = doc->authCert();
 		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
@@ -554,6 +555,8 @@ void MainWindow::showCardStatus()
 		if( !doc->authCert().isValid() )
 			content += tr("<br /><font color=\"red\">Auth certificate is expired</font>");
 	}
+	else if( !doc->activeCard().isEmpty() )
+		content += tr("Loading data");
 	else
 		content += tr("No card in reader");
 

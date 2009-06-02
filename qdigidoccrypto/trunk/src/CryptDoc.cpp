@@ -178,6 +178,10 @@ void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
 	{
 		changed = true;
 		m_card = card;
+	}
+	if( m_authCert != auth || m_signCert != sign )
+	{
+		changed = true;
 		m_authCert = auth;
 		m_signCert = sign;
 	}
