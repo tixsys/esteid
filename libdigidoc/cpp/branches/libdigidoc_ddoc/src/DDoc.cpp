@@ -222,7 +222,12 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 	if( !d->doc )
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
 	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
-		return Document( "", "" );
+	{
+		std::ostringstream s;
+		s << "Incorrect document id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " documents in container.";
+		throw BDocException( __FILE__, __LINE__, s.str() );
+	}
 
 	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
 }
@@ -232,7 +237,12 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 	if( !d->doc )
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
 	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
-		return new DSignature();
+	{
+		std::ostringstream s;
+		s << "Incorrect signature id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " signatures in container.";
+		throw BDocError( __FILE__, __LINE__, s.str() );
+	}
 
 	return new DSignature( d->doc->pSignatures[id], d );
 }
@@ -245,7 +255,18 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 		throwError( "Document not open", __LINE__ );
 
 	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
-		return;
+	{
+		std::ostringstream s;
+		s << "Incorrect document id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " documents in container.";
+		throwError( s.str(), __LINE__ );
+	}
+	if( d->doc->nSignatures )
+	{
+		throwError(
+			"Can not remove document from container which has signatures, "
+			"remove all signatures before removing document.", __LINE__ );
+	}
 
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
 	throwError( err, "Failed to delete file", __LINE__ );
@@ -259,7 +280,12 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 		throwError( "Document not open", __LINE__ );
 
 	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
-		return;
+	{
+		std::ostringstream s;
+		s << "Incorrect signature id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " signatures in container.";
+		throwError( s.str(), __LINE__ );
+	}
 
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
 	throwError( err, "Failed to remove signature", __LINE__ );
