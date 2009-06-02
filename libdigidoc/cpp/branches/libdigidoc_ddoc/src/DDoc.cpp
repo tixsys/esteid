@@ -241,7 +241,7 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
 		s << d->doc->nDataFiles << " signatures in container.";
-		throw BDocError( __FILE__, __LINE__, s.str() );
+		throw BDocException( __FILE__, __LINE__, s.str() );
 	}
 
 	return new DSignature( d->doc->pSignatures[id], d );
