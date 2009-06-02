@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 2.6)
 SET (SDKVERSION "3.0")
 SET (BUILDID "300m15(Build:9379)")
-SET (COMP_NAME "complextoolbarcontrols")
+SET (COMP_NAME "OOoDigiDocTool")
 
 #SET (OS "WIN")
 SET (OS "LINUX")
@@ -130,12 +130,12 @@ ENDFOREACH(iDir)
 #----------------Set Output-----------------------
 SET(UNOFILES
 	${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp    
-#	SimpleBdocApp.cpp
 	MyProtocolHandler.cxx
 	MyJob.cxx
 	MyListener.cxx
 	WriterListener.cxx
 	CalcListener.cxx
+#	PresentationListener.cxx
 	ListenerHelper.cxx
 	exports.cxx
 	)
@@ -217,6 +217,7 @@ CONFIGURE_FILE(Addons.xcu ${OUT_MISC}/${COMP_NAME}/Addons.xcu COPYONLY)
 CONFIGURE_FILE(ProtocolHandler.xcu ${OUT_MISC}/${COMP_NAME}/ProtocolHandler.xcu COPYONLY)
 CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.xcu COPYONLY)
 CONFIGURE_FILE(CalcWindowState.xcu ${OUT_MISC}/${COMP_NAME}/CalcWindowState.xcu COPYONLY)
+#CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
 

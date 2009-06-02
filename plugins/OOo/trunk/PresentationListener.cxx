@@ -6,7 +6,7 @@
  *
  * OpenOffice.org - a multi-platform office productivity suite
  *
- * $RCSfile: WriterListener.cxx,v $
+ * $RCSfile: CalcListener.cxx,v $
  * $Revision: 1.5 $
  *
  * This file is part of OpenOffice.org.
@@ -30,22 +30,13 @@
 
 
 #include "MyListener.h"
-#include <stdio.h>
-
 #include <com/sun/star/lang/XMultiServiceFactory.hpp>
 
-void SAL_CALL WriterListener::notifyEvent( const ::com::sun::star::document::EventObject& aEvent ) throw (com::sun::star::uno::RuntimeException)
+void SAL_CALL PresentationListener::notifyEvent( const ::com::sun::star::document::EventObject& aEvent ) throw (com::sun::star::uno::RuntimeException)
 {
 }
 
-void SAL_CALL WriterListener::disposing( const com::sun::star::lang::EventObject& aSource ) throw( com::sun::star::uno::RuntimeException )
+void SAL_CALL PresentationListener::disposing( const com::sun::star::lang::EventObject& aSource ) throw( com::sun::star::uno::RuntimeException )
 {
 }
-
-WriterListener::WriterListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF)
-	: mxMSF( rxMSF )
-{
-	
-}
-
 

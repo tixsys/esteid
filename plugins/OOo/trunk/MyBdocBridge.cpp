@@ -21,6 +21,7 @@
 #endif
 
 #include "My1EstEIDSigner.h"
+//#include "MyOOoBridge.h"
 
 using namespace digidoc;
 using namespace std;
@@ -47,25 +48,76 @@ void MyBdocBridge::DigiInit()
 }
 
 //-----------------------------------------------------------
-void MyBdocBridge::DigiSign()
+void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 {
-	((My1EstEIDSigner *)this)->signPlace.str_city = "Linn";
-	((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince = "Maakond";
-	((My1EstEIDSigner *)this)->signPlace.str_postalCode = "99999";
-	((My1EstEIDSigner *)this)->signPlace.str_countryName = "Riik";
-	((My1EstEIDSigner *)this)->signerRoles.str_role = "pealik";
-	((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "orjaosakond";
-	((My1EstEIDSigner *)this)->str_pin = "01497";
-	((My1EstEIDSigner *)this)->str_bdocpath = "/home/mark/Desktop/Juhan.bdoc";
-	((My1EstEIDSigner *)this)->str_filepath = "/home/mark/Desktop/Juhan.txt";
+	//((My1EstEIDSigner *)this)->str_filepath = "/home/mark/Desktop/Juhan.txt";
+	//((My1EstEIDSigner *)this)->str_filepath = pPath;
+	//((My1EstEIDSigner *)this)->signPlace.str_city = "Linn";
+	//((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince = "Maakond";
+	//((My1EstEIDSigner *)this)->signPlace.str_postalCode = "99999";
+	//((My1EstEIDSigner *)this)->signPlace.str_countryName = "Riik";
+	//((My1EstEIDSigner *)this)->signerRoles.str_role = "pealik";
+	//((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "orjaosakond";
+	//((My1EstEIDSigner *)this)->str_pin = pPin;
 
-	((My1EstEIDSigner *)this)->signFile();
+	string strPath, strParam;
+	strPath = pPath;
+	strParam = pParam;
+
+	((My1EstEIDSigner *)this)->str_filepath = "";
+	((My1EstEIDSigner *)this)->signPlace.str_city = "";
+	((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince = "";
+	((My1EstEIDSigner *)this)->signPlace.str_postalCode = "";
+	((My1EstEIDSigner *)this)->signPlace.str_countryName = "";
+	((My1EstEIDSigner *)this)->signerRoles.str_role = "";
+	((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "";
+
+	for (int i=7; i<strPath.size(); i++)
+		((My1EstEIDSigner *)this)->str_filepath += strPath[i];
+
+	for(int j=0, k=0; j<strParam.size(); j++)
+	{
+		while (strParam[j] != '#')
+		{
+			switch (k)
+			{
+				case 0:
+					((My1EstEIDSigner *)this)->signPlace.str_city += strParam[j];
+					break;
+				case 1:
+					((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince += strParam[j];
+					break;
+				case 2:
+					((My1EstEIDSigner *)this)->signPlace.str_postalCode += strParam[j];
+					break;
+				case 3:
+					((My1EstEIDSigner *)this)->signPlace.str_countryName += strParam[j];
+					break;
+				case 4:
+					((My1EstEIDSigner *)this)->signerRoles.str_role += strParam[j];
+					break;
+				case 5:
+					((My1EstEIDSigner *)this)->signerRoles.str_additionalRole += strParam[j];
+					break;
+				default:
+					k++;
+			}
+			
+			j++;
+		}
+		k++;
+	}
+
+	((My1EstEIDSigner *)this)->str_pin = pPin;
+
+	ret = ((My1EstEIDSigner *)this)->signFile();
+
 }
 
 //-----------------------------------------------------------
 void MyBdocBridge::DigiOpen()
 {
-	((My1EstEIDSigner *)this)->str_bdocpath = "/home/mark/Desktop/Juhan.bdoc";
+	//((My1EstEIDSigner *)this)->str_bdocpath = "/home/mark/Desktop/Juhan.bdoc";
 	((My1EstEIDSigner *)this)->openCont();
 }
 
@@ -100,9 +152,9 @@ int My1EstEIDSigner::initData()
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		std::string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;//
-		putenv((char*)&conf );
-		val = getenv( "BDOCLIB_CONF_XML" );		
+		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;//
+		putenv(conf);
+		val = getenv( "BDOCLIB_CONF_XML" );
 	}
 
 	digidoc::initialize();
@@ -119,10 +171,21 @@ int My1EstEIDSigner::initData()
 //***********************************************************
 int My1EstEIDSigner::signFile ()
 {
-	int i_ok = 0; //for testing	
+/*
+cout<<"linn: "<<signPlace.str_city<<endl;
+cout<<"maak: "<<signPlace.str_stateOrProvince<<endl;
+cout<<"post: "<<signPlace.str_postalCode<<endl;
+cout<<"riik: "<<signPlace.str_countryName<<endl;
+cout<<"amet: "<<signerRoles.str_role<<endl;
+cout<<"auaste: "<< signerRoles.str_additionalRole<<endl;
+cout <<"PIN: "<<str_pin<<endl;
+*/
+	int i_ok = 0;
 	try
 	{		
 		MyRealEstEIDSigner m_signer;
+		
+		i_ok =	m_signer.i_ret;	
 		
 		m_signer.pin = str_pin;
 		// Init certificate store.
@@ -158,42 +221,46 @@ int My1EstEIDSigner::signFile ()
 
 			// Sign the BDOC container.
 			locBdoc->sign(&m_signer, profile);
-			
+						
 			// Save the BDOC container.
+			str_bdocpath = str_filepath + ".bdoc";
 			std::auto_ptr<ISerialize> serializer(new ZipSerialize(str_bdocpath));
 			locBdoc->saveTo(serializer);
 
 			// Destroy certificate store.
 			digidoc::X509CertStore::destroy();
-		}	
-    }
+		}
+		
+	}
 	
 	catch(const digidoc::BDocException& e)
 	{
 		ERR("Caught BDocException: %s", e.getMsg().c_str());
-		i_ok = 1;
+		
+		i_ok |= 10;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		ERR("Caught IOException: %s", e.getMsg().c_str());
-		i_ok = 2;
+		i_ok |= 20;
 	}
 	catch(const digidoc::SignException& e)
 	{
 		ERR("Caught SignException: %s", e.getMsg().c_str());
-		i_ok = 3;
+		i_ok |= 30;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		ERR("Caught Exception: %s", e.getMsg().c_str());
-		i_ok = 4;
+		i_ok |= 40;
 	}
 	catch(...)
 	{
 		ERR("Caught unknown exception");
-		i_ok = 9;
+		i_ok |= 90;
 	}
 
+	
 	// Terminate digidoc library.
 	digidoc::terminate();
 	
@@ -201,7 +268,7 @@ int My1EstEIDSigner::signFile ()
 
 	delete locBdoc;
 	locBdoc = 0;
-	 
+
 	return i_ok;
 }
 
@@ -336,11 +403,14 @@ MyRealEstEIDSigner::MyRealEstEIDSigner() throw(SignException)
 :	EstEIDSigner( Conf::getInstance()->getPKCS11DriverPath() )
 {
 	cardSignCert = NULL;
+	i_ret=0;
 	try	
 	{
 		cardSignCert = getCert();	
 	}
-	catch( const Exception & ) {}	
+	catch( const Exception & ) {
+		i_ret=1;
+	}	
 }
 
 //===========================================================
@@ -351,7 +421,8 @@ MyRealEstEIDSigner::~MyRealEstEIDSigner()
 //===========================================================
 //***********************************************************
 std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
-{		
+{	
+	//somehow have to fix return, when PIN is wrong
 	return pin;
 }
 

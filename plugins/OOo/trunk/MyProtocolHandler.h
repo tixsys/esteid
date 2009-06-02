@@ -1,6 +1,8 @@
 #ifndef _MyProtocolHandler_HXX
 #define _MyProtocolHandler_HXX
 
+#include <stdio.h>
+
 #include <com/sun/star/lang/XInitialization.hpp>
 #include <com/sun/star/frame/XDispatchProvider.hpp>
 #include <com/sun/star/frame/XControlNotificationListener.hpp>
@@ -89,11 +91,12 @@ class BaseDispatch : public cppu::WeakImplHelper2
 {
 protected:
 	::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > mxFrame;
-    ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > mxMSF;
+	::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame > mxDesktopFrame;//***********
+    	::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > mxMSF;
 	::com::sun::star::uno::Reference< ::com::sun::star::awt::XToolkit > mxToolkit;
-    ::rtl::OUString msDocService;
-    ::rtl::OUString maComboBoxText;
-    sal_Bool        mbButtonEnabled;
+    	::rtl::OUString msDocService;
+    	::rtl::OUString maComboBoxText;
+    	sal_Bool        mbButtonEnabled;
 
 public:
 	BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
@@ -125,7 +128,9 @@ public:
 	WriterDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.text.TextDocument" ) ) )
-	{}
+	{
+
+	}
 };
 
 class CalcDispatch : public BaseDispatch
@@ -136,5 +141,15 @@ public:
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sheet.SpreadSheetDocument" ) ) )
 	{}
 };
+/*
+class PresentationDispatch : public BaseDispatch
+{
+public:
+	PresentationDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
+		const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
+        : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sheet.PresentationDocument" ) ) )
+	{}
+};
+*/
 
 #endif

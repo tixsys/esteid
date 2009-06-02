@@ -74,7 +74,28 @@ class CalcListener : public cppu::WeakImplHelper1< css::document::XEventListener
 	virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
         throw (css::uno::RuntimeException);
 };
+/*
+class PresentationListener : public cppu::WeakImplHelper1< css::document::XEventListener >
+{
+    private:
+        ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > mxMSF;
 
+
+    public:
+        PresentationListener(const css::uno::Reference< css::lang::XMultiServiceFactory > &rxMSF)
+            : mxMSF( rxMSF )
+        {}
+
+        virtual ~PresentationListener()
+        {}
+
+    // document.XEventListener
+    virtual void SAL_CALL notifyEvent(const css::document::EventObject& aEvent)
+        throw (css::uno::RuntimeException);
+	virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
+        throw (css::uno::RuntimeException);
+};
+*/
 class WriterListener : public cppu::WeakImplHelper1< css::document::XEventListener >
 {
     private:

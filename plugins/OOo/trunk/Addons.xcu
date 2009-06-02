@@ -8,7 +8,7 @@
 						<value>vnd.demo.complextoolbarcontrols.demoaddon:Command1</value>
 					</prop>
 					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Image Button</value>
+						<value xml:lang="en-US">Est DigiDoc Sign</value>
 					</prop>
 					<prop oor:name="Target" oor:type="xs:string">
 						<value>_self</value>
@@ -20,7 +20,7 @@
 						<value>ImageButton</value>
 					</prop>
 				</node>
-				<node oor:name="m2" oor:op="replace">
+<!--				<node oor:name="m2" oor:op="replace">
 					<prop oor:name="URL" oor:type="xs:string">
                         <value>vnd.demo.complextoolbarcontrols.demoaddon:Command2</value>
 					</prop>
@@ -40,116 +40,7 @@
 					    <value>200</value>
 					</prop>
 				</node>
-				<node oor:name="m3" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>private:separator</value>
-					</prop>
-				</node>
-				<node oor:name="m4" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:Command5</value>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Spinfield</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-					</prop>
-					<prop oor:name="ControlType" oor:type="xs:string">
-						<value>Spinfield</value>
-					</prop>
-					<prop oor:name="Width" oor:type="xs:long">
-					    <value>70</value>
-					</prop>
-				</node>
-				<node oor:name="m5" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>private:separator</value>
-					</prop>
-				</node>
-				<node oor:name="m6" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:Command6</value>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Editfield</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-					</prop>
-					<prop oor:name="ControlType" oor:type="xs:string">
-						<value>Editfield</value>
-					</prop>
-					<prop oor:name="Width" oor:type="xs:long">
-					    <value>130</value>
-					</prop>
-				</node>
-				<node oor:name="m7" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>private:separator</value>
-					</prop>
-				</node>
-				<node oor:name="m8" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:Command7</value>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Dropdownbox</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-					</prop>
-					<prop oor:name="ControlType" oor:type="xs:string">
-						<value>Dropdownbox</value>
-					</prop>
-					<prop oor:name="Width" oor:type="xs:long">
-					    <value>80</value>
-					</prop>
-				</node>
-				<node oor:name="m9" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:Command3</value>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Toggle Dropdown Button</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-					</prop>
-					<prop oor:name="ControlType" oor:type="xs:string">
-						<value>ToggleDropdownButton</value>
-					</prop>
-				</node>
-				<node oor:name="m10" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-                        <value>vnd.demo.complextoolbarcontrols.demoaddon:Command4</value>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value xml:lang="en-US">Dropdown Button</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument,com.sun.star.sheet.SpreadsheetDocument</value>
-					</prop>
-					<prop oor:name="ControlType" oor:type="xs:string">
-						<value>DropdownButton</value>
-					</prop>
-				</node>
-			</node>
+-->			</node>
 		</node>
 		<node oor:name="Images">
             <node oor:name="vnd.demo.complextoolbarcontrols.image1" oor:op="replace">

@@ -27,7 +27,7 @@
  * for a copy of the LGPLv3 License.
  *
  ************************************************************************/
-
+#include<stdio.h>
 
 #include "MyListener.h"
 #include <com/sun/star/lang/XMultiServiceFactory.hpp>
@@ -101,24 +101,24 @@ css::uno::Any SAL_CALL MyListener::execute(const css::uno::Sequence< css::beans:
 
     css::uno::Reference< css::lang::XServiceInfo > xInfo(xModel, css::uno::UNO_QUERY);
     sal_Bool bCalc   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.sheet.SpreadsheetDocument"));
+ //   sal_Bool bPresentation   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.sheet.PresentationDocument"));
     sal_Bool bWriter = (
                          xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.TextDocument"  )) &&
                         !xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.WebDocument"   )) &&
                         !xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.GlobalDocument"))
                        );
 
-    // Wir interessieren uns nur für Writer und Calc. Werden hier aber für
-    // alle neu geöffneten Dokumente benachrichtigt ...
-    if (!bCalc && !bWriter)
+    if (!bCalc && !bWriter )//&& !bPresentation)
 		return css::uno::Any();
 
     void* pListener = 0;
     if (bCalc)
         pListener = (void*)(new CalcListener(m_xSMGR));
-    else
-    if (bWriter)
+    else if (bWriter)
         pListener = (void*)(new WriterListener(m_xSMGR));
-
+ //   if (bPresentation)
+ //       pListener = (void*)(new PresentationListener(m_xSMGR));
+    
     css::uno::Reference< css::document::XEventListener >    xDocListener     (static_cast< css::document::XEventListener* >(pListener), css::uno::UNO_QUERY);
     css::uno::Reference< css::document::XEventBroadcaster > xDocBroadcaster  (xModel   , css::uno::UNO_QUERY);
 
