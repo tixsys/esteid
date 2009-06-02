@@ -65,7 +65,7 @@ void Poller::run()
 		if( m.tryLock() )
 		{
 			char driver[200];
-			snprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
+			qsnprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
 				ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
 			LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( driver ) );
 
@@ -86,7 +86,7 @@ void Poller::run()
 			}
 
 			cards.clear();
-			for( int i = 0; i < count; ++i )
+			for( CK_ULONG i = 0; i < count; ++i )
 			{
 				CK_TOKEN_INFO tokeninfo;
 				err = GetTokenInfo( &tokeninfo, slotids[i] );
