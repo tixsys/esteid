@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+svn update ../..
+
+REVISION=`svn info -r HEAD | grep Revision | cut -d ' ' -f 2`
 ARCH=universal
-NAME=`date "+esteid_mac_${ARCH}_%Y%m%d.dmg"`
+NAME=`date "+installer_${ARCH}_%Y%m%d_r${REVISION}.dmg"`
 FILE=build/Packages/${NAME}
 
 if test -n "$1"; then

@@ -136,7 +136,7 @@ class Application
 			run_command 'install_name_tool -id /usr/local/libdigidoc.dylib src/Release/libdigidoc.dylib'
 			puts "Copying file libdigidoc.dylib" if @options.verbose
 			FileUtils.cp_r('src/Release/libdigidoc.dylib', digidoc)
-					
+			
 			puts "Copying file bdoclib.conf" if @options.verbose
 			FileUtils.cp_r('bdoclib.conf', conf)
 			
