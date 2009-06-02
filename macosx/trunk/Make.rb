@@ -113,6 +113,17 @@ class Application
 			if @options.force
 				run_command 'sudo xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target install -sdk macosx10.4'
 			end
+			
+			# This should be here only temporary until overall structure is fixed in libdigidoc2 (ie no 2 certificate storages)
+			digidoc2conf = Pathname.new(@path).join(@options.digidoc, 'etc', 'digidoc.conf').to_s
+			digidoc2stuff = Pathname.new(@path).join(@options.digidoc, 'share').to_s
+			
+			FileUtils.rm_rf(digidoc2conf) if File.exists? digidoc2conf
+			FileUtils.rm_rf(digidoc2stuff) if File.exists? digidoc2stuff
+			
+			FileUtils.cp('etc/digidoc.conf', digidoc2conf)
+			FileUtils.mkdir_p(digidoc2stuff) unless File.exists? digidoc2stuff
+			FileUtils.cp_r('/usr/local/share/libdigidoc2/', digidoc2stuff)
 		end
 		
 		puts "Creating libdigidoc..."if @options.verbose
@@ -539,7 +550,8 @@ class Application
 				
 			# Copy the package from temporary destination to the final destination
 			puts "Copying package #{name + extension} to #{@options.packages}" if @options.verbose
-			dstname = (identifier == 'org.esteid.installer' && !@options.name.nil?) ? @options.name : name
+			dstname = (identifier == 'org.esteid.installer' and !@options.name.nil?) ? @options.name : name
+			dstname = package[:dstname] unless package[:dstname].nil?
 			dst = Pathname.new(@path).join(@options.packages, dstname + extension).to_s
 			FileUtils.mkdir_p(File.dirname(dst)) unless File.exists? File.dirname(dst)
 			FileUtils.rm_rf(dst) if File.exists? dst
@@ -549,7 +561,7 @@ class Application
 			`setfile -a E #{dst}`
 			
 			# Finally create .dmg and .tar.gz files
-			if extension == '.mpkg'
+			if identifier == 'org.esteid.installer'
 				FileUtils.cd(Pathname.new(@path).join(@options.packages).to_s) do
 					dmg = dstname + '.dmg'
 					
@@ -559,6 +571,8 @@ class Application
 					`setfile -a E #{dmg}`
 				end
 			end
+			
+			FileUtils.rm_rf(pkgroot)
 		end
 		
 		puts "\n" if @options.verbose
@@ -663,18 +677,18 @@ class Application
 	def packages
 		return [
 			{
-				:name => 'esteid-digidoc',
-				:files => [ File.join(@options.digidoc, '*/**') ],
-				:froot => @options.digidoc,
-				:location => '/usr/local',
-				:identifier => 'org.esteid.digidoc',
-				:version => '1.0'
-			}, {
 				:name => 'esteid-opensc',
 				:files => [ File.join(@options.opensc, '*/**') ],
 				:froot => @options.opensc,
 				:location => '/',
-				:identifier => 'org.esteid.opensc',
+				:identifier => 'org.esteid.installer.opensc',
+				:version => '1.0'
+			}, {
+				:name => 'esteid-digidoc',
+				:files => [ File.join(@options.digidoc, '*/**') ],
+				:froot => @options.digidoc,
+				:location => '/usr/local',
+				:identifier => 'org.esteid.installer.digidoc',
 				:version => '1.0'
 			}, {
 				:name => 'esteid-qt',
@@ -688,26 +702,11 @@ class Application
 					File.join(@options.qt, 'phonon.framework') ],
 				:froot => @options.qt,
 				:location => '/Library/Frameworks',
-				:identifier => 'org.esteid.qt',
+				:identifier => 'org.esteid.installer.qt',
 				:version => '1.0'
-			}, {
-				:name => 'esteid-updater',
-				:files => File.join(@options.binaries, 'EstEIDSU.app'),
-				:froot => @options.binaries,
-				:location => '/Applications/Utilities'
-			}, {
-				:name => 'esteid-preferences',
-				:files => File.join(@options.binaries, 'EstEIDPP.prefPane'),
-				:froot => @options.binaries,
-				:location => '/Library/PreferencePanes'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
-				:froot => @options.binaries,
-				:location => '/Applications'
-			}, {
-				:name => 'esteid-qdigidocclient',
-				:files => File.join(@options.binaries, 'qdigidocclient.app'),
 				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
@@ -716,9 +715,23 @@ class Application
 				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
+				# For live testing
+				:name => 'esteid',
+				:dstname => 'esteid-dev',
+				:files => File.join(@options.packages, '*.pkg'),
+				:identifier => 'org.esteid.installer.dev',
+				:restart => 'RequiredRestart',
+				:version => '0.0.1'
+			}, {
+				:name => 'esteid-qdigidocclient',
+				:files => File.join(@options.binaries, 'qdigidocclient.app'),
+				:froot => @options.binaries,
+				:location => '/Applications'
+			}, {
 				:name => 'esteid-contextmenu',
 				:files => File.join(@options.binaries, 'EstEIDCM.plugin'),
 				:froot => @options.binaries,
+				:identifier => 'org.esteid.installer.cmi',
 				:location => '/Library/Contextual Menu Items'
 			}, {
 				:name => 'esteid-webplugin',
@@ -726,6 +739,18 @@ class Application
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
+			}, {
+				:name => 'esteid-updater',
+				:files => File.join(@options.binaries, 'EstEIDSU.app'),
+				:froot => @options.binaries,
+				:identifier => 'org.esteid.installer.su',
+				:location => '/Applications/Utilities'
+			}, {
+				:name => 'esteid-preferences',
+				:files => File.join(@options.binaries, 'EstEIDPP.prefPane'),
+				:froot => @options.binaries,
+				:identifier => 'org.esteid.installer.pp',
+				:location => '/Library/PreferencePanes'
 			}, {
 				:name => 'esteid-tokend',
 				:files => File.join(@options.binaries, 'OpenSC.tokend'),
@@ -735,7 +760,7 @@ class Application
 				:name => 'esteid',
 				:files => File.join(@options.packages, '*.pkg'),
 				:identifier => 'org.esteid.installer',
-				#:restart => 'RequiredRestart',
+				:restart => 'RequiredRestart',
 				:version => '1.0'
 			} ]
 	end

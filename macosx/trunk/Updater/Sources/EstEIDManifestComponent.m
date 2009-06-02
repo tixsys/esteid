@@ -12,8 +12,8 @@
 {
 	static NSString *language = nil;
 	
-	if(!language) {// TODO: NSLocale?
-		NSArray *languages = [NSObject preferredLanguages];
+	if(!language) {
+		NSArray *languages = [NSLocale preferredLanguages];
 		
 		language = ([languages count] > 0) ? [languages objectAtIndex:0] : nil;
 		

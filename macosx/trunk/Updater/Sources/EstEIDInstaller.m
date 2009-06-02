@@ -101,6 +101,7 @@ NS_DURING
 			break;
 		}
 #else
+		[NSThread sleepForTimeInterval:3.0F];
 		NSLog(@"%@: %@ installation simulation was successful!", NSStringFromClass([self class]), [[package metadata] identifier]);
 		count += 1;
 #endif

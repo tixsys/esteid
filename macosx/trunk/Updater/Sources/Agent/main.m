@@ -12,8 +12,6 @@
 #import <unistd.h>
 #import <dlfcn.h>
 
-// TODO: Clean this stuff!
-
 static inline NSString *EstEIDAgentGetString(const char *str)
 {
 	return [[[NSString alloc] initWithBytes:str length:strlen(str) encoding:NSUTF8StringEncoding] autorelease];
