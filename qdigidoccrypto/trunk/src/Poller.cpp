@@ -114,8 +114,8 @@ void Poller::run()
 			{
 				auth = QSslCertificate();
 				sign = QSslCertificate();
-				Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 			}
+			Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
 			m.unlock();
 		}
 
