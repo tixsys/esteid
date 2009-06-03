@@ -28,9 +28,6 @@
 #ifdef WIN32
 #include <winsock2.h>
 #define PKCS11_MODULE "opensc-pkcs11.dll"
-#elif defined(__APPLE__)
-#include <netdb.h>
-#define PKCS11_MODULE "/Library/OpenSC/lib/opensc-pkcs11.so"
 #else
 #include <netdb.h>
 #define PKCS11_MODULE "/usr/lib/opensc-pkcs11.so"
