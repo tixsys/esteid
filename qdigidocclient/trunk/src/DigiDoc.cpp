@@ -119,11 +119,13 @@ DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
 ,	modified( false )
+,	poller(0)
 {}
 
 DigiDoc::~DigiDoc()
 {
-	delete poller;
+	if( poller )
+		delete poller;
 	clear();
 	X509CertStore::destroy();
 	digidoc::terminate();
