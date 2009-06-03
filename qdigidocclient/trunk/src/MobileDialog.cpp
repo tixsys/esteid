@@ -47,6 +47,8 @@ void MobileDialog::on_buttonNext_clicked()
     switch( pages->currentIndex() )
     {
         case Start:
+            if ( inputPhoneNumber->text().isEmpty() || inputSSID->text().isEmpty() )
+                return;
             startSession();
             pages->setCurrentIndex( Challenge );
             break;
@@ -151,8 +153,8 @@ void MobileDialog::addFilesResult( const QDomElement &element )
 void MobileDialog::startSign()
 {
     QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>"
-                        "<SignerIDCode xsi:type=\"xsd:String\">38108290256</SignerIDCode>"
-                        "<SignerPhoneNo xsi:type=\"xsd:String\">+37253492310</SignerPhoneNo>"
+                        "<SignerIDCode xsi:type=\"xsd:String\">" + inputSSID->text().toLatin1() + "</SignerIDCode>"
+                        "<SignerPhoneNo xsi:type=\"xsd:String\">" + inputPhoneNumber->text().toLatin1() + "</SignerPhoneNo>"
                         "<ServiceName xsi:type=\"xsd:String\">DigiDoc Client</ServiceName>"
                         "<AdditionalDataToBeDisplayed xsi:type=\"xsd:String\">DigiDoc3</AdditionalDataToBeDisplayed>"
                         "<Language xsi:type=\"xsd:String\">EST</Language>"
