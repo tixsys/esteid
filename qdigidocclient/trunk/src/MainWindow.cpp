@@ -21,7 +21,7 @@
  */
 
 #include "MainWindow.h"
-
+#include "MobileDialog.h"
 #include "PrintSheet.h"
 #include "Settings.h"
 #include "SignatureDialog.h"
@@ -88,6 +88,7 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( signRemoveFile, SignRemoveFile );
 	buttonGroup->addButton( signSaveAs, SignSaveAs );
 	buttonGroup->addButton( signSign, SignSign );
+        buttonGroup->addButton( signSignMobile, SignSignMobile );
 	buttonGroup->addButton( homeView, HomeView );
 	buttonGroup->addButton( viewAddSignature, ViewAddSignature );
 	buttonGroup->addButton( viewBrowse, ViewBrowse );
@@ -304,6 +305,9 @@ void MainWindow::buttonClicked( int button )
 			signCountryInput->text() );
 		setCurrentPage( View );
 		break;
+        case SignSignMobile:
+                (new MobileDialog( doc, this ))->exec();
+                break;
 	case HomeView:
 	{
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),

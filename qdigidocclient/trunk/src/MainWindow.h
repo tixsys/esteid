@@ -64,6 +64,7 @@ private:
 		SignRemoveFile,
 		SignSaveAs,
 		SignSign,
+                SignSignMobile,
 		HomeView,
 		ViewAddSignature,
 		ViewBrowse,

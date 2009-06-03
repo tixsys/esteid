@@ -23,7 +23,8 @@ SET( MOC_HEADERS
 	src/CertificateWidget.h
 	src/DigiDoc.h
 	src/MainWindow.h
-	src/Poller.h
+        src/MobileDialog.h
+        src/Poller.h
 	src/PrintSheet.h
 	src/Settings.h
 	src/SignatureDialog.h
@@ -39,7 +40,8 @@ SET( SOURCES
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
-	src/Poller.cpp
+        src/MobileDialog.cpp
+        src/Poller.cpp
 	src/PrintSheet.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
@@ -48,13 +50,16 @@ SET( SOURCES
 SET( UIS
 	src/ui/CertificateWidget.ui
 	src/ui/MainWindow.ui
-	src/ui/Settings.ui
+        src/ui/MobileDialog.ui
+        src/ui/Settings.ui
 	src/ui/SignatureDialog.ui
 	)
 SET( RCS src/rc/qdigidocclient.qrc )
 
 SET( QT_USE_QTNETWORK true )
 SET( QT_USE_QTWEBKIT true )
+SET( QT_USE_QTXML true )
+
 INCLUDE( ${QT_USE_FILE} )
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
