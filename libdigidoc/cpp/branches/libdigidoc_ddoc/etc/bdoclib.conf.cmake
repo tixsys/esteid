@@ -7,11 +7,13 @@
     <!--pkcs11 driver location-->
     <param name="pkcs11.driver.path">/usr/lib/opensc-pkcs11.so</param>
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
-    <param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>
+    <!--<param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>-->
+	<param name="ocsp.url">http://ocsp.sk.ee</param>
     <!--Trusted CA certs in PEM format-->
     <param name="cert.store.path">certs</param>
     <!--OCSP responder public certificate for validating OCSP response-->
-    <param name="ocsp.certs.file">certs/sk-test-ocsp-responder-2005.pem</param>
+    <!--<param name="ocsp.certs.file">certs/sk-test-ocsp-responder-2005.pem</param>-->
+	<param name="ocsp.certs.file">certs/ESTEID-SK 2007 RESPONDER.pem</param>
 
     <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
     <param name="xades.xsd.path">schema/XAdES.xsd</param>
