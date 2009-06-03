@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.$REVISION</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>$REVISION</string>
 	<key>EstEIDHelpWebsite</key>
 	<string>http://www.id.ee/</string>
 	<key>NSMainNibFile</key>

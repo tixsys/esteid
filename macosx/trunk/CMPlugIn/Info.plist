@@ -17,9 +17,9 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>$REVISION</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0.$REVISION</string>
 	<key>CFPlugInFactories</key>
 	<dict>
 		<key>C772CBB7-D745-4D3A-850A-50B4D5441D77</key>

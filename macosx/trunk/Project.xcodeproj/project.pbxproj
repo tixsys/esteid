@@ -734,6 +734,7 @@
 				8122F10E0F55F75500FA51CD /* Resources */,
 				8122F10F0F55F75500FA51CD /* Sources */,
 				8122F1100F55F75500FA51CD /* Frameworks */,
+				81F0FC0B0FD6EB810093DA43 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -767,6 +768,7 @@
 				81BF405F0F56E78000F60FED /* Resources */,
 				81BF40600F56E78000F60FED /* Sources */,
 				81BF40610F56E78000F60FED /* Frameworks */,
+				81F0FC130FD6EB8A0093DA43 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -839,6 +841,7 @@
 				81F874890F56085100FCAB5D /* Resources */,
 				81F8748A0F56085100FCAB5D /* Sources */,
 				81F8748B0F56085100FCAB5D /* Frameworks */,
+				81F0FBA80FD6CE6B0093DA43 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -856,6 +859,7 @@
 				81F875960F560E9A00FCAB5D /* Resources */,
 				81F875970F560E9A00FCAB5D /* Sources */,
 				81F875980F560E9A00FCAB5D /* Frameworks */,
+				81F0FC170FD6EB910093DA43 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1009,6 +1013,58 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		81F0FBA80FD6CE6B0093DA43 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+		};
+		81F0FC0B0FD6EB810093DA43 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+		};
+		81F0FC130FD6EB8A0093DA43 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+		};
+		81F0FC170FD6EB910093DA43 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
 		};
 /* End PBXShellScriptBuildPhase section */
 
