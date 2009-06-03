@@ -196,7 +196,12 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		throwError( "DDoc library not loaded", __LINE__ );
 
 	d->filename = serializer->getPath().c_str();
-	util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
+	try
+	{
+		util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
+	}
+	catch( const Exception & )
+	{ throwError( "Failed to create temporary directory", __LINE__ ); }
 
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
 	throwError( err, "Failed to open ddoc file", __LINE__ );
