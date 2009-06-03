@@ -124,7 +124,8 @@ DSignature::DSignature(): m_doc(0), m_sig(0) {}
 DSignature::DSignature( SignatureInfo *sig, DDocPrivate *doc )
 :	m_sig(sig), m_doc( doc )
 {
-	setSigningCertificate( doc->f_ddocSigInfo_GetSignersCert( sig ) );
+	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
+	setSigningCertificate( cert );
 
 	Signer::Signature s;
 	s.signature = (unsigned char*)sig->pSigValue->mbufSignatureValue.pMem;
@@ -196,8 +197,21 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 
 	d->filename = serializer->getPath().c_str();
 	util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
+
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
 	throwError( err, "Failed to open ddoc file", __LINE__ );
+
+	for( int i = 0; i < d->doc->nDataFiles; ++i)
+	{
+		DataFile *data = d->doc->pDataFiles[i];
+		std::ostringstream file;
+		file << d->tmpFolder.data() << data->szFileName;
+		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename,
+			file.str().data(), data->szId, CHARSET_UTF_8 );
+		throwError( err, "Failed to exctract files", __LINE__ );
+		free( data->szFileName );
+		data->szFileName = strdup( file.str().data() );
+	}
 }
 
 void DDoc::addDocument( const Document &document ) throw(BDocException)
@@ -235,15 +249,7 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		throw BDocException( __FILE__, __LINE__, s.str() );
 	}
 
-	DataFile *data = d->doc->pDataFiles[id];
-	std::ostringstream file;
-	file << d->tmpFolder << data->szFileName;
-	int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename,
-		file.str().data(), data->szId, CHARSET_UTF_8 );
-	if( err == ERR_OK )
-		return Document( file.str(), data->szMimeType );
-	else
-		return Document( data->szFileName, data->szMimeType );
+	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
 }
 
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
