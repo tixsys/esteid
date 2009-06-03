@@ -1597,10 +1597,7 @@
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-lcrypto",
-					"-ldigidoc",
-				);
+				OTHER_LDFLAGS = /usr/local/lib/libcrypto.a;
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
@@ -1624,10 +1621,7 @@
 				INFOPLIST_FILE = WebPlugIn/Tests.plist;
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				OTHER_LDFLAGS = (
-					"-lcrypto",
-					"-ldigidoc",
-				);
+				OTHER_LDFLAGS = /usr/local/lib/libcrypto.a;
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
@@ -1679,8 +1673,7 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
-					"-lcrypto",
-					"-ldigidoc",
+					/usr/local/lib/libcrypto.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
@@ -1707,8 +1700,7 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
-					"-lcrypto",
-					"-ldigidoc",
+					/usr/local/lib/libcrypto.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;

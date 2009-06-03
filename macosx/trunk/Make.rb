@@ -715,12 +715,17 @@ class Application
 				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
+				:name => 'esteid-webplugin',
+				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
+				:froot => @options.binaries,
+				:location => '/Library/Internet Plug-Ins'
+			}, {
 				# For live testing
 				:name => 'esteid',
 				:dstname => 'esteid-dev',
 				:files => File.join(@options.packages, '*.pkg'),
 				:identifier => 'org.esteid.installer.dev',
-				:restart => 'RequiredRestart',
 				:version => '0.0.1'
 			}, {
 				:name => 'esteid-qdigidocclient',
@@ -733,12 +738,6 @@ class Application
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.cmi',
 				:location => '/Library/Contextual Menu Items'
-			}, {
-				:name => 'esteid-webplugin',
-				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
-				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
-				:froot => @options.binaries,
-				:location => '/Library/Internet Plug-Ins'
 			}, {
 				:name => 'esteid-updater',
 				:files => File.join(@options.binaries, 'EstEIDSU.app'),
@@ -755,12 +754,12 @@ class Application
 				:name => 'esteid-tokend',
 				:files => File.join(@options.binaries, 'OpenSC.tokend'),
 				:froot => @options.binaries,
-				:location => '/System/Library/Security/tokend'
+				:location => '/System/Library/Security/tokend',
+				#:restart => 'RequiredRestart'
 			}, {
 				:name => 'esteid',
 				:files => File.join(@options.packages, '*.pkg'),
 				:identifier => 'org.esteid.installer',
-				:restart => 'RequiredRestart',
 				:version => '1.0'
 			} ]
 	end
