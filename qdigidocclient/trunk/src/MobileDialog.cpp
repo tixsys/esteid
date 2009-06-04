@@ -230,10 +230,12 @@ void MobileDialog::getSignedDocResult( const QDomElement &element )
     file.setAutoRemove( false );
     if ( file.open() )
     {
+        QString fName = file.fileName();
         file.write( element.elementsByTagName( "SignedDocData" ).item(0).toElement().text().toLatin1() );
-        qDebug() << file.fileName();
+        file.close();
+        qDebug() << fName;
         try {
-            std::auto_ptr<digidoc::ISerialize> s(new digidoc::ZipSerialize(file.fileName().toStdString()));
+            std::auto_ptr<digidoc::ISerialize> s(new digidoc::ZipSerialize(fName.toStdString()));
             digidoc::WDoc *w = new digidoc::WDoc( s );
 
             QList<DigiDocSignature> list;
