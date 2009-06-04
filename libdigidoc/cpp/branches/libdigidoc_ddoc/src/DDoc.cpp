@@ -376,12 +376,12 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	throwError( err, "Failed to sign document", __LINE__ );
 
 	if( err != ERR_OK )
-	{
 		d->f_SignatureInfo_delete( d->doc, info->szId );
-		throwError( err, "Failed to sign document", __LINE__ );
-	}
+	throwError( err, "Failed to sign document", __LINE__ );
 
 	err = d->f_notarizeSignature( d->doc, info );
+	if( err != ERR_OK )
+		d->f_SignatureInfo_delete( d->doc, info->szId );
 	throwError( err, "Failed to sign document", __LINE__ );
 }
 
