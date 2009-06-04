@@ -835,7 +835,37 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
           <property name="margin">
            <number>0</number>
           </property>
-          <item row="3" column="0">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="viewFileName">
+            <property name="text">
+             <string>Container:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="viewFileStatus">
+            <property name="text">
+             <string>This container is </string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="viewSignaturesLabel">
+            <property name="font">
+             <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Signature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
            <widget class="QLabel" name="viewContentLabel">
             <property name="font">
              <font>
@@ -851,7 +881,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </property>
            </widget>
           </item>
-          <item row="3" column="1" rowspan="4">
+          <item row="2" column="1" rowspan="3">
            <widget class="QScrollArea" name="viewSignaturesScroll">
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -864,8 +894,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>301</width>
-               <height>252</height>
+               <width>300</width>
+               <height>240</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -886,7 +916,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </widget>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QTreeWidget" name="viewContentView">
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -920,68 +950,38 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </column>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="viewFileName">
+          <item row="4" column="0">
+           <widget class="QLabel" name="viewSaveAs">
             <property name="text">
-             <string>Container:</string>
+             <string>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="viewFileStatus">
-            <property name="text">
-             <string>This container is </string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="viewSignaturesLabel">
-            <property name="font">
-             <font>
-              <family>Arial, Liberation Sans</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Signature</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="viewPrint">
-            <property name="text">
-             <string>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="viewEmail">
             <property name="text">
              <string>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="5" column="1">
+           <widget class="QLabel" name="viewPrint">
+            <property name="text">
+             <string>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
            <widget class="QLabel" name="viewBrowse">
             <property name="text">
              <string>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="1">
+          <item row="6" column="1">
            <widget class="QDialogButtonBox" name="viewButtons">
             <property name="standardButtons">
              <set>QDialogButtonBox::Close</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="viewSaveAs">
-            <property name="text">
-             <string>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</string>
             </property>
            </widget>
           </item>
