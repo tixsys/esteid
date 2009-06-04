@@ -44,6 +44,7 @@ private Q_SLOTS:
 	void openFile( const QModelIndex &index );
 	void showCardStatus();
 	void showWarning( const QString &msg );
+	void viewAction( const QModelIndex &index );
 	void viewSignaturesRemove( unsigned int num );
 
 private:
@@ -64,7 +65,6 @@ private:
 		SignRemoveFile,
 		SignSaveAs,
 		SignSign,
-                SignSignMobile,
 		HomeView,
 		ViewAddSignature,
 		ViewBrowse,
@@ -88,5 +88,5 @@ private:
 	QHash<int,QString> lang;
 	QStringList params;
 
-	QPushButton *signButton;
+	QPushButton *introNext, *signButton;
 };

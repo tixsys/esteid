@@ -49,12 +49,21 @@
 #include <mapi.h>
 #endif
 
-static QString fileSize( qint64 size )
+static QString fileSize( qint64 bytes )
 {
-	double sizeStr = (double)size/1024;
-	return QString( "%1 %2" )
-		.arg( QString::number( sizeStr > 1024 ? sizeStr/ 1024 : sizeStr, 'f', 2 ) )
-		.arg( sizeStr > 1024 ? "MB" : "KB" );
+	const quint64 kb = 1024;
+	const quint64 mb = 1024 * kb;
+	const quint64 gb = 1024 * mb;
+	const quint64 tb = 1024 * gb;
+	if( bytes >= tb )
+		return QString( "%1 TB" ).arg( qreal(bytes) / tb, 0, 'f', 3 );
+	if( bytes >= gb )
+		return QString( "%1 GB" ).arg( qreal(bytes) / gb, 0, 'f', 2 );
+	if( bytes >= mb )
+		return QString( "%1 MB" ).arg( qreal(bytes) / mb, 0, 'f', 1 );
+	if( bytes >= kb )
+		return QString( "%1 KB" ).arg( bytes / kb );
+	return QString( "%1 B" ).arg( bytes );
 }
 
 
@@ -75,8 +84,12 @@ MainWindow::MainWindow( QWidget *parent )
 
 	connect( signContentView, SIGNAL(doubleClicked(QModelIndex)),
 		SLOT(openFile(QModelIndex)) );
+	connect( signContentView, SIGNAL(clicked(QModelIndex)),
+		SLOT(viewAction(QModelIndex)) );
 	connect( viewContentView, SIGNAL(doubleClicked(QModelIndex)),
 		SLOT(openFile(QModelIndex)) );
+	connect( viewContentView, SIGNAL(clicked(QModelIndex)),
+		SLOT(viewAction(QModelIndex)) );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
@@ -85,8 +98,9 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( homeView, HomeView );
 	buttonGroup->addButton( homeCrypt, HomeCrypt );
 
-	buttonGroup->addButton( introBack, IntroBack );
+	introNext = introButtons->addButton( tr( "Next" ), QDialogButtonBox::ActionRole );
 	buttonGroup->addButton( introNext, IntroNext );
+	buttonGroup->addButton( introButtons->button( QDialogButtonBox::Cancel ), IntroBack );
 
 	buttonGroup->addButton( signAddFile, SignAddFile );
 	buttonGroup->addButton( signRemoveFile, SignRemoveFile );
@@ -293,35 +307,30 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case SignSign:
-		if( !doc->sign(
-				signCityInput->text(),
-				signStateInput->text(),
-				signZipInput->text(),
-				signCountryInput->text(),
-				signRoleInput->text(),
-				signResolutionInput->text() ) )
+	{
+		if( signCard->isChecked() )
+		{
+			if( !doc->sign( signCityInput->text(), signStateInput->text(),
+					signZipInput->text(), signCountryInput->text(),
+					signRoleInput->text(), signResolutionInput->text() ) )
+				break;
+		}
+		else
+		{
+			MobileDialog *m = new MobileDialog( doc, this );
+			m->setSignatureInfo( signCityInput->text(),
+				signStateInput->text(), signZipInput->text(),
+				signCountryInput->text(), signRoleInput->text(),
+				signResolutionInput->text() );
+			m->exec();
+			m->deleteLater();
 			break;
-		Settings::saveSignatureInfo(
-			signRoleInput->text(),
-			signResolutionInput->text(),
-			signCityInput->text(),
-			signStateInput->text(),
-			signZipInput->text(),
+		}
+		Settings::saveSignatureInfo( signRoleInput->text(),
+			signResolutionInput->text(), signCityInput->text(),
+			signStateInput->text(), signZipInput->text(),
 			signCountryInput->text() );
 		setCurrentPage( View );
-		break;
-	case SignSignMobile:
-	{
-		MobileDialog *m = new MobileDialog( doc, this );
-		m->setSignatureInfo(
-				signCityInput->text(),
-				signStateInput->text(),
-				signZipInput->text(),
-				signCountryInput->text(),
-				signRoleInput->text(),
-				signResolutionInput->text() );
-		m->exec();
-		m->deleteLater();
 		break;
 	}
 	case HomeView:
@@ -459,24 +468,35 @@ void MainWindow::dropEvent( QDropEvent *e )
 
 void MainWindow::loadDocuments( QTreeWidget *view )
 {
-	view->clear();
-	QList<QTreeWidgetItem*> items;
-	Q_FOREACH( const digidoc::Document &file, doc->documents() )
-	{
-		QTreeWidgetItem *i = new QTreeWidgetItem( view );
-		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
-		i->setText( 0, info.fileName() );
-		i->setText( 1, fileSize( info.size() ) );
-		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
-		i->setCheckState( 0, Qt::Unchecked );
-		i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
-		i->setData( 0, Qt::ToolTipRole, info.fileName() );
-		items << i;
-	}
-	view->insertTopLevelItems( 0, items );
 	view->header()->setStretchLastSection( false );
 	view->header()->setResizeMode( 0, QHeaderView::Stretch );
 	view->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
+	view->header()->setResizeMode( 2, QHeaderView::ResizeToContents );
+	view->clear();
+	QList<digidoc::Document> docs = doc->documents();
+	Q_FOREACH( const digidoc::Document &file, docs )
+	{
+		QTreeWidgetItem *i = new QTreeWidgetItem( view );
+		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
+		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+
+		QString file = info.fileName();
+		if( docs.size() < 9 )
+			file += QString( "\n" ).append( fileSize( info.size() ) );
+		i->setText( 0, file );
+
+		i->setData( 0, Qt::ToolTipRole, info.fileName() );
+		i->setData( 1, Qt::DecorationRole,
+			QPixmap(":/trolltech/styles/commonstyle/images/standardbutton-save-16.png") );
+		i->setData( 1, Qt::ToolTipRole, tr("Save") );
+		i->setData( 2, Qt::DecorationRole,
+			QPixmap(":/trolltech/styles/commonstyle/images/standardbutton-delete-16.png") );
+		i->setData( 2, Qt::ToolTipRole, tr("Delete") );
+		view->addTopLevelItem( i );
+	}
+	QList<DigiDocSignature> list = doc->signatures();
+	view->setColumnHidden( 1, !list.isEmpty() );
+	view->setColumnHidden( 2, !list.isEmpty() );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
@@ -489,6 +509,8 @@ void MainWindow::on_languages_activated( int index )
 	qtTranslator->load( ":/translations/qt_" + lang[index] );
 	retranslateUi( this );
 	languages->setCurrentIndex( index );
+	introNext->setText( tr( "Next" ) );
+	signButton->setText( tr("Sign") );
 	showCardStatus();
 }
 
@@ -497,7 +519,7 @@ void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 void MainWindow::openFile( const QModelIndex &index )
 {
 	QList<digidoc::Document> list = doc->documents();
-	if( list.isEmpty() || index.row() >= list.size() )
+	if( list.isEmpty() || index.row() >= list.size() || index.column() > 0 )
 		return;
 
 #ifdef Q_OS_WIN32
@@ -639,7 +661,7 @@ void MainWindow::showCardStatus()
 			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) )
 			s << "<br />" << tr("Your certificates will be expire, run utility");
 
-		signSignerLabel->setText( QString( "%1 %2 (%3)" )
+		signSigner->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
 			.arg( c.subjectInfo( "serialNumber" ) ) );
@@ -647,7 +669,7 @@ void MainWindow::showCardStatus()
 	else
 	{
 		content = tr("No card in reader");
-		signSignerLabel->setText( QString() );
+		signSigner->setText( QString() );
 	}
 
 	info->setText( content );
@@ -666,7 +688,43 @@ void MainWindow::showCardStatus()
 }
 
 void MainWindow::showWarning( const QString &msg )
-{ QMessageBox::warning( this, "QDigDocClient", msg ); }
+{
+	QMessageBox d( QMessageBox::Warning, "QDigDocClient", msg, QMessageBox::Close | QMessageBox::Help, this );
+	if( d.exec() == QMessageBox::Help )
+	{
+		QUrl u( "http://support.sk.ee/" );
+		u.addQueryItem( "searchquery", msg );
+		u.addQueryItem( "searchtype", "all" );
+		u.addQueryItem( "_m", "core" );
+		u.addQueryItem( "_a", "searchclient" );
+		QDesktopServices::openUrl( u );
+	}
+}
+
+void MainWindow::viewAction( const QModelIndex &index )
+{
+	QList<digidoc::Document> list = doc->documents();
+	if( list.isEmpty() || index.row() >= list.size() )
+		return;
+
+	switch( index.column() )
+	{
+	case 1:
+	{
+		QString dir = QFileDialog::getExistingDirectory( this,
+			tr("Select folder where file will be stored"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( !dir.isEmpty() )
+			doc->saveDocument( index.row(), dir );
+		break;
+	}
+	case 2:
+		doc->removeDocument( index.row() );
+		setCurrentPage( (Pages)stack->currentIndex() );
+		break;
+	default: break;
+	}
+}
 
 void MainWindow::viewSignaturesRemove( unsigned int num )
 {

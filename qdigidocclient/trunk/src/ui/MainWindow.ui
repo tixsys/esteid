@@ -52,15 +52,19 @@ QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }
 
 QPushButton
 {
-color: white;
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #406A9E, stop: 0.75 #00355F);
 border: 0px;
 border-radius: 2px;
-padding: 4px 7px;
+color: white;
 margin-left: 1px;
 margin-right: 1px;
 min-width: 75px;
+padding: 1px 7px;
 }
+
+QDialogButtonBox QPushButton,
+#home QPushButton
+{ padding: 4px 7px; }
 
 QPushButton:hover, QPushButton:focus
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927); }
@@ -129,13 +133,20 @@ font: bold;
 
 #signContentView, #viewContentView
 {
-color: #355670;
 background-color: transparent;
+border: 1px solid grey;
+color: #355670;
 }
 
 #home, #intro, #sign, #view,
-#viewSignatures, #viewSignaturesScroll
-{ background-color: transparent; }</string>
+#viewSignatures
+{ background-color: transparent; }
+
+#signSignerRole, #viewSignaturesScroll
+{
+background-color: transparent;
+border: 1px solid grey;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
    <property name="spacing">
@@ -506,29 +517,9 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
              </widget>
             </item>
             <item>
-             <spacer name="introButtonSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="introBack">
-              <property name="text">
-               <string>Cancel</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="introNext">
-              <property name="text">
-               <string>Next</string>
+             <widget class="QDialogButtonBox" name="introButtons">
+              <property name="standardButtons">
+               <set>QDialogButtonBox::Cancel</set>
               </property>
              </widget>
             </item>
@@ -541,44 +532,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
           <property name="margin">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="signContentButtonsLayout">
-            <item>
-             <widget class="QPushButton" name="signAddFile">
-              <property name="text">
-               <string>Add file</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="signSaveAs">
-              <property name="text">
-               <string>Save files to disk</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="signRemoveFile">
-              <property name="text">
-               <string>Remove checked files</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="signDocsSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
           <item row="0" column="1">
            <widget class="QLabel" name="signSignerLabel">
             <property name="font">
@@ -592,25 +545,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </property>
             <property name="text">
              <string>Signature</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="signContentLabel">
-            <property name="font">
-             <font>
-              <family>Arial, Liberation Sans</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Container content:</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -636,156 +570,237 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
              <bool>true</bool>
             </property>
             <property name="columnCount">
-             <number>2</number>
+             <number>3</number>
             </property>
             <column>
              <property name="text">
-              <string>Filename</string>
+              <string/>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>Size</string>
+              <string/>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string/>
              </property>
             </column>
            </widget>
           </item>
-          <item row="2" column="1">
-           <layout class="QGridLayout" name="signSignerLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="signRoleLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
+          <item row="4" column="0" colspan="2">
+           <widget class="QDialogButtonBox" name="signButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" rowspan="2">
+           <widget class="QFrame" name="signSignerRole">
+            <layout class="QGridLayout" name="signSignerRoleLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="signRoleLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Role</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="signRoleInput"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="signResolutionLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Resolution</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="signResolutionInput"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="signLocationLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Location</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="signCityLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>City</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="signCityInput"/>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="signStateLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>State</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="signStateInput"/>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="signCountryLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Country</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="signCountryInput"/>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="signZipLabel">
+               <property name="font">
+                <font>
+                 <family>Arial, Liberation Sans</family>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Zip</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLineEdit" name="signZipInput"/>
+             </item>
+             <item row="7" column="1">
+              <spacer name="signSignerSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="9" column="1">
+              <widget class="QRadioButton" name="signMobile">
+               <property name="text">
+                <string>Use Mobile ID</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QRadioButton" name="signCard">
+               <property name="text">
+                <string>Use ID card</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <layout class="QHBoxLayout" name="signContentButtonsLayout">
+            <item>
+             <widget class="QPushButton" name="signAddFile">
               <property name="text">
-               <string>Role</string>
+               <string>Add file</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="signRoleInput"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="signResolutionLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
+            <item>
+             <widget class="QPushButton" name="signSaveAs">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="text">
-               <string>Resolution</string>
+               <string>Save files to disk</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="signResolutionInput"/>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="signLocationLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
+            <item>
+             <widget class="QPushButton" name="signRemoveFile">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="text">
-               <string>Location</string>
+               <string>Remove selected files</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="signCityLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>City</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="signCityInput"/>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="signStateLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>State</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QLineEdit" name="signStateInput"/>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="signCountryLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Country</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QLineEdit" name="signCountryInput"/>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="signZipLabel">
-              <property name="font">
-               <font>
-                <family>Arial, Liberation Sans</family>
-                <pointsize>-1</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Zip</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="signZipInput"/>
-            </item>
-            <item row="7" column="1">
-             <spacer name="signSignerSpacer">
+            <item>
+             <spacer name="signDocsSpacer">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -795,29 +810,21 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               </property>
              </spacer>
             </item>
-            <item row="9" column="1">
-             <widget class="QRadioButton" name="radioButton">
-              <property name="text">
-               <string>Use Mobile ID</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QRadioButton" name="radioButton_2">
-              <property name="text">
-               <string>Use ID card</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QDialogButtonBox" name="signButtons">
-            <property name="standardButtons">
-             <set>QDialogButtonBox::Cancel</set>
+          <item row="0" column="0">
+           <widget class="QLabel" name="signContentLabel">
+            <property name="font">
+             <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Container content:</string>
             </property>
            </widget>
           </item>
@@ -916,8 +923,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>48</width>
-               <height>16</height>
+               <width>290</width>
+               <height>230</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -953,16 +960,21 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
              <bool>true</bool>
             </property>
             <property name="columnCount">
-             <number>2</number>
+             <number>3</number>
             </property>
             <column>
              <property name="text">
-              <string>Filename</string>
+              <string/>
              </property>
             </column>
             <column>
              <property name="text">
-              <string>Size</string>
+              <string/>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string/>
              </property>
             </column>
            </widget>
