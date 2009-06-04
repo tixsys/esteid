@@ -87,4 +87,6 @@ private:
 	QTranslator *appTranslator, *qtTranslator;
 	QHash<int,QString> lang;
 	QStringList params;
+
+	QPushButton *signButton;
 };

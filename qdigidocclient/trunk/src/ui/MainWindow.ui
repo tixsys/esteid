@@ -350,7 +350,7 @@ background-color: transparent;
           </item>
           <item>
            <layout class="QGridLayout" name="homeButtonLayout">
-            <item row="0" column="0">
+            <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="homeButtonLabel">
               <property name="font">
                <font>
@@ -364,12 +364,9 @@ background-color: transparent;
               <property name="text">
                <string>I want to:</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="0" column="2">
              <spacer name="homeButtonSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -382,7 +379,7 @@ background-color: transparent;
               </property>
              </spacer>
             </item>
-            <item row="1" column="0">
+            <item row="1" column="1">
              <widget class="QPushButton" name="homeSign">
               <property name="font">
                <font>
@@ -398,7 +395,7 @@ background-color: transparent;
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="2" column="1">
              <widget class="QPushButton" name="homeView">
               <property name="font">
                <font>
@@ -414,7 +411,7 @@ background-color: transparent;
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
+            <item row="3" column="1">
              <widget class="QPushButton" name="homeCrypt">
               <property name="font">
                <font>
@@ -426,9 +423,25 @@ background-color: transparent;
                </font>
               </property>
               <property name="text">
-               <string>Crypt document</string>
+               <string>Crypt files for secure transfer</string>
               </property>
              </widget>
+            </item>
+            <item row="1" column="0">
+             <spacer name="homePadding">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Minimum</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -782,45 +795,31 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               </property>
              </spacer>
             </item>
+            <item row="9" column="1">
+             <widget class="QRadioButton" name="radioButton">
+              <property name="text">
+               <string>Use Mobile ID</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="text">
+               <string>Use ID card</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="3" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="signButtonLayout">
-            <item>
-             <spacer name="signButtonSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="signCancel">
-              <property name="text">
-               <string>Cancel</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="signSign">
-              <property name="text">
-               <string>Sign</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="signSignMobile">
-              <property name="text">
-               <string>Sign with Mobile-ID</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QDialogButtonBox" name="signButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -917,8 +916,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>48</width>
+               <height>16</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

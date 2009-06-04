@@ -39,6 +39,7 @@
 #include <QPrintPreviewDialog>
 #include <QProcess>
 #include <QSslCertificate>
+#include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
 
@@ -78,18 +79,22 @@ MainWindow::MainWindow( QWidget *parent )
 		SLOT(openFile(QModelIndex)) );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
-	buttonGroup->addButton( homeCrypt, HomeCrypt );
+
 	//buttonGroup->addButton( homeOpenUtility, HomeOpenUtility );
 	buttonGroup->addButton( homeSign, HomeSign );
+	buttonGroup->addButton( homeView, HomeView );
+	buttonGroup->addButton( homeCrypt, HomeCrypt );
+
 	buttonGroup->addButton( introBack, IntroBack );
 	buttonGroup->addButton( introNext, IntroNext );
+
 	buttonGroup->addButton( signAddFile, SignAddFile );
-	buttonGroup->addButton( signCancel, SignCancel );
 	buttonGroup->addButton( signRemoveFile, SignRemoveFile );
 	buttonGroup->addButton( signSaveAs, SignSaveAs );
-	buttonGroup->addButton( signSign, SignSign );
-        buttonGroup->addButton( signSignMobile, SignSignMobile );
-	buttonGroup->addButton( homeView, HomeView );
+	signButton = signButtons->addButton( tr("Sign"), QDialogButtonBox::AcceptRole );
+	buttonGroup->addButton( signButton, SignSign );
+	buttonGroup->addButton( signButtons->button( QDialogButtonBox::Cancel ), SignCancel );
+
 	buttonGroup->addButton( viewAddSignature, ViewAddSignature );
 	buttonGroup->addButton( viewBrowse, ViewBrowse );
 	buttonGroup->addButton( viewClose, ViewClose );
@@ -568,7 +573,7 @@ void MainWindow::setCurrentPage( Pages page )
 
 		signAddFile->setEnabled( doc->signatures().isEmpty() );
 		signRemoveFile->setEnabled( doc->signatures().isEmpty() );
-		signSign->setEnabled(
+		signButton->setEnabled(
 			signContentView->model()->rowCount() > 0 && doc->signCert().isValid() );
 		break;
 	}
@@ -617,21 +622,22 @@ void MainWindow::showCardStatus()
 	if( !doc->activeCard().isEmpty() )
 	{
 		const SslCertificate c = doc->signCert();
-		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) );
+		QTextStream s( &content );
+		s << tr("Name") << ": <font color=\"black\">"
+			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
+			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+		s << tr("Personal code") << ": <font color=\"black\">"
+			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+		s << tr("Card in reader") << ": <font color=\"black\">"
+			<< doc->activeCard() << "</font><br />";
+		s << tr("Sign certificate is") << " "
+			<< (doc->signCert().isValid() ? tr("valid") : tr("expired")) << "<br />";
+		s << tr("Auth certificate is") << " "
+			<< (doc->authCert().isValid() ? tr("valid") : tr("expired"));
 
-		QLocale l;
-		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( doc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !doc->signCert().isValid() )
-			content += tr("<br /><font color=\"#E80303\">Sign certificate is expired</font>");
-
-		content += tr("<br />Auth certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( doc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !doc->authCert().isValid() )
-			content += tr("<br /><font color=\"#E80303\">Auth certificate is expired</font>");
+		if( doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
+			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) )
+			s << "<br />" << tr("Your certificates will be expire, run utility");
 
 		signSignerLabel->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
@@ -648,7 +654,8 @@ void MainWindow::showCardStatus()
 
 	/*homeOpenUtility->setVisible(
 		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
-		(!bdoc->authCert().isValid() || !bdoc->signCert().isValid()) );*/
+		(doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
+		 doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 )) );*/
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
