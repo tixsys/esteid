@@ -38,6 +38,8 @@ class MobileDialog : public QDialog, private Ui::MobileDialog
 
 public:
     MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
+	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
+							const QString &country, const QString &role, const QString &role2 );
 
 private Q_SLOTS:
     void on_buttonNext_clicked();
@@ -70,6 +72,7 @@ private:
     DigiDoc *m_doc;
     QHttp *m_http;
     QTimer *m_timer;
+	QString signature;
 
     int addedFiles;
     int sessionCode;

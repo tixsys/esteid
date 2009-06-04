@@ -305,9 +305,20 @@ void MainWindow::buttonClicked( int button )
 			signCountryInput->text() );
 		setCurrentPage( View );
 		break;
-        case SignSignMobile:
-                (new MobileDialog( doc, this ))->exec();
-                break;
+	case SignSignMobile:
+	{
+		MobileDialog *m = new MobileDialog( doc, this );
+		m->setSignatureInfo(
+				signCityInput->text(),
+				signStateInput->text(),
+				signZipInput->text(),
+				signCountryInput->text(),
+				signRoleInput->text(),
+				signResolutionInput->text() );
+		m->exec();
+		m->deleteLater();
+		break;
+	}
 	case HomeView:
 	{
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),

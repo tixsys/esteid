@@ -158,20 +158,28 @@ void MobileDialog::addFilesResult( const QDomElement &element )
         startSign();
 }
 
+void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
+										const QString &country, const QString &role, const QString &role2 )
+{
+	signature = QString(
+						"<City xsi:type=\"xsd:String\">%1</City>"
+						"<StateOrProvince xsi:type=\"xsd:String\">%2</StateOrProvince>"
+						"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
+						"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
+						"<Role xsi:type=\"xsd:String\">%5 / %6</Role>"
+						).arg( city ).arg( state ).arg( zip ).arg( country ).arg( role ).arg( role2 );
+}
+
 void MobileDialog::startSign()
 {
     QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>"
                         "<SignerIDCode xsi:type=\"xsd:String\">" + inputSSID->text().toLatin1() + "</SignerIDCode>"
                         "<SignerPhoneNo xsi:type=\"xsd:String\">" + inputPhoneNumber->text().toLatin1() + "</SignerPhoneNo>"
-                        "<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
+						"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+						"<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
                         "<AdditionalDataToBeDisplayed xsi:type=\"xsd:String\">DigiDoc3</AdditionalDataToBeDisplayed>"
                         "<Language xsi:type=\"xsd:String\">EST</Language>"
-                        "<Role xsi:type=\"xsd:String\"></Role>"
-                        "<City xsi:type=\"xsd:String\"></City>"
-                        "<StateOrProvince xsi:type=\"xsd:String\"></StateOrProvince>"
-                        "<PostalCode xsi:type=\"xsd:String\"></PostalCode>"
-                        "<CountryName xsi:type=\"xsd:String\"></CountryName>"
-                        "<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+						+ signature.toLatin1() +
                         "<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
                         "<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>"
                         "<ReturnDocInfo xsi:type=\"xsd:boolean\">false</ReturnDocInfo>"
