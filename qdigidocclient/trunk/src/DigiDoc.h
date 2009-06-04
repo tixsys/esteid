@@ -78,7 +78,6 @@ public:
 	QList<digidoc::Document> documents();
 	QString fileName() const;
 	void init();
-	bool isModified() const;
 	bool isNull() const;
 	QString lastError() const;
 	bool open( const QString &file );
@@ -115,6 +114,5 @@ private:
 	QString			m_card;
 	QString			m_fileName;
 	QString			m_lastError;
-	bool			modified;
 	Poller			*poller;
 };

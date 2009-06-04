@@ -206,8 +206,6 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HomeCrypt:
-		if( !saveDocument() )
-			break;
 #ifdef Q_OS_MAC
 		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qdigidoccrypto" << doc->fileName() ) )
 #else
@@ -266,14 +264,13 @@ void MainWindow::buttonClicked( int button )
 
 			if( msgBox.clickedButton() == keep )
 			{
+				doc->save();
 				setCurrentPage( View );
 				break;
 			}
 		}
 	case IntroBack:
 	case ViewClose:
-		if( !saveDocument() )
-			break;
 		doc->clear();
 		setCurrentPage( Home );
 		break;
@@ -312,6 +309,7 @@ void MainWindow::buttonClicked( int button )
 					signZipInput->text(), signCountryInput->text(),
 					signRoleInput->text(), signResolutionInput->text() ) )
 				break;
+				doc->save();
 		}
 		else
 		{
@@ -360,9 +358,6 @@ void MainWindow::buttonClicked( int button )
 	default: break;
 	}
 }
-
-void MainWindow::closeEvent( QCloseEvent *e )
-{ e->setAccepted( saveDocument() ); }
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
@@ -457,8 +452,6 @@ void MainWindow::parseLink( const QString &link )
 {
 	if( link == "browse" )
 	{
-		if( !saveDocument( false ) )
-			return;
 #ifdef Q_OS_WIN32
 		QString url( "file:///" );
 #else
@@ -468,8 +461,6 @@ void MainWindow::parseLink( const QString &link )
 	}
 	else if( link == "email" )
 	{
-		if( !saveDocument( false ) )
-			return;
 #ifdef Q_OS_WIN32
 		QByteArray filePath = doc->fileName().toLatin1();
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
@@ -555,26 +546,6 @@ void MainWindow::parseParams()
 	if( !doc->isNull() )
 		setCurrentPage( Sign );
 	params.clear();
-}
-
-bool MainWindow::saveDocument( bool close )
-{
-	if( !doc->isModified() )
-		return true;
-
-	QMessageBox::StandardButtons b = QMessageBox::Save | QMessageBox::Cancel;
-	if( close )
-		b |= QMessageBox::Close;
-	QMessageBox::StandardButton btn = QMessageBox::warning( this,
-		"QDigiDocClient", tr("Document has changed. Save changes?"),
-		b, QMessageBox::Save );
-	switch( btn )
-	{
-	case QMessageBox::Save: doc->save();
-	case QMessageBox::Close: return true;
-	case QMessageBox::Cancel:
-	default: return false;
-	}
 }
 
 void MainWindow::setCurrentPage( Pages page )
@@ -733,6 +704,16 @@ void MainWindow::viewAction( const QModelIndex &index )
 
 void MainWindow::viewSignaturesRemove( unsigned int num )
 {
+	SslCertificate c = doc->signatures().at( num ).cert();
+	QString msg = tr("Remove signature %1 %2 %3")
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+		.arg( c.subjectInfo( "serialNumber" ) );
+	QMessageBox::StandardButton b = QMessageBox::warning( this,
+		"QDigiDocClient", msg,
+		QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel );
+	if( b == QMessageBox::Cancel )
+		return;
 	doc->removeSignature( num );
 	doc->save();
 	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );

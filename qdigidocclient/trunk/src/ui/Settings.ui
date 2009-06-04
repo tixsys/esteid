@@ -188,7 +188,7 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt &quot;Arial Baltic&quot;; }
       <item row="7" column="0" colspan="2">
        <widget class="QCheckBox" name="signOverwrite">
         <property name="text">
-         <string>Overwrite role, resolution, localtion values</string>
+         <string>Save last insert role and resolution</string>
         </property>
        </widget>
       </item>
