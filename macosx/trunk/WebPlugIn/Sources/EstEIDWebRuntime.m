@@ -490,8 +490,9 @@ NPError NPP_Destroy(NPP plugin, NPSavedData **save)
 {
     EstEIDWebObjectContextRef obj = plugin->pdata;
 	
-    if(obj != NULL) {
+    if(obj != NULL && plugin->pdata != NULL) {
 		browser->releaseobject((NPObject *)plugin->pdata);
+		plugin->pdata = NULL;
     }
     
     return NPERR_NO_ERROR;
