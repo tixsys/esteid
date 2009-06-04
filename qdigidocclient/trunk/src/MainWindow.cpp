@@ -109,15 +109,17 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( signButton, SignSign );
 	buttonGroup->addButton( signButtons->button( QDialogButtonBox::Cancel ), SignCancel );
 
+	viewAddSignature = viewButtons->addButton( tr("Add signature"), QDialogButtonBox::ActionRole );
 	buttonGroup->addButton( viewAddSignature, ViewAddSignature );
-	buttonGroup->addButton( viewBrowse, ViewBrowse );
-	buttonGroup->addButton( viewClose, ViewClose );
-	buttonGroup->addButton( viewCrypt, ViewCrypt );
-	buttonGroup->addButton( viewEmail, ViewEmail );
-	buttonGroup->addButton( viewPrint, ViewPrint );
-	buttonGroup->addButton( viewSaveAs, ViewSaveAs );
+	buttonGroup->addButton( viewButtons->button( QDialogButtonBox::Close ), ViewClose );
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
+
+	connect( viewBrowse, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+	connect( viewEmail, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+	connect( viewPrint, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+	connect( viewSaveAs, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+
 
 	appTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
@@ -204,7 +206,6 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HomeCrypt:
-	case ViewCrypt:
 		if( !saveDocument() )
 			break;
 #ifdef Q_OS_MAC
@@ -278,14 +279,10 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case SignRemoveFile:
 	{
-		QAbstractItemModel *m = signContentView->model();
-
+		QItemSelectionModel *selection = signContentView->selectionModel();
 		QStringList files;
-		for( int i = 0; i < m->rowCount(); ++i )
-		{
-			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-				files << m->index( i, 0 ).data().toString();
-		}
+		Q_FOREACH( const QModelIndex &i, selection->selectedRows( 0 ) )
+			files << i.data().toString();
 
 		if( files.empty() )
 			break;
@@ -298,9 +295,10 @@ void MainWindow::buttonClicked( int button )
 		if( btn == QMessageBox::Cancel )
 			break;
 
+		QAbstractItemModel *m = signContentView->model();
 		for( int i = m->rowCount() - 1; i >= 0; --i )
 		{
-			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+			if( selection->isSelected( m->index( i, 0 ) ) )
 				doc->removeDocument( i );
 		}
 		setCurrentPage( Sign );
@@ -348,92 +346,15 @@ void MainWindow::buttonClicked( int button )
 	case ViewAddSignature:
 		setCurrentPage( Sign );
 		break;
-	case ViewBrowse:
-	{
-		if( !saveDocument( false ) )
-			break;
-#ifdef Q_OS_WIN32
-		QString url( "file:///" );
-#else
-		QString url( "file://" );
-#endif
-		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
-		break;
-	}
-	case ViewEmail:
-	{
-		if( !saveDocument( false ) )
-			break;
-#ifdef Q_OS_WIN32
-		QByteArray filePath = doc->fileName().toLatin1();
-		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
-
-		MapiFileDesc doc[1];
-		doc[0].ulReserved = 0;
-		doc[0].flFlags = 0;
-		doc[0].nPosition = -1;
-		doc[0].lpszPathName = filePath.data();
-		doc[0].lpszFileName = fileName.data();
-		doc[0].lpFileType = NULL;
-
-		// Create message
-		MapiMessage message;
-		message.ulReserved = 0;
-		message.lpszSubject = "";
-		message.lpszNoteText = "";
-		message.lpszMessageType = NULL;
-		message.lpszDateReceived = NULL;
-		message.lpszConversationID = NULL;
-		message.flFlags = 0;
-		message.lpOriginator = NULL;
-		message.nRecipCount = 0;
-		message.lpRecips = NULL;
-		message.nFileCount = 1;
-		message.lpFiles = (lpMapiFileDesc)&doc;
-
-		QLibrary lib("mapi32");
-		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
-		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
-		if( mapi )
-		{
-			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
-			if( status == SUCCESS_SUCCESS )
-				break;
-		}
-		showWarning( tr("Failed to send email") );
-#else
-		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( doc->fileName() ).fileName() )
-			.arg( doc->fileName() ) );
-#endif
-		break;
-	}
-	case ViewPrint:
-	{
-		QPrintPreviewDialog *dialog = new QPrintPreviewDialog( this );
-		dialog->setWindowFlags( dialog->windowFlags() | Qt::WindowMinMaxButtonsHint );
-		PrintSheet *p = new PrintSheet( doc, dialog );
-		p->setVisible( false );
-		connect( dialog, SIGNAL(paintRequested(QPrinter*)), p, SLOT(print(QPrinter*)) );
-		dialog->exec();
-		break;
-	}
 	case SignSaveAs:
-	case ViewSaveAs:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
 			tr("Select folder where files will be stored"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !dir.isEmpty() )
-		{
-			QAbstractItemModel *m = button == SignSaveAs ?
-				signContentView->model() : viewContentView->model();
-			for( int i = 0; i < m->rowCount(); ++i )
-			{
-				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-					doc->saveDocument( i, dir );
-			}
-		}
+		if( dir.isEmpty() )
+			break;
+		Q_FOREACH( const QModelIndex &i, signContentView->selectionModel()->selectedRows(0) )
+			doc->saveDocument( i.row(), dir );
 		break;
 	}
 	default: break;
@@ -496,7 +417,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 	}
 	QList<DigiDocSignature> list = doc->signatures();
 	view->setColumnHidden( 1, !list.isEmpty() );
-	view->setColumnHidden( 2, !list.isEmpty() );
+	view->setColumnHidden( 2, stack->currentIndex() == View || !list.isEmpty() );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
@@ -511,6 +432,7 @@ void MainWindow::on_languages_activated( int index )
 	languages->setCurrentIndex( index );
 	introNext->setText( tr( "Next" ) );
 	signButton->setText( tr("Sign") );
+	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
 }
 
@@ -529,6 +451,87 @@ void MainWindow::openFile( const QModelIndex &index )
 #endif
 	url += QString::fromStdString( list[index.row()].getPath() );
 	QDesktopServices::openUrl( url );
+}
+
+void MainWindow::parseLink( const QString &link )
+{
+	if( link == "browse" )
+	{
+		if( !saveDocument( false ) )
+			return;
+#ifdef Q_OS_WIN32
+		QString url( "file:///" );
+#else
+		QString url( "file://" );
+#endif
+		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
+	}
+	else if( link == "email" )
+	{
+		if( !saveDocument( false ) )
+			return;
+#ifdef Q_OS_WIN32
+		QByteArray filePath = doc->fileName().toLatin1();
+		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
+
+		MapiFileDesc doc[1];
+		doc[0].ulReserved = 0;
+		doc[0].flFlags = 0;
+		doc[0].nPosition = -1;
+		doc[0].lpszPathName = filePath.data();
+		doc[0].lpszFileName = fileName.data();
+		doc[0].lpFileType = NULL;
+
+		// Create message
+		MapiMessage message;
+		message.ulReserved = 0;
+		message.lpszSubject = "";
+		message.lpszNoteText = "";
+		message.lpszMessageType = NULL;
+		message.lpszDateReceived = NULL;
+		message.lpszConversationID = NULL;
+		message.flFlags = 0;
+		message.lpOriginator = NULL;
+		message.nRecipCount = 0;
+		message.lpRecips = NULL;
+		message.nFileCount = 1;
+		message.lpFiles = (lpMapiFileDesc)&doc;
+
+		QLibrary lib("mapi32");
+		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
+		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
+		if( mapi )
+		{
+			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
+			if( status == SUCCESS_SUCCESS )
+				break;
+		}
+		showWarning( tr("Failed to send email") );
+#else
+		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
+			.arg( QFileInfo( doc->fileName() ).fileName() )
+			.arg( doc->fileName() ) );
+#endif
+	}
+	else if( link == "print" )
+	{
+		QPrintPreviewDialog *dialog = new QPrintPreviewDialog( this );
+		dialog->setWindowFlags( dialog->windowFlags() | Qt::WindowMinMaxButtonsHint );
+		PrintSheet *p = new PrintSheet( doc, dialog );
+		p->setVisible( false );
+		connect( dialog, SIGNAL(paintRequested(QPrinter*)), p, SLOT(print(QPrinter*)) );
+		dialog->exec();
+	}
+	else if( link == "saveAs" )
+	{
+		QString dir = QFileDialog::getExistingDirectory( this,
+			tr("Select folder where files will be stored"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( dir.isEmpty() )
+			return;
+		Q_FOREACH( const QModelIndex &i, viewContentView->selectionModel()->selectedRows(0) )
+			doc->saveDocument( i.row(), dir );
+	}
 }
 
 void MainWindow::parseParams()
@@ -622,7 +625,8 @@ void MainWindow::setCurrentPage( Pages page )
 			++i;
 		}
 
-		viewFileName->setText( tr("Container: <b>%1</b>").arg( doc->fileName() ) );
+		viewFileName->setText( QString( "%1 <b>%2</b>" ).arg( tr("Container:") ).arg( doc->fileName() ) );
+		viewFileName->setToolTip( doc->fileName() );
 
 		if( i > 0 && cardOwnerSignature )
 			viewFileStatus->setText( tr("This container is signed by you") );
@@ -631,6 +635,7 @@ void MainWindow::setCurrentPage( Pages page )
 		else
 			viewFileStatus->setText( tr("Container is unsigned") );
 
+		viewSignaturesLabel->setText( i == 1 ? tr("Signature") : tr("Signatures") );
 		viewAddSignature->setEnabled( doc->signCert().isValid() && !cardOwnerSignature );
 		break;
 	}

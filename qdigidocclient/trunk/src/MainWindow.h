@@ -42,6 +42,7 @@ private Q_SLOTS:
 	void on_languages_activated( int index );
 	void on_settings_clicked();
 	void openFile( const QModelIndex &index );
+	void parseLink( const QString &link );
 	void showCardStatus();
 	void showWarning( const QString &msg );
 	void viewAction( const QModelIndex &index );
@@ -67,12 +68,7 @@ private:
 		SignSign,
 		HomeView,
 		ViewAddSignature,
-		ViewBrowse,
 		ViewClose,
-		ViewCrypt,
-		ViewEmail,
-		ViewPrint,
-		ViewSaveAs,
 	};
 	bool addFile( const QString &file );
 	void closeEvent( QCloseEvent *e );
@@ -88,5 +84,5 @@ private:
 	QHash<int,QString> lang;
 	QStringList params;
 
-	QPushButton *introNext, *signButton;
+	QPushButton *introNext, *signButton, *viewAddSignature;
 };

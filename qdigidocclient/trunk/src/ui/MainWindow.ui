@@ -557,11 +557,11 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
           </item>
           <item row="2" column="0">
            <widget class="QTreeWidget" name="signContentView">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::MultiSelection</enum>
             </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
@@ -835,60 +835,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
           <property name="margin">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="viewSaveAsLayout">
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewSaveAs">
-              <property name="text">
-               <string>Save files to disk</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewSaveAsSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="viewSignaturesLabel">
-            <property name="font">
-             <font>
-              <family>Arial, Liberation Sans</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Signatures</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="viewContentLabel">
             <property name="font">
              <font>
@@ -902,16 +849,10 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             <property name="text">
              <string>Container content:</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
            </widget>
           </item>
-          <item row="1" column="1" rowspan="2">
+          <item row="3" column="1" rowspan="4">
            <widget class="QScrollArea" name="viewSignaturesScroll">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
@@ -923,8 +864,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>290</width>
-               <height>230</height>
+               <width>301</width>
+               <height>252</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -945,13 +886,13 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </widget>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="4" column="0">
            <widget class="QTreeWidget" name="viewContentView">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::MultiSelection</enum>
             </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
@@ -979,104 +920,70 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             </column>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QLabel" name="viewFileName"/>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="viewFileName">
+            <property name="text">
+             <string>Container:</string>
+            </property>
+           </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="viewFileStatus"/>
+          <item row="2" column="0">
+           <widget class="QLabel" name="viewFileStatus">
+            <property name="text">
+             <string>This container is </string>
+            </property>
+           </widget>
           </item>
-          <item row="4" column="1">
-           <layout class="QHBoxLayout" name="viewPrintLayout">
-            <item>
-             <widget class="QPushButton" name="viewPrint">
-              <property name="text">
-               <string>Print summary</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewCrypt">
-              <property name="text">
-               <string>Crypt document</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewPrintSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+          <item row="2" column="1">
+           <widget class="QLabel" name="viewSignaturesLabel">
+            <property name="font">
+             <font>
+              <family>Arial, Liberation Sans</family>
+              <pointsize>-1</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Signature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLabel" name="viewPrint">
+            <property name="text">
+             <string>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="viewEmail">
+            <property name="text">
+             <string>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="viewBrowse">
+            <property name="text">
+             <string>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QDialogButtonBox" name="viewButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Close</set>
+            </property>
+           </widget>
           </item>
           <item row="5" column="0">
-           <layout class="QHBoxLayout" name="viewBrowseLayout">
-            <item>
-             <widget class="QPushButton" name="viewEmail">
-              <property name="text">
-               <string>Send container to email</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewBrowse">
-              <property name="text">
-               <string>Browse container location</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewBrowseSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="5" column="1">
-           <layout class="QHBoxLayout" name="viewButtonsLayout">
-            <item>
-             <widget class="QPushButton" name="viewAddSignature">
-              <property name="text">
-               <string>Add signature</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewClose">
-              <property name="text">
-               <string>Close container</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewButtonsSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="QLabel" name="viewSaveAs">
+            <property name="text">
+             <string>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
