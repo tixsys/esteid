@@ -5,19 +5,19 @@
     <name>CertificateDialog</name>
     <message>
         <source>Save certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
@@ -41,11 +41,11 @@
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation type="unfinished"></translation>
+        <translation>Seeria number</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"></translation>
+        <translation>Avalik võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
@@ -73,7 +73,7 @@
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detailid</translation>
     </message>
     <message>
         <source>Field</source>
@@ -89,11 +89,11 @@
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Väärtus</translation>
+        <translation>Väärtus</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta</translation>
     </message>
     <message>
         <source>Certification Path</source>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi staatus:</translation>
     </message>
 </context>
 <context>
@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Katkesta</translation>
+        <translation type="obsolete">Katkesta</translation>
     </message>
     <message>
         <source>Next</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Send container to email</source>
-        <translation>Saada e-postiga</translation>
+        <translation type="obsolete">Saada e-postiga</translation>
     </message>
     <message>
         <source>Print signature summary</source>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Browse container location</source>
-        <translation>Näita asukohta kettal</translation>
+        <translation type="obsolete">Näita asukohta kettal</translation>
     </message>
     <message>
         <source>Add signature</source>
@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>Close container</source>
-        <translation>Sulge ümbrik</translation>
+        <translation type="obsolete">Sulge ümbrik</translation>
     </message>
     <message>
         <source>Save files to disk</source>
@@ -259,7 +259,7 @@
     </message>
     <message>
         <source>Container: &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Ümbrik: &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation type="obsolete">Ümbrik: &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <source>This container is signed by you</source>
@@ -282,27 +282,13 @@
 Should I keep unsigned documents or remove these?</source>
         <translation>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</translation>
     </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamine.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Digitaalallkirja andmiseks on vajalik interneti ühendus.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Skip this intro</source>
         <translation>Ära rohkem mulle seda sissejuhatust näita</translation>
     </message>
     <message>
         <source>Remove checked files</source>
-        <translation>Eemalda valitud</translation>
+        <translation type="obsolete">Eemalda valitud</translation>
     </message>
     <message>
         <source>Save file</source>
@@ -314,11 +300,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Filename</source>
-        <translation>Faili nimi</translation>
+        <translation type="obsolete">Faili nimi</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Suurus</translation>
+        <translation type="obsolete">Suurus</translation>
     </message>
     <message>
         <source>Failed to send email</source>
@@ -326,11 +312,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Sign with Mobile-ID</source>
-        <translation>Kirjutan alla Mobiil-ID-ga</translation>
+        <translation type="obsolete">Kirjutan alla Mobiil-ID-ga</translation>
     </message>
     <message>
         <source>Crypt document</source>
-        <translation>Krüpteerida dokumenti</translation>
+        <translation type="obsolete">Krüpteerida dokumenti</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
@@ -346,11 +332,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Person &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; card in reader&lt;br /&gt;Person SSID: %3</source>
-        <translation>Kasutaja &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3</translation>
+        <translation type="obsolete">Kasutaja &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; kaart on lugejas&lt;br /&gt;Kasutaja isikukood: %3</translation>
     </message>
     <message>
         <source>&lt;br /&gt;Sign certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>&lt;br /&gt;Allkirjastamise sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
+        <translation type="obsolete">&lt;br /&gt;Allkirjastamise sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
     <message>
         <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
@@ -358,7 +344,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>&lt;br /&gt;Isikutuvastuse sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
+        <translation type="obsolete">&lt;br /&gt;Isikutuvastuse sertifikaat on kehtiv kuni &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
     <message>
         <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
@@ -390,23 +376,142 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Container contains file with same name, ovewrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ümbrikus on samanimeline fail, kirjutan üle?</translation>
     </message>
     <message>
         <source>Document has changed. Save changes?</source>
-        <translation>Dokumenti on muudetud. Kas soovite salvestada muudatused?</translation>
+        <translation type="obsolete">Dokumenti on muudetud. Kas soovite salvestada muudatused?</translation>
     </message>
     <message>
-        <source>&lt;br /&gt;&lt;font color=&quot;#E80303&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Kustuta</translation>
+    </message>
+    <message>
+        <source>Container:</source>
+        <translation>Ümbrik:</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Personal code</source>
+        <translation>Isikukood</translation>
+    </message>
+    <message>
+        <source>Card in reader</source>
+        <translation>Lugejas on kaart</translation>
+    </message>
+    <message>
+        <source>Sign certificate is</source>
+        <translation>Allkirjastamise sertifikaat on</translation>
+    </message>
+    <message>
+        <source>valid</source>
+        <translation>kehtiv</translation>
+    </message>
+    <message>
+        <source>expired</source>
+        <translation>aegunud</translation>
+    </message>
+    <message>
+        <source>Auth certificate is</source>
+        <translation>Isikutuvastamise sertifikaat on</translation>
+    </message>
+    <message>
+        <source>Your certificates will be expire, run utility</source>
+        <translation>Sinu sertifikaadid hakkavad aeguma, käivita utiliit</translation>
+    </message>
+    <message>
+        <source>Select folder where file will be stored</source>
+        <translation>Vali kataloog kuhu failid salvestatakse</translation>
+    </message>
+    <message>
+        <source>Remove signature %1 %2 %3</source>
+        <translation>Eemalda allkiri %1 %2 %3</translation>
+    </message>
+    <message>
+        <source>Crypt files for secure transfer</source>
+        <translation>Krüpteeri failid turvaliseks edastamiseks</translation>
+    </message>
+    <message utf8="true">
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;br /&gt;&lt;br /&gt;
+Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkirja andmiseks on vajalik interneti ühendus.
+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;br /&gt;&lt;font color=&quot;#E80303&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
+        <source>Use Mobile ID</source>
+        <translation>Kasuta Mobiil-ID</translation>
+    </message>
+    <message>
+        <source>Use ID card</source>
+        <translation>Kasuta ID kaarti</translation>
+    </message>
+    <message>
+        <source>Remove selected files</source>
+        <translation>Eemalda valitud</translation>
+    </message>
+    <message>
+        <source>This container is </source>
+        <translation>See ümbrik on</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;saveAs&quot;&gt;Salvesta failid kettale&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;email&quot;&gt;Saada ümbrik e-postiga&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;print&quot;&gt;Trüki kinnitusleht&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;browse&quot;&gt;Näita ümbriku asukohta kettal&lt;/a&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>MobileDialog</name>
+    <message>
+        <source>Mobiiliga allkirjastamine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Print summary</source>
+        <source>Allkirjastaja telefoninumber</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allkirjastaja isikukood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toimub allkirjastamine...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kontrollkood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished">Edasi</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Katkesta</translation>
     </message>
 </context>
 <context>
@@ -485,7 +590,7 @@ For using sign certificate enter PIN2</source>
     </message>
     <message>
         <source>Overwrite role, resolution, localtion values</source>
-        <translation>Kirjutada üle rolli, resolutsiooni, asukoha vaikimisiväärtuse</translation>
+        <translation type="obsolete">Kirjutada üle rolli, resolutsiooni, asukoha vaikimisiväärtuse</translation>
     </message>
     <message>
         <source>...</source>
@@ -509,15 +614,19 @@ For using sign certificate enter PIN2</source>
     </message>
     <message>
         <source>Default file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaikimisi faili tüüp:</translation>
     </message>
     <message>
         <source>BDoc</source>
-        <translation type="unfinished"></translation>
+        <translation>BDoc</translation>
     </message>
     <message>
         <source>DDoc</source>
-        <translation type="unfinished"></translation>
+        <translation>DDoc</translation>
+    </message>
+    <message>
+        <source>Save last insert role and resolution</source>
+        <translation>Jäta viimati sisestatud roll ja resolutsioon meelde</translation>
     </message>
 </context>
 <context>
@@ -604,15 +713,15 @@ For using sign certificate enter PIN2</source>
     </message>
     <message>
         <source>Signature is valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Allkiri on kehtiv</translation>
     </message>
     <message>
         <source>Signature is not valid (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Allkiri ei ole kehtiv (%1)</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu viga</translation>
     </message>
 </context>
 <context>
