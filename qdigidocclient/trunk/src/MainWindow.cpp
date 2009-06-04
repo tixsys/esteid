@@ -280,7 +280,6 @@ void MainWindow::buttonClicked( int button )
 		QStringList files;
 		Q_FOREACH( const QModelIndex &i, selection->selectedRows( 0 ) )
 			files << i.data().toString();
-
 		if( files.empty() )
 			break;
 
@@ -288,7 +287,6 @@ void MainWindow::buttonClicked( int button )
 			this, "QDigiDocClient",
 			tr("Are you sure you want remove files %1").arg( files.join(", ") ),
 			QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel );
-
 		if( btn == QMessageBox::Cancel )
 			break;
 
@@ -334,11 +332,8 @@ void MainWindow::buttonClicked( int button )
 		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
 			tr("Documents (*.bdoc *.ddoc)") );
-		if( !file.isEmpty() )
-		{
-			if( doc->open( file ) )
-				setCurrentPage( View );
-		}
+		if( !file.isEmpty() && doc->open( file ) )
+			setCurrentPage( View );
 		break;
 	}
 	case ViewAddSignature:
