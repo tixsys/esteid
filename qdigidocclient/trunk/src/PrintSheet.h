@@ -32,7 +32,4 @@ class PrintSheet: public QWebView
 
 public:
 	PrintSheet( DigiDoc *doc, QWidget *parent = 0 );
-
-private:
-	DigiDoc *d;
 };

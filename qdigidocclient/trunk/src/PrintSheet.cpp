@@ -31,9 +31,8 @@
 #include <QFileInfo>
 #include <QTextStream>
 
-PrintSheet::PrintSheet( DigiDoc *doc, QWidget *parent )
+PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 :	QWebView( parent )
-,	d( doc )
 {
 	QString html;
 	QTextStream s( &html );
@@ -79,10 +78,10 @@ PrintSheet::PrintSheet( DigiDoc *doc, QWidget *parent )
 		s
 		<< "<tr>"
 		<< "<td class=\"textborder\">"
-		<< QFileInfo( QString::fromStdString( doc.getPath() ) ).fileName()
+		<< QFileInfo( QString::fromUtf8( doc.getPath().data() ) ).fileName()
 		<< "</td>"
 		<< "<td class=\"textborderright\">"
-		<< QString::fromStdString( doc.getMediaType() )
+		<< QString::fromUtf8( doc.getMediaType().data() )
 		<< "</td>"
 		<< "<td class=\"textborderright\">"
 		<< doc.getSize()
