@@ -117,9 +117,14 @@ void PCSCManager::ensureReaders(uint idx)
 		if (mReaderStates.size() ==  0 )
 			throw SCError(SCARD_E_READER_UNAVAILABLE);
 		}
-
-	SCError::check((*pSCardGetStatusChange)
-		(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+	
+#ifdef __APPLE__
+	for(int i = 0; i < mReaderStates.size(); i++) {
+		SCError::check((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
+	}
+#else
+	SCError::check((*pSCardGetStatusChange)(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+#endif
 	if (idx >= mReaderStates.size())
 		throw std::range_error("ensureReaders: Index out of bounds");
 }
