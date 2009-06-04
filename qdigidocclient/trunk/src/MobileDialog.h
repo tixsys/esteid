@@ -50,6 +50,7 @@ private Q_SLOTS:
     void startSignResult( const QDomElement &element );
     void getSignStatus();
     void getSignStatusResult( const QDomElement &element );
+    void getSignedDocResult( const QDomElement &element );
 
 private:
     enum Pages {
@@ -62,6 +63,7 @@ private:
         AddDataFile,
         StartSign,
         SignStatus,
+        GetSignedDoc,
         CloseSession
     };
 
@@ -77,6 +79,7 @@ private:
     void createSignedDoc();
     void addFiles();
     void startSign();
+    void getSignedDoc();
 
     QByteArray insertBody( MobileAction action, const QByteArray &body ) const;
 };

@@ -22,11 +22,18 @@
 
 #include "MobileDialog.h"
 #include "DigiDoc.h"
+
 #include <digidoc/Document.h>
+#include <digidoc/Exception.h>
 #include <digidoc/crypto/Digest.h>
+#include <digidoc/WDoc.h>
+#include <digidoc/io/ZipSerialize.h>
+#include <digidoc/crypto/cert/DirectoryX509CertStore.h>
 
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
+#include <QTemporaryFile>
 
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :   QDialog( parent )
@@ -39,7 +46,8 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     m_http = new QHttp( this );
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
-    m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
+    //m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
+    m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
 }
 
 void MobileDialog::on_buttonNext_clicked()
@@ -155,7 +163,7 @@ void MobileDialog::startSign()
     QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>"
                         "<SignerIDCode xsi:type=\"xsd:String\">" + inputSSID->text().toLatin1() + "</SignerIDCode>"
                         "<SignerPhoneNo xsi:type=\"xsd:String\">" + inputPhoneNumber->text().toLatin1() + "</SignerPhoneNo>"
-                        "<ServiceName xsi:type=\"xsd:String\">DigiDoc Client</ServiceName>"
+                        "<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
                         "<AdditionalDataToBeDisplayed xsi:type=\"xsd:String\">DigiDoc3</AdditionalDataToBeDisplayed>"
                         "<Language xsi:type=\"xsd:String\">EST</Language>"
                         "<Role xsi:type=\"xsd:String\"></Role>"
@@ -194,9 +202,49 @@ void MobileDialog::getSignStatus()
 
 void MobileDialog::getSignStatusResult( const QDomElement &element )
 {
-    labelError->setText( element.elementsByTagName( "StatusCode" ).item(0).toElement().text() );
+    QString status = element.elementsByTagName( "StatusCode" ).item(0).toElement().text();
+    labelError->setText( status );
 
-    qDebug() << element.elementsByTagName( "SignedDocInfo" ).item(0).toElement().text();
+    qDebug() << status << element.elementsByTagName( "SignedDocInfo" ).item(0).toElement().text();
+
+    if ( status == "SIGNATURE" )
+    {
+        m_timer->stop();
+        getSignedDoc();
+    }
+}
+
+void MobileDialog::getSignedDoc()
+{
+        QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>";
+        int id = m_http->post( "/", insertBody( GetSignedDoc, message ) );
+        m_callBackList.insert( id, "getSignedDocResult" );
+}
+
+void MobileDialog::getSignedDocResult( const QDomElement &element )
+{
+    //qDebug() << element.elementsByTagName( "SignedDocData" ).item(0).toElement().text();
+
+    QTemporaryFile file( QString( "%1%2XXXXXXs.ddoc" )
+                        .arg( QDir::tempPath() ).arg( QDir::separator() ) );
+    file.setAutoRemove( false );
+    if ( file.open() )
+    {
+        file.write( element.elementsByTagName( "SignedDocData" ).item(0).toElement().text().toLatin1() );
+        qDebug() << file.fileName();
+        try {
+            std::auto_ptr<digidoc::ISerialize> s(new digidoc::ZipSerialize(file.fileName().toStdString()));
+            digidoc::WDoc *w = new digidoc::WDoc( s );
+
+            QList<DigiDocSignature> list;
+            unsigned int count = w->signatureCount();
+            for( unsigned int i = 0; i < count; ++i )
+                        list << DigiDocSignature( w->getSignature( i ), 0 );
+
+        } catch( const digidoc::Exception &e ) {
+            qDebug() << e.getMsg().data();
+        }
+    }
 }
 
 QByteArray MobileDialog::insertBody( MobileAction maction, const QByteArray &body ) const
@@ -210,6 +258,7 @@ QByteArray MobileDialog::insertBody( MobileAction maction, const QByteArray &bod
         case StartSign: action="MobileSign"; break;
         case SignStatus: action="GetStatusInfo"; break;
         case CloseSession: action="CloseSession"; break;
+        case GetSignedDoc: action="GetSignedDoc"; break;
     }
 
     QByteArray message = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> "
