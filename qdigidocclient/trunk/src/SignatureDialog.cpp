@@ -29,6 +29,7 @@
 
 #include <QDateTime>
 #include <QSslKey>
+#include <QTextStream>
 
 SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
 :	QWidget( parent )
@@ -37,12 +38,18 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 {
 	const SslCertificate cert = s.cert();
 	QLabel *c = new QLabel( this );
-	c->setText( tr("<b>%1 %2</b><br />%3<br />Signed on %4<br />Signature is %5")
-		.arg( SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) )
-		.arg( SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) )
-		.arg( s.location() )
-		.arg( s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) )
-		.arg( s.isValid() ? tr("valid") : tr("not valid") ) );
+	QString content;
+	QTextStream st( &content );
+	if( cert.isTempel() )
+		st << "<img src=\":/images/ico_stamp_blue_16.png\">";
+	else
+		st << "<img src=\":/images/ico_person_blue_16.png\">";
+	st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
+		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b><br />";
+	st << s.location() << "<br />";
+	st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
+	st << tr("Signature is") << " " << ( s.isValid() ? tr("valid") : tr("not valid") );
+	c->setText( content );
 
 	QPushButton *b = new QPushButton( tr("Show details"), this );
 	connect( b, SIGNAL(clicked()), SLOT(showSignature()) );
