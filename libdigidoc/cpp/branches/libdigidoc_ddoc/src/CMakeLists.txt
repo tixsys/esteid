@@ -195,7 +195,6 @@ install( FILES
 )
 
 install( FILES
-    xml/OpenDocument_manifest.hxx
     xml/XAdES.hxx
     xml/xmldsig-core-schema.hxx
     DESTINATION include/digidoc/xml

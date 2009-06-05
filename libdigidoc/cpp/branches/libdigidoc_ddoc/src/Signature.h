@@ -9,7 +9,6 @@
 #include "crypto/ocsp/OCSP.h"
 #include "crypto/signer/Signer.h"
 #include "io/IOException.h"
-#include "xml/OpenDocument_manifest.hxx"
 #include "xml/xmldsig-core-schema.hxx"
 
 namespace digidoc
