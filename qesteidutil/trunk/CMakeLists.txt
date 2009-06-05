@@ -90,6 +90,11 @@ include_directories(
     ${LIBP11_INCLUDE_DIR}
 )
 
+# xCode hacks
+if(APPLE)
+	include_directories(/usr/local/include/../include)
+endif(APPLE)
+
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
