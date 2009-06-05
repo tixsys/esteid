@@ -26,6 +26,7 @@ SET( MOC_HEADERS
 	src/MobileDialog.h
 	src/Poller.h
 	src/PrintSheet.h
+	src/QMobileSigner.h
 	src/Settings.h
 	src/SignatureDialog.h
 	src/TreeWidget.h
@@ -44,6 +45,7 @@ SET( SOURCES
 	src/MobileDialog.cpp
 	src/Poller.cpp
 	src/PrintSheet.cpp
+	src/QMobileSigner.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
 	src/SslCertificate.cpp

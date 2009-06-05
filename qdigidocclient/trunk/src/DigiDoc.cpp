@@ -364,6 +364,29 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	return result;
 }
 
+bool DigiDoc::signMobile( Signer *s )
+{
+	if( isNull() )
+	{
+		setLastError( tr("Container is not open") );
+		return false;
+	}
+	if( b->documentCount() == 0 )
+	{
+		setLastError( tr("Cannot add signature to empty container") );
+		return false;
+	}
+
+	bool result = false;
+	try
+	{
+		b->sign( s, Signature::MOBILE );
+		result = true;
+	}
+	catch( const Exception &e ) { setLastError( e ); }
+	return result;
+}
+
 QList<DigiDocSignature> DigiDoc::signatures()
 {
 	QList<DigiDocSignature> list;

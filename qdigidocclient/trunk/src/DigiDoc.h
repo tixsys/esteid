@@ -32,6 +32,7 @@ namespace digidoc
 	class WDoc;
 	class Document;
 	class Exception;
+	class Signer;
 	class Signature;
 }
 
@@ -93,6 +94,7 @@ public:
 		const QString &country,
 		const QString &role,
 		const QString &role2 );
+	bool signMobile( digidoc::Signer *s );
 	QList<DigiDocSignature> signatures();
 
 Q_SIGNALS:

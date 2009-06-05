@@ -1,7 +1,7 @@
 /*
  * QDigiDocClient
  *
- * Copyright (C) 2009 Jargo KÃµster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -28,7 +28,6 @@
 #include <digidoc/crypto/Digest.h>
 #include <digidoc/WDoc.h>
 #include <digidoc/io/ZipSerialize.h>
-#include <digidoc/crypto/cert/DirectoryX509CertStore.h>
 
 #include <QDebug>
 #include <QDir>
@@ -40,6 +39,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 ,   m_doc( doc )
 ,   sessionCode( 0 )
 ,   m_timer( 0 )
+,	m_signer( 0 )
 {
     setupUi( this );
 
@@ -49,6 +49,8 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     //m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
     m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
 }
+
+digidoc::QMobileSigner* MobileDialog::signer() { return m_signer; }
 
 void MobileDialog::on_buttonNext_clicked()
 {
@@ -92,6 +94,7 @@ void MobileDialog::httpRequestFinished( int id, bool error )
     if ( result.contains( "Fault" ) )
     {
         QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
+		labelError->setText( error );
         qDebug() << result;
         return;
     }
@@ -213,7 +216,7 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
     QString status = element.elementsByTagName( "StatusCode" ).item(0).toElement().text();
     labelError->setText( status );
 
-    qDebug() << status << element.elementsByTagName( "SignedDocInfo" ).item(0).toElement().text();
+	//qDebug() << status << element.elementsByTagName( "SignedDocInfo" ).item(0).toElement().text();
 
     if ( status == "SIGNATURE" )
     {
@@ -231,9 +234,8 @@ void MobileDialog::getSignedDoc()
 
 void MobileDialog::getSignedDocResult( const QDomElement &element )
 {
-    //qDebug() << element.elementsByTagName( "SignedDocData" ).item(0).toElement().text();
-
-    QTemporaryFile file( QString( "%1%2XXXXXXs.ddoc" )
+	closeSession();
+	QTemporaryFile file( QString( "%1%2XXXXXXs.ddoc" )
                         .arg( QDir::tempPath() ).arg( QDir::separator() ) );
     file.setAutoRemove( false );
     if ( file.open() )
@@ -241,20 +243,27 @@ void MobileDialog::getSignedDocResult( const QDomElement &element )
         QString fName = file.fileName();
         file.write( element.elementsByTagName( "SignedDocData" ).item(0).toElement().text().toLatin1() );
         file.close();
-        qDebug() << fName;
+
+		digidoc::WDoc *w = 0;
         try {
             std::auto_ptr<digidoc::ISerialize> s(new digidoc::ZipSerialize(fName.toStdString()));
-            digidoc::WDoc *w = new digidoc::WDoc( s );
-
-            QList<DigiDocSignature> list;
-            unsigned int count = w->signatureCount();
-            for( unsigned int i = 0; i < count; ++i )
-                        list << DigiDocSignature( w->getSignature( i ), 0 );
-
+			 w = new digidoc::WDoc( s );
         } catch( const digidoc::Exception &e ) {
             qDebug() << e.getMsg().data();
         }
+
+		if ( !w )
+			return;
+
+		m_signer = new digidoc::QMobileSigner( w );
+		close();
     }
+}
+
+void MobileDialog::closeSession()
+{
+	QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>";
+	m_http->post( "/", insertBody( CloseSession, message ) );
 }
 
 QByteArray MobileDialog::insertBody( MobileAction maction, const QByteArray &body ) const

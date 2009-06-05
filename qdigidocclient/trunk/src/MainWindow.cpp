@@ -317,8 +317,9 @@ void MainWindow::buttonClicked( int button )
 				signCountryInput->text(), signRoleInput->text(),
 				signResolutionInput->text() );
 			m->exec();
+			if ( m->signer() )
+				doc->signMobile( m->signer() );
 			m->deleteLater();
-			break;
 		}
 		Settings::saveSignatureInfo( signRoleInput->text(),
 			signResolutionInput->text(), signCityInput->text(),

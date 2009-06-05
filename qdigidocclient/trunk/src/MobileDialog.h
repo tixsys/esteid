@@ -30,6 +30,8 @@
 
 #include "ui_MobileDialog.h"
 
+#include "QMobileSigner.h"
+
 class DigiDoc;
 
 class MobileDialog : public QDialog, private Ui::MobileDialog
@@ -40,6 +42,7 @@ public:
     MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
 	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 							const QString &country, const QString &role, const QString &role2 );
+	digidoc::QMobileSigner* signer();
 
 private Q_SLOTS:
     void on_buttonNext_clicked();
@@ -73,6 +76,7 @@ private:
     QHttp *m_http;
     QTimer *m_timer;
 	QString signature;
+	digidoc::QMobileSigner *m_signer;
 
     int addedFiles;
     int sessionCode;
@@ -83,6 +87,7 @@ private:
     void addFiles();
     void startSign();
     void getSignedDoc();
+	void closeSession();
 
     QByteArray insertBody( MobileAction action, const QByteArray &body ) const;
 };
