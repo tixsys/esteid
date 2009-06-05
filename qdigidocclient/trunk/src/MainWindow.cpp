@@ -391,10 +391,10 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
 		i->setFlags( Qt::ItemIsEnabled );
 
-		QString file = info.fileName();
+		QString fileName = info.fileName();
 		if( docs.size() < 9 )
-			file += QString( "\n" ).append( fileSize( info.size() ) );
-		i->setText( 0, file );
+			fileName += QString( "\n" ).append( fileSize( info.size() ) );
+		i->setText( 0, fileName );
 
 		i->setData( 0, Qt::ToolTipRole, info.fileName() );
 		i->setData( 1, Qt::DecorationRole,
@@ -490,7 +490,7 @@ void MainWindow::parseLink( const QString &link )
 		{
 			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
 			if( status == SUCCESS_SUCCESS )
-				break;
+				return;
 		}
 		showWarning( tr("Failed to send email") );
 #else
