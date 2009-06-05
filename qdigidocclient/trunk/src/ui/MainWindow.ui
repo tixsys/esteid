@@ -341,7 +341,7 @@ border: 1px solid #DFDFDF;
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>195</width>
+             <width>475</width>
              <height>20</height>
             </size>
            </property>
@@ -350,14 +350,14 @@ border: 1px solid #DFDFDF;
          <item>
           <widget class="QLabel" name="utilityLabel">
            <property name="text">
-            <string>Selle kaardiga ei saa anda digiallkirja</string>
+            <string/>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="utilityOpen">
            <property name="text">
-            <string>Käivita ID-kaardi haldusvahend</string>
+            <string>Run ID-Card utility</string>
            </property>
           </widget>
          </item>

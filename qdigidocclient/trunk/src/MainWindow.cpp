@@ -651,9 +651,9 @@ void MainWindow::showCardStatus()
 			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
 		utilityFrame->setVisible( expired || willExpire );
 		if( expired )
-			utilityLabel->setText( tr("Your certificates are expired, run utility") );
+			utilityLabel->setText( tr("Your certificates are expired") );
 		else if( willExpire )
-			utilityLabel->setText( tr("Your certificates will be expire, run utility") );
+			utilityLabel->setText( tr("Your certificates will be expire") );
 		else
 			utilityLabel->setText( QString() );
 	}
