@@ -721,13 +721,6 @@ class Application
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
 			}, {
-				# For live testing
-				:name => 'esteid',
-				:dstname => 'esteid-dev',
-				:files => File.join(@options.packages, '*.pkg'),
-				:identifier => 'org.esteid.installer.dev',
-				:version => '0.0.1'
-			}, {
 				:name => 'esteid-qdigidocclient',
 				:files => File.join(@options.binaries, 'qdigidocclient.app'),
 				:froot => @options.binaries,
@@ -738,6 +731,13 @@ class Application
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.cmi',
 				:location => '/Library/Contextual Menu Items'
+			}, {
+				# For live testing
+				:name => 'esteid',
+				:dstname => 'esteid-dev',
+				:files => File.join(@options.packages, '*.pkg'),
+				:identifier => 'org.esteid.installer.dev',
+				:version => '0.0.1'
 			}, {
 				:name => 'esteid-updater',
 				:files => File.join(@options.binaries, 'EstEIDSU.app'),
