@@ -346,8 +346,8 @@ void MainWindow::buttonClicked( int button )
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( dir.isEmpty() )
 			break;
-		Q_FOREACH( const QModelIndex &i, signContentView->selectionModel()->selectedRows(0) )
-			doc->saveDocument( i.row(), dir );
+		for( int i = 0; i < signContentView->model()->rowCount(); ++i )
+			doc->saveDocument( i, dir );
 		break;
 	}
 	default: break;
@@ -389,7 +389,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 	{
 		QTreeWidgetItem *i = new QTreeWidgetItem( view );
 		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
-		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+		i->setFlags( Qt::ItemIsEnabled );
 
 		QString file = info.fileName();
 		if( docs.size() < 9 )
@@ -515,8 +515,8 @@ void MainWindow::parseLink( const QString &link )
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( dir.isEmpty() )
 			return;
-		Q_FOREACH( const QModelIndex &i, viewContentView->selectionModel()->selectedRows(0) )
-			doc->saveDocument( i.row(), dir );
+		for( int i = 0; viewContentView->model()->rowCount(); ++i )
+			doc->saveDocument( i, dir );
 	}
 }
 

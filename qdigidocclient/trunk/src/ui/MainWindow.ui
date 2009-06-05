@@ -560,9 +560,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::MultiSelection</enum>
-            </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
             </property>
@@ -894,8 +891,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>300</width>
-               <height>240</height>
+               <width>301</width>
+               <height>252</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -920,9 +917,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
            <widget class="QTreeWidget" name="viewContentView">
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="selectionMode">
-             <enum>QAbstractItemView::MultiSelection</enum>
             </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
