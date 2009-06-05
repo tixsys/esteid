@@ -164,7 +164,19 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
     // Make OCSP request.
     std::vector<unsigned char> ocspResponse;
     struct tm producedAt;
-    OCSP::CertStatus status = ocsp.checkCert(cert, issuer, nonce, ocspResponse, producedAt);
+    OCSP::CertStatus status;
+    try
+    {
+        status = ocsp.checkCert(cert, issuer, nonce, ocspResponse, producedAt);
+    }
+    catch(const IOException& e)
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to get OCSP response");
+    }
+    catch(const OCSPException& e)
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to get OCSP response");
+    }
 
     if(status == digidoc::OCSP::GOOD) { DEBUG("OCSP status: GOOD"); }
     else if(status == digidoc::OCSP::REVOKED) { DEBUG("OCSP status: REVOKED"); }
