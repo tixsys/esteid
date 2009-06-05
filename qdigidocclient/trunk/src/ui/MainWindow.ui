@@ -593,9 +593,12 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QTreeWidget" name="signContentView">
+           <widget class="TreeWidget" name="signContentView">
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="dragEnabled">
+             <bool>true</bool>
             </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
@@ -928,8 +931,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>98</width>
-               <height>28</height>
+               <width>301</width>
+               <height>221</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -951,9 +954,12 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QTreeWidget" name="viewContentView">
+           <widget class="TreeWidget" name="viewContentView">
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="dragEnabled">
+             <bool>true</bool>
             </property>
             <property name="rootIsDecorated">
              <bool>false</bool>
@@ -1025,6 +1031,13 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>TreeWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../rc/qdigidocclient.qrc"/>
  </resources>

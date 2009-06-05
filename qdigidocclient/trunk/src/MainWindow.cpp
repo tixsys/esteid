@@ -34,7 +34,6 @@
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QFileDialog>
-#include <QHeaderView>
 #include <QMessageBox>
 #include <QPrintPreviewDialog>
 #include <QProcess>
@@ -380,24 +379,21 @@ void MainWindow::dropEvent( QDropEvent *e )
 
 void MainWindow::loadDocuments( QTreeWidget *view )
 {
-	view->header()->setStretchLastSection( false );
-	view->header()->setResizeMode( 0, QHeaderView::Stretch );
-	view->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
-	view->header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 	view->clear();
 	QList<digidoc::Document> docs = doc->documents();
 	Q_FOREACH( const digidoc::Document &file, docs )
 	{
 		QTreeWidgetItem *i = new QTreeWidgetItem( view );
 		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
-		i->setFlags( Qt::ItemIsEnabled );
+		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled );
 
 		QString fileName = info.fileName();
 		if( docs.size() < 9 )
 			fileName += QString( "\n" ).append( fileSize( info.size() ) );
 		i->setText( 0, fileName );
-
 		i->setData( 0, Qt::ToolTipRole, info.fileName() );
+		i->setData( 0, Qt::UserRole, info.absoluteFilePath() );
+
 		i->setData( 1, Qt::DecorationRole,
 			QPixmap(":/trolltech/styles/commonstyle/images/standardbutton-save-16.png") );
 		i->setData( 1, Qt::ToolTipRole, tr("Save") );

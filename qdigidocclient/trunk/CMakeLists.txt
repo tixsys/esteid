@@ -23,11 +23,12 @@ SET( MOC_HEADERS
 	src/CertificateWidget.h
 	src/DigiDoc.h
 	src/MainWindow.h
-        src/MobileDialog.h
-        src/Poller.h
+	src/MobileDialog.h
+	src/Poller.h
 	src/PrintSheet.h
 	src/Settings.h
 	src/SignatureDialog.h
+	src/TreeWidget.h
 	)
 SET( HEADERS
 	${MOC_HEADERS}
@@ -40,18 +41,19 @@ SET( SOURCES
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/MainWindow.cpp
-        src/MobileDialog.cpp
-        src/Poller.cpp
+	src/MobileDialog.cpp
+	src/Poller.cpp
 	src/PrintSheet.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
 	src/SslCertificate.cpp
+	src/TreeWidget.cpp
 	)
 SET( UIS
 	src/ui/CertificateWidget.ui
 	src/ui/MainWindow.ui
-        src/ui/MobileDialog.ui
-        src/ui/Settings.ui
+	src/ui/MobileDialog.ui
+	src/ui/Settings.ui
 	src/ui/SignatureDialog.ui
 	)
 SET( RCS src/rc/qdigidocclient.qrc )
