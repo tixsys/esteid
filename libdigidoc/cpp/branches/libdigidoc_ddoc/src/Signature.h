@@ -19,7 +19,7 @@ namespace digidoc
       friend class BDoc;
 
       public:
-          enum Type { BES, TM };
+		  enum Type { BES, TM, MOBILE };
 
           virtual ~Signature();
           virtual std::string getMediaType() const = 0;
@@ -31,6 +31,7 @@ namespace digidoc
           Signer::SignerRole getSignerRole() const;
           std::string getSigningTime() const;
           X509Cert getSigningCertificate() const throw(SignatureException);
+		  std::vector<unsigned char> getSignatureValue() const;
 
       protected:
           Signature();
@@ -47,7 +48,6 @@ namespace digidoc
 
           xades::SignedSignaturePropertiesType& getSignedSignatureProperties() const throw(SignatureException);
           dsig::X509DataType::X509CertificateType& getSigningX509CertificateType() const throw(SignatureException);
-          std::vector<unsigned char> getSignatureValue() const;
 
           static xml_schema::NamespaceInfomap createNamespaceMap();
           std::vector<unsigned char> calcDigestOnNode(Digest* calc, const std::string& ns, const std::string& tagName)

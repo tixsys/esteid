@@ -34,6 +34,7 @@ set(libdigidoc_SRCS
     Signature.cpp
     SignatureBES.cpp
     SignatureTM.cpp
+    SignatureMobile.cpp
     SignatureException.cpp
     WDoc.cpp
     crypto/Digest.cpp
@@ -134,6 +135,7 @@ install( FILES
     SignatureException.h
     Signature.h
     SignatureTM.h
+    SignatureMobile.h
     WDoc.h
     XmlConf.h
     DESTINATION include/digidoc
