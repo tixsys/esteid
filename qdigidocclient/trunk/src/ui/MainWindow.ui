@@ -40,15 +40,16 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-font: 12px &quot;Arial, Liberation Sans&quot;;
 color: #355670;
+font: 12px &quot;Arial, Liberation Sans&quot;;
 }
 
 #background
 { background-image: url(&quot;:/images/background.png&quot;); }
 
 /* widgets */
-QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }
+QDialogButtonBox
+{ dialogbuttonbox-buttons-have-icons: 0; }
 
 QPushButton
 {
@@ -63,7 +64,7 @@ padding: 1px 7px;
 }
 
 QDialogButtonBox QPushButton,
-#home QPushButton
+#home QPushButton, #utilityOpen
 { padding: 4px 7px; }
 
 QPushButton:hover, QPushButton:focus
@@ -75,10 +76,10 @@ QPushButton:disabled
 /* header */
 #cards, #languages
 {
-color: white;
-border: 0px;
-padding-right: 5px;
 background-color: #00355F;
+border: 0px;
+color: white;
+padding-right: 5px;
 }
 
 #cards QAbstractItemView,
@@ -109,20 +110,20 @@ min-width: 0px;
 
 #info
 {
+background-color: rgba( 255, 255, 255, 153 );
+border-radius: 3px;
 color: #668696;
 font: bold;
-border-radius: 3px;
-background-color: rgba( 255, 255, 255, 153 );
 padding: 10px;
 }
 
-/* content */
-#viewSignatures
+#utilityLabel
 {
-color: #71889A; 
-border-left: 1px solid #DFDFDF;
+color: red;
+font: bold;
 }
 
+/* content */
 #homeButtonLabel,
 #viewContentLabel, #viewSignaturesLabel,
 #signContentLabel, #signSigner, #signSignerLabel
@@ -134,7 +135,7 @@ font: bold;
 #signContentView, #viewContentView
 {
 background-color: transparent;
-border: 1px solid grey;
+border: 1px solid #DFDFDF;
 color: #355670;
 }
 
@@ -142,10 +143,13 @@ color: #355670;
 #viewSignatures
 { background-color: transparent; }
 
+#viewSignatures
+{ color: #71889A; }
+
 #signSignerRole, #viewSignaturesScroll
 {
 background-color: transparent;
-border: 1px solid grey;
+border: 1px solid #DFDFDF;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
@@ -326,6 +330,39 @@ border: 1px solid grey;
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QFrame" name="utilityFrame">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="utilitySpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>195</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="utilityLabel">
+           <property name="text">
+            <string>Selle kaardiga ei saa anda digiallkirja</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="utilityOpen">
+           <property name="text">
+            <string>Käivita ID-kaardi haldusvahend</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
        <widget class="QStackedWidget" name="stack">
@@ -891,8 +928,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>301</width>
-               <height>252</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

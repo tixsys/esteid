@@ -56,8 +56,8 @@ private:
 		View,
 	};
 	enum Buttons {
+		UtilityOpen,
 		HomeCrypt,
-		HomeOpenUtility,
 		HomeSign,
 		IntroBack,
 		IntroNext,

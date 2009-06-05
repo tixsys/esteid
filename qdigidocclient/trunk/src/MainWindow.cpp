@@ -93,7 +93,8 @@ MainWindow::MainWindow( QWidget *parent )
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
-	//buttonGroup->addButton( homeOpenUtility, HomeOpenUtility );
+	buttonGroup->addButton( utilityOpen, UtilityOpen );
+
 	buttonGroup->addButton( homeSign, HomeSign );
 	buttonGroup->addButton( homeView, HomeView );
 	buttonGroup->addButton( homeCrypt, HomeCrypt );
@@ -213,7 +214,7 @@ void MainWindow::buttonClicked( int button )
 #endif
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
-	case HomeOpenUtility:
+	case UtilityOpen:
 #ifdef Q_OS_MAC
 		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
 #else
@@ -628,10 +629,6 @@ void MainWindow::showCardStatus()
 		s << tr("Auth certificate is") << " "
 			<< (doc->authCert().isValid() ? tr("valid") : tr("expired"));
 
-		if( doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
-			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) )
-			s << "<br />" << tr("Your certificates will be expire, run utility");
-
 		signSigner->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
@@ -645,10 +642,26 @@ void MainWindow::showCardStatus()
 
 	info->setText( content );
 
-	/*homeOpenUtility->setVisible(
-		!bdoc->authCert().isNull() && !bdoc->signCert().isNull() &&
-		(doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
-		 doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 )) );*/
+	if( !doc->authCert().isNull() && !doc->signCert().isNull() )
+	{
+		bool expired = !doc->authCert().isValid() || !doc->authCert().isValid();
+		bool willExpire =
+			doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
+			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
+		utilityFrame->setVisible( expired || willExpire );
+		if( expired )
+			utilityLabel->setText( tr("Your certificates are expired, run utility") );
+		else if( willExpire )
+			utilityLabel->setText( tr("Your certificates will be expire, run utility") );
+		else
+			utilityLabel->setText( QString() );
+	}
+	else
+	{
+		utilityLabel->setText( QString() );
+		utilityFrame->setVisible( false );
+	}
+
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
