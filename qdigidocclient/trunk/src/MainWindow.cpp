@@ -427,6 +427,12 @@ void MainWindow::on_languages_activated( int index )
 	showCardStatus();
 }
 
+void MainWindow::on_signMobile_toggled( bool )
+{
+	signButton->setEnabled( signContentView->model()->rowCount() > 0 &&
+		(doc->signCert().isValid() || signMobile->isChecked()) );
+}
+
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
 void MainWindow::openFile( const QModelIndex &index )
@@ -565,8 +571,8 @@ void MainWindow::setCurrentPage( Pages page )
 
 		signAddFile->setEnabled( doc->signatures().isEmpty() );
 		signRemoveFile->setEnabled( doc->signatures().isEmpty() );
-		signButton->setEnabled(
-			signContentView->model()->rowCount() > 0 && doc->signCert().isValid() );
+		signButton->setEnabled( signContentView->model()->rowCount() > 0 &&
+			(doc->signCert().isValid() || signMobile->isChecked()) );
 		break;
 	}
 	case View:
