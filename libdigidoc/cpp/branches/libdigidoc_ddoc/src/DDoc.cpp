@@ -246,7 +246,7 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
 	if( !d->doc )
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
-	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
@@ -261,7 +261,7 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 {
 	if( !d->doc )
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
-	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
+	if( id >= (unsigned int)d->doc->nSignatures || !d->doc->pSignatures[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
@@ -279,7 +279,7 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 	if( !d->doc )
 		throwError( "Document not open", __LINE__ );
 
-	if( id >= d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
@@ -304,7 +304,7 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 	if( !d->doc )
 		throwError( "Document not open", __LINE__ );
 
-	if( id >= d->doc->nSignatures || !d->doc->pSignatures[id] )
+	if( id >= (unsigned int)d->doc->nSignatures || !d->doc->pSignatures[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
@@ -357,7 +357,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	throwError( err, "Failed to sign document", __LINE__ );
 
 	Signer::SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
-	for( int i = 0; i < r.size(); ++i )
+	for( size_t i = 0; i < r.size(); ++i )
 	{
 		err = d->f_addSignerRole( info, 0, r[i].c_str(), -1, 0 );
 		throwError( err, "Failed to sign document", __LINE__ );
