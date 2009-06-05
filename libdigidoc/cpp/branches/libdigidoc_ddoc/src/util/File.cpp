@@ -10,6 +10,8 @@
 // platform-specific includes
 #ifdef _POSIX_VERSION
     #include <dirent.h>
+    #include <sys/param.h>
+    #include <sys/stat.h>
 #else
     #include <windows.h>
     #include <direct.h>
@@ -444,6 +446,8 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
         THROW_IOEXCEPTION("Failed to open directory '%s'", directory.c_str());
     }
 
+    char fullPath[MAXPATHLEN];
+    struct stat info;
     dirent* entry;
     while((entry = readdir(pDir)) != NULL)
     {
@@ -453,8 +457,11 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             continue;
         }
 
-        if((!filesOnly && (entry->d_type == 0x04)) // Directory
-        || (filesOnly && (entry->d_type == 0x08))) // File
+        sprintf(fullPath, "%s/%s", directory.c_str(), entry->d_name);
+        lstat(fullPath, &info);
+
+        if((!filesOnly && (entry->d_type == 0x04||S_ISDIR(info.st_mode))) // Directory
+        || (filesOnly && (entry->d_type == 0x08||S_ISREG(info.st_mode)))) // File
         {
             if(relative)
                 files.push_back(std::string(entry->d_name));
