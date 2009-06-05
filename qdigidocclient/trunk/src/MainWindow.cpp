@@ -394,11 +394,9 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		i->setData( 0, Qt::ToolTipRole, info.fileName() );
 		i->setData( 0, Qt::UserRole, info.absoluteFilePath() );
 
-		i->setData( 1, Qt::DecorationRole,
-			QPixmap(":/trolltech/styles/commonstyle/images/standardbutton-save-16.png") );
+		i->setData( 1, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
 		i->setData( 1, Qt::ToolTipRole, tr("Save") );
-		i->setData( 2, Qt::DecorationRole,
-			QPixmap(":/trolltech/styles/commonstyle/images/standardbutton-delete-16.png") );
+		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
 		i->setData( 2, Qt::ToolTipRole, tr("Delete") );
 		view->addTopLevelItem( i );
 	}

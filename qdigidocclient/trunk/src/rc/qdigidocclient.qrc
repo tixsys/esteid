@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="images" >
     <file alias="background.png" >../images/background.png</file>
+    <file alias="ico_save.png" >../images/ico_save.png</file>
+    <file alias="ico_delete.png" >../images/ico_delete.png</file>
     <file alias="languages_button.png" >../images/languages_button.png</file>
     <file alias="digidoc_icon_48x48.png" >../images/digidoc_icon_48x48.png</file>
   </qresource>
