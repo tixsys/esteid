@@ -42,7 +42,6 @@ void* DDocLibrary::resolve( const char *symbol )
 
 DDocPrivate::DDocPrivate()
 :	doc(0)
-,	filename(0)
 ,	ready(false)
 ,	f_addAllDocInfos(0)
 ,	f_addSignerRole(0)
@@ -167,7 +166,7 @@ void DSignature::validateOffline() const throw(SignatureException)
 
 OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
 {
-	int err = m_doc->f_verifySignatureAndNotary( m_doc->doc, m_sig, m_doc->filename );
+	int err = m_doc->f_verifySignatureAndNotary( m_doc->doc, m_sig, m_doc->filename.c_str() );
 	switch( err )
 	{
 	case ERR_OK: return OCSP::GOOD;
@@ -195,7 +194,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	if( !d->isLoaded() )
 		throwError( "DDoc library not loaded", __LINE__ );
 
-	d->filename = serializer->getPath().c_str();
+	d->filename = serializer->getPath();
 	try
 	{
 		util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
@@ -203,7 +202,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	catch( const Exception & )
 	{ throwError( "Failed to create temporary directory", __LINE__ ); }
 
-	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename, 0, 300 );
+	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 300 );
 	throwError( err, "Failed to open ddoc file", __LINE__ );
 
 	for( int i = 0; i < d->doc->nDataFiles; ++i)
@@ -211,7 +210,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		DataFile *data = d->doc->pDataFiles[i];
 		std::ostringstream file;
 		file << d->tmpFolder.data() << data->szFileName;
-		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename,
+		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename.c_str(),
 			file.str().data(), data->szId, CHARSET_UTF_8 );
 		throwError( err, "Failed to exctract files", __LINE__ );
 		free( data->szFileName );
@@ -323,7 +322,7 @@ void DDoc::save() throw(IOException, BDocException)
 	if( !d->doc )
 		throwError( "Document not open", __LINE__ );
 
-	int err = d->f_createSignedDoc( d->doc, d->filename, d->filename );
+	int err = d->f_createSignedDoc( d->doc, d->filename.c_str(), d->filename.c_str() );
 	throwError( err, "Filed to save document", __LINE__ );
 }
 
@@ -334,7 +333,7 @@ void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 	if( !d->doc )
 		throwError( "Document not open", __LINE__ );
 
-	d->filename = serializer->getPath().c_str();
+	d->filename = serializer->getPath();
 	save();
 }
 

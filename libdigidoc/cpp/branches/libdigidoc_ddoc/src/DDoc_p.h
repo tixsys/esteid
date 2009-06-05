@@ -69,7 +69,7 @@ public:
 
 	DDocLibrary lib;
 	SignedDoc *doc;
-	const char *filename;
+	std::string filename;
 	std::string tmpFolder;
 	bool ready;
 
