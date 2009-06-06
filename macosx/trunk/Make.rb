@@ -713,7 +713,7 @@ class Application
 				:name => 'esteid-qdigidoccrypto',
 				:files => File.join(@options.binaries, 'qdigidoccrypto.app'),
 				:froot => @options.binaries,
-				:location => '/Applications'
+				:location => '/Applications/Utilities'
 			}, {
 				:name => 'esteid-webplugin',
 				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
