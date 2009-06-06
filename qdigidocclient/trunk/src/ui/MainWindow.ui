@@ -114,7 +114,8 @@ background-color: rgba( 255, 255, 255, 153 );
 border-radius: 3px;
 color: #668696;
 font: bold;
-padding: 10px;
+padding-left: 10px;
+padding-right: 10px;
 }
 
 #utilityLabel
@@ -341,8 +342,8 @@ border: 1px solid #DFDFDF;
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>475</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>
