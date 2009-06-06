@@ -26,13 +26,13 @@ SET( MOC_HEADERS
 	src/MobileDialog.h
 	src/Poller.h
 	src/PrintSheet.h
-	src/QMobileSigner.h
 	src/Settings.h
 	src/SignatureDialog.h
 	src/TreeWidget.h
 	)
 SET( HEADERS
 	${MOC_HEADERS}
+	src/QMobileSigner.h
 	src/SslCertificate.h
 	src/version.h
 	)
