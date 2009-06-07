@@ -390,7 +390,6 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		view->addTopLevelItem( i );
 	}
 	QList<DigiDocSignature> list = doc->signatures();
-	view->setColumnHidden( 1, !list.isEmpty() );
 	view->setColumnHidden( 2, stack->currentIndex() == View || !list.isEmpty() );
 }
 
