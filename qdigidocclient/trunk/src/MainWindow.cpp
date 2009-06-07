@@ -104,7 +104,6 @@ MainWindow::MainWindow( QWidget *parent )
 
 	buttonGroup->addButton( signAddFile, SignAddFile );
 	buttonGroup->addButton( signRemoveFile, SignRemoveFile );
-	buttonGroup->addButton( signSaveAs, SignSaveAs );
 	signButton = signButtons->addButton( tr("Sign"), QDialogButtonBox::AcceptRole );
 	buttonGroup->addButton( signButton, SignSign );
 	buttonGroup->addButton( signButtons->button( QDialogButtonBox::Cancel ), SignCancel );
@@ -340,17 +339,6 @@ void MainWindow::buttonClicked( int button )
 	case ViewAddSignature:
 		setCurrentPage( Sign );
 		break;
-	case SignSaveAs:
-	{
-		QString dir = QFileDialog::getExistingDirectory( this,
-			tr("Select folder where files will be stored"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( dir.isEmpty() )
-			break;
-		for( int i = 0; i < signContentView->model()->rowCount(); ++i )
-			doc->saveDocument( i, dir );
-		break;
-	}
 	default: break;
 	}
 }

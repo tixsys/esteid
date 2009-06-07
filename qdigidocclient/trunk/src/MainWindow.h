@@ -65,7 +65,6 @@ private:
 		SignAddFile,
 		SignCancel,
 		SignRemoveFile,
-		SignSaveAs,
 		SignSign,
 		HomeView,
 		ViewAddSignature,
