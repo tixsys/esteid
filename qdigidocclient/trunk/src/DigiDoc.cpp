@@ -290,7 +290,7 @@ void DigiDoc::save()
 
 	try
 	{
-		std::auto_ptr<ISerialize> s(new ZipSerialize(m_fileName.toStdString()));
+		std::auto_ptr<ISerialize> s(new ZipSerialize(m_fileName.toUtf8().constData()));
 		b->saveTo( s );
 	}
 	catch( const Exception &e ) { setLastError( e ); }
