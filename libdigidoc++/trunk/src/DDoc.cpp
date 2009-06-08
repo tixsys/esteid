@@ -8,7 +8,7 @@ using namespace digidoc;
 
 #ifdef WIN32
 
-#define LIBDIGIDOC_NAME "digidoc2.dll"
+#define LIBDIGIDOC_NAME "digidoc.dll"
 
 DDocLibrary::DDocLibrary()
 { h = LoadLibrary( LIBDIGIDOC_NAME ); }
@@ -22,9 +22,9 @@ void* DDocLibrary::resolve( const char *symbol )
 #else
 
 #if defined(__APPLE__)
-#define LIBDIGIDOC_NAME "libdigidoc2.dylib"
+#define LIBDIGIDOC_NAME "libdigidoc.dylib"
 #else
-#define LIBDIGIDOC_NAME "libdigidoc2.so"
+#define LIBDIGIDOC_NAME "libdigidoc.so"
 #endif
 
 DDocLibrary::DDocLibrary()
