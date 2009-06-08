@@ -1,7 +1,7 @@
 /*
  * QDigiDocCrypt
  *
- * Copyright (C) 2009 Jargo Kster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or

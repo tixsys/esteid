@@ -1,7 +1,7 @@
 /*
  * QDigiDocCrypt
  *
- * Copyright (C) 2009 Jargo Kster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kıster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -63,13 +63,13 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	<< "</head>"
 	<< "<body>"
 
-	<< "<div id=\"head\">DIGITAALKIRJADE KINNITUSLEHT</div>"
+	<< "<div id=\"head\">DIGIALLKIRJADE KINNITUSLEHT</div>"
 	<< "<div class=\"sectionHead\">ALLKIRJASTATUD FAILID</div>"
 
 	<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 	<< "<tr>"
 	<< "<td class=\"label\" width=\"300\">FAILI NIMI</td>"
-	<< "<td class=\"label\" width=\"200\">FAILI T‹‹P</td>"
+	//<< "<td class=\"label\" width=\"200\">FAILI T‹‹P</td>"
 	<< "<td class=\"label\" width=\"100\">FAILI SUURUS</td>"
 	<< "</tr>";
 
@@ -80,9 +80,9 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<td class=\"textborder\">"
 		<< QFileInfo( QString::fromUtf8( doc.getPath().data() ) ).fileName()
 		<< "</td>"
-		<< "<td class=\"textborderright\">"
+		/*<< "<td class=\"textborderright\">"
 		<< QString::fromUtf8( doc.getMediaType().data() )
-		<< "</td>"
+		<< "</td>"*/
 		<< "<td class=\"textborderright\">"
 		<< doc.getSize()
 		<< "</td>"
