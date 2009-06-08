@@ -155,9 +155,8 @@ bool MainWindow::addFile( const QString &file )
 	if( doc->isNull() )
 	{
 		QFileInfo info( file );
-		QString docname = QString( "%1%2%3.%4" )
+		QString docname = QString( "%1/%2.%3" )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
-			.arg( QDir::separator() )
 			.arg( info.fileName() )
 			.arg( SettingsValues().value( "Main/type" ,"bdoc" ).toString() );
 
@@ -446,7 +445,7 @@ void MainWindow::parseLink( const QString &link )
 	else if( link == "email" )
 	{
 #ifdef Q_OS_WIN32
-		QByteArray filePath = doc->fileName().toLatin1();
+		QByteArray filePath = QDir::toNativeSeparators( doc->fileName().toLatin1() );
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
 
 		MapiFileDesc doc[1];
@@ -580,8 +579,10 @@ void MainWindow::setCurrentPage( Pages page )
 			++i;
 		}
 
-		viewFileName->setText( QString( "%1 <b>%2</b>" ).arg( tr("Container:") ).arg( doc->fileName() ) );
-		viewFileName->setToolTip( doc->fileName() );
+		viewFileName->setText( QString( "%1 <b>%2</b>" )
+			.arg( tr("Container:") )
+			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
+		viewFileName->setToolTip( QDir::toNativeSeparators( doc->fileName() ) );
 
 		if( i > 0 && cardOwnerSignature )
 			viewFileStatus->setText( tr("This container is signed by you") );
