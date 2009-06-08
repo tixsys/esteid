@@ -1,3 +1,0 @@
-#!/bin/sh
-
-BDOCLIB_CONF_XML=/etc/libdigidoc/bdoclib.conf qdigidocclient

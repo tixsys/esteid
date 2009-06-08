@@ -21,9 +21,3 @@ RDEPEND="dev-libs/libdigidoc++
 DEPEND="${RDEPEND}"
 
 DOCS=""
-
-src_install() {
-	cmake-utils_src_install
-
-	dobin "${FILESDIR}"/qdigidoc || die "dobin failed"
-}
