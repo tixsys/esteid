@@ -605,10 +605,11 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
+	if( !doc->activeCard().isEmpty() && !doc->signCert().isNull() )
 	{
 		const SslCertificate c = doc->signCert();
 		QTextStream s( &content );
+
 		s << tr("Name") << ": <font color=\"black\">"
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
@@ -616,11 +617,18 @@ void MainWindow::showCardStatus()
 			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
 		s << tr("Card in reader") << ": <font color=\"black\">"
 			<< doc->activeCard() << "</font><br />";
+
+		bool willExpire = c.expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
 		s << tr("Sign certificate is") << " ";
-		if( doc->signCert().isValid() )
+		if( doc->signCert().isValid()  )
+		{
 			s << "<font color=\"green\">" << tr("valid") << "</font>";
+			if( willExpire )
+				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
+		}
 		else
 			s << "<font color=\"red\">" << tr("expired") << "</font>";
+		utilityOpen->setVisible( !c.isValid() || willExpire );
 
 		signSigner->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
@@ -629,36 +637,18 @@ void MainWindow::showCardStatus()
 	}
 	else if( !doc->activeCard().isEmpty() )
 	{
+		utilityOpen->setVisible( false );
 		content = tr("Loading data");
+		signSigner->setText( QString() );
 	}
 	else
 	{
+		utilityOpen->setVisible( false );
 		content = tr("No card in reader");
 		signSigner->setText( QString() );
 	}
 
 	info->setText( content );
-
-	if( !doc->authCert().isNull() && !doc->signCert().isNull() )
-	{
-		bool expired = !doc->authCert().isValid() || !doc->authCert().isValid();
-		bool willExpire =
-			doc->authCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 ) ||
-			doc->signCert().expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
-		utilityFrame->setVisible( expired || willExpire );
-		if( expired )
-			utilityLabel->setText( tr("Your certificates are expired") );
-		else if( willExpire )
-			utilityLabel->setText( tr("Your certificates will be expire") );
-		else
-			utilityLabel->setText( QString() );
-	}
-	else
-	{
-		utilityLabel->setText( QString() );
-		utilityFrame->setVisible( false );
-	}
-
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
