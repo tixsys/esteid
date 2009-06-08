@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>454</width>
-    <height>460</height>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,13 +138,6 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt &quot;Arial Baltic&quot;; }
       <item row="1" column="1">
        <widget class="QLineEdit" name="signResolutionInput"/>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="signLocationLabel">
-        <property name="text">
-         <string>Location</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="QLabel" name="signCityLabel">
         <property name="text">
@@ -191,6 +184,22 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt &quot;Arial Baltic&quot;; }
          <string>Save last insert role and resolution</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="1">
+       <spacer name="signLocationSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
