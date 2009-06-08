@@ -51,24 +51,22 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	st << tr("Signature is") << " " << ( s.isValid() ? tr("valid") : tr("not valid") );
 	c->setText( content );
 
-	QPushButton *b = new QPushButton( tr("Show details"), this );
-	connect( b, SIGNAL(clicked()), SLOT(showSignature()) );
-
-	QPushButton *r = new QPushButton( tr("Remove"), this );
-	connect( r, SIGNAL(clicked()), SLOT(removeSignature()) );
-
-	QHBoxLayout *h = new QHBoxLayout();
-	h->addItem( new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-	h->addWidget( b );
-	h->addWidget( r );
+	QLabel *b = new QLabel( QString( "<a href=\"details\">%1</a> <a href=\"remove\">%2</a>" )
+		.arg( tr("Show details") ).arg( tr("Remove") ), this );
+	connect( b, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
 
 	QVBoxLayout *v = new QVBoxLayout( this );
 	v->addWidget( c );
-	v->addLayout( h );
+	v->addWidget( b, 0, Qt::AlignRight );
 }
 
-void SignatureWidget::removeSignature() { Q_EMIT removeSignature( num ); }
-void SignatureWidget::showSignature() { SignatureDialog( s, this ).exec(); }
+void SignatureWidget::link( const QString &url )
+{
+	if( url == "details" )
+		SignatureDialog( s, this ).exec();
+	else if( url == "remove" )
+		Q_EMIT removeSignature( num );
+}
 
 
 

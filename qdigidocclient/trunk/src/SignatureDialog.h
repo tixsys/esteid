@@ -37,8 +37,7 @@ Q_SIGNALS:
 	void removeSignature( unsigned int num );
 
 private Q_SLOTS:
-	void removeSignature();
-	void showSignature();
+	void link( const QString &url );
 
 private:
 	unsigned int num;
