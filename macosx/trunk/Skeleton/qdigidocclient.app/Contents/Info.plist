@@ -25,7 +25,7 @@
 	<key>LSEnvironment</key>
 	<dict>
 		<key>BDOCLIB_CONF_XML</key>
-		<string>/usr/local/etc/libdigidoc/bdoclib.conf</string>
+		<string>/usr/local/etc/libdigidoc/libdigidoc++.conf</string>
 	</dict>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>

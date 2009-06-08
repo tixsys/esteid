@@ -22,11 +22,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>LSEnvironment</key>
-	<dict>
-		<key>BDOCLIB_CONF_XML</key>
-		<string>/usr/local/etc/libdigidoc/bdoclib.conf</string>
-	</dict>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
 	<key>CFBundleDocumentTypes</key>
