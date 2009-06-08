@@ -446,7 +446,7 @@ void MainWindow::parseLink( const QString &link )
 	else if( link == "email" )
 	{
 #ifdef Q_OS_WIN32
-		QByteArray filePath = QDir::toNativeSeparators( doc->fileName().toLatin1() );
+		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
 		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
 
 		MapiFileDesc doc[1];
