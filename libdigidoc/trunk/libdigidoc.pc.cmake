@@ -3,8 +3,8 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
-Name: libdigidoc2
-Description: libdigidoc2
+Name: libdigidoc
+Description: libdigidoc
 Version: @DIGIDOC_VERSION@
-Libs: -L${libdir} -ldigidoc2
-Cflags: -I${includedir}/libdigidoc2
+Libs: -L${libdir} -ldigidoc
+Cflags: -I${includedir}

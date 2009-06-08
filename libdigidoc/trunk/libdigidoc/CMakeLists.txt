@@ -2,7 +2,7 @@ add_subdirectory( mssp )
 add_subdirectory( pkcs11 )
 add_subdirectory( ts )
 
-set( libdigidoc2_SRCS
+set( libdigidoc_SRCS
     DigiDocConfig.c
     DigiDocLib.c
     DigiDocObj.c
@@ -39,18 +39,18 @@ if( MSVC )
     )
 endif( MSVC )
 
-add_library( digidoc2 SHARED ${libdigidoc2_SRCS} )
-target_link_libraries( digidoc2
+add_library( digidoc SHARED ${libdigidoc_SRCS} )
+target_link_libraries( digidoc
     ${LIBXML2_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${ZLIB_LIBRARIES}
 )
-set_target_properties( digidoc2 PROPERTIES VERSION ${DIGIDOC_VERSION} SOVERSION 2 )
-install( TARGETS digidoc2 DESTINATION lib )
+set_target_properties( digidoc PROPERTIES VERSION ${DIGIDOC_VERSION} SOVERSION 2 )
+install( TARGETS digidoc DESTINATION lib )
 
 add_executable( cdigidoc cdigidoc.c )
-target_link_libraries( cdigidoc digidoc2 )
+target_link_libraries( cdigidoc digidoc )
 install( TARGETS cdigidoc DESTINATION bin )
 
 # Include files

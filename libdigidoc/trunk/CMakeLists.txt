@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 2.6 )
-project( libdigidoc2 )
+project( libdigidoc )
 
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -17,8 +17,8 @@ set( PKCS11_PROVIDER
     CACHE FILEPATH "pkcs11 module"
 )
 set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
-set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc2/certs" )
-set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include/libdigidoc2" )
+set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc/certs" )
+set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include" )
 set( DIGIDOC_VERSION "2.6.0" )
 
 find_package( LibXml2 REQUIRED )
@@ -28,8 +28,8 @@ find_package( ZLIB REQUIRED )
 find_package( Iconv REQUIRED )
 
 configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/libdigidoc2.pc.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc2.pc
+    ${CMAKE_CURRENT_SOURCE_DIR}/libdigidoc.pc.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc.pc
     @ONLY
 )
 
@@ -51,4 +51,4 @@ endif(APPLE)
 add_subdirectory( etc )
 add_subdirectory( libdigidoc )
 
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc2.pc DESTINATION lib/pkgconfig )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc.pc DESTINATION lib/pkgconfig )
