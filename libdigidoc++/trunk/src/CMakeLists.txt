@@ -138,31 +138,31 @@ install( FILES
     SignatureMobile.h
     WDoc.h
     XmlConf.h
-    DESTINATION include/digidoc++
+    DESTINATION include/libdigidoc++
 )
 
 install( FILES
     crypto/Digest.h
     crypto/OpenSSLHelpers.h
-    DESTINATION include/digidoc++/crypto
+    DESTINATION include/libdigidoc++/crypto
 )
 
 install( FILES
     crypto/cert/DirectoryX509CertStore.h
     crypto/cert/X509Cert.h
     crypto/cert/X509CertStore.h
-    DESTINATION include/digidoc++/crypto/cert
+    DESTINATION include/libdigidoc++/crypto/cert
 )
 
 install( FILES
     crypto/crypt/RSACrypt.h
-    DESTINATION include/digidoc++/crypto/crypt
+    DESTINATION include/libdigidoc++/crypto/crypt
 )
 
 install( FILES
     crypto/ocsp/OCSPException.h
     crypto/ocsp/OCSP.h
-    DESTINATION include/digidoc++/crypto/ocsp
+    DESTINATION include/libdigidoc++/crypto/ocsp
 )
 
 install( FILES
@@ -171,31 +171,31 @@ install( FILES
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h
-    DESTINATION include/digidoc++/crypto/signer
+    DESTINATION include/libdigidoc++/crypto/signer
 )
 
 install( FILES
     io/IOException.h
     io/ISerialize.h
     io/ZipSerialize.h
-    DESTINATION include/digidoc++/io
+    DESTINATION include/libdigidoc++/io
 )
 
 install( FILES
     minizip/unzip.h
     minizip/ioapi.h
-    DESTINATION include/digidoc++/minizip
+    DESTINATION include/libdigidoc++/minizip
 )
 
 
 install( FILES
     util/File.h
     util/String.h
-    DESTINATION include/digidoc++/util
+    DESTINATION include/libdigidoc++/util
 )
 
 install( FILES
     xml/XAdES.hxx
     xml/xmldsig-core-schema.hxx
-    DESTINATION include/digidoc++/xml
+    DESTINATION include/libdigidoc++/xml
 )
