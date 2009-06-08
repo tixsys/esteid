@@ -26,7 +26,7 @@ include_directories(
 )
 
 add_executable( unittests WIN32 ${unittests_SRCS} )
-target_link_libraries( unittests cppunit digidoc++ ${OPENSSL_LIBRARIES} )
+target_link_libraries( unittests cppunit digidocpp ${OPENSSL_LIBRARIES} )
 
 add_custom_target( test-stage
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data

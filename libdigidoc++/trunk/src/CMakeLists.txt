@@ -22,7 +22,7 @@ if(WIN32)
     )
 endif(WIN32)
 
-set(libdigidoc++_SRCS
+set(digidocpp_SRCS
     BDoc.cpp
     BDocException.cpp
     DDoc.cpp
@@ -98,8 +98,8 @@ if(APPLE)
 	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY} ${LTDL_LIBRARY})
 endif(APPLE)
 
-add_library(digidoc++ ${DIGIDOC_LIB_TYPE} ${libdigidoc++_SRCS} ${minizip_SRCS})
-target_link_libraries(digidoc++
+add_library(digidocpp ${DIGIDOC_LIB_TYPE} ${digidocpp_SRCS} ${minizip_SRCS})
+target_link_libraries(digidocpp
     ${ICONV_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
@@ -109,20 +109,21 @@ target_link_libraries(digidoc++
     ${XMLSECURITYC_LIBRARIES}
     ${EXTRA_LIBS}
 )
-set_target_properties(digidoc++ PROPERTIES
+set_target_properties(digidocpp PROPERTIES
                               VERSION 0.1.0
                               SOVERSION 0
+                              OUTPUT_NAME digidoc++
                       )
-install(TARGETS digidoc++ DESTINATION lib)
+install(TARGETS digidocpp DESTINATION lib)
 
-add_executable(digidoc++-demo main_demo.cpp)
-target_link_libraries(digidoc++-demo digidoc++)
-install(TARGETS digidoc++-demo DESTINATION bin)
+add_executable(digidoc-demo main_demo.cpp)
+target_link_libraries(digidoc-demo digidocpp)
+install(TARGETS digidoc-demo DESTINATION bin)
 
-add_executable(digidoc++-tool bdoc_ref.cpp)
-target_link_libraries(digidoc++-tool digidoc++)
+add_executable(digidoc-tool bdoc_ref.cpp)
+target_link_libraries(digidoc-tool digidocpp)
 
-install(TARGETS digidoc++-tool DESTINATION bin)
+install(TARGETS digidoc-tool DESTINATION bin)
 
 install( FILES
     ADoc.h
