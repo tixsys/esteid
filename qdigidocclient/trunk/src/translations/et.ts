@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation type="obsolete">Salvesta</translation>
     </message>
     <message>
         <source>Certification Path</source>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Save files to disk</source>
-        <translation>Salvesta failid kettale</translation>
+        <translation type="obsolete">Salvesta failid kettale</translation>
     </message>
     <message>
         <source>DigiDoc client</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation>Kustutan</translation>
+        <translation>Eemalda</translation>
     </message>
     <message>
         <source>Keep</source>
@@ -308,7 +308,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Kustuta</translation>
+        <translation type="obsolete">Kustuta</translation>
     </message>
     <message>
         <source>Container:</source>

@@ -68,7 +68,7 @@ QDialogButtonBox QPushButton,
 { padding: 4px 7px; }
 
 QPushButton:hover, QPushButton:focus
-{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927); }
+{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #9BB676, stop: 0.75 #80A84A); }
 
 QPushButton:disabled
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }
@@ -136,7 +136,7 @@ font: bold;
 #signContentView, #viewContentView
 {
 background-color: transparent;
-border: 1px solid #DFDFDF;
+border: 1px solid gray;
 color: #355670;
 }
 
@@ -150,7 +150,7 @@ color: #355670;
 #signSignerRole, #viewSignaturesScroll
 {
 background-color: transparent;
-border: 1px solid #DFDFDF;
+border: 1px solid gray;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
@@ -815,29 +815,16 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item row="3" column="0">
-           <layout class="QHBoxLayout" name="signContentButtonsLayout">
+           <layout class="QHBoxLayout" name="signAddFileLayout">
             <item>
-             <widget class="QPushButton" name="signAddFile">
+             <widget class="QLabel" name="signAddFile">
               <property name="text">
-               <string>Add file</string>
+               <string>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="signRemoveFile">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Remove selected files</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="signDocsSpacer">
+             <spacer name="signAddFileSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -934,7 +921,7 @@ p, li { white-space: pre-wrap; }
                <x>0</x>
                <y>0</y>
                <width>301</width>
-               <height>221</height>
+               <height>220</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

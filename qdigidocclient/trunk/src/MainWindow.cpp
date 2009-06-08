@@ -102,8 +102,6 @@ MainWindow::MainWindow( QWidget *parent )
 	buttonGroup->addButton( introNext, IntroNext );
 	buttonGroup->addButton( introButtons->button( QDialogButtonBox::Cancel ), IntroBack );
 
-	buttonGroup->addButton( signAddFile, SignAddFile );
-	buttonGroup->addButton( signRemoveFile, SignRemoveFile );
 	signButton = signButtons->addButton( tr("Sign"), QDialogButtonBox::AcceptRole );
 	buttonGroup->addButton( signButton, SignSign );
 	buttonGroup->addButton( signButtons->button( QDialogButtonBox::Cancel ), SignCancel );
@@ -114,6 +112,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
+	connect( signAddFile, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewBrowse, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewEmail, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewPrint, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
@@ -227,13 +226,12 @@ void MainWindow::buttonClicked( int button )
 			break;
 		}
 	case IntroNext:
+	{
 		if( !params.isEmpty() )
 		{
 			parseParams();
 			break;
 		}
-	case SignAddFile:
-	{
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !list.isEmpty() )
@@ -272,31 +270,6 @@ void MainWindow::buttonClicked( int button )
 		doc->clear();
 		setCurrentPage( Home );
 		break;
-	case SignRemoveFile:
-	{
-		QItemSelectionModel *selection = signContentView->selectionModel();
-		QStringList files;
-		Q_FOREACH( const QModelIndex &i, selection->selectedRows( 0 ) )
-			files << i.data().toString();
-		if( files.empty() )
-			break;
-
-		QMessageBox::StandardButtons btn = QMessageBox::warning(
-			this, "QDigiDocClient",
-			tr("Are you sure you want remove files %1").arg( files.join(", ") ),
-			QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel );
-		if( btn == QMessageBox::Cancel )
-			break;
-
-		QAbstractItemModel *m = signContentView->model();
-		for( int i = m->rowCount() - 1; i >= 0; --i )
-		{
-			if( selection->isSelected( m->index( i, 0 ) ) )
-				doc->removeDocument( i );
-		}
-		setCurrentPage( Sign );
-		break;
-	}
 	case SignSign:
 	{
 		if( signCard->isChecked() )
@@ -385,10 +358,11 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		i->setData( 1, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
 		i->setData( 1, Qt::ToolTipRole, tr("Save") );
 		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
-		i->setData( 2, Qt::ToolTipRole, tr("Delete") );
+		i->setData( 2, Qt::ToolTipRole, tr("Remove") );
 		view->addTopLevelItem( i );
 	}
 	QList<DigiDocSignature> list = doc->signatures();
+	view->setColumnHidden( 1, stack->currentIndex() == Sign );
 	view->setColumnHidden( 2, stack->currentIndex() == View || !list.isEmpty() );
 }
 
@@ -433,7 +407,23 @@ void MainWindow::openFile( const QModelIndex &index )
 
 void MainWindow::parseLink( const QString &link )
 {
-	if( link == "browse" )
+	if( link == "addFile" )
+	{
+		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( !list.isEmpty() )
+		{
+			Q_FOREACH( const QString &file, list )
+			{
+				if( !addFile( file ) )
+					return;
+			}
+			setCurrentPage( Sign );
+		}
+		else if( doc->isNull() )
+			setCurrentPage( Home );
+	}
+	else if( link == "browse" )
 	{
 #ifdef Q_OS_WIN32
 		QString url( "file:///" );
@@ -550,10 +540,10 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		signAddFile->setEnabled( doc->signatures().isEmpty() );
-		signRemoveFile->setEnabled( doc->signatures().isEmpty() );
+		signAddFile->setVisible( doc->signatures().isEmpty() );
 		signButton->setEnabled( signContentView->model()->rowCount() > 0 &&
 			(doc->signCert().isValid() || signMobile->isChecked()) );
+		signButton->setFocus();
 		break;
 	}
 	case View:
@@ -592,7 +582,6 @@ void MainWindow::setCurrentPage( Pages page )
 			viewFileStatus->setText( tr("Container is unsigned") );
 
 		viewSignaturesLabel->setText( i == 1 ? tr("Signature") : tr("Signatures") );
-		viewAddSignature->setEnabled( doc->signCert().isValid() && !cardOwnerSignature );
 		break;
 	}
 	default: break;
