@@ -610,6 +610,11 @@ void MainWindow::showCardStatus()
 		const SslCertificate c = doc->signCert();
 		QTextStream s( &content );
 
+		if( c.isTempel() )
+			s << "<img align=\"right\" src=\":/images/ico_stamp_blue_75.png\">";
+		else
+			s << "<img align=\"right\" src=\":/images/ico_person_blue_75.png\">";
+
 		s << tr("Name") << ": <font color=\"black\">"
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
