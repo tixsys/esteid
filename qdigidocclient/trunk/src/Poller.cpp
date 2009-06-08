@@ -94,7 +94,12 @@ QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
 }
 
 QSslCertificate QEstEIDSigner::authCert( const QString &card ) const { return auth.value(card); }
-QStringList	QEstEIDSigner::cards() const { return auth.keys(); }
+QStringList	QEstEIDSigner::cards() const
+{
+	if( auth.isEmpty() )
+		return QStringList();
+	return auth.keys();
+}
 QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return sign.value(card); }
 
 std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
