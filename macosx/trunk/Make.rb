@@ -81,18 +81,18 @@ class Application
 	protected
 	
 	def run_digidoc
-		puts "Creating libdigidoc2..." if @options.verbose
+		puts "Creating libdigidoc..." if @options.verbose
 		
 		release = Pathname.new(@path).join(@options.digidoc, 'lib').to_s
-		digidoc2 = File.join(release, 'libdigidoc2.dylib')
-		digidoc = File.join(release, 'libdigidoc.dylib')
+		digidoc2 = File.join(release, 'libdigidoc.dylib')
+		digidoc = File.join(release, 'libdigidoc++.dylib')
 		
 		FileUtils.mkdir_p(release) unless File.exists? release
 		FileUtils.rm_rf(digidoc2) if File.exists? digidoc2
 		FileUtils.rm_rf(digidoc) if File.exists? digidoc
 		
 		conf_root = Pathname.new(@path).join(@options.digidoc, 'etc', 'libdigidoc')
-		conf = File.join(conf_root, 'bdoclib.conf')
+		conf = File.join(conf_root, 'libdigidoc++.conf')
 		conf_certs = File.join(conf_root, 'certs')
 		conf_schema = File.join(conf_root, 'schema')
 		
@@ -102,16 +102,17 @@ class Application
 		FileUtils.mkdir_p(conf_certs) unless File.exists? conf_certs
 		FileUtils.mkdir_p(conf_schema) unless File.exists? conf_schema
 		
-		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc2/trunk').to_s) do	
+		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/trunk').to_s) do	
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command 'xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
-			run_command 'install_name_tool -id /usr/local/libdigidoc2.dylib libdigidoc/Release/libdigidoc2.dylib'
-			FileUtils.cp_r('libdigidoc/Release/libdigidoc2.dylib', digidoc2)
+			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+			run_command 'install_name_tool -id /usr/local/libdigidoc.dylib libdigidoc/Release/libdigidoc.dylib'
+			puts "Copying file libdigidoc.dylib" if @options.verbose
+			FileUtils.cp_r('libdigidoc/Release/libdigidoc.dylib', digidoc2)
 			
 			if @options.force
-				run_command 'sudo xcodebuild -project libdigidoc2.xcodeproj -configuration Release -target install -sdk macosx10.4'
+				run_command 'sudo xcodebuild -project libdigidoc.xcodeproj -configuration Release -target install -sdk macosx10.4'
 			end
 			
 			# This should be here only temporary until overall structure is fixed in libdigidoc2 (ie no 2 certificate storages)
@@ -123,22 +124,22 @@ class Application
 			
 			FileUtils.cp('etc/digidoc.conf', digidoc2conf)
 			FileUtils.mkdir_p(digidoc2stuff) unless File.exists? digidoc2stuff
-			FileUtils.cp_r('/usr/local/share/libdigidoc2/', digidoc2stuff)
+			FileUtils.cp_r('/usr/local/share/libdigidoc/', digidoc2stuff)
 		end
 		
-		puts "Creating libdigidoc..."if @options.verbose
+		puts "Creating libdigidoc++..."if @options.verbose
 		
-		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/cpp/branches/libdigidoc_ddoc').to_s) do
+		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc++/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DLIBP11_LIBRARY=/usr/local/lib/libp11.a -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
-			run_command 'install_name_tool -id /usr/local/libdigidoc.dylib src/Release/libdigidoc.dylib'
-			puts "Copying file libdigidoc.dylib" if @options.verbose
-			FileUtils.cp_r('src/Release/libdigidoc.dylib', digidoc)
+			run_command 'xcodebuild -project libdigidoc++.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+			run_command 'install_name_tool -id /usr/local/libdigidoc++.dylib src/Release/libdigidoc++.dylib'
+			puts "Copying file libdigidoc++.dylib" if @options.verbose
+			FileUtils.cp_r('src/Release/libdigidoc++.dylib', digidoc)
 			
-			puts "Copying file bdoclib.conf" if @options.verbose
-			FileUtils.cp_r('bdoclib.conf', conf)
+			puts "Copying file libdigidoc++.conf" if @options.verbose
+			FileUtils.cp_r('libdigidoc++.conf', conf)
 			
 			Dir.glob(File.join('etc/certs', '**/*')).each do |path|
 				rpath = File.join(conf_certs, path['etc/certs'.length, path.length - 1])
@@ -163,7 +164,7 @@ class Application
 			end
 			
 			if @options.force
-				run_command 'sudo xcodebuild -project libdigidoc.xcodeproj -configuration Release -target install -sdk macosx10.4'
+				run_command 'sudo xcodebuild -project libdigidoc++.xcodeproj -configuration Release -target install -sdk macosx10.4'
 			end
 		end
 		
