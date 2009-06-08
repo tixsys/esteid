@@ -6,7 +6,7 @@ ESVN_REPO_URI="https://id.eesti.ee/svn/libdigidoc/cpp/trunk/"
 
 inherit cmake-utils subversion
 
-DESCRIPTION="BDoc C++ library"
+DESCRIPTION="C++ library for handling BDoc and DDoc digital signature containers"
 HOMEPAGE="https://id.eesti.ee/trac/"
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -14,6 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-libs/libp11
+	dev-libs/libdigidoc2
 	dev-libs/opensc
 	dev-libs/openssl
 	dev-libs/xerces-c

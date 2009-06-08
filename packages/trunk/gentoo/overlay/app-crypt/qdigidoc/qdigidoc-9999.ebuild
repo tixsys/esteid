@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="dev-libs/libdigidoc
+RDEPEND="dev-libs/libdigidoc++
 	dev-libs/openssl
 	sys-apps/pcsc-lite
 	x11-libs/qt-core:4
