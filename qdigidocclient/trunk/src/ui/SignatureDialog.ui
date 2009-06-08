@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>SignatureDialog</class>
- <widget class="QDialog" name="SignatureDialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="SignatureDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,94 +10,94 @@
     <height>335</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="SignatureDialogLayout" >
+  <layout class="QVBoxLayout" name="SignatureDialogLayout">
    <item>
-    <widget class="QLabel" name="title" />
+    <widget class="QLabel" name="title"/>
    </item>
    <item>
-    <widget class="QLabel" name="error" />
+    <widget class="QLabel" name="error"/>
    </item>
    <item>
-    <widget class="QTabWidget" name="tabWidget" >
-     <property name="currentIndex" >
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="signer" >
-      <attribute name="title" >
+     <widget class="QWidget" name="signer">
+      <attribute name="title">
        <string>Signer</string>
       </attribute>
-      <layout class="QGridLayout" name="signerLayout" >
-       <item rowspan="3" row="0" column="0" >
-        <widget class="QGroupBox" name="signerLocationGroup" >
-         <property name="title" >
+      <layout class="QGridLayout" name="signerLayout">
+       <item row="0" column="0" rowspan="3">
+        <widget class="QGroupBox" name="signerLocationGroup">
+         <property name="title">
           <string>Signer location</string>
          </property>
-         <layout class="QFormLayout" name="signerLocationGroupLayout" >
-          <item row="0" column="0" >
-           <widget class="QLabel" name="signerCityLabel" >
-            <property name="text" >
+         <layout class="QFormLayout" name="signerLocationGroupLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="signerCityLabel">
+            <property name="text">
              <string>City</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1" >
-           <widget class="QLineEdit" name="signerCity" >
-            <property name="readOnly" >
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="signerCity">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" >
-           <widget class="QLabel" name="signerStateLabel" >
-            <property name="text" >
+          <item row="1" column="0">
+           <widget class="QLabel" name="signerStateLabel">
+            <property name="text">
              <string>State</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" >
-           <widget class="QLineEdit" name="signerState" >
-            <property name="readOnly" >
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="signerState">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="2" column="0" >
-           <widget class="QLabel" name="signerCountryLabel" >
-            <property name="text" >
+          <item row="2" column="0">
+           <widget class="QLabel" name="signerCountryLabel">
+            <property name="text">
              <string>Country</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1" >
-           <widget class="QLineEdit" name="signerCountry" >
-            <property name="readOnly" >
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="signerCountry">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" >
-           <widget class="QLabel" name="signerZipLabel" >
-            <property name="text" >
+          <item row="3" column="0">
+           <widget class="QLabel" name="signerZipLabel">
+            <property name="text">
              <string>Zip</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1" >
-           <widget class="QLineEdit" name="signerZip" >
-            <property name="readOnly" >
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="signerZip">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="4" column="1" >
-           <spacer name="verticalSpacer" >
-            <property name="orientation" >
+          <item row="4" column="1">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
-              <width>130</width>
-              <height>40</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -104,15 +105,15 @@
          </layout>
         </widget>
        </item>
-       <item row="0" column="1" >
-        <widget class="QGroupBox" name="signerRoleGroup" >
-         <property name="title" >
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="signerRoleGroup">
+         <property name="title">
           <string>Role / resolution</string>
          </property>
-         <layout class="QVBoxLayout" name="signerRoleGroupLayout" >
+         <layout class="QVBoxLayout" name="signerRoleGroupLayout">
           <item>
-           <widget class="QLineEdit" name="signerRole" >
-            <property name="readOnly" >
+           <widget class="QLineEdit" name="signerRole">
+            <property name="readOnly">
              <bool>true</bool>
             </property>
            </widget>
@@ -120,110 +121,110 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="1" >
-        <spacer name="signerSpacer" >
-         <property name="orientation" >
+       <item row="1" column="1">
+        <spacer name="signerSpacer">
+         <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
-           <height>131</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="2" column="1" >
-        <widget class="QPushButton" name="signerShowCert" >
-         <property name="text" >
+       <item row="2" column="1">
+        <widget class="QPushButton" name="signerShowCert">
+         <property name="text">
           <string>Show certificate</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="signature" >
-      <attribute name="title" >
+     <widget class="QWidget" name="signature">
+      <attribute name="title">
        <string>Signature</string>
       </attribute>
-      <layout class="QGridLayout" name="signatureLayout" >
-       <item row="0" column="0" colspan="2" >
-        <widget class="QTreeWidget" name="signatureView" >
-         <property name="rootIsDecorated" >
+      <layout class="QGridLayout" name="signatureLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QTreeWidget" name="signatureView">
+         <property name="rootIsDecorated">
           <bool>false</bool>
          </property>
          <column>
-          <property name="text" >
+          <property name="text">
            <string>Attribute</string>
           </property>
          </column>
          <column>
-          <property name="text" >
+          <property name="text">
            <string>Value</string>
           </property>
          </column>
         </widget>
        </item>
-       <item row="1" column="0" >
-        <spacer name="signatureSpacer" >
-         <property name="orientation" >
+       <item row="1" column="0">
+        <spacer name="signatureSpacer">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>264</width>
-           <height>20</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="1" column="1" >
-        <widget class="QPushButton" name="signatureShowCert" >
-         <property name="text" >
+       <item row="1" column="1">
+        <widget class="QPushButton" name="signatureShowCert">
+         <property name="text">
           <string>Show certificate</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="verify" >
-      <attribute name="title" >
+     <widget class="QWidget" name="verify">
+      <attribute name="title">
        <string>Verify</string>
       </attribute>
-      <layout class="QGridLayout" name="verifyLayout" >
-       <item row="0" column="0" colspan="2" >
-        <widget class="QTreeWidget" name="verifyView" >
-         <property name="rootIsDecorated" >
+      <layout class="QGridLayout" name="verifyLayout">
+       <item row="0" column="0" colspan="2">
+        <widget class="QTreeWidget" name="verifyView">
+         <property name="rootIsDecorated">
           <bool>false</bool>
          </property>
          <column>
-          <property name="text" >
+          <property name="text">
            <string>Attribute</string>
           </property>
          </column>
          <column>
-          <property name="text" >
+          <property name="text">
            <string>Value</string>
           </property>
          </column>
         </widget>
        </item>
-       <item row="1" column="0" >
-        <spacer name="verifySpacer" >
-         <property name="orientation" >
+       <item row="1" column="0">
+        <spacer name="verifySpacer">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
-           <width>274</width>
-           <height>20</height>
+           <width>0</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="1" column="1" >
-        <widget class="QPushButton" name="verifyShowCert" >
-         <property name="text" >
+       <item row="1" column="1">
+        <widget class="QPushButton" name="verifyShowCert">
+         <property name="text">
           <string>Show certificate</string>
          </property>
         </widget>
@@ -233,8 +234,8 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox" >
-     <property name="standardButtons" >
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
       <set>QDialogButtonBox::Close</set>
      </property>
     </widget>
@@ -249,11 +250,11 @@
    <receiver>SignatureDialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>199</x>
      <y>314</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>167</y>
     </hint>
@@ -265,11 +266,11 @@
    <receiver>SignatureDialog</receiver>
    <slot>showCertificate()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>335</x>
      <y>272</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>167</y>
     </hint>
@@ -281,11 +282,11 @@
    <receiver>SignatureDialog</receiver>
    <slot>showCertificate()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>300</x>
      <y>272</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>167</y>
     </hint>
@@ -297,11 +298,11 @@
    <receiver>SignatureDialog</receiver>
    <slot>showCertificate()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>335</x>
      <y>272</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>199</x>
      <y>167</y>
     </hint>
