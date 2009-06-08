@@ -1,10 +1,17 @@
 #include "../minizip/zip.h"
+#include "../minizip/unzip.h"
 
 #include <iostream>
 #include "../log.h"
 #include "../util/File.h"
 #include "../util/String.h"
 #include "ZipSerialize.h"
+
+
+namespace digidoc
+{
+static void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOException);
+}
 
 /**
  * Initializes ZIP file serializer.
@@ -95,7 +102,9 @@ std::string digidoc::ZipSerialize::extract() throw(IOException)
  * @throws IOException throws exception if the extraction of the current file fails from ZIP
  *         file or creating new file to disk failed.
  */
-void digidoc::ZipSerialize::extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOException)
+namespace digidoc
+{
+void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOException)
 {
     DEBUG("ZipSerialize::extractCurrentFile(zipFile = 0x%X, directory = '%s')", (unsigned int)zipFile, directory.c_str());
 
@@ -178,6 +187,7 @@ void digidoc::ZipSerialize::extractCurrentFile(unzFile zipFile, const std::strin
     {
         THROW_IOEXCEPTION("Failed to close current file inside ZIP container. ZLib error: %d", unzResult);
     }
+}
 }
 
 /**

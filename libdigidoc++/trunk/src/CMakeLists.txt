@@ -182,13 +182,6 @@ install( FILES
 )
 
 install( FILES
-    minizip/unzip.h
-    minizip/ioapi.h
-    DESTINATION include/libdigidoc++/minizip
-)
-
-
-install( FILES
     util/File.h
     util/String.h
     DESTINATION include/libdigidoc++/util

@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "../minizip/unzip.h"
-
 #include "ISerialize.h"
 
 namespace digidoc
@@ -29,9 +27,6 @@ namespace digidoc
       protected:
           struct FileEntry { std::string containerPath; std::string path; };
           std::vector<FileEntry> filesAdded;
-
-      private:
-          void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOException);
 
     };
 }
