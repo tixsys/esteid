@@ -24,7 +24,7 @@
 
 #include "SslCertificate.h"
 
-#include <digidoc/XmlConf.h>
+#include <libdigidoc++/XmlConf.h>
 
 #include <QApplication>
 #include <QInputDialog>

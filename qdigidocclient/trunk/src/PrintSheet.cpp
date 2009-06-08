@@ -25,7 +25,7 @@
 #include "DigiDoc.h"
 #include "SslCertificate.h"
 
-#include <digidoc/Document.h>
+#include <libdigidoc++/Document.h>
 
 #include <QDateTime>
 #include <QFileInfo>

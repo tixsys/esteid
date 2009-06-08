@@ -23,7 +23,7 @@
 #include "QMobileSigner.h"
 #include "DigiDoc.h"
 
-#include <digidoc/WDoc.h>
+#include <libdigidoc++/WDoc.h>
 
 #include <QDebug>
 

@@ -22,8 +22,8 @@
 
 #pragma once
 
-#include <digidoc/crypto/signer/Signer.h>
-#include <digidoc/WDoc.h>
+#include <libdigidoc++/crypto/signer/Signer.h>
+#include <libdigidoc++/WDoc.h>
 
 namespace digidoc
 {

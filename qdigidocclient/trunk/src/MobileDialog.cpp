@@ -23,11 +23,11 @@
 #include "MobileDialog.h"
 #include "DigiDoc.h"
 
-#include <digidoc/Document.h>
-#include <digidoc/Exception.h>
-#include <digidoc/crypto/Digest.h>
-#include <digidoc/WDoc.h>
-#include <digidoc/io/ZipSerialize.h>
+#include <libdigidoc++/Document.h>
+#include <libdigidoc++/Exception.h>
+#include <libdigidoc++/crypto/Digest.h>
+#include <libdigidoc++/WDoc.h>
+#include <libdigidoc++/io/ZipSerialize.h>
 
 #include <QDebug>
 #include <QDir>

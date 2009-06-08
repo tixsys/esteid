@@ -24,7 +24,7 @@
 
 #include <QThread>
 
-#include <digidoc/crypto/signer/PKCS11Signer.h>
+#include <libdigidoc++/crypto/signer/PKCS11Signer.h>
 
 #include <QHash>
 #include <QMutex>
