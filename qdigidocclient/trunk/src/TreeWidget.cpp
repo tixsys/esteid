@@ -29,11 +29,12 @@
 TreeWidget::TreeWidget( QWidget *parent )
 :	QTreeWidget( parent )
 {
-	setColumnCount( 3 );
+	setColumnCount( 4 );
 	header()->setStretchLastSection( false );
 	header()->setResizeMode( 0, QHeaderView::Stretch );
 	header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 	header()->setResizeMode( 2, QHeaderView::ResizeToContents );
+	header()->setResizeMode( 3, QHeaderView::ResizeToContents );
 }
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const

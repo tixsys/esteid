@@ -177,12 +177,13 @@ bool MainWindow::addFile( const QString &file )
 	QList<digidoc::Document> docs = doc->documents();
 	for( int i = 0; i < docs.size(); ++i )
 	{
-		if( QFileInfo( QString::fromStdString( docs[i].getPath() ) ).fileName() ==
+		if( QFileInfo( QString::fromUtf8( docs[i].getPath().data() ) ).fileName() ==
 			QFileInfo( file ).fileName() )
 		{
 			QMessageBox::StandardButton btn = QMessageBox::warning( this,
-				"QDigiDocClient",
-				tr("Container contains file with same name, ovewrite?"),
+				tr("File already in container"),
+				tr("%1<br />already in container, ovewrite?")
+					.arg( QFileInfo( file ).fileName() ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			if( btn == QMessageBox::Yes )
 			{
@@ -348,22 +349,23 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
 		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled );
 
-		QString fileName = info.fileName();
-		if( docs.size() < 9 )
-			fileName += QString( "\n" ).append( fileSize( info.size() ) );
-		i->setText( 0, fileName );
+		i->setText( 0, info.fileName() );
 		i->setData( 0, Qt::ToolTipRole, info.fileName() );
 		i->setData( 0, Qt::UserRole, info.absoluteFilePath() );
 
-		i->setData( 1, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
-		i->setData( 1, Qt::ToolTipRole, tr("Save") );
-		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
-		i->setData( 2, Qt::ToolTipRole, tr("Remove") );
+		i->setText( 1, fileSize( info.size() ) );
+		i->setData( 1, Qt::TextAlignmentRole, Qt::AlignRight );
+		i->setData( 1, Qt::ForegroundRole, Qt::gray );
+
+		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
+		i->setData( 2, Qt::ToolTipRole, tr("Save") );
+		i->setData( 3, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
+		i->setData( 3, Qt::ToolTipRole, tr("Remove") );
 		view->addTopLevelItem( i );
 	}
 	QList<DigiDocSignature> list = doc->signatures();
-	view->setColumnHidden( 1, stack->currentIndex() == Sign );
-	view->setColumnHidden( 2, stack->currentIndex() == View || !list.isEmpty() );
+	view->setColumnHidden( 2, stack->currentIndex() == Sign );
+	view->setColumnHidden( 3, stack->currentIndex() == View || !list.isEmpty() );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
@@ -410,7 +412,7 @@ void MainWindow::openFile( const QModelIndex &index )
 #else
 	QString url( "file://" );
 #endif
-	url += QString::fromStdString( list[index.row()].getPath() );
+	url += QString::fromUtf8( list[index.row()].getPath().data() );
 	QDesktopServices::openUrl( url );
 }
 
@@ -599,7 +601,7 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->activeCard().isEmpty() )
+	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
 	{
 		const SslCertificate c = doc->signCert();
 		QTextStream s( &content );
@@ -611,14 +613,16 @@ void MainWindow::showCardStatus()
 		s << tr("Card in reader") << ": <font color=\"black\">"
 			<< doc->activeCard() << "</font><br />";
 		s << tr("Sign certificate is") << " "
-			<< (doc->signCert().isValid() ? tr("valid") : tr("expired")) << "<br />";
-		s << tr("Auth certificate is") << " "
-			<< (doc->authCert().isValid() ? tr("valid") : tr("expired"));
+			<< (doc->signCert().isValid() ? tr("valid") : tr("expired"));
 
 		signSigner->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
 			.arg( c.subjectInfo( "serialNumber" ) ) );
+	}
+	else if( !doc->activeCard().isEmpty() )
+	{
+		content = tr("Loading data");
 	}
 	else
 	{
@@ -679,7 +683,7 @@ void MainWindow::viewAction( const QModelIndex &index )
 
 	switch( index.column() )
 	{
-	case 1:
+	case 2:
 	{
 		QString dir = QFileDialog::getExistingDirectory( this,
 			tr("Select folder where file will be stored"),
@@ -688,7 +692,7 @@ void MainWindow::viewAction( const QModelIndex &index )
 			doc->saveDocument( index.row(), dir );
 		break;
 	}
-	case 2:
+	case 3:
 		doc->removeDocument( index.row() );
 		setCurrentPage( (Pages)stack->currentIndex() );
 		break;

@@ -51,7 +51,7 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	st << tr("Signature is") << " " << ( s.isValid() ? tr("valid") : tr("not valid") );
 	c->setText( content );
 
-	QLabel *b = new QLabel( QString( "<a href=\"details\">%1</a> <a href=\"remove\">%2</a>" )
+	QLabel *b = new QLabel( QString( "<a href=\"details\">%1</a><br /><a href=\"remove\">%2</a>" )
 		.arg( tr("Show details") ).arg( tr("Remove") ), this );
 	connect( b, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
 

@@ -249,7 +249,7 @@ bool DigiDoc::open( const QString &file )
 	m_fileName = file;
 	try
 	{
-		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toStdString()));
+		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toUtf8().constData()));
 		b = new WDoc( s );
 		return true;
 	}
