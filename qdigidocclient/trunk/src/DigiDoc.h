@@ -86,7 +86,7 @@ public:
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();
-	void saveDocument( unsigned int num, const QString &path );
+	void saveDocument( unsigned int num, const QString &filepath );
 	bool sign(
 		const QString &city,
 		const QString &state,

@@ -504,8 +504,12 @@ void MainWindow::parseLink( const QString &link )
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( dir.isEmpty() )
 			return;
-		for( int i = 0; viewContentView->model()->rowCount(); ++i )
-			doc->saveDocument( i, dir );
+		QAbstractItemModel *m = viewContentView->model();
+		for( int i = 0; i < m->rowCount(); ++i )
+		{
+			doc->saveDocument( i, QString( "%1/%2" )
+				.arg( dir ).arg( m->index( i, 0 ).data().toString() ) );
+		}
 	}
 }
 
@@ -612,8 +616,11 @@ void MainWindow::showCardStatus()
 			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
 		s << tr("Card in reader") << ": <font color=\"black\">"
 			<< doc->activeCard() << "</font><br />";
-		s << tr("Sign certificate is") << " "
-			<< (doc->signCert().isValid() ? tr("valid") : tr("expired"));
+		s << tr("Sign certificate is") << " ";
+		if( doc->signCert().isValid() )
+			s << "<font color=\"green\">" << tr("valid") << "</font>";
+		else
+			s << "<font color=\"red\">" << tr("expired") << "</font>";
 
 		signSigner->setText( QString( "%1 %2 (%3)" )
 			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
@@ -685,11 +692,12 @@ void MainWindow::viewAction( const QModelIndex &index )
 	{
 	case 2:
 	{
-		QString dir = QFileDialog::getExistingDirectory( this,
-			tr("Select folder where file will be stored"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !dir.isEmpty() )
-			doc->saveDocument( index.row(), dir );
+		QString filepath = QFileDialog::getSaveFileName( this,
+			tr("Save file"), QString( "%1/%2" )
+				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
+				.arg( index.model()->index( index.row(), 0 ).data().toString() ) );
+		if( !filepath.isEmpty() )
+			doc->saveDocument( index.row(), filepath );
 		break;
 	}
 	case 3:

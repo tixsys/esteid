@@ -296,7 +296,7 @@ void DigiDoc::save()
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
-void DigiDoc::saveDocument( unsigned int num, const QString &path )
+void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -304,11 +304,7 @@ void DigiDoc::saveDocument( unsigned int num, const QString &path )
 	if( num >= b->documentCount() )
 		return setLastError( tr("Missing document") );
 
-	try
-	{
-		QFileInfo file( QString::fromUtf8( b->getDocument( num ).getPath().data() ) );
-		b->getDocument( num ).saveAs( QString( path + QDir::separator() + file.fileName() ).toStdString() );
-	}
+	try { b->getDocument( num ).saveAs( filepath.toUtf8().constData() ); }
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
