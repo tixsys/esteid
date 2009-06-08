@@ -1,9 +1,9 @@
-set(CONF_DIR /etc/libdigidoc)
+set(CONF_DIR /etc/libdigidoc++)
 
-configure_file(bdoclib.conf.cmake bdoclib.conf)
+configure_file(libdigidoc++.conf.cmake libdigidoc++.conf)
 
 install(FILES
-    ${CMAKE_BINARY_DIR}/bdoclib.conf
+    ${CMAKE_BINARY_DIR}/libdigidoc++.conf
     DESTINATION ${CONF_DIR}
 )
 

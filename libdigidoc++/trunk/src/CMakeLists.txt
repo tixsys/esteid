@@ -22,7 +22,7 @@ if(WIN32)
     )
 endif(WIN32)
 
-set(libdigidoc_SRCS
+set(libdigidoc++_SRCS
     BDoc.cpp
     BDocException.cpp
     DDoc.cpp
@@ -79,7 +79,7 @@ if(MSVC)
     )
 endif(MSVC)
 
-# FIXME: to compile libdigidoc as a shared dll, we need to either
+# FIXME: to compile libdigidoc++ as a shared dll, we need to either
 # create a .def file or use __declspec(dllexport) export directives.
 if(WIN32)
     set(DIGIDOC_LIB_TYPE STATIC)
@@ -98,8 +98,8 @@ if(APPLE)
 	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY} ${LTDL_LIBRARY})
 endif(APPLE)
 
-add_library(digidoc ${DIGIDOC_LIB_TYPE} ${libdigidoc_SRCS} ${minizip_SRCS})
-target_link_libraries(digidoc
+add_library(digidoc++ ${DIGIDOC_LIB_TYPE} ${libdigidoc++_SRCS} ${minizip_SRCS})
+target_link_libraries(digidoc++
     ${ICONV_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
@@ -109,20 +109,20 @@ target_link_libraries(digidoc
     ${XMLSECURITYC_LIBRARIES}
     ${EXTRA_LIBS}
 )
-set_target_properties(digidoc PROPERTIES
-                              VERSION 0.0.8
+set_target_properties(digidoc++ PROPERTIES
+                              VERSION 0.1.0
                               SOVERSION 0
                       )
-install(TARGETS digidoc DESTINATION lib)
+install(TARGETS digidoc++ DESTINATION lib)
 
-add_executable(digidoc-demo main_demo.cpp)
-target_link_libraries(digidoc-demo digidoc)
-install(TARGETS digidoc-demo DESTINATION bin)
+add_executable(digidoc++-demo main_demo.cpp)
+target_link_libraries(digidoc++-demo digidoc++)
+install(TARGETS digidoc++-demo DESTINATION bin)
 
-add_executable(digidoc-tool bdoc_ref.cpp)
-target_link_libraries(digidoc-tool digidoc)
+add_executable(digidoc++-tool bdoc_ref.cpp)
+target_link_libraries(digidoc++-tool digidoc++)
 
-install(TARGETS digidoc-tool DESTINATION bin)
+install(TARGETS digidoc++-tool DESTINATION bin)
 
 install( FILES
     ADoc.h
@@ -138,31 +138,31 @@ install( FILES
     SignatureMobile.h
     WDoc.h
     XmlConf.h
-    DESTINATION include/digidoc
+    DESTINATION include/digidoc++
 )
 
 install( FILES
     crypto/Digest.h
     crypto/OpenSSLHelpers.h
-    DESTINATION include/digidoc/crypto
+    DESTINATION include/digidoc++/crypto
 )
 
 install( FILES
     crypto/cert/DirectoryX509CertStore.h
     crypto/cert/X509Cert.h
     crypto/cert/X509CertStore.h
-    DESTINATION include/digidoc/crypto/cert
+    DESTINATION include/digidoc++/crypto/cert
 )
 
 install( FILES
     crypto/crypt/RSACrypt.h
-    DESTINATION include/digidoc/crypto/crypt
+    DESTINATION include/digidoc++/crypto/crypt
 )
 
 install( FILES
     crypto/ocsp/OCSPException.h
     crypto/ocsp/OCSP.h
-    DESTINATION include/digidoc/crypto/ocsp
+    DESTINATION include/digidoc++/crypto/ocsp
 )
 
 install( FILES
@@ -171,31 +171,31 @@ install( FILES
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h
-    DESTINATION include/digidoc/crypto/signer
+    DESTINATION include/digidoc++/crypto/signer
 )
 
 install( FILES
     io/IOException.h
     io/ISerialize.h
     io/ZipSerialize.h
-    DESTINATION include/digidoc/io
+    DESTINATION include/digidoc++/io
 )
 
 install( FILES
     minizip/unzip.h
     minizip/ioapi.h
-    DESTINATION include/digidoc/minizip
+    DESTINATION include/digidoc++/minizip
 )
 
 
 install( FILES
     util/File.h
     util/String.h
-    DESTINATION include/digidoc/util
+    DESTINATION include/digidoc++/util
 )
 
 install( FILES
     xml/XAdES.hxx
     xml/xmldsig-core-schema.hxx
-    DESTINATION include/digidoc/xml
+    DESTINATION include/digidoc++/xml
 )
