@@ -384,8 +384,17 @@ void MainWindow::on_languages_activated( int index )
 
 void MainWindow::on_signMobile_toggled( bool )
 {
-	signButton->setEnabled( signContentView->model()->rowCount() > 0 &&
-		(doc->signCert().isValid() || signMobile->isChecked()) );
+	bool cardOwnerSignature = false;
+	Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
+	{
+		if( c.cert().subjectInfo( "serialNumber" ) == doc->signCert().subjectInfo( "serialNumber" ) )
+		{
+			cardOwnerSignature = true;
+			break;
+		}
+	}
+	signButton->setEnabled( signMobile->isChecked() ||
+		(!cardOwnerSignature && doc->signCert().isValid()) );
 }
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
@@ -540,9 +549,8 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
+		on_signMobile_toggled( signMobile->isChecked() );
 		signAddFile->setVisible( doc->signatures().isEmpty() );
-		signButton->setEnabled( signContentView->model()->rowCount() > 0 &&
-			(doc->signCert().isValid() || signMobile->isChecked()) );
 		signButton->setFocus();
 		break;
 	}
