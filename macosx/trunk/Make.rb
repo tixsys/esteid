@@ -490,11 +490,12 @@ class Application
 				file.puts "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
 				file.puts "<installer-script minSpecVersion=\"1.000000\" authoringTool=\"org.esteid.make\" authoringToolVersion=\"#{VERSION}\" authoringToolBuild=\"1\">"
 				file.puts "<options customize=\"never\" allow-external-scripts=\"yes\" rootVolumeOnly=\"true\" />"
-				file.puts "<background file=\"Background.tiff\" alignment=\"center\" scaling=\"none\" />"
-				file.puts "<welcome file=\"Welcome.html\" />"
-				file.puts "<readme file=\"ReadMe.html\" />"
-				file.puts "<license file=\"License.html\" />"
-				file.puts "<conclusion file=\"Conclusion.html\" />"
+				# FIXME: Uncomment to build complete installer
+				#file.puts "<background file=\"Background.tiff\" alignment=\"center\" scaling=\"none\" />"
+				#file.puts "<welcome file=\"Welcome.html\" />"
+				#file.puts "<readme file=\"ReadMe.html\" />"
+				#file.puts "<license file=\"License.html\" />"
+				#file.puts "<conclusion file=\"Conclusion.html\" />"
 				file.puts "<choices-outline>"
 				file.puts outlines
 				file.puts "</choices-outline>"
