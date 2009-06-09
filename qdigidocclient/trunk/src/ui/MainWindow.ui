@@ -113,10 +113,12 @@ min-width: 0px;
 background-color: rgba( 255, 255, 255, 153 );
 border-radius: 3px;
 color: #668696;
-font: bold;
 padding-left: 10px;
 padding-right: 10px;
 }
+
+#info
+{ font: bold; }
 
 #utilityLabel
 {
@@ -370,9 +372,9 @@ padding: 5px;
               <font>
                <family>Arial, Liberation Sans</family>
                <pointsize>-1</pointsize>
-               <weight>50</weight>
+               <weight>75</weight>
                <italic>false</italic>
-               <bold>false</bold>
+               <bold>true</bold>
               </font>
              </property>
             </widget>

@@ -389,6 +389,8 @@ void MainWindow::on_languages_activated( int index )
 
 void MainWindow::on_infoSignMobile_toggled( bool )
 {
+	if( doc->isNull() )
+		return;
 	bool cardOwnerSignature = false;
 	Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
 	{
