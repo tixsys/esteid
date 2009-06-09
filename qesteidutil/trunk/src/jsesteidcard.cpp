@@ -426,7 +426,7 @@ bool JsEsteidCard::checkPin( const QString &pin )
 
 void JsEsteidCard::showCert( int type )
 {
-	CertificateWidget *c = new CertificateWidget;
+        CertificateDialog *c = new CertificateDialog;
 	if( type == 1 )
 		c->setCertificate( m_authCert->cert() );
 	else
