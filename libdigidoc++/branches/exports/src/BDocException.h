@@ -13,7 +13,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class BDocException : public Exception
+    class EXP_DIGIDOC BDocException : public Exception
     {
 
       public:

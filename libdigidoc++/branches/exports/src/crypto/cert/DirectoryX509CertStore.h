@@ -12,7 +12,7 @@ namespace digidoc
      * Implementation of X.509 certificate store, which loads the certificates
      * from the directory provided.
      */
-    class DirectoryX509CertStore: public X509CertStore
+    class EXP_DIGIDOC DirectoryX509CertStore: public X509CertStore
     {
 
       public:

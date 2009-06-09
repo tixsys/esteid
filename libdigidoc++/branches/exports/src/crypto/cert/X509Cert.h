@@ -13,7 +13,7 @@ namespace digidoc
     /**
      * Wrapper for OpenSSL X509 certificate structure.
      */
-    class X509Cert
+    class EXP_DIGIDOC X509Cert
     {
 
       public:

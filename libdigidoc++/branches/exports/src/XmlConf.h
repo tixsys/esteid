@@ -14,7 +14,7 @@
 namespace digidoc
 {
 
-class XmlConf: public digidoc::Conf
+class EXP_DIGIDOC XmlConf: public digidoc::Conf
 {
 public:
     static void initialize();

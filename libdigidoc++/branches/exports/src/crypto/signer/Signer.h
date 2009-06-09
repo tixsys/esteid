@@ -15,11 +15,11 @@ namespace digidoc
      * that allows signing with EstId chip card. Other implementation may provide signing implementation
      * with other public-key cryptography systems.
      */
-    class Signer
+    class EXP_DIGIDOC Signer
     {
 
       public:
-          struct SignatureProductionPlace
+          struct EXP_DIGIDOC SignatureProductionPlace
           {
               SignatureProductionPlace();
               SignatureProductionPlace(std::string city, std::string stateOrProvince, std::string postalCode, std::string countryName);
@@ -31,7 +31,7 @@ namespace digidoc
               std::string countryName;
           };
 
-          struct SignerRole
+          struct EXP_DIGIDOC SignerRole
           {
               SignerRole();
               SignerRole(const std::string& claimedRole);
@@ -41,7 +41,7 @@ namespace digidoc
               TRoles claimedRoles;
           };
 
-          struct Digest
+          struct EXP_DIGIDOC Digest
           {
               /** Digest type (e.g NID_sha1), available values in openssl/obj_mac.h */
               int type;
@@ -49,7 +49,7 @@ namespace digidoc
               unsigned int length;
           };
 
-          struct Signature
+          struct EXP_DIGIDOC Signature
           {
               unsigned char* signature;
               unsigned int length;

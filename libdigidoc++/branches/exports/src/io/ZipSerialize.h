@@ -14,7 +14,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class ZipSerialize : public ISerialize
+    class EXP_DIGIDOC ZipSerialize : public ISerialize
     {
 
       public:

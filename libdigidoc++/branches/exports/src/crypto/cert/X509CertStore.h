@@ -10,7 +10,7 @@ namespace digidoc
     /**
      * X.509 certificate store interface.
      */
-    class X509CertStore
+    class EXP_DIGIDOC X509CertStore
     {
 
       public:

@@ -5,7 +5,7 @@
 namespace digidoc
 {
 
-class WDoc: public ADoc
+class EXP_DIGIDOC WDoc: public ADoc
 {
 public:
 	enum DocumentType

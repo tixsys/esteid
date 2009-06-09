@@ -9,7 +9,7 @@
 namespace digidoc
 {
 
-class ADoc
+class EXP_DIGIDOC ADoc
 {
 public:
 	virtual void save() throw(IOException, BDocException) = 0;

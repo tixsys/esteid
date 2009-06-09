@@ -4,12 +4,14 @@
 #include <memory>
 #include <string>
 
+#include "Exports.h"
+
 namespace digidoc
 {
     /**
      * TODO: implement and add description
      */
-    class Conf
+    class EXP_DIGIDOC Conf
     {
 
       public:
@@ -23,9 +25,10 @@ namespace digidoc
           virtual std::string getOCSPUrl() const = 0;
           virtual std::string getOCSPCertPath() const = 0;
           virtual std::string getCertStorePath() const = 0;
-
-      protected:
-		  Conf() {}
+// Fixme should be protected
+          Conf() {}
+      private:
+// Fixme should be protected
           Conf( const Conf& conf );
           Conf& operator= ( const Conf& conf );
 

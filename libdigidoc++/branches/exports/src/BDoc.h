@@ -18,8 +18,8 @@
 namespace digidoc
 {
 
-    void initialize();
-    void terminate();
+    EXP_DIGIDOC void initialize();
+    EXP_DIGIDOC void terminate();
 
 
     /**
@@ -35,7 +35,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class BDoc: public ADoc
+    class EXP_DIGIDOC BDoc: public ADoc
     {
 
       public:
