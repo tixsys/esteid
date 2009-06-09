@@ -40,3 +40,7 @@ void SAL_CALL PresentationListener::disposing( const com::sun::star::lang::Event
 {
 }
 
+PresentationListener::PresentationListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF)
+	: mxMSF( rxMSF )
+{}
+

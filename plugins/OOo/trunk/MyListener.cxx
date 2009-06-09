@@ -42,7 +42,9 @@ namespace css = ::com::sun::star;
 -----------------------------------------------------*/
 MyListener::MyListener(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR)
 	: m_xSMGR(xSMGR)
-{}
+{
+printf("MyListener::MyListener\n");
+}
 
 /*-----------------------------------------------------
 	20.11.2003 11:32
@@ -58,6 +60,7 @@ css::uno::Any SAL_CALL MyListener::execute(const css::uno::Sequence< css::beans:
 		   css::uno::Exception,
 		   css::uno::RuntimeException)
 {
+printf("MyListener::execute\n");
     css::uno::Sequence< css::beans::NamedValue > lEnv;
 
           sal_Int32               i = 0;
@@ -100,24 +103,25 @@ css::uno::Any SAL_CALL MyListener::execute(const css::uno::Sequence< css::beans:
 		return css::uno::Any();
 
     css::uno::Reference< css::lang::XServiceInfo > xInfo(xModel, css::uno::UNO_QUERY);
-    sal_Bool bCalc   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.sheet.SpreadsheetDocument"));
- //   sal_Bool bPresentation   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.sheet.PresentationDocument"));
+    //sal_Bool bCalc   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.sheet.SpreadsheetDocument"));
+    sal_Bool bPresentation   = xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.presentation.PresentationDocument"/*"com.sun.star.drawing.GenericDrawingDocument"*/));
     sal_Bool bWriter = (
                          xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.TextDocument"  )) &&
                         !xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.WebDocument"   )) &&
                         !xInfo->supportsService(::rtl::OUString::createFromAscii("com.sun.star.text.GlobalDocument"))
                        );
 
-    if (!bCalc && !bWriter )//&& !bPresentation)
+    if (!bWriter && !bPresentation)// && !bCalc)
 		return css::uno::Any();
 
     void* pListener = 0;
-    if (bCalc)
-        pListener = (void*)(new CalcListener(m_xSMGR));
-    else if (bWriter)
+    if (bWriter)
         pListener = (void*)(new WriterListener(m_xSMGR));
- //   if (bPresentation)
- //       pListener = (void*)(new PresentationListener(m_xSMGR));
+   // else if (bCalc)
+     //   pListener = (void*)(new CalcListener(m_xSMGR));
+     
+    else if (bPresentation)
+        pListener = (void*)(new PresentationListener(m_xSMGR));
     
     css::uno::Reference< css::document::XEventListener >    xDocListener     (static_cast< css::document::XEventListener* >(pListener), css::uno::UNO_QUERY);
     css::uno::Reference< css::document::XEventBroadcaster > xDocBroadcaster  (xModel   , css::uno::UNO_QUERY);

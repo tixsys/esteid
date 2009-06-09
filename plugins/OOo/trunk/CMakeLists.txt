@@ -134,8 +134,8 @@ SET(UNOFILES
 	MyJob.cxx
 	MyListener.cxx
 	WriterListener.cxx
-	CalcListener.cxx
-#	PresentationListener.cxx
+#	CalcListener.cxx
+	PresentationListener.cxx
 	ListenerHelper.cxx
 	exports.cxx
 	)
@@ -216,8 +216,8 @@ CONFIGURE_FILE (manifest.xml.in ${COMP_UNOPKG_MANIFEST})
 CONFIGURE_FILE(Addons.xcu ${OUT_MISC}/${COMP_NAME}/Addons.xcu COPYONLY)
 CONFIGURE_FILE(ProtocolHandler.xcu ${OUT_MISC}/${COMP_NAME}/ProtocolHandler.xcu COPYONLY)
 CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.xcu COPYONLY)
-CONFIGURE_FILE(CalcWindowState.xcu ${OUT_MISC}/${COMP_NAME}/CalcWindowState.xcu COPYONLY)
-#CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
+#CONFIGURE_FILE(CalcWindowState.xcu ${OUT_MISC}/${COMP_NAME}/CalcWindowState.xcu COPYONLY)
+CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
 

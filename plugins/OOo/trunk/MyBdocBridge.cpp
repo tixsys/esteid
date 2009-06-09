@@ -36,6 +36,13 @@ MyBdocBridge::MyBdocBridge() {
 
 //===========================================================
 //*************bridge to bdoc functions**********************
+void MyBdocBridge::DigiCheckCert()
+{
+	ret = ((My1EstEIDSigner *)this)->checkCert();
+}
+
+//===========================================================
+//*************bridge to bdoc functions**********************
 void MyBdocBridge::teemingilollus1()
 {
 	((My1EstEIDSigner *)this)->sammkampunn();	
@@ -115,10 +122,21 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 }
 
 //-----------------------------------------------------------
-void MyBdocBridge::DigiOpen()
+void MyBdocBridge::DigiOpen(char* pPath)
 {
-	//((My1EstEIDSigner *)this)->str_bdocpath = "/home/mark/Desktop/Juhan.bdoc";
+	((My1EstEIDSigner *)this)->str_bdocpath = pPath;
 	((My1EstEIDSigner *)this)->openCont();
+	
+	pRetPath = ((My1EstEIDSigner *)this)->str_filepath.c_str();
+	pSignName = ((My1EstEIDSigner *)this)->str_signCert.c_str();
+	pSignCity = ((My1EstEIDSigner *)this)->signPlace.str_city.c_str();
+	pSignState = ((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince.c_str();
+	pSignPostal = ((My1EstEIDSigner *)this)->signPlace.str_postalCode.c_str();
+	pSignCountry = ((My1EstEIDSigner *)this)->signPlace.str_countryName.c_str();
+	pSignRole = ((My1EstEIDSigner *)this)->signerRoles.str_role.c_str();
+	pSignAddRole = ((My1EstEIDSigner *)this)->signerRoles.str_additionalRole.c_str();
+	pSignTime = ((My1EstEIDSigner *)this)->str_signTime.c_str();
+	iSignCnt = ((My1EstEIDSigner *)this)->i_signatureCounter;
 }
 
 
@@ -161,7 +179,10 @@ int My1EstEIDSigner::initData()
 
 	profile = Signature::TM;//BES
 	//str_destination = str_bdocpath;	
-	validateOnline = true;
+	
+	//online validation in open container	
+	//validateOnline = true;
+	validateOnline = false;
 	
 	locBdoc = 0;
 	return 0; 
@@ -199,12 +220,16 @@ cout <<"PIN: "<<str_pin<<endl;
 			digidoc::initialize();
 			
 			if (!compIDnumber(m_signer.cardSignCert->name))
-				i_ok = 11;
+			{
+			//	i_ok = 100;
+				printf("Allready Signed!\n");
+			}
 		}		
 		else //if it's an new container (in openoffice we will have only 1 file per container)
 		{
 			locBdoc = new BDoc();
 			locBdoc->addDocument(Document(str_filepath, "file"));
+			str_bdocpath = str_filepath + ".bdoc";
 		}
 
 		if (!i_ok)
@@ -223,7 +248,6 @@ cout <<"PIN: "<<str_pin<<endl;
 			locBdoc->sign(&m_signer, profile);
 						
 			// Save the BDOC container.
-			str_bdocpath = str_filepath + ".bdoc";
 			std::auto_ptr<ISerialize> serializer(new ZipSerialize(str_bdocpath));
 			locBdoc->saveTo(serializer);
 
@@ -243,6 +267,11 @@ cout <<"PIN: "<<str_pin<<endl;
 	{
 		ERR("Caught IOException: %s", e.getMsg().c_str());
 		i_ok |= 20;
+	}
+	catch(const digidoc::OCSPException& e)
+	{
+		ERR("Caught OCSPException: %s", e.getMsg().c_str());
+		i_ok |= 50;
 	}
 	catch(const digidoc::SignException& e)
 	{
@@ -288,8 +317,8 @@ int My1EstEIDSigner::openCont ()
 		//we assume that we have only one file in container (for openoffice)
 		Document file = locBdoc->getDocument(0);
 		str_filepath = file.getPath().c_str();
-		//cout << endl << str_origin << endl; 
-	
+
+		i_signatureCounter = locBdoc->signatureCount();
 		// Print container signatures list.
 		printf("\nSignatures:\n");
 		for(unsigned int i = 0; i < locBdoc->signatureCount(); i++)
@@ -331,38 +360,60 @@ int My1EstEIDSigner::openCont ()
 			Signer::SignatureProductionPlace spp = sig->getProductionPlace();
 			if(!spp.isEmpty())
 			{
-				signPlace.str_city = spp.city.c_str();
-				signPlace.str_stateOrProvince = spp.stateOrProvince.c_str();
-				signPlace.str_postalCode = spp.postalCode.c_str();
-				signPlace.str_countryName = spp.countryName.c_str();
+				signPlace.str_city += spp.city.c_str();
+				signPlace.str_city += "#";
+				signPlace.str_stateOrProvince += spp.stateOrProvince.c_str();
+				signPlace.str_stateOrProvince += "#";
+				signPlace.str_postalCode += spp.postalCode.c_str();
+				signPlace.str_postalCode += "#";
+				signPlace.str_countryName += spp.countryName.c_str();
+				signPlace.str_countryName += "#";
 
-				cout << "********************************************"  << endl;
+				/*cout << "********************************************"  << endl;
 				cout << "*   City:            " << signPlace.str_city << endl;
 				cout << "*   State/Province:  " << signPlace.str_stateOrProvince << endl;
 				cout << "*   Postal/ZIP:      " << signPlace.str_postalCode << endl;
 				cout << "*   Country:         " << signPlace.str_countryName << endl;
-				cout << "********************************************"  << endl;
+				cout << "********************************************"  << endl;*/
 			}
 
 			// Get signer role info.
 			Signer::SignerRole roles = sig->getSignerRole();
 			if(!roles.isEmpty())
 			{
-				signerRoles.str_role = roles.claimedRoles.at(0);
-				signerRoles.str_additionalRole = roles.claimedRoles.at(1);
-				cout << "*   " << signerRoles.str_role << endl;
+				signerRoles.str_role += roles.claimedRoles.at(0);
+				signerRoles.str_role += "#";
+				signerRoles.str_additionalRole += roles.claimedRoles.at(1);
+				signerRoles.str_additionalRole += "#";
+				/*cout << "*   " << signerRoles.str_role << endl;
 				cout << "*   " << signerRoles.str_additionalRole << endl;
-				cout << "********************************************"  << endl;
+				cout << "********************************************"  << endl;*/
 			}
 
 			// Get signing time.
-			str_signTime = sig->getSigningTime().c_str();
-			cout << "*   Signing time: " << str_signTime << endl;
-			cout << "********************************************"  << endl;
+			str_signTime += sig->getSigningTime().c_str();
+			str_signTime += "#";
+			/*cout << "*   Signing time: " << str_signTime << endl;
+			cout << "********************************************"  << endl;*/
 
-		// Get signer certificate.
-		// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
-		X509Cert cert = sig->getSigningCertificate();
+			// Get signer certificate.
+			// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
+			X509Cert cert = sig->getSigningCertificate();
+			string tempname = cert.getSubject().c_str();
+			for (int u=0; u<tempname.size(); u++)
+			{
+				if (!memcmp(&tempname[u], ",CN=", 4))
+				{
+					u += 4;
+					while (memcmp(&tempname[u], ",OU=", 4))
+						str_signCert += tempname[u++];
+				}
+
+			}
+			//printf("Sert Subject: %s\n",cert.getSubject().c_str());
+			//Fix UTF-8 encoding!!!!
+			str_signCert += "#";
+
 		}
 
 	// Destroy certificate store.
@@ -428,7 +479,45 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 
 //===========================================================
 //***********************************************************
+int My1EstEIDSigner::checkCert ()
+{
 
+	int i_ok = 0;
+//	try
+//	{		
+		MyRealEstEIDSigner m_signer;
+		
+		i_ok =	m_signer.i_ret;
+//	}
+/*	catch(const digidoc::BDocException& e)
+	{
+		ERR("Caught BDocException: %s", e.getMsg().c_str());
+		
+		i_ok |= 10;
+	}
+	catch(const digidoc::IOException& e)
+	{
+		ERR("Caught IOException: %s", e.getMsg().c_str());
+		i_ok |= 20;
+	}
+	catch(const digidoc::SignException& e)
+	{
+		ERR("Caught SignException: %s", e.getMsg().c_str());
+		i_ok |= 30;
+	}
+	catch(const digidoc::Exception& e)
+	{
+		ERR("Caught Exception: %s", e.getMsg().c_str());
+		i_ok |= 40;
+	}
+	catch(...)
+	{
+		ERR("Caught unknown exception");
+		i_ok |= 90;
+	}
+*/	
+	return i_ok;
+}
 //===========================================================
 //***********************************************************
 

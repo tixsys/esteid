@@ -46,12 +46,15 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		int initData ();
 		int signFile ();
 		int openCont ();
+		int checkCert ();
 		void sammkampunn();
 	
 		std::string str_pin;
 		std::string str_signTime;
+		std::string str_signCert;
 		std::string str_filepath;
 		std::string str_bdocpath;
+		int i_signatureCounter;
 		
 
 		struct SignaturePlace

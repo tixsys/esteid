@@ -11,7 +11,7 @@ Dim strParam As String
 &apos;****************************************************************
 Sub Main	
 &apos;	OpenFile
-&apos;	GetCert	
+	GetCert	(&quot;KALA&quot;)
 	Signing	
 
 End Sub
@@ -152,7 +152,7 @@ rem			oSignDialog.endExecute()
 	oPINDialog.dispose()	
 End Function
 &apos;****************************************************************
-Function GetCert
+Function GetCert (strInData As String)
 	Dim Ctl As Object
 	Dim oSvc As Object
 	Dim oCertDial As Object
@@ -165,14 +165,16 @@ Function GetCert
 
 	DialogLibraries.LoadLibrary(&quot;HW&quot;)
 	oCertDial = CreateUnoDialog(DialogLibraries.HW.Cert)
-	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
+rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
 	Ctl = oCertDial.getControl(&quot;SignerCertListBox&quot;)
 	
-	For c=0 To Len(strCerts)
+
+	
+	For c=0 To Len(strInData)
 			
-		k = Instr(k+1, strCerts, &quot;;&quot;)
+		k = Instr(k+1, strInData, &quot;;&quot;)
 		If k then
-			strTemp = Mid(strCerts, j+1, (k-j-1))
+			strTemp = Mid(strInData, j+1, (k-j-1))
 			Ctl.AddItem(strTemp,i)
 			i=i+1
 			j = k			

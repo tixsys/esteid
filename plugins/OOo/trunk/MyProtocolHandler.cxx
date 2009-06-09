@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <iostream.h>
 #include "MyBdocBridge.h"
-//#include "MyOOoParams.h"
+
 
 #include "ListenerHelper.h"
 #include "MyProtocolHandler.h"
@@ -59,6 +59,7 @@
 #include <com/sun/star/system/SystemShellExecuteFlags.hpp>
 #include <com/sun/star/frame/XStorable.hpp>
 #include <com/sun/star/container/XContainerQuery.hpp>
+#include <com/sun/star/presentation/XPresentation.hpp>
 
 #include <osl/file.hxx>
 #include <cppuhelper/bootstrap.hxx> 
@@ -98,9 +99,16 @@ using com::sun::star::beans::NamedValue;
 using namespace com::sun::star::awt;
 using com::sun::star::view::XSelectionSupplier;
 using namespace com::sun::star::system;
+using com::sun::star::presentation::XPresentation;
 
-
+//--Global Variables--
 ListenerHelper aListenerHelper;
+OUString ousBDocFileURL;
+OUString ousBDocContURL;
+bool bContFlag;
+bool bPrevContFlag;
+
+//--------------------
 
 void BaseDispatch::ShowMessageBox( const Reference< XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText )
 {
@@ -151,6 +159,9 @@ void BaseDispatch::SendCommand( const com::sun::star::util::URL& aURL, const ::r
     
     aEvent.State <<= aCtrlCmd;
     aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
+//**********************************
+printf("BaseDispatch::SendCommand\n");
+//***********************************
 }
 
 void BaseDispatch::SendCommandTo( const Reference< XStatusListener >& xControl, const URL& aURL, const ::rtl::OUString& rCommand, const Sequence< NamedValue >& rArgs, sal_Bool bEnabled )
@@ -168,6 +179,9 @@ void BaseDispatch::SendCommandTo( const Reference< XStatusListener >& xControl, 
     
     aEvent.State <<= aCtrlCmd;
     xControl->statusChanged( aEvent );
+//**********************************
+printf("BaseDispatch::SendCommandTo\n");
+//***********************************
 }
 
 void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments ) throw ( Exception, RuntimeException)
@@ -176,25 +190,219 @@ void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 	Reference < XFrame > xFrame;
 	if ( aArguments.getLength() )
 	{
+
 		// das erste Argument ist immer der Frame, da ein ProtocolHandler den braucht um Zugriff
 		// auf den Context zu haben, in dem er aufgerufen wird
 		aArguments[0] >>= xFrame;
 		mxFrame = xFrame;
-	}
 
+//**********************************
+printf("MyProtocolHandler::initialize\n");
+//***********************************
+	}
+	bPrevContFlag = bContFlag;
+	bContFlag = false;
+	Reference < XController > xCtrl = mxFrame->getController();
+
+	//----------------- Get File component and URL -------------------------
+	Reference<XModel> xModel1(xCtrl->getModel(),UNO_QUERY);	
+	
+	Reference < XDesktop > pDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
+
+	Reference< XComponent > xCompMain = pDesktop->getCurrentComponent();
+
+	ousBDocFileURL = xModel1->getURL();
+	OString muffik = OUStringToOString(ousBDocFileURL, RTL_TEXTENCODING_ASCII_US);
+	printf("URL : %s\n",muffik.pData->buffer);
+	string strContainerPath = muffik.pData->buffer;
+	//----------------------------------------------------------------------
+	//----------------- If Bdoc Container, open it -------------------------
+	if (!memcmp(&strContainerPath[strContainerPath.size() - 5], ".bdoc", 5))
+	{
+		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
+		m_BdocBridge1->DigiInit();
+		m_BdocBridge1->DigiOpen(&strContainerPath[7]);
+				
+		string strTempFileUrl = "file://";
+		strTempFileUrl += m_BdocBridge1->pRetPath;
+		ousBDocContURL = ousBDocFileURL; //<-----Get access to the container in new frame!
+		ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+
+		bContFlag = true;
+		
+		Sequence< PropertyValue > loadProps(1);
+		loadProps[0] = PropertyValue();
+		loadProps[0].Name = OUString::createFromAscii("ReadOnly");
+		loadProps[0].Value <<= sal_True;
+
+		OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
+		OUString sOldName = mxFrame->getName(); 
+		
+		mxFrame->setName(sTarget); 
+
+	
+		// Get access to the global component loader of the office 
+		// for synchronous loading of documents. 
+		Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
+
+		// Load the document into the target frame by using our unambigous name 
+		// and special search flags. 
+		//Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, /*frame::FrameSearchFlag->CHILDREN*/4, loadProps)); 
+		Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
+		//Reference <XStatusbarController> xStatusBar(xComp2, UNO_QUERY);
+		mxFrame->setName(sOldName);
+		xCompMain->dispose();
+	}		
+	//----------------------------------------------------------------------
+
+/*	else if (bPrevContFlag) //-if it's a new frame after opening a bdoc container
+	{
+		muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
+		strContainerPath = muffik.pData->buffer;
+
+		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
+		m_BdocBridge1->DigiInit();
+		m_BdocBridge1->DigiOpen(&strContainerPath[7]);
+		//------------Fix sign data string from returned data---------				
+		string strSignData;
+		int k,l,m,n,o,p,q,r;
+		k=l=m=n=o=p=q=r=0;
+		for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
+		{	//Signer Name
+			while (m_BdocBridge1->pSignName[k] != '#')
+			{
+				if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] == ','))
+				{
+					strSignData += ";";
+					k++;
+				}
+				else
+					strSignData += m_BdocBridge1->pSignName[k];
+				k++;
+			}
+			k++;
+			strSignData += ";";
+
+			//Signer Role
+			if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Roll: ";
+				while (m_BdocBridge1->pSignRole[l] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignRole[l];
+					l++;
+				}
+				l++;
+			}
+			strSignData += ";";
+
+			//Signer AddRole
+			if (sizeof(m_BdocBridge1->pSignAddRole) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Resolutsioon: ";
+				while (m_BdocBridge1->pSignAddRole[m] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignAddRole[m];
+					m++;
+				}
+				m++;
+			}
+			strSignData += ";";
+
+			//Signing Time
+			while (m_BdocBridge1->pSignTime[n] != '#')
+			{
+				if ((m_BdocBridge1->pSignTime[n] == 'T') || (m_BdocBridge1->pSignTime[n] == 'Z'))
+				{
+					strSignData += " ";
+					
+				}
+				else
+					strSignData += m_BdocBridge1->pSignTime[n];
+				n++;
+			}
+			n++;
+			strSignData += ";";
+			
+			//Signing City
+			if (sizeof(m_BdocBridge1->pSignCity) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Linn: ";
+				while (m_BdocBridge1->pSignCity[o] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignCity[o];
+					o++;
+				}
+				o++;
+			}
+			strSignData += ";";
+
+			//Signing Region
+			while (m_BdocBridge1->pSignState[p] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignState[p];
+				p++;
+			}
+			p++;
+			strSignData += ";";
+
+			//Signing Postal nr
+			while (m_BdocBridge1->pSignPostal[q] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignPostal[q];
+				q++;
+			}
+			q++;
+			strSignData += ";";
+
+			//Signing Postal nr
+			while (m_BdocBridge1->pSignCountry[r] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignCountry[r];
+				r++;
+			}
+			r++;
+			strSignData += ";";
+
+			strSignData += "_____________________;";
+
+		}
+		strSignData = "macro:///HW.HW.GetCert(" + strSignData + ")";
+		//------------------------------------------------------------
+cout<<"mõmmik: "<<strSignData<<endl;	
+
+		
+		// dispose the local service manager
+		//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
+
+		//-------------Open Signature Viewer Macro------------------------
+		Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
+		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+		Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
+
+		Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+		//----------------------------------------------------------------
+	}*/
+
+	
 }
 
-Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(	const URL& aURL, const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags )
+Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(const URL& aURL, const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags )
 				throw( RuntimeException )
 {
+//**********************************
+printf("MyProtocolHandler::queryDispatch\n");
+//***********************************
 	Reference < XDispatch > xRet;
 	if ( !mxFrame.is() )
 		return 0;
 
 	Reference < XController > xCtrl = mxFrame->getController();
-	if ( xCtrl.is() && !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
+
+	if (xCtrl.is() && !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
 	{
 		Reference < XTextViewCursorSupplier > xCursor( xCtrl, UNO_QUERY );
+		Reference <XPresentation> xPresentation ( xCtrl, UNO_QUERY );
 		//Reference < XSpreadsheetView > xView( xCtrl, UNO_QUERY );
 		//if ( !xCursor.is() && !xView.is() )
 			// ohne ein entsprechendes Dokument funktioniert der Handler nicht
@@ -205,15 +413,21 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(	const URL& aUR
 			xRet = aListenerHelper.GetDispatch( mxFrame, aURL.Path );
 			if ( !xRet.is() )
 			{
-				xRet = xCursor.is() ? (BaseDispatch*) new WriterDispatch( mxMSF, mxFrame ) :
-					//(BaseDispatch*) new PresentationDispatch( mxMSF, mxFrame ) :
-					(BaseDispatch*) new CalcDispatch( mxMSF, mxFrame );
+				if (xPresentation.is())
+					xRet = (BaseDispatch*) new PresentationDispatch( mxMSF, mxFrame );
+				else
+					xRet = /*xCursor.is() ?*/ (BaseDispatch*) new WriterDispatch( mxMSF, mxFrame );
+					// :
+					//(BaseDispatch*) new CalcDispatch( mxMSF, mxFrame );
 				aListenerHelper.AddDispatch( xRet, mxFrame, aURL.Path );
+//**********************************
+printf("olen siin - MyProtocolHandler::queryDispatch2\n");
+//***********************************
 			}
 			
 		}
+		
 	}
-
 	return xRet;
 	
 }
@@ -221,6 +435,7 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(	const URL& aUR
 Sequence < Reference< XDispatch > > SAL_CALL MyProtocolHandler::queryDispatches( const Sequence < DispatchDescriptor >& seqDescripts )
 			throw( RuntimeException )
 {
+printf("MyProtocolHandler::queryDispatches\n");
     sal_Int32 nCount = seqDescripts.getLength();
     Sequence < Reference < XDispatch > > lDispatcher( nCount );
 
@@ -233,13 +448,14 @@ Sequence < Reference< XDispatch > > SAL_CALL MyProtocolHandler::queryDispatches(
 ::rtl::OUString MyProtocolHandler_getImplementationName ()
 	throw (RuntimeException)
 {
-	
+printf("MyProtocolHandler_getImplementationName\n");	
     return ::rtl::OUString::createFromAscii(MYPROTOCOLHANDLER_IMPLEMENTATIONNAME);
 }
 
 sal_Bool SAL_CALL MyProtocolHandler_supportsService( const ::rtl::OUString& ServiceName )
 	throw (RuntimeException)
 {
+printf("MyProtocolHandler_supportsService\n");
     return (
             ServiceName.equalsAscii(MYPROTOCOLHANDLER_SERVICENAME  ) ||
             ServiceName.equalsAscii("com.sun.star.frame.ProtocolHandler")
@@ -249,6 +465,7 @@ sal_Bool SAL_CALL MyProtocolHandler_supportsService( const ::rtl::OUString& Serv
 Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler_getSupportedServiceNames(  )
 	throw (RuntimeException)
 {
+printf("MyProtocolHandler_getSupportedServiceNames\n");
 	Sequence < ::rtl::OUString > aRet(1);
     aRet[0] = ::rtl::OUString::createFromAscii(MYPROTOCOLHANDLER_SERVICENAME);
     return aRet;
@@ -259,6 +476,7 @@ Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler_getSupportedServiceNames(
 Reference< XInterface > SAL_CALL MyProtocolHandler_createInstance( const Reference< XMultiServiceFactory > & rSMgr)
 	throw( Exception )
 {
+printf("MyProtocolHandler_createInstance\n");
 	return (cppu::OWeakObject*) new MyProtocolHandler( rSMgr );
 }
 
@@ -266,18 +484,21 @@ Reference< XInterface > SAL_CALL MyProtocolHandler_createInstance( const Referen
 ::rtl::OUString SAL_CALL MyProtocolHandler::getImplementationName(  )
 	throw (RuntimeException)
 {
+printf("MyProtocolHandler::getImplementationName\n");
 	return MyProtocolHandler_getImplementationName();
 }
 
 sal_Bool SAL_CALL MyProtocolHandler::supportsService( const ::rtl::OUString& rServiceName )
 	throw (RuntimeException)
 {
+printf("MyProtocolHandler::supportsService\n");
     return MyProtocolHandler_supportsService( rServiceName );
 }
 
 Sequence< ::rtl::OUString > SAL_CALL MyProtocolHandler::getSupportedServiceNames(  )
 	throw (RuntimeException)
 {
+printf("MyProtocolHandler::getSupportedServiceNames\n");
     return MyProtocolHandler_getSupportedServiceNames();
 }
 
@@ -290,6 +511,12 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 		E.g. An open db beamer in combination with the My-Dialog
 		can force such strange situation :-(
 	 */
+printf("BaseDispatch::dispatch\n");
+OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
+	printf("ousBDocContURL : %s\n",muffik.pData->buffer);
+	muffik = OUStringToOString(ousBDocFileURL, RTL_TEXTENCODING_ASCII_US);
+	printf("ousBDocFileURL : %s\n",muffik.pData->buffer);
+	
 	Reference< XInterface > xSelfHold(static_cast< XDispatch* >(this), UNO_QUERY);
 
 	if ( !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
@@ -297,13 +524,6 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 		if ( !aURL.Path.compareToAscii("Command1" ))
 		{
 			MyBdocBridge * m_BdocBridge = MyBdocBridge::getInstance();
-			//MyOOoParams::MyOOoParams mOOoParams;	
-/*			m_BdocBridge->teemingilollus1();
-			string str_targetPath = "/home/mark/Desktop/Juhan.bdoc";
-			string str_inputPath = "/home/mark/Desktop/Juhan.txt";
-			m_BdocBridge->DigiInit();
-			m_BdocBridge->DigiSign();	
-*/
 
 //====================================================================================================
 //-------------See jura käivitab olemasoleva factory kontrolleriga macro, kuid ei saa returni---------
@@ -361,33 +581,204 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
 			
 			Reference < XModel> xMyModel (xComp, UNO_QUERY);
-			pParam = xMyModel->getURL();
-			muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-			printf("URL : %s\n",muff.pData->buffer);	
+			//pParam = xMyModel->getURL();
+			//muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+			//printf("URL : %s\n",muff.pData->buffer);	
 			//check which OOo service app is running
 			//if ()
 			//{						
 				//Reference < XTextDocument> xDoc(xComp, UNO_QUERY);
 
 			ostrPath = OUStringToOString(xMyModel->getURL(), RTL_TEXTENCODING_UTF8);
-
+			
+			//for bdoc container
+			muff = OUStringToOString(ousLocBdocContUrl, RTL_TEXTENCODING_ASCII_US);
+			string strBdocUrl;
+			strBdocUrl = muff.pData->buffer;
+			
 			//if file has not been saved
 			if (!memcmp(ostrPath.pData->buffer, "", 1))
 			{
 				i_try = 0;
 				::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Salvesamata Fail!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Palun salvestage fail!" )));
 			}
+
+//=================================================================================	
+//----------------------If We are dealing with BDoc container----------------------
+			else if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag)
+			{
+				m_BdocBridge->DigiInit();
+				m_BdocBridge->DigiOpen(&strBdocUrl[7]);
+				
+	//			string strTempFileUrl = "file://";
+	//			strTempFileUrl += m_BdocBridge->pRetPath;
+				
+				//------------Fix sign data string from returned data---------				
+				string strSignData;
+				int k,l,m,n,o,p,q,r;
+				k=l=m=n=o=p=q=r=0;
+				for (int cnt=0; cnt<m_BdocBridge->iSignCnt; cnt++)
+				{	//Signer Name
+					while (m_BdocBridge->pSignName[k] != '#')
+					{
+						if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] == ','))
+						{
+							strSignData += ";";
+							k++;
+						}
+						else
+							strSignData += m_BdocBridge->pSignName[k];
+						k++;
+					}
+					k++;
+					strSignData += ";";
+
+					//Signer Role
+					if (sizeof(m_BdocBridge->pSignRole) > m_BdocBridge->iSignCnt)
+					{
+						//strSignData += "Roll: ";
+						while (m_BdocBridge->pSignRole[l] != '#')
+						{
+							strSignData += m_BdocBridge->pSignRole[l];
+							l++;
+						}
+						l++;
+					}
+					strSignData += ";";
+
+					//Signer AddRole
+					if (sizeof(m_BdocBridge->pSignAddRole) > m_BdocBridge->iSignCnt)
+					{
+						//strSignData += "Resolutsioon: ";
+						while (m_BdocBridge->pSignAddRole[m] != '#')
+						{
+							strSignData += m_BdocBridge->pSignAddRole[m];
+							m++;
+						}
+						m++;
+					}
+					strSignData += ";";
+
+					//Signing Time
+					while (m_BdocBridge->pSignTime[n] != '#')
+					{
+						if ((m_BdocBridge->pSignTime[n] == 'T') || (m_BdocBridge->pSignTime[n] == 'Z'))
+						{
+							strSignData += " ";
+							
+						}
+						else
+							strSignData += m_BdocBridge->pSignTime[n];
+						n++;
+					}
+					n++;
+					strSignData += ";";
+					
+					//Signing City
+					if (sizeof(m_BdocBridge->pSignCity) > m_BdocBridge->iSignCnt)
+					{
+						//strSignData += "Linn: ";
+						while (m_BdocBridge->pSignCity[o] != '#')
+						{
+							strSignData += m_BdocBridge->pSignCity[o];
+							o++;
+						}
+						o++;
+					}
+					strSignData += ";";
+
+					//Signing Region
+					while (m_BdocBridge->pSignState[p] != '#')
+					{
+						strSignData += m_BdocBridge->pSignState[p];
+						p++;
+					}
+					p++;
+					strSignData += ";";
+
+					//Signing Postal nr
+					while (m_BdocBridge->pSignPostal[q] != '#')
+					{
+						strSignData += m_BdocBridge->pSignPostal[q];
+						q++;
+					}
+					q++;
+					strSignData += ";";
+
+					//Signing Postal nr
+					while (m_BdocBridge->pSignCountry[r] != '#')
+					{
+						strSignData += m_BdocBridge->pSignCountry[r];
+						r++;
+					}
+					r++;
+					strSignData += ";";
+
+					strSignData += "_____________________;";
+cout<<"mõmmik: "<<strSignData<<endl;
+				}
+				strSignData = "macro:///HW.HW.GetCert(" + strSignData + ")";
+				//------------------------------------------------------------
+				
+
+	//			OUString sURL(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+				//OUString sURL(RTL_CONSTASCII_USTRINGPARAM("file:///home/mark/Desktop/Juhan.txt"));
+	//			OUString sOldName = mxFrame->getName(); 
+	//			OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
+	//			mxFrame->setName(sTarget); 
+
+	//			Sequence< PropertyValue > loadProps(1);
+	//			loadProps[0] = PropertyValue();
+	//			loadProps[0].Name = OUString::createFromAscii("ReadOnly");
+	//			loadProps[0].Value <<= sal_True;
+
 			
+				// Get access to the global component loader of the office 
+				// for synchronous loading of documents. 
+	//			Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
+
+				// Load the document into the target frame by using our unambigous name 
+				// and special search flags. 
+	//			xComp = xLoader->loadComponentFromURL( sURL, sTarget, /*::com::sun::star::frame::FrameSearchFlag->CHILDREN*/4, loadProps); 
+
+				
+
+				//-------------Open Signature Viewer Macro------------------------
+				Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+				Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
+ 
+				Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+				//----------------------------------------------------------------
+
+				
+	//			mxFrame->setName(sOldName);
+				i_try = 0;
+				
+			}
+//=================================================================================			
 			else
 			{
-				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
-				xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-				muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-								
-//printf("macrost1: %s\n",muff.pData->buffer);			
-				//--If Cacel button--
-				if (!memcmp(muff.pData->buffer, "*", 1))
+				strBdocUrl = "";
+				m_BdocBridge->DigiInit();
+				m_BdocBridge->DigiCheckCert();
+				if (m_BdocBridge->ret == 1)
+				{ //NO card or cardreader
+					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
+					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					i_try = 0;
+				}
+
+				else
+				{
+					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
+					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+					muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+								
+//printf("macrost1: %s\n",muff.pData->buffer);				
+					//--If Cacel button--
+					if (!memcmp(muff.pData->buffer, "*", 1))
+						i_try = 0;
+				}
 			}
 			
 					
@@ -410,7 +801,16 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					//--If OK button--
 					if (memcmp(ostrPin.pData->buffer, "*", 1))
 					{	//sign file --if not success retry					
-						m_BdocBridge->DigiInit();						
+						if (strBdocUrl.size())
+						//if (!memcmp (ostrPath.pData->buffer, &strBdocUrl, strBdocUrl.size()))
+						{	//- tõsta see hiljem else sisse!!!
+							//if its an open bdoc container	
+								 			
+							m_BdocBridge->DigiInit();
+							m_BdocBridge->DigiOpen(&strBdocUrl[7]);
+printf("!!!sees!!!\n");
+						}
+printf("!!!Allkirjastan!!!\n");
 						m_BdocBridge->DigiSign((char*)ostrPath.pData->buffer, (char*)ostrParam.pData->buffer, (char*)ostrPin.pData->buffer);	
 
 						//printf("RETURN OLI: %d\n", m_BdocBridge->ret);
@@ -437,6 +837,11 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							{ //IF Canceled
 								i_try = 0;
 							}
+						}
+						else if (m_BdocBridge->ret == 100)
+						{
+							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
+							i_try = 0;
 						}
 					}
 				}
@@ -485,11 +890,20 @@ void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener 
 		}
 		aListenerHelper.AddListener( mxFrame, xControl, aURL.Path );
 	}
+printf("BaseDispatch::addStatusListener\n");
+OString osBDocContPath = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
+printf("Cont URL in addStatusListener: %s\n",osBDocContPath.pData->buffer);
+	
 }
 
 void SAL_CALL BaseDispatch::removeStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL ) throw (RuntimeException)
 {
 	aListenerHelper.RemoveListener( mxFrame, xControl, aURL.Path );
+	
+printf("BaseDispatch::removeStatusListener\n");
+OString osBDocFilePath = OUStringToOString(ousBDocFileURL, RTL_TEXTENCODING_ASCII_US);
+printf("URL in removeStatusListener: %s\n",osBDocFilePath.pData->buffer);
+
 }
 
 void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (RuntimeException)
@@ -518,6 +932,7 @@ void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (Run
 		    }
 		}
 ***/	}
+printf("BaseDispatch::controlEvent\n");
 }
  
 BaseDispatch::BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
@@ -527,28 +942,23 @@ BaseDispatch::BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::
         , msDocService( rServiceName )
         , mbButtonEnabled( sal_True )//, mbButtonEnabled( sal_False )
 {	
-
-/*	
-	OUString sURL(RTL_CONSTASCII_USTRINGPARAM("private:factory/swriter"));
-	OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
-	mxDesktopFrame->setName(sTarget); 
-	
-	// Get access to the global component loader of the office 
-	// for synchronous loading of documents. 
-	Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
-
-	// Load the document into the target frame by using our unambigous name 
-	// and special search flags. 
-	Reference <XComponent> xComp = xLoader->loadComponentFromURL( sURL, sTarget, /*::com::sun::star::frame::FrameSearchFlag->CHILDREN*///4, lArgs); 
-
+//**********************************
+printf("BaseDispatch::BaseDispatch\n");
+//***********************************
+	ousLocBdocContUrl = ousBDocContURL;
+	iLocPrevContFlag = bPrevContFlag;
 }
 
 
 BaseDispatch::~BaseDispatch()
 {
+//**********************************
+printf("BaseDispatch::~\n");
+//***********************************
 	mxFrame.clear();
 	mxMSF.clear();
 }
 
 ///================================================
+
 

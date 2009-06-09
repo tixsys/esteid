@@ -97,12 +97,17 @@ protected:
     	::rtl::OUString msDocService;
     	::rtl::OUString maComboBoxText;
     	sal_Bool        mbButtonEnabled;
+	
+	::rtl::OUString ousLocBdocContUrl;
+	int iLocPrevContFlag;
 
 public:
 	BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
         const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame, const ::rtl::OUString& rServiceName );
 
 	virtual ~BaseDispatch();
+		
+	
 
 	void ShowMessageBox( const com::sun::star::uno::Reference< com::sun::star::frame::XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText );
     void SendCommand( const com::sun::star::util::URL& aURL, const ::rtl::OUString& rCommand, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rArgs, sal_Bool bEnabled );
@@ -128,11 +133,9 @@ public:
 	WriterDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.text.TextDocument" ) ) )
-	{
-
-	}
+	{}
 };
-
+/*
 class CalcDispatch : public BaseDispatch
 {
 public:
@@ -141,15 +144,15 @@ public:
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sheet.SpreadSheetDocument" ) ) )
 	{}
 };
-/*
+*/
 class PresentationDispatch : public BaseDispatch
 {
 public:
 	PresentationDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
 		const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame )
-        : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.sheet.PresentationDocument" ) ) )
+        : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.presentation.PresentationDocument"/*"com.sun.star.drawing.GenericDrawingDocument" */) ) )
 	{}
 };
-*/
+
 
 #endif

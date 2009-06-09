@@ -36,16 +36,18 @@
 
 void SAL_CALL WriterListener::notifyEvent( const ::com::sun::star::document::EventObject& aEvent ) throw (com::sun::star::uno::RuntimeException)
 {
+printf("WriterListener::notifyEvent\n");
 }
 
 void SAL_CALL WriterListener::disposing( const com::sun::star::lang::EventObject& aSource ) throw( com::sun::star::uno::RuntimeException )
 {
+printf("WriterListener::disposing\n");
 }
 
 WriterListener::WriterListener( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF)
 	: mxMSF( rxMSF )
 {
-	
+printf("WriterListener::WriterListener\n");	
 }
 
 

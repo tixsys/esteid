@@ -53,7 +53,7 @@ class MyListener : public cppu::WeakImplHelper2< css::task::XJob         ,
 
     static css::uno::Reference< css::uno::XInterface > st_createInstance(const css::uno::Reference< css::lang::XMultiServiceFactory >& xSMGR);
 };
-
+/*
 class CalcListener : public cppu::WeakImplHelper1< css::document::XEventListener >
 {
     private:
@@ -74,7 +74,7 @@ class CalcListener : public cppu::WeakImplHelper1< css::document::XEventListener
 	virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
         throw (css::uno::RuntimeException);
 };
-/*
+*/
 class PresentationListener : public cppu::WeakImplHelper1< css::document::XEventListener >
 {
     private:
@@ -82,9 +82,9 @@ class PresentationListener : public cppu::WeakImplHelper1< css::document::XEvent
 
 
     public:
-        PresentationListener(const css::uno::Reference< css::lang::XMultiServiceFactory > &rxMSF)
-            : mxMSF( rxMSF )
-        {}
+        PresentationListener(const css::uno::Reference< css::lang::XMultiServiceFactory > &rxMSF);
+        //    : mxMSF( rxMSF )
+        //{}
 
         virtual ~PresentationListener()
         {}
@@ -95,7 +95,7 @@ class PresentationListener : public cppu::WeakImplHelper1< css::document::XEvent
 	virtual void SAL_CALL disposing(const css::lang::EventObject& aEvent)
         throw (css::uno::RuntimeException);
 };
-*/
+
 class WriterListener : public cppu::WeakImplHelper1< css::document::XEventListener >
 {
     private:
