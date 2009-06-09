@@ -79,7 +79,7 @@ MainWindow::MainWindow( QWidget *parent )
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-	//homeOpenUtility->hide();
+	viewSignaturesError->hide();
 
 	connect( signContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );
