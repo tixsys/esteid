@@ -14,7 +14,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class Document
+    class EXP_DIGIDOC Document
     {
 
       public:

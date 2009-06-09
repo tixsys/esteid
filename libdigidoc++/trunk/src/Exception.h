@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "Exports.h"
+
 namespace digidoc
 {
     /**
@@ -13,7 +15,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class Exception
+    class EXP_DIGIDOC Exception
     {
 
       public:

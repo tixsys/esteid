@@ -24,7 +24,7 @@ namespace digidoc
      * @author Janari Põld
      */
 	class PKCS11SignerPrivate;
-    class PKCS11Signer : public Signer
+    class EXP_DIGIDOC PKCS11Signer : public Signer
     {
 
       public:

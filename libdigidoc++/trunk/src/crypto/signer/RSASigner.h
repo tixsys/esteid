@@ -12,7 +12,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class RSASigner : public Signer
+    class EXP_DIGIDOC RSASigner : public Signer
     {
 
       public:

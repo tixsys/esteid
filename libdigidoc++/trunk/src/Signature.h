@@ -13,7 +13,7 @@
 
 namespace digidoc
 {
-    class Signature
+    class EXP_DIGIDOC Signature
     {
       friend class BDoc;
 

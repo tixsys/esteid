@@ -12,7 +12,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class EstEIDSigner : public PKCS11Signer
+    class EXP_DIGIDOC EstEIDSigner : public PKCS11Signer
     {
 
       public:
@@ -29,7 +29,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class EstEIDConsolePinSigner : public EstEIDSigner
+    class EXP_DIGIDOC EstEIDConsolePinSigner : public EstEIDSigner
     {
 
       public:

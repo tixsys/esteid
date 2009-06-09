@@ -8,12 +8,15 @@
 
 #include "../io/IOException.h"
 
+#define URI_SHA1 "http://www.w3.org/2000/09/xmldsig#sha1"
+#define URI_SHA256 "http://www.w3.org/2001/04/xmlenc#sha256"
+
 namespace digidoc
 {
     /**
      * Digest calculation interface.
      */
-    class Digest
+    class EXP_DIGIDOC Digest
     {
 
       public:
@@ -32,8 +35,8 @@ namespace digidoc
           static int toMethod(const std::string& methodUri) throw(IOException);
           static bool isSupported(const std::string& methodUri);
 
-          static const std::string URI_SHA1;
-          static const std::string URI_SHA256;
+          //static const std::string URI_SHA1;
+          //static const std::string URI_SHA256;
 
     };
 

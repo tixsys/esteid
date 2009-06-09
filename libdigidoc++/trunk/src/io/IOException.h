@@ -12,7 +12,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class IOException : public Exception
+    class EXP_DIGIDOC IOException : public Exception
     {
 
       public:

@@ -7,7 +7,7 @@
 
 namespace digidoc
 {
-    class SignException : public Exception
+    class EXP_DIGIDOC SignException : public Exception
     {
 
       public:

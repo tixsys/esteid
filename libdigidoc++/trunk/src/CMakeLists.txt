@@ -79,14 +79,6 @@ if(MSVC)
     )
 endif(MSVC)
 
-# FIXME: to compile libdigidoc++ as a shared dll, we need to either
-# create a .def file or use __declspec(dllexport) export directives.
-if(WIN32)
-    set(DIGIDOC_LIB_TYPE STATIC)
-else(WIN32)
-    set(DIGIDOC_LIB_TYPE SHARED)
-endif(WIN32)
-
 # xCode and static linking hacks
 if(APPLE)
 	include_directories(/Library/OpenSC/include)
@@ -98,7 +90,7 @@ if(APPLE)
 	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY} ${LTDL_LIBRARY})
 endif(APPLE)
 
-add_library(digidocpp ${DIGIDOC_LIB_TYPE} ${digidocpp_SRCS} ${minizip_SRCS})
+add_library(digidocpp SHARED ${digidocpp_SRCS} ${minizip_SRCS})
 target_link_libraries(digidocpp
     ${ICONV_LIBRARIES}
     ${OPENSSL_LIBRARIES}
@@ -132,6 +124,7 @@ install( FILES
     Conf.h
     Document.h
     Exception.h
+    Exports.h
     SignatureBES.h
     SignatureException.h
     Signature.h

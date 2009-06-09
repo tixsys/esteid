@@ -17,7 +17,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class RSACrypt
+    class EXP_DIGIDOC RSACrypt
     {
 
       public:

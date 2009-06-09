@@ -10,7 +10,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
-    class ISerialize
+    class EXP_DIGIDOC ISerialize
     {
 
       public:
