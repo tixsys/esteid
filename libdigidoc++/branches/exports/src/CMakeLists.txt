@@ -124,6 +124,7 @@ install( FILES
     Conf.h
     Document.h
     Exception.h
+    Exports.h
     SignatureBES.h
     SignatureException.h
     Signature.h
