@@ -73,12 +73,14 @@ QByteArray CertificateDialog::addHexSeparators( const QByteArray &data ) const
 	return ret;
 }
 
-void CertificateDialog::on_parameters_itemClicked( QTreeWidgetItem *item, int )
+void CertificateDialog::on_parameters_itemSelectionChanged()
 {
-	if( !item->data( 1, Qt::UserRole ).isNull() )
-		parameterContent->setPlainText( item->data( 1, Qt::UserRole ).toString() );
+	if ( !parameters->selectionModel()->hasSelection() || !parameters->selectedItems().size() )
+		return;
+	if( !parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString().isEmpty() )
+		parameterContent->setPlainText( parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString() );
 	else
-		parameterContent->setPlainText( item->text( 1 ) );
+		parameterContent->setPlainText( parameters->selectedItems().value(0)->text( 1 ) );
 }
 
 void CertificateDialog::save()
