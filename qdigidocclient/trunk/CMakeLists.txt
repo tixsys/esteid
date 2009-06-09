@@ -22,6 +22,7 @@ find_package( LibDigiDoc++ REQUIRED )
 SET( MOC_HEADERS
 	src/CertificateWidget.h
 	src/DigiDoc.h
+	src/IKValidator.h
 	src/MainWindow.h
 	src/MobileDialog.h
 	src/Poller.h
@@ -41,6 +42,7 @@ SET( SOURCES
 	src/CertificateWidget.cpp
 	src/main.cpp
 	src/DigiDoc.cpp
+	src/IKValidator.cpp
 	src/MainWindow.cpp
 	src/MobileDialog.cpp
 	src/Poller.cpp

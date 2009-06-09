@@ -21,6 +21,8 @@
  */
 
 #include "MainWindow.h"
+
+#include "IKValidator.h"
 #include "MobileDialog.h"
 #include "PrintSheet.h"
 #include "Settings.h"
@@ -80,6 +82,9 @@ MainWindow::MainWindow( QWidget *parent )
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	viewSignaturesError->hide();
+
+	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
+	connect( infoMobileCode, SIGNAL(editingFinished()), SLOT(enableSign()) );
 
 	connect( signContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );
@@ -284,6 +289,7 @@ void MainWindow::buttonClicked( int button )
 				signStateInput->text(), signZipInput->text(),
 				signCountryInput->text(), signRoleInput->text(),
 				signResolutionInput->text() );
+			m->sign( infoMobileCode->text().toLatin1(), infoMobileCell->text().toLatin1() );
 			m->exec();
 			if ( m->signer() && doc->signMobile( m->signer() ) )
 			{
@@ -346,6 +352,7 @@ void MainWindow::enableSign()
 {
 	bool mobile = infoSignMobile->isChecked();
 	if( doc->isNull() ||
+		(mobile && !IKValidator::isValid( infoMobileCode->text() )) ||
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );

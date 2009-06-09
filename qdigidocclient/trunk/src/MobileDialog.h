@@ -42,10 +42,10 @@ public:
     MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
 	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 							const QString &country, const QString &role, const QString &role2 );
+	void sign( const QByteArray &ssid, const QByteArray &cell );
 	digidoc::QMobileSigner* signer();
 
 private Q_SLOTS:
-    void on_buttonNext_clicked();
     void sslErrors(const QList<QSslError> &);
     void httpRequestFinished( int id, bool error );
 
@@ -77,6 +77,7 @@ private:
     QTimer *m_timer;
 	QString signature;
 	digidoc::QMobileSigner *m_signer;
+	QByteArray ssid, cell;
 
     int addedFiles;
     int sessionCode;

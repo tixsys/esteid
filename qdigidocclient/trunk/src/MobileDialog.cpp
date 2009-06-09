@@ -52,20 +52,6 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 
 digidoc::QMobileSigner* MobileDialog::signer() { return m_signer; }
 
-void MobileDialog::on_buttonNext_clicked()
-{
-    switch( pages->currentIndex() )
-    {
-        case Start:
-            if ( inputPhoneNumber->text().isEmpty() || inputSSID->text().isEmpty() )
-                return;
-            startSession();
-            pages->setCurrentIndex( Challenge );
-            break;
-        case Challenge: break;
-    }
-}
-
 void MobileDialog::sslErrors(const QList<QSslError> &)
 { m_http->ignoreSslErrors(); }
 
@@ -104,8 +90,10 @@ void MobileDialog::httpRequestFinished( int id, bool error )
     m_callBackList.remove( id );
 }
 
-void MobileDialog::startSession()
+void MobileDialog::sign( const QByteArray &_ssid, const QByteArray &_cell )
 {
+	ssid = _ssid;
+	cell = _cell;
     QByteArray message = "<SigDocXML xsi:type=\"xsd:String\"></SigDocXML>"
                         "<bHoldSession xsi:type=\"xsd:boolean\">true</bHoldSession>"
                         "<datafile xsi:type=\"m:DataFileData\"></datafile>";
@@ -176,8 +164,8 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 void MobileDialog::startSign()
 {
     QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>"
-                        "<SignerIDCode xsi:type=\"xsd:String\">" + inputSSID->text().toLatin1() + "</SignerIDCode>"
-                        "<SignerPhoneNo xsi:type=\"xsd:String\">" + inputPhoneNumber->text().toLatin1() + "</SignerPhoneNo>"
+						"<SignerIDCode xsi:type=\"xsd:String\">" + ssid + "</SignerIDCode>"
+						"<SignerPhoneNo xsi:type=\"xsd:String\">" + cell + "</SignerPhoneNo>"
 						"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
 						"<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
                         "<AdditionalDataToBeDisplayed xsi:type=\"xsd:String\">DigiDoc3</AdditionalDataToBeDisplayed>"

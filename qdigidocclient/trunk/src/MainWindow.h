@@ -38,6 +38,7 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
+	void enableSign();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
 	void on_infoSignMobile_toggled( bool checked );
@@ -73,7 +74,6 @@ private:
 	void loadDocuments( QTreeWidget *view );
 	void parseParams();
 	void setCurrentPage( Pages page );
-	void enableSign();
 
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
