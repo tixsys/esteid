@@ -73,6 +73,7 @@ private:
 	void loadDocuments( QTreeWidget *view );
 	void parseParams();
 	void setCurrentPage( Pages page );
+	void enableSign();
 
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;

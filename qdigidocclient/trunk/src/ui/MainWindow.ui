@@ -117,7 +117,7 @@ padding-left: 10px;
 padding-right: 10px;
 }
 
-#info
+#infoCard, #infoMobile
 { font: bold; }
 
 #utilityLabel
@@ -363,20 +363,62 @@ padding: 5px;
              </item>
             </layout>
            </item>
-           <item row="0" column="1" rowspan="2">
+           <item row="0" column="1" rowspan="3">
             <widget class="QLabel" name="infoLogo"/>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="info">
-             <property name="font">
-              <font>
-               <family>Arial, Liberation Sans</family>
-               <pointsize>-1</pointsize>
-               <weight>75</weight>
-               <italic>false</italic>
-               <bold>true</bold>
-              </font>
+            <widget class="QStackedWidget" name="infoStack">
+             <property name="currentIndex">
+              <number>0</number>
              </property>
+             <widget class="QLabel" name="infoCard">
+              <property name="font">
+               <font>
+                <family>Arial, Liberation Sans</family>
+                <pointsize>-1</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+             </widget>
+             <widget class="QWidget" name="infoMobile">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="infoMobileCellLabel">
+                 <property name="text">
+                  <string>Cell number:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLineEdit" name="infoMobileCell"/>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="infoMobileCodeLabel">
+                 <property name="text">
+                  <string>Personal code:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="infoMobileCode"/>
+               </item>
+               <item row="2" column="0">
+                <spacer name="infoMobileSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
@@ -942,8 +984,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>288</width>
-               <height>176</height>
+               <width>88</width>
+               <height>18</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

@@ -342,6 +342,30 @@ void MainWindow::dropEvent( QDropEvent *e )
 		parseParams();
 }
 
+void MainWindow::enableSign()
+{
+	bool mobile = infoSignMobile->isChecked();
+	if( doc->isNull() ||
+		(!mobile && !doc->signCert().isValid()) )
+	{
+		signButton->setEnabled( false );
+		return;
+	}
+
+	bool cardOwnerSignature = false;
+	const QByteArray serialNumber = mobile ?
+		infoMobileCode->text().toLatin1() : doc->signCert().subjectInfo( "serialNumber" ).toLatin1();
+	Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
+	{
+		if( c.cert().subjectInfo( "serialNumber" ) == serialNumber )
+		{
+			cardOwnerSignature = true;
+			break;
+		}
+	}
+	signButton->setEnabled( !cardOwnerSignature );
+}
+
 void MainWindow::loadDocuments( QTreeWidget *view )
 {
 	view->clear();
@@ -387,21 +411,16 @@ void MainWindow::on_languages_activated( int index )
 	showCardStatus();
 }
 
-void MainWindow::on_infoSignMobile_toggled( bool )
+void MainWindow::on_infoSignMobile_toggled( bool checked )
 {
-	if( doc->isNull() )
-		return;
-	bool cardOwnerSignature = false;
-	Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
+	infoStack->setCurrentIndex( checked ? 1 : 0 );
+	if( checked )
 	{
-		if( c.cert().subjectInfo( "serialNumber" ) == doc->signCert().subjectInfo( "serialNumber" ) )
-		{
-			cardOwnerSignature = true;
-			break;
-		}
+		infoLogo->setPixmap( QPixmap() );
+		enableSign();
 	}
-	signButton->setEnabled( infoSignMobile->isChecked() ||
-		(!cardOwnerSignature && doc->signCert().isValid()) );
+	else
+		showCardStatus();
 }
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
@@ -545,7 +564,7 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		on_infoSignMobile_toggled( infoSignMobile->isChecked() );
+		enableSign();
 		signAddFile->setVisible( doc->signatures().isEmpty() );
 		signButton->setFocus();
 		break;
@@ -643,7 +662,7 @@ void MainWindow::showCardStatus()
 		signSigner->setText( QString() );
 	}
 
-	info->setText( content );
+	infoCard->setText( content );
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
