@@ -58,7 +58,7 @@ input[type="button"] { cursor: hand; }
 .buttonSelectedBottom { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
 .buttonBottom { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}
 
-.rightContent {position: absolute; left: 290px; margin-top: 10px; height: 180px; padding-left: 30px;}
+.rightContent {position: absolute; left: 290px; width: 245px; margin-top: 10px; height: 180px; padding-left: 30px;}
 #signBottomButtons, #authBottomButtons { position: absolute; bottom:0px; left: 0px; height: 30px; width:250; z-index: 1; }
 
 .keyBlocked { position: absolute; bottom: 35px; width: 220px; padding: 5px;
@@ -68,3 +68,5 @@ a:link {color: #509b00; text-decoration: none;}
 a:hover, a:focus {color: #509b00; text-decoration: underline;}	
 
 label	 {color: #355670; font-weight: bold;}
+
+#statusBar { position: absolute; left: 10px; bottom:5px; width: 500px; height: 20px; }
