@@ -1,4 +1,4 @@
-﻿var emailsLoaded = false;
+var emailsLoaded = false;
 var activeCardId = "";
 
 document.onkeyup = checkAccessKeys;
@@ -270,8 +270,10 @@ function savePicture()
 function setPicture( img, code )
 {
 	if ( code != "" )
-		alert( _(code) );
-	else {
+	{
+		var codes = code.split( "|" );
+		alert( _(codes[0]) + ( typeof codes[1] != "undefined" ? "\n" + codes[1] : "") );
+	} else {
 		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="' + img + '">';
 		document.getElementById('savePhoto').style.display = 'block';
 	}

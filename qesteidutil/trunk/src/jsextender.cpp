@@ -293,7 +293,7 @@ void JsExtender::loadPicture()
 				return;
 			}
 		}
-		jsCall( "setPicture", "", "loadPicFailed3" );
+		jsCall( "setPicture", "", QString( "loadPicFailed3|%1" ).arg( file.errorString() ) );
 	} else { //probably got xml error string
 		QString result2 = "loadPicFailed2";
 		xml.clear();
