@@ -87,11 +87,11 @@ void CertificateDialog::save()
 {
 	QString file = QFileDialog::getSaveFileName( this,
 		tr("Save certificate"),
-		QString( "%1%2%3.pem" )
+		QString( "%1%2%3.cer" )
 			.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
 			.arg( QDir::separator() )
 			.arg( d->cert.subjectInfo( "serialNumber" ) ),
-		tr("Certificates (*.pem *.crt *.cer)") );
+		tr("Certificates (*.cer *.crt *.pem)") );
 	if( file.isEmpty() )
 		return;
 
