@@ -31,6 +31,13 @@ function checkAccessKeys(e)
 	}		
 }
 
+function checkNumeric(e)
+{
+	if ( e.keyCode == 13 || String.fromCharCode(e.keyCode).match(/[\d]/) )
+		return true;
+	return false;
+}
+
 function handlekey(nextItem)
 {
 	if ( window.event.keyCode != 13 )
