@@ -7,22 +7,13 @@ using namespace digidoc;
 
 WDoc::WDoc(): m_doc(NULL) { setType( BDocType ); }
 WDoc::WDoc( DocumentType type ): m_doc(NULL) { setType( type ); }
-WDoc::WDoc( ADoc *doc )
+WDoc::WDoc( ADoc *doc ) { m_doc = doc; }
+
+WDoc::~WDoc()
 {
-	BDoc *bdoc = static_cast<BDoc*>( doc );
-	if( bdoc )
-		m_type = BDocType;
-	DDoc *ddoc = static_cast<DDoc*>( doc );
-	if( ddoc )
-		m_type = DDocType;
-
-	if( !bdoc && !ddoc )
-		m_type = CustomType;
-
-	m_doc = doc;
+	if( m_doc )
+		delete m_doc;
 }
-
-WDoc::~WDoc() { delete m_doc; }
 
 WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
@@ -30,20 +21,11 @@ WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	std::string ext = serializer->getPath().substr( len - 4, len );
 
 	if( ext == "bdoc" )
-	{
 		m_doc = new BDoc( serializer );
-		m_type = BDocType;
-	}
 	else if( ext == "ddoc" )
-	{
 		m_doc = new DDoc( serializer );
-		m_type = DDocType;
-	}
 	else
-	{
-		m_type = CustomType;
 		throw IOException( __FILE__, __LINE__, "Unknow document format" );
-	}
 }
 
 void WDoc::addDocument(const Document& document) throw(BDocException)
@@ -112,7 +94,6 @@ void WDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 
 void WDoc::setType( DocumentType type )
 {
-	m_type = BDocType;
 	if( m_doc ) delete m_doc;
 	switch( type )
 	{
@@ -137,5 +118,3 @@ unsigned int WDoc::signatureCount() const
 
 	return m_doc->signatureCount();
 }
-
-WDoc::DocumentType WDoc::type() const { return m_type; }

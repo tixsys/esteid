@@ -12,6 +12,7 @@ namespace digidoc
 class EXP_DIGIDOC ADoc
 {
 public:
+	virtual ~ADoc() {}
 	virtual void save() throw(IOException, BDocException) = 0;
 	virtual void saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException) = 0;
 	virtual void addDocument(const Document& document) throw(BDocException) = 0;

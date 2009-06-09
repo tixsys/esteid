@@ -12,7 +12,6 @@ public:
 	{
 		BDocType,
 		DDocType,
-		CustomType,
 	};
 
 	WDoc();
@@ -32,12 +31,10 @@ public:
 	unsigned int signatureCount() const;
 	void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
 
-	DocumentType type() const;
 	void setType( DocumentType type );
 
 private:
 	ADoc *m_doc;
-	DocumentType m_type;
 };
 
 }

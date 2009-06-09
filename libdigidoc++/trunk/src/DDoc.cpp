@@ -78,6 +78,9 @@ DDocPrivate::DDocPrivate()
 
 DDocPrivate::~DDocPrivate()
 {
+	for( std::vector<DSignature*>::iterator i = signatures.begin();
+		i != signatures.end(); ++i )
+		delete *i;
 	if( !f_SignedDoc_free || !f_cleanupConfigStore || !f_finalizeDigiDocLib )
 		return;
 	if( doc )
@@ -87,6 +90,17 @@ DDocPrivate::~DDocPrivate()
 }
 
 bool DDocPrivate::isLoaded() const { return ready; }
+
+void DDocPrivate::loadSignatures()
+{
+	for( std::vector<DSignature*>::iterator i = signatures.begin();
+		i != signatures.end(); ++i )
+		delete *i;
+	signatures.clear();
+	for( int i = 0; i < doc->nSignatures; ++i )
+		signatures.push_back( new DSignature( i, this ) );
+}
+
 bool DDocPrivate::loadSymbols()
 {
 	if( !(f_addAllDocInfos = (sym_addAllDocInfos)lib.resolve("addAllDocInfos")) ||
@@ -119,10 +133,10 @@ bool DDocPrivate::loadSymbols()
 }
 
 
-DSignature::DSignature(): m_doc(0), m_sig(0) {}
-DSignature::DSignature( SignatureInfo *sig, DDocPrivate *doc )
-:	m_sig(sig), m_doc( doc )
+DSignature::DSignature( int id, DDocPrivate *doc )
+:	m_id( id ), m_doc( doc )
 {
+	SignatureInfo *sig = doc->doc->pSignatures[id];
 	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
 	setSigningCertificate( cert );
 
@@ -166,7 +180,8 @@ void DSignature::validateOffline() const throw(SignatureException)
 
 OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
 {
-	int err = m_doc->f_verifySignatureAndNotary( m_doc->doc, m_sig, m_doc->filename.c_str() );
+	int err = m_doc->f_verifySignatureAndNotary(
+		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
 	switch( err )
 	{
 	case ERR_OK: return OCSP::GOOD;
@@ -216,6 +231,8 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		free( data->szFileName );
 		data->szFileName = strdup( file.str().data() );
 	}
+
+	d->loadSignatures();
 }
 
 void DDoc::addDocument( const Document &document ) throw(BDocException)
@@ -268,7 +285,7 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 		throw BDocException( __FILE__, __LINE__, s.str() );
 	}
 
-	return new DSignature( d->doc->pSignatures[id], d );
+	return d->signatures[id];
 }
 
 void DDoc::removeDocument( unsigned int id ) throw(BDocException)
@@ -313,6 +330,7 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
 	throwError( err, "Failed to remove signature", __LINE__ );
+	d->loadSignatures();
 }
 
 void DDoc::save() throw(IOException, BDocException)
@@ -382,6 +400,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	if( err != ERR_OK )
 		d->f_SignatureInfo_delete( d->doc, info->szId );
 	throwError( err, "Failed to sign document", __LINE__ );
+	d->loadSignatures();
 }
 
 unsigned int DDoc::signatureCount() const

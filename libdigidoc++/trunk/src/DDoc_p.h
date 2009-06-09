@@ -58,6 +58,8 @@ private:
 #endif
 };
 
+class DSignature;
+
 class DDocPrivate
 {
 public:
@@ -72,6 +74,9 @@ public:
 	std::string filename;
 	std::string tmpFolder;
 	bool ready;
+
+	void loadSignatures();
+	std::vector<DSignature*> signatures;
 
 	sym_addAllDocInfos			f_addAllDocInfos;
 	sym_addSignerRole			f_addSignerRole;
@@ -102,8 +107,7 @@ public:
 class DSignature: public Signature
 {
 public:
-	DSignature();
-	DSignature( SignatureInfo *sig, DDocPrivate *doc );
+	DSignature( int id, DDocPrivate *doc );
 
 	virtual std::string getMediaType() const;
 	virtual void validateOffline() const throw(SignatureException);
@@ -114,7 +118,7 @@ protected:
 
 private:
 	DDocPrivate *m_doc;
-	SignatureInfo *m_sig;
+	int m_id;
 };
 
 }
