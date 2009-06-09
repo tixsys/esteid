@@ -138,7 +138,7 @@ void MobileDialog::addFiles()
     Q_FOREACH( digidoc::Document file, m_doc->documents() )
     {
         QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
-        std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( digidoc::Digest::URI_SHA1 );
+        std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( URI_SHA1 );
         std::vector<unsigned char> d = file.calcDigest( calc.get() );
         QByteArray digest( (char*)&d[0], d.size() );
         QByteArray message = "<Sesscode xsi:type=\"xsd:int\">" + QByteArray::number( sessionCode ) + "</Sesscode>"
