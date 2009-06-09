@@ -40,7 +40,7 @@ private Q_SLOTS:
 	void buttonClicked( int button );
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
-	void on_signMobile_toggled( bool checked );
+	void on_infoSignMobile_toggled( bool checked );
 	void on_settings_clicked();
 	void parseLink( const QString &link );
 	void showCardStatus();

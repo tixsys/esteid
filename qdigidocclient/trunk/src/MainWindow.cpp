@@ -387,7 +387,7 @@ void MainWindow::on_languages_activated( int index )
 	showCardStatus();
 }
 
-void MainWindow::on_signMobile_toggled( bool )
+void MainWindow::on_infoSignMobile_toggled( bool )
 {
 	bool cardOwnerSignature = false;
 	Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
@@ -543,7 +543,7 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		on_signMobile_toggled( infoSignMobile->isChecked() );
+		on_infoSignMobile_toggled( infoSignMobile->isChecked() );
 		signAddFile->setVisible( doc->signatures().isEmpty() );
 		signButton->setFocus();
 		break;
