@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE manifest:manifest PUBLIC "-//OpenOffice.org//DTD Manifest 1.0//EN" "Manifest.dtd">
+<manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
+	<manifest:file-entry manifest:media-type="application/vnd.bdoc-1.0" manifest:full-path="/" />
+	<manifest:file-entry manifest:media-type="application/msword" manifest:full-path="document.doc" />
+	<manifest:file-entry manifest:media-type="signature/bdoc-1.0/TS" manifest:full-path="META-INF/signature1.xml" />
+</manifest:manifest>
