@@ -81,7 +81,7 @@ void CertificateDialog::on_parameters_itemClicked( QTreeWidgetItem *item, int )
 		parameterContent->setPlainText( item->text( 1 ) );
 }
 
-void CertificateDialog::on_save_clicked()
+void CertificateDialog::save()
 {
 	QString file = QFileDialog::getSaveFileName( this,
 		tr("Save certificate"),

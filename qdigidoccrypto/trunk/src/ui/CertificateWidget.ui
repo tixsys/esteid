@@ -25,7 +25,11 @@
       </attribute>
       <layout class="QVBoxLayout" name="generalLayout">
        <item>
-        <widget class="QTextEdit" name="info"/>
+        <widget class="QTextEdit" name="info">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -64,28 +68,11 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="saveLayout">
-         <item>
-          <spacer name="saveSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="save">
-           <property name="text">
-            <string>Save</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QDialogButtonBox" name="saveBox">
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Save</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -156,5 +143,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>saveBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>CertificateDialog</receiver>
+   <slot>save()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>226</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>save()</slot>
+ </slots>
 </ui>
