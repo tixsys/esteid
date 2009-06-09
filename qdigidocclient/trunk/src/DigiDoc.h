@@ -117,4 +117,5 @@ private:
 	QString			m_fileName;
 	QString			m_lastError;
 	Poller			*poller;
+	QByteArray		env;
 };

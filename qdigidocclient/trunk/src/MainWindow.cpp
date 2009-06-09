@@ -84,7 +84,7 @@ MainWindow::MainWindow( QWidget *parent )
 	viewSignaturesError->hide();
 
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
-	connect( infoMobileCode, SIGNAL(editingFinished()), SLOT(enableSign()) );
+	connect( infoMobileCode, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
 
 	connect( signContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );

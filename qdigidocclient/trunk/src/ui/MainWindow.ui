@@ -387,7 +387,7 @@ padding: 5px;
                <item row="0" column="0">
                 <widget class="QLabel" name="infoMobileCellLabel">
                  <property name="text">
-                  <string>Cell number:</string>
+                  <string>Mobile number:</string>
                  </property>
                 </widget>
                </item>

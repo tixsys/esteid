@@ -48,9 +48,15 @@ DigiDocSignature::DigiDocSignature( const digidoc::Signature *signature, DigiDoc
 
 QSslCertificate DigiDocSignature::cert() const
 {
-	try { return SslCertificate::fromX509( (Qt::HANDLE*)s->getSigningCertificate().getX509() ); }
+	QSslCertificate c;
+	try
+	{
+		X509 *x509 = s->getSigningCertificate().getX509();
+		c = SslCertificate::fromX509( (Qt::HANDLE*)x509 );
+		free( x509 );
+	}
 	catch( const Exception & ) {}
-	return QSslCertificate();
+	return c;
 }
 
 QDateTime DigiDocSignature::dateTime() const
@@ -219,12 +225,12 @@ void DigiDoc::init()
 	{
 		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,
 			"Estonian ID Card", "libdigidoc++" ).value( "ConfigFile" ).toByteArray();
-		QByteArray env( "BDOCLIB_CONF_XML=" );
+		env = "BDOCLIB_CONF_XML=";
 		if( !path.isEmpty() )
 			env.append( path );
 		else
 			env.append( BDOCLIB_CONF_PATH );
-		putenv( qstrdup( env.constData() ) );
+		putenv( env.data() );
 	}
 
 	try
