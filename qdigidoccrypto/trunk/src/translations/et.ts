@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Serial number</source>
-        <translation>Sertifikaadi seerianumber</translation>
+        <translation>Seerianumber</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>Certification Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifitseermisahel</translation>
     </message>
     <message>
         <source>Certificate status:</source>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <source>Failed to create document</source>
-        <translation type="unfinished"></translation>
+        <translation>Teegi viga: </translation>
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Missing document</source>
-        <translation type="unfinished">Puuduv dokument</translation>
+        <translation>Teegi viga</translation>
     </message>
     <message>
         <source>Failed to remove file</source>
