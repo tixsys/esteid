@@ -42,7 +42,6 @@ private Q_SLOTS:
 	void on_languages_activated( int index );
 	void on_signMobile_toggled( bool checked );
 	void on_settings_clicked();
-	void openFile( const QModelIndex &index );
 	void parseLink( const QString &link );
 	void showCardStatus();
 	void showWarning( const QString &msg );

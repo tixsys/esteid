@@ -22,6 +22,7 @@
 
 #include "TreeWidget.h"
 
+#include <QDesktopServices>
 #include <QHeaderView>
 #include <QMimeData>
 #include <QUrl>
@@ -35,20 +36,15 @@ TreeWidget::TreeWidget( QWidget *parent )
 	header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 	header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 	header()->setResizeMode( 3, QHeaderView::ResizeToContents );
+	connect( this, SIGNAL(doubleClicked(QModelIndex)),
+		SLOT(openFile(QModelIndex)) );
 }
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
 {
 	QList<QUrl> list;
 	Q_FOREACH( QTreeWidgetItem *item, items )
-	{
-		QString url( "file://" );
-#ifdef Q_OS_WIN32
-		url.append( "/" );
-#endif
-		url += item->data( 0, Qt::UserRole ).toString();
-		list << url;
-	}
+		list << url( indexFromItem( item ) );
 	QMimeData *data = new QMimeData();
 	data->setUrls( list );
 	return data;
@@ -57,5 +53,19 @@ QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
 QStringList TreeWidget::mimeTypes() const
 { return QStringList() << "text/uri-list"; }
 
+void TreeWidget::openFile( const QModelIndex &index )
+{ QDesktopServices::openUrl( url( index ) ); }
+
 Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }
+
+QString TreeWidget::url( const QModelIndex &item ) const
+{
+#ifdef Q_OS_WIN32
+	QString url( "file:///" );
+#else
+	QString url( "file://" );
+#endif
+	url += item.model()->index( item.row(), 0 ).data( Qt::UserRole ).toString();
+	return url;
+}

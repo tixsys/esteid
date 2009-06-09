@@ -34,4 +34,10 @@ protected:
 	QMimeData* mimeData( const QList<QTreeWidgetItem*> items ) const;
 	QStringList mimeTypes() const;
 	Qt::DropActions supportedDropActions() const;
+
+private Q_SLOTS:
+	void openFile( const QModelIndex &index );
+
+private:
+	QString url( const QModelIndex &item ) const;
 };

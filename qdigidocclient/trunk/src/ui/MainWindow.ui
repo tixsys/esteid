@@ -108,7 +108,7 @@ font: bold;
 min-width: 0px;
 }
 
-#info
+#infoFrame
 {
 background-color: rgba( 255, 255, 255, 153 );
 border-radius: 3px;
@@ -313,7 +313,7 @@ padding: 5px;
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="info">
+         <widget class="QFrame" name="infoFrame">
           <property name="minimumSize">
            <size>
             <width>387</width>
@@ -326,15 +326,58 @@ padding: 5px;
             <height>95</height>
            </size>
           </property>
-          <property name="font">
-           <font>
-            <family>Arial, Liberation Sans</family>
-            <pointsize>-1</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="infoSignLayout">
+             <item>
+              <widget class="QRadioButton" name="infoSignCard">
+               <property name="text">
+                <string>Use ID card</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="infoSignMobile">
+               <property name="text">
+                <string>Use Mobile ID</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="infoSignSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <widget class="QLabel" name="infoLogo"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="info">
+             <property name="font">
+              <font>
+               <family>Arial, Liberation Sans</family>
+               <pointsize>-1</pointsize>
+               <weight>50</weight>
+               <italic>false</italic>
+               <bold>false</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -754,23 +797,6 @@ p, li { white-space: pre-wrap; }
                </property>
               </spacer>
              </item>
-             <item row="10" column="1">
-              <widget class="QRadioButton" name="signMobile">
-               <property name="text">
-                <string>Use Mobile ID</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QRadioButton" name="signCard">
-               <property name="text">
-                <string>Use ID card</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="signSigner">
                <property name="styleSheet">
@@ -914,8 +940,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>88</width>
-               <height>18</height>
+               <width>288</width>
+               <height>176</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

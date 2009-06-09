@@ -81,12 +81,8 @@ MainWindow::MainWindow( QWidget *parent )
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	//homeOpenUtility->hide();
 
-	connect( signContentView, SIGNAL(doubleClicked(QModelIndex)),
-		SLOT(openFile(QModelIndex)) );
 	connect( signContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );
-	connect( viewContentView, SIGNAL(doubleClicked(QModelIndex)),
-		SLOT(openFile(QModelIndex)) );
 	connect( viewContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );
 
@@ -273,7 +269,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case SignSign:
 	{
-		if( signCard->isChecked() )
+		if( infoSignCard->isChecked() )
 		{
 			if( !doc->sign( signCityInput->text(), signStateInput->text(),
 					signZipInput->text(), signCountryInput->text(),
@@ -395,26 +391,11 @@ void MainWindow::on_signMobile_toggled( bool )
 			break;
 		}
 	}
-	signButton->setEnabled( signMobile->isChecked() ||
+	signButton->setEnabled( infoSignMobile->isChecked() ||
 		(!cardOwnerSignature && doc->signCert().isValid()) );
 }
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
-
-void MainWindow::openFile( const QModelIndex &index )
-{
-	QList<digidoc::Document> list = doc->documents();
-	if( list.isEmpty() || index.row() >= list.size() || index.column() > 0 )
-		return;
-
-#ifdef Q_OS_WIN32
-	QString url( "file:///" );
-#else
-	QString url( "file://" );
-#endif
-	url += QString::fromUtf8( list[index.row()].getPath().data() );
-	QDesktopServices::openUrl( url );
-}
 
 void MainWindow::parseLink( const QString &link )
 {
@@ -555,7 +536,7 @@ void MainWindow::setCurrentPage( Pages page )
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
 
-		on_signMobile_toggled( signMobile->isChecked() );
+		on_signMobile_toggled( infoSignMobile->isChecked() );
 		signAddFile->setVisible( doc->signatures().isEmpty() );
 		signButton->setFocus();
 		break;
@@ -611,9 +592,9 @@ void MainWindow::showCardStatus()
 		QTextStream s( &content );
 
 		if( c.isTempel() )
-			s << "<img align=\"right\" src=\":/images/ico_stamp_blue_75.png\">";
+			infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
 		else
-			s << "<img align=\"right\" src=\":/images/ico_person_blue_75.png\">";
+			infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
 
 		s << tr("Name") << ": <font color=\"black\">"
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
@@ -628,7 +609,7 @@ void MainWindow::showCardStatus()
 		if( doc->signCert().isValid()  )
 		{
 			s << "<font color=\"green\">" << tr("valid") << "</font>";
-			if( willExpire )
+			if( willExpire || true)
 				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
 		}
 		else
