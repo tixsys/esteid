@@ -285,8 +285,15 @@ void MainWindow::buttonClicked( int button )
 				signCountryInput->text(), signRoleInput->text(),
 				signResolutionInput->text() );
 			m->exec();
-			if ( m->signer() )
-				doc->signMobile( m->signer() );
+			if ( m->signer() && doc->signMobile( m->signer() ) )
+			{
+				doc->save();
+			}
+			else
+			{
+				m->deleteLater();
+				break;
+			}
 			m->deleteLater();
 		}
 		Settings::saveSignatureInfo( signRoleInput->text(),
