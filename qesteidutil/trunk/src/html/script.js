@@ -135,6 +135,7 @@ function readCardData()
 		return;
 	} else
 		enableFields();
+
 	if ( activeCardId == "" )
 		activeCardId = esteidData.getDocumentId();
 
@@ -166,13 +167,13 @@ function readCardData()
 		document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
 		document.getElementById('citizen').innerHTML = esteidData.getCitizen();
 	}
-	
+
 	document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
 	document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
 
 	document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
 	document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
-	
+
 	if ( esteidData.getPin1RetryCount() != 0 )
 	{
 		document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
@@ -443,7 +444,7 @@ function changePin( type )
 	if ( !eval("esteidData.validatePin" + type + "(oldVal)") )
 	{
 		ret = eval("esteidData.getPin" + type + "RetryCount() ");
-		if ( ret == 0 )
+		if ( ret == 0 || ret > 3 )
 		{
 			document.getElementById('pin' + type + 'OldPin').value = "";
 			document.getElementById('pin' + type + 'NewPin').value = "";
@@ -465,7 +466,13 @@ function changePin( type )
 		alert( _( 'PIN' + type + 'EnterNew' ) );
 		document.getElementById('pin' + type + 'NewPin').focus();
 		return;
-	}		
+	}
+	if ( oldVal == newVal )
+	{
+		alert( _( 'PIN' + type + 'NewOldSame' ) );
+		document.getElementById('pin' + type + 'NewPin').focus();
+		return;
+	}
 	//PIN1 length 4-12, PIN2 5-12
 	if ( (type == 1 && (newVal.length<4 || newVal.length > 12) ) || 
 		(type == 2 && (newVal.length<5 || newVal.length > 12) ) ) 
@@ -539,6 +546,12 @@ function changePuk()
 		document.getElementById('pukNewPin').focus();
 		return;
 	}
+	if ( oldVal == newVal )
+	{
+		alert( _( 'PUKNewOldSame' ) );
+		document.getElementById('pin' + type + 'NewPin').focus();
+		return;
+	}	
 	//PUK length 8-12
 	if ( newVal.length<8 || newVal.length > 12 ) 
 	{
