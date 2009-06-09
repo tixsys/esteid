@@ -287,6 +287,7 @@ function setEmailActivate( msg )
 		extender.loadEmails();
 		return;
 	}
+	extender.closeLoading();
 	document.getElementById('emailsContent').innerHTML = _(msg);
 }
 

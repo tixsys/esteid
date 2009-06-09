@@ -39,7 +39,7 @@ public:
 
 private Q_SLOTS:
 	void on_parameters_itemClicked( QTreeWidgetItem *item, int column );
-	void on_save_clicked();
+	void save();
 
 private:
 	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
