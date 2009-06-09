@@ -38,7 +38,7 @@ public:
 	void setCertificate( const QSslCertificate &cert );
 
 private Q_SLOTS:
-	void on_parameters_itemClicked( QTreeWidgetItem *item, int column );
+	void on_parameters_itemSelectionChanged();
 	void save();
 
 private:
