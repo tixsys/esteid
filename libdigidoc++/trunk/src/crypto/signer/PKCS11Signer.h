@@ -1,8 +1,6 @@
 #if !defined(__PKCS11SIGNER_H_INCLUDED__)
 #define __PKCS11SIGNER_H_INCLUDED__
 
-#include <libp11.h>
-
 #include <string>
 
 #include "Signer.h"
@@ -25,6 +23,7 @@ namespace digidoc
      *
      * @author Janari Põld
      */
+	class PKCS11SignerPrivate;
     class PKCS11Signer : public Signer
     {
 
@@ -67,17 +66,9 @@ namespace digidoc
           virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       private:
-          PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
           void loadDriver(const std::string& driver) throw(SignException);
 
-          std::string driver;
-          PKCS11_CTX* ctx;
-          PKCS11_CERT* signCertificate;
-          PKCS11_SLOT* signSlot;
-
-          PKCS11_SLOT* slots;
-          unsigned int numberOfSlots;
-
+          PKCS11SignerPrivate *d;
     };
 }
 

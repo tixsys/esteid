@@ -1,11 +1,38 @@
 #include <memory.h>
 #include <map>
+#include <libp11.h>
 
 #include "../../log.h"
 #include "../../Conf.h"
 #include "../../util/String.h"
 #include "PKCS11Signer.h"
 
+namespace digidoc
+{
+class PKCS11SignerPrivate
+{
+public:
+	PKCS11SignerPrivate( std::string _driver = "" )
+	: driver(_driver)
+	, ctx(NULL)
+	, signCertificate(NULL)
+	, signSlot(NULL)
+	, slots(NULL)
+	, numberOfSlots(0)
+	{};
+
+    digidoc::PKCS11Signer::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
+
+    std::string driver;
+
+    PKCS11_CTX* ctx;
+    PKCS11_CERT* signCertificate;
+    PKCS11_SLOT* signSlot;
+
+    PKCS11_SLOT* slots;
+    unsigned int numberOfSlots;
+};
+}
 
 /**
  * Initializes p11 library and loads PKCS #11 driver. Get driver path
@@ -15,16 +42,11 @@
  *         loading failed.
  */
 digidoc::PKCS11Signer::PKCS11Signer() throw(SignException)
- : driver("")
- , ctx(NULL)
- , signCertificate(NULL)
- , signSlot(NULL)
- , slots(NULL)
- , numberOfSlots(0)
+ : d(new PKCS11SignerPrivate())
 {
-    DEBUG("PKCS11Signer(driver = '%s'", driver.c_str());
-    driver = Conf::getInstance()->getPKCS11DriverPath();
-    loadDriver(driver);
+    DEBUG("PKCS11Signer(driver = '%s'", d->driver.c_str());
+    d->driver = Conf::getInstance()->getPKCS11DriverPath();
+    loadDriver(d->driver);
 }
 
 /**
@@ -35,15 +57,10 @@ digidoc::PKCS11Signer::PKCS11Signer() throw(SignException)
  *         loading failed.
  */
 digidoc::PKCS11Signer::PKCS11Signer(const std::string& driver) throw(SignException)
- : driver(driver)
- , ctx(NULL)
- , signCertificate(NULL)
- , signSlot(NULL)
- , slots(NULL)
- , numberOfSlots(0)
+ : d(new PKCS11SignerPrivate(driver))
 {
-    DEBUG("PKCS11Signer(driver = '%s'", driver.c_str());
-    loadDriver(driver);
+    DEBUG("PKCS11Signer(driver = '%s'", d->driver.c_str());
+    loadDriver(d->driver);
 }
 
 /**
@@ -53,24 +70,25 @@ digidoc::PKCS11Signer::~PKCS11Signer()
 {
     DEBUG("~PKCS11Signer()");
     unloadDriver();
+	delete d;
 }
 
 void digidoc::PKCS11Signer::unloadDriver()
 {
-    if(ctx == NULL)
+    if(d->ctx == NULL)
         return;
 
-    if(slots != NULL)
+    if(d->slots != NULL)
     {
         // Release all slots.
-        PKCS11_release_all_slots(ctx, slots, numberOfSlots);
-        slots = NULL;
+        PKCS11_release_all_slots(d->ctx, d->slots, d->numberOfSlots);
+        d->slots = NULL;
     }
 
     // Release PKCS #11 context.
-    PKCS11_CTX_unload(ctx);
-    PKCS11_CTX_free(ctx);
-    ctx = NULL;
+    PKCS11_CTX_unload(d->ctx);
+    PKCS11_CTX_free(d->ctx);
+    d->ctx = NULL;
 }
 
 /**
@@ -83,12 +101,12 @@ void digidoc::PKCS11Signer::unloadDriver()
 void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignException)
 {
     // Create PKCS #11 context.
-    ctx = PKCS11_CTX_new();
+    d->ctx = PKCS11_CTX_new();
 
     // Load PKCS #11 driver.
-    if(PKCS11_CTX_load(ctx, driver.c_str()) != 0)
+    if(PKCS11_CTX_load(d->ctx, driver.c_str()) != 0)
     {
-        PKCS11_CTX_free(ctx);
+        PKCS11_CTX_free(d->ctx);
         THROW_SIGNEXCEPTION("Failed to load driver '%s' for PKCS #11 engine: %s",
                 driver.c_str(), ERR_reason_error_string(ERR_get_error()));
     }
@@ -109,22 +127,22 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     DEBUG("PKCS11Signer::getCert()");
 
     // If certificate is already selected return it.
-    if(signCertificate != NULL && signSlot != NULL)
+    if(d->signCertificate != NULL && d->signSlot != NULL)
     {
-        return signCertificate->x509;
+        return d->signCertificate->x509;
     }
 
     // Set selected state to 'no certificate selected'.
-    signCertificate = NULL;
-    signSlot = NULL;
-    if(slots != NULL)
+    d->signCertificate = NULL;
+    d->signSlot = NULL;
+    if(d->slots != NULL)
     {
         // Release all slots.
-        PKCS11_release_all_slots(ctx, slots, numberOfSlots);
+        PKCS11_release_all_slots(d->ctx, d->slots, d->numberOfSlots);
     }
 
     // Load all slots.
-    if(PKCS11_enumerate_slots(ctx, &slots, &numberOfSlots) != 0)
+    if(PKCS11_enumerate_slots(d->ctx, &d->slots, &d->numberOfSlots) != 0)
     {
         THROW_SIGNEXCEPTION("Could not find any ID-Cards in any readers: %s", ERR_reason_error_string(ERR_get_error()));
     }
@@ -132,9 +150,9 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
     std::vector<PKCS11Cert> certificates;
     std::map<PKCS11_CERT*, PKCS11_SLOT*> certSlotMapping;
-    for(unsigned int i = 0; i < numberOfSlots; i++)
+    for(unsigned int i = 0; i < d->numberOfSlots; i++)
     {
-        PKCS11_SLOT* slot = slots + i;
+        PKCS11_SLOT* slot = d->slots + i;
 
         if(slot->token != NULL)
         {
@@ -158,7 +176,7 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
             {
                 PKCS11_CERT* cert = certs + i;
                 certSlotMapping[cert] = slot;
-                certificates.push_back(createPKCS11Cert(slot, cert));
+                certificates.push_back(d->createPKCS11Cert(slot, cert));
             }
         }
     }
@@ -181,18 +199,18 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     {
         if(iter->first->x509 == selectedCert)
         {
-            signCertificate = iter->first;
-            signSlot = iter->second;
+            d->signCertificate = iter->first;
+            d->signSlot = iter->second;
             break;
         }
     }
 
-    if(signCertificate == NULL || signSlot == NULL)
+    if(d->signCertificate == NULL || d->signSlot == NULL)
     {
         THROW_SIGNEXCEPTION("Could not find slot for selected certificate.");
     }
 
-    return signCertificate->x509;
+    return d->signCertificate->x509;
 }
 
 /**
@@ -211,23 +229,23 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
             (unsigned int)signature.signature, signature.length);
 
     // Check that sign slot and certificate are selected.
-    if(signCertificate == NULL || signSlot == NULL)
+    if(d->signCertificate == NULL || d->signSlot == NULL)
     {
         THROW_SIGNEXCEPTION("Signing slot or certificate are not selected.");
     }
 
     // Login if required.
-    if(signSlot->token->loginRequired)
+    if(d->signSlot->token->loginRequired)
     {
         // Perform PKCS #11 login.
-        if(PKCS11_login(signSlot, 0, getPin(createPKCS11Cert(signSlot, signCertificate)).c_str()) != 0)
+        if(PKCS11_login(d->signSlot, 0, getPin(d->createPKCS11Cert(d->signSlot, d->signCertificate)).c_str()) != 0)
         {
-            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", signSlot->token->label,
+            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->signSlot->token->label,
                     ERR_reason_error_string(ERR_get_error()));
         }
     }
 
-    PKCS11_KEY* signKey = PKCS11_find_key(signCertificate);
+    PKCS11_KEY* signKey = PKCS11_find_key(d->signCertificate);
     if(signKey == NULL)
     {
         THROW_SIGNEXCEPTION("Could not get key that matches selected certificate.");
@@ -248,9 +266,9 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
  * @param cert cert to be used to init PKCS11Cert.
  * @return returns created PKCS11Cert struct.
  */
-digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11Signer::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
+digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
 {
-    PKCS11Cert certificate;
+	digidoc::PKCS11Signer::PKCS11Cert certificate;
     certificate.token.label = slot->token->label;
     certificate.token.manufacturer = slot->token->manufacturer;
     certificate.token.model = slot->token->model;
