@@ -333,11 +333,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Failed to get result</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei saanud LDAP päringule vastust</translation>
     </message>
     <message>
         <source>Empty result</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei leidnud midagi</translation>
     </message>
 </context>
 <context>
@@ -517,7 +517,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>This container contains signature! Open with QDigiDocClient?</source>
-        <translation type="unfinished"></translation>
+        <translation>See on digitaalallkirjaga fail!
+Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>Document has changed. Save changes?</source>
@@ -545,15 +546,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>No card in reader</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaarti pole lugejas</translation>
     </message>
     <message>
         <source>Browse location</source>
-        <translation type="unfinished"></translation>
+        <translation>Näita turvaümbriku asukohta kettal</translation>
     </message>
     <message>
         <source>Send to email</source>
-        <translation type="unfinished"></translation>
+        <translation>Saada turvaümbrik e-postiga</translation>
     </message>
 </context>
 <context>
@@ -561,7 +562,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Selected action requires auth certificate.
 For using auth certificate enter PIN1</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.
+Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>Proves your identity to a remote computer</source>
