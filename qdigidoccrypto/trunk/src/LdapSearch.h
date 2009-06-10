@@ -26,6 +26,7 @@
 
 #ifdef Q_OS_WIN32
 #include <Winldap.h>
+#include <Winber.h>
 #else
 #define LDAP_DEPRECATED 1
 #include <ldap.h>
