@@ -71,7 +71,6 @@ public:
 	bool encrypt();
 	QString fileName() const;
 	bool isEncrypted() const;
-	bool isModified() const;
 	bool isNull() const;
 	bool isSigned() const;
 	QList<CKey> keys();
@@ -104,6 +103,5 @@ private:
 	QString			m_lastError;
 	DEncEncryptedData *m_enc;
 	SignedDoc		*m_doc;
-	bool			modified;
 	Poller			*poller;
 };

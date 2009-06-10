@@ -44,7 +44,6 @@ CryptDoc::CryptDoc( QObject *parent )
 :	QObject( parent )
 ,	m_enc(0)
 ,	m_doc(0)
-,	modified(false)
 {
 	initDigiDocLib();
 	initConfigStore( NULL );
@@ -106,7 +105,6 @@ void CryptDoc::addFile( const QString &file, const QString &mime )
 	err = calculateDataFileSizeAndDigest( m_doc, data->szId, file.toUtf8(), DIGEST_SHA1 );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to calculate digest"), err );
-	modified = true;
 }
 
 void CryptDoc::addKey( const CKey &key )
@@ -121,8 +119,6 @@ void CryptDoc::addKey( const CKey &key )
 		DENC_ENC_METHOD_RSA1_5, NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to add key"), err );
-	else
-		modified = true;
 }
 
 QSslCertificate CryptDoc::authCert() const { return m_authCert; }
@@ -142,7 +138,6 @@ void CryptDoc::clear()
 		QFile::remove( m_ddocTemp );
 		m_ddocTemp.clear();
 	}
-	modified = false;
 }
 
 void CryptDoc::create( const QString &file )
@@ -244,7 +239,6 @@ bool CryptDoc::decrypt( const QString &pin )
 		if( qstrncmp( p->szName, "orig_file", 9 ) == 0 )
 			dencEncryptedData_DeleteEncryptionProperty( m_enc, i );
 	}
-	modified = true;
 	return !isEncrypted();
 }
 
@@ -359,7 +353,6 @@ bool CryptDoc::encrypt()
 
 	SignedDoc_free( m_doc );
 	m_doc = 0;
-	modified = true;
 	return isEncrypted();
 }
 
@@ -372,7 +365,6 @@ bool CryptDoc::isEncrypted() const
 		m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED);
 }
 
-bool CryptDoc::isModified() const { return modified; }
 bool CryptDoc::isNull() const { return m_enc == 0; }
 bool CryptDoc::isSigned() const { return m_doc && m_doc->nSignatures; }
 
@@ -425,8 +417,6 @@ void CryptDoc::removeDocument( int id )
 	int err = DataFile_delete( m_doc, m_doc->pDataFiles[id]->szId );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to remove file"), err );
-	else
-		modified = true;
 }
 
 void CryptDoc::removeKey( int id )
@@ -443,8 +433,6 @@ void CryptDoc::removeKey( int id )
 	int err = dencEncryptedData_DeleteEncryptedKey( m_enc, id );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to remove key"), err );
-	else
-		modified = true;
 }
 
 void CryptDoc::save()
@@ -457,8 +445,6 @@ void CryptDoc::save()
 	int err = dencGenEncryptedData_writeToFile( m_enc, m_fileName.toUtf8() );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to save encrpyted file"), err );
-	else
-		modified = false;
 }
 
 bool CryptDoc::saveDDoc( const QString &filename )
