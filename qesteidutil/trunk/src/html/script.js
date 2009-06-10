@@ -247,11 +247,36 @@ function setActive( content, el )
 
 	switch( content )
 	{
-		case "cpuk": document.getElementById('pukOldPin').focus(); break;
-		case "pin1": document.getElementById('pin1OldPin').focus(); break;
-		case "pin2": document.getElementById('pin2OldPin').focus(); break;
-		case "bpin1": document.getElementById('bpin1OldPin').focus(); break;
-		case "bpin2": document.getElementById('bpin2OldPin').focus(); break;
+		case "cpuk":
+			document.getElementById('pukOldPin').value = "";
+			document.getElementById('pukNewPin').value = "";
+			document.getElementById('pukNewPin2').value = "";
+			document.getElementById('pukOldPin').focus();
+			break;
+		case "pin1":
+			document.getElementById('pin1OldPin').value = "";
+			document.getElementById('pin1NewPin').value = "";
+			document.getElementById('pin1NewPin2').value = "";
+			document.getElementById('pin1OldPin').focus();
+			break;
+		case "pin2":
+			document.getElementById('pin2OldPin').value = "";
+			document.getElementById('pin2NewPin').value = "";
+			document.getElementById('pin2NewPin2').value = "";
+			document.getElementById('pin2OldPin').focus();
+			break;
+		case "bpin1":
+			document.getElementById('bpin1OldPin').value = "";
+			document.getElementById('bpin1NewPin').value = "";
+			document.getElementById('bpin1NewPin2').value = "";
+			document.getElementById('bpin1OldPin').focus();
+			break;
+		case "bpin2":
+			document.getElementById('bpin2OldPin').value = "";
+			document.getElementById('bpin2NewPin').value = "";
+			document.getElementById('bpin2NewPin2').value = "";
+			document.getElementById('bpin2OldPin').focus();
+			break;
 		case "email": if ( !emailsLoaded ) document.getElementById('emailsContentCheck').style.display = 'block'; break;
 	}
 }
