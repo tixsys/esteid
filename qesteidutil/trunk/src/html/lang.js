@@ -54,22 +54,22 @@ var htmlStrings = {
 	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.", "", "Если вы не знаете PUK код своей ID- карты, посетите цент обслуживания, где вы сможете получить новые сертификаты и конверт с кодами." ),
 	
 	"labelChangingPIN1": new tr( "PIN1 koodi vahetus", "Change PIN1 code", "Замена кода PIN1" ),
-	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "", "PIN1 - код, который используют для доступа к сертификатам индентификации личности." ),
-	"labelChangingPIN12": new tr( "Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "Если PIN1 введён 3 раза неверно, тогда блокируется идентификационный сертификат и использовать ID- карту невозможно, пока блокировка не снята PUK кодом." ),
+	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "PIN1 code is used for accessing identification certificates.", "PIN1 - код, который используют для доступа к сертификатам индентификации личности." ),
+	"labelChangingPIN12": new tr( "Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.", "If PIN1 is inserted 3 times inccorectly, then identification certificate will be blocked and it will be impossible to use ID-card to verify identification, until it is unblocked via PUK code.", "Если PIN1 введён 3 раза неверно, тогда блокируется идентификационный сертификат и использовать ID- карту невозможно, пока блокировка не снята PUK кодом." ),
 	"labelChangingPIN13": new tr( "Kui olete unustanud PIN1 koodi, kuid teate PUK koodi, siis siin saate määrata uue PIN1 koodi.", "", "" ),
 	"linkPIN1withPUK": new tr( "Muuda PIN1 kood PUK koodi abil", "Change PIN1 using PUK code", "" ),
 
 	"labelChangingPIN2": new tr( "PIN2 koodi vahetus", "Change PIN2 code", "Смена кода PIN2" ),
-	"labelChangingPIN21": new tr( "PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.", "", "PIN2 - код, что используется для дигитальной подписи." ),
-	"labelChangingPIN22": new tr( "Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "Если PIN2 введён 3 раза неверно, тогда блокируется сертификат цифровой подписи и использовать ID- карту для цифровой подписи невозможно, пока  блокировка не снята PUK кодом." ),
+	"labelChangingPIN21": new tr( "PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.", "PIN2 code is used to digitally sign documents.", "PIN2 - код, что используется для дигитальной подписи." ),
+	"labelChangingPIN22": new tr( "Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.", "If PIN2 is inserted 3 times inccorectly, then signing certificate will be blocked and it will be impossible to use ID-card for digital signing, until it is unblocked via PUK code.", "Если PIN2 введён 3 раза неверно, тогда блокируется сертификат цифровой подписи и использовать ID- карту для цифровой подписи невозможно, пока  блокировка не снята PUK кодом." ),
 	"labelChangingPIN23": new tr( "Kui olete unustanud PIN2 koodi, kuid teate PUK koodi, siis siin saate määrata uue PIN2 koodi.", "", "" ),
 	"linkPIN2withPUK": new tr( "Muuda PIN2 kood PUK koodi abil", "Change PIN2 using PUK code", "" ),
 
 	"labelChangingPUK": new tr( "PUK koodi vahetus", "Change PUK code", "Смена PUK кода" ),
-	"labelChangingPUK2": new tr( "Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.", "", "Если после смены PUK код забывается и сетрификат блокируется из-за неверно введённых PIN1 или PIN2, то единственной возможностью восстановить работоспособность ID- карты, это обратиться в бюро обслуживания." ),
+	"labelChangingPUK2": new tr( "Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.", "If you forget PUK code or certificates remain unblocked, then it is needed to turn to service provider to get your ID-card working again.", "Если после смены PUK код забывается и сетрификат блокируется из-за неверно введённых PIN1 или PIN2, то единственной возможностью восстановить работоспособность ID- карты, это обратиться в бюро обслуживания." ),
 	
-	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "", "PUK код, это код, который разблокирует сертификаты, если PIN1 или PIN2 были введены неверно 3 раза подрят." ),
-	"labelInputPUK2": new tr( "PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "", "PUK код записан в конверте с кодами, который выдаётся вместе с ID- картой или при смене сетрификатов." ),
+	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "PUK-code ise used for unblocking certificates, when PIN1 or PIN2 has been entered 3 times incorrectly.", "PUK код, это код, который разблокирует сертификаты, если PIN1 или PIN2 были введены неверно 3 раза подрят." ),
+	"labelInputPUK2": new tr( "PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "PUK code is written in the envelpole, that was given with the ID-card or when certificates were changed.", "PUK код записан в конверте с кодами, который выдаётся вместе с ID- картой или при смене сетрификатов." ),
 	
 	"inputCert": new tr( "Sertifikaadid", "Certificates", "Сертификаты" ),
 	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "@eesti.ee эл. почта" ),
@@ -100,11 +100,11 @@ var htmlStrings = {
 	"labelPUK": new tr( "PUK kood", "PUK code", "PUK код" ),
 	
 	"labelEmailAddress": new tr( "E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad", "Email addres where your @eesti.ee emails will be forwarded", "Адрес эл. почты, куда перенаправляют Вашу почту с @eesti.ee" ),
-	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "", "Более полную информации о настройке пересылки эл. почты найдёте в портале" ),
+	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "For more detailed official email adress forwarding, please visit", "Более полную информации о настройке пересылки эл. почты найдёте в портале" ),
 	
-	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "", "Mobiil-ID это возможность идентифицировать личность и давать подпись мобильным телефоном, вместо ID- карты." ),
-	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "", "Для использования Mobiil-ID нужна новая SIM- карта, которую можно получить у мобильного оператора. Если такая карта уже есть, то услугу следует активировать." ),
-	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "", "Более подробно на страничке id.ee" ),
+	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "Mobile-id is possibility to use mobile phone instead of ID-card for identification and digital signing.", "Mobiil-ID это возможность идентифицировать личность и давать подпись мобильным телефоном, вместо ID- карты." ),
+	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "To use Mobile-id it is needed to use a SIM card that supports this feature. If such a SIM card is already purchased, then it has to be activated.", "Для использования Mobiil-ID нужна новая SIM- карта, которую можно получить у мобильного оператора. Если такая карта уже есть, то услугу следует активировать." ),
+	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "More info from id.ee", "Более подробно на страничке id.ee" ),
 	"mobileNumber": new tr( "Mobiili number", "Mobile number", "Номер моб. телефона" ),
 	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "Оператор моб. телефона" ),
 	"mobileStatus": new tr( "Staatus", "Mobile status", "Статус" ),
@@ -135,10 +135,10 @@ var eestiStrings = {
 	"10": new tr( "Tundmatu viga.", "Unknown error", "Неизвестная ошибка." ),
 	"11": new tr( "KMA päringu tegemisel tekkis viga.", "" ,"В запросе КМА возникла ошибка." ),
 	"12": new tr( "Äriregistri päringu tegemisel tekkis viga.", "", "В запросе к Äriregister возникла ошибка." ),
-	"20": new tr( "Ühtegi ametliku e-posti suunamist ei leitud.", "", "Не было найдено ни одной официальной пересылки эл. почты." ),
+	"20": new tr( "Ühtegi ametliku e-posti suunamist ei leitud.", "No official email forwarding adresses was found", "Не было найдено ни одной официальной пересылки эл. почты." ),
 	"21": new tr( "Teie e-posti konto on suletud. Avamiseks saatke palun e-kiri aadressil toimetaja@eesti.ee või helistage telefonil 663 0215.", "", "Ваша учётная запись эл. почты закрыта. Для открытия пошлите письмо на toimetaja@eesti.ee или звоните по телефону 663 0215." ),
 	"22": new tr( "Vigane e-posti aadress.", "Invalid e-mail address", "Неверный адрес эл. почты." ),
-	"23": new tr( "Suunamine on salvestatud, ning Teile on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "", "Переадресация сохранена и Вам послано письмо с ключом активации. Переадресация активна только после введения ключа." )
+	"23": new tr( "Suunamine on salvestatud, ning Teile on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "Forwarding is activated and you have been sent an email with activation key. Forwarding will be activated only after confirming the key.", "Переадресация сохранена и Вам послано письмо с ключом активации. Переадресация активна только после введения ключа." )
 };
 
 var eidStrings = {
