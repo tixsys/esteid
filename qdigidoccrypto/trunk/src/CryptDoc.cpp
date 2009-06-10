@@ -50,8 +50,8 @@ CryptDoc::CryptDoc( QObject *parent )
 	initConfigStore( NULL );
 
 	poller = new Poller();
-	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)),
-		SLOT(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)) );
+	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
+		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
 	poller->start();
 }
 
@@ -153,12 +153,12 @@ void CryptDoc::create( const QString &file )
 
 	int err = SignedDoc_new( &m_doc, format, version );
 	if( err != ERR_OK )
-		return setLastError( tr("Failed to create document"), err );
+		return setLastError( tr("Internal error"), err );
 
 	err = dencEncryptedData_new( &m_enc, DENC_XMLNS_XMLENC, DENC_ENC_METHOD_AES128, 0, 0, 0 );
 	if( err != ERR_OK )
 	{
-		setLastError( tr("Failed to create document"), err );
+		setLastError( tr("Internal error"), err );
 		clear();
 		return;
 	}
@@ -166,7 +166,7 @@ void CryptDoc::create( const QString &file )
 }
 
 void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
-	const QSslCertificate &auth, const QSslCertificate &sign )
+	const QSslCertificate &auth )
 {
 	bool changed = false;
 	if( m_cards != cards )
@@ -179,11 +179,10 @@ void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
 		changed = true;
 		m_card = card;
 	}
-	if( m_authCert != auth || m_signCert != sign )
+	if( m_authCert != auth )
 	{
 		changed = true;
 		m_authCert = auth;
-		m_signCert = sign;
 	}
 	if( changed )
 		Q_EMIT dataChanged();
@@ -421,7 +420,7 @@ void CryptDoc::removeDocument( int id )
 		return setLastError( tr("Container is encrypted") );
 
 	if( !m_doc || id >= m_doc->nDataFiles || !m_doc->pDataFiles[id] )
-		return setLastError( tr("Missing document") );
+		return setLastError( tr("Internal error") );
 
 	int err = DataFile_delete( m_doc, m_doc->pDataFiles[id]->szId );
 	if( err != ERR_OK )
@@ -439,7 +438,7 @@ void CryptDoc::removeKey( int id )
 		return setLastError( tr("Container is encrypted") );
 
 	if( !m_enc || id >= m_enc->nEncryptedKeys || !m_enc->arrEncryptedKeys[id] )
-		return setLastError( tr("Missing key") );
+		return setLastError( tr("Internal error") );
 
 	int err = dencEncryptedData_DeleteEncryptedKey( m_enc, id );
 	if( err != ERR_OK )
@@ -484,7 +483,7 @@ void CryptDoc::saveDocument( int id, const QString &path )
 		return setLastError( tr("Container is encrypted") );
 
 	if( !m_doc || id >= m_doc->nDataFiles || !m_doc->pDataFiles[id] )
-		return setLastError( tr("Missing document") );
+		return setLastError( tr("Internal error") );
 
 	QFileInfo source( QString::fromUtf8( m_doc->pDataFiles[id]->szFileName ) );
 	QString destination = QString( "%1%2%3" )
@@ -514,5 +513,3 @@ void CryptDoc::setLastError( const QString &err, int code )
 	if( err > 0 ) errMsg = getErrorString( code );
 	Q_EMIT error( m_lastError = err, code, errMsg );
 }
-
-QSslCertificate CryptDoc::signCert() const { return m_signCert; }

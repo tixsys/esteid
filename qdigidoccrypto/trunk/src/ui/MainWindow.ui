@@ -103,14 +103,16 @@ font: bold;
 min-width: 0px;
 }
 
-#info
+#infoFrame
 {
 color: #668696;
-font: bold;
 border-radius: 3px;
 background-color: rgba( 255, 255, 255, 153 );
 padding: 10px;
 }
+
+#infoCard
+{ font: bold; }
 
 /* content */
 #homeButtonLabel,
@@ -283,7 +285,7 @@ background-color: transparent;
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="info">
+         <widget class="QFrame" name="infoFrame">
           <property name="minimumSize">
            <size>
             <width>387</width>
@@ -296,15 +298,24 @@ background-color: transparent;
             <height>95</height>
            </size>
           </property>
-          <property name="font">
-           <font>
-            <family>Arial, Liberation Sans</family>
-            <pointsize>-1</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="infoCard">
+             <property name="font">
+              <font>
+               <family>Arial, Liberation Sans</family>
+               <pointsize>-1</pointsize>
+               <weight>75</weight>
+               <italic>false</italic>
+               <bold>true</bold>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="infoLogo"/>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -343,7 +354,7 @@ background-color: transparent;
           </item>
           <item>
            <layout class="QGridLayout" name="homeButtonLayout">
-            <item row="0" column="0">
+            <item row="0" column="0" colspan="2">
              <widget class="QLabel" name="homeButtonLabel">
               <property name="font">
                <font>
@@ -357,12 +368,9 @@ background-color: transparent;
               <property name="text">
                <string>I want to:</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="0" column="2">
              <spacer name="homeButtonSpacer">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -375,7 +383,7 @@ background-color: transparent;
               </property>
              </spacer>
             </item>
-            <item row="1" column="0">
+            <item row="1" column="1">
              <widget class="QPushButton" name="homeCreate">
               <property name="font">
                <font>
@@ -391,7 +399,7 @@ background-color: transparent;
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="2" column="1">
              <widget class="QPushButton" name="homeView">
               <property name="font">
                <font>
@@ -406,6 +414,22 @@ background-color: transparent;
                <string>View crypted document content</string>
               </property>
              </widget>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -468,29 +492,9 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <spacer name="introButtonSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="introBack">
-              <property name="text">
-               <string>Cancel</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="introNext">
-              <property name="text">
-               <string>Next</string>
+             <widget class="QDialogButtonBox" name="introButtons">
+              <property name="standardButtons">
+               <set>QDialogButtonBox::Cancel</set>
               </property>
              </widget>
             </item>
@@ -503,7 +507,7 @@ p, li { white-space: pre-wrap; }
           <property name="margin">
            <number>0</number>
           </property>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="viewContentLabel">
             <property name="font">
              <font>
@@ -517,12 +521,9 @@ p, li { white-space: pre-wrap; }
             <property name="text">
              <string>Container content:</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1">
            <widget class="QLabel" name="viewKeysLabel">
             <property name="font">
              <font>
@@ -538,198 +539,137 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="viewButtonLayout">
-            <item>
-             <spacer name="viewButtonSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewClose">
-              <property name="text">
-               <string>Close</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewAddRecipient">
-              <property name="text">
-               <string>Add recipient</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewCrypt">
-              <property name="text">
-               <string>Encrypt</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="7" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="viewrowseLayout">
-            <item>
-             <widget class="QPushButton" name="viewBrowse">
-              <property name="text">
-               <string>Browse location</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewBrowseSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="viewEmailLayout">
-            <item>
-             <widget class="QPushButton" name="viewEmail">
-              <property name="text">
-               <string>Send to email</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewEmailSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
           <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="viewFileName"/>
-          </item>
-          <item row="1" column="0">
-           <layout class="QHBoxLayout" name="viewContentButtonsLayout">
-            <item>
-             <widget class="QPushButton" name="viewAddFile">
-              <property name="text">
-               <string>Add file</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewSaveAs">
-              <property name="text">
-               <string>Save files to disk</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="viewRemoveFile">
-              <property name="text">
-               <string>Remove checked files</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="viewContentButtonsSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item row="3" column="0">
-           <widget class="QTreeWidget" name="viewContentView">
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+           <widget class="QLabel" name="viewFileName">
+            <property name="text">
+             <string>Container:</string>
             </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="rootIsDecorated">
-             <bool>false</bool>
-            </property>
-            <property name="headerHidden">
-             <bool>true</bool>
-            </property>
-            <property name="columnCount">
-             <number>2</number>
-            </property>
-            <column>
-             <property name="text">
-              <string>Filename</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Size</string>
-             </property>
-            </column>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QScrollArea" name="viewKeysScroll">
+          <item row="5" column="0" colspan="2">
+           <widget class="QDialogButtonBox" name="viewButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Close</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="viewLinks">
+            <property name="text">
+             <string>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QFrame" name="viewContentFrame">
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-            <property name="widgetResizable">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="viewKeys">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>0</y>
-               <width>100</width>
-               <height>30</height>
-              </rect>
-             </property>
-             <layout class="QVBoxLayout" name="viewKeysLayout">
-              <item>
-               <spacer name="viewKeysSpacer">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QTreeWidget" name="viewContentView">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="rootIsDecorated">
+                <bool>false</bool>
+               </property>
+               <property name="headerHidden">
+                <bool>true</bool>
+               </property>
+               <property name="columnCount">
+                <number>2</number>
+               </property>
+               <column>
+                <property name="text">
+                 <string>Filename</string>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Size</string>
                 </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="viewContentLinks">
+               <property name="text">
+                <string>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Save files to disk&lt;/a&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QFrame" name="viewKeysFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QScrollArea" name="viewKeysScroll">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="widgetResizable">
+                <bool>true</bool>
+               </property>
+               <widget class="QWidget" name="viewKeys">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>100</width>
+                  <height>30</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="viewKeysLayout">
+                 <item>
+                  <spacer name="viewKeysSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="viewKeysLinks">
+               <property name="text">
+                <string>&lt;a href=&quot;addRecipient&quot;&gt;Add recipient&lt;/a&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

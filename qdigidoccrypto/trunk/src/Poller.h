@@ -42,7 +42,7 @@ public:
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
-		const QSslCertificate &auth, const QSslCertificate &sign );
+		const QSslCertificate &auth );
 
 private:
 	void readCerts();
@@ -52,5 +52,5 @@ private:
 	QMutex m;
 	QHash<QString,int> cards;
 	QString selectedCard;
-	QSslCertificate auth, sign;
+	QSslCertificate auth;
 };

@@ -44,18 +44,15 @@ void Poller::lock() { m.lock(); }
 
 void Poller::readCerts()
 {
-	Q_EMIT dataChanged( cards.keys(), selectedCard, QSslCertificate(), QSslCertificate() );
+	Q_EMIT dataChanged( cards.keys(), selectedCard, QSslCertificate() );
 
 	int slot = cards[selectedCard];
 	X509 *cert;
 	findUsersCertificate( slot, &cert );
 	auth = SslCertificate::fromX509( (Qt::HANDLE*)cert );
 	free( cert );
-	findUsersCertificate( slot + 1, &cert );
-	sign = SslCertificate::fromX509( (Qt::HANDLE*)cert );
-	free( cert );
 
-	Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+	Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
 }
 
 void Poller::run()
@@ -111,11 +108,8 @@ void Poller::run()
 				readCerts();
 			}
 			if( selectedCard.isEmpty() )
-			{
 				auth = QSslCertificate();
-				sign = QSslCertificate();
-			}
-			Q_EMIT dataChanged( cards.keys(), selectedCard, auth, sign );
+			Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
 			m.unlock();
 		}
 

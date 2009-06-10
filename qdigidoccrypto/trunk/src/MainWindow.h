@@ -43,6 +43,7 @@ private Q_SLOTS:
 	void on_languages_activated( int index );
 	void on_settings_clicked();
 	void on_viewContentView_doubleClicked( const QModelIndex &index );
+	void parseLink( const QString &url );
 	void showCardStatus();
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err, const QString &errmsg = QString() );
@@ -59,25 +60,19 @@ private:
 		HomeView,
 		IntroBack,
 		IntroNext,
-		ViewAddFile,
-		ViewAddRecipient,
-		ViewBrowse,
 		ViewClose,
 		ViewCrypt,
-		ViewEmail,
-		ViewRemoveFile,
-		ViewSaveAs,
 	};
 	bool addFile( const QString &file );
-	void closeEvent( QCloseEvent *e );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	void parseParams();
-	bool saveDocument( bool close = true );
 	void setCurrentPage( Pages page );
 
 	CryptDoc	*doc;
 	QTranslator *appTranslator, *qtTranslator;
 	QHash<int,QString> lang;
 	QStringList	params;
+
+	QPushButton *introNext, *viewCrypt;
 };

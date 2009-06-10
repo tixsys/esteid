@@ -64,7 +64,6 @@ public:
 	void addFile( const QString &file, const QString &mime );
 	void addKey( const CKey &key );
 	QSslCertificate authCert() const;
-	QSslCertificate signCert() const;
 	void create( const QString &file );
 	void clear();
 	bool decrypt( const QString &pin );
@@ -91,13 +90,13 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
-		const QSslCertificate &auth, const QSslCertificate &sign );
+		const QSslCertificate &auth );
 	void selectCard( const QString &card );
 
 private:
 	void setLastError( const QString &err, int code = -1 );
 
-	QSslCertificate	m_authCert, m_signCert;
+	QSslCertificate	m_authCert;
 	QStringList		m_cards;
 	QString			m_card;
 	QString			m_ddocTemp;

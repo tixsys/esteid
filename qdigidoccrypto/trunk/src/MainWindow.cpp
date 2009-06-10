@@ -36,6 +36,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QSslCertificate>
+#include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
 
@@ -57,26 +58,29 @@ MainWindow::MainWindow( QWidget *parent )
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-	//homeOpenUtility->hide();
+
 	viewContentView->header()->setStretchLastSection( false );
 	viewContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
 	viewContentView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
+
 	buttonGroup->addButton( homeCreate, HomeCreate );
 	buttonGroup->addButton( homeView, HomeView );
-	buttonGroup->addButton( introBack, IntroBack );
+
+	introNext = introButtons->addButton( tr( "Next" ), QDialogButtonBox::ActionRole );
 	buttonGroup->addButton( introNext, IntroNext );
-	buttonGroup->addButton( viewAddFile, ViewAddFile );
-	buttonGroup->addButton( viewAddRecipient, ViewAddRecipient );
-	buttonGroup->addButton( viewBrowse, ViewBrowse );
-	buttonGroup->addButton( viewClose, ViewClose );
+	buttonGroup->addButton( introButtons->button( QDialogButtonBox::Cancel ), IntroBack );
+
+	viewCrypt = viewButtons->addButton( tr("Encrypt"), QDialogButtonBox::ActionRole );
 	buttonGroup->addButton( viewCrypt, ViewCrypt );
-	buttonGroup->addButton( viewEmail, ViewEmail );
-	buttonGroup->addButton( viewRemoveFile, ViewRemoveFile );
-	buttonGroup->addButton( viewSaveAs, ViewSaveAs );
+	buttonGroup->addButton( viewButtons->button( QDialogButtonBox::Close ), ViewClose );
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
+
+	connect( viewLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+	connect( viewContentLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
+	connect( viewKeysLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 
 	appTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
@@ -186,13 +190,12 @@ void MainWindow::buttonClicked( int button )
 			break;
 		}
 	case IntroNext:
+	{
 		if( !params.isEmpty() )
 		{
 			parseParams();
 			break;
 		}
-	case ViewAddFile:
-	{
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !list.isEmpty() )
@@ -208,54 +211,11 @@ void MainWindow::buttonClicked( int button )
 			setCurrentPage( Home );
 		break;
 	}
-	case ViewAddRecipient:
-	{
-		if( doc->isEncrypted() )
-			return;
-
-		KeyAddDialog *key = new KeyAddDialog( this );
-		connect( key, SIGNAL(addCardCert()), SLOT(addCardCert()) );
-		connect( key, SIGNAL(selected(QList<CKey>)), SLOT(addKeys(QList<CKey>)) );
-		key->show();
-		break;
-	}
 	case IntroBack:
 	case ViewClose:
-		if( !saveDocument() )
-			break;
 		doc->clear();
 		setCurrentPage( Home );
 		break;
-	case ViewRemoveFile:
-	{
-		QAbstractItemModel *m = viewContentView->model();
-
-		QStringList files;
-		for( int i = 0; i < m->rowCount(); ++i )
-		{
-			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-				files << m->index( i, 0 ).data().toString();
-		}
-
-		if( files.empty() )
-			break;
-
-		QMessageBox::StandardButtons btn = QMessageBox::warning(
-			this, "QDigiDocCrypto",
-			tr("Are you sure you want remove files %1").arg( files.join(", ") ),
-			QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Cancel );
-
-		if( btn == QMessageBox::Cancel )
-			break;
-
-		for( int i = m->rowCount() - 1; i >= 0; --i )
-		{
-			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-				doc->removeDocument( i );
-		}
-		setCurrentPage( View );
-		break;
-	}
 	case ViewCrypt:
 		if( doc->isEncrypted() )
 		{
@@ -287,7 +247,10 @@ void MainWindow::buttonClicked( int button )
 			}
 		}
 		else
+		{
 			doc->encrypt();
+			doc->save();
+		}
 		setCurrentPage( View );
 		break;
 	case HomeView:
@@ -299,88 +262,9 @@ void MainWindow::buttonClicked( int button )
 			setCurrentPage( View );
 		break;
 	}
-	case ViewBrowse:
-	{
-		if( !saveDocument( false ) )
-			break;
-#ifdef Q_OS_WIN32
-		QString url( "file:///" );
-#else
-		QString url( "file://" );
-#endif
-		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
-		break;
-	}
-	case ViewEmail:
-	{
-		if( !saveDocument( false ) )
-			break;
-#ifdef Q_OS_WIN32
-		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
-		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
-
-		MapiFileDesc doc[1];
-		doc[0].ulReserved = 0;
-		doc[0].flFlags = 0;
-		doc[0].nPosition = -1;
-		doc[0].lpszPathName = filePath.data();
-		doc[0].lpszFileName = fileName.data();
-		doc[0].lpFileType = NULL;
-
-		// Create message
-		MapiMessage message;
-		message.ulReserved = 0;
-		message.lpszSubject = "";
-		message.lpszNoteText = "";
-		message.lpszMessageType = NULL;
-		message.lpszDateReceived = NULL;
-		message.lpszConversationID = NULL;
-		message.flFlags = 0;
-		message.lpOriginator = NULL;
-		message.nRecipCount = 0;
-		message.lpRecips = NULL;
-		message.nFileCount = 1;
-		message.lpFiles = (lpMapiFileDesc)&doc;
-
-		QLibrary lib("mapi32");
-		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
-		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
-		if( mapi )
-		{
-			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
-			if( status == SUCCESS_SUCCESS )
-				break;
-		}
-		showWarning( tr("Failed to send email"), -1 );
-#else
-		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( doc->fileName() ).fileName() )
-			.arg( doc->fileName() ) );
-#endif
-		break;
-	}
-	case ViewSaveAs:
-	{
-		QString dir = QFileDialog::getExistingDirectory( this,
-			tr("Select folder where files will be stored"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !dir.isEmpty() )
-		{
-			QAbstractItemModel *m = viewContentView->model();
-			for( int i = 0; i < m->rowCount(); ++i )
-			{
-				if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-					doc->saveDocument( i, dir );
-			}
-		}
-		break;
-	}
 	default: break;
 	}
 }
-
-void MainWindow::closeEvent( QCloseEvent *e )
-{ e->setAccepted( saveDocument() ); }
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
@@ -443,6 +327,98 @@ void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
 	QDesktopServices::openUrl( url );
 }
 
+void MainWindow::parseLink( const QString &url )
+{
+	if( url == "addFile" )
+	{
+		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( list.isEmpty() )
+			return;
+		Q_FOREACH( const QString &file, list )
+			addFile( file );
+		setCurrentPage( View );
+	}
+	else if( url == "addRecipient" )
+	{
+		if( doc->isEncrypted() )
+			return;
+
+		KeyAddDialog *key = new KeyAddDialog( this );
+		connect( key, SIGNAL(addCardCert()), SLOT(addCardCert()) );
+		connect( key, SIGNAL(selected(QList<CKey>)), SLOT(addKeys(QList<CKey>)) );
+		key->show();
+	}
+	else if( url == "browse" )
+	{
+#ifdef Q_OS_WIN32
+		QString url( "file:///" );
+#else
+		QString url( "file://" );
+#endif
+		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
+	}
+	else if( url == "email" )
+	{
+#ifdef Q_OS_WIN32
+		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
+		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
+
+		MapiFileDesc doc[1];
+		doc[0].ulReserved = 0;
+		doc[0].flFlags = 0;
+		doc[0].nPosition = -1;
+		doc[0].lpszPathName = filePath.data();
+		doc[0].lpszFileName = fileName.data();
+		doc[0].lpFileType = NULL;
+
+		// Create message
+		MapiMessage message;
+		message.ulReserved = 0;
+		message.lpszSubject = "";
+		message.lpszNoteText = "";
+		message.lpszMessageType = NULL;
+		message.lpszDateReceived = NULL;
+		message.lpszConversationID = NULL;
+		message.flFlags = 0;
+		message.lpOriginator = NULL;
+		message.nRecipCount = 0;
+		message.lpRecips = NULL;
+		message.nFileCount = 1;
+		message.lpFiles = (lpMapiFileDesc)&doc;
+
+		QLibrary lib("mapi32");
+		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
+		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
+		if( mapi )
+		{
+			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
+			if( status == SUCCESS_SUCCESS )
+				break;
+		}
+		showWarning( tr("Failed to send email"), -1 );
+#else
+		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
+			.arg( QFileInfo( doc->fileName() ).fileName() )
+			.arg( doc->fileName() ) );
+#endif
+	}
+	else if( url == "saveAll" )
+	{
+		QString dir = QFileDialog::getExistingDirectory( this,
+			tr("Select folder where files will be stored"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( dir.isEmpty() )
+			return;
+		QAbstractItemModel *m = viewContentView->model();
+		for( int i = 0; i < m->rowCount(); ++i )
+		{
+			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
+				doc->saveDocument( i, dir );
+		}
+	}
+}
+
 void MainWindow::parseParams()
 {
 	Q_FOREACH( const QString &param, params )
@@ -469,26 +445,6 @@ void MainWindow::removeKey( int id )
 	setCurrentPage( View );
 }
 
-bool MainWindow::saveDocument( bool close )
-{
-	if( !doc->isModified() )
-		return true;
-
-	QMessageBox::StandardButtons b = QMessageBox::Save | QMessageBox::Cancel;
-	if( close )
-		b |= QMessageBox::Close;
-	QMessageBox::StandardButton btn = QMessageBox::warning( this,
-		"QDigiDocCrypto", tr("Document has changed. Save changes?"),
-		b, QMessageBox::Save );
-	switch( btn )
-	{
-	case QMessageBox::Save: doc->save();
-	case QMessageBox::Close: return true;
-	case QMessageBox::Cancel:
-	default: return false;
-	}
-}
-
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
@@ -498,27 +454,21 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 		viewFileName->setText( tr("Container: <b>%1</b>")
 			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
-		viewAddFile->setDisabled( doc->isEncrypted() );
-		viewSaveAs->setDisabled( doc->isEncrypted() );
-		viewRemoveFile->setDisabled( doc->isEncrypted() );
-		viewAddRecipient->setDisabled( doc->isEncrypted() );
+		viewLinks->setVisible( doc->isEncrypted() );
+		viewContentLinks->setHidden( doc->isEncrypted() );
+		viewKeysLinks->setHidden( doc->isEncrypted() );
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
 		viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
 
 		viewContentView->clear();
-		Qt::ItemFlags flags;
-		if( !doc->isEncrypted() )
-			flags = Qt::ItemIsEnabled | Qt::ItemIsUserCheckable;
 		Q_FOREACH( const CDocument &file, doc->documents() )
 		{
 			QTreeWidgetItem *i = new QTreeWidgetItem( viewContentView );
 			i->setText( 0, file.filename );
-			i->setText( 1, file.size );
-			i->setFlags( flags );
-			i->setCheckState( 0, Qt::Unchecked );
-			i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
 			i->setData( 0, Qt::ToolTipRole, file.filename );
+			i->setText( 1, file.size );
+			i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
 			viewContentView->addTopLevelItem( i );
 		}
 
@@ -541,33 +491,42 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
-	if( !doc->activeCard().isEmpty() &&
-		(!doc->authCert().isNull() || !doc->signCert().isNull()) )
+	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
 	{
 		const SslCertificate c = doc->authCert();
-		content += tr("Person <font color=\"black\">%1 %2</font> card in reader<br />Person SSID: %3")
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) );
+		QTextStream s( &content );
 
-		QLocale l;
-		content += tr("<br />Sign certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( doc->signCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !doc->signCert().isValid() )
-			content += tr("<br /><font color=\"red\">Sign certificate is expired</font>");
+		if( c.isTempel() )
+			infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
+		else
+			infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
 
-		content += tr("<br />Auth certificate is valid until <font color=\"black\">%1</font>")
-			.arg( l.toString( doc->authCert().expiryDate(), "dd. MMMM yyyy" ) );
-		if( !doc->authCert().isValid() )
-			content += tr("<br /><font color=\"red\">Auth certificate is expired</font>");
+		s << tr("Name") << ": <font color=\"black\">"
+			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
+			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+		s << tr("Personal code") << ": <font color=\"black\">"
+			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+		s << tr("Card in reader") << ": <font color=\"black\">"
+			<< doc->activeCard() << "</font><br />";
+
+		bool willExpire = c.expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
+		s << tr("Auth certificate is") << " ";
+		if( doc->authCert().isValid()  )
+		{
+			s << "<font color=\"green\">" << tr("valid") << "</font>";
+			if( willExpire )
+				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
+		}
+		else
+			s << "<font color=\"red\">" << tr("expired") << "</font>";
 	}
 	else if( !doc->activeCard().isEmpty() )
 		content += tr("Loading data");
 	else
 		content += tr("No card in reader");
+	infoCard->setText( content );
 
 	viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
-	info->setText( content );
 	cards->clear();
 	cards->addItems( doc->presentCards() );
 	cards->setVisible( doc->presentCards().size() > 1 );
