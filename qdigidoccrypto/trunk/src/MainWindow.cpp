@@ -450,7 +450,16 @@ void MainWindow::setCurrentPage( Pages page )
 		viewKeysLinks->setHidden( doc->isEncrypted() );
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
-		viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
+		bool hasKey = false;
+		if( !doc->authCert().isNull() )
+		{
+			Q_FOREACH( const CKey &key, doc->keys() )
+			{
+				hasKey = (key.cert == doc->authCert());
+				break;
+			}
+		}
+		viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
 
 		viewContentView->clear();
 		Q_FOREACH( const CDocument &file, doc->documents() )
@@ -517,7 +526,17 @@ void MainWindow::showCardStatus()
 		content += tr("No card in reader");
 	infoCard->setText( content );
 
-	viewCrypt->setEnabled( !doc->isEncrypted() || !doc->authCert().isNull() );
+	bool hasKey = false;
+	if( !doc->authCert().isNull() )
+	{
+		Q_FOREACH( const CKey &key, doc->keys() )
+		{
+			hasKey = (key.cert == doc->authCert());
+			break;
+		}
+	}
+	viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
+
 	cards->clear();
 	cards->addItems( doc->presentCards() );
 	cards->setVisible( doc->presentCards().size() > 1 );
