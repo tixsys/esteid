@@ -54,7 +54,7 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
-QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
+QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 {
 	unsigned char *cert = NULL;
 	int len = i2d_X509( (X509*)x509, &cert );

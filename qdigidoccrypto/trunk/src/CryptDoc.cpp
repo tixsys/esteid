@@ -80,7 +80,7 @@ void CryptDoc::addCardCert()
 	}
 	poller->unlock();
 
-	SslCertificate c = SslCertificate::fromX509( (Qt::HANDLE*)cert );
+	SslCertificate c = SslCertificate::fromX509( (Qt::HANDLE)cert );
 	free( cert );
 
 	CKey key;
@@ -114,9 +114,18 @@ void CryptDoc::addKey( const CKey &key )
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
+	X509 *cert = NULL;
+	QByteArray data = key.cert.toDer();
+	int err = ddocDecodeX509Data( &cert, (const byte*)data.constData(), data.size() );
+	if( err != ERR_OK )
+	{
+		setLastError( tr("Failed to add key"), err );
+		return;
+	}
+
 	DEncEncryptedKey *pkey;
-	int err = dencEncryptedKey_new( m_enc, &pkey, (X509*)decodeCert( key.cert.toPem() ),
-		DENC_ENC_METHOD_RSA1_5, NULL, key.recipient.toUtf8(), NULL, NULL );
+	err = dencEncryptedKey_new( m_enc, &pkey, cert, DENC_ENC_METHOD_RSA1_5,
+		NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to add key"), err );
 }
@@ -377,7 +386,7 @@ QList<CKey> CryptDoc::keys()
 	for( int i = 0; i < m_enc->nEncryptedKeys; ++i )
 	{
 		CKey ckey;
-		ckey.cert = SslCertificate::fromX509( (Qt::HANDLE*)m_enc->arrEncryptedKeys[i]->pCert );
+		ckey.cert = SslCertificate::fromX509( (Qt::HANDLE)m_enc->arrEncryptedKeys[i]->pCert );
 		ckey.id = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szId );
 		ckey.name = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szKeyName );
 		ckey.recipient = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szRecipient );

@@ -49,7 +49,7 @@ void Poller::readCerts()
 	int slot = cards[selectedCard];
 	X509 *cert;
 	findUsersCertificate( slot, &cert );
-	auth = SslCertificate::fromX509( (Qt::HANDLE*)cert );
+	auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
 	free( cert );
 
 	Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
