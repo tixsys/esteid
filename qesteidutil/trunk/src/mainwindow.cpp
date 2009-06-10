@@ -34,7 +34,8 @@ MainWindow::MainWindow( QWidget *parent )
 #else
 	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
 #endif
-	
+	page()->mainFrame()->setScrollBarPolicy( Qt::Horizontal, Qt::ScrollBarAlwaysOff );
+	page()->mainFrame()->setScrollBarPolicy( Qt::Vertical, Qt::ScrollBarAlwaysOff );
 	setContextMenuPolicy(Qt::PreventContextMenu);
 	setWindowIcon( QIcon( ":/html/images/id_icon_48x48.png" ) );
 	setFixedSize( 585, 535 );
