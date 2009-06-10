@@ -328,7 +328,7 @@ padding: 5px;
             <height>95</height>
            </size>
           </property>
-          <layout class="QGridLayout" name="gridLayout">
+          <layout class="QGridLayout" name="infoFrameLayout">
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="infoSignLayout">
              <item>
@@ -408,6 +408,9 @@ padding: 5px;
                 <spacer name="infoMobileSpacer">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Preferred</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -984,8 +987,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>88</width>
-               <height>18</height>
+               <width>288</width>
+               <height>176</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
