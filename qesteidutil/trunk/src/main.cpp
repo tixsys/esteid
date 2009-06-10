@@ -21,12 +21,16 @@
  */
 
 #include <QtGui/QApplication>
+#include <openssl/ssl.h>
 
 #include "mainwindow.h"
 #include "version.h"
 
 int main(int argc, char *argv[])
 {
+	SSL_load_error_strings();
+	SSL_library_init();
+	
     QApplication app(argc, argv);
 	app.setApplicationName( APP );
 	app.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
