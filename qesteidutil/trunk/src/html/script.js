@@ -238,7 +238,7 @@ function readCardData()
 		document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
 		if(esteidData.getPukRetryCount() == 0)
-			alert( _('PUKBlocked') );
+			setActive('puk',document.getElementById('buttonPUK'));
 	} catch ( err ) { }
 }
 
@@ -310,7 +310,20 @@ function setActive( content, el )
 			document.getElementById('bpin2NewPin2').value = "";
 			document.getElementById('bpin2OldPin').focus();
 			break;
-		case "email": if ( !emailsLoaded ) document.getElementById('emailsContentCheck').style.display = 'block'; break;
+		case "email":
+			if ( !emailsLoaded )
+				document.getElementById('emailsContentCheck').style.display = 'block';
+			break;
+		case "puk":
+			if ( esteidData.getPukRetryCount() == 0 )
+			{
+				document.getElementById('buttonChangePUK2').style.display = 'none';
+				document.getElementById('labelPUKBlocked').style.display = 'block';
+			} else {
+				document.getElementById('buttonChangePUK2').style.display = 'block';
+				document.getElementById('labelPUKBlocked').style.display = 'none';
+			}
+			break;
 	}
 }
 

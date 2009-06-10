@@ -55,7 +55,7 @@
         <li><input type="button" accesskey="C" trcode="inputCert" name="cert" onClick="setActive('cert',this);" class="buttonSelected" /></li>
         <li><input type="button" accesskey="E" trcode="inputEmail" name="email" onClick="setActive('email',this);" class="button" /></li>
         <li><input type="button" accesskey="M" trcode="inputMobile" name="mobile" onClick="setActive('mobile',this);" class="button" /></li>
-        <li><input type="button" accesskey="P" trcode="inputPUK" name="puk" onClick="setActive('puk',this);" class="button" /></li>
+		<li><input type="button" accesskey="P" trcode="inputPUK" id="buttonPUK" name="puk" onClick="setActive('puk',this);" class="button" /></li>
       </ul>
     </div>
     <div id="cardInfo" class="cardInfo">
@@ -392,8 +392,11 @@
 	<p>
 		<trtag trcode="labelInputPUK2"></trtag>
     </p>
+	<p id="labelPUKBlocked" style="display: none; text-align:center;">
+	  <span class="noCard"><trtag trcode="labelPUKBlocked"></trtag></span>
+	</p>
 	<p>
-		<input type="button" trcode="inputChangePUK" onclick="setActive('cpuk','');" class="buttonBottom" />
+		<input type="button" trcode="inputChangePUK" id="buttonChangePUK2" onclick="setActive('cpuk','');" class="buttonBottom" />
 	</p>
   </div>
   <!-- PUK sisu l6pp -->
