@@ -91,8 +91,6 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << getLibVersion( "ssleay32" ) << "<br />";
 #elif defined Q_OS_MAC
 	s << getLibVersion( "PCSC" ) << "<br />";
-	s << getLibVersion( "ssl" ) << "<br />";
-	s << getLibVersion( "crypto" ) << "<br />";
 #else
 	s << getLibVersion( "pcsclite" ) << "<br />";
 	s << getLibVersion( "ssl" ) << "<br />";
