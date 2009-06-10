@@ -388,7 +388,7 @@ void MainWindow::parseLink( const QString &url )
 		{
 			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
 			if( status == SUCCESS_SUCCESS )
-				break;
+				return;
 		}
 		showWarning( tr("Failed to send email"), -1 );
 #else
