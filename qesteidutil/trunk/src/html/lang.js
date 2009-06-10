@@ -20,7 +20,7 @@ var htmlStrings = {
 	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
-	"linkHelp": new tr( "Abi", "Help", "Help" ),
+	"linkHelp": new tr( "Abi", "Help", "Помощь" ),
 
 	"personName": new tr( "Nimi", "Name", "Имя" ),
 	"personDepartment": new tr( "Osakond", "Department", "Отдел" ),
@@ -101,9 +101,9 @@ var htmlStrings = {
 	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "", "Mobiil-ID это возможность идентифицировать личность и давать подпись мобильным телефоном, вместо ID- карты." ),
 	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "", "Для использования Mobiil-ID нужна новая SIM- карта, которую можно получить у мобильного оператора. Если такая карта уже есть, то услугу следует активировать." ),
 	"labelMobileReadMore": new tr( "Loe täpsemalt id.ee kodulehelt", "", "Более подробно на страничке id.ee" ),
-	"mobileNumber": new tr( "Mobiili number", "Mobile number", "" ),
-	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "" ),
-	"mobileStatus": new tr( "Staatus", "Mobile status", "" ),
+	"mobileNumber": new tr( "Mobiili number", "Mobile number", "Номер моб. телефона" ),
+	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "Оператор моб. телефона" ),
+	"mobileStatus": new tr( "Staatus", "Mobile status", "Статус" ),
 	
 	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "Возникла ошибка:" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "Загружаю настройки эл. почты" ),
@@ -156,7 +156,7 @@ var eidStrings = {
 	"PIN1UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "Unblock failed.\nYour new PIN1 has to be different than current!", "Снятие блокировки неуспешно.\nНовый PIN должен отличаться от старого!" ),
 	"PIN1UnblockSuccess": new tr( "PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN1 changed and you current sertificates blocking has been removed!", "PIN1 код изменён и сертификат разблокирован!" ),
 	"PIN1Blocked": new tr( "PIN1 blokeeritud.", "PIN1 blocked", "PIN1 заблокирован." ),
-	"PIN1NewOldSame": new tr( "Vana ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "" ),
+	"PIN1NewOldSame": new tr( "Vana ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "Старый и новый PIN1 должны отличаться!" ),
 
 	"PIN2Enter": new tr( "Sisesta vana PIN2 kood", "Current PIN2 code", "Введите старый PIN2 код" ),
 	"PIN2Length": new tr( "PIN2 pikkus peab olema 5-12 numbrit", "PIN2 length has to be between 5 and 12", "Длина PIN2 должна быть 5-12 номера" ),
@@ -170,7 +170,7 @@ var eidStrings = {
 	"PIN2UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "Unblock failed.\nYour new PIN2 has to be different than current!", "Снятие блокировки неуспешно.\nНовый PIN должен отличаться от старого!" ),
 	"PIN2UnblockSuccess": new tr( "PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN2 changed and you current sertificates blocking has been removed!", "PIN2 код изменён и сертификат разблокирован!" ),
 	"PIN2Blocked": new tr( "PIN2 blokeeritud.", "PIN2 blocked", "PIN2 заблокирован." ),
-	"PIN2NewOldSame": new tr( "Vana ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "" ),
+	"PIN2NewOldSame": new tr( "Vana ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "Старый и новый PIN2 должны отличаться!" ),
 
 	"PUKEnter": new tr( "Sisesta PUK kood.", "Enter PUK code.", "Введите PUK код" ),
 	"PUKLength": new tr( "PUK koodi pikkus peab olema 8-12 numbrit.", "PUK length has to be between 8 and 12.", "Длина PUK должна быть 8-12 номера" ),
@@ -182,7 +182,7 @@ var eidStrings = {
 	"PUKUnsuccess": new tr( "PUK koodi muutmine ebaõnnestus!", "Changing PUK failed!", "Смена PUK кода неудачна!" ),
 	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida 2 korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "PUK blocked", "PUK заблокирован." ),
-	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "" )
+	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" )
 };
 
 function selectLanguage()
