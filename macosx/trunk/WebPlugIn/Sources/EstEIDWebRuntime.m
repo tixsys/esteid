@@ -359,9 +359,9 @@ bool EstEIDWebRuntimeMsgSend(NPP npp, id self, SEL selector, const NPVariant *ar
 				result->type = NPVariantType_Void;
 			}
 			
-			// Weird...?
+			// Workaround to WebKit bug: browser->setexception() doesn't work with every configuration
 			[WebScriptObject throwException:[(NSException *)object name]];
-			//browser->setexception((NPObject *)npp->pdata, [(NSException *)object name]);
+			browser->setexception((NPObject *)npp->pdata, [[(NSException *)object name] UTF8String]);
 		} else {
 			if(result) {
 				EstEIDWebRuntimeObjectToVariant(npp, object, result);
