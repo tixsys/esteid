@@ -36,5 +36,5 @@ QString Common::fileSize( quint64 bytes )
 		return QString( "%1 MB" ).arg( qreal(bytes) / mb, 0, 'f', 1 );
 	if( bytes >= kb )
 		return QString( "%1 KB" ).arg( bytes / kb );
-	return QString::number( bytes );
+	return QString( "%1 B" ).arg( bytes );
 }

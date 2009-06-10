@@ -103,10 +103,7 @@ MainWindow::MainWindow( QWidget *parent )
 	{
 		args.removeAt( 0 );
 		params = args;
-		if( SettingsValues().showIntro() )
-			setCurrentPage( Intro );
-		else
-			parseParams();
+		buttonClicked( HomeCreate );
 	}
 }
 
@@ -283,10 +280,7 @@ void MainWindow::dropEvent( QDropEvent *e )
 			params << u.path();
 #endif
 	}
-	if( stack->currentIndex() == Home && SettingsValues().showIntro() )
-		setCurrentPage( Intro );
-	else
-		parseParams();
+	buttonClicked( HomeCreate );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
