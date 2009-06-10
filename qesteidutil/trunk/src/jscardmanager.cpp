@@ -90,11 +90,8 @@ void JsCardManager::pollCard()
 						card->connect( i, true );
 						reader.cardId = QString::fromStdString( card->readDocumentID() );
 						reader.connected = true;
-						if ( !foundConnected )
-						{
-							foundConnected = true;
-							insert = reader.name;
-						}
+						foundConnected = true;
+						insert = reader.name;
 					}
 				} else if ( !cardReaders.value(reader.name).cardId.isEmpty() && cardReaders.value(reader.name).connected )
 					remove = reader.name;
@@ -124,7 +121,8 @@ void JsCardManager::pollCard()
 		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
-			m_jsEsteidCard->setCard( 0 );
+			if ( m_jsEsteidCard->m_card && m_jsEsteidCard->getDocumentId() == cardReaders[remove].cardId )
+				m_jsEsteidCard->setCard( 0 );
 			emit cardEvent( m_jsCardRemoveFunc, remove != "empty" ? cardReaders[remove].id : -1 );
 		}
 		if ( !insert.isEmpty() )
@@ -201,10 +199,6 @@ bool JsCardManager::selectReader( const ReaderState &reader )
     try {
         if (!cardMgr)
             cardMgr = new SmartCardManager();
-		else {
-			//refresh reader states
-			cardMgr->getReaderCount( true );
-		}
 		card = new EstEidCard(*cardMgr);
 		card->connect( reader.id, true );
 		QCoreApplication::processEvents();
@@ -243,11 +237,6 @@ QString JsCardManager::getReaderName(int i)
 {
     if (!cardMgr)
         return "";
-
-	//refresh reader states
-	try {
-		cardMgr->getReaderCount( true );
-	} catch( std::runtime_error & ) {}
 
     return QString::fromStdString(cardMgr->getReaderName(i));
 }

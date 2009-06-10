@@ -57,22 +57,26 @@ function cardInserted(i)
 {
 	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
 	checkReaderCount();
-	if ( !cardManager.isInReader( activeCardId ) )
-	{
-		document.getElementById('cardInfoNoCard').style.display='none';	
-		activeCardId = "";
-		emailsLoaded = false;
-		if ( i != -1 )
+
+	try {
+		if ( !cardManager.isInReader( activeCardId ) )
 		{
-			extender.showLoading( _('loadCardData') );
-			cardManager.selectReader( i );
-			if ( esteidData.canReadCard() )
+			document.getElementById('cardInfoNoCard').style.display='none';
+			activeCardId = "";
+			emailsLoaded = false;
+			if ( i != -1 )
 			{
-				activeCardId = esteidData.getDocumentId();
-				extender.closeLoading();
-			}		
+				extender.showLoading( _('loadCardData') );
+				cardManager.selectReader( i );
+				if ( esteidData.canReadCard() )
+				{
+					activeCardId = esteidData.getDocumentId();
+					extender.closeLoading();
+				}
+			}
 		}
-	}
+	} catch ( err ) {}
+
 	readCardData();
 }
 
@@ -80,15 +84,19 @@ function cardRemoved(i)
 {
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i) + " " + activeCardId );
 	checkReaderCount();
-	if ( !cardManager.isInReader( activeCardId ) )
-	{
-		emailsLoaded = false;
-		activeCardId = "";
-		disableFields();
-		cardManager.findCard();
-		if ( esteidData.canReadCard() )
-			activeCardId = esteidData.getDocumentId();
-	}
+
+	try {
+		if ( !cardManager.isInReader( activeCardId ) )
+		{
+			emailsLoaded = false;
+			activeCardId = "";
+			disableFields();
+			cardManager.findCard();
+			if ( esteidData.canReadCard() )
+				activeCardId = esteidData.getDocumentId();
+		}
+	} catch( err ) {}
+
 	extender.closeLoading();
 	readCardData();
 }
@@ -98,9 +106,14 @@ function selectReader()
 	extender.showLoading( _('loadCardData') );
 	disableFields();
 	var select = document.getElementById('readerSelect'); 
-	cardManager.selectReader( select.options[select.selectedIndex].value );
+
+	try {
+		cardManager.selectReader( select.options[select.selectedIndex].value );
+	} catch( err ) {}
+
 	if ( esteidData.canReadCard() )
 		activeCardId = esteidData.getDocumentId();
+
 	extender.closeLoading();
 	readCardData();
 }
@@ -111,19 +124,23 @@ function checkReaderCount()
 	var reader = document.getElementById( 'readerSelect' );
 	while ( reader.options.length > 0 )
 		reader.remove(0);
-	for( var i = 0; i < cardManager.getReaderCount(); i++ )
-	{
-		if ( cardManager.isInReader( i ) )
+
+	try {
+		for( var i = 0; i < cardManager.getReaderCount(); i++ )
 		{
-			var el = document.createElement( 'option' );
-			el.text = cardManager.cardId( i );
-			el.value = i;
-			if ( activeCardId != "" && el.text == activeCardId )
-				el.selected = true;
-			reader.add( el, null );
-			cards++;
+			if ( cardManager.isInReader( i ) )
+			{
+				var el = document.createElement( 'option' );
+				el.text = cardManager.cardId( i );
+				el.value = i;
+				if ( activeCardId != "" && el.text == activeCardId )
+					el.selected = true;
+				reader.add( el, null );
+				cards++;
+			}
 		}
-	}
+	} catch ( err ) {}
+
 	if ( cards < 2 )
 	{
 		document.getElementById( 'headerMenus' ).style.right = '95px';
@@ -146,6 +163,8 @@ function readCardData()
 
 		if ( activeCardId == "" )
 			activeCardId = esteidData.getDocumentId();
+
+		checkReaderCount();
 
 		document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 		document.getElementById('expiry').innerHTML = esteidData.getExpiry();
@@ -413,20 +432,27 @@ function disableFields()
 	document.getElementById('department').innerHTML = "";
 	
 	document.getElementById('cardInfo').style.display='none';
-	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
-	{
-		document.getElementById('cardInfoNoCard').style.display='block';
-		document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
-	}
+
 	document.getElementById('emailsContent').innerHTML = "";
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
 	document.getElementById('photo').style.background = '#FFFFFF';
 	document.getElementById('savePhoto').style.display = 'none';
-	
+
 	var divs = document.getElementsByTagName('div');
 	for( i=0;i<divs.length;i++ )
-		if ( (typeof divs[i] != "undefined") && (typeof divs[i].style != "undefined") && (typeof divs[i].className != "undefined") && divs[i].className == "content" )
-			divs[i].style.display = 'none';
+	{
+		if ( (typeof divs[i].className == "undefined") || ( typeof divs[i].id == "undefined" ) || divs[i].className != "content" )
+				continue;
+		divs[i].style.display = 'none';
+	}
+
+	try {
+		if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		{
+			document.getElementById('cardInfoNoCard').style.display='block';
+			document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
+		}
+	} catch( err ) {}
 }
 
 function enableFields()
