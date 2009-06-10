@@ -29,7 +29,7 @@
 
 class LdapSearch;
 
-class KeyWidget: public QWidget
+class KeyWidget: public QLabel
 {
 	Q_OBJECT
 
@@ -40,8 +40,7 @@ Q_SIGNALS:
 	void remove( int id );
 
 private Q_SLOTS:
-	void remove();
-	void showDetails();
+	void link( const QString &url );
 
 private:
 	int m_id;

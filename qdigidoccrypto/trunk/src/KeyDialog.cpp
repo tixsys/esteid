@@ -38,33 +38,32 @@
 #include <QTextStream>
 
 KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
-:	QWidget( parent )
+:	QLabel( parent )
 ,	m_id( id )
 ,	m_key( key )
 {
-	QLabel *c = new QLabel( key.recipient, this );
-
-	QPushButton *b = new QPushButton( tr("Show details"), this );
-	connect( b, SIGNAL(clicked()), SLOT(showDetails()) );
-
-	QHBoxLayout *h = new QHBoxLayout();
-	h->addItem( new QSpacerItem( 0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum ) );
-	h->addWidget( b );
-
+	connect( this, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
+	QString content;
+	QTextStream s( &content );
+	s << "<p>" << key.recipient << "</p>";
+	s << "<p align=\"right\">";
+	s << "<a href=\"details\">" << tr("Show details") << "</a>";
 	if( !encrypted )
 	{
-		QPushButton *d = new QPushButton( tr("Remove"), this );
-		connect( d, SIGNAL(clicked()), SLOT(remove()) );
-		h->addWidget( d );
+		s << "<br />";
+		s << "<a href=\"remove\">" << tr("Remove") << "</a>";
 	}
-
-	QVBoxLayout *v = new QVBoxLayout( this );
-	v->addWidget( c );
-	v->addLayout( h );
+	s << "</p>";
+	setText( content );
 }
 
-void KeyWidget::remove() { Q_EMIT remove( m_id ); }
-void KeyWidget::showDetails() { (new KeyDialog( m_key, this ))->show(); }
+void KeyWidget::link( const QString &url )
+{
+	if( url == "details" )
+		(new KeyDialog( m_key, this ))->show();
+	else if( url == "remove" )
+		Q_EMIT remove( m_id );
+}
 
 
 
