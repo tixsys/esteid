@@ -406,10 +406,7 @@ void MainWindow::parseLink( const QString &url )
 			return;
 		QAbstractItemModel *m = viewContentView->model();
 		for( int i = 0; i < m->rowCount(); ++i )
-		{
-			if( m->index( i, 0 ).data( Qt::CheckStateRole ) == Qt::Checked )
-				doc->saveDocument( i, dir );
-		}
+			doc->saveDocument( i, dir );
 	}
 }
 

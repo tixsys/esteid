@@ -70,19 +70,7 @@ void CryptDoc::addCardCert()
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
-	poller->lock();
-	X509 *cert;
-	int err = findUsersCertificate( 0, &cert );
-	if( err != ERR_OK )
-	{
-		poller->unlock();
-		return setLastError( tr("Din't find card certificate") );
-	}
-	poller->unlock();
-
-	SslCertificate c = SslCertificate::fromX509( (Qt::HANDLE)cert );
-	free( cert );
-
+	SslCertificate c = m_authCert;
 	CKey key;
 	key.cert = c;
 	key.recipient = c.subjectInfoUtf8( "CN" );
@@ -318,7 +306,7 @@ bool CryptDoc::encrypt()
 		qsnprintf( id, 50, "orig_file%d", i );
 		int err = dencOrigContent_add( m_enc,
 			id,
-			QFileInfo( data->szFileName ).fileName().toUtf8(),
+			QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName().toUtf8(),
 			Common::fileSize( data->nSize ).toUtf8(),
 			data->szMimeType,
 			data->szId );
@@ -481,8 +469,8 @@ void CryptDoc::saveDocument( int id, const QString &path )
 		return setLastError( tr("Internal error") );
 
 	QFileInfo source( QString::fromUtf8( m_doc->pDataFiles[id]->szFileName ) );
-	QString destination = QString( "%1%2%3" )
-		.arg( path ).arg( QDir::separator() ).arg( source.fileName() );
+	QString destination = QString( "%1/%2" )
+		.arg( path ).arg( source.fileName() );
 	if( source.isAbsolute() )
 	{
 		QFile::remove( destination );

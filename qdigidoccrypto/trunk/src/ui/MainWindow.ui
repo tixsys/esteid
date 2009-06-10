@@ -128,26 +128,16 @@ color: #00355F;
 font: bold;
 }
 
+#home, #intro, #view,
+#viewContentView
+{ background-color: transparent; }
+
 #viewContentFrame
 {
 background-color: rgba( 255, 255, 255, 200 );
 border: 1px solid gray;
 color: #355670;
-}
-
-#viewContentView
-{
-background-color: transparent;
 padding: 5px;
-}
-
-#home, #intro, #view
-{ background-color: transparent; }
-
-#viewKeys, #viewKeysScroll
-{
-background-color: transparent;
-color: #71889A;
 }
 
 #viewKeysFrame
@@ -155,6 +145,12 @@ color: #71889A;
 background-color: rgba( 255, 255, 255, 200 );
 border: 1px solid gray;
 padding: 5px;
+}
+
+#viewKeys, #viewKeysScroll
+{
+background-color: transparent;
+color: #71889A;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="MainLayout">
@@ -604,6 +600,9 @@ p, li { white-space: pre-wrap; }
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
+             <property name="margin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QTreeWidget" name="viewContentView">
                <property name="frameShape">
@@ -658,6 +657,9 @@ p, li { white-space: pre-wrap; }
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="margin">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QScrollArea" name="viewKeysScroll">
                <property name="frameShape">
@@ -674,8 +676,8 @@ p, li { white-space: pre-wrap; }
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>280</width>
-                  <height>199</height>
+                  <width>288</width>
+                  <height>192</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="viewKeysLayout">
