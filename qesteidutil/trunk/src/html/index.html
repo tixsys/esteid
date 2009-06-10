@@ -165,6 +165,7 @@
 		<p>
 			<trtag trcode="labelChangingPIN12"></trtag>
 		</p>
+		<a href="#" style="font-size:12px;" onClick="setActive('ppin1','');"><trtag trcode="linkPIN1withPUK"></trtag></a>
 	</div>
 	<div class="rightContent">
 		<label>
@@ -188,6 +189,39 @@
   </div>
   <!-- PIN1 muutmine l6pp -->
   
+  <!-- PIN1 muutmine PUKiga algus -->
+  <div id="ppin1Content" class="content" style="display: none;">
+	<span class="contentHeader"><trtag trcode="labelChangingPIN1"></trtag></span>
+	<div class="leftContent">
+		<p>
+			<trtag trcode="labelChangingPIN11"></trtag>
+		</p>
+		<p>
+			<trtag trcode="labelChangingPIN13"></trtag>
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			<trtag trcode="labelPUK"></trtag>
+			<input type="password" name="pin1OldPin" id="ppin1OldPin" maxlength="12" onKeyPress="handlekey('ppin1NewPin'); return checkNumeric(event);">
+		</label>
+		<br />
+		<label>
+			<trtag trcode="labelNewPIN1"></trtag>
+			<input type="password" name="pin1NewPin" id="ppin1NewPin" maxlength="12" onKeyPress="handlekey('ppin1NewPin2'); return checkNumeric(event);">
+		</label>
+		<br />
+		<label>
+			<trtag trcode="labelNewPIN12"></trtag>
+			<input type="password" name="pin1NewPin2" id="ppin1NewPin2" maxlength="12" onKeyPress="handlekey('inputChangePin1p'); return checkNumeric(event);">
+		</label>
+		<br />
+		<input type="button" trcode="inputChange" onClick="changePin1PUK();" class="buttonBottom" id="inputChangePin1p" />
+		<input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />
+	</div>
+  </div>
+  <!-- PIN1 muutmine PUKiga l6pp -->
+
   <!-- PIN2 blokeeringu algus -->
   <div id="bpin2Content" class="content" style="display: none;">
 	<span class="contentHeader"><trtag trcode="labelSignCertBlocked"></trtag></span>
@@ -234,6 +268,7 @@
 		<p>
 			<trtag trcode="labelChangingPIN22"></trtag>
 		</p>
+		<a href="#" style="font-size:12px;" onClick="setActive('ppin2','');"><trtag trcode="linkPIN2withPUK"></trtag></a>
 	</div>
 	<div class="rightContent">
 		<label>
@@ -257,6 +292,39 @@
   </div>
   <!-- PIN2 muutmine l6pp -->
   
+  <!-- PIN2 muutmine PUKiga algus -->
+  <div id="ppin2Content" class="content" style="display: none;">
+	<span class="contentHeader"><trtag trcode="labelChangingPIN2"></trtag></span>
+	<div class="leftContent">
+		<p>
+			<trtag trcode="labelChangingPIN21"></trtag>
+		</p>
+		<p>
+			<trtag trcode="labelChangingPIN23"></trtag>
+		</p>
+	</div>
+	<div class="rightContent">
+		<label>
+			<trtag trcode="labelPUK"></trtag>
+			<input type="password" name="pin2OldPin" id="ppin2OldPin" maxlength="12" onKeyPress="handlekey('ppin2NewPin'); return checkNumeric(event);">
+		</label>
+		<br />
+		<label>
+			<trtag trcode="labelNewPIN2"></trtag>
+			<input type="password" name="pin2NewPin" id="ppin2NewPin" maxlength="12" onKeyPress="handlekey('ppin2NewPin2'); return checkNumeric(event);">
+		</label>
+		<br />
+		<label>
+			<trtag trcode="labelNewPIN22"></trtag>
+			<input type="password" name="pin2NewPin2" id="ppin2NewPin2" maxlength="12" onKeyPress="handlekey('inputChangePin2p'); return checkNumeric(event);">
+		</label>
+		<br />
+		<input type="button" trcode="inputChange" onClick="changePin2PUK();" class="buttonBottom" id="inputChangePin2p" />
+		<input type="button" trcode="inputCancel" onClick="setActive('cert','');" class="buttonBottom" />
+	</div>
+  </div>
+  <!-- PIN2 muutmine PUKiga l6pp -->
+
   <!-- Eposti sisu algus -->
   <div id="emailContent" class="content" style="display: none;">
 	<span class="contentHeader"><trtag trcode="inputEmail"></trtag></span>

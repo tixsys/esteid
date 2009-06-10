@@ -53,7 +53,7 @@ input[type="button"] { cursor: hand; }
 .statusBlocked, .certBlocked {color: #e80303; font-weight: bold; }
 .certValid {font-weight: bold;}
 
-.leftContent {position: absolute; left: 40px; width: 240px; height: 180px; border-right: 1px solid #dfdfdf; margin-top: 10px;}
+.leftContent {position: absolute; left: 40px; width: 240px; height: 180px; border-right: 1px solid #dfdfdf; margin-top: 10px; padding-right: 10px; }
 .buttonSelectedBottom, .buttonBottom { height: 25px; -webkit-border-radius: 3px; font-family: "Arial, Liberation Sans"; font-size: 12px; margin-left: 0px;}
 .buttonSelectedBottom { background-image: url('qrc:/html/images/buttonSelected.png'); border: 1px solid #ce911b; color: #00355f;}
 .buttonBottom { background-image: url('qrc:/html/images/button.png'); border: 1px solid #1a4b79; color: #ffffff;}

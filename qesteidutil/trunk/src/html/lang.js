@@ -56,11 +56,15 @@ var htmlStrings = {
 	"labelChangingPIN1": new tr( "PIN1 koodi vahetus", "Change PIN1 code", "Замена кода PIN1" ),
 	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "", "PIN1 - код, который используют для доступа к сертификатам индентификации личности." ),
 	"labelChangingPIN12": new tr( "Kui PIN1 koodi sisestatakse kolm korda valesti, siis isikutuvastamise sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada isiku tuvastamiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "Если PIN1 введён 3 раза неверно, тогда блокируется идентификационный сертификат и использовать ID- карту невозможно, пока блокировка не снята PUK кодом." ),
+	"labelChangingPIN13": new tr( "Kui olete unustanud PIN1 koodi, kuid teate PUK koodi, siis siin saate määrata uue PIN1 koodi.", "", "" ),
+	"linkPIN1withPUK": new tr( "Muuda PIN1 kood PUK koodi abil", "Change PIN1 using PUK code", "" ),
 
 	"labelChangingPIN2": new tr( "PIN2 koodi vahetus", "Change PIN2 code", "Смена кода PIN2" ),
 	"labelChangingPIN21": new tr( "PIN2 on kood, mida kasutatakse digitaalallkirja andmiseks.", "", "PIN2 - код, что используется для дигитальной подписи." ),
 	"labelChangingPIN22": new tr( "Kui PIN2 koodi sisestatakse kolm korda valesti, siis allkirja sertifikaat blokeeritakse ning ID-kaarti pole võimalik kasutada digitaalallkirja andmiseks enne kui blokeering tühistatakse PUK-koodiga.", "", "Если PIN2 введён 3 раза неверно, тогда блокируется сертификат цифровой подписи и использовать ID- карту для цифровой подписи невозможно, пока  блокировка не снята PUK кодом." ),
-	
+	"labelChangingPIN23": new tr( "Kui olete unustanud PIN2 koodi, kuid teate PUK koodi, siis siin saate määrata uue PIN2 koodi.", "", "" ),
+	"linkPIN2withPUK": new tr( "Muuda PIN2 kood PUK koodi abil", "Change PIN2 using PUK code", "" ),
+
 	"labelChangingPUK": new tr( "PUK koodi vahetus", "Change PUK code", "Смена PUK кода" ),
 	"labelChangingPUK2": new tr( "Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.", "", "Если после смены PUK код забывается и сетрификат блокируется из-за неверно введённых PIN1 или PIN2, то единственной возможностью восстановить работоспособность ID- карты, это обратиться в бюро обслуживания." ),
 	

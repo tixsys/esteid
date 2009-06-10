@@ -259,11 +259,23 @@ function setActive( content, el )
 			document.getElementById('pin1NewPin2').value = "";
 			document.getElementById('pin1OldPin').focus();
 			break;
+		case "ppin1":
+			document.getElementById('ppin1OldPin').value = "";
+			document.getElementById('ppin1NewPin').value = "";
+			document.getElementById('ppin1NewPin2').value = "";
+			document.getElementById('ppin1OldPin').focus();
+			break;
 		case "pin2":
 			document.getElementById('pin2OldPin').value = "";
 			document.getElementById('pin2NewPin').value = "";
 			document.getElementById('pin2NewPin2').value = "";
 			document.getElementById('pin2OldPin').focus();
+			break;
+		case "ppin2":
+			document.getElementById('ppin2OldPin').value = "";
+			document.getElementById('ppin2NewPin').value = "";
+			document.getElementById('ppin2NewPin2').value = "";
+			document.getElementById('ppin2OldPin').focus();
 			break;
 		case "bpin1":
 			document.getElementById('bpin1OldPin').value = "";
@@ -537,6 +549,97 @@ function changePin( type )
 		document.getElementById('pin' + type + 'OldPin').value = "";
 		document.getElementById('pin' + type + 'NewPin').value = "";
 		document.getElementById('pin' + type + 'NewPin2').value = "";
+		alert( _( 'PIN' + type + 'Changed' ) );
+		setActive('cert','');
+	} else
+		alert( _( 'PIN' + type + 'Unsuccess' ) );
+}
+
+function changePin1PUK()
+{ changePinPUK( 1 ); }
+
+function changePin2PUK()
+{ changePinPUK( 2 ); }
+
+function changePinPUK( type )
+{
+	var oldVal=document.getElementById('ppin' + type + 'OldPin').value;
+	if (oldVal==null || oldVal.length < 4)
+	{
+		alert( _( 'PUKEnterOld' ) );
+		document.getElementById('ppin' + type + 'OldPin').focus();
+		return;
+	}
+	if ( !esteidData.validatePuk(oldVal) )
+	{
+		ret = ret = esteidData.getPukRetryCount();
+		if ( ret == 0 || ret > 3 )
+		{
+			document.getElementById('ppin' + type + 'OldPin').value = "";
+			document.getElementById('ppin' + type + 'NewPin').value = "";
+			document.getElementById('ppin' + type + 'NewPin2').value = "";
+			alert( _("PUKBlocked") );
+			readCardData();
+			setActive('cert','');
+			return;
+		}
+		alert( _('PUKInvalidRetry').replace( /%d/, ret ) );
+		document.getElementById('ppin' + type + 'OldPin').focus();
+		return;
+	}
+
+	var newVal=document.getElementById('ppin' + type + 'NewPin').value;
+	var newVal2=document.getElementById('ppin' + type + 'NewPin2').value;
+	if (newVal==null || newVal == "")
+	{
+		alert( _( 'PIN' + type + 'EnterNew' ) );
+		document.getElementById('ppin' + type + 'NewPin').focus();
+		return;
+	}
+	if ( oldVal == newVal )
+	{
+		alert( _( 'PIN' + type + 'NewOldSame' ) );
+		document.getElementById('ppin' + type + 'NewPin').focus();
+		return;
+	}
+	//PIN1 length 4-12, PIN2 5-12
+	if ( (type == 1 && (newVal.length<4 || newVal.length > 12) ) ||
+		(type == 2 && (newVal.length<5 || newVal.length > 12) ) )
+	{
+		alert( _( 'PIN' + type + 'Length' ) );
+		document.getElementById('ppin' + type + 'NewPin').focus();
+		return;
+	}
+	//check date of birth and birth year inside pin
+	if ( !esteidData.checkPin( newVal ) )
+	{
+		alert( _( 'PINCheck' ) );
+		document.getElementById('ppin' + type + 'NewPin').focus();
+		return;
+	}
+	if (newVal2==null || newVal2 == "" )
+	{
+		alert( _( 'PIN' + type + 'Retry' ) );
+		document.getElementById('ppin' + type + 'NewPin2').focus();
+		return;
+	}
+	if ( newVal != newVal2 )
+	{
+		alert( _( 'PIN' + type + 'Different' ) );
+		document.getElementById('ppin' + type + 'NewPin2').focus();
+		return;
+	}
+	if ( eval("esteidData.validatePin" + type + "(newVal)") )
+	{
+		alert( _( 'PIN' + type + 'NewOldSame' ) );
+		document.getElementById('ppin' + type + 'NewPin').focus();
+		return;
+	}
+	if ( eval('esteidData.unblockPin' + type + '(newVal, oldVal)') )
+	{
+		document.getElementById('ppin' + type + 'OldPin').value = "";
+		document.getElementById('ppin' + type + 'NewPin').value = "";
+		document.getElementById('ppin' + type + 'NewPin2').value = "";
 		alert( _( 'PIN' + type + 'Changed' ) );
 		setActive('cert','');
 	} else
