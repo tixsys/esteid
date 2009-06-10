@@ -30,12 +30,19 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 	setAttribute( Qt::WA_DeleteOnClose, true );
 
 	sessionTime->setValue( Settings().value( "sessionTime", 0 ).toInt() );
-	
+
+#ifdef WIN32
 	int interval = updateInterval->findText( Settings().value( "updateInterval" ).toString() );
 	if ( interval == -1 )
 		interval = 0;
 	updateInterval->setCurrentIndex( interval );
 	autoUpdate->setChecked( Settings().value( "autoUpdate", true ).toBool() );
+#else
+	updateInterval->hide();
+	updateIntervalLabel->hide();
+	autoUpdate->hide();
+	autoUpdateLabel->hide();
+#endif
 }
 
 void SettingsDialog::accept()
