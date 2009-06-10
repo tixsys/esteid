@@ -136,89 +136,91 @@ function checkReaderCount()
 
 function readCardData()
 {
-	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
-	{
-		disableFields();
-		return;
-	} else
-		enableFields();
+	try {
+		if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		{
+			disableFields();
+			return;
+		} else
+			enableFields();
 
-	if ( activeCardId == "" )
-		activeCardId = esteidData.getDocumentId();
+		if ( activeCardId == "" )
+			activeCardId = esteidData.getDocumentId();
 
-	document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
-	document.getElementById('expiry').innerHTML = esteidData.getExpiry();
-	document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
+		document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
+		document.getElementById('expiry').innerHTML = esteidData.getExpiry();
+		document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
 
-	if ( esteidData.authCert.isTempel() )
-	{
-		document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
-		document.getElementById('photo').style.background = '#abadb0';
-		document.getElementById('id').innerHTML = esteidData.authCert.getSerialNum();
-		document.getElementById('personCode').innerHTML = _('regcode');
-		document.getElementById('firstName').innerHTML = esteidData.authCert.getSubjSN();
-		document.getElementById('department').innerHTML = esteidData.authCert.getSubjOU();
-		document.getElementById('liPersonBirth').style.display = 'none';
-		document.getElementById('liPersonCitizen').style.display = 'none';
-		document.getElementById('liDepartment').style.display = 'block';
-	} else {
-		document.getElementById('personCode').innerHTML = _('personCode');
-		document.getElementById('liPersonBirth').style.display = 'block';
-		document.getElementById('liPersonCitizen').style.display = 'block';
-		document.getElementById('liDepartment').style.display = 'none';
-		document.getElementById('firstName').innerHTML = esteidData.getFirstName();
-		document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
-		document.getElementById('surName').innerHTML = esteidData.getSurName();
-		document.getElementById('id').innerHTML = esteidData.getId();
-		document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
-		document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
-		document.getElementById('citizen').innerHTML = esteidData.getCitizen();
-	}
+		if ( esteidData.authCert.isTempel() )
+		{
+			document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
+			document.getElementById('photo').style.background = '#abadb0';
+			document.getElementById('id').innerHTML = esteidData.authCert.getSerialNum();
+			document.getElementById('personCode').innerHTML = _('regcode');
+			document.getElementById('firstName').innerHTML = esteidData.authCert.getSubjSN();
+			document.getElementById('department').innerHTML = esteidData.authCert.getSubjOU();
+			document.getElementById('liPersonBirth').style.display = 'none';
+			document.getElementById('liPersonCitizen').style.display = 'none';
+			document.getElementById('liDepartment').style.display = 'block';
+		} else {
+			document.getElementById('personCode').innerHTML = _('personCode');
+			document.getElementById('liPersonBirth').style.display = 'block';
+			document.getElementById('liPersonCitizen').style.display = 'block';
+			document.getElementById('liDepartment').style.display = 'none';
+			document.getElementById('firstName').innerHTML = esteidData.getFirstName();
+			document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
+			document.getElementById('surName').innerHTML = esteidData.getSurName();
+			document.getElementById('id').innerHTML = esteidData.getId();
+			document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
+			document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
+			document.getElementById('citizen').innerHTML = esteidData.getCitizen();
+		}
 
-	document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
-	document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
+		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
+		document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
 
-	document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
-	document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
+		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
+		document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
 
-	if ( esteidData.getPin1RetryCount() != 0 )
-	{
-		document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
-		document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'certValid' : 'certBlocked' );
-		document.getElementById('authKeyText').style.display='block';
-		document.getElementById('authKeyBlocked').style.display='none';
-		document.getElementById('authValidButtons').style.display='block';
-		document.getElementById('authBlockedButtons').style.display='none';
-	} else {
-		document.getElementById('authCertStatus').className='statusBlocked';
-		document.getElementById('authCertStatus').innerHTML=_('validBlocked');
-		document.getElementById('authKeyText').style.display='none';
-		document.getElementById('authKeyBlocked').style.display='block';
-		document.getElementById('authValidButtons').style.display='none';
-		document.getElementById('authBlockedButtons').style.display='block';
-	}
-	document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
+		if ( esteidData.getPin1RetryCount() != 0 )
+		{
+			document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
+			document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'certValid' : 'certBlocked' );
+			document.getElementById('authKeyText').style.display='block';
+			document.getElementById('authKeyBlocked').style.display='none';
+			document.getElementById('authValidButtons').style.display='block';
+			document.getElementById('authBlockedButtons').style.display='none';
+		} else {
+			document.getElementById('authCertStatus').className='statusBlocked';
+			document.getElementById('authCertStatus').innerHTML=_('validBlocked');
+			document.getElementById('authKeyText').style.display='none';
+			document.getElementById('authKeyBlocked').style.display='block';
+			document.getElementById('authValidButtons').style.display='none';
+			document.getElementById('authBlockedButtons').style.display='block';
+		}
+		document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
 
-	if (esteidData.getPin2RetryCount() != 0 )
-	{
-		document.getElementById('signCertStatus').className=esteidData.signCert.isValid() ? 'statusValid' : 'statusBlocked';
-		document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'certValid' : 'certBlocked' );
-		document.getElementById('signKeyText').style.display='block';
-		document.getElementById('signKeyBlocked').style.display='none';
-		document.getElementById('signValidButtons').style.display='block';
-		document.getElementById('signBlockedButtons').style.display='none';
-	} else {
-		document.getElementById('signCertStatus').className='statusBlocked';
-		document.getElementById('signCertStatus').innerHTML=_('validBlocked');
-		document.getElementById('signKeyText').style.display='none';
-		document.getElementById('signKeyBlocked').style.display='block';
-		document.getElementById('signValidButtons').style.display='none';
-		document.getElementById('signBlockedButtons').style.display='block';
-	}
-	document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
+		if (esteidData.getPin2RetryCount() != 0 )
+		{
+			document.getElementById('signCertStatus').className=esteidData.signCert.isValid() ? 'statusValid' : 'statusBlocked';
+			document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'certValid' : 'certBlocked' );
+			document.getElementById('signKeyText').style.display='block';
+			document.getElementById('signKeyBlocked').style.display='none';
+			document.getElementById('signValidButtons').style.display='block';
+			document.getElementById('signBlockedButtons').style.display='none';
+		} else {
+			document.getElementById('signCertStatus').className='statusBlocked';
+			document.getElementById('signCertStatus').innerHTML=_('validBlocked');
+			document.getElementById('signKeyText').style.display='none';
+			document.getElementById('signKeyBlocked').style.display='block';
+			document.getElementById('signValidButtons').style.display='none';
+			document.getElementById('signBlockedButtons').style.display='block';
+		}
+		document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
-	if(esteidData.getPukRetryCount() == 0)
-		alert( _('PUKBlocked') )
+		if(esteidData.getPukRetryCount() == 0)
+			alert( _('PUKBlocked') );
+	} catch ( err ) { }
 }
 
 function setActive( content, el )
@@ -380,6 +382,11 @@ function handleError(msg)
 {
 	if ( msg == "" )
 		return;
+	if ( msg.indexOf("smart card API error") != -1 || msg.indexOf("No card in specified reader") != -1 )
+	{
+		extender.closeLoading();
+		return;
+	}
 	if ( msg == "PIN1InvalidRetry" )
 	{
 		var ret = esteidData.getPin1RetryCount();
