@@ -29,7 +29,7 @@
          <item>
           <widget class="QLabel" name="sscodeLabel">
            <property name="text">
-            <string>SS number:</string>
+            <string>Personal code:</string>
            </property>
           </widget>
          </item>

@@ -101,33 +101,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/CertificateWidget.ui" line="34"/>
+        <location filename="../ui/CertificateWidget.ui" line="38"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/CertificateWidget.ui" line="44"/>
+        <location filename="../ui/CertificateWidget.ui" line="48"/>
         <source>Field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/CertificateWidget.ui" line="49"/>
+        <location filename="../ui/CertificateWidget.ui" line="53"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/CertificateWidget.ui" line="84"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="94"/>
-        <location filename="../ui/CertificateWidget.ui" line="100"/>
+        <location filename="../ui/CertificateWidget.ui" line="81"/>
+        <location filename="../ui/CertificateWidget.ui" line="87"/>
         <source>Certification Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/CertificateWidget.ui" line="121"/>
+        <location filename="../ui/CertificateWidget.ui" line="108"/>
         <source>Certificate status:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -138,12 +133,12 @@
         <location filename="../CryptDoc.cpp" line="70"/>
         <location filename="../CryptDoc.cpp" line="96"/>
         <location filename="../CryptDoc.cpp" line="115"/>
-        <location filename="../CryptDoc.cpp" line="196"/>
-        <location filename="../CryptDoc.cpp" line="291"/>
-        <location filename="../CryptDoc.cpp" line="418"/>
-        <location filename="../CryptDoc.cpp" line="436"/>
-        <location filename="../CryptDoc.cpp" line="454"/>
-        <location filename="../CryptDoc.cpp" line="482"/>
+        <location filename="../CryptDoc.cpp" line="195"/>
+        <location filename="../CryptDoc.cpp" line="290"/>
+        <location filename="../CryptDoc.cpp" line="417"/>
+        <location filename="../CryptDoc.cpp" line="435"/>
+        <location filename="../CryptDoc.cpp" line="453"/>
+        <location filename="../CryptDoc.cpp" line="481"/>
         <source>Container is not open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,9 +146,9 @@
         <location filename="../CryptDoc.cpp" line="72"/>
         <location filename="../CryptDoc.cpp" line="98"/>
         <location filename="../CryptDoc.cpp" line="117"/>
-        <location filename="../CryptDoc.cpp" line="421"/>
-        <location filename="../CryptDoc.cpp" line="439"/>
-        <location filename="../CryptDoc.cpp" line="484"/>
+        <location filename="../CryptDoc.cpp" line="420"/>
+        <location filename="../CryptDoc.cpp" line="438"/>
+        <location filename="../CryptDoc.cpp" line="483"/>
         <source>Container is encrypted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -180,84 +175,76 @@
     <message>
         <location filename="../CryptDoc.cpp" line="156"/>
         <location filename="../CryptDoc.cpp" line="161"/>
-        <source>Failed to create document</source>
+        <location filename="../CryptDoc.cpp" line="423"/>
+        <location filename="../CryptDoc.cpp" line="441"/>
+        <location filename="../CryptDoc.cpp" line="486"/>
+        <source>Internal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="207"/>
+        <location filename="../CryptDoc.cpp" line="206"/>
         <source>Recipient does not exist in document recipient list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="216"/>
+        <location filename="../CryptDoc.cpp" line="215"/>
         <source>Failed decrypt data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="238"/>
+        <location filename="../CryptDoc.cpp" line="237"/>
         <source>Failed to read decrypted data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="298"/>
+        <location filename="../CryptDoc.cpp" line="297"/>
         <source>No recipient keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="308"/>
-        <location filename="../CryptDoc.cpp" line="325"/>
-        <location filename="../CryptDoc.cpp" line="335"/>
-        <location filename="../CryptDoc.cpp" line="341"/>
-        <location filename="../CryptDoc.cpp" line="348"/>
-        <location filename="../CryptDoc.cpp" line="357"/>
+        <location filename="../CryptDoc.cpp" line="307"/>
+        <location filename="../CryptDoc.cpp" line="324"/>
+        <location filename="../CryptDoc.cpp" line="334"/>
+        <location filename="../CryptDoc.cpp" line="340"/>
+        <location filename="../CryptDoc.cpp" line="347"/>
+        <location filename="../CryptDoc.cpp" line="356"/>
         <source>Failed to encrypt data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="409"/>
+        <location filename="../CryptDoc.cpp" line="408"/>
         <source>Failed to open crypted document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="424"/>
-        <location filename="../CryptDoc.cpp" line="487"/>
-        <source>Missing document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CryptDoc.cpp" line="428"/>
+        <location filename="../CryptDoc.cpp" line="427"/>
         <source>Failed to remove file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="442"/>
-        <source>Missing key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CryptDoc.cpp" line="446"/>
+        <location filename="../CryptDoc.cpp" line="445"/>
         <source>Failed to remove key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="456"/>
+        <location filename="../CryptDoc.cpp" line="455"/>
         <source>Container is not crypted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="460"/>
+        <location filename="../CryptDoc.cpp" line="459"/>
         <source>Failed to save encrpyted file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="469"/>
+        <location filename="../CryptDoc.cpp" line="468"/>
         <source>Document not open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../CryptDoc.cpp" line="475"/>
-        <location filename="../CryptDoc.cpp" line="497"/>
-        <location filename="../CryptDoc.cpp" line="504"/>
+        <location filename="../CryptDoc.cpp" line="474"/>
+        <location filename="../CryptDoc.cpp" line="496"/>
+        <location filename="../CryptDoc.cpp" line="503"/>
         <source>Failed to save file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,27 +252,27 @@
 <context>
     <name>KeyAddDialog</name>
     <message>
-        <location filename="../KeyDialog.cpp" line="177"/>
+        <location filename="../KeyDialog.cpp" line="176"/>
         <source>Certificates (*.pem *.cer *.crt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="184"/>
+        <location filename="../KeyDialog.cpp" line="183"/>
         <source>Failed to open certifiacte</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="198"/>
+        <location filename="../KeyDialog.cpp" line="197"/>
         <source>Failed to read certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="208"/>
+        <location filename="../KeyDialog.cpp" line="207"/>
         <source>Social security number is not valid!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="262"/>
+        <location filename="../KeyDialog.cpp" line="261"/>
         <source>
 Error code: %1</source>
         <translation type="unfinished"></translation>
@@ -302,7 +289,7 @@ Error code: %1</source>
     </message>
     <message>
         <location filename="../ui/KeyAddDialog.ui" line="32"/>
-        <source>SS number:</source>
+        <source>Personal code:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -357,27 +344,27 @@ Error code: %1</source>
 <context>
     <name>KeyDialog</name>
     <message>
-        <location filename="../KeyDialog.cpp" line="81"/>
+        <location filename="../KeyDialog.cpp" line="80"/>
         <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="82"/>
+        <location filename="../KeyDialog.cpp" line="81"/>
         <source>Crypt method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="83"/>
+        <location filename="../KeyDialog.cpp" line="82"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="84"/>
+        <location filename="../KeyDialog.cpp" line="83"/>
         <source>Expires</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="85"/>
+        <location filename="../KeyDialog.cpp" line="84"/>
         <source>Issuer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -410,12 +397,12 @@ Error code: %1</source>
 <context>
     <name>KeyWidget</name>
     <message>
-        <location filename="../KeyDialog.cpp" line="47"/>
+        <location filename="../KeyDialog.cpp" line="50"/>
         <source>Show details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../KeyDialog.cpp" line="56"/>
+        <location filename="../KeyDialog.cpp" line="54"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,114 +434,115 @@ Error code: %1</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../MainWindow.cpp" line="128"/>
+        <location filename="../MainWindow.cpp" line="129"/>
         <source>Save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="128"/>
-        <location filename="../MainWindow.cpp" line="297"/>
+        <location filename="../MainWindow.cpp" line="129"/>
+        <location filename="../MainWindow.cpp" line="257"/>
         <source>Documents (*.cdoc)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="147"/>
+        <location filename="../MainWindow.cpp" line="148"/>
         <source>Container contains file with same name, ovewrite?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="178"/>
+        <location filename="../MainWindow.cpp" line="179"/>
         <source>Failed to start process &apos;qesteidutil&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="196"/>
+        <location filename="../MainWindow.cpp" line="328"/>
         <source>Select documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="245"/>
-        <source>Are you sure you want remove files %1</source>
+        <location filename="../MainWindow.cpp" line="498"/>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="280"/>
+        <location filename="../MainWindow.cpp" line="501"/>
+        <source>Personal code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="503"/>
+        <source>Card in reader</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="507"/>
+        <source>Auth certificate is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="510"/>
+        <source>valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="512"/>
+        <source>Your certificates will be expire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="515"/>
+        <source>expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainWindow.cpp" line="237"/>
         <source>This container contains signature! Open with QDigiDocClient?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="295"/>
+        <location filename="../MainWindow.cpp" line="255"/>
         <source>Open container</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="354"/>
+        <location filename="../MainWindow.cpp" line="393"/>
         <source>Failed to send email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="365"/>
+        <location filename="../MainWindow.cpp" line="403"/>
         <source>Select folder where files will be stored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="481"/>
-        <source>Document has changed. Save changes?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="499"/>
+        <location filename="../MainWindow.cpp" line="449"/>
         <source>Container: &lt;b&gt;%1&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="506"/>
+        <location filename="../MainWindow.cpp" line="455"/>
         <source>Decrypt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="506"/>
-        <location filename="../ui/MainWindow.ui" line="573"/>
+        <location filename="../MainWindow.cpp" line="75"/>
+        <location filename="../MainWindow.cpp" line="455"/>
         <source>Encrypt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="548"/>
-        <source>Person &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; card in reader&lt;br /&gt;Person SSID: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="554"/>
-        <source>&lt;br /&gt;Sign certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="557"/>
-        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="559"/>
-        <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="562"/>
-        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../MainWindow.cpp" line="565"/>
+        <location filename="../MainWindow.cpp" line="518"/>
         <source>Loading data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="567"/>
+        <location filename="../MainWindow.cpp" line="520"/>
         <source>No card in reader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainWindow.cpp" line="581"/>
+        <location filename="../MainWindow.cpp" line="534"/>
         <source>&lt;br /&gt;Error code: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -564,47 +552,47 @@ Error code: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="188"/>
+        <location filename="../ui/MainWindow.ui" line="215"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="220"/>
+        <location filename="../ui/MainWindow.ui" line="247"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="247"/>
+        <location filename="../ui/MainWindow.ui" line="274"/>
         <source>Estonian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="252"/>
+        <location filename="../ui/MainWindow.ui" line="279"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="257"/>
+        <location filename="../ui/MainWindow.ui" line="284"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="358"/>
+        <location filename="../ui/MainWindow.ui" line="400"/>
         <source>I want to:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="390"/>
+        <location filename="../ui/MainWindow.ui" line="429"/>
         <source>Crypt documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="406"/>
+        <location filename="../ui/MainWindow.ui" line="445"/>
         <source>View crypted document content</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/MainWindow.ui" line="435"/>
+        <location filename="../ui/MainWindow.ui" line="490"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -615,72 +603,53 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="466"/>
+        <location filename="../ui/MainWindow.ui" line="521"/>
         <source>Yes, I will use ID-card certificate only for secure transfer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="486"/>
-        <source>Cancel</source>
+        <location filename="../ui/MainWindow.ui" line="579"/>
+        <source>Container:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="493"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="518"/>
-        <source>Container content:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="537"/>
-        <source>Keys</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="559"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="566"/>
-        <source>Add recipient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="584"/>
-        <source>Browse location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="608"/>
-        <source>Send to email</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.ui" line="635"/>
-        <source>Add file</source>
+        <location filename="../ui/MainWindow.ui" line="593"/>
+        <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="642"/>
-        <source>Save files to disk</source>
+        <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Save files to disk&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="649"/>
-        <source>Remove checked files</source>
+        <location filename="../ui/MainWindow.ui" line="705"/>
+        <source>&lt;a href=&quot;addRecipient&quot;&gt;Add recipient&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="687"/>
+        <location filename="../MainWindow.cpp" line="71"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.ui" line="556"/>
+        <source>Container content:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.ui" line="572"/>
+        <source>Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.ui" line="629"/>
         <source>Filename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.ui" line="692"/>
+        <location filename="../ui/MainWindow.ui" line="634"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -688,7 +657,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../MainWindow.cpp" line="269"/>
+        <location filename="../MainWindow.cpp" line="226"/>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
         <translation type="unfinished"></translation>
     </message>

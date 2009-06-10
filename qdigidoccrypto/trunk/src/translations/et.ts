@@ -2,106 +2,205 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
-    <name>CertificateWidget</name>
+    <name>CertificateDialog</name>
     <message>
         <source>Save certificate</source>
-        <translation>Salvesta sertifikaat</translation>
+        <translation type="unfinished">Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
+        <translation type="unfinished">Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Faili salvestamine ebaõnnestus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation>Sertifikaadi info:</translation>
+        <translation type="unfinished">Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation>Selle sertifikaadi otstarve on:</translation>
+        <translation type="unfinished">Selle sertifikaadi otstarve on:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation>Kellele väljastatud:</translation>
+        <translation type="unfinished">Kellele väljastatud:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation>Väljastaja:</translation>
+        <translation type="unfinished">Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation>Kehtiv alates</translation>
+        <translation type="unfinished">Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation>kuni</translation>
+        <translation type="unfinished">kuni</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Versioon</translation>
+        <translation type="unfinished">Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation>Seerianumber</translation>
+        <translation type="unfinished">Seerianumber</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation>Signatuuri algoritm</translation>
+        <translation type="unfinished">Signatuuri algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation>Väljaandja</translation>
+        <translation type="unfinished">Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation>Kehtiv kuni</translation>
+        <translation type="unfinished">Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation>Subjekt</translation>
+        <translation type="unfinished">Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Avalik võti</translation>
+        <translation type="unfinished">Avalik võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation>Sertifikaadi reeglid</translation>
+        <translation type="unfinished">Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Sertifikaat</translation>
+        <translation type="unfinished">Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Üldine</translation>
+        <translation type="unfinished">Üldine</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Detailid</translation>
+        <translation type="unfinished">Detailid</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation>Väli</translation>
+        <translation type="unfinished">Väli</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Väärtus</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation type="unfinished">Väärtus</translation>
     </message>
     <message>
         <source>Certification Path</source>
-        <translation>Sertifitseermisahel</translation>
+        <translation type="unfinished">Sertifitseermisahel</translation>
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation>Sertifikaadi staatus:</translation>
+        <translation type="unfinished">Sertifikaadi staatus:</translation>
+    </message>
+</context>
+<context>
+    <name>CertificateWidget</name>
+    <message>
+        <source>Save certificate</source>
+        <translation type="obsolete">Salvesta sertifikaat</translation>
+    </message>
+    <message>
+        <source>Certificates (*.pem *.crt *.cer)</source>
+        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
+    </message>
+    <message>
+        <source>Failed to save file</source>
+        <translation type="obsolete">Faili salvestamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Certificate Information:</source>
+        <translation type="obsolete">Sertifikaadi info:</translation>
+    </message>
+    <message>
+        <source>This certificate is intended for following purpose(s):</source>
+        <translation type="obsolete">Selle sertifikaadi otstarve on:</translation>
+    </message>
+    <message>
+        <source>Issued to:</source>
+        <translation type="obsolete">Kellele väljastatud:</translation>
+    </message>
+    <message>
+        <source>Issued by:</source>
+        <translation type="obsolete">Väljastaja:</translation>
+    </message>
+    <message>
+        <source>Valid from</source>
+        <translation type="obsolete">Kehtiv alates</translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="obsolete">kuni</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="obsolete">Versioon</translation>
+    </message>
+    <message>
+        <source>Serial number</source>
+        <translation type="obsolete">Seerianumber</translation>
+    </message>
+    <message>
+        <source>Signature algorithm</source>
+        <translation type="obsolete">Signatuuri algoritm</translation>
+    </message>
+    <message>
+        <source>Issuer</source>
+        <translation type="obsolete">Väljaandja</translation>
+    </message>
+    <message>
+        <source>Vaild to</source>
+        <translation type="obsolete">Kehtiv kuni</translation>
+    </message>
+    <message>
+        <source>Subject</source>
+        <translation type="obsolete">Subjekt</translation>
+    </message>
+    <message>
+        <source>Public key</source>
+        <translation type="obsolete">Avalik võti</translation>
+    </message>
+    <message>
+        <source>Certificate policies</source>
+        <translation type="obsolete">Sertifikaadi reeglid</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation type="obsolete">Sertifikaat</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="obsolete">Üldine</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="obsolete">Detailid</translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="obsolete">Väli</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="obsolete">Väärtus</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="obsolete">Salvesta</translation>
+    </message>
+    <message>
+        <source>Certification Path</source>
+        <translation type="obsolete">Sertifitseermisahel</translation>
+    </message>
+    <message>
+        <source>Certificate status:</source>
+        <translation type="obsolete">Sertifikaadi staatus:</translation>
     </message>
 </context>
 <context>
@@ -128,7 +227,7 @@
     </message>
     <message>
         <source>Failed to create document</source>
-        <translation>Teegi viga: </translation>
+        <translation type="obsolete">Teegi viga: </translation>
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
@@ -152,7 +251,7 @@
     </message>
     <message>
         <source>Missing document</source>
-        <translation>Teegi viga</translation>
+        <translation type="obsolete">Teegi viga</translation>
     </message>
     <message>
         <source>Failed to remove file</source>
@@ -160,7 +259,7 @@
     </message>
     <message>
         <source>Missing key</source>
-        <translation>Puuduv võti</translation>
+        <translation type="obsolete">Puuduv võti</translation>
     </message>
     <message>
         <source>Failed to remove key</source>
@@ -190,6 +289,10 @@
         <source>Document not open</source>
         <translation>Turvaümbrik pole avatud</translation>
     </message>
+    <message>
+        <source>Internal error</source>
+        <translation>Teegi viga</translation>
+    </message>
 </context>
 <context>
     <name>KeyAddDialog</name>
@@ -208,7 +311,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>SS number:</source>
-        <translation>Isikukood:</translation>
+        <translation type="obsolete">Isikukood:</translation>
     </message>
     <message>
         <source>Search</source>
@@ -261,6 +364,10 @@ Error code: %1</source>
     <message>
         <source>Add cert from file</source>
         <translation>Lisa sertifikaat failist</translation>
+    </message>
+    <message>
+        <source>Personal code:</source>
+        <translation>Isikukood:</translation>
     </message>
 </context>
 <context>
@@ -376,7 +483,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Katkesta</translation>
+        <translation type="obsolete">Katkesta</translation>
     </message>
     <message>
         <source>Next</source>
@@ -384,11 +491,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Add file</source>
-        <translation>Lisa fail</translation>
+        <translation type="obsolete">Lisa fail</translation>
     </message>
     <message>
         <source>Send container to email</source>
-        <translation>Saada turvaümbrik e-postiga</translation>
+        <translation type="obsolete">Saada turvaümbrik e-postiga</translation>
     </message>
     <message>
         <source>Browse container location</source>
@@ -396,7 +503,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Save files to disk</source>
-        <translation>Salvesta failid kettale</translation>
+        <translation type="obsolete">Salvesta failid kettale</translation>
     </message>
     <message>
         <source>Open container</source>
@@ -416,7 +523,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Remove checked files</source>
-        <translation>Eemalda valitud</translation>
+        <translation type="obsolete">Eemalda valitud</translation>
     </message>
     <message>
         <source>Save file</source>
@@ -424,7 +531,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Are you sure you want remove files %1</source>
-        <translation>Oled kindel, et soovid eemaldada faile %1 ?</translation>
+        <translation type="obsolete">Oled kindel, et soovid eemaldada faile %1 ?</translation>
     </message>
     <message>
         <source>Filename</source>
@@ -453,11 +560,11 @@ Error code: %1</source>
     <message>
         <source>
 Error code: %1</source>
-        <translation>Veakood: %1</translation>
+        <translation type="obsolete">Veakood: %1</translation>
     </message>
     <message>
         <source>DigiDoc crypt</source>
-        <translation type="unfinished"></translation>
+        <translation>DigiDoc crypto</translation>
     </message>
     <message>
         <source>I want to:</source>
@@ -489,7 +596,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</source>
-        <translation>Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
+        <translation type="obsolete">Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Container content:</source>
@@ -501,11 +608,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Close</source>
-        <translation>Sulge</translation>
+        <translation type="obsolete">Sulge</translation>
     </message>
     <message>
         <source>Add recipient</source>
-        <translation>Lisa adressaat</translation>
+        <translation type="obsolete">Lisa adressaat</translation>
     </message>
     <message>
         <source>Container contains file with same name, ovewrite?</source>
@@ -521,40 +628,74 @@ p, li { white-space: pre-wrap; }
 Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
-        <source>Document has changed. Save changes?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Person &lt;font color=&quot;black&quot;&gt;%1 %2&lt;/font&gt; card in reader&lt;br /&gt;Person SSID: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br /&gt;Sign certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Sign certificate is expired&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br /&gt;Auth certificate is valid until &lt;font color=&quot;black&quot;&gt;%1&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br /&gt;&lt;font color=&quot;red&quot;&gt;Auth certificate is expired&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No card in reader</source>
         <translation>Kaarti pole lugejas</translation>
     </message>
     <message>
         <source>Browse location</source>
-        <translation>Näita turvaümbriku asukohta kettal</translation>
+        <translation type="obsolete">Näita turvaümbriku asukohta kettal</translation>
     </message>
     <message>
         <source>Send to email</source>
-        <translation>Saada turvaümbrik e-postiga</translation>
+        <translation type="obsolete">Saada turvaümbrik e-postiga</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Personal code</source>
+        <translation>Isikukood</translation>
+    </message>
+    <message>
+        <source>Card in reader</source>
+        <translation>Lugejas on kaart</translation>
+    </message>
+    <message>
+        <source>Auth certificate is</source>
+        <translation>Isikutuvastuse sertifikaat on</translation>
+    </message>
+    <message>
+        <source>valid</source>
+        <translation>kehtiv</translation>
+    </message>
+    <message>
+        <source>Your certificates will be expire</source>
+        <translation>Sertifikaadid hakkavad aeguma</translation>
+    </message>
+    <message>
+        <source>expired</source>
+        <translation>aegunud</translation>
+    </message>
+    <message>
+        <source>Loading data</source>
+        <translation>Laen andmeid</translation>
+    </message>
+    <message>
+        <source>&lt;br /&gt;Error code: %1</source>
+        <translation>&lt;br /&gt;Veakood: %1</translation>
+    </message>
+    <message>
+        <source>Yes, I will use ID-card certificate only for secure transfer</source>
+        <translation>Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
+    </message>
+    <message>
+        <source>Container:</source>
+        <translation>Turvaümbrik:</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;email&quot;&gt;Saada turvaümbrik e-postiga&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;browse&quot;&gt;Näita turvaümbriku asukohta kettal&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Save files to disk&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;addFile&quot;&gt;Lisa fail&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Salvesta failid kettale&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;addRecipient&quot;&gt;Add recipient&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;addRecipient&quot;&gt;Lisa adressaat&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -562,7 +703,7 @@ Kas avan Digidoc kliendiga?</translation>
     <message>
         <source>Selected action requires auth certificate.
 For using auth certificate enter PIN1</source>
-        <translation>Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.
+        <translation type="obsolete">Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.
 Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
@@ -579,6 +720,10 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>All application policies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
