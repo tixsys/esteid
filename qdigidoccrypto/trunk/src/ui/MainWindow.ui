@@ -63,17 +63,19 @@ min-width: 75px;
 padding: 1px 7px;
 }
 
-QDialogButtonBox QPushButton,
-#home QPushButton, #utilityOpen
+QDialogButtonBox QPushButton, #home QPushButton
 { padding: 4px 7px; }
 
-QPushButton:hover
+QPushButton:hover, QPushButton:focus
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927); }
 
 QPushButton:disabled
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }
 
 /* header */
+#headerLine, #headerLine2
+{ background-color: #00355F; }
+
 #cards, #languages
 {
 background-color: #00355F;
@@ -82,22 +84,17 @@ color: white;
 padding-right: 5px;
 }
 
-#cards QAbstractItemView,
-#languages QAbstractItemView
+#cards QAbstractItemView, #languages QAbstractItemView
 {
 background-color: white;
 border: 0px;
 color: #355670;
 }
 
-#headerLine, #headerLine2
-{ background-color: #00355F; }
-
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
 
-#cards::drop-down,
-#languages::drop-down
+#cards::drop-down, #languages::drop-down
 { border: 0px; }
 
 #settings, #help
@@ -107,6 +104,10 @@ color: #afc6d1;
 font: bold;
 min-width: 0px;
 }
+
+#settings:hover, #settings:focus
+#help:hover, #help:focus
+{ text-decoration: underline; }
 
 #infoFrame
 {
@@ -604,12 +605,15 @@ p, li { white-space: pre-wrap; }
               <number>0</number>
              </property>
              <item>
-              <widget class="QTreeWidget" name="viewContentView">
+              <widget class="TreeWidget" name="viewContentView">
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="dragEnabled">
+                <bool>true</bool>
                </property>
                <property name="alternatingRowColors">
                 <bool>true</bool>
@@ -620,17 +624,9 @@ p, li { white-space: pre-wrap; }
                <property name="headerHidden">
                 <bool>true</bool>
                </property>
-               <property name="columnCount">
-                <number>2</number>
-               </property>
                <column>
                 <property name="text">
-                 <string>Filename</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Size</string>
+                 <string notr="true">1</string>
                 </property>
                </column>
               </widget>
@@ -723,6 +719,13 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>TreeWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../rc/qdigidoccrypto.qrc"/>
  </resources>

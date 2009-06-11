@@ -35,6 +35,7 @@
 class CDocument
 {
 public:
+	QString path;
 	QString filename;
 	QString mime;
 	QString size;
@@ -98,7 +99,7 @@ private:
 	QSslCertificate	m_authCert;
 	QStringList		m_cards;
 	QString			m_card;
-	QString			m_ddocTemp;
+	QString			m_ddoc, m_ddocTemp;
 	QString			m_fileName;
 	QString			m_lastError;
 	DEncEncryptedData *m_enc;

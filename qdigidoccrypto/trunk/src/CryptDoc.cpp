@@ -132,7 +132,11 @@ void CryptDoc::clear()
 	m_lastError.clear();
 	if( !m_ddocTemp.isEmpty() )
 	{
-		QFile::remove( m_ddocTemp );
+		QDir d( m_ddocTemp );
+		Q_FOREACH( const QString &file, d.entryList() )
+			d.remove( file );
+		d.rmdir( m_ddocTemp );
+		m_ddoc.clear();
 		m_ddocTemp.clear();
 	}
 }
@@ -208,27 +212,30 @@ bool CryptDoc::decrypt( const QString &pin )
 		return false;
 	}
 
-	QTemporaryFile f( QString( "%1%2XXXXXX.ddoc" )
-		.arg( QDir::tempPath() ).arg( QDir::separator() ) );
-	f.setAutoRemove( false );
-	if( f.open() )
-	{
-		m_ddocTemp = f.fileName();
-		f.write( (const char*)m_enc->mbufEncryptedData.pMem, m_enc->mbufEncryptedData.nLen );
-		f.close();
-		err = ddocSaxReadSignedDocFromFile( &m_doc, m_ddocTemp.toUtf8(), 0, 300 );
-	}
-	else
-	{
-		err = ddocSaxReadSignedDocFromMemory( &m_doc,
-			m_enc->mbufEncryptedData.pMem, m_enc->mbufEncryptedData.nLen, 300 );
-	}
+	QString docName = QFileInfo( m_fileName ).fileName();
+	m_ddocTemp = QString( "%1/%2" ).arg( QDir::tempPath() ).arg( docName ); 
+	if( !QDir().exists( m_ddocTemp ) )
+		QDir().mkdir( m_ddocTemp );
 
+	m_ddoc = QString( "%1/%2.ddoc" ).arg( m_ddocTemp ).arg( docName );
+	QFile f( m_ddoc );
+	if( !f.open( QIODevice::WriteOnly ) )
+	{
+		setLastError( tr("Failed to create temporary files<br />%1").arg( f.errorString() ), -1 );
+		return false;
+	}
+	f.write( (const char*)m_enc->mbufEncryptedData.pMem, m_enc->mbufEncryptedData.nLen );
+	f.close();
+
+	err = ddocSaxReadSignedDocFromFile( &m_doc, f.fileName().toUtf8(), 0, 300 );
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed to read decrypted data"), err );
 		return false;
 	}
+
+	for( int i = 0; i < m_doc->nDataFiles; ++i )
+		saveDocument( i, m_ddocTemp );
 
 	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
 	{
@@ -265,6 +272,7 @@ QList<CDocument> CryptDoc::documents()
 		{
 			DataFile *data = m_doc->pDataFiles[i];
 			CDocument doc;
+			doc.path = m_ddocTemp;
 			doc.filename = QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName();
 			doc.mime = QString::fromUtf8( data->szMimeType );
 			doc.size = Common::fileSize( data->nSize );
@@ -480,7 +488,7 @@ void CryptDoc::saveDocument( int id, const QString &path )
 	}
 	else
 	{
-		int err = ddocSaxExtractDataFile( m_doc, m_ddocTemp.toUtf8(),
+		int err = ddocSaxExtractDataFile( m_doc, m_ddoc.toUtf8(),
 			destination.toUtf8(), m_doc->pDataFiles[id]->szId, CHARSET_UTF_8 );
 		if( err != ERR_OK )
 			return setLastError( tr("Failed to save file"), err );

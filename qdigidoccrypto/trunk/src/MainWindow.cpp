@@ -31,7 +31,6 @@
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QFileDialog>
-#include <QHeaderView>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QProcess>
@@ -58,10 +57,6 @@ MainWindow::MainWindow( QWidget *parent )
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-
-	viewContentView->header()->setStretchLastSection( false );
-	viewContentView->header()->setResizeMode( 0, QHeaderView::Stretch );
-	viewContentView->header()->setResizeMode( 1, QHeaderView::ResizeToContents );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
@@ -296,30 +291,12 @@ void MainWindow::on_languages_activated( int index )
 	qtTranslator->load( ":/translations/qt_" + lang[index] );
 	retranslateUi( this );
 	languages->setCurrentIndex( index );
+	introNext->setText( tr( "Next" ) );
 	showCardStatus();
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
-
-void MainWindow::on_viewContentView_doubleClicked( const QModelIndex &index )
-{
-	if( doc->isNull() || doc->isEncrypted() )
-		return;
-
-	QList<CDocument> list = doc->documents();
-	if( list.isEmpty() || index.row() >= list.size() )
-		return;
-
-	doc->saveDocument( index.row(), QDir::tempPath() );
-#ifdef Q_OS_WIN32
-	QString url( "file:///" );
-#else
-	QString url( "file://" );
-#endif
-	url += QString( "%1/%2" ).arg( QDir::tempPath() ).arg( list[index.row()].filename );
-	QDesktopServices::openUrl( url );
-}
 
 void MainWindow::parseLink( const QString &url )
 {
@@ -445,43 +422,31 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 		viewFileName->setText( tr("Container: <b>%1</b>")
 			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
+
 		viewLinks->setVisible( doc->isEncrypted() );
 		viewContentLinks->setHidden( doc->isEncrypted() );
 		viewKeysLinks->setHidden( doc->isEncrypted() );
 
-		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
-		bool hasKey = false;
-		if( !doc->authCert().isNull() )
-		{
-			Q_FOREACH( const CKey &key, doc->keys() )
-			{
-				hasKey = (key.cert == doc->authCert());
-				break;
-			}
-		}
-		viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
-
-		viewContentView->clear();
-		Q_FOREACH( const CDocument &file, doc->documents() )
-		{
-			QTreeWidgetItem *i = new QTreeWidgetItem( viewContentView );
-			i->setText( 0, file.filename );
-			i->setData( 0, Qt::ToolTipRole, file.filename );
-			i->setText( 1, file.size );
-			i->setData( 1, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
-			viewContentView->addTopLevelItem( i );
-		}
+		viewContentView->setColumnHidden( 2, doc->isEncrypted() );
+		viewContentView->setColumnHidden( 3, doc->isEncrypted() );
+		viewContentView->setContent( doc->documents() );
 
 		Q_FOREACH( KeyWidget *w, viewKeys->findChildren<KeyWidget*>() )
 			w->deleteLater();
+
 		int i = 0;
+		bool hasKey = false;
 		Q_FOREACH( const CKey &k, doc->keys() )
 		{
 			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewKeys );
 			connect( key, SIGNAL(remove(int)), SLOT(removeKey(int)) );
 			viewKeysLayout->insertWidget( i, key );
+			hasKey = (k.cert == doc->authCert());
 			++i;
 		}
+
+		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
+		viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
 		break;
 	}
 	default: break;
