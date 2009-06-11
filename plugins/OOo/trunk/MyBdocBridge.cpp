@@ -5,19 +5,19 @@
 //#include <conio.h>
 #include <iostream>
 
-#include <digidoc/BDoc.h>
-#include <digidoc/BDoc.h>
-#include <digidoc/log.h>
-#include <digidoc/Conf.h>
-#include <digidoc/SignatureBES.h>
-#include <digidoc/crypto/cert/DirectoryX509CertStore.h>
-#include <digidoc/crypto/cert/X509Cert.h>
-#include <digidoc/io/ZipSerialize.h>
-#include <digidoc/crypto/signer/PKCS11Signer.h>
-#include <digidoc/crypto/signer/EstEIDSigner.h>
+#include <libdigidoc++/BDoc.h>
+#include <libdigidoc++/BDoc.h>
+#include <libdigidoc++/log.h>
+#include <libdigidoc++/Conf.h>
+#include <libdigidoc++/SignatureBES.h>
+#include <libdigidoc++/crypto/cert/DirectoryX509CertStore.h>
+#include <libdigidoc++/crypto/cert/X509Cert.h>
+#include <libdigidoc++/io/ZipSerialize.h>
+#include <libdigidoc++/crypto/signer/PKCS11Signer.h>
+#include <libdigidoc++/crypto/signer/EstEIDSigner.h>
 
 #ifndef BDOCLIB_CONF_PATH
-#define BDOCLIB_CONF_PATH "bdoclib.conf"
+#define BDOCLIB_CONF_PATH "libdigidoc++.conf"
 #endif
 
 #include "My1EstEIDSigner.h"
@@ -474,7 +474,9 @@ int My1EstEIDSigner::openCont ()
 //===========================================================
 //***********************************************************
 bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
-{}
+{
+	return true;
+}
 
 //===========================================================
 //***********Constructor for real digidoc connection*********

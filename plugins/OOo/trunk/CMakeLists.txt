@@ -5,8 +5,8 @@ SET (SDKVERSION "3.0")
 SET (BUILDID "300m15(Build:9379)")
 SET (COMP_NAME "OOoDigiDocPlugin")
 
-#SET (OS "WIN")
-SET (OS "LINUX")
+SET (OS "WIN")
+#SET (OS "LINUX")
 
 #set(CMAKE_BUILD_TYPE Debug)
 project (${COMP_NAME})
@@ -35,53 +35,41 @@ SET (OUT_CLASS "${OUT}/class")
 
 
 
-#IF (WIN32)
-#	SET (UNOPKG_PLATFORM "Windows")
-#	SET (SHAREDLIB_EXT "dll")
-#	SET (EXE_EXT ".exe")
-#	SET (OO_SDK_HOME "C:/Program Files/OpenOffice.org_3.0_SDK/sdk")
-#	SET (OO_SDK_URE_HOME "C:/Program Files/OpenOffice.org 3/URE")
-#	SET (OO_SDK_URE_LIB_DIR "${OO_SDK_URE_HOME}/lib")
-#	SET (OFFICE_BASE_PROGRAM_PATH "C:/Program Files/OpenOffice.org 3/Basis/program")
+IF (WIN32)
+	SET (UNOPKG_PLATFORM "Windows")
+	SET (SHAREDLIB_EXT "dll")
+	SET (EXE_EXT ".exe")
+	
+	SET (OO_SDK_HOME "C:/Program Files/OpenOffice.org_3.0_SDK/sdk")
+	SET (OO_SDK_URE_HOME "C:/Program Files/OpenOffice.org 3/URE")
+	SET (OFFICE_BASE_PROGRAM_PATH "C:/Program Files/OpenOffice.org 3/Basis/program")
+	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
+ENDIF (WIN32)
 
-#	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
-#	SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
-#
-#	SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")
-
-#	SET (SETTINGS "${OO_SDK_HOME}/settings")
-#ENDIF (WIN32)
-
-#IF (LINUX)
+IF (UNIX)
 	SET (UNOPKG_PLATFORM "Linux_x86")
 	SET (SHAREDLIB_EXT "so")
 	SET (EXE_EXT "")
-#	SET (PRJ "/usr/lib/openoffice/basis3.0/sdk")
+	
 	SET (OO_SDK_HOME "/usr/lib/openoffice/basis3.0/sdk")
 	SET (OO_SDK_URE_HOME "/usr/lib/ure")
-	SET (OO_SDK_URE_LIB_DIR "/usr/lib/ure/lib")
 	SET (OFFICE_BASE_PROGRAM_PATH "/usr/lib/openoffice/basis3.0/program")
-	SET (OOSDK_INCLUDE_DIR "${OO_SDK_HOME}/include")
-	
-#	SET (OO_SDK_OUT "/home/mark/complextoolbarcontrols")
-#	SET (OO_SDK_ZIP_HOME "/usr/bin")
-	
 	SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
-
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
-	SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
-	SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")
+ENDIF(UNIX)
 
-	SET (SETTINGS "${OO_SDK_HOME}/settings")
-#ENDIF(LINUX)
-
-
+#Common
+SET (OO_SDK_URE_LIB_DIR "${OO_SDK_URE_HOME}/lib")
+SET (OOSDK_INCLUDE_DIR "${OO_SDK_HOME}/include")
+SET (SETTINGS "${OO_SDK_HOME}/settings")
+SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")	
+SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
 
 #-------------------------------------------------
 #----------------Load modules Include-------------
 
 find_package( OOoSDK REQUIRED )
-find_package( LibDigiDoc REQUIRED )
+find_package( LibDigiDoc++ REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
@@ -92,14 +80,15 @@ find_package( XSD REQUIRED )
 
 
 
-#ADD_CUSTOM_COMMAND(
-#	OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp		
-#	COMMAND ${OO_SDK_HOME}/bin/cppumaker${EXE_EXT} -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
-#	)
 ADD_CUSTOM_COMMAND(
-   OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
-   COMMAND ${OO_SDK_HOME}/bin/cppumaker -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
-   )
+	OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp		
+	COMMAND ${OO_SDK_HOME}/bin/cppumaker${EXE_EXT} -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
+	)
+
+#ADD_CUSTOM_COMMAND(
+#   OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
+#   COMMAND ${OO_SDK_HOME}/bin/cppumaker -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
+#   )
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
@@ -107,9 +96,9 @@ INCLUDE_DIRECTORIES(
 )
 
 set(UNO_INCLUDES 
-	${OO_SDK_HOME}/include
-	${OO_SDK_HOME}/include/stl
-	${OUT_INC}
+	\"${OOSDK_INCLUDE_DIR}\"
+	\"${OOSDK_INCLUDE_DIR}/stl\"
+	\"${OUT_INC}\"
 )
 
 set(BDOC_INCLUDES
@@ -119,8 +108,9 @@ set(BDOC_INCLUDES
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
-	${LIBDIGIDOC_INCLUDE_DIR}
+	${LIBDIGIDOC++_INCLUDE_DIR}
 )
+
 
 # FIXME: Find a sane way to construct these!!
 FOREACH(iDir ${UNO_INCLUDES})
@@ -149,16 +139,19 @@ SET(BDOCFILES
 )
    
 #TODO:add all definitions from settinks mk
-#IF (WIN32)
-#	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
-#	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800")
-#	add_definitions(${CC_DEFINES} ${CC_FLAGS})
-#ENDIF (WIN32)
-#IF (LINUX)
-        set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
-#ENDIF (LINUX)
+IF (WIN32)
+	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
+	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800")
+	add_definitions(${CC_DEFINES} ${CC_FLAGS})
+	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC++_CONF}" )
+ENDIF (WIN32)
 
-set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOC_CONF}\\\"" )
+IF (UNIX)
+        set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+        set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOC++_CONF}\\\"" )
+ENDIF (UNIX)
+
+
 
 #if(MSVC)
 #	STRING(REPLACE "/MD"  "/MT"  CMAKE_C_FLAGS_RELEASE ${CMAKE_C_FLAGS_RELEASE})
@@ -186,7 +179,7 @@ add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
 #---------------Link to the Libraries-------------
 #----------------This is win specific-------------
 target_link_libraries(${COMP_NAME}.uno 
-	${LIBDIGIDOC_LIBRARY}
+	${LIBDIGIDOC++_LIBRARY}
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${ZLIB_LIBRARIES}
@@ -203,15 +196,23 @@ target_link_libraries(${COMP_NAME}.uno
 	${STORE_LIBRARY} 
 	${STLPORT_LIBRARY}
 	)
-SET(LINK_FLAG_SCRIPT "-Wl,-z,defs -Wl,--version-script,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
-#SET(LINK_FLAG_SCRIPT "-Wl,--version-script,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
 
-set_target_properties(${COMP_NAME}.uno PROPERTIES
+IF (UNIX)
+	SET(LINK_FLAG_SCRIPT "-Wl,-z,defs -Wl,--version-script,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
+	set_target_properties(${COMP_NAME}.uno PROPERTIES
 				PREFIX ""
-#win specific#			LINK_FLAGS "/DEF:${OO_SDK_HOME}/settings/component.uno.def"
 				LINK_FLAGS "${LINK_FLAG_SCRIPT}"
 				SKIP_BUILD_RPATH true
 				LIBRARY_OUTPUT_DIRECTORY "${OUT_LIB}")
+ENDIF (UNIX)
+
+IF (WIN32)
+	set_target_properties(${COMP_NAME}.uno PROPERTIES
+				PREFIX ""
+				LINK_FLAGS "/DEF:\"${OO_SDK_HOME}/settings/component.uno.def\""
+				SKIP_BUILD_RPATH true
+				LIBRARY_OUTPUT_DIRECTORY "${OUT_LIB}")
+ENDIF (WIN32)
 
 
 ##setup and zip oxt package
@@ -244,14 +245,26 @@ execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn)
 		#remove svn folder
 
 
-add_custom_target( zip-oxt ALL
-	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+IF (WIN32)
+	add_custom_target( zip-oxt ALL
+		COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
+			${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 
-#	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
-#		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+		WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
+		COMMAND ${MKDIR} ${OUT_BIN}
+		COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
+		)
+ENDIF (WIN32)
 
-	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
-	COMMAND ${MKDIR} ${OUT_BIN}
-	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
-	)
+IF (UNIX)
+	add_custom_target( zip-oxt ALL
+		COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+			${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+
+		WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
+		COMMAND ${MKDIR} ${OUT_BIN}
+		COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
+		)
+ENDIF (UNIX)
+
+

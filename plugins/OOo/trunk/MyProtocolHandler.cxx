@@ -28,7 +28,7 @@
  *
  ************************************************************************/
 #include <stdio.h>
-#include <iostream.h>
+#include <iostream>
 #include "MyBdocBridge.h"
 
 

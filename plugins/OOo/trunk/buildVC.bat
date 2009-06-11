@@ -2,10 +2,10 @@
 
 set target_dir=target
 
-set libdigidoc_include=C:\build\Win32\libdigidoc\build\target\include
-set libdigidoc_library=C:\build\Win32\libdigidoc\build\target\lib
-set openssl_include=C:\build\Win32\openssl-shared-0.9.8k\include
-set openssl_library=C:\build\Win32\openssl-shared-0.9.8k\out32dll
+set libdigidoc_include=C:\build\Win32\libdigidoc++\build\target\include
+set libdigidoc_library=C:\build\Win32\libdigidoc++\build\target\lib
+set openssl_include=C:\build\Win32\openssl-shared\include
+set openssl_library=C:\build\Win32\openssl-shared\out32dll
 set zlib_include=C:\build\Win32\zlib123
 set zlib_library=C:\build\Win32\zlib123
 set libp11_include=C:\build\Win32\libp11-0.2.5-r178\src
@@ -30,5 +30,5 @@ cmake .. -G "Visual Studio 9 2008" ^
          -DCMAKE_INSTALL_PREFIX="" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^
-         -DLIBDIGIDOC_CONF="C:/Program Files/Estonian ID Card/bdoclib.conf"
+         -DLIBDIGIDOC++_CONF="C:/Program Files/Estonian ID Card/libdigidoc++.conf"
 cd..
