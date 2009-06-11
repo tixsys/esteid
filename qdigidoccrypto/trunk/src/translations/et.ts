@@ -5,99 +5,99 @@
     <name>CertificateDialog</name>
     <message>
         <source>Save certificate</source>
-        <translation type="unfinished">Salvesta sertifikaat</translation>
+        <translation>Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="unfinished">Sertifikaadid (*.pem *.crt *.cer)</translation>
+        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation type="unfinished">Sertifikaadi info:</translation>
+        <translation>Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation type="unfinished">Selle sertifikaadi otstarve on:</translation>
+        <translation>Selle sertifikaadi otstarve on:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation type="unfinished">Kellele väljastatud:</translation>
+        <translation>Kellele väljastatud:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation type="unfinished">Väljastaja:</translation>
+        <translation>Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation type="unfinished">Kehtiv alates</translation>
+        <translation>Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished">kuni</translation>
+        <translation>kuni</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Versioon</translation>
+        <translation>Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation type="unfinished">Seerianumber</translation>
+        <translation>Seerianumber</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation type="unfinished">Signatuuri algoritm</translation>
+        <translation>Signatuuri algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished">Väljaandja</translation>
+        <translation>Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation type="unfinished">Kehtiv kuni</translation>
+        <translation>Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished">Subjekt</translation>
+        <translation>Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished">Avalik võti</translation>
+        <translation>Avalik võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation type="unfinished">Sertifikaadi reeglid</translation>
+        <translation>Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished">Sertifikaat</translation>
+        <translation>Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Üldine</translation>
+        <translation>Üldine</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Detailid</translation>
+        <translation>Detailid</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation type="unfinished">Väli</translation>
+        <translation>Väli</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Väärtus</translation>
+        <translation>Väärtus</translation>
     </message>
     <message>
         <source>Certification Path</source>
-        <translation type="unfinished">Sertifitseermisahel</translation>
+        <translation>Sertifitseermisahel</translation>
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation type="unfinished">Sertifikaadi staatus:</translation>
+        <translation>Sertifikaadi staatus:</translation>
     </message>
 </context>
 <context>
@@ -432,11 +432,11 @@ Error code: %1</source>
     <name>LdapSearch</name>
     <message>
         <source>Failed to init ldap</source>
-        <translation type="unfinished"></translation>
+        <translation>LDAP initsialiseerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to init ldap search</source>
-        <translation type="unfinished"></translation>
+        <translation>LDAP otsingu initsialiseerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to get result</source>
