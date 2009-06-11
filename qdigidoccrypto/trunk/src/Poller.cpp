@@ -22,7 +22,7 @@
 
 #include "Poller.h"
 
-#include "SslCertificate.h"
+#include "common/SslCertificate.h"
 
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocPKCS11.h>

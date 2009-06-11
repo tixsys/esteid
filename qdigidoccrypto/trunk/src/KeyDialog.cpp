@@ -22,9 +22,9 @@
 
 #include "KeyDialog.h"
 
-#include "CertificateWidget.h"
+#include "common/CertificateWidget.h"
+#include "common/SslCertificate.h"
 #include "LdapSearch.h"
-#include "SslCertificate.h"
 
 #include <QDateTime>
 #include <QDesktopServices>

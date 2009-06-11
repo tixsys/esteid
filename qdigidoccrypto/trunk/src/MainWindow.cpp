@@ -24,7 +24,7 @@
 
 #include "KeyDialog.h"
 #include "Settings.h"
-#include "SslCertificate.h"
+#include "common/SslCertificate.h"
 
 #include <QApplication>
 #include <QDateTime>
