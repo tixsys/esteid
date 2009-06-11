@@ -10,24 +10,26 @@ find_package( LibDigiDoc REQUIRED )
 find_package( Ldap REQUIRED )
 
 SET( MOC_HEADERS
-	src/CertificateWidget.h
+	common/CertificateWidget.h
 	src/CryptDoc.h
 	src/KeyDialog.h
 	src/LdapSearch.h
 	src/MainWindow.h
 	src/Poller.h
 	src/Settings.h
+	src/TreeWidget.h
 	)
 SET( HEADERS
 	${MOC_HEADERS}
+	common/SslCertificate.h
 	src/Common.h
-	src/SslCertificate.h
 	src/version.h
 	)
 SET( SOURCES
 	${HEADERS}
+	common/CertificateWidget.cpp
+	common/SslCertificate.cpp
 	src/main.cpp
-	src/CertificateWidget.cpp
 	src/Common.cpp
 	src/CryptDoc.cpp
 	src/KeyDialog.cpp
@@ -35,10 +37,10 @@ SET( SOURCES
 	src/MainWindow.cpp
 	src/Poller.cpp
 	src/Settings.cpp
-	src/SslCertificate.cpp
+	src/TreeWidget.cpp
 	)
 SET( UIS
-	src/ui/CertificateWidget.ui
+	common/ui/CertificateWidget.ui
 	src/ui/KeyAddDialog.ui
 	src/ui/KeyDialog.ui
 	src/ui/MainWindow.ui
