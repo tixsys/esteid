@@ -362,7 +362,6 @@ int JsEsteidCard::getPin1RetryCount()
 	byte puk,pinAuth,pinSign;
 
 	try {
-		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
@@ -379,7 +378,6 @@ int JsEsteidCard::getPin2RetryCount()
     byte puk,pinAuth,pinSign;
 	
 	try {
-		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
@@ -396,7 +394,6 @@ int JsEsteidCard::getPukRetryCount()
     byte puk,pinAuth,pinSign;
 
 	try {
-		m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
