@@ -7,7 +7,7 @@
         <location filename="../CertificateWidget.cpp" line="87"/>
         <location filename="../CertificateWidget.cpp" line="103"/>
         <source>Save certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить сертификат</translation>
     </message>
     <message>
         <location filename="../CertificateWidget.cpp" line="92"/>
