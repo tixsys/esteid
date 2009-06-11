@@ -155,4 +155,8 @@ public:
 };
 
 
+void SAL_CALL threadShowSign(char *pData);
+
+void SAL_CALL threadChangeStatusBar(char *pMess);
+
 #endif

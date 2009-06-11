@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 2.6)
 SET (SDKVERSION "3.0")
 SET (BUILDID "300m15(Build:9379)")
-SET (COMP_NAME "OOoDigiDocTool")
+SET (COMP_NAME "OOoDigiDocPlugin")
 
 #SET (OS "WIN")
 SET (OS "LINUX")
@@ -13,7 +13,9 @@ project (${COMP_NAME})
 
 set(MKDIR ${CMAKE_COMMAND} -E make_directory)
 set(RM ${CMAKE_COMMAND} -E remove)
+set(RMDIR ${CMAKE_COMMAND} -E remove_directory)
 set(CP ${CMAKE_COMMAND} -E copy)
+set(CPDIR ${CMAKE_COMMAND} -E copy_directory)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Modules")
 
@@ -30,6 +32,8 @@ SET (OUT_SLB "${OUT}/slb")
 SET (OUT_MISC "${OUT}/misc")
 SET (OUT_OBJ "${OUT}/obj")
 SET (OUT_CLASS "${OUT}/class")
+
+
 
 #IF (WIN32)
 #	SET (UNOPKG_PLATFORM "Windows")
@@ -220,12 +224,31 @@ CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.
 CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
+#CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
+
+
+execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/UI # Copy UI 
+			${OUT_MISC}/${COMP_NAME}
+		COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)	#remove svn folder 
+		#COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter # Copy Filter 	 #FIX Filter extension first
+		#	${OUT_MISC}/${COMP_NAME}
+		
+		
+#Fix Find Path later, so we do not need to know the final directory 
+#FIND_PATH(TARGET_FILTER_DIR bdocimport.xsl ${OUT_MISC}/${COMP_NAME}/BDocFilter)	 #FIX Filter extension first
+FIND_PATH(TARGET_GUI_DIR dialog.xlb ${OUT_MISC}/${COMP_NAME}/HW)
+
+execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn)
+		
+		#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	 #FIX Filter extension first
+		#remove svn folder
+
 
 add_custom_target( zip-oxt ALL
 	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 
-#	COMMAND ${CP} ${OUT_LIB}/Debug/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
+#	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
 #		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 
 	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}

@@ -62,6 +62,8 @@
 #include <com/sun/star/presentation/XPresentation.hpp>
 
 #include <osl/file.hxx>
+#include <osl/thread.h>
+
 #include <cppuhelper/bootstrap.hxx> 
 #include <com/sun/star/bridge/XUnoUrlResolver.hpp>
 #include <com/sun/star/text/XText.hpp>
@@ -107,7 +109,8 @@ OUString ousBDocFileURL;
 OUString ousBDocContURL;
 bool bContFlag;
 bool bPrevContFlag;
-
+Reference < XDesktop > rGlobalDesktop;
+Reference < XDispatchHelper > rGlobalDispatchHelper;
 //--------------------
 
 void BaseDispatch::ShowMessageBox( const Reference< XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText )
@@ -255,7 +258,7 @@ printf("MyProtocolHandler::initialize\n");
 	}		
 	//----------------------------------------------------------------------
 
-/*	else if (bPrevContFlag) //-if it's a new frame after opening a bdoc container
+	else if (bPrevContFlag) //-if it's a new frame after opening a bdoc container
 	{
 		muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 		strContainerPath = muffik.pData->buffer;
@@ -263,126 +266,167 @@ printf("MyProtocolHandler::initialize\n");
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
 		m_BdocBridge1->DigiOpen(&strContainerPath[7]);
-		//------------Fix sign data string from returned data---------				
-		string strSignData;
-		int k,l,m,n,o,p,q,r;
-		k=l=m=n=o=p=q=r=0;
-		for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
-		{	//Signer Name
-			while (m_BdocBridge1->pSignName[k] != '#')
-			{
-				if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] == ','))
+
+		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
+		rGlobalDesktop = rDesktop;
+
+		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+		rGlobalDispatchHelper = rDispatchHelper;
+printf("Return from FileOpen: %d\n", m_BdocBridge1->ret);
+		if ((m_BdocBridge1->ret < 100) && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
+		{
+			//------------Fix sign data string from returned data---------		
+			string strSignData;
+			int k,l,m,n,o,p,q,r;
+			k=l=m=n=o=p=q=r=0;
+			for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
+			{	
+				//Signer Name
+				while (m_BdocBridge1->pSignName[k] != '#')
 				{
-					strSignData += ";";
+					if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] == ','))
+					{
+						strSignData += ";";
+						k++;
+					}
+					else
+						strSignData += m_BdocBridge1->pSignName[k];
 					k++;
 				}
-				else
-					strSignData += m_BdocBridge1->pSignName[k];
 				k++;
-			}
-			k++;
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signer Role
-			if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
-			{
-				//strSignData += "Roll: ";
-				while (m_BdocBridge1->pSignRole[l] != '#')
+				//Signer Role
+				if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
 				{
-					strSignData += m_BdocBridge1->pSignRole[l];
+					//strSignData += "Roll: ";
+					while (m_BdocBridge1->pSignRole[l] != '#')
+					{
+						strSignData += m_BdocBridge1->pSignRole[l];
+						l++;
+					}
 					l++;
 				}
-				l++;
-			}
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signer AddRole
-			if (sizeof(m_BdocBridge1->pSignAddRole) > m_BdocBridge1->iSignCnt)
-			{
-				//strSignData += "Resolutsioon: ";
-				while (m_BdocBridge1->pSignAddRole[m] != '#')
+				//Signer AddRole
+				if (sizeof(m_BdocBridge1->pSignAddRole) > m_BdocBridge1->iSignCnt)
 				{
-					strSignData += m_BdocBridge1->pSignAddRole[m];
+					//strSignData += "Resolutsioon: ";
+					while (m_BdocBridge1->pSignAddRole[m] != '#')
+					{
+						strSignData += m_BdocBridge1->pSignAddRole[m];
+						m++;
+					}
 					m++;
 				}
-				m++;
-			}
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signing Time
-			while (m_BdocBridge1->pSignTime[n] != '#')
-			{
-				if ((m_BdocBridge1->pSignTime[n] == 'T') || (m_BdocBridge1->pSignTime[n] == 'Z'))
+				//Signing Time
+				while (m_BdocBridge1->pSignTime[n] != '#')
 				{
-					strSignData += " ";
+					if ((m_BdocBridge1->pSignTime[n] == 'T') || (m_BdocBridge1->pSignTime[n] == 'Z'))
+					{
+						strSignData += " ";
 					
+					}
+					else
+						strSignData += m_BdocBridge1->pSignTime[n];
+					n++;
 				}
-				else
-					strSignData += m_BdocBridge1->pSignTime[n];
 				n++;
-			}
-			n++;
-			strSignData += ";";
+				strSignData += ";";
 			
-			//Signing City
-			if (sizeof(m_BdocBridge1->pSignCity) > m_BdocBridge1->iSignCnt)
-			{
-				//strSignData += "Linn: ";
-				while (m_BdocBridge1->pSignCity[o] != '#')
+				//Signing City
+				if (sizeof(m_BdocBridge1->pSignCity) > m_BdocBridge1->iSignCnt)
 				{
-					strSignData += m_BdocBridge1->pSignCity[o];
+					//strSignData += "Linn: ";
+					while (m_BdocBridge1->pSignCity[o] != '#')
+					{
+						strSignData += m_BdocBridge1->pSignCity[o];
+						o++;
+					}
 					o++;
 				}
-				o++;
-			}
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signing Region
-			while (m_BdocBridge1->pSignState[p] != '#')
-			{
-				strSignData += m_BdocBridge1->pSignState[p];
+				//Signing Region
+				while (m_BdocBridge1->pSignState[p] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignState[p];
+					p++;
+				}
 				p++;
-			}
-			p++;
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signing Postal nr
-			while (m_BdocBridge1->pSignPostal[q] != '#')
-			{
-				strSignData += m_BdocBridge1->pSignPostal[q];
+				//Signing Postal nr
+				while (m_BdocBridge1->pSignPostal[q] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignPostal[q];
+					q++;
+				}
 				q++;
-			}
-			q++;
-			strSignData += ";";
+				strSignData += ";";
 
-			//Signing Postal nr
-			while (m_BdocBridge1->pSignCountry[r] != '#')
-			{
-				strSignData += m_BdocBridge1->pSignCountry[r];
+				//Signing Postal nr
+				while (m_BdocBridge1->pSignCountry[r] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignCountry[r];
+					r++;
+				}
 				r++;
+				strSignData += ";";
+
+				strSignData += "_____________________;";
+
 			}
-			r++;
-			strSignData += ";";
+			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
+			const char * pcSignData = strSignData.data();
+			//----------------------------------------------------------------
+printf("%s\n",pcSignData);
+			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
+			oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadShowSign;
+			// create and start the hThreadShowSign with pcSignData as a parameter value		
+			oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) pcSignData);
+			//----------------------------------------------------------------
+			const char* pcMessage;
+			if (m_BdocBridge1->ret)	//validation failed
+			{
+			//Change Statusbar
+				pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab kehtetuid või aegunud allkirju!)";
+			}
 
-			strSignData += "_____________________;";
+			else//Change Statusbar			
+				pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!)";
+			oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
+			oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
 
+	/*		// dispose the local service manager
+			//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
+
+			//-------------Open Signature Viewer Macro------------------------
+			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
+			Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+			Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
+
+			Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+			//----------------------------------------------------------------
+*/		}
+		else if (m_BdocBridge1->ret && (m_BdocBridge1->ret<100))//validation failed -> All signatures invalid
+		{
+			//Change Statusbar
+			const char* pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab ainult kehtetuid või aegunud allkirju!)";
+			oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
+			oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
 		}
-		strSignData = "macro:///HW.HW.GetCert(" + strSignData + ")";
-		//------------------------------------------------------------
-cout<<"mõmmik: "<<strSignData<<endl;	
-
-		
-		// dispose the local service manager
-		//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
-
-		//-------------Open Signature Viewer Macro------------------------
-		Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
-		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
-		Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
-
-		Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-		//----------------------------------------------------------------
-	}*/
+		else if (m_BdocBridge1->ret >= 10000)
+		{
+			//Change Statusbar
+			const char* pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud! -- Allkirja lugemisel tekkis viga!)";
+			oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
+			oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
+		}
+	}
 
 	
 }
@@ -596,169 +640,17 @@ OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 			string strBdocUrl;
 			strBdocUrl = muff.pData->buffer;
 			
+			bool bPathIs = memcmp(ostrPath.pData->buffer, "", 1);
 			//if file has not been saved
-			if (!memcmp(ostrPath.pData->buffer, "", 1))
+			if (!bPathIs)
 			{
 				i_try = 0;
 				::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Salvesamata Fail!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Palun salvestage fail!" )));
 			}
-
-//=================================================================================	
-//----------------------If We are dealing with BDoc container----------------------
-			else if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag)
-			{
-				m_BdocBridge->DigiInit();
-				m_BdocBridge->DigiOpen(&strBdocUrl[7]);
-				
-	//			string strTempFileUrl = "file://";
-	//			strTempFileUrl += m_BdocBridge->pRetPath;
-				
-				//------------Fix sign data string from returned data---------				
-				string strSignData;
-				int k,l,m,n,o,p,q,r;
-				k=l=m=n=o=p=q=r=0;
-				for (int cnt=0; cnt<m_BdocBridge->iSignCnt; cnt++)
-				{	//Signer Name
-					while (m_BdocBridge->pSignName[k] != '#')
-					{
-						if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] == ','))
-						{
-							strSignData += ";";
-							k++;
-						}
-						else
-							strSignData += m_BdocBridge->pSignName[k];
-						k++;
-					}
-					k++;
-					strSignData += ";";
-
-					//Signer Role
-					if (sizeof(m_BdocBridge->pSignRole) > m_BdocBridge->iSignCnt)
-					{
-						//strSignData += "Roll: ";
-						while (m_BdocBridge->pSignRole[l] != '#')
-						{
-							strSignData += m_BdocBridge->pSignRole[l];
-							l++;
-						}
-						l++;
-					}
-					strSignData += ";";
-
-					//Signer AddRole
-					if (sizeof(m_BdocBridge->pSignAddRole) > m_BdocBridge->iSignCnt)
-					{
-						//strSignData += "Resolutsioon: ";
-						while (m_BdocBridge->pSignAddRole[m] != '#')
-						{
-							strSignData += m_BdocBridge->pSignAddRole[m];
-							m++;
-						}
-						m++;
-					}
-					strSignData += ";";
-
-					//Signing Time
-					while (m_BdocBridge->pSignTime[n] != '#')
-					{
-						if ((m_BdocBridge->pSignTime[n] == 'T') || (m_BdocBridge->pSignTime[n] == 'Z'))
-						{
-							strSignData += " ";
-							
-						}
-						else
-							strSignData += m_BdocBridge->pSignTime[n];
-						n++;
-					}
-					n++;
-					strSignData += ";";
-					
-					//Signing City
-					if (sizeof(m_BdocBridge->pSignCity) > m_BdocBridge->iSignCnt)
-					{
-						//strSignData += "Linn: ";
-						while (m_BdocBridge->pSignCity[o] != '#')
-						{
-							strSignData += m_BdocBridge->pSignCity[o];
-							o++;
-						}
-						o++;
-					}
-					strSignData += ";";
-
-					//Signing Region
-					while (m_BdocBridge->pSignState[p] != '#')
-					{
-						strSignData += m_BdocBridge->pSignState[p];
-						p++;
-					}
-					p++;
-					strSignData += ";";
-
-					//Signing Postal nr
-					while (m_BdocBridge->pSignPostal[q] != '#')
-					{
-						strSignData += m_BdocBridge->pSignPostal[q];
-						q++;
-					}
-					q++;
-					strSignData += ";";
-
-					//Signing Postal nr
-					while (m_BdocBridge->pSignCountry[r] != '#')
-					{
-						strSignData += m_BdocBridge->pSignCountry[r];
-						r++;
-					}
-					r++;
-					strSignData += ";";
-
-					strSignData += "_____________________;";
-cout<<"mõmmik: "<<strSignData<<endl;
-				}
-				strSignData = "macro:///HW.HW.GetCert(" + strSignData + ")";
-				//------------------------------------------------------------
-				
-
-	//			OUString sURL(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
-				//OUString sURL(RTL_CONSTASCII_USTRINGPARAM("file:///home/mark/Desktop/Juhan.txt"));
-	//			OUString sOldName = mxFrame->getName(); 
-	//			OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
-	//			mxFrame->setName(sTarget); 
-
-	//			Sequence< PropertyValue > loadProps(1);
-	//			loadProps[0] = PropertyValue();
-	//			loadProps[0].Name = OUString::createFromAscii("ReadOnly");
-	//			loadProps[0].Value <<= sal_True;
-
 			
-				// Get access to the global component loader of the office 
-				// for synchronous loading of documents. 
-	//			Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
-
-				// Load the document into the target frame by using our unambigous name 
-				// and special search flags. 
-	//			xComp = xLoader->loadComponentFromURL( sURL, sTarget, /*::com::sun::star::frame::FrameSearchFlag->CHILDREN*/4, loadProps); 
-
-				
-
-				//-------------Open Signature Viewer Macro------------------------
-				Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
-				Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
- 
-				Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-				//----------------------------------------------------------------
-
-				
-	//			mxFrame->setName(sOldName);
-				i_try = 0;
-				
-			}
-//=================================================================================			
-			else
-			{
-				strBdocUrl = "";
+			//---------------------check if card is in reader----------------------------------
+			else 
+			{				
 				m_BdocBridge->DigiInit();
 				m_BdocBridge->DigiCheckCert();
 				if (m_BdocBridge->ret == 1)
@@ -767,22 +659,177 @@ cout<<"mõmmik: "<<strSignData<<endl;
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					i_try = 0;
 				}
+			}	
+			//----------------------If We are dealing with BDoc container----------------------
+			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs)
+			{
+				m_BdocBridge->DigiInit();
+				m_BdocBridge->DigiOpen(&strBdocUrl[7]);
+				
+				//			string strTempFileUrl = "file://";
+				//			strTempFileUrl += m_BdocBridge->pRetPath;
+				
+				//------------Fix sign data string from returned data---------			
+				if ((m_BdocBridge->ret < 100) && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
+				{// Container has at least one valid signature
+					string strSignData;
+					int k,l,m,n,o,p,q,r;
+					k=l=m=n=o=p=q=r=0;
+					for (int cnt=0; cnt<m_BdocBridge->iSignCnt; cnt++)
+					{	//Signer Name
+						while (m_BdocBridge->pSignName[k] != '#')
+						{
+							if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] == ','))
+							{
+								strSignData += ";";
+								k++;
+							}
+							else
+								strSignData += m_BdocBridge->pSignName[k];
+							k++;
+						}
+						k++;
+						strSignData += ";";
 
-				else
-				{
-					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
-					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-					muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-								
-//printf("macrost1: %s\n",muff.pData->buffer);				
-					//--If Cacel button--
-					if (!memcmp(muff.pData->buffer, "*", 1))
-						i_try = 0;
+						//Signer Role
+						if (sizeof(m_BdocBridge->pSignRole) > m_BdocBridge->iSignCnt)
+						{
+							//strSignData += "Roll: ";
+							while (m_BdocBridge->pSignRole[l] != '#')
+							{
+								strSignData += m_BdocBridge->pSignRole[l];
+								l++;
+							}
+							l++;
+						}
+						strSignData += ";";
+
+						//Signer AddRole
+						if (sizeof(m_BdocBridge->pSignAddRole) > m_BdocBridge->iSignCnt)
+						{
+							//strSignData += "Resolutsioon: ";
+							while (m_BdocBridge->pSignAddRole[m] != '#')
+							{
+								strSignData += m_BdocBridge->pSignAddRole[m];
+								m++;
+							}
+							m++;
+						}
+						strSignData += ";";
+
+						//Signing Time
+						while (m_BdocBridge->pSignTime[n] != '#')
+						{
+							if ((m_BdocBridge->pSignTime[n] == 'T') || (m_BdocBridge->pSignTime[n] == 'Z'))
+							{
+								strSignData += " ";
+							
+							}
+							else
+								strSignData += m_BdocBridge->pSignTime[n];
+							n++;
+						}
+						n++;
+						strSignData += ";";
+					
+						//Signing City
+						if (sizeof(m_BdocBridge->pSignCity) > m_BdocBridge->iSignCnt)
+						{
+							//strSignData += "Linn: ";
+							while (m_BdocBridge->pSignCity[o] != '#')
+							{
+								strSignData += m_BdocBridge->pSignCity[o];
+								o++;
+							}
+							o++;
+						}
+						strSignData += ";";
+
+						//Signing Region
+						while (m_BdocBridge->pSignState[p] != '#')
+						{
+							strSignData += m_BdocBridge->pSignState[p];
+							p++;
+						}
+						p++;
+						strSignData += ";";
+
+						//Signing Postal nr
+						while (m_BdocBridge->pSignPostal[q] != '#')
+						{
+							strSignData += m_BdocBridge->pSignPostal[q];
+							q++;
+						}
+						q++;
+						strSignData += ";";
+
+						//Signing Postal nr
+						while (m_BdocBridge->pSignCountry[r] != '#')
+						{
+							strSignData += m_BdocBridge->pSignCountry[r];
+							r++;
+						}
+						r++;
+						strSignData += ";";
+
+						strSignData += "_____________________;";
+	cout<<"mõmmik: "<<strSignData<<endl;
+					}
+					strSignData = "macro:///HW.HW.GetCert(" + strSignData + ")";
+				
+					//------------------------------------------------------------
+				
+
+		//			OUString sURL(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+					//OUString sURL(RTL_CONSTASCII_USTRINGPARAM("file:///home/mark/Desktop/Juhan.txt"));
+		//			OUString sOldName = mxFrame->getName(); 
+		//			OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
+		//			mxFrame->setName(sTarget); 
+
+		//			Sequence< PropertyValue > loadProps(1);
+		//			loadProps[0] = PropertyValue();
+		//			loadProps[0].Name = OUString::createFromAscii("ReadOnly");
+		//			loadProps[0].Value <<= sal_True;
+
+			
+					// Get access to the global component loader of the office 
+					// for synchronous loading of documents. 
+		//			Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
+
+					// Load the document into the target frame by using our unambigous name 
+					// and special search flags. 
+		//			xComp = xLoader->loadComponentFromURL( sURL, sTarget, /*::com::sun::star::frame::FrameSearchFlag->CHILDREN*/4, loadProps);
+					// mxFrame->setName(sOldName);
+
+					//-------------Open Signature Viewer Macro------------------------
+					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+					Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
+	 
+					Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+					//----------------------------------------------------------------
 				}
+							
+//printf("macro returns: %s\n",muff.pData->buffer);				
+				
+				//i_try = 0;
+				
+			}
+			//---------------New File will be signed -> View a Warning------------------
+			else if (bPathIs)
+			{	
+				strBdocUrl = "";		
+				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
+				xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+				muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+							
+//printf("macro returns: %s\n",muff.pData->buffer);				
+				//--If Cacel button--
+				if (!memcmp(muff.pData->buffer, "*", 1))
+					i_try = 0;			
 			}
 			
 					
-
+			//----------------------Start the signing procedure---------------------------
 			while (i_try)
 			{
 				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Signing?language=Basic&location=application") ), UNO_QUERY);
@@ -960,5 +1007,31 @@ printf("BaseDispatch::~\n");
 }
 
 ///================================================
+
+void SAL_CALL threadShowSign(char *pData)
+{
+printf("\nIn Thread: %s\n\n",pData);
+	Reference < XDesktop > rLocDesktop = rGlobalDesktop;
+	Reference < XDispatchHelper > rLocalDispatchHelper = rGlobalDispatchHelper;
+
+	//-------------Open Signature Viewer Macro------------------------
+	Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
+	Any any = rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pData), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+	//----------------------------------------------------------------
+}
+///================================================
+
+void SAL_CALL threadChangeStatusBar(char *pMess)
+{
+	Reference < XDesktop > rLocDesktop = rGlobalDesktop;
+	Reference < XDispatchHelper > rLocalDispatchHelper = rGlobalDispatchHelper;
+
+	//-------------Open StatusBar Macro------------------------
+	Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
+	Any any = rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pMess), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+	//----------------------------------------------------------------
+}
+
+
 
 

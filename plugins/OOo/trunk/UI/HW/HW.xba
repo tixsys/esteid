@@ -3,10 +3,13 @@
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="HW" script:language="StarBasic">REM  *****  BASIC  *****
 Dim Proc As Integer
 Dim oSignDialog As Object
+Dim oCertDial As Object
 Dim fileURL As String
 Dim strCerts As String
 Dim strPin As String	
 Dim strParam As String
+Dim strSignCertData As String
+Dim oBar    &apos; Generated status bar
 
 &apos;****************************************************************
 Sub Main	
@@ -154,23 +157,35 @@ End Function
 &apos;****************************************************************
 Function GetCert (strInData As String)
 	Dim Ctl As Object
+	Dim CtlButtonY As Object
+	Dim CtlButtonN As Object
 	Dim oSvc As Object
-	Dim oCertDial As Object
 	Dim i, j, k, c As Integer
+	
+	
 
+	strSignCertData = strInData
 	Proc = 0
 	i = 0
-	j = 0
+	j = 1
 	k = 0
 
 	DialogLibraries.LoadLibrary(&quot;HW&quot;)
 	oCertDial = CreateUnoDialog(DialogLibraries.HW.Cert)
 rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
 	Ctl = oCertDial.getControl(&quot;SignerCertListBox&quot;)
+	CtlButtonY = oCertDial.getControl(&quot;SignButton&quot;)
+	CtlButtonN = oCertDial.getControl(&quot;ExitButton&quot;)
 	
-
+	If Instr(1, strInData, &quot;*&quot;) Then
+		CtlButtonY.setEnable(FALSE)
+		CtlButtonN.setEnable(FALSE)
+		CtlButtonY.setVisible(FALSE)
+		CtlButtonN.setVisible(FALSE)
+&apos;		oCertDial.setHeight(220)		
+	End If
 	
-	For c=0 To Len(strInData)
+	For c=1 To Len(strInData)
 			
 		k = Instr(k+1, strInData, &quot;;&quot;)
 		If k then
@@ -182,12 +197,26 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 		c = k
 	Next c
 
-	oCertDial.Execute()
+	If oCertDial.Execute() Then
+		GetCert =&quot;#&quot;
+	Else
+		GetCert = &quot;*&quot;
+	End If
+
+	oCertDial.dispose()
 	
-	oSvc = createUnoService(&quot;com.sun.star.system.SystemShellExecute&quot;)
+&apos;	oSvc = createUnoService(&quot;com.sun.star.system.SystemShellExecute&quot;)
 	rem program for reading bdoc container and sending cert info	
 &apos;	oSvc.execute(&quot;C:/Documents and Settings/Mark/Desktop/test-bin&quot;,&quot;&quot;,0)
 		
+End Function
+
+&apos;****************************************************************
+Function ShowSignCert
+
+	MsgBox strSignCertData
+
+	
 End Function
 
 &apos;****************************************************************
@@ -236,7 +265,42 @@ Function Failure
 End Function
 
 &apos;****************************************************************
-
+Function StatusBarCtrl (strMessage As String)
+&apos;	Dim oBar    &apos; Generated status bar
+	Dim oFrame  &apos; Current frame
+	
+&apos;	oBar = ThisComponent.CurrentController.StatusIndicator
+&apos;	oBar.setText(&quot;ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!&quot;, 100)
+	
+	REM Obtain the current frame from the current controller
+	oFrame = ThisComponent.getCurrentController().getFrame() 
+	
+	REM Create a NEW status indicator 
+	oBar = oFrame.createStatusIndicator()
+	
+	REM Start using the new status bar in the lower left corner.
+	REM The original status bar will no longer be visible.
+	REM The value of 100 is an arbitrary value for use as a
+	REM progress bar if I choose to do so.
+	oBar.start(strMessage, 400)
+	
+	REM Pause the macro so that I can see the text in the lower
+	REM left corner.
+&apos;	Print &quot;Waiting&quot;
+	
+	REM Terminate this status bar, causing the original status
+	REM bar to be used instead.
+&apos;	oBar.end() 
+End Function
 
 &apos;****************************************************************
+Function EndStatusBar
+	oBar.end()
+End Function
+
+&apos;****************************************************************
+sub test
+	StatusBarCtrl
+	EndStatusBar
+end sub
 </script:module>

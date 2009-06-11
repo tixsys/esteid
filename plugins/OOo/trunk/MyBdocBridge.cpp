@@ -125,7 +125,7 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 void MyBdocBridge::DigiOpen(char* pPath)
 {
 	((My1EstEIDSigner *)this)->str_bdocpath = pPath;
-	((My1EstEIDSigner *)this)->openCont();
+	ret = ((My1EstEIDSigner *)this)->openCont();
 	
 	pRetPath = ((My1EstEIDSigner *)this)->str_filepath.c_str();
 	pSignName = ((My1EstEIDSigner *)this)->str_signCert.c_str();
@@ -137,6 +137,8 @@ void MyBdocBridge::DigiOpen(char* pPath)
 	pSignAddRole = ((My1EstEIDSigner *)this)->signerRoles.str_additionalRole.c_str();
 	pSignTime = ((My1EstEIDSigner *)this)->str_signTime.c_str();
 	iSignCnt = ((My1EstEIDSigner *)this)->i_signatureCounter;
+
+	
 }
 
 
@@ -305,6 +307,13 @@ cout <<"PIN: "<<str_pin<<endl;
 //***********************************************************
 int My1EstEIDSigner::openCont ()
 {
+	int i_ret = 0;
+	
+	//memset((void*)&signPlace, 0, sizeof(signPlace));
+	//memset((void*)&signerRoles, 0, sizeof(signerRoles));
+	//str_signTime = "";
+	//str_signCert = "";
+	
 	try
 	{
 		// Init certificate store.
@@ -339,7 +348,9 @@ int My1EstEIDSigner::openCont ()
 			{
 				//If signature is not offline valid, other data fields can not be read from it.
 				printf("    Offline validation: FAILED (%s)\n", e.getMsg().c_str());
-				continue;
+				i_ret += 1;
+				signPlace.str_countryName += "-KEHTETU-";
+				//continue;
 			}
 
 			// Validate signature online. 
@@ -353,6 +364,7 @@ int My1EstEIDSigner::openCont ()
 				catch(const SignatureException& e)
 				{
 					printf("    Online validation: FAILED (%s)\n", e.getMsg().c_str());
+					i_ret += 100;
 				}
 			}
 
@@ -376,6 +388,13 @@ int My1EstEIDSigner::openCont ()
 				cout << "*   Country:         " << signPlace.str_countryName << endl;
 				cout << "********************************************"  << endl;*/
 			}
+			else
+			{
+				signPlace.str_city += "#";
+				signPlace.str_stateOrProvince += "#";
+				signPlace.str_postalCode += "#";
+				signPlace.str_countryName += "#";
+			}
 
 			// Get signer role info.
 			Signer::SignerRole roles = sig->getSignerRole();
@@ -388,6 +407,11 @@ int My1EstEIDSigner::openCont ()
 				/*cout << "*   " << signerRoles.str_role << endl;
 				cout << "*   " << signerRoles.str_additionalRole << endl;
 				cout << "********************************************"  << endl;*/
+			}
+			else
+			{
+				signerRoles.str_role += "#";
+				signerRoles.str_additionalRole += "#";
 			}
 
 			// Get signing time.
@@ -423,24 +447,28 @@ int My1EstEIDSigner::openCont ()
 	catch(const digidoc::BDocException& e)
 	{
 		printf("Caught BDocException: %s\n", e.getMsg().c_str());
+		i_ret += 10000;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		printf("Caught IOException: %s\n", e.getMsg().c_str());
+		i_ret += 20000;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		printf("Caught Exception: %s\n", e.getMsg().c_str());
+		i_ret += 30000;
 	}
 	catch(...)
 	{
 		printf("Caught unknown exception\n");
+		i_ret += 90000;
 	}
 
 	// Terminate digidoc library.
 	digidoc::terminate();
 
-	return 0;
+	return i_ret;
 }
 
 //===========================================================
