@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QEstEidCommon
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -31,9 +31,9 @@ class CertificateDialog: public QDialog, private Ui::CertificateDialog
 {
 	Q_OBJECT
 public:
-        CertificateDialog( QWidget *parent = 0 );
-        CertificateDialog( const QSslCertificate &cert, QWidget *parent = 0 );
-        ~CertificateDialog();
+	CertificateDialog( QWidget *parent = 0 );
+	CertificateDialog( const QSslCertificate &cert, QWidget *parent = 0 );
+	~CertificateDialog();
 
 	void setCertificate( const QSslCertificate &cert );
 
@@ -45,5 +45,5 @@ private:
 	void addItem( const QString &variable, const QString &value, const QVariant &valueext = QVariant() );
 	QByteArray addHexSeparators( const QByteArray &data ) const;
 
-        CertificateDialogPrivate *d;
+	CertificateDialogPrivate *d;
 };

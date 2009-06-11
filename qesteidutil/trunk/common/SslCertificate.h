@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QEstEidCommon
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -30,7 +30,7 @@ public:
 	SslCertificate( const QSslCertificate &cert );
 
 	static QString formatName( const QString &name );
-	static QSslCertificate fromX509( const Qt::HANDLE *x509 );
+	static QSslCertificate fromX509( const Qt::HANDLE x509 );
 	bool		isTempel() const;
 	QStringList keyUsage() const;
 	QStringList policies() const;
@@ -42,5 +42,7 @@ public:
 
 private:
 	void*	getExtension( int nid ) const;
+	QString decode( const QString &data ) const;
+	QString	toUtf16( const QString &data ) const;
 	QString	toUtf8( const QString &data ) const;
 };

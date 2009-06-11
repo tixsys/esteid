@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QEstEidCommon
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -29,6 +29,14 @@
 SslCertificate::SslCertificate( const QSslCertificate &cert )
 : QSslCertificate( cert ) {}
 
+QString SslCertificate::decode( const QString &in ) const
+{
+	if( in.contains( "\\x" ) )
+		return in.contains( "\\x00" ) ? toUtf16( in ) : toUtf8( in );
+	else
+		return in;
+}
+
 void* SslCertificate::getExtension( int nid ) const
 {
 	if( !handle() )
@@ -54,14 +62,16 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
-QSslCertificate SslCertificate::fromX509( const Qt::HANDLE *x509 )
+QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 {
 	unsigned char *cert = NULL;
-	int res = i2d_X509( (X509*)x509, &cert );
+	int len = i2d_X509( (X509*)x509, &cert );
 	QByteArray der;
-	if( res > 0 )
-		der = QByteArray( (char*)cert, res );
-	free( cert );
+	if( len >= 0 )
+	{
+		der = QByteArray( (char*)cert, len );
+		free( cert );
+	}
 	return QSslCertificate( der, QSsl::Der );
 }
 
@@ -140,16 +150,13 @@ QByteArray SslCertificate::serialNumber() const
 }
 
 QString SslCertificate::subjectInfoUtf8( SubjectInfo subject ) const
-{ return toUtf8( subjectInfo( subject ) ); }
+{ return decode( subjectInfo( subject ) ); }
 
 QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
-{ return toUtf8( subjectInfo( tag ) ); }
+{ return decode( subjectInfo( tag ) ); }
 
-QString SslCertificate::toUtf8( const QString &in ) const
+QString SslCertificate::toUtf16( const QString &in ) const
 {
-	if( !in.contains( "\\x" ) )
-		return in;
-
 	QString res;
 	bool firstByte = true;
 	ushort data;
@@ -173,6 +180,29 @@ QString SslCertificate::toUtf8( const QString &in ) const
 			++i;
 		}
 		firstByte = !firstByte;
+	}
+	return res;
+}
+
+QString SslCertificate::toUtf8( const QString &in ) const
+{
+	QString res;
+	int i = 0;
+	while( i < in.size() )
+	{
+		if( in.mid( i, 2 ) == "\\x" )
+		{
+			const char data[2] = {
+				in.mid( i+2, 2 ).toUInt( 0, 16 ),
+				in.mid( i+6, 2 ).toUInt( 0, 16 ) };
+			res +=  QString::fromUtf8( data, 2 );
+			i += 8;
+		}
+		else
+		{
+			res += in[i];
+			++i;
+		}
 	}
 	return res;
 }
