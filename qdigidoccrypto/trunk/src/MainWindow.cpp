@@ -298,6 +298,31 @@ void MainWindow::on_languages_activated( int index )
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
+void MainWindow::on_viewContentView_clicked( const QModelIndex &index )
+{
+	QList<CDocument> list = doc->documents();
+	if( list.isEmpty() || index.row() >= list.size() )
+		return;
+
+	switch( index.column() )
+	{
+	case 2:
+	{
+		QString dir = QFileDialog::getExistingDirectory( this,
+			tr("Select folder where file will be stored"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+		if( !dir.isEmpty() )
+			doc->saveDocument( index.row(), dir );
+		break;
+	}
+	case 3:
+		doc->removeDocument( index.row() );
+		setCurrentPage( (Pages)stack->currentIndex() );
+		break;
+	default: break;
+	}
+}
+
 void MainWindow::parseLink( const QString &url )
 {
 	if( url == "addFile" )

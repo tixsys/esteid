@@ -624,9 +624,27 @@ p, li { white-space: pre-wrap; }
                <property name="headerHidden">
                 <bool>true</bool>
                </property>
+               <property name="columnCount">
+                <number>4</number>
+               </property>
                <column>
                 <property name="text">
-                 <string notr="true">1</string>
+                 <string/>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string/>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string/>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string/>
                 </property>
                </column>
               </widget>
