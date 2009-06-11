@@ -217,7 +217,7 @@ function readCardData()
 			document.getElementById('authKeyText').style.display='none';
 			document.getElementById('authKeyBlocked').style.display='block';
 			document.getElementById('authValidButtons').style.display='none';
-			document.getElementById('authBlockedButtons').style.display='block';
+			document.getElementById('authBlockedButtons').style.display=(esteidData.getPukRetryCount() == 0 ? 'none' : 'block');
 		}
 		document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
 
@@ -235,7 +235,7 @@ function readCardData()
 			document.getElementById('signKeyText').style.display='none';
 			document.getElementById('signKeyBlocked').style.display='block';
 			document.getElementById('signValidButtons').style.display='none';
-			document.getElementById('signBlockedButtons').style.display='block';
+			document.getElementById('signBlockedButtons').style.display=(esteidData.getPukRetryCount() == 0 ? 'none' : 'block');;
 		}
 		document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
