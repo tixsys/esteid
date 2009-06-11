@@ -25,7 +25,7 @@
 #include <QStringList>
 
 #include "jscertdata.h"
-#include "SslCertificate.h"
+#include "common/SslCertificate.h"
 
 JsCertData::JsCertData( QObject *parent )
 :	QObject( parent )

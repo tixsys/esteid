@@ -24,9 +24,9 @@
 #include <QDebug>
 #include <QDate>
 
-#include "CertificateWidget.h"
 #include "jsesteidcard.h"
-#include "SslCertificate.h"
+#include "common/CertificateWidget.h"
+#include "common/SslCertificate.h"
 
 using namespace std;
 
