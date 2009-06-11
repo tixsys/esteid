@@ -46,8 +46,8 @@ var htmlStrings = {
 	"labelTimes": new tr( "korda", "times", "раз" ),
 	
 	"labelCertBlocked": new tr( "Sertifikaat on blokeeritud.", "Certificate is blocked.", "Сертификат заблокирован." ),
-	"labelAuthKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.", "", "С данной ID-картой невозможно идентифицироваться, т.к. PIN1 был введён 3 раза неверно." ),
-	"labelSignKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.", "", "С данной ID-картой невозможно создать цифровую подпись, т.к. PIN2 был введён 3 раза неверно." ),
+	"labelAuthKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik audentida, kuna PIN1 koodi on sisestatud 3 korda valesti.", "It is not possible to authenticate with this ID-card, because PIN1 was inserted 3 times incorrectly.", "С данной ID-картой невозможно идентифицироваться, т.к. PIN1 был введён 3 раза неверно." ),
+	"labelSignKeyBlocked": new tr( "Selle ID-kaardiga ei ole hetkel võimalik anda digitaalallkirja, kuna PIN2 koodi on sisestatud 3 korda valesti.", "It is not possible to digitally sign with this ID-card, because PIN2 was inserted 3 times incorrectly.", "С данной ID-картой невозможно создать цифровую подпись, т.к. PIN2 был введён 3 раза неверно." ),
 	"labelAuthCertBlocked": new tr( "Isikutuvastamise sertifikaat on blokeeritud.", "Authentication certificate is blocked." , "Идентификационный сертификат заблокирован." ),
 	"labelSignCertBlocked": new tr( "Allkirjastamise sertifikaat on blokeeritud.", "Signing certificate is blocked.", "Сертификат подписи заблокирован." ),
 	"labelCertUnblock": new tr( "Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.", "To unblock certificate you have to enter PUK code.", "Для разблокировки сертификата введите PUK код." ),
