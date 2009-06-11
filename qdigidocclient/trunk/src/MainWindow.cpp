@@ -23,8 +23,8 @@
 #include "MainWindow.h"
 
 #include "common/SslCertificate.h"
+#include "common/IKValidator.h"
 
-#include "IKValidator.h"
 #include "MobileDialog.h"
 #include "PrintSheet.h"
 #include "Settings.h"
