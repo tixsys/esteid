@@ -87,7 +87,8 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 			name = ldap_get_values( ldap, entry, attr );
 		else if( qstrcmp( attr, "userCertificate;binary" ) == 0 )
 			cert = ldap_get_values_len( ldap, entry, attr );
-		ber_free( pos, 0 );
+		//TODO - leak??
+		//ber_free( pos, 0 );
 	}
 	while( (attr = ldap_next_attribute( ldap, entry, pos ) ) );
 	ber_free( pos, 0 );
