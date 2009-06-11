@@ -11,6 +11,7 @@ find_package( Ldap REQUIRED )
 
 SET( MOC_HEADERS
 	common/CertificateWidget.h
+	common/IKValidator.h
 	src/CryptDoc.h
 	src/KeyDialog.h
 	src/LdapSearch.h
@@ -28,6 +29,7 @@ SET( HEADERS
 SET( SOURCES
 	${HEADERS}
 	common/CertificateWidget.cpp
+	common/IKValidator.cpp
 	common/SslCertificate.cpp
 	src/main.cpp
 	src/Common.cpp

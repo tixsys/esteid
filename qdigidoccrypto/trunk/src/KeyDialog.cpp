@@ -23,6 +23,7 @@
 #include "KeyDialog.h"
 
 #include "common/CertificateWidget.h"
+#include "common/IKValidator.h"
 #include "common/SslCertificate.h"
 #include "LdapSearch.h"
 
@@ -122,7 +123,7 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	connect( ldap, SIGNAL(searchResult(CKey)), SLOT(showResult(CKey)) );
 	connect( ldap, SIGNAL(error(QString,int)), SLOT(showError(QString,int)) );
 
-	sscode->setValidator( new QRegExpValidator( QRegExp( "[0-9]{11}" ), this ) );
+	sscode->setValidator( new IKValidator( sscode ) );
 	sscode->setFocus();
 	add->setEnabled( false );
 	progress->setVisible( false );
@@ -201,7 +202,7 @@ void KeyAddDialog::on_addFile_clicked()
 
 void KeyAddDialog::on_search_clicked()
 {
-	if( sscode->text().size() != 11 )
+	if( !IKValidator::isValid( sscode->text() ) )
 	{
 		QMessageBox::warning( this, "QDigiDocCrypto",
 			tr("Social security number is not valid!") );
