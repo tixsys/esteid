@@ -22,7 +22,7 @@
 
 #include "Poller.h"
 
-#include "SslCertificate.h"
+#include "common/SslCertificate.h"
 
 #include <libdigidoc++/XmlConf.h>
 
@@ -104,7 +104,7 @@ QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return si
 
 std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
 {
-	SslCertificate s = SslCertificate::fromX509( (Qt::HANDLE*)c.cert );
+	SslCertificate s = SslCertificate::fromX509( (Qt::HANDLE)c.cert );
 	QString title = QString( "%1 %2 %3" )
 		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
 		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
@@ -133,10 +133,10 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 			if( selectedCard.isEmpty() )
 				selectedCard = card;
 			if( cert.label == std::string("Isikutuvastus") )
-				auth[card] = SslCertificate::fromX509( (Qt::HANDLE*)cert.cert );
+				auth[card] = SslCertificate::fromX509( (Qt::HANDLE)cert.cert );
 			else if( cert.label == std::string("Allkirjastamine") )
 			{
-				sign[card] = SslCertificate::fromX509( (Qt::HANDLE*)cert.cert );
+				sign[card] = SslCertificate::fromX509( (Qt::HANDLE)cert.cert );
 				if( selectedCard == card )
 					signCert = cert;
 			}

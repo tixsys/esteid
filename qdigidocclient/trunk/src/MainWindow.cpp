@@ -22,12 +22,13 @@
 
 #include "MainWindow.h"
 
+#include "common/SslCertificate.h"
+
 #include "IKValidator.h"
 #include "MobileDialog.h"
 #include "PrintSheet.h"
 #include "Settings.h"
 #include "SignatureDialog.h"
-#include "SslCertificate.h"
 
 #include <libdigidoc++/Document.h>
 

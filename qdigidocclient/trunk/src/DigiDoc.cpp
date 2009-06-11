@@ -22,8 +22,9 @@
 
 #include "DigiDoc.h"
 
+#include "common/SslCertificate.h"
+
 #include "Poller.h"
-#include "SslCertificate.h"
 
 #include <libdigidoc++/BDoc.h>
 #include <libdigidoc++/WDoc.h>
@@ -52,7 +53,7 @@ QSslCertificate DigiDocSignature::cert() const
 	try
 	{
 		X509 *x509 = s->getSigningCertificate().getX509();
-		c = SslCertificate::fromX509( (Qt::HANDLE*)x509 );
+		c = SslCertificate::fromX509( (Qt::HANDLE)x509 );
 		free( x509 );
 	}
 	catch( const Exception & ) {}

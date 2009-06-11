@@ -6,10 +6,7 @@ project( qdigidocclient )
 find_package( Qt4 REQUIRED )
 find_package( OpenSSL REQUIRED )
 if( WIN32 )
-	find_package( Iconv REQUIRED )
 	find_package( OpenSSLCrypto REQUIRED )
-	find_package( ZLIB REQUIRED )
-	find_package( LibP11 REQUIRED )
 	find_package( XercesC REQUIRED )
 	find_package( XmlSecurityC REQUIRED )
 	find_package( XSD REQUIRED )
@@ -20,7 +17,7 @@ endif( UNIX )
 find_package( LibDigiDoc++ REQUIRED )
 
 SET( MOC_HEADERS
-	src/CertificateWidget.h
+	common/CertificateWidget.h
 	src/DigiDoc.h
 	src/IKValidator.h
 	src/MainWindow.h
@@ -33,13 +30,14 @@ SET( MOC_HEADERS
 	)
 SET( HEADERS
 	${MOC_HEADERS}
+	common/SslCertificate.h
 	src/QMobileSigner.h
-	src/SslCertificate.h
 	src/version.h
 	)
 SET( SOURCES
 	${HEADERS}
-	src/CertificateWidget.cpp
+	common/CertificateWidget.cpp
+	common/SslCertificate.cpp
 	src/main.cpp
 	src/DigiDoc.cpp
 	src/IKValidator.cpp
@@ -50,11 +48,10 @@ SET( SOURCES
 	src/QMobileSigner.cpp
 	src/Settings.cpp
 	src/SignatureDialog.cpp
-	src/SslCertificate.cpp
 	src/TreeWidget.cpp
 	)
 SET( UIS
-	src/ui/CertificateWidget.ui
+	common/ui/CertificateWidget.ui
 	src/ui/MainWindow.ui
 	src/ui/MobileDialog.ui
 	src/ui/Settings.ui
@@ -84,12 +81,10 @@ else (Subversion_FOUND)
 endif (Subversion_FOUND)
 
 INCLUDE_DIRECTORIES(
+	${CMAKE_SOURCE_DIR}
 	${CMAKE_SOURCE_DIR}/src
 	${CMAKE_BINARY_DIR}
-	${ICONV_INCLUDE_DIR}
 	${OPENSSL_INCLUDE_DIR}
-	${ZLIB_INCLUDE_DIR}
-	${LIBP11_INCLUDE_DIR}
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
@@ -124,11 +119,8 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${QT_QTMAIN_LIBRARY}
 	${QT_LIBRARIES}
 	${LIBDIGIDOC++_LIBRARY}
-	${ICONV_LIBRARIES}
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
-	${ZLIB_LIBRARIES}
-	${LIBP11_LIBRARIES}
 	${XERCESC_LIBRARIES}
 	${XMLSECURITYC_LIBRARIES}
 )

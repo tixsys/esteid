@@ -22,8 +22,8 @@
 
 #include "SignatureDialog.h"
 
-#include "CertificateWidget.h"
-#include "SslCertificate.h"
+#include "common/CertificateWidget.h"
+#include "common/SslCertificate.h"
 
 #include <libdigidoc++/Document.h>
 
