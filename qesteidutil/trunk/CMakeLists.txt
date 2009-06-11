@@ -13,7 +13,7 @@ if(UNIX)
 endif(UNIX)
 
 set(qesteidutil_MOC_HDRS
-    src/CertificateWidget.h
+    common/CertificateWidget.h
     src/DiagnosticsDialog.h
     src/Settings.h
     src/SettingsDialog.h
@@ -26,7 +26,7 @@ set(qesteidutil_MOC_HDRS
 )
 
 set(qesteidutil_HDRS
-    src/SslCertificate.h
+    common/SslCertificate.h
     src/version.h
 )
 
@@ -41,7 +41,8 @@ set(cardlib_SRCS
 )
 
 set(qesteidutil_SRCS
-    src/CertificateWidget.cpp
+    common/CertificateWidget.cpp
+    common/SslCertificate.cpp
     src/DiagnosticsDialog.cpp
     src/SettingsDialog.cpp
     src/jscardmanager.cpp
@@ -50,12 +51,11 @@ set(qesteidutil_SRCS
     src/jsextender.cpp
     src/main.cpp
     src/mainwindow.cpp
-    src/SslCertificate.cpp
     src/sslConnect.cpp
 )
 
 set( UIS
-    src/ui/CertificateWidget.ui
+    common/ui/CertificateWidget.ui
     src/ui/DiagnosticsDialog.ui
     src/ui/SettingsDialog.ui
 )
