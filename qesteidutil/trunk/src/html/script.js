@@ -169,6 +169,8 @@ function readCardData()
 		document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
 		document.getElementById('expiry').innerHTML = esteidData.getExpiry();
 		document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
+		document.getElementById('labelCardValidity').innerHTML = _( esteidData.isValid() ? 'labelIsValid' : 'labelIsInValid' );
+		document.getElementById('labelCardValidity').style.color = esteidData.isValid() ? '#509b00' : '#e80303';
 
 		if ( esteidData.authCert.isTempel() )
 		{

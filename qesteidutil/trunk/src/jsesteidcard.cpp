@@ -411,6 +411,14 @@ int JsEsteidCard::getSignUsageCount()
 	return signUsageCount;
 }
 
+bool JsEsteidCard::isValid()
+{
+	if (!m_card)
+		return false;
+
+	return QDateTime::fromString( expiry, "dd.MM.yyyy" ) >= QDateTime::currentDateTime();
+}
+
 bool JsEsteidCard::checkPin( const QString &pin )
 {
 	QDate date( QDate::fromString( birthDate, "dd.MM.yyyy" ) );

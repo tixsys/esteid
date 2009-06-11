@@ -93,6 +93,7 @@ public slots:
     QString getComment4();
 
 	bool canReadCard();
+	bool isValid();
 
     int getPin1RetryCount();
     int getPin2RetryCount();
