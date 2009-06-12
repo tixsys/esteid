@@ -614,53 +614,54 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../ui/MainWindow.ui" line="521"/>
         <source>Yes, I will use ID-card certificate only for secure transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Да, я использую ID-карту только для безопасной передачи данных</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="579"/>
         <source>Container:</source>
-        <translation type="unfinished"></translation>
+        <translation>Контейнер:</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="593"/>
         <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;email&quot;&gt;Послать контейнер на эл. почту&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;browse&quot;&gt;Показать расположение контейнера&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="642"/>
         <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Save files to disk&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;addFile&quot;&gt;Добавить файл&lt;/a&gt; &lt;a href=&quot;saveAll&quot;&gt;Сохранить файлы&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="705"/>
         <source>&lt;a href=&quot;addRecipient&quot;&gt;Add recipient&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;addRecipient&quot;&gt;Добавить получателя&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../MainWindow.cpp" line="71"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Далее</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="556"/>
         <source>Container content:</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержание контейнера:</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="572"/>
         <source>Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключи</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="629"/>
         <source>Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя файла</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.ui" line="634"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер</translation>
     </message>
 </context>
 <context>
@@ -696,37 +697,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../Settings.cpp" line="50"/>
         <source>Select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать папку</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="13"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="24"/>
         <source>Container default location</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение контейнера по умолчанию</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="31"/>
         <source>Same folder</source>
-        <translation type="unfinished"></translation>
+        <translation>В ту же папку</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="50"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="59"/>
         <source>Ask container name</source>
-        <translation type="unfinished"></translation>
+        <translation>Спросить имя документа</translation>
     </message>
     <message>
         <location filename="../ui/Settings.ui" line="66"/>
         <source>Show signing intro</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать введение в подписывание</translation>
     </message>
 </context>
 </TS>
