@@ -24,15 +24,31 @@
 
 #include <QSslCertificate>
 
+#include <QHash>
+
 class SslCertificate: public QSslCertificate
 {
 public:
+	enum KeyUsage
+	{
+		DigitalSignature = 0,
+		NonRepudiation,
+		KeyEncipherment,
+		DataEncipherment,
+		KeyAgreement,
+		KeyCertificateSign,
+		CRLSign,
+		EncipherOnly,
+		DecipherOnly,
+	};
+
 	SslCertificate( const QSslCertificate &cert );
 
+	QStringList enhancedKeyUsage() const;
 	static QString formatName( const QString &name );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );
 	bool		isTempel() const;
-	QStringList keyUsage() const;
+	QHash<int,QString> keyUsage() const;
 	QStringList policies() const;
 	QString		policyInfo( const QString &oid ) const;
 	QString		subjectInfoUtf8( SubjectInfo subject ) const;

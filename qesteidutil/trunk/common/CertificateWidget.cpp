@@ -115,7 +115,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	s << "<hr>";
 	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b>";
 	s << "<ul>";
-	Q_FOREACH( const QString &ext, c.keyUsage() )
+	Q_FOREACH( const QString &ext, c.enhancedKeyUsage() )
 		s << "<li>" << ext << "</li>";
 	s << "</ul>";
 	s << "<br /><br /><br /><br />";
@@ -167,5 +167,9 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
 	addItem( tr("Public key"), QString("RSA (%1)").arg( c.publicKey().length() ),
 		addHexSeparators( c.publicKey().toDer().toHex() ) );
+	QStringList enhancedKeyUsage = c.enhancedKeyUsage();
+	addItem( tr("Enhanched key usage"), enhancedKeyUsage.join( ", " ), enhancedKeyUsage.join( "\n" ) );
 	addItem( tr("Certificate policies"), c.policies().join( ", " ) );
+	QStringList keyUsage = c.keyUsage().values();
+	addItem( tr("Key usage"), keyUsage.join( ", " ), keyUsage.join( "\n" ) );
 }

@@ -37,11 +37,30 @@ QString SslCertificate::decode( const QString &in ) const
 		return in;
 }
 
-void* SslCertificate::getExtension( int nid ) const
+QStringList SslCertificate::enhancedKeyUsage() const
 {
-	if( !handle() )
-		return NULL;
-	return X509_get_ext_d2i( (X509*)handle(), nid, NULL, NULL );
+	QStringList list;
+
+	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
+	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
+	{
+		ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
+		switch( OBJ_obj2nid( obj ) )
+		{
+		case NID_client_auth:
+			list << QObject::tr("Proves your identity to a remote computer"); break;
+		case NID_email_protect:
+			list << QObject::tr("Protects e-mail messages"); break;
+		case NID_OCSP_sign:
+			list << QObject::tr("OCSP signing"); break;
+		default: break;
+		}
+	}
+	sk_ASN1_OBJECT_pop_free( usage, ASN1_OBJECT_free );
+
+	if( list.isEmpty() )
+		list << QObject::tr("All application policies");
+	return list;
 }
 
 QString SslCertificate::formatName( const QString &name )
@@ -75,6 +94,13 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 	return QSslCertificate( der, QSsl::Der );
 }
 
+void* SslCertificate::getExtension( int nid ) const
+{
+	if( !handle() )
+		return NULL;
+	return X509_get_ext_d2i( (X509*)handle(), nid, NULL, NULL );
+}
+
 bool SslCertificate::isTempel() const
 {
 	Q_FOREACH( const QString &p, policies() )
@@ -83,29 +109,32 @@ bool SslCertificate::isTempel() const
 	return false;
 }
 
-QStringList SslCertificate::keyUsage() const
+QHash<int,QString> SslCertificate::keyUsage() const
 {
-	QStringList list;
+	QHash<int,QString> list;
 
-	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
-	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
+	ASN1_BIT_STRING *keyusage = (ASN1_BIT_STRING*)getExtension( NID_key_usage );
+	for( int n = 0; n < 9; ++n )
 	{
-		ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
-		switch( OBJ_obj2nid( obj ) )
+		if( ASN1_BIT_STRING_get_bit( keyusage, n ) )
 		{
-		case NID_client_auth:
-			list << QObject::tr("Proves your identity to a remote computer"); break;
-		case NID_email_protect:
-			list << QObject::tr("Protects e-mail messages"); break;
-		case NID_OCSP_sign:
-			list << QObject::tr("OCSP signing"); break;
-		default: break;
+			switch( n )
+			{
+			case DigitalSignature: list[n] = QObject::tr("Digital signature"); break;
+			case NonRepudiation: list[n] = QObject::tr("Non repudiation"); break;
+			case KeyEncipherment: list[n] = QObject::tr("Key encipherment"); break;
+			case DataEncipherment: list[n] = QObject::tr("Data encipherment"); break;
+			case KeyAgreement: list[n] = QObject::tr("Key agreement"); break;
+			case KeyCertificateSign: list[n] = QObject::tr("Key certificate sign"); break;
+			case CRLSign: list[n] = QObject::tr("CRL sign"); break;
+			case EncipherOnly: list[n] = QObject::tr("Encipher only"); break;
+			case DecipherOnly: list[n] = QObject::tr("Decipher only"); break;
+			default: break;
+			}
 		}
 	}
-	sk_ASN1_OBJECT_pop_free( usage, ASN1_OBJECT_free );
+	ASN1_BIT_STRING_free( keyusage );
 
-	if( list.isEmpty() )
-		list << QObject::tr("All application policies");
 	return list;
 }
 

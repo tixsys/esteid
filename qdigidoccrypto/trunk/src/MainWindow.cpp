@@ -249,8 +249,8 @@ void MainWindow::buttonClicked( int button )
 		}
 		else
 		{
-			doc->encrypt();
-			doc->save();
+			if( doc->encrypt() )
+				doc->save();
 		}
 		setCurrentPage( View );
 		break;

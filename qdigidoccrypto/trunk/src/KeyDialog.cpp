@@ -152,13 +152,19 @@ void KeyAddDialog::addFile()
 	k.cert = QSslCertificate( &f, QSsl::Pem );
 	if( k.cert.isNull() )
 		k.cert = QSslCertificate( &f, QSsl::Der );
-	if( !k.cert.isNull() )
+	if( k.cert.isNull() )
+	{
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
+	}
+	else if( !SslCertificate( k.cert ).keyUsage().contains( SslCertificate::DataEncipherment ) )
+	{
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("This certificate is not usable for crypting") );
+	}
+	else
 	{
 		k.recipient = SslCertificate( k.cert ).subjectInfoUtf8( QSslCertificate::CommonName );
 		Q_EMIT selected( QList<CKey>() << k );
 	}
-	else
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
 
 	f.close();
 }
