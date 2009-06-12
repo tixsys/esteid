@@ -141,7 +141,7 @@ SET(BDOCFILES
 #TODO:add all definitions from settinks mk
 IF (WIN32)
 	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
-	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800")
+	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS")
 	add_definitions(${CC_DEFINES} ${CC_FLAGS})
 	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC++_CONF}" )
 ENDIF (WIN32)
@@ -228,43 +228,30 @@ CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
 #CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
 
 
-execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/UI # Copy UI 
-			${OUT_MISC}/${COMP_NAME}
-		COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)	#remove svn folder 
-		#COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter # Copy Filter 	 #FIX Filter extension first
-		#	${OUT_MISC}/${COMP_NAME}
+execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/UI	${OUT_MISC}/${COMP_NAME})				
+				#COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter ${OUT_MISC}/${COMP_NAME}# Copy Filter 	 #FIX Filter extension first
 		
 		
 #Fix Find Path later, so we do not need to know the final directory 
 #FIND_PATH(TARGET_FILTER_DIR bdocimport.xsl ${OUT_MISC}/${COMP_NAME}/BDocFilter)	 #FIX Filter extension first
 FIND_PATH(TARGET_GUI_DIR dialog.xlb ${OUT_MISC}/${COMP_NAME}/HW)
 
-execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn)
+execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn			#remove svn folders	
+				COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)		
+				#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	) #FIX Filter extension first
 		
-		#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	 #FIX Filter extension first
-		#remove svn folder
 
 
-IF (WIN32)
-	add_custom_target( zip-oxt ALL
-		COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
-			${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 
-		WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
-		COMMAND ${MKDIR} ${OUT_BIN}
-		COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
-		)
-ENDIF (WIN32)
-
-IF (UNIX)
-	add_custom_target( zip-oxt ALL
-		COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-			${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-
-		WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
-		COMMAND ${MKDIR} ${OUT_BIN}
-		COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
-		)
-ENDIF (UNIX)
-
+add_custom_target( zip-oxt ALL
+#	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
+#		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		
+		
+	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
+	COMMAND ${MKDIR} ${OUT_BIN}
+	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
+	)
 

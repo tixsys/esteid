@@ -103,6 +103,15 @@ using com::sun::star::view::XSelectionSupplier;
 using namespace com::sun::star::system;
 using com::sun::star::presentation::XPresentation;
 
+#ifdef _WIN32
+#define UNO_URL_HEAD "file:///"
+#define SLASH "/"
+#else
+#define UNO_URL_HEAD "file://"
+#define SLASH ""
+#endif
+
+
 //--Global Variables--
 ListenerHelper aListenerHelper;
 OUString ousBDocFileURL;
@@ -224,9 +233,9 @@ printf("MyProtocolHandler::initialize\n");
 	{
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
-		m_BdocBridge1->DigiOpen(&strContainerPath[7]);
+		m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
 				
-		string strTempFileUrl = "file://";
+		string strTempFileUrl = UNO_URL_HEAD;
 		strTempFileUrl += m_BdocBridge1->pRetPath;
 		ousBDocContURL = ousBDocFileURL; //<-----Get access to the container in new frame!
 		ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
@@ -265,7 +274,7 @@ printf("MyProtocolHandler::initialize\n");
 
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
-		m_BdocBridge1->DigiOpen(&strContainerPath[7]);
+		m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
 
 		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 		rGlobalDesktop = rDesktop;
@@ -639,7 +648,7 @@ OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 			muff = OUStringToOString(ousLocBdocContUrl, RTL_TEXTENCODING_ASCII_US);
 			string strBdocUrl;
 			strBdocUrl = muff.pData->buffer;
-			
+
 			bool bPathIs = memcmp(ostrPath.pData->buffer, "", 1);
 			//if file has not been saved
 			if (!bPathIs)
@@ -664,7 +673,7 @@ OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs)
 			{
 				m_BdocBridge->DigiInit();
-				m_BdocBridge->DigiOpen(&strBdocUrl[7]);
+				m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
 				
 				//			string strTempFileUrl = "file://";
 				//			strTempFileUrl += m_BdocBridge->pRetPath;
@@ -815,7 +824,7 @@ OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 				
 			}
 			//---------------New File will be signed -> View a Warning------------------
-			else if (bPathIs)
+			else if (bPathIs && i_try)
 			{	
 				strBdocUrl = "";		
 				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
@@ -854,11 +863,11 @@ OString muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
 							//if its an open bdoc container	
 								 			
 							m_BdocBridge->DigiInit();
-							m_BdocBridge->DigiOpen(&strBdocUrl[7]);
+							m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
 printf("!!!sees!!!\n");
 						}
 printf("!!!Allkirjastan!!!\n");
-						m_BdocBridge->DigiSign((char*)ostrPath.pData->buffer, (char*)ostrParam.pData->buffer, (char*)ostrPin.pData->buffer);	
+						m_BdocBridge->DigiSign((char*)ostrPath.pData->buffer[sizeof(SLASH)], (char*)ostrParam.pData->buffer, (char*)ostrPin.pData->buffer);	
 
 						//printf("RETURN OLI: %d\n", m_BdocBridge->ret);
 						if (!m_BdocBridge->ret)
@@ -894,6 +903,11 @@ printf("!!!Allkirjastan!!!\n");
 				}
 				else
 					i_try = 0;
+
+				FILE *fp;
+				fp = fopen("c:\\OOoDebug.txt", "a");
+				fprintf( fp, "VAL1: \n%d\nVAL2: \n%d\n", m_BdocBridge->ret, i_try);
+				fclose(fp);
 
 			}
 //printf("macrost2: %s\n",muff.pData->buffer);
@@ -1032,6 +1046,13 @@ void SAL_CALL threadChangeStatusBar(char *pMess)
 	//----------------------------------------------------------------
 }
 
+OString SAL_CALL BaseDispatch::convertURItoPath(OUString& ousURI)
+{
+	Ostring osPath;
+		osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_UTF8);
+		//osPath.pData->buffer
 
 
+	return osPath;
+}
 

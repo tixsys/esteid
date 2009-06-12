@@ -30,5 +30,5 @@ cmake .. -G "Visual Studio 9 2008" ^
          -DCMAKE_INSTALL_PREFIX="" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^
-         -DLIBDIGIDOC++_CONF="C:/Program Files/Estonian ID Card/libdigidoc++.conf"
+         -DLIBDIGIDOC++_CONF="C:\Program Files\Estonian ID Card\libdigidoc++.conf"
 cd..

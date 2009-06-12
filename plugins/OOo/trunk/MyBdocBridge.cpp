@@ -20,6 +20,13 @@
 #define BDOCLIB_CONF_PATH "libdigidoc++.conf"
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+#include <Winreg.h>
+#endif
+
+#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\libdigidoc++"
+
 #include "My1EstEIDSigner.h"
 //#include "MyOOoBridge.h"
 
@@ -29,9 +36,12 @@ using namespace std;
 const char* CERT_STATUSES[3] = { "GOOD", "REVOKED", "UNKNOWN" };
 
 
+
 //===========================================================
 //********Constructor for OO reachable bridge class**********
 MyBdocBridge::MyBdocBridge() {
+
+
 }
 
 //===========================================================
@@ -79,10 +89,10 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 	((My1EstEIDSigner *)this)->signerRoles.str_role = "";
 	((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "";
 
-	for (int i=7; i<strPath.size(); i++)
+	for (size_t i=7; i<strPath.size(); i++)
 		((My1EstEIDSigner *)this)->str_filepath += strPath[i];
 
-	for(int j=0, k=0; j<strParam.size(); j++)
+	for(size_t j=0, k=0; j<strParam.size(); j++)
 	{
 		while (strParam[j] != '#')
 		{
@@ -168,16 +178,60 @@ void My1EstEIDSigner::sammkampunn() {
 //***********************************************************
 int My1EstEIDSigner::initData()
 {
+		
 	//set installed BDoc library path
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;//
-		putenv(conf);
+		string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
+
+	#ifdef _WIN32
+		HKEY hkey;
+		DWORD dwSize;
+		TCHAR tcConfPath[1024];
+		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+		{
+			dwSize = 1024 * sizeof(TCHAR);
+			RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
+			RegCloseKey(hkey);
+		}
+		conf = "BDOCLIB_CONF_XML=";
+		conf += tcConfPath;
+	#endif
+
+		putenv(conf.c_str());
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
 
-	digidoc::initialize();
+	try
+	{
+		digidoc::initialize();
+	}
+	catch(const digidoc::BDocException& e)
+	{
+		ERR("Caught BDocException: %s", e.getMsg().c_str());
+	}
+	catch(const digidoc::IOException& e)
+	{
+		ERR("Caught IOException: %s", e.getMsg().c_str());
+	}
+	catch(const digidoc::OCSPException& e)
+	{
+		ERR("Caught OCSPException: %s", e.getMsg().c_str());
+	}
+	catch(const digidoc::SignException& e)
+	{
+		ERR("Caught SignException: %s", e.getMsg().c_str());
+	}
+	catch(const digidoc::Exception& e)
+	{
+		ERR("Caught Exception: %s", e.getMsg().c_str());
+	}
+	catch(...)
+	{
+		ERR("Caught unknown exception");
+	}
+
 
 	profile = Signature::TM;//BES
 	//str_destination = str_bdocpath;	
@@ -208,7 +262,7 @@ cout <<"PIN: "<<str_pin<<endl;
 	{		
 		MyRealEstEIDSigner m_signer;
 		
-		i_ok =	m_signer.i_ret;	
+		i_ok =	m_signer.i_ret;	 //--- check this!!!!
 		
 		m_signer.pin = str_pin;
 		// Init certificate store.
@@ -258,16 +312,25 @@ cout <<"PIN: "<<str_pin<<endl;
 		}
 		
 	}
-	
+
 	catch(const digidoc::BDocException& e)
 	{
 		ERR("Caught BDocException: %s", e.getMsg().c_str());
-		
+FILE *fp;
+fp = fopen("c:\\OOoDebug.txt", "a");	
+fprintf( fp, "IOEXCEPTION: \n%s\n", e.getMsg().c_str());
+fclose(fp);		
 		i_ok |= 10;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		ERR("Caught IOException: %s", e.getMsg().c_str());
+
+FILE *fp;
+				fp = fopen("c:\\OOoDebug.txt", "a");
+				fprintf( fp, "IOEXCEPTION: \n%s\n", e.getMsg().c_str());
+				fclose(fp);
+
 		i_ok |= 20;
 	}
 	catch(const digidoc::OCSPException& e)
@@ -424,7 +487,7 @@ int My1EstEIDSigner::openCont ()
 			// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
 			X509Cert cert = sig->getSigningCertificate();
 			string tempname = cert.getSubject().c_str();
-			for (int u=0; u<tempname.size(); u++)
+			for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], ",CN=", 4))
 				{

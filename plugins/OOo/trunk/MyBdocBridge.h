@@ -16,6 +16,7 @@ public:
 	void DigiOpen(char* pPath);
 	void DigiInit();
 	void DigiCheckCert();
+
 	int ret;
 	int iSignCnt;
 	const char* pRetPath;
@@ -27,4 +28,5 @@ public:
 	const char* pSignCountry;
 	const char* pSignRole;
 	const char* pSignAddRole;
+
 };

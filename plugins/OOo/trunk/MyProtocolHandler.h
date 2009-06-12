@@ -107,6 +107,7 @@ public:
 
 	virtual ~BaseDispatch();
 		
+	::rtl::OString BaseDispatch::convertURItoPath(const ::rtl::OUString& ousURI);
 	
 
 	void ShowMessageBox( const com::sun::star::uno::Reference< com::sun::star::frame::XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText );
@@ -153,8 +154,6 @@ public:
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.presentation.PresentationDocument"/*"com.sun.star.drawing.GenericDrawingDocument" */) ) )
 	{}
 };
-
-
 void SAL_CALL threadShowSign(char *pData);
 
 void SAL_CALL threadChangeStatusBar(char *pMess);

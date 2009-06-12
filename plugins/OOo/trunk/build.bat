@@ -30,7 +30,7 @@ cmake .. -G "NMake Makefiles" ^
          -DCMAKE_INSTALL_PREFIX="" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^
-         -DLIBDIGIDOC++_CONF="C:/Program Files/Estonian ID Card/libdigidoc++.conf"
+         -DLIBDIGIDOC++_CONF="C:\Program Files\Estonian ID Card\libdigidoc++.conf"
 nmake VERBOSE=1
 REM nmake install DESTDIR="%target_dir%"
 cd..
