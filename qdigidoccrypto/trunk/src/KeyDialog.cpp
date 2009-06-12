@@ -80,7 +80,7 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 
 	addItem( tr("Recipient"), k.recipient );
 	addItem( tr("Crypt method"), k.type );
-	addItem( tr("ID"), k.id );
+	//addItem( tr("ID"), k.id );
 	addItem( tr("Expires"), key.cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
 	addItem( tr("Issuer"), key.cert.issuerInfo( QSslCertificate::CommonName ) );
 	view->resizeColumnToContents( 0 );
