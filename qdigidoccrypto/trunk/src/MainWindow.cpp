@@ -117,8 +117,17 @@ bool MainWindow::addFile( const QString &file )
 			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() );
 
-		if( SettingsValues().value( "Main/AskSaveAs", false ).toBool() ||
-			QFile::exists( docname ) )
+		bool ask = SettingsValues().value( "Main/AskSaveAs", false ).toBool();
+		bool select = false;
+		if( !ask && QFile::exists( docname ) )
+		{
+			QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocClient",
+				tr( "%1 already exists.<br />Do you want replace it?" ).arg( docname ),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+			select = b == QMessageBox::No;
+		}
+
+		if( ask || select )
 		{
 			docname = QFileDialog::getSaveFileName(
 				this, tr("Save file"), docname, tr("Documents (*.cdoc)") );
