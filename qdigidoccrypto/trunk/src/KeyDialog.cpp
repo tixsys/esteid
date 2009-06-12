@@ -105,7 +105,11 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
-	connect( addCard, SIGNAL(clicked()), SIGNAL(addCardCert()) );
+
+	connect( buttonBox->addButton( tr("Add cert from card"), QDialogButtonBox::ActionRole ),
+		SIGNAL(clicked()), SIGNAL(addCardCert()) );
+	connect( buttonBox->addButton( tr("Add cert from file"), QDialogButtonBox::ActionRole ),
+		SIGNAL(clicked()), SLOT(addFile()) );
 
 	skView->header()->setStretchLastSection( false );
 	skView->header()->setResizeMode( 0, QHeaderView::Stretch );
@@ -127,6 +131,36 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	sscode->setFocus();
 	add->setEnabled( false );
 	progress->setVisible( false );
+}
+
+void KeyAddDialog::addFile()
+{
+	QString file = QFileDialog::getOpenFileName( this, "QDigiDocCrypto",
+		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
+		tr("Certificates (*.pem *.cer *.crt)") );
+	if( file.isEmpty() )
+		return;
+
+	QFile f( file );
+	if( !f.open( QIODevice::ReadOnly ) )
+	{
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to open certifiacte") );
+		return;
+	}
+
+	CKey k;
+	k.cert = QSslCertificate( &f, QSsl::Pem );
+	if( k.cert.isNull() )
+		k.cert = QSslCertificate( &f, QSsl::Der );
+	if( !k.cert.isNull() )
+	{
+		k.recipient = SslCertificate( k.cert ).subjectInfoUtf8( QSslCertificate::CommonName );
+		Q_EMIT selected( QList<CKey>() << k );
+	}
+	else
+		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
+
+	f.close();
 }
 
 void KeyAddDialog::disableSearch( bool disable )
@@ -168,36 +202,6 @@ void KeyAddDialog::on_add_clicked()
 
 	saveHistory();
 	Q_EMIT selected( skKeys );
-}
-
-void KeyAddDialog::on_addFile_clicked()
-{
-	QString file = QFileDialog::getOpenFileName( this, "QDigiDocCrypto",
-		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
-		tr("Certificates (*.pem *.cer *.crt)") );
-	if( file.isEmpty() )
-		return;
-
-	QFile f( file );
-	if( !f.open( QIODevice::ReadOnly ) )
-	{
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to open certifiacte") );
-		return;
-	}
-
-	CKey k;
-	k.cert = QSslCertificate( &f, QSsl::Pem );
-	if( k.cert.isNull() )
-		k.cert = QSslCertificate( &f, QSsl::Der );
-	if( !k.cert.isNull() )
-	{
-		k.recipient = SslCertificate( k.cert ).subjectInfoUtf8( QSslCertificate::CommonName );
-		Q_EMIT selected( QList<CKey>() << k );
-	}
-	else
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
-
-	f.close();
 }
 
 void KeyAddDialog::on_search_clicked()
@@ -275,6 +279,7 @@ void KeyAddDialog::showResult( const CKey &key )
 	i->setText( 2, key.cert.expiryDate().toString( "dd.MM.yyyy" ) );
 	skView->addTopLevelItem( i );
 
-	add->setEnabled( true );
 	disableSearch( false );
+	add->setEnabled( true );
+	add->setFocus();
 }

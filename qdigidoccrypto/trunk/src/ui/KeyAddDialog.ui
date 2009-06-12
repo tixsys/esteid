@@ -142,63 +142,16 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="buttonsLayout">
-     <item>
-      <spacer name="buttonsSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="addCard">
-       <property name="text">
-        <string>Add cert from card</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="addFile">
-       <property name="text">
-        <string>Add cert from file</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="close">
-       <property name="text">
-        <string>Close</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Close</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>close</sender>
-   <signal>clicked()</signal>
-   <receiver>KeyAddDialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>458</x>
-     <y>253</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>252</x>
-     <y>137</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>sscode</sender>
    <signal>returnPressed()</signal>
@@ -212,6 +165,22 @@
     <hint type="destinationlabel">
      <x>454</x>
      <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>KeyAddDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>252</x>
+     <y>137</y>
     </hint>
    </hints>
   </connection>
