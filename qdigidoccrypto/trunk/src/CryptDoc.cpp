@@ -102,6 +102,15 @@ void CryptDoc::addKey( const CKey &key )
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
+	Q_FOREACH( const CKey &k, keys() )
+	{
+		if( k.cert == key.cert )
+		{
+			setLastError( tr("Key already exists") );
+			return;
+		}
+	}
+
 	X509 *cert = NULL;
 	QByteArray data = key.cert.toDer();
 	int err = ddocDecodeX509Data( &cert, (const byte*)data.constData(), data.size() );
@@ -501,6 +510,6 @@ void CryptDoc::selectCard( const QString &card )
 void CryptDoc::setLastError( const QString &err, int code )
 {
 	QString errMsg;
-	if( err > 0 ) errMsg = getErrorString( code );
+	if( code > 0 ) errMsg = getErrorString( code );
 	Q_EMIT error( m_lastError = err, code, errMsg );
 }
