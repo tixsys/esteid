@@ -16,7 +16,7 @@ static inline NSData *CPlusDataToNSData(ByteVec bytes)
 
 static inline NSString *CPlusStringToNSString(std::string str)
 {
-	return [[[NSString alloc] initWithBytes:str.c_str() length:str.length() encoding:NSISOLatin1StringEncoding] autorelease];
+	return [(NSString *)CFStringCreateWithBytes(kCFAllocatorDefault, (const UInt8 *)str.c_str(), str.length(), kCFStringEncodingISOLatin9, NO) autorelease];
 }
 
 typedef struct _EstEIDReaderManagerState {
