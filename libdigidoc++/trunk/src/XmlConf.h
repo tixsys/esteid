@@ -34,6 +34,9 @@ public:
     virtual std::string getProxyHost() const;
     virtual std::string getProxyPort() const;
 
+    virtual void setProxyHost( const std::string & );
+    virtual void setProxyPort( const std::string & );
+
     static const std::string CONF_ENV;
     static const std::string DEFAULT_CONF_LOC;
 

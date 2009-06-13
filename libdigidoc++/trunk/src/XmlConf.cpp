@@ -239,3 +239,14 @@ std::string digidoc::XmlConf::getProxyPort() const
 {
 	return proxyPort;
 }
+
+void digidoc::XmlConf::setProxyHost( const std::string &host )
+{
+	proxyHost = host;
+}
+
+void digidoc::XmlConf::setProxyPort( const std::string &port )
+{
+        proxyPort = port;
+}
+

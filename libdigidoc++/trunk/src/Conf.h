@@ -28,6 +28,9 @@ namespace digidoc
           virtual std::string getProxyHost() const = 0;
           virtual std::string getProxyPort() const = 0;
 
+	  virtual void setProxyHost( const std::string & ) = 0;
+	  virtual void setProxyPort( const std::string & ) = 0;
+
 // Fixme should be protected
           Conf() {}
       private:
