@@ -44,7 +44,7 @@ public:
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
-		const QSslCertificate &auth, const QSslCertificate &sign );
+		const QSslCertificate &sign );
 
 private:
 	void run();
@@ -63,7 +63,6 @@ public:
 	QEstEIDSigner( const QString &card = QString() ) throw(SignException);
 	virtual ~QEstEIDSigner() {}
 
-	QSslCertificate authCert( const QString &card ) const;
 	QStringList		cards() const;
 	QSslCertificate signCert( const QString &card ) const;
 
@@ -73,7 +72,6 @@ protected:
 		std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException);
 
 private:
-	QHash<QString,QSslCertificate> auth;
 	QHash<QString,QSslCertificate> sign;
 	QString selectedCard;
 };

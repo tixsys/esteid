@@ -158,9 +158,6 @@ void DigiDoc::addFile( const QString &file )
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
-QSslCertificate DigiDoc::authCert() { return m_authCert; }
-QSslCertificate DigiDoc::signCert() { return m_signCert; }
-
 void DigiDoc::clear()
 {
 	if( b != 0 )
@@ -187,7 +184,7 @@ void DigiDoc::create( const QString &file )
 }
 
 void DigiDoc::dataChanged( const QStringList &cards, const QString &card,
-	const QSslCertificate &auth, const QSslCertificate &sign )
+	const QSslCertificate &sign )
 {
 	bool changed = false;
 	if( m_cards != cards )
@@ -199,7 +196,6 @@ void DigiDoc::dataChanged( const QStringList &cards, const QString &card,
 	{
 		changed = true;
 		m_card = card;
-		m_authCert = auth;
 		m_signCert = sign;
 	}
 	if( changed )
@@ -250,8 +246,8 @@ void DigiDoc::init()
 	catch( const Exception &e ) { setLastError( e ); return; }
 
 	poller = new Poller();
-	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)),
-		SLOT(dataChanged(QStringList,QString,QSslCertificate,QSslCertificate)) );
+	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
+		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
 	poller->start();
 }
 
@@ -374,6 +370,8 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	poller->unlock();
 	return result;
 }
+
+QSslCertificate DigiDoc::signCert() { return m_signCert; }
 
 bool DigiDoc::signMobile( const QString &fName )
 {

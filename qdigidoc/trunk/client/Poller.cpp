@@ -59,8 +59,7 @@ void Poller::run()
 				selectedCard.clear();
 			if( selectedCard.isEmpty() && !s->cards().isEmpty() )
 				selectedCard = s->cards().first();
-			Q_EMIT dataChanged( s->cards(), selectedCard,
-				s->authCert( selectedCard ), s->signCert( selectedCard ) );
+			Q_EMIT dataChanged( s->cards(), selectedCard, s->signCert( selectedCard ) );
 
 			delete s;
 			m.unlock();
@@ -93,12 +92,11 @@ QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
 	catch( const Exception & ) {}
 }
 
-QSslCertificate QEstEIDSigner::authCert( const QString &card ) const { return auth.value(card); }
 QStringList	QEstEIDSigner::cards() const
 {
-	if( auth.isEmpty() )
+	if( sign.isEmpty() )
 		return QStringList();
-	return auth.keys();
+	return sign.keys();
 }
 QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return sign.value(card); }
 
@@ -132,9 +130,7 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 			const QString card = QString::fromStdString( cert.token.serialNr );
 			if( selectedCard.isEmpty() )
 				selectedCard = card;
-			if( cert.label == std::string("Isikutuvastus") )
-				auth[card] = SslCertificate::fromX509( (Qt::HANDLE)cert.cert );
-			else if( cert.label == std::string("Allkirjastamine") )
+			if( cert.label == std::string("Allkirjastamine") )
 			{
 				sign[card] = SslCertificate::fromX509( (Qt::HANDLE)cert.cert );
 				if( selectedCard == card )

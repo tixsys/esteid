@@ -72,8 +72,6 @@ public:
 
 	QString activeCard() const;
 	void addFile( const QString &file );
-	QSslCertificate authCert();
-	QSslCertificate signCert();
 	void create( const QString &file );
 	void clear();
 	QList<digidoc::Document> documents();
@@ -94,6 +92,7 @@ public:
 		const QString &country,
 		const QString &role,
 		const QString &role2 );
+	QSslCertificate signCert();
 	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
 
@@ -103,7 +102,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
-		const QSslCertificate &auth, const QSslCertificate &sign );
+		const QSslCertificate &sign );
 	void selectCard( const QString &card );
 
 private:
@@ -111,7 +110,7 @@ private:
 	void setLastError( const QString &err );
 
 	digidoc::WDoc	*b;
-	QSslCertificate	m_authCert, m_signCert;
+	QSslCertificate	m_signCert;
 	QStringList		m_cards;
 	QString			m_card;
 	QString			m_fileName;
