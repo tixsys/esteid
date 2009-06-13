@@ -1,13 +1,14 @@
 include_directories( ${ICONV_INCLUDE_DIR} )
 include_directories( ${LIBDIGIDOC_INCLUDE_DIR} )
+include_directories( ${LIBP11_INCLUDE_DIR} )
+include_directories( ${LTDL_INCLUDE_DIR} )
 include_directories( ${MINIZIP_INCLUDE_DIR} )
 include_directories( ${OPENSSL_INCLUDE_DIR} )
 include_directories( ${OPENSSLCRYPTO_INCLUDE_DIR} )
-include_directories( ${ZLIB_INCLUDE_DIR} )
-include_directories( ${LIBP11_INCLUDE_DIR} )
 include_directories( ${XERCESC_INCLUDE_DIR} )
 include_directories( ${XMLSECURITYC_INCLUDE_DIR} )
 include_directories( ${XSD_INCLUDE_DIR} )
+include_directories( ${ZLIB_INCLUDE_DIR} )
 
 set(minizip_SRCS
     minizip/zip.c
@@ -85,20 +86,20 @@ if(APPLE)
 	include_directories(/usr/local/include/../include)
 	find_library(CARBON_LIBRARY Carbon)
 	find_library(COREFOUNDATION_LIBRARY CoreFoundation)
-	find_library(LTDL_LIBRARY ltdl)
-	mark_as_advanced(CARBON_LIBRARY COREFOUNDATION_LIBRARY LTDL_LIBRARY)
-	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY} ${LTDL_LIBRARY})
+	mark_as_advanced(CARBON_LIBRARY COREFOUNDATION_LIBRARY)
+	set(EXTRA_LIBS ${CARBON_LIBRARY} ${COREFOUNDATION_LIBRARY})
 endif(APPLE)
 
 add_library(digidocpp SHARED ${digidocpp_SRCS} ${minizip_SRCS})
 target_link_libraries(digidocpp
     ${ICONV_LIBRARIES}
-    ${OPENSSL_LIBRARIES}
-    ${OPENSSLCRYPTO_LIBRARIES}
-    ${ZLIB_LIBRARIES}
     ${LIBP11_LIBRARIES}
+    ${LTDL_LIBRARIES}
+    ${OPENSSLCRYPTO_LIBRARIES}
+    ${OPENSSL_LIBRARIES}
     ${XERCESC_LIBRARIES}
     ${XMLSECURITYC_LIBRARIES}
+    ${ZLIB_LIBRARIES}
     ${EXTRA_LIBS}
 )
 set_target_properties(digidocpp PROPERTIES
