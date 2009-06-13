@@ -25,7 +25,6 @@ typedef int (*sym_DataFile_new)( DataFile**, SignedDoc*, const char*, const char
 typedef int (*sym_ddocSaxReadSignedDocFromFile)( SignedDoc**, const char*, int, int );
 typedef X509* (*sym_ddocSigInfo_GetSignersCert)( const SignatureInfo * );
 typedef void (*sym_finalizeDigiDocLib)();
-typedef int (*sym_findCAForCertificate)(X509**, const X509*);
 typedef char* (*sym_getErrorString)( int );
 typedef void (*sym_initDigiDocLib)();
 typedef int (*sym_initConfigStore)( const char* );
@@ -39,8 +38,6 @@ typedef int (*sym_SignatureInfo_new)( SignatureInfo**, SignedDoc*, const char* )
 typedef int (*sym_SignedDoc_free)( SignedDoc* );
 typedef int (*sym_SignedDoc_new)( SignedDoc**, const char*, const char* );
 typedef int (*sym_verifySignatureAndNotary)( SignedDoc*, SignatureInfo *, const char* );
-typedef int (*sym_verifySignatureInfoCERT)( const SignedDoc*, const SignatureInfo*,
-	const void*, const char*, int, FilePath*, int );
 
 namespace digidoc
 {
@@ -94,7 +91,6 @@ public:
 	sym_ddocSaxReadSignedDocFromFile f_ddocSaxReadSignedDocFromFile;
 	sym_ddocSigInfo_GetSignersCert f_ddocSigInfo_GetSignersCert;
 	sym_finalizeDigiDocLib		f_finalizeDigiDocLib;
-	sym_findCAForCertificate	f_findCAForCertificate;
 	sym_getErrorString			f_getErrorString;
 	sym_initDigiDocLib			f_initDigiDocLib;
 	sym_initConfigStore			f_initConfigStore;
@@ -106,7 +102,6 @@ public:
 	sym_SignedDoc_free			f_SignedDoc_free;
 	sym_SignedDoc_new			f_SignedDoc_new;
 	sym_verifySignatureAndNotary f_verifySignatureAndNotary;
-	sym_verifySignatureInfoCERT	f_verifySignatureInfoCERT;
 };
 
 class DSignature: public Signature

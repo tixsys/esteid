@@ -56,7 +56,6 @@ DDocPrivate::DDocPrivate()
 ,	f_ddocSaxReadSignedDocFromFile(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
 ,	f_finalizeDigiDocLib(0)
-,	f_findCAForCertificate(0)
 ,	f_getErrorString(0)
 ,	f_initDigiDocLib(0)
 ,	f_initConfigStore(0)
@@ -68,7 +67,6 @@ DDocPrivate::DDocPrivate()
 ,	f_SignedDoc_free(0)
 ,	f_SignedDoc_new(0)
 ,	f_verifySignatureAndNotary(0)
-,	f_verifySignatureInfoCERT(0)
 {
 	if( !loadSymbols() )
 		return;
@@ -118,7 +116,6 @@ bool DDocPrivate::loadSymbols()
 		!(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) ||
 		!(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) ||
 		!(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) ||
-		!(f_findCAForCertificate = (sym_findCAForCertificate)lib.resolve("findCAForCertificate")) ||
 		!(f_getErrorString = (sym_getErrorString)lib.resolve("getErrorString")) ||
 		!(f_initDigiDocLib = (sym_initDigiDocLib)lib.resolve("initDigiDocLib")) ||
 		!(f_initConfigStore = (sym_initConfigStore)lib.resolve("initConfigStore")) ||
@@ -129,8 +126,7 @@ bool DDocPrivate::loadSymbols()
 		!(f_SignatureInfo_new = (sym_SignatureInfo_new)lib.resolve("SignatureInfo_new")) ||
 		!(f_SignedDoc_free = (sym_SignedDoc_free)lib.resolve("SignedDoc_free")) ||
 		!(f_SignedDoc_new = (sym_SignedDoc_new)lib.resolve("SignedDoc_new")) ||
-		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) ||
-		!(f_verifySignatureInfoCERT = (sym_verifySignatureInfoCERT)lib.resolve("verifySignatureInfoCERT")) )
+		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) )
 		return false;
 	else
 		return true;
@@ -180,13 +176,8 @@ std::string DSignature::getMediaType() const
 
 void DSignature::validateOffline() const throw(SignatureException)
 {
-	X509* CA = 0;
-	int err = m_doc->f_findCAForCertificate( &CA,
-		m_doc->f_ddocSigInfo_GetSignersCert( m_doc->doc->pSignatures[m_id] ) );
-	throwError( "Did not find signer CA cert", err, __LINE__ );
-
-	err = m_doc->f_verifySignatureInfoCERT( m_doc->doc, m_doc->doc->pSignatures[m_id],
-		CA, m_doc->filename.c_str(), 1, NULL, 0 );
+	int err = m_doc->f_verifySignatureAndNotary(
+		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
 	throwError( "Failed to validate signature", err, __LINE__ );
 }
 
@@ -194,12 +185,8 @@ OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(
 		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
-	switch( err )
-	{
-	case ERR_OK: return OCSP::GOOD;
-	case ERR_OCSP_CERT_REVOKED: return OCSP::REVOKED;
-	default: return OCSP::UNKNOWN;
-	}
+	throwError( "Failed to validate signature", err, __LINE__ );
+	return OCSP::GOOD;
 }
 void DSignature::sign(Signer* signer) throw(SignatureException, SignException) {}
 
