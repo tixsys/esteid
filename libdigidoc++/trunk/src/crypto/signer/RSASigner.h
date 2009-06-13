@@ -20,7 +20,6 @@ namespace digidoc
           virtual ~RSASigner();
           X509* getCert() throw(SignException);
           void sign(const Digest& digest, Signature& signature) throw(SignException);
-          std::string signaturePath() {}
 
       private:
           X509* cert;

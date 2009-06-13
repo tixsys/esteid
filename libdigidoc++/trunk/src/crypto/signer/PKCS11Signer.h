@@ -35,7 +35,6 @@ namespace digidoc
           virtual ~PKCS11Signer();
           X509* getCert() throw(SignException);
           void sign(const Digest& digest, Signature& signature) throw(SignException);
-          std::string signaturePath() {}
           void unloadDriver();
 
       protected:
