@@ -18,7 +18,7 @@ digidoc::OCSP::OCSP(const std::string& url, const std::string &phost,const std::
  , path(NULL)
  , proxyHost(const_cast<char*>(phost.c_str()))
  , proxyPort(const_cast<char*>(pport.c_str()))
- , ssl(true)
+ , ssl(false)
  , skew(50)
  , maxAge(10)
  , connection(NULL)
