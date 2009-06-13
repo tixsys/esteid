@@ -21,44 +21,14 @@
  */
 
 #include "QMobileSigner.h"
-#include "DigiDoc.h"
-
-#include <libdigidoc++/WDoc.h>
-
-#include <QDebug>
 
 using namespace digidoc;
 
-QMobileSigner::QMobileSigner( const digidoc::WDoc &w ) throw(SignException)
-:	wdoc( w )
-,	signature( 0 )
-{
-	try
-	{
-		unsigned int count = wdoc.signatureCount();
-		for( unsigned int i = 0; i < count; ++i )
-			signature = wdoc.getSignature( i );
-	}
-	catch( const Exception &e ) {
-		qDebug() << e.getMsg().data();
-	}
-	if ( signature )
-	{
-		setSignatureProductionPlace( signature->getProductionPlace() );
-		setSignerRole( signature->getSignerRole() );
-	}
-}
+QMobileSigner::QMobileSigner( const QString &f ) throw(SignException)
+:	fName( f )
+{ }
 
-X509* QMobileSigner::getCert() throw(SignException)
+std::string QMobileSigner::signaturePath()
 {
-	if ( !signature )
-		return NULL;
-	return signature->getSigningCertificate().getX509();
-}
-
-void QMobileSigner::sign( const Digest &, Signature &s ) throw(SignException)
-{
-	std::vector<unsigned char> sign = signature->getSignatureValue();
-	memcpy(s.signature, &sign[0], sign.size());
-	s.length = sign.size();
+	return fName.toStdString();
 }

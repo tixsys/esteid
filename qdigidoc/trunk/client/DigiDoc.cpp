@@ -24,6 +24,7 @@
 
 #include "common/SslCertificate.h"
 
+#include "QMobileSigner.h"
 #include "Poller.h"
 
 #include <libdigidoc++/BDoc.h>
@@ -376,7 +377,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	return result;
 }
 
-bool DigiDoc::signMobile( Signer *s )
+bool DigiDoc::signMobile( const QString &fName )
 {
 	if( isNull() )
 	{
@@ -392,7 +393,7 @@ bool DigiDoc::signMobile( Signer *s )
 	bool result = false;
 	try
 	{
-		b->sign( s, Signature::MOBILE );
+		b->sign( new digidoc::QMobileSigner( fName ), Signature::MOBILE );
 		result = true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }

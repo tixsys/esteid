@@ -23,7 +23,8 @@
 #pragma once
 
 #include <libdigidoc++/crypto/signer/Signer.h>
-#include <libdigidoc++/WDoc.h>
+
+#include <QString>
 
 namespace digidoc
 {
@@ -31,14 +32,14 @@ namespace digidoc
 class QMobileSigner : public Signer
 {
 public:
-	QMobileSigner( const digidoc::WDoc &) throw(SignException);
+	QMobileSigner( const QString &fName ) throw(SignException);
 
-	X509* getCert() throw(SignException);
-	void sign(const Digest& digest, Signature& signature) throw(SignException);
+	X509* getCert() throw(SignException){}
+	void sign(const Digest& digest, Signature& signature) throw(SignException){}
+	std::string signaturePath();
 
 private:
-	digidoc::WDoc wdoc;
-	const digidoc::Signature *signature;
+	QString fName;
 };
 
 }

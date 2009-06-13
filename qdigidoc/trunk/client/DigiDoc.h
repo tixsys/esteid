@@ -94,7 +94,7 @@ public:
 		const QString &country,
 		const QString &role,
 		const QString &role2 );
-	bool signMobile( digidoc::Signer *s );
+	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
 
 Q_SIGNALS:

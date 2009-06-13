@@ -30,8 +30,6 @@
 
 #include "ui_MobileDialog.h"
 
-#include "QMobileSigner.h"
-
 class DigiDoc;
 
 class MobileDialog : public QDialog, private Ui::MobileDialog
@@ -43,52 +41,32 @@ public:
 	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 							const QString &country, const QString &role, const QString &role2 );
 	void sign( const QByteArray &ssid, const QByteArray &cell );
-	digidoc::QMobileSigner* signer();
+	QString fName;
 
 private Q_SLOTS:
     void sslErrors(const QList<QSslError> &);
     void httpRequestFinished( int id, bool error );
 
     void startSessionResult( const QDomElement &element );
-    void createSignedDocResult( const QDomElement &element );
-    void addFilesResult( const QDomElement &element );
-    void startSignResult( const QDomElement &element );
-    void getSignStatus();
     void getSignStatusResult( const QDomElement &element );
-    void getSignedDocResult( const QDomElement &element );
+	void getSignStatus();
 
 private:
-    enum Pages {
-            Start,
-            Challenge,
-    };
     enum MobileAction {
-        StartSession,
-        CreateSignedDoc,
-        AddDataFile,
-        StartSign,
-        SignStatus,
-        GetSignedDoc,
-        CloseSession
+		MobileCreateSignature,
+		GetMobileCreateSignatureStatus
     };
 
     DigiDoc *m_doc;
     QHttp *m_http;
     QTimer *m_timer;
 	QString signature;
-	digidoc::QMobileSigner *m_signer;
-	QByteArray ssid, cell;
 
-    int addedFiles;
     int sessionCode;
     QHash< int, QByteArray > m_callBackList;
 
     void startSession();
-    void createSignedDoc();
-    void addFiles();
-    void startSign();
-    void getSignedDoc();
-	void closeSession();
 
+	QByteArray getFiles() const;
     QByteArray insertBody( MobileAction action, const QByteArray &body ) const;
 };

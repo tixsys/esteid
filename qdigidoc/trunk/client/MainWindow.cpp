@@ -267,6 +267,7 @@ void MainWindow::buttonClicked( int button )
 		}
 		else
 		{
+
 			MobileDialog *m = new MobileDialog( doc, this );
 			m->setSignatureInfo( signCityInput->text(),
 				signStateInput->text(), signZipInput->text(),
@@ -274,12 +275,10 @@ void MainWindow::buttonClicked( int button )
 				signResolutionInput->text() );
 			m->sign( infoMobileCode->text().toLatin1(), infoMobileCell->text().toLatin1() );
 			m->exec();
-			if ( m->signer() && doc->signMobile( m->signer() ) )
+			if ( !m->fName.isEmpty() && doc->signMobile( m->fName ) )
 			{
 				doc->save();
-			}
-			else
-			{
+			} else {
 				m->deleteLater();
 				break;
 			}
