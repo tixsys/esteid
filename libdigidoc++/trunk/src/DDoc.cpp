@@ -142,7 +142,8 @@ DSignature::DSignature( int id, DDocPrivate *doc )
 {
 	SignatureInfo *sig = doc->doc->pSignatures[id];
 	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
-	setSigningCertificate( cert );
+	try { setSigningCertificate( cert ); }
+	catch( const Exception &e ) {}
 
 	Signer::Signature s;
 	s.signature = (unsigned char*)sig->pSigValue->mbufSignatureValue.pMem;
