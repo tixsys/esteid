@@ -1,14 +1,16 @@
-include_directories( ${ICONV_INCLUDE_DIR} )
-include_directories( ${LIBDIGIDOC_INCLUDE_DIR} )
-include_directories( ${LIBP11_INCLUDE_DIR} )
-include_directories( ${LTDL_INCLUDE_DIR} )
-include_directories( ${MINIZIP_INCLUDE_DIR} )
-include_directories( ${OPENSSL_INCLUDE_DIR} )
-include_directories( ${OPENSSLCRYPTO_INCLUDE_DIR} )
-include_directories( ${XERCESC_INCLUDE_DIR} )
-include_directories( ${XMLSECURITYC_INCLUDE_DIR} )
-include_directories( ${XSD_INCLUDE_DIR} )
-include_directories( ${ZLIB_INCLUDE_DIR} )
+include_directories(
+    ${ICONV_INCLUDE_DIR}
+    ${LIBDIGIDOC_INCLUDE_DIR}
+    ${LIBDL_INCLUDE_DIR}
+    ${LIBP11_INCLUDE_DIR}
+    ${MINIZIP_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
+    ${OPENSSLCRYPTO_INCLUDE_DIR}
+    ${XERCESC_INCLUDE_DIR}
+    ${XMLSECURITYC_INCLUDE_DIR}
+    ${XSD_INCLUDE_DIR}
+    ${ZLIB_INCLUDE_DIR}
+)
 
 set(minizip_SRCS
     minizip/zip.c
@@ -94,7 +96,7 @@ add_library(digidocpp SHARED ${digidocpp_SRCS} ${minizip_SRCS})
 target_link_libraries(digidocpp
     ${ICONV_LIBRARIES}
     ${LIBP11_LIBRARIES}
-    ${LTDL_LIBRARIES}
+    ${LIBDL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${XERCESC_LIBRARIES}

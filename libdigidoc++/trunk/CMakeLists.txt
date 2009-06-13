@@ -7,13 +7,16 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(Iconv REQUIRED)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)
-find_package(LTDL REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(XercesC REQUIRED)
 find_package(XmlSecurityC REQUIRED)
 find_package(XSD REQUIRED)
 find_package(ZLIB REQUIRED)
+
+if(UNIX)
+	find_package(LibDL REQUIRED)
+endif(UNIX)
 
 set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
 
