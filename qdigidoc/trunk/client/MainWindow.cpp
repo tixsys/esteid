@@ -634,7 +634,7 @@ void MainWindow::showCardStatus()
 		if( doc->signCert().isValid()  )
 		{
 			s << "<font color=\"green\">" << tr("valid") << "</font>";
-			if( willExpire || true)
+			if( willExpire )
 				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
 		}
 		else

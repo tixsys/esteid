@@ -290,10 +290,10 @@ padding: 5px;
       <item>
        <layout class="QHBoxLayout" name="infoLayout">
         <property name="topMargin">
-         <number>20</number>
+         <number>10</number>
         </property>
         <property name="bottomMargin">
-         <number>20</number>
+         <number>10</number>
         </property>
         <item>
          <spacer name="infoSpacer">
@@ -313,13 +313,13 @@ padding: 5px;
           <property name="minimumSize">
            <size>
             <width>387</width>
-            <height>95</height>
+            <height>115</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>387</width>
-            <height>95</height>
+            <height>115</height>
            </size>
           </property>
           <layout class="QGridLayout" name="infoFrameLayout">
