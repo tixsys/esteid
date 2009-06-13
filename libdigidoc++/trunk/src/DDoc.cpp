@@ -56,6 +56,7 @@ DDocPrivate::DDocPrivate()
 ,	f_ddocSaxReadSignedDocFromFile(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
 ,	f_finalizeDigiDocLib(0)
+,	f_findCAForCertificate(0)
 ,	f_getErrorString(0)
 ,	f_initDigiDocLib(0)
 ,	f_initConfigStore(0)
@@ -67,6 +68,7 @@ DDocPrivate::DDocPrivate()
 ,	f_SignedDoc_free(0)
 ,	f_SignedDoc_new(0)
 ,	f_verifySignatureAndNotary(0)
+,	f_verifySignatureInfoCERT(0)
 {
 	if( !loadSymbols() )
 		return;
@@ -116,6 +118,7 @@ bool DDocPrivate::loadSymbols()
 		!(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) ||
 		!(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) ||
 		!(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) ||
+		!(f_findCAForCertificate = (sym_findCAForCertificate)lib.resolve("findCAForCertificate")) ||
 		!(f_getErrorString = (sym_getErrorString)lib.resolve("getErrorString")) ||
 		!(f_initDigiDocLib = (sym_initDigiDocLib)lib.resolve("initDigiDocLib")) ||
 		!(f_initConfigStore = (sym_initConfigStore)lib.resolve("initConfigStore")) ||
@@ -126,7 +129,8 @@ bool DDocPrivate::loadSymbols()
 		!(f_SignatureInfo_new = (sym_SignatureInfo_new)lib.resolve("SignatureInfo_new")) ||
 		!(f_SignedDoc_free = (sym_SignedDoc_free)lib.resolve("SignedDoc_free")) ||
 		!(f_SignedDoc_new = (sym_SignedDoc_new)lib.resolve("SignedDoc_new")) ||
-		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) )
+		!(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary")) ||
+		!(f_verifySignatureInfoCERT = (sym_verifySignatureInfoCERT)lib.resolve("verifySignatureInfoCERT")) )
 		return false;
 	else
 		return true;
@@ -175,7 +179,14 @@ std::string DSignature::getMediaType() const
 
 void DSignature::validateOffline() const throw(SignatureException)
 {
-//	int rc = verifySigCert( sig );
+	X509* CA = 0;
+	int err = m_doc->f_findCAForCertificate( &CA,
+		m_doc->f_ddocSigInfo_GetSignersCert( m_doc->doc->pSignatures[m_id] ) );
+	throwError( "Did not find signer CA cert", err, __LINE__ );
+
+	err = m_doc->f_verifySignatureInfoCERT( m_doc->doc, m_doc->doc->pSignatures[m_id],
+		CA, m_doc->filename.c_str(), 1, NULL, 0 );
+	throwError( "Failed to validate signature", err, __LINE__ );
 }
 
 OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
@@ -190,6 +201,19 @@ OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
 	}
 }
 void DSignature::sign(Signer* signer) throw(SignatureException, SignException) {}
+
+void DSignature::throwError( std::string msg, int err, int line ) const throw(SignatureException)
+{
+	if( err == ERR_OK )
+		return;
+
+	std::ostringstream s;
+	s << msg;
+	s << "; error: " << err;
+	if( m_doc->f_getErrorString )
+		s << "; message: " << m_doc->f_getErrorString( err );
+	throw SignatureException( __FILE__, line, s.str() );
+}
 
 
 
@@ -259,15 +283,15 @@ unsigned int DDoc::documentCount() const
 Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 {
 	if( !d->isLoaded() )
-		throw BDocException( __FILE__, __LINE__, "DDoc library not loaded" );
+		throwError( "DDoc library not loaded", __LINE__ );
 	if( !d->doc )
-		throw BDocException( __FILE__, __LINE__, "Document not open" );
+		throwError( "Document not open", __LINE__ );
 	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
 		s << d->doc->nDataFiles << " documents in container.";
-		throw BDocException( __FILE__, __LINE__, s.str() );
+		throwError( s.str(), __LINE__ );
 	}
 
 	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
@@ -276,13 +300,13 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
 {
 	if( !d->doc )
-		throw BDocException( __FILE__, __LINE__, "Document not open" );
+		throwError( "Document not open", __LINE__ );
 	if( id >= (unsigned int)d->doc->nSignatures || !d->doc->pSignatures[id] )
 	{
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
 		s << d->doc->nDataFiles << " signatures in container.";
-		throw BDocException( __FILE__, __LINE__, s.str() );
+		throwError( s.str(), __LINE__ );
 	}
 
 	return d->signatures[id];
@@ -406,15 +430,15 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 unsigned int DDoc::signatureCount() const
 { return !d->doc || d->doc->nSignatures < 0 ? 0 : d->doc->nSignatures; }
 
-void DDoc::throwError( const std::string &msg, int line ) throw(BDocException)
+void DDoc::throwError( const std::string &msg, int line ) const throw(BDocException)
 { throw BDocException( __FILE__, line, msg ); }
 
-void DDoc::throwError( int err, const std::string &msg, int line ) throw(BDocException)
+void DDoc::throwError( int err, const std::string &msg, int line ) const throw(BDocException)
 {
 	if( err != ERR_OK )
 	{
 		std::ostringstream s;
-		s << msg << " (error: " << err;
+		s << msg << "\n (error: " << err;
 		if( d->f_getErrorString )
 			s << "; message: " << d->f_getErrorString( err );
 		s << ")";
