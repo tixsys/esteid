@@ -110,12 +110,9 @@ install(TARGETS digidocpp DESTINATION lib)
 
 add_executable(digidoc-demo main_demo.cpp)
 target_link_libraries(digidoc-demo digidocpp)
-install(TARGETS digidoc-demo DESTINATION bin)
 
 add_executable(digidoc-tool bdoc_ref.cpp)
 target_link_libraries(digidoc-tool digidocpp)
-
-install(TARGETS digidoc-tool DESTINATION bin)
 
 install( FILES
     ADoc.h
