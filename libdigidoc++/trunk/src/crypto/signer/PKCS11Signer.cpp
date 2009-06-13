@@ -107,6 +107,7 @@ void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignExce
     if(PKCS11_CTX_load(d->ctx, driver.c_str()) != 0)
     {
         PKCS11_CTX_free(d->ctx);
+        d->ctx = NULL;
         THROW_SIGNEXCEPTION("Failed to load driver '%s' for PKCS #11 engine: %s",
                 driver.c_str(), ERR_reason_error_string(ERR_get_error()));
     }
