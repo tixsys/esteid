@@ -119,6 +119,18 @@ void Settings::saveSignatureInfo(
 	s.endGroup();
 }
 
+void Settings::saveMobileInfo( const QString &code, const QString &number )
+{
+	SettingsValues s;
+	s.beginGroup( "Main" );
+	if( s.value( "Overwrite", "false" ).toBool() )
+	{
+		s.setValue( "MobileCode", code );
+		s.setValue( "MobileNumber", number );
+	}
+	s.endGroup();
+}
+
 SettingsValues::SettingsValues( QObject *parent )
 :	QSettings( QSettings::NativeFormat, QSettings::UserScope, ORG, APP, parent )
 {}

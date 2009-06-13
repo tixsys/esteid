@@ -41,6 +41,9 @@ public:
 		const QString &country,
 		const QString &zip,
 		bool force = false );
+	static void saveMobileInfo(
+		const QString &code,
+		const QString &number );
 
 private Q_SLOTS:
 	void on_selectDefaultDir_clicked();

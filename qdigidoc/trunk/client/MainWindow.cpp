@@ -267,7 +267,6 @@ void MainWindow::buttonClicked( int button )
 		}
 		else
 		{
-
 			MobileDialog *m = new MobileDialog( doc, this );
 			m->setSignatureInfo( signCityInput->text(),
 				signStateInput->text(), signZipInput->text(),
@@ -288,6 +287,7 @@ void MainWindow::buttonClicked( int button )
 			signResolutionInput->text(), signCityInput->text(),
 			signStateInput->text(), signZipInput->text(),
 			signCountryInput->text() );
+		Settings::saveMobileInfo( infoMobileCode->text(), infoMobileCell->text() );
 		setCurrentPage( View );
 		break;
 	}
@@ -406,6 +406,14 @@ void MainWindow::on_infoSignMobile_toggled( bool checked )
 	if( checked )
 	{
 		infoLogo->setPixmap( QPixmap() );
+		if ( infoMobileCell->text().isEmpty() || infoMobileCode->text().isEmpty() )
+		{
+			SettingsValues s;
+			s.beginGroup( "Main" );
+			infoMobileCell->setText( s.value( "MobileNumber" ).toString() );
+			infoMobileCode->setText( s.value( "MobileCode" ).toString() );
+			s.endGroup();
+		}
 		enableSign();
 	}
 	else
