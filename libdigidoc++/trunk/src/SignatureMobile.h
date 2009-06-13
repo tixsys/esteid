@@ -1,11 +1,11 @@
 #pragma once
 
-#include "SignatureBES.h"
+#include "SignatureTM.h"
 
 namespace digidoc
 {
 
-class SignatureMobile: public digidoc::SignatureBES
+class SignatureMobile: public digidoc::SignatureTM
 {
 public:
 	SignatureMobile( const std::string &path, BDoc& _bdoc );
