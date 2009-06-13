@@ -642,7 +642,13 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
     }
 	else if(profile == Signature::MOBILE)
 	{
-		signature = new SignatureMobile(*this);
+		try {
+			signature = new SignatureMobile( signer->signaturePath(), *this);
+		} catch(const Exception& e) {
+			THROW_BDOCEXCEPTION_CAUSE(e, "MobileSignature");
+		}
+		addSignature( signature );
+		return;
 	}
 	else
     {

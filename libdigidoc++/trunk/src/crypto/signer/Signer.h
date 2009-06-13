@@ -64,8 +64,9 @@ namespace digidoc
           void setSignerRole(const SignerRole& signerRole);
           SignerRole getSignerRole() const;
           SignerRole getSignerRoleUtf8() const;
+          virtual std::string signaturePath() = 0;
 
-      protected:
+	  protected:
           SignatureProductionPlace signatureProductionPlace;
           SignerRole signerRole;
 

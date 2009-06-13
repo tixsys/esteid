@@ -4,22 +4,12 @@
 
 using namespace digidoc;
 
-SignatureMobile::SignatureMobile(BDoc& _bdoc)
-: SignatureBES(_bdoc)
+SignatureMobile::SignatureMobile(const std::string &p, BDoc& _bdoc)
+: SignatureBES(p,_bdoc)
 {}
 
 SignatureMobile::~SignatureMobile()
 {}
-
-void SignatureMobile::sign(Signer* signer) throw(SignatureException, SignException)
-{
-	DEBUG("SignatureMobile::sign()");
-
-	// Sign with BES profile.
-	SignatureBES::sign(signer);
-	DEBUG("BES signature successful.");
-
-}
 
 OCSP::CertStatus SignatureMobile::validateOnline() const throw(SignatureException)
 {
