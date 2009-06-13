@@ -603,11 +603,11 @@ padding: 5px;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px 'Arial,Liberation Sans';&quot;&gt;
-Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;br /&gt;&lt;br /&gt;
-Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkirja andmiseks on vajalik interneti ühendus.
-&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+Digital signing.&lt;br /&gt;&lt;br /&gt;
+Digital signing is equal to physical signing. to sing a document you need an ID-card with a valid and usable signing certificate.&lt;br /&gt;&lt;br /&gt;
+Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
+Also and active internet connection is needed.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>

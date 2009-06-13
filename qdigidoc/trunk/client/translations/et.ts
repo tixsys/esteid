@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
+        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
@@ -21,23 +21,23 @@
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Selle sertifikaadi otstarve on:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kellele väljastatud:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>kuni</translation>
     </message>
     <message>
         <source>Version</source>
@@ -49,19 +49,19 @@
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Signatuuri algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation type="unfinished"></translation>
+        <translation>Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -69,7 +69,7 @@
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -77,7 +77,7 @@
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Üldine</translation>
     </message>
     <message>
         <source>Details</source>
@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>Field</source>
-        <translation type="unfinished"></translation>
+        <translation>Väli</translation>
     </message>
     <message>
         <source>Value</source>
@@ -97,11 +97,23 @@
     </message>
     <message>
         <source>Certification Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifitseermisahel</translation>
     </message>
     <message>
         <source>Certificate status:</source>
         <translation>Sertifikaadi staatus:</translation>
+    </message>
+    <message>
+        <source>Certificates (*.cer *.crt *.pem)</source>
+        <translation>Sertifikaadid (*.cer *.crt *.pem)</translation>
+    </message>
+    <message>
+        <source>Enhanched key usage</source>
+        <translation>Täiendatud võtme kasutus</translation>
+    </message>
+    <message>
+        <source>Key usage</source>
+        <translation>Võtme kastus</translation>
     </message>
 </context>
 <context>
@@ -159,7 +171,7 @@
     </message>
     <message>
         <source>Add file</source>
-        <translation>Lisa fail</translation>
+        <translation type="obsolete">Lisa fail</translation>
     </message>
     <message>
         <source>Role</source>
@@ -171,7 +183,7 @@
     </message>
     <message>
         <source>Location</source>
-        <translation>Asukoht</translation>
+        <translation type="obsolete">Asukoht</translation>
     </message>
     <message>
         <source>City</source>
@@ -256,7 +268,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Are you sure you want remove files %1</source>
-        <translation>Oled sa kindel, et tahad eemaldada faile %1?</translation>
+        <translation type="obsolete">Oled sa kindel, et tahad eemaldada faile %1?</translation>
     </message>
     <message>
         <source>Failed to send email</source>
@@ -300,7 +312,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Container contains file with same name, ovewrite?</source>
-        <translation>Ümbrikus on samanimeline fail, kirjutan üle?</translation>
+        <translation type="obsolete">Ümbrikus on samanimeline fail, kirjutan üle?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -340,11 +352,11 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Auth certificate is</source>
-        <translation>Isikutuvastamise sertifikaat on</translation>
+        <translation type="obsolete">Isikutuvastamise sertifikaat on</translation>
     </message>
     <message>
         <source>Select folder where file will be stored</source>
-        <translation>Vali kataloog kuhu failid salvestatakse</translation>
+        <translation type="obsolete">Vali kataloog kuhu failid salvestatakse</translation>
     </message>
     <message>
         <source>Remove signature %1 %2 %3</source>
@@ -352,19 +364,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Crypt files for secure transfer</source>
-        <translation>Krüpteeri failid turvaliseks edastamiseks</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
-&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;br /&gt;&lt;br /&gt;
-Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkirja andmiseks on vajalik interneti ühendus.
-&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Krüpteeri failid turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Use Mobile ID</source>
@@ -376,7 +376,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Remove selected files</source>
-        <translation>Eemalda valitud</translation>
+        <translation type="obsolete">Eemalda valitud</translation>
     </message>
     <message>
         <source>This container is </source>
@@ -416,7 +416,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Your certificates are expired</source>
-        <translation>Sertifikaadid on aegunud</translation>
+        <translation type="obsolete">Sertifikaadid on aegunud</translation>
     </message>
     <message>
         <source>Your certificates will be expire</source>
@@ -426,19 +426,64 @@ p, li { white-space: pre-wrap; }
         <source>Run ID-Card utility</source>
         <translation>Käivita ID-kaardi haldusvahend</translation>
     </message>
+    <message>
+        <source>File already in container</source>
+        <translation>Fail on juba konteineris</translation>
+    </message>
+    <message>
+        <source>%1&lt;br /&gt;already in container, ovewrite?</source>
+        <translation>%1&lt;br /&gt;on juba ümbrikus. Kas kirjutan üle?</translation>
+    </message>
+    <message>
+        <source>Loading data</source>
+        <translation>Loen andmeid</translation>
+    </message>
+    <message>
+        <source>Mobile number:</source>
+        <translation>Telefoni number:</translation>
+    </message>
+    <message>
+        <source>Personal code:</source>
+        <translation>Isikukood:</translation>
+    </message>
+    <message>
+        <source>Encrypt files for secure transfer</source>
+        <translation>Krüpteeri failid turvaliseks edastamiseks</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+Digital signing.&lt;br /&gt;&lt;br /&gt;
+Digital signing is equal to physical signing. to sing a document you need an ID-card with a valid and usable signing certificate.&lt;br /&gt;&lt;br /&gt;
+Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
+Also and active internet connection is needed.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;br /&gt;&lt;br /&gt;
+Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkirja andmiseks on vajalik interneti ühendus.
+&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;addFile&quot;&gt;Lisa fail&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>NB: Vigane allkiri</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
     <message>
         <source>Mobiiliga allkirjastamine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allkirjastaja telefoninumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allkirjastaja isikukood</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -451,11 +496,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished">Edasi</translation>
+        <translation type="obsolete">Edasi</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Katkesta</translation>
+        <translation>Katkesta</translation>
     </message>
 </context>
 <context>
@@ -484,6 +529,42 @@ p, li { white-space: pre-wrap; }
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
     </message>
+    <message>
+        <source>Digital signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Non repudiation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key encipherment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data encipherment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key agreement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key certificate sign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CRL sign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encipher only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decipher only</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -509,7 +590,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Location</source>
-        <translation>Asukoht</translation>
+        <translation type="obsolete">Asukoht</translation>
     </message>
     <message>
         <source>City</source>

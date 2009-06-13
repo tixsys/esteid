@@ -490,20 +490,10 @@ Error code: %1</source>
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krÃ¼ptimine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krÃ¼ptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja vÃµi saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krÃ¼ptimine ei ole mÃµeldud andmete pikaajaliseleturvalisele sÃ¤ilitamisele jm Ã¼lesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krÃ¼ptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krÃ¼ptitakse sertifikaadis sisalduva avalikuvÃµtmega. KrÃ¼ptimine on Ã¼hesuunaline, de-krÃ¼ptimiseks on vaja vastavasertifikaadi privaatvÃµtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -552,6 +542,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Size</source>
         <translation type="obsolete">Размер</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+Document encryption.&lt;br /&gt;&lt;br /&gt;
+Document encryption is for safe data transfer over unsecure media, so that only scpecific reciever(s) can open it.&lt;br /&gt;&lt;br /&gt;
+Encryption with ID-card is not ment for long and secure data storage, it is only ment for transfering.&lt;br /&gt;&lt;br /&gt;
+For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate. Encryption is one-way only, for decryption private key is needed, that is only on reciever&apos;s ID-card.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
