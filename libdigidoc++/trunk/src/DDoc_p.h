@@ -12,13 +12,13 @@
 #endif
 
 typedef int (*sym_addAllDocInfos)( SignedDoc*, SignatureInfo* );
-typedef int (*sym_addConfigItem)(ConfigurationStore*, const char*, const char*, int, int );
 typedef int (*sym_addSignerRole)( SignatureInfo*, int, const char*, int, int );
 typedef int (*sym_calculateDataFileSizeAndDigest)( SignedDoc*, const char*, const char*, int );
 typedef int (*sym_calculateSignatureWithEstID)( SignedDoc*, SignatureInfo*, int, const char* );
 typedef void (*sym_cleanupConfigStore)( ConfigurationStore* );
 typedef int (*sym_convertStringToTimestamp)( SignedDoc*, const char*, Timestamp* );
 typedef int (*sym_ConfigItem_lookup_int)( const char *, int );
+typedef int (*sym_createOrReplacePrivateConfigItem)(ConfigurationStore*, const char*, const char* );
 typedef int (*sym_createSignedDoc)( SignedDoc*, const char*, const char* );
 typedef int (*sym_DataFile_delete)( SignedDoc*, const char* );
 typedef int (*sym_DataFile_new)( DataFile**, SignedDoc*, const char*, const char*,
@@ -80,13 +80,13 @@ public:
 	std::vector<DSignature*> signatures;
 
 	sym_addAllDocInfos			f_addAllDocInfos;
-	sym_addConfigItem			f_addConfigItem;
 	sym_addSignerRole			f_addSignerRole;
 	sym_calculateDataFileSizeAndDigest f_calculateDataFileSizeAndDigest;
 	sym_calculateSignatureWithEstID f_calculateSignatureWithEstID;
 	sym_cleanupConfigStore		f_cleanupConfigStore;
 	sym_ConfigItem_lookup_int	f_ConfigItem_lookup_int;
 	sym_convertStringToTimestamp f_convertStringToTimestamp;
+	sym_createOrReplacePrivateConfigItem f_createOrReplacePrivateConfigItem;
 	sym_createSignedDoc			f_createSignedDoc;
 	sym_DataFile_delete			f_DataFile_delete;
 	sym_DataFile_new			f_DataFile_new;

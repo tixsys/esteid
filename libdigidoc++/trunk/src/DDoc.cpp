@@ -45,13 +45,13 @@ DDocPrivate::DDocPrivate()
 :	doc(0)
 ,	ready(false)
 ,	f_addAllDocInfos(0)
-,	f_addConfigItem(0)
 ,	f_addSignerRole(0)
 ,	f_calculateDataFileSizeAndDigest(0)
 ,	f_calculateSignatureWithEstID(0)
 ,	f_cleanupConfigStore(0)
 ,	f_ConfigItem_lookup_int(0)
 ,	f_convertStringToTimestamp(0)
+,	f_createOrReplacePrivateConfigItem(0)
 ,	f_createSignedDoc(0)
 ,	f_DataFile_delete(0)
 ,	f_DataFile_new(0)
@@ -75,15 +75,6 @@ DDocPrivate::DDocPrivate()
 
 	f_initDigiDocLib();
 	f_initConfigStore( NULL );
-
-	std::string host = Conf::getInstance()->getProxyHost();
-	std::string port = Conf::getInstance()->getProxyPort();
-	if( !host.empty() )
-	{
-		f_addConfigItem( NULL, "USE_PROXY", "1", ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
-		f_addConfigItem( NULL, "DIGIDOC_PROXY_HOST", host.c_str(), ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
-		f_addConfigItem( NULL, "DIGIDOC_PROXY_PORT", port.c_str(), ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
-	}
 
 	ready = true;
 }
@@ -116,13 +107,13 @@ void DDocPrivate::loadSignatures()
 bool DDocPrivate::loadSymbols()
 {
 	if( !(f_addAllDocInfos = (sym_addAllDocInfos)lib.resolve("addAllDocInfos")) ||
-		!(f_addConfigItem = (sym_addConfigItem)lib.resolve("addConfigItem")) ||
 		!(f_addSignerRole = (sym_addSignerRole)lib.resolve("addSignerRole")) ||
 		!(f_calculateDataFileSizeAndDigest = (sym_calculateDataFileSizeAndDigest)lib.resolve("calculateDataFileSizeAndDigest")) ||
 		!(f_calculateSignatureWithEstID = (sym_calculateSignatureWithEstID)lib.resolve("calculateSignatureWithEstID")) ||
 		!(f_cleanupConfigStore = (sym_cleanupConfigStore)lib.resolve("cleanupConfigStore")) ||
 		!(f_ConfigItem_lookup_int = (sym_ConfigItem_lookup_int)lib.resolve("ConfigItem_lookup_int")) ||
 		!(f_convertStringToTimestamp = (sym_convertStringToTimestamp)lib.resolve("convertStringToTimestamp")) ||
+		!(f_createOrReplacePrivateConfigItem = (sym_createOrReplacePrivateConfigItem)lib.resolve("createOrReplacePrivateConfigItem")) ||
 		!(f_createSignedDoc = (sym_createSignedDoc)lib.resolve("createSignedDoc")) ||
 		!(f_DataFile_delete = (sym_DataFile_delete)lib.resolve("DataFile_delete")) ||
 		!(f_DataFile_new = (sym_DataFile_new)lib.resolve("DataFile_new")) ||
@@ -412,8 +403,8 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	{
 		PKCS11Signer::PKCS11Cert c;
 		c.cert = pkcs11->getCert();
-		pkcs11->unloadDriver();
 		pin = pkcs11->getPin( c );
+		pkcs11->unloadDriver();
 	}
 	err = d->f_calculateSignatureWithEstID( d->doc, info,
 		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
@@ -422,6 +413,17 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	if( err != ERR_OK )
 		d->f_SignatureInfo_delete( d->doc, info->szId );
 	throwError( err, "Failed to sign document", __LINE__ );
+
+	std::string host = Conf::getInstance()->getProxyHost();
+	std::string port = Conf::getInstance()->getProxyPort();
+	if( !host.empty() )
+	{
+		d->f_createOrReplacePrivateConfigItem( NULL, "USE_PROXY", "true" );
+		d->f_createOrReplacePrivateConfigItem( NULL, "DIGIDOC_PROXY_HOST", host.c_str() );
+		d->f_createOrReplacePrivateConfigItem( NULL, "DIGIDOC_PROXY_PORT", port.c_str() );
+	}
+	else
+		d->f_createOrReplacePrivateConfigItem( NULL, "USE_PROXY", "false" );
 
 	err = d->f_notarizeSignature( d->doc, info );
 	if( err != ERR_OK )
