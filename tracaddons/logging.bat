@@ -1,1 +1,1 @@
-msiexec /i %1 /lvx "%~1.log"
+msiexec /i %1 /l*vx "%~1.log"
