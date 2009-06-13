@@ -282,7 +282,7 @@ Function StatusBarCtrl (strMessage As String)
 	REM The original status bar will no longer be visible.
 	REM The value of 100 is an arbitrary value for use as a
 	REM progress bar if I choose to do so.
-	oBar.start(strMessage, 400)
+	oBar.start(strMessage, 100)
 	
 	REM Pause the macro so that I can see the text in the lower
 	REM left corner.

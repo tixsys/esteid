@@ -1,5 +1,7 @@
 //================================
 //
+#include "MyDebug.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 //#include <conio.h>
@@ -28,7 +30,6 @@
 #define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\libdigidoc++"
 
 #include "My1EstEIDSigner.h"
-//#include "MyOOoBridge.h"
 
 using namespace digidoc;
 using namespace std;
@@ -65,7 +66,7 @@ void MyBdocBridge::DigiInit()
 }
 
 //-----------------------------------------------------------
-void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
+void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* pPin)
 {
 	//((My1EstEIDSigner *)this)->str_filepath = "/home/mark/Desktop/Juhan.txt";
 	//((My1EstEIDSigner *)this)->str_filepath = pPath;
@@ -78,7 +79,7 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 	//((My1EstEIDSigner *)this)->str_pin = pPin;
 
 	string strPath, strParam;
-	strPath = pPath;
+	//strPath = pPath;
 	strParam = pParam;
 
 	((My1EstEIDSigner *)this)->str_filepath = "";
@@ -89,8 +90,8 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 	((My1EstEIDSigner *)this)->signerRoles.str_role = "";
 	((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "";
 
-	for (size_t i=7; i<strPath.size(); i++)
-		((My1EstEIDSigner *)this)->str_filepath += strPath[i];
+	//for (size_t i=7; i<strPath.size(); i++)
+	((My1EstEIDSigner *)this)->str_filepath = pPath;
 
 	for(size_t j=0, k=0; j<strParam.size(); j++)
 	{
@@ -132,7 +133,7 @@ void MyBdocBridge::DigiSign(char* pPath, char* pParam, char* pPin)
 }
 
 //-----------------------------------------------------------
-void MyBdocBridge::DigiOpen(char* pPath)
+void MyBdocBridge::DigiOpen(const char* pPath)
 {
 	((My1EstEIDSigner *)this)->str_bdocpath = pPath;
 	ret = ((My1EstEIDSigner *)this)->openCont();
@@ -210,18 +211,46 @@ int My1EstEIDSigner::initData()
 	catch(const digidoc::BDocException& e)
 	{
 		ERR("Caught BDocException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 	}
 	catch(const digidoc::IOException& e)
 	{
 		ERR("Caught IOException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 	}
 	catch(const digidoc::OCSPException& e)
 	{
 		ERR("Caught OCSPException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 	}
 	catch(const digidoc::SignException& e)
 	{
 		ERR("Caught SignException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 	}
 	catch(const digidoc::Exception& e)
 	{
@@ -248,15 +277,6 @@ int My1EstEIDSigner::initData()
 //***********************************************************
 int My1EstEIDSigner::signFile ()
 {
-/*
-cout<<"linn: "<<signPlace.str_city<<endl;
-cout<<"maak: "<<signPlace.str_stateOrProvince<<endl;
-cout<<"post: "<<signPlace.str_postalCode<<endl;
-cout<<"riik: "<<signPlace.str_countryName<<endl;
-cout<<"amet: "<<signerRoles.str_role<<endl;
-cout<<"auaste: "<< signerRoles.str_additionalRole<<endl;
-cout <<"PIN: "<<str_pin<<endl;
-*/
 	int i_ok = 0;
 	try
 	{		
@@ -316,41 +336,68 @@ cout <<"PIN: "<<str_pin<<endl;
 	catch(const digidoc::BDocException& e)
 	{
 		ERR("Caught BDocException: %s", e.getMsg().c_str());
-FILE *fp;
-fp = fopen("c:\\OOoDebug.txt", "a");	
-fprintf( fp, "IOEXCEPTION: \n%s\n", e.getMsg().c_str());
-fclose(fp);		
+
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ok |= 10;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		ERR("Caught IOException: %s", e.getMsg().c_str());
-
-FILE *fp;
-				fp = fopen("c:\\OOoDebug.txt", "a");
-				fprintf( fp, "IOEXCEPTION: \n%s\n", e.getMsg().c_str());
-				fclose(fp);
-
+PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ok |= 20;
 	}
 	catch(const digidoc::OCSPException& e)
 	{
 		ERR("Caught OCSPException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ok |= 50;
 	}
 	catch(const digidoc::SignException& e)
 	{
 		ERR("Caught SignException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ok |= 30;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		ERR("Caught Exception: %s", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ok |= 40;
 	}
 	catch(...)
 	{
 		ERR("Caught unknown exception");
+		
 		i_ok |= 90;
 	}
 
@@ -510,21 +557,43 @@ int My1EstEIDSigner::openCont ()
 	catch(const digidoc::BDocException& e)
 	{
 		printf("Caught BDocException: %s\n", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ret += 10000;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		printf("Caught IOException: %s\n", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ret += 20000;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		printf("Caught Exception: %s\n", e.getMsg().c_str());
+		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		if (e.hasCause())
+			for (int u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
 		i_ret += 30000;
 	}
 	catch(...)
 	{
 		printf("Caught unknown exception\n");
+		
 		i_ret += 90000;
 	}
 

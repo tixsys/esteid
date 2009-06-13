@@ -100,15 +100,14 @@ protected:
 	
 	::rtl::OUString ousLocBdocContUrl;
 	int iLocPrevContFlag;
-
+	
 public:
 	BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
         const ::com::sun::star::uno::Reference< ::com::sun::star::frame::XFrame >& xFrame, const ::rtl::OUString& rServiceName );
 
 	virtual ~BaseDispatch();
-		
-	::rtl::OString BaseDispatch::convertURItoPath(const ::rtl::OUString& ousURI);
-	
+
+	//::rtl::OString SAL_CALL convertURItoPath(const ::rtl::OUString ousURI);
 
 	void ShowMessageBox( const com::sun::star::uno::Reference< com::sun::star::frame::XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText );
     void SendCommand( const com::sun::star::util::URL& aURL, const ::rtl::OUString& rCommand, const ::com::sun::star::uno::Sequence< ::com::sun::star::beans::NamedValue >& rArgs, sal_Bool bEnabled );
@@ -154,8 +153,10 @@ public:
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.presentation.PresentationDocument"/*"com.sun.star.drawing.GenericDrawingDocument" */) ) )
 	{}
 };
-void SAL_CALL threadShowSign(char *pData);
+//void SAL_CALL threadShowSign(char *pData);
 
-void SAL_CALL threadChangeStatusBar(char *pMess);
+void SAL_CALL threadCallMacro(char *pMess);
+
+::rtl::OString SAL_CALL convertURItoPath(const ::rtl::OUString ousURI);
 
 #endif

@@ -12,8 +12,8 @@ protected:
 public:
 	static MyBdocBridge * getInstance();
 	void teemingilollus1();
-	void DigiSign(char* pPath, char* pParam, char* pPin);
-	void DigiOpen(char* pPath);
+	void DigiSign(const char* pPath, const char* pParam, const char* pPin);
+	void DigiOpen(const char* pPath);
 	void DigiInit();
 	void DigiCheckCert();
 
@@ -28,5 +28,7 @@ public:
 	const char* pSignCountry;
 	const char* pSignRole;
 	const char* pSignAddRole;
+
+	const char* pcErrMsg;
 
 };

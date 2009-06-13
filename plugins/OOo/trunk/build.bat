@@ -20,7 +20,7 @@ set include_path=%libdigidoc_include%;%openssl_include%;%zlib_include%;%libp11_i
 set library_path=%libdigidoc_library%;%openssl_library%;%zlib_library%;%libp11_library%;%xercesc_library%;%xmlsecurityc_library%;%xsd_library%
 
        
-
+REM 
 rm -r build
 md build
 cd build
@@ -31,6 +31,6 @@ cmake .. -G "NMake Makefiles" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^
          -DLIBDIGIDOC++_CONF="C:\Program Files\Estonian ID Card\libdigidoc++.conf"
-nmake VERBOSE=1
+nmake
 REM nmake install DESTDIR="%target_dir%"
 cd..
