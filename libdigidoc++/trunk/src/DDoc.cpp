@@ -355,7 +355,7 @@ void DDoc::save() throw(IOException, BDocException)
 		throwError( "Document not open", __LINE__ );
 
 	int err = d->f_createSignedDoc( d->doc, d->filename.c_str(), d->filename.c_str() );
-	throwError( err, "Filed to save document", __LINE__ );
+	throwError( err, "Failed to save document", __LINE__ );
 }
 
 void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
@@ -399,8 +399,8 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	{
 		PKCS11Signer::PKCS11Cert c;
 		c.cert = pkcs11->getCert();
-		pin = pkcs11->getPin( c );
 		pkcs11->unloadDriver();
+		pin = pkcs11->getPin( c );
 	}
 	err = d->f_calculateSignatureWithEstID( d->doc, info,
 		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
