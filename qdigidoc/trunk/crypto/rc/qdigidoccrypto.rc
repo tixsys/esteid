@@ -28,7 +28,7 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "CompanyName", ORG "\0"
 				VALUE "FileDescription", APP "\0"
 				VALUE "FileVersion", VER_STR(FILE_VER) "\0"
-				VALUE "OriginalFilename", "QDigiDocClient.exe\0"
+				VALUE "OriginalFilename", "QDigiDocCrypto.exe\0"
 				VALUE "ProductName", APP "\0"
 				VALUE "ProductVersion", VER_STR(FILE_VER) "\0"
 			END
