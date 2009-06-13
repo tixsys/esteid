@@ -25,6 +25,9 @@ namespace digidoc
           virtual std::string getOCSPUrl() const = 0;
           virtual std::string getOCSPCertPath() const = 0;
           virtual std::string getCertStorePath() const = 0;
+          virtual std::string getProxyHost() const = 0;
+          virtual std::string getProxyPort() const = 0;
+
 // Fixme should be protected
           Conf() {}
       private:

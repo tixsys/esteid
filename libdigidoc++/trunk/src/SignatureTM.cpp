@@ -67,8 +67,9 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
 //       3. Check that nonce field in OCSP response is same as CompleteRevocationRefs->DigestValue
 //       4. Recalculate hash of signature and compare with nonce
 
-    OCSP ocsp(Conf::getInstance()->getOCSPUrl());
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(Conf::getInstance()->getOCSPCertPath());
+    Conf* conf = Conf::getInstance();
+    OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
+    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(conf->getOCSPCertPath());
     X509Stack_scope x509StackScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     //ocsp.setCertStore(digidoc::X509CertStore::getInstance()->getCertStore());
@@ -154,8 +155,9 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
 
     // Initialize OCSP.
     DEBUG("Making OCSP request.");
-    OCSP ocsp(Conf::getInstance()->getOCSPUrl());
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(Conf::getInstance()->getOCSPCertPath());
+    Conf* conf = Conf::getInstance();
+    OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
+    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(conf->getOCSPCertPath());
     X509Stack_scope ocspCertsScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     ocsp.setMaxAge(5); // FIXME: remove or move to conf

@@ -3,6 +3,7 @@
 
 #include <openssl/ocsp.h>
 #include <openssl/x509.h>
+#include <openssl/ssl.h>
 
 #include <string>
 #include <time.h>
@@ -32,9 +33,9 @@ namespace digidoc
       public:
           enum CertStatus { GOOD, REVOKED, UNKNOWN };
 
-          OCSP(const std::string& url) throw(IOException);
+          OCSP( const std::string &url, const std::string &phost,const std::string &pport ) throw(IOException);
           ~OCSP();
-          void setUrl(const std::string& url) throw(IOException);
+          void setUrl( const std::string& url ) throw(IOException);
           void setOCSPCerts(STACK_OF(X509)* ocspCerts);
           void setCertStore(X509_STORE* certStore);
           void setSignCert(X509* signCert, EVP_PKEY* signKey);
@@ -62,13 +63,16 @@ namespace digidoc
           std::string url;
           char* host;
           char* port;
-          char* path;
+	  char* proxyHost;
+	  char* proxyPort;
+	  char* path;
           bool ssl;
 
           long skew;
           long maxAge;
 
-          BIO* connection;
+	  BIO *connection, *sconnection;
+	  SSL_CTX *ctx;
           X509* ocspCert;
           STACK_OF(X509)* ocspCerts;
           X509_STORE* certStore;

@@ -154,7 +154,7 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
     X509Stack_scope ocspCertsScope(&ocspCerts);
 
     // Check the certificate validity from OCSP server.
-	OCSP ocsp(conf->getOCSPUrl());
+	OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
 	ocsp.setSkew(120);//XXX: load from conf
 	ocsp.setOCSPCerts(ocspCerts);
 	std::auto_ptr<Digest> calc = Digest::create();

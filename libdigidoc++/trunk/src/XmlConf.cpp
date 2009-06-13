@@ -29,6 +29,8 @@ const std::string digidoc::XmlConf::CERT_STORE_PATH    = "cert.store.path";
 const std::string digidoc::XmlConf::MANIFEST_XSD_PATH  = "manifest.xsd.path";
 const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
 const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
+const std::string digidoc::XmlConf::PROXY_HOST         = "proxy.host";
+const std::string digidoc::XmlConf::PROXY_PORT         = "proxy.port";
 
 
 /**
@@ -141,7 +143,15 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             {
                certStorePath = *it;
             }
-            else
+			else if(PROXY_HOST.compare(it->name()) == 0)
+			{
+			   proxyHost = *it;
+			}
+			else if(PROXY_PORT.compare(it->name()) == 0)
+			{
+			   proxyPort = *it;
+			}
+			else
             {
                 WARN("Unknown configuration parameter %s", it->name().c_str());
             }
@@ -218,4 +228,14 @@ std::string digidoc::XmlConf::getCertStorePath() const
     std::string certStoreFullPath(digidoc::util::File::directory(conf_fullpath));
     certStoreFullPath.append("/" + certStorePath);
     return certStoreFullPath;
+}
+
+std::string digidoc::XmlConf::getProxyHost() const
+{
+	return proxyHost;
+}
+
+std::string digidoc::XmlConf::getProxyPort() const
+{
+	return proxyPort;
 }

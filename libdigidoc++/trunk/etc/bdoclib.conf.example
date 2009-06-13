@@ -18,4 +18,6 @@
     <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
     <param name="xades.xsd.path">schema/XAdES.xsd</param>
     <param name="dsig.xsd.path">schema/xmldsig-core-schema.xsd</param>
+    <!--<param name="proxy.host"></param>-->
+    <!--<param name="proxy.port"></param>-->
 </configuration>

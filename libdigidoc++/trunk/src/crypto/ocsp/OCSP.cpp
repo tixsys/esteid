@@ -1,8 +1,8 @@
 #include <openssl/err.h>
+#include <openssl/ocsp.h>
 #include "../../log.h"
 #include "../../util/String.h"
 #include "OCSP.h"
-
 
 
 /**
@@ -12,20 +12,32 @@
  * @throws IOException exception is thrown if provided OCSP URL is in incorrect format.
  * @see setUrl(const std::string& url)
  */
-digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
+digidoc::OCSP::OCSP(const std::string& url, const std::string &phost,const std::string &pport) throw(IOException)
  : host(NULL)
  , port(NULL)
  , path(NULL)
- , ssl(false)
- , skew(5)
- , maxAge(1)
+ , proxyHost(const_cast<char*>(phost.c_str()))
+ , proxyPort(const_cast<char*>(pport.c_str()))
+ , ssl(true)
+ , skew(50)
+ , maxAge(10)
  , connection(NULL)
+ , sconnection(NULL)
+ , ctx(NULL)
  , ocspCerts(NULL)
  , certStore(NULL)
  , signCert(NULL)
  , signKey(NULL)
 {
     setUrl(url);
+    //proxy support
+    if ( proxyHost != 0 && *proxyHost != '\0' )
+    {
+	host = proxyHost;
+	if( proxyPort != 0 && *proxyPort != '\0' )
+             port = proxyPort;
+        path = const_cast<char*>(url.c_str());
+    }
 }
 
 /**
@@ -33,10 +45,9 @@ digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
  */
 digidoc::OCSP::~OCSP()
 {
+    if(sconnection) { BIO_free_all(sconnection); }
     if(connection) { BIO_free_all(connection); }
-    if(host) { OPENSSL_free(host); }
-    if(port) { OPENSSL_free(port); }
-    if(path) { OPENSSL_free(path); }
+    if(ctx) { SSL_CTX_free(ctx); }
 }
 
 /**
@@ -45,7 +56,7 @@ digidoc::OCSP::~OCSP()
  * @param url full OCSP URL (e.g. http://www.openxades.org/cgi-bin/ocsp.cgi).
  * @throws IOException exception is thrown if provided OCSP URL is in incorrect format.
  */
-void digidoc::OCSP::setUrl(const std::string& url) throw(IOException)
+void digidoc::OCSP::setUrl( const std::string& url ) throw(IOException)
 {
     // Parse OCSP connection URL.
     int sslFlag = 0;
@@ -248,10 +259,28 @@ digidoc::OCSP::CertStatus digidoc::OCSP::checkCert(X509* cert, X509* issuer,
  */
 void digidoc::OCSP::connect() throw(IOException)
 {
-    if(ssl)
-        connectSSL();
-    else
-        connectNoSSL();
+	// Release old connection if it exists.
+	if(sconnection) { BIO_free_all(sconnection); }
+	if(connection) { BIO_free_all(connection); }
+	if(ctx) { SSL_CTX_free(ctx); }
+
+	// Establish a connection to the OCSP responder.
+	connection = BIO_new_connect(host);
+	if(connection == NULL)
+	{
+		THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host);
+	}
+
+	if( port != NULL && BIO_set_conn_port(connection, port) <= 0 )
+	{
+		THROW_IOEXCEPTION("Failed to set port of the connection: %s", port);
+	}
+
+	if(ssl)
+		connectSSL();
+
+	if ( !BIO_do_connect(connection) )
+		THROW_IOEXCEPTION( "Failed to connect to host: '%s'", host );
 }
 
 /**
@@ -261,20 +290,6 @@ void digidoc::OCSP::connect() throw(IOException)
  */
 void digidoc::OCSP::connectNoSSL() throw(IOException)
 {
-    // Release old connection if it exists.
-    if(connection) { BIO_free_all(connection); }
-
-    // Establish a connection to the OCSP responder.
-    connection = BIO_new_connect(host);
-    if(connection == NULL)
-    {
-        THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host);
-    }
-
-    if(BIO_set_conn_port(connection, port) <= 0)
-    {
-        THROW_IOEXCEPTION("Failed to set port of the connection: %s", port);
-    }
 }
 
 /**
@@ -282,8 +297,10 @@ void digidoc::OCSP::connectNoSSL() throw(IOException)
  */
 void digidoc::OCSP::connectSSL() throw(IOException)
 {
-    // TODO: implement
-    THROW_IOEXCEPTION("HTTPS connection is not implemented in OCSP class.");
+	ctx = SSL_CTX_new(SSLv23_client_method());
+	SSL_CTX_set_mode(ctx, SSL_MODE_AUTO_RETRY);
+	sconnection = BIO_new_ssl(ctx, 1);
+	connection = BIO_push(sconnection, connection);
 }
 
 /**
@@ -423,7 +440,7 @@ digidoc::OCSP::CertStatus digidoc::OCSP::validateResponse(OCSP_REQUEST* req, OCS
     // Check that response creation time is in valid time slot.
     if(!OCSP_check_validity(thisUpdate, nextUpdate, skew, maxAge))
     {
-        THROW_OCSPEXCEPTION(respStatus, "OCSP response not in valid time slot.");
+		THROW_OCSPEXCEPTION(respStatus, "OCSP response not in valid time slot.");
     }
 
     // Return certificate status.
