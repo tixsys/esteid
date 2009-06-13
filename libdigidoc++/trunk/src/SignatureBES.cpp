@@ -376,12 +376,19 @@ void digidoc::SignatureBES::checkKeyInfo() const throw(SignatureException)
 	dsig::X509IssuerSerialType::X509SerialNumberType certSerialNumber = certs[0].issuerSerial().x509SerialNumber();
 
 	//XXX: issuer name can be in different formats, compare using OpenSSL xxx_cmp() or write own
-	if ( certIssuerName != x509.getIssuerName() || x509.getSerial() != certSerialNumber )
+	try
 	{
-	    DEBUG("certIssuerName: \"%s\"", certIssuerName.c_str());
-	    DEBUG("x509.getCertIssuerName() \"%s\"", x509.getIssuerName().c_str());
-	    DEBUG("sertCerials = %ld %ld", x509.getSerial(), (long)certSerialNumber);
-	    THROW_SIGNATUREEXCEPTION("Signing certificate issuer information does not match");
+		if ( certIssuerName != x509.getIssuerName() || x509.getSerial() != certSerialNumber )
+		{
+			DEBUG("certIssuerName: \"%s\"", certIssuerName.c_str());
+			DEBUG("x509.getCertIssuerName() \"%s\"", x509.getIssuerName().c_str());
+			DEBUG("sertCerials = %ld %ld", x509.getSerial(), (long)certSerialNumber);
+			THROW_SIGNATUREEXCEPTION("Signing certificate issuer information does not match");
+		}
+	}
+	catch( const IOException &e )
+	{
+		THROW_SIGNATUREEXCEPTION_CAUSE(e, "Signing certificate issuer information not valid");
 	}
 
 	xades::DigestAlgAndValueType::DigestValueType const& certDigestValue = certs[0].certDigest().digestValue();
