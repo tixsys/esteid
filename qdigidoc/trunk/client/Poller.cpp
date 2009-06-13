@@ -51,9 +51,14 @@ void Poller::run()
 	{
 		if( m.tryLock() )
 		{
-			QEstEIDSigner *s;
+			QEstEIDSigner *s = NULL;
 			try { s = new QEstEIDSigner(); }
-			catch( const Exception & ) {}
+			catch( const Exception & )
+			{
+				delete s;
+				m.unlock();
+				continue;
+			}
 
 			if( !selectedCard.isEmpty() && !s->cards().contains( selectedCard ) )
 				selectedCard.clear();
@@ -93,11 +98,7 @@ QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
 }
 
 QStringList	QEstEIDSigner::cards() const
-{
-	if( sign.isEmpty() )
-		return QStringList();
-	return sign.keys();
-}
+{ return sign.keys(); }
 QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return sign.value(card); }
 
 std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)

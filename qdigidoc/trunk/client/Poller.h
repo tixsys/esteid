@@ -61,7 +61,6 @@ class QEstEIDSigner: public PKCS11Signer
 {
 public:
 	QEstEIDSigner( const QString &card = QString() ) throw(SignException);
-	virtual ~QEstEIDSigner() {}
 
 	QStringList		cards() const;
 	QSslCertificate signCert( const QString &card ) const;
