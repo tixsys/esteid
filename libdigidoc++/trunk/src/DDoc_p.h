@@ -12,6 +12,7 @@
 #endif
 
 typedef int (*sym_addAllDocInfos)( SignedDoc*, SignatureInfo* );
+typedef int (*sym_addConfigItem)(ConfigurationStore*, const char*, const char*, int, int );
 typedef int (*sym_addSignerRole)( SignatureInfo*, int, const char*, int, int );
 typedef int (*sym_calculateDataFileSizeAndDigest)( SignedDoc*, const char*, const char*, int );
 typedef int (*sym_calculateSignatureWithEstID)( SignedDoc*, SignatureInfo*, int, const char* );
@@ -79,6 +80,7 @@ public:
 	std::vector<DSignature*> signatures;
 
 	sym_addAllDocInfos			f_addAllDocInfos;
+	sym_addConfigItem			f_addConfigItem;
 	sym_addSignerRole			f_addSignerRole;
 	sym_calculateDataFileSizeAndDigest f_calculateDataFileSizeAndDigest;
 	sym_calculateSignatureWithEstID f_calculateSignatureWithEstID;

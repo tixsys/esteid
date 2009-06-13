@@ -3,6 +3,7 @@
 
 #include "crypto/signer/PKCS11Signer.h"
 #include "util/File.h"
+#include "Conf.h"
 
 using namespace digidoc;
 
@@ -44,6 +45,7 @@ DDocPrivate::DDocPrivate()
 :	doc(0)
 ,	ready(false)
 ,	f_addAllDocInfos(0)
+,	f_addConfigItem(0)
 ,	f_addSignerRole(0)
 ,	f_calculateDataFileSizeAndDigest(0)
 ,	f_calculateSignatureWithEstID(0)
@@ -73,6 +75,16 @@ DDocPrivate::DDocPrivate()
 
 	f_initDigiDocLib();
 	f_initConfigStore( NULL );
+
+	std::string host = Conf::getInstance()->getProxyHost();
+	std::string port = Conf::getInstance()->getProxyPort();
+	if( !host.empty() )
+	{
+		f_addConfigItem( NULL, "USE_PROXY", "1", ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
+		f_addConfigItem( NULL, "DIGIDOC_PROXY_HOST", host.c_str(), ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
+		f_addConfigItem( NULL, "DIGIDOC_PROXY_PORT", port.c_str(), ITEM_TYPE_PRIVATE, ITEM_STATUS_OK );
+	}
+
 	ready = true;
 }
 
@@ -104,6 +116,7 @@ void DDocPrivate::loadSignatures()
 bool DDocPrivate::loadSymbols()
 {
 	if( !(f_addAllDocInfos = (sym_addAllDocInfos)lib.resolve("addAllDocInfos")) ||
+		!(f_addConfigItem = (sym_addConfigItem)lib.resolve("addConfigItem")) ||
 		!(f_addSignerRole = (sym_addSignerRole)lib.resolve("addSignerRole")) ||
 		!(f_calculateDataFileSizeAndDigest = (sym_calculateDataFileSizeAndDigest)lib.resolve("calculateDataFileSizeAndDigest")) ||
 		!(f_calculateSignatureWithEstID = (sym_calculateSignatureWithEstID)lib.resolve("calculateSignatureWithEstID")) ||
