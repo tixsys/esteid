@@ -34,7 +34,7 @@ class QMobileSigner : public Signer
 public:
 	QMobileSigner( const QString &fName ) throw(SignException);
 
-	X509* getCert() throw(SignException){}
+	X509* getCert() throw(SignException) { return NULL; }
 	void sign(const Digest& digest, Signature& signature) throw(SignException){}
 	std::string signaturePath();
 
