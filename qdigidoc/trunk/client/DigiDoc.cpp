@@ -68,13 +68,11 @@ QDateTime DigiDocSignature::dateTime() const
 	return QDateTime( t.date(), t.time(), Qt::UTC ).toLocalTime();
 }
 
-#include <QDebug>
 bool DigiDocSignature::isValid()
 {
 	try
 	{
 		s->validateOffline();
-		qDebug() << s->getMediaType().c_str();
 		if( s->getMediaType() == "signature/bdoc-1.0/BES" )
 			return s->validateOnline() == OCSP::GOOD;
 		else

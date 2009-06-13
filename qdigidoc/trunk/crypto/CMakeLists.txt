@@ -71,7 +71,7 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 
 if(UNIX AND NOT APPLE)
 	INSTALL(FILES QDigiDocCrypto.desktop DESTINATION share/applications)
-	INSTALL(FILES images/crypto_icon_48x48.png DESTINATION share/pixmaps )
+	INSTALL(FILES images/crypto_64.png DESTINATION share/pixmaps )
 endif(UNIX AND NOT APPLE)
 
 install(TARGETS qdigidoccrypto DESTINATION bin)

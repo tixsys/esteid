@@ -35,8 +35,8 @@
    <string>DigiDoc crypt</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/images/crypto_icon_48x48.png</normaloff>:/images/crypto_icon_48x48.png</iconset>
+   <iconset resource="../rc/qdigidoccrypto.qrc">
+    <normaloff>:/images/crypto_64.png</normaloff>:/images/crypto_64.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">* {
