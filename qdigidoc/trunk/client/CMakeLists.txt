@@ -14,6 +14,7 @@ SET( MOC_HEADERS
 	)
 SET( HEADERS
 	${MOC_HEADERS}
+	${COMMON}/Common.h
 	${COMMON}/SslCertificate.h
 	QMobileSigner.h
 	version.h
@@ -21,6 +22,7 @@ SET( HEADERS
 SET( SOURCES
 	${HEADERS}
 	${COMMON}/CertificateWidget.cpp
+	${COMMON}/Common.cpp
 	${COMMON}/SslCertificate.cpp
 	${COMMON}/IKValidator.cpp
 	main.cpp

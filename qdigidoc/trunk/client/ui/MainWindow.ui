@@ -120,12 +120,6 @@ padding-right: 10px;
 #infoCard, #infoMobile
 { font: bold; }
 
-#utilityLabel
-{
-color: red;
-font: bold;
-}
-
 /* content */
 #homeButtonLabel,
 #viewContentLabel, #viewSignaturesLabel,
@@ -987,8 +981,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>288</width>
-               <height>176</height>
+               <width>88</width>
+               <height>18</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

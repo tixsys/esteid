@@ -22,8 +22,8 @@
 
 #include "CryptDoc.h"
 
+#include "common/Common.h"
 #include "common/SslCertificate.h"
-#include "Common.h"
 #include "Poller.h"
 
 #include <libdigidoc/DigiDocCert.h>

@@ -13,17 +13,17 @@ SET( MOC_HEADERS
 	)
 SET( HEADERS
 	${MOC_HEADERS}
+	${COMMON}/Common.h
 	${COMMON}/SslCertificate.h
-	Common.h
 	version.h
 	)
 SET( SOURCES
 	${HEADERS}
 	${COMMON}/CertificateWidget.cpp
+	${COMMON}/Common.cpp
 	${COMMON}/IKValidator.cpp
 	${COMMON}/SslCertificate.cpp
 	main.cpp
-	Common.cpp
 	CryptDoc.cpp
 	KeyDialog.cpp
 	LdapSearch.cpp

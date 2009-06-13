@@ -22,8 +22,9 @@
 
 #include "MainWindow.h"
 
-#include "common/SslCertificate.h"
+#include "common/Common.h"
 #include "common/IKValidator.h"
+#include "common/SslCertificate.h"
 
 #include "MobileDialog.h"
 #include "PrintSheet.h"
@@ -50,25 +51,6 @@
 #include <windows.h>
 #include <mapi.h>
 #endif
-
-static QString fileSize( qint64 bytes )
-{
-	const quint64 kb = 1024;
-	const quint64 mb = 1024 * kb;
-	const quint64 gb = 1024 * mb;
-	const quint64 tb = 1024 * gb;
-	if( bytes >= tb )
-		return QString( "%1 TB" ).arg( qreal(bytes) / tb, 0, 'f', 3 );
-	if( bytes >= gb )
-		return QString( "%1 GB" ).arg( qreal(bytes) / gb, 0, 'f', 2 );
-	if( bytes >= mb )
-		return QString( "%1 MB" ).arg( qreal(bytes) / mb, 0, 'f', 1 );
-	if( bytes >= kb )
-		return QString( "%1 KB" ).arg( bytes / kb );
-	return QString( "%1 B" ).arg( bytes );
-}
-
-
 
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
@@ -388,7 +370,7 @@ void MainWindow::loadDocuments( QTreeWidget *view )
 		i->setData( 0, Qt::ToolTipRole, info.fileName() );
 		i->setData( 0, Qt::UserRole, info.absoluteFilePath() );
 
-		i->setText( 1, fileSize( info.size() ) );
+		i->setText( 1, Common::fileSize( info.size() ) );
 		i->setData( 1, Qt::TextAlignmentRole, Qt::AlignRight );
 		i->setData( 1, Qt::ForegroundRole, Qt::gray );
 
