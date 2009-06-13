@@ -550,7 +550,7 @@ unsigned char *get_authority_key(STACK_OF(X509_EXTENSION) *exts)
   
   met = X509V3_EXT_get(ex);
   p = ex->value->data;
-#if OPENSSL_VERSION_NUMBER > 0x00908000
+#if OPENSSL_VERSION_NUMBER > 0x00908000L
   // crashes here!
   st = ASN1_item_d2i(NULL, (const unsigned char**)&p, ex->value->length, ASN1_ITEM_ptr(met->it));
 #else
@@ -574,6 +574,28 @@ unsigned char *get_authority_key(STACK_OF(X509_EXTENSION) *exts)
  
   return ret;
 
+}
+
+
+
+//--------------------------------------------------
+// otsib X.509 seest Authority Key Identifieri välja
+//--------------------------------------------------
+unsigned char *get_authority_key_from_cert(X509 *x)
+{
+  unsigned char *ret = 0;
+  AUTHORITY_KEYID *val = (AUTHORITY_KEYID*)X509_get_ext_d2i( x, NID_authority_key_identifier, NULL, NULL );
+  if(!val) {
+	ddocDebug(4, "get_authority_key_from_cert", "Extension not found");
+	return(NULL);
+  }
+
+  //ret = ASN1_STRING_data(val->keyid);
+  // workaround encode/decode bugs
+  ret = decodeHex((unsigned char*)hex_to_string(ASN1_STRING_data(val->keyid), ASN1_STRING_length(val->keyid)));
+  AUTHORITY_KEYID_free(val);
+
+  return ret;
 }
 
 
@@ -605,7 +627,8 @@ OCSP_CERTID* createOCSPCertid(X509 *cert, X509* pCACert)
 	len = sizeof(md);
     if(X509_NAME_digest(iname, dgst, md, &len)) {
       // issuer key hashi lugemine
-      ikey = get_authority_key(cert->cert_info->extensions);
+	  //ikey = get_authority_key(cert->cert_info->extensions);
+	  ikey = get_authority_key_from_cert(cert);
       if(ikey != NULL) {
 	// serial numbri lugemine
 	sno = X509_get_serialNumber(cert);
