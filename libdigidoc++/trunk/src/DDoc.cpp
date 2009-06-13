@@ -237,11 +237,13 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		DataFile *data = d->doc->pDataFiles[i];
 		std::ostringstream file;
 		file << d->tmpFolder.data() << data->szFileName;
+		free( data->szFileName );
+		data->szFileName = strdup( file.str().data() );
+		if ( !strcmp( data->szContentType, CONTENT_HASHCODE ) )
+			continue;
 		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename.c_str(),
 			file.str().data(), data->szId, CHARSET_UTF_8 );
 		throwError( err, "Failed to exctract files", __LINE__ );
-		free( data->szFileName );
-		data->szFileName = strdup( file.str().data() );
 	}
 
 	d->loadSignatures();
