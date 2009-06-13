@@ -43,8 +43,8 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     m_http = new QHttp( this );
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
-    //m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
-    m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+    m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
+   //m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
 }
 
 void MobileDialog::sslErrors(const QList<QSslError> &)
@@ -89,31 +89,31 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 										const QString &country, const QString &role, const QString &role2 )
 {
 	signature = QString(
-						"<City xsi:type=\"xsd:String\">%1</City>"
-						"<StateOrProvince xsi:type=\"xsd:String\">%2</StateOrProvince>"
-						"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
-						"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
-						"<Role xsi:type=\"xsd:String\">%5 / %6</Role>"
-						).arg( city ).arg( state ).arg( zip ).arg( country ).arg( role ).arg( role2 );
+			"<City xsi:type=\"xsd:String\">%1</City>"
+			"<StateOrProvince xsi:type=\"xsd:String\">%2</StateOrProvince>"
+			"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
+			"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
+			"<Role xsi:type=\"xsd:String\">%5 / %6</Role>"
+			).arg( city ).arg( state ).arg( zip ).arg( country ).arg( role ).arg( role2 );
 }
 
 void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 {
 	QByteArray message = "<IDCode xsi:type=\"xsd:String\">" + ssid + "</IDCode>"
-						"<PhoneNo xsi:type=\"xsd:String\">" + cell + "</PhoneNo>"
-						"<Language xsi:type=\"xsd:String\">EST</Language>"
-						"<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
-						"<MessageToDisplay xsi:type=\"xsd:String\">DigiDoc3</MessageToDisplay>"
-						+ signature.toLatin1() +
-						"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
-						+ getFiles() +
-						"<Format xsi:type=\"xsd:String\">DIGIDOC-XML</Format>"
-						"<Version xsi:type=\"xsd:String\">1.3</Version>"
-						"<SignatureID xsi:type=\"xsd:String\">S" + QByteArray::number( m_doc->signatures().size() ) + "</SignatureID>"
-						"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
-						"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>";
+			"<PhoneNo xsi:type=\"xsd:String\">" + cell + "</PhoneNo>"
+			"<Language xsi:type=\"xsd:String\">EST</Language>"
+			"<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
+			"<MessageToDisplay xsi:type=\"xsd:String\">DigiDoc3</MessageToDisplay>"
+			+ signature.toLatin1() +
+			"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+			+ getFiles() +
+			"<Format xsi:type=\"xsd:String\">DIGIDOC-XML</Format>"
+			"<Version xsi:type=\"xsd:String\">1.3</Version>"
+			"<SignatureID xsi:type=\"xsd:String\">S" + QByteArray::number( m_doc->signatures().size() ) + "</SignatureID>"
+			"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
+			"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>";
 	int id = m_http->post( "/", insertBody( MobileCreateSignature, message ) );
-    m_callBackList.insert( id, "startSessionResult" );
+	m_callBackList.insert( id, "startSessionResult" );
 }
 
 QByteArray MobileDialog::getFiles() const
@@ -126,10 +126,10 @@ QByteArray MobileDialog::getFiles() const
 		std::vector<unsigned char> d = file.calcDigest( calc.get() );
 		QByteArray digest( (char*)&d[0], d.size() );
 		message += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
-						"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"
-						"<DigestType xsi:type=\"xsd:String\">sha1</DigestType>"
-						"<DigestValue xsi:type=\"xsd:String\">" + digest.toBase64() + "</DigestValue>"
-						"</DataFileDigest>";
+			"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"
+			"<DigestType xsi:type=\"xsd:String\">sha1</DigestType>"
+			"<DigestValue xsi:type=\"xsd:String\">" + digest.toBase64() + "</DigestValue>"
+			"</DataFileDigest>";
 		i++;
 	}
 	message += "</DataFiles>";
@@ -162,13 +162,13 @@ void MobileDialog::getSignStatus()
 void MobileDialog::getSignStatusResult( const QDomElement &element )
 {
 	QString status = element.elementsByTagName( "Status" ).item(0).toElement().text();
-    labelError->setText( status );
+	labelError->setText( status );
 
 	//qDebug() << status << element.elementsByTagName( "Signature" ).item(0).toElement().text();
 
-    if ( status == "SIGNATURE" )
-    {
-        m_timer->stop();
+	if ( status == "SIGNATURE" )
+	{
+        	m_timer->stop();
 
 		QTemporaryFile file( QString( "%1%2XXXXXX.xml" )
 							.arg( QDir::tempPath() ).arg( QDir::separator() ) );
@@ -177,9 +177,11 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		{
 			fName = file.fileName();
 			QByteArray data = element.elementsByTagName( "Signature" ).item(0).toElement().text().toLatin1();
+			
 			QRegExp rx( "<Exponent>(.*)</Exponent>" );
 			rx.indexIn( data );
 			data.replace( rx.cap(1) + "<SignedProperties", "<SignedProperties" )
+				.replace( "<Exponent>AQAB","<Exponent>F4O3")
 				.replace( "xmlns=\"http://www.w3.org/2000/09/xmldsig#\"", "xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"")
 				.replace( "v1.1.1", "v1.3.2" )
 				.replace( "<ResponderID>", "<ResponderID><ByName>" )
@@ -223,7 +225,6 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 
 			file.write( data );
 			file.close();
-			setResult( 1 );
 			close();
 		}
 	}
@@ -234,8 +235,8 @@ QByteArray MobileDialog::insertBody( MobileAction maction, const QByteArray &bod
     QByteArray action;
     switch ( maction )
     {
-		case MobileCreateSignature: action="MobileCreateSignature"; break;
-		case GetMobileCreateSignatureStatus: action="GetMobileCreateSignatureStatus"; break;
+	case MobileCreateSignature: action="MobileCreateSignature"; break;
+	case GetMobileCreateSignatureStatus: action="GetMobileCreateSignatureStatus"; break;
     }
 
     QByteArray message = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> "

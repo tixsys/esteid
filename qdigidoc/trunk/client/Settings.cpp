@@ -22,6 +22,8 @@
 
 #include "Settings.h"
 
+#include <libdigidoc++/XmlConf.h>
+
 #include "version.h"
 
 #include <QDesktopServices>
@@ -52,6 +54,9 @@ Settings::Settings( QWidget *parent )
 	signZipInput->setText( s.value( "Zip" ).toString() );
 
 	signOverwrite->setChecked( s.value( "Overwrite", false ).toBool() );
+
+	proxyHost->setText( s.value( "proxyHost" ).toString() );
+	proxyPort->setText( s.value( "proxyPort" ).toString() );
 
 	s.endGroup();
 }
@@ -84,6 +89,11 @@ void Settings::save()
 		defaultDir->clear();
 		s.remove( "DefaultDir" );
 	}
+	s.setValue( "proxyHost", proxyHost->text() );
+	s.setValue( "proxyPort", proxyPort->text() );
+	digidoc::XmlConf::getInstance()->setProxyPort( s.value( "proxyPort" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setProxyHost( s.value( "proxyHost" ).toString().toStdString() );
+
 	s.endGroup();
 
 	saveSignatureInfo(

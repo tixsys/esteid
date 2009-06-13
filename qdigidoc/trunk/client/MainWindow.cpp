@@ -32,6 +32,7 @@
 #include "SignatureDialog.h"
 
 #include <libdigidoc++/Document.h>
+#include <libdigidoc++/XmlConf.h>
 
 #include <QApplication>
 #include <QDateTime>
@@ -131,6 +132,8 @@ MainWindow::MainWindow( QWidget *parent )
 		else
 			parseParams();
 	}
+	digidoc::XmlConf::getInstance()->setProxyPort( SettingsValues().value( "Main/proxyPort" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setProxyHost( SettingsValues().value( "Main/proxyHost" ).toString().toStdString() );
 }
 
 bool MainWindow::addFile( const QString &file )
