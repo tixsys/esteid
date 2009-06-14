@@ -94,7 +94,7 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 			"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
 			"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
 			"<Role xsi:type=\"xsd:String\">%5 / %6</Role>"
-			).arg( city ).arg( state ).arg( zip ).arg( country ).arg( role ).arg( role2 );
+			).arg( city ).arg( state ).arg( country ).arg( zip ).arg( role ).arg( role2 );
 }
 
 void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
@@ -176,8 +176,15 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		if ( file.open() )
 		{
 			fName = file.fileName();
-			QByteArray data = element.elementsByTagName( "Signature" ).item(0).toElement().text().toLatin1();
-			
+			QByteArray data;
+
+			data += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+						"<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">";
+
+			data += element.elementsByTagName( "Signature" ).item(0).toElement().text().toLatin1();
+
+			data += "</SignedDoc>";
+			/*
 			QRegExp rx( "<Exponent>(.*)</Exponent>" );
 			rx.indexIn( data );
 			data.replace( rx.cap(1) + "<SignedProperties", "<SignedProperties" )
@@ -222,7 +229,7 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 				.replace( "</X509IssuerName>", "</ds:X509IssuerName>" )
 				.replace( "<X509SerialNumber", "<ds:X509SerialNumber" )
 				.replace( "</X509SerialNumber>", "</ds:X509SerialNumber>" );
-
+*/
 			file.write( data );
 			file.close();
 			close();
