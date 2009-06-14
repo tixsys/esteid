@@ -75,7 +75,14 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
     //ocsp.setCertStore(digidoc::X509CertStore::getInstance()->getCertStore());
     std::vector<unsigned char> respBuf;
     getOCSPResponseValue(respBuf);
-    ocsp.verifyResponse(respBuf);
+    try
+    {
+        ocsp.verifyResponse(respBuf);
+    }
+    catch( const Exception &e )
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE( e, "OCSP response verfiy failed" );
+    }
     DEBUG("OCSP response was signed by trusted OCSP responder");
 
 

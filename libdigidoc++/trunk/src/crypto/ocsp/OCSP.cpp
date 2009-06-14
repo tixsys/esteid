@@ -461,7 +461,7 @@ digidoc::OCSP::CertStatus digidoc::OCSP::validateResponse(OCSP_REQUEST* req, OCS
  * Check that response was signed with trusted OCSP certificate
  * @param ocspResponseDER DER encoded OCSP response bytes
  */
-void digidoc::OCSP::verifyResponse(const std::vector<unsigned char>& ocspResponseDER) const
+void digidoc::OCSP::verifyResponse(const std::vector<unsigned char>& ocspResponseDER) const throw(IOException)
 {
     BIO * bio = BIO_new_mem_buf(const_cast<unsigned char*>(&ocspResponseDER[0]), ocspResponseDER.size()); BIO_scope bioScope(&bio);
 

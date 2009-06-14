@@ -45,7 +45,7 @@ namespace digidoc
           CertStatus checkCert(X509* cert, X509* issuer, const std::vector<unsigned char>& nonce,
                   std::vector<unsigned char>& ocspResponseDER, tm& producedAt) throw(IOException, OCSPException);
 
-          void verifyResponse( const std::vector<unsigned char>& ocspResponseDER) const;
+          void verifyResponse( const std::vector<unsigned char>& ocspResponseDER) const throw(IOException);
           std::vector<unsigned char> getNonce(const std::vector<unsigned char>& ocspResponseDER) const;
 
       private:
