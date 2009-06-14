@@ -55,6 +55,7 @@ DDocPrivate::DDocPrivate()
 ,	f_createSignedDoc(0)
 ,	f_DataFile_delete(0)
 ,	f_DataFile_new(0)
+,	f_ddocReadNewSignaturesFromDdoc(0)
 ,	f_ddocSaxReadSignedDocFromFile(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
 ,	f_finalizeDigiDocLib(0)
@@ -117,6 +118,7 @@ bool DDocPrivate::loadSymbols()
 		!(f_createSignedDoc = (sym_createSignedDoc)lib.resolve("createSignedDoc")) ||
 		!(f_DataFile_delete = (sym_DataFile_delete)lib.resolve("DataFile_delete")) ||
 		!(f_DataFile_new = (sym_DataFile_new)lib.resolve("DataFile_new")) ||
+		!(f_ddocReadNewSignaturesFromDdoc = (sym_ddocReadNewSignaturesFromDdoc)lib.resolve("ddocReadNewSignaturesFromDdoc")) ||
 		!(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) ||
 		!(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) ||
 		!(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) ||
@@ -379,6 +381,14 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		throwError( "DDoc library not loaded", __LINE__ );
 	if( !d->doc )
 		throwError( "Document not open", __LINE__ );
+
+	if ( type == Signature::MOBILE )
+	{
+		std::string file = signer->signaturePath();
+		d->f_ddocReadNewSignaturesFromDdoc(d->doc, file.c_str());
+		d->loadSignatures();
+		return;
+	}
 
 	SignatureInfo *info;
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
