@@ -24,6 +24,7 @@
 
 #include <QDialog>
 #include <QDomElement>
+#include <QHash>
 #include <QHttp>
 #include <QSslError>
 #include <QTimer>
@@ -57,9 +58,9 @@ private:
 		GetMobileCreateSignatureStatus
     };
 
-    DigiDoc *m_doc;
-    QHttp *m_http;
-    QTimer *m_timer;
+	DigiDoc *m_doc;
+	QHttp *m_http;
+	QTimer *m_timer;
 	QString signature;
 
     int sessionCode;

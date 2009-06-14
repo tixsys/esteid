@@ -35,8 +35,8 @@
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :   QDialog( parent )
 ,   m_doc( doc )
-,   sessionCode( 0 )
 ,   m_timer( 0 )
+,   sessionCode( 0 )
 {
     setupUi( this );
 
