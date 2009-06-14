@@ -83,8 +83,6 @@ MainWindow::MainWindow( QWidget *parent )
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
-	buttonGroup->addButton( utilityOpen, UtilityOpen );
-
 	buttonGroup->addButton( homeSign, HomeSign );
 	buttonGroup->addButton( homeView, HomeView );
 	buttonGroup->addButton( homeCrypt, HomeCrypt );
@@ -103,6 +101,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
+	connect( infoLogo, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( signAddFile, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewBrowse, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewEmail, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
@@ -207,14 +206,6 @@ void MainWindow::buttonClicked( int button )
 		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
 #endif
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
-		break;
-	case UtilityOpen:
-#ifdef Q_OS_MAC
-		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
-#else
-		if( !QProcess::startDetached( "qesteidutil" ) )
-#endif
-			showWarning( tr("Failed to start process 'qesteidutil'") );
 		break;
 	case HomeSign:
 		if( SettingsValues().showIntro() )
@@ -517,6 +508,15 @@ void MainWindow::parseLink( const QString &link )
 				.arg( dir ).arg( m->index( i, 0 ).data().toString() ) );
 		}
 	}
+	else if( link == "openUtility" )
+	{
+#ifdef Q_OS_MAC
+		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
+#else
+		if( !QProcess::startDetached( "qesteidutil" ) )
+#endif
+			showWarning( tr("Failed to start process 'qesteidutil'") );
+	}
 }
 
 void MainWindow::parseParams()
@@ -610,7 +610,9 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	infoLogo->setPixmap( QPixmap() );
+	infoLogo->setText( QString() );
+	signSigner->setText( QString() );
+
 	if( infoSignMobile->isChecked() )
 	{
 		infoStack->setCurrentIndex( 1 );
@@ -646,12 +648,16 @@ void MainWindow::showCardStatus()
 				s << "<font color=\"red\">" << tr("expired") << "</font>";
 
 			if( !c.isValid() || willExpire )
-				infoLogo->setPixmap( QPixmap() );
+			{
+				infoLogo->setText( QString(
+					"<p align=\"center\"><a href=\"openUtility\">"
+					"<img src=\":/images/warning.png\"><br />"
+					"<font color=\"red\">%1</font></a></p>" ).arg( "Open utility" ) );
+			}
 			else if( c.isTempel() )
-				infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
+				infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );
 			else
-				infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
-			utilityOpen->setVisible( !c.isValid() || willExpire );
+				infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
 
 			signSigner->setText( QString( "%1 %2 (%3)" )
 				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
@@ -659,17 +665,9 @@ void MainWindow::showCardStatus()
 				.arg( c.subjectInfo( "serialNumber" ) ) );
 		}
 		else if( !doc->activeCard().isEmpty() )
-		{
-			utilityOpen->setVisible( false );
 			content = tr("Loading data");
-			signSigner->setText( QString() );
-		}
 		else
-		{
-			utilityOpen->setVisible( false );
 			content = tr("No card in reader");
-			signSigner->setText( QString() );
-		}
 		infoCard->setText( content );
 	}
 

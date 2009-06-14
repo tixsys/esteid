@@ -43,7 +43,10 @@ SET( UIS
 	ui/Settings.ui
 	ui/SignatureDialog.ui
 	)
-SET( RCS rc/qdigidocclient.qrc )
+SET( RCS
+	${COMMON}/images/images.qrc
+	rc/qdigidocclient.qrc
+	)
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}

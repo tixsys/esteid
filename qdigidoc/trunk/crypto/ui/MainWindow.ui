@@ -67,7 +67,10 @@ QDialogButtonBox QPushButton, #home QPushButton
 { padding: 4px 7px; }
 
 QPushButton:hover, QPushButton:focus
-{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927); }
+{
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927);
+color: #00355F;
+}
 
 QPushButton:disabled
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }

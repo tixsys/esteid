@@ -67,8 +67,11 @@ QDialogButtonBox QPushButton,
 #home QPushButton, #utilityOpen
 { padding: 4px 7px; }
 
-QPushButton:hover
-{ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #9BB676, stop: 0.75 #80A84A); }
+QPushButton:hover, QPushButton:focus
+{
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #F1C157, stop:0.28 #FADF91, stop:1 #EBA927);
+color: #00355F;
+}
 
 QPushButton:disabled
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }
@@ -422,30 +425,6 @@ padding: 5px;
             </widget>
            </item>
           </layout>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="utilityLayout">
-        <item>
-         <spacer name="utilitySpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="utilityOpen">
-          <property name="text">
-           <string>Run ID-Card utility</string>
-          </property>
          </widget>
         </item>
        </layout>
