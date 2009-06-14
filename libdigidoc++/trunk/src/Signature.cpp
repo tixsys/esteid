@@ -607,8 +607,15 @@ digidoc::X509Cert digidoc::Signature::getSigningCertificate() const throw(Signat
     unsigned char * data = reinterpret_cast<unsigned char*>( const_cast<char*>( certBlock.data() ) );
     std::vector<unsigned char> x509Bytes(certBlock.size());
     std::copy(data, data+certBlock.size(), &x509Bytes[0]);
-    X509Cert cert(x509Bytes);
-    return cert;
+    try
+    {
+        X509Cert cert(x509Bytes);
+        return cert;
+    }
+    catch( const IOException &e )
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE( e, "Failed to read X509 certificate" );
+    }
 }
 
 /**
