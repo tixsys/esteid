@@ -122,6 +122,10 @@ SSLObj::~SSLObj()
 	PKCS11_release_all_slots(ctx, pslots, nslots);
 	PKCS11_CTX_unload(ctx);
 	PKCS11_CTX_free(ctx);
+
+	CRYPTO_cleanup_all_ex_data();
+	ERR_free_strings();
+	ERR_remove_state(0);
 }
 
 bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int reader )
