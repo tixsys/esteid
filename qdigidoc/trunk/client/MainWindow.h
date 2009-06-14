@@ -74,7 +74,7 @@ private:
 	void setCurrentPage( Pages page );
 
 	DigiDoc	*doc;
-	QTranslator *appTranslator, *qtTranslator;
+	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QHash<int,QString> lang;
 	QStringList params;
 

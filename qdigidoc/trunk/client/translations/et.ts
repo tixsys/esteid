@@ -5,7 +5,7 @@
     <name>CertificateDialog</name>
     <message>
         <source>Save certificate</source>
-        <translation>Salvesta sertifikaat</translation>
+        <translation type="obsolete">Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
@@ -13,83 +13,83 @@
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Salvestamine ebaõnnestus</translation>
+        <translation type="obsolete">Salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation>Sertifikaadi info:</translation>
+        <translation type="obsolete">Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation>Selle sertifikaadi otstarve on:</translation>
+        <translation type="obsolete">Selle sertifikaadi otstarve on:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation>Kellele väljastatud:</translation>
+        <translation type="obsolete">Kellele väljastatud:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation>Väljastaja:</translation>
+        <translation type="obsolete">Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation>Kehtiv alates</translation>
+        <translation type="obsolete">Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation>kuni</translation>
+        <translation type="obsolete">kuni</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Versioon</translation>
+        <translation type="obsolete">Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation>Seeria number</translation>
+        <translation type="obsolete">Seeria number</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation>Signatuuri algoritm</translation>
+        <translation type="obsolete">Signatuuri algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation>Väljaandja</translation>
+        <translation type="obsolete">Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation>Kehtiv kuni</translation>
+        <translation type="obsolete">Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation>Subjekt</translation>
+        <translation type="obsolete">Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Avalik võti</translation>
+        <translation type="obsolete">Avalik võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation>Sertifikaadi reeglid</translation>
+        <translation type="obsolete">Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Sertifikaat</translation>
+        <translation type="obsolete">Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Üldine</translation>
+        <translation type="obsolete">Üldine</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Detailid</translation>
+        <translation type="obsolete">Detailid</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation>Väli</translation>
+        <translation type="obsolete">Väli</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Väärtus</translation>
+        <translation type="obsolete">Väärtus</translation>
     </message>
     <message>
         <source>Save</source>
@@ -97,23 +97,23 @@
     </message>
     <message>
         <source>Certification Path</source>
-        <translation>Sertifitseermisahel</translation>
+        <translation type="obsolete">Sertifitseermisahel</translation>
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation>Sertifikaadi staatus:</translation>
+        <translation type="obsolete">Sertifikaadi staatus:</translation>
     </message>
     <message>
         <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation>Sertifikaadid (*.cer *.crt *.pem)</translation>
+        <translation type="obsolete">Sertifikaadid (*.cer *.crt *.pem)</translation>
     </message>
     <message>
         <source>Enhanched key usage</source>
-        <translation>Täiendatud võtme kasutus</translation>
+        <translation type="obsolete">Täiendatud võtme kasutus</translation>
     </message>
     <message>
         <source>Key usage</source>
-        <translation>Võtme kastus</translation>
+        <translation type="obsolete">Võtme kastus</translation>
     </message>
 </context>
 <context>
@@ -424,7 +424,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Run ID-Card utility</source>
-        <translation>Käivita ID-kaardi haldusvahend</translation>
+        <translation type="obsolete">Käivita ID-kaardi haldusvahend</translation>
     </message>
     <message>
         <source>File already in container</source>
@@ -510,60 +510,8 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <translation>PIN koodi sisestamine katkestati</translation>
     </message>
     <message>
-        <source>Proves your identity to a remote computer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Protects e-mail messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OCSP signing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
-    </message>
-    <message>
-        <source>Digital signature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non repudiation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key agreement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key certificate sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CRL sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encipher only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decipher only</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -578,7 +526,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Default values</source>
-        <translation>Vaikimisi väärtused</translation>
+        <translation type="obsolete">Vaikimisi väärtused</translation>
     </message>
     <message>
         <source>Role</source>
@@ -643,6 +591,30 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Save last insert role and resolution</source>
         <translation>Jäta viimati sisestatud roll ja resolutsioon meelde</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Üldine</translation>
+    </message>
+    <message>
+        <source>OCSP PKCS12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation type="unfinished">Allkiri</translation>
+    </message>
+    <message>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -45,6 +45,7 @@ SET( UIS
 	)
 SET( RCS
 	${COMMON}/images/images.qrc
+	${COMMON}/translations/tr.qrc
 	rc/qdigidocclient.qrc
 	)
 

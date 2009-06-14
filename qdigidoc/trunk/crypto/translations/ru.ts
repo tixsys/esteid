@@ -5,7 +5,7 @@
     <name>CertificateDialog</name>
     <message>
         <source>Save certificate</source>
-        <translation>Сохранить сертификат</translation>
+        <translation type="obsolete">Сохранить сертификат</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
@@ -13,105 +13,87 @@
     </message>
     <message>
         <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation>Сертификаты (*.pem *.crt *.cer)</translation>
+        <translation type="obsolete">Сертификаты (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Файл не был сохранён</translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translatorcomment>Информация о сертификате</translatorcomment>
-        <translation></translation>
+        <translation type="obsolete">Файл не был сохранён</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation>Предназначение сертификата:</translation>
+        <translation type="obsolete">Предназначение сертификата:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation>Выдан:</translation>
+        <translation type="obsolete">Выдан:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation>Выдано:</translation>
+        <translation type="obsolete">Выдано:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation>Действительно с</translation>
+        <translation type="obsolete">Действительно с</translation>
     </message>
     <message>
         <source>to</source>
-        <translation>до</translation>
+        <translation type="obsolete">до</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Версия</translation>
+        <translation type="obsolete">Версия</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation>Серийный номер</translation>
+        <translation type="obsolete">Серийный номер</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation>Алгоритм подписи</translation>
+        <translation type="obsolete">Алгоритм подписи</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation>Выдавший</translation>
+        <translation type="obsolete">Выдавший</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation>Действительно до</translation>
+        <translation type="obsolete">Действительно до</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation>Субъект</translation>
+        <translation type="obsolete">Субъект</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Открытый ключ</translation>
-    </message>
-    <message>
-        <source>Enhanched key usage</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Открытый ключ</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation>Правила сертификатов</translation>
-    </message>
-    <message>
-        <source>Key usage</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Правила сертификатов</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <translation type="obsolete">Сертификат</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Общее</translation>
+        <translation type="obsolete">Общее</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Детали</translation>
+        <translation type="obsolete">Детали</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation>Поле</translation>
+        <translation type="obsolete">Поле</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Значение</translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translatorcomment>Путь сертификата</translatorcomment>
-        <translation></translation>
+        <translation type="obsolete">Значение</translation>
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation>Статус сертификата:</translation>
+        <translation type="obsolete">Статус сертификата:</translation>
     </message>
 </context>
 <context>
@@ -366,7 +348,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>
-        <translation>Создание процесса &apos;qesteidutil&apos; неудачно</translation>
+        <translation type="obsolete">Создание процесса &apos;qesteidutil&apos; неудачно</translation>
     </message>
     <message>
         <source>Select documents</source>
@@ -554,63 +536,15 @@ For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to start process &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proves your identity to a remote computer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Protects e-mail messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OCSP signing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Digital signature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non repudiation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key agreement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key certificate sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CRL sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encipher only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decipher only</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,113 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
-    <name>CertificateDialog</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enhanched key usage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key usage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -311,10 +204,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Run ID-Card utility</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>I want to:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -448,58 +337,6 @@ p, li { white-space: pre-wrap; }
         <source>PIN acquisition canceled.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Proves your identity to a remote computer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Protects e-mail messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OCSP signing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Digital signature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Non repudiation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data encipherment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key agreement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key certificate sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CRL sign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encipher only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decipher only</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Settings</name>
@@ -544,10 +381,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Default values</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Role</source>
         <translation type="unfinished"></translation>
     </message>
@@ -573,6 +406,30 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Save last insert role and resolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Host</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

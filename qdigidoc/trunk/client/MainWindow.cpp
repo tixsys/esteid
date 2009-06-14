@@ -110,8 +110,10 @@ MainWindow::MainWindow( QWidget *parent )
 
 
 	appTranslator = new QTranslator( this );
+	commonTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
 	QApplication::instance()->installTranslator( appTranslator );
+	QApplication::instance()->installTranslator( commonTranslator );
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new DigiDoc( this );
@@ -402,6 +404,7 @@ void MainWindow::on_languages_activated( int index )
 {
 	SettingsValues().setValue( "Main/Language", lang[index] );
 	appTranslator->load( ":/translations/" + lang[index] );
+	commonTranslator->load( ":/translations/common_" + lang[index] );
 	qtTranslator->load( ":/translations/qt_" + lang[index] );
 	retranslateUi( this );
 	languages->setCurrentIndex( index );
