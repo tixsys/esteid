@@ -112,6 +112,9 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 
 void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 {
+	if ( !getFiles() )
+		return;
+
 	labelError->setText( mobileResults.value( "START" ) );
 	QByteArray message = "<IDCode xsi:type=\"xsd:String\">" + ssid + "</IDCode>"
 			"<PhoneNo xsi:type=\"xsd:String\">" + cell + "</PhoneNo>"
@@ -120,7 +123,7 @@ void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 			"<MessageToDisplay xsi:type=\"xsd:String\">DigiDoc3</MessageToDisplay>"
 			+ signature.toLatin1() +
 			"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
-			+ getFiles() +
+			+ files +
 			"<Format xsi:type=\"xsd:String\">DIGIDOC-XML</Format>"
 			"<Version xsi:type=\"xsd:String\">1.3</Version>"
 			"<SignatureID xsi:type=\"xsd:String\">S" + QByteArray::number( m_doc->signatures().size() ) + "</SignatureID>"
@@ -130,24 +133,30 @@ void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 	m_callBackList.insert( id, "startSessionResult" );
 }
 
-QByteArray MobileDialog::getFiles() const
+bool MobileDialog::getFiles()
 {
-	QByteArray message = "<DataFiles xsi:type=\"m:DataFileDigestList\">";
+	files = "<DataFiles xsi:type=\"m:DataFileDigestList\">";
 	int i = 0;
 	Q_FOREACH( digidoc::Document file, m_doc->documents() )
 	{
 		std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( URI_SHA1 );
-		std::vector<unsigned char> d = file.calcDigest( calc.get() );
+		std::vector<unsigned char> d;
+		try {
+			 d = file.calcDigest( calc.get() );
+		} catch( const digidoc::IOException &e ) {
+			labelError->setText( QString::fromStdString( e.getMsg() ) );
+			return false;
+		}
 		QByteArray digest( (char*)&d[0], d.size() );
-		message += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
+		files += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
 			"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"
 			"<DigestType xsi:type=\"xsd:String\">sha1</DigestType>"
 			"<DigestValue xsi:type=\"xsd:String\">" + digest.toBase64() + "</DigestValue>"
 			"</DataFileDigest>";
 		i++;
 	}
-	message += "</DataFiles>";
-	return message;
+	files += "</DataFiles>";
+	return true;
 }
 
 void MobileDialog::startSessionResult( const QDomElement &element )

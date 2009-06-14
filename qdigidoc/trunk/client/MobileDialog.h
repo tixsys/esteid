@@ -65,6 +65,7 @@ private:
 	QTimer *m_timer, *statusTimer;
 	QTime startTime;
 	QString signature;
+	QByteArray files;
 
     int sessionCode;
     QHash< int, QByteArray > m_callBackList;
@@ -72,6 +73,6 @@ private:
 
     void startSession();
 
-	QByteArray getFiles() const;
+	bool getFiles();
     QByteArray insertBody( MobileAction action, const QByteArray &body ) const;
 };
