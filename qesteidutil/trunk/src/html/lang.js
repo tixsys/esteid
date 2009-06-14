@@ -7,16 +7,16 @@ var helpUrl_ru = "http://support.sk.ee/ru/";
 
 //code: (est, eng, rus)
 var htmlStrings = {
-	"Active": new tr( "sertifikaadid on aktiivsed ja Mobiil-ID kasutamine on võimalik.", "active", "сертификаты активны, и использование Modiil-ID возможно." ),
-	"Not Active": new tr( "sertifikaadid on aktiveerimata, Mobiil-ID kasutamiseks on vajalik sertifikaatide aktiveerimine.", "not active", "сертификаты не активированы, для использования Mobiil-ID требуется активация сертификатов." ),
-	"Suspended": new tr( "sertifikaadid on peatatud, Mobiil-ID kasutamiseks on vajalik peatatuse lõpetamine.", "suspended", "сертификаты приостановлены, для использования Mobiil-ID следует их возобновить." ),
-	"Revoked": new tr( "sertifikaadid on tunnistatud kehtetuks. Mobiil-ID kasutamiseks on vajalik hankida operaatorilt uus Mobiil-ID SIM kaart.", "revoked", "сертификаты признаны недействительными. Для использования Mobiil-ID следует взять новую Mobiil-ID SIM карту у оператора." ),
-	"Unknown": new tr( "sertifikaadi olek teadmata.", "unknown", "состояние сертификата неизвестно." ),
-	"Expired": new tr( "sertifikaadid on aegunud. Vajalik on operaatorilt uue SIM kaardi hankimine.", "expired", "сертификаты устарели. У оператора следует взять новую SIM карту." ),
-	"mobileNoCert": new tr( "Kasutajal puuduvad Mobiil-ID sertifikaadid!", "mobile no cert", "Упользователя отсутствуют сертивикаты Mobiil-ID!" ),
-	"mobileNotActive": new tr( "Kasutaja ID-kaardi sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "mobile not active", "Пользовательские сертификаты ID-карты неактивны, получение информации невозможно!" ),
-	"mobileInternalError": new tr( "Teenuse sisemine viga!", "mobile internal error", "Внутренняя ошибка услуги!" ),
-	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "mobile interface not ready", "Интерфейс ещё не работает!" ),
+	"Active": new tr( "sertifikaadid on aktiivsed ja Mobiil-ID kasutamine on võimalik.", "certificates are active and Mobile-ID is usable.", "сертификаты активны, и использование Modiil-ID возможно." ),
+	"Not Active": new tr( "sertifikaadid on aktiveerimata, Mobiil-ID kasutamiseks on vajalik sertifikaatide aktiveerimine.", "certificates are inactive, to use Mobile-ID certificates must be activated.", "сертификаты не активированы, для использования Mobiil-ID требуется активация сертификатов." ),
+	"Suspended": new tr( "sertifikaadid on peatatud, Mobiil-ID kasutamiseks on vajalik peatatuse lõpetamine.", "certificates are suspended. To use Mobile-Id these must be active.", "сертификаты приостановлены, для использования Mobiil-ID следует их возобновить." ),
+	"Revoked": new tr( "sertifikaadid on tunnistatud kehtetuks. Mobiil-ID kasutamiseks on vajalik hankida operaatorilt uus Mobiil-ID SIM kaart.", "certificates are revoked. To use Mobile-ID, a new SIM card must be requested from service provider.", "сертификаты признаны недействительными. Для использования Mobiil-ID следует взять новую Mobiil-ID SIM карту у оператора." ),
+	"Unknown": new tr( "sertifikaadi olek teadmata.", "certificates status is unknown", "состояние сертификата неизвестно." ),
+	"Expired": new tr( "sertifikaadid on aegunud. Vajalik on operaatorilt uue SIM kaardi hankimine.", "certificates are expired. New SIM card has to be requested from Service provider.", "сертификаты устарели. У оператора следует взять новую SIM карту." ),
+	"mobileNoCert": new tr( "Kasutajal puuduvad Mobiil-ID sertifikaadid!", "User has no Mobile-ID certificates.", "Упользователя отсутствуют сертивикаты Mobiil-ID!" ),
+	"mobileNotActive": new tr( "Kasutaja Mobiil-id sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "Mobile-id not active. Not possible to display info.", "Пользовательские сертификаты ID-карты неактивны, получение информации невозможно!" ),
+	"mobileInternalError": new tr( "Teenuse sisemine viga!", "Service internal error!", "Внутренняя ошибка услуги!" ),
+	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "Mobile interface not ready!", "Интерфейс ещё не работает!" ),
 	
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
