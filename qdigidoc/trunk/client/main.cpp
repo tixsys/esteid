@@ -34,6 +34,10 @@ int main( int argc, char *argv[] )
 	a.setOrganizationDomain( DOMAINURL );
 	a.setOrganizationName( ORG );
 	a.setStyleSheet( "QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }" );
+	QPalette p = a.palette();
+	p.setBrush( QPalette::Link, QBrush( "#509B00" ) );
+	p.setBrush( QPalette::LinkVisited, QBrush( "#509B00" ) );
+	a.setPalette( p );
 
 	MainWindow m;
 	m.show();
