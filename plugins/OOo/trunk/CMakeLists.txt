@@ -5,8 +5,14 @@ SET (SDKVERSION "3.0")
 SET (BUILDID "300m15(Build:9379)")
 SET (COMP_NAME "OOoDigiDocPlugin")
 
-SET (OS "WIN")
-#SET (OS "LINUX")
+
+
+IF (WIN32)
+	SET (OS "WIN")
+ENDIF (WIN32)
+IF(UNIX)
+	SET (OS "LINUX")
+ENDIF(UNIX)
 
 #set(CMAKE_BUILD_TYPE Debug)
 project (${COMP_NAME})

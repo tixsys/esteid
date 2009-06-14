@@ -103,14 +103,6 @@ using com::sun::star::view::XSelectionSupplier;
 using namespace com::sun::star::system;
 using com::sun::star::presentation::XPresentation;
 
-#ifdef _WIN32
-#define UNO_URL_HEAD "file:///"
-#define SLASH "/"
-#else
-#define UNO_URL_HEAD "file://"
-#define SLASH ""
-#endif
-
 
 
 //--Global Variables--
@@ -280,7 +272,7 @@ PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);
 		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 		rGlobalDispatchHelper = rDispatchHelper;
 PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
-		if ((m_BdocBridge1->ret < 100) && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
+		if (m_BdocBridge1->ret < 100)// && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
 		{
 			//------------Fix sign data string from returned data---------		
 			strSignData = "";
@@ -411,22 +403,16 @@ PRINT_DEBUG("Signature Data: %s",strSignData.c_str());
 
 			// dispose the local service manager
 			//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
-/*	
-			//-------------Open Signature Viewer Macro------------------------
-			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
-			Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
-			Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
 
-			Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-*/		//----------------------------------------------------------------
+		//----------------------------------------------------------------
 		}
-		else if (m_BdocBridge1->ret && (m_BdocBridge1->ret<100))//validation failed -> All signatures invalid
+/*		else if (m_BdocBridge1->ret && (m_BdocBridge1->ret<100))//validation failed -> All signatures invalid
 		{
 			//Change Statusbar
 			pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab ainult kehtetuid või aegunud allkirju!)";
 			//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
 			//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
-		}
+		}*/
 		else if (m_BdocBridge1->ret >= 10000)
 		{
 			//Change Statusbar
@@ -669,7 +655,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				//			strTempFileUrl += m_BdocBridge->pRetPath;
 				
 				//------------Fix sign data string from returned data---------			
-				if ((m_BdocBridge->ret < 100) && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
+				if (m_BdocBridge->ret < 100)// && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
 				{// Container has at least one valid signature
 					strSignData = "";
 					int k,l,m,n,o,p,q,r;
@@ -775,16 +761,17 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					}
 					strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
 					//------------------------------------------------------------
-					//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ASCII_US);//
+/*					//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ASCII_US);//
 					oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
 					//oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) osSignData.pData->buffer);
 					oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
+*/					//OBS! Call in function instead of thread. Threads may delay and mess with dialog order					
 					//-------------Open Signature Viewer Macro------------------------
-/*					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 					Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
 	 
 					Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-*/				//----------------------------------------------------------------
+				//----------------------------------------------------------------
 				}
 							
 //printf("macro returns: %s\n",muff.pData->buffer);				

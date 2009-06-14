@@ -184,9 +184,10 @@ int My1EstEIDSigner::initData()
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
+		
 
 	#ifdef _WIN32
+		string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		HKEY hkey;
 		DWORD dwSize;
 		TCHAR tcConfPath[1024];
@@ -198,9 +199,11 @@ int My1EstEIDSigner::initData()
 		}
 		conf = "BDOCLIB_CONF_XML=";
 		conf += tcConfPath;
-	#endif
-
 		putenv(conf.c_str());
+	#else
+		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
+		putenv(conf);	
+	#endif		
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
 
