@@ -117,7 +117,7 @@ EstEIDPluginInstance::EstEIDPluginInstance(NPP aInstance) : nsPluginInstanceBase
 EstEIDPluginInstance::~EstEIDPluginInstance()
 {
   ESTEID_DEBUG("~EstEIDPluginInstance()\n");
-  // NS_IF_RELEASE(mScriptablePeer);
+  NS_IF_RELEASE(mScriptablePeer);
 }
 
 
@@ -127,7 +127,7 @@ NPBool EstEIDPluginInstance::initXPCOM() {
   if (gServiceManager) {
     ESTEID_DEBUG("EstEIDPluginInstance: Trying to aquire %s\n", NS_ESTEID_CONTRACTID);
     gServiceManager->GetServiceByContractID(NS_ESTEID_CONTRACTID,
-        NS_GET_IID(nsIEstEID), (void **)getter_AddRefs(mScriptablePeer));
+        NS_GET_IID(nsIEstEID), (void **)&mScriptablePeer);
     if(mScriptablePeer) {
         nsCString ver;
         mScriptablePeer->GetVersion(ver);
