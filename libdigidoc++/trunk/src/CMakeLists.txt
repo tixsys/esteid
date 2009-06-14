@@ -105,7 +105,7 @@ target_link_libraries(digidocpp
     ${EXTRA_LIBS}
 )
 set_target_properties(digidocpp PROPERTIES
-                              VERSION 0.1.0
+                              VERSION 1.0.0
                               SOVERSION 0
                               OUTPUT_NAME digidoc++
                       )
