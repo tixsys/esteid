@@ -13,8 +13,8 @@
     <!--Trusted CA certs in PEM format-->
     <param name="cert.store.path">certs</param>
     <!--OCSP responder public certificate for validating OCSP response-->
-    <!--<param name="ocsp.certs.file">certs/sk-test-ocsp-responder-2005.pem</param>-->
-    <param name="ocsp.certs.file">certs/ESTEID-SK 2007 RESPONDER.pem</param>
+    <!--<param name="ocsp.certs.file">certs/TEST-SK OCSP 2005.pem</param>-->
+    <param name="ocsp.certs.file">certs/ESTEID-SK OCSP 2007.pem</param>
 
     <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
     <param name="xades.xsd.path">schema/XAdES.xsd</param>
