@@ -111,7 +111,8 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 SSLObj::SSLObj()
 {
 	ctx = PKCS11_CTX_new();
-	PKCS11_CTX_load(ctx, PKCS11_MODULE);
+	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
+		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
 }
 
 SSLObj::~SSLObj()
@@ -133,6 +134,8 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 	unsigned int ncerts;
 
 	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
+	if ( result )
+		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
 
 	if ( (unsigned int)reader*4 > nslots )
 		throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );

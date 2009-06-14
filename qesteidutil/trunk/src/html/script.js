@@ -424,6 +424,8 @@ function handleError(msg)
 	if ( msg == "PIN1InvalidRetry" )
 	{
 		var ret = esteidData.getPin1RetryCount();
+		if ( ret == -1 || ret > 3 )
+			return;
 		alert( _( msg ).replace( /%d/, ret ) );
 		if ( ret == 0 )
 			readCardData();
@@ -541,9 +543,13 @@ function changePin( type )
 			document.getElementById('pin' + type + 'OldPin').value = "";
 			document.getElementById('pin' + type + 'NewPin').value = "";
 			document.getElementById('pin' + type + 'NewPin2').value = "";
-			alert( _("PIN" + type + "Blocked") );
-			readCardData();
-			setActive('cert','');
+			if ( ret == 0 )
+			{
+				alert( _("PIN" + type + "Blocked") );
+				readCardData();
+				setActive('cert','');
+			} else
+				alert( _("PIN" + type + "ValidateFailed") );
 			return;
 		}
 		alert( _( 'PIN' + type + 'InvalidRetry' ).replace( /%d/, ret ) );
@@ -620,15 +626,19 @@ function changePinPUK( type )
 	}
 	if ( !esteidData.validatePuk(oldVal) )
 	{
-		ret = ret = esteidData.getPukRetryCount();
+		ret = esteidData.getPukRetryCount();
 		if ( ret == 0 || ret > 3 )
 		{
 			document.getElementById('ppin' + type + 'OldPin').value = "";
 			document.getElementById('ppin' + type + 'NewPin').value = "";
 			document.getElementById('ppin' + type + 'NewPin2').value = "";
-			alert( _("PUKBlocked") );
-			readCardData();
-			setActive('cert','');
+			if ( ret == 0 )
+			{
+				alert( _("PUKBlocked") );
+				readCardData();
+				setActive('cert','');
+			} else
+				alert( _("PUKValidateFailed") );
 			return;
 		}
 		alert( _('PUKInvalidRetry').replace( /%d/, ret ) );

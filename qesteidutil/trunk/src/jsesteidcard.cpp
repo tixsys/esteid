@@ -88,12 +88,11 @@ void JsEsteidCard::reloadData() {
         comment2 = tmp[EstEidCard::COMMENT2].c_str();
         comment3 = tmp[EstEidCard::COMMENT3].c_str();
         comment4 = tmp[EstEidCard::COMMENT4].c_str();
-    } catch (runtime_error &err ) {
-//        doShowError(err);
+
+		m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
+	} catch (runtime_error &err ) {
         cout << "Error: " << err.what() << endl;
     }
-
-	m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
 }
 
 bool JsEsteidCard::canReadCard()
@@ -111,8 +110,7 @@ bool JsEsteidCard::validatePin1(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->validateAuthPin(oldVal.toStdString(),
-                                     retriesLeft);
+		return m_card->validateAuthPin(oldVal.toStdString(), retriesLeft);
     } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
@@ -131,10 +129,10 @@ bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->changeAuthPin(newVal.toStdString(),
+		return m_card->changeAuthPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
-    } catch(AuthError &) {
+	} catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -152,7 +150,7 @@ bool JsEsteidCard::validatePin2(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->validateSignPin(oldVal.toStdString(),
+		return m_card->validateSignPin(oldVal.toStdString(),
 										retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -172,10 +170,10 @@ bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->changeSignPin(newVal.toStdString(),
+		return m_card->changeSignPin(newVal.toStdString(),
                                      oldVal.toStdString(),
                                      retriesLeft);
-    } catch(AuthError &) {
+	} catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -193,7 +191,7 @@ bool JsEsteidCard::validatePuk(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->validatePuk(oldVal.toStdString(),
+		return m_card->validatePuk(oldVal.toStdString(),
                                      retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -213,7 +211,7 @@ bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-        return m_card->changePUK(newVal.toStdString(),
+		return m_card->changePUK(newVal.toStdString(),
                                  oldVal.toStdString(),
                                  retriesLeft);
     } catch(AuthError &) {
@@ -234,7 +232,7 @@ bool JsEsteidCard::unblockPin1(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
-        return m_card->unblockAuthPin(newVal.toStdString(),
+		return m_card->unblockAuthPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
     } catch(AuthError &) {
@@ -255,10 +253,10 @@ bool JsEsteidCard::unblockPin2(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
-        return m_card->unblockSignPin(newVal.toStdString(),
+		return m_card->unblockSignPin(newVal.toStdString(),
                                       puk.toStdString(),
                                       retriesLeft);
-    } catch(AuthError &) {
+	} catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
         handleError(err.what());
@@ -351,7 +349,9 @@ int JsEsteidCard::getPin1RetryCount()
     if (!m_card)
         return -1;
     
-	byte puk,pinAuth,pinSign;
+	byte puk = -1;
+	byte pinAuth = -1;
+	byte pinSign = -1;
 
 	try {
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
@@ -367,8 +367,10 @@ int JsEsteidCard::getPin2RetryCount()
     if (!m_card)
         return -1;
 
-    byte puk,pinAuth,pinSign;
-	
+	byte puk = -1;
+	byte pinAuth = -1;
+	byte pinSign = -1;
+
 	try {
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
@@ -383,7 +385,9 @@ int JsEsteidCard::getPukRetryCount()
     if (!m_card)
         return -1;
 
-    byte puk,pinAuth,pinSign;
+	byte puk = -1;
+	byte pinAuth = -1;
+	byte pinSign = -1;
 
 	try {
 		m_card->getRetryCounts(puk,pinAuth,pinSign);

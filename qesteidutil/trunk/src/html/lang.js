@@ -163,6 +163,7 @@ var eidStrings = {
 	"PIN1UnblockSuccess": new tr( "PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN1 changed and you current sertificates blocking has been removed!", "PIN1 код изменён и сертификат разблокирован!" ),
 	"PIN1Blocked": new tr( "PIN1 blokeeritud.", "PIN1 blocked", "PIN1 заблокирован." ),
 	"PIN1NewOldSame": new tr( "Vana ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "Старый и новый PIN1 должны отличаться!" ),
+	"PIN1ValidateFailed": new tr( "PIN1 koodi valideerimine ebaõnnestus", "PIN1 validation failed", "" ),
 
 	"PIN2Enter": new tr( "Sisesta vana PIN2 kood", "Current PIN2 code", "Введите старый PIN2 код" ),
 	"PIN2Length": new tr( "PIN2 pikkus peab olema 5-12 numbrit", "PIN2 length has to be between 5 and 12", "Длина PIN2 должна быть 5-12 номера" ),
@@ -177,6 +178,7 @@ var eidStrings = {
 	"PIN2UnblockSuccess": new tr( "PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN2 changed and you current sertificates blocking has been removed!", "PIN2 код изменён и сертификат разблокирован!" ),
 	"PIN2Blocked": new tr( "PIN2 blokeeritud.", "PIN2 blocked", "PIN2 заблокирован." ),
 	"PIN2NewOldSame": new tr( "Vana ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "Старый и новый PIN2 должны отличаться!" ),
+	"PIN2ValidateFailed": new tr( "PIN2 koodi valideerimine ebaõnnestus", "PIN2 validation failed", "" ),
 
 	"PUKEnter": new tr( "Sisesta PUK kood.", "Enter PUK code.", "Введите PUK код" ),
 	"PUKLength": new tr( "PUK koodi pikkus peab olema 8-12 numbrit.", "PUK length has to be between 8 and 12.", "Длина PUK должна быть 8-12 номера" ),
@@ -188,13 +190,15 @@ var eidStrings = {
 	"PUKUnsuccess": new tr( "PUK koodi muutmine ebaõnnestus!", "Changing PUK failed!", "Смена PUK кода неудачна!" ),
 	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida 2 korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "PUK blocked", "PUK заблокирован." ),
-	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" )
+	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" ),
+	"PUKValidateFailed": new tr( "PUK koodi valideerimine ebaõnnestus", "PUK validation failed", "" )
 };
 
 function selectLanguage()
 {
 	var select = document.getElementById('headerSelect'); 
 	language = select.options[select.selectedIndex].value;
+	disableFields();
 	translateHTML();
 	readCardData();
 	extender.setLanguage( language );
