@@ -317,12 +317,6 @@ color: #71889A;
             <height>115</height>
            </size>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>387</width>
-            <height>115</height>
-           </size>
-          </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <widget class="QLabel" name="infoCard">
@@ -515,22 +509,18 @@ For encryption Sertifitseerimiskeskus' LDAP service ise used, to search for reci
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="introButtonLayout">
-            <item>
-             <widget class="QCheckBox" name="introCheck">
-              <property name="text">
-               <string>Yes, I will use ID-card certificate only for secure transfer</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDialogButtonBox" name="introButtons">
-              <property name="standardButtons">
-               <set>QDialogButtonBox::Cancel</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QCheckBox" name="introCheck">
+            <property name="text">
+             <string>Yes, I will use ID-card certificate only for secure transfer</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDialogButtonBox" name="introButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -694,8 +684,8 @@ For encryption Sertifitseerimiskeskus' LDAP service ise used, to search for reci
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>100</width>
-                  <height>30</height>
+                  <width>33</width>
+                  <height>16</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="viewKeysLayout">
