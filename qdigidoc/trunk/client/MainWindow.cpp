@@ -22,7 +22,6 @@
 
 #include "MainWindow.h"
 
-#include "common/Common.h"
 #include "common/IKValidator.h"
 #include "common/SslCertificate.h"
 
@@ -65,6 +64,10 @@ MainWindow::MainWindow( QWidget *parent )
 #else
 	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
 #endif
+
+	signContentView->setColumnHidden( 2, true );
+	viewContentView->setColumnHidden( 3, true );
+
 
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
@@ -369,35 +372,6 @@ void MainWindow::enableSign()
 	signButton->setEnabled( !cardOwnerSignature );
 }
 
-void MainWindow::loadDocuments( QTreeWidget *view )
-{
-	view->clear();
-	QList<digidoc::Document> docs = doc->documents();
-	Q_FOREACH( const digidoc::Document &file, docs )
-	{
-		QTreeWidgetItem *i = new QTreeWidgetItem( view );
-		QFileInfo info( QString::fromUtf8( file.getPath().data() ) );
-		i->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled );
-
-		i->setText( 0, info.fileName() );
-		i->setData( 0, Qt::ToolTipRole, info.fileName() );
-		i->setData( 0, Qt::UserRole, info.absoluteFilePath() );
-
-		i->setText( 1, Common::fileSize( info.size() ) );
-		i->setData( 1, Qt::TextAlignmentRole, Qt::AlignRight );
-		i->setData( 1, Qt::ForegroundRole, Qt::gray );
-
-		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
-		i->setData( 2, Qt::ToolTipRole, tr("Save") );
-		i->setData( 3, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
-		i->setData( 3, Qt::ToolTipRole, tr("Remove") );
-		view->addTopLevelItem( i );
-	}
-	QList<DigiDocSignature> list = doc->signatures();
-	view->setColumnHidden( 2, stack->currentIndex() == Sign );
-	view->setColumnHidden( 3, stack->currentIndex() == View || !list.isEmpty() );
-}
-
 void MainWindow::on_introCheck_stateChanged( int state )
 { SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
 
@@ -559,7 +533,8 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 	case Sign:
 	{
-		loadDocuments( signContentView );
+		signContentView->setContent( doc->documents() );
+		signContentView->setColumnHidden( 3, !doc->signatures().isEmpty() );
 
 		SettingsValues s;
 		s.beginGroup( "Main" );
@@ -578,7 +553,7 @@ void MainWindow::setCurrentPage( Pages page )
 	}
 	case View:
 	{
-		loadDocuments( viewContentView );
+		viewContentView->setContent( doc->documents() );
 
 		Q_FOREACH( SignatureWidget *w, viewSignatures->findChildren<SignatureWidget*>() )
 			w->deleteLater();

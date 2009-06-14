@@ -24,11 +24,15 @@
 
 #include <QTreeWidget>
 
+namespace digidoc{ class Document; }
+
 class TreeWidget : public QTreeWidget
 {
 	Q_OBJECT
 public:
     TreeWidget( QWidget *parent = 0 );
+
+	void setContent( const QList<digidoc::Document> &docs );
 
 protected:
 	QMimeData* mimeData( const QList<QTreeWidgetItem*> items ) const;

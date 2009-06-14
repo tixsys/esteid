@@ -77,11 +77,11 @@ void TreeWidget::setContent( const QList<CDocument> &docs )
 
 		i->setData( 2, Qt::DecorationRole, QPixmap(":/images/ico_save.png") );
 		i->setData( 2, Qt::ToolTipRole, tr("Save") );
-		i->setData( 2, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
+		i->setData( 2, Qt::SizeHintRole, QSize( 20, 20 ) );
 
 		i->setData( 3, Qt::DecorationRole, QPixmap(":/images/ico_delete.png") );
 		i->setData( 3, Qt::ToolTipRole, tr("Remove") );
-		i->setData( 3, Qt::TextAlignmentRole, (int)Qt::AlignRight|Qt::AlignVCenter );
+		i->setData( 3, Qt::SizeHintRole, QSize( 20, 20 ) );
 
 		addTopLevelItem( i );
 	}

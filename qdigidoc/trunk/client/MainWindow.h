@@ -70,7 +70,6 @@ private:
 	bool addFile( const QString &file );
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
-	void loadDocuments( QTreeWidget *view );
 	void parseParams();
 	void setCurrentPage( Pages page );
 
