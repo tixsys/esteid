@@ -49,8 +49,8 @@ private:
 	void run();
 
 	volatile bool terminate;
-	QMutex m;
+	QMutex m, selectLock;
 	QHash<QString,int> cards;
-	QString selectedCard;
+	QString selectedCard, select;
 	QSslCertificate auth;
 };

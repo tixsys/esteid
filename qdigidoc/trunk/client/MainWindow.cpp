@@ -68,6 +68,7 @@ MainWindow::MainWindow( QWidget *parent )
 
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+	connect( cards, SIGNAL(activated(QString)), SLOT(selectCard()) );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	viewSignaturesError->hide();
 
@@ -545,6 +546,12 @@ void MainWindow::parseParams()
 	params.clear();
 }
 
+void MainWindow::selectCard()
+{
+	infoCard->setText( tr("Loading data") );
+	infoLogo->setText( QString() );
+}
+
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
@@ -667,9 +674,7 @@ void MainWindow::showCardStatus()
 				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
 				.arg( c.subjectInfo( "serialNumber" ) ) );
 		}
-		else if( !doc->activeCard().isEmpty() )
-			content = tr("Loading data");
-		else
+		else if( doc->activeCard().isEmpty() )
 			content = tr("No card in reader");
 		infoCard->setText( content );
 	}

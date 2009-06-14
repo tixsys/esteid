@@ -44,8 +44,6 @@ void Poller::lock() { m.lock(); }
 
 void Poller::readCerts()
 {
-	Q_EMIT dataChanged( cards.keys(), selectedCard, QSslCertificate() );
-
 	int slot = cards[selectedCard];
 	X509 *cert;
 	findUsersCertificate( slot, &cert );
@@ -102,6 +100,21 @@ void Poller::run()
 
 			if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
 				selectedCard.clear();
+
+			selectLock.lock();
+			if( !select.isEmpty() && cards.contains( select ) )
+			{
+				selectedCard = select;
+				select.clear();
+				selectLock.unlock();
+				readCerts();
+			}
+			else
+			{
+				select.clear();
+				selectLock.unlock();
+			}
+
 			if( selectedCard.isEmpty() && !cards.isEmpty() )
 			{
 				selectedCard = cards.begin().key();
@@ -124,10 +137,9 @@ void Poller::run()
 
 void Poller::selectCard( const QString &card )
 {
-	m.lock();
-	selectedCard = card;
-	readCerts();
-	m.unlock();
+	selectLock.lock();
+	select = card;
+	selectLock.unlock();
 }
 
 void Poller::unlock() { m.unlock(); }

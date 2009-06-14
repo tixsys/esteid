@@ -43,6 +43,7 @@ private Q_SLOTS:
 	void on_languages_activated( int index );
 	void on_settings_clicked();
 	void parseLink( const QString &link );
+	void selectCard();
 	void showCardStatus();
 	void showWarning( const QString &msg );
 	void viewAction( const QModelIndex &index );

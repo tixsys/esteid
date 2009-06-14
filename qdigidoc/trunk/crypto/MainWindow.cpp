@@ -60,6 +60,7 @@ MainWindow::MainWindow( QWidget *parent )
 
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
+	connect( cards, SIGNAL(activated(QString)), SLOT(selectCard()) );
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
@@ -89,9 +90,9 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new CryptDoc( this );
+	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)), Qt::QueuedConnection );
 	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
-	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 
 	lang[0] = "et";
 	lang[1] = "en";
@@ -466,6 +467,12 @@ void MainWindow::removeKey( int id )
 	setCurrentPage( View );
 }
 
+void MainWindow::selectCard()
+{
+	infoCard->setText( tr("Loading data") );
+	infoLogo->setText( QString() );
+}
+
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
@@ -546,9 +553,7 @@ void MainWindow::showCardStatus()
 		else
 			infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
 	}
-	else if( !doc->activeCard().isEmpty() )
-		content += tr("Loading data");
-	else
+	else if( doc->activeCard().isEmpty() )
 		content += tr("No card in reader");
 	infoCard->setText( content );
 
