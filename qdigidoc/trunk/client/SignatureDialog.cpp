@@ -32,32 +32,33 @@
 #include <QTextStream>
 
 SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
-:	QWidget( parent )
+:	QLabel( parent )
 ,	num( signnum )
 ,	s( signature )
 {
 	const SslCertificate cert = s.cert();
-	QLabel *c = new QLabel( this );
 	QString content;
 	QTextStream st( &content );
+
 	if( cert.isTempel() )
 		st << "<img src=\":/images/ico_stamp_blue_16.png\">";
 	else
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
+
 	st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
 		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b><br />";
 	st << s.location() << "<br />";
 	st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
 	st << tr("Signature is") << " " << ( s.isValid() ? tr("valid") : tr("not valid") );
-	c->setText( content );
 
-	QLabel *b = new QLabel( QString( "<a href=\"details\">%1</a><br /><a href=\"remove\">%2</a>" )
-		.arg( tr("Show details") ).arg( tr("Remove") ), this );
-	connect( b, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
+	st << "<p align=\"right\" style=\"margin: 0px\">";
+	st << "<a href=\"details\">" << tr("Show details") << "</a><br />";
+	st << "<a href=\"remove\">" << tr("Remove") << "</a>";
+	st << "</p>";
 
-	QVBoxLayout *v = new QVBoxLayout( this );
-	v->addWidget( c );
-	v->addWidget( b, 0, Qt::AlignRight );
+	setText( content );
+
+	connect( this, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
 }
 
 void SignatureWidget::link( const QString &url )

@@ -46,8 +46,8 @@ KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
 	connect( this, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
 	QString content;
 	QTextStream s( &content );
-	s << "<p>" << key.recipient << "</p>";
-	s << "<p align=\"right\">";
+	s << key.recipient;
+	s << "<p align=\"right\" style=\"margin: 0px\">";
 	s << "<a href=\"details\">" << tr("Show details") << "</a>";
 	if( !encrypted )
 	{

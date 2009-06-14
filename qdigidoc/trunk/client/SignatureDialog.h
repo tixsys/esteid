@@ -26,7 +26,7 @@
 
 #include "DigiDoc.h"
 
-class SignatureWidget: public QWidget
+class SignatureWidget: public QLabel
 {
 	Q_OBJECT
 
