@@ -176,17 +176,6 @@ class Application
 		
 		# Build cross-platform Qt-based components
 		
-		puts "Creating qdigidocclient..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../qdigidocclient/trunk').to_s) do
-			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
-			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command 'xcodebuild -project qdigidocclient.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
-		end
-		
-		run_command 'Skeleton/Make.rb -V -i ../../../qdigidocclient/trunk/Release/qdigidocclient'
-		
 		puts "Creating qesteidutil..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
@@ -198,16 +187,22 @@ class Application
 		
 		run_command 'Skeleton/Make.rb -V -i ../../../qesteidutil/trunk/Release/qesteidutil'
 		
-		puts "Creating qdigidoccrypto..." if @options.verbose
+		puts "Creating qdigidoc..." if @options.verbose
 		
-		FileUtils.cd(Pathname.new(@path).join('../../qdigidoccrypto/trunk').to_s) do
+		FileUtils.cd(Pathname.new(@path).join('../../qdigidoc/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command 'xcodebuild -project qdigidoccrypto.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
+			
+			puts "Creating qdigidocclient..." if @options.verbose
+			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
+			
+			puts "Creating qdigidoccrypto..." if @options.verbose
+			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
 		end
 		
-		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoccrypto/trunk/Release/qdigidoccrypto'
+		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoc/trunk/client/Release/qdigidocclient'
+		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoc/trunk/crypto/Release/qdigidoccrypto'
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
