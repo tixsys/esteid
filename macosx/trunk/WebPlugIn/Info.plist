@@ -42,7 +42,7 @@
 	<string>EstEIDWebService</string>
 	<key>WebPluginMIMETypes</key>
 	<dict>
-		<key>application/esteid-plugin</key>
+		<key>application/esteid</key>
 		<dict>
 			<key>WebPluginTypeDescription</key>
 			<string>EstEID Module</string>

@@ -16,10 +16,10 @@ nsIServiceManager * gServiceManager = NULL;
 
 // Unix needs this
 #ifdef XP_UNIX
-#define MIME_TYPES_HANDLED  "application/esteid-plugin"
+#define MIME_TYPES_HANDLED  "application/esteid"
 #define PLUGIN_NAME         "Estonian ID-Card Plugin for Mozilla"
 #define MIME_TYPES_DESCRIPTION  MIME_TYPES_HANDLED"::"PLUGIN_NAME
-#define PLUGIN_DESCRIPTION  PLUGIN_NAME " (XPCOM bridge)" 
+#define PLUGIN_DESCRIPTION  PLUGIN_NAME " (XPCOM bridge)"
 
 char* NPP_GetMIMEDescription(void)
 {
@@ -54,18 +54,18 @@ NPError NS_PluginInitialize()
   // this is probably a good place to get the service manager
   // note that Mozilla will add reference, so do not forget to release
   nsISupports * sm = NULL;
-  
+
   NPN_GetValue(NULL, NPNVserviceManager, &sm);
 
   // Mozilla returns nsIServiceManager so we can use it directly; doing QI on
-  // nsISupports here can still be more appropriate in case something is changed 
+  // nsISupports here can still be more appropriate in case something is changed
   // in the future so we don't need to do casting of any sort.
   if(sm) {
     sm->QueryInterface(NS_GET_IID(nsIServiceManager), (void**)&gServiceManager);
     NS_RELEASE(sm);
-    DEBUG("EstEIDPluginInstance: Service manager initialized\n");
+    ESTEID_DEBUG("EstEIDPluginInstance: Service manager initialized\n");
   }
-  
+
   return NPERR_NO_ERROR;
 }
 
@@ -111,13 +111,13 @@ EstEIDPluginInstance::EstEIDPluginInstance(NPP aInstance) : nsPluginInstanceBase
   mInitialized(FALSE),
   mScriptablePeer(NULL)
 {
-  DEBUG("EstEIDPluginInstance()\n");
+  ESTEID_DEBUG("EstEIDPluginInstance()\n");
 }
 
 EstEIDPluginInstance::~EstEIDPluginInstance()
 {
-  DEBUG("~EstEIDPluginInstance()\n");
-  NS_IF_RELEASE(mScriptablePeer);
+  ESTEID_DEBUG("~EstEIDPluginInstance()\n");
+  // NS_IF_RELEASE(mScriptablePeer);
 }
 
 
@@ -125,30 +125,30 @@ NPBool EstEIDPluginInstance::initXPCOM() {
   /* Get a pointer to EstEID XPCOM object so we can expose it
      for scripting */
   if (gServiceManager) {
-    DEBUG("EstEIDPluginInstance: Trying to aquire %s\n", NS_ESTEID_CONTRACTID);
+    ESTEID_DEBUG("EstEIDPluginInstance: Trying to aquire %s\n", NS_ESTEID_CONTRACTID);
     gServiceManager->GetServiceByContractID(NS_ESTEID_CONTRACTID,
-        NS_GET_IID(nsIEstEID), (void **)&mScriptablePeer);
+        NS_GET_IID(nsIEstEID), (void **)getter_AddRefs(mScriptablePeer));
     if(mScriptablePeer) {
         nsCString ver;
         mScriptablePeer->GetVersion(ver);
-        DEBUG("EstEIDPluginInstance: Loaded EstEID XPCOM version %s\n", ver.get());
+        ESTEID_DEBUG("EstEIDPluginInstance: Loaded EstEID XPCOM version %s\n", ver.get());
         return TRUE;
     } else {
-      DEBUG("EstEIDPluginInstance: Failed to load EstEID XPCOM component\n");
+      ESTEID_DEBUG("EstEIDPluginInstance: Failed to load EstEID XPCOM component\n");
       return FALSE;
     }
   } else {
-    DEBUG("EstEIDPluginInstance: No Service manager available\n");
+    ESTEID_DEBUG("EstEIDPluginInstance: No Service manager available\n");
     return FALSE;
   }
 }
 
 NPBool EstEIDPluginInstance::init(NPWindow* aWindow)
 {
-  DEBUG("EstEIDPluginInstance::init()\n");
-  /* if(aWindow == NULL)
+  ESTEID_DEBUG("EstEIDPluginInstance::init()\n");
+  // FIXME: Is this needed?
+  if(aWindow == NULL)
     return FALSE;
-  */
 
   mInitialized = TRUE;
   return TRUE;
@@ -156,13 +156,13 @@ NPBool EstEIDPluginInstance::init(NPWindow* aWindow)
 
 void EstEIDPluginInstance::shut()
 {
-  DEBUG("EstEIDPluginInstance::shut()\n");
+  ESTEID_DEBUG("EstEIDPluginInstance::shut()\n");
   mInitialized = FALSE;
 }
 
 NPBool EstEIDPluginInstance::isInitialized()
 {
-  DEBUG("EstEIDPluginInstance::isInitialized()\n");
+  ESTEID_DEBUG("EstEIDPluginInstance::isInitialized()\n");
   return mInitialized;
 }
 
@@ -171,7 +171,7 @@ NPBool EstEIDPluginInstance::isInitialized()
 // ==============================
 //
 // here the plugin is asked by Mozilla to tell if it is scriptable
-// we should return a valid interface id and a pointer to 
+// we should return a valid interface id and a pointer to
 // nsScriptablePeer interface which we should have implemented
 // and which should be defined in the corressponding *.xpt file
 // in the bin/components folder
@@ -181,20 +181,20 @@ NPError	EstEIDPluginInstance::GetValue(NPPVariable aVariable, void *aValue)
 
   switch (aVariable) {
     case NPPVpluginScriptableInstance: {
-      DEBUG("EstEIDPluginInstance::GetValue(NPPVpluginScriptableInstance)\n");
+      ESTEID_DEBUG("EstEIDPluginInstance::GetValue(NPPVpluginScriptableInstance)\n");
       if (mScriptablePeer) {
         // add reference for the caller requesting the object
         NS_ADDREF(mScriptablePeer);
         *(nsISupports **)aValue = mScriptablePeer;
       } else {
-        DEBUG("EstEID XPCOM not initialized\n");
+        ESTEID_DEBUG("EstEID XPCOM not initialized\n");
         rv = NPERR_OUT_OF_MEMORY_ERROR;
       }
     }
     break;
 
     case NPPVpluginScriptableIID: {
-      DEBUG("EstEIDPluginInstance::GetValue(NPPVpluginScriptableIID)\n");
+      ESTEID_DEBUG("EstEIDPluginInstance::GetValue(NPPVpluginScriptableIID)\n");
       static nsIID scriptableIID = NS_IESTEID_IID;
       nsIID* ptr = (nsIID *)NPN_MemAlloc(sizeof(nsIID));
       if (ptr) {
