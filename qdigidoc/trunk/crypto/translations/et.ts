@@ -749,7 +749,7 @@ Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te
     </message>
     <message>
         <source>Failed to start process &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Protsessi &apos;%1&apos; loomine ebaõnnestus</translation>
     </message>
 </context>
 <context>

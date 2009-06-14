@@ -538,7 +538,7 @@ For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for
     </message>
     <message>
         <source>Failed to start process &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Создание процесса &apos;%1&apos; неудачно</translation>
     </message>
 </context>
 <context>

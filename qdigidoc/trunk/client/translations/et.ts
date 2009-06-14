@@ -594,15 +594,15 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Üldine</translation>
+        <translation>Üldine</translation>
     </message>
     <message>
         <source>OCSP PKCS12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõend</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished">Allkiri</translation>
+        <translation>Allkiri</translation>
     </message>
     <message>
         <source>Proxy</source>
