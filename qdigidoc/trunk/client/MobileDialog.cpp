@@ -36,6 +36,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :   QDialog( parent )
 ,   m_doc( doc )
 ,   m_timer( 0 )
+,	statusTimer( 0 )
 ,   sessionCode( 0 )
 {
     setupUi( this );
@@ -45,6 +46,18 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
     m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
    //m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+
+	mobileResults[ "START" ] = tr( "Signing in process" );
+	mobileResults[ "REQUEST_OK" ] = tr( "Request accepted" );
+	mobileResults[ "EXPIRED_TRANSACTION" ] = tr( "Request timeout" );
+	mobileResults[ "USER_CANCEL" ] = tr( "User denied or cancelled" );
+	mobileResults[ "SIGNATURE" ] = tr( "Got signature" );
+	mobileResults[ "OUTSTANDING_TRANSACTION" ] = tr( "Request pending" );
+	mobileResults[ "MID_NOT_READY" ] = tr( "Mobile-ID not ready, try again later" );
+	mobileResults[ "PHONE_ABSENT" ] = tr( "Phone absent" );
+	mobileResults[ "SENDING_ERROR" ] = tr( "Request sending error" );
+	mobileResults[ "SIM_ERROR" ] = tr( "SIM error" );
+	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
 }
 
 void MobileDialog::sslErrors(const QList<QSslError> &)
@@ -94,11 +107,12 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 			"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
 			"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
 			"<Role xsi:type=\"xsd:String\">%5 / %6</Role>"
-			).arg( city ).arg( state ).arg( country ).arg( zip ).arg( role ).arg( role2 );
+			).arg( city ).arg( state ).arg( zip ).arg( country ).arg( role ).arg( role2 );
 }
 
 void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 {
+	labelError->setText( mobileResults.value( "START" ) );
 	QByteArray message = "<IDCode xsi:type=\"xsd:String\">" + ssid + "</IDCode>"
 			"<PhoneNo xsi:type=\"xsd:String\">" + cell + "</PhoneNo>"
 			"<Language xsi:type=\"xsd:String\">EST</Language>"
@@ -141,6 +155,14 @@ void MobileDialog::startSessionResult( const QDomElement &element )
     sessionCode=element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
     if ( sessionCode )
 	{
+		if ( !statusTimer )
+		{
+			statusTimer = new QTimer( this );
+			connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
+		}
+		startTime.start();
+		statusTimer->start( 1000 );
+
 		labelCode->setText( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() );
 		if ( !m_timer )
 		{
@@ -148,7 +170,8 @@ void MobileDialog::startSessionResult( const QDomElement &element )
 			connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
 		}
 		m_timer->start( 5000 );
-	}
+	} else
+		labelError->setText( mobileResults.value( element.elementsByTagName( "message" ).item(0).toElement().text().toLatin1() ) );
 }
 
 void MobileDialog::getSignStatus()
@@ -162,13 +185,17 @@ void MobileDialog::getSignStatus()
 void MobileDialog::getSignStatusResult( const QDomElement &element )
 {
 	QString status = element.elementsByTagName( "Status" ).item(0).toElement().text();
-	labelError->setText( status );
+	labelError->setText( mobileResults.value( status.toLatin1() ) );
 
 	//qDebug() << status << element.elementsByTagName( "Signature" ).item(0).toElement().text();
 
-	if ( status == "SIGNATURE" )
+	if ( status != "REQUEST_OK" && status != "OUTSTANDING_TRANSACTION" )
 	{
-        	m_timer->stop();
+		m_timer->stop();
+		statusTimer->stop();
+
+		if ( status != "SIGNATURE" )
+			return;
 
 		QTemporaryFile file( QString( "%1%2XXXXXX.xml" )
 							.arg( QDir::tempPath() ).arg( QDir::separator() ) );
@@ -254,4 +281,18 @@ QByteArray MobileDialog::insertBody( MobileAction maction, const QByteArray &bod
         "</SOAP-ENV:Body>"
     "</SOAP-ENV:Envelope>";
     return message;
+}
+
+void MobileDialog::updateStatus()
+{
+	if ( statusTimer && statusTimer->isActive() && startTime.isValid() )
+	{
+		signProgressBar->setValue( startTime.elapsed() / 1000 );
+		if ( signProgressBar->value() >= signProgressBar->maximum() )
+		{
+			m_timer->stop();
+			statusTimer->stop();
+			labelError->setText( mobileResults.value( "EXPIRED_TRANSACTION" ) );
+		}
+	}
 }

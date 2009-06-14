@@ -27,6 +27,7 @@
 #include <QHash>
 #include <QHttp>
 #include <QSslError>
+#include <QTime>
 #include <QTimer>
 
 #include "ui_MobileDialog.h"
@@ -51,6 +52,7 @@ private Q_SLOTS:
     void startSessionResult( const QDomElement &element );
     void getSignStatusResult( const QDomElement &element );
 	void getSignStatus();
+	void updateStatus();
 
 private:
     enum MobileAction {
@@ -60,11 +62,13 @@ private:
 
 	DigiDoc *m_doc;
 	QHttp *m_http;
-	QTimer *m_timer;
+	QTimer *m_timer, *statusTimer;
+	QTime startTime;
 	QString signature;
 
     int sessionCode;
     QHash< int, QByteArray > m_callBackList;
+	QHash< QByteArray, QString > mobileResults;
 
     void startSession();
 
