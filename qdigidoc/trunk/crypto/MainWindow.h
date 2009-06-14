@@ -56,7 +56,6 @@ private:
 	};
 	enum Buttons {
 		HomeCreate,
-		HomeOpenUtility,
 		HomeView,
 		IntroBack,
 		IntroNext,

@@ -182,10 +182,6 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
-	case HomeOpenUtility:
-		if( !QProcess::startDetached( "qesteidutil" ) )
-			showWarning( tr("Failed to start process 'qesteidutil'"), -1 );
-		break;
 	case HomeCreate:
 		if( SettingsValues().showIntro() )
 		{
@@ -248,7 +244,14 @@ void MainWindow::buttonClicked( int button )
 					break;
 				QString file = QString( doc->fileName() ).append( ".ddoc" );
 				if( doc->saveDDoc( file ) )
-					QProcess::startDetached( "qdigidocclient", QStringList() << file );
+				{
+#ifdef Q_OS_MAC
+					if( !QProcess::startDetached( "open", QStringList() << "-a" << "qdigidocclient" << file ) )
+#else
+					if( !QProcess::startDetached( "qdigidocclient", QStringList() << file ) )
+#endif
+						showWarning( tr("Failed to start process '%1'").arg( "qdigidocclient" ), -1 );
+				}
 			}
 		}
 		else
@@ -423,6 +426,15 @@ void MainWindow::parseLink( const QString &url )
 		for( int i = 0; i < m->rowCount(); ++i )
 			doc->saveDocument( i, dir );
 	}
+	else if( url == "openUtility" )
+	{
+#ifdef Q_OS_MAC
+		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
+#else
+		if( !QProcess::startDetached( "qesteidutil" ) )
+#endif
+			showWarning( tr("Failed to start process '%1'").arg( "qesteidutil" ), -1 );
+	}
 }
 
 void MainWindow::parseParams()
@@ -493,16 +505,12 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
+	infoLogo->setText( QString() );
 	QString content;
 	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
 	{
 		const SslCertificate c = doc->authCert();
 		QTextStream s( &content );
-
-		if( c.isTempel() )
-			infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
-		else
-			infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
 
 		s << tr("Name") << ": <font color=\"black\">"
 			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
@@ -522,6 +530,18 @@ void MainWindow::showCardStatus()
 		}
 		else
 			s << "<font color=\"red\">" << tr("expired") << "</font>";
+
+		if( !c.isValid() || willExpire )
+		{
+			infoLogo->setText( QString(
+				"<p align=\"center\"><a href=\"openUtility\">"
+				"<img src=\":/images/warning.png\"><br />"
+				"<font color=\"red\">%1</font></a></p>" ).arg( "Open utility" ) );
+		}
+		else if( c.isTempel() )
+			infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );
+		else
+			infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
 	}
 	else if( !doc->activeCard().isEmpty() )
 		content += tr("Loading data");

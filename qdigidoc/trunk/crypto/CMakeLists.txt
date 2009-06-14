@@ -39,7 +39,10 @@ SET( UIS
 	ui/MainWindow.ui
 	ui/Settings.ui
 	)
-SET( RCS rc/qdigidoccrypto.qrc )
+SET( RCS
+	${COMMON}/images/images.qrc
+	rc/qdigidoccrypto.qrc
+	)
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
