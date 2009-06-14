@@ -48,9 +48,6 @@ font: 12px &quot;Arial, Liberation Sans&quot;;
 { background-image: url(&quot;:/images/background.png&quot;); }
 
 /* widgets */
-QDialogButtonBox
-{ dialogbuttonbox-buttons-have-icons: 0; }
-
 QPushButton
 {
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #406A9E, stop: 0.75 #00355F);

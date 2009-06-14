@@ -33,6 +33,7 @@ int main( int argc, char *argv[] )
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	a.setOrganizationDomain( DOMAINURL );
 	a.setOrganizationName( ORG );
+	a.setStyleSheet( "QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }" );
 
 	MainWindow m;
 	m.show();
