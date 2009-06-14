@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=QDigiDocCrypto
+Name=Krüpto
 Exec=qdigidoccrypto %F
 Categories=Qt;Office;
 Icon=crypto_64.png
