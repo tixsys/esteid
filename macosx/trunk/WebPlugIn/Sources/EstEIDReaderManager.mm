@@ -191,7 +191,7 @@ NSString *EstEIDReaderRetryCounterPIN2 = @"pin2";
 {
 	if(EstEIDReaderManagerStateIsValid(self->m_state)) {
 		try {
-			return [CPlusStringToNSString(self->m_state->internal->getReaderName([self index])) retain];
+			return CPlusStringToNSString(self->m_state->internal->getReaderName([self index]));
 		}
 		catch(std::runtime_error err) {
 			NSLog(@"%@: Couldn't read reader name (reader=%d)", NSStringFromClass([self class]), [self index]);
