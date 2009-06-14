@@ -130,15 +130,15 @@ var htmlStrings = {
 //codes from eesti.ee
 var eestiStrings = {
 	"0":  new tr( "Toiming õnnestus", "Success", "Выполнение успешно!" ),
-	"1":  new tr( "ID-kaart pole väljastatud riiklikult tunnustatud sertifitseerija poolt.", "", "ID- карта не была выдана разрешённым сертифицирующим органом." ),
-	"2":  new tr( "Sisestati vale PIN-kood, katkestati PIN-koodi sisestamine, tekkisid probleemid sertifikaatidega või puudub ID-kaardi tugi brauseris.","", "Ввели неверный PIN код, прервали введение PIN кода, возникли проблемы с сертификатами или отсутствует поддержка ID- карты в браузере." ),
-	"3":  new tr( "ID-kaardi sertifikaat ei kehti.", "", "Сертификат ID- карты недействителен." ),
-	"4":  new tr( "Sisemine on lubatud ainult Eesti isikukoodiga.", "", "Вход разрешён только с эстонским личным кодом." ),
+	"1":  new tr( "ID-kaart pole väljastatud riiklikult tunnustatud sertifitseerija poolt.", "ID-card has not been published by locally recognized verification provider.", "ID- карта не была выдана разрешённым сертифицирующим органом." ),
+	"2":  new tr( "Sisestati vale PIN-kood, katkestati PIN-koodi sisestamine, tekkisid probleemid sertifikaatidega või puudub ID-kaardi tugi brauseris.","Wrong PIN was entered or cancelled, there was a problem with certificates or browser does not support ID-card.", "Ввели неверный PIN код, прервали введение PIN кода, возникли проблемы с сертификатами или отсутствует поддержка ID- карты в браузере." ),
+	"3":  new tr( "ID-kaardi sertifikaat ei kehti.", "ID-card certificate is not valid.", "Сертификат ID- карты недействителен." ),
+	"4":  new tr( "Sisemine on lubatud ainult Eesti isikukoodiga.", "Entrance is permitted only with Estonian personal code.", "Вход разрешён только с эстонским личным кодом." ),
 	"10": new tr( "Tundmatu viga.", "Unknown error", "Неизвестная ошибка." ),
-	"11": new tr( "KMA päringu tegemisel tekkis viga.", "" ,"В запросе КМА возникла ошибка." ),
-	"12": new tr( "Äriregistri päringu tegemisel tekkis viga.", "", "В запросе к Äriregister возникла ошибка." ),
+	"11": new tr( "KMA päringu tegemisel tekkis viga.", "There was an error with request to KMA." ,"В запросе КМА возникла ошибка." ),
+	"12": new tr( "Äriregistri päringu tegemisel tekkis viga.", "There was an error with request to Äriregister.", "В запросе к Äriregister возникла ошибка." ),
 	"20": new tr( "Ühtegi ametliku e-posti suunamist ei leitud.", "No official email forwarding adresses was found", "Не было найдено ни одной официальной пересылки эл. почты." ),
-	"21": new tr( "Teie e-posti konto on suletud. Avamiseks saatke palun e-kiri aadressil toimetaja@eesti.ee või helistage telefonil 663 0215.", "", "Ваша учётная запись эл. почты закрыта. Для открытия пошлите письмо на toimetaja@eesti.ee или звоните по телефону 663 0215." ),
+	"21": new tr( "Teie e-posti konto on suletud. Avamiseks saatke palun e-kiri aadressil toimetaja@eesti.ee või helistage telefonil 663 0215.", "Your email account has been blocked. To open it, please send an e-mail to toimetaja@eesti.ee or call 663 0215.", "Ваша учётная запись эл. почты закрыта. Для открытия пошлите письмо на toimetaja@eesti.ee или звоните по телефону 663 0215." ),
 	"22": new tr( "Vigane e-posti aadress.", "Invalid e-mail address", "Неверный адрес эл. почты." ),
 	"23": new tr( "Suunamine on salvestatud, ning Teile on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "Forwarding is activated and you have been sent an email with activation key. Forwarding will be activated only after confirming the key.", "Переадресация сохранена и Вам послано письмо с ключом активации. Переадресация активна только после введения ключа." )
 };
