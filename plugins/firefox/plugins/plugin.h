@@ -10,7 +10,9 @@
 #include "plugingate/pluginbase.h"
 #include "nsIEstEID.h"
 
-#define DEBUG printf
+#include <nsCOMPtr.h>
+
+#define ESTEID_DEBUG printf
 
 class EstEIDPluginInstance : public nsPluginInstanceBase
 {
@@ -32,7 +34,7 @@ public:
 private:
   NPP mInstance;
   NPBool mInitialized;
-  nsIEstEID* mScriptablePeer;
+  nsCOMPtr <nsIEstEID> mScriptablePeer;
 };
 
 #endif // __PLUGIN_H__
