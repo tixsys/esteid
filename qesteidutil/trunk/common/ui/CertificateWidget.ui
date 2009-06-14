@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Certificate</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#parameterContent { font: 10pt &quot;Liberation Mono, Courier New&quot;; }</string>
+  </property>
   <layout class="QVBoxLayout" name="WidgetLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -57,11 +60,6 @@
        </item>
        <item>
         <widget class="QPlainTextEdit" name="parameterContent">
-         <property name="font">
-          <font>
-           <family>Courier</family>
-          </font>
-         </property>
          <property name="readOnly">
           <bool>true</bool>
          </property>
