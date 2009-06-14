@@ -73,6 +73,8 @@ MainWindow::MainWindow( QWidget *parent )
 
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
 	connect( infoMobileCode, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
+	connect( infoMobileCell, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
+	connect( infoSignMobile, SIGNAL(toggled(bool)), SLOT(showCardStatus()) );
 
 	connect( signContentView, SIGNAL(clicked(QModelIndex)),
 		SLOT(viewAction(QModelIndex)) );
@@ -119,25 +121,29 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	doc->init();
 
+	SettingsValues s;
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
 	lang[0] = "et";
 	lang[1] = "en";
 	lang[2] = "ru";
 	on_languages_activated( lang.key(
-		SettingsValues().value( "Main/Language", "et" ).toString() ) );
+		s.value( "Main/Language", "et" ).toString() ) );
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
 		args.removeAt( 0 );
 		params = args;
-		if( SettingsValues().showIntro() )
+		if( s.showIntro() )
 			setCurrentPage( Intro );
 		else
 			parseParams();
 	}
-	digidoc::XmlConf::getInstance()->setProxyPort( SettingsValues().value( "Main/proxyPort" ).toString().toStdString() );
-	digidoc::XmlConf::getInstance()->setProxyHost( SettingsValues().value( "Main/proxyHost" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setProxyPort( s.value( "Main/proxyPort" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setProxyHost( s.value( "Main/proxyHost" ).toString().toStdString() );
+
+	infoMobileCell->setText( s.value( "Main/MobileNumber" ).toString() );
+	infoMobileCode->setText( s.value( "Main/MobileCode" ).toString() );
 }
 
 bool MainWindow::addFile( const QString &file )
@@ -340,6 +346,13 @@ void MainWindow::dropEvent( QDropEvent *e )
 void MainWindow::enableSign()
 {
 	bool mobile = infoSignMobile->isChecked();
+
+	if( mobile )
+	{
+		signSigner->setText( QString( "%1 (%2)" )
+			.arg( infoMobileCell->text() ).arg( infoMobileCode->text() ) );
+	}
+
 	if( doc->isNull() ||
 		(mobile && !IKValidator::isValid( infoMobileCode->text() )) ||
 		(!mobile && !doc->signCert().isValid()) )
@@ -405,26 +418,6 @@ void MainWindow::on_languages_activated( int index )
 	signButton->setText( tr("Sign") );
 	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
-}
-
-void MainWindow::on_infoSignMobile_toggled( bool checked )
-{
-	infoStack->setCurrentIndex( checked ? 1 : 0 );
-	if( checked )
-	{
-		infoLogo->setPixmap( QPixmap() );
-		if ( infoMobileCell->text().isEmpty() || infoMobileCode->text().isEmpty() )
-		{
-			SettingsValues s;
-			s.beginGroup( "Main" );
-			infoMobileCell->setText( s.value( "MobileNumber" ).toString() );
-			infoMobileCode->setText( s.value( "MobileCode" ).toString() );
-			s.endGroup();
-		}
-		enableSign();
-	}
-	else
-		showCardStatus();
 }
 
 void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
@@ -617,63 +610,75 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	QString content;
-	if( !doc->activeCard().isEmpty() && !doc->signCert().isNull() )
+	infoLogo->setPixmap( QPixmap() );
+	if( infoSignMobile->isChecked() )
 	{
-		const SslCertificate c = doc->signCert();
-		QTextStream s( &content );
-
-		if( c.isTempel() )
-			infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
-		else
-			infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
-
-		s << tr("Name") << ": <font color=\"black\">"
-			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
-			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
-		s << tr("Personal code") << ": <font color=\"black\">"
-			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-		s << tr("Card in reader") << ": <font color=\"black\">"
-			<< doc->activeCard() << "</font><br />";
-
-		bool willExpire = c.expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
-		s << tr("Sign certificate is") << " ";
-		if( doc->signCert().isValid()  )
-		{
-			s << "<font color=\"green\">" << tr("valid") << "</font>";
-			if( willExpire )
-				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
-		}
-		else
-			s << "<font color=\"red\">" << tr("expired") << "</font>";
-		utilityOpen->setVisible( !c.isValid() || willExpire );
-
-		signSigner->setText( QString( "%1 %2 (%3)" )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) ) );
-	}
-	else if( !doc->activeCard().isEmpty() )
-	{
-		utilityOpen->setVisible( false );
-		content = tr("Loading data");
-		signSigner->setText( QString() );
+		infoStack->setCurrentIndex( 1 );
+		signSigner->setText( QString( "%1 (%2)" )
+			.arg( infoMobileCell->text() ).arg( infoMobileCode->text() ) );
 	}
 	else
 	{
-		utilityOpen->setVisible( false );
-		content = tr("No card in reader");
-		signSigner->setText( QString() );
-	}
+		infoStack->setCurrentIndex( 0 );
+		QString content;
+		if( !doc->activeCard().isEmpty() && !doc->signCert().isNull() )
+		{
+			const SslCertificate c = doc->signCert();
+			QTextStream s( &content );
 
-	infoCard->setText( content );
+			s << tr("Name") << ": <font color=\"black\">"
+				<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
+				<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+			s << tr("Personal code") << ": <font color=\"black\">"
+				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+			s << tr("Card in reader") << ": <font color=\"black\">"
+				<< doc->activeCard() << "</font><br />";
+
+			bool willExpire = c.expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
+			s << tr("Sign certificate is") << " ";
+			if( doc->signCert().isValid()  )
+			{
+				s << "<font color=\"green\">" << tr("valid") << "</font>";
+				if( willExpire )
+					s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
+			}
+			else
+				s << "<font color=\"red\">" << tr("expired") << "</font>";
+
+			if( !c.isValid() || willExpire )
+				infoLogo->setPixmap( QPixmap() );
+			else if( c.isTempel() )
+				infoLogo->setPixmap( QPixmap( ":/images/ico_stamp_blue_75.png" ) );
+			else
+				infoLogo->setPixmap( QPixmap( ":/images/ico_person_blue_75.png" ) );
+			utilityOpen->setVisible( !c.isValid() || willExpire );
+
+			signSigner->setText( QString( "%1 %2 (%3)" )
+				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+				.arg( c.subjectInfo( "serialNumber" ) ) );
+		}
+		else if( !doc->activeCard().isEmpty() )
+		{
+			utilityOpen->setVisible( false );
+			content = tr("Loading data");
+			signSigner->setText( QString() );
+		}
+		else
+		{
+			utilityOpen->setVisible( false );
+			content = tr("No card in reader");
+			signSigner->setText( QString() );
+		}
+		infoCard->setText( content );
+	}
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
 	cards->setVisible( doc->presentCards().size() > 1 );
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
-	setCurrentPage( (Pages)stack->currentIndex() );
+	enableSign();
 }
 
 void MainWindow::showWarning( const QString &msg )

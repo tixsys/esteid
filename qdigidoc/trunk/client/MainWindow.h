@@ -41,7 +41,6 @@ private Q_SLOTS:
 	void enableSign();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
-	void on_infoSignMobile_toggled( bool checked );
 	void on_settings_clicked();
 	void parseLink( const QString &link );
 	void showCardStatus();
