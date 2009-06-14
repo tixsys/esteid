@@ -31,7 +31,7 @@
 #include <QSslKey>
 #include <QTextStream>
 
-SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, QWidget *parent )
+SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, bool extended, QWidget *parent )
 :	QLabel( parent )
 ,	num( signnum )
 ,	s( signature )
@@ -47,9 +47,18 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
 		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b><br />";
-	st << s.location() << "<br />";
-	st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
-	st << tr("Signature is") << " " << ( s.isValid() ? tr("valid") : tr("not valid") );
+
+	if( extended )
+	{
+		st << s.location() << "<br />";
+		st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
+	}
+
+	st << tr("Signature is") << " ";
+	if( s.isValid() )
+		st << "<font color=\"green\">" << tr("valid") << "</font>";
+	else
+		st << "<font color=\"red\">" << tr("not valid") << "</font>";
 
 	st << "<p align=\"right\" style=\"margin: 0px\">";
 	st << "<a href=\"details\">" << tr("Show details") << "</a><br />";

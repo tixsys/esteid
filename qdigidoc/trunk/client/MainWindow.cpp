@@ -569,11 +569,12 @@ void MainWindow::setCurrentPage( Pages page )
 
 		int i = 0;
 		bool cardOwnerSignature = false;
-		Q_FOREACH( const DigiDocSignature &c, doc->signatures() )
+		QList<DigiDocSignature> signatures = doc->signatures();
+		Q_FOREACH( const DigiDocSignature &c, signatures )
 		{
-			SignatureWidget *signature = new SignatureWidget( c, i, viewSignatures );
+			SignatureWidget *signature = new SignatureWidget( c, i, signatures.size() < 3, viewSignatures );
 			viewSignaturesLayout->insertWidget( i, signature );
-			connect( signature, SIGNAL(removeSignature(uint)),
+			connect( signature, SIGNAL(removeSignature(unsigned int)),
 				SLOT(viewSignaturesRemove(unsigned int)) );
 			if( !cardOwnerSignature )
 			{
@@ -588,14 +589,14 @@ void MainWindow::setCurrentPage( Pages page )
 			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
 		viewFileName->setToolTip( QDir::toNativeSeparators( doc->fileName() ) );
 
-		if( i > 0 && cardOwnerSignature )
+		if( !signatures.isEmpty() && cardOwnerSignature )
 			viewFileStatus->setText( tr("This container is signed by you") );
-		else if( i > 0 && !cardOwnerSignature )
+		else if( !signatures.isEmpty() && !cardOwnerSignature )
 			viewFileStatus->setText( tr("You have not signed this container") );
 		else
 			viewFileStatus->setText( tr("Container is unsigned") );
 
-		viewSignaturesLabel->setText( i == 1 ? tr("Signature") : tr("Signatures") );
+		viewSignaturesLabel->setText( signatures.size() == 1 ? tr("Signature") : tr("Signatures") );
 		break;
 	}
 	default: break;
