@@ -174,20 +174,16 @@ function readCardData()
 
 		if ( esteidData.authCert.isTempel() )
 		{
-			document.getElementById('photo').innerHTML = '<img width="90" height="120" src="qrc:/html/images/sk_logo.png">';
-			document.getElementById('photo').style.background = '#abadb0';
+			document.getElementById('photo').innerHTML = '<div style="padding-top:25px;"><img width="75" height="75" src="qrc:/stamp"></div>';
 			document.getElementById('id').innerHTML = esteidData.authCert.getSerialNum();
 			document.getElementById('personCode').innerHTML = _('regcode');
-			document.getElementById('firstName').innerHTML = esteidData.authCert.getSubjSN();
-			document.getElementById('department').innerHTML = esteidData.authCert.getSubjOU();
+			document.getElementById('firstName').innerHTML = esteidData.authCert.getSubjCN();
 			document.getElementById('liPersonBirth').style.display = 'none';
 			document.getElementById('liPersonCitizen').style.display = 'none';
-			document.getElementById('liDepartment').style.display = 'block';
 		} else {
 			document.getElementById('personCode').innerHTML = _('personCode');
 			document.getElementById('liPersonBirth').style.display = 'block';
 			document.getElementById('liPersonCitizen').style.display = 'block';
-			document.getElementById('liDepartment').style.display = 'none';
 			document.getElementById('firstName').innerHTML = esteidData.getFirstName();
 			document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
 			document.getElementById('surName').innerHTML = esteidData.getSurName();
@@ -446,13 +442,11 @@ function disableFields()
 	document.getElementById('birthPlace').innerHTML = "";
 	document.getElementById('citizen').innerHTML = "";
 	document.getElementById('email').innerHTML = "";
-	document.getElementById('department').innerHTML = "";
 	
 	document.getElementById('cardInfo').style.display='none';
 
 	document.getElementById('emailsContent').innerHTML = "";
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
-	document.getElementById('photo').style.background = '#FFFFFF';
 	document.getElementById('savePhoto').style.display = 'none';
 
 	var divs = document.getElementsByTagName('div');

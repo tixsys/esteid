@@ -23,7 +23,6 @@ var htmlStrings = {
 	"linkHelp": new tr( "Abi", "Help", "Помощь" ),
 
 	"personName": new tr( "Nimi", "Name", "Имя" ),
-	"personDepartment": new tr( "Osakond", "Department", "Отдел" ),
 	"personCode": new tr( "Isikukood", "Personal Code", "Личный номер" ),
 	"regcode": new tr( "Registrikood", "Reg nr", "Регистрационный номер" ),
 	"personBirth": new tr( "Sündinud", "Birth", "День рождения" ),

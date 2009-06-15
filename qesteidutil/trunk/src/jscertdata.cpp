@@ -89,6 +89,9 @@ QString JsCertData::getEmail()
     if (!m_qcert)
         return "";
 
+	if ( isTempel() )
+		return m_qcert->subjectInfo( "emailAddress" );
+
     QStringList mailaddresses = m_qcert->alternateSubjectNames().values(QSsl::EmailEntry);
 
     // return first email address

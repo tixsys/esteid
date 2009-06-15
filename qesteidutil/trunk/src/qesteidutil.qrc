@@ -14,7 +14,7 @@
     <file>html/images/flag_estonian.png</file>
     <file>html/images/flag_english.png</file>
     <file>html/images/flag_russian.png</file>
-	<file>html/images/sk_logo.png</file>
+	<file alias="stamp">../common/images/ico_stamp_blue_75.png</file>
   </qresource>
   <qresource prefix="translations" >
     <file alias="et" >translations/et.qm</file>
