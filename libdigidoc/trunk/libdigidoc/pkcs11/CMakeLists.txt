@@ -4,5 +4,5 @@ install( FILES
     pkcs11t.h
     unix.h
     cryptoki.h
-    DESTINATION ${DIGIDOC_INCLUDE_DIR}/digidoc/pkcs11
+    DESTINATION ${DIGIDOC_INCLUDE_DIR}/libdigidoc/pkcs11
 )
