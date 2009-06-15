@@ -22,7 +22,7 @@
 
 #include "Settings.h"
 
-#include <libdigidoc++/XmlConf.h>
+#include <digidocpp/XmlConf.h>
 
 #include "version.h"
 

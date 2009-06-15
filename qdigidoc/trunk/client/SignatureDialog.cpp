@@ -25,7 +25,7 @@
 #include "common/CertificateWidget.h"
 #include "common/SslCertificate.h"
 
-#include <libdigidoc++/Document.h>
+#include <digidocpp/Document.h>
 
 #include <QDateTime>
 #include <QSslKey>

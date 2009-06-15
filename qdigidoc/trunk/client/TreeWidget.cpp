@@ -24,7 +24,7 @@
 
 #include "common/Common.h"
 
-#include <libdigidoc++/Document.h>
+#include <digidocpp/Document.h>
 
 #include <QDesktopServices>
 #include <QFileInfo>

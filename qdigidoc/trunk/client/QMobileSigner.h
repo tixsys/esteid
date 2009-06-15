@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <libdigidoc++/crypto/signer/Signer.h>
+#include <digidocpp/crypto/signer/Signer.h>
 
 #include <QString>
 

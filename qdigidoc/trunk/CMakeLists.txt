@@ -5,7 +5,7 @@ project( qdigidoc )
 
 find_package( Ldap REQUIRED )
 find_package( LibDigiDoc REQUIRED )
-find_package( LibDigiDoc++ REQUIRED )
+find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( Qt4 REQUIRED )

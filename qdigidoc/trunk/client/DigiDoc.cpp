@@ -27,10 +27,10 @@
 #include "QMobileSigner.h"
 #include "Poller.h"
 
-#include <libdigidoc++/BDoc.h>
-#include <libdigidoc++/WDoc.h>
-#include <libdigidoc++/crypto/cert/DirectoryX509CertStore.h>
-#include <libdigidoc++/io/ZipSerialize.h>
+#include <digidocpp/BDoc.h>
+#include <digidocpp/WDoc.h>
+#include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
+#include <digidocpp/io/ZipSerialize.h>
 
 #include <QDateTime>
 #include <QDir>
@@ -38,7 +38,7 @@
 #include <QSettings>
 
 #ifndef BDOCLIB_CONF_PATH
-#define BDOCLIB_CONF_PATH "bdoclib.conf"
+#define BDOCLIB_CONF_PATH "digidocpp.conf"
 #endif
 
 using namespace digidoc;
@@ -229,7 +229,7 @@ void DigiDoc::init()
 	if( getenv( "BDOCLIB_CONF_XML" ) == 0 )
 	{
 		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,
-			"Estonian ID Card", "libdigidoc++" ).value( "ConfigFile" ).toByteArray();
+			"Estonian ID Card", "digidocpp" ).value( "ConfigFile" ).toByteArray();
 		env = "BDOCLIB_CONF_XML=";
 		if( !path.isEmpty() )
 			env.append( path );

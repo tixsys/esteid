@@ -30,8 +30,8 @@
 #include "Settings.h"
 #include "SignatureDialog.h"
 
-#include <libdigidoc++/Document.h>
-#include <libdigidoc++/XmlConf.h>
+#include <digidocpp/Document.h>
+#include <digidocpp/XmlConf.h>
 
 #include <QApplication>
 #include <QDateTime>
