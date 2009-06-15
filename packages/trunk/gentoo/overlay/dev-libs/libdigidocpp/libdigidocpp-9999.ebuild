@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ESVN_REPO_URI="https://id.eesti.ee/svn/libdigidoc++/trunk/"
+ESVN_REPO_URI="https://id.eesti.ee/svn/libdigidocpp/trunk/"
 
 inherit cmake-utils subversion
 

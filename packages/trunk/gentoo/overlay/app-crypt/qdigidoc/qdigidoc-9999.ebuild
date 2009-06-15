@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-libs/libdigidoc
-	dev-libs/libdigidoc++
+	dev-libs/libdigidocpp
 	dev-libs/openssl
 	net-nds/openldap
 	x11-libs/qt-core:4
