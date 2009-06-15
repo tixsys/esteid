@@ -123,7 +123,9 @@ function readCertificateData(n) {
             e.innerHTML = cert[cnames[i]];
         }
         var e = document.getElementById(n + "CertDump");
-        e.innerHTML = cert.cert;
+        // Stupid IE will forget preformatting when assigning innerHTML
+        // so we have to add another set of tags here.
+        e.innerHTML = "<pre>" + cert.cert + "</pre>";
         stat.innerHTML = "OK";
         stat.style.background = "";
     }
