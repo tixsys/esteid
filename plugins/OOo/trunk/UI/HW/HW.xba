@@ -266,8 +266,8 @@ End Function
 
 &apos;****************************************************************
 Function StatusBarCtrl (strMessage As String)
-&apos;	Dim oBar    &apos; Generated status bar
-	Dim oFrame  &apos; Current frame
+  Dim oBar    &apos; Generated status bar
+  Dim oFrame  &apos; Current frame
 	
 &apos;	oBar = ThisComponent.CurrentController.StatusIndicator
 &apos;	oBar.setText(&quot;ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!&quot;, 100)
