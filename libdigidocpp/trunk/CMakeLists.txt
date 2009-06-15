@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(libdigidoc++)
+project(libdigidocpp)
 
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")

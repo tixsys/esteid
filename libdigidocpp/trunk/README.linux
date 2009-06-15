@@ -1,4 +1,4 @@
-libdigidoc++ is a C++ library for creating and validating BDOC-1.0 documents [1]. 
+libdigidocpp is a C++ library for creating and validating BDOC-1.0 documents [1]. 
 Older Digidoc formats(DIGIDOC-XML) are not supported. Difference between 
 DDoc, EDoc and BDoc are described in [2]. BDoc signatures should be XAdES [3]
 compliant, but some XAdES signatures may be uncompliant with BDoc. Currently 

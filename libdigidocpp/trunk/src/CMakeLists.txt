@@ -107,7 +107,6 @@ target_link_libraries(digidocpp
 set_target_properties(digidocpp PROPERTIES
                               VERSION 1.0.0
                               SOVERSION 0
-                              OUTPUT_NAME digidoc++
                       )
 install(TARGETS digidocpp DESTINATION lib)
 
@@ -133,31 +132,31 @@ install( FILES
     SignatureMobile.h
     WDoc.h
     XmlConf.h
-    DESTINATION include/libdigidoc++
+    DESTINATION include/digidocpp
 )
 
 install( FILES
     crypto/Digest.h
     crypto/OpenSSLHelpers.h
-    DESTINATION include/libdigidoc++/crypto
+    DESTINATION include/digidocpp/crypto
 )
 
 install( FILES
     crypto/cert/DirectoryX509CertStore.h
     crypto/cert/X509Cert.h
     crypto/cert/X509CertStore.h
-    DESTINATION include/libdigidoc++/crypto/cert
+    DESTINATION include/digidocpp/crypto/cert
 )
 
 install( FILES
     crypto/crypt/RSACrypt.h
-    DESTINATION include/libdigidoc++/crypto/crypt
+    DESTINATION include/digidocpp/crypto/crypt
 )
 
 install( FILES
     crypto/ocsp/OCSPException.h
     crypto/ocsp/OCSP.h
-    DESTINATION include/libdigidoc++/crypto/ocsp
+    DESTINATION include/digidocpp/crypto/ocsp
 )
 
 install( FILES
@@ -166,24 +165,24 @@ install( FILES
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h
-    DESTINATION include/libdigidoc++/crypto/signer
+    DESTINATION include/digidocpp/crypto/signer
 )
 
 install( FILES
     io/IOException.h
     io/ISerialize.h
     io/ZipSerialize.h
-    DESTINATION include/libdigidoc++/io
+    DESTINATION include/digidocpp/io
 )
 
 install( FILES
     util/File.h
     util/String.h
-    DESTINATION include/libdigidoc++/util
+    DESTINATION include/digidocpp/util
 )
 
 install( FILES
     xml/XAdES.hxx
     xml/xmldsig-core-schema.hxx
-    DESTINATION include/libdigidoc++/xml
+    DESTINATION include/digidocpp/xml
 )
