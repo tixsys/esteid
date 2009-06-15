@@ -9,6 +9,10 @@ set( PKCS11_PROVIDER
     CACHE FILEPATH "pkcs11 module"
 )
 
+if(LIBDIGIDOC_PROVIDER)
+    add_definitions(-DLIBDIGIDOC_NAME="${LIBDIGIDOC_PROVIDER}")
+endif(LIBDIGIDOC_PROVIDER)
+
 find_package(Iconv REQUIRED)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)

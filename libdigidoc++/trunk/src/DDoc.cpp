@@ -7,9 +7,17 @@
 
 using namespace digidoc;
 
-#ifdef WIN32
+#ifndef LIBDIGIDOC_NAME
+#  if defined(__APPLE__)
+#    define LIBDIGIDOC_NAME "libdigidoc.dylib"
+#  elif defined(_WIN32)
+#    define LIBDIGIDOC_NAME "digidoc.dll"
+#  else
+#    define LIBDIGIDOC_NAME "libdigidoc.so.2"
+#  endif
+#endif
 
-#define LIBDIGIDOC_NAME "digidoc.dll"
+#ifdef _WIN32
 
 DDocLibrary::DDocLibrary()
 { h = LoadLibrary( LIBDIGIDOC_NAME ); }
@@ -21,12 +29,6 @@ void* DDocLibrary::resolve( const char *symbol )
 { return isOpen() ? (void*)GetProcAddress( h, symbol ) : NULL; }
 
 #else
-
-#if defined(__APPLE__)
-#define LIBDIGIDOC_NAME "libdigidoc.dylib"
-#else
-#define LIBDIGIDOC_NAME "libdigidoc.so"
-#endif
 
 DDocLibrary::DDocLibrary()
 { h = dlopen( LIBDIGIDOC_NAME, RTLD_LAZY ); }
