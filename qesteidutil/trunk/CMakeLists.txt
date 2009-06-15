@@ -4,6 +4,10 @@ project(qesteidutil)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+if(PKCS11_MODULE)
+    add_definitions(-DPKCS11_MODULE="${PKCS11_MODULE}")
+endif(PKCS11_MODULE)
+
 find_package(Qt4 REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)

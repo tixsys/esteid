@@ -25,12 +25,18 @@
 #include <stdexcept>
 #include <sstream>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <winsock2.h>
-#define PKCS11_MODULE "opensc-pkcs11.dll"
 #else
 #include <netdb.h>
-#define PKCS11_MODULE "/usr/lib/opensc-pkcs11.so"
+#endif
+
+#ifndef PKCS11_MODULE
+#  if defined(_WIN32)
+#    define PKCS11_MODULE "opensc-pkcs11.dll"
+#  else
+#    define PKCS11_MODULE "opensc-pkcs11.so"
+#  endif
 #endif
 
 #ifdef OPENSSL_SYS_WIN32 
