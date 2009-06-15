@@ -75,10 +75,10 @@ install( FILES
     DigiDocSAXParser.h
     DigiDocStack.h
     DigiDocVerify.h
-    DESTINATION ${DIGIDOC_INCLUDE_DIR}/libdigidoc
+    DESTINATION ${DIGIDOC_INCLUDE_DIR}/digidoc
 )
 
 install( FILES
     ts/DigiDocTS.h
-    DESTINATION ${DIGIDOC_INCLUDE_DIR}/libdigidoc/ts
+    DESTINATION ${DIGIDOC_INCLUDE_DIR}/digidoc/ts
 )
