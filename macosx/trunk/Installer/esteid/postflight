@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set BDOCLIB_CONF_XML env variable?
-#export BDOCLIB_CONF_XML=/usr/local/etc/libdigidoc/bdoclib.conf
+#export BDOCLIB_CONF_XML=/usr/local/etc/digidocpp/digidocpp.conf
 
 # Configure launchd
 #/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable
