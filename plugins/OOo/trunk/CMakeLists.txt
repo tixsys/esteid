@@ -75,7 +75,7 @@ SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
 #----------------Load modules Include-------------
 
 find_package( OOoSDK REQUIRED )
-find_package( LibDigiDoc++ REQUIRED )
+find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
@@ -114,7 +114,7 @@ set(BDOC_INCLUDES
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
-	${LIBDIGIDOC++_INCLUDE_DIR}
+	${LIBDIGIDOCPP_INCLUDE_DIR}
 )
 
 
@@ -149,12 +149,12 @@ IF (WIN32)
 	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
 	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS")
 	add_definitions(${CC_DEFINES} ${CC_FLAGS})
-	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOC++_CONF}" )
+	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
 ENDIF (WIN32)
 
 IF (UNIX)
         set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
-        set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOC++_CONF}\\\"" )
+        set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOCPP_CONF}\\\"" )
 ENDIF (UNIX)
 
 
@@ -185,7 +185,7 @@ add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
 #---------------Link to the Libraries-------------
 #----------------This is win specific-------------
 target_link_libraries(${COMP_NAME}.uno 
-	${LIBDIGIDOC++_LIBRARY}
+	${LIBDIGIDOCPP_LIBRARY}
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${ZLIB_LIBRARIES}

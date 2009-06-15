@@ -2,8 +2,8 @@
 
 set target_dir=target
 
-set libdigidoc_include=C:\build\Win32\libdigidoc++\build\target\include
-set libdigidoc_library=C:\build\Win32\libdigidoc++\build\target\lib
+set libdigidoc_include=C:\build\Win32\libdigidocpp\build\target\include
+set libdigidoc_library=C:\build\Win32\libdigidocpp\build\target\lib
 set openssl_include=C:\build\Win32\openssl-shared\include
 set openssl_library=C:\build\Win32\openssl-shared\out32dll
 set zlib_include=C:\build\Win32\zlib123
@@ -30,7 +30,7 @@ cmake .. -G "NMake Makefiles" ^
          -DCMAKE_INSTALL_PREFIX="" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^
-         -DLIBDIGIDOC++_CONF="C:\Program Files\Estonian ID Card\libdigidoc++.conf"
+         -DLIBDIGIDOCPP_CONF="C:\Program Files\Estonian ID Card\digidocpp.conf"
 nmake
 REM nmake install DESTDIR="%target_dir%"
 cd..

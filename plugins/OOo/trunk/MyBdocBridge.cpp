@@ -7,19 +7,19 @@
 //#include <conio.h>
 #include <iostream>
 
-#include <libdigidoc++/BDoc.h>
-#include <libdigidoc++/BDoc.h>
-#include <libdigidoc++/log.h>
-#include <libdigidoc++/Conf.h>
-#include <libdigidoc++/SignatureBES.h>
-#include <libdigidoc++/crypto/cert/DirectoryX509CertStore.h>
-#include <libdigidoc++/crypto/cert/X509Cert.h>
-#include <libdigidoc++/io/ZipSerialize.h>
-#include <libdigidoc++/crypto/signer/PKCS11Signer.h>
-#include <libdigidoc++/crypto/signer/EstEIDSigner.h>
+#include <digidocpp/BDoc.h>
+#include <digidocpp/BDoc.h>
+#include <digidocpp/log.h>
+#include <digidocpp/Conf.h>
+#include <digidocpp/SignatureBES.h>
+#include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
+#include <digidocpp/crypto/cert/X509Cert.h>
+#include <digidocpp/io/ZipSerialize.h>
+#include <digidocpp/crypto/signer/PKCS11Signer.h>
+#include <digidocpp/crypto/signer/EstEIDSigner.h>
 
 #ifndef BDOCLIB_CONF_PATH
-#define BDOCLIB_CONF_PATH "libdigidoc++.conf"
+#define BDOCLIB_CONF_PATH "digidocpp.conf"
 #endif
 
 #ifdef _WIN32
@@ -27,7 +27,7 @@
 #include <Winreg.h>
 #endif
 
-#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\libdigidoc++"
+#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
 
 #include "My1EstEIDSigner.h"
 
