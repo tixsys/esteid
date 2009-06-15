@@ -4,6 +4,11 @@ project(libdigidoc++)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+set( PKCS11_PROVIDER
+    "opensc-pkcs11.so"
+    CACHE FILEPATH "pkcs11 module"
+)
+
 find_package(Iconv REQUIRED)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)

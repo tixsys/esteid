@@ -5,7 +5,7 @@
         see http://www.ietf.org/rfc/rfc4051.txt-->
     <param name="digest.uri">http://www.w3.org/2000/09/xmldsig#sha1</param>
     <!--pkcs11 driver location-->
-    <param name="pkcs11.driver.path">/usr/lib/opensc-pkcs11.so</param>
+    <param name="pkcs11.driver.path">@PKCS11_PROVIDER@</param>
 
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
     <!--<param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>-->
