@@ -117,6 +117,11 @@ set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl)
 
 message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 
+# Xulrunner 1.9.1 has npfunctions.h instead of npupp.h
+include(CheckIncludeFiles)
+check_include_files(npfunctions.h HAVE_NPFUNCTIONS_H)
+configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
+
 add_definitions(${GECKO_SDK_CFLAGS})
 link_directories(${GECKO_SDK_DIR}/sdk/lib)
 link_directories(${GECKO_SDK_LIBRARY_DIRS})
