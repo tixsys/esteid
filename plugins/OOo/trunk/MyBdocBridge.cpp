@@ -212,8 +212,7 @@ int My1EstEIDSigner::initData()
 	}
 	catch(const digidoc::BDocException& e)
 	{
-		ERR("Caught BDocException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -223,8 +222,7 @@ int My1EstEIDSigner::initData()
 	}
 	catch(const digidoc::IOException& e)
 	{
-		ERR("Caught IOException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -234,8 +232,7 @@ int My1EstEIDSigner::initData()
 	}
 	catch(const digidoc::OCSPException& e)
 	{
-		ERR("Caught OCSPException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -245,8 +242,7 @@ int My1EstEIDSigner::initData()
 	}
 	catch(const digidoc::SignException& e)
 	{
-		ERR("Caught SignException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -254,13 +250,13 @@ int My1EstEIDSigner::initData()
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
 	}
-	catch(const digidoc::Exception& e)
+/*	catch(const digidoc::Exception& e)
 	{
-		ERR("Caught Exception: %s", e.getMsg().c_str());
+		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 	}
-	catch(...)
+*/	catch(...)
 	{
-		ERR("Caught unknown exception");
+		PRINT_DEBUG("Caught unknown exception");
 	}
 
 
@@ -337,9 +333,8 @@ int My1EstEIDSigner::signFile ()
 
 	catch(const digidoc::BDocException& e)
 	{
-		ERR("Caught BDocException: %s", e.getMsg().c_str());
+		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -350,8 +345,7 @@ int My1EstEIDSigner::signFile ()
 	}
 	catch(const digidoc::IOException& e)
 	{
-		ERR("Caught IOException: %s", e.getMsg().c_str());
-PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -362,8 +356,7 @@ PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
 	}
 	catch(const digidoc::OCSPException& e)
 	{
-		ERR("Caught OCSPException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -374,8 +367,7 @@ PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
 	}
 	catch(const digidoc::SignException& e)
 	{
-		ERR("Caught SignException: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -386,8 +378,7 @@ PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
 	}
 	catch(const digidoc::Exception& e)
 	{
-		ERR("Caught Exception: %s", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -398,7 +389,7 @@ PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
 	}
 	catch(...)
 	{
-		ERR("Caught unknown exception");
+		PRINT_DEBUG("Caught unknown exception");
 		
 		i_ok |= 90;
 	}
@@ -558,8 +549,7 @@ int My1EstEIDSigner::openCont ()
 
 	catch(const digidoc::BDocException& e)
 	{
-		printf("Caught BDocException: %s\n", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -570,8 +560,7 @@ int My1EstEIDSigner::openCont ()
 	}
 	catch(const digidoc::IOException& e)
 	{
-		printf("Caught IOException: %s\n", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -582,8 +571,7 @@ int My1EstEIDSigner::openCont ()
 	}
 	catch(const digidoc::Exception& e)
 	{
-		printf("Caught Exception: %s\n", e.getMsg().c_str());
-		PRINT_DEBUG("ErrMess%s",e.getMsg().c_str());
+		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 		if (e.hasCause())
 			for (int u=0; u<e.getCauses().size(); u++)
 			{
@@ -594,7 +582,7 @@ int My1EstEIDSigner::openCont ()
 	}
 	catch(...)
 	{
-		printf("Caught unknown exception\n");
+		PRINT_DEBUG("Caught unknown exception");
 		
 		i_ret += 90000;
 	}
@@ -644,43 +632,10 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 //===========================================================
 //***********************************************************
 int My1EstEIDSigner::checkCert ()
-{
-
-	int i_ok = 0;
-//	try
-//	{		
-		MyRealEstEIDSigner m_signer;
-		
-		i_ok =	m_signer.i_ret;
-//	}
-/*	catch(const digidoc::BDocException& e)
-	{
-		ERR("Caught BDocException: %s", e.getMsg().c_str());
-		
-		i_ok |= 10;
-	}
-	catch(const digidoc::IOException& e)
-	{
-		ERR("Caught IOException: %s", e.getMsg().c_str());
-		i_ok |= 20;
-	}
-	catch(const digidoc::SignException& e)
-	{
-		ERR("Caught SignException: %s", e.getMsg().c_str());
-		i_ok |= 30;
-	}
-	catch(const digidoc::Exception& e)
-	{
-		ERR("Caught Exception: %s", e.getMsg().c_str());
-		i_ok |= 40;
-	}
-	catch(...)
-	{
-		ERR("Caught unknown exception");
-		i_ok |= 90;
-	}
-*/	
-	return i_ok;
+{	
+	MyRealEstEIDSigner m_signer;
+	
+	return m_signer.i_ret;
 }
 //===========================================================
 //***********************************************************

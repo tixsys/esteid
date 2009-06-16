@@ -74,11 +74,12 @@
 
 #include <com/sun/star/frame/XDispatchHelper.hpp>
 #include <com/sun/star/frame/XDispatchProvider.hpp>
-
+#include <com/sun/star/util/XCloseable.hpp>
 
 using namespace std;
 using namespace rtl;
 
+using namespace com::sun::star::util;
 using namespace com::sun::star::lang;
 using namespace com::sun::star::script::provider; 
 
@@ -115,6 +116,7 @@ Reference < XDesktop > rGlobalDesktop;
 Reference < XDispatchHelper > rGlobalDispatchHelper;
 const char* pcMessage;
 string strSignData;
+string strBuffer;
 //--------------------
 
 void BaseDispatch::ShowMessageBox( const Reference< XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText )
@@ -194,12 +196,14 @@ void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 	Reference < XFrame > xFrame;
 	if ( aArguments.getLength() )
 	{
-
 		// das erste Argument ist immer der Frame, da ein ProtocolHandler den braucht um Zugriff
 		// auf den Context zu haben, in dem er aufgerufen wird
 		aArguments[0] >>= xFrame;
 		mxFrame = xFrame;
 	}
+
+	//Add an information to the statusbar
+	
 	bPrevContFlag = bContFlag;
 	bContFlag = false;
 	Reference < XController > xCtrl = mxFrame->getController();
@@ -252,7 +256,10 @@ PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);
 		Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
 		//Reference <XStatusbarController> xStatusBar(xComp2, UNO_QUERY);
 		mxFrame->setName(sOldName);
-		xCompMain->dispose();
+
+		Reference <XCloseable> xCloseable( mxFrame, UNO_QUERY);
+		xCloseable->close(true);
+
 	}		
 	//----------------------------------------------------------------------
 
@@ -406,13 +413,6 @@ PRINT_DEBUG("Signature Data: %s",strSignData.c_str());
 
 		//----------------------------------------------------------------
 		}
-/*		else if (m_BdocBridge1->ret && (m_BdocBridge1->ret<100))//validation failed -> All signatures invalid
-		{
-			//Change Statusbar
-			pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab ainult kehtetuid või aegunud allkirju!)";
-			//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
-			//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
-		}*/
 		else if (m_BdocBridge1->ret >= 10000)
 		{
 			//Change Statusbar
@@ -420,9 +420,10 @@ PRINT_DEBUG("Signature Data: %s",strSignData.c_str());
 			//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
 			//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
 		}
-	}
-
-	
+		
+		//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
+		//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);		
+	}	
 }
 
 Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(const URL& aURL, const ::rtl::OUString& sTargetFrameName, sal_Int32 nSearchFlags )
@@ -460,11 +461,8 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(const URL& aURL
 		}
 		
 	}
-	if (bPrevContFlag)
-	{
-		oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
-		oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
-	}
+
+
 	return xRet;
 	
 }
@@ -946,9 +944,6 @@ void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener 
 		}
 		aListenerHelper.AddListener( mxFrame, xControl, aURL.Path );
 	}
-printf("BaseDispatch::addStatusListener\n");
-OString osBDocContPath = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
-printf("Cont URL in addStatusListener: %s\n",osBDocContPath.pData->buffer);
 	
 }
 
@@ -988,7 +983,7 @@ void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (Run
 		    }
 		}
 ***/	}
-printf("BaseDispatch::controlEvent\n");
+
 }
  
 BaseDispatch::BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
@@ -998,9 +993,6 @@ BaseDispatch::BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::
         , msDocService( rServiceName )
         , mbButtonEnabled( sal_True )//, mbButtonEnabled( sal_False )
 {	
-//**********************************
-printf("BaseDispatch::BaseDispatch\n");
-//***********************************
 	ousLocBdocContUrl = ousBDocContURL;
 	iLocPrevContFlag = bPrevContFlag;
 }
@@ -1008,9 +1000,6 @@ printf("BaseDispatch::BaseDispatch\n");
 
 BaseDispatch::~BaseDispatch()
 {
-//**********************************
-printf("BaseDispatch::~\n");
-//***********************************
 	mxFrame.clear();
 	mxMSF.clear();
 }
@@ -1044,7 +1033,7 @@ PRINT_DEBUG("In the MacroCallerThread: %s",pData);
 OString SAL_CALL convertURItoPath(OUString ousURI)
 {
 	OString osPath;
-	string strBuffer = "";
+	strBuffer = "";
 	osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_UTF8);
 	//osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ASCII_US);
 

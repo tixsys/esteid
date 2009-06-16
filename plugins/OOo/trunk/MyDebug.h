@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 #ifdef _WIN32
 #define DEBUG_FILE "c:\\OOoDebug.txt"
