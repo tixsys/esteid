@@ -136,14 +136,14 @@ NPError Private_SetValue(NPP instance, NPNVariable variable, void *value);
 
 #endif //XP_MAC
 
-#include <config.h>
-
 #include "npapi.h"
 
+#include "esteid-config.h"
+
 #ifdef HAVE_NPFUNCTIONS_H
-#include <npfunctions.h>
+#include "npfunctions.h"
 #else
-#include <npupp.h>
+#include "npupp.h"
 #endif
 
 #ifndef HIBYTE

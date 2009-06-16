@@ -15,6 +15,8 @@
 #include "plbase64.h"
 #include "nsCRT.h"
 
+#include <stdio.h>
+
 NS_IMPL_ISUPPORTS2_CI(nsEstEIDCertificate,
 		              nsIEstEIDCertificate,
 		              nsISecurityCheckedComponent)

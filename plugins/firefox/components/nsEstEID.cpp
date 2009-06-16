@@ -12,6 +12,7 @@
 #include <nsIWindowWatcher.h>
 #include <nsIPrompt.h>
 
+#include <stdio.h>
 #include <iostream>
 
 NS_IMPL_ISUPPORTS3_CI(nsEstEID, nsIEstEID,

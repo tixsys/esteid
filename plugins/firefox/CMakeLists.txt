@@ -117,21 +117,25 @@ set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl)
 
 message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 
-# Xulrunner 1.9.1 has npfunctions.h instead of npupp.h
-include(CheckIncludeFiles)
-check_include_files(npfunctions.h HAVE_NPFUNCTIONS_H)
-configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
-
 add_definitions(${GECKO_SDK_CFLAGS})
 link_directories(${GECKO_SDK_DIR}/sdk/lib)
 link_directories(${GECKO_SDK_LIBRARY_DIRS})
-include_directories(${GECKO_SDK_DIR}/include)
-include_directories(${GECKO_SDK_DIR}/include/xpcom)
-include_directories(${GECKO_SDK_DIR}/include/dom)
-include_directories(${GECKO_SDK_DIR}/include/caps)
-include_directories(${GECKO_SDK_DIR}/include/necko)
-include_directories(${GECKO_SDK_DIR}/sdk/include)
+
+set(GECKO_SDK_INCLUDE_DIRS
+    ${GECKO_SDK_DIR}/include
+    ${GECKO_SDK_DIR}/include/xpcom
+    ${GECKO_SDK_DIR}/include/dom
+    ${GECKO_SDK_DIR}/include/caps
+    ${GECKO_SDK_DIR}/include/necko
+    ${GECKO_SDK_DIR}/sdk/include
+)
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
+
+# Xulrunner 1.9.1 has npfunctions.h instead of npupp.h
+include(CheckIncludeFiles)
+set(CMAKE_REQUIRED_INCLUDES ${GECKO_SDK_INCLUDE_DIRS})
+check_include_files(npfunctions.h HAVE_NPFUNCTIONS_H)
+configure_file(esteid-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/esteid-config.h )
 
 if(WIN32)
   add_definitions(-DXP_WIN -D_USRDLL)

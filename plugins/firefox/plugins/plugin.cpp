@@ -11,6 +11,8 @@
 #include "nsStringAPI.h"
 #include "nsIEstEID.h"
 
+#include <stdio.h>
+
 // service manager which will give the access to all public browser services
 nsIServiceManager * gServiceManager = NULL;
 
@@ -108,7 +110,7 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 //
 EstEIDPluginInstance::EstEIDPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
-  mInitialized(FALSE),
+  mInitialized(PR_FALSE),
   mScriptablePeer(NULL)
 {
   ESTEID_DEBUG("EstEIDPluginInstance()\n");
@@ -132,14 +134,14 @@ NPBool EstEIDPluginInstance::initXPCOM() {
         nsCString ver;
         mScriptablePeer->GetVersion(ver);
         ESTEID_DEBUG("EstEIDPluginInstance: Loaded EstEID XPCOM version %s\n", ver.get());
-        return TRUE;
+        return PR_TRUE;
     } else {
       ESTEID_DEBUG("EstEIDPluginInstance: Failed to load EstEID XPCOM component\n");
-      return FALSE;
+      return PR_FALSE;
     }
   } else {
     ESTEID_DEBUG("EstEIDPluginInstance: No Service manager available\n");
-    return FALSE;
+    return PR_FALSE;
   }
 }
 
@@ -148,16 +150,16 @@ NPBool EstEIDPluginInstance::init(NPWindow* aWindow)
   ESTEID_DEBUG("EstEIDPluginInstance::init()\n");
   // FIXME: Is this needed?
   if(aWindow == NULL)
-    return FALSE;
+    return PR_FALSE;
 
-  mInitialized = TRUE;
-  return TRUE;
+  mInitialized = PR_TRUE;
+  return PR_TRUE;
 }
 
 void EstEIDPluginInstance::shut()
 {
   ESTEID_DEBUG("EstEIDPluginInstance::shut()\n");
-  mInitialized = FALSE;
+  mInitialized = PR_FALSE;
 }
 
 NPBool EstEIDPluginInstance::isInitialized()
