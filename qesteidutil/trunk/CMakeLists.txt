@@ -4,6 +4,8 @@ project(qesteidutil)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+include(InstallSettings)
+
 if(PKCS11_MODULE)
     add_definitions(-DPKCS11_MODULE="${PKCS11_MODULE}")
 endif(PKCS11_MODULE)
@@ -97,7 +99,7 @@ include_directories(
 
 # xCode hacks
 if(APPLE)
-	include_directories(/usr/local/include/../include)
+    include_directories(/usr/local/include/../include)
 endif(APPLE)
 
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
@@ -105,7 +107,7 @@ QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 
 IF(WIN32)
-	SET( qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc )
+    SET(qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc)
 ENDIF(WIN32)
 
 add_executable(qesteidutil WIN32
@@ -127,8 +129,16 @@ target_link_libraries(qesteidutil
 )
 
 if(UNIX AND NOT APPLE)
-        INSTALL(FILES QEstEIDUtil.desktop DESTINATION share/applications)
-        INSTALL(FILES src/html/images/id_icon_48x48.png DESTINATION share/pixmaps )
+    INSTALL(FILES qesteidutil.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
+
+    # Install icons
+    foreach(RES 16x16 32x32 48x48)
+        install(
+            FILES src/html/images/id_icon_${RES}.png
+            DESTINATION ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}/apps/
+            RENAME qesteidutil.png
+        )
+    endforeach(RES)
 endif(UNIX AND NOT APPLE)
 
-install(TARGETS qesteidutil DESTINATION bin)
+install(TARGETS qesteidutil DESTINATION ${BIN_INSTALL_DIR})
