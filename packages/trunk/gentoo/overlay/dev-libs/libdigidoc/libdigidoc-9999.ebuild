@@ -4,6 +4,7 @@
 
 ESVN_REPO_URI="https://id.eesti.ee/svn/libdigidoc/trunk/"
 
+EAPI=2
 inherit cmake-utils subversion
 
 DESCRIPTION="C library for handling DDoc and CDoc digital signature containers"
@@ -11,7 +12,7 @@ HOMEPAGE="https://id.eesti.ee/trac/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="debug"
 
 RDEPEND="dev-libs/libxml2
 	dev-libs/opensc
@@ -21,9 +22,12 @@ DEPEND="${RDEPEND}"
 
 DOCS="AUTHORS ChangeLog README"
 
-src_unpack() {
-	subversion_src_unpack
-	cd "${S}"
-	sed -e "s#DESTINATION lib#DESTINATION $(get_libdir)#" -i CMakeLists.txt
-	sed -e "s#DESTINATION lib#DESTINATION $(get_libdir)#" -i libdigidoc/CMakeLists.txt
+src_configure() {
+	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
+	local mycmakeargs="${mycmakeargs}
+		-DSYSCONF_INSTALL_DIR=${ROOT}etc"
+
+	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
+
+	cmake-utils_src_configure
 }
