@@ -66,6 +66,7 @@ set( UIS
 
 set(qesteidutil_RCS src/qesteidutil.qrc)
 
+set(QT_MIN_VERSION 4.4.0)
 set(QT_USE_QTNETWORK true)
 set(QT_USE_QTWEBKIT true)
 set(QT_USE_QTXML true)
