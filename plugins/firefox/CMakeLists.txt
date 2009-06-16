@@ -12,9 +12,7 @@ project(xpi)
 # Define directories
 # set( CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/build)
 set(PLUGINGATE plugins/plugingate)
-
-# FIXME: Ugly son of a bitch!
-set(CARDLIB ../../qesteidutil/trunk/cardlib)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/cardlib)
 
 # Build type
 #if( CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -34,7 +32,7 @@ if( NOT PROJECT_VERSION)
 	endif( NOT PROJECT_WC_LAST_CHANGED_REV)
 	message( STATUS "Current subversion revision is ${PROJECT_WC_LAST_CHANGED_REV}")
 	set( MAJOR 0)
-	set( MINOR 1)
+	set( MINOR 2)
 	set( REV ${PROJECT_WC_LAST_CHANGED_REV})
 	set( PROJECT_VERSION "${MAJOR}.${MINOR}.${REV}")
 endif( NOT PROJECT_VERSION)
