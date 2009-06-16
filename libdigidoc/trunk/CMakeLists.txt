@@ -23,6 +23,9 @@ find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
 find_package( Iconv REQUIRED )
+if(UNIX)
+    find_package( LibDL REQUIRED )
+endif(UNIX)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/libdigidoc.pc.cmake
@@ -35,6 +38,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${ICONV_INCLUDE_DIR}
+    ${LIBDL_INCLUDE_DIR}
     ${LIBXML2_INCLUDE_DIR}
     ${OPENSSLCRYPTO_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}

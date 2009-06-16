@@ -41,6 +41,7 @@ endif( MSVC )
 
 add_library( digidoc SHARED ${libdigidoc_SRCS} )
 target_link_libraries( digidoc
+    ${LIBDL_LIBRARIES}
     ${LIBXML2_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
