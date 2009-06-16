@@ -13,6 +13,7 @@ find_package( XercesC REQUIRED )
 find_package( XmlSecurityC REQUIRED )
 find_package( XSD REQUIRED )
 
+set( QT_MIN_VERSION 4.4.0 )
 set( QT_USE_QTNETWORK true )
 set( QT_USE_QTWEBKIT true )
 set( QT_USE_QTXML true )
