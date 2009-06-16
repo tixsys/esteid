@@ -77,7 +77,7 @@ DDocPrivate::DDocPrivate()
 		return;
 
 	f_initDigiDocLib();
-	f_initConfigStore( NULL );
+	f_initConfigStore( "digidoc.ini" );
 
 	ready = true;
 }
