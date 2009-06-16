@@ -9,7 +9,6 @@
 
 #include <digidocpp/BDoc.h>
 #include <digidocpp/BDoc.h>
-#include <digidocpp/log.h>
 #include <digidocpp/Conf.h>
 #include <digidocpp/SignatureBES.h>
 #include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
