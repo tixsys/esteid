@@ -1,10 +1,10 @@
 prefix=@CMAKE_INSTALL_PREFIX@
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@LIB_INSTALL_DIR@
+includedir=@CMAKE_INSTALL_PREFIX@/include
 
 Name: libdigidoc
-Description: libdigidoc
+Description: Libdigidoc library for handling digitally signed documents
 Version: @DIGIDOC_VERSION@
 Libs: -L${libdir} -ldigidoc
 Cflags: -I${includedir}

@@ -47,11 +47,11 @@ target_link_libraries( digidoc
     ${ZLIB_LIBRARIES}
 )
 set_target_properties( digidoc PROPERTIES VERSION ${DIGIDOC_VERSION} SOVERSION 2 )
-install( TARGETS digidoc DESTINATION lib )
+install( TARGETS digidoc DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 add_executable( cdigidoc cdigidoc.c )
 target_link_libraries( cdigidoc digidoc )
-install( TARGETS cdigidoc DESTINATION bin )
+install( TARGETS cdigidoc DESTINATION ${BIN_INSTALL_DIR} )
 
 # Include files
 install( FILES
@@ -75,10 +75,5 @@ install( FILES
     DigiDocSAXParser.h
     DigiDocStack.h
     DigiDocVerify.h
-    DESTINATION ${DIGIDOC_INCLUDE_DIR}/libdigidoc
-)
-
-install( FILES
-    ts/DigiDocTS.h
-    DESTINATION ${DIGIDOC_INCLUDE_DIR}/libdigidoc/ts
+    DESTINATION ${DIGIDOC_INCLUDE_DIR}
 )

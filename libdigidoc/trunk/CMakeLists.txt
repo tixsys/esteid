@@ -2,23 +2,20 @@ cmake_minimum_required( VERSION 2.6 )
 project( libdigidoc )
 
 # Custom cmake modules
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
 
-set( SYSCONF_INSTALL_DIR
-    "${CMAKE_INSTALL_PREFIX}/etc"
-    CACHE PATH "Configuration files directory"
-)
-set( SHARE_INSTALL_PREFIX
-    "${CMAKE_INSTALL_PREFIX}/share"
-    CACHE PATH "Base directory for files which go to share/"
-)
-set( PKCS11_PROVIDER
-    "/usr/lib/opensc-pkcs11.so"
-    CACHE FILEPATH "pkcs11 module"
-)
-set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
+include( InstallSettings )
+
+if( WIN32 )
+    set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.ini" )
+    set( PKCS11_MODULE "opensc-pkcs11.dll" )
+else( WIN32 )
+    set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
+    set( PKCS11_MODULE "opensc-pkcs11.so" )
+endif( WIN32 )
+
 set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc/certs" )
-set( DIGIDOC_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include" )
+set( DIGIDOC_INCLUDE_DIR "${INCLUDE_INSTALL_DIR}/libdigidoc" )
 set( DIGIDOC_VERSION "2.6.0" )
 
 find_package( LibXml2 REQUIRED )
@@ -32,23 +29,22 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc.pc
     @ONLY
 )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${ICONV_INCLUDE_DIR}
     ${LIBXML2_INCLUDE_DIR}
-    ${OPENSSL_INCLUDE_DIR}
     ${OPENSSLCRYPTO_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
     ${ZLIB_INCLUDE_DIR}
-	${ICONV_INCLUDE_DIR}
 )
 
-if(APPLE)
-	include_directories(/Library/OpenSC/include)
-	include_directories(/usr/local/include/../include)
-endif(APPLE)
+if( APPLE )
+    include_directories( /Library/OpenSC/include )
+    include_directories( /usr/local/include/../include )
+endif( APPLE )
 
 add_subdirectory( etc )
 add_subdirectory( libdigidoc )
-
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidoc.pc DESTINATION lib/pkgconfig )
