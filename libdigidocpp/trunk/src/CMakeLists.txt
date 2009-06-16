@@ -105,10 +105,10 @@ target_link_libraries(digidocpp
     ${EXTRA_LIBS}
 )
 set_target_properties(digidocpp PROPERTIES
-                              VERSION 0.1.0
-                              SOVERSION 0
+                                VERSION ${DIGIDOCPP_VERSION}
+                                SOVERSION 0
                       )
-install(TARGETS digidocpp DESTINATION lib)
+install(TARGETS digidocpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(digidoc-demo main_demo.cpp)
 target_link_libraries(digidoc-demo digidocpp)
@@ -124,7 +124,6 @@ install( FILES
     Document.h
     Exception.h
     Exports.h
-    log.h
     SignatureBES.h
     SignatureException.h
     Signature.h
@@ -132,31 +131,31 @@ install( FILES
     SignatureMobile.h
     WDoc.h
     XmlConf.h
-    DESTINATION include/digidocpp
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}
 )
 
 install( FILES
     crypto/Digest.h
     crypto/OpenSSLHelpers.h
-    DESTINATION include/digidocpp/crypto
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto
 )
 
 install( FILES
     crypto/cert/DirectoryX509CertStore.h
     crypto/cert/X509Cert.h
     crypto/cert/X509CertStore.h
-    DESTINATION include/digidocpp/crypto/cert
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto/cert
 )
 
 install( FILES
     crypto/crypt/RSACrypt.h
-    DESTINATION include/digidocpp/crypto/crypt
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto/crypt
 )
 
 install( FILES
     crypto/ocsp/OCSPException.h
     crypto/ocsp/OCSP.h
-    DESTINATION include/digidocpp/crypto/ocsp
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto/ocsp
 )
 
 install( FILES
@@ -165,24 +164,24 @@ install( FILES
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h
-    DESTINATION include/digidocpp/crypto/signer
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto/signer
 )
 
 install( FILES
     io/IOException.h
     io/ISerialize.h
     io/ZipSerialize.h
-    DESTINATION include/digidocpp/io
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/io
 )
 
 install( FILES
     util/File.h
     util/String.h
-    DESTINATION include/digidocpp/util
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/util
 )
 
 install( FILES
     xml/XAdES.hxx
     xml/xmldsig-core-schema.hxx
-    DESTINATION include/digidocpp/xml
+    DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/xml
 )
