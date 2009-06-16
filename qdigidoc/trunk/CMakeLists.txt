@@ -10,7 +10,6 @@ find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( Qt4 REQUIRED )
 find_package( XercesC REQUIRED )
-find_package( XmlSecurityC REQUIRED )
 find_package( XSD REQUIRED )
 
 set( QT_MIN_VERSION 4.4.0 )
