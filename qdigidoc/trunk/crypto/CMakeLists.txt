@@ -73,9 +73,4 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 	${LDAP_LIBRARIES}
 )
 
-if(UNIX AND NOT APPLE)
-	INSTALL(FILES QDigiDocCrypto.desktop DESTINATION share/applications)
-	INSTALL(FILES images/crypto_64.png DESTINATION share/pixmaps )
-endif(UNIX AND NOT APPLE)
-
-install(TARGETS qdigidoccrypto DESTINATION bin)
+install(TARGETS qdigidoccrypto DESTINATION ${BIN_INSTALL_DIR})

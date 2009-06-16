@@ -1,7 +1,9 @@
 cmake_minimum_required( VERSION 2.6 )
+project( qdigidoc )
+
 set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
 
-project( qdigidoc )
+include( InstallSettings )
 
 find_package( Ldap REQUIRED )
 find_package( LibDigiDoc REQUIRED )

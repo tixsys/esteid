@@ -88,8 +88,16 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 )
 
 if(UNIX AND NOT APPLE)
-	INSTALL(FILES QDigiDocClient.desktop DESTINATION share/applications)
-	INSTALL(FILES images/digidoc_icon_48x48.png DESTINATION share/pixmaps )
+	INSTALL(FILES qdigidoc.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
+
+	# Install icons
+	foreach(RES 48x48)
+		install(
+			FILES images/digidoc_icon_${RES}.png
+			DESTINATION ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}/apps/
+			RENAME qdigidoc.png
+		)
+	endforeach(RES)
 endif(UNIX AND NOT APPLE)
 
-install(TARGETS qdigidocclient DESTINATION bin)
+install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})

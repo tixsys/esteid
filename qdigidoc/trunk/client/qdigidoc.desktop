@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=QDigiDoc
+Name[et]=QDigiDoc
+GenericName=DigiDoc3 Client
+GenericName[et]=DigiDoc3 klient
+Exec=qdigidocclient %F
+Icon=qdigidocclient
+Terminal=false
+Categories=Qt;Office;
