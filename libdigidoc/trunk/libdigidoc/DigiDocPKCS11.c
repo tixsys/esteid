@@ -850,4 +850,41 @@ EXP_OPTION int findUsersCertificate(int slot, X509** ppCert)
   return err;
 }
 
+EXP_OPTION int GetSlotCertificate(CK_SLOT_ID slotId, X509 **ppCertificate)
+{
+  int err = ERR_OK;
+  CK_SESSION_HANDLE hSession = 0;
+  CK_OBJECT_HANDLE hCert;
+  CK_BYTE certData[2048];
+  CK_ULONG certLen = sizeof(certData);
 
+  // open session
+  hSession = OpenSession(slotId, NULL);
+  if (hSession == CK_INVALID_HANDLE) { SET_LAST_ERROR(ERR_PKCS_LOGIN); return ERR_PKCS_LOGIN; }
+  ddocDebug(3, "GetSlotCertificate", "OpenSession ok, hSession = %d", (int)hSession);
+
+  // get cert
+  memset(certData, 0, sizeof(certLen));
+  hCert = LocateCertificate(hSession, certData, &certLen, 0, 0, 0);
+  ddocDebug(3, "GetSlotCertificate", "hCert = %d, len: %d", (int)hCert, certLen);
+  if (hCert == (CK_OBJECT_HANDLE)-1)
+  {
+	(*ckFunc->C_CloseSession)(hSession);
+	SET_LAST_ERROR(ERR_PKCS_CERT_LOC);
+	return ERR_PKCS_CERT_LOC;
+  }
+
+  // set cert data
+  if(certLen)
+	err = ddocDecodeX509Data(ppCertificate, certData, certLen);
+
+  (*ckFunc->C_CloseSession)(hSession);
+  return err;
+}
+
+EXP_OPTION int WaitSlotEvent(CK_SLOT_ID_PTR pSlot)
+{
+  CK_RV rv;
+  rv = (*ckFunc->C_WaitForSlotEvent)(CKF_DONT_BLOCK, pSlot, NULL_PTR);
+  return rv;
+}
