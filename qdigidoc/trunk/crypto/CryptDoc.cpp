@@ -203,18 +203,22 @@ bool CryptDoc::decrypt( const QString &pin )
 	if( !isEncrypted() )
 		return true;
 
-	poller->lock();
-	DEncEncryptedKey *key;
-	int err = dencEncryptedData_findEncryptedKeyByPKCS11( m_enc, &key );
-	if( err != ERR_OK || !key )
+	DEncEncryptedKey *key = 0;
+	for( int i = 0; i < m_enc->nEncryptedKeys; ++i )
 	{
-		setLastError( tr("Recipient does not exist in document recipient list"), err );
-		poller->unlock();
+		DEncEncryptedKey *tmp = m_enc->arrEncryptedKeys[i];
+		if( m_authCert == SslCertificate::fromX509( (Qt::HANDLE)tmp->pCert ) )
+			key = tmp;
+	}
+	if( !key )
+	{
+		setLastError( tr("You do not have the key to decrypt this document") );
 		return false;
 	}
 
-	err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
-	poller->unlock();
+	poller->stop();
+	int err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
+	poller->start();
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed decrypt data"), err );
@@ -302,7 +306,7 @@ bool CryptDoc::encrypt()
 		return true;
 	if( m_enc->nEncryptedKeys < 1 )
 	{
-		setLastError( tr("No recipient keys") );
+		setLastError( tr("No keys specified") );
 		return false;
 	}
 
@@ -505,7 +509,7 @@ void CryptDoc::saveDocument( int id, const QString &path )
 }
 
 void CryptDoc::selectCard( const QString &card )
-{ poller->selectCard( card ); }
+{ QMetaObject::invokeMethod( poller, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 
 void CryptDoc::setLastError( const QString &err, int code )
 {

@@ -34,112 +34,99 @@ Poller::Poller( QObject *parent )
 ,	terminate( false )
 {}
 
-Poller::~Poller()
-{
-	terminate = true;
-	wait();
-}
+Poller::~Poller() { stop(); }
 
-void Poller::lock() { m.lock(); }
-
-void Poller::readCerts()
+void Poller::read()
 {
-	int slot = cards[selectedCard];
-	X509 *cert;
-	findUsersCertificate( slot, &cert );
-	auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
-	free( cert );
+	CK_ULONG count = 20;
+	CK_SLOT_ID slotids[20];
+	int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
+	if( err != ERR_OK )
+		return;
+
+	QHash<QString,int> cards;
+	for( CK_ULONG i = 0; i < count; ++i )
+	{
+		CK_TOKEN_INFO tokeninfo;
+		err = GetTokenInfo( &tokeninfo, slotids[i] );
+		QString serialNumber = QByteArray( (const char*)tokeninfo.serialNumber, 16 ).trimmed();
+		if( !cards.contains( serialNumber ) )
+			cards[serialNumber] = i;
+	}
+
+	if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
+	{
+		auth = QSslCertificate();
+		selectedCard.clear();
+	}
+
+	if( !select.isEmpty() && cards.contains( select ) )
+	{
+		selectedCard = select;
+		select.clear();
+		X509 *cert;
+		GetSlotCertificate( slotids[cards[selectedCard]], &cert );
+		auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
+		free( cert );
+	}
+	else
+		select.clear();
+
+	if( selectedCard.isEmpty() && !cards.isEmpty() )
+	{
+		selectedCard = cards.begin().key();
+		X509 *cert;
+		GetSlotCertificate( slotids[cards[selectedCard]], &cert );
+		auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
+		free( cert );
+	}
 
 	Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
 }
 
 void Poller::run()
 {
-	Q_FOREVER
+	char driver[200];
+	qsnprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
+		ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
+	lib = (Qt::HANDLE)initPKCS11Library( ConfigItem_lookup( driver ) );
+
+	if( !lib )
+		return;
+
+	read();
+
+	CK_SLOT_ID slot;
+	bool seq = true;
+	while( !terminate )
 	{
+		sleep( 1 );
 		if( m.tryLock() )
+			continue;
+
+		switch( WaitSlotEvent( &slot ) )
 		{
-			char driver[200];
-			qsnprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
-				ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );
-			LIBHANDLE lib = initPKCS11Library( ConfigItem_lookup( driver ) );
-
-			if( !lib )
-			{
-				m.unlock();
+		case CKR_OK:
+			if( !seq )
 				continue;
-			}
-
-			CK_ULONG count = 20;
-			CK_SLOT_ID slotids[20];
-			int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
-			if( err != ERR_OK )
-			{
-				closePKCS11Library( lib, 0 );
-				m.unlock();
-				continue;
-			}
-
-			cards.clear();
-			for( CK_ULONG i = 0; i < count; ++i )
-			{
-				CK_TOKEN_INFO tokeninfo;
-				err = GetTokenInfo( &tokeninfo, slotids[i] );
-				QString serialNumber;
-				int len = sizeof(tokeninfo.serialNumber);
-				for( int j = 0; j < len; ++j )
-				{
-					if( tokeninfo.serialNumber[j] == ' ' )
-						break;
-					serialNumber.append( tokeninfo.serialNumber[j] );
-				}
-				if( !cards.contains( serialNumber ) )
-					cards[serialNumber] = i;
-			}
-			closePKCS11Library( lib, 0 );
-
-			if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
-				selectedCard.clear();
-
-			selectLock.lock();
-			if( !select.isEmpty() && cards.contains( select ) )
-			{
-				selectedCard = select;
-				select.clear();
-				selectLock.unlock();
-				readCerts();
-			}
-			else
-			{
-				select.clear();
-				selectLock.unlock();
-			}
-
-			if( selectedCard.isEmpty() && !cards.isEmpty() )
-			{
-				selectedCard = cards.begin().key();
-				readCerts();
-			}
-			if( selectedCard.isEmpty() )
-				auth = QSslCertificate();
-			Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
-			m.unlock();
+			read();
+			seq = false;
+			break;
+		case CKR_NO_EVENT:
+			seq = true;
+			break;
+		default:
+			return;
 		}
-
-		for( int i = 0; i < 5; ++i )
-		{
-			if( terminate )
-				return;
-			sleep( 1 );
-		}
+		m.unlock();
 	}
 }
 
-void Poller::selectCard( const QString &card )
+void Poller::selectCard( const QString &card ) { select = card; read(); }
+void Poller::stop()
 {
-	selectLock.lock();
-	select = card;
-	selectLock.unlock();
+	terminate = true;
+	wait();
+	if( lib )
+		closePKCS11Library( (LIBHANDLE)lib, 0 );
 }
-
-void Poller::unlock() { m.unlock(); }

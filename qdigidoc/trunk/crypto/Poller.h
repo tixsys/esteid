@@ -24,7 +24,6 @@
 
 #include <QThread>
 
-#include <QHash>
 #include <QMutex>
 #include <QSslCertificate>
 
@@ -36,21 +35,22 @@ public:
 	Poller( QObject *parent = 0 );
 	~Poller();
 
-	void lock();
-	void selectCard( const QString &card );
-	void unlock();
+	void stop();
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth );
 
+private Q_SLOTS:
+	void selectCard( const QString &card );
+
 private:
-	void readCerts();
+	void read();
 	void run();
 
+	Qt::HANDLE lib;
 	volatile bool terminate;
-	QMutex m, selectLock;
-	QHash<QString,int> cards;
+	QMutex m;
 	QString selectedCard, select;
 	QSslCertificate auth;
 };
