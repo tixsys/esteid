@@ -522,11 +522,21 @@ void MainWindow::showCardStatus()
 		const SslCertificate c = doc->authCert();
 		QTextStream s( &content );
 
-		s << tr("Name") << ": <font color=\"black\">"
-			<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
-			<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
-		s << tr("Personal code") << ": <font color=\"black\">"
-			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+		if( c.isTempel() )
+		{
+			s << tr("Company") << ": <font color=\"black\">"
+				<< SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) << "</font><br />";
+			s << tr("Register code") << ": <font color=\"black\">"
+				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+		}
+		else
+		{
+			s << tr("Name") << ": <font color=\"black\">"
+				<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
+				<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+			s << tr("Personal code") << ": <font color=\"black\">"
+				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+		}
 		s << tr("Card in reader") << ": <font color=\"black\">"
 			<< doc->activeCard() << "</font><br />";
 
