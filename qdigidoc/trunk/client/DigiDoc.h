@@ -67,6 +67,12 @@ class DigiDoc: public QObject
 {
 	Q_OBJECT
 public:
+	enum ConfParameter
+	{
+		ProxyHost,
+		ProxyPort,
+	};
+
 	DigiDoc( QObject *parent = 0 );
 	~DigiDoc();
 
@@ -85,6 +91,7 @@ public:
 	void removeSignature( unsigned int num );
 	void save();
 	void saveDocument( unsigned int num, const QString &filepath );
+	void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
 		const QString &city,
 		const QString &state,

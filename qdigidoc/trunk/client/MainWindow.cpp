@@ -31,7 +31,6 @@
 #include "SignatureDialog.h"
 
 #include <digidocpp/Document.h>
-#include <digidocpp/XmlConf.h>
 
 #include <QApplication>
 #include <QDateTime>
@@ -144,8 +143,9 @@ MainWindow::MainWindow( QWidget *parent )
 		else
 			parseParams();
 	}
-	digidoc::XmlConf::getInstance()->setProxyPort( s.value( "Main/proxyPort" ).toString().toStdString() );
-	digidoc::XmlConf::getInstance()->setProxyHost( s.value( "Main/proxyHost" ).toString().toStdString() );
+
+	doc->setConfValue( DigiDoc::ProxyHost, s.value( "Main/proxyPort" ) );
+	doc->setConfValue( DigiDoc::ProxyPort, s.value( "Main/proxyHost" ) );
 
 	infoMobileCell->setText( s.value( "Main/MobileNumber" ).toString() );
 	infoMobileCode->setText( s.value( "Main/MobileCode" ).toString() );

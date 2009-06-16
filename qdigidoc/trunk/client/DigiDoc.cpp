@@ -28,6 +28,7 @@
 #include "Poller.h"
 
 #include <digidocpp/BDoc.h>
+#include <digidocpp/XmlConf.h>
 #include <digidocpp/WDoc.h>
 #include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
 #include <digidocpp/io/ZipSerialize.h>
@@ -321,6 +322,24 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 
 void DigiDoc::selectCard( const QString &card )
 { poller->selectCard( card ); }
+
+void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
+{
+	digidoc::Conf *i = digidoc::XmlConf::getInstance();
+	if( !i )
+		return;
+
+	switch( parameter )
+	{
+	case ProxyHost:
+		i->setProxyPort( value.toString().toStdString() );
+		break;
+	case ProxyPort:
+		i->setProxyHost( value.toString().toStdString() );
+		break;
+	default: break;
+	}
+}
 
 void DigiDoc::setLastError( const Exception &e )
 {
