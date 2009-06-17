@@ -4,6 +4,7 @@
 #include "crypto/signer/PKCS11Signer.h"
 #include "util/File.h"
 #include "Conf.h"
+#include "XmlConf.h"
 
 using namespace digidoc;
 
@@ -77,7 +78,20 @@ DDocPrivate::DDocPrivate()
 		return;
 
 	f_initDigiDocLib();
-	f_initConfigStore( "digidoc.ini" );
+
+#if WIN32
+	std::string conf;
+	const char *bdoc = getenv( XmlConf::CONF_ENV.c_str() );
+	if( bdoc )
+	{
+		conf.append( util::File::directory( bdoc ) );
+		conf.append( "/" );
+	}
+	conf.append( "digidoc.ini" );
+	f_initConfigStore( conf.c_str() );
+#else
+	f_initConfigStore( NULL );
+#endif
 
 	ready = true;
 }
