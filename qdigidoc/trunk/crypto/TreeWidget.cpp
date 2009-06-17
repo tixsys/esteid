@@ -43,7 +43,11 @@ TreeWidget::TreeWidget( QWidget *parent )
 }
 
 void TreeWidget::doubleClicked( const QModelIndex &index )
-{ QDesktopServices::openUrl( url( index ) ); }
+{
+	QString u = url( index );
+	if( !u.isEmpty() )
+		QDesktopServices::openUrl( u );
+}
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
 {
@@ -98,6 +102,9 @@ QString TreeWidget::url( const QModelIndex &index ) const
 	QString url( "file://" );
 #endif
 	QModelIndex i = index.model()->index( index.row(), 0 );
-	url += QString( "%1/%2" ).arg( i.data( Qt::UserRole ).toString() ).arg( i.data().toString() );
+	QString path = i.data( Qt::UserRole ).toString();
+	if( path.isEmpty() )
+		return path;
+	url += QString( "%1/%2" ).arg( path ).arg( i.data().toString() );
 	return url;
 }
