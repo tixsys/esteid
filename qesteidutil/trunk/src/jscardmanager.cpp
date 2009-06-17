@@ -169,6 +169,17 @@ QString JsCardManager::cardId( int readerNum )
 
 void JsCardManager::findCard()
 {
+	if ( !cardMgr )
+		return;
+
+	try {
+		if ( cardMgr->getReaderCount( true ) <= 0 )
+		return;
+	} catch ( const std::runtime_error &e ) {
+		qDebug() << e.what();
+		return;
+	}
+
 	m_jsEsteidCard->setCard( 0 );
 	QCoreApplication::processEvents();
 	foreach( const ReaderState &reader, cardReaders )
