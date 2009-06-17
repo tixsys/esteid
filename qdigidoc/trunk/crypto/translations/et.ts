@@ -235,7 +235,7 @@
     </message>
     <message>
         <source>Failed to add key</source>
-        <translation>Võtme lisamine ebaõnnestus</translation>
+        <translation>Adressaadi lisamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to create document</source>
@@ -243,7 +243,7 @@
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
-        <translation>Adresaat ei ole turvaümbriku adresaatide nimekirjas</translation>
+        <translation>Adresaat ei ole turvaümbriku adressaatide nimekirjas</translation>
     </message>
     <message>
         <source>Failed decrypt data</source>
@@ -275,7 +275,7 @@
     </message>
     <message>
         <source>Failed to remove key</source>
-        <translation>Võtme eemaldamine ebaõnnestus</translation>
+        <translation>Adressaadi eemaldamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Container is not crypted</source>
@@ -295,7 +295,7 @@
     </message>
     <message>
         <source>No recipient keys</source>
-        <translation>Puuduvad vastuvõtja võtmed</translation>
+        <translation>Puuduvad adressaadi võtmed</translation>
     </message>
     <message>
         <source>Document not open</source>
@@ -307,11 +307,11 @@
     </message>
     <message>
         <source>Key already exists</source>
-        <translation>Võti juba eksisteerib</translation>
+        <translation>Adresaat on juba lisatud</translation>
     </message>
     <message>
         <source>Failed to create temporary files&lt;br /&gt;%1</source>
-        <translation>Ajutiste failde tekitamine ebaõnnestus&lt;br /&gt;%1</translation>
+        <translation>Ajutiste failde loomine ebaõnnestus&lt;br /&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -323,7 +323,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Add Recipient</source>
-        <translation>Lisa sertifikaat</translation>
+        <translation>Lisa adressaat</translation>
     </message>
     <message>
         <source>SK Certificates</source>
@@ -391,14 +391,14 @@ Error code: %1</source>
     </message>
     <message>
         <source>This certificate is not usable for crypting</source>
-        <translation>See sertifikaat ei kõlba krüpteerimiseks</translation>
+        <translation>See sertifikaadiga ei saa krüpteerida</translation>
     </message>
 </context>
 <context>
     <name>KeyDialog</name>
     <message>
         <source>Recipient</source>
-        <translation>Vastuvõtja</translation>
+        <translation>Adressaat</translation>
     </message>
     <message>
         <source>Crypt method</source>
@@ -418,7 +418,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Crypt recipient</source>
-        <translation>Krüpteerida vastuvõtjale</translation>
+        <translation>Krüpteerida adressaadile</translation>
     </message>
     <message>
         <source>Attribute</source>
@@ -596,11 +596,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Crypt documents</source>
-        <translation>Krüpteerida dokument</translation>
+        <translation>Krüpteerida faile</translation>
     </message>
     <message>
         <source>View crypted document content</source>
-        <translation>Vaata krüpteeritud dokumendi sisu</translation>
+        <translation>Vaata turvaümbriku sisu</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -723,7 +723,7 @@ Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
-        <translation>%1 eksisteerib.&lt;br /&gt;Kas sa tahad asendada seda?</translation>
+        <translation>%1 on juba olemas.&lt;br /&gt;Kas sa tahad seda asendada?</translation>
     </message>
     <message>
         <source>Select folder where file will be stored</source>
@@ -741,10 +741,13 @@ For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Dokumentide krüptimine&lt;br /&gt;&lt;br /&gt;
-Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;
-Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;
-Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;
+&lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+Faili krüpteerimise eesmärgiks on muuta selles asuvad andmed võõrastele loetamatuteks.&lt;br /&gt;&lt;br /&gt;
+Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
+Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Failid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, dekrüpteerimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult vastava isiku ID-kaardil.&lt;/p&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;HOIATUS:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /
+&lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
+&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -762,7 +765,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevus jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
 </context>
 <context>
@@ -773,7 +776,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>Container default location</source>
-        <translation>Ümbriku loomise vaikekataloog</translation>
+        <translation>Turvaümbriku loomise vaikekataloog</translation>
     </message>
     <message>
         <source>...</source>
@@ -785,7 +788,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>Show signing intro</source>
-        <translation>Näita allkirjastamisel sissejuhatust</translation>
+        <translation>Näita krüpteerimisel sissejuhatust</translation>
     </message>
     <message>
         <source>Same folder</source>
@@ -793,7 +796,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>Ask container name</source>
-        <translation>Küsi dokumendi nime</translation>
+        <translation>Küsi turvaümbriku nime</translation>
     </message>
 </context>
 <context>
