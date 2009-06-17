@@ -588,7 +588,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>DigiDoc crypt</source>
-        <translation>DigiDoc crypto</translation>
+        <translation>DigiDoc3 krüpto</translation>
     </message>
     <message>
         <source>I want to:</source>
