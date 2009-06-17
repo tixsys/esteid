@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=ID-card utility
+Name=ID-card Utility
 Name[et]=ID-kaardi haldusvahend
 Exec=qesteidutil %F
 Icon=qesteidutil
