@@ -503,15 +503,15 @@ Error code: %1</source>
     </message>
     <message>
         <source>Estonian</source>
-        <translation>Estonian</translation>
+        <translation type="obsolete">Estonian</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation>Russian</translation>
+        <translation type="obsolete">Russian</translation>
     </message>
     <message>
         <source>German</source>

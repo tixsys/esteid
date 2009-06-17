@@ -465,15 +465,15 @@ Error code: %1</source>
     </message>
     <message>
         <source>Estonian</source>
-        <translation>Эстонский</translation>
+        <translation type="obsolete">Estonian</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>Английский</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation>Русский</translation>
+        <translation type="obsolete">Russian</translation>
     </message>
     <message>
         <source>I want to:</source>

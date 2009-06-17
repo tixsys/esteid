@@ -268,17 +268,17 @@ color: #71889A;
          <widget class="QComboBox" name="languages">
           <item>
            <property name="text">
-            <string>Estonian</string>
+            <string notr="true">Estonian</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>English</string>
+            <string notr="true">English</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Russian</string>
+            <string notr="true">Russian</string>
            </property>
           </item>
          </widget>
