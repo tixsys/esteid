@@ -128,7 +128,7 @@ bool MainWindow::addFile( const QString &file )
 		bool select = false;
 		if( !ask && QFile::exists( docname ) )
 		{
-			QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocClient",
+			QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 				tr( "%1 already exists.<br />Do you want replace it?" ).arg( docname ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			select = b == QMessageBox::No;
@@ -155,8 +155,7 @@ bool MainWindow::addFile( const QString &file )
 			QFileInfo( file ).fileName() )
 		{
 			QMessageBox::StandardButton btn = QMessageBox::warning( this,
-				"QDigiDocClient",
-				tr("Container contains file with same name, ovewrite?"),
+				windowTitle(), tr("Container contains file with same name, ovewrite?"),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			if( btn == QMessageBox::Yes )
 			{
@@ -240,7 +239,7 @@ void MainWindow::buttonClicked( int button )
 
 			if( doc->isSigned() )
 			{
-				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+				QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 					tr("This container contains signature! Open with QDigiDocClient?"),
 					QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes );
 				if( b != QMessageBox::Yes )
@@ -363,6 +362,7 @@ void MainWindow::parseLink( const QString &url )
 		KeyAddDialog *key = new KeyAddDialog( this );
 		connect( key, SIGNAL(addCardCert()), SLOT(addCardCert()) );
 		connect( key, SIGNAL(selected(QList<CKey>)), SLOT(addKeys(QList<CKey>)) );
+		key->move( pos() );
 		key->show();
 	}
 	else if( url == "browse" )

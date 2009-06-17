@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>275</height>
+    <width>650</width>
+    <height>216</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,18 +30,21 @@
        <item>
         <layout class="QHBoxLayout" name="searchLayout">
          <item>
-          <widget class="QLabel" name="sscodeLabel">
-           <property name="text">
-            <string>Personal code:</string>
-           </property>
+          <widget class="QComboBox" name="searchType">
+           <item>
+            <property name="text">
+             <string>Personal code:</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Company name:</string>
+            </property>
+           </item>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="sscode">
-           <property name="maxLength">
-            <number>11</number>
-           </property>
-          </widget>
+          <widget class="QLineEdit" name="searchContent"/>
          </item>
          <item>
           <widget class="QPushButton" name="search">
@@ -156,7 +159,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>sscode</sender>
+   <sender>searchContent</sender>
    <signal>returnPressed()</signal>
    <receiver>search</receiver>
    <slot>click()</slot>

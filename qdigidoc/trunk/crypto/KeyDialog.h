@@ -27,6 +27,7 @@
 
 #include "CryptDoc.h"
 
+class IKValidator;
 class LdapSearch;
 
 class KeyWidget: public QLabel
@@ -79,15 +80,17 @@ private Q_SLOTS:
 	void addFile();
 	void on_add_clicked();
 	void on_search_clicked();
+	void on_searchType_activated( int index );
 	void on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int column );
-	void showError( const QString &msg, int err );
-	void showResult( const CKey &key );
+	void showError( const QString &msg );
+	void showResult( const QList<CKey> &result );
 
 private:
 	void disableSearch( bool disable );
 	void loadHistory();
 	void saveHistory();
 
+	IKValidator *validator;
 	LdapSearch *ldap;
 	QList<CKey> skKeys;
 };

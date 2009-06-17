@@ -44,11 +44,12 @@ public:
 	void search( const QString &search );
 
 Q_SIGNALS:
-	void searchResult( const CKey &key );
-	void error( const QString &msg, int err );
+	void searchResult( const QList<CKey> &result );
+	void error( const QString &msg );
 
 private:
 	void timerEvent( QTimerEvent *e );
+	void setLastError( const QString &msg, int err );
 
 	LDAP *ldap;
 	ULONG msg_id;

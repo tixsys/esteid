@@ -78,7 +78,7 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 
 	title->setText( k.recipient );
 
-	addItem( tr("Recipient"), k.recipient );
+	addItem( tr("Key"), k.recipient );
 	addItem( tr("Crypt method"), k.type );
 	//addItem( tr("ID"), k.id );
 	addItem( tr("Expires"), key.cert.expiryDate().toString("dd.MM.yyyy hh:mm:ss") );
@@ -124,18 +124,18 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	loadHistory();
 
 	ldap = new LdapSearch( this );
-	connect( ldap, SIGNAL(searchResult(CKey)), SLOT(showResult(CKey)) );
-	connect( ldap, SIGNAL(error(QString,int)), SLOT(showError(QString,int)) );
+	connect( ldap, SIGNAL(searchResult(QList<CKey>)), SLOT(showResult(QList<CKey>)) );
+	connect( ldap, SIGNAL(error(QString)), SLOT(showError(QString)) );
 
-	sscode->setValidator( new IKValidator( sscode ) );
-	sscode->setFocus();
+	validator = new IKValidator( this );
+	on_searchType_activated( 0 );
 	add->setEnabled( false );
 	progress->setVisible( false );
 }
 
 void KeyAddDialog::addFile()
 {
-	QString file = QFileDialog::getOpenFileName( this, "QDigiDocCrypto",
+	QString file = QFileDialog::getOpenFileName( this, windowTitle(),
 		QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
 		tr("Certificates (*.pem *.cer *.crt)") );
 	if( file.isEmpty() )
@@ -144,7 +144,7 @@ void KeyAddDialog::addFile()
 	QFile f( file );
 	if( !f.open( QIODevice::ReadOnly ) )
 	{
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to open certifiacte") );
+		QMessageBox::warning( this, windowTitle(), tr("Failed to open certifiacte") );
 		return;
 	}
 
@@ -154,11 +154,11 @@ void KeyAddDialog::addFile()
 		k.cert = QSslCertificate( &f, QSsl::Der );
 	if( k.cert.isNull() )
 	{
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("Failed to read certificate") );
+		QMessageBox::warning( this, windowTitle(), tr("Failed to read certificate") );
 	}
 	else if( !SslCertificate( k.cert ).keyUsage().contains( SslCertificate::DataEncipherment ) )
 	{
-		QMessageBox::warning( this, "QDigiDocCrypto", tr("This certificate is not usable for crypting") );
+		QMessageBox::warning( this, windowTitle(), tr("This certificate is not usable for crypting") );
 	}
 	else
 	{
@@ -174,7 +174,8 @@ void KeyAddDialog::disableSearch( bool disable )
 	progress->setVisible( disable );
 	search->setDisabled( disable );
 	skView->setDisabled( disable );
-	sscode->setDisabled( disable );
+	searchType->setDisabled( disable );
+	searchContent->setDisabled( disable );
 }
 
 void KeyAddDialog::loadHistory()
@@ -196,6 +197,7 @@ void KeyAddDialog::loadHistory()
 		i->setText( 0, list.value( 0 ) );
 		i->setText( 1, list.value( 1 ) );
 		i->setText( 2, list.value( 2 ) );
+		i->setData( 0, Qt::UserRole, list.value( 3 ).toInt() );
 		usedView->addTopLevelItem( i );
 	}
 	f.close();
@@ -207,14 +209,18 @@ void KeyAddDialog::on_add_clicked()
 		return;
 
 	saveHistory();
-	Q_EMIT selected( skKeys );
+	QList<CKey> keys;
+	Q_FOREACH( const QModelIndex &index, skView->selectionModel()->selectedRows() )
+		keys << skKeys.value( index.row() );
+	Q_EMIT selected( keys );
 }
 
 void KeyAddDialog::on_search_clicked()
 {
-	if( !IKValidator::isValid( sscode->text() ) )
+	if( searchType->currentIndex() == 0 &&
+		!IKValidator::isValid( searchContent->text() ) )
 	{
-		QMessageBox::warning( this, "QDigiDocCrypto",
+		QMessageBox::warning( this, windowTitle(),
 			tr("Social security number is not valid!") );
 	}
 	else
@@ -222,13 +228,32 @@ void KeyAddDialog::on_search_clicked()
 		skView->clear();
 		add->setEnabled( false );
 		disableSearch( true );
-		ldap->search( QString( "(serialNumber=%1)" ).arg( sscode->text() ) );
+		if( searchType->currentIndex() == 0 )
+			ldap->search( QString( "(serialNumber=%1)" ).arg( searchContent->text() ) );
+		else
+			ldap->search( QString( "(cn=%1*)" ).arg( searchContent->text() ) );
 	}
+}
+
+void KeyAddDialog::on_searchType_activated( int index )
+{
+	searchType->setCurrentIndex( index );
+	if( index == 0 )
+		searchContent->setValidator( validator );
+	else
+		searchContent->setValidator( 0 );
+	skView->clear();
+	searchContent->clear();
+	searchContent->setFocus();
 }
 
 void KeyAddDialog::on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int )
 {
-	sscode->setText( item->text( 0 ).split( ',' ).value( 2 ) );
+	on_searchType_activated( item->data( 0, Qt::UserRole ).toInt() );
+	if( searchType->currentIndex() == 0 )
+		searchContent->setText( item->text( 0 ).split( ',' ).value( 2 ) );
+	else
+		searchContent->setText( item->text( 0 ) );
 	tabWidget->setCurrentIndex( 0 );
 	on_search_clicked();
 }
@@ -243,6 +268,7 @@ void KeyAddDialog::saveHistory()
 			i->setText( 0, k.recipient );
 			i->setText( 1, k.cert.issuerInfo( "CN" ) );
 			i->setText( 2, k.cert.expiryDate().toString( "dd.MM.yyyy" ) );
+			i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
 			usedView->addTopLevelItem( i );
 		}
 	}
@@ -260,30 +286,35 @@ void KeyAddDialog::saveHistory()
 		QTreeWidgetItem *child = top->child( i );
 		s << child->text( 0 ) << ';';
 		s << child->text( 1 ) << ';';
-		s << child->text( 2 ) << '\n';
+		s << child->text( 2 ) << ';';
+		s << child->data( 0, Qt::UserRole ).toInt() << '\n';
 	}
 	f.close();
 }
 
-void KeyAddDialog::showError( const QString &msg, int err )
+void KeyAddDialog::showError( const QString &msg )
 {
-	QString s( msg );
-	if( err != -1 )
-		s.append( tr("\nError code: %1").arg( err ) );
 	disableSearch( false );
-	QMessageBox::warning( this, "QDigDocCrypto", s );
+	QMessageBox::warning( this, windowTitle(), msg );
 }
 
-void KeyAddDialog::showResult( const CKey &key )
+void KeyAddDialog::showResult( const QList<CKey> &result )
 {
 	skKeys.clear();
-	skKeys << key;
 
-	QTreeWidgetItem *i = new QTreeWidgetItem( skView );
-	i->setText( 0, key.recipient );
-	i->setText( 1, key.cert.issuerInfo( QSslCertificate::CommonName ) );
-	i->setText( 2, key.cert.expiryDate().toString( "dd.MM.yyyy" ) );
-	skView->addTopLevelItem( i );
+	Q_FOREACH( const CKey &k, result )
+	{
+		if( !SslCertificate( k.cert ).keyUsage().contains( SslCertificate::DataEncipherment ) )
+			continue;
+
+		skKeys << k;
+		QTreeWidgetItem *i = new QTreeWidgetItem( skView );
+		i->setText( 0, k.recipient );
+		i->setText( 1, k.cert.issuerInfo( QSslCertificate::CommonName ) );
+		i->setText( 2, k.cert.expiryDate().toString( "dd.MM.yyyy" ) );
+		i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
+		skView->addTopLevelItem( i );
+	}
 
 	disableSearch( false );
 	add->setEnabled( true );

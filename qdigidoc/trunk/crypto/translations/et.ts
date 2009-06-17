@@ -327,7 +327,7 @@
     <message>
         <source>
 Error code: %1</source>
-        <translation>Veakood: %1</translation>
+        <translation type="obsolete">Veakood: %1</translation>
     </message>
     <message>
         <source>Add Recipient</source>
@@ -400,6 +400,10 @@ Error code: %1</source>
     <message>
         <source>This certificate is not usable for crypting</source>
         <translation>See sertifikaadiga ei saa krüpteerida</translation>
+    </message>
+    <message>
+        <source>Company name:</source>
+        <translation>Asutus:</translation>
     </message>
 </context>
 <context>

@@ -216,7 +216,7 @@
     <message>
         <source>
 Error code: %1</source>
-        <translation>Ошибка:%1</translation>
+        <translation type="obsolete">Ошибка:%1</translation>
     </message>
     <message>
         <source>Add Recipient</source>
@@ -265,6 +265,10 @@ Error code: %1</source>
     <message>
         <source>Close</source>
         <translation type="obsolete">Закрыть</translation>
+    </message>
+    <message>
+        <source>Company name:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
