@@ -79,7 +79,7 @@ DDocPrivate::DDocPrivate()
 
 	f_initDigiDocLib();
 
-#if WIN32
+#ifdef WIN32
 	std::string conf;
 	const char *bdoc = getenv( XmlConf::CONF_ENV.c_str() );
 	if( bdoc )
