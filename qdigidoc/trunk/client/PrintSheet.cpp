@@ -142,7 +142,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<td class=\"label\">" << tr("CERTIFICATE ISSUER PUBLIC KEY HASH") << "</td>"
 		<< "</tr>"
 		<< "<td class=\"textborder\">" << cert.issuerInfo( QSslCertificate::CommonName ) << "</td>"
-		<< "<td class=\"textborderright\"></td>"
+		<< "<td class=\"textborderright\">" << cert.toHex( cert.authorityKeyIdentifier() ) << "</td>"
 		<< "</table>"
 
 		<< "<div class=\"label\">" << tr("KEHTIVUSKINNITUSE SÕNUMILÜHEND") << "&nbsp;</div>"

@@ -65,14 +65,6 @@ void CertificateDialog::addItem( const QString &variable, const QString &value, 
 	parameters->addTopLevelItem( t );
 }
 
-QByteArray CertificateDialog::addHexSeparators( const QByteArray &data ) const
-{
-	QByteArray ret = data;
-	for( int i = 2; i < ret.size(); i += 3 )
-		ret.insert( i, ' ' );
-	return ret;
-}
-
 void CertificateDialog::on_parameters_itemSelectionChanged()
 {
 	if ( !parameters->selectionModel()->hasSelection() || !parameters->selectedItems().size() )
@@ -165,11 +157,16 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
 	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
-	addItem( tr("Public key"), QString("RSA (%1)").arg( c.publicKey().length() ),
-		addHexSeparators( c.publicKey().toDer().toHex() ) );
+	addItem( tr("Public key"), QString("%1 (%1)")
+			.arg( c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" )
+			.arg( c.publicKey().length() ),
+		c.toHex( c.publicKey().toDer() ) );
+
 	QStringList enhancedKeyUsage = c.enhancedKeyUsage();
 	addItem( tr("Enhanched key usage"), enhancedKeyUsage.join( ", " ), enhancedKeyUsage.join( "\n" ) );
 	addItem( tr("Certificate policies"), c.policies().join( ", " ) );
+	addItem( tr("Authority key identifier"), c.toHex( c.authorityKeyIdentifier() ) );
+	addItem( tr("Subject key identifier"), c.toHex( c.subjectKeyIdentifier() ) );
 	QStringList keyUsage = c.keyUsage().values();
 	addItem( tr("Key usage"), keyUsage.join( ", " ), keyUsage.join( "\n" ) );
 }

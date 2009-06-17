@@ -44,6 +44,7 @@ public:
 
 	SslCertificate( const QSslCertificate &cert );
 
+	QByteArray	authorityKeyIdentifier() const;
 	QStringList enhancedKeyUsage() const;
 	static QString formatName( const QString &name );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );
@@ -54,6 +55,8 @@ public:
 	QString		subjectInfoUtf8( SubjectInfo subject ) const;
 	QString		subjectInfoUtf8( const QByteArray &tag ) const;
 	QByteArray	serialNumber() const;
+	QByteArray	subjectKeyIdentifier() const;
+	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
 	QByteArray	versionNumber() const;
 
 private:

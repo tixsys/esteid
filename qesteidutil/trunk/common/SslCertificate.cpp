@@ -26,8 +26,22 @@
 
 #include <openssl/x509v3.h>
 
+static QByteArray ASN_STRING_to_QByteArray( ASN1_OCTET_STRING *str )
+{ return QByteArray( (const char *)ASN1_STRING_data(str), ASN1_STRING_length(str) ); }
+
+
 SslCertificate::SslCertificate( const QSslCertificate &cert )
 : QSslCertificate( cert ) {}
+
+QByteArray SslCertificate::authorityKeyIdentifier() const
+{
+	AUTHORITY_KEYID *id = (AUTHORITY_KEYID *)getExtension( NID_authority_key_identifier );
+	QByteArray out;
+	if( id->keyid )
+		out = ASN_STRING_to_QByteArray( id->keyid );
+	AUTHORITY_KEYID_free( id );
+	return out;
+}
 
 QString SslCertificate::decode( const QString &in ) const
 {
@@ -183,6 +197,22 @@ QString SslCertificate::subjectInfoUtf8( SubjectInfo subject ) const
 
 QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
 { return decode( subjectInfo( tag ) ); }
+
+QByteArray SslCertificate::subjectKeyIdentifier() const
+{
+	ASN1_OCTET_STRING *id = (ASN1_OCTET_STRING *)getExtension( NID_subject_key_identifier );
+	QByteArray out = ASN_STRING_to_QByteArray( id );
+	ASN1_OCTET_STRING_free( id );
+	return out;
+}
+
+QByteArray SslCertificate::toHex( const QByteArray &in, QChar separator )
+{
+	QByteArray ret = in.toHex();
+	for( int i = 2; i < ret.size(); i += 3 )
+		ret.insert( i, separator );
+	return ret;
+}
 
 QString SslCertificate::toUtf16( const QString &in ) const
 {
