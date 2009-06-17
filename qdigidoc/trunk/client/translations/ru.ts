@@ -88,10 +88,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to send email</source>
         <translation type="unfinished"></translation>
     </message>
@@ -307,23 +303,162 @@ p, li { white-space: pre-wrap; }
         <source>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register code</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
     <message>
-        <source>Mobiiliga allkirjastamine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toimub allkirjastamine...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kontrollkood</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signing in process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request accepted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User denied or cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Got signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request pending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobile-ID not ready, try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone absent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request sending error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Service internal error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signing with Mobile-ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%v sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PrintSheet</name>
+    <message>
+        <source>DIGIALLKIRJADE KINNITUSLEHT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNED FILES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FILE NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FILE SIZE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNERS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PERSONAL CODE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TIME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNATURE VALIDITY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNATURE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IS VALID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IS NOT VALID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROLE/RESOLUTION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CERTIFICATE SERIALNUMBER</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CERTIFICATE ISSUER NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CERTIFICATE ISSUER PUBLIC KEY HASH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KEHTIVUSKINNITUSE SÕNUMILÜHEND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;Allkirjastatud failid&lt;/b&gt; nimetatud failide esitus paberil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOTES</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -410,10 +545,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OCSP PKCS12 certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -548,6 +679,17 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TreeWidget</name>
+    <message>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

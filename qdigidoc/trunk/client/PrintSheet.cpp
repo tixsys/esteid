@@ -63,14 +63,14 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	<< "</head>"
 	<< "<body>"
 
-	<< "<div id=\"head\">DIGIALLKIRJADE KINNITUSLEHT</div>"
-	<< "<div class=\"sectionHead\">ALLKIRJASTATUD FAILID</div>"
+	<< "<div id=\"head\">" << tr("DIGIALLKIRJADE KINNITUSLEHT") << "</div>"
+	<< "<div class=\"sectionHead\">" << tr("SIGNED FILES") << "</div>"
 
 	<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 	<< "<tr>"
-	<< "<td class=\"label\" width=\"300\">FAILI NIMI</td>"
-	//<< "<td class=\"label\" width=\"200\">FAILI TÜÜP</td>"
-	<< "<td class=\"label\" width=\"100\">FAILI SUURUS</td>"
+	<< "<td class=\"label\" width=\"300\">" << tr("FILE NAME") << "</td>"
+	//<< "<td class=\"label\" width=\"200\">" << tr("FILE TYPE") << "</td>"
+	<< "<td class=\"label\" width=\"100\">" << tr("FILE SIZE") << "</td>"
 	<< "</tr>";
 
 	Q_FOREACH( const digidoc::Document &doc, d->documents() )
@@ -91,7 +91,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 
 	s
 	<< "</table>"
-	<< "<div class=\"sectionHead\">ALLKIRJASTAJAD</div>";
+	<< "<div class=\"sectionHead\">" << tr("SIGNERS") << "</div>";
 
 	int i = 1;
 	Q_FOREACH( DigiDocSignature sig, d->signatures() )
@@ -101,9 +101,9 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
 		<< "<td class=\"label\" width=\"40\">nr.</td>"
-		<< "<td class=\"label\">NIMI</td>"
-		<< "<td class=\"label\" width=\"200\">ISIKUKOOD</td>"
-		<< "<td class=\"label\" width=\"160\">AEG</td>"
+		<< "<td class=\"label\">" << tr("NAME") << "</td>"
+		<< "<td class=\"label\" width=\"200\">" << tr("PERSONAL CODE") << "</td>"
+		<< "<td class=\"label\" width=\"160\">" << tr("TIME") << "</td>"
 		<< "</tr>"
 		<< "<tr>"
 		<< "<td class=\"textborder\">" << i << "</td>"
@@ -120,40 +120,42 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "</tr>"
 		<< "</table>"
 
-		<< "<div class=\"label\">ALLKIRJA KEHTIVUS</div>"
-		<< "<div class=\"textborder\">ALLKIRI " << (sig.isValid() ? "KEHTIB" : "EI KEHTI") << "</div>"
+		<< "<div class=\"label\">" << tr("SIGNATURE VALIDITY") << "</div>"
+		<< "<div class=\"textborder\">" << tr("SIGNATURE") << " "
+		<< (sig.isValid() ? tr("IS VALID") : tr("IS NOT VALID")) << "</div>"
 
-		<< "<div class=\"label\">ROLL/RESOLUTSIOON</div>"
-		<< "<div class=\"textborder\">" << sig.role() << "</div>"
+		<< "<div class=\"label\">" << tr("ROLE/RESOLUTION") << "</div>"
+		<< "<div class=\"textborder\">" << sig.role() << "&nbsp;</div>"
 
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
-		<< "<td class=\"label\">ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</td>"
-		<< "<td class=\"label\" width=\"200\">SERTIFIKAADI SEERIANUMBER</td>"
+		<< "<td class=\"label\">" << tr("SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)") << "</td>"
+		<< "<td class=\"label\" width=\"200\">" << tr("CERTIFICATE SERIALNUMBER") << "</td>"
 		<< "</tr>"
-		<< "<td class=\"textborder\">" << sig.location() << "</td>"
-		<< "<td class=\"textborderright\">" << cert.serialNumber() << "</td>"
+		<< "<td class=\"textborder\">" << sig.location() << "&nbsp;</td>"
+		<< "<td class=\"textborderright\">" << cert.serialNumber() << "&nbsp;</td>"
 		<< "</table>"
 
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
-		<< "<td class=\"label\" width=\"185\">SERTIFIKAADI VÄLJAANDJA NIMI</td>"
-		<< "<td class=\"label\">SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</td>"
+		<< "<td class=\"label\" width=\"185\">" << tr("CERTIFICATE ISSUER NAME") << "</td>"
+		<< "<td class=\"label\">" << tr("CERTIFICATE ISSUER PUBLIC KEY HASH") << "</td>"
 		<< "</tr>"
 		<< "<td class=\"textborder\">" << cert.issuerInfo( QSslCertificate::CommonName ) << "</td>"
 		<< "<td class=\"textborderright\"></td>"
 		<< "</table>"
 
-		<< "<div class=\"label\">KEHTIVUSKINNITUSE SÕNUMILÜHEND</div>"
-		<< "<div class=\"textborder\"> </div>";
+		<< "<div class=\"label\">" << tr("KEHTIVUSKINNITUSE SÕNUMILÜHEND") << "&nbsp;</div>"
+		<< "<div class=\"textborder\">&nbsp;</div>";
 
 		++i;
 	}
 
 	s
-	<< "<div class=\"text\" style=\"margin-top: 10px\">Selle kinnituslehe lahutamatu osa on lõigus "
-	<< "<b>Allkirjastatud failid</b> nimetatud failide esitus paberil</div>"
-	<< "<div class=\"label\" style=\"margin-top: 20px\">MÄRKUSED</div>"
+	<< "<div class=\"text\" style=\"margin-top: 10px\">"
+	<< tr("Selle kinnituslehe lahutamatu osa on lõigus <b>Allkirjastatud failid</b> nimetatud failide esitus paberil")
+	<< "</div>"
+	<< "<div class=\"label\" style=\"margin-top: 20px\">" << tr("NOTES") << "</div>"
 	<< "<div class=\"textborder\" style=\"height: 100px\"></div>"
 	<< "</body>"
 	<< "</html>";

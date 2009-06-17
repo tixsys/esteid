@@ -90,7 +90,7 @@ void Poller::unlock() { m.unlock(); }
 
 
 QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
-:	PKCS11Signer( Conf::getInstance()->getPKCS11DriverPath() )
+:	PKCS11Signer()
 ,	selectedCard( card )
 {
 	try	{ getCert(); }

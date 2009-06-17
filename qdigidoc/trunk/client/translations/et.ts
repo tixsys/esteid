@@ -316,7 +316,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation type="obsolete">Salvesta</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -479,21 +479,21 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <source>NB: Vigane allkiri</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Company</source>
+        <translation>Asutus</translation>
+    </message>
+    <message>
+        <source>Register code</source>
+        <translation>Registrikood</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
-    <message>
-        <source>Mobiiliga allkirjastamine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toimub allkirjastamine...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kontrollkood</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Next</source>
         <translation type="obsolete">Edasi</translation>
@@ -501,6 +501,145 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Cancel</source>
         <translation>Katkesta</translation>
+    </message>
+    <message>
+        <source>Signing in process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request accepted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User denied or cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Got signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request pending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobile-ID not ready, try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phone absent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request sending error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIM error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Service internal error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Signing with Mobile-ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%v sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PrintSheet</name>
+    <message>
+        <source>DIGIALLKIRJADE KINNITUSLEHT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIGNED FILES</source>
+        <translation>ALLKIRJASTATUD FAILID</translation>
+    </message>
+    <message>
+        <source>FILE NAME</source>
+        <translation>FAILI NIMI</translation>
+    </message>
+    <message>
+        <source>FILE SIZE</source>
+        <translation>FAILI SUURUS</translation>
+    </message>
+    <message>
+        <source>SIGNERS</source>
+        <translation>ALLKIRJASTAJAD</translation>
+    </message>
+    <message>
+        <source>NAME</source>
+        <translation>NIMI</translation>
+    </message>
+    <message>
+        <source>PERSONAL CODE</source>
+        <translation>ISIKUKOOD</translation>
+    </message>
+    <message>
+        <source>TIME</source>
+        <translation>AEG</translation>
+    </message>
+    <message>
+        <source>SIGNATURE VALIDITY</source>
+        <translation>ALLKIRJA KEHTIVUS</translation>
+    </message>
+    <message>
+        <source>SIGNATURE</source>
+        <translation>ALLKIRI</translation>
+    </message>
+    <message>
+        <source>IS VALID</source>
+        <translation>KEHTIB</translation>
+    </message>
+    <message>
+        <source>IS NOT VALID</source>
+        <translation>EI KEHTI</translation>
+    </message>
+    <message>
+        <source>ROLE/RESOLUTION</source>
+        <translation>ROLL/RESOLUTSIOON</translation>
+    </message>
+    <message>
+        <source>SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)</source>
+        <translation>ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
+    </message>
+    <message>
+        <source>CERTIFICATE SERIALNUMBER</source>
+        <translation>SERTIFIKAADI SEERIANUMBER</translation>
+    </message>
+    <message>
+        <source>CERTIFICATE ISSUER NAME</source>
+        <translation>SERTIFIKAADI VÄLJAANDJA NIMI</translation>
+    </message>
+    <message>
+        <source>CERTIFICATE ISSUER PUBLIC KEY HASH</source>
+        <translation>SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
+    </message>
+    <message>
+        <source>KEHTIVUSKINNITUSE SÕNUMILÜHEND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;Allkirjastatud failid&lt;/b&gt; nimetatud failide esitus paberil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOTES</source>
+        <translation>MÄRKUSED</translation>
     </message>
 </context>
 <context>
@@ -598,7 +737,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>OCSP PKCS12 certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation type="obsolete">Ligipääsutõend</translation>
     </message>
     <message>
         <source>Signature</source>
@@ -737,6 +876,17 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Signature is</source>
         <translation>Allkiri on</translation>
+    </message>
+</context>
+<context>
+    <name>TreeWidget</name>
+    <message>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eemalda</translation>
     </message>
 </context>
 </TS>
