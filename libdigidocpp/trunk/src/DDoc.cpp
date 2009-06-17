@@ -451,6 +451,17 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	else
 		d->f_createOrReplacePrivateConfigItem( NULL, "USE_PROXY", "false" );
 
+	std::string cert = Conf::getInstance()->getPKCS12Cert();
+	std::string pass = Conf::getInstance()->getPKCS12Pass();
+	if( !cert.empty() )
+	{
+		d->f_createOrReplacePrivateConfigItem( NULL, "SIGN_OCSP", "true" );
+		d->f_createOrReplacePrivateConfigItem( NULL, "DIGIDOC_PKCS_FILE", cert.c_str() );
+		d->f_createOrReplacePrivateConfigItem( NULL, "DIGIDOC_PKCS_PASSWD", pass.c_str() );
+	}
+	else
+		d->f_createOrReplacePrivateConfigItem( NULL, "SIGN_OCSP", "false" );
+
 	err = d->f_notarizeSignature( d->doc, info );
 	if( err != ERR_OK )
 		d->f_SignatureInfo_delete( d->doc, info->szId );
