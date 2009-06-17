@@ -189,7 +189,7 @@ function readCardData()
 			document.getElementById('surName').innerHTML = esteidData.getSurName();
 			document.getElementById('id').innerHTML = esteidData.getId();
 			document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
-			document.getElementById('birthPlace').innerHTML = esteidData.getBirthPlace();
+			document.getElementById('birthPlace').innerHTML = (esteidData.getBirthPlace() != "" ? ", " + esteidData.getBirthPlace() : "" );
 			document.getElementById('citizen').innerHTML = esteidData.getCitizen();
 		}
 
