@@ -1,8 +1,10 @@
 #include <openssl/err.h>
 #include <openssl/ocsp.h>
+#include <openssl/pkcs12.h>
 #include "../../log.h"
 #include "../../util/String.h"
 #include "OCSP.h"
+#include "../../Conf.h"
 
 
 /**
@@ -241,6 +243,32 @@ digidoc::OCSP::CertStatus digidoc::OCSP::checkCert(X509* cert, X509* issuer,
 
     // Connect to OCSP server.
     connect();
+
+    std::string file = digidoc::Conf::getInstance()->getPKCS12Cert();
+    std::string pass = digidoc::Conf::getInstance()->getPKCS12Pass();
+    if(!file.empty())
+    {
+        BIO *bio = BIO_new(BIO_s_file());
+        BIO_read_filename(bio, file.c_str());
+        PKCS12 *p12 = d2i_PKCS12_bio(bio, NULL);
+        if(!p12)
+        {
+            BIO_free(bio);
+            THROW_IOEXCEPTION("Failed to read PKCS12 certificate.");
+        }
+        BIO_free(bio);
+
+        X509 *cert;
+        EVP_PKEY *key;
+        if(!PKCS12_parse(p12, pass.c_str(), &key, &cert, NULL))
+        {
+            PKCS12_free(p12);
+            THROW_IOEXCEPTION("Failed to parse PKCS12 certificate.");
+        }
+        PKCS12_free(p12);
+
+        setSignCert(cert, key);
+    }
 
     // Create OCSP request.
     *req = createRequest(cert, issuer, nonce);

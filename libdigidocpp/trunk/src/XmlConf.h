@@ -33,9 +33,13 @@ public:
     virtual std::string getCertStorePath() const;
     virtual std::string getProxyHost() const;
     virtual std::string getProxyPort() const;
+    virtual std::string getPKCS12Cert() const;
+    virtual std::string getPKCS12Pass() const;
 
-    virtual void setProxyHost( const std::string & );
-    virtual void setProxyPort( const std::string & );
+    virtual void setProxyHost( const std::string &host );
+    virtual void setProxyPort( const std::string &port );
+    virtual void setPKCS12Cert( const std::string &cert );
+    virtual void setPKCS12Pass( const std::string &pass );
 
     static const std::string CONF_ENV;
     static const std::string DEFAULT_CONF_LOC;
@@ -54,6 +58,8 @@ private:
     std::string dsigXsdPath;
     std::string proxyHost;
     std::string proxyPort;
+    std::string pkcs12Cert;
+    std::string pkcs12Pass;
 
     static const std::string DIGEST_URI;
     static const std::string PKCS11_DRIVER_PATH;
@@ -65,6 +71,8 @@ private:
     static const std::string DSIG_XSD_PATH;
     static const std::string PROXY_HOST;
     static const std::string PROXY_PORT;
+    static const std::string PKCS12_CERT;
+    static const std::string PKCS12_PASS;
 };
 
 }

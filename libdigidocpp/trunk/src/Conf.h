@@ -27,9 +27,13 @@ namespace digidoc
           virtual std::string getCertStorePath() const = 0;
           virtual std::string getProxyHost() const = 0;
           virtual std::string getProxyPort() const = 0;
+          virtual std::string getPKCS12Cert() const = 0;
+          virtual std::string getPKCS12Pass() const = 0;
 
-	  virtual void setProxyHost( const std::string & ) = 0;
-	  virtual void setProxyPort( const std::string & ) = 0;
+          virtual void setProxyHost( const std::string &host ) = 0;
+          virtual void setProxyPort( const std::string &port ) = 0;
+          virtual void setPKCS12Cert( const std::string &cert ) = 0;
+          virtual void setPKCS12Pass( const std::string &pass ) = 0;
 
 // Fixme should be protected
           Conf() {}

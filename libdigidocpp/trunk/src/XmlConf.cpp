@@ -31,6 +31,8 @@ const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
 const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
 const std::string digidoc::XmlConf::PROXY_HOST         = "proxy.host";
 const std::string digidoc::XmlConf::PROXY_PORT         = "proxy.port";
+const std::string digidoc::XmlConf::PKCS12_CERT        = "pkcs12.cert";
+const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
 
 
 /**
@@ -141,17 +143,25 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             }
             else if(CERT_STORE_PATH.compare(it->name()) == 0)
             {
-               certStorePath = *it;
+                certStorePath = *it;
             }
-			else if(PROXY_HOST.compare(it->name()) == 0)
-			{
-			   proxyHost = *it;
-			}
-			else if(PROXY_PORT.compare(it->name()) == 0)
-			{
-			   proxyPort = *it;
-			}
-			else
+            else if(PROXY_HOST.compare(it->name()) == 0)
+            {
+                proxyHost = *it;
+            }
+            else if(PROXY_PORT.compare(it->name()) == 0)
+            {
+                proxyPort = *it;
+            }
+            else if(PKCS12_CERT.compare(it->name()) == 0)
+            {
+                pkcs12Cert = *it;
+            }
+            else if(PKCS12_PASS.compare(it->name()) == 0)
+            {
+                pkcs12Pass = *it;
+            }
+            else
             {
                 WARN("Unknown configuration parameter %s", it->name().c_str());
             }
@@ -232,21 +242,40 @@ std::string digidoc::XmlConf::getCertStorePath() const
 
 std::string digidoc::XmlConf::getProxyHost() const
 {
-	return proxyHost;
+    return proxyHost;
 }
 
 std::string digidoc::XmlConf::getProxyPort() const
 {
-	return proxyPort;
+    return proxyPort;
+}
+
+std::string digidoc::XmlConf::getPKCS12Cert() const
+{
+    return pkcs12Cert;
+}
+
+std::string digidoc::XmlConf::getPKCS12Pass() const
+{
+    return pkcs12Pass;
 }
 
 void digidoc::XmlConf::setProxyHost( const std::string &host )
 {
-	proxyHost = host;
+    proxyHost = host;
 }
 
 void digidoc::XmlConf::setProxyPort( const std::string &port )
 {
-        proxyPort = port;
+    proxyPort = port;
 }
 
+void digidoc::XmlConf::setPKCS12Cert( const std::string &cert )
+{
+    pkcs12Cert = cert;
+}
+
+void digidoc::XmlConf::setPKCS12Pass( const std::string &pass )
+{
+    pkcs12Pass = pass;
+}
