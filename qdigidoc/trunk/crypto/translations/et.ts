@@ -315,11 +315,11 @@
     </message>
     <message>
         <source>You do not have the key to decrypt this document</source>
-        <translation type="unfinished"></translation>
+        <translation>Sul puudub võti millega dekrüpteerida seda turvaümbrikut</translation>
     </message>
     <message>
         <source>No keys specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Ühtegi võtit ei ole valitud</translation>
     </message>
 </context>
 <context>
@@ -404,6 +404,10 @@ Error code: %1</source>
     <message>
         <source>Company name:</source>
         <translation>Asutus:</translation>
+    </message>
+    <message>
+        <source>Empty result</source>
+        <translation>Ei leidnud midagi</translation>
     </message>
 </context>
 <context>
@@ -604,7 +608,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>DigiDoc crypt</source>
-        <translation>DigiDoc3 krüpto</translation>
+        <translation type="obsolete">DigiDoc3 krüpto</translation>
     </message>
     <message>
         <source>I want to:</source>
@@ -612,11 +616,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Crypt documents</source>
-        <translation>Krüpteerida faile</translation>
+        <translation type="obsolete">Krüpteerida faile</translation>
     </message>
     <message>
         <source>View crypted document content</source>
-        <translation>Vaata turvaümbriku sisu</translation>
+        <translation type="obsolete">Vaata turvaümbriku sisu</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -801,6 +805,18 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
 &lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message utf8="true">
+        <source>DigiDoc3 Krüpto</source>
+        <translation>DigiDoc3 krüpto</translation>
+    </message>
+    <message>
+        <source>Encrypt documents</source>
+        <translation>Krüpteerida faile</translation>
+    </message>
+    <message>
+        <source>View encrypted document content</source>
+        <translation>Vaata turvaümbriku sisu</translation>
     </message>
 </context>
 <context>

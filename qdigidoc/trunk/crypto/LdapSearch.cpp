@@ -82,6 +82,7 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 	if( entry == NULL )
 	{
 		setLastError( tr("Empty result"), -1 );
+		ldap_msgfree( result );
 		killTimer( e->timerId() );
 		return;
 	}

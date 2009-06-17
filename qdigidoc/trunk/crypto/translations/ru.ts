@@ -270,6 +270,10 @@ Error code: %1</source>
         <source>Company name:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Empty result</source>
+        <translation>Ничего не найдено</translation>
+    </message>
 </context>
 <context>
     <name>KeyDialog</name>
@@ -372,7 +376,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Select folder where file will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрите папку где будут сохранены файл</translation>
     </message>
     <message>
         <source>Name</source>
@@ -449,7 +453,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>DigiDoc crypt</source>
-        <translation>Шифрование DigiDoc</translation>
+        <translation type="obsolete">Шифрование DigiDoc</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -477,11 +481,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Crypt documents</source>
-        <translation>Зашифровать документ</translation>
+        <translation type="obsolete">Зашифровать документ</translation>
     </message>
     <message>
         <source>View crypted document content</source>
-        <translation>Посмотреть содержание зашифрованного документа</translation>
+        <translation type="obsolete">Посмотреть содержание зашифрованного документа</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -566,6 +570,18 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>DigiDoc3 Krüpto</source>
+        <translation>DigiDoc3 krüpto</translation>
+    </message>
+    <message>
+        <source>Encrypt documents</source>
+        <translation>Зашифровать документ</translation>
+    </message>
+    <message>
+        <source>View encrypted document content</source>
+        <translation>Посмотреть содержание зашифрованного документа</translation>
     </message>
 </context>
 <context>

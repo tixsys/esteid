@@ -32,7 +32,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>DigiDoc crypt</string>
+   <string>DigiDoc3 Krüpto</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../rc/qdigidoccrypto.qrc">
@@ -417,7 +417,7 @@ color: #71889A;
                </font>
               </property>
               <property name="text">
-               <string>Crypt documents</string>
+               <string>Encrypt documents</string>
               </property>
              </widget>
             </item>
@@ -433,7 +433,7 @@ color: #71889A;
                </font>
               </property>
               <property name="text">
-               <string>View crypted document content</string>
+               <string>View encrypted document content</string>
               </property>
              </widget>
             </item>

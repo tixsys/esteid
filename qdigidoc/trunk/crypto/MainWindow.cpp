@@ -591,7 +591,7 @@ void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg
 		s += tr("<br />Error code: %1").arg( err );
 	if( !errmsg.isEmpty() )
 		s += QString(" (%1)").arg( errmsg );
-	QMessageBox d( QMessageBox::Warning, "QDigDocCrypto", s, QMessageBox::Close | QMessageBox::Help, this );
+	QMessageBox d( QMessageBox::Warning, windowTitle(), s, QMessageBox::Close | QMessageBox::Help, this );
 	if( d.exec() == QMessageBox::Help )
 	{
 		QUrl u( "http://support.sk.ee/" );
