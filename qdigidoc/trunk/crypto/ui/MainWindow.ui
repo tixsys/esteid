@@ -481,10 +481,13 @@ color: #71889A;
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px 'Arial,Liberation Sans';&quot;&gt;
-Document encryption.&lt;br /&gt;&lt;br /&gt;
-Document encryption is for safe data transfer over unsecure media, so that only scpecific reciever(s) can open it.&lt;br /&gt;&lt;br /&gt;
-Encryption with ID-card is not ment for long and secure data storage, it is only ment for transfering.&lt;br /&gt;&lt;br /&gt;
-For encryption Sertifitseerimiskeskus' LDAP service ise used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate. Encryption is one-way only, for decryption private key is needed, that is only on reciever's ID-card.&lt;/p&gt;
+&lt;b&gt;File encryption&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+The purpose of file encryption is to make the data stored in the file unreadable for any unauthorised users.&lt;br /&gt;&lt;br /&gt;
+Encryption with ID-card is not ment for long and secure data storage, it is only ment for secure transfering of data over unsecure media.&lt;br /&gt;&lt;br /&gt;
+For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate.&lt;/p&gt;
+&lt;p style=&quot; font: 12px 'Arial,Liberation Sans';&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;Warning&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever's ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
+&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">
@@ -681,8 +684,8 @@ For encryption Sertifitseerimiskeskus' LDAP service ise used, to search for reci
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>33</width>
-                  <height>16</height>
+                  <width>100</width>
+                  <height>30</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="viewKeysLayout">

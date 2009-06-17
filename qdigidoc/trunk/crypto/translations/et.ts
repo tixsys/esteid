@@ -243,7 +243,7 @@
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
-        <translation>Adresaat ei ole turvaümbriku adressaatide nimekirjas</translation>
+        <translation type="obsolete">Adresaat ei ole turvaümbriku adressaatide nimekirjas</translation>
     </message>
     <message>
         <source>Failed decrypt data</source>
@@ -295,7 +295,7 @@
     </message>
     <message>
         <source>No recipient keys</source>
-        <translation>Puuduvad adressaadi võtmed</translation>
+        <translation type="obsolete">Puuduvad adressaadi võtmed</translation>
     </message>
     <message>
         <source>Document not open</source>
@@ -312,6 +312,14 @@
     <message>
         <source>Failed to create temporary files&lt;br /&gt;%1</source>
         <translation>Ajutiste failde loomine ebaõnnestus&lt;br /&gt;%1</translation>
+    </message>
+    <message>
+        <source>You do not have the key to decrypt this document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys specified</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -398,7 +406,7 @@ Error code: %1</source>
     <name>KeyDialog</name>
     <message>
         <source>Recipient</source>
-        <translation>Adressaat</translation>
+        <translation type="obsolete">Adressaat</translation>
     </message>
     <message>
         <source>Crypt method</source>
@@ -439,6 +447,10 @@ Error code: %1</source>
     <message>
         <source>Close</source>
         <translation>Sulge</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>Võti</translation>
     </message>
 </context>
 <context>
@@ -738,7 +750,7 @@ Document encryption is for safe data transfer over unsecure media, so that only 
 Encryption with ID-card is not ment for long and secure data storage, it is only ment for transfering.&lt;br /&gt;&lt;br /&gt;
 For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate. Encryption is one-way only, for decryption private key is needed, that is only on reciever&apos;s ID-card.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
@@ -753,6 +765,38 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>Failed to start process &apos;%1&apos;</source>
         <translation>Protsessi &apos;%1&apos; loomine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Company</source>
+        <translation>Asutus</translation>
+    </message>
+    <message>
+        <source>Register code</source>
+        <translation>Registri kood</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+&lt;b&gt;File encryption&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+The purpose of file encryption is to make the data stored in the file unreadable for any unauthorised users.&lt;br /&gt;&lt;br /&gt;
+Encryption with ID-card is not ment for long and secure data storage, it is only ment for secure transfering of data over unsecure media.&lt;br /&gt;&lt;br /&gt;
+For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate.&lt;/p&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;Warning&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
+&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+&lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+Faili krüpteerimise eesmärgiks on muuta selles asuvad andmed võõrastele loetamatuteks.&lt;br /&gt;&lt;br /&gt;
+Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
+Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Failid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, dekrüpteerimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult vastava isiku ID-kaardil.&lt;/p&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;HOIATUS:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
+&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

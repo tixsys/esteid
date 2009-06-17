@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Recipient does not exist in document recipient list</source>
-        <translation>Адресата нет в списке получателей документа</translation>
+        <translation type="obsolete">Адресата нет в списке получателей документа</translation>
     </message>
     <message>
         <source>Failed decrypt data</source>
@@ -148,7 +148,7 @@
     </message>
     <message>
         <source>No recipient keys</source>
-        <translation>Нет ключа получателя</translation>
+        <translation type="obsolete">Нет ключа получателя</translation>
     </message>
     <message>
         <source>Failed to encrypt data</source>
@@ -181,6 +181,14 @@
     <message>
         <source>Failed to save file</source>
         <translation>Сохранение файла неуспешно</translation>
+    </message>
+    <message>
+        <source>You do not have the key to decrypt this document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys specified</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -263,7 +271,7 @@ Error code: %1</source>
     <name>KeyDialog</name>
     <message>
         <source>Recipient</source>
-        <translation>Получатель</translation>
+        <translation type="obsolete">Получатель</translation>
     </message>
     <message>
         <source>Crypt method</source>
@@ -300,6 +308,10 @@ Error code: %1</source>
     <message>
         <source>Close</source>
         <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -526,19 +538,30 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Размер</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Document encryption.&lt;br /&gt;&lt;br /&gt;
-Document encryption is for safe data transfer over unsecure media, so that only scpecific reciever(s) can open it.&lt;br /&gt;&lt;br /&gt;
-Encryption with ID-card is not ment for long and secure data storage, it is only ment for transfering.&lt;br /&gt;&lt;br /&gt;
-For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate. Encryption is one-way only, for decryption private key is needed, that is only on reciever&apos;s ID-card.&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Failed to start process &apos;%1&apos;</source>
+        <translation>Создание процесса &apos;%1&apos; неудачно</translation>
+    </message>
+    <message>
+        <source>Company</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to start process &apos;%1&apos;</source>
-        <translation>Создание процесса &apos;%1&apos; неудачно</translation>
+        <source>Register code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+&lt;b&gt;File encryption&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+The purpose of file encryption is to make the data stored in the file unreadable for any unauthorised users.&lt;br /&gt;&lt;br /&gt;
+Encryption with ID-card is not ment for long and secure data storage, it is only ment for secure transfering of data over unsecure media.&lt;br /&gt;&lt;br /&gt;
+For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate.&lt;/p&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;Warning&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
+&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
