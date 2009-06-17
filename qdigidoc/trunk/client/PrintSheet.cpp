@@ -63,7 +63,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	<< "</head>"
 	<< "<body>"
 
-	<< "<div id=\"head\">" << tr("DIGIALLKIRJADE KINNITUSLEHT") << "</div>"
+	<< "<div id=\"head\">" << tr("VALIDITY CONFIRMATION SHEET") << "</div>"
 	<< "<div class=\"sectionHead\">" << tr("SIGNED FILES") << "</div>"
 
 	<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
@@ -100,7 +100,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		s
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
-		<< "<td class=\"label\" width=\"40\">nr.</td>"
+		<< "<td class=\"label\" width=\"40\">" << tr("NO.") << "</td>"
 		<< "<td class=\"label\">" << tr("NAME") << "</td>"
 		<< "<td class=\"label\" width=\"200\">" << tr("PERSONAL CODE") << "</td>"
 		<< "<td class=\"label\" width=\"160\">" << tr("TIME") << "</td>"
@@ -120,17 +120,17 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "</tr>"
 		<< "</table>"
 
-		<< "<div class=\"label\">" << tr("SIGNATURE VALIDITY") << "</div>"
+		<< "<div class=\"label\">" << tr("VALIDITY OF SIGNATURE") << "</div>"
 		<< "<div class=\"textborder\">" << tr("SIGNATURE") << " "
-		<< (sig.isValid() ? tr("IS VALID") : tr("IS NOT VALID")) << "</div>"
+		<< (sig.isValid() ? tr("VALID") : tr("NOT VALID")) << "</div>"
 
-		<< "<div class=\"label\">" << tr("ROLE/RESOLUTION") << "</div>"
+		<< "<div class=\"label\">" << tr("ROLE / RESOLUTION") << "</div>"
 		<< "<div class=\"textborder\">" << sig.role() << "&nbsp;</div>"
 
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
-		<< "<td class=\"label\">" << tr("SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)") << "</td>"
-		<< "<td class=\"label\" width=\"200\">" << tr("CERTIFICATE SERIALNUMBER") << "</td>"
+		<< "<td class=\"label\">" << tr("PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)") << "</td>"
+		<< "<td class=\"label\" width=\"200\">" << tr("SERIAL NUMBER OF CERTIFICATE") << "</td>"
 		<< "</tr>"
 		<< "<td class=\"textborder\">" << sig.location() << "&nbsp;</td>"
 		<< "<td class=\"textborderright\">" << cert.serialNumber() << "&nbsp;</td>"
@@ -138,14 +138,14 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
-		<< "<td class=\"label\" width=\"185\">" << tr("CERTIFICATE ISSUER NAME") << "</td>"
-		<< "<td class=\"label\">" << tr("CERTIFICATE ISSUER PUBLIC KEY HASH") << "</td>"
+		<< "<td class=\"label\" width=\"185\">" << tr("ISSUER OF CERTIFICATE") << "</td>"
+		<< "<td class=\"label\">" << tr("HASH VALUE OF ISSUER'S PUBLIC KEY") << "</td>"
 		<< "</tr>"
 		<< "<td class=\"textborder\">" << cert.issuerInfo( QSslCertificate::CommonName ) << "</td>"
 		<< "<td class=\"textborderright\">" << cert.toHex( cert.authorityKeyIdentifier() ) << "</td>"
 		<< "</table>"
 
-		<< "<div class=\"label\">" << tr("KEHTIVUSKINNITUSE SÕNUMILÜHEND") << "&nbsp;</div>"
+		<< "<div class=\"label\">" << tr("HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)") << "&nbsp;</div>"
 		<< "<div class=\"textborder\">&nbsp;</div>";
 
 		++i;
@@ -153,7 +153,8 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 
 	s
 	<< "<div class=\"text\" style=\"margin-top: 10px\">"
-	<< tr("Selle kinnituslehe lahutamatu osa on lõigus <b>Allkirjastatud failid</b> nimetatud failide esitus paberil")
+	<< tr("The print out of files listed in the section <b>\"Signed Files\"</b> "
+		  "are inseparable part of this Validity Confirmation Sheet.")
 	<< "</div>"
 	<< "<div class=\"label\" style=\"margin-top: 20px\">" << tr("NOTES") << "</div>"
 	<< "<div class=\"textborder\" style=\"height: 100px\"></div>"

@@ -562,10 +562,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
 <context>
     <name>PrintSheet</name>
     <message>
-        <source>DIGIALLKIRJADE KINNITUSLEHT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SIGNED FILES</source>
         <translation>ALLKIRJASTATUD FAILID</translation>
     </message>
@@ -595,7 +591,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>SIGNATURE VALIDITY</source>
-        <translation>ALLKIRJA KEHTIVUS</translation>
+        <translation type="obsolete">ALLKIRJA KEHTIVUS</translation>
     </message>
     <message>
         <source>SIGNATURE</source>
@@ -603,43 +599,83 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>IS VALID</source>
-        <translation>KEHTIB</translation>
+        <translation type="obsolete">KEHTIB</translation>
     </message>
     <message>
         <source>IS NOT VALID</source>
-        <translation>EI KEHTI</translation>
+        <translation type="obsolete">EI KEHTI</translation>
     </message>
     <message>
         <source>ROLE/RESOLUTION</source>
-        <translation>ROLL/RESOLUTSIOON</translation>
+        <translation type="obsolete">ROLL/RESOLUTSIOON</translation>
     </message>
     <message>
         <source>SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)</source>
-        <translation>ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
+        <translation type="obsolete">ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
     </message>
     <message>
         <source>CERTIFICATE SERIALNUMBER</source>
-        <translation>SERTIFIKAADI SEERIANUMBER</translation>
+        <translation type="obsolete">SERTIFIKAADI SEERIANUMBER</translation>
     </message>
     <message>
         <source>CERTIFICATE ISSUER NAME</source>
-        <translation>SERTIFIKAADI VÄLJAANDJA NIMI</translation>
+        <translation type="obsolete">SERTIFIKAADI VÄLJAANDJA NIMI</translation>
     </message>
     <message>
         <source>CERTIFICATE ISSUER PUBLIC KEY HASH</source>
-        <translation>SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
-    </message>
-    <message>
-        <source>KEHTIVUSKINNITUSE SÕNUMILÜHEND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;Allkirjastatud failid&lt;/b&gt; nimetatud failide esitus paberil</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
     </message>
     <message>
         <source>NOTES</source>
         <translation>MÄRKUSED</translation>
+    </message>
+    <message>
+        <source>VALIDITY CONFIRMATION SHEET</source>
+        <translation>DIGITAALALLKIRJADE KINNITUSLEHT</translation>
+    </message>
+    <message>
+        <source>NO.</source>
+        <translation>nr.</translation>
+    </message>
+    <message>
+        <source>VALIDITY OF SIGNATURE</source>
+        <translation>ALLKIRJA KEHTIVUS</translation>
+    </message>
+    <message>
+        <source>VALID</source>
+        <translation>KEHTIB</translation>
+    </message>
+    <message>
+        <source>NOT VALID</source>
+        <translation>KETHETU</translation>
+    </message>
+    <message>
+        <source>ROLE / RESOLUTION</source>
+        <translation>ROLL/RESOLUTSIOON</translation>
+    </message>
+    <message>
+        <source>PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)</source>
+        <translation>ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
+    </message>
+    <message>
+        <source>SERIAL NUMBER OF CERTIFICATE</source>
+        <translation>SERTIFIKAADI SEERIANUMBER</translation>
+    </message>
+    <message>
+        <source>ISSUER OF CERTIFICATE</source>
+        <translation>SERTIFIKAADI VÄLJAANDJA NIMI</translation>
+    </message>
+    <message>
+        <source>HASH VALUE OF ISSUER&apos;S PUBLIC KEY</source>
+        <translation>SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
+    </message>
+    <message>
+        <source>HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)</source>
+        <translation>KEHTIVUSKINNITUSE SÕNUMILÜHEND</translation>
+    </message>
+    <message>
+        <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>
+        <translation>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;&quot;Allkirjastatud failid&quot;&lt;/b&gt; nimetatud failide esitus paberil.</translation>
     </message>
 </context>
 <context>

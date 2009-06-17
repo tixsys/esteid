@@ -382,84 +382,88 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PrintSheet</name>
     <message>
-        <source>DIGIALLKIRJADE KINNITUSLEHT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SIGNED FILES</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОДПИСАННЫЕ ФАИЛЫ</translation>
     </message>
     <message>
         <source>FILE NAME</source>
-        <translation type="unfinished"></translation>
+        <translation>ИМЯ ФАЙЛА</translation>
     </message>
     <message>
         <source>FILE SIZE</source>
-        <translation type="unfinished"></translation>
+        <translation>РАЗМЕР ФАЙЛА</translation>
     </message>
     <message>
         <source>SIGNERS</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОДПИСАВШИЙСЯ</translation>
     </message>
     <message>
         <source>NAME</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя</translation>
     </message>
     <message>
         <source>PERSONAL CODE</source>
-        <translation type="unfinished"></translation>
+        <translation>Личный код</translation>
     </message>
     <message>
         <source>TIME</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SIGNATURE VALIDITY</source>
-        <translation type="unfinished"></translation>
+        <translation>Время</translation>
     </message>
     <message>
         <source>SIGNATURE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IS VALID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IS NOT VALID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ROLE/RESOLUTION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CERTIFICATE SERIALNUMBER</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CERTIFICATE ISSUER NAME</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CERTIFICATE ISSUER PUBLIC KEY HASH</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KEHTIVUSKINNITUSE SÕNUMILÜHEND</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;Allkirjastatud failid&lt;/b&gt; nimetatud failide esitus paberil</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись</translation>
     </message>
     <message>
         <source>NOTES</source>
+        <translation>Замечания</translation>
+    </message>
+    <message>
+        <source>VALIDITY CONFIRMATION SHEET</source>
+        <translation>ЛИСТ ПОДТВЕРЖДЕНИЯ ДИГИТАЛЬНЫХ ПОДПИСЕЙ</translation>
+    </message>
+    <message>
+        <source>NO.</source>
+        <translation>НО</translation>
+    </message>
+    <message>
+        <source>VALIDITY OF SIGNATURE</source>
+        <translation>ДЕЙСТВИТЕЛЬНОСТЬ ПОДПИСИ</translation>
+    </message>
+    <message>
+        <source>VALID</source>
+        <translation>действительна</translation>
+    </message>
+    <message>
+        <source>NOT VALID</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ROLE / RESOLUTION</source>
+        <translation>Роль / заявление</translation>
+    </message>
+    <message>
+        <source>PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)</source>
+        <translation>МЕСТОПОЛОЖЕНИЕ ПОДПИСАВШЕГО (город, уезд, индекс, страна)</translation>
+    </message>
+    <message>
+        <source>SERIAL NUMBER OF CERTIFICATE</source>
+        <translation>СЕРИЙНЫЙ НОМЕР СЕРТИФИКАТА</translation>
+    </message>
+    <message>
+        <source>ISSUER OF CERTIFICATE</source>
+        <translation>ИМЯ ВЫДАВШЕГО СЕРТИФИКАТА</translation>
+    </message>
+    <message>
+        <source>HASH VALUE OF ISSUER&apos;S PUBLIC KEY</source>
+        <translation>СОКРАШЕНИЕ ПУБЛИЧНОГО КЛЮЧА ВЫДАВШЕГО СЕРТИФИКАТА</translation>
+    </message>
+    <message>
+        <source>HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)</source>
+        <translation>СОКРАШЕНИЕ СООБЩЕНИЯ ПОДТВЕРЖДЕНИЯ ДЕИСТВИТЕЛЬНОСТИ</translation>
+    </message>
+    <message>
+        <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>
+        <translation>Неотъемлемой частью этого листа подтверждения подписей является распечатка названных файлов на бумаге в разделе &lt;b&gt;&quot;Подписанные файлы&quot;&lt;/b&gt;.</translation>
     </message>
 </context>
 <context>
