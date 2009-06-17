@@ -32,7 +32,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>DigiDoc3 Krüpto</string>
+   <string notr="true">DigiDoc3 Krüpto</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../rc/qdigidoccrypto.qrc">

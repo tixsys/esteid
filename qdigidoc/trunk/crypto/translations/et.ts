@@ -808,7 +808,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
     <message utf8="true">
         <source>DigiDoc3 Krüpto</source>
-        <translation>DigiDoc3 krüpto</translation>
+        <translation type="obsolete">DigiDoc3 krüpto</translation>
     </message>
     <message>
         <source>Encrypt documents</source>

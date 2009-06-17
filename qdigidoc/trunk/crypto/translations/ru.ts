@@ -573,7 +573,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message utf8="true">
         <source>DigiDoc3 Krüpto</source>
-        <translation>DigiDoc3 krüpto</translation>
+        <translation type="obsolete">DigiDoc3 krüpto</translation>
     </message>
     <message>
         <source>Encrypt documents</source>

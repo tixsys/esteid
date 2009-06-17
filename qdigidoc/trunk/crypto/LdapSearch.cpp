@@ -70,7 +70,7 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 	LDAPMessage *result;
 	LDAP_TIMEVAL t = { 5, 0 };
 	int err = ldap_result( ldap, msg_id, LDAP_MSG_ALL, &t, &result );
-	int count = ldap_count_messages( ldap, result );
+	//int count = ldap_count_messages( ldap, result );
 	if( err != LDAP_RES_SEARCH_ENTRY && err != LDAP_RES_SEARCH_RESULT )
 	{
 		setLastError( tr("Failed to get result"), err );
