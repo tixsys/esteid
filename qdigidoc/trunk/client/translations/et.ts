@@ -151,15 +151,15 @@
     </message>
     <message>
         <source>Estonian</source>
-        <translation>Estonian</translation>
+        <translation type="obsolete">Estonian</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation>Russian</translation>
+        <translation type="obsolete">Russian</translation>
     </message>
     <message>
         <source>Next</source>
@@ -215,7 +215,7 @@
     </message>
     <message>
         <source>DigiDoc client</source>
-        <translation>DigiDoc klient</translation>
+        <translation type="obsolete">DigiDoc klient</translation>
     </message>
     <message>
         <source>Save container</source>
@@ -790,6 +790,26 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Port</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select PKCS#12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS#12 certificate</source>
+        <translation>Ligipääsutõend</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>Sertifikaat</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Parool</translation>
     </message>
 </context>
 <context>

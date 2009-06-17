@@ -160,27 +160,11 @@ Should I keep unsigned documents or remove these?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DigiDoc client</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Estonian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -565,6 +549,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select PKCS#12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS#12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

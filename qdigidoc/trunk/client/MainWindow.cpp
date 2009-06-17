@@ -146,6 +146,8 @@ MainWindow::MainWindow( QWidget *parent )
 
 	doc->setConfValue( DigiDoc::ProxyHost, s.value( "Main/proxyPort" ) );
 	doc->setConfValue( DigiDoc::ProxyPort, s.value( "Main/proxyHost" ) );
+	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "Main/pkcs12Cert" ) );
+	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "Main/pkcs12Pass" ) );
 
 	infoMobileCell->setText( s.value( "Main/MobileNumber" ).toString() );
 	infoMobileCode->setText( s.value( "Main/MobileCode" ).toString() );

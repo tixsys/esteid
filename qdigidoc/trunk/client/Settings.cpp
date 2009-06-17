@@ -57,8 +57,24 @@ Settings::Settings( QWidget *parent )
 
 	proxyHost->setText( s.value( "proxyHost" ).toString() );
 	proxyPort->setText( s.value( "proxyPort" ).toString() );
+	p12Cert->setText( s.value( "pkcs12Cert" ).toString() );
+	p12Pass->setText( s.value( "pkcs12Pass" ).toString() );
 
 	s.endGroup();
+}
+
+void Settings::on_p12Button_clicked()
+{
+	QString cert = SettingsValues().value( "Main/pkcs12Cert" ).toString();
+	if( cert.isEmpty() )
+		cert = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
+	cert = QFileDialog::getOpenFileName( this, tr("Select PKCS#12 certificate"), cert,
+		tr("PKCS#12 Certificates (*.p12 *.p12d)") );
+	if( !cert.isEmpty() )
+	{
+		SettingsValues().setValue( "Main/pkcs12Cert", cert );
+		p12Cert->setText( cert );
+	}
 }
 
 void Settings::on_selectDefaultDir_clicked()
@@ -91,8 +107,12 @@ void Settings::save()
 	}
 	s.setValue( "proxyHost", proxyHost->text() );
 	s.setValue( "proxyPort", proxyPort->text() );
+	s.setValue( "pkcs12Cert", p12Cert->text() );
+	s.setValue( "pkcs12Pass", p12Pass->text() );
 	digidoc::XmlConf::getInstance()->setProxyPort( s.value( "proxyPort" ).toString().toStdString() );
 	digidoc::XmlConf::getInstance()->setProxyHost( s.value( "proxyHost" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setPKCS12Cert( s.value( "pkcs12Cert" ).toString().toStdString() );
+	digidoc::XmlConf::getInstance()->setPKCS12Pass( s.value( "pkcs12Pass" ).toString().toStdString() );
 
 	s.endGroup();
 

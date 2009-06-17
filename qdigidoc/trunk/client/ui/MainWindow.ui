@@ -32,7 +32,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>DigiDoc client</string>
+   <string notr="true">DigiDoc3 client</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../rc/qdigidocclient.qrc">
@@ -270,17 +270,17 @@ padding: 5px;
          <widget class="QComboBox" name="languages">
           <item>
            <property name="text">
-            <string>Estonian</string>
+            <string notr="true">Estonian</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>English</string>
+            <string notr="true">English</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Russian</string>
+            <string notr="true">Russian</string>
            </property>
           </item>
          </widget>
@@ -954,8 +954,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>288</width>
-               <height>201</height>
+               <width>88</width>
+               <height>18</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">

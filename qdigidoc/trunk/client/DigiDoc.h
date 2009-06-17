@@ -71,6 +71,8 @@ public:
 	{
 		ProxyHost,
 		ProxyPort,
+		PKCS12Cert,
+		PKCS12Pass,
 	};
 
 	DigiDoc( QObject *parent = 0 );

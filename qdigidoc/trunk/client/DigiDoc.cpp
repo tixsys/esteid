@@ -337,6 +337,12 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 	case ProxyPort:
 		i->setProxyHost( value.toString().toStdString() );
 		break;
+	case PKCS12Cert:
+		i->setPKCS12Cert( value.toString().toStdString() );
+		break;
+	case PKCS12Pass:
+		i->setPKCS12Pass( value.toString().toStdString() );
+		break;
 	default: break;
 	}
 }

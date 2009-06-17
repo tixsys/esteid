@@ -46,6 +46,7 @@ public:
 		const QString &number );
 
 private Q_SLOTS:
+	void on_p12Button_clicked();
 	void on_selectDefaultDir_clicked();
 	void save();
 };
