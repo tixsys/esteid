@@ -316,6 +316,9 @@ void KeyAddDialog::showResult( const QList<CKey> &result )
 		skView->addTopLevelItem( i );
 	}
 
+	if( skKeys.isEmpty() )
+		showError( tr("Empty result") );
+
 	disableSearch( false );
 	add->setEnabled( true );
 	add->setFocus();
