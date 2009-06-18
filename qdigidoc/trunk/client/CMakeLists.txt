@@ -63,6 +63,24 @@ INCLUDE_DIRECTORIES(
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 	)
 
+if(APPLE)
+    set(APP_CONTENTS_DIR "${CMAKE_SOURCE_DIR}/client/mac")
+    
+    # xCode hacks
+    include_directories(/usr/local/include/../include)
+    
+    # Bundle resources
+    file(GLOB_RECURSE RESOURCE_FILES
+        ${APP_CONTENTS_DIR}/Resources/*.icns
+        ${APP_CONTENTS_DIR}/Resources/**/*.strings)
+    
+    foreach(_file ${RESOURCE_FILES})
+        get_filename_component(_file_dir ${_file} PATH)
+        file(RELATIVE_PATH _file_dir ${APP_CONTENTS_DIR}/Resources ${_file_dir})
+        set_source_files_properties(${_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${_file_dir}" )
+    endforeach(_file)
+endif(APPLE)
+
 QT4_ADD_RESOURCES( RC_SOURCES ${RCS} )
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
@@ -80,7 +98,18 @@ if(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
 	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
 endif(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
 
-ADD_EXECUTABLE( qdigidocclient WIN32 ${SOURCES} ${MOC_SOURCES} ${RC_SOURCES} ${UI_HEADERS} )
+ADD_EXECUTABLE( qdigidocclient WIN32 MACOSX_BUNDLE ${SOURCES} ${MOC_SOURCES} ${RC_SOURCES} ${UI_HEADERS} ${RESOURCE_FILES})
+
+if(APPLE)
+    configure_file(
+        ${APP_CONTENTS_DIR}/Info.plist.cmake
+        ${APP_CONTENTS_DIR}/Info.plist
+        @ONLY)
+    
+    set_target_properties(qdigidocclient
+    	PROPERTIES
+    	MACOSX_BUNDLE_INFO_PLIST ${APP_CONTENTS_DIR}/Info.plist)
+endif(APPLE)
 
 TARGET_LINK_LIBRARIES( qdigidocclient
 	${QT_QTMAIN_LIBRARY}

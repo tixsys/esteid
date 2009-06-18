@@ -36,10 +36,5 @@ else (Subversion_FOUND)
     add_definitions(-DBUILD_VER=0)
 endif (Subversion_FOUND)
 
-# xCode hacks
-if( APPLE )
-    include_directories( /usr/local/include/../include )
-endif( APPLE )
-
 add_subdirectory( client )
 add_subdirectory( crypto )
