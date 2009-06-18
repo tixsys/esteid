@@ -469,9 +469,16 @@ void digidoc::SignatureBES::checkSigningCertificate() const throw(SignatureExcep
 {
     X509Cert signingCert = getSigningCertificate();
 
-    if(!signingCert.verify())
+    try
     {
-        THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
+        if(!signingCert.verify())
+        {
+            THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
+        }
+    }
+    catch( const IOException &e )
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE( e, "Unable to verify signing certificate" );
     }
 }
 
