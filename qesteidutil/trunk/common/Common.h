@@ -24,6 +24,7 @@
 
 #include <QObject>
 
+class QStringList;
 class QUrl;
 
 class Common: public QObject
@@ -33,6 +34,8 @@ public:
 	Common( QObject *parent = 0 );
 
 	static QString fileSize( quint64 bytes );
+	static bool startDetached( const QString &program );
+	static bool startDetached( const QString &program, const QStringList &arguments );
 
 public Q_SLOTS:
 	void mailTo( const QUrl &url );

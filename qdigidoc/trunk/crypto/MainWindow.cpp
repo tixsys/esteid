@@ -34,7 +34,6 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
-#include <QProcess>
 #include <QSslCertificate>
 #include <QTextStream>
 #include <QTranslator>
@@ -245,11 +244,7 @@ void MainWindow::buttonClicked( int button )
 				QString file = QString( doc->fileName() ).append( ".ddoc" );
 				if( doc->saveDDoc( file ) )
 				{
-#ifdef Q_OS_MAC
-					if( !QProcess::startDetached( "open", QStringList() << "-a" << "qdigidocclient" << file ) )
-#else
-					if( !QProcess::startDetached( "qdigidocclient", QStringList() << file ) )
-#endif
+					if( !Common::startDetached( "qdigidocclient", QStringList() << file ) )
 						showWarning( tr("Failed to start process '%1'").arg( "qdigidocclient" ), -1 );
 				}
 			}
@@ -391,11 +386,7 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "openUtility" )
 	{
-#ifdef Q_OS_MAC
-		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
-#else
-		if( !QProcess::startDetached( "qesteidutil" ) )
-#endif
+		if( !Common::startDetached( "qesteidutil" ) )
 			showWarning( tr("Failed to start process '%1'").arg( "qesteidutil" ), -1 );
 	}
 }

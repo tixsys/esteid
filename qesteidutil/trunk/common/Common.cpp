@@ -23,6 +23,7 @@
 #include "Common.h"
 
 #include <QDesktopServices>
+#include <QProcess>
 #include <QUrl>
 
 #ifdef Q_OS_WIN32
@@ -95,5 +96,17 @@ void Common::mailTo( const QUrl &url )
 	}
 #else
 	QDesktopServices::openUrl( url );
+#endif
+}
+
+bool Common::startDetached( const QString &program )
+{ return startDetached( program, QStringList() ); }
+
+bool Common::startDetached( const QString &program, const QStringList &arguments )
+{
+#ifdef Q_OS_MAC
+	return QProcess::startDetached( "open", QStringList() << "-a" << program << arguments );
+#else
+	return QProcess::startDetached( program, arguments );
 #endif
 }

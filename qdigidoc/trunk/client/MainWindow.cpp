@@ -40,7 +40,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPrintPreviewDialog>
-#include <QProcess>
 #include <QSslCertificate>
 #include <QTextStream>
 #include <QTranslator>
@@ -214,11 +213,7 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HomeCrypt:
-#ifdef Q_OS_MAC
-		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qdigidoccrypto" << doc->fileName() ) )
-#else
-		if( !QProcess::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
-#endif
+		if( !Common::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeSign:
@@ -457,11 +452,7 @@ void MainWindow::parseLink( const QString &link )
 	}
 	else if( link == "openUtility" )
 	{
-#ifdef Q_OS_MAC
-		if( !QProcess::startDetached( "open", QStringList() << "-a" << "qesteidutil") )
-#else
-		if( !QProcess::startDetached( "qesteidutil" ) )
-#endif
+		if( !Common::startDetached( "qesteidutil" ) )
 			showWarning( tr("Failed to start process 'qesteidutil'") );
 	}
 }
