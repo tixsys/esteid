@@ -117,6 +117,8 @@ public:
 	virtual void validateOffline() const throw(SignatureException);
 	virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
 
+	virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
+
 protected:
 	virtual void sign(Signer* signer) throw(SignatureException, SignException);
 

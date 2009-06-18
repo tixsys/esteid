@@ -18,6 +18,8 @@ namespace digidoc
           virtual void validateOffline() const throw(SignatureException);
           virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
 
+          virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) {}
+
           static const std::string MEDIA_TYPE;
 
       protected:

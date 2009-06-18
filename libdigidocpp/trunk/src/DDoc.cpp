@@ -196,6 +196,15 @@ std::string DSignature::getMediaType() const
 	return s.str();
 }
 
+void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
+{
+	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
+	data.resize( n->mbufOcspDigest.nLen );
+	std::copy( (unsigned char*)n->mbufOcspDigest.pMem,
+		(unsigned char*)n->mbufOcspDigest.pMem + n->mbufOcspDigest.nLen, data.begin() );
+	digestMethodUri = n->szDigestType;
+}
+
 void DSignature::validateOffline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(

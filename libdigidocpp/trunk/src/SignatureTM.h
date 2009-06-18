@@ -24,6 +24,8 @@ public:
     virtual std::string getMediaType() const;
     virtual void validateOffline() const throw(SignatureException);
 
+    void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
+
     static const std::string MEDIA_TYPE;
 protected:
     virtual void sign(Signer* signer) throw(SignatureException, SignException);
@@ -38,7 +40,6 @@ private:
             const std::vector<unsigned char>& ocspResponseHash, const struct tm& producedAt );
 
     void getOCSPResponseValue(std::vector<unsigned char>& data) const;
-    void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
 };
 
 }
