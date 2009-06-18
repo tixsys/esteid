@@ -246,6 +246,11 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case SignCancel:
+		if( !doc->signatures().isEmpty() )
+		{
+			setCurrentPage( View );
+			break;
+		}
 		if( !doc->documents().isEmpty() )
 		{
 			QMessageBox msgBox( QMessageBox::Question, tr("Save container"),
