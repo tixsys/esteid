@@ -109,25 +109,34 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	signerRole->setText( s.role() );
 
 	// Certificate info
-	addItem( tr("Signing time"), s.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
-	addItem( tr("Signature type"), c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" );
-	addItem( tr("Signature format"), s.mediaType() );
-	addItem( tr("Signed file count"), QString::number( s.parent()->documents().size() ) );
-	addItem( tr("Certificate serialnumber"), c.serialNumber() );
-	addItem( tr("Certificate valid at"), c.effectiveDate().toString( "dd.MM.yyyy" ) );
-	addItem( tr("Certificate valid until"), c.expiryDate().toString( "dd.MM.yyyy" ) );
-	addItem( tr("Certificate issuer"), c.issuerInfo( QSslCertificate::CommonName ) );
-	signatureView->resizeColumnToContents( 0 );
+	QTreeWidget *t = signatureView;
+	addItem( t, tr("Signing time"), s.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
+	addItem( t, tr("Signature type"), c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" );
+	addItem( t, tr("Signature format"), s.mediaType() );
+	addItem( t, tr("Signed file count"), QString::number( s.parent()->documents().size() ) );
+	addItem( t, tr("Certificate serialnumber"), c.serialNumber() );
+	addItem( t, tr("Certificate valid at"), c.effectiveDate().toString( "dd.MM.yyyy" ) );
+	addItem( t, tr("Certificate valid until"), c.expiryDate().toString( "dd.MM.yyyy" ) );
+	addItem( t, tr("Certificate issuer"), c.issuerInfo( QSslCertificate::CommonName ) );
+	t->resizeColumnToContents( 0 );
 
 	// OCSP info
+	t = ocspView;
+	addItem( t, tr("Signature type"), "" );
+	addItem( t, tr("Type"), s.digestMethod() );
+	addItem( t, tr("Certificate serialnumber"), "" );
+	addItem( t, tr("Time"), "" );
+	addItem( t, tr("SHA1 hash"), "" );
+	addItem( t, tr("Subject name"), "" );
+	t->resizeColumnToContents( 0 );
 }
 
-void SignatureDialog::addItem( const QString &variable, const QString &value )
+void SignatureDialog::addItem( QTreeWidget *view, const QString &variable, const QString &value )
 {
-	QTreeWidgetItem *i = new QTreeWidgetItem( signatureView );
+	QTreeWidgetItem *i = new QTreeWidgetItem( view );
 	i->setText( 0, variable );
 	i->setText( 1, value );
-	signatureView->addTopLevelItem( i );
+	view->addTopLevelItem( i );
 }
 
 void SignatureDialog::showCertificate()

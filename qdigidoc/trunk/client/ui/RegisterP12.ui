@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>OCSP PKCS#12 certificate installer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../rc/qdigidocclient.qrc">
+    <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="p12CertLabel">
@@ -113,6 +117,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../rc/qdigidocclient.qrc"/>
+ </resources>
  <connections/>
 </ui>

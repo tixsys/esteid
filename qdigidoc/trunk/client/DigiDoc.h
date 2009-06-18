@@ -46,14 +46,16 @@ public:
 	DigiDocSignature( const digidoc::Signature *signature, DigiDoc *parent );
 
 	QSslCertificate	cert() const;
-	QDateTime dateTime() const;
-	bool	isValid();
-	QString	lastError() const;
-	QString	location() const;
+	QDateTime	dateTime() const;
+	QString		digestMethod() const;
+	QByteArray	digestValue() const;
+	bool		isValid();
+	QString		lastError() const;
+	QString		location() const;
 	QStringList locations() const;
-	QString	mediaType() const;
-	DigiDoc *parent() const;
-	QString	role() const;
+	QString		mediaType() const;
+	DigiDoc		*parent() const;
+	QString		role() const;
 
 private:
 	void setLastError( const digidoc::Exception &e );

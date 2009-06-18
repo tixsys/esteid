@@ -146,7 +146,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "</table>"
 
 		<< "<div class=\"label\">" << tr("HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)") << "&nbsp;</div>"
-		<< "<div class=\"textborder\">&nbsp;</div>";
+		<< "<div class=\"textborder\">" << cert.toHex( sig.digestValue() ) << "&nbsp;</div>";
 
 		++i;
 	}

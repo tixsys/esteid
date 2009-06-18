@@ -208,7 +208,7 @@ QByteArray SslCertificate::subjectKeyIdentifier() const
 
 QByteArray SslCertificate::toHex( const QByteArray &in, QChar separator )
 {
-	QByteArray ret = in.toHex();
+	QByteArray ret = in.toHex().toUpper();
 	for( int i = 2; i < ret.size(); i += 3 )
 		ret.insert( i, separator );
 	return ret;

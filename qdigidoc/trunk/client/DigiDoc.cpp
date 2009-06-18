@@ -69,6 +69,33 @@ QDateTime DigiDocSignature::dateTime() const
 	return QDateTime( t.date(), t.time(), Qt::UTC ).toLocalTime();
 }
 
+QString DigiDocSignature::digestMethod() const
+{
+	try
+	{
+		std::vector<unsigned char> data;
+		std::string method;
+		s->getRevocationOCSPRef( data, method );
+		return QString::fromStdString( method );
+	}
+	catch( const Exception & ) {}
+	return QString();
+}
+
+QByteArray DigiDocSignature::digestValue() const
+{
+	try
+	{
+		std::vector<unsigned char> data;
+		std::string method;
+		s->getRevocationOCSPRef( data, method );
+		if( data.size() > 0 )
+			return QByteArray( (const char*)&data[0], data.size() );
+	}
+	catch( const Exception & ) {}
+	return QByteArray();
+}
+
 bool DigiDocSignature::isValid()
 {
 	try

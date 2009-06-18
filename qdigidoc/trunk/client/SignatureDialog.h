@@ -55,7 +55,7 @@ private Q_SLOTS:
 	void showCertificate();
 
 private:
-	void addItem( const QString &variable, const QString &value );
+	void addItem( QTreeWidget *view, const QString &variable, const QString &value );
 
 	DigiDocSignature s;
 };

@@ -187,13 +187,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="verify">
+     <widget class="QWidget" name="ocsp">
       <attribute name="title">
        <string>Verify</string>
       </attribute>
       <layout class="QGridLayout" name="verifyLayout">
        <item row="0" column="0" colspan="2">
-        <widget class="QTreeWidget" name="verifyView">
+        <widget class="QTreeWidget" name="ocspView">
          <property name="rootIsDecorated">
           <bool>false</bool>
          </property>
@@ -210,7 +210,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <spacer name="verifySpacer">
+        <spacer name="ocspSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -223,7 +223,7 @@
         </spacer>
        </item>
        <item row="1" column="1">
-        <widget class="QPushButton" name="verifyShowCert">
+        <widget class="QPushButton" name="ocspShowCert">
          <property name="text">
           <string>Show certificate</string>
          </property>
@@ -293,7 +293,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>verifyShowCert</sender>
+   <sender>ocspShowCert</sender>
    <signal>clicked()</signal>
    <receiver>SignatureDialog</receiver>
    <slot>showCertificate()</slot>
