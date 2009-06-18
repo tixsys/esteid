@@ -159,4 +159,8 @@ void SAL_CALL threadCallMacro(char *pMess);
 
 ::rtl::OString SAL_CALL convertURItoPath(const ::rtl::OUString ousURI);
 
+int getTimeZoneDiff();
+
+int convHexAsciiToInt(char cA, char cB);
+
 #endif

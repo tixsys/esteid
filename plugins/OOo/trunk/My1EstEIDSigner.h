@@ -76,10 +76,7 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 
 	private:
 		bool compIDnumber(std::string str_idNum);
-		//digidoc::PKCS11Signer::X509Cert *singnCert;
-		//std::string str_destination;
-		//std::string str_origin;
-		
+		digidoc::X509Cert *singnCert;
 
 		digidoc::Signature::Type profile;
 		digidoc::BDoc *locBdoc;		

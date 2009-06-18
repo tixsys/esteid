@@ -29,6 +29,8 @@
  ************************************************************************/
 #include <stdio.h>
 #include <iostream>
+#include <time.h>
+#include <sstream>
 #include "MyBdocBridge.h"
 #include "MyDebug.h"
 
@@ -281,9 +283,12 @@ PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);
 PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 		if (m_BdocBridge1->ret < 100)// && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
 		{
+			
 			//------------Fix sign data string from returned data---------		
 			strSignData = "";
-			int k,l,m,n,o,p,q,r;
+			//char* cTemp = NULL;
+			int k,l,m,n,o,p,q,r, iHour;
+			
 			k=l=m=n=o=p=q=r=0;
 			for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
 			{	
@@ -295,12 +300,29 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 						strSignData += ";";
 						k++;
 					}
+					else if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] != ','))
+					{	//convert utf-8 ascii string to unicode char
+						int iCD1, iCD2;
+						iCD1 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
+						k += 3; 
+						iCD2 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
+						k += 2; 
+						wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+						
+PRINT_DEBUG("utfChar: %c \nNum1: %d\nNum2: %d\nutf as nr: %d", utfChar, iCD1, iCD2, utfChar);
+						strSignData += (char)utfChar;
+
+					}
 					else
 						strSignData += m_BdocBridge1->pSignName[k];
 					k++;
 				}
 				k++;
 				strSignData += ";";
+
+PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
+
+
 
 				//Signer Role
 				if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
@@ -331,13 +353,19 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 				//Signing Time
 				while (m_BdocBridge1->pSignTime[n] != '#')
 				{
-					if ((m_BdocBridge1->pSignTime[n] == 'T') || (m_BdocBridge1->pSignTime[n] == 'Z'))
+					if (m_BdocBridge1->pSignTime[n] == 'T')
 					{
+						stringstream out;
 						strSignData += " ";
-					
+						iHour = 10*((int)m_BdocBridge1->pSignTime[++n] - 48);
+						iHour += (int)m_BdocBridge1->pSignTime[++n] - 48;
+						iHour += getTimeZoneDiff();						
+						out << iHour;
+						strSignData += out.str();
 					}
-					else
+					else if (m_BdocBridge1->pSignTime[n] != 'Z')
 						strSignData += m_BdocBridge1->pSignTime[n];
+											
 					n++;
 				}
 				n++;
@@ -386,9 +414,14 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 				strSignData += "_____________________;";
 
 			}
+			//OUString ousTemp(RTL_CONSTASCII_USTRINGPARAM(strSignData.c_str()));
+			OString oTemp(strSignData.c_str(), RTL_TEXTENCODING_ISO_8859_15);
+			strSignData	= oTemp.pData->buffer; 
 			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
+			
+			
 			//Amazing converting to proper ascii
-			//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ASCII_US);// 
+			//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ISO_8859_15);// 
 			//----------------------------------------------------------------
 PRINT_DEBUG("Signature Data: %s",strSignData.c_str());
 			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
@@ -644,7 +677,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			}	
 			//----------------------If We are dealing with BDoc container----------------------
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs)
-			{
+			{	
+				int iHour;
 				m_BdocBridge->DigiInit();
 				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
 				//m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
@@ -703,13 +737,19 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						//Signing Time
 						while (m_BdocBridge->pSignTime[n] != '#')
 						{
-							if ((m_BdocBridge->pSignTime[n] == 'T') || (m_BdocBridge->pSignTime[n] == 'Z'))
+							if (m_BdocBridge->pSignTime[n] == 'T')
 							{
+								stringstream out;
 								strSignData += " ";
-							
+								iHour = 10*((int)m_BdocBridge->pSignTime[++n] - 48);
+								iHour += (int)m_BdocBridge->pSignTime[++n] - 48;
+								iHour += getTimeZoneDiff();						
+								out << iHour;
+								strSignData += out.str();
 							}
-							else
+							else if (m_BdocBridge->pSignTime[n] != 'Z')
 								strSignData += m_BdocBridge->pSignTime[n];
+													
 							n++;
 						}
 						n++;
@@ -836,12 +876,12 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 								m_BdocBridge->DigiInit();
 								m_BdocBridge->DigiOpen(strNewPath.c_str());
 								//m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
-	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge->pRetPath);	
+//	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge->pRetPath);	
 								string strTempFileUrl = UNO_URL_HEAD;
 								strTempFileUrl += m_BdocBridge->pRetPath;
 								strNewPath = UNO_URL_HEAD + strNewPath;
-	PRINT_DEBUG ("NewTempFile URL: %s\n",strTempFileUrl.c_str());
-	PRINT_DEBUG ("NewContFile URL: %s\n",strTempFileUrl.c_str());
+//	PRINT_DEBUG ("NewTempFile URL: %s\n",strTempFileUrl.c_str());
+//	PRINT_DEBUG ("NewContFile URL: %s\n",strTempFileUrl.c_str());
 								ousBDocContURL = ::rtl::OUString(strNewPath.data(),strNewPath.size(), RTL_TEXTENCODING_UNICODE, 0);; //<-----Get access to the container in new frame!
 								ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
 
@@ -1034,7 +1074,7 @@ OString SAL_CALL convertURItoPath(OUString ousURI)
 {
 	OString osPath;
 	strBuffer = "";
-	osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_UTF8);
+	osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ISO_8859_15);
 	//osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ASCII_US);
 
 	for(int i=sizeof(UNO_URL_HEAD)-1; i<osPath.getLength(); i++)
@@ -1055,3 +1095,69 @@ OString SAL_CALL convertURItoPath(OUString ousURI)
 	return OString(strBuffer.c_str());
 }
 
+
+int getTimeZoneDiff()
+{
+	tm *gmtTime;
+	time_t locTime;
+	double  dif;
+
+	time(&locTime);
+	gmtTime = gmtime ( &locTime );
+	dif = difftime (locTime, mktime(gmtTime));
+
+	return int(dif / 3600);
+}
+
+int convHexAsciiToInt(char cA, char cB)
+{
+	int num;
+	switch (cA)
+	{
+	case 'A':
+		num = 10;
+		break;
+	case 'B':
+		num = 11;
+		break;
+	case 'C':
+		num = 12;
+		break;
+	case 'D':
+		num = 13;
+		break;
+	case 'E':
+		num = 14;
+		break;
+	case 'F':
+		num = 15;
+		break;
+	default:
+		num = (int)cA - 48;		
+	}
+	num *= 16; 
+	switch (cB)
+	{
+	case 'A':
+		num += 10;
+		break;
+	case 'B':
+		num += 11;
+		break;
+	case 'C':
+		num += 12;
+		break;
+	case 'D':
+		num += 13;
+		break;
+	case 'E':
+		num += 14;
+		break;
+	case 'F':
+		num += 15;
+		break;
+	default:
+		num += (int)cB - 48;
+	}
+	return num;
+}

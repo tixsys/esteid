@@ -295,8 +295,8 @@ int My1EstEIDSigner::signFile ()
 			
 			if (!compIDnumber(m_signer.cardSignCert->name))
 			{
-			//	i_ok = 100;
-				printf("Allready Signed!\n");
+				i_ok = 100;
+			//	printf("Allready Signed!\n");
 			}
 		}		
 		else //if it's an new container (in openoffice we will have only 1 file per container)
@@ -452,7 +452,7 @@ int My1EstEIDSigner::openCont ()
 				//If signature is not offline valid, other data fields can not be read from it.
 				printf("    Offline validation: FAILED (%s)\n", e.getMsg().c_str());
 				i_ret += 1;
-				signPlace.str_countryName += "-KEHTETU-";
+				signPlace.str_countryName += "-KEHTETU-;";
 				//continue;
 			}
 
@@ -526,7 +526,7 @@ int My1EstEIDSigner::openCont ()
 			// Get signer certificate.
 			// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
 			X509Cert cert = sig->getSigningCertificate();
-			string tempname = cert.getSubject().c_str();
+			string tempname = cert.getSubject();//.data());.c_str();
 			for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], ",CN=", 4))
@@ -597,6 +597,39 @@ int My1EstEIDSigner::openCont ()
 //***********************************************************
 bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
 {
+	string str_cerNum, id1, id2;
+	int k = 0;
+	size_t found;
+	const Signature* sign;
+
+	found=str_idNum.find("serialNumber=");
+	if (found!=string::npos)
+	{
+		id1.assign(str_idNum, int(found), 24);
+		cout << "id1: " << id1 << endl;
+	}
+
+	for(unsigned int i = 0; i < locBdoc->signatureCount(); i++)
+	{
+		sign = locBdoc->getSignature(i);
+		
+		singnCert = new X509Cert(sign->getSigningCertificate());
+		
+		str_cerNum = singnCert->getSubject(); 
+		
+		found=str_cerNum.find("serialNumber=");
+		if (found!=string::npos)
+		{
+			id2.assign(str_cerNum, int(found), 24);
+			cout << "id2: " << id2 << endl;
+		}
+		delete singnCert; 
+		singnCert = 0;
+
+		if(!id1.compare(id2))
+			return false;
+	}		
+	
 	return true;
 }
 
