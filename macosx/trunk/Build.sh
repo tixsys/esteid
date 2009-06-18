@@ -25,7 +25,7 @@ fi
 NAME=`date "+installer_${ARCH}_%Y%m%d_r${REVISION}.dmg"`
 FILE=build/Packages/${NAME}
 
-./make.rb -V --arch ${ARCH} installer
+./make.rb -V -f --arch ${ARCH} installer
 
 hdiutil create -fs HFS+ -srcfolder build/Packages/esteid-dev.mpkg -volname esteid-dev ${FILE}
 setfile -a E ${FILE}
