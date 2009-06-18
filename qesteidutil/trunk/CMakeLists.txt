@@ -14,9 +14,9 @@ find_package(Qt4 REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
-if(UNIX)
+if(UNIX AND NOT APPLE)
     find_package(PCSCLite REQUIRED)
-endif(UNIX)
+endif(UNIX AND NOT APPLE)
 
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
@@ -97,9 +97,22 @@ include_directories(
     ${LIBP11_INCLUDE_DIR}
 )
 
-# xCode hacks
 if(APPLE)
+    set(APP_CONTENTS_DIR "${CMAKE_SOURCE_DIR}/mac")
+    
+    # xCode hacks
     include_directories(/usr/local/include/../include)
+    
+    # Bundle resources
+    file(GLOB_RECURSE RESOURCE_FILES
+        ${APP_CONTENTS_DIR}/Resources/*.icns
+        ${APP_CONTENTS_DIR}/Resources/**/*.strings)
+    
+    foreach(_file ${RESOURCE_FILES})
+        get_filename_component(_file_dir ${_file} PATH)
+        file(RELATIVE_PATH _file_dir ${APP_CONTENTS_DIR}/Resources ${_file_dir})
+        set_source_files_properties(${_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${_file_dir}" )
+    endforeach(_file)
 endif(APPLE)
 
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
@@ -109,8 +122,8 @@ QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 IF(WIN32)
     SET(qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc)
 ENDIF(WIN32)
-
-add_executable(qesteidutil WIN32
+    
+add_executable(qesteidutil WIN32 MACOSX_BUNDLE
     ${cardlib_SRCS}
     ${qesteidutil_SRCS}
     ${qesteidutil_HDRS}
@@ -118,7 +131,20 @@ add_executable(qesteidutil WIN32
     ${qesteidutil_RCC_SRCS}
     ${qesteidutil_MOC_HDRS}
     ${UI_HEADERS}
+    ${RESOURCE_FILES}
 )
+
+if(APPLE)
+    configure_file(
+        ${APP_CONTENTS_DIR}/Info.plist.cmake
+        ${APP_CONTENTS_DIR}/Info.plist
+        @ONLY)
+    
+    set_target_properties(qesteidutil
+    	PROPERTIES
+    	MACOSX_BUNDLE_INFO_PLIST ${APP_CONTENTS_DIR}/Info.plist
+   )
+endif(APPLE)
 
 target_link_libraries(qesteidutil
     ${QT_QTMAIN_LIBRARY}
