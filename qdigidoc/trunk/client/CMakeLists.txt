@@ -8,6 +8,7 @@ SET( MOC_HEADERS
 	MobileDialog.h
 	Poller.h
 	PrintSheet.h
+	RegisterP12.h
 	Settings.h
 	SignatureDialog.h
 	TreeWidget.h
@@ -32,6 +33,7 @@ SET( SOURCES
 	Poller.cpp
 	PrintSheet.cpp
 	QMobileSigner.cpp
+	RegisterP12.cpp
 	Settings.cpp
 	SignatureDialog.cpp
 	TreeWidget.cpp
@@ -40,6 +42,7 @@ SET( UIS
 	${COMMON}/ui/CertificateWidget.ui
 	ui/MainWindow.ui
 	ui/MobileDialog.ui
+	ui/RegisterP12.ui
 	ui/Settings.ui
 	ui/SignatureDialog.ui
 	)

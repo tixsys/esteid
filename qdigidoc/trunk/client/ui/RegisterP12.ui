@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterP12</class>
+ <widget class="QWidget" name="RegisterP12">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>241</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OCSP PKCS#12 certificate installer</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="p12CertLabel">
+     <property name="text">
+      <string>OCSP PKCS#12 certificate</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="p12CertLayout">
+     <item>
+      <widget class="QLineEdit" name="p12Cert"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="p12Button">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="p12PassLayout">
+     <item>
+      <spacer name="p12PassSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="p12PassLabel">
+       <property name="text">
+        <string>Password</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="p12Pass"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="p12AccessLabel">
+     <property name="text">
+      <string>Certificate permissions</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="p12Any">
+     <property name="text">
+      <string>All users</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="p12Me">
+     <property name="text">
+      <string>Only me</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="RegisterP12Spacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>4</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="info">
+     <property name="text">
+      <string>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
+&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

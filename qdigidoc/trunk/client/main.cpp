@@ -21,7 +21,7 @@
  */
 
 #include "MainWindow.h"
-
+#include "RegisterP12.h"
 #include "version.h"
 
 #include <QApplication>
@@ -39,7 +39,15 @@ int main( int argc, char *argv[] )
 	p.setBrush( QPalette::LinkVisited, QBrush( "#509B00" ) );
 	a.setPalette( p );
 
-	MainWindow m;
-	m.show();
-	return a.exec();
+	QWidget *w;
+	QStringList args = a.arguments();
+	if( args.size() > 1 && args.value(1).right(4) == "p12d" )
+		w = new RegisterP12( args.value(1) );
+	else
+		w = new MainWindow();
+
+	w->show();
+	int ret = a.exec();
+	delete w;
+	return ret;
 }
