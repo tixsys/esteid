@@ -2,6 +2,7 @@ set( COMMON ${CMAKE_SOURCE_DIR}/common )
 
 SET( MOC_HEADERS
 	${COMMON}/CertificateWidget.h
+	${COMMON}/Common.h
 	${COMMON}/IKValidator.h
 	CryptDoc.h
 	KeyDialog.h
@@ -13,7 +14,6 @@ SET( MOC_HEADERS
 	)
 SET( HEADERS
 	${MOC_HEADERS}
-	${COMMON}/Common.h
 	${COMMON}/SslCertificate.h
 	version.h
 	)

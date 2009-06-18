@@ -24,6 +24,7 @@
 
 #include "KeyDialog.h"
 #include "Settings.h"
+#include "common/Common.h"
 #include "common/SslCertificate.h"
 
 #include <QApplication>
@@ -39,12 +40,6 @@
 #include <QTranslator>
 #include <QUrl>
 
-#ifdef Q_OS_WIN32
-#include <QLibrary>
-#include <windows.h>
-#include <mapi.h>
-#endif
-
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
@@ -57,6 +52,9 @@ MainWindow::MainWindow( QWidget *parent )
 #else
 	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
 #endif
+
+	Common *common = new Common( this );
+	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
 	cards->hide();
 	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
@@ -376,48 +374,9 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "email" )
 	{
-#ifdef Q_OS_WIN32
-		QByteArray filePath = QDir::toNativeSeparators( doc->fileName() ).toLatin1();
-		QByteArray fileName = QFileInfo( doc->fileName() ).fileName().toLatin1();
-
-		MapiFileDesc doc[1];
-		doc[0].ulReserved = 0;
-		doc[0].flFlags = 0;
-		doc[0].nPosition = -1;
-		doc[0].lpszPathName = filePath.data();
-		doc[0].lpszFileName = fileName.data();
-		doc[0].lpFileType = NULL;
-
-		// Create message
-		MapiMessage message;
-		message.ulReserved = 0;
-		message.lpszSubject = "";
-		message.lpszNoteText = "";
-		message.lpszMessageType = NULL;
-		message.lpszDateReceived = NULL;
-		message.lpszConversationID = NULL;
-		message.flFlags = 0;
-		message.lpOriginator = NULL;
-		message.nRecipCount = 0;
-		message.lpRecips = NULL;
-		message.nFileCount = 1;
-		message.lpFiles = (lpMapiFileDesc)&doc;
-
-		QLibrary lib("mapi32");
-		typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
-		SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
-		if( mapi )
-		{
-			int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
-			if( status == SUCCESS_SUCCESS )
-				return;
-		}
-		showWarning( tr("Failed to send email"), -1 );
-#else
 		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
 			.arg( QFileInfo( doc->fileName() ).fileName() )
 			.arg( doc->fileName() ) );
-#endif
 	}
 	else if( url == "saveAll" )
 	{

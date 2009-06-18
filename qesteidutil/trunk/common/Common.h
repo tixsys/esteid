@@ -22,10 +22,18 @@
 
 #pragma once
 
-#include <QString>
+#include <QObject>
 
-class Common
+class QUrl;
+
+class Common: public QObject
 {
+	Q_OBJECT
 public:
+	Common( QObject *parent = 0 );
+
 	static QString fileSize( quint64 bytes );
+
+public Q_SLOTS:
+	void mailTo( const QUrl &url );
 };

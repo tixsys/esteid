@@ -22,6 +22,20 @@
 
 #include "Common.h"
 
+#include <QDesktopServices>
+#include <QUrl>
+
+#ifdef Q_OS_WIN32
+#include <QDir>
+#include <QFile>
+#include <QLibrary>
+
+#include <windows.h>
+#include <mapi.h>
+#endif
+
+Common::Common( QObject *parent ): QObject( parent ) {}
+
 QString Common::fileSize( quint64 bytes )
 {
 	const quint64 kb = 1024;
@@ -37,4 +51,49 @@ QString Common::fileSize( quint64 bytes )
 	if( bytes >= kb )
 		return QString( "%1 KB" ).arg( bytes / kb );
 	return QString( "%1 B" ).arg( bytes );
+}
+
+void Common::mailTo( const QUrl &url )
+{
+#ifdef Q_OS_WIN32
+	QString file = url.queryItemValue( "attachment" );
+	QByteArray filePath = QDir::toNativeSeparators( file ).toLatin1();
+	QByteArray fileName = QFileInfo( file ).fileName().toLatin1();
+	QByteArray subject = url.queryItemValue( "subject" ).toLatin1();
+
+	MapiFileDesc doc[1];
+	doc[0].ulReserved = 0;
+	doc[0].flFlags = 0;
+	doc[0].nPosition = -1;
+	doc[0].lpszPathName = filePath.data();
+	doc[0].lpszFileName = fileName.data();
+	doc[0].lpFileType = NULL;
+
+	// Create message
+	MapiMessage message;
+	message.ulReserved = 0;
+	message.lpszSubject = subject.data();
+	message.lpszNoteText = "";
+	message.lpszMessageType = NULL;
+	message.lpszDateReceived = NULL;
+	message.lpszConversationID = NULL;
+	message.flFlags = 0;
+	message.lpOriginator = NULL;
+	message.nRecipCount = 0;
+	message.lpRecips = NULL;
+	message.nFileCount = 1;
+	message.lpFiles = (lpMapiFileDesc)&doc;
+
+	QLibrary lib("mapi32");
+	typedef ULONG (PASCAL *SendMail)(ULONG,ULONG,MapiMessage*,FLAGS,ULONG);
+	SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
+	if( mapi )
+	{
+		int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
+		if( status == SUCCESS_SUCCESS )
+			return;
+	}
+#else
+	QDesktopServices::openUrl( url );
+#endif
 }
