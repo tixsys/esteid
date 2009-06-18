@@ -360,12 +360,7 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "browse" )
 	{
-#ifdef Q_OS_WIN32
-		QString url( "file:///" );
-#else
-		QString url( "file://" );
-#endif
-		QDesktopServices::openUrl( url.append( QFileInfo( doc->fileName() ).absolutePath() ) );
+		QDesktopServices::openUrl( Common::toUrl( QFileInfo( doc->fileName() ).absolutePath() ) );
 	}
 	else if( url == "email" )
 	{

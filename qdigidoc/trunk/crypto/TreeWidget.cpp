@@ -22,6 +22,7 @@
 
 #include "TreeWidget.h"
 
+#include "common/Common.h"
 #include "CryptDoc.h"
 
 #include <QDesktopServices>
@@ -44,7 +45,7 @@ TreeWidget::TreeWidget( QWidget *parent )
 
 void TreeWidget::doubleClicked( const QModelIndex &index )
 {
-	QString u = url( index );
+	QUrl u = url( index );
 	if( !u.isEmpty() )
 		QDesktopServices::openUrl( u );
 }
@@ -94,17 +95,11 @@ void TreeWidget::setContent( const QList<CDocument> &docs )
 Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }
 
-QString TreeWidget::url( const QModelIndex &index ) const
+QUrl TreeWidget::url( const QModelIndex &index ) const
 {
-#ifdef Q_OS_WIN32
-	QString url( "file:///" );
-#else
-	QString url( "file://" );
-#endif
 	QModelIndex i = index.model()->index( index.row(), 0 );
 	QString path = i.data( Qt::UserRole ).toString();
 	if( path.isEmpty() )
 		return path;
-	url += QString( "%1/%2" ).arg( path ).arg( i.data().toString() );
-	return url;
+	return Common::toUrl( QString( "%1/%2" ).arg( path ).arg( i.data().toString() ) );
 }

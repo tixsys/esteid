@@ -93,13 +93,5 @@ void TreeWidget::setContent( const QList<digidoc::Document> &docs )
 Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }
 
-QString TreeWidget::url( const QModelIndex &item ) const
-{
-#ifdef Q_OS_WIN32
-	QString url( "file:///" );
-#else
-	QString url( "file://" );
-#endif
-	url += item.model()->index( item.row(), 0 ).data( Qt::UserRole ).toString();
-	return url;
-}
+QUrl TreeWidget::url( const QModelIndex &item ) const
+{ return Common::toUrl( item.model()->index( item.row(), 0 ).data( Qt::UserRole ).toString() ); }

@@ -26,6 +26,8 @@
 
 namespace digidoc{ class Document; }
 
+class QUrl;
+
 class TreeWidget : public QTreeWidget
 {
 	Q_OBJECT
@@ -43,5 +45,5 @@ private Q_SLOTS:
 	void openFile( const QModelIndex &index );
 
 private:
-	QString url( const QModelIndex &item ) const;
+	QUrl url( const QModelIndex &item ) const;
 };

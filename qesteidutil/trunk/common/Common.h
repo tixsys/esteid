@@ -36,6 +36,7 @@ public:
 	static QString fileSize( quint64 bytes );
 	static bool startDetached( const QString &program );
 	static bool startDetached( const QString &program, const QStringList &arguments );
+	static QUrl toUrl( const QString &path );
 
 public Q_SLOTS:
 	void mailTo( const QUrl &url );

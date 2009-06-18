@@ -110,3 +110,12 @@ bool Common::startDetached( const QString &program, const QStringList &arguments
 	return QProcess::startDetached( program, arguments );
 #endif
 }
+
+QUrl Common::toUrl( const QString &path )
+{
+#ifdef Q_OS_WIN32
+	return QString( "file:///" ).append( path );
+#else
+	return QString( "file://" ).append( path );
+#endif
+}

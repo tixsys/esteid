@@ -25,6 +25,7 @@
 #include <QTreeWidget>
 
 class CDocument;
+class QUrl;
 
 class TreeWidget: public QTreeWidget
 {
@@ -43,5 +44,5 @@ private Q_SLOTS:
 	void doubleClicked( const QModelIndex &index );
 
 private:
-	QString url( const QModelIndex &index ) const;
+	QUrl url( const QModelIndex &index ) const;
 };
