@@ -176,8 +176,15 @@ class Application
 	def run_binaries
 		puts "Creating installer binaries..." if @options.verbose
 		
-		# Build cross-platform Qt-based components
+		binaries = Pathname.new(@path).join(@options.binaries).to_s
 		
+		# Cleanup
+		FileUtils.mkdir_p(binaries) unless File.exists? binaries
+		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
+		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
+		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
+		
+		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
@@ -186,28 +193,36 @@ class Application
 			run_command 'rm -R Release' if File.exists? 'Release'
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command 'xcodebuild -project qesteidutil.xcodeproj -configuration Release -target qesteidutil -sdk macosx10.4'
+			
+			puts "Copying qesteidutil.app..." if @options.verbose
+			FileUtils.cp_r('Release/qesteidutil.app', binaries)
 		end
-		
-		run_command 'Skeleton/Make.rb -V -i ../../../qesteidutil/trunk/Release/qesteidutil'
 		
 		puts "Creating qdigidoc..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidoc/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
+			run_command 'rm client/CMakeCache.txt' if File.exists? 'client/CMakeCache.txt'
+			run_command 'rm -R client/CMakeFiles' if File.exists? 'client/CMakeFiles'
 			run_command 'rm -R client/Release' if File.exists? 'client/Release'
+			run_command 'rm crypto/CMakeCache.txt' if File.exists? 'crypto/CMakeCache.txt'
+			run_command 'rm -R crypto/CMakeFiles' if File.exists? 'crypto/CMakeFiles'
 			run_command 'rm -R crypto/Release' if File.exists? 'crypto/Release'
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
 			
 			puts "Creating qdigidocclient..." if @options.verbose
 			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
 			
+			puts "Copying qdigidocclient.app..." if @options.verbose
+			FileUtils.cp_r('client/Release/qdigidocclient.app', binaries)
+			
 			puts "Creating qdigidoccrypto..." if @options.verbose
 			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
+			
+			puts "Copying qdigidoccrypto.app..." if @options.verbose
+			FileUtils.cp_r('crypto/Release/qdigidoccrypto.app', binaries)
 		end
-		
-		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoc/trunk/client/Release/qdigidocclient'
-		run_command 'Skeleton/Make.rb -V -i ../../../qdigidoc/trunk/crypto/Release/qdigidoccrypto'
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
