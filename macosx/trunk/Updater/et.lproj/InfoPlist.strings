@@ -1,6 +1,6 @@
 /* Localized versions of Info.plist keys */
 
-CFBundleDisplayName = "ID-kaardi Uuendaja";
+CFBundleDisplayName = "ID-kaardi uuendaja";
 CFBundleGetInfoString = "v1.0, Copyright 2009 __COMPANY_NAME__.";
 NSHumanReadableCopyright = "Copyright (c) 2009, __COMPANY_NAME__.";
 NSPrefPaneIconLabel = "ID-kaart";

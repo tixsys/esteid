@@ -1025,7 +1025,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+			shellScript = "revision = `svn info WebPlugIn | grep -E \"Last Changed Rev: ([0-9]+)\" | cut -c 19-`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
 		};
 		81F0FC0B0FD6EB810093DA43 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1038,7 +1038,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+			shellScript = "revision = `svn info CMPlugIn | grep -E \"Last Changed Rev: ([0-9]+)\" | cut -c 19-`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
 		};
 		81F0FC130FD6EB8A0093DA43 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1051,7 +1051,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+			shellScript = "revision = `svn info Updater | grep -E \"Last Changed Rev: ([0-9]+)\" | cut -c 19-`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
 		};
 		81F0FC170FD6EB910093DA43 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1064,7 +1064,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "revision = `svn info | grep Revision | cut -d ' ' -f 2`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+			shellScript = "revision = `svn info Updater | grep -E \"Last Changed Rev: ([0-9]+)\" | cut -c 19-`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
 		};
 /* End PBXShellScriptBuildPhase section */
 
