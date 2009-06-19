@@ -280,11 +280,7 @@ void MainWindow::dropEvent( QDropEvent *e )
 	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
 	{
 		if( u.isRelative() || u.scheme() == "file" )
-#ifdef Q_OS_WIN32
-			params << u.path().remove( 0, 1 );
-#else
-			params << u.path();
-#endif
+			params << Common::toPath( u );
 	}
 	buttonClicked( HomeCreate );
 }
