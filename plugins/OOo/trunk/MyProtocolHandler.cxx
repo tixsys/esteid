@@ -309,7 +309,7 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 						k += 2; 
 						wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
 						
-PRINT_DEBUG("utfChar: %c \nNum1: %d\nNum2: %d\nutf as nr: %d", utfChar, iCD1, iCD2, utfChar);
+//PRINT_DEBUG("utfChar: %c \nNum1: %d\nNum2: %d\nutf as nr: %d", utfChar, iCD1, iCD2, utfChar);
 						strSignData += (char)utfChar;
 
 					}
@@ -415,15 +415,16 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 
 			}
 			//OUString ousTemp(RTL_CONSTASCII_USTRINGPARAM(strSignData.c_str()));
-			OString oTemp(strSignData.c_str(), RTL_TEXTENCODING_ISO_8859_15);
-			strSignData	= oTemp.pData->buffer; 
+//			OString oTemp(strSignData.c_str(), RTL_TEXTENCODING_ISO_8859_15);
+//			strSignData	= oTemp.pData->buffer; 
+//PRINT_DEBUG("Signature Ostr: %s",oTemp.pData->buffer);			
 			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
 			
 			
 			//Amazing converting to proper ascii
 			//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ISO_8859_15);// 
 			//----------------------------------------------------------------
-PRINT_DEBUG("Signature Data: %s",strSignData.c_str());
+PRINT_DEBUG("Signature strData: %s",strSignData.c_str());
 			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
 			oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
 			// create and start the hThreadShowSign with pcSignData as a parameter value		
@@ -674,7 +675,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					i_try = 0;
 				}
-			}	
+			}
+
 			//----------------------If We are dealing with BDoc container----------------------
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs)
 			{	
@@ -693,13 +695,24 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					int k,l,m,n,o,p,q,r;
 					k=l=m=n=o=p=q=r=0;
 					for (int cnt=0; cnt<m_BdocBridge->iSignCnt; cnt++)
-					{	//Signer Name
+					{	
+						//Signer Name
 						while (m_BdocBridge->pSignName[k] != '#')
 						{
 							if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] == ','))
 							{
 								strSignData += ";";
 								k++;
+							}
+							else if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] != ','))
+							{	//convert utf-8 ascii string to unicode char
+								int iCD1, iCD2;
+								iCD1 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
+								k += 3; 
+								iCD2 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
+								k += 2; 
+								wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+								strSignData += (char)utfChar;
 							}
 							else
 								strSignData += m_BdocBridge->pSignName[k];
@@ -860,7 +873,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							//m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
 							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
 						}
-
+PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
 
 						if (!m_BdocBridge->ret)
@@ -1066,6 +1079,7 @@ PRINT_DEBUG("In the MacroCallerThread: %s",pData);
 	//----------------------Open Macro--------------------------------
 	Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
 	Any any = rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pData), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+PRINT_DEBUG("Return From Macro: %d",any);	
 	//----------------------------------------------------------------
 }
 
@@ -1083,6 +1097,17 @@ OString SAL_CALL convertURItoPath(OUString ousURI)
 		{
 			strBuffer += " ";
 			i += 3;
+		}
+
+		else if (osPath.pData->buffer[i] == '%')
+		{	//an utf16 character -> change to utf8
+			int iCD1, iCD2;
+			iCD1 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
+			i += 3; 
+			iCD2 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
+			i += 3; 
+			wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+			strBuffer += (char)utfChar;
 		}
 		/*if (osPath.pData->buffer[i] == '\\')
 		{
