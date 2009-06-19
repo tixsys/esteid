@@ -587,7 +587,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Failed to send email</source>
-        <translation>E-kirja koostamine ebaõnnestus</translation>
+        <translation type="obsolete">E-kirja koostamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Documents (*.cdoc)</source>
@@ -818,6 +818,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>View encrypted document content</source>
         <translation>Vaata turvaümbriku sisu</translation>
     </message>
+    <message>
+        <source>Decrypting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -829,7 +833,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
 </context>
 <context>

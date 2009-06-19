@@ -36,5 +36,32 @@ else (Subversion_FOUND)
     add_definitions(-DBUILD_VER=0)
 endif (Subversion_FOUND)
 
+set( COMMON ${CMAKE_SOURCE_DIR}/common )
+set( COMMON_MOC_HEADERS
+	${COMMON}/CertificateWidget.h
+	${COMMON}/Common.h
+	${COMMON}/IKValidator.h
+	${COMMON}/PinDialog.h
+	)
+set( COMMON_HEADERS
+	${COMMON_MOC_HEADERS}
+	${COMMON}/SslCertificate.h
+	)
+set( COMMON_SOURCES
+	${COMMON_HEADERS}
+	${COMMON}/CertificateWidget.cpp
+	${COMMON}/Common.cpp
+	${COMMON}/IKValidator.cpp
+	${COMMON}/PinDialog.cpp
+	${COMMON}/SslCertificate.cpp
+	)
+set( COMMON_UIS
+	${COMMON}/ui/CertificateWidget.ui
+	)
+set( COMMON_RCS
+	${COMMON}/images/images.qrc
+	${COMMON}/translations/tr.qrc
+	)
+
 add_subdirectory( client )
 add_subdirectory( crypto )

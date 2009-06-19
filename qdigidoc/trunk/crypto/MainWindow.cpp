@@ -25,6 +25,7 @@
 #include "KeyDialog.h"
 #include "Settings.h"
 #include "common/Common.h"
+#include "common/PinDialog.h"
 #include "common/SslCertificate.h"
 
 #include <QApplication>
@@ -32,7 +33,6 @@
 #include <QDesktopServices>
 #include <QDragEnterEvent>
 #include <QFileDialog>
-#include <QInputDialog>
 #include <QMessageBox>
 #include <QSslCertificate>
 #include <QTextStream>
@@ -219,18 +219,8 @@ void MainWindow::buttonClicked( int button )
 	case ViewCrypt:
 		if( doc->isEncrypted() )
 		{
-			bool ok;
-			SslCertificate c = doc->authCert();
-			QString title = QString( "%1 %2 %3" )
-				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-				.arg( c.subjectInfo( "serialNumber" ) );
-			QString pin = QInputDialog::getText( this, title,
-				QObject::tr("<b>%1</b><br />"
-					"Selected action requires auth certificate.<br />"
-					"For using auth certificate enter PIN1").arg( title ),
-				QLineEdit::Password, QString(), &ok );
-			if( !ok )
+			PinDialog p( PinDialog::Pin1Type, doc->authCert(), this );
+			if( !p.exec() )
 				break;
 
 			setEnabled( false );
@@ -242,7 +232,7 @@ void MainWindow::buttonClicked( int button )
 			progress->show();
 			QApplication::processEvents();
 
-			doc->decrypt( pin );
+			doc->decrypt( p.textValue() );
 
 			progress->deleteLater();
 			setEnabled( true );

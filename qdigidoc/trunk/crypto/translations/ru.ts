@@ -421,7 +421,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Failed to send email</source>
-        <translation>Создание эл. письма неуспешно</translation>
+        <translation type="obsolete">Создание эл. письма неуспешно</translation>
     </message>
     <message>
         <source>Select folder where files will be stored</source>
@@ -583,11 +583,8 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>View encrypted document content</source>
         <translation>Посмотреть содержание зашифрованного документа</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
+        <source>Decrypting</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,9 +1,4 @@
-set( COMMON ${CMAKE_SOURCE_DIR}/common )
-
 SET( MOC_HEADERS
-	${COMMON}/CertificateWidget.h
-	${COMMON}/Common.h
-	${COMMON}/IKValidator.h
 	DigiDoc.h
 	MainWindow.h
 	MobileDialog.h
@@ -16,16 +11,11 @@ SET( MOC_HEADERS
 	)
 SET( HEADERS
 	${MOC_HEADERS}
-	${COMMON}/SslCertificate.h
 	QMobileSigner.h
 	version.h
 	)
 SET( SOURCES
 	${HEADERS}
-	${COMMON}/CertificateWidget.cpp
-	${COMMON}/Common.cpp
-	${COMMON}/SslCertificate.cpp
-	${COMMON}/IKValidator.cpp
 	main.cpp
 	DigiDoc.cpp
 	MainWindow.cpp
@@ -39,7 +29,6 @@ SET( SOURCES
 	TreeWidget.cpp
 	)
 SET( UIS
-	${COMMON}/ui/CertificateWidget.ui
 	ui/MainWindow.ui
 	ui/MobileDialog.ui
 	ui/RegisterP12.ui
@@ -47,8 +36,6 @@ SET( UIS
 	ui/SignatureDialog.ui
 	)
 SET( RCS
-	${COMMON}/images/images.qrc
-	${COMMON}/translations/tr.qrc
 	rc/qdigidocclient.qrc
 	)
 
@@ -81,9 +68,9 @@ if(APPLE)
     endforeach(_file)
 endif(APPLE)
 
-QT4_ADD_RESOURCES( RC_SOURCES ${RCS} )
-QT4_WRAP_UI( UI_HEADERS ${UIS} )
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
+QT4_ADD_RESOURCES( RC_SOURCES ${COMMON_RCS} ${RCS} )
+QT4_WRAP_UI( UI_HEADERS ${COMMON_UIS} ${UIS} )
+QT4_WRAP_CPP( MOC_SOURCES ${COMMON_MOC_HEADERS} ${MOC_HEADERS} )
 
 if(MSVC)
 	# disable warning C4290: C++ exception specification ignored
@@ -98,7 +85,17 @@ if(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
 	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
 endif(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
 
-ADD_EXECUTABLE( qdigidocclient WIN32 MACOSX_BUNDLE ${SOURCES} ${MOC_SOURCES} ${RC_SOURCES} ${UI_HEADERS} ${RESOURCE_FILES})
+ADD_EXECUTABLE(
+	qdigidocclient
+	WIN32
+	MACOSX_BUNDLE
+	${COMMON_SOURCES}
+	${SOURCES}
+	${MOC_SOURCES}
+	${RC_SOURCES}
+	${UI_HEADERS}
+	${RESOURCE_FILES}
+	)
 
 if(APPLE)
     configure_file(

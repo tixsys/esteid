@@ -272,7 +272,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Failed to send email</source>
-        <translation>Ekirja koostamine ebaõnnestus</translation>
+        <translation type="obsolete">Ekirja koostamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
@@ -686,7 +686,59 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
+    </message>
+</context>
+<context>
+    <name>RegisterP12</name>
+    <message>
+        <source>No OCSP PKCS#12 certificate selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to copy file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select PKCS#12 certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS#12 certificate installer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS#12 certificate</source>
+        <translation type="unfinished">Ligipääsutõend</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">Parool</translation>
+    </message>
+    <message>
+        <source>Certificate permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only me</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
+&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -905,6 +957,22 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Unknown error</source>
         <translation>Tundmatu viga</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SHA1 hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

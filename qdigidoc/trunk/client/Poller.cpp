@@ -22,12 +22,12 @@
 
 #include "Poller.h"
 
+#include "common/PinDialog.h"
 #include "common/SslCertificate.h"
 
 #include <digidocpp/XmlConf.h>
 
 #include <QApplication>
-#include <QInputDialog>
 #include <QStringList>
 
 using namespace digidoc;
@@ -103,21 +103,11 @@ QSslCertificate QEstEIDSigner::signCert( const QString &card ) const { return si
 
 std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
 {
-	SslCertificate s = SslCertificate::fromX509( (Qt::HANDLE)c.cert );
-	QString title = QString( "%1 %2 %3" )
-		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "GN" ) ) )
-		.arg( SslCertificate::formatName( s.subjectInfoUtf8( "SN" ) ) )
-		.arg( s.subjectInfo( "serialNumber" ) );
-	bool ok;
-	QString pin = QInputDialog::getText( qApp->activeWindow(), title,
-		QObject::tr( "<b>%1</b><br />"
-			"Selected action requires sign certificate.<br />"
-			"For using sign certificate enter PIN2" ).arg( title ),
-		QLineEdit::Password, QString(), &ok );
-	if( !ok )
+	PinDialog p( PinDialog::Pin2Type, SslCertificate::fromX509( (Qt::HANDLE)c.cert ), qApp->activeWindow() );
+	if( !p.exec() )
 		throw SignException( __FILE__, __LINE__,
 			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
-	return pin.toStdString();
+	return p.textValue().toStdString();
 }
 
 PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
