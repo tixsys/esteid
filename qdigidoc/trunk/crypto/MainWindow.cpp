@@ -232,7 +232,20 @@ void MainWindow::buttonClicked( int button )
 				QLineEdit::Password, QString(), &ok );
 			if( !ok )
 				break;
+
+			setEnabled( false );
+			QLabel *progress = new QLabel( tr("Decrypting"), view );
+			progress->setAlignment( Qt::AlignCenter );
+			progress->setFixedSize( 300, 20 );
+			progress->setStyleSheet( "font: bold; border: 1px solid black; background-color: white;" );
+			progress->move( view->geometry().center() - progress->geometry().center() );
+			progress->show();
+			QApplication::processEvents();
+
 			doc->decrypt( pin );
+
+			progress->deleteLater();
+			setEnabled( true );
 
 			if( doc->isSigned() )
 			{
