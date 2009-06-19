@@ -6,17 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>298</height>
+    <width>427</width>
+    <height>316</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">#Settings { background: white; }
-QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt &quot;Arial Baltic&quot;; }
-</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

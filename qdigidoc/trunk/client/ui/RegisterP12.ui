@@ -67,27 +67,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="p12AccessLabel">
-     <property name="text">
-      <string>Certificate permissions</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="p12Any">
-     <property name="text">
-      <string>All users</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="p12Me">
-     <property name="text">
-      <string>Only me</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <spacer name="RegisterP12Spacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

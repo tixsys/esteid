@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Settings</class>
- <widget class="QDialog" name="Settings" >
-  <property name="geometry" >
+ <widget class="QDialog" name="Settings">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,44 +10,39 @@
     <height>306</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <property name="styleSheet" >
-   <string notr="true" >#Settings { background: white; }
-QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
-</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label" >
-     <property name="text" >
+    <widget class="QLabel" name="label">
+     <property name="text">
       <string>Container default location</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="defaultSameDir" >
-     <property name="text" >
+    <widget class="QCheckBox" name="defaultSameDir">
+     <property name="text">
       <string>Same folder</string>
      </property>
-     <property name="checked" >
+     <property name="checked">
       <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" >
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="defaultDir" >
-       <property name="readOnly" >
+      <widget class="QLineEdit" name="defaultDir">
+       <property name="readOnly">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="selectDefaultDir" >
-       <property name="text" >
+      <widget class="QToolButton" name="selectDefaultDir">
+       <property name="text">
         <string>...</string>
        </property>
       </widget>
@@ -54,25 +50,25 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="askSaveAs" >
-     <property name="text" >
+    <widget class="QCheckBox" name="askSaveAs">
+     <property name="text">
       <string>Ask container name</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="showIntro" >
-     <property name="text" >
+    <widget class="QCheckBox" name="showIntro">
+     <property name="text">
       <string>Show signing intro</string>
      </property>
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer" >
-     <property name="orientation" >
+    <spacer name="verticalSpacer">
+     <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
        <height>40</height>
@@ -81,8 +77,8 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
     </spacer>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox" >
-     <property name="standardButtons" >
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
       <set>QDialogButtonBox::Close</set>
      </property>
     </widget>
@@ -102,11 +98,11 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
    <receiver>Settings</receiver>
    <slot>save()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>219</x>
      <y>131</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>217</x>
      <y>188</y>
     </hint>
@@ -118,11 +114,11 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
    <receiver>Settings</receiver>
    <slot>save()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>226</x>
      <y>95</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>226</x>
      <y>207</y>
     </hint>
@@ -134,11 +130,11 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
    <receiver>Settings</receiver>
    <slot>save()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>226</x>
      <y>39</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>226</x>
      <y>207</y>
     </hint>
@@ -150,11 +146,11 @@ QLabel, QLineEdit, QCheckBox, QGroupBox { font: 8pt "Arial Baltic"; }
    <receiver>Settings</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>226</x>
      <y>394</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>226</x>
      <y>207</y>
     </hint>
