@@ -41,7 +41,6 @@ private Q_SLOTS:
 	void enableSign();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
-	void on_settings_clicked();
 	void parseLink( const QString &link );
 	void selectCard();
 	void showCardStatus();
@@ -57,6 +56,8 @@ private:
 		View,
 	};
 	enum Buttons {
+		HeadSettings,
+		HeadHelp,
 		HomeCrypt,
 		HomeSign,
 		IntroBack,

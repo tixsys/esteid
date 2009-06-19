@@ -41,7 +41,6 @@ private Q_SLOTS:
 	void buttonClicked( int button );
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
-	void on_settings_clicked();
 	void on_viewContentView_clicked( const QModelIndex &index );
 	void parseLink( const QString &url );
 	void selectCard();
@@ -56,6 +55,8 @@ private:
 		View,
 	};
 	enum Buttons {
+		HeadSettings,
+		HeadHelp,
 		HomeCreate,
 		HomeView,
 		IntroBack,

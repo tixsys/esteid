@@ -34,7 +34,6 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QSslCertificate>
 #include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
@@ -61,6 +60,9 @@ MainWindow::MainWindow( QWidget *parent )
 	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
+
+	buttonGroup->addButton( settings, HeadSettings );
+	buttonGroup->addButton( help, HeadHelp );
 
 	buttonGroup->addButton( homeCreate, HomeCreate );
 	buttonGroup->addButton( homeView, HomeView );
@@ -181,6 +183,21 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
+	case HeadSettings:
+		Settings( this ).exec();
+		break;
+	case HeadHelp:
+		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
+		break;
+	case HomeView:
+	{
+		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
+			tr("Documents (*.cdoc)") );
+		if( !file.isEmpty() && doc->open( file ) )
+			setCurrentPage( View );
+		break;
+	}
 	case HomeCreate:
 		if( SettingsValues().showIntro() )
 		{
@@ -259,15 +276,6 @@ void MainWindow::buttonClicked( int button )
 		}
 		setCurrentPage( View );
 		break;
-	case HomeView:
-	{
-		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
-			tr("Documents (*.cdoc)") );
-		if( !file.isEmpty() && doc->open( file ) )
-			setCurrentPage( View );
-		break;
-	}
 	default: break;
 	}
 }
@@ -306,8 +314,6 @@ void MainWindow::on_languages_activated( int index )
 	showCardStatus();
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
-
-void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
 void MainWindow::on_viewContentView_clicked( const QModelIndex &index )
 {

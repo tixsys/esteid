@@ -40,7 +40,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPrintPreviewDialog>
-#include <QSslCertificate>
 #include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
@@ -81,6 +80,9 @@ MainWindow::MainWindow( QWidget *parent )
 		SLOT(viewAction(QModelIndex)) );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
+
+	buttonGroup->addButton( settings, HeadSettings );
+	buttonGroup->addButton( help, HeadHelp );
 
 	buttonGroup->addButton( homeSign, HomeSign );
 	buttonGroup->addButton( homeView, HomeView );
@@ -212,6 +214,21 @@ void MainWindow::buttonClicked( int button )
 {
 	switch( button )
 	{
+	case HeadSettings:
+		Settings( this ).exec();
+		break;
+	case HeadHelp:
+		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
+		break;
+	case HomeView:
+	{
+		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
+			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
+			tr("Documents (*.bdoc *.ddoc)") );
+		if( !file.isEmpty() && doc->open( file ) )
+			setCurrentPage( View );
+		break;
+	}
 	case HomeCrypt:
 		if( !Common::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
@@ -309,15 +326,6 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( View );
 		break;
 	}
-	case HomeView:
-	{
-		QString file = QFileDialog::getOpenFileName( this, tr("Open container"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
-			tr("Documents (*.bdoc *.ddoc)") );
-		if( !file.isEmpty() && doc->open( file ) )
-			setCurrentPage( View );
-		break;
-	}
 	case ViewAddSignature:
 		setCurrentPage( Sign );
 		break;
@@ -338,10 +346,7 @@ void MainWindow::dropEvent( QDropEvent *e )
 		if( u.isRelative() || u.scheme() == "file" )
 			params << Common::toPath( u );
 	}
-	if( stack->currentIndex() == Home && SettingsValues().showIntro() )
-		setCurrentPage( Intro );
-	else
-		parseParams();
+	buttonClicked( HomeSign );
 }
 
 void MainWindow::enableSign()
@@ -392,8 +397,6 @@ void MainWindow::on_languages_activated( int index )
 	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
 }
-
-void MainWindow::on_settings_clicked() { Settings( this ).exec(); }
 
 void MainWindow::parseLink( const QString &link )
 {
