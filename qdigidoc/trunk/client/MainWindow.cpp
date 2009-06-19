@@ -125,10 +125,10 @@ MainWindow::MainWindow( QWidget *parent )
 
 	SettingsValues s;
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
-	lang[0] = "et";
-	lang[1] = "en";
-	lang[2] = "ru";
-	on_languages_activated( lang.key(
+	cards->hack();
+	languages->hack();
+	lang << "et" << "en" << "ru";
+	on_languages_activated( lang.indexOf(
 		s.value( "Main/Language", "et" ).toString() ) );
 
 	doc->setConfValue( DigiDoc::ProxyHost, s.value( "Main/proxyPort" ) );

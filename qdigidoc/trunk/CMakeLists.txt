@@ -39,6 +39,7 @@ endif (Subversion_FOUND)
 set( COMMON ${CMAKE_SOURCE_DIR}/common )
 set( COMMON_MOC_HEADERS
 	${COMMON}/CertificateWidget.h
+	${COMMON}/ComboBox.h
 	${COMMON}/Common.h
 	${COMMON}/IKValidator.h
 	${COMMON}/PinDialog.h
@@ -50,6 +51,7 @@ set( COMMON_HEADERS
 set( COMMON_SOURCES
 	${COMMON_HEADERS}
 	${COMMON}/CertificateWidget.cpp
+	${COMMON}/ComboBox.cpp
 	${COMMON}/Common.cpp
 	${COMMON}/IKValidator.cpp
 	${COMMON}/PinDialog.cpp

@@ -84,7 +84,7 @@ color: white;
 padding-right: 5px;
 }
 
-#cards QAbstractItemView, #languages QAbstractItemView
+#cards QListView, #languages QListView
 {
 background-color: white;
 border: 0px;
@@ -262,10 +262,10 @@ color: #71889A;
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cards"/>
+         <widget class="ComboBox" name="cards"/>
         </item>
         <item>
-         <widget class="QComboBox" name="languages">
+         <widget class="ComboBox" name="languages">
           <item>
            <property name="text">
             <string notr="true">Estonian</string>
@@ -736,6 +736,11 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
    <class>TreeWidget</class>
    <extends>QTreeWidget</extends>
    <header>TreeWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>ComboBox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

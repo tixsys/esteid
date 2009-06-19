@@ -60,8 +60,7 @@ min-width: 75px;
 padding: 1px 7px;
 }
 
-QDialogButtonBox QPushButton,
-#home QPushButton, #utilityOpen
+QDialogButtonBox QPushButton, #home QPushButton
 { padding: 4px 7px; }
 
 QPushButton:hover, QPushButton:focus
@@ -74,6 +73,9 @@ QPushButton:disabled
 { background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #A3AFC0, stop: 0.75 #80909D); }
 
 /* header */
+#headerLine, #headerLine2
+{ background-color: #00355F; }
+
 #cards, #languages
 {
 background-color: #00355F;
@@ -82,22 +84,17 @@ color: white;
 padding-right: 5px;
 }
 
-#cards QAbstractItemView,
-#languages QAbstractItemView
+#cards QListView, #languages QListView
 {
 background-color: white;
 border: 0px;
 color: #355670;
 }
 
-#headerLine, #headerLine2
-{ background-color: #00355F; }
-
 #cards::down-arrow, #languages::down-arrow
 { image: url(&quot;:/images/languages_button.png&quot;); }
 
-#cards::drop-down,
-#languages::drop-down
+#cards::drop-down, #languages::drop-down
 { border: 0px; }
 
 #settings, #help
@@ -129,6 +126,10 @@ color: #00355F;
 font: bold;
 }
 
+#home, #intro, #sign, #view,
+#viewSignatures
+{ background-color: transparent; }
+
 #signContentFrame, #viewContentFrame
 {
 background-color: rgba( 255, 255, 255, 200 );
@@ -141,10 +142,6 @@ color: #355670;
 background-color: transparent;
 padding: 5px;
 }
-
-#home, #intro, #sign, #view,
-#viewSignatures
-{ background-color: transparent; }
 
 #viewSignatures
 { color: #71889A; }
@@ -264,10 +261,10 @@ padding: 5px;
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="cards"/>
+         <widget class="ComboBox" name="cards"/>
         </item>
         <item>
-         <widget class="QComboBox" name="languages">
+         <widget class="ComboBox" name="languages">
           <item>
            <property name="text">
             <string notr="true">Estonian</string>
@@ -1116,6 +1113,11 @@ color: red;</string>
    <class>TreeWidget</class>
    <extends>QTreeWidget</extends>
    <header>TreeWidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ComboBox</class>
+   <extends>QComboBox</extends>
+   <header>ComboBox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

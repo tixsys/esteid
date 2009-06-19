@@ -76,8 +76,6 @@ private:
 
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
-	QHash<int,QString> lang;
-	QStringList params;
-
+	QStringList lang, params;
 	QPushButton *introNext, *signButton, *viewAddSignature;
 };

@@ -93,10 +93,10 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
-	lang[0] = "et";
-	lang[1] = "en";
-	lang[2] = "ru";
-	on_languages_activated( lang.key(
+	cards->hack();
+	languages->hack();
+	lang << "et" << "en" << "ru";
+	on_languages_activated( lang.indexOf(
 		SettingsValues().value( "Main/Language", "et" ).toString() ) );
 
 	QStringList args = qApp->arguments();
