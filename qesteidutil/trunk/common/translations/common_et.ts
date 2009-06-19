@@ -107,6 +107,25 @@
         <source>Key usage</source>
         <translation>Võtme kasutus</translation>
     </message>
+    <message>
+        <source>Authority key identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subject key identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PinDialog</name>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
