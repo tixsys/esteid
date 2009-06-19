@@ -33,7 +33,10 @@ int main( int argc, char *argv[] )
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	a.setOrganizationDomain( DOMAINURL );
 	a.setOrganizationName( ORG );
-	a.setStyleSheet( "QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }" );
+	a.setStyleSheet(
+		"QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }\n"
+		"* { font: 12px \"Arial, Liberation Sans\"; }"
+	);
 	QPalette p = a.palette();
 	p.setBrush( QPalette::Link, QBrush( "#509B00" ) );
 	p.setBrush( QPalette::LinkVisited, QBrush( "#509B00" ) );
