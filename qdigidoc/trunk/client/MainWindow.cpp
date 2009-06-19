@@ -131,17 +131,6 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.key(
 		s.value( "Main/Language", "et" ).toString() ) );
 
-	QStringList args = qApp->arguments();
-	if( args.size() > 1 )
-	{
-		args.removeAt( 0 );
-		params = args;
-		if( s.showIntro() )
-			setCurrentPage( Intro );
-		else
-			parseParams();
-	}
-
 	doc->setConfValue( DigiDoc::ProxyHost, s.value( "Main/proxyPort" ) );
 	doc->setConfValue( DigiDoc::ProxyPort, s.value( "Main/proxyHost" ) );
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "Main/pkcs12Cert" ) );
@@ -149,6 +138,14 @@ MainWindow::MainWindow( QWidget *parent )
 
 	infoMobileCell->setText( s.value( "Main/MobileNumber" ).toString() );
 	infoMobileCode->setText( s.value( "Main/MobileCode" ).toString() );
+
+	QStringList args = qApp->arguments();
+	if( args.size() > 1 )
+	{
+		args.removeAt( 0 );
+		params = args;
+		buttonClicked( HomeSign );
+	}
 }
 
 bool MainWindow::addFile( const QString &file )
