@@ -243,7 +243,7 @@
     </message>
     <message>
         <source>You have not signed this container</source>
-        <translation>Sa pole seda ümbriku allakirjutanud</translation>
+        <translation>Sa pole seda ümbrikut allkirjastanud</translation>
     </message>
     <message>
         <source>Container is unsigned</source>
@@ -448,7 +448,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Encrypt files for secure transfer</source>
-        <translation>Krüpteeri failid turvaliseks edastamiseks</translation>
+        <translation>Krüpteerida faile turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -481,7 +481,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 on juba olemas.&lt;br/&gt;Soovid asendada?</translation>
     </message>
     <message>
         <source>Company</source>
@@ -504,15 +504,15 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Signing in process</source>
-        <translation type="unfinished"></translation>
+        <translation>Toimub allkirjastamine</translation>
     </message>
     <message>
         <source>Request accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Päring aksepteeritud</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Päringu kannatus katkes</translation>
     </message>
     <message>
         <source>User denied or cancelled</source>
@@ -520,15 +520,15 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Got signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Sain allkirja</translation>
     </message>
     <message>
         <source>Request pending</source>
-        <translation type="unfinished"></translation>
+        <translation>Päring ootel</translation>
     </message>
     <message>
         <source>Mobile-ID not ready, try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>Mobiil-ID pole valmis, proovi hiljem uuesti</translation>
     </message>
     <message>
         <source>Phone absent</source>
@@ -536,27 +536,27 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Request sending error</source>
-        <translation type="unfinished"></translation>
+        <translation>Päringu saatmise viga</translation>
     </message>
     <message>
         <source>SIM error</source>
-        <translation type="unfinished"></translation>
+        <translation>SIM kaardi viga</translation>
     </message>
     <message>
         <source>Service internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Teenuse sisemine viga</translation>
     </message>
     <message>
         <source>Signing with Mobile-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Allkirjastan Mobiil-ID -ga</translation>
     </message>
     <message>
         <source>Control code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollkood</translation>
     </message>
     <message>
         <source>%v sec</source>
-        <translation type="unfinished"></translation>
+        <translation>%v sek</translation>
     </message>
 </context>
 <context>

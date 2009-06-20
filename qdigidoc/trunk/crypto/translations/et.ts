@@ -820,7 +820,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
     <message>
         <source>Decrypting</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekrüpteerimine</translation>
     </message>
 </context>
 <context>
