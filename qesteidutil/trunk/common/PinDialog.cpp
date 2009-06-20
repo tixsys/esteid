@@ -25,12 +25,31 @@
 #include "SslCertificate.h"
 
 #include <QDialogButtonBox>
+#include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QRegExpValidator>
+#include <QVBoxLayout>
 
-PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent, Qt::WindowFlags flags )
-:	QInputDialog( parent, flags )
+PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent )
+:	QDialog( parent )
 {
+	QDialogButtonBox *buttons = new QDialogButtonBox(
+		QDialogButtonBox::Ok|QDialogButtonBox::Cancel, Qt::Horizontal, this );
+	ok = buttons->button( QDialogButtonBox::Ok );
+	ok->setAutoDefault( true );
+	connect( buttons, SIGNAL(accepted()), SLOT(accept()) );
+	connect( buttons, SIGNAL(rejected()), SLOT(reject()) );
+
+	QLabel *label = new QLabel( this );
+	m_text = new QLineEdit( this );
+	m_text->setEchoMode( QLineEdit::Password );
+	m_text->setFocus();
+	QVBoxLayout *l = new QVBoxLayout( this );
+	l->addWidget( label );
+	l->addWidget( m_text );
+	l->addWidget( buttons );
+
 	SslCertificate c = cert;
 	QString title = QString( "%1 %2 %3" )
 		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
@@ -40,32 +59,24 @@ PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent
 
 	if( type == Pin1Type )
 	{
-		setLabelText( tr("<b>%1</b><br />"
+		label->setText( tr("<b>%1</b><br />"
 			"Selected action requires auth certificate.<br />"
 			"For using auth certificate enter PIN1").arg( title ) );
 		regexp.setPattern( "\\d{4,12}" );
 	}
 	else
 	{
-		setLabelText( tr("<b>%1</b><br />"
+		label->setText( tr("<b>%1</b><br />"
 			"Selected action requires sign certificate.<br />"
 			"For using sign certificate enter PIN2").arg( title ) );
 		regexp.setPattern( "\\d{5,12}" );
 	}
-	setTextEchoMode( QLineEdit::Password );
-	okButtonText();
-	QLineEdit *t = findChild<QLineEdit*>();
-	if( t )
-	{
-		t->setValidator( new QRegExpValidator( regexp, t ) );
-		connect( t, SIGNAL(textEdited(QString)), SLOT(textEdited(QString)) );
-		textEdited( QString() );
-	}
+	m_text->setValidator( new QRegExpValidator( regexp, m_text ) );
+	connect( m_text, SIGNAL(textEdited(QString)), SLOT(textEdited(QString)) );
+	textEdited( QString() );
 }
 
+QString PinDialog::text() const { return m_text->text(); }
+
 void PinDialog::textEdited( const QString &text )
-{
-	QDialogButtonBox *box = findChild<QDialogButtonBox*>();
-	if( box )
-		box->button( QDialogButtonBox::Ok )->setEnabled( regexp.exactMatch( text ) );
-}
+{ ok->setEnabled( regexp.exactMatch( text ) ); }

@@ -22,13 +22,14 @@
 
 #pragma once
 
-#include <QInputDialog>
+#include <QDialog>
 
 #include <QRegExp>
 
+class QLineEdit;
 class QSslCertificate;
 
-class PinDialog: public QInputDialog
+class PinDialog: public QDialog
 {
 	Q_OBJECT
 public:
@@ -37,11 +38,15 @@ public:
 		Pin1Type,
 		Pin2Type,
 	};
-	PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent = 0, Qt::WindowFlags flags = 0 );
+	PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent = 0 );
+
+	QString text() const;
 
 private Q_SLOTS:
 	void textEdited( const QString &text );
 
 private:
+	QLineEdit	*m_text;
+	QPushButton	*ok;
 	QRegExp		regexp;
 };

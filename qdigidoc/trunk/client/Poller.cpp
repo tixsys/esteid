@@ -107,7 +107,7 @@ std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
 	if( !p.exec() )
 		throw SignException( __FILE__, __LINE__,
 			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
-	return p.textValue().toStdString();
+	return p.text().toStdString();
 }
 
 PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(

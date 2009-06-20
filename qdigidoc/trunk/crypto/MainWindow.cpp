@@ -249,7 +249,7 @@ void MainWindow::buttonClicked( int button )
 			progress->show();
 			QApplication::processEvents();
 
-			doc->decrypt( p.textValue() );
+			doc->decrypt( p.text() );
 
 			progress->deleteLater();
 			setEnabled( true );
