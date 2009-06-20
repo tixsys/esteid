@@ -264,7 +264,7 @@ padding: 5px;
           <property name="minimumSize">
            <size>
             <width>100</width>
-            <height>0</height>
+            <height>20</height>
            </size>
           </property>
          </widget>
@@ -274,7 +274,7 @@ padding: 5px;
           <property name="minimumSize">
            <size>
             <width>75</width>
-            <height>0</height>
+            <height>20</height>
            </size>
           </property>
           <item>
