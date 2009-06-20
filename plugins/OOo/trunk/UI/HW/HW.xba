@@ -68,30 +68,6 @@ Function Signing
 	oRoleField.Text = &quot;&quot;
 	oAddRoleField.Text = &quot;&quot; 
 	
-
-&apos;	oSignerButton = oSignDialog.getControl(&quot;SignButton&quot;)
-	
-&apos;	Proc = 0
-&apos;	i = 0
-&apos;	j = 0
-&apos;	k = 0
-
-&apos;	strCerts = &quot;Paul Puu-Uks;Kalle Krooks;Teemu Tige;&quot;	
-&apos;	Ctl = oSignDialog.getControl(&quot;CertComboBox&quot;)
-&apos;	
-&apos;	For c=0 To Len(strCerts)
-&apos;			
-&apos;		k = Instr(k+1, strCerts, &quot;;&quot;)
-&apos;		If k then
-&apos;			strTemp = Mid(strCerts, j+1, (k-j-1))
-&apos;			Ctl.AddItem(strTemp,i)
-&apos;			i=i+1
-&apos;			j = k			
-&apos;		End If
-&apos;		c = k
-&apos;	Next c
-	
-&apos;	Ctl.Model.ReadOnly(True)	
 rem	Ctl.Model.SelectItem(strTemp, True) 	
 rem	Ctl.makeVisible(1)
 	
@@ -155,22 +131,23 @@ rem			oSignDialog.endExecute()
 	oPINDialog.dispose()	
 End Function
 &apos;****************************************************************
-Function GetCert (strInData As String)
-	Dim Ctl As Object
-	Dim CtlButtonY As Object
-	Dim CtlButtonN As Object
-	Dim oSvc As Object
-	Dim i, j, k, c As Integer
-	
-	
+  Function GetCert (strInData As String)
+  Dim Ctl As Object
+  Dim CtlButtonY As Object
+  Dim CtlButtonN As Object
+  Dim oSvc As Object
+  Dim i, j, k, c, x As Integer
+  Dim char As String
+  Dim strData as String
 
-	strSignCertData = strInData
-	Proc = 0
-	i = 0
-	j = 1
-	k = 0
 
-	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+  strSignCertData = strInData
+  Proc = 0
+  i = 0
+  j = 1
+  k = 0
+
+  DialogLibraries.LoadLibrary(&quot;HW&quot;)
 	oCertDial = CreateUnoDialog(DialogLibraries.HW.Cert)
 rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
 	Ctl = oCertDial.getControl(&quot;SignerCertListBox&quot;)
@@ -190,8 +167,17 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 		k = Instr(k+1, strInData, &quot;;&quot;)
 		If k then
 			strTemp = Mid(strInData, j+1, (k-j-1))
-			Ctl.AddItem(strTemp,i)
-			i=i+1
+				For x=1 To Len(strTemp)
+					char = Mid(strTemp, x, 1) 
+					if Asc(char) > 127 then 
+						strData = strData + Chr$(Asc(char)-65280) rem - hexFF00
+					else
+						strData = strData + char
+					end if 
+				Next x      
+      Ctl.AddItem(strData,i)
+      strData = ""
+		  i=i+1
 			j = k			
 		End If
 		c = k
