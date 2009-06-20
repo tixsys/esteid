@@ -81,7 +81,6 @@ QPushButton:disabled
 background-color: #00355F;
 border: 0px;
 color: white;
-padding-right: 5px;
 }
 
 #cards QListView, #languages QListView
@@ -262,10 +261,23 @@ color: #71889A;
          </widget>
         </item>
         <item>
-         <widget class="ComboBox" name="cards"/>
+         <widget class="ComboBox" name="cards">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="ComboBox" name="languages">
+          <property name="minimumSize">
+           <size>
+            <width>75</width>
+            <height>0</height>
+           </size>
+          </property>
           <item>
            <property name="text">
             <string notr="true">Estonian</string>

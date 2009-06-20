@@ -55,9 +55,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
 	cards->hide();
-	cards->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 	connect( cards, SIGNAL(activated(QString)), SLOT(selectCard()) );
-	languages->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
