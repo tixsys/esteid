@@ -34,6 +34,7 @@
 #include <libdigidoc/DigiDocPKCS11.h>
 #include <libdigidoc/DigiDocSAXParser.h>
 
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QDir>
 #include <QFileInfo>
@@ -46,7 +47,11 @@ CryptDoc::CryptDoc( QObject *parent )
 ,	m_doc(0)
 {
 	initDigiDocLib();
-	initConfigStore( NULL );
+	QString ini = QString( "%1/digidoc.ini" ).arg( QCoreApplication::applicationDirPath() );
+	if( QFileInfo( ini ).isFile() )
+		initConfigStore( ini.toUtf8() );
+	else
+		initConfigStore( NULL );
 
 	poller = new Poller();
 	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
