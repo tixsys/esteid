@@ -658,6 +658,8 @@ void MainWindow::showWarning( const QString &msg )
 
 void MainWindow::viewAction( const QModelIndex &index )
 {
+	if( index.column() != 2 && index.column()  != 3 )
+		return;
 	QList<digidoc::Document> list = doc->documents();
 	if( list.isEmpty() || index.row() >= list.size() )
 		return;

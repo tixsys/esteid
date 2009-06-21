@@ -343,7 +343,14 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 	if( num >= b->documentCount() )
 		return setLastError( tr("Missing document") );
 
-	try { b->getDocument( num ).saveAs( filepath.toUtf8().constData() ); }
+	try
+	{
+		digidoc::Document doc = b->getDocument( num );
+		if( doc.getPath().data() == filepath.toUtf8() )
+			return;
+		QFile::remove( filepath );
+		doc.saveAs( filepath.toUtf8().constData() );
+	}
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
