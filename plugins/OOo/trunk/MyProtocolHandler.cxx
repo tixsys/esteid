@@ -307,11 +307,8 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 						k += 3; 
 						iCD2 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
 						k += 2; 
-						wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
-						
-//PRINT_DEBUG("utfChar: %c \nNum1: %d\nNum2: %d\nutf as nr: %d", utfChar, iCD1, iCD2, utfChar);
-						strSignData += (char)utfChar;
-
+						strSignData += (char)iCD1;
+						strSignData += (char)iCD2;
 					}
 					else
 						strSignData += m_BdocBridge1->pSignName[k];
@@ -469,7 +466,7 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(const URL& aURL
 
 	Reference < XController > xCtrl = mxFrame->getController();
 
-	if (xCtrl.is() && !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
+	if (xCtrl.is() && !aURL.Protocol.compareToAscii("vnd.demo.digidoc.addon:") )
 	{
 		Reference < XTextViewCursorSupplier > xCursor( xCtrl, UNO_QUERY );
 		Reference <XPresentation> xPresentation ( xCtrl, UNO_QUERY );
@@ -575,7 +572,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 	
 	Reference< XInterface > xSelfHold(static_cast< XDispatch* >(this), UNO_QUERY);
 
-	if ( !aURL.Protocol.compareToAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
+	if ( !aURL.Protocol.compareToAscii("vnd.demo.digidoc.addon:") )
 	{
 		if ( !aURL.Path.compareToAscii("Command1" ))
 		{
@@ -678,7 +675,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			}
 
 			//----------------------If We are dealing with BDoc container----------------------
-			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs)
+			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs && i_try)
 			{	
 				int iHour;
 				m_BdocBridge->DigiInit();
@@ -707,12 +704,13 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							else if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] != ','))
 							{	//convert utf-8 ascii string to unicode char
 								int iCD1, iCD2;
+								wchar_t utfChar;
 								iCD1 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
 								k += 3; 
 								iCD2 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
 								k += 2; 
-								wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
-								strSignData += (char)utfChar;
+								strSignData += (char)iCD1;
+								strSignData += (char)iCD2;
 							}
 							else
 								strSignData += m_BdocBridge->pSignName[k];
@@ -982,7 +980,7 @@ PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 
 void SAL_CALL BaseDispatch::addStatusListener( const Reference< XStatusListener >& xControl, const URL& aURL ) throw (RuntimeException)
 {
-	if ( aURL.Protocol.equalsAscii("vnd.demo.complextoolbarcontrols.demoaddon:") )
+	if ( aURL.Protocol.equalsAscii("vnd.demo.digidoc.addon:") )
 	{
 		if ( aURL.Path.equalsAscii("Command1" ) )
 		{
@@ -1012,7 +1010,7 @@ printf("URL in removeStatusListener: %s\n",osBDocFilePath.pData->buffer);
 
 void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (RuntimeException)
 {
-	if ( Event.aURL.Protocol.equalsAscii("vnd.demo.complextoolbarcontrols.demoaddon:" ))
+	if ( Event.aURL.Protocol.equalsAscii("vnd.demo.digidoc.addon:" ))
 	{
 /***		if ( Event.aURL.Path.equalsAscii( "Command2" ))
 		{

@@ -130,6 +130,7 @@ rem			oSignDialog.endExecute()
 	End If
 	oPINDialog.dispose()	
 End Function
+
 &apos;****************************************************************
   Function GetCert (strInData As String)
   Dim Ctl As Object
@@ -159,22 +160,29 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 		CtlButtonN.setEnable(FALSE)
 		CtlButtonY.setVisible(FALSE)
 		CtlButtonN.setVisible(FALSE)
-&apos;		oCertDial.setHeight(220)		
-	End If
-	
-	For c=1 To Len(strInData)
-			
-		k = Instr(k+1, strInData, &quot;;&quot;)
+&apos;		oCertDial.setHeight(220)
+  Else
+    CtlButtonN.setEnable(FALSE)
+    CtlButtonN.setVisible(FALSE)
+  End If
+
+  For c=1 To Len(strInData)
+
+  k = Instr(k+1, strInData, &quot;;&quot;)
 		If k then
 			strTemp = Mid(strInData, j+1, (k-j-1))
 				For x=1 To Len(strTemp)
-					char = Mid(strTemp, x, 1) 
+					char = Mid(strTemp, x, 1)					
 					if Asc(char) > 127 then 
-						strData = strData + Chr$(Asc(char)-65280) rem - hexFF00
-					else
-						strData = strData + char
-					end if 
-				Next x      
+						utf1 = Asc(char)-65280 rem - hexFF00
+						x = x+1
+						char = Mid(strTemp, x, 1)
+						utf2 = Asc(char)-65280
+						rem Convert from UTF-16 to UTF-8
+						char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+					end if	
+					strData = strData + char					 
+				Next x        
       Ctl.AddItem(strData,i)
       strData = ""
 		  i=i+1

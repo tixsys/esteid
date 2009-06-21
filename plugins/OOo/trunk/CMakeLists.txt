@@ -223,7 +223,6 @@ ENDIF (WIN32)
 
 ##setup and zip oxt package
 CONFIGURE_FILE (manifest.xml.in ${COMP_UNOPKG_MANIFEST})
-#CONFIGURE_FILE(${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} ${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT COPYONLY})
 CONFIGURE_FILE(Addons.xcu ${OUT_MISC}/${COMP_NAME}/Addons.xcu COPYONLY)
 CONFIGURE_FILE(ProtocolHandler.xcu ${OUT_MISC}/${COMP_NAME}/ProtocolHandler.xcu COPYONLY)
 CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.xcu COPYONLY)
@@ -232,10 +231,10 @@ CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/Presentation
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
 #CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
-
+#CONFIGURE_FILE(bdoc2oo.jar ${OUT_MISC}/${COMP_NAME}/bdoc2oo.jar COPYONLY)
 
 execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/UI	${OUT_MISC}/${COMP_NAME})				
-				#COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter ${OUT_MISC}/${COMP_NAME}# Copy Filter 	 #FIX Filter extension first
+#execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter ${OUT_MISC}/${COMP_NAME})# Copy Filter 	 #FIX Filter extension first
 		
 		
 #Fix Find Path later, so we do not need to know the final directory 

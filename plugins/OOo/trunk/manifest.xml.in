@@ -2,14 +2,15 @@
 <!DOCTYPE manifest:manifest PUBLIC "-//OpenOffice.org//DTD Manifest 1.0//EN" "Manifest.dtd">
 <manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
 
-  <!--manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
+ <!-- <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
 		       manifest:full-path="TypeDetection.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
 		       manifest:full-path="BDocFilter/bdocimport.xsl"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data" 
 		       manifest:full-path="BDocFilter/Type.xcu"/>
   <manifest:file-entry manifest:media-type="" 
-		       manifest:full-path="BDocFilter/"/-->
+		       manifest:full-path="BDocFilter/"/> -->
+  
 
   <manifest:file-entry manifest:full-path="HW/" manifest:media-type="application/vnd.sun.star.basic-library"/>
 

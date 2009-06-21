@@ -3,7 +3,7 @@
 	<node oor:name="HandlerSet">
         <node oor:name="vnd.demo.ProtocolHandler" oor:op="replace">
 			<prop oor:name="Protocols" oor:type="oor:string-list">
-                <value>vnd.demo.complextoolbarcontrols.demoaddon:*</value>
+                <value>vnd.demo.digidoc.addon:*</value>
 			</prop>
 		</node>
 	</node>

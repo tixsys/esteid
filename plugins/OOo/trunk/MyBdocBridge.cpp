@@ -49,6 +49,7 @@ MyBdocBridge::MyBdocBridge() {
 void MyBdocBridge::DigiCheckCert()
 {
 	ret = ((My1EstEIDSigner *)this)->checkCert();
+	//pSignName = ((My1EstEIDSigner *)this)->str_signCert.c_str();
 }
 
 //===========================================================
@@ -505,11 +506,14 @@ int My1EstEIDSigner::openCont ()
 			{
 				signerRoles.str_role += roles.claimedRoles.at(0);
 				signerRoles.str_role += "#";
-				signerRoles.str_additionalRole += roles.claimedRoles.at(1);
-				signerRoles.str_additionalRole += "#";
-				/*cout << "*   " << signerRoles.str_role << endl;
-				cout << "*   " << signerRoles.str_additionalRole << endl;
-				cout << "********************************************"  << endl;*/
+				//some fix, to be a compatibel with digidoc client
+				if (roles.claimedRoles.size() == 1)
+					signerRoles.str_additionalRole += "#";
+				for(int nn=1; nn<roles.claimedRoles.size(); nn++)
+				{
+					signerRoles.str_additionalRole += roles.claimedRoles.at(1);
+					signerRoles.str_additionalRole += "#";
+				}
 			}
 			else
 			{
@@ -666,9 +670,23 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 //***********************************************************
 int My1EstEIDSigner::checkCert ()
 {	
+	string strRetCert;
+
 	MyRealEstEIDSigner m_signer;
-	
-	return m_signer.i_ret;
+
+/*	X509Cert xCert(m_signer.cardSignCert);
+	strRetCert = xCert.getSubject();
+	for (size_t u=0; u<strRetCert.size(); u++)
+	{
+		if (!memcmp(&strRetCert[u], ",CN=", 4))
+		{
+			u += 4;
+			while (memcmp(&strRetCert[u], ",OU=", 4))
+				str_signCert += strRetCert[u++];
+		}
+
+	}
+*/	return m_signer.i_ret;
 }
 //===========================================================
 //***********************************************************
