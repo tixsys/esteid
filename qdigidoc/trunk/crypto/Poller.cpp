@@ -60,13 +60,6 @@ void Poller::read()
 		selectedCard.clear();
 	}
 
-	if( !select.isEmpty() && cards.contains( select ) )
-	{
-		selectedCard = select;
-		readCert();
-	}
-	select.clear();
-
 	if( selectedCard.isEmpty() && !cards.isEmpty() )
 	{
 		selectedCard = cards.begin().key();
@@ -104,6 +97,14 @@ void Poller::run()
 		if( m.tryLock() )
 			continue;
 
+		if( !select.isEmpty() && cards.contains( select ) )
+		{
+			selectedCard = select;
+			readCert();
+			Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
+		}
+		select.clear();
+
 		switch( WaitSlotEvent( &slot ) )
 		{
 		case CKR_OK:
@@ -123,7 +124,13 @@ void Poller::run()
 	}
 }
 
-void Poller::selectCard( const QString &card ) { select = card; read(); }
+void Poller::selectCard( const QString &card )
+{
+	m.lock();
+	select = card;
+	m.unlock();
+}
+
 void Poller::stop()
 {
 	terminate = true;
