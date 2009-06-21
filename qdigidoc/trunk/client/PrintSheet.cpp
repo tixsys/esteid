@@ -23,6 +23,7 @@
 #include "PrintSheet.h"
 
 #include "DigiDoc.h"
+#include "common/Common.h"
 #include "common/SslCertificate.h"
 
 #include <digidocpp/Document.h>
