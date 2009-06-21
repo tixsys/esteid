@@ -57,6 +57,7 @@ function cardInserted(i)
 {
 	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
 	checkReaderCount();
+	setActive('cert',document.getElementById('buttonCert'));
 
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
@@ -84,6 +85,7 @@ function cardRemoved(i)
 {
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i) + " " + activeCardId );
 	checkReaderCount();
+	setActive('cert',document.getElementById('buttonCert'));
 
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
