@@ -48,6 +48,7 @@ NPNetscapeFuncs *browser = NULL;
 	uint32_t argi, argc = [arguments count];
 	NPVariant *args = malloc(sizeof(NPVariant) * argc);
 	NPVariant variant;
+	BOOL status = NO;
 	
 	for(argi = 0; argi < argc; argi++) {
 		EstEIDWebRuntimeObjectToVariant(self->m_npp, [arguments objectAtIndex:argi], args + argi);
@@ -59,11 +60,12 @@ NPNetscapeFuncs *browser = NULL;
 		}
 		
 		browser->releasevariantvalue(&variant);
-		
-		return YES;
+		status = YES;
 	}
 	
-	return NO;
+	free(args);
+	
+	return status;
 }
 
 #pragma mark NSObject
