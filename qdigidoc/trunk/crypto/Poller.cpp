@@ -97,7 +97,7 @@ void Poller::run()
 	read();
 
 	CK_SLOT_ID slot;
-	bool seq = true;
+	int seq = 0;
 	while( !terminate )
 	{
 		sleep( 1 );
@@ -107,13 +107,14 @@ void Poller::run()
 		switch( WaitSlotEvent( &slot ) )
 		{
 		case CKR_OK:
-			if( !seq )
-				continue;
-			read();
-			seq = false;
+			if( seq == 0 )
+				read();
+			seq++;
+			if( seq == 3 )
+				seq = 0;
 			break;
 		case CKR_NO_EVENT:
-			seq = true;
+			seq = 0;
 			break;
 		default:
 			return;
