@@ -39,23 +39,7 @@ public:
 
     void setCard(EstEidCard *card, int reader = 0);
     void reloadData();
-
-    QString surName;
-    QString firstName;
-    QString middleName;
-    QString sex;
-    QString citizen;
-    QString birthDate;
-    QString id;
-    QString documentId;
-    QString expiry;
-    QString birthPlace;
-    QString issueDate;
-    QString residencePermit;
-    QString comment1;
-    QString comment2;
-    QString comment3;
-    QString comment4;
+	void reconnect();
 
     EstEidCard *m_card;
 	int			m_reader;
@@ -67,12 +51,6 @@ public:
     JsCertData *m_signCert;
     Q_PROPERTY(QObject* signCert READ getSignCert)
 		QObject *getSignCert() { return m_signCert; }
-
-private:
-    SmartCardManager *m_cardManager;
-    void handleError(QString msg);
-	dword authUsageCount;
-	dword signUsageCount;
 
 public slots:
     QString getSurName();
@@ -116,4 +94,27 @@ public slots:
 
 signals:
     void cardError(QString func, QString err);
+
+private:
+	SmartCardManager *m_cardManager;
+	void handleError(QString msg);
+	dword authUsageCount;
+	dword signUsageCount;
+
+	QString surName;
+	QString firstName;
+	QString middleName;
+	QString sex;
+	QString citizen;
+	QString birthDate;
+	QString id;
+	QString documentId;
+	QString expiry;
+	QString birthPlace;
+	QString issueDate;
+	QString residencePermit;
+	QString comment1;
+	QString comment2;
+	QString comment3;
+	QString comment4;
 };

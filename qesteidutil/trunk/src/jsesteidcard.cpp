@@ -427,10 +427,22 @@ bool JsEsteidCard::checkPin( const QString &pin )
 
 void JsEsteidCard::showCert( int type )
 {
-        CertificateDialog *c = new CertificateDialog;
+	CertificateDialog *c = new CertificateDialog;
 	if( type == 1 )
 		c->setCertificate( m_authCert->cert() );
 	else
 		c->setCertificate( m_signCert->cert() );
 	c->show();
+}
+
+void JsEsteidCard::reconnect()
+{
+	if (!m_card)
+		return;
+
+	try {
+		m_card->connect( m_reader, true );
+	} catch ( std::runtime_error &e ) {
+		qDebug() << e.what();
+	}
 }
