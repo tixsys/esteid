@@ -2,137 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU" sourcelanguage="en">
 <context>
-    <name>CertificateWidget</name>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="91"/>
-        <location filename="../CertificateWidget.cpp" line="107"/>
-        <source>Save certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="96"/>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="107"/>
-        <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="116"/>
-        <source>Certificate Information:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="118"/>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="127"/>
-        <source>Issued to:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="129"/>
-        <source>Issued by:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="131"/>
-        <location filename="../CertificateWidget.cpp" line="154"/>
-        <source>Valid from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="132"/>
-        <source>to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="136"/>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="137"/>
-        <source>Serial number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="140"/>
-        <source>Signature algorithm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="153"/>
-        <source>Issuer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="155"/>
-        <source>Vaild to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="169"/>
-        <source>Subject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="170"/>
-        <source>Public key</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../CertificateWidget.cpp" line="172"/>
-        <source>Certificate policies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="14"/>
-        <source>Certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="24"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="34"/>
-        <source>Details</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="44"/>
-        <source>Field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="49"/>
-        <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="84"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="94"/>
-        <location filename="../ui/CertificateWidget.ui" line="100"/>
-        <source>Certification Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/CertificateWidget.ui" line="121"/>
-        <source>Certificate status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DiagnosticsDialog</name>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="54"/>
@@ -155,62 +24,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="117"/>
+        <location filename="../DiagnosticsDialog.cpp" line="114"/>
         <source>Smart Card service status: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="119"/>
+        <location filename="../DiagnosticsDialog.cpp" line="116"/>
         <source>PCSC service status: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="121"/>
+        <location filename="../DiagnosticsDialog.cpp" line="118"/>
         <source>Running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="121"/>
+        <location filename="../DiagnosticsDialog.cpp" line="118"/>
         <source>Not running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="124"/>
+        <location filename="../DiagnosticsDialog.cpp" line="121"/>
         <source>Card readers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="139"/>
+        <location filename="../DiagnosticsDialog.cpp" line="136"/>
         <source>%1 - failed to get version info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="161"/>
+        <location filename="../DiagnosticsDialog.cpp" line="159"/>
         <source>ID - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="167"/>
+        <location filename="../DiagnosticsDialog.cpp" line="165"/>
         <source>Error reading card data:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="211"/>
+        <location filename="../DiagnosticsDialog.cpp" line="209"/>
         <source>Save as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="213"/>
+        <location filename="../DiagnosticsDialog.cpp" line="211"/>
         <source>Text files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="219"/>
+        <location filename="../DiagnosticsDialog.cpp" line="217"/>
         <source>Error occured</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../DiagnosticsDialog.cpp" line="219"/>
+        <location filename="../DiagnosticsDialog.cpp" line="217"/>
         <source>Failed write to file!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -223,12 +92,12 @@
 <context>
     <name>JsExtender</name>
     <message>
-        <location filename="../jsextender.cpp" line="115"/>
+        <location filename="../jsextender.cpp" line="114"/>
         <source>Authentication</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jsextender.cpp" line="115"/>
+        <location filename="../jsextender.cpp" line="114"/>
         <source>This action needs authentication
 Enter PIN1</source>
         <translation type="unfinished"></translation>
@@ -257,7 +126,7 @@ Enter PIN1</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="69"/>
+        <location filename="../mainwindow.cpp" line="70"/>
         <source>ID-card utility</source>
         <translation type="unfinished"></translation>
     </message>
@@ -265,23 +134,33 @@ Enter PIN1</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../SslCertificate.cpp" line="87"/>
-        <source>Proves your identity to a remote computer</source>
+        <location filename="../sslConnect.cpp" line="127"/>
+        <source>failed to load pkcs11 module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SslCertificate.cpp" line="89"/>
-        <source>Protects e-mail messages</source>
+        <location filename="../sslConnect.cpp" line="154"/>
+        <source>failed to list slots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SslCertificate.cpp" line="91"/>
-        <source>OCSP signing</source>
+        <location filename="../sslConnect.cpp" line="157"/>
+        <source>token failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SslCertificate.cpp" line="98"/>
-        <source>All application policies</source>
+        <location filename="../sslConnect.cpp" line="163"/>
+        <source>no token available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sslConnect.cpp" line="173"/>
+        <source>no key matching certificate available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sslConnect.cpp" line="196"/>
+        <source>Failed to resolve hostname. Are you connected to the internet?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

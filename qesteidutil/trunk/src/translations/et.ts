@@ -5,103 +5,103 @@
     <name>CertificateWidget</name>
     <message>
         <source>Save certificate</source>
-        <translation>Salvesta sertifikaat</translation>
+        <translation type="obsolete">Salvesta sertifikaat</translation>
     </message>
     <message>
         <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation>Sertifikaadid (*.pem *.crt *.cer)</translation>
+        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Salvestamine ebaõnnestus</translation>
+        <translation type="obsolete">Salvestamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate Information:</source>
-        <translation>Sertifikaadi info:</translation>
+        <translation type="obsolete">Sertifikaadi info:</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>
-        <translation>Seda sertifikaati kasutatakse järgmistel eesmärkidel:</translation>
+        <translation type="obsolete">Seda sertifikaati kasutatakse järgmistel eesmärkidel:</translation>
     </message>
     <message>
         <source>Issued to:</source>
-        <translation>Väljastatud kellel:</translation>
+        <translation type="obsolete">Väljastatud kellel:</translation>
     </message>
     <message>
         <source>Issued by:</source>
-        <translation>Väljastaja:</translation>
+        <translation type="obsolete">Väljastaja:</translation>
     </message>
     <message>
         <source>Valid from</source>
-        <translation>Kehtiv alates</translation>
+        <translation type="obsolete">Kehtiv alates</translation>
     </message>
     <message>
         <source>to</source>
-        <translation>kuni</translation>
+        <translation type="obsolete">kuni</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Versioon</translation>
+        <translation type="obsolete">Versioon</translation>
     </message>
     <message>
         <source>Serial number</source>
-        <translation>Seeria number</translation>
+        <translation type="obsolete">Seeria number</translation>
     </message>
     <message>
         <source>Signature algorithm</source>
-        <translation>Allkirja algoritm</translation>
+        <translation type="obsolete">Allkirja algoritm</translation>
     </message>
     <message>
         <source>Issuer</source>
-        <translation>Väljaandja</translation>
+        <translation type="obsolete">Väljaandja</translation>
     </message>
     <message>
         <source>Vaild to</source>
-        <translation>Kehtiv kuni</translation>
+        <translation type="obsolete">Kehtiv kuni</translation>
     </message>
     <message>
         <source>Subject</source>
-        <translation>Subjekt</translation>
+        <translation type="obsolete">Subjekt</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Avatud võti</translation>
+        <translation type="obsolete">Avatud võti</translation>
     </message>
     <message>
         <source>Certificate policies</source>
-        <translation>Sertifikaadi reeglid</translation>
+        <translation type="obsolete">Sertifikaadi reeglid</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Sertifikaat</translation>
+        <translation type="obsolete">Sertifikaat</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Üldine</translation>
+        <translation type="obsolete">Üldine</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Detailid</translation>
+        <translation type="obsolete">Detailid</translation>
     </message>
     <message>
         <source>Field</source>
-        <translation>Väli</translation>
+        <translation type="obsolete">Väli</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Väärtus</translation>
+        <translation type="obsolete">Väärtus</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation type="obsolete">Salvesta</translation>
     </message>
     <message>
         <source>Certification Path</source>
-        <translation>Sertifikaadi asukoht</translation>
+        <translation type="obsolete">Sertifikaadi asukoht</translation>
     </message>
     <message>
         <source>Certificate status:</source>
-        <translation>Sertifikaadi staatus:</translation>
+        <translation type="obsolete">Sertifikaadi staatus:</translation>
     </message>
 </context>
 <context>
@@ -215,19 +215,43 @@ Sisesta PIN1</translation>
     <name>QObject</name>
     <message>
         <source>Proves your identity to a remote computer</source>
-        <translation>Isikutuvastus</translation>
+        <translation type="obsolete">Isikutuvastus</translation>
     </message>
     <message>
         <source>Protects e-mail messages</source>
-        <translation>Kaitseb e-posti teateid</translation>
+        <translation type="obsolete">Kaitseb e-posti teateid</translation>
     </message>
     <message>
         <source>OCSP signing</source>
-        <translation>OCSP allkirjastamine</translation>
+        <translation type="obsolete">OCSP allkirjastamine</translation>
     </message>
     <message>
         <source>All application policies</source>
-        <translation>Kõik rakenduste reeglid</translation>
+        <translation type="obsolete">Kõik rakenduste reeglid</translation>
+    </message>
+    <message>
+        <source>failed to load pkcs11 module</source>
+        <translation>viga pkcs11 mooduli laadimisel</translation>
+    </message>
+    <message>
+        <source>failed to list slots</source>
+        <translation>viga pkcs11 slottide lugemisel</translation>
+    </message>
+    <message>
+        <source>token failed</source>
+        <translation>viga &quot;tokeni&quot; laadimisel</translation>
+    </message>
+    <message>
+        <source>no token available</source>
+        <translation>ei leitud ühtegi &quot;tokenit&quot;</translation>
+    </message>
+    <message>
+        <source>no key matching certificate available</source>
+        <translation>ei leitud ühtegi sobivat sertifikaati</translation>
+    </message>
+    <message>
+        <source>Failed to resolve hostname. Are you connected to the internet?</source>
+        <translation>Puudub internetiühendus!</translation>
     </message>
 </context>
 <context>
