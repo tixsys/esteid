@@ -84,7 +84,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< QString::fromUtf8( doc.getMediaType().data() )
 		<< "</td>"*/
 		<< "<td class=\"textborderright\">"
-		<< doc.getSize()
+		<< Common::fileSize( doc.getSize() )
 		<< "</td>"
 		<< "</tr>";
 	}
