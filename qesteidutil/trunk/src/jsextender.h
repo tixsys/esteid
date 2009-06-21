@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include "sslConnect.h"
+
 #include <QLabel>
 #include <QObject>
 #include <QtWebKit>
@@ -39,6 +41,7 @@ public:
 		OK = 0,
 		NoCert = 1,
 		NotActive = 2,
+		NoIDCert = 3,
 		InternalError = 100,
 		InterfaceNotReady = 101
 	};
@@ -54,7 +57,7 @@ private:
 	QString m_locale;
 	QDateTime m_dateTime;
 	QLabel *m_loading;
-	QByteArray getUrl( const QString &type, const QString &def );
+	QByteArray getUrl( SSLConnect::RequestType, const QString &def );
 	QString pin;
 	QString activeDocument;
 	QHttp m_http;

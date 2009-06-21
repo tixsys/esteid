@@ -125,7 +125,7 @@ QString JsExtender::checkPin()
 	return pin;
 }
 
-QByteArray JsExtender::getUrl( const QString &type, const QString &def )
+QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def )
 {
 	QString pin = checkPin();
 	if ( pin.isEmpty() || pin.size() < 4 )
@@ -135,7 +135,7 @@ QByteArray JsExtender::getUrl( const QString &type, const QString &def )
 
 	SSLConnect *sslConnect = new SSLConnect( this );
 
-	buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type.toStdString(), def.toStdString() );
+	buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type, def.toStdString() );
 	
 	sslConnect->deleteLater();
 
@@ -146,7 +146,7 @@ void JsExtender::activateEmail( const QString &email )
 {
 	QByteArray buffer;
 	try {
-		buffer = getUrl( "activateEmail", email );
+		buffer = getUrl( SSLConnect::ActivateEmails, email );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "forwardFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -176,7 +176,7 @@ void JsExtender::loadEmails()
 {
 	QByteArray buffer;
 	try {
-		buffer = getUrl( "emails", "" );
+		buffer = getUrl( SSLConnect::EmailInfo, "" );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setEmails", "loadFailed", "" );
 		jsCall( "handleError", e.what() );
@@ -261,7 +261,7 @@ void JsExtender::loadPicture()
 	QString result = "loadPicFailed";
 	QByteArray buffer;
 	try {
-		buffer = getUrl( "picture", "" );
+		buffer = getUrl( SSLConnect::PictureInfo, "" );
 	} catch( std::runtime_error &e ) {
 		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );
@@ -338,39 +338,45 @@ void JsExtender::savePicture()
 
 void JsExtender::getMidStatus()
 {
-	QByteArray data = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"> "
-						"<SOAP-ENV:Body> "
-						"<m:GetMIDTokens xmlns:m=\"urn:GetMIDTokens\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"/> "
-						"</SOAP-ENV:Body> "
+	QString result = "mobileFailed";
+	QByteArray buffer;
+
+	QString data = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+						"<SOAP-ENV:Body>"
+						"<m:GetMIDTokens xmlns:m=\"urn:GetMIDTokens\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"/>"
+						"</SOAP-ENV:Body>"
 						"</SOAP-ENV:Envelope>";
-
-	QHttpRequestHeader header( "POST", "/midstatusdemo/", 1, 1 );
-	header.setValue( "host", "demo.digidoc.ee" );
-	header.setContentType( "text/xml" );
-	header.setContentLength( data.length() );
-	m_http.setHost( "demo.digidoc.ee" );
-	m_http.request( header, data );
-	connect( &m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
-}
-
-void JsExtender::httpRequestFinished( int, bool error )
-{
-	if ( error)
-		qDebug() << "Download failed: " << m_http.errorString();
-
-	QByteArray result = m_http.readAll();
-	if ( !result.isEmpty() )
+	QString header = "POST /id/midstatusinfo/ HTTP/1.1\r\n"
+					 "Host: " + QString(SK) + "\r\n"
+					 "Content-Type: text/xml\r\n"
+					 "Content-Length: " + QString::number( data.size() ) + "\r\n"
+					 "SOAPAction: \"\"\r\n"
+					 "Connection: close\r\n\r\n";
+	try {
+		buffer = getUrl( SSLConnect::MobileInfo, header + data );
+	} catch( std::runtime_error &e ) {
+		jsCall( "setMobile", "", result );
+		jsCall( "handleError", e.what() );
+		return;
+	}
+	if ( !buffer.size() )
+	{
+		jsCall( "setMobile", "", result );
+		return;
+	}
+	//qDebug() << buffer;
+	if ( !buffer.isEmpty() )
 	{
 		QDomDocument doc;
-		if ( !doc.setContent( result ) )
+		if ( !doc.setContent( buffer ) )
 		{
-			jsCall( "handleError", "mobileFailed" );
+			jsCall( "handleError", result );
 			return;
 		}
 		QDomElement e = doc.documentElement();
 		if ( !e.elementsByTagName( "ResponseStatus" ).size() )
 		{
-			jsCall( "handleError", "mobileFailed" );
+			jsCall( "handleError", result );
 			return;
 		}
 		MobileResult mRes = (MobileResult)e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt();
@@ -379,6 +385,7 @@ void JsExtender::httpRequestFinished( int, bool error )
 		{
 			case NoCert: mResString = "mobileNoCert"; break;
 			case NotActive: mResString = "mobileNotActive"; break;
+			case NoIDCert: mResString = "noIDCert"; break;
 			case InternalError: mResString = "mobileInternalError"; break;
 			case InterfaceNotReady: mResString = "mobileInterfaceNotReady"; break;
 			case OK:
@@ -396,6 +403,24 @@ void JsExtender::httpRequestFinished( int, bool error )
 						.arg( e.elementsByTagName( "URL" ).item(0).toElement().text() );
 		jsCall( "setMobile", mResString );
 	}
+
+	/*
+	QHttpRequestHeader header( "POST", "/id/midstatusinfo/", 1, 1 );
+	header.setValue( "host", "www.sk.ee" );
+	header.setContentType( "text/xml" );
+	header.setContentLength( data.length() );
+	m_http.setHost( "www.sk.ee" );
+	m_http.request( header, data );
+	connect( &m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
+	*/
+}
+
+void JsExtender::httpRequestFinished( int, bool error )
+{
+	if ( error)
+		qDebug() << "Download failed: " << m_http.errorString();
+
+	QByteArray result = m_http.readAll();
 }
 
 void JsExtender::showSettings()
@@ -403,15 +428,16 @@ void JsExtender::showSettings()
 
 void JsExtender::showLoading( const QString &str )
 {
+	bool wide = (str.size() > 20);
 	if ( !m_loading )
 	{
 		m_loading = new QLabel( m_mainWindow );
 		m_loading->setStyleSheet( "background-color: rgba(255,255,255,200); border: 1px solid #cddbeb; border-radius: 5px;"
 									"color: #509b00; font-weight: bold; font-family: Arial; font-size: 18px;" );
 		m_loading->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
-		m_loading->setFixedSize( 250, 100 );
 	}
-	m_loading->move( 180, 305 );
+	m_loading->setFixedSize( wide ? 300 : 250, 100 );
+	m_loading->move( wide ? 155 : 180, 305 );
 	m_loading->setText( str );
 	m_loading->show();
 	QCoreApplication::processEvents();

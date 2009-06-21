@@ -22,12 +22,14 @@
 
 #pragma once
 
-#include <QObject>
-
 #include <libp11.h>
 #include <openssl/ssl.h>
 
+#include <QObject>
 #include <vector>
+
+#define EESTI "sisene.www.eesti.ee"
+#define SK "www.openxades.org"
 
 class SSLObj
 {
@@ -37,7 +39,8 @@ public:
 	~SSLObj();
 
 	bool connectToHost( const std::string &site, const std::string &pin, int reader );
-	std::vector<unsigned char> getUrl( const std::string &type );
+	std::vector<unsigned char> getUrl( const std::string &url );
+	std::vector<unsigned char> getRequest( const std::string &request );
 	PKCS11_CTX *ctx;
 
 private:
@@ -54,11 +57,18 @@ class SSLConnect: public QObject
 	Q_OBJECT
 
 public:
+	enum RequestType {
+		EmailInfo,
+		ActivateEmails,
+		MobileInfo,
+		PictureInfo
+	};
+
 	SSLConnect( QObject *parent = 0 );
 	~SSLConnect();
 
 	bool isLoaded();
-	std::vector<unsigned char> getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value = "" );
+	std::vector<unsigned char> getUrl( const std::string &pin, int readerNum, RequestType, const std::string &value = "" );
 
 private:
 	SSLObj	*obj;

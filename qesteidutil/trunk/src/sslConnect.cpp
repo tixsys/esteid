@@ -24,6 +24,7 @@
 
 #include <stdexcept>
 #include <sstream>
+#include <QDebug>
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -49,8 +50,6 @@
 #endif 
 
 #include <openssl/ssl.h>
-
-#define EESTI "sisene.www.eesti.ee"
 
 class sslError:public std::runtime_error {
 public:
@@ -92,7 +91,7 @@ SSLConnect::~SSLConnect()
 
 bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
-std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int readerNum, const std::string &type, const std::string &value )
+std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int readerNum, RequestType type, const std::string &value )
 {
 	if ( !obj )
 		obj = new SSLObj();
@@ -102,14 +101,21 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 	if ( !isLoaded() )
 		return result;
 
-	if ( obj->connectToHost( EESTI, pin, readerNum ) )
+	std::string site;
+	switch( type )
 	{
-		if ( type == "picture" )
-			result =  obj->getUrl( "/idportaal/portaal.idpilt" );
-		if ( type == "emails" )
-			result = obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
-		if ( type == "activateEmail" )
-			result = obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+		case MobileInfo: site = SK; break;
+		default: site = EESTI; break;
+	}
+	if ( obj->connectToHost( site, pin, readerNum ) )
+	{
+		switch( type )
+		{
+			case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+			case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+			case MobileInfo: return obj->getRequest( value );
+			case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
+		}
 	}
 	return result;
 }
@@ -169,7 +175,7 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
-	SSL_CTX *sctx = SSL_CTX_new( SSLv3_method() );
+	SSL_CTX *sctx = SSL_CTX_new( SSLv23_client_method() );
 	sslError::check("CTX_use_cert", SSL_CTX_use_certificate(sctx, authcert->x509 ) );
 	sslError::check("CTX_use_privkey", SSL_CTX_use_PrivateKey(sctx,pkey) );
     sslError::check("CTX_check_privkey", SSL_CTX_check_private_key(sctx) );
@@ -194,10 +200,10 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 	struct sockaddr_in server_addr;
 	memset (&server_addr, '\0', sizeof(server_addr));
 	server_addr.sin_family      = AF_INET;
- 	server_addr.sin_port        = htons(443);
+	server_addr.sin_port        = htons(443);
 	server_addr.sin_addr.s_addr = address;
 
-    int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	int sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	int err = connect(sock, (struct sockaddr*) &server_addr, sizeof(server_addr));
 
 	SSL_set_fd(s, sock);
@@ -208,7 +214,12 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
 {
 	std::string req = "GET " + url + " HTTP/1.0\r\n\r\n";
-    sslError::check("sslwrite", SSL_write(s,req.c_str(),req.length()) );
+	return getRequest( req );
+}
+
+std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
+{
+	sslError::check("sslwrite", SSL_write(s,request.c_str(),request.length()) );
 
 	std::vector<unsigned char> buffer;
 	buffer.resize(4096 * 4);
@@ -224,10 +235,11 @@ std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
 
     int lastErr = SSL_get_error(s,bytesRead);
     if (lastErr != SSL_ERROR_NONE && lastErr != SSL_ERROR_ZERO_RETURN)
-		sslError::check("SSL_write /GET failed", 0);
+		sslError::check("SSL_write GET,POST failed", 0);
 
 	buffer[bytesTotal] = '\0';
 	buffer.erase(buffer.begin() + bytesTotal,buffer.end());
+	//qDebug() << QByteArray( (char *)&buffer[0], buffer.size() );
 	std::string pageStr(buffer.size(),'\0');
 	copy(buffer.begin(),buffer.end(),pageStr.begin());
 
