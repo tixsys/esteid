@@ -118,7 +118,7 @@ if(APPLE)
     set_source_files_properties(${LIBQJPEG_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS/imageformats" )
 endif(APPLE)
 
-QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
+QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS} common/translations/tr.qrc)
 QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 

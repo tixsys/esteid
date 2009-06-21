@@ -42,23 +42,25 @@ MainWindow::MainWindow( QWidget *parent )
 
 	appTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
+	commonTranslator = new QTranslator( this );
 	QApplication::instance()->installTranslator( appTranslator );
 	QApplication::instance()->installTranslator( qtTranslator );
+	QApplication::instance()->installTranslator( commonTranslator );
 
 	m_jsExtender = new JsExtender( this );
 	
-    jsEsteidCard = new JsEsteidCard( this );
-    jsCardManager = new JsCardManager( jsEsteidCard );
+	jsEsteidCard = new JsEsteidCard( this );
+	jsCardManager = new JsCardManager( jsEsteidCard );
 
-    connect(jsCardManager, SIGNAL(cardEvent(QString, int)),
-            m_jsExtender, SLOT(jsCall(QString, int)));
-    connect(jsCardManager, SIGNAL(cardError(QString, QString)),
-            m_jsExtender, SLOT(jsCall(QString, QString)));
-    connect(jsEsteidCard, SIGNAL(cardError(QString, QString)),
-            m_jsExtender, SLOT(jsCall(QString, QString)));
+	connect(jsCardManager, SIGNAL(cardEvent(QString, int)),
+		m_jsExtender, SLOT(jsCall(QString, int)));
+	connect(jsCardManager, SIGNAL(cardError(QString, QString)),
+		m_jsExtender, SLOT(jsCall(QString, QString)));
+	connect(jsEsteidCard, SIGNAL(cardError(QString, QString)),
+		m_jsExtender, SLOT(jsCall(QString, QString)));
 
-    m_jsExtender->registerObject("esteidData", jsEsteidCard);
-    m_jsExtender->registerObject("cardManager", jsCardManager);
+ 	m_jsExtender->registerObject("esteidData", jsEsteidCard);
+	m_jsExtender->registerObject("cardManager", jsCardManager);
 
 	load(QUrl("qrc:/html/index.html"));
 }
@@ -67,5 +69,6 @@ void MainWindow::retranslate( const QString &lang )
 {
 	appTranslator->load( ":/translations/" + lang );
 	qtTranslator->load( ":/translations/qt_" + lang );
+	commonTranslator->load( ":/translations/common_" + lang );
 	setWindowTitle(QApplication::translate("MainWindow", "ID-card utility", 0, QApplication::UnicodeUTF8));
 }
