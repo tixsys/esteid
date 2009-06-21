@@ -133,7 +133,7 @@ QStringList DigiDocSignature::locations() const
 }
 
 QString DigiDocSignature::mediaType() const
-{ return QString::fromUtf8( s->getMediaType().data() ).remove( "signature/" ); }
+{ return QString::fromUtf8( s->getMediaType().data() ); }
 
 DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 

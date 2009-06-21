@@ -85,6 +85,7 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 ,	s( signature )
 {
 	setupUi( this );
+	tabWidget->removeTab( 2 );
 
 	const SslCertificate c = s.cert();
 	QString titleText = QString("%1 %2 %3")

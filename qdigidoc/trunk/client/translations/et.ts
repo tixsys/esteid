@@ -481,7 +481,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
-        <translation>%1 on juba olemas.&lt;br/&gt;Soovid asendada?</translation>
+        <translation>%1 on juba olemas.&lt;br /&gt;Soovid asendada?</translation>
     </message>
     <message>
         <source>Company</source>
@@ -709,19 +709,19 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõend paigaldamine</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation type="unfinished">Ligipääsutõend</translation>
+        <translation>Ligipääsutõend</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Parool</translation>
+        <translation>Parool</translation>
     </message>
     <message>
         <source>Certificate permissions</source>
