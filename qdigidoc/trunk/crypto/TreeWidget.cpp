@@ -101,5 +101,5 @@ QUrl TreeWidget::url( const QModelIndex &index ) const
 	QString path = i.data( Qt::UserRole ).toString();
 	if( path.isEmpty() )
 		return path;
-	return Common::toUrl( QString( "%1/%2" ).arg( path ).arg( i.data().toString() ) );
+	return Common::toUrl( path );
 }

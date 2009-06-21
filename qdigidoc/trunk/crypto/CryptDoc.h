@@ -82,7 +82,7 @@ public:
 	void removeKey( int id );
 	void save();
 	bool saveDDoc( const QString &filename );
-	void saveDocument( int id, const QString &path );
+	void saveDocument( int id, const QString &filepath );
 
 Q_SIGNALS:
 	void dataChanged();

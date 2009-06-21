@@ -248,7 +248,19 @@ bool CryptDoc::decrypt( const QString &pin )
 	}
 
 	for( int i = 0; i < m_doc->nDataFiles; ++i )
-		saveDocument( i, m_ddocTemp );
+	{
+		QString file = QString( "%1/%2" ).arg( m_ddocTemp )
+			.arg( QString::fromUtf8( m_doc->pDataFiles[i]->szFileName ) );
+		err = ddocSaxExtractDataFile( m_doc, m_ddoc.toUtf8(),
+			file.toUtf8(), m_doc->pDataFiles[i]->szId, CHARSET_UTF_8 );
+		if( err == ERR_OK )
+		{
+			free( m_doc->pDataFiles[i]->szFileName );
+			m_doc->pDataFiles[i]->szFileName = qstrdup( file.toUtf8() );
+		}
+		else
+			setLastError( tr("Failed to save file '%1'").arg( file ), err );
+	}
 
 	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
 	{
@@ -285,7 +297,7 @@ QList<CDocument> CryptDoc::documents()
 		{
 			DataFile *data = m_doc->pDataFiles[i];
 			CDocument doc;
-			doc.path = m_ddocTemp;
+			doc.path = QString::fromUtf8( data->szFileName );
 			doc.filename = QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName();
 			doc.mime = QString::fromUtf8( data->szMimeType );
 			doc.size = Common::fileSize( data->nSize );
@@ -479,7 +491,7 @@ bool CryptDoc::saveDDoc( const QString &filename )
 	return err == ERR_OK;
 }
 
-void CryptDoc::saveDocument( int id, const QString &path )
+void CryptDoc::saveDocument( int id, const QString &filepath )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -489,23 +501,14 @@ void CryptDoc::saveDocument( int id, const QString &path )
 	if( !m_doc || id >= m_doc->nDataFiles || !m_doc->pDataFiles[id] )
 		return setLastError( tr("Internal error") );
 
-	QFileInfo source( QString::fromUtf8( m_doc->pDataFiles[id]->szFileName ) );
-	QString destination = QString( "%1/%2" )
-		.arg( path ).arg( source.fileName() );
-	if( source.isAbsolute() )
-	{
-		QFile::remove( destination );
-		bool err = QFile::copy( source.absoluteFilePath(), destination );
-		if( !err )
-			return setLastError( tr("Failed to save file"), err );
-	}
-	else
-	{
-		int err = ddocSaxExtractDataFile( m_doc, m_ddoc.toUtf8(),
-			destination.toUtf8(), m_doc->pDataFiles[id]->szId, CHARSET_UTF_8 );
-		if( err != ERR_OK )
-			return setLastError( tr("Failed to save file"), err );
-	}
+	QString src = QString::fromUtf8( m_doc->pDataFiles[id]->szFileName );
+	if( src == filepath )
+		return;
+	if( QFile::exists( filepath ) )
+		QFile::remove( filepath );
+	bool err = QFile::copy( src, filepath );
+	if( !err )
+		return setLastError( tr("Failed to save file"), err );
 }
 
 void CryptDoc::selectCard( const QString &card )

@@ -315,6 +315,8 @@ void MainWindow::on_languages_activated( int index )
 
 void MainWindow::on_viewContentView_clicked( const QModelIndex &index )
 {
+	if( index.column() != 2 && index.column()  != 3 )
+		return;
 	QList<CDocument> list = doc->documents();
 	if( list.isEmpty() || index.row() >= list.size() )
 		return;
@@ -323,11 +325,12 @@ void MainWindow::on_viewContentView_clicked( const QModelIndex &index )
 	{
 	case 2:
 	{
-		QString dir = QFileDialog::getExistingDirectory( this,
-			tr("Select folder where file will be stored"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !dir.isEmpty() )
-			doc->saveDocument( index.row(), dir );
+		QString filepath = QFileDialog::getSaveFileName( this,
+			tr("Save file"), QString( "%1/%2" )
+				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
+				.arg( index.model()->index( index.row(), 0 ).data().toString() ) );
+		if( !filepath.isEmpty() )
+			doc->saveDocument( index.row(), filepath );
 		break;
 	}
 	case 3:
@@ -380,7 +383,23 @@ void MainWindow::parseLink( const QString &url )
 			return;
 		QAbstractItemModel *m = viewContentView->model();
 		for( int i = 0; i < m->rowCount(); ++i )
-			doc->saveDocument( i, dir );
+		{
+			QString file = QString( "%1/%2" )
+				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
+			if( QFile::exists( file ) )
+			{
+				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+				if( b == QMessageBox::No )
+				{
+					file = QFileDialog::getSaveFileName( this, tr("Save file"), file );
+					if( file.isEmpty() )
+						continue;
+				}
+			}
+			doc->saveDocument( i, file );
+		}
 	}
 	else if( url == "openUtility" )
 	{
