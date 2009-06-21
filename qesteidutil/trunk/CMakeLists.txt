@@ -99,20 +99,23 @@ include_directories(
 
 if(APPLE)
     set(APP_CONTENTS_DIR "${CMAKE_SOURCE_DIR}/mac")
+    set(LIBQJPEG_FILE "${QT_PLUGINS_DIR}/imageformats/libqjpeg.dylib")
     
     # xCode hacks
     include_directories(/usr/local/include/../include)
     
     # Bundle resources
-    file(GLOB_RECURSE RESOURCE_FILES
-        ${APP_CONTENTS_DIR}/Resources/*.icns
-        ${APP_CONTENTS_DIR}/Resources/**/*.strings)
+    file(GLOB_RECURSE RESOURCE_FILES ${APP_CONTENTS_DIR}/Resources/*.icns ${APP_CONTENTS_DIR}/Resources/**/*.strings)
     
     foreach(_file ${RESOURCE_FILES})
         get_filename_component(_file_dir ${_file} PATH)
         file(RELATIVE_PATH _file_dir ${APP_CONTENTS_DIR}/Resources ${_file_dir})
         set_source_files_properties(${_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${_file_dir}" )
     endforeach(_file)
+    
+    # Qt jpeg plugin
+    set(RESOURCE_FILES ${RESOURCE_FILES} ${LIBQJPEG_FILE})
+    set_source_files_properties(${LIBQJPEG_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS/imageformats" )
 endif(APPLE)
 
 QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS})
