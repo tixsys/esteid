@@ -193,7 +193,7 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	struct hostent *ent;
 	if ( !(ent = gethostbyname(site.c_str()) ) )
-		return false;
+		throw std::runtime_error( QObject::tr( "Failed to resolve hostname. Are you connected to the internet?" ).toStdString() );
 
 	unsigned long address = *((unsigned int *)*ent->h_addr_list);
 
