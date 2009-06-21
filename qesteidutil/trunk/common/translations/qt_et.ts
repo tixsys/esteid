@@ -1216,7 +1216,7 @@ to
     <message>
         <location line="+3"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Abi</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1231,7 +1231,7 @@ to
     <message>
         <location line="+3"/>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jah</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1241,7 +1241,7 @@ to
     <message>
         <location line="+3"/>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ei</translation>
     </message>
     <message>
         <location line="+3"/>
