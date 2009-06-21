@@ -17,7 +17,8 @@ var htmlStrings = {
 	"mobileNotActive": new tr( "Kasutaja Mobiil-id sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "Mobile-id not active. Not possible to display info.", "Пользовательские сертификаты ID-карты неактивны, получение информации невозможно!" ),
 	"mobileInternalError": new tr( "Teenuse sisemine viga!", "Service internal error!", "Внутренняя ошибка услуги!" ),
 	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "Mobile interface not ready!", "Интерфейс ещё не работает!" ),
-	
+	"noIDCert": new tr( "Server ei suutnud lugeda või valideerida ID kaardi sertifikaati!", "Server could not read or validate ID card certificate!", ""),
+
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
 	"linkHelp": new tr( "Abi", "Help", "Помощь" ),
