@@ -432,8 +432,19 @@ function handleError(msg)
 	alert( _('errorFound') + _( msg ) )
 }
 
-function disableFields()
+function disableFields( translate )
 {
+	var divs = document.getElementsByTagName('div');
+	for( i=0;i<divs.length;i++ )
+	{
+		if ( (typeof divs[i].className == "undefined") || ( typeof divs[i].id == "undefined" ) || divs[i].className != "content" )
+				continue;
+		divs[i].style.display = 'none';
+	}
+
+	if ( translate != null )
+		return;
+
 	document.getElementById('documentId').innerHTML = "";
 	document.getElementById('expiry').innerHTML = "";
 	document.getElementById('firstName').innerHTML = "";
@@ -451,13 +462,6 @@ function disableFields()
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
 	document.getElementById('savePhoto').style.display = 'none';
 
-	var divs = document.getElementsByTagName('div');
-	for( i=0;i<divs.length;i++ )
-	{
-		if ( (typeof divs[i].className == "undefined") || ( typeof divs[i].id == "undefined" ) || divs[i].className != "content" )
-				continue;
-		divs[i].style.display = 'none';
-	}
 
 	try {
 		if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )

@@ -198,7 +198,7 @@ function selectLanguage()
 {
 	var select = document.getElementById('headerSelect'); 
 	language = select.options[select.selectedIndex].value;
-	disableFields();
+	disableFields( true );
 	translateHTML();
 	readCardData();
 	extender.setLanguage( language );
