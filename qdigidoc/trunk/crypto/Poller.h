@@ -24,6 +24,7 @@
 
 #include <QThread>
 
+#include <QHash>
 #include <QMutex>
 #include <QSslCertificate>
 
@@ -46,11 +47,13 @@ private Q_SLOTS:
 
 private:
 	void read();
+	void readCert();
 	void run();
 
 	Qt::HANDLE lib;
 	volatile bool terminate;
 	QMutex m;
+	QHash<QString,quint64> cards;
 	QString selectedCard, select;
 	QSslCertificate auth;
 };

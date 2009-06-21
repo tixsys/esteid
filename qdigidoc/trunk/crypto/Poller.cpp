@@ -44,14 +44,14 @@ void Poller::read()
 	if( err != ERR_OK )
 		return;
 
-	QHash<QString,int> cards;
+	cards.clear();
 	for( CK_ULONG i = 0; i < count; ++i )
 	{
 		CK_TOKEN_INFO tokeninfo;
 		err = GetTokenInfo( &tokeninfo, slotids[i] );
 		QString serialNumber = QByteArray( (const char*)tokeninfo.serialNumber, 16 ).trimmed();
 		if( !cards.contains( serialNumber ) )
-			cards[serialNumber] = i;
+			cards[serialNumber] = slotids[i];
 	}
 
 	if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
@@ -63,25 +63,25 @@ void Poller::read()
 	if( !select.isEmpty() && cards.contains( select ) )
 	{
 		selectedCard = select;
-		select.clear();
-		X509 *cert;
-		GetSlotCertificate( slotids[cards[selectedCard]], &cert );
-		auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
-		free( cert );
+		readCert();
 	}
-	else
-		select.clear();
+	select.clear();
 
 	if( selectedCard.isEmpty() && !cards.isEmpty() )
 	{
 		selectedCard = cards.begin().key();
-		X509 *cert;
-		GetSlotCertificate( slotids[cards[selectedCard]], &cert );
-		auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
-		free( cert );
+		readCert();
 	}
 
 	Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
+}
+
+void Poller::readCert()
+{
+	X509 *cert;
+	GetSlotCertificate( cards[selectedCard], &cert );
+	auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
+	free( cert );
 }
 
 void Poller::run()
