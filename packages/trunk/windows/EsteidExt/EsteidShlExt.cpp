@@ -127,11 +127,8 @@ STDMETHODIMP CEsteidShlExt::ExecuteDigidocclient(LPCMINVOKECOMMANDINFO pCmdInfo)
 		return E_INVALIDARG;
 	}
 
-	wsprintf(szCommand, _T("%s\\qdigidocclient.exe"), szInstalldir);
+	wsprintf(szCommand, _T("%sqdigidocclient.exe"), szInstalldir);
 	wsprintf(szArgument, _T("\"%s\""), m_szFile);
-	MessageBox(pCmdInfo->hwnd, szCommand, _T("Debugi info"),
-	           MB_ICONINFORMATION);
-
 
 	SHELLEXECUTEINFO  seInfo;
 
