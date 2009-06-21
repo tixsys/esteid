@@ -440,8 +440,23 @@ void MainWindow::parseLink( const QString &link )
 		QAbstractItemModel *m = viewContentView->model();
 		for( int i = 0; i < m->rowCount(); ++i )
 		{
-			doc->saveDocument( i, QString( "%1/%2" )
-				.arg( dir ).arg( m->index( i, 0 ).data().toString() ) );
+			QString file = QString( "%1/%2" )
+				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
+			if( QFile::exists( file ) )
+			{
+				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+				if( b == QMessageBox::No )
+				{
+					file = QFileDialog::getSaveFileName( this, tr("Save file"), file );
+					if( file.isEmpty() )
+						continue;
+				}
+				else
+					QFile::remove( file );
+			}
+			doc->saveDocument( i, file );
 		}
 	}
 	else if( link == "openUtility" )
