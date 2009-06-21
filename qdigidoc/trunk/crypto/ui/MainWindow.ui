@@ -327,6 +327,9 @@ color: #71889A;
            </size>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
+           <property name="margin">
+            <number>0</number>
+           </property>
            <item>
             <widget class="QLabel" name="infoCard">
              <property name="sizePolicy">
