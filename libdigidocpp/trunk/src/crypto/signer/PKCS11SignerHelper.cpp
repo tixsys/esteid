@@ -51,8 +51,6 @@ public:
 	, certX509(NULL)
 	{}
 
-	static CK_MECHANISM_TYPE type(int openssl) throw(SignException);
-
 	static PKCS11Signer::PKCS11Cert createPKCS11Cert(pkcs11h_certificate_id_t cert);
     std::string driver;
 	pkcs11h_certificate_id_t signCertificate;
@@ -229,26 +227,22 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
             OBJ_nid2sn(digest.type), (unsigned int)digest.digest, digest.length,
             (unsigned int)signature.signature, signature.length);
 
-    // Check that sign slot and certificate are selected.
-	if(d->signCertificate == NULL)
+	// Check that sign certificate is selected.
+	if(d->cert == NULL)
     {
-		THROW_SIGNEXCEPTION("Signing certificate are not selected.");
+		THROW_SIGNEXCEPTION("Signing certificate is not selected.");
     }
 
-	CK_RV rv = pkcs11h_certificate_lockSession(d->cert);
-	if(rv != CKR_OK)
-	{
-		THROW_SIGNEXCEPTION("Failed to sign digest: %s", pkcs11h_getMessage(rv));
-	}
+	pkcs11h_openssl_session_t openssl = pkcs11h_openssl_createSession(d->cert);
+	RSA* rsa = pkcs11h_openssl_session_getRSA(openssl);
+	signature.signature = (unsigned char*)malloc(RSA_size(rsa));
 
 	// Sign the digest.
-	rv = pkcs11h_certificate_signAny(d->cert, digidoc::PKCS11SignerPrivate::type(digest.type),
-		digest.digest, digest.length, signature.signature, &(signature.length));
-	pkcs11h_certificate_releaseSession(d->cert);
-	if(rv != CKR_OK)
-    {
-		THROW_SIGNEXCEPTION("Failed to sign digest: %s", pkcs11h_getMessage(rv));
-    }
+	int ok = RSA_sign(digest.type, digest.digest, digest.length, signature.signature, &signature.length, rsa);
+	//FIXME: handle error
+
+	pkcs11h_openssl_freeSession(openssl);
+	pkcs11h_certificate_create(d->signCertificate, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, 0, &d->cert);
 }
 
 /**
@@ -270,16 +264,4 @@ digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert
 	pkcs11h_certificate_create(cert, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, 0, &cert_object);
 	certificate.cert = pkcs11h_openssl_getX509(cert_object);
 	return certificate;
-}
-
-CK_MECHANISM_TYPE digidoc::PKCS11SignerPrivate::type(int openssl) throw(SignException)
-{
-	switch(openssl)
-	{
-	case NID_sha1: return CKM_SHA1_RSA_PKCS; //CKM_SHA_1
-	case NID_sha256: return CKM_SHA256_RSA_PKCS;
-	case NID_sha384: return CKM_SHA384_RSA_PKCS;
-	case NID_sha512: return CKM_SHA512_RSA_PKCS;
-	default: THROW_SIGNEXCEPTION( "Unsuported digest" ); break;
-	}
 }
