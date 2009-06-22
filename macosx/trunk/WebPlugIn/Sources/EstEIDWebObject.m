@@ -14,15 +14,6 @@
 	return NULL;
 }
 
-- (NSWindow *)window
-{
-	return nil;
-}
-
-- (void)setWindow:(NSWindow *)window
-{
-}
-
 - (BOOL)invokeMethod:(NSString *)name withArguments:(NSArray *)arguments result:(id *)result
 {
 	SEL selector = [[self class] selectorForMethod:[name UTF8String]];
