@@ -68,20 +68,6 @@ CryptDoc::~CryptDoc()
 
 QString CryptDoc::activeCard() const { return m_card; }
 
-void CryptDoc::addCardCert()
-{
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
-
-	SslCertificate c = m_authCert;
-	CKey key;
-	key.cert = c;
-	key.recipient = c.subjectInfoUtf8( "CN" );
-	addKey( key );
-}
-
 void CryptDoc::addFile( const QString &file, const QString &mime )
 {
 	if( isNull() )

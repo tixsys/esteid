@@ -108,7 +108,11 @@ MainWindow::MainWindow( QWidget *parent )
 
 void MainWindow::addCardCert()
 {
-	doc->addCardCert();
+	SslCertificate c = doc->authCert();
+	CKey key;
+	key.cert = c;
+	key.recipient = c.subjectInfoUtf8( "CN" );
+	doc->addKey( key );
 	setCurrentPage( View );
 }
 

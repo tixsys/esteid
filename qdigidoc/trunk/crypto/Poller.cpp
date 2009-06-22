@@ -94,9 +94,8 @@ void Poller::run()
 	while( !terminate )
 	{
 		sleep( 1 );
-		if( m.tryLock() )
-			continue;
 
+		m.lock();
 		if( !select.isEmpty() && cards.contains( select ) )
 		{
 			selectedCard = select;
@@ -104,6 +103,7 @@ void Poller::run()
 			Q_EMIT dataChanged( cards.keys(), selectedCard, auth );
 		}
 		select.clear();
+		m.unlock();
 
 		switch( WaitSlotEvent( &slot ) )
 		{
@@ -120,7 +120,6 @@ void Poller::run()
 		default:
 			return;
 		}
-		m.unlock();
 	}
 }
 
