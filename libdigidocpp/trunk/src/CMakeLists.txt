@@ -3,6 +3,7 @@ include_directories(
     ${LIBDIGIDOC_INCLUDE_DIR}
     ${LIBDL_INCLUDE_DIR}
     ${LIBP11_INCLUDE_DIR}
+    ${PKCS11H_INCLUDE_DIR}
     ${MINIZIP_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
     ${OPENSSLCRYPTO_INCLUDE_DIR}
@@ -48,6 +49,7 @@ set(digidocpp_SRCS
     crypto/ocsp/OCSPException.cpp
     crypto/crypt/RSACrypt.cpp
     crypto/signer/PKCS11Signer.cpp
+    crypto/signer/PKCS11Signer2.cpp
     crypto/signer/EstEIDSigner.cpp
     crypto/signer/RSASigner.cpp
     crypto/signer/Signer.cpp
@@ -96,6 +98,7 @@ add_library(digidocpp SHARED ${digidocpp_SRCS} ${minizip_SRCS})
 target_link_libraries(digidocpp
     ${ICONV_LIBRARIES}
     ${LIBP11_LIBRARIES}
+    ${PKCS11H_LIBRARIES}
     ${LIBDL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${OPENSSL_LIBRARIES}
@@ -161,6 +164,7 @@ install( FILES
 install( FILES
     crypto/signer/EstEIDSigner.h
     crypto/signer/PKCS11Signer.h
+    crypto/signer/PKCS11Signer2.h
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h

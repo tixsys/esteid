@@ -9,7 +9,28 @@
 #include "../../log.h"
 #include "../../Conf.h"
 #include "../../util/String.h"
-#include "PKCS11Signer.h"
+#include "PKCS11Signer2.h"
+
+
+namespace digidoc
+{
+class PKCS11Signer2Private
+{
+public:
+	PKCS11Signer2Private(std::string _driver = "")
+	: driver(_driver)
+	, signCertificate(NULL)
+	, cert(NULL)
+	{}
+
+	static PKCS11Signer::PKCS11Cert createPKCS11Cert(pkcs11h_certificate_id_t cert);
+	std::string driver;
+	pkcs11h_certificate_id_t signCertificate;
+	X509 *cert;
+};
+}
+
+using namespace digidoc;
 
 static PKCS11H_BOOL _pkcs11h_hooks_pin_prompt(
 	void * const global_data,
@@ -19,7 +40,7 @@ static PKCS11H_BOOL _pkcs11h_hooks_pin_prompt(
 	char * const pin,
 	const size_t pin_max)
 {
-	digidoc::PKCS11Signer::PKCS11Cert c;
+	PKCS11Signer::PKCS11Cert c;
 	c.token.label = token->label;
 	c.token.manufacturer = token->manufacturerID;
 	c.token.model = token->model;
@@ -27,35 +48,16 @@ static PKCS11H_BOOL _pkcs11h_hooks_pin_prompt(
 	c.cert = (X509*)user_data;
 	try
 	{
-		digidoc::PKCS11Signer *signer = (digidoc::PKCS11Signer*)global_data;
+		PKCS11Signer2 *signer = (PKCS11Signer2*)global_data;
 		std::string p = signer->getPin(c);
 		strncpy(pin, p.c_str(), pin_max);
 		pin[pin_max-1] = '\0';
 		return true;
 	}
-	catch(const digidoc::Exception &e)
+	catch(const Exception &e)
 	{
 		return false;
 	}
-}
-
-
-namespace digidoc
-{
-class PKCS11SignerPrivate
-{
-public:
-	PKCS11SignerPrivate(std::string _driver = "")
-	: driver(_driver)
-	, signCertificate(NULL)
-	, cert(NULL)
-	{}
-
-	static PKCS11Signer::PKCS11Cert createPKCS11Cert(pkcs11h_certificate_id_t cert);
-    std::string driver;
-	pkcs11h_certificate_id_t signCertificate;
-	X509 *cert;
-};
 }
 
 /**
@@ -65,10 +67,10 @@ public:
  * @throws SignException exception is thrown if the provided PKCS #11 driver
  *         loading failed.
  */
-digidoc::PKCS11Signer::PKCS11Signer() throw(SignException)
- : d(new PKCS11SignerPrivate())
+PKCS11Signer2::PKCS11Signer2() throw(SignException)
+ : d(new PKCS11Signer2Private())
 {
-    DEBUG("PKCS11Signer(driver = '%s'", d->driver.c_str());
+	DEBUG("PKCS11Signer2(driver = '%s'", d->driver.c_str());
     d->driver = Conf::getInstance()->getPKCS11DriverPath();
     loadDriver(d->driver);
 }
@@ -80,24 +82,24 @@ digidoc::PKCS11Signer::PKCS11Signer() throw(SignException)
  * @throws SignException exception is thrown if the provided PKCS #11 driver
  *         loading failed.
  */
-digidoc::PKCS11Signer::PKCS11Signer(const std::string& driver) throw(SignException)
- : d(new PKCS11SignerPrivate(driver))
+PKCS11Signer2::PKCS11Signer2(const std::string& driver) throw(SignException)
+ : d(new PKCS11Signer2Private(driver))
 {
-    DEBUG("PKCS11Signer(driver = '%s'", d->driver.c_str());
+	DEBUG("PKCS11Signer2(driver = '%s'", d->driver.c_str());
     loadDriver(d->driver);
 }
 
 /**
  * Uninitializes p11 library and releases acquired memory.
  */
-digidoc::PKCS11Signer::~PKCS11Signer()
+PKCS11Signer2::~PKCS11Signer2()
 {
-    DEBUG("~PKCS11Signer()");
+	DEBUG("~PKCS11Signer2()");
     unloadDriver();
 	delete d;
 }
 
-void digidoc::PKCS11Signer::unloadDriver()
+void PKCS11Signer2::unloadDriver()
 {
 	if(d->cert != NULL)
 		X509_free(d->cert);
@@ -114,7 +116,7 @@ void digidoc::PKCS11Signer::unloadDriver()
  * @throws SignException exception is thrown if the provided PKCS #11 driver
  *         loading failed.
  */
-void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignException)
+void PKCS11Signer2::loadDriver(const std::string& driver) throw(SignException)
 {
 	CK_RV rv = pkcs11h_initialize();
 	if(rv != CKR_OK)
@@ -147,9 +149,9 @@ void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignExce
  * @throws throws exception if failed to select the signing certificate. For example
  *         no cards found or card has no certificate.
  */
-X509* digidoc::PKCS11Signer::getCert() throw(SignException)
+X509* PKCS11Signer2::getCert() throw(SignException)
 {
-    DEBUG("PKCS11Signer::getCert()");
+	DEBUG("PKCS11Signer2::getCert()");
 
     // If certificate is already selected return it.
 	if(d->cert != NULL)
@@ -163,15 +165,15 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
 		THROW_SIGNEXCEPTION("Could not find any ID-Cards in any readers: %s", pkcs11h_getMessage(rv));
 
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
-	std::vector<PKCS11Cert> certificates;
+	std::vector<PKCS11Signer::PKCS11Cert> certificates;
 	for(pkcs11h_certificate_id_list_t temp = certs; temp != NULL; temp = temp->next)
-		certificates.push_back(PKCS11SignerPrivate::createPKCS11Cert(temp->certificate_id));
+		certificates.push_back(PKCS11Signer2Private::createPKCS11Cert(temp->certificate_id));
 
     if(certificates.size() == 0)
         THROW_SIGNEXCEPTION("No certificates found.");
 
     // Let the application select the signing certificate.
-	PKCS11Cert selectedCert;
+	PKCS11Signer::PKCS11Cert selectedCert;
 	try
 	{
 		selectedCert = selectSigningCertificate(certificates);
@@ -221,7 +223,7 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
  *        is set to the actual signature length.
  * @throws SignException throws exception if the signing operation failed.
  */
-void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) throw(SignException)
+void PKCS11Signer2::sign(const Digest& digest, Signature& signature) throw(SignException)
 {
     DEBUG("sign(digest = {type=%s,digest=0x%X,length=%d}, signature={signature=0x%X,length=%d})",
             OBJ_nid2sn(digest.type), (unsigned int)digest.digest, digest.length,
@@ -261,9 +263,9 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
  * @param cert cert to be used to init PKCS11Cert.
  * @return returns created PKCS11Cert struct.
  */
-digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(pkcs11h_certificate_id_t cert)
+PKCS11Signer::PKCS11Cert PKCS11Signer2Private::createPKCS11Cert(pkcs11h_certificate_id_t cert)
 {
-	digidoc::PKCS11Signer::PKCS11Cert certificate;
+	PKCS11Signer::PKCS11Cert certificate;
 	certificate.token.label = cert->token_id->label;
 	certificate.token.manufacturer = cert->token_id->manufacturerID;
 	certificate.token.model = cert->token_id->model;
