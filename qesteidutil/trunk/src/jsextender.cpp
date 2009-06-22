@@ -139,11 +139,13 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 	
 	sslConnect->deleteLater();
 
+	/*
 	//try to reconnect to smartcard after pkcs11 module load/unload
 #ifdef Q_OS_WIN32
 	if ( m_mainWindow->eidCard() )
 		m_mainWindow->eidCard()->reconnect();
 #endif
+	*/
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }
