@@ -27,6 +27,11 @@
  * for a copy of the LGPLv3 License.
  *
  ************************************************************************/
+/************************************************************************
+* Modified By Mark Erlich, Smartlink OÜ
+* 2009
+*************************************************************************/
+
 #include <stdio.h>
 #include <iostream>
 #include <time.h>
@@ -170,9 +175,6 @@ void BaseDispatch::SendCommand( const com::sun::star::util::URL& aURL, const ::r
     
     aEvent.State <<= aCtrlCmd;
     aListenerHelper.Notify( mxFrame, aEvent.FeatureURL.Path, aEvent ); 
-//**********************************
-printf("BaseDispatch::SendCommand\n");
-//***********************************
 }
 
 void BaseDispatch::SendCommandTo( const Reference< XStatusListener >& xControl, const URL& aURL, const ::rtl::OUString& rCommand, const Sequence< NamedValue >& rArgs, sal_Bool bEnabled )
@@ -204,8 +206,6 @@ void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 		mxFrame = xFrame;
 	}
 
-	//Add an information to the statusbar
-	
 	bPrevContFlag = bContFlag;
 	bContFlag = false;
 	Reference < XController > xCtrl = mxFrame->getController();
@@ -228,7 +228,7 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
 		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL).pData->buffer);
-		//m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
+
 PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);				
 		string strTempFileUrl = UNO_URL_HEAD;
 		strTempFileUrl += m_BdocBridge1->pRetPath;
@@ -254,26 +254,23 @@ PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);
 
 		// Load the document into the target frame by using our unambigous name 
 		// and special search flags. 
-		//Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, /*frame::FrameSearchFlag->CHILDREN*/4, loadProps)); 
 		Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
-		//Reference <XStatusbarController> xStatusBar(xComp2, UNO_QUERY);
 		mxFrame->setName(sOldName);
 
 		Reference <XCloseable> xCloseable( mxFrame, UNO_QUERY);
 		xCloseable->close(true);
+	
+		// dispose the local service manager
+		//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
 
 	}		
 	//----------------------------------------------------------------------
 
 	else if (bPrevContFlag) //-if it's a new frame after opening a bdoc container
 	{
-		//muffik = OUStringToOString(ousBDocContURL, RTL_TEXTENCODING_ASCII_US);
-		//strContainerPath = muffik.pData->buffer;
-
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
 		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL).pData->buffer);
-		//m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
 
 		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 		rGlobalDesktop = rDesktop;
@@ -286,7 +283,6 @@ PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
 			
 			//------------Fix sign data string from returned data---------		
 			strSignData = "";
-			//char* cTemp = NULL;
 			int k,l,m,n,o,p,q,r, iHour;
 			
 			k=l=m=n=o=p=q=r=0;
@@ -411,15 +407,8 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 				strSignData += "_____________________;";
 
 			}
-			//OUString ousTemp(RTL_CONSTASCII_USTRINGPARAM(strSignData.c_str()));
-//			OString oTemp(strSignData.c_str(), RTL_TEXTENCODING_ISO_8859_15);
-//			strSignData	= oTemp.pData->buffer; 
-//PRINT_DEBUG("Signature Ostr: %s",oTemp.pData->buffer);			
 			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
 			
-			
-			//Amazing converting to proper ascii
-			//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ISO_8859_15);// 
 			//----------------------------------------------------------------
 PRINT_DEBUG("Signature strData: %s",strSignData.c_str());
 			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
@@ -436,11 +425,6 @@ PRINT_DEBUG("Signature strData: %s",strSignData.c_str());
 
 			else//Change Statusbar			
 				pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!)";
-			//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
-			//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
-
-			// dispose the local service manager
-			//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
 
 		//----------------------------------------------------------------
 		}
@@ -448,8 +432,6 @@ PRINT_DEBUG("Signature strData: %s",strSignData.c_str());
 		{
 			//Change Statusbar
 			pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud! -- Allkirja lugemisel tekkis viga!)";
-			//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadChangeStatusBar;
-			//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
 		}
 		
 		//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
@@ -578,52 +560,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 		{
 			MyBdocBridge * m_BdocBridge = MyBdocBridge::getInstance();
 
-//====================================================================================================
-//-------------See jura käivitab olemasoleva factory kontrolleriga macro, kuid ei saa returni---------
-//----------------------------------------------------------------------------------------------------
-/*			 
 			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
- 
-			Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
-
-			Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
- 
-			Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii("macro:///Standard.HW.Munnid()"), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-
-			printf("any: %d\n",(int)any.pData);
-*/			
-
-//====================================================================================================
-//----------------See jura loob uue componendi ja laeb avatud dokumendi sinna sisse-------------------
-//----------------------------------------------------------------------------------------------------
-			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
-
 			Reference <XComponent> xComp = rDesktop->getCurrentComponent();
-//====================================================================================================
-//----------------See jura loob uue componendi ja sellega hävitab ka vana dokumendi akna--------------
-/*/----------------------------------------------------------------------------------------------------
-			// Conditions: sURL = "private:factory/swriter" 
-			// xSMGR = m_xServiceManager 
-			// xFrame = reference to a frame
-			// lProperties[] = new com.sun.star.beans.PropertyValue[0]
-			OUString sURL(RTL_CONSTASCII_USTRINGPARAM("private:factory/swriter"));
-			//OUString sURL(RTL_CONSTASCII_USTRINGPARAM("file:///home/mark/Desktop/Juhan.txt"));
-			OUString sOldName = mxFrame->getName(); 
-			OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
-			mxFrame->setName(sTarget); 
-			
-			// Get access to the global component loader of the office 
-			// for synchronous loading of documents. 
-			Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
 
-			// Load the document into the target frame by using our unambigous name 
-			// and special search flags. 
-			Reference <XComponent> xComp = xLoader->loadComponentFromURL( sURL, sTarget, /*::com::sun::star::frame::FrameSearchFlag->CHILDREN*///4, lArgs); 
-
-
-//====================================================================================================
-//----------------See jura käivitab macro / scripti ning saab tagastatava return väärtuse-------------
-//----------------------------------------------------------------------------------------------------
 			Sequence <Any> outparam;
 			Sequence <sal_Int16> indexes;
 			OUString pParam;
@@ -634,17 +573,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
 			
 			Reference < XModel> xMyModel (xComp, UNO_QUERY);
-			//pParam = xMyModel->getURL();
-			//muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-			//printf("URL : %s\n",muff.pData->buffer);	
-			//check which OOo service app is running
-			//if ()
-			//{						
-				//Reference < XTextDocument> xDoc(xComp, UNO_QUERY);
-
+			
 			ostrPath = convertURItoPath(xMyModel->getURL());
-			//ostrPath = ::BaseDispatch::convertURItoPath(xMyModel->getURL());
-
 
 //PRINT_DEBUG( "After Converter File OstrPath: %s", ostrPath.pData->buffer);
 		
@@ -680,10 +610,6 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				int iHour;
 				m_BdocBridge->DigiInit();
 				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
-				//m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
-				
-				//			string strTempFileUrl = "file://";
-				//			strTempFileUrl += m_BdocBridge->pRetPath;
 				
 				//------------Fix sign data string from returned data---------			
 				if (m_BdocBridge->ret < 100)// && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
@@ -809,12 +735,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						strSignData += "_____________________;";
 					}
 					strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
-					//------------------------------------------------------------
-/*					//OString osSignData = OUStringToOString((OUString::createFromAscii(strSignData.c_str())), RTL_TEXTENCODING_ASCII_US);//
-					oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
-					//oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) osSignData.pData->buffer);
-					oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
-*/					//OBS! Call in function instead of thread. Threads may delay and mess with dialog order					
+				
 					//-------------Open Signature Viewer Macro------------------------
 					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 					Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
@@ -822,10 +743,6 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
 				//----------------------------------------------------------------
 				}
-							
-//printf("macro returns: %s\n",muff.pData->buffer);				
-				
-				//i_try = 0;
 				
 			}
 			//---------------New File will be signed -> View a Warning------------------
@@ -835,8 +752,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
 				xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 				muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-							
-//printf("macro returns: %s\n",muff.pData->buffer);				
+			
 				//--If Cacel button--
 				if (!memcmp(muff.pData->buffer, "*", 1))
 					i_try = 0;			
@@ -854,7 +770,6 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				//--If sign button--
 				if (memcmp(ostrParam.pData->buffer, "*", 1))
 				{
-//printf("macrost1: %s\n",ostrParam.pData->buffer);
 					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
@@ -863,15 +778,12 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					if (memcmp(ostrPin.pData->buffer, "*", 1))
 					{	//sign file --if not success retry					
 						if (strBdocUrl.size()>1)
-						//if (!memcmp (ostrPath.pData->buffer, &strBdocUrl, strBdocUrl.size()))
-						{	//- tõsta see hiljem else sisse!!!
-							//if its an open bdoc container	
-		 			
+						{	//if its an open bdoc container			 			
 							m_BdocBridge->DigiInit();
-							//m_BdocBridge->DigiOpen(&strBdocUrl[sizeof(UNO_URL_HEAD)]);
 							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
 						}
 PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
+						//Sign
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
 
 						if (!m_BdocBridge->ret)
@@ -886,7 +798,7 @@ PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 								strNewPath += ".bdoc";
 								m_BdocBridge->DigiInit();
 								m_BdocBridge->DigiOpen(strNewPath.c_str());
-								//m_BdocBridge1->DigiOpen(&strContainerPath[sizeof(UNO_URL_HEAD)]);
+
 //	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge->pRetPath);	
 								string strTempFileUrl = UNO_URL_HEAD;
 								strTempFileUrl += m_BdocBridge->pRetPath;
@@ -916,9 +828,7 @@ PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 
 								// Load the document into the target frame by using our unambigous name 
 								// and special search flags. 
-								//Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, /*frame::FrameSearchFlag->CHILDREN*/4, loadProps)); 
 								Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
-								//Reference <XStatusbarController> xStatusBar(xComp2, UNO_QUERY);
 								mxFrame->setName(sOldName);
 								xComp->dispose();
 							}
@@ -954,26 +864,7 @@ PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 					i_try = 0;
 
 			}
-//printf("macrost2: %s\n",muff.pData->buffer);
-
-			// insert the returned string into the opened text document..
-/*			Reference < ::com::sun::star::text::XTextDocument > xDoc(xComp, UNO_QUERY);
-			Reference < ::com::sun::star::text::XText > xText(xDoc->getText(), UNO_QUERY);
-			xText->setString(pname);
-		
-			Reference<XStorable> storeable(xComp, UNO_QUERY);
-
-			if (storeable->hasLocation()) 
-			{
-				OString loc = OUStringToOString(storeable->getLocation(), RTL_TEXTENCODING_ASCII_US);
-
-				printf("loc: %s\n",loc.pData->buffer);
-			}
-		
-*/			// dont forget to restore old frame name ... 
-			//mxFrame->setName(sOldName);
-		}
-		
+		}		
 	}
 }
 
@@ -1055,19 +946,6 @@ BaseDispatch::~BaseDispatch()
 	mxMSF.clear();
 }
 
-///================================================
-
-/*void SAL_CALL threadShowSign(char *pData)
-{
-	Reference < XDesktop > rLocDesktop = rGlobalDesktop;
-	Reference < XDispatchHelper > rLocalDispatchHelper = rGlobalDispatchHelper;
-
-	//-------------Open Signature Viewer Macro------------------------
-	Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
-	Any any = rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pData), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-	//----------------------------------------------------------------
-}*/
-///================================================
 
 void SAL_CALL threadCallMacro(char *pData)
 {

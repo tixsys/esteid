@@ -1,3 +1,7 @@
+/************************************************************************
+* Created By Mark Erlich, Smartlink OÜ
+* 2009
+*************************************************************************/
 //================================
 //
 #include "MyDebug.h"
@@ -68,16 +72,6 @@ void MyBdocBridge::DigiInit()
 //-----------------------------------------------------------
 void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* pPin)
 {
-	//((My1EstEIDSigner *)this)->str_filepath = "/home/mark/Desktop/Juhan.txt";
-	//((My1EstEIDSigner *)this)->str_filepath = pPath;
-	//((My1EstEIDSigner *)this)->signPlace.str_city = "Linn";
-	//((My1EstEIDSigner *)this)->signPlace.str_stateOrProvince = "Maakond";
-	//((My1EstEIDSigner *)this)->signPlace.str_postalCode = "99999";
-	//((My1EstEIDSigner *)this)->signPlace.str_countryName = "Riik";
-	//((My1EstEIDSigner *)this)->signerRoles.str_role = "pealik";
-	//((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "orjaosakond";
-	//((My1EstEIDSigner *)this)->str_pin = pPin;
-
 	string strPath, strParam;
 	//strPath = pPath;
 	strParam = pParam;
@@ -90,7 +84,7 @@ void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* p
 	((My1EstEIDSigner *)this)->signerRoles.str_role = "";
 	((My1EstEIDSigner *)this)->signerRoles.str_additionalRole = "";
 
-	//for (size_t i=7; i<strPath.size(); i++)
+
 	((My1EstEIDSigner *)this)->str_filepath = pPath;
 
 	for(size_t j=0, k=0; j<strParam.size(); j++)
@@ -251,18 +245,13 @@ int My1EstEIDSigner::initData()
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
 	}
-/*	catch(const digidoc::Exception& e)
-	{
-		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
-	}
-*/	catch(...)
+	catch(...)
 	{
 		PRINT_DEBUG("Caught unknown exception");
 	}
 
 
 	profile = Signature::TM;//BES
-	//str_destination = str_bdocpath;	
 	
 	//online validation in open container	
 	//validateOnline = true;
@@ -287,8 +276,6 @@ int My1EstEIDSigner::signFile ()
 		// Init certificate store.
 		
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
-//		cout << m_signer.cardSignCert->name<<endl;
-//		getchar();
 		
 		if (locBdoc)
 		{
@@ -297,7 +284,6 @@ int My1EstEIDSigner::signFile ()
 			if (!compIDnumber(m_signer.cardSignCert->name))
 			{
 				i_ok = 100;
-			//	printf("Allready Signed!\n");
 			}
 		}		
 		else //if it's an new container (in openoffice we will have only 1 file per container)
@@ -413,11 +399,6 @@ int My1EstEIDSigner::openCont ()
 {
 	int i_ret = 0;
 	
-	//memset((void*)&signPlace, 0, sizeof(signPlace));
-	//memset((void*)&signerRoles, 0, sizeof(signerRoles));
-	//str_signTime = "";
-	//str_signCert = "";
-	
 	try
 	{
 		// Init certificate store.
@@ -484,13 +465,6 @@ int My1EstEIDSigner::openCont ()
 				signPlace.str_postalCode += "#";
 				signPlace.str_countryName += spp.countryName.c_str();
 				signPlace.str_countryName += "#";
-
-				/*cout << "********************************************"  << endl;
-				cout << "*   City:            " << signPlace.str_city << endl;
-				cout << "*   State/Province:  " << signPlace.str_stateOrProvince << endl;
-				cout << "*   Postal/ZIP:      " << signPlace.str_postalCode << endl;
-				cout << "*   Country:         " << signPlace.str_countryName << endl;
-				cout << "********************************************"  << endl;*/
 			}
 			else
 			{
@@ -524,8 +498,6 @@ int My1EstEIDSigner::openCont ()
 			// Get signing time.
 			str_signTime += sig->getSigningTime().c_str();
 			str_signTime += "#";
-			/*cout << "*   Signing time: " << str_signTime << endl;
-			cout << "********************************************"  << endl;*/
 
 			// Get signer certificate.
 			// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
@@ -541,10 +513,7 @@ int My1EstEIDSigner::openCont ()
 				}
 
 			}
-			//printf("Sert Subject: %s\n",cert.getSubject().c_str());
-			//Fix UTF-8 encoding!!!!
 			str_signCert += "#";
-
 		}
 
 	// Destroy certificate store.
@@ -685,8 +654,8 @@ int My1EstEIDSigner::checkCert ()
 				str_signCert += strRetCert[u++];
 		}
 
-	}
-*/	return m_signer.i_ret;
+	}*/
+	return m_signer.i_ret;
 }
 //===========================================================
 //***********************************************************
