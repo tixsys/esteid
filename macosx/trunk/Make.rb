@@ -733,7 +733,7 @@ class Application
 				:location => '/Applications/Utilities'
 			}, {
 				:name => 'esteid-webplugin',
-				:files => File.join(@options.binaries, 'EstEIDWP.bundle'),
+				:files => File.join(@options.binaries, 'EstEIDWP.plugin'),
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
