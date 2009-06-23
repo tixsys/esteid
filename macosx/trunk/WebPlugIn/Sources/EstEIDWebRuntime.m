@@ -103,6 +103,8 @@ static bool EstEIDWebObjectContextHasProperty(EstEIDWebObjectContextRef ctx, NPI
 {	
     bool result = false;
 	
+	EstEIDLog(@"%s(%X, %d)", __PRETTY_FUNCTION__, ctx, identifier);
+	
 	if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
@@ -118,6 +120,8 @@ static bool EstEIDWebObjectContextHasMethod(EstEIDWebObjectContextRef ctx, NPIde
 {
 	bool result = false;
 	
+	EstEIDLog(@"%s(%X, %d)", __PRETTY_FUNCTION__, ctx, identifier);
+	
 	if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
@@ -131,6 +135,8 @@ static bool EstEIDWebObjectContextHasMethod(EstEIDWebObjectContextRef ctx, NPIde
 
 static bool EstEIDWebObjectContextGetProperty(EstEIDWebObjectContextRef ctx, NPIdentifier identifier, NPVariant *result)
 {
+	EstEIDLog(@"%s(%X, %d)", __PRETTY_FUNCTION__, ctx, identifier);
+	
     if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
@@ -148,6 +154,8 @@ static bool EstEIDWebObjectContextGetProperty(EstEIDWebObjectContextRef ctx, NPI
 
 static bool EstEIDWebObjectContextSetProperty(EstEIDWebObjectContextRef ctx, NPIdentifier identifier, const NPVariant *value)
 {
+	EstEIDLog(@"%s(%X, %d, %X)", __PRETTY_FUNCTION__, ctx, identifier, value);
+	
     if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		unsigned int length = strlen(str);
@@ -169,6 +177,8 @@ static bool EstEIDWebObjectContextSetProperty(EstEIDWebObjectContextRef ctx, NPI
 
 static bool EstEIDWebObjectContextInvoke(EstEIDWebObjectContextRef ctx, NPIdentifier identifier, NPVariant *args, unsigned argc, NPVariant *result)
 {
+	EstEIDLog(@"%s(%X, %d, %d)", __PRETTY_FUNCTION__, ctx, identifier, argc);
+	
 	if(ctx->obj) {
 		NPUTF8 *str = browser->utf8fromidentifier(identifier);
 		
@@ -185,6 +195,8 @@ static bool EstEIDWebObjectContextInvoke(EstEIDWebObjectContextRef ctx, NPIdenti
 
 static bool EstEIDWebObjectContextInvokeDefault(EstEIDWebObjectContextRef ctx, NPVariant *args, unsigned argCount, NPVariant *result)
 {
+	EstEIDLog(@"%s(%X, %d)", __PRETTY_FUNCTION__, ctx, argCount);
+	
     result->type = NPVariantType_Void;
 	
 	return false;
@@ -201,18 +213,14 @@ static NPObject *EstEIDWebObjectContextAllocate(NPP npp, NPClass *klass)
     ctx->obj = nil;
     ctx->npp = npp;
     
-#if DEBUG
-	NSLog(@"EstEIDWebObjectContextAllocate (address=%X)", ctx);
-#endif
+	EstEIDLog(@"%s(%X, %X) = %X", __PRETTY_FUNCTION__, npp, klass, ctx);
 	
     return (NPObject *)ctx;
 }
 
 static void EstEIDWebObjectContextDeallocate(EstEIDWebObjectContextRef ctx) 
 {
-#if DEBUG
-	NSLog(@"EstEIDWebObjectContextDeallocate (address=%X)", ctx);
-#endif
+	EstEIDLog(@"%s(%X)", __PRETTY_FUNCTION__, ctx);
 	
     if(ctx->obj != nil) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -246,13 +254,15 @@ static NPClass *EstEIDWebObjectContextGetClass(void)
 
 static NPObject *EstEIDWebObjectContextCreate(NPP plugin, EstEIDWebObject *obj)
 {
-    EstEIDWebObjectContextRef context = (EstEIDWebObjectContextRef)browser->createobject((NPP)plugin, EstEIDWebObjectContextGetClass());
+    EstEIDWebObjectContextRef ctx = (EstEIDWebObjectContextRef)browser->createobject((NPP)plugin, EstEIDWebObjectContextGetClass());
     
-    if(context != NULL && obj != nil) {
-        context->obj = [obj retain];
+    if(ctx != NULL && obj != nil) {
+        ctx->obj = [obj retain];
     }
+	
+	EstEIDLog(@"%s(%X, %X) = %X", __PRETTY_FUNCTION__, plugin, obj, ctx);
     
-    return (NPObject *)context;
+    return (NPObject *)ctx;
 }
 
 #pragma mark -
@@ -311,7 +321,7 @@ void EstEIDWebRuntimeObjectToVariant(NPP npp, id object, NPVariant *variant)
 		EstEIDWebRuntimeObjectToVariant(npp, [dateFormatter stringFromDate:(NSDate *)object], variant);
 		[dateFormatter release];
 	} else {
-		NSLog(@"EstEID: The %@ class instance couldn't be converted.", [object class]);
+		EstEIDLog(@"%s: The %@ class instance couldn't be converted.", __PRETTY_FUNCTION__, [object class]);
 		variant->type = NPVariantType_Void;
 	}
 }
@@ -390,6 +400,7 @@ typedef void (*TransitionVector)(void);
 
 static FunctionPointer functionPointerForTVector(TransitionVector tvp)
 {
+#ifdef __ppc__
     const uint32 temp[6] = { 0x3D800000, 0x618C0000, 0x800C0000, 0x804C0004, 0x7C0903A6, 0x4E800420 };
     uint32 *newGlue = NULL;
     
@@ -407,12 +418,16 @@ static FunctionPointer functionPointerForTVector(TransitionVector tvp)
             MakeDataExecutable(newGlue, sizeof(temp));
         }
     }
-    
+	
     return (FunctionPointer)newGlue;
+#else
+	return (FunctionPointer)tvp;
+#endif
 }
 
 static TransitionVector tVectorForFunctionPointer(FunctionPointer fp)
 {
+#ifdef __ppc__
     FunctionPointer *newGlue = NULL;
     
     if(fp != NULL) {
@@ -425,21 +440,26 @@ static TransitionVector tVectorForFunctionPointer(FunctionPointer fp)
     }
     
     return (TransitionVector)newGlue;
+#else
+	return (TransitionVector)fp;
+#endif
 }
 
 #pragma mark -
 
 #pragma export on
-// Mach-o entry points
+// Mach-o entry points (Safari, Firefox)
 NPError NP_Initialize(NPNetscapeFuncs *browserFuncs);
 NPError NP_GetEntryPoints(NPPluginFuncs *pluginFuncs);
 void NP_Shutdown(void);
-// For compatibility with CFM browsers.
+// For compatibility with CFM browsers. (Opera, Camino and some older browsers)
 int main(NPNetscapeFuncs *browserFuncs, NPPluginFuncs *pluginFuncs, NPP_ShutdownProcPtr *shutdown);
 #pragma export off
 
 NPError NPP_New(NPMIMEType pluginType, NPP plugin, uint16 mode, int16 argc, char *argn[], char *argv[], NPSavedData *saved)
 {
+	EstEIDLog(@"%s(%X, %X, %d, %d, %X)", __PRETTY_FUNCTION__, pluginType, plugin, mode, argc, saved);
+	
     if(browser->version >= 14) {
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		Class class = NSClassFromString([[[NSBundle bundleForClass:[EstEIDWebObject class]] infoDictionary] objectForKey:@"NSPrincipalClass"]);
@@ -492,6 +512,8 @@ NPError NPP_Destroy(NPP plugin, NPSavedData **save)
 {
     EstEIDWebObjectContextRef obj = plugin->pdata;
 	
+	EstEIDLog(@"%s(%X, %X)", __PRETTY_FUNCTION__, plugin, save);
+	
     if(obj != NULL && plugin->pdata != NULL) {
 		browser->releaseobject((NPObject *)plugin->pdata);
 		plugin->pdata = NULL;
@@ -504,6 +526,8 @@ NPError NPP_SetWindow(NPP plugin, NPWindow *window)
 {
     EstEIDWebObjectContextRef obj = plugin->pdata;
     
+	EstEIDLog(@"%s(%X, %X)", __PRETTY_FUNCTION__, plugin, window);
+	
     if(obj != NULL) {
         obj->window = window;
 		
@@ -537,50 +561,45 @@ int32 NPP_WriteReady(NPP plugin, NPStream *stream)
     return 0;
 }
 
-int32 NPP_Write(NPP instance, NPStream *stream, int32 offset, int32 len, void *buffer)
+int32 NPP_Write(NPP plugin, NPStream *stream, int32 offset, int32 len, void *buffer)
 {
     return 0;
 }
 
-void NPP_StreamAsFile(NPP instance, NPStream *stream, const char *fname)
+void NPP_StreamAsFile(NPP plugin, NPStream *stream, const char *fname)
 {
 }
 
-void NPP_Print(NPP instance, NPPrint *platformPrint)
+void NPP_Print(NPP plugin, NPPrint *platformPrint)
 {
+}
+
+int16 NPP_HandleEvent(NPP plugin, void *event)
+{
+    return 0;
+}
+
+void NPP_URLNotify(NPP plugin, const char *url, NPReason reason, void *notifyData)
+{
+}
+
+NPError NPP_GetValue(NPP plugin, NPPVariable variable, void *value)
+{
+	EstEIDLog(@"%s(%X, %d)", __PRETTY_FUNCTION__, plugin, variable);
 	
-}
-
-int16 NPP_HandleEvent(NPP instance, void *event)
-{
-    EstEIDWebObjectContextRef obj = instance->pdata;
-    
-    if(obj != NULL) {
-        return 0;
-    }
-    
-    return 0;
-}
-
-void NPP_URLNotify(NPP instance, const char *url, NPReason reason, void *notifyData)
-{
-}
-
-NPError NPP_GetValue(NPP instance, NPPVariable variable, void *value)
-{
     if(variable == NPPVpluginScriptableNPObject) {
         void **v = (void **)value;
         
-		if(instance->pdata) {
-			const char *uagent = browser->uagent(instance);
+		if(plugin->pdata) {
+			const char *uagent = browser->uagent(plugin);
 			
 			// Without this check we'll be leaking memory before 10.5
 			if(!(uagent != NULL && (uagent = strstr(uagent, " AppleWebKit/")) != NULL && atoi(uagent + 13) < 420)) {
-				browser->retainobject((NPObject *)instance->pdata);
+				browser->retainobject((NPObject *)plugin->pdata);
 			}
 		}
 		
-        *v = instance->pdata;
+        *v = plugin->pdata;
         
         return NPERR_NO_ERROR;
     }
@@ -588,12 +607,14 @@ NPError NPP_GetValue(NPP instance, NPPVariable variable, void *value)
     return NPERR_GENERIC_ERROR;
 }
 
-NPError NPP_SetValue(NPP instance, NPNVariable variable, void *value)
+NPError NPP_SetValue(NPP plugin, NPNVariable variable, void *value)
 {
+	EstEIDLog(@"%s(%X, %X)", __PRETTY_FUNCTION__, plugin, variable);
+	
     return NPERR_GENERIC_ERROR;
 }
 
-// Mach-o entry points
+// Mach-o entry points (Safari, Firefox)
 NPError NP_Initialize(NPNetscapeFuncs *browserFuncs)
 {
 	browser = browserFuncs;
@@ -626,15 +647,15 @@ void NP_Shutdown(void)
 {
 }
 
-// For compatibility with CFM browsers.
+// For compatibility with CFM browsers. (Opera, Camino and some older browsers)
 int main(NPNetscapeFuncs *browserFuncs, NPPluginFuncs *pluginFuncs, NPP_ShutdownProcPtr *shutdown)
 {
     browser = memset(malloc(sizeof(NPNetscapeFuncs)), 0x00, sizeof(NPNetscapeFuncs));
     
-    browser->size = browserFuncs->size;
+	browser->size = browserFuncs->size;
     browser->version = browserFuncs->version;
     
-    browser->geturl = (NPN_GetURLProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->geturl);
+	browser->geturl = (NPN_GetURLProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->geturl);
     browser->posturl = (NPN_PostURLProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->posturl);
     browser->requestread = (NPN_RequestReadProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->requestread);
     browser->newstream = (NPN_NewStreamProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->newstream);
@@ -646,16 +667,35 @@ int main(NPNetscapeFuncs *browserFuncs, NPPluginFuncs *pluginFuncs, NPP_Shutdown
     browser->memfree = (NPN_MemFreeProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->memfree);
     browser->memflush = (NPN_MemFlushProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->memflush);
     browser->reloadplugins = (NPN_ReloadPluginsProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->reloadplugins);
-    browser->geturlnotify = (NPN_GetURLNotifyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->geturlnotify);
+    browser->getJavaEnv = (NPN_GetJavaEnvProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getJavaEnv);
+    browser->getJavaPeer = (NPN_GetJavaPeerProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getJavaPeer);
+	browser->geturlnotify = (NPN_GetURLNotifyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->geturlnotify);
     browser->posturlnotify = (NPN_PostURLNotifyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->posturlnotify);
     browser->getvalue = (NPN_GetValueProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getvalue);
     browser->setvalue = (NPN_SetValueProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->setvalue);
     browser->invalidaterect = (NPN_InvalidateRectProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->invalidaterect);
     browser->invalidateregion = (NPN_InvalidateRegionProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->invalidateregion);
     browser->forceredraw = (NPN_ForceRedrawProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->forceredraw);
-    browser->getJavaEnv = (NPN_GetJavaEnvProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getJavaEnv);
-    browser->getJavaPeer = (NPN_GetJavaPeerProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getJavaPeer);
-    
+    browser->getstringidentifier = (NPN_GetStringIdentifierProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getstringidentifier);
+	browser->getstringidentifiers = (NPN_GetStringIdentifiersProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getstringidentifiers);
+	browser->getintidentifier = (NPN_GetIntIdentifierProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getintidentifier);
+	browser->identifierisstring = (NPN_IdentifierIsStringProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->identifierisstring);
+	browser->utf8fromidentifier = (NPN_UTF8FromIdentifierProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->utf8fromidentifier);
+	browser->intfromidentifier = (NPN_IntFromIdentifierProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->intfromidentifier);
+	browser->createobject = (NPN_CreateObjectProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->createobject);
+	browser->retainobject = (NPN_RetainObjectProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->retainobject);
+    browser->releaseobject = (NPN_ReleaseObjectProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->releaseobject);
+	browser->invoke = (NPN_InvokeProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->invoke);
+	browser->invokeDefault = (NPN_InvokeDefaultProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->invokeDefault);
+	browser->evaluate = (NPN_EvaluateProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->evaluate);
+	browser->getproperty = (NPN_GetPropertyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->getproperty);
+	browser->setproperty = (NPN_SetPropertyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->setproperty);
+	browser->removeproperty = (NPN_RemovePropertyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->removeproperty);
+	browser->hasproperty = (NPN_HasPropertyProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->hasproperty);
+	browser->hasmethod = (NPN_HasMethodProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->hasmethod);
+	browser->releasevariantvalue = (NPN_ReleaseVariantValueProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->releasevariantvalue);
+	browser->setexception = (NPN_SetExceptionProcPtr)functionPointerForTVector((TransitionVector)browserFuncs->setexception);
+	
     pluginFuncs->version = 11;
     pluginFuncs->size = sizeof(pluginFuncs);
     pluginFuncs->newp = (NPP_NewProcPtr)tVectorForFunctionPointer((FunctionPointer)NPP_New);

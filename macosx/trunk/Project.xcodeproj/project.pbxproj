@@ -86,6 +86,7 @@
 		81303BA30F596C970029C4D7 /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
 		81303CC90F597FCD0029C4D7 /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
 		81303D9A0F5998D30029C4D7 /* EstEIDManifestDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */; };
+		8145A1910FF11BED003A9708 /* Info.r in Rez */ = {isa = PBXBuildFile; fileRef = 8145A1080FF11948003A9708 /* Info.r */; };
 		814F310A0F93F0C700A89C70 /* EstEIDManifestPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */; };
 		814F31F10F9407BE00A89C70 /* EstEIDInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */; };
 		814F34A60F94473500A89C70 /* EstEIDPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F34A50F94473500A89C70 /* EstEIDPackage.m */; };
@@ -289,6 +290,7 @@
 		81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Additions.m"; path = "Updater/Sources/NSBundle+Additions.m"; sourceTree = "<group>"; };
 		81303D980F5998D30029C4D7 /* EstEIDManifestDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestDownload.h; path = Updater/Sources/EstEIDManifestDownload.h; sourceTree = "<group>"; };
 		81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestDownload.m; path = Updater/Sources/EstEIDManifestDownload.m; sourceTree = "<group>"; };
+		8145A1080FF11948003A9708 /* Info.r */ = {isa = PBXFileReference; explicitFileType = sourcecode.rez; fileEncoding = 4; name = Info.r; path = WebPlugIn/Info.r; sourceTree = "<group>"; };
 		814F31080F93F0C700A89C70 /* EstEIDManifestPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDManifestPackage.h; path = Updater/Sources/EstEIDManifestPackage.h; sourceTree = "<group>"; };
 		814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDManifestPackage.m; path = Updater/Sources/EstEIDManifestPackage.m; sourceTree = "<group>"; };
 		814F31EF0F9407BE00A89C70 /* EstEIDInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDInstaller.h; path = Updater/Sources/EstEIDInstaller.h; sourceTree = "<group>"; };
@@ -357,7 +359,7 @@
 		81F871AB0FA0FB8A00832B54 /* EstEIDPINPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPINPanel.m; path = WebPlugIn/Sources/EstEIDPINPanel.m; sourceTree = "<group>"; };
 		81F871F10FA1209100832B54 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = WebPlugIn/Images/Icon.png; sourceTree = "<group>"; };
 		81F873B10FA13A7500832B54 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		81F8748D0F56085100FCAB5D /* EstEIDWP.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDWP.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		81F874BC0F560A5500FCAB5D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = WebPlugIn/Info.plist; sourceTree = "<group>"; };
 		81F874C10F560ABF00FCAB5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EstEIDPP.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -502,7 +504,7 @@
 				81F8759A0F560E9A00FCAB5D /* EstEIDPP.prefPane */,
 				8122F1120F55F75500FA51CD /* EstEIDCM.plugin */,
 				81E4CB4D0F9C74F300997F53 /* EstEIDCM.octest */,
-				81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */,
+				81F8748D0F56085100FCAB5D /* EstEIDWP.plugin */,
 				81E4CBC40F9C75CB00997F53 /* EstEIDWP.octest */,
 				81BF40630F56E78000F60FED /* EstEIDSU.app */,
 				81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */,
@@ -575,6 +577,7 @@
 			children = (
 				81F871EF0FA1208600832B54 /* Images */,
 				8122F1080F55F5DC00FA51CD /* Sources */,
+				8145A1080FF11948003A9708 /* Info.r */,
 				81F874BC0F560A5500FCAB5D /* Info.plist */,
 				81F86EF50FA08E1100832B54 /* InfoPlist.strings */,
 				81F86EF30FA08E1100832B54 /* Localizable.strings */,
@@ -840,6 +843,7 @@
 			buildPhases = (
 				81F874890F56085100FCAB5D /* Resources */,
 				81F8748A0F56085100FCAB5D /* Sources */,
+				8145A1980FF11BFA003A9708 /* Rez */,
 				81F8748B0F56085100FCAB5D /* Frameworks */,
 				81F0FBA80FD6CE6B0093DA43 /* ShellScript */,
 			);
@@ -849,7 +853,7 @@
 			);
 			name = "Internet Plug-In";
 			productName = WebPlugIn;
-			productReference = 81F8748D0F56085100FCAB5D /* EstEIDWP.bundle */;
+			productReference = 81F8748D0F56085100FCAB5D /* EstEIDWP.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		81F875990F560E9A00FCAB5D /* Updater Preference Pane */ = {
@@ -973,6 +977,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		8145A1980FF11BFA003A9708 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8145A1910FF11BED003A9708 /* Info.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		81E4C8CA0F9C43F200997F53 /* ShellScript */ = {
@@ -1734,7 +1749,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
 		};
@@ -1761,7 +1776,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDWP;
 				SDKROOT = macosx10.4;
-				WRAPPER_EXTENSION = bundle;
+				WRAPPER_EXTENSION = plugin;
 				ZERO_LINK = NO;
 			};
 			name = Release;

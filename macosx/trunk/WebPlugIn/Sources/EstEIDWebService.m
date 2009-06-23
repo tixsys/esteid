@@ -342,11 +342,9 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 - (id)init
 {
-#if DEBUG
-	NSLog(@"EstEID: Plug-in allocated (address=0x%X)", self);
-#endif
-	
 	self = [super init];
+	
+	EstEIDLog(@"%@: Alloc! (address=0x%X)", NSStringFromClass([self class]), self);
 	
 	if(self) {
 		self->m_readerManager = [[EstEIDReaderManager alloc] init];
@@ -360,9 +358,7 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 - (void)dealloc
 {
-#if DEBUG
-	NSLog(@"EstEID: Plug-in deallocated (address=0x%X)", self);
-#endif
+	EstEIDLog(@"%@: Dealloc! (address=0x%X)", NSStringFromClass([self class]), self);
 	
 	[self->m_readerManager release];
 	[self->m_eventListeners release];

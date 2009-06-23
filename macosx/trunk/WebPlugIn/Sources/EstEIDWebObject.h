@@ -2,6 +2,12 @@
 
 #import <Foundation/Foundation.h>
 
+#ifdef DEBUG
+#define EstEIDLog NSLog
+#else
+#define EstEIDLog //NSLog
+#endif
+
 @class NSWindow;
 
 @protocol EstEIDWebService <NSObject>
