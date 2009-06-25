@@ -57,6 +57,7 @@ public:
 	QByteArray	serialNumber() const;
 	QByteArray	subjectKeyIdentifier() const;
 	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
+	static QDateTime	toLocalTime( const QDateTime &datetime );
 	QByteArray	versionNumber() const;
 
 private:

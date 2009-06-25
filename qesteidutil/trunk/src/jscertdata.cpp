@@ -146,7 +146,7 @@ QString JsCertData::getValidFrom()
     if (!m_qcert)
         return "";
 
-    return m_qcert->effectiveDate().toString("dd. MMMM yyyy");
+	return SslCertificate::toLocalTime( m_qcert->effectiveDate() ).toString("dd. MMMM yyyy");
 }
 
 QString JsCertData::getValidTo()
@@ -154,7 +154,7 @@ QString JsCertData::getValidTo()
     if (!m_qcert)
         return "";
 
-    return m_qcert->expiryDate().toString("dd. MMMM yyyy");
+	return SslCertificate::toLocalTime( m_qcert->expiryDate() ).toString("dd. MMMM yyyy");
 }
 
 QString JsCertData::getIssuerCN()
@@ -194,5 +194,5 @@ bool JsCertData::isValid()
     if (!m_qcert)
         return false;
 
-	return m_qcert->expiryDate() >= QDateTime::currentDateTime();
+	return SslCertificate::toLocalTime( m_qcert->expiryDate() ) >= QDateTime::currentDateTime();
 }

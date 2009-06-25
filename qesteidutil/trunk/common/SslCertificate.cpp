@@ -22,6 +22,7 @@
 
 #include "SslCertificate.h"
 
+#include <QDateTime>
 #include <QStringList>
 
 #include <openssl/x509v3.h>
@@ -213,6 +214,9 @@ QByteArray SslCertificate::toHex( const QByteArray &in, QChar separator )
 		ret.insert( i, separator );
 	return ret;
 }
+
+QDateTime SslCertificate::toLocalTime( const QDateTime &datetime )
+{ return QDateTime( datetime.date(), datetime.time(), Qt::UTC ).toLocalTime(); }
 
 QString SslCertificate::toUtf16( const QString &in ) const
 {
