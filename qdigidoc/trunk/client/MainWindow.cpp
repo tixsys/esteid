@@ -601,7 +601,7 @@ void MainWindow::showCardStatus()
 			s << tr("Card in reader") << ": <font color=\"black\">"
 				<< doc->activeCard() << "</font><br />";
 
-			bool willExpire = c.expiryDate() <= QDateTime::currentDateTime().addDays( 100 );
+			bool willExpire = SslCertificate::toLocalTime( c.expiryDate() ) <= QDateTime::currentDateTime().addDays( 105 );
 			s << tr("Sign certificate is") << " ";
 			if( doc->signCert().isValid()  )
 			{
