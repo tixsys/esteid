@@ -64,9 +64,8 @@ QSslCertificate DigiDocSignature::cert() const
 
 QDateTime DigiDocSignature::dateTime() const
 {
-	QDateTime t = QDateTime::fromString(
-		s->getSigningTime().data(), "yyyy-MM-dd'T'hh:mm:ss'Z'" );
-	return QDateTime( t.date(), t.time(), Qt::UTC ).toLocalTime();
+	return SslCertificate::toLocalTime( QDateTime::fromString(
+		s->getSigningTime().data(), "yyyy-MM-dd'T'hh:mm:ss'Z'" ) );
 }
 
 QString DigiDocSignature::digestMethod() const
