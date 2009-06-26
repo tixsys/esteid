@@ -338,8 +338,8 @@ void MainWindow::dropEvent( QDropEvent *e )
 {
 	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
 	{
-		if( u.isRelative() || u.scheme() == "file" )
-			params << Common::toPath( u );
+		if( u.scheme() == "file" )
+			params << u.toLocalFile();
 	}
 	buttonClicked( HomeSign );
 }
@@ -413,13 +413,15 @@ void MainWindow::parseLink( const QString &link )
 	}
 	else if( link == "browse" )
 	{
-		QDesktopServices::openUrl( Common::toUrl( QFileInfo( doc->fileName() ).absolutePath() ) );
+		QDesktopServices::openUrl( QUrl::fromLocalFile( QFileInfo( doc->fileName() ).absolutePath() ) );
 	}
 	else if( link == "email" )
 	{
-		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( doc->fileName() ).fileName() )
-			.arg( doc->fileName() ) );
+		QUrl url;
+		url.setScheme( "mailto" );
+		url.addQueryItem( "subject", QFileInfo( doc->fileName() ).fileName() );
+		url.addQueryItem( "attachment", doc->fileName() );
+		QDesktopServices::openUrl( url );
 	}
 	else if( link == "print" )
 	{

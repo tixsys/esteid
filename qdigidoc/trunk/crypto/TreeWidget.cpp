@@ -101,5 +101,5 @@ QUrl TreeWidget::url( const QModelIndex &index ) const
 	QString path = i.data( Qt::UserRole ).toString();
 	if( path.isEmpty() )
 		return path;
-	return Common::toUrl( path );
+	return QUrl::fromLocalFile( path );
 }

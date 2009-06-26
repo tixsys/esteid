@@ -94,4 +94,4 @@ Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }
 
 QUrl TreeWidget::url( const QModelIndex &item ) const
-{ return Common::toUrl( item.model()->index( item.row(), 0 ).data( Qt::UserRole ).toString() ); }
+{ return QUrl::fromLocalFile( item.model()->index( item.row(), 0 ).data( Qt::UserRole ).toString() ); }

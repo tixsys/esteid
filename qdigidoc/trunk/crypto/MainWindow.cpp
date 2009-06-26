@@ -292,8 +292,8 @@ void MainWindow::dropEvent( QDropEvent *e )
 {
 	Q_FOREACH( const QUrl &u, e->mimeData()->urls() )
 	{
-		if( u.isRelative() || u.scheme() == "file" )
-			params << Common::toPath( u );
+		if( u.scheme() == "file" )
+			params << u.toLocalFile();
 	}
 	buttonClicked( HomeCreate );
 }
@@ -370,7 +370,7 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "browse" )
 	{
-		QDesktopServices::openUrl( Common::toUrl( QFileInfo( doc->fileName() ).absolutePath() ) );
+		QDesktopServices::openUrl( QUrl::fromLocalFile( QFileInfo( doc->fileName() ).absolutePath() ) );
 	}
 	else if( url == "email" )
 	{
