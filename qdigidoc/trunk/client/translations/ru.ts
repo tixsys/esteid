@@ -5,38 +5,38 @@
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
-        <translation type="unfinished"></translation>
+        <translation>Контейнер не открыт</translation>
     </message>
     <message>
         <source>Cannot add files to signed container</source>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя добавлять файлы в подписанный контейнер</translation>
     </message>
     <message>
         <source>Missing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Документ отсутствует</translation>
     </message>
     <message>
         <source>Missing signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись отсутствует</translation>
     </message>
     <message>
         <source>Cannot add signature to empty container</source>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя добавить подпись в пустой контейнер</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Дальше</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation type="unfinished"></translation>
+        <translation>Подписать</translation>
     </message>
     <message>
         <source>Add signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить подпись</translation>
     </message>
     <message>
         <source>Save file</source>
@@ -64,32 +64,32 @@
     </message>
     <message>
         <source>Select documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить файлы</translation>
     </message>
     <message>
         <source>Save container</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить контейнер</translation>
     </message>
     <message>
         <source>You added %1 files to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Оставить</translation>
     </message>
     <message>
         <source>Open container</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть контейнер</translation>
     </message>
     <message>
         <source>Select folder where files will be stored</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите папку для сохранения файлов</translation>
     </message>
     <message>
         <source>Container:</source>
@@ -97,19 +97,19 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>This container is signed by you</source>
-        <translation type="unfinished"></translation>
+        <translation>Данный контейнер подписан вами</translation>
     </message>
     <message>
         <source>You have not signed this container</source>
-        <translation type="unfinished"></translation>
+        <translation>Данный контейнер не подписан вами</translation>
     </message>
     <message>
         <source>Container is unsigned</source>
-        <translation type="unfinished"></translation>
+        <translation>Контейнер не подписан</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись</translation>
     </message>
     <message>
         <source>Signatures</source>
@@ -157,11 +157,11 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощь</translation>
     </message>
     <message>
         <source>Use ID card</source>
@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Role</source>
-        <translation type="unfinished"></translation>
+        <translation>Роль</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -237,23 +237,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Резолюция</translation>
     </message>
     <message>
         <source>City</source>
-        <translation type="unfinished"></translation>
+        <translation>Город</translation>
     </message>
     <message>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Уезд</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation type="unfinished"></translation>
+        <translation>Страна</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</source>
