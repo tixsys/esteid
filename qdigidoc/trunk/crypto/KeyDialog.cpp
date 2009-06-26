@@ -75,6 +75,7 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
+	buttonBox->addButton( tr("Show certificate"), QDialogButtonBox::AcceptRole );
 
 	title->setText( k.recipient );
 
