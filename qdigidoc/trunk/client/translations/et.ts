@@ -524,7 +524,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>User denied or cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutaja keeldus või katkestas</translation>
     </message>
     <message>
         <source>Got signature</source>
@@ -846,15 +846,15 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Host</source>
-        <translation type="unfinished">Host</translation>
+        <translation>Host</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished">Por</translation>
+        <translation>Port</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation type="unfinished">Valige PKCS#12 sertifikaat</translation>
+        <translation>Valige PKCS#12 sertifikaat</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>

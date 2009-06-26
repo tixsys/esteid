@@ -623,7 +623,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     <name>TreeWidget</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <source>Remove</source>
