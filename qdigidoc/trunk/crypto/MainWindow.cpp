@@ -374,9 +374,11 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "email" )
 	{
-		QDesktopServices::openUrl( QString( "mailto:?subject=%1&attachment=%2" )
-			.arg( QFileInfo( doc->fileName() ).fileName() )
-			.arg( doc->fileName() ) );
+		QUrl url;
+		url.setScheme( "mailto" );
+		url.addQueryItem( "subject", QFileInfo( doc->fileName() ).fileName() );
+		url.addQueryItem( "attachment", doc->fileName() );
+		QDesktopServices::openUrl( url );
 	}
 	else if( url == "saveAll" )
 	{
