@@ -733,15 +733,15 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Certificate permissions</source>
-        <translation>Sertifikaadide load</translation>
+        <translation type="obsolete">Sertifikaadide load</translation>
     </message>
     <message>
         <source>All users</source>
-        <translation>Kõik kasutajad</translation>
+        <translation type="obsolete">Kõik kasutajad</translation>
     </message>
     <message>
         <source>Only me</source>
-        <translation>Ainult mina</translation>
+        <translation type="obsolete">Ainult mina</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
@@ -818,11 +818,11 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>BDoc</source>
-        <translation>BDoc</translation>
+        <translation type="obsolete">BDoc</translation>
     </message>
     <message>
         <source>DDoc</source>
-        <translation>DDoc</translation>
+        <translation type="obsolete">DDoc</translation>
     </message>
     <message>
         <source>Save last insert role and resolution</source>

@@ -506,15 +506,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Certificate permissions</source>
-        <translation>Разрешения сертификата</translation>
+        <translation type="obsolete">Разрешения сертификата</translation>
     </message>
     <message>
         <source>All users</source>
-        <translation>Все пользователи</translation>
+        <translation type="obsolete">Все пользователи</translation>
     </message>
     <message>
         <source>Only me</source>
-        <translation>Только я</translation>
+        <translation type="obsolete">Только я</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
@@ -559,11 +559,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>BDoc</source>
-        <translation>BDoc</translation>
+        <translation type="obsolete">BDoc</translation>
     </message>
     <message>
         <source>DDoc</source>
-        <translation>DDoc</translation>
+        <translation type="obsolete">DDoc</translation>
     </message>
     <message>
         <source>Role</source>

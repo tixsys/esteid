@@ -321,6 +321,10 @@
         <source>No keys specified</source>
         <translation>Ühtegi võtit ei ole valitud</translation>
     </message>
+    <message>
+        <source>Failed to save file &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyAddDialog</name>
@@ -454,7 +458,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sulge</translation>
+        <translation type="obsolete">Sulge</translation>
     </message>
     <message>
         <source>Key</source>
@@ -747,7 +751,7 @@ Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>Select folder where file will be stored</source>
-        <translation>Vali kataloog kuhu fail salvestatakse</translation>
+        <translation type="obsolete">Vali kataloog kuhu fail salvestatakse</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;

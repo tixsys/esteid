@@ -190,6 +190,10 @@
         <source>No keys specified</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to save file &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyAddDialog</name>
@@ -315,7 +319,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation type="obsolete">Закрыть</translation>
     </message>
     <message>
         <source>Key</source>
@@ -376,7 +380,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Select folder where file will be stored</source>
-        <translation>Выбрите папку где будут сохранены файл</translation>
+        <translation type="obsolete">Выбрите папку где будут сохранены файл</translation>
     </message>
     <message>
         <source>Name</source>
