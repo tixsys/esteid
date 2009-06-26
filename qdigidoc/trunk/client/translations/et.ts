@@ -690,7 +690,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <name>QObject</name>
     <message>
         <source>PIN acquisition canceled.</source>
-        <translation>PIN koodi sisestamine katkestati</translation>
+        <translation>PIN koodi sisestamine katkestati.</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
@@ -701,19 +701,19 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <name>RegisterP12</name>
     <message>
         <source>No OCSP PKCS#12 certificate selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ükski OCSP PKCS#12 sertifikaat ei ole valitud</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili kopeerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Valige PKCS#12 sertifikaat</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS#12 Sertifikaadid (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
@@ -733,20 +733,21 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Certificate permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadide load</translation>
     </message>
     <message>
         <source>All users</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõik kasutajad</translation>
     </message>
     <message>
         <source>Only me</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainult mina</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>OCSP PKCS#12 serveri ligipääsu sertifikaadid on võimalik saada&lt;br /&gt;
+&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -841,23 +842,23 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Proksi</translation>
     </message>
     <message>
         <source>Host</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Host</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Por</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Valige PKCS#12 sertifikaat</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS#12 Sertifikaadid (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
@@ -968,19 +969,19 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüüp</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Aeg</translation>
     </message>
     <message>
         <source>SHA1 hash</source>
-        <translation type="unfinished"></translation>
+        <translation>SHA1 räsi</translation>
     </message>
     <message>
         <source>Subject name</source>
-        <translation type="unfinished"></translation>
+        <translation>Pealkirja nimi</translation>
     </message>
 </context>
 <context>

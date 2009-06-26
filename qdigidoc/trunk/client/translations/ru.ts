@@ -317,63 +317,63 @@ p, li { white-space: pre-wrap; }
     <name>MobileDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Прервать</translation>
     </message>
     <message>
         <source>Signing in process</source>
-        <translation type="unfinished"></translation>
+        <translation>Подписывание</translation>
     </message>
     <message>
         <source>Request accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрос принят</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Время запроса истекло</translation>
     </message>
     <message>
         <source>User denied or cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Пользователю отказано</translation>
     </message>
     <message>
         <source>Got signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись получена</translation>
     </message>
     <message>
         <source>Request pending</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрос в ожидании</translation>
     </message>
     <message>
         <source>Mobile-ID not ready, try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>Mobiil-ID не готов, попробуйте позже</translation>
     </message>
     <message>
         <source>Phone absent</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет телефона</translation>
     </message>
     <message>
         <source>Request sending error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка запроса</translation>
     </message>
     <message>
         <source>SIM error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка SIM карты</translation>
     </message>
     <message>
         <source>Service internal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутренняя ошибка услуги</translation>
     </message>
     <message>
         <source>Signing with Mobile-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Подписывается с Mobiil-ID</translation>
     </message>
     <message>
         <source>Control code</source>
-        <translation type="unfinished"></translation>
+        <translation>Контрольный код</translation>
     </message>
     <message>
         <source>%v sec</source>
-        <translation type="unfinished"></translation>
+        <translation>%v сек</translation>
     </message>
 </context>
 <context>
@@ -432,7 +432,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>NOT VALID</source>
-        <translation type="unfinished"></translation>
+        <translation>НЕДЕЙСТВИТЕЛЬНО</translation>
     </message>
     <message>
         <source>ROLE / RESOLUTION</source>
@@ -467,319 +467,320 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <source>PIN acquisition canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Введение PIN кода было прервано.</translation>
     </message>
 </context>
 <context>
     <name>RegisterP12</name>
     <message>
         <source>No OCSP PKCS#12 certificate selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ни один OCSP PKCS#12 сертфикат не выбран</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирование файла неуспешно</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите PKCS#12 сертификат</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS#12 Сертификаты (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
-        <translation type="unfinished"></translation>
+        <translation>Установка сертификата доступа</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат доступа</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Certificate permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешения сертификата</translation>
     </message>
     <message>
         <source>All users</source>
-        <translation type="unfinished"></translation>
+        <translation>Все пользователи</translation>
     </message>
     <message>
         <source>Only me</source>
-        <translation type="unfinished"></translation>
+        <translation>Только я</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>OCSP PKCS#12 сертификат доступа к серверу доступен на&lt;br /&gt;
+&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Select folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать папку</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Container default location</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение контейнера по умолчанию</translation>
     </message>
     <message>
         <source>Same folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Та же папка</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Ask container name</source>
-        <translation type="unfinished"></translation>
+        <translation>Спросить название контейнера</translation>
     </message>
     <message>
         <source>Show signing intro</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать введение при подписывании</translation>
     </message>
     <message>
         <source>Default file type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип файла по умолчанию:</translation>
     </message>
     <message>
         <source>BDoc</source>
-        <translation type="unfinished"></translation>
+        <translation>BDoc</translation>
     </message>
     <message>
         <source>DDoc</source>
-        <translation type="unfinished"></translation>
+        <translation>DDoc</translation>
     </message>
     <message>
         <source>Role</source>
-        <translation type="unfinished"></translation>
+        <translation>Роль</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Резолюция</translation>
     </message>
     <message>
         <source>City</source>
-        <translation type="unfinished"></translation>
+        <translation>Город</translation>
     </message>
     <message>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Уезд</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation type="unfinished"></translation>
+        <translation>Страна</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс</translation>
     </message>
     <message>
         <source>Save last insert role and resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить последнюю введённую роль и резолюцию</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Общее</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокси</translation>
     </message>
     <message>
         <source>Host</source>
-        <translation type="unfinished"></translation>
+        <translation>Хост</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Порт</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите  PKCS#12 сертификат</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS#12 Сертификаты (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат доступа</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
 </context>
 <context>
     <name>SignatureDialog</name>
     <message>
         <source>Signature is valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись действительна</translation>
     </message>
     <message>
         <source>Signature is not valid (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись недействительна (%1)</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
         <source>Signing time</source>
-        <translation type="unfinished"></translation>
+        <translation>Время подписи</translation>
     </message>
     <message>
         <source>Signature type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип подписи</translation>
     </message>
     <message>
         <source>Signature format</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат подписи</translation>
     </message>
     <message>
         <source>Signed file count</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество подписанных файлов</translation>
     </message>
     <message>
         <source>Certificate serialnumber</source>
-        <translation type="unfinished"></translation>
+        <translation>Серийный номер сертификатов</translation>
     </message>
     <message>
         <source>Certificate valid at</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат действителен с</translation>
     </message>
     <message>
         <source>Certificate valid until</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат действителен до</translation>
     </message>
     <message>
         <source>Certificate issuer</source>
-        <translation type="unfinished"></translation>
+        <translation>Выдавший сертификат</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"></translation>
+        <translation>Подписавшаяся сторона</translation>
     </message>
     <message>
         <source>Signer location</source>
-        <translation type="unfinished"></translation>
+        <translation>Месторасположение расписавшегося</translation>
     </message>
     <message>
         <source>City</source>
-        <translation type="unfinished"></translation>
+        <translation>Город</translation>
     </message>
     <message>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Уезд</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation type="unfinished"></translation>
+        <translation>Страна</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation type="unfinished"></translation>
+        <translation>Индекс</translation>
     </message>
     <message>
         <source>Role / resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Роль / резолюция</translation>
     </message>
     <message>
         <source>Show certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать сертификат</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Атрибут</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Значение</translation>
     </message>
     <message>
         <source>Verify</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Время</translation>
     </message>
     <message>
         <source>SHA1 hash</source>
-        <translation type="unfinished"></translation>
+        <translation>SHA1 хэш</translation>
     </message>
     <message>
         <source>Subject name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название заглавия</translation>
     </message>
 </context>
 <context>
     <name>SignatureWidget</name>
     <message>
         <source>Signed on</source>
-        <translation type="unfinished"></translation>
+        <translation>Подписано</translation>
     </message>
     <message>
         <source>Signature is</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись</translation>
     </message>
     <message>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>действителен</translation>
     </message>
     <message>
         <source>not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>недействителен</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>Подробнее</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
     <name>TreeWidget</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
 </context>
 </TS>
