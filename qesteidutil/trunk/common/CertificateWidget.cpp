@@ -157,7 +157,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
 	addItem( tr("Subject"), text.join( ", " ), textExt.join( "\n" ) );
-	addItem( tr("Public key"), QString("%1 (%1)")
+	addItem( tr("Public key"), QString("%1 (%2)")
 			.arg( c.publicKey().algorithm() == QSsl::Rsa ? "RSA" : "DSA" )
 			.arg( c.publicKey().length() ),
 		c.toHex( c.publicKey().toDer() ) );
