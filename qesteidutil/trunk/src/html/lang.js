@@ -154,6 +154,7 @@ var eidStrings = {
 	"PIN1Enter": new tr( "Sisesta vana PIN1 kood", "Current PIN1 code", "Введите старый PIN1 код" ),
 	"PIN1Length": new tr( "PIN1 pikkus peab olema 4-12 numbrit", "PIN1 length has to be between 4 and 12", "Длина PIN1 должна быть 4-12 номера" ),
 	"PIN1InvalidRetry": new tr( "Vale PIN1 kood. Saad veel proovida %d korda.", "Wrong PIN1 code. You can try %d more times.", "Неверный PIN1 код. Попыток ещё: %d" ),
+	"PIN1Invalid": new tr( "Vale PIN1 kood.", "Wrong PIN1 code.", "Неверный PIN1 код." ),
 	"PIN1EnterNew": new tr( "Sisesta uus PIN1 kood", "Enter new PIN1 code", "Неверный PIN1 код. Попыток ещё" ),
 	"PIN1Retry": new tr( "Korda uut PIN1 koodi", "Retry your new PIN1 code", "Повторите новый PIN1 код" ),
 	"PIN1Different": new tr( "Uued PIN1 koodid on erinevad", "New PIN1 codes doesn't match", "Новые PIN1 коды не сходятся" ),

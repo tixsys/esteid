@@ -116,10 +116,10 @@ QString JsExtender::checkPin()
 		{
 			pin = "";
 			throw std::runtime_error( "" );
-		} else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
+		}/* else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
 			pin = "";
 			throw std::runtime_error( "PIN1InvalidRetry" );
-		}
+		}*/
 	}
 	QCoreApplication::processEvents();
 	return pin;
@@ -135,17 +135,14 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 
 	SSLConnect *sslConnect = new SSLConnect( this );
 
-	buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type, def.toStdString() );
+	try {
+		buffer = sslConnect->getUrl( pin.toStdString(), m_mainWindow->cardManager()->activeReaderNum(), type, def.toStdString() );
+	} catch( const std::runtime_error &e ) {
+		sslConnect->deleteLater();
+		throw std::runtime_error( e );
+	}
 	
 	sslConnect->deleteLater();
-
-	/*
-	//try to reconnect to smartcard after pkcs11 module load/unload
-#ifdef Q_OS_WIN32
-	if ( m_mainWindow->eidCard() )
-		m_mainWindow->eidCard()->reconnect();
-#endif
-	*/
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }

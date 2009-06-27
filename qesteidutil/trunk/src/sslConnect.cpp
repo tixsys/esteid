@@ -121,6 +121,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 }
 
 SSLObj::SSLObj()
+: s( NULL )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
@@ -129,8 +130,11 @@ SSLObj::SSLObj()
 
 SSLObj::~SSLObj()
 {
-	SSL_shutdown(s);
-	SSL_free(s);
+	if ( s )
+	{
+		SSL_shutdown(s);
+		SSL_free(s);
+	}
 	PKCS11_release_all_slots(ctx, pslots, nslots);
 	PKCS11_CTX_unload(ctx);
 	PKCS11_CTX_free(ctx);
@@ -165,7 +169,11 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
 	authcert=&certs[0];
+	
 	result = PKCS11_login(slot, 0, pin.c_str());
+	if ( result )
+		throw std::runtime_error( "PIN1Invalid" );
+
 	authkey = PKCS11_find_key(authcert);
 	if ( !authkey )
 	{
