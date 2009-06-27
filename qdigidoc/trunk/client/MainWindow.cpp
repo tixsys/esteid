@@ -642,6 +642,7 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	enableSign();
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::showWarning( const QString &msg )
