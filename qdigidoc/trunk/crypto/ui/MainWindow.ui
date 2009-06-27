@@ -80,6 +80,7 @@ QPushButton:disabled
 {
 background-color: #00355F;
 border: 0px;
+margin-right: 0px;
 color: white;
 }
 
@@ -702,8 +703,8 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>288</width>
-                  <height>207</height>
+                  <width>100</width>
+                  <height>30</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="viewKeysLayout">

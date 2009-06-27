@@ -80,6 +80,7 @@ QPushButton:disabled
 {
 background-color: #00355F;
 border: 0px;
+margin-right: 0px;
 color: white;
 }
 
@@ -968,8 +969,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>288</width>
-               <height>201</height>
+               <width>73</width>
+               <height>24</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
