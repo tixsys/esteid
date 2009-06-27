@@ -3,14 +3,14 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
 */
-// Revision $Revision: 204 $
+// Revision $Revision: 326 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #define CTAPI __stdcall
 #else
 #define CTAPI

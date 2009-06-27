@@ -3,14 +3,14 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
 */
-// Revision $Revision: 204 $
+// Revision $Revision: 326 $
 #include "precompiled.h"
 #include "PCSCManager.h"
 #include "SCError.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #define LIBNAME "winscard"
 #define SUFFIX "A"
 #else
@@ -42,7 +42,7 @@ PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME),mOwnCo
 
 void PCSCManager::construct()
 {
-#ifdef WIN32
+#ifdef _WIN32
 	pSCardAccessStartedEvent = ( HANDLE(SCAPI *)() )
 		mLibrary.getProc("SCardAccessStartedEvent");
 	pSCardReleaseStartedEvent = (void(SCAPI *)(HANDLE))mLibrary.getProc("SCardReleaseStartedEvent");
@@ -71,7 +71,7 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardBeginTransaction");
 	pSCardEndTransaction=(LONG(SCAPI *)(SCARDHANDLE ,DWORD ))
 		mLibrary.getProc("SCardEndTransaction");
-#ifdef WIN32
+#ifdef _WIN32
 	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD ,
 		LPDWORD ,LPDWORD ,LPBYTE ,LPDWORD ))
 		mLibrary.getProc("SCardStatus" SUFFIX);
@@ -90,7 +90,7 @@ PCSCManager::~PCSCManager(void)
 {
 	if (mOwnContext)
 		(*pSCardReleaseContext)(mSCardContext);
-#ifdef WIN32
+#ifdef _WIN32
 // this crashes with "ESP not being preserved", wrong calling convention apparently
 //	(*pSCardReleaseStartedEvent)(mSCStartedEvent);
 #endif
@@ -194,7 +194,7 @@ PCSCConnection * PCSCManager::connect(uint idx,bool forceT0)
 
 PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
 	DWORD proto = SCARD_PROTOCOL_T0;
-#ifdef WIN32 //quick hack, pcsclite headers dont have that
+#ifdef _WIN32 //quick hack, pcsclite headers dont have that
 	DWORD tmpProto,sz=sizeof(DWORD);
 	if (!(*pSCardGetAttrib)(existingHandle,SCARD_ATTR_CURRENT_PROTOCOL_TYPE,
 		(LPBYTE)&tmpProto,&sz)) 
@@ -204,6 +204,7 @@ PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
 }
 
 PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
+	UNUSED_ARG(forceT0); //??
 	PCSCConnection *pc = (PCSCConnection *)c;
 	SCError::check((*pSCardReconnect)(pc->hScard, 
 		SCARD_SHARE_SHARED, (pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0,

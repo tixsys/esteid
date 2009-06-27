@@ -3,22 +3,16 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 23:12:12 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
 */
-// Revision $Revision: 207 $
+// Revision $Revision: 248 $
 #pragma once
 
-typedef unsigned int uint;
-typedef unsigned char byte;
-typedef unsigned short word;
-typedef unsigned long dword;
-typedef unsigned short ushort;
-/// shorthand for std::vector<unsigned char>, used everywhere
-typedef	std::vector<byte> ByteVec;
+#include "types.h"
 
 struct ConnectionBase;
 
-/// Abstraction of system smarcard managers
+/// Abstraction of system smartcard managers
 /** ManagerInterface is abstraction of system smartcard managers.
  Concrete managers are PCSCManager and CTAPIManager. Example additional 
  derivations might be direct communications driver or even serial/USB port */
@@ -42,7 +36,7 @@ public:
 	/// connects instance of card to reader at index, forceT0 is used for cards that cant speak T1
 	virtual ConnectionBase * connect(uint index,bool forceT0=false) = 0;
 	/// reconnect using a different protocol
-	virtual ConnectionBase * reconnect(ConnectionBase *c,bool forceT0=false) {return c;}
+	virtual ConnectionBase * reconnect(ConnectionBase *c,bool forceT0=false) {UNUSED_ARG(forceT0);return c;}
 	/// use given stream as APDU log
 	inline void setLogging(std::ostream *logStream) {mLogger = logStream;}
 protected:
@@ -60,10 +54,13 @@ protected:
 	virtual void execCommand(ConnectionBase *c,std::vector<byte> &cmd,std::vector<byte> &recv,
 		unsigned int &recvLen) = 0;
 	virtual void execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
+		UNUSED_ARG(c);UNUSED_ARG(cmd);
 		throw std::runtime_error("This manager does not support PIN entry commands");
 		}
 	virtual void execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd
 		,size_t oldPinLen,size_t newPinLen) { 
+		UNUSED_ARG(c);UNUSED_ARG(cmd);
+		UNUSED_ARG(oldPinLen);UNUSED_ARG(newPinLen);
 		throw std::runtime_error("This manager does not support PIN change commands");
 		}
 	/// tell if given connection is using T1 (true) or T0
@@ -87,7 +84,7 @@ struct ConnectionBase {
 	/// tells if the manager has a secure PIN input method, true for CTAPI
 	virtual bool isSecure() {return false;}
 	ConnectionBase(ManagerInterface &manager) : 
-		mManager(manager),mIndex(-1),mForceT0(false),mOwnConnection(false) {}
+		mManager(manager),mIndex((uint)-1),mForceT0(false),mOwnConnection(false) {}
 	ConnectionBase(ManagerInterface &manager,unsigned int index,bool f) 
 		: mManager(manager),mIndex(index),mForceT0(f),mOwnConnection(true) {
 		mManager.makeConnection(this,index);

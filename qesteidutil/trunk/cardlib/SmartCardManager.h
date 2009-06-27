@@ -3,7 +3,7 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-03-29 17:33:52 +0300 (P, 29 märts 2009) $
 */
 // Revision $Revision: 204 $
 #pragma once

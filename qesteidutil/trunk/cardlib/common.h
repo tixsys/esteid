@@ -5,8 +5,9 @@
 #include <stdexcept>
 #include <sstream>
 #include <iomanip>
+#include "types.h"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <tchar.h>
 #endif
 /*! \mainpage Cardlib documentation

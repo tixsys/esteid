@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2008-07-11 09:10:20 +0300 (Fri, 11 Jul 2008) $
+	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
 */
-// Revision $Revision: 89 $
+// Revision $Revision: 248 $
 #include "precompiled.h"
 #include "EstEidCardMaintainer.h"
 
@@ -22,6 +22,6 @@ void EstEidCardMaintainer::performGenerateNewKeys() {
 	card.setSecEnv(3);
 	card.selectDF(EstEidCard::FILEID_APP);
 	card.setSecEnv(3);
-	CardBase::FCI fileInfo = card.selectEF(0x0013);
+	/*CardBase::FCI fileInfo = */card.selectEF(0x0013);
 	card.readEF(1);
 }

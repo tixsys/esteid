@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
 */
-// Revision $Revision: 204 $
+// Revision $Revision: 248 $
 #include "precompiled.h"
 #include "CTAPIManager.h"
 #include "helperMacro.h"
@@ -373,6 +373,7 @@ void CTAPIManager::execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd)
 
 void CTAPIManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd
 			,size_t oldPinLen,size_t newPinLen) {
+	UNUSED_ARG(newPinLen);
 	CTAPIConnection *conn = (CTAPIConnection *) c;
 
 	byte cmdChange[] = {0x20,INS_MODIFY,0x01,0x00}; //change pin on ICC1

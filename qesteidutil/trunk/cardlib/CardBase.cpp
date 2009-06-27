@@ -3,7 +3,7 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-02-05 14:51:28 +0200 (Thu, 05 Feb 2009) $
+	\date		$Date: 2009-02-05 14:51:28 +0200 (N, 05 veebr 2009) $
 */
 // Revision $Revision: 158 $
 #include "precompiled.h"

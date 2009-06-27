@@ -3,21 +3,24 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
 */
-// Revision $Revision: 204 $
+// Revision $Revision: 326 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"
-#ifndef WIN32
+#ifndef _WIN32
 #include <PCSC/wintypes.h>
 #include <PCSC/pcsclite.h>
 #include <PCSC/winscard.h>
 #else
+#pragma warning(push)
+#pragma warning(disable:4201)
 #include <winscard.h>
+#pragma warning(pop)
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
 #define SCAPI __stdcall
 #define CSTRTYPE const CHAR *
 #define STRTYPE CHAR *
@@ -55,14 +58,14 @@ struct PCSCConnection : public ConnectionBase {
 class PCSCManager : public ManagerInterface {
 	DynamicLibrary mLibrary;
 	bool mOwnContext;
-#ifdef WIN32
+#ifdef _WIN32
 	HANDLE mSCStartedEvent;
 #endif
 	SCARDCONTEXT mSCardContext;
 	std::vector<char > mReaders;
 	std::vector<SCARD_READERSTATE> mReaderStates;
 
-#ifdef WIN32
+#ifdef _WIN32
 	HANDLE (SCAPI *pSCardAccessStartedEvent)();
 	void (SCAPI *pSCardReleaseStartedEvent)(HANDLE hStartedEventHandle);
 #endif

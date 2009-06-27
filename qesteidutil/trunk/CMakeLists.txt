@@ -44,6 +44,7 @@ set(cardlib_SRCS
     cardlib/PCSCManager.cpp
     cardlib/SCError.cpp
     cardlib/SmartCardManager.cpp
+    cardlib/types.cpp
 )
 
 set(qesteidutil_SRCS

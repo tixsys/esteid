@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-16 08:49:10 +0200 (Mon, 16 Mar 2009) $
+	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
 */
-// Revision $Revision: 195 $
+// Revision $Revision: 326 $
 #include "precompiled.h"
 #include "DynamicLibrary.h"
 
@@ -27,12 +27,14 @@ DynamicLibrary::DynamicLibrary(const char *dllName,const char *pathHint,
 	construct(version);
 	}
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #pragma comment(lib,"version")
 
 void DynamicLibrary::construct(int ) {
 	mLibhandle = LoadLibraryA(name.c_str());
+	if (!mLibhandle)
+		mLibhandle = LoadLibraryA( std::string(std::string(m_pathHint) + "\\" + name).c_str());
 	if (!mLibhandle) {
 		std::ostringstream buf;
 		buf << "Dynamic library '" << name << "' not found in system";

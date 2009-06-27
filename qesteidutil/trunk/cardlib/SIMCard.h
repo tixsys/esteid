@@ -5,7 +5,7 @@ class SIMCard :
 	public CardBase
 {
 public:
-	SIMCard(void);
+	SIMCard(ManagerInterface &ref);
 	~SIMCard(void);
 	void test(void);
 };

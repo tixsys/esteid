@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 23:12:12 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
 */
-// Revision $Revision: 207 $
+// Revision $Revision: 248 $
 #pragma once
 #include "ManagerInterface.h"
 
@@ -88,7 +88,7 @@ public:
 	/// connects the card instance to the reader at index idx
 	void connect(unsigned int idx,bool forceT0=false);
 	/// virtual to be overridden by concrete cards, that can check for ATR or other card specific data
-	virtual bool isInReader(unsigned int idx) {return false;}
+	virtual bool isInReader(unsigned int idx) {UNUSED_ARG(idx);return false;}
 	/// set logging stream. set to NULL for no logging ( default )
 	void setLogging(std::ostream *logStream);
 	/// sigh .. just a hack to reset card in some instances
