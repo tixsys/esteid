@@ -391,6 +391,7 @@ void MainWindow::on_languages_activated( int index )
 	signButton->setText( tr("Sign") );
 	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::parseLink( const QString &link )
@@ -642,7 +643,6 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	enableSign();
-	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::showWarning( const QString &msg )
