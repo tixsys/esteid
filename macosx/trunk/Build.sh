@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=/usr/local/bin:$PATH
+
 svn update ../..
 
 ARCH=universal
@@ -25,6 +27,7 @@ fi
 NAME=`date "+installer_${ARCH}_%Y%m%d_r${REVISION}.dmg"`
 FILE=build/Packages/${NAME}
 
+env
 ./make.rb -V -f --sign build/Manifest.key --arch ${ARCH} installer
 
 hdiutil create -fs HFS+ -srcfolder build/Packages/esteid-dev.mpkg -volname esteid-dev ${FILE}
