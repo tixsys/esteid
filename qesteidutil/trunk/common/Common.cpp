@@ -105,7 +105,7 @@ bool Common::startDetached( const QString &program )
 bool Common::startDetached( const QString &program, const QStringList &arguments )
 {
 #ifdef Q_OS_MAC
-	return QProcess::startDetached( "open", QStringList() << "-a" << program << arguments );
+	return QProcess::startDetached( "/usr/bin/open", QStringList() << "-a" << program << arguments );
 #else
 	return QProcess::startDetached( program, arguments );
 #endif
