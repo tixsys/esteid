@@ -544,6 +544,9 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
           <property name="horizontalSpacing">
            <number>10</number>
           </property>
+          <property name="verticalSpacing">
+           <number>4</number>
+          </property>
           <property name="margin">
            <number>0</number>
           </property>
@@ -699,8 +702,8 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>100</width>
-                  <height>30</height>
+                  <width>288</width>
+                  <height>207</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="viewKeysLayout">

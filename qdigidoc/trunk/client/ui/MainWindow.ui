@@ -613,22 +613,18 @@ Also and active internet connection is needed.&lt;/p&gt;
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="introButtonLayout">
-            <item>
-             <widget class="QCheckBox" name="introCheck">
-              <property name="text">
-               <string>Skip this intro</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QDialogButtonBox" name="introButtons">
-              <property name="standardButtons">
-               <set>QDialogButtonBox::Cancel</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QCheckBox" name="introCheck">
+            <property name="text">
+             <string>Skip this intro</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDialogButtonBox" name="introButtons">
+            <property name="standardButtons">
+             <set>QDialogButtonBox::Cancel</set>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -636,6 +632,9 @@ Also and active internet connection is needed.&lt;/p&gt;
          <layout class="QGridLayout" name="signLayout">
           <property name="horizontalSpacing">
            <number>10</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>4</number>
           </property>
           <property name="margin">
            <number>0</number>
@@ -920,6 +919,9 @@ p, li { white-space: pre-wrap; }
           <property name="horizontalSpacing">
            <number>10</number>
           </property>
+          <property name="verticalSpacing">
+           <number>4</number>
+          </property>
           <property name="margin">
            <number>0</number>
           </property>
@@ -966,8 +968,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>88</width>
-               <height>18</height>
+               <width>288</width>
+               <height>201</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
