@@ -65,4 +65,5 @@ public slots:
 
 	bool	isTempel();
 	bool	isValid();
+	int		validDays();
 };

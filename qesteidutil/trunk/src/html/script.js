@@ -196,9 +196,23 @@ function readCardData()
 		}
 
 		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
+		var days = esteidData.authCert.validDays();
+		if ( days > 0 && days <= 105 )
+		{
+			document.getElementById('authCertWillExpire').style.display = 'block';
+			document.getElementById('authCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
+		} else
+			document.getElementById('authCertWillExpire').style.display = 'none';
 		document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
 
 		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
+		days = esteidData.signCert.validDays();
+		if ( days > 0 && days <= 105 )
+		{
+			document.getElementById('signCertWillExpire').style.display = 'block';
+			document.getElementById('signCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
+		} else
+			document.getElementById('signCertWillExpire').style.display = 'none';
 		document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
 
 		if ( esteidData.getPin1RetryCount() != 0 )

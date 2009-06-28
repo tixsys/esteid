@@ -41,6 +41,7 @@ var htmlStrings = {
 	"labelSignCert": new tr( "Allkirjastamise sertifikaat", "Signature certificate", "Сертификат подписи" ),
 	"labelCertIs": new tr( "Sertifikaat on", "Certificate is", "Сертификат" ),
 	"labelCertIsValidTill": new tr( "Sertifikaat kehtib kuni", "Certificate is valid till", "Сертификат действителен до" ),
+	"labelCertWillExpire": new tr( "Sertifikaat aegub %d päeva pärast", "Certificate will expire in %d days", "Сертификат истекает через %d дня" ),
 	"labelAuthUsed": new tr( "ID-kaarti on kasutatud isikutuvastamiseks", "Authentication key has been used", "Сертификат использован" ),
 	"labelSignUsed": new tr( "ID-kaarti on kasutatud allkirjastamiseks", "Signature key has been used", "Сертификат использован" ),
 	"labelTimes": new tr( "korda", "times", "раз" ),
