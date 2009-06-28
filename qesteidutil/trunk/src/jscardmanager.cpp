@@ -61,7 +61,6 @@ void JsCardManager::pollCard()
 		pollTimer.start( 1000 );
 
 	int numReaders = 0;
-    EstEidCard *card = 0;
     try {
 		QString insert,remove;
 		bool foundConnected = false;
@@ -83,12 +82,11 @@ void JsCardManager::pollCard()
 				//card in use
 				if ( !reader.state.contains( "EMPTY" ) )
 				{
-					if ( !card )
-						card = new EstEidCard(*cardMgr);
-					if ( card->isInReader(i) )
+					EstEidCard card(*cardMgr);
+					if ( card.isInReader(i) )
 					{
-						card->connect( i, true );
-						reader.cardId = QString::fromStdString( card->readDocumentID() );
+						card.connect( i );
+						reader.cardId = QString::fromStdString( card.readDocumentID() );
 						reader.connected = true;
 						foundConnected = true;
 						insert = reader.name;
@@ -211,7 +209,7 @@ bool JsCardManager::selectReader( const ReaderState &reader )
         if (!cardMgr)
             cardMgr = new SmartCardManager();
 		card = new EstEidCard(*cardMgr);
-		card->connect( reader.id, true );
+		card->connect( reader.id );
 		QCoreApplication::processEvents();
 		m_jsEsteidCard->setCard(card, reader.id);
         return true;
