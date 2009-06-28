@@ -6,6 +6,6 @@ class SIMCard :
 {
 public:
 	SIMCard(ManagerInterface &ref);
-	~SIMCard(void);
-	void test(void);
+	~SIMCard(void) {};
+	void test(void) {};
 };
