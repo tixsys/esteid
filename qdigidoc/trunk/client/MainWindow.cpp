@@ -1,7 +1,7 @@
 /*
  * QDigiDocClient
  *
- * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo KÄ±ster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -57,6 +57,8 @@ MainWindow::MainWindow( QWidget *parent )
 	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
 #endif
 
+	QApplication::instance()->installEventFilter( this );
+	
 	signContentView->setColumnHidden( 2, true );
 	viewContentView->setColumnHidden( 3, true );
 
@@ -342,6 +344,19 @@ void MainWindow::dropEvent( QDropEvent *e )
 			params << u.toLocalFile();
 	}
 	buttonClicked( HomeSign );
+}
+
+bool MainWindow::eventFilter( QObject *o, QEvent *e )
+{
+	if( e->type() == QEvent::FileOpen )
+	{
+		QFileOpenEvent *o = static_cast<QFileOpenEvent*>(e);
+		params << o->file();
+		buttonClicked( HomeSign );
+		return true;
+	}
+	else
+		return QWidget::eventFilter( o, e );
 }
 
 void MainWindow::enableSign()

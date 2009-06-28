@@ -1,7 +1,7 @@
 /*
  * QDigiDocCrypto
  *
- * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo KÄ±ster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -44,6 +44,7 @@ MainWindow::MainWindow( QWidget *parent )
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
 	setupUi( this );
+	
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
 #if QT_VERSION >= 0x040500
 	setWindowFlags( windowFlags() | Qt::WindowCloseButtonHint );
@@ -51,6 +52,8 @@ MainWindow::MainWindow( QWidget *parent )
 	setWindowFlags( windowFlags() | Qt::WindowSystemMenuHint );
 #endif
 
+	QApplication::instance()->installEventFilter( this );
+	
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
@@ -296,6 +299,19 @@ void MainWindow::dropEvent( QDropEvent *e )
 			params << u.toLocalFile();
 	}
 	buttonClicked( HomeCreate );
+}
+
+bool MainWindow::eventFilter( QObject *o, QEvent *e )
+{
+	if( e->type() == QEvent::FileOpen )
+	{
+		QFileOpenEvent *o = static_cast<QFileOpenEvent*>(e);
+		params << o->file();
+		buttonClicked( HomeCreate );
+		return true;
+	}
+	else
+		return QWidget::eventFilter( o, e );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
