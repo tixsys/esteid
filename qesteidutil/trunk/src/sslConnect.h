@@ -44,7 +44,6 @@ public:
 	PKCS11_CTX *ctx;
 
 private:
-	SSL_CTX *sctx;
 	SSL		*s;
 	int		m_reader;
 

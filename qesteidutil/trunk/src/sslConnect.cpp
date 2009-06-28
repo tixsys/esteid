@@ -121,7 +121,8 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 }
 
 SSLObj::SSLObj()
-: s( NULL )
+:	ctx( NULL )
+,	s( NULL )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
@@ -130,14 +131,17 @@ SSLObj::SSLObj()
 
 SSLObj::~SSLObj()
 {
-	if ( s )
+	if ( s != NULL )
 	{
 		SSL_shutdown(s);
 		SSL_free(s);
 	}
-	PKCS11_release_all_slots(ctx, pslots, nslots);
-	PKCS11_CTX_unload(ctx);
-	PKCS11_CTX_free(ctx);
+	if ( ctx != NULL )
+	{
+		PKCS11_release_all_slots(ctx, pslots, nslots);
+		PKCS11_CTX_unload(ctx);
+		PKCS11_CTX_free(ctx);
+	}
 
 	CRYPTO_cleanup_all_ex_data();
 	ERR_free_strings();
