@@ -263,6 +263,8 @@ function setActive( content, el )
 
 	if ( el != '' )
 	{
+		if ( typeof el == 'string' )
+			el = document.getElementById( el );
 		var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
 		for( i=0;i<buttons.length;i++)
 			buttons[i].className = 'button';
