@@ -1,7 +1,7 @@
 /*
  * QDigiDocClient
  *
- * Copyright (C) 2009 Jargo KÄ±ster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -658,6 +658,7 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	enableSign();
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::showWarning( const QString &msg )
