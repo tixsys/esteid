@@ -56,6 +56,7 @@ public:
 	QString		mediaType() const;
 	DigiDoc		*parent() const;
 	QString		role() const;
+	QStringList	roles() const;
 
 private:
 	void setLastError( const digidoc::Exception &e );

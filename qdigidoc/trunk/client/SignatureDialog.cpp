@@ -107,7 +107,9 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	signerZip->setText( l.value( 2 ) );
 	signerCountry->setText( l.value( 3 ) );
 
-	signerRole->setText( s.role() );
+	QStringList roles = s.roles();
+	signerRole->setText( roles.value(0) );
+	signerResolution->setText( roles.value(1) );
 
 	// Certificate info
 	QTreeWidget *t = signatureView;

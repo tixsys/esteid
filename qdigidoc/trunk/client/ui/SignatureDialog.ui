@@ -118,6 +118,9 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLineEdit" name="signerResolution"/>
+          </item>
          </layout>
         </widget>
        </item>

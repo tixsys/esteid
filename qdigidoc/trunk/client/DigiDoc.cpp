@@ -137,13 +137,16 @@ QString DigiDocSignature::mediaType() const
 DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 
 QString DigiDocSignature::role() const
+{ return roles().join( ", " ); }
+
+QStringList DigiDocSignature::roles() const
 {
 	QStringList list;
 	const Signer::SignerRole::TRoles roles = s->getSignerRole().claimedRoles;
 	Signer::SignerRole::TRoles::const_iterator i = roles.begin();
 	for( ; i != roles.end(); ++i )
 		list << QString::fromUtf8( i->data() );
-	return list.join( ", " );
+	return list;
 }
 
 void DigiDocSignature::setLastError( const Exception &e )
