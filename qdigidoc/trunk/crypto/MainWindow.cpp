@@ -1,7 +1,7 @@
 /*
  * QDigiDocCrypto
  *
- * Copyright (C) 2009 Jargo KÄ±ster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -245,7 +245,6 @@ void MainWindow::buttonClicked( int button )
 			if( !p.exec() )
 				break;
 
-			setEnabled( false );
 			QLabel *progress = new QLabel( tr("Decrypting"), view );
 			progress->setAlignment( Qt::AlignCenter );
 			progress->setFixedSize( 300, 20 );
@@ -257,7 +256,6 @@ void MainWindow::buttonClicked( int button )
 			doc->decrypt( p.text() );
 
 			progress->deleteLater();
-			setEnabled( true );
 
 			if( doc->isSigned() )
 			{
