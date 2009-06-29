@@ -103,22 +103,22 @@ Enter PIN1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jsextender.cpp" line="262"/>
+        <location filename="../jsextender.cpp" line="261"/>
         <source> - %1 (active)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jsextender.cpp" line="262"/>
+        <location filename="../jsextender.cpp" line="261"/>
         <source> - %1 (not active)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jsextender.cpp" line="330"/>
+        <location filename="../jsextender.cpp" line="329"/>
         <source>Save picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../jsextender.cpp" line="330"/>
+        <location filename="../jsextender.cpp" line="329"/>
         <source>JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -126,7 +126,7 @@ Enter PIN1</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="70"/>
+        <location filename="../mainwindow.cpp" line="73"/>
         <source>ID-card utility</source>
         <translation type="unfinished"></translation>
     </message>
@@ -134,32 +134,32 @@ Enter PIN1</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../sslConnect.cpp" line="127"/>
+        <location filename="../sslConnect.cpp" line="129"/>
         <source>failed to load pkcs11 module</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sslConnect.cpp" line="154"/>
+        <location filename="../sslConnect.cpp" line="162"/>
         <source>failed to list slots</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sslConnect.cpp" line="157"/>
+        <location filename="../sslConnect.cpp" line="165"/>
         <source>token failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sslConnect.cpp" line="163"/>
+        <location filename="../sslConnect.cpp" line="171"/>
         <source>no token available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sslConnect.cpp" line="173"/>
+        <location filename="../sslConnect.cpp" line="185"/>
         <source>no key matching certificate available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sslConnect.cpp" line="196"/>
+        <location filename="../sslConnect.cpp" line="208"/>
         <source>Failed to resolve hostname. Are you connected to the internet?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -173,7 +173,7 @@ Enter PIN1</source>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="30"/>
-        <source>Save password for specified period in minutes
+        <source>Save PIN1 for specified period in minutes
 0 - always ask</source>
         <translation type="unfinished"></translation>
     </message>

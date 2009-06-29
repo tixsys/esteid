@@ -263,7 +263,7 @@ Sisesta PIN1</translation>
     <message>
         <source>Save password for specified period in minutes
 0 - always ask</source>
-        <translation>Salvesta parool määratud minutiteks
+        <translation type="obsolete">Salvesta parool määratud minutiteks
 0 - küsi iga kord</translation>
     </message>
     <message>
@@ -289,6 +289,12 @@ Sisesta PIN1</translation>
     <message>
         <source>Never</source>
         <translation>Mitte kunagi</translation>
+    </message>
+    <message>
+        <source>Save PIN1 for specified period in minutes
+0 - always ask</source>
+        <translation>Salvesta PIN1 määratud minutiteks
+0 - küsi iga kord</translation>
     </message>
 </context>
 </TS>
