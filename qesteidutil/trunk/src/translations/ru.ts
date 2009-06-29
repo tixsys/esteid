@@ -94,33 +94,34 @@
     <message>
         <location filename="../jsextender.cpp" line="114"/>
         <source>Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификация личности</translation>
     </message>
     <message>
         <location filename="../jsextender.cpp" line="114"/>
         <source>This action needs authentication
 Enter PIN1</source>
-        <translation type="unfinished"></translation>
+        <translation>Для данного действия нужно идентифицировать личность.
+Введите PIN1</translation>
     </message>
     <message>
         <location filename="../jsextender.cpp" line="261"/>
         <source> - %1 (active)</source>
-        <translation type="unfinished"></translation>
+        <translation> - %1 (активно)</translation>
     </message>
     <message>
         <location filename="../jsextender.cpp" line="261"/>
         <source> - %1 (not active)</source>
-        <translation type="unfinished"></translation>
+        <translation> - %1 (неактивно)</translation>
     </message>
     <message>
         <location filename="../jsextender.cpp" line="329"/>
         <source>Save picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Cохранить картинку</translation>
     </message>
     <message>
         <location filename="../jsextender.cpp" line="329"/>
         <source>JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -128,7 +129,7 @@ Enter PIN1</source>
     <message>
         <location filename="../mainwindow.cpp" line="73"/>
         <source>ID-card utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Oбсуживание ID- карты</translation>
     </message>
 </context>
 <context>
@@ -169,43 +170,44 @@ Enter PIN1</source>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="30"/>
         <source>Save PIN1 for specified period in minutes
 0 - always ask</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранять PIN1 на обозначенный период в минутах
+0 - всегда спрашивать</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="41"/>
         <source>Check updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверить на обновления</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="71"/>
         <source>Update automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновлять автоматически</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="104"/>
         <source>Once a day</source>
-        <translation type="unfinished"></translation>
+        <translation>Раз в день</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="109"/>
         <source>Once a week</source>
-        <translation type="unfinished"></translation>
+        <translation>Раз в неделю</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="114"/>
         <source>Once a month</source>
-        <translation type="unfinished"></translation>
+        <translation>Раз в месяц</translation>
     </message>
     <message>
         <location filename="../ui/SettingsDialog.ui" line="119"/>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Никогда</translation>
     </message>
 </context>
 </TS>

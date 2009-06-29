@@ -32,7 +32,7 @@ var htmlStrings = {
 
 	"labelCardInReaderID": new tr( "Lugejas on ID kaart", "Card in reader", "Карта в считывателе" ),
 	"labelThisIs": new tr( "See on", "This is", "Это" ),
-	"labelIsValid": new tr( "kehtiv", "valid", "действительно" ),
+	"labelIsValid": new tr( "kehtiv", "valid", "действительный" ),
 	"labelIsInValid": new tr( "kehtetu", "expired", "недействительно" ),
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "Карта действительна до" ),
@@ -72,10 +72,10 @@ var htmlStrings = {
 	
 	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "PUK-code ise used for unblocking certificates, when PIN1 or PIN2 has been entered 3 times incorrectly.", "PUK код, это код, который разблокирует сертификаты, если PIN1 или PIN2 были введены неверно 3 раза подрят." ),
 	"labelInputPUK2": new tr( "PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "PUK code is written in the envelpole, that was given with the ID-card or when certificates were changed.", "PUK код записан в конверте с кодами, который выдаётся вместе с ID- картой или при смене сетрификатов." ),
-	"labelPUKBlocked": new tr( "PUK kood on blokeeritud!", "PUK code is blocked!", "PUK кода заблокирован!" ),
+	"labelPUKBlocked": new tr( "PUK kood on blokeeritud!", "PUK code is blocked!", "PUK код заблокирован!" ),
 
 	"inputCert": new tr( "Sertifikaadid", "Certificates", "Сертификаты" ),
-	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "@eesti.ee эл. почта" ),
+	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "@eesti.ee" ),
 	"inputActivateEmail": new tr( "Aktiveeri @eesti.ee e-post", "Activate @eesti.ee email", "Активируй @eesti.ee эл. почту" ),
 	"inputCheckEmails": new tr( "Kontrolli @eesti.ee e-posti seadistust", "Check your @eesti.ee email settings", "Проверь настройки эл. почты @eesti.ee" ),
 	"inputMobile": new tr( "Mobiil-ID", "Mobile-ID", "Mobiil-ID" ),
@@ -125,7 +125,7 @@ var htmlStrings = {
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus!", "Loading picture failed!", "Загрузка картинки неуспешна!" ),
 	"loadPicFailed2": new tr( "Pildi laadimine ebaõnnestus - tundmatu pildiformaat!", "Loading picture failed - unknown picture format!", "Загрузка картинки неуспешна- неизвестный формат!" ),
 	"loadPicFailed3": new tr( "Pildi laadimine ebaõnnestus - viga salvestamisel!", "Loading picture failed - error saving file!", "Загрузка картинки неуспешна- ошибка при сохранении!" ),
-	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считваются" )
+	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считываются" )
 };
 
 //codes from eesti.ee

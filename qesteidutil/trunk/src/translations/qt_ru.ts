@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="et">
+<TS version="2.0" language="ru_RU" sourcelanguage="en_US">
 <context>
     <name>AudioOutput</name>
     <message>
@@ -1176,7 +1176,7 @@ to
     <message>
         <location line="+0"/>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1201,7 +1201,7 @@ to
     <message>
         <location line="+0"/>
         <source>Close</source>
-        <translation>Sulge</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6029,6 +6029,7 @@ Please choose a different file name.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -6925,12 +6926,14 @@ Please choose a different file name.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location line="+11"/>
         <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
         <translation type="unfinished">
+            <numerusform></numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
