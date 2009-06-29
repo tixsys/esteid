@@ -323,7 +323,7 @@
     </message>
     <message>
         <source>Failed to save file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili salvestamine ebaõnnestus &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

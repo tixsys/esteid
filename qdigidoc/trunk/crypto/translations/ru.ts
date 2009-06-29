@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Key already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Адресат уже добавлен</translation>
     </message>
     <message>
         <source>Failed to add key</source>
@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>Failed to create temporary files&lt;br /&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Создание временных файлов неуспешно&lt;br /&gt;%1</translation>
     </message>
     <message>
         <source>Failed to read decrypted data</source>
@@ -184,15 +184,15 @@
     </message>
     <message>
         <source>You do not have the key to decrypt this document</source>
-        <translation type="unfinished"></translation>
+        <translation>У вас отсутствует ключ для расшифровки документа</translation>
     </message>
     <message>
         <source>No keys specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Не выбран ни один ключ</translation>
     </message>
     <message>
         <source>Failed to save file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранение файла неуспешно &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>This certificate is not usable for crypting</source>
-        <translation type="unfinished"></translation>
+        <translation>Данным сертификатом нельзя шифровать</translation>
     </message>
     <message>
         <source>Social security number is not valid!</source>
@@ -272,7 +272,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Company name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Учреждение:</translation>
     </message>
     <message>
         <source>Empty result</source>
@@ -323,7 +323,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключ</translation>
     </message>
 </context>
 <context>
@@ -417,7 +417,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 уже есть.&lt;br /&gt;Желаете заменить?</translation>
     </message>
     <message>
         <source>Open container</source>
@@ -555,11 +555,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Company</source>
-        <translation type="unfinished"></translation>
+        <translation>Учреждение</translation>
     </message>
     <message>
         <source>Register code</source>
-        <translation type="unfinished"></translation>
+        <translation>Код регистра</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -573,7 +573,17 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
+&lt;b&gt;Шифрование файлов&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
+Цель шифрования файла- сделать данные нечитаемыми для посторонних лиц.&lt;br /&gt;&lt;br /&gt;
+Шифрование Id-картой не предназначено для долгосрочного хранения данных и других заданий. Это только метод для передачи файлов по небезопасному каналу связиi.&lt;br /&gt;&lt;br /&gt;
+Для шифрования файлов используется AS Sertifitseerimiskeskuse LDAP услуга для поиска сертификатов. Файлы шифруются открытым ключом, содержащимся в сертификате.Шифрование односторонне, для расшифровки нужен личный ключ соответствующего сертификата, что храниться только на ID-карте это человекаl.&lt;/p&gt;
+&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;ПРЕДУПРЕЖДЕНИЕ:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Так как сертификат, позволяющий расшифровать данные сохранён только на ID-карте, то после потери, обновления, устаревания или механического повреждения ID-карты расшифровка  данных технически невозможна&lt;/b&gt;
+&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message utf8="true">
         <source>DigiDoc3 Krüpto</source>
@@ -589,7 +599,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Decrypting</source>
-        <translation type="unfinished"></translation>
+        <translation>Расшифровка</translation>
     </message>
 </context>
 <context>
