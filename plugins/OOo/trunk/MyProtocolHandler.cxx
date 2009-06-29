@@ -630,7 +630,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							else if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] != ','))
 							{	//convert utf-8 ascii string to unicode char
 								int iCD1, iCD2;
-								wchar_t utfChar;
+								//wchar_t utfChar;
 								iCD1 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
 								k += 3; 
 								iCD2 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);

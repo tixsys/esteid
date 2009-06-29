@@ -41,15 +41,18 @@ Function Signing
 	Dim Ctl As Object
 &apos;	Dim oSignButton As Object
 
-	Dim oCityField As Object
-	Dim oRegionField As Object
-	Dim oPostalField As Object
-	Dim oCountryField As Object
-	Dim oRoleField As Object
-	Dim oAddRoleField As Object		
-	Dim strParam As String
-	
-&apos;	Dim i, j, k, c As Integer
+  Dim oCityField As Object
+  Dim oRegionField As Object
+  Dim oPostalField As Object
+  Dim oCountryField As Object
+  Dim oRoleField As Object
+  Dim oAddRoleField As Object
+  Dim strParam As String
+  
+  Dim CtlCombo As Object
+  Dim CtlComboHeader As Object
+  
+  &apos;	Dim i, j, k, c As Integer
 
 	DialogLibraries.LoadLibrary(&quot;HW&quot;)
 	oSignDialog = CreateUnoDialog(DialogLibraries.HW.SignMain)
@@ -60,8 +63,14 @@ Function Signing
 	oCountryField = oSignDialog.getControl(&quot;CountryField&quot;)
 	oRoleField = oSignDialog.getControl(&quot;RoleField&quot;)
 	oAddRoleField = oSignDialog.getControl(&quot;AddRoleField&quot;)
-	
-	oCityField.Text = &quot;&quot; 
+
+  CtlCombo = oSignDialog.getControl(&quot;CertComboBox&quot;)
+  CtlComboHeader = oSignDialog.getControl(&quot;CertLabel&quot;)
+  CtlComboHeader.Text = &quot;Allkirjastamise info väljad pole kohustuslikud!&quot;
+  CtlCombo.setEnable(FALSE)
+  CtlCombo.setVisible(FALSE)
+
+  oCityField.Text = &quot;&quot; 
 	oRegionField.Text = &quot;&quot;
 	oPostalField.Text = &quot;&quot;
 	oCountryField.Text = &quot;&quot;

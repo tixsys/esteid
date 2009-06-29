@@ -11,7 +11,7 @@
 #else
 #define UNO_URL_HEAD "file://"
 #define SLASH ""
-#define DEBUG_FILE "/home/mark/OOoDebug.txt"
+#define DEBUG_FILE "/tmp/OOoDebug.txt"
 #endif
 
 #if DEBUG

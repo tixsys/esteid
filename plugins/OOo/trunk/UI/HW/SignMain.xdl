@@ -15,7 +15,7 @@
   <dlg:textfield dlg:id="PostalField" dlg:tab-index="2" dlg:left="12" dlg:top="86" dlg:width="60" dlg:height="15"/>
   <dlg:fixedline dlg:id="FixedLine2" dlg:tab-index="16" dlg:left="86" dlg:top="111" dlg:width="4" dlg:height="65" dlg:align="vertical"/>
   <dlg:fixedline dlg:id="FixedLine3" dlg:tab-index="17" dlg:left="10" dlg:top="36" dlg:width="137" dlg:height="5"/>
-  <dlg:text dlg:id="CertLabel" dlg:tab-index="18" dlg:left="12" dlg:top="6" dlg:width="72" dlg:height="9" dlg:value="Allkirjastamise Sertifikaat"/>
+  <dlg:text dlg:id="CertLabel" dlg:tab-index="18" dlg:left="12" dlg:top="6" dlg:width="134" dlg:height="9" dlg:value="Allkirjastamise Sertifikaat"/>
   <dlg:combobox dlg:id="CertComboBox" dlg:tab-index="9" dlg:disabled="true" dlg:left="12" dlg:top="15" dlg:width="134" dlg:height="15" dlg:page="1" dlg:help-text="Pick certificate for signing" dlg:readonly="true" dlg:hide-inactive-selection="false" dlg:spin="true"/>
   <dlg:textfield dlg:id="CountryField" dlg:tab-index="3" dlg:left="86" dlg:top="82" dlg:width="60" dlg:height="15"/>
   <dlg:textfield dlg:id="CityField" dlg:tab-index="0" dlg:left="12" dlg:top="55" dlg:width="60" dlg:height="15"/>
