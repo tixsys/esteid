@@ -36,6 +36,8 @@ namespace digidoc
           std::vector<unsigned char> getRsaModulus() const throw(IOException);
           std::vector<unsigned char> getRsaExponent() const throw(IOException);
 
+		  bool isValid() const throw(IOException);
+
           int verify(X509_STORE* store = NULL) const throw(IOException);
 
       protected:

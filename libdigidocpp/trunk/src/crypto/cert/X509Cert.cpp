@@ -392,6 +392,15 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaExponent() const throw(IOExc
 	return rsaExponent;
 }
 
+bool digidoc::X509Cert::isValid() const throw(IOException)
+{
+	int notBefore = X509_cmp_current_time(cert->cert_info->validity->notBefore);
+	int notAfter = X509_cmp_current_time(cert->cert_info->validity->notAfter);
+	if(notBefore == 0 || notAfter == 0)
+		THROW_IOEXCEPTION("Failed to validate cert",ERR_reason_error_string(ERR_get_error()));
+	return notBefore < 0 && notAfter > 0;
+}
+
 /**
  * Check if X509Cert is signed by trusted issuer
  * @param aStore X509_STORE of trusted issuers. If NULL, lib uses X509CertStore::getInstance()->getCertStore()
