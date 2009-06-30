@@ -85,13 +85,16 @@
       <div id="authKeyBlocked" class="keyBlocked">
         <trtag trcode="labelAuthKeyBlocked"></trtag><br /><trtag trcode="labelCertBlocked"></trtag>
       </div>
+	  <div id="authUpdateDiv" style="display: none;">
+		<input id="authUpdateButton" type="button" trcode="inputUpdateCert" onClick="updateCert('auth');" class="buttonBottom" />
+	  </div>
       <div id="authBottomButtons">
         <div id="authValidButtons">
-          <input type="button" trcode="inputChangePIN1" onClick="setActive('pin1','');" class="buttonBottom" />
-          <input type="button" trcode="inputCertDetails" onClick="esteidData.showCert(1)" class="buttonBottom" />
+          <input id="authValidButtons1" type="button" trcode="inputChangePIN1" onClick="setActive('pin1','');" class="buttonBottom" />
+          <input id="authValidButtons2" type="button" trcode="inputCertDetails" onClick="esteidData.showCert(1)" class="buttonBottom" />
         </div>
         <div id="authBlockedButtons" style="position: absolute; bottom: 5px; left: 50px;">
-          <input type="button" trcode="inputUnblock" onclick="setActive('bpin1','');" class="buttonBottom" />
+          <input id="authBlockedButtons1" type="button" trcode="inputUnblock" onclick="setActive('bpin1','');" class="buttonBottom" />
         </div>
       </div>
     </div>
@@ -108,13 +111,16 @@
       <div id="signKeyBlocked" class="keyBlocked">
         <trtag trcode="labelSignKeyBlocked"></trtag><br /><trtag trcode="labelCertBlocked"></trtag>
       </div>
+	  <div id="signUpdateDiv" style="display: none; padding-left: 30px;">
+		<input id="signUpdateButton" type="button" trcode="inputUpdateCert" onClick="updateCert('sign');" class="buttonBottom" />
+	  </div>
       <div id="signBottomButtons" style="padding-left: 30px;">
         <div id="signValidButtons">
-          <input type="button" trcode="inputChangePIN2" onclick="setActive('pin2','');" class="buttonBottom" />
-          <input type="button" trcode="inputCertDetails" onClick="esteidData.showCert(2)" class="buttonBottom" />
+          <input id="signValidButtons1" type="button" trcode="inputChangePIN2" onclick="setActive('pin2','');" class="buttonBottom" />
+          <input id="signValidButtons2" type="button" trcode="inputCertDetails" onClick="esteidData.showCert(2)" class="buttonBottom" />
         </div>
         <div id="signBlockedButtons" style="position: absolute; bottom: 5px; left: 90px;">
-          <input type="button" trcode="inputUnblock" onclick="setActive('bpin2','');" class="buttonBottom" />
+          <input id="signBlockedButtons1" type="button" trcode="inputUnblock" onclick="setActive('bpin2','');" class="buttonBottom" />
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ var htmlStrings = {
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "Карта действительна до" ),
 	
-	"labelAuthCert": new tr( "Isikutuvastamise sertifikaat", "Authentication certificate", "Идентификационный сертификат" ),
+	"labelAuthCert": new tr( "Isikutuvastamise sertifikaat", "Authentication certificate", "Идент. сертификат" ),
 	"labelSignCert": new tr( "Allkirjastamise sertifikaat", "Signature certificate", "Сертификат подписи" ),
 	"labelCertIs": new tr( "Sertifikaat on", "Certificate is", "Сертификат" ),
 	"labelCertIsValidTill": new tr( "Sertifikaat kehtib kuni", "Certificate is valid till", "Сертификат действителен до" ),
@@ -90,6 +90,7 @@ var htmlStrings = {
 	"inputChangePIN2": new tr( "Muuda PIN2", "Change PIN2", "Поменять PIN2" ),
 	"inputChangePUK": new tr( "Muuda PUK", "Change PUK", "Поменять PUK" ),
 	"inputCertDetails": new tr( "Vaata üksikasju", "View details", "Просмотреть детали" ),
+	"inputUpdateCert": new tr( "Uuenda sertifikaat", "Update certificate", "Обнови сертификат" ),
 	"inputUnblock": new tr ( "Tühista blokeering", "Revoke blocking", "Отменить блокировку" ),
 	
 	"labelCurrentPIN1": new tr( "Vana PIN1 kood", "Current PIN1 code", "Старый PIN1 код" ),

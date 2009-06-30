@@ -60,6 +60,7 @@ input[type="button"] { cursor: hand; }
 
 .rightContent {position: absolute; left: 290px; width: 245px; margin-top: 10px; height: 180px; padding-left: 30px;}
 #signBottomButtons, #authBottomButtons { position: absolute; bottom:0px; left: 0px; height: 30px; width:250; z-index: 1; }
+#signUpdateDiv, #authUpdateDiv { position: absolute; bottom:30px; left: 0px; height: 30px; width:250; z-index: 1; }
 
 .keyBlocked { position: absolute; bottom: 35px; width: 220px; padding: 5px;
 	font-family: "Arial, Liberation Sans"; font-size: 12px; font-weight: bold; color: #e80303; border: 1px solid #e80303; -webkit-border-radius: 5px; }
