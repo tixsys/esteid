@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Simple EstEIDSigner</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <script type="text/javascript" src="sample.js"></script>
+</head>
+<body onload="initMe();">
+<div id="container">
+  <object id="esteid" type="application/esteid"
+          style="width: 1px; height: 1px; visibility: hidden;"></object>
+  <div id="signcontrols">
+    <a href="leping.txt">leping.txt</a>
+    <input type="button" id="signbutton"
+           value="Allkirjasta" onclick="signButton();" />
+  </div>
+  <div id="result"></div>
+  <div style="margin: 1em;"><a href="out">Allkirjastatud Failid</a></div>
+</div> <!-- container -->
+</body>
+</html>
