@@ -8,5 +8,5 @@ Icon=qdigidoc-crypto
 Name=DigiDoc3 Crypto
 Name[et]=DigiDoc3 krüpto
 
-Categories=Qt;Utility;
+Categories=Qt;Office;
 MimeType=application/x-cdoc;
