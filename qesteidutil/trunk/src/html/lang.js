@@ -78,6 +78,7 @@ var htmlStrings = {
 	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "@eesti.ee" ),
 	"inputActivateEmail": new tr( "Aktiveeri @eesti.ee e-post", "Activate @eesti.ee email", "Активируй @eesti.ee эл. почту" ),
 	"inputCheckEmails": new tr( "Kontrolli @eesti.ee e-posti seadistust", "Check your @eesti.ee email settings", "Проверь настройки эл. почты @eesti.ee" ),
+	"emailCheckID": new tr( "E-posti seadistamine on lubatud ainult ID-kaardiga.", "It is possible to change email settings only with an ID-card.", "Настройка эл. почты возможна только с ID-картой." ),
 	"inputMobile": new tr( "Mobiil-ID", "Mobile-ID", "Mobiil-ID" ),
 	"inputActivateMobile": new tr( "Aktiveeri Mobiil-ID teenus", "Activate Mobile-ID", "Активируй услугу Mobiil-ID" ),
 	"inputCheckMobile": new tr( "Kontrolli Mobiil-ID staatust", "Check Mobile-ID status", "Проверь статус Mobiil-ID" ),

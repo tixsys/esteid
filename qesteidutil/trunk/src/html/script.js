@@ -327,8 +327,17 @@ function setActive( content, el )
 			document.getElementById('bpin2OldPin').focus();
 			break;
 		case "email":
+			try {
+				if ( esteidData.authCert.isTempel() )
+				{
+					document.getElementById('emailsContentCheck').style.display = 'none';
+					document.getElementById('emailsContentCheckID').style.display = 'block';
+					break;
+				}
+			} catch ( err ) {}
 			if ( !emailsLoaded )
 				document.getElementById('emailsContentCheck').style.display = 'block';
+			document.getElementById('emailsContentCheckID').style.display = 'none';
 			break;
 		case "puk":
 			if ( esteidData.getPukRetryCount() == 0 )
