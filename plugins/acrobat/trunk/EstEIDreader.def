@@ -1,8 +1,0 @@
-LIBRARY EstEIDReader
-EXPORTS 
-OpenReader
-CloseReader
-GetSlotCount
-IsMechanismSupported
-GetTokenInfo
-Sign
