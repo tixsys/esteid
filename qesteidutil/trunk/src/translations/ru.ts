@@ -6,87 +6,87 @@
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="54"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="57"/>
         <source>OS:</source>
-        <translation type="unfinished"></translation>
+        <translation>Оп. система:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="84"/>
         <source>Library paths:</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск по тэгам:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="87"/>
         <source>Libraries</source>
-        <translation type="unfinished"></translation>
+        <translation>Тэги</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="114"/>
         <source>Smart Card service status: </source>
-        <translation type="unfinished"></translation>
+        <translation>Статус Smart Card сервиса:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="116"/>
         <source>PCSC service status: </source>
-        <translation type="unfinished"></translation>
+        <translation>Статус PCSC сервиса:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="118"/>
         <source>Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Работает</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="118"/>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation>Не работает</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="121"/>
         <source>Card readers</source>
-        <translation type="unfinished"></translation>
+        <translation>Считыватели карт</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="136"/>
         <source>%1 - failed to get version info</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - ошибка при чтении версии</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="159"/>
         <source>ID - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ID - %1</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="165"/>
         <source>Error reading card data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при чтении с карты:</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="209"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="211"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="217"/>
         <source>Error occured</source>
-        <translation type="unfinished"></translation>
+        <translation>Возникла ошибка</translation>
     </message>
     <message>
         <location filename="../DiagnosticsDialog.cpp" line="217"/>
         <source>Failed write to file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись файла неудачна!</translation>
     </message>
     <message>
         <location filename="../ui/DiagnosticsDialog.ui" line="26"/>
         <source>Diagnostics</source>
-        <translation type="unfinished"></translation>
+        <translation>Диагностика</translation>
     </message>
 </context>
 <context>
@@ -137,32 +137,32 @@ Enter PIN1</source>
     <message>
         <location filename="../sslConnect.cpp" line="129"/>
         <source>failed to load pkcs11 module</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка при загрузке модуля pkcs11</translation>
     </message>
     <message>
         <location filename="../sslConnect.cpp" line="162"/>
         <source>failed to list slots</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка при чтении слотов pkcs11</translation>
     </message>
     <message>
         <location filename="../sslConnect.cpp" line="165"/>
         <source>token failed</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка при загрузке &quot;token&quot;-а</translation>
     </message>
     <message>
         <location filename="../sslConnect.cpp" line="171"/>
         <source>no token available</source>
-        <translation type="unfinished"></translation>
+        <translation>не найдено ни одного &quot;token&quot;-а</translation>
     </message>
     <message>
         <location filename="../sslConnect.cpp" line="185"/>
         <source>no key matching certificate available</source>
-        <translation type="unfinished"></translation>
+        <translation>не найдено подходящего сертификата</translation>
     </message>
     <message>
         <location filename="../sslConnect.cpp" line="208"/>
         <source>Failed to resolve hostname. Are you connected to the internet?</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствует подключение к Интернету!</translation>
     </message>
 </context>
 <context>
