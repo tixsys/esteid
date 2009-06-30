@@ -117,17 +117,24 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${OPENSSLCRYPTO_LIBRARIES}
 )
 
-if(UNIX AND NOT APPLE)
-	INSTALL(FILES qdigidoc.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
-
-	# Install icons
-	foreach(RES 48x48)
-		install(
-			FILES images/digidoc_icon_${RES}.png
-			DESTINATION ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}/apps/
-			RENAME qdigidoc.png
-		)
-	endforeach(RES)
-endif(UNIX AND NOT APPLE)
-
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
+
+if(UNIX AND NOT APPLE)
+add_custom_target(
+	install_client_icons
+	COMMAND xdg-desktop-menu install --mode system ${CMAKE_SOURCE_DIR}/client/qdigidoc-client.desktop
+	COMMAND xdg-mime install --mode system ${CMAKE_SOURCE_DIR}/client/qdigidoc-client.xml
+	COMMAND xdg-icon-resource install --mode system --size 48 ${CMAKE_SOURCE_DIR}/client/images/digidoc_icon_48x48.png qdigidoc-client
+	COMMAND xdg-icon-resource install --mode system --context mimetypes --size 24 ${CMAKE_SOURCE_DIR}/client/images/bdoc_file_icon_24x24.png application-x-bdoc
+	COMMAND xdg-icon-resource install --mode system --context mimetypes --size 24 ${CMAKE_SOURCE_DIR}/client/images/ddoc_file_icon_24x24.png application-x-ddoc
+	)
+
+add_custom_target(
+	uninstall_client_icons
+	COMMAND xdg-icon-resource uninstall --mode system --context mimetypes --size 24 application-x-bdoc
+	COMMAND xdg-icon-resource uninstall --mode system --context mimetypes --size 24 application-x-ddoc
+	COMMAND xdg-icon-resource uninstall --mode system --size 48 qdigidoc-client
+	COMMAND xdg-mime uninstall --mode system ${CMAKE_SOURCE_DIR}/client/qdigidoc-client.xml
+	COMMAND xdg-desktop-menu uninstall --mode system ${CMAKE_SOURCE_DIR}/client/qdigidoc-client.desktop
+	)
+endif(UNIX AND NOT APPLE)

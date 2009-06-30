@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=DigiDoc3 Client
-Name[et]=DigiDoc3 klient
-Exec=qdigidocclient %F
-Icon=qdigidoc
-Terminal=false
-Categories=Qt;Office;

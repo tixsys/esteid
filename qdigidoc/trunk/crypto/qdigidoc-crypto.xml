@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+
+  <mime-type type="application/x-cdoc">
+    <comment>CDOC container</comment>
+    <glob pattern="*.cdoc"/>
+  </mime-type>
+
+</mime-info>

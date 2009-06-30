@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+
+  <mime-type type="application/x-bdoc">
+    <comment>BDOC container</comment>
+    <glob pattern="*.bdoc"/>
+  </mime-type>
+
+  <mime-type type="application/x-ddoc">
+    <comment>DDOC container</comment>
+    <glob pattern="*.ddoc"/>
+  </mime-type>
+
+</mime-info>

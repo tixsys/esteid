@@ -101,3 +101,21 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 )
 
 install(TARGETS qdigidoccrypto DESTINATION ${BIN_INSTALL_DIR})
+
+if(UNIX AND NOT APPLE)
+add_custom_target(
+	install_crypto_icons
+	COMMAND xdg-desktop-menu install --mode system ${CMAKE_SOURCE_DIR}/crypto/qdigidoc-crypto.desktop
+        COMMAND xdg-mime install --mode system ${CMAKE_SOURCE_DIR}/crypto/qdigidoc-crypto.xml
+	COMMAND xdg-icon-resource install --mode system --size 48 ${CMAKE_SOURCE_DIR}/crypto/images/crypto_64.png qdigidoc-crypto
+        COMMAND xdg-icon-resource install --mode system --context mimetypes --size 24 ${CMAKE_SOURCE_DIR}/crypto/images/cdoc_file_icon_24x24.png application-x-cdoc
+        )
+
+add_custom_target(
+        uninstall_crypto_icons
+        COMMAND xdg-icon-resource uninstall --mode system --context mimetypes --size 24 application-x-cdoc
+	COMMAND xdg-icon-resource uninstall --mode system --size 48 qdigidoc-crypto
+        COMMAND xdg-mime uninstall --mode system ${CMAKE_SOURCE_DIR}/crypto/qdigidoc-crypto.xml
+	COMMAND xdg-desktop-menu uninstall --mode system ${CMAKE_SOURCE_DIR}/crypto/qdigidoc-crypto.desktop
+        )
+endif(UNIX AND NOT APPLE)
