@@ -508,9 +508,9 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             || filesOnly && !(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) // File
             {
                 if(relative)
-                    files.push_back(decodeName(fileName));
+                    files.push_back(decodeName(fileName.c_str()));
                 else
-                    files.push_back(path(directory, decodeName(fileName), unixStyle));
+                    files.push_back(path(directory, decodeName(fileName.c_str()), unixStyle));
             }
         } while ( ::FindNextFile(hFind, &findFileData) != FALSE );
 
