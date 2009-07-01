@@ -113,10 +113,8 @@ QString DigiDocSignature::lastError() const { return m_lastError; }
 
 QString DigiDocSignature::location() const
 {
-	QStringList l;
-	Q_FOREACH( const QString &item, locations() )
-		if( !item.isEmpty() )
-			l << item;
+	QStringList l = locations();
+	l.removeAll( "" );
 	return l.join( ", " );
 }
 
@@ -124,10 +122,10 @@ QStringList DigiDocSignature::locations() const
 {
 	QStringList l;
 	const Signer::SignatureProductionPlace p = s->getProductionPlace();
-	l << QString::fromUtf8( p.city.data() );
-	l << QString::fromUtf8( p.stateOrProvince.data() );
-	l << QString::fromUtf8( p.postalCode.data() );
-	l << QString::fromUtf8( p.countryName.data() );
+	l << QString::fromUtf8( p.city.data() ).trimmed();
+	l << QString::fromUtf8( p.stateOrProvince.data() ).trimmed();
+	l << QString::fromUtf8( p.postalCode.data() ).trimmed();
+	l << QString::fromUtf8( p.countryName.data() ).trimmed();
 	return l;
 }
 
@@ -137,7 +135,11 @@ QString DigiDocSignature::mediaType() const
 DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 
 QString DigiDocSignature::role() const
-{ return roles().join( ", " ); }
+{
+	QStringList r = roles();
+	r.removeAll( "" );
+	return r.join( ", " );
+}
 
 QStringList DigiDocSignature::roles() const
 {
@@ -145,7 +147,7 @@ QStringList DigiDocSignature::roles() const
 	const Signer::SignerRole::TRoles roles = s->getSignerRole().claimedRoles;
 	Signer::SignerRole::TRoles::const_iterator i = roles.begin();
 	for( ; i != roles.end(); ++i )
-		list << QString::fromUtf8( i->data() );
+		list << QString::fromUtf8( i->data() ).trimmed();
 	return list;
 }
 
