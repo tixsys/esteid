@@ -76,16 +76,17 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 
 	Q_FOREACH( const digidoc::Document &doc, d->documents() )
 	{
+		QFileInfo f( QString::fromUtf8( doc.getPath().data() ) );
 		s
 		<< "<tr>"
 		<< "<td class=\"textborder\">"
-		<< QFileInfo( QString::fromUtf8( doc.getPath().data() ) ).fileName()
+		<< f.fileName()
 		<< "</td>"
 		/*<< "<td class=\"textborderright\">"
 		<< QString::fromUtf8( doc.getMediaType().data() )
 		<< "</td>"*/
 		<< "<td class=\"textborderright\">"
-		<< Common::fileSize( doc.getSize() )
+		<< Common::fileSize( f.size() )
 		<< "</td>"
 		<< "</tr>";
 	}
