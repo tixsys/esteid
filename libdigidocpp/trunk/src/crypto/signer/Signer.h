@@ -60,10 +60,8 @@ namespace digidoc
           virtual void sign(const Digest& digest, Signature& signature) throw(SignException) = 0;
           void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);
           SignatureProductionPlace getSignatureProductionPlace() const;
-          SignatureProductionPlace getSignatureProductionPlaceUtf8() const;
           void setSignerRole(const SignerRole& signerRole);
           SignerRole getSignerRole() const;
-          SignerRole getSignerRoleUtf8() const;
 		  virtual std::string signaturePath() { return std::string(); }
 
 	  protected:

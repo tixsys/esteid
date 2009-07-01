@@ -185,8 +185,8 @@ void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignE
 {
 	// Set required signature fields.
     setSigningCertificate(signer->getCert());
-    setSignatureProductionPlace(signer->getSignatureProductionPlaceUtf8());
-    setSignerRole(signer->getSignerRoleUtf8());
+    setSignatureProductionPlace(signer->getSignatureProductionPlace());
+    setSignerRole(signer->getSignerRole());
     setSigningTime(util::date::currentTime());
 
     // Calculate digest of the Signature->Object->SignedProperties node.
@@ -469,16 +469,18 @@ void digidoc::SignatureBES::checkSigningCertificate() const throw(SignatureExcep
 {
     X509Cert signingCert = getSigningCertificate();
 
+    bool valid = false;
     try
     {
-        if(!signingCert.verify())
-        {
-            THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
-        }
+        valid = signingCert.verify();
     }
     catch( const IOException &e )
     {
         THROW_SIGNATUREEXCEPTION_CAUSE( e, "Unable to verify signing certificate" );
+    }
+    if(!valid)
+    {
+        THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
     }
 }
 
