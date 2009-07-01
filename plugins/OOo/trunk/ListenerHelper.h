@@ -1,5 +1,5 @@
-#include <vector>
-#include <hash_map>
+#include <stl/vector>
+#include <stl/hash_map>
 #include <com/sun/star/frame/XFrame.hpp>
 #include <com/sun/star/frame/XStatusListener.hpp>
 #include <com/sun/star/frame/FeatureStateEvent.hpp>
