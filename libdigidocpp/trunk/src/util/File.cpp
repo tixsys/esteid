@@ -488,7 +488,8 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             THROW_IOEXCEPTION("Directory path '%s' exceeds the limit %d", directory.c_str(), MAX_PATH);
         }
 
-        std::string findPattern(encodeName(directory) + "\\*");
+        std::string findPattern(encodeName(directory));
+		findPattern += "\\*";
         hFind = ::FindFirstFile(findPattern.c_str(), &findFileData);
         if (hFind == INVALID_HANDLE_VALUE)
         {
