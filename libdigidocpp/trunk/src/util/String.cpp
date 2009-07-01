@@ -92,7 +92,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
         if(charset.compare("C") == 0)
         {
             INFO("System locale is C, continuing without conversion.");
-            return str_in;
+            charset = "LATIN1";
         }
 
         if(to_UTF)
@@ -159,6 +159,7 @@ std::string digidoc::util::String::getSystemEncoding()
 
     if(encoding.length() == 0)
     {   
+        encoding.append("C");
         INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
         return encoding;
     }

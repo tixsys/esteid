@@ -35,7 +35,7 @@ std::string digidoc::ZipSerialize::extract() throw(IOException)
     DEBUG("ZipSerialize::extract()");
 
     // Open ZIP file for extracting.
-    unzFile zipFile = unzOpen(path.c_str());
+    unzFile zipFile = unzOpen(digidoc::util::File::encodeName(path));
     if(zipFile == NULL)
     {
         THROW_IOEXCEPTION("Failed to open ZIP file '%s'.", path.c_str());
@@ -138,7 +138,7 @@ void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOE
 
     // Create new file to write the extracted data to.
     DEBUG("Extracting file '%s' to '%s'.", fileName.c_str(), path.c_str());
-    FILE* pFile = fopen(path.c_str(), "wb");
+    FILE* pFile = fopen(digidoc::util::File::encodeName(path), "wb");
     if(pFile == NULL)
     {
         unzCloseCurrentFile(zipFile);
@@ -241,7 +241,7 @@ void digidoc::ZipSerialize::save() throw(IOException)
 
     // Create new ZIP file.
     std::string fileName = util::File::tempFileName();
-    zipFile zipFile = zipOpen(fileName.c_str(), APPEND_STATUS_CREATE);
+    zipFile zipFile = zipOpen(digidoc::util::File::encodeName(fileName), APPEND_STATUS_CREATE);
     DEBUG("Created ZIP file: fileName = '%s', zipFile = 0x%X", fileName.c_str(), (unsigned int)zipFile);
     if(zipFile == NULL)
     {
@@ -252,7 +252,7 @@ void digidoc::ZipSerialize::save() throw(IOException)
     for(std::vector<FileEntry>::const_iterator iter = filesAdded.begin(); iter != filesAdded.end(); iter++)
     {
         // Open file to archive.
-        FILE* pFile = fopen(iter->path.c_str(), "rb");
+        FILE* pFile = fopen(digidoc::util::File::encodeName(iter->path), "rb");
         if(pFile == NULL)
         {
             zipClose(zipFile, NULL);

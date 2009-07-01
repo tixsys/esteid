@@ -63,7 +63,7 @@ std::vector<unsigned char> digidoc::Document::calcDigest(Digest* calc) throw(IOE
 
 	// Calculate digest.
     std::ifstream ifs; 
-	ifs.open(path.c_str(), std::ios::in | std::ios::binary);
+	ifs.open(digidoc::util::File::encodeName(path), std::ios::in | std::ios::binary);
 	
 	if(!ifs.is_open() || ifs.fail())
     {

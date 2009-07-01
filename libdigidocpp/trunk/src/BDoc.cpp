@@ -370,7 +370,7 @@ std::string digidoc::BDoc::createMimetype() throw(IOException)
 
     // Create mimetype file.
     std::string fileName = util::File::tempFileName();
-    std::ofstream ofs(fileName.c_str());
+    std::ofstream ofs(util::File::encodeName(fileName));
     ofs << getMimeType();
     ofs.close();
 
@@ -408,7 +408,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         // Add documents with mimetypes.
         for(std::vector<Document>::const_iterator iter = documents.begin(); iter != documents.end(); iter++)
         {
-            manifest::File_entry fileEntry(util::File::fileNameUtf8(iter->getPath()), iter->getMediaType());
+            manifest::File_entry fileEntry(util::File::fileName(iter->getPath()), iter->getMediaType());
             manifest.file_entry().push_back(fileEntry);
         }
 
@@ -425,7 +425,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         map["manifest"].name = MANIFEST_NAMESPACE;
         DEBUG("Serializing manifest XML to '%s'", fileName.c_str());
         // all XML data must be in UTF-8
-        std::ofstream ofs(digidoc::util::String::convertUTF8(fileName, true).c_str());
+        std::ofstream ofs(digidoc::util::File::encodeName(fileName));
         manifest::manifest(ofs, manifest, map, "", xml_schema::Flags::dont_initialize);
         ofs.close();
 
@@ -528,14 +528,14 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
             }
             manifestFiles.insert(iter->full_path());
 
-            // Add document to documents list. Convert back from UTF-8 if the system encoding is different
+            // Add document to documents list.
             if(iter->full_path().find_first_of("/") == std::string::npos)
             {
-                if(!util::File::fileExists(digidoc::util::String::convertUTF8(util::File::path(path, iter->full_path()), false)))
+                if(!util::File::fileExists(util::File::path(path, iter->full_path())))
                 {
                     THROW_BDOCEXCEPTION("File described in manifest '%s' does not exist in BDOC container.", iter->full_path().c_str());
                 }
-                documents.push_back(Document(digidoc::util::String::convertUTF8(util::File::path(path, iter->full_path()),false), iter->media_type()));
+                documents.push_back(Document(util::File::path(path, iter->full_path()), iter->media_type()));
                 continue;
             }
 
@@ -604,8 +604,7 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
             }
 
             std::replace(containerFile.begin(), containerFile.end(), '\\', '/');
-            // compare against the file name in UTF-8
-            if(manifestFiles.find(digidoc::util::String::convertUTF8(containerFile, true)) == manifestFiles.end())
+            if(manifestFiles.find(containerFile) == manifestFiles.end())
             {
                 THROW_BDOCEXCEPTION("File '%s' found in BDOC container is not described in manifest.", containerFile.c_str());
             }
