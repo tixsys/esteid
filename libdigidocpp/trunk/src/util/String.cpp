@@ -119,15 +119,14 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
         return str_in; 
     }
 
-    char inbuf[MAX_LANG_LENGTH] = {0}; 
     char outbuf[MAX_LANG_LENGTH] = {0};
-    strncpy( inbuf, str_in.c_str(), MAX_LANG_LENGTH-1 );
-    ICONV_CONST char* inptr( inbuf );
+    ICONV_CONST char* inptr = (ICONV_CONST char*)str_in.c_str();
     char* outptr( outbuf );
-    size_t inleft = strlen( inbuf ) + 1;
+    size_t inleft = str_in.size();
     size_t outleft = MAX_LANG_LENGTH-1;
     size_t conversion_result = iconv(ic_descr, &inptr, &inleft, &outptr, &outleft);
-    
+    iconv_close(ic_descr);
+
     if(conversion_result == -1)
     {    
         THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
