@@ -66,7 +66,7 @@ void MyBdocBridge::teemingilollus1()
 //-----------------------------------------------------------
 void MyBdocBridge::DigiInit()
 {
-	((My1EstEIDSigner *)this)->initData();
+	ret = ((My1EstEIDSigner *)this)->initData();
 }
 
 //-----------------------------------------------------------
@@ -173,7 +173,7 @@ void My1EstEIDSigner::sammkampunn() {
 //***********************************************************
 int My1EstEIDSigner::initData()
 {
-		
+	int iRet = 0;	
 	//set installed BDoc library path
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
@@ -193,7 +193,7 @@ int My1EstEIDSigner::initData()
 		}
 		conf = "BDOCLIB_CONF_XML=";
 		conf += tcConfPath;
-		putenv(conf.c_str());
+		_putenv(conf.c_str());
 	#else
 		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		putenv(conf);	
@@ -214,6 +214,7 @@ int My1EstEIDSigner::initData()
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
+			iRet = 1;
 	}
 	catch(const digidoc::IOException& e)
 	{
@@ -224,6 +225,7 @@ int My1EstEIDSigner::initData()
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
+			iRet = 2;
 	}
 	catch(const digidoc::OCSPException& e)
 	{
@@ -234,6 +236,7 @@ int My1EstEIDSigner::initData()
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
+			iRet = 3;
 	}
 	catch(const digidoc::SignException& e)
 	{
@@ -244,10 +247,13 @@ int My1EstEIDSigner::initData()
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
 			}
+			iRet = 4;
 	}
 	catch(...)
 	{
-		PRINT_DEBUG("Caught unknown exception");
+		pcErrMsg = "Caught unknown exception";
+		PRINT_DEBUG(pcErrMsg);
+		iRet = 10;
 	}
 
 
@@ -258,7 +264,7 @@ int My1EstEIDSigner::initData()
 	validateOnline = false;
 	
 	locBdoc = 0;
-	return 0; 
+	return iRet; 
 }
 
 //===========================================================

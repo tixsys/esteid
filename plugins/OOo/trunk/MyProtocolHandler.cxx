@@ -227,42 +227,49 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 	{
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
-		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL).pData->buffer);
+/*		
+*/		if (!m_BdocBridge1->ret)
+		{
+			m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL).pData->buffer);
 
-PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);				
-		string strTempFileUrl = UNO_URL_HEAD;
-		strTempFileUrl += m_BdocBridge1->pRetPath;
-		ousBDocContURL = ousBDocFileURL; //<-----Get access to the container in new frame!
-		ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);				
+			string strTempFileUrl = UNO_URL_HEAD;
+			strTempFileUrl += m_BdocBridge1->pRetPath;
+			ousBDocContURL = ousBDocFileURL; //<-----Get access to the container in new frame!
+			ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
 
-		bContFlag = true;
+			bContFlag = true;
+			
+			Sequence< PropertyValue > loadProps(1);
+			loadProps[0] = PropertyValue();
+			loadProps[0].Name = OUString::createFromAscii("ReadOnly");
+			loadProps[0].Value <<= sal_True;
+
+			OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
+			OUString sOldName = mxFrame->getName(); 
+			
+			mxFrame->setName(sTarget); 
+
 		
-		Sequence< PropertyValue > loadProps(1);
-		loadProps[0] = PropertyValue();
-		loadProps[0].Name = OUString::createFromAscii("ReadOnly");
-		loadProps[0].Value <<= sal_True;
+			// Get access to the global component loader of the office 
+			// for synchronous loading of documents. 
+			Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
 
-		OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
-		OUString sOldName = mxFrame->getName(); 
-		
-		mxFrame->setName(sTarget); 
+			// Load the document into the target frame by using our unambigous name 
+			// and special search flags. 
+			Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
+			mxFrame->setName(sOldName);
 
-	
-		// Get access to the global component loader of the office 
-		// for synchronous loading of documents. 
-		Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
-
-		// Load the document into the target frame by using our unambigous name 
-		// and special search flags. 
-		Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
-		mxFrame->setName(sOldName);
-
+			// dispose the local service manager
+			//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
+		}
+		else
+		{ // We got an error in init
+			//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Digidoc Error!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( m_BdocBridge1->pcErrMsg )));
+			printf("Error: %s\n",m_BdocBridge1->pcErrMsg);
+		}
 		Reference <XCloseable> xCloseable( mxFrame, UNO_QUERY);
 		xCloseable->close(true);
-	
-		// dispose the local service manager
-		//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
-
 	}		
 	//----------------------------------------------------------------------
 
@@ -595,12 +602,20 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			else 
 			{				
 				m_BdocBridge->DigiInit();
-				m_BdocBridge->DigiCheckCert();
-				if (m_BdocBridge->ret == 1)
-				{ //NO card or cardreader
-					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
-					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+				if (m_BdocBridge->ret)
+				{
+					::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Digidoc Error!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( m_BdocBridge->pcErrMsg )));
 					i_try = 0;
+				}
+				else
+				{
+					m_BdocBridge->DigiCheckCert();
+					if (m_BdocBridge->ret == 1)
+					{ //NO card or cardreader
+						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
+						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+						i_try = 0;
+					}
 				}
 			}
 
