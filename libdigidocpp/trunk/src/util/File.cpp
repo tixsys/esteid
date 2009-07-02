@@ -35,19 +35,19 @@
 const char* digidoc::util::File::encodeName(const std::string &fileName)
 {
 #ifndef __APPLE__
-	return digidoc::util::String::convertUTF8(fileName,false).c_str();
-#else
-	return fileName.c_str();
+	try { return digidoc::util::String::convertUTF8(fileName,false).c_str(); }
+	catch( const digidoc::Exception & ) {}
 #endif
+	return fileName.c_str();
 }
 
 std::string digidoc::util::File::decodeName(const char *localFileName)
 {
 #ifndef __APPLE__
-	return digidoc::util::String::convertUTF8(localFileName,true);
-#else
-	return std::string(localFileName);
+	try { return digidoc::util::String::convertUTF8(localFileName,true); }
+	catch( const digidoc::Exception & ) {}
 #endif
+	return std::string(localFileName);
 }
 
 /**
