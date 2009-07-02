@@ -79,9 +79,7 @@ find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
-find_package( LibP11 REQUIRED )
 find_package( XercesC REQUIRED )
-find_package( XmlSecurityC REQUIRED )
 find_package( XSD REQUIRED )
 
 
@@ -110,7 +108,6 @@ set(UNO_INCLUDES
 set(BDOC_INCLUDES
 	${OPENSSL_INCLUDE_DIR}
 	${ZLIB_INCLUDE_DIR}
-	${LIBP11_INCLUDE_DIR}
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
@@ -189,9 +186,7 @@ target_link_libraries(${COMP_NAME}.uno
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${ZLIB_LIBRARIES}
-	${LIBP11_LIBRARIES}
 	${XERCESC_LIBRARIES}
-	${XMLSECURITYC_LIBRARIES}
 	
 	${CPPU_LIBRARY} 
 	${CPPUHELPER_LIBRARY} 
