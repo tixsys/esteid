@@ -26,7 +26,7 @@ namespace digidoc
 
 
           private:
-              static const int MAX_LANG_LENGTH = 64; //should be enough to hold the LANG value
+              static const int MAX_LANG_LENGTH = 256; //should be enough to hold the LANG value
 
               static std::string formatArgList(const char *fmt, va_list args);
               static std::string getSystemEncoding();

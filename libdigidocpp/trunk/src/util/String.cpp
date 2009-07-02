@@ -153,6 +153,7 @@ std::string digidoc::util::String::getSystemEncoding()
     }
     else
     {
+        encoding.append("C");
         INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
         return encoding;
     }
