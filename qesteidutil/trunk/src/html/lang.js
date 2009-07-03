@@ -33,7 +33,7 @@ var htmlStrings = {
 	"labelCardInReaderID": new tr( "Lugejas on ID kaart", "Card in reader", "Карта в считывателе" ),
 	"labelThisIs": new tr( "See on", "This is", "Это" ),
 	"labelIsValid": new tr( "kehtiv", "valid", "действительный" ),
-	"labelIsInValid": new tr( "kehtetu", "expired", "недействительно" ),
+	"labelIsInValid": new tr( "kehtetu", "expired", "недействителен" ),
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "Карта действительна до" ),
 	
@@ -70,7 +70,7 @@ var htmlStrings = {
 	"labelChangingPUK": new tr( "PUK koodi vahetus", "Change PUK code", "Смена PUK кода" ),
 	"labelChangingPUK2": new tr( "Kui peale vahetamist PUK kood läheb meelest ära ja sertifikaat jääb blokeerituks kolme vale PIN1 või PIN2 sisetamise järel, siis ainus võimalus ID-kaart jälle tööle saada on pöörduda teenindusbüroo poole.", "If you forget PUK code or certificates remain unblocked, then it is needed to turn to service provider to get your ID-card working again.", "Если после смены PUK код забывается и сетрификат блокируется из-за неверно введённых PIN1 или PIN2, то единственной возможностью восстановить работоспособность ID- карты, это обратиться в бюро обслуживания." ),
 	
-	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "PUK-code ise used for unblocking certificates, when PIN1 or PIN2 has been entered 3 times incorrectly.", "PUK код, это код, который разблокирует сертификаты, если PIN1 или PIN2 были введены неверно 3 раза подрят." ),
+	"labelInputPUK": new tr( "PUK-kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "PUK-code ise used for unblocking certificates, when PIN1 or PIN2 has been entered 3 times incorrectly.", "PUK код, это код, который разблокирует сертификаты, если PIN1 или PIN2 были введены 3 раза подрят неверно." ),
 	"labelInputPUK2": new tr( "PUK-kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "PUK code is written in the envelpole, that was given with the ID-card or when certificates were changed.", "PUK код записан в конверте с кодами, который выдаётся вместе с ID- картой или при смене сетрификатов." ),
 	"labelPUKBlocked": new tr( "PUK kood on blokeeritud!", "PUK code is blocked!", "PUK код заблокирован!" ),
 
