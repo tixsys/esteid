@@ -45,5 +45,5 @@ class SettingsValues: public QSettings
 public:
 	SettingsValues( QObject *parent = 0 );
 
-	bool showIntro() const { return value( "Main/Intro", true ).toBool(); }
+	bool showIntro() const { return value( "Main/Warning", true ).toBool(); }
 };
