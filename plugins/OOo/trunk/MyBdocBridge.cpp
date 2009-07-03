@@ -209,7 +209,7 @@ int My1EstEIDSigner::initData()
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -220,7 +220,7 @@ int My1EstEIDSigner::initData()
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -231,7 +231,7 @@ int My1EstEIDSigner::initData()
 	{
 		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -242,7 +242,7 @@ int My1EstEIDSigner::initData()
 	{
 		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -329,7 +329,7 @@ int My1EstEIDSigner::signFile ()
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -340,7 +340,7 @@ int My1EstEIDSigner::signFile ()
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -351,7 +351,7 @@ int My1EstEIDSigner::signFile ()
 	{
 		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -362,7 +362,7 @@ int My1EstEIDSigner::signFile ()
 	{
 		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -373,7 +373,7 @@ int My1EstEIDSigner::signFile ()
 	{
 		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -489,7 +489,7 @@ int My1EstEIDSigner::openCont ()
 				//some fix, to be a compatibel with digidoc client
 				if (roles.claimedRoles.size() == 1)
 					signerRoles.str_additionalRole += "#";
-				for(int nn=1; nn<roles.claimedRoles.size(); nn++)
+				for(size_t nn=1; nn<roles.claimedRoles.size(); nn++)
 				{
 					signerRoles.str_additionalRole += roles.claimedRoles.at(1);
 					signerRoles.str_additionalRole += "#";
@@ -530,7 +530,7 @@ int My1EstEIDSigner::openCont ()
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -541,7 +541,7 @@ int My1EstEIDSigner::openCont ()
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
@@ -552,7 +552,7 @@ int My1EstEIDSigner::openCont ()
 	{
 		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 		if (e.hasCause())
-			for (int u=0; u<e.getCauses().size(); u++)
+			for (size_t u=0; u<e.getCauses().size(); u++)
 			{
 				pcErrMsg = e.getCauses()[u].getMsg().c_str();
 				PRINT_DEBUG("ErrMess%s",pcErrMsg);
