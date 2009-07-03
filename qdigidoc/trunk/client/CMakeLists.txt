@@ -28,15 +28,29 @@ SET( SOURCES
 	SignatureDialog.cpp
 	TreeWidget.cpp
 	)
-SET( UIS
+QT4_WRAP_UI( UI_HEADERS
+	${COMMON_UIS}
 	ui/MainWindow.ui
 	ui/MobileDialog.ui
 	ui/RegisterP12.ui
 	ui/Settings.ui
 	ui/SignatureDialog.ui
 	)
-SET( RCS
-	rc/qdigidocclient.qrc
+
+set(QM_DIR ${CMAKE_BINARY_DIR}/client)
+configure_file(${COMMON}/translations/common_tr.qrc.cmake ${QM_DIR}/common_tr.qrc)
+configure_file(translations/tr.qrc.cmake ${QM_DIR}/tr.qrc)
+
+QT4_ADD_RESOURCES( RC_SOURCES
+	${COMMON_RCS}
+	images/images.qrc
+	${QM_DIR}/common_tr.qrc
+	${QM_DIR}/tr.qrc
+	)
+QT4_ADD_TRANSLATION( QM_FILES
+	${COMMON_TS}
+	translations/et.ts
+	translations/ru.ts
 	)
 
 INCLUDE_DIRECTORIES(
@@ -69,8 +83,6 @@ if(APPLE)
     endforeach(_file)
 endif(APPLE)
 
-QT4_ADD_RESOURCES( RC_SOURCES ${COMMON_RCS} ${RCS} )
-QT4_WRAP_UI( UI_HEADERS ${COMMON_UIS} ${UIS} )
 QT4_WRAP_CPP( MOC_SOURCES ${COMMON_MOC_HEADERS} ${MOC_HEADERS} )
 
 if(MSVC)
@@ -79,7 +91,7 @@ if(MSVC)
 	add_definitions( -wd4996 )
 endif(MSVC)
 IF(WIN32)
-	SET( SOURCES ${SOURCES} rc/qdigidocclient.rc )
+	SET( SOURCES ${SOURCES} qdigidocclient.rc )
 ENDIF(WIN32)
 
 if(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
@@ -93,6 +105,7 @@ ADD_EXECUTABLE(
 	${COMMON_SOURCES}
 	${SOURCES}
 	${MOC_SOURCES}
+	${QM_FILES}
 	${RC_SOURCES}
 	${UI_HEADERS}
 	${RESOURCE_FILES}

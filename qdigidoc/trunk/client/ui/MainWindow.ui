@@ -35,7 +35,7 @@
    <string notr="true">DigiDoc3 client</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../rc/qdigidocclient.qrc">
+   <iconset resource="../images/images.qrc">
     <normaloff>:/images/digidoc_icon_48x48.png</normaloff>:/images/digidoc_icon_48x48.png</iconset>
   </property>
   <property name="styleSheet">
@@ -1139,7 +1139,7 @@ color: red;</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../rc/qdigidocclient.qrc"/>
+  <include location="../images/images.qrc"/>
  </resources>
  <connections/>
 </ui>

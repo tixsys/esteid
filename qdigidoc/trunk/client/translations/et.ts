@@ -485,7 +485,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>NB: Vigane allkiri</source>
-        <translation type="unfinished"></translation>
+        <translation>NB: Vigane allkiri</translation>
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>

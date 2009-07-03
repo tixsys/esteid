@@ -35,7 +35,7 @@
    <string notr="true">DigiDoc3 Krüpto</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../rc/qdigidoccrypto.qrc">
+   <iconset resource="../images/images.qrc">
     <normaloff>:/images/crypto_64.png</normaloff>:/images/crypto_64.png</iconset>
   </property>
   <property name="styleSheet">
@@ -763,7 +763,7 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../rc/qdigidoccrypto.qrc"/>
+  <include location="../images/images.qrc"/>
  </resources>
  <connections/>
 </ui>
