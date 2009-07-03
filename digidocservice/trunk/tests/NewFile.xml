@@ -1,20 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
- <soapenv:Body>
-  <ns1:AddDataFileResponse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl">
-   <Status xsi:type="xsd:string">OK</Status>
-   <SignedDocInfo xsi:type="ns1:SignedDocInfo">
-    <Format xsi:type="xsd:string">DIGIDOC-XML</Format>
-    <Version xsi:type="xsd:string">1.4</Version>
-    <DataFileInfo xsi:type="ns1:DataFileInfo">
-     <Id xsi:type="xsd:string">D0</Id>
-     <Filename xsi:type="xsd:string">test_file_1.txt</Filename>
-     <MimeType xsi:type="xsd:string">application/binary</MimeType>
-     <ContentType xsi:type="xsd:string">EMBEDDED_BASE64</ContentType>
-     <Size xsi:type="xsd:int">21</Size>
-     <DigestType xsi:type="xsd:string">sha1</DigestType>
-     <DigestValue xsi:type="xsd:string">TSYQcPMcFIuTXxueTiTkIHLs2Y8=</DigestValue>
-    </DataFileInfo>
-   </SignedDocInfo>
-  </ns1:AddDataFileResponse>
- </soapenv:Body>
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<ns1:CreateSignedDoc soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://www.sk.ee/DigiDocService/DigiDocService_2_3.wsdl">
+			<Sesscode href="#id0" />
+			<Format xsi:type="xsd:string">DIGIDOC-XML</Format>
+			<Version xsi:type="xsd:string">1.4</Version>
+		</ns1:CreateSignedDoc>
+		<multiRef id="id0" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xsi:type="xsd:int" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">7667</multiRef>
+	</soapenv:Body>
 </soapenv:Envelope>

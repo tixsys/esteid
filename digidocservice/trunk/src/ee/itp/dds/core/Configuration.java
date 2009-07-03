@@ -29,6 +29,7 @@ public class Configuration implements InitializingBean {
 
     private final String MODULES_PATH = "modules.path";
     private final String JDIGIDOC_CONFIG = "jdigidoc.config";
+    private final String DEBUG_MODE = "debugMode";
     
     private static final Log log = LogFactory.getLog (Configuration.class);    
     
@@ -50,6 +51,11 @@ public class Configuration implements InitializingBean {
      */
     private String getParameter(final String key) {
         return properties.getProperty(key);
+    }
+    
+    public boolean isDebugMode() {
+       String dm = properties.getProperty(DEBUG_MODE);
+       return (dm == null || dm.equals("false"))?false:true;
     }
 
     /**

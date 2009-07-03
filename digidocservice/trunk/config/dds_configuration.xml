@@ -3,6 +3,7 @@
 
 	<property name="jdigidoc.config" value="jar://JDigiDoc.cfg"/>
 	<property name="modules.path" value="/home/dds/"/>
+  <property name="debugMode" value="true"/>
 
 	<!-- Signature modules -->
 	

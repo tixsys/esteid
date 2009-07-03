@@ -13,8 +13,13 @@ import javax.xml.soap.SOAPException;
 
 import org.apache.axis.description.OperationDesc;
 import org.apache.axis.message.SOAPFault;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class DigiDocServiceStub extends org.apache.axis.client.Stub implements ee.itp.dds.service.DigiDocServicePortType {
+  
+  private static final Log log = LogFactory.getLog(DigiDocServiceStub.class);
+  
     private Vector cachedSerClasses = new Vector();
     private Vector cachedSerQNames = new Vector();
     private Vector cachedSerFactories = new Vector();
@@ -695,9 +700,11 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { signingProfile, sigDocXML, new java.lang.Boolean(bHoldSession), datafile });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
-                throw (java.rmi.RemoteException) _resp;
+              throw (java.rmi.RemoteException) _resp;
             } else {
                 extractAttachments(_call);
                 java.util.Map _output;
@@ -720,6 +727,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -739,7 +748,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode) });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -751,6 +762,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -771,7 +784,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), format, version });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -791,7 +806,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
-            throw axisFaultException;
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());  
+          throw axisFaultException;
         }
     }
 
@@ -812,7 +829,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), fileName, mimeType, contentType, new java.lang.Integer(size), digestType, digestValue,
                     content });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -832,6 +851,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -839,6 +860,7 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
     public void removeDataFile(int sesscode, java.lang.String dataFileId, javax.xml.rpc.holders.StringHolder status, ee.itp.dds.service.holders.SignedDocInfoHolder signedDocInfo)
             throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
+          
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
@@ -852,7 +874,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), dataFileId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -872,6 +896,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -891,7 +917,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode) });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -910,6 +938,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -929,7 +959,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode) });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -949,6 +981,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -969,7 +1003,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), dataFileId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -989,6 +1025,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1008,8 +1046,11 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setRequestHeaders(_call);
         setAttachments(_call);
         try {
-            java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
 
+          java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+          
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1028,6 +1069,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1048,7 +1091,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1067,6 +1112,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1086,7 +1133,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1105,6 +1154,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1125,7 +1176,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), timestampId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1144,6 +1197,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1163,7 +1218,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), timestampId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1182,6 +1239,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1201,6 +1260,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
 
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
@@ -1220,6 +1281,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1240,7 +1303,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), platform, phase, type });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1260,6 +1325,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1282,7 +1349,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         try {
             java.lang.Object _resp = _call
                     .invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signersCertificate, signersTokenId, role, city, state, postalCode, country, signingProfile });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1306,6 +1375,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1326,7 +1397,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId, signatureValue });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1346,6 +1419,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1366,7 +1441,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), signatureId });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1386,6 +1463,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1405,7 +1484,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1424,6 +1505,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
@@ -1444,7 +1527,9 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
         setAttachments(_call);
         try {
             java.lang.Object _resp = _call.invoke(new java.lang.Object[] { new java.lang.Integer(sesscode), new java.lang.Boolean(returnDocInfo), new java.lang.Boolean(waitSignature) });
-
+            log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+            log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
+            
             if (_resp instanceof java.rmi.RemoteException) {
                 throw (java.rmi.RemoteException) _resp;
             } else {
@@ -1469,6 +1554,8 @@ public class DigiDocServiceStub extends org.apache.axis.client.Stub implements e
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {
+          log.info("INPUT : " + _call.getMessageContext().getRequestMessage().getSOAPEnvelope());
+          log.info("OUTPUT : " + _call.getMessageContext().getResponseMessage().getSOAPEnvelope());
             throw axisFaultException;
         }
     }
