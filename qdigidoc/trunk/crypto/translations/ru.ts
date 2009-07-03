@@ -396,11 +396,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Auth certificate is</source>
-        <translation>Сертификат идентификации личности</translation>
+        <translation type="unfinished">Сертификаты подписи</translation>
     </message>
     <message>
         <source>valid</source>
-        <translation>действительно</translation>
+        <translation type="unfinished">действителен</translation>
     </message>
     <message>
         <source>Your certificates will be expire</source>
@@ -481,7 +481,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>I want to:</source>
-        <translation>Я хочу:</translation>
+        <translation type="unfinished">Я желаю:</translation>
     </message>
     <message>
         <source>Crypt documents</source>
@@ -618,7 +618,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Same folder</source>
-        <translation>В ту же папку</translation>
+        <translation type="unfinished">Та же папка</translation>
     </message>
     <message>
         <source>...</source>
@@ -626,11 +626,11 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Ask container name</source>
-        <translation>Спросить имя документа</translation>
+        <translation type="unfinished">Спрашивать имя документа</translation>
     </message>
     <message>
         <source>Show signing intro</source>
-        <translation>Показать введение в подписывание</translation>
+        <translation type="unfinished">Показывать подсказку при подписывании</translation>
     </message>
 </context>
 <context>

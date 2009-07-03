@@ -133,7 +133,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>valid</source>
-        <translation>действительно</translation>
+        <translation type="unfinished">действительны</translation>
     </message>
     <message>
         <source>Your certificates will be expire</source>
@@ -141,7 +141,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>expired</source>
-        <translation>устарело</translation>
+        <translation type="unfinished">устарели</translation>
     </message>
     <message>
         <source>Loading data</source>
@@ -205,14 +205,14 @@ Digital signing is equal to physical signing. to sing a document you need an ID-
 Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
 Also and active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 Подписывание документов.&lt;br /&gt;&lt;br /&gt;
-Цифровая подписаь аналогична физической подписи. Для цифровой подписи нужна ID-карта, которая имеет действующие сертификаты .&lt;br /&gt;&lt;br /&gt;
+Цифровая подпись аналогична физической подписи. Для цифровой подписи нужна ID-карта, которая имеет действующие сертификаты .&lt;br /&gt;&lt;br /&gt;
 При подписывании документов нужен PIN2 код.&lt;br /&gt;&lt;br /&gt;
-Для цифровой подписи нужно интернет подключение.
+Для цифровой подписи необходимо подключение к интернету.
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
