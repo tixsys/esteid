@@ -13,7 +13,7 @@ IF (LIBDIGIDOCPP_INCLUDE_DIR)
 ENDIF (LIBDIGIDOCPP_INCLUDE_DIR)
 
 FIND_PATH(LIBDIGIDOCPP_INCLUDE_DIR digidocpp/BDoc.h /usr/include /usr/local/include)
-FIND_FILE(LIBDIGIDOCPP_CONF digidocpp.conf /etc/digidocpp)
+FIND_FILE(LIBDIGIDOCPP_CONF digidocpp.conf /etc/digidocpp /usr/local/etc/digidocpp)
 FIND_LIBRARY(LIBDIGIDOCPP_LIBRARY NAMES digidocpp)
 
 # handle the QUIETLY and REQUIRED arguments and set LIBDIGIDOCPP_FOUND to TRUE if 
