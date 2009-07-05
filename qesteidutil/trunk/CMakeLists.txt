@@ -18,6 +18,10 @@ if(UNIX AND NOT APPLE)
     find_package(PCSCLite REQUIRED)
 endif(UNIX AND NOT APPLE)
 
+set(QT_USE_QTNETWORK true)
+set(QT_USE_QTWEBKIT true)
+set(QT_USE_QTXML true)
+
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
     src/DiagnosticsDialog.h
