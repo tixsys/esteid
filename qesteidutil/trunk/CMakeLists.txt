@@ -10,7 +10,7 @@ if(PKCS11_MODULE)
     add_definitions(-DPKCS11_MODULE="${PKCS11_MODULE}")
 endif(PKCS11_MODULE)
 
-find_package(Qt4 REQUIRED)
+find_package(Qt4 4.4.0 COMPONENTS QtCore QtGui QtNetwork QtWebkit QtXml REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
@@ -61,18 +61,26 @@ set(qesteidutil_SRCS
     src/sslConnect.cpp
 )
 
-set( UIS
+QT4_WRAP_UI( UI_HEADERS
     common/ui/CertificateWidget.ui
     src/ui/DiagnosticsDialog.ui
     src/ui/SettingsDialog.ui
 )
 
-set(qesteidutil_RCS src/qesteidutil.qrc)
+set(QM_DIR ${CMAKE_BINARY_DIR})
+configure_file(common/translations/common_tr.qrc.cmake ${QM_DIR}/common_tr.qrc)
 
-set(QT_MIN_VERSION 4.4.0)
-set(QT_USE_QTNETWORK true)
-set(QT_USE_QTWEBKIT true)
-set(QT_USE_QTXML true)
+QT4_ADD_RESOURCES( qesteidutil_RCC_SRCS
+    ${QM_DIR}/common_tr.qrc
+    src/qesteidutil.qrc
+)
+
+QT4_ADD_TRANSLATION( QM_FILES
+    common/translations/common_et.ts
+    common/translations/common_ru.ts
+    common/translations/qt_et.ts
+    common/translations/qt_ru.ts
+)
 
 include(${QT_USE_FILE})
 
@@ -119,8 +127,6 @@ if(APPLE)
     set_source_files_properties(${LIBQJPEG_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS/imageformats" )
 endif(APPLE)
 
-QT4_ADD_RESOURCES(qesteidutil_RCC_SRCS ${qesteidutil_RCS} common/translations/tr.qrc)
-QT4_WRAP_UI( UI_HEADERS ${UIS} )
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 
 IF(WIN32)
@@ -132,6 +138,7 @@ add_executable(qesteidutil WIN32 MACOSX_BUNDLE
     ${qesteidutil_SRCS}
     ${qesteidutil_HDRS}
     ${qesteidutil_MOC_SRCS}
+    ${QM_FILES}
     ${qesteidutil_RCC_SRCS}
     ${qesteidutil_MOC_HDRS}
     ${UI_HEADERS}
