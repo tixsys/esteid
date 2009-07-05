@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <iconv.h>
+#include <errno.h>
 #include "../log.h"
 #include "String.h"
 
@@ -113,26 +114,44 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
         return str_in;
     }
 
-    if( ic_descr == (iconv_t)(-1))
+    if( ic_descr == iconv_t(-1))
     {
         INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
         return str_in; 
     }
 
-    char outbuf[MAX_LANG_LENGTH] = {0};
     ICONV_CONST char* inptr = (ICONV_CONST char*)str_in.c_str();
-    char* outptr( outbuf );
     size_t inleft = str_in.size();
-    size_t outleft = MAX_LANG_LENGTH-1;
-    size_t conversion_result = iconv(ic_descr, &inptr, &inleft, &outptr, &outleft);
+
+    std::string out;
+	char outbuf[32];
+	char* outptr = (char *)outbuf;
+    size_t outleft;
+
+    while(inleft > 0)
+    {
+        outbuf[0] = '\0';
+        outleft = sizeof(outbuf) - sizeof(outbuf[0]);
+
+        size_t result = iconv(ic_descr, &inptr, &inleft, &outptr, &outleft);
+        if(result == size_t(-1))
+        {
+            switch(errno)
+            {
+            case E2BIG: break;
+            case EILSEQ:
+            case EINVAL:
+            default:
+                iconv_close(ic_descr);
+                THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
+                break;
+            }
+        }
+        out += outbuf;
+    }
     iconv_close(ic_descr);
 
-    if(conversion_result == -1)
-    {    
-        THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
-    }
-
-    return std::string(outbuf);
+    return out;
 }
 
 
@@ -150,14 +169,8 @@ std::string digidoc::util::String::getSystemEncoding()
     {
         encoding.append(env_lang);
     }
-    else
-    {
-        encoding.append("C");
-        INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
-        return encoding;
-    }
 
-    if(encoding.length() == 0)
+    if(encoding.empty())
     {   
         encoding.append("C");
         INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
