@@ -10,14 +10,9 @@ find_package( LibDigiDoc REQUIRED )
 find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
-find_package( Qt4 REQUIRED )
+find_package( Qt4 4.4.0 COMPONENTS QtCore QtGui QtNetwork QtWebkit QtXml REQUIRED )
 find_package( XercesC REQUIRED )
 find_package( XSD REQUIRED )
-
-set( QT_MIN_VERSION 4.4.0 )
-set( QT_USE_QTNETWORK true )
-set( QT_USE_QTWEBKIT true )
-set( QT_USE_QTXML true )
 
 include( ${QT_USE_FILE} )
 add_definitions( -DQT_NO_KEYWORDS )
@@ -61,8 +56,13 @@ set( COMMON_UIS
 	${COMMON}/ui/CertificateWidget.ui
 	)
 set( COMMON_RCS
-	${COMMON}/images/images.qrc
-	${COMMON}/translations/tr.qrc
+	${COMMON}/images/common_images.qrc
+	)
+set( COMMON_TS
+	${COMMON}/translations/common_et.ts
+	${COMMON}/translations/common_ru.ts
+	${COMMON}/translations/qt_et.ts
+	${COMMON}/translations/qt_ru.ts
 	)
 
 add_subdirectory( client )
