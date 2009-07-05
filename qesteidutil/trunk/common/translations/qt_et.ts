@@ -1171,12 +1171,12 @@ to
     <message>
         <location line="+3"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvesta</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1186,7 +1186,7 @@ to
     <message>
         <location line="+3"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Katkesta</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -1196,7 +1196,7 @@ to
     <message>
         <location line="+3"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;ulge</translation>
     </message>
     <message>
         <location line="+0"/>
