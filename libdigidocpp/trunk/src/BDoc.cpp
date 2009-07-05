@@ -369,8 +369,8 @@ std::string digidoc::BDoc::createMimetype() throw(IOException)
     DEBUG("BDoc::createMimetype()");
 
     // Create mimetype file.
-    std::string fileName = util::File::tempFileName();
-    std::ofstream ofs(util::File::encodeName(fileName));
+    std::string fileName = util::File::encodeName(util::File::tempFileName());
+    std::ofstream ofs(fileName.c_str());
     ofs << getMimeType();
     ofs.close();
 
@@ -396,7 +396,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
 {
     DEBUG("digidoc::BDoc::createManifest()");
 
-    std::string fileName = util::File::tempFileName();
+    std::string fileName = digidoc::util::File::encodeName(util::File::tempFileName());
 
     try
     {
@@ -425,7 +425,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         map["manifest"].name = MANIFEST_NAMESPACE;
         DEBUG("Serializing manifest XML to '%s'", fileName.c_str());
         // all XML data must be in UTF-8
-        std::ofstream ofs(digidoc::util::File::encodeName(fileName));
+        std::ofstream ofs(fileName.c_str());
         manifest::manifest(ofs, manifest, map, "", xml_schema::Flags::dont_initialize);
         ofs.close();
 

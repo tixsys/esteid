@@ -124,13 +124,14 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
     size_t inleft = str_in.size();
 
     std::string out;
-	char outbuf[32];
-	char* outptr = (char *)outbuf;
+    char outbuf[64];
+    char* outptr;
     size_t outleft;
 
     while(inleft > 0)
     {
         outbuf[0] = '\0';
+        outptr = (char *)outbuf;
         outleft = sizeof(outbuf) - sizeof(outbuf[0]);
 
         size_t result = iconv(ic_descr, &inptr, &inleft, &outptr, &outleft);
@@ -147,6 +148,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
                 break;
             }
         }
+        *outptr = '\0';
         out += outbuf;
     }
     iconv_close(ic_descr);

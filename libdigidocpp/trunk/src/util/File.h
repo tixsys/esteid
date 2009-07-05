@@ -20,8 +20,8 @@ namespace digidoc
           public:
               static bool fileExists(const std::string& path);
               static bool directoryExists(const std::string& path);
-              static const char* encodeName(const std::string& fileName);
-              static std::string decodeName(const char* localFileName);
+              static std::string encodeName(const std::string& fileName);
+              static std::string decodeName(const std::string& localFileName);
               static std::string fileName(const std::string& path);
               static std::string directory(const std::string& path);
               static std::string path(const std::string& directory, const std::string& relativePath, bool unixStyle = false);

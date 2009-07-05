@@ -32,16 +32,16 @@
     #define PATH_DELIMITER '\\'
 #endif
 
-const char* digidoc::util::File::encodeName(const std::string &fileName)
+std::string digidoc::util::File::encodeName(const std::string &fileName)
 {
 #ifndef __APPLE__
-	try { return digidoc::util::String::convertUTF8(fileName,false).c_str(); }
+	try { return digidoc::util::String::convertUTF8(fileName,false); }
 	catch( const digidoc::Exception & ) {}
 #endif
-	return fileName.c_str();
+	return fileName;
 }
 
-std::string digidoc::util::File::decodeName(const char *localFileName)
+std::string digidoc::util::File::decodeName(const std::string &localFileName)
 {
 #ifndef __APPLE__
 	try { return digidoc::util::String::convertUTF8(localFileName,true); }
@@ -59,7 +59,8 @@ std::string digidoc::util::File::decodeName(const char *localFileName)
 bool digidoc::util::File::fileExists(const std::string& path)
 {
     struct stat fileInfo;
-    if(stat(encodeName(path), &fileInfo) != 0)
+    std::string _path = encodeName(path);
+    if(stat(_path.c_str(), &fileInfo) != 0)
     {
         return false;
     }
@@ -82,7 +83,7 @@ bool digidoc::util::File::fileExists(const std::string& path)
 bool digidoc::util::File::directoryExists(const std::string& path)
 {
     struct stat fileInfo;
-    std::string adjustedPath(path);
+    std::string adjustedPath = encodeName(path);
 #ifndef _POSIX_VERSION
     // stat will fail on win32 if path ends with backslash
     if(!adjustedPath.empty() && (adjustedPath[adjustedPath.size() - 1] == '/'
@@ -93,7 +94,7 @@ bool digidoc::util::File::directoryExists(const std::string& path)
     // TODO:XXX: "C:" is not a directory, so create recursively will
     // do stack overflow in case first-dir in root doesn't exist.
 #endif
-    if(stat(encodeName(adjustedPath), &fileInfo) != 0)
+    if(stat(adjustedPath.c_str(), &fileInfo) != 0)
     {
         return false;
     }
@@ -225,21 +226,22 @@ void digidoc::util::File::createDirectory(const std::string& path) throw(IOExcep
 
     bool createFailed = true;
 
+    std::string _path = encodeName(path);
 #ifdef _POSIX_VERSION
     umask(0);
-    int result = mkdir(encodeName(path), 0700);
-    DEBUG("Created directory '%s' with result = %d", path.c_str(), result);
+    int result = mkdir(_path.c_str(), 0700);
+    DEBUG("Created directory '%s' with result = %d", _path.c_str(), result);
     createFailed = (result != 0);
 #else
-    int result = _mkdir(encodeName(path));
+    int result = _mkdir(path.c_str());
     createFailed = (result != 0);
     if ( createFailed )
     {
-        DEBUG("Creating directory '%s' failed with errno = %d", path.c_str(), errno);
+        DEBUG("Creating directory '%s' failed with errno = %d", _path.c_str(), errno);
     }
     else
     {
-        DEBUG("Created directory '%s'", path.c_str());
+        DEBUG("Created directory '%s'", _path.c_str());
     }
 #endif
 
@@ -273,19 +275,20 @@ std::string digidoc::util::File::createTempDirectory() throw(IOException)
 unsigned long digidoc::util::File::fileSize(const std::string& path) throw(IOException)
 {
     struct stat fileInfo;
-    if(stat(encodeName(path), &fileInfo) != 0)
+    std::string _path = encodeName(path);
+    if(stat(_path.c_str(), &fileInfo) != 0)
     {
-        THROW_IOEXCEPTION("File '%s' does not exist.", path.c_str());
+        THROW_IOEXCEPTION("File '%s' does not exist.", _path.c_str());
     }
 
     if((fileInfo.st_mode & S_IFMT) == S_IFDIR)
     {
-        THROW_IOEXCEPTION("'%s' is not a file.", path.c_str());
+        THROW_IOEXCEPTION("'%s' is not a file.", _path.c_str());
     }
 
     if (fileInfo.st_size < 0)
     {
-        THROW_IOEXCEPTION("Failed to get size for file '%s'.", path.c_str());
+        THROW_IOEXCEPTION("Failed to get size for file '%s'.", _path.c_str());
     }
 
     return static_cast<unsigned long>(fileInfo.st_size);
@@ -375,8 +378,10 @@ void digidoc::util::File::copyFile(const std::string& srcPath, const std::string
     }
 
     // Copy file.
-    std::ifstream ifs(encodeName(srcPath), std::ios::binary);
-    std::ofstream ofs(encodeName(destPath), std::ios::binary | std::ios::trunc);
+    std::string _srcPath = encodeName(srcPath);
+    std::string _destPath = encodeName(destPath);
+    std::ifstream ifs(_srcPath.c_str(), std::ios::binary);
+    std::ofstream ofs(_destPath.c_str(), std::ios::binary | std::ios::trunc);
 
     ofs << ifs.rdbuf();
 
@@ -385,7 +390,7 @@ void digidoc::util::File::copyFile(const std::string& srcPath, const std::string
 
     if(ifs.fail() || ofs.fail())
     {
-        THROW_IOEXCEPTION("Failed to copy file '%s' to '%s'.", srcPath.c_str(), destPath.c_str());
+        THROW_IOEXCEPTION("Failed to copy file '%s' to '%s'.", _srcPath.c_str(), _destPath.c_str());
     }
 }
 
@@ -410,17 +415,19 @@ void digidoc::util::File::moveFile(const std::string& srcPath, const std::string
         THROW_IOEXCEPTION("Destination file exists '%s' can not move to there. Overwrite flag is set to false.", destPath.c_str());
     }
 
-    int result = rename(encodeName(srcPath), encodeName(destPath));
+    std::string _srcPath = encodeName(srcPath);
+    std::string _destPath = encodeName(destPath);
+    int result = rename(_srcPath.c_str(), _destPath.c_str());
     if ( result != 0 )
     {
 		// -=K=-: copy and remove source should work as move between different partitions
 		copyFile( srcPath, destPath, overwrite );
-		result = remove( encodeName(srcPath) );
+		result = remove( _srcPath.c_str() );
     }
 	if ( result != 0 )
 	{
 		// -=K=-: suceeded to copy, failed to remove. Should we throw or warn?
-		WARN( "Failed to remove source file '%s' when moving it to '%s'.", srcPath.c_str(), destPath.c_str() );
+		WARN( "Failed to remove source file '%s' when moving it to '%s'.", _srcPath.c_str(), _destPath.c_str() );
 	}
 
 }
@@ -443,10 +450,11 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
 
 #ifdef _POSIX_VERSION
 
-    DIR* pDir = opendir(encodeName(directory));
+    std::string _directory = encodeName(directory);
+    DIR* pDir = opendir(_directory.c_str());
     if(!pDir)
     {
-        THROW_IOEXCEPTION("Failed to open directory '%s'", directory.c_str());
+        THROW_IOEXCEPTION("Failed to open directory '%s'", _directory.c_str());
     }
 
     char fullPath[MAXPATHLEN];
@@ -460,7 +468,7 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             continue;
         }
 
-        sprintf(fullPath, "%s/%s", encodeName(directory), entry->d_name);
+        sprintf(fullPath, "%s/%s", _directory.c_str(), entry->d_name);
         lstat(fullPath, &info);
 
         if((!filesOnly && (entry->d_type == 0x04||S_ISDIR(info.st_mode))) // Directory
@@ -488,8 +496,7 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             THROW_IOEXCEPTION("Directory path '%s' exceeds the limit %d", directory.c_str(), MAX_PATH);
         }
 
-        std::string findPattern(encodeName(directory));
-		findPattern += "\\*";
+        std::string findPattern = encodeName(directory) + "\\*";
         hFind = ::FindFirstFile(findPattern.c_str(), &findFileData);
         if (hFind == INVALID_HANDLE_VALUE)
         {
@@ -508,9 +515,9 @@ std::vector<std::string> digidoc::util::File::getDirSubElements(const std::strin
             || filesOnly && !(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) // File
             {
                 if(relative)
-                    files.push_back(decodeName(fileName.c_str()));
+                    files.push_back(decodeName(fileName));
                 else
-                    files.push_back(path(directory, decodeName(fileName.c_str()), unixStyle));
+                    files.push_back(path(directory, decodeName(fileName), unixStyle));
             }
         } while ( ::FindNextFile(hFind, &findFileData) != FALSE );
 
