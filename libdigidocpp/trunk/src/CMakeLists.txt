@@ -60,7 +60,7 @@ set(digidocpp_SRCS
     util/String.cpp
     util/File.cpp
     util/DateTime.cpp
-    xml/conf_parser.cxx
+    xml/conf.cxx
     xml/OpenDocument_manifest.cxx
     xml/xmldsig-core-schema.cxx
     xml/XAdES.cxx

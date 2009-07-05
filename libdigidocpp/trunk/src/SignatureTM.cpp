@@ -68,8 +68,13 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
 //       4. Recalculate hash of signature and compare with nonce
 
     Conf* conf = Conf::getInstance();
-    OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(conf->getOCSPCertPath());
+    Conf::OCSPConf ocspConf = conf->getOCSP(getSigningCertificate().getIssuerName());
+    if(ocspConf.issuer.empty())
+    {
+       THROW_SIGNATUREEXCEPTION("Failed to load ocsp issuer certificate.");
+    }
+    OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
+    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope x509StackScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     //ocsp.setCertStore(digidoc::X509CertStore::getInstance()->getCertStore());
@@ -163,8 +168,13 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
     // Initialize OCSP.
     DEBUG("Making OCSP request.");
     Conf* conf = Conf::getInstance();
-    OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(conf->getOCSPCertPath());
+    Conf::OCSPConf ocspConf = conf->getOCSP(cert_.getIssuerName());
+    if(ocspConf.issuer.empty())
+    {
+        THROW_SIGNEXCEPTION("Failed to load ocsp issuer certificate.");
+    }
+    OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
+    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope ocspCertsScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     ocsp.setMaxAge(5); // FIXME: remove or move to conf

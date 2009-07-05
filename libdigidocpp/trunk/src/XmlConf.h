@@ -28,8 +28,7 @@ public:
     virtual std::string getXadesXsdPath() const;
     virtual std::string getDsigXsdPath() const;
     virtual std::string getPKCS11DriverPath() const;
-    virtual std::string getOCSPUrl() const;
-    virtual std::string getOCSPCertPath() const;
+    virtual OCSPConf getOCSP(const std::string &issuer) const;
     virtual std::string getCertStorePath() const;
     virtual std::string getProxyHost() const;
     virtual std::string getProxyPort() const;
@@ -50,8 +49,6 @@ private:
 
     std::string digestUri;
     std::string pkcs11DriverPath;
-    std::string ocspUrl;
-    std::string ocspCertsFile;
     std::string certStorePath;
     std::string manifestXsdPath;
     std::string xadesXsdPath;
@@ -60,11 +57,10 @@ private:
     std::string proxyPort;
     std::string pkcs12Cert;
     std::string pkcs12Pass;
+    std::vector<OCSPConf> ocsp;
 
     static const std::string DIGEST_URI;
     static const std::string PKCS11_DRIVER_PATH;
-    static const std::string OCSP_URL;
-    static const std::string OCSP_CERTS_FILE;
     static const std::string CERT_STORE_PATH;
     static const std::string MANIFEST_XSD_PATH;
     static const std::string XADES_XSD_PATH;

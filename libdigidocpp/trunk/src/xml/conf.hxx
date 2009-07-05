@@ -553,6 +553,7 @@ namespace xml_schema
 // Forward declarations.
 //
 class Configuration;
+class Ocsp;
 class Param;
 
 #include <memory>    // std::auto_ptr
@@ -638,6 +639,70 @@ class Configuration: public ::xml_schema::Type
   //@}
 
   /**
+   * @name ocsp
+   *
+   * @brief Accessor and modifier functions for the %ocsp
+   * sequence element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::Ocsp OcspType;
+
+  /**
+   * @brief Element sequence container type.
+   */
+  typedef ::xsd::cxx::tree::sequence< OcspType > OcspSequence;
+
+  /**
+   * @brief Element iterator type.
+   */
+  typedef xsd::cxx::tree::sequence< OcspType >::iterator OcspIterator;
+
+  /**
+   * @brief Element constant iterator type.
+   */
+  typedef xsd::cxx::tree::sequence< OcspType >::const_iterator OcspConstIterator;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< OcspType, char > OcspTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element
+   * sequence.
+   *
+   * @return A constant reference to the sequence container.
+   */
+  const OcspSequence&
+  ocsp () const;
+
+  /**
+   * @brief Return a read-write reference to the element sequence.
+   *
+   * @return A reference to the sequence container.
+   */
+  OcspSequence&
+  ocsp ();
+
+  /**
+   * @brief Copy elements from a given sequence.
+   *
+   * @param s A sequence to copy elements from.
+   *
+   * For each element in @a s this function makes a copy and adds it 
+   * to the sequence. Note that this operation completely changes the 
+   * sequence and all old elements will be lost.
+   */
+  void
+  ocsp (const OcspSequence& s);
+
+  //@}
+
+  /**
    * @name Constructors
    */
   //@{
@@ -708,6 +773,268 @@ class Configuration: public ::xml_schema::Type
 
   protected:
   ParamSequence param_;
+  OcspSequence ocsp_;
+
+  //@endcond
+};
+
+/**
+ * @brief Class corresponding to the %ocsp schema type.
+ *
+ * @nosubgrouping
+ */
+class Ocsp: public ::xml_schema::Type
+{
+  public:
+  /**
+   * @name url
+   *
+   * @brief Accessor and modifier functions for the %url
+   * required element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::xml_schema::String UrlType;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< UrlType, char > UrlTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element.
+   *
+   * @return A constant reference to the element.
+   */
+  const UrlType&
+  url () const;
+
+  /**
+   * @brief Return a read-write reference to the element.
+   *
+   * @return A reference to the element.
+   */
+  UrlType&
+  url ();
+
+  /**
+   * @brief Set the element value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the element.
+   */
+  void
+  url (const UrlType& x);
+
+  /**
+   * @brief Set the element value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  url (::std::auto_ptr< UrlType > p);
+
+  //@}
+
+  /**
+   * @name cert
+   *
+   * @brief Accessor and modifier functions for the %cert
+   * required element.
+   */
+  //@{
+
+  /**
+   * @brief Element type.
+   */
+  typedef ::xml_schema::String CertType;
+
+  /**
+   * @brief Element traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< CertType, char > CertTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the element.
+   *
+   * @return A constant reference to the element.
+   */
+  const CertType&
+  cert () const;
+
+  /**
+   * @brief Return a read-write reference to the element.
+   *
+   * @return A reference to the element.
+   */
+  CertType&
+  cert ();
+
+  /**
+   * @brief Set the element value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the element.
+   */
+  void
+  cert (const CertType& x);
+
+  /**
+   * @brief Set the element value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  cert (::std::auto_ptr< CertType > p);
+
+  //@}
+
+  /**
+   * @name issuer
+   *
+   * @brief Accessor and modifier functions for the %issuer
+   * required attribute.
+   */
+  //@{
+
+  /**
+   * @brief Attribute type.
+   */
+  typedef ::xml_schema::String IssuerType;
+
+  /**
+   * @brief Attribute traits type.
+   */
+  typedef ::xsd::cxx::tree::traits< IssuerType, char > IssuerTraits;
+
+  /**
+   * @brief Return a read-only (constant) reference to the attribute.
+   *
+   * @return A constant reference to the attribute.
+   */
+  const IssuerType&
+  issuer () const;
+
+  /**
+   * @brief Return a read-write reference to the attribute.
+   *
+   * @return A reference to the attribute.
+   */
+  IssuerType&
+  issuer ();
+
+  /**
+   * @brief Set the attribute value.
+   *
+   * @param x A new value to set.
+   *
+   * This function makes a copy of its argument and sets it as
+   * the new value of the attribute.
+   */
+  void
+  issuer (const IssuerType& x);
+
+  /**
+   * @brief Set the attribute value without copying.
+   *
+   * @param p A new value to use.
+   *
+   * This function will try to use the passed value directly instead
+   * of making a copy.
+   */
+  void
+  issuer (::std::auto_ptr< IssuerType > p);
+
+  //@}
+
+  /**
+   * @name Constructors
+   */
+  //@{
+
+  /**
+   * @brief Create an instance from the ultimate base and
+   * initializers for required elements and attributes.
+   */
+  Ocsp (const UrlType&,
+        const CertType&,
+        const IssuerType&);
+
+  /**
+   * @brief Create an instance from a DOM element.
+   *
+   * @param e A DOM element to extract the data from.
+   * @param f Flags to create the new instance with.
+   * @param c A pointer to the object that will contain the new
+   * instance.
+   */
+  Ocsp (const xercesc::DOMElement& e,
+        ::xml_schema::Flags f = 0,
+        ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy constructor.
+   *
+   * @param x An instance to make a copy of.
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   *
+   * For polymorphic object models use the @c _clone function instead.
+   */
+  Ocsp (const Ocsp& x,
+        ::xml_schema::Flags f = 0,
+        ::xml_schema::Container* c = 0);
+
+  /**
+   * @brief Copy the instance polymorphically.
+   *
+   * @param f Flags to create the copy with.
+   * @param c A pointer to the object that will contain the copy.
+   * @return A pointer to the dynamically allocated copy.
+   *
+   * This function ensures that the dynamic type of the instance is
+   * used for copying and should be used for polymorphic object
+   * models instead of the copy constructor.
+   */
+  virtual Ocsp*
+  _clone (::xml_schema::Flags f = 0,
+          ::xml_schema::Container* c = 0) const;
+
+  //@}
+
+  /**
+   * @brief Destructor.
+   */
+  virtual 
+  ~Ocsp ();
+
+  // Implementation.
+  //
+
+  //@cond
+
+  protected:
+  void
+  parse (::xsd::cxx::xml::dom::parser< char >&,
+         ::xml_schema::Flags);
+
+  protected:
+  ::xsd::cxx::tree::one< UrlType > url_;
+  ::xsd::cxx::tree::one< CertType > cert_;
+  ::xsd::cxx::tree::one< IssuerType > issuer_;
 
   //@endcond
 };

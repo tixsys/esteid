@@ -21,10 +21,8 @@ const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML";
 const std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "bdoclib.conf";
 
 
-const std::string digidoc::XmlConf::OCSP_URL           = "ocsp.url";
 const std::string digidoc::XmlConf::DIGEST_URI         = "digest.uri";
 const std::string digidoc::XmlConf::PKCS11_DRIVER_PATH = "pkcs11.driver.path";
-const std::string digidoc::XmlConf::OCSP_CERTS_FILE    = "ocsp.certs.file";
 const std::string digidoc::XmlConf::CERT_STORE_PATH    = "cert.store.path";
 const std::string digidoc::XmlConf::MANIFEST_XSD_PATH  = "manifest.xsd.path";
 const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
@@ -133,14 +131,6 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             {
                 pkcs11DriverPath = *it;
             }
-            else if(OCSP_URL.compare(it->name()) == 0)
-            {
-                ocspUrl = *it;
-            }
-            else if(OCSP_CERTS_FILE.compare(it->name()) == 0)
-            {
-                ocspCertsFile = *it;
-            }
             else if(CERT_STORE_PATH.compare(it->name()) == 0)
             {
                 certStorePath = *it;
@@ -165,6 +155,20 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             {
                 WARN("Unknown configuration parameter %s", it->name().c_str());
             }
+        }
+
+        // the file path in conf is relative to the conf file's location
+        std::string conf_fullpath = digidoc::util::File::directory(getenv(CONF_ENV.c_str()));
+        if( !conf_fullpath.empty() ) conf_fullpath += "/";
+        Configuration::OcspSequence ocspSeq = conf->ocsp();
+        for( Configuration::OcspSequence::const_iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
+        {
+            OCSPConf o;
+            o.issuer = it->issuer();
+            o.url = it->url();
+            o.cert = it->cert();
+            o.cert.insert(0, conf_fullpath);
+            ocsp.push_back(o);
         }
     }
     catch(const xml_schema::Exception& e)
@@ -217,18 +221,17 @@ std::string digidoc::XmlConf::getPKCS11DriverPath() const
     return pkcs11DriverPath;
 }
 
-std::string digidoc::XmlConf::getOCSPUrl() const
+digidoc::Conf::OCSPConf digidoc::XmlConf::getOCSP(const std::string &issuer) const
 {
-    return ocspUrl;
-}
-
-std::string digidoc::XmlConf::getOCSPCertPath() const
-{
-    // the file path in conf is relative to the conf file's location
-    std::string conf_fullpath(getenv(CONF_ENV.c_str()));
-    std::string ocspCertPath(digidoc::util::File::directory(conf_fullpath));
-    ocspCertPath.append("/" + ocspCertsFile);
-    return ocspCertPath;
+    int pos = issuer.find( "CN=", 0 ) + 3;
+    std::string _issuer = issuer.substr( pos, issuer.find( ",", pos ) - pos );
+    for(std::vector<OCSPConf>::const_iterator i = ocsp.begin(); i != ocsp.end(); ++i)
+    {
+        if(i->issuer == _issuer)
+            return *i;
+    }
+    OCSPConf o;
+    return o;
 }
 
 std::string digidoc::XmlConf::getCertStorePath() const

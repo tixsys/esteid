@@ -6,16 +6,8 @@
     <param name="digest.uri">http://www.w3.org/2000/09/xmldsig#sha1</param>
     <!--pkcs11 driver location-->
     <param name="pkcs11.driver.path">@PKCS11_MODULE@</param>
-
-    <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
-    <!--<param name="ocsp.url">http://www.openxades.org/cgi-bin/ocsp.cgi</param>-->
-    <param name="ocsp.url">http://91.198.206.66</param>
     <!--Trusted CA certs in PEM format-->
     <param name="cert.store.path">certs</param>
-    <!--OCSP responder public certificate for validating OCSP response-->
-    <!--<param name="ocsp.certs.file">certs/TEST-SK OCSP 2005.pem</param>-->
-    <param name="ocsp.certs.file">certs/ESTEID-SK OCSP 2007.pem</param>
-
     <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
     <param name="xades.xsd.path">schema/XAdES.xsd</param>
     <param name="dsig.xsd.path">schema/xmldsig-core-schema.xsd</param>
@@ -23,4 +15,14 @@
     <!--<param name="proxy.port"></param>-->
     <!--<param name="pkcs12.cert"></param>-->
     <!--<param name="pkcs12.pass"></param>-->
+
+    <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
+    <ocsp issuer="ESTEID-SK 2007">
+        <url>http://91.198.206.66</url>
+        <cert>certs/ESTEID-SK OCSP 2007.pem</cert>
+    </ocsp>
+    <ocsp issuer="TEST-SK">
+        <url>http://www.openxades.org/cgi-bin/ocsp.cgi</url>
+        <cert>certs/TEST-SK OCSP 2005.pem</cert>
+    </ocsp>
 </configuration>

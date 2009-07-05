@@ -150,11 +150,16 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
 
     // Get OCSP responder certificate.
     // FIXME: throws IOException, handle it
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(conf->getOCSPCertPath());
+    Conf::OCSPConf ocspConf = conf->getOCSP(cert.getIssuerName());
+    if(ocspConf.issuer.empty())
+    {
+        THROW_SIGNATUREEXCEPTION("Failed to load ocsp issuer certificate.");
+    }
+    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope ocspCertsScope(&ocspCerts);
 
     // Check the certificate validity from OCSP server.
-	OCSP ocsp(conf->getOCSPUrl(), conf->getProxyHost(), conf->getProxyPort());
+	OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
 	ocsp.setSkew(120);//XXX: load from conf
 	ocsp.setOCSPCerts(ocspCerts);
 	std::auto_ptr<Digest> calc = Digest::create();

@@ -61,6 +61,100 @@ param (const ParamSequence& s)
   this->param_ = s;
 }
 
+const Configuration::OcspSequence& Configuration::
+ocsp () const
+{
+  return this->ocsp_;
+}
+
+Configuration::OcspSequence& Configuration::
+ocsp ()
+{
+  return this->ocsp_;
+}
+
+void Configuration::
+ocsp (const OcspSequence& s)
+{
+  this->ocsp_ = s;
+}
+
+
+// Ocsp
+// 
+
+const Ocsp::UrlType& Ocsp::
+url () const
+{
+  return this->url_.get ();
+}
+
+Ocsp::UrlType& Ocsp::
+url ()
+{
+  return this->url_.get ();
+}
+
+void Ocsp::
+url (const UrlType& x)
+{
+  this->url_.set (x);
+}
+
+void Ocsp::
+url (::std::auto_ptr< UrlType > x)
+{
+  this->url_.set (x);
+}
+
+const Ocsp::CertType& Ocsp::
+cert () const
+{
+  return this->cert_.get ();
+}
+
+Ocsp::CertType& Ocsp::
+cert ()
+{
+  return this->cert_.get ();
+}
+
+void Ocsp::
+cert (const CertType& x)
+{
+  this->cert_.set (x);
+}
+
+void Ocsp::
+cert (::std::auto_ptr< CertType > x)
+{
+  this->cert_.set (x);
+}
+
+const Ocsp::IssuerType& Ocsp::
+issuer () const
+{
+  return this->issuer_.get ();
+}
+
+Ocsp::IssuerType& Ocsp::
+issuer ()
+{
+  return this->issuer_.get ();
+}
+
+void Ocsp::
+issuer (const IssuerType& x)
+{
+  this->issuer_.set (x);
+}
+
+void Ocsp::
+issuer (::std::auto_ptr< IssuerType > x)
+{
+  this->issuer_.set (x);
+}
+
 
 // Param
 // 
@@ -98,7 +192,8 @@ name (::std::auto_ptr< NameType > x)
 Configuration::
 Configuration ()
 : ::xml_schema::Type (),
-  param_ (::xml_schema::Flags (), this)
+  param_ (::xml_schema::Flags (), this),
+  ocsp_ (::xml_schema::Flags (), this)
 {
 }
 
@@ -107,7 +202,8 @@ Configuration (const Configuration& x,
                ::xml_schema::Flags f,
                ::xml_schema::Container* c)
 : ::xml_schema::Type (x, f, c),
-  param_ (x.param_, f, this)
+  param_ (x.param_, f, this),
+  ocsp_ (x.ocsp_, f, this)
 {
 }
 
@@ -116,7 +212,8 @@ Configuration (const xercesc::DOMElement& e,
                ::xml_schema::Flags f,
                ::xml_schema::Container* c)
 : ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
-  param_ (f, this)
+  param_ (f, this),
+  ocsp_ (f, this)
 {
   if ((f & ::xml_schema::Flags::base) == 0)
   {
@@ -146,6 +243,17 @@ parse (::xsd::cxx::xml::dom::parser< char >& p,
       continue;
     }
 
+    // ocsp
+    //
+    if (n.name () == "ocsp" && n.namespace_ ().empty ())
+    {
+      ::std::auto_ptr< OcspType > r (
+        OcspTraits::create (i, f, this));
+
+      this->ocsp_.push_back (r);
+      continue;
+    }
+
     break;
   }
 }
@@ -159,6 +267,138 @@ _clone (::xml_schema::Flags f,
 
 Configuration::
 ~Configuration ()
+{
+}
+
+// Ocsp
+//
+
+Ocsp::
+Ocsp (const UrlType& url,
+      const CertType& cert,
+      const IssuerType& issuer)
+: ::xml_schema::Type (),
+  url_ (url, ::xml_schema::Flags (), this),
+  cert_ (cert, ::xml_schema::Flags (), this),
+  issuer_ (issuer, ::xml_schema::Flags (), this)
+{
+}
+
+Ocsp::
+Ocsp (const Ocsp& x,
+      ::xml_schema::Flags f,
+      ::xml_schema::Container* c)
+: ::xml_schema::Type (x, f, c),
+  url_ (x.url_, f, this),
+  cert_ (x.cert_, f, this),
+  issuer_ (x.issuer_, f, this)
+{
+}
+
+Ocsp::
+Ocsp (const xercesc::DOMElement& e,
+      ::xml_schema::Flags f,
+      ::xml_schema::Container* c)
+: ::xml_schema::Type (e, f | ::xml_schema::Flags::base, c),
+  url_ (f, this),
+  cert_ (f, this),
+  issuer_ (f, this)
+{
+  if ((f & ::xml_schema::Flags::base) == 0)
+  {
+    ::xsd::cxx::xml::dom::parser< char > p (e, true, true);
+    this->parse (p, f);
+  }
+}
+
+void Ocsp::
+parse (::xsd::cxx::xml::dom::parser< char >& p,
+       ::xml_schema::Flags f)
+{
+  for (; p.more_elements (); p.next_element ())
+  {
+    const xercesc::DOMElement& i (p.cur_element ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    // url
+    //
+    if (n.name () == "url" && n.namespace_ ().empty ())
+    {
+      ::std::auto_ptr< UrlType > r (
+        UrlTraits::create (i, f, this));
+
+      if (!url_.present ())
+      {
+        this->url_.set (r);
+        continue;
+      }
+    }
+
+    // cert
+    //
+    if (n.name () == "cert" && n.namespace_ ().empty ())
+    {
+      ::std::auto_ptr< CertType > r (
+        CertTraits::create (i, f, this));
+
+      if (!cert_.present ())
+      {
+        this->cert_.set (r);
+        continue;
+      }
+    }
+
+    break;
+  }
+
+  if (!url_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_element< char > (
+      "url",
+      "");
+  }
+
+  if (!cert_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_element< char > (
+      "cert",
+      "");
+  }
+
+  while (p.more_attributes ())
+  {
+    const xercesc::DOMAttr& i (p.next_attribute ());
+    const ::xsd::cxx::xml::qualified_name< char > n (
+      ::xsd::cxx::xml::dom::name< char > (i));
+
+    if (n.name () == "issuer" && n.namespace_ ().empty ())
+    {
+      ::std::auto_ptr< IssuerType > r (
+        IssuerTraits::create (i, f, this));
+
+      this->issuer_.set (r);
+      continue;
+    }
+  }
+
+  if (!issuer_.present ())
+  {
+    throw ::xsd::cxx::tree::expected_attribute< char > (
+      "issuer",
+      "");
+  }
+}
+
+Ocsp* Ocsp::
+_clone (::xml_schema::Flags f,
+        ::xml_schema::Container* c) const
+{
+  return new class Ocsp (*this, f, c);
+}
+
+Ocsp::
+~Ocsp ()
 {
 }
 

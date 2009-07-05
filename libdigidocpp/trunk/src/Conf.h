@@ -15,6 +15,7 @@ namespace digidoc
     {
 
       public:
+          struct OCSPConf { std::string issuer, url, cert; };
           static void init(Conf* conf);
           static Conf* getInstance();
           virtual std::string getDigestUri() const = 0;
@@ -22,8 +23,7 @@ namespace digidoc
           virtual std::string getXadesXsdPath() const = 0;
           virtual std::string getDsigXsdPath() const = 0;
           virtual std::string getPKCS11DriverPath() const = 0;
-          virtual std::string getOCSPUrl() const = 0;
-          virtual std::string getOCSPCertPath() const = 0;
+          virtual OCSPConf getOCSP(const std::string &issuer) const = 0;
           virtual std::string getCertStorePath() const = 0;
           virtual std::string getProxyHost() const = 0;
           virtual std::string getProxyPort() const = 0;
