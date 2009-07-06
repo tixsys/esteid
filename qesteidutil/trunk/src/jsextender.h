@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "sslConnect.h"
+#include "../common/sslConnect.h"
 
 #include <QLabel>
 #include <QObject>

@@ -29,7 +29,6 @@
 
 #include "mainwindow.h"
 #include "jsextender.h"
-#include "sslConnect.h"
 #include "Settings.h"
 #include "SettingsDialog.h"
 

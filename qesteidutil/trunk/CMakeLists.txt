@@ -24,6 +24,7 @@ set(QT_USE_QTXML true)
 
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
+    common/sslConnect.h
     src/DiagnosticsDialog.h
     src/Settings.h
     src/SettingsDialog.h
@@ -32,7 +33,6 @@ set(qesteidutil_MOC_HDRS
     src/jsesteidcard.h
     src/jsextender.h
     src/mainwindow.h
-    src/sslConnect.h
 )
 
 set(qesteidutil_HDRS
@@ -54,6 +54,7 @@ set(cardlib_SRCS
 set(qesteidutil_SRCS
     common/CertificateWidget.cpp
     common/SslCertificate.cpp
+    common/sslConnect.cpp
     src/DiagnosticsDialog.cpp
     src/SettingsDialog.cpp
     src/jscardmanager.cpp
@@ -62,7 +63,6 @@ set(qesteidutil_SRCS
     src/jsextender.cpp
     src/main.cpp
     src/mainwindow.cpp
-    src/sslConnect.cpp
 )
 
 QT4_WRAP_UI( UI_HEADERS
