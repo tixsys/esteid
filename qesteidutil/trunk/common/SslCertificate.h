@@ -47,6 +47,7 @@ public:
 	QByteArray	authorityKeyIdentifier() const;
 	QStringList enhancedKeyUsage() const;
 	static QString formatName( const QString &name );
+	static QSslCertificate fromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );
 	bool		isTempel() const;
 	QHash<int,QString> keyUsage() const;

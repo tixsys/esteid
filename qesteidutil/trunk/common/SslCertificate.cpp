@@ -26,6 +26,7 @@
 #include <QStringList>
 
 #include <openssl/x509v3.h>
+#include <openssl/pkcs12.h>
 
 static QByteArray ASN_STRING_to_QByteArray( ASN1_OCTET_STRING *str )
 { return QByteArray( (const char *)ASN1_STRING_data(str), ASN1_STRING_length(str) ); }
@@ -94,6 +95,32 @@ QString SslCertificate::formatName( const QString &name )
 		}
 	}
 	return ret;
+}
+
+QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
+{
+	BIO *bio = BIO_new( BIO_s_mem() );
+	if( !bio )
+		return QSslCertificate();
+
+	BIO_write( bio, data.data(), data.size() );
+
+	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
+	BIO_free( bio );
+	if( !p12 )
+		return QSslCertificate();
+
+	X509 *cert;
+	EVP_PKEY *key;
+	int ret = PKCS12_parse( p12, passPhrase.data(), &key, &cert, NULL );
+	PKCS12_free(p12);
+
+	if( !ret )
+		return QSslCertificate();
+
+	EVP_PKEY_free( key );
+
+	return fromX509( Qt::HANDLE(cert) );
 }
 
 QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
