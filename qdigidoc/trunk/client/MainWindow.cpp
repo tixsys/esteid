@@ -739,7 +739,16 @@ bool MainWindow::checkAccessCert()
 	QString certPass = QString::fromStdString( doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ) );
 
 	if ( certFile.size() && QFile::exists( certFile ) )
-		return true;
+	{
+		QFile f( certFile.toLatin1() );
+		if( f.open( QIODevice::ReadOnly ) )
+		{
+			SslCertificate cert = SslCertificate::fromPKCS12( f.readAll(), certPass.toLatin1() );
+			f.close();
+			if ( !cert.isNull() && cert.isValid() && cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) )
+				return true;
+		}
+	}
 
 	if ( QMessageBox::question( this,
 								tr( "Server access certificate" ),
