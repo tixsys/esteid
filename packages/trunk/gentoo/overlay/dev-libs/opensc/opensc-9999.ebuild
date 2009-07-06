@@ -1,7 +1,8 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-libs/opensc/opensc-0.11.7.ebuild,v 1.9 2009/03/09 19:26:07 gmsoft Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-libs/opensc/opensc-0.11.8.ebuild,v 1.7 2009/05/22 22:45:10 maekke Exp $
 
+EAPI="2"
 
 if [[ ${PV} = 9999* ]]; then
 	SVN_ECLASS="subversion"
@@ -17,7 +18,7 @@ inherit ${AUTOTOOLS_ECLASS} multilib ${SVN_ECLASS}
 DESCRIPTION="SmartCard library and applications"
 HOMEPAGE="http://www.opensc-project.org/opensc/"
 
-KEYWORDS="alpha amd64 arm hppa ia64 ~m68k ppc ppc64 s390 sh sparc x86"
+KEYWORDS="alpha amd64 arm hppa ia64 m68k ppc ppc64 s390 sh sparc x86"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -32,6 +33,7 @@ RDEPEND="dev-libs/openssl
 		x11-libs/libXt
 	)"
 DEPEND="${RDEPEND}
+	app-text/docbook-xsl-stylesheets
 	dev-util/pkgconfig
 	nsplugin? ( dev-libs/libassuan )"
 
@@ -43,7 +45,7 @@ if [[ ${PV} = 9999* ]]; then
 	}
 fi
 
-src_compile() {
+src_configure() {
 	econf \
 		--docdir="/usr/share/doc/${PF}" \
 		--htmldir="/usr/share/doc/${PF}/html" \
@@ -52,16 +54,17 @@ src_compile() {
 		$(use_enable nsplugin) \
 		$(use_enable doc) \
 		--with-pinentry="/usr/bin/pinentry"
-	emake || die
 }
 
 src_install() {
-	emake install DESTDIR="${D}" || die
+	emake DESTDIR="${D}" install || die "emake install failed"
 }
 
 pkg_postinst() {
-	elog "This package is a security fix to CVE-2009-0368. If you have private keys on your"
-	elog "smart card intialised by this package they may stored with improper access restrictions."
-	elog "See advisory http://thread.gmane.org/gmane.comp.encryption.opensc.announce/22 for"
-	elog "full details and mitigation advice"
+	elog "This package contains security fix for CVE-2009-1603. pkcs11-tool from OpenSC 0.11.7,"
+	elog "when used with third-party PKCS#11 modules, generated RSA keys with incorrect public"
+	elog "exponents, which allows attackers to read the cleartext form of messages that were"
+	elog "intended to be encrypted."
+	elog "See http://www.opensc-project.org/pipermail/opensc-announce/2009-May/000025.html"
+	elog "for details"
 }
