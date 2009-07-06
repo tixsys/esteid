@@ -24,7 +24,7 @@
     <message>
         <location filename="../src/gui/widgets/qtabbar.cpp" line="+2217"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge kaart</translation>
     </message>
 </context>
 <context>
@@ -815,41 +815,41 @@ to
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+627"/>
         <location line="+26"/>
         <source>Host not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Masinat ei leitud</translation>
     </message>
     <message>
         <location line="+50"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
-        <translation type="unfinished"></translation>
+        <translation>Ühendusest keelduti</translation>
     </message>
     <message>
         <location line="+141"/>
         <source>Connection timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Ühendus aegus</translation>
     </message>
     <message>
         <location line="-547"/>
         <location line="+787"/>
         <location line="+208"/>
         <source>Operation on socket is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Sokli toiming ei ole toetatud</translation>
     </message>
     <message>
         <location line="+137"/>
         <source>Socket operation timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Soklitoiming aegus</translation>
     </message>
     <message>
         <location line="+380"/>
         <source>Socket is not connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sokkel pole ühendatud</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="-8"/>
         <source>Network unreachable</source>
-        <translation type="unfinished"></translation>
+        <translation>Võrk ei ole kättesaadav</translation>
     </message>
 </context>
 <context>
@@ -857,17 +857,17 @@ to
     <message>
         <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1169"/>
         <source>&amp;Step up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Samm üles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Step &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;amm alla</translation>
     </message>
     <message>
         <location line="-8"/>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vali kõik</translation>
     </message>
 </context>
 <context>
@@ -875,7 +875,7 @@ to
     <message>
         <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+346"/>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiveeri</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
@@ -891,12 +891,12 @@ to
         <location filename="../src/gui/kernel/qapplication.cpp" line="+2212"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+2"/>
         <source>Activates the program&apos;s main window</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiveerib programmi peaakna</translation>
     </message>
 </context>
 <context>
@@ -927,17 +927,17 @@ to
     <message>
         <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+84"/>
         <source>Uncheck</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda märge</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Märgi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Toggle</source>
-        <translation type="unfinished"></translation>
+        <translation>Lülita</translation>
     </message>
 </context>
 <context>
@@ -1004,22 +1004,22 @@ to
         <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1741"/>
         <location line="+65"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+514"/>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Väär</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Tõene</translation>
     </message>
     <message>
         <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+0"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
 </context>
 <context>
@@ -1028,19 +1028,19 @@ to
         <location filename="../src/corelib/kernel/qsystemsemaphore_unix.cpp" line="+89"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1: võti on tühi</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>%1: unable to make key</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1: võtme loomine nurjus</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>%1: ftok failed</source>
         <comment>QSystemSemaphore</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1: ftok nurjus&quot;</translation>
     </message>
 </context>
 <context>
@@ -1105,22 +1105,22 @@ to
     <message>
         <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2265"/>
         <source>AM</source>
-        <translation type="unfinished"></translation>
+        <translation>AM</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>am</source>
-        <translation type="unfinished"></translation>
+        <translation>am</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>PM</source>
-        <translation type="unfinished"></translation>
+        <translation>PM</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>pm</source>
-        <translation type="unfinished"></translation>
+        <translation>pm</translation>
     </message>
 </context>
 <context>
@@ -1146,12 +1146,12 @@ to
     <message>
         <location filename="../src/gui/dialogs/qdialog.cpp" line="+567"/>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mis see on?</translation>
     </message>
     <message>
         <location line="-115"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Tehtud</translation>
     </message>
 </context>
 <context>
@@ -1161,12 +1161,12 @@ to
         <location line="+464"/>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+531"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+0"/>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1181,17 +1181,17 @@ to
     <message>
         <location line="+3"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Katkesta</translation>
+        <translation>&amp;Loobu</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Cancel</source>
-        <translation>Katkesta</translation>
+        <translation>Loobu</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1206,12 +1206,12 @@ to
     <message>
         <location line="+3"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakenda</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähtesta</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1221,12 +1221,12 @@ to
     <message>
         <location line="+4"/>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Ära salvesta</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Unusta</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1236,7 +1236,7 @@ to
     <message>
         <location line="+3"/>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>J&amp;ah kõigile</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1246,37 +1246,37 @@ to
     <message>
         <location line="+3"/>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>E&amp;i kõigile</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta kõik</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Katkesta</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Proovi uuesti</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ignore</source>
-        <translation type="unfinished"></translation>
+        <translation>Eira</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaikeväärtused</translation>
     </message>
     <message>
         <location line="-29"/>
         <source>Close without Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge salvestamata</translation>
     </message>
 </context>
 <context>
@@ -1284,29 +1284,29 @@ to
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+423"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Suurus</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Kind</source>
         <comment>Match OS X Finder</comment>
-        <translation type="unfinished"></translation>
+        <translation>Laad</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tüüp</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Muutmise kuupäev</translation>
     </message>
 </context>
 <context>
@@ -1314,17 +1314,17 @@ to
     <message>
         <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1209"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Doki</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Ujuvaks</translation>
     </message>
 </context>
 <context>
@@ -1332,12 +1332,12 @@ to
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-537"/>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Rohkem</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Less</source>
-        <translation type="unfinished"></translation>
+        <translation>Vähem</translation>
     </message>
 </context>
 <context>
@@ -1374,27 +1374,27 @@ to
         <location filename="../src/corelib/io/qfile.cpp" line="+678"/>
         <location line="+130"/>
         <source>Destination file exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Sihtfail on olemas</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Cannot open %1 for input</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 avamine sisendiks nurjus</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Cannot open for output</source>
-        <translation type="unfinished"></translation>
+        <translation>Avamine väljundiks nurjus</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Failure to write block</source>
-        <translation type="unfinished"></translation>
+        <translation>Ploki kirjutamine nurjus</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Cannot create %1 for output</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 loomine väljundiks nurjus</translation>
     </message>
 </context>
 <context>
@@ -1427,13 +1427,14 @@ to
     <message>
         <location line="-705"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <location line="+1469"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 on juba olemas.
+Kas kirjutada see üle?</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -1445,7 +1446,7 @@ Please verify the correct file name was given.</source>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+402"/>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Minu arvuti</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1458"/>
@@ -1466,7 +1467,7 @@ Please verify the correct file name was given.</source>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
         <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagasi</translation>
     </message>
     <message>
         <location/>
@@ -1540,18 +1541,18 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+381"/>
         <source>Drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketas</translation>
     </message>
     <message>
         <location line="+3"/>
         <location line="+1"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fail</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-4"/>
@@ -1561,7 +1562,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+29"/>
         <source>Show </source>
-        <translation type="unfinished"></translation>
+        <translation>Näita</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
@@ -1588,7 +1589,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qsidebar.cpp" line="+388"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-662"/>
@@ -1614,74 +1615,74 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+791"/>
         <source>Invalid filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Vigane failinimi</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Nime  \&quot;%1\&quot; ei saa kasutada.&lt;/b&gt;&lt;p&gt;Proovi mõnda muud nime, milles oleks vähem tähti või puuduksid kirjavahemärgid.</translation>
     </message>
     <message>
         <location line="+63"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Suurus</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Kind</source>
         <comment>Match OS X Finder</comment>
-        <translation type="unfinished"></translation>
+        <translation>Laad</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tüüp</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Muutmise kuupäev</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+204"/>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Minu arvuti</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Arvuti</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-163"/>
         <source>%1 TB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bytes</translation>
     </message>
 </context>
 <context>
@@ -2092,7 +2093,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/network/kernel/qhostinfo_p.h" line="+153"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu viga</translation>
     </message>
 </context>
 <context>
@@ -2442,27 +2443,27 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/corelib/global/qglobal.cpp" line="+1830"/>
         <source>Permission denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Õigustest ei piisa</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Too many open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Liiga palju avatud faile</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Sellist faili või kataloogi ei ole</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>No space left on device</source>
-        <translation type="unfinished"></translation>
+        <translation>Seadmel pole enam vaba ruumi</translation>
     </message>
     <message>
         <location filename="../src/corelib/io/qiodevice.cpp" line="+1506"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu viga</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2494,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+193"/>
         <source>Enter a value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisesta väärtus:</translation>
     </message>
 </context>
 <context>
@@ -2501,66 +2502,66 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/corelib/plugin/qlibrary.cpp" line="+348"/>
         <source>Could not mmap &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nurjus mmap &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin kontrollimisandmed ei klapi asukohas &apos;%1&apos;</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Could not unmap &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nurjus unmap &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location line="+302"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin &apos;%1&apos; kasutab ühildumatut Qt teeki. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. Expected build key &quot;%2&quot;, got &quot;%3&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin &apos;%1&apos; kasutab ühildumatut Qt teeki. Oodati ehitamisvõtit \&quot;%2\&quot;, aga saadi \&quot;%3\&quot;</translation>
     </message>
     <message>
         <location line="+340"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu viga</translation>
     </message>
     <message>
         <location line="-377"/>
         <location filename="../src/corelib/plugin/qpluginloader.cpp" line="+250"/>
         <source>The shared library was not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jagatud teeki ei leitud.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fail &apos;%1&apos; ei ole korrektne Qt plugin.</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin &apos;%1&apos; kasutab ühildumatut Qt teeki. (Ei tohi segada silumis- ja väljalasteteeke.)</translation>
     </message>
     <message>
         <location filename="../src/corelib/plugin/qlibrary_unix.cpp" line="+179"/>
         <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+69"/>
         <source>Cannot load library %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Teegi %1 laadimine nurjus: %2</translation>
     </message>
     <message>
         <location line="+16"/>
         <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+26"/>
         <source>Cannot unload library %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Teegi %1 töö lõpetamine nurjus: %2</translation>
     </message>
     <message>
         <location line="+31"/>
         <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Sümboli \&quot;%1\&quot; lahendamine asukohas %2 nurjus: %3</translation>
     </message>
 </context>
 <context>
@@ -2568,37 +2569,37 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/widgets/qlineedit.cpp" line="+2649"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Võta tagasi</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tee uuesti</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>L&amp;õika</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopeeri</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aseta</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali kõik</translation>
     </message>
 </context>
 <context>
@@ -2892,20 +2893,20 @@ Do you want to delete it anyway?</source>
         <location filename="../src/plugins/accessible/widgets/qaccessiblemenu.cpp" line="+127"/>
         <location line="+225"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
     <message>
         <location line="-224"/>
         <location line="+225"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
     <message>
         <location line="-223"/>
         <location line="+225"/>
         <location line="+51"/>
         <source>Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>Käivita</translation>
     </message>
 </context>
 <context>
@@ -2921,27 +2922,27 @@ Do you want to delete it anyway?</source>
         <location filename="../src/gui/dialogs/qmessagebox.h" line="-52"/>
         <location line="+8"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location line="+503"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt info</translation>
     </message>
     <message>
         <location line="-15"/>
         <source>&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Käesolev programm kasutab Qt versiooni %1.&lt;/p&gt;</translation>
     </message>
     <message>
         <location line="-1584"/>
         <source>Show Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Näita üksikasju...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hide Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Peida üksikasjad...</translation>
     </message>
     <message>
         <location line="+1570"/>
@@ -2959,7 +2960,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontext.cpp" line="+58"/>
         <source>Select IM</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisestusviisi valik</translation>
     </message>
 </context>
 <context>
@@ -3367,48 +3368,48 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+134"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodu</translation>
     </message>
     <message>
         <location filename="../src/network/access/qnetworkaccessdatabackend.cpp" line="+44"/>
         <source>Operation not supported on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Operation not supported on %1</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Invalid URI: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vigane URI: %1</translation>
     </message>
     <message>
         <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+145"/>
         <source>Write error writing to %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjutamisviga %1 kirjutamisel: %2</translation>
     </message>
     <message>
         <location line="+57"/>
         <source>Read error reading from %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Lugemisviga %1 lugemisel: %2</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Socket error on %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Sokli viga masinas %1: %2</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Remote host closed the connection prematurely on %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Võrgumasin sulges ühenduse enneaegselt masinas %1</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Protocol error: packet of size 0 received</source>
-        <translation type="unfinished"></translation>
+        <translation>Protokolli viga: saadi pakett suurusega 0</translation>
     </message>
     <message>
         <location filename="../src/network/kernel/qhostinfo.cpp" line="+147"/>
         <location line="+57"/>
         <source>No host name given</source>
-        <translation type="unfinished"></translation>
+        <translation>Masina nime ei ole antud</translation>
     </message>
 </context>
 <context>
@@ -3416,12 +3417,12 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1165"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Väärtus</translation>
     </message>
 </context>
 <context>
@@ -3475,102 +3476,102 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+274"/>
         <source>Centimeters (cm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sentimeetrid (cm)</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Millimeters (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Millimeetrid (mm)</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Inches (in)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tollid (in)</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Points (pt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktid (pt)</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qpagesetupwidget.ui"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Paber</translation>
     </message>
     <message>
         <location/>
         <source>Page size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülje suurus:</translation>
     </message>
     <message>
         <location/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Laius:</translation>
     </message>
     <message>
         <location/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõrgus:</translation>
     </message>
     <message>
         <location/>
         <source>Paper source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paberi allikas:</translation>
     </message>
     <message>
         <location/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Suund</translation>
     </message>
     <message>
         <location/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Püstpaigutus</translation>
     </message>
     <message>
         <location/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Rõhtpaigutus</translation>
     </message>
     <message>
         <location/>
         <source>Reverse landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagurpidi rõhtpaigutus</translation>
     </message>
     <message>
         <location/>
         <source>Reverse portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagurpidi püstpaigutus</translation>
     </message>
     <message>
         <location/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Veerised</translation>
     </message>
     <message>
         <location/>
         <source>top margin</source>
-        <translation type="unfinished"></translation>
+        <translation>ülaveeris</translation>
     </message>
     <message>
         <location/>
         <source>left margin</source>
-        <translation type="unfinished"></translation>
+        <translation>vasakveeris</translation>
     </message>
     <message>
         <location/>
         <source>right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>paremveeris</translation>
     </message>
     <message>
         <location/>
         <source>bottom margin</source>
-        <translation type="unfinished"></translation>
+        <translation>alaveeris</translation>
     </message>
 </context>
 <context>
@@ -3578,12 +3579,12 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/corelib/plugin/qpluginloader.cpp" line="+24"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundmatu viga</translation>
     </message>
     <message>
         <location line="-68"/>
         <source>The plugin was not loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin ei olnud laaditud.</translation>
     </message>
 </context>
 <context>
@@ -3591,425 +3592,428 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+68"/>
         <source>locally connected</source>
-        <translation type="unfinished"></translation>
+        <translation>kohalikult ühendatud</translation>
     </message>
     <message>
         <location line="+23"/>
         <location line="+225"/>
         <source>Aliases: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliased: %1</translation>
     </message>
     <message>
         <location line="+223"/>
         <location line="+199"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>tundmatu</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+299"/>
         <source>A0 (841 x 1189 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A0 (841 x 1189 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A1 (594 x 841 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A1 (594 x 841 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A2 (420 x 594 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A2 (420 x 594 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A3 (297 x 420 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A3 (297 x 420 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A4 (210 x 297 mm, 8.26 x 11.7 inches)</source>
-        <translation type="unfinished"></translation>
+        <translation>A4 (210 x 297 mm, 8.26 x 11,7 tolli)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A5 (148 x 210 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A5 (148 x 210 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A6 (105 x 148 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A6 (105 x 148 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A7 (74 x 105 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A7 (74 x 105 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A8 (52 x 74 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A8 (52 x 74 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A9 (37 x 52 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>A9 (37 x 52 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B0 (1000 x 1414 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B0 (1000 x 1414 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B1 (707 x 1000 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B1 (707 x 1000 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B2 (500 x 707 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B2 (500 x 707 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B3 (353 x 500 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B3 (353 x 500 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B4 (250 x 353 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B4 (250 x 353 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B5 (176 x 250 mm, 6.93 x 9.84 inches)</source>
-        <translation type="unfinished"></translation>
+        <translation>B5 (176 x 250 mm, 6,93 x 9,84 tolli)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B6 (125 x 176 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B6 (125 x 176 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B7 (88 x 125 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B7 (88 x 125 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B8 (62 x 88 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B8 (62 x 88 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B9 (44 x 62 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B9 (44 x 62 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B10 (31 x 44 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>B10 (31 x 44 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>C5E (163 x 229 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>C5E (163 x 229 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DLE (110 x 220 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>DLE (110 x 220 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Executive (7.5 x 10 inches, 191 x 254 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Executive (7,5 x 10 tolli, 191 x 254 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folio (210 x 330 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Foolio (210 x 330 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ledger (432 x 279 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledger (432 x 279 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Legal (8.5 x 14 inches, 216 x 356 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Legal (8,5 x 14 tolli, 216 x 356 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter (8.5 x 11 inches, 216 x 279 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter (8,5 x 11 tolli, 216 x 279 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tabloid (279 x 432 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloid (279 x 432 mm)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>US Common #10 Envelope (105 x 241 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>US Common #10 ümbrik (105 x 241 mm)</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+238"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+80"/>
         <location line="+13"/>
         <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimine</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-357"/>
         <source>Print To File ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimine faili...</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+19"/>
         <source>Print range</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükivahemik</translation>
     </message>
     <message>
         <location line="-2"/>
         <source>Print all</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõige trükkimine</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+80"/>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fail %1 ei ole kirjutatav.
+Palun vali mõni muu failinimi.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 already exists.
+Do you want to overwrite it?</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="-227"/>
         <source>File exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Fail on olemas</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&lt;qt&gt;Do you want to overwrite it?&lt;/qt&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;qt&gt;Kas kirjutada see üle?&lt;/qt&gt;</translation>
     </message>
     <message>
         <location line="+227"/>
         <source>Print selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Trüki valik</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-8"/>
         <source>%1 is a directory.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 on kataloog.
+Palun vali mõni muu failinimi.</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="-232"/>
         <source>A0</source>
-        <translation type="unfinished"></translation>
+        <translation>A0</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A1</source>
-        <translation type="unfinished"></translation>
+        <translation>A1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A2</source>
-        <translation type="unfinished"></translation>
+        <translation>A2</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A3</source>
-        <translation type="unfinished"></translation>
+        <translation>A3</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A4</source>
-        <translation type="unfinished"></translation>
+        <translation>A4</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A5</source>
-        <translation type="unfinished"></translation>
+        <translation>A5</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A6</source>
-        <translation type="unfinished"></translation>
+        <translation>A6</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A7</source>
-        <translation type="unfinished"></translation>
+        <translation>A7</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A8</source>
-        <translation type="unfinished"></translation>
+        <translation>A8</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>A9</source>
-        <translation type="unfinished"></translation>
+        <translation>A9</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B0</source>
-        <translation type="unfinished"></translation>
+        <translation>B0</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B1</source>
-        <translation type="unfinished"></translation>
+        <translation>B1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B2</source>
-        <translation type="unfinished"></translation>
+        <translation>B2</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B3</source>
-        <translation type="unfinished"></translation>
+        <translation>B3</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B4</source>
-        <translation type="unfinished"></translation>
+        <translation>B4</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B5</source>
-        <translation type="unfinished"></translation>
+        <translation>B5</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B6</source>
-        <translation type="unfinished"></translation>
+        <translation>B6</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B7</source>
-        <translation type="unfinished"></translation>
+        <translation>B7</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B8</source>
-        <translation type="unfinished"></translation>
+        <translation>B8</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B9</source>
-        <translation type="unfinished"></translation>
+        <translation>B9</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>B10</source>
-        <translation type="unfinished"></translation>
+        <translation>B10</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>C5E</source>
-        <translation type="unfinished"></translation>
+        <translation>C5E</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>DLE</source>
-        <translation type="unfinished"></translation>
+        <translation>DLE</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Executive</source>
-        <translation type="unfinished"></translation>
+        <translation>Executive</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Folio</source>
-        <translation type="unfinished"></translation>
+        <translation>Foolio</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ledger</source>
-        <translation type="unfinished"></translation>
+        <translation>Ledger</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Legal</source>
-        <translation type="unfinished"></translation>
+        <translation>Legal</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Letter</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Tabloid</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabloid</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>US Common #10 Envelope</source>
-        <translation type="unfinished"></translation>
+        <translation>US Common #10 ümbrik</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Kohandatud</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-522"/>
         <location line="+68"/>
         <source>&amp;Options &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valikud &gt;&gt;</translation>
     </message>
     <message>
         <location line="-63"/>
         <source>&amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trüki</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>&amp;Options &lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Valikud &lt;&lt;</translation>
     </message>
     <message>
         <location line="+253"/>
         <source>Print to File (PDF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimine faili (PDF)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Print to File (Postscript)</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimine faili (PostScript)</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>Local file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kohalik fail</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Write %1 file</source>
-        <translation type="unfinished"></translation>
+        <translation>%1-faili kirjutamine</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
         <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alguse väärtus ei saa olla suurem kui lõpu väärtus.</translation>
     </message>
 </context>
 <context>
@@ -4018,107 +4022,107 @@ Please choose a different file name.</source>
         <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+38"/>
         <location line="+12"/>
         <source>Page Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülje seadistused</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+222"/>
         <source>%1%</source>
-        <translation type="unfinished"></translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <location line="+79"/>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimise eelvaatlus</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Next page</source>
-        <translation type="unfinished"></translation>
+        <translation>Järgmine lehekülg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Previous page</source>
-        <translation type="unfinished"></translation>
+        <translation>Eelmine lehekülg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>First page</source>
-        <translation type="unfinished"></translation>
+        <translation>Esimene lehekülg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Last page</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimane lehekülg</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Fit width</source>
-        <translation type="unfinished"></translation>
+        <translation>Mahuta laiusele</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Fit page</source>
-        <translation type="unfinished"></translation>
+        <translation>Mahuta leheküljele</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Suurenda</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Vähenda</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Püstpaigutus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Rõhtpaigutus</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Show single page</source>
-        <translation type="unfinished"></translation>
+        <translation>Üks lehekülg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show facing pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõrvutised leheküljed</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Show overview of all pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõigi lehekülgede ülevaade</translation>
     </message>
     <message>
         <location line="+15"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükkimine</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Page setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülje seadistused</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge</translation>
     </message>
     <message>
         <location line="+151"/>
         <source>Export to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspordi PDF-ina</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Export to PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspordi PostScriptina</translation>
     </message>
 </context>
 <context>
@@ -4126,17 +4130,17 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/dialogs/qprintpropertieswidget.ui"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location/>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg</translation>
     </message>
     <message>
         <location/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Muu</translation>
     </message>
 </context>
 <context>
@@ -4144,97 +4148,97 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/dialogs/qprintsettingsoutput.ui"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Koopiad</translation>
     </message>
     <message>
         <location/>
         <source>Print range</source>
-        <translation type="unfinished"></translation>
+        <translation>Trükivahemik</translation>
     </message>
     <message>
         <location/>
         <source>Print all</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõige trükkimine</translation>
     </message>
     <message>
         <location/>
         <source>Pages from</source>
-        <translation type="unfinished"></translation>
+        <translation>Leheküljed alates</translation>
     </message>
     <message>
         <location/>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>kuni</translation>
     </message>
     <message>
         <location/>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Valik</translation>
     </message>
     <message>
         <location/>
         <source>Output Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljundi seadistused</translation>
     </message>
     <message>
         <location/>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koopiad:</translation>
     </message>
     <message>
         <location/>
         <source>Collate</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksemplarhaaval</translation>
     </message>
     <message>
         <location/>
         <source>Reverse</source>
-        <translation type="unfinished"></translation>
+        <translation>Vastupidi</translation>
     </message>
     <message>
         <location/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Valikud</translation>
     </message>
     <message>
         <location/>
         <source>Color Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Värvirežiim</translation>
     </message>
     <message>
         <location/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Värv</translation>
     </message>
     <message>
         <location/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Halltoon</translation>
     </message>
     <message>
         <location/>
         <source>Duplex Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplekstrükk</translation>
     </message>
     <message>
         <location/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Puudub</translation>
     </message>
     <message>
         <location/>
         <source>Long side</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikem külg</translation>
     </message>
     <message>
         <location/>
         <source>Short side</source>
-        <translation type="unfinished"></translation>
+        <translation>Lühem külg</translation>
     </message>
 </context>
 <context>
@@ -4242,47 +4246,47 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/dialogs/qprintwidget.ui"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Printer</translation>
     </message>
     <message>
         <location/>
         <source>&amp;Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nimi:</translation>
     </message>
     <message>
         <location/>
         <source>P&amp;roperties</source>
-        <translation type="unfinished"></translation>
+        <translation>O&amp;madused</translation>
     </message>
     <message>
         <location/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Asukoht:</translation>
     </message>
     <message>
         <location/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Eelvaatlus</translation>
     </message>
     <message>
         <location/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüüp:</translation>
     </message>
     <message>
         <location/>
         <source>Output &amp;file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljund&amp;fail:</translation>
     </message>
     <message>
         <location/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -4291,18 +4295,18 @@ Please choose a different file name.</source>
         <location filename="../src/corelib/io/qprocess_unix.cpp" line="+445"/>
         <location filename="../src/corelib/io/qprocess_win.cpp" line="+117"/>
         <source>Could not open input redirection for reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisendi ümbersuunamise avamine lugemiseks nurjus.</translation>
     </message>
     <message>
         <location line="+12"/>
         <location filename="../src/corelib/io/qprocess_win.cpp" line="+36"/>
         <source>Could not open output redirection for writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljundi ümbersuunamise avamine lugemiseks nurjus.</translation>
     </message>
     <message>
         <location line="+235"/>
         <source>Resource error (fork failure): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ressursi viga (hargmiku viga): %1</translation>
     </message>
     <message>
         <location line="+259"/>
@@ -4315,7 +4319,7 @@ Please choose a different file name.</source>
         <location line="+42"/>
         <location line="+54"/>
         <source>Process operation timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Protsessi toiming aegus</translation>
     </message>
     <message>
         <location filename="../src/corelib/io/qprocess.cpp" line="+503"/>
@@ -4323,24 +4327,24 @@ Please choose a different file name.</source>
         <location filename="../src/corelib/io/qprocess_win.cpp" line="-211"/>
         <location line="+50"/>
         <source>Error reading from process</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga protsessist lugemisel</translation>
     </message>
     <message>
         <location line="+47"/>
         <location line="+779"/>
         <location filename="../src/corelib/io/qprocess_win.cpp" line="+140"/>
         <source>Error writing to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga protsessi kirjutamisel</translation>
     </message>
     <message>
         <location line="-709"/>
         <source>Process crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Protsessi tabas krahh</translation>
     </message>
     <message>
         <location filename="../src/corelib/io/qprocess_win.cpp" line="-341"/>
         <source>Process failed to start</source>
-        <translation type="unfinished"></translation>
+        <translation>Protsess ei käivitunud</translation>
     </message>
 </context>
 <context>
@@ -4348,7 +4352,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+152"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Loobu</translation>
     </message>
 </context>
 <context>
@@ -4356,7 +4360,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-8"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
 </context>
 <context>
@@ -4364,7 +4368,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+12"/>
         <source>Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Märgi</translation>
     </message>
 </context>
 <context>
@@ -4519,69 +4523,69 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/widgets/qscrollbar.cpp" line="+419"/>
         <source>Scroll here</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri siia</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Vasakus servas</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Ülal</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Paremas servas</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>All</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Page left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg vasakule</translation>
     </message>
     <message>
         <location line="+0"/>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+143"/>
         <source>Page up</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg üles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Page right</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg paremale</translation>
     </message>
     <message>
         <location line="+0"/>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+4"/>
         <source>Page down</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg alla</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri vasakule</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri üles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri paremale</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri alla</translation>
     </message>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-6"/>
@@ -4591,7 +4595,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+4"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Asukoht</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5171,27 +5175,27 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+151"/>
         <source>Page left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg vasakule</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Page up</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg üles</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Asukoht</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Page right</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg paremale</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Page down</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehekülg alla</translation>
     </message>
 </context>
 <context>
@@ -5272,12 +5276,12 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-574"/>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Rohkem</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Less</source>
-        <translation type="unfinished"></translation>
+        <translation>Vähem</translation>
     </message>
 </context>
 <context>
@@ -5444,12 +5448,12 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="-326"/>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri vasakule</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri paremale</translation>
     </message>
 </context>
 <context>
@@ -5457,7 +5461,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+252"/>
         <source>Operation on socket is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Sokli toiming ei ole toetatud</translation>
     </message>
 </context>
 <context>
@@ -5465,42 +5469,42 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/text/qtextcontrol.cpp" line="+1942"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Võta tagasi</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tee uuesti</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>L&amp;õika</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopeeri</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Copy &amp;Link Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopeeri &amp;viida asukoht</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aseta</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali kõik</translation>
     </message>
 </context>
 <context>
@@ -5509,13 +5513,13 @@ Please choose a different file name.</source>
         <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+254"/>
         <location line="+6"/>
         <source>Press</source>
-        <translation type="unfinished"></translation>
+        <translation>Vajuta</translation>
     </message>
     <message>
         <location line="-4"/>
         <location line="+8"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava</translation>
     </message>
 </context>
 <context>
@@ -5523,7 +5527,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/network/socket/qudpsocket.cpp" line="+139"/>
         <source>This platform does not support IPv6</source>
-        <translation type="unfinished"></translation>
+        <translation>See platvorm ei toeta IPv6</translation>
     </message>
 </context>
 <context>
@@ -5531,12 +5535,12 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/util/qundogroup.cpp" line="+356"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Võta tagasi</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Tee uuesti</translation>
     </message>
 </context>
 <context>
@@ -5544,7 +5548,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/util/qundoview.cpp" line="+71"/>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tühi&gt;</translation>
     </message>
 </context>
 <context>
@@ -5552,12 +5556,12 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/util/qundostack.cpp" line="+804"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Võta tagasi</translation>
     </message>
     <message>
         <location line="+27"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Tee uuesti</translation>
     </message>
 </context>
 <context>
@@ -5565,57 +5569,57 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/text/qtextcontrol.cpp" line="+884"/>
         <source>LRM Left-to-right mark</source>
-        <translation type="unfinished"></translation>
+        <translation>LRM vasakult paremale märk</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>RLM Right-to-left mark</source>
-        <translation type="unfinished"></translation>
+        <translation>RLM paremalt vasakule märk</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ZWJ Zero width joiner</source>
-        <translation type="unfinished"></translation>
+        <translation>ZWJ null-laiusega ühendaja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ZWNJ Zero width non-joiner</source>
-        <translation type="unfinished"></translation>
+        <translation>ZWNJ null-laiusega lahutaja</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ZWSP Zero width space</source>
-        <translation type="unfinished"></translation>
+        <translation>ZWSP null-laiusega tühik</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>LRE Start of left-to-right embedding</source>
-        <translation type="unfinished"></translation>
+        <translation>LRE vasakult paremale lisamise algus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>RLE Start of right-to-left embedding</source>
-        <translation type="unfinished"></translation>
+        <translation>RLE paremalt vasakule lisamise algus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>LRO Start of left-to-right override</source>
-        <translation type="unfinished"></translation>
+        <translation>LRO vasakult paremale ülekirjutamise algus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>RLO Start of right-to-left override</source>
-        <translation type="unfinished"></translation>
+        <translation>RLO paremalt vasakule ülekirjutamise algus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>PDF Pop directional formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF Suunavorminduse lõpp</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Insert Unicode control character</source>
-        <translation type="unfinished"></translation>
+        <translation>Unicode juhtmärgi lisamine</translation>
     </message>
 </context>
 <context>
@@ -6182,7 +6186,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+492"/>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mis see on?</translation>
     </message>
 </context>
 <context>
@@ -6190,7 +6194,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/kernel/qwidget.cpp" line="+5290"/>
         <source>*</source>
-        <translation type="unfinished"></translation>
+        <translation>*</translation>
     </message>
 </context>
 <context>
