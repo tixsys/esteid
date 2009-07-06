@@ -29,7 +29,7 @@
 
 #include "mainwindow.h"
 #include "jsextender.h"
-#include "Settings.h"
+#include "common/Settings.h"
 #include "SettingsDialog.h"
 
 JsExtender::JsExtender( MainWindow *main )
@@ -37,7 +37,7 @@ JsExtender::JsExtender( MainWindow *main )
 ,	m_mainWindow( main )
 ,	m_loading( 0 )
 {
-	m_locale = Settings().value( "language" ).toString();
+	m_locale = Settings().value( "Main/language" ).toString();
 	if ( m_locale.isEmpty() )
 		m_locale = QLocale::system().name().left( 2 );
 	setLanguage( m_locale );
@@ -59,7 +59,7 @@ void JsExtender::setLanguage( const QString &lang )
 	m_locale = lang;
 	if ( m_locale == "C" )
 		m_locale = "en";
-	Settings().setValue( "language", m_locale );
+	Settings().setValue( "Main/language", m_locale );
 	m_mainWindow->retranslate( m_locale );
 }
 
@@ -104,8 +104,8 @@ QString JsExtender::checkPin()
 	if ( !m_mainWindow->eidCard() || !m_mainWindow->eidCard()->m_card )
 		throw std::runtime_error( "noCard" );
 	if ( activeDocument.isEmpty() || activeDocument != m_mainWindow->eidCard()->getDocumentId() || pin.isEmpty() || 
-		Settings().value( "sessionTime").toInt() == 0 || 
-		!m_dateTime.isValid() || m_dateTime.addSecs( Settings().value( "sessionTime").toInt() * 60 ) < QDateTime::currentDateTime() )
+		Settings().value( "Util/sessionTime").toInt() == 0 || 
+		!m_dateTime.isValid() || m_dateTime.addSecs( Settings().value( "Util/sessionTime").toInt() * 60 ) < QDateTime::currentDateTime() )
 	{
 		activeDocument = m_mainWindow->eidCard()->getDocumentId();
 		m_dateTime = QDateTime::currentDateTime();

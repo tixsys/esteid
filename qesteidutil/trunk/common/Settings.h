@@ -1,5 +1,5 @@
 /*
- * QEstEidUtil
+ * QEstEidCommon
  *
  * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
@@ -30,5 +30,5 @@ class Settings : public QSettings
 
 public:
 	Settings( QObject *parent = 0 )
-	: QSettings( QSettings::NativeFormat, QSettings::UserScope, "Estonian ID Card", "QEstEIDUtil", parent ) {};
+	: QSettings( "Estonian ID Card", QString(), parent ) {};
 };

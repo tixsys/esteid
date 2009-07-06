@@ -24,9 +24,9 @@ set(QT_USE_QTXML true)
 
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
+    common/Settings.h
     common/sslConnect.h
     src/DiagnosticsDialog.h
-    src/Settings.h
     src/SettingsDialog.h
     src/jscardmanager.h
     src/jscertdata.h

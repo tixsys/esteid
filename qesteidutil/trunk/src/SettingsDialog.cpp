@@ -21,7 +21,7 @@
  */
 
 #include "SettingsDialog.h"
-#include "Settings.h"
+#include "common/Settings.h"
 
 SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
@@ -29,14 +29,16 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose, true );
 
-	sessionTime->setValue( Settings().value( "sessionTime", 0 ).toInt() );
+	Settings s;
+	s.beginGroup( "Util" );
+	sessionTime->setValue( s.value( "sessionTime", 0 ).toInt() );
 
 #ifdef WIN32
-	int interval = updateInterval->findText( Settings().value( "updateInterval" ).toString() );
+	int interval = updateInterval->findText( s.value( "updateInterval" ).toString() );
 	if ( interval == -1 )
 		interval = 0;
 	updateInterval->setCurrentIndex( interval );
-	autoUpdate->setChecked( Settings().value( "autoUpdate", true ).toBool() );
+	autoUpdate->setChecked( s.value( "autoUpdate", true ).toBool() );
 #else
 	updateInterval->hide();
 	updateIntervalLabel->hide();
@@ -47,10 +49,12 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 
 void SettingsDialog::accept()
 {
-	Settings().setValue( "sessionTime", sessionTime->value() );
+	Settings s;
+	s.beginGroup( "Util" );
+	s.setValue( "sessionTime", sessionTime->value() );
 	
-	Settings().setValue( "updateInterval", updateInterval->currentText() );
-	Settings().setValue( "autoUpdate", autoUpdate->isChecked() );
+	s.setValue( "updateInterval", updateInterval->currentText() );
+	s.setValue( "autoUpdate", autoUpdate->isChecked() );
 
 	done( 1 );
 }
