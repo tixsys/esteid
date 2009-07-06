@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Settings</class>
- <widget class="QDialog" name="Settings">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -350,7 +350,7 @@
   <connection>
    <sender>showIntro</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -366,7 +366,7 @@
   <connection>
    <sender>signRoleInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -382,7 +382,7 @@
   <connection>
    <sender>signResolutionInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -398,7 +398,7 @@
   <connection>
    <sender>signCityInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -414,7 +414,7 @@
   <connection>
    <sender>signStateInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -430,7 +430,7 @@
   <connection>
    <sender>signCountryInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -446,7 +446,7 @@
   <connection>
    <sender>signZipInput</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -462,7 +462,7 @@
   <connection>
    <sender>signOverwrite</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -478,7 +478,7 @@
   <connection>
    <sender>askSaveAs</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -494,7 +494,7 @@
   <connection>
    <sender>defaultSameDir</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -510,7 +510,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -526,7 +526,7 @@
   <connection>
    <sender>typeBDoc</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -542,7 +542,7 @@
   <connection>
    <sender>typeDDoc</sender>
    <signal>clicked()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -558,7 +558,7 @@
   <connection>
    <sender>proxyHost</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -574,7 +574,7 @@
   <connection>
    <sender>proxyPort</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -590,7 +590,7 @@
   <connection>
    <sender>p12Pass</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -606,7 +606,7 @@
   <connection>
    <sender>p12Cert</sender>
    <signal>editingFinished()</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">

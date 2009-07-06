@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Settings</class>
- <widget class="QDialog" name="Settings">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -95,7 +95,7 @@
   <connection>
    <sender>showIntro</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -111,7 +111,7 @@
   <connection>
    <sender>askSaveAs</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -127,7 +127,7 @@
   <connection>
    <sender>defaultSameDir</sender>
    <signal>stateChanged(int)</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>save()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -143,7 +143,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>clicked(QAbstractButton*)</signal>
-   <receiver>Settings</receiver>
+   <receiver>SettingsDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

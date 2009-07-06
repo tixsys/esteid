@@ -43,6 +43,7 @@ set( COMMON_MOC_HEADERS
 	${COMMON}/Common.h
 	${COMMON}/IKValidator.h
 	${COMMON}/PinDialog.h
+	${COMMON}/Settings.h
 	)
 set( COMMON_HEADERS
 	${COMMON_MOC_HEADERS}

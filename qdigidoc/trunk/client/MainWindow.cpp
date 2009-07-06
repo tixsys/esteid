@@ -24,11 +24,12 @@
 
 #include "common/Common.h"
 #include "common/IKValidator.h"
+#include "common/Settings.h"
 #include "common/SslCertificate.h"
 
 #include "MobileDialog.h"
 #include "PrintSheet.h"
-#include "Settings.h"
+#include "SettingsDialog.h"
 #include "SignatureDialog.h"
 
 #include <digidocpp/Document.h>
@@ -123,7 +124,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	doc->init();
 
-	SettingsValues s;
+	Settings s;
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
 	cards->hack();
 	languages->hack();
@@ -131,13 +132,14 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.indexOf(
 		s.value( "Main/Language", "et" ).toString() ) );
 
-	doc->setConfValue( DigiDoc::ProxyHost, s.value( "Main/proxyPort" ) );
-	doc->setConfValue( DigiDoc::ProxyPort, s.value( "Main/proxyHost" ) );
-	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "Main/pkcs12Cert" ) );
-	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "Main/pkcs12Pass" ) );
+	s.beginGroup( "Client" );
+	doc->setConfValue( DigiDoc::ProxyHost, s.value( "proxyPort" ) );
+	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyHost" ) );
+	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
-	infoMobileCell->setText( s.value( "Main/MobileNumber" ).toString() );
-	infoMobileCode->setText( s.value( "Main/MobileCode" ).toString() );
+	infoMobileCell->setText( s.value( "MobileNumber" ).toString() );
+	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
@@ -152,13 +154,15 @@ bool MainWindow::addFile( const QString &file )
 {
 	if( doc->isNull() )
 	{
+		Settings s;
+		s.beginGroup( "Client" );
 		QFileInfo info( file );
 		QString docname = QString( "%1/%2.%3" )
-			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
+			.arg( s.value( "DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() )
-			.arg( SettingsValues().value( "Main/type" ,"bdoc" ).toString() );
+			.arg( s.value( "type" ,"bdoc" ).toString() );
 
-		bool ask = SettingsValues().value( "Main/AskSaveAs", false ).toBool();
+		bool ask = s.value( "AskSaveAs", false ).toBool();
 		bool select = false;
 		if( !ask && QFile::exists( docname ) )
 		{
@@ -212,7 +216,7 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HeadSettings:
-		Settings( this ).exec();
+		SettingsDialog( this ).exec();
 		break;
 	case HeadHelp:
 		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
@@ -231,7 +235,7 @@ void MainWindow::buttonClicked( int button )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeSign:
-		if( SettingsValues().showIntro() )
+		if( Settings().value( "Client/Intro", true ).toBool() )
 		{
 			introCheck->setChecked( false );
 			setCurrentPage( Intro );
@@ -315,11 +319,11 @@ void MainWindow::buttonClicked( int button )
 			}
 			m->deleteLater();
 		}
-		Settings::saveSignatureInfo( signRoleInput->text(),
+		SettingsDialog::saveSignatureInfo( signRoleInput->text(),
 			signResolutionInput->text(), signCityInput->text(),
 			signStateInput->text(), signZipInput->text(),
 			signCountryInput->text() );
-		Settings::saveMobileInfo( infoMobileCode->text(), infoMobileCell->text() );
+		SettingsDialog::saveMobileInfo( infoMobileCode->text(), infoMobileCell->text() );
 		setCurrentPage( View );
 		break;
 	}
@@ -392,11 +396,11 @@ void MainWindow::enableSign()
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
-{ SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked ); }
+{ Settings().setValue( "Client/Intro", state == Qt::Unchecked ); }
 
 void MainWindow::on_languages_activated( int index )
 {
-	SettingsValues().setValue( "Main/Language", lang[index] );
+	Settings().setValue( "Main/Language", lang[index] );
 	appTranslator->load( ":/translations/" + lang[index] );
 	commonTranslator->load( ":/translations/common_" + lang[index] );
 	qtTranslator->load( ":/translations/qt_" + lang[index] );
@@ -523,8 +527,8 @@ void MainWindow::setCurrentPage( Pages page )
 		signContentView->setContent( doc->documents() );
 		signContentView->setColumnHidden( 3, !doc->signatures().isEmpty() );
 
-		SettingsValues s;
-		s.beginGroup( "Main" );
+		Settings s;
+		s.beginGroup( "Client" );
 		signRoleInput->setText( s.value( "Role" ).toString() );
 		signResolutionInput->setText( s.value( "Resolution" ).toString() );
 		signCityInput->setText( s.value( "City" ).toString() );

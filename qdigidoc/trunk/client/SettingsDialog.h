@@ -22,16 +22,16 @@
 
 #pragma once
 
-#include "ui_Settings.h"
+#include "ui_SettingsDialog.h"
 
 #include <QSettings>
 
-class Settings: public QDialog, private Ui::Settings
+class SettingsDialog: public QDialog, private Ui::SettingsDialog
 {
 	Q_OBJECT
 
 public:
-	Settings( QWidget *parent = 0 );
+	SettingsDialog( QWidget *parent = 0 );
 
 	static void saveSignatureInfo(
 		const QString &role,
@@ -49,14 +49,4 @@ private Q_SLOTS:
 	void on_p12Button_clicked();
 	void on_selectDefaultDir_clicked();
 	void save();
-};
-
-class SettingsValues: public QSettings
-{
-	Q_OBJECT
-
-public:
-	SettingsValues( QObject *parent = 0 );
-
-	bool showIntro() const { return value( "Main/Intro", true ).toBool(); }
 };

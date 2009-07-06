@@ -20,49 +20,49 @@
  *
  */
 
-#include "Settings.h"
+#include "SettingsDialog.h"
 
+#include "Settings.h"
 #include "version.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>
 
-Settings::Settings( QWidget *parent )
+SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
 
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Crypto" );
 
-	defaultSameDir->setChecked( s.value( "SameDir", true ).toBool() );
+	defaultSameDir->setChecked( s.value( "DefaultDir" ).isNull() );
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
 	showIntro->setChecked( s.value( "Intro", true ).toBool() );
 	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
 	s.endGroup();
 }
 
-void Settings::on_selectDefaultDir_clicked()
+void SettingsDialog::on_selectDefaultDir_clicked()
 {
-	QString dir = SettingsValues().value( "Main/DefaultDir" ).toString();
+	QString dir = Settings().value( "Crypto/DefaultDir" ).toString();
 	if( dir.isEmpty() )
 		dir = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
 	dir = QFileDialog::getExistingDirectory( this, tr("Select folder"), dir );
 	if( !dir.isEmpty() )
 	{
-		SettingsValues().setValue( "Main/DefaultDir", dir );
+		Settings().setValue( "Crypto/DefaultDir", dir );
 		defaultDir->setText( dir );
 	}
 	defaultSameDir->setChecked( defaultDir->text().isEmpty() );
 }
 
-void Settings::save()
+void SettingsDialog::save()
 {
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Crypto" );
 	s.setValue( "Intro", showIntro->isChecked() );
 	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
-	s.setValue( "SameDir", defaultSameDir->isChecked() );
 	if( defaultSameDir->isChecked() )
 	{
 		defaultDir->clear();
@@ -70,7 +70,3 @@ void Settings::save()
 	}
 	s.endGroup();
 }
-
-SettingsValues::SettingsValues( QObject *parent )
-:	QSettings( QSettings::NativeFormat, QSettings::UserScope, ORG, APP, parent )
-{}

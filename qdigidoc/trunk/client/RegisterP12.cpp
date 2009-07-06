@@ -60,7 +60,7 @@ void RegisterP12::on_buttonBox_accepted()
 		return;
 	}
 
-	SettingsValues s;
+	Settings s;
 	s.setValue( "Main/pkcs12Cert", dest );
 	s.setValue( "Main/pkcs12Pass", p12Pass->text() );
 	close();

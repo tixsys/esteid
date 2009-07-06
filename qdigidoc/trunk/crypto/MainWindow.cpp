@@ -23,9 +23,10 @@
 #include "MainWindow.h"
 
 #include "KeyDialog.h"
-#include "Settings.h"
+#include "SettingsDialog.h"
 #include "common/Common.h"
 #include "common/PinDialog.h"
+#include "common/Settings.h"
 #include "common/SslCertificate.h"
 
 #include <QApplication>
@@ -98,7 +99,7 @@ MainWindow::MainWindow( QWidget *parent )
 	languages->hack();
 	lang << "et" << "en" << "ru";
 	on_languages_activated( lang.indexOf(
-		SettingsValues().value( "Main/Language", "et" ).toString() ) );
+		Settings().value( "Main/Language", "et" ).toString() ) );
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
@@ -123,12 +124,14 @@ bool MainWindow::addFile( const QString &file )
 {
 	if( doc->isNull() )
 	{
+		Settings s;
+		s.beginGroup( "Crypto" );
 		QFileInfo info( file );
 		QString docname = QString( "%1/%3.cdoc" )
-			.arg( SettingsValues().value( "Main/DefaultDir", info.absolutePath() ).toString() )
+			.arg( s.value( "DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() );
 
-		bool ask = SettingsValues().value( "Main/AskSaveAs", false ).toBool();
+		bool ask = s.value( "AskSaveAs", false ).toBool();
 		bool select = false;
 		if( !ask && QFile::exists( docname ) )
 		{
@@ -189,7 +192,7 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HeadSettings:
-		Settings( this ).exec();
+		SettingsDialog( this ).exec();
 		break;
 	case HeadHelp:
 		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
@@ -204,7 +207,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case HomeCreate:
-		if( SettingsValues().showIntro() )
+		if( Settings().value( "Client/Intro", true ).toBool() )
 		{
 			introCheck->setChecked( false );
 			introNext->setEnabled( false );
@@ -314,13 +317,13 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 
 void MainWindow::on_introCheck_stateChanged( int state )
 {
-	SettingsValues().setValue( "Main/Intro", state == Qt::Unchecked );
+	Settings().setValue( "Crypto/Intro", state == Qt::Unchecked );
 	introNext->setEnabled( state == Qt::Checked );
 }
 
 void MainWindow::on_languages_activated( int index )
 {
-	SettingsValues().setValue( "Main/Language", lang[index] );
+	Settings().setValue( "Main/Language", lang[index] );
 	appTranslator->load( ":/translations/" + lang[index] );
 	commonTranslator->load( ":/translations/common_" + lang[index] );
 	qtTranslator->load( ":/translations/qt_" + lang[index] );

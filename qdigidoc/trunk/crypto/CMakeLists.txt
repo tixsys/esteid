@@ -4,7 +4,7 @@ SET( MOC_HEADERS
 	LdapSearch.h
 	MainWindow.h
 	Poller.h
-	Settings.h
+	SettingsDialog.h
 	TreeWidget.h
 	)
 SET( HEADERS
@@ -19,7 +19,7 @@ SET( SOURCES
 	LdapSearch.cpp
 	MainWindow.cpp
 	Poller.cpp
-	Settings.cpp
+	SettingsDialog.cpp
 	TreeWidget.cpp
 	)
 QT4_WRAP_UI( UI_HEADERS
@@ -27,7 +27,7 @@ QT4_WRAP_UI( UI_HEADERS
 	ui/KeyAddDialog.ui
 	ui/KeyDialog.ui
 	ui/MainWindow.ui
-	ui/Settings.ui
+	ui/SettingsDialog.ui
 	)
 
 set(QM_DIR ${CMAKE_BINARY_DIR}/crypto)

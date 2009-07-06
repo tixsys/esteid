@@ -20,24 +20,25 @@
  *
  */
 
-#include "Settings.h"
+#include "SettingsDialog.h"
 
 #include <digidocpp/XmlConf.h>
 
+#include "Settings.h"
 #include "version.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>
 
-Settings::Settings( QWidget *parent )
+SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
 {
 	setupUi( this );
 
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Client" );
 
-	defaultSameDir->setChecked( s.value( "SameDir", true ).toBool() );
+	defaultSameDir->setChecked( s.value( "DefaultDir" ).isNull() );
 	defaultDir->setText( s.value( "DefaultDir" ).toString() );
 	showIntro->setChecked( s.value( "Intro", true ).toBool() );
 	askSaveAs->setChecked( s.value( "AskSaveAs", false ).toBool() );
@@ -63,42 +64,41 @@ Settings::Settings( QWidget *parent )
 	s.endGroup();
 }
 
-void Settings::on_p12Button_clicked()
+void SettingsDialog::on_p12Button_clicked()
 {
-	QString cert = SettingsValues().value( "Main/pkcs12Cert" ).toString();
+	QString cert = Settings().value( "Client/pkcs12Cert" ).toString();
 	if( cert.isEmpty() )
 		cert = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
 	cert = QFileDialog::getOpenFileName( this, tr("Select PKCS#12 certificate"), cert,
 		tr("PKCS#12 Certificates (*.p12 *.p12d)") );
 	if( !cert.isEmpty() )
 	{
-		SettingsValues().setValue( "Main/pkcs12Cert", cert );
+		Settings().setValue( "Client/pkcs12Cert", cert );
 		p12Cert->setText( cert );
 	}
 }
 
-void Settings::on_selectDefaultDir_clicked()
+void SettingsDialog::on_selectDefaultDir_clicked()
 {
-	QString dir = SettingsValues().value( "Main/DefaultDir" ).toString();
+	QString dir = Settings().value( "Client/DefaultDir" ).toString();
 	if( dir.isEmpty() )
 		dir = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
 	dir = QFileDialog::getExistingDirectory( this, tr("Select folder"), dir );
 	if( !dir.isEmpty() )
 	{
-		SettingsValues().setValue( "Main/DefaultDir", dir );
+		Settings().setValue( "Client/DefaultDir", dir );
 		defaultDir->setText( dir );
 	}
 	defaultSameDir->setChecked( defaultDir->text().isEmpty() );
 }
 
-void Settings::save()
+void SettingsDialog::save()
 {
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Client" );
 	s.setValue( "Intro", showIntro->isChecked() );
 	s.setValue( "Overwrite", signOverwrite->isChecked() );
 	s.setValue( "AskSaveAs", askSaveAs->isChecked() );
-	s.setValue( "SameDir", defaultSameDir->isChecked() );
 	s.setValue( "type", typeBDoc->isChecked() ? "bdoc" : "ddoc" );
 	if( defaultSameDir->isChecked() )
 	{
@@ -126,7 +126,7 @@ void Settings::save()
 		true );
 }
 
-void Settings::saveSignatureInfo(
+void SettingsDialog::saveSignatureInfo(
 		const QString &role,
 		const QString &resolution,
 		const QString &city,
@@ -135,8 +135,8 @@ void Settings::saveSignatureInfo(
 		const QString &zip,
 		bool force )
 {
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Client" );
 	if( force || s.value( "Overwrite", "false" ).toBool() )
 	{
 		s.setValue( "Role", role );
@@ -149,10 +149,10 @@ void Settings::saveSignatureInfo(
 	s.endGroup();
 }
 
-void Settings::saveMobileInfo( const QString &code, const QString &number )
+void SettingsDialog::saveMobileInfo( const QString &code, const QString &number )
 {
-	SettingsValues s;
-	s.beginGroup( "Main" );
+	Settings s;
+	s.beginGroup( "Client" );
 	if( s.value( "Overwrite", "false" ).toBool() )
 	{
 		s.setValue( "MobileCode", code );
@@ -160,7 +160,3 @@ void Settings::saveMobileInfo( const QString &code, const QString &number )
 	}
 	s.endGroup();
 }
-
-SettingsValues::SettingsValues( QObject *parent )
-:	QSettings( QSettings::NativeFormat, QSettings::UserScope, ORG, APP, parent )
-{}

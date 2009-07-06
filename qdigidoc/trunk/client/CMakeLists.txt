@@ -5,7 +5,7 @@ SET( MOC_HEADERS
 	Poller.h
 	PrintSheet.h
 	RegisterP12.h
-	Settings.h
+	SettingsDialog.h
 	SignatureDialog.h
 	TreeWidget.h
 	)
@@ -24,7 +24,7 @@ SET( SOURCES
 	PrintSheet.cpp
 	QMobileSigner.cpp
 	RegisterP12.cpp
-	Settings.cpp
+	SettingsDialog.cpp
 	SignatureDialog.cpp
 	TreeWidget.cpp
 	)
@@ -33,7 +33,7 @@ QT4_WRAP_UI( UI_HEADERS
 	ui/MainWindow.ui
 	ui/MobileDialog.ui
 	ui/RegisterP12.ui
-	ui/Settings.ui
+	ui/SettingsDialog.ui
 	ui/SignatureDialog.ui
 	)
 
