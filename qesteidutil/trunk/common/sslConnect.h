@@ -60,7 +60,8 @@ public:
 		EmailInfo,
 		ActivateEmails,
 		MobileInfo,
-		PictureInfo
+		PictureInfo,
+		AccessCert
 	};
 
 	SSLConnect( QObject *parent = 0 );
@@ -68,6 +69,8 @@ public:
 
 	bool isLoaded();
 	std::vector<unsigned char> getUrl( const std::string &pin, int readerNum, RequestType, const std::string &value = "" );
+
+	static std::string getValue( RequestType type );
 
 private:
 	SSLObj	*obj;

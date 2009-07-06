@@ -104,6 +104,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 	std::string site;
 	switch( type )
 	{
+		case AccessCert:
 		case MobileInfo: site = SK; break;
 		default: site = EESTI; break;
 	}
@@ -111,6 +112,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 	{
 		switch( type )
 		{
+			case AccessCert: return obj->getRequest( getValue( type ) );
 			case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
 			case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
 			case MobileInfo: return obj->getRequest( value );
@@ -259,4 +261,32 @@ std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
 	return buffer;
+}
+
+std::string SSLConnect::getValue( RequestType type )
+{
+	std::string value;
+
+	switch( type )
+	{
+		case AccessCert:
+			value += "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+						"<SOAP-ENV:Body>"
+						"<m:GetAccessToken xmlns:m=\"urn:GetAccessToken\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+						"<Language xsi:type=\"xsd:string\">ET</Language>"
+						"<RequestTime xsi:type=\"xsd:string\" />"
+						"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
+						"<SoftwareVersion xsi:type=\"xsd:string\" />"
+						"</m:GetAccessToken>"
+						"</SOAP-ENV:Body>"
+						"</SOAP-ENV:Envelope>";
+			value = "POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
+					 "Host: " + QString(SK).toStdString() + "\r\n"
+					 "Content-Type: text/xml\r\n"
+					 "Content-Length: " + QString::number( value.size() ).toStdString() + "\r\n"
+					 "SOAPAction: \"\"\r\n"
+					 "Connection: close\r\n\r\n" + value;
+		break;
+	}
+	return value;
 }
