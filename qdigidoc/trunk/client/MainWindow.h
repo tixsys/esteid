@@ -69,6 +69,7 @@ private:
 		ViewClose,
 	};
 	bool addFile( const QString &file );
+	bool checkAccessCert();
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );

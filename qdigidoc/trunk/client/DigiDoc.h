@@ -96,6 +96,7 @@ public:
 	void removeSignature( unsigned int num );
 	void save();
 	void saveDocument( unsigned int num, const QString &filepath );
+	std::string getConfValue( ConfParameter parameter, const QVariant &value ) const;
 	void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
 		const QString &city,
@@ -107,6 +108,7 @@ public:
 	QSslCertificate signCert();
 	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
+	Poller			*poller;
 
 Q_SIGNALS:
 	void dataChanged();
@@ -127,6 +129,5 @@ private:
 	QString			m_card;
 	QString			m_fileName;
 	QString			m_lastError;
-	Poller			*poller;
 	QByteArray		env;
 };

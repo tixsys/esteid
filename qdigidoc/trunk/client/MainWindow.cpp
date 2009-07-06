@@ -25,9 +25,12 @@
 #include "common/Common.h"
 #include "common/IKValidator.h"
 #include "common/Settings.h"
+#include "common/PinDialog.h"
 #include "common/SslCertificate.h"
+#include "common/sslConnect.h"
 
 #include "MobileDialog.h"
+#include "Poller.h"
 #include "PrintSheet.h"
 #include "SettingsDialog.h"
 #include "SignatureDialog.h"
@@ -293,6 +296,9 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case SignSign:
 	{
+		if ( !checkAccessCert() )
+			break;
+
 		if( infoSignCard->isChecked() )
 		{
 			if( !doc->sign( signCityInput->text(), signStateInput->text(),
@@ -722,4 +728,111 @@ void MainWindow::viewSignaturesRemove( unsigned int num )
 	doc->removeSignature( num );
 	doc->save();
 	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
+}
+
+bool MainWindow::checkAccessCert()
+{
+	Settings s;
+	s.beginGroup( "Client" );
+
+	QString certFile = QString::fromStdString( doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) ) );
+	QString certPass = QString::fromStdString( doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ) );
+
+	if ( certFile.size() && QFile::exists( certFile ) )
+		return true;
+
+	if ( QMessageBox::question( this,
+								tr( "Server access certificate" ),
+								tr( "Did not find any server access certificate!\nStart downloading?" ),
+								QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
+		return false;
+
+	doc->poller->lock();
+	PinDialog p( PinDialog::Pin1Type, doc->signCert(), qApp->activeWindow() );
+	if( !p.exec() )
+	{
+		doc->poller->unlock();
+		return false;
+	}
+	std::vector<unsigned char> buffer;
+
+	SSLConnect *sslConnect = new SSLConnect( this );
+	try {
+		buffer = sslConnect->getUrl( p.text().toStdString(), 0, SSLConnect::AccessCert, "");
+	} catch( ... ) {}
+
+	delete sslConnect;
+	doc->poller->unlock();
+
+	QByteArray result = buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
+
+	if ( result.isEmpty() )
+	{
+		QMessageBox::warning( this,
+								tr( "Server access certificate" ),
+								tr( "Error downloading server access certificate!" ),
+								QMessageBox::Ok );
+		return false;
+	}
+
+	QDomDocument domDoc;
+	if ( !domDoc.setContent( result ) )
+	{
+		QMessageBox::warning( this,
+								tr( "Server access certificate" ),
+								tr( "Error parsing server access certificate result!" ),
+								QMessageBox::Ok );
+		return false;
+	}
+
+	QDomElement e = domDoc.documentElement();
+	if ( !e.elementsByTagName( "StatusCode" ).size() )
+	{
+		QMessageBox::warning( this,
+								tr( "Server access certificate" ),
+								tr( "Error parsing server access certificate result!" ),
+								QMessageBox::Ok );
+		return false;
+	}
+
+	int statusCode = e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt();
+	//0 - ok
+	//1 - need to order cert manually from SK web
+	//2 - got error, show message from MessageToDisplay element
+	if ( statusCode == 1 )
+	{
+		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
+		return false;
+	}
+	if ( statusCode == 2 )
+	{
+		QMessageBox::warning( this,
+								tr( "Server access certificate" ),
+								tr( "Error downloading server access certificate!\n%1" )
+									.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
+								QMessageBox::Ok );
+		return false;
+	}
+
+	QString dest = QString( "%1/%2.p12" )
+		.arg( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) )
+		.arg( doc->signCert().subjectInfo( "serialNumber" ) );
+
+	if( QFile::exists( dest ) )
+		QFile::remove( dest );
+	QFile file( dest );
+	if ( !file.open( QIODevice::WriteOnly ) )
+	{
+		QMessageBox::warning( this, tr( "Server access certificate" ), tr("Failed to save server access certificate file!") );
+		return false;
+	}
+	file.write( QByteArray::fromBase64( e.elementsByTagName( "TokenData" ).item(0).toElement().text().toLatin1() ) );
+	file.close();
+
+	s.setValue( "pkcs12Cert", dest );
+	s.setValue( "pkcs12Pass", e.elementsByTagName( "TokenPassword" ).item(0).toElement().text() );
+
+	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
+	return true;
 }

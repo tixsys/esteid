@@ -8,6 +8,7 @@ SET( MOC_HEADERS
 	SettingsDialog.h
 	SignatureDialog.h
 	TreeWidget.h
+	${COMMON}/sslConnect.h
 	)
 SET( HEADERS
 	${MOC_HEADERS}
@@ -26,6 +27,7 @@ SET( SOURCES
 	RegisterP12.cpp
 	SettingsDialog.cpp
 	SignatureDialog.cpp
+	${COMMON}/sslConnect.cpp
 	TreeWidget.cpp
 	)
 QT4_WRAP_UI( UI_HEADERS
@@ -63,6 +65,7 @@ INCLUDE_DIRECTORIES(
 	${XSD_INCLUDE_DIR}
 	${PCSCLITE_INCLUDE_DIR}
 	${LIBDIGIDOCPP_INCLUDE_DIR}
+	${LIBP11_INCLUDE_DIR}
 	)
 
 if(APPLE)
@@ -128,6 +131,7 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${LIBDIGIDOCPP_LIBRARY}
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
+	${LIBP11_LIBRARY}
 )
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
 

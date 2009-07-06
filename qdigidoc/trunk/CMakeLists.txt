@@ -5,9 +5,14 @@ set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
 
 include( InstallSettings )
 
+if(PKCS11_MODULE)
+    add_definitions(-DPKCS11_MODULE="${PKCS11_MODULE}")
+endif(PKCS11_MODULE)
+
 find_package( Ldap REQUIRED )
 find_package( LibDigiDoc REQUIRED )
 find_package( LibDigiDocpp REQUIRED )
+find_package( LibP11 REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( Qt4 REQUIRED )

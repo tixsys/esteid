@@ -361,6 +361,26 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 void DigiDoc::selectCard( const QString &card )
 { poller->selectCard( card ); }
 
+std::string DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
+{
+	digidoc::Conf *i = digidoc::XmlConf::getInstance();
+	if( !i )
+		return value.toString().toStdString();
+
+	switch( parameter )
+	{
+	case ProxyHost:
+		return i->getProxyHost().size() ? i->getProxyHost() : value.toString().toStdString();
+	case ProxyPort:
+		return i->getProxyPort().size() ? i->getProxyPort() : value.toString().toStdString();
+	case PKCS12Cert:
+		return i->getPKCS12Cert().size() ? i->getPKCS12Cert() : value.toString().toStdString();
+	case PKCS12Pass:
+		return i->getPKCS12Pass().size() ? i->getPKCS12Pass() : value.toString().toStdString();
+	default: break;
+	}
+}
+
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 {
 	digidoc::Conf *i = digidoc::XmlConf::getInstance();
