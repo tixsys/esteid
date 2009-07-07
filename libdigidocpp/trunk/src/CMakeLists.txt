@@ -250,7 +250,7 @@ install( FILES
 )
 
 install( FILES
-    xml/XAdES.hxx
-    xml/xmldsig-core-schema.hxx
+    ${XML_DIR}/XAdES.hxx
+    ${XML_DIR}/xmldsig-core-schema.hxx
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/xml
 )
