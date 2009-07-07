@@ -411,7 +411,7 @@ void MainWindow::parseLink( const QString &url )
 				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
 			if( QFile::exists( file ) )
 			{
-				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+				QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 				if( b == QMessageBox::No )

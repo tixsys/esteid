@@ -169,7 +169,7 @@ bool MainWindow::addFile( const QString &file )
 		bool select = false;
 		if( !ask && QFile::exists( docname ) )
 		{
-			QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+			QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 				tr( "%1 already exists.<br />Do you want replace it?" ).arg( docname ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			select = b == QMessageBox::No;
@@ -472,7 +472,7 @@ void MainWindow::parseLink( const QString &link )
 				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
 			if( QFile::exists( file ) )
 			{
-				QMessageBox::StandardButton b = QMessageBox::warning( this, "QDigiDocCrypto",
+				QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 				if( b == QMessageBox::No )
@@ -721,7 +721,7 @@ void MainWindow::viewSignaturesRemove( unsigned int num )
 		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
 		.arg( c.subjectInfo( "serialNumber" ) );
 	QMessageBox::StandardButton b = QMessageBox::warning( this,
-		"QDigiDocClient", msg,
+		windowTitle(), msg,
 		QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel );
 	if( b == QMessageBox::Cancel )
 		return;
