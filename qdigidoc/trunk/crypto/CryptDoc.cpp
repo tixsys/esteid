@@ -248,6 +248,7 @@ bool CryptDoc::decrypt( const QString &pin )
 		{
 			free( m_doc->pDataFiles[i]->szFileName );
 			m_doc->pDataFiles[i]->szFileName = qstrdup( file.toUtf8() );
+			QFile::setPermissions( file, QFile::ReadOwner );
 		}
 		else
 			setLastError( tr("Failed to save file '%1'").arg( file ), err );
