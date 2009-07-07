@@ -396,11 +396,11 @@ Error code: %1</source>
     </message>
     <message>
         <source>Auth certificate is</source>
-        <translation type="unfinished">Сертификаты подписи</translation>
+        <translation>Сертификаты подписи</translation>
     </message>
     <message>
         <source>valid</source>
-        <translation type="unfinished">действителен</translation>
+        <translation>действителен</translation>
     </message>
     <message>
         <source>Your certificates will be expire</source>
@@ -481,7 +481,7 @@ Error code: %1</source>
     </message>
     <message>
         <source>I want to:</source>
-        <translation type="unfinished">Я желаю:</translation>
+        <translation>Я желаю:</translation>
     </message>
     <message>
         <source>Crypt documents</source>
@@ -573,7 +573,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Шифрование файлов&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
@@ -603,7 +603,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>SettingsDialog</name>
     <message>
         <source>Select folder</source>
         <translation>Выбрать папку</translation>
@@ -618,19 +618,15 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Same folder</source>
-        <translation type="unfinished">Та же папка</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
+        <translation>Та же папка</translation>
     </message>
     <message>
         <source>Ask container name</source>
-        <translation type="unfinished">Спрашивать имя документа</translation>
+        <translation>Спрашивать имя документа</translation>
     </message>
     <message>
         <source>Show signing intro</source>
-        <translation type="unfinished">Показывать подсказку при подписывании</translation>
+        <translation>Показывать подсказку при подписывании</translation>
     </message>
 </context>
 <context>

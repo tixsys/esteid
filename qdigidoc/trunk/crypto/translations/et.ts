@@ -841,7 +841,7 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
         <translation>Seaded</translation>
@@ -849,10 +849,6 @@ Sertifikaadi kasutamiseks sisesta PIN1</translation>
     <message>
         <source>Container default location</source>
         <translation>Turvaümbriku loomise vaikekataloog</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Select folder</source>
