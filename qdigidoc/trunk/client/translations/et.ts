@@ -436,7 +436,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>File already in container</source>
-        <translation>Fail on juba konteineris</translation>
+        <translation>Fail on juba ümbrikus</translation>
     </message>
     <message>
         <source>%1&lt;br /&gt;already in container, ovewrite?</source>
@@ -501,7 +501,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
     <message>
         <source>Server access certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõend</translation>
     </message>
     <message>
         <source>Did not find any server access certificate!
