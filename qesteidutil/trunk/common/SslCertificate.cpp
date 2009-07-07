@@ -118,9 +118,11 @@ QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteA
 	if( !ret )
 		return QSslCertificate();
 
+	QSslCertificate c = fromX509( Qt::HANDLE(cert) );
+	X509_free( cert );
 	EVP_PKEY_free( key );
 
-	return fromX509( Qt::HANDLE(cert) );
+	return c;
 }
 
 QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
