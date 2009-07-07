@@ -363,22 +363,21 @@ void DigiDoc::selectCard( const QString &card )
 
 std::string DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
+	const std::string v = value.toString().toStdString();
 	digidoc::Conf *i = digidoc::XmlConf::getInstance();
 	if( !i )
-		return value.toString().toStdString();
+		return v;
 
+	std::string r;
 	switch( parameter )
 	{
-	case ProxyHost:
-		return i->getProxyHost().size() ? i->getProxyHost() : value.toString().toStdString();
-	case ProxyPort:
-		return i->getProxyPort().size() ? i->getProxyPort() : value.toString().toStdString();
-	case PKCS12Cert:
-		return i->getPKCS12Cert().size() ? i->getPKCS12Cert() : value.toString().toStdString();
-	case PKCS12Pass:
-		return i->getPKCS12Pass().size() ? i->getPKCS12Pass() : value.toString().toStdString();
+	case ProxyHost: r = i->getProxyHost(); break;
+	case ProxyPort: r = i->getProxyPort(); break;
+	case PKCS12Cert: r = i->getPKCS12Cert(); break;
+	case PKCS12Pass: r = i->getPKCS12Pass(); break;
 	default: break;
 	}
+	return r.empty() ? v : r;
 }
 
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
@@ -387,20 +386,13 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 	if( !i )
 		return;
 
+	const std::string v = value.toString().toStdString();
 	switch( parameter )
 	{
-	case ProxyHost:
-		i->setProxyPort( value.toString().toStdString() );
-		break;
-	case ProxyPort:
-		i->setProxyHost( value.toString().toStdString() );
-		break;
-	case PKCS12Cert:
-		i->setPKCS12Cert( value.toString().toStdString() );
-		break;
-	case PKCS12Pass:
-		i->setPKCS12Pass( value.toString().toStdString() );
-		break;
+	case ProxyHost: i->setProxyPort( v ); break;
+	case ProxyPort: i->setProxyHost( v ); break;
+	case PKCS12Cert: i->setPKCS12Cert( v ); break;
+	case PKCS12Pass: i->setPKCS12Pass( v ); break;
 	default: break;
 	}
 }
