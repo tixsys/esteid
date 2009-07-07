@@ -499,6 +499,32 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <source>Register code</source>
         <translation>Registrikood</translation>
     </message>
+    <message>
+        <source>Server access certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Did not find any server access certificate!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error downloading server access certificate!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error parsing server access certificate result!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error downloading server access certificate!
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save server access certificate file to %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -751,7 +777,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
         <translation>Seaded</translation>

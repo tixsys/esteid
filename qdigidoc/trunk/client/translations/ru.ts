@@ -312,6 +312,32 @@ p, li { white-space: pre-wrap; }
         <source>Register code</source>
         <translation>Код регистра</translation>
     </message>
+    <message>
+        <source>Server access certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Did not find any server access certificate!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error downloading server access certificate!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error parsing server access certificate result!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error downloading server access certificate!
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save server access certificate file to %1!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -524,7 +550,7 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>Settings</name>
+    <name>SettingsDialog</name>
     <message>
         <source>Select folder</source>
         <translation>Выбрать папку</translation>
