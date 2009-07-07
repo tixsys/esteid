@@ -5,7 +5,7 @@
 #include <string>
 
 
-#include "../xml/xmldsig-core-schema.hxx"
+#include "xml/xmldsig-core-schema.hxx"
 
 namespace digidoc
 {
