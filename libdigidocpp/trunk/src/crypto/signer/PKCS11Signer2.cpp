@@ -51,6 +51,7 @@ static PKCS11H_BOOL _pkcs11h_hooks_pin_prompt(
 		PKCS11Signer2 *signer = (PKCS11Signer2*)global_data;
 		std::string p = signer->getPin(c);
 		strncpy(pin, p.c_str(), pin_max);
+		fill(p.begin(),p.end(),0);
 		pin[pin_max-1] = '\0';
 		return true;
 	}
@@ -61,7 +62,7 @@ static PKCS11H_BOOL _pkcs11h_hooks_pin_prompt(
 }
 
 /**
- * Initializes p11 library and loads PKCS #11 driver. Get driver path
+ * Initializes pkcs11-helper library and loads PKCS #11 driver. Get driver path
  * from configuration.
  *
  * @throws SignException exception is thrown if the provided PKCS #11 driver
@@ -76,7 +77,7 @@ PKCS11Signer2::PKCS11Signer2() throw(SignException)
 }
 
 /**
- * Initializes p11 library and loads PKCS #11 driver.
+ * Initializes pkcs11-helper library and loads PKCS #11 driver.
  *
  * @param driver full path to the PKCS #11 driver (e.g. /usr/lib/opensc-pkcs11.so)
  * @throws SignException exception is thrown if the provided PKCS #11 driver
@@ -90,7 +91,7 @@ PKCS11Signer2::PKCS11Signer2(const std::string& driver) throw(SignException)
 }
 
 /**
- * Uninitializes p11 library and releases acquired memory.
+ * Uninitializes pkcs11-helper library and releases acquired memory.
  */
 PKCS11Signer2::~PKCS11Signer2()
 {
@@ -103,14 +104,16 @@ void PKCS11Signer2::unloadDriver()
 {
 	if(d->cert != NULL)
 		X509_free(d->cert);
+	d->cert = NULL;
 	if(d->signCertificate != NULL)
 		pkcs11h_certificate_freeCertificateId(d->signCertificate);
+	d->signCertificate = NULL;
 	pkcs11h_removeProvider(d->driver.c_str());
 	pkcs11h_terminate();
 }
 
 /**
- * Initializes p11 library and loads PKCS #11 driver.
+ * Initializes pkcs11-helper library and loads PKCS #11 driver.
  *
  * @param driver full path to the PKCS #11 driver (e.g. /usr/lib/opensc-pkcs11.so)
  * @throws SignException exception is thrown if the provided PKCS #11 driver
@@ -140,8 +143,7 @@ void PKCS11Signer2::loadDriver(const std::string& driver) throw(SignException)
 }
 
 /**
- * Finds all slots connected with the computer, if the slots have tokens, lists all
- * certificates found in token. If there are more that 1 certificate lets the user
+ * Enumerates all token certificates. If there are more that 1 certificate lets the user
  * application select (by calling the <code>selectSignCertificate</code> callback
  * function) the certificate used for signing.
  *
@@ -233,6 +235,7 @@ void PKCS11Signer2::sign(const Digest& digest, Signature& signature) throw(SignE
 	if(d->signCertificate == NULL)
 		THROW_SIGNEXCEPTION("Signing certificate is not selected.");
 
+	// Create session
 	pkcs11h_certificate_t cert;
 	CK_RV rv = pkcs11h_certificate_create(d->signCertificate, NULL, PKCS11H_PROMPT_MASK_ALLOW_ALL, 0, &cert);
 	if(rv != CKR_OK)
@@ -241,15 +244,23 @@ void PKCS11Signer2::sign(const Digest& digest, Signature& signature) throw(SignE
 
 	pkcs11h_openssl_session_t openssl = pkcs11h_openssl_createSession(cert);
 	if(openssl == NULL)
+	{
+		pkcs11h_certificate_freeCertificate(cert);
 		THROW_SIGNEXCEPTION("Failed to create openssl session.");
+	}
 	RSA* rsa = pkcs11h_openssl_session_getRSA(openssl);
 	if(rsa == NULL)
+	{
+		pkcs11h_openssl_freeSession(openssl);
 		THROW_SIGNEXCEPTION("Failed to get openssl RSA object.");
-
-	signature.signature = (unsigned char*)malloc(RSA_size(rsa));
+	}
 
 	// Sign the digest.
+	signature.signature = (unsigned char*)malloc(RSA_size(rsa));
 	int sign = RSA_sign(digest.type, digest.digest, digest.length, signature.signature, &signature.length, rsa);
+	RSA_free(rsa);
+
+	// Cleanup session
 	pkcs11h_openssl_freeSession(openssl);
 
 	if(sign != 1)
