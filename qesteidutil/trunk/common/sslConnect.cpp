@@ -125,8 +125,8 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 SSLObj::SSLObj()
 :	ctx( NULL )
 ,	s( NULL )
-,	pslots( NULL )
 ,	nslots( 0 )
+,	pslots( NULL )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
@@ -158,7 +158,6 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 	PKCS11_CERT *certs;
 	PKCS11_KEY *authkey;
 	PKCS11_CERT *authcert;
-	EVP_PKEY *pubkey = NULL;
 	unsigned int ncerts;
 
 	releaseSlots();
@@ -217,6 +216,8 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	int sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	int err = connect(sock, (struct sockaddr*) &server_addr, sizeof(server_addr));
+	if( err == -1 )
+		throw std::runtime_error( QObject::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
 
 	SSL_set_fd(s, sock);
 	sslError::check("SSL_connect", SSL_connect(s) );
@@ -293,6 +294,7 @@ std::string SSLConnect::getValue( RequestType type )
 					 "SOAPAction: \"\"\r\n"
 					 "Connection: close\r\n\r\n" + value;
 		break;
+		default: break;
 	}
 	return value;
 }

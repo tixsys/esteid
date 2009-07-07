@@ -193,7 +193,8 @@ QStringList SslCertificate::policies() const
 		char buf[50];
 		memset( buf, 0, 50 );
 		int len = OBJ_obj2txt( buf, 50, pi->policyid, 1 );
-		list << buf;
+		if( len != NID_undef )
+			list << buf;
 	}
 	sk_POLICYINFO_pop_free( cp, POLICYINFO_free );
 

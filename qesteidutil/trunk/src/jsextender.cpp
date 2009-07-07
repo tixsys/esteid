@@ -194,7 +194,6 @@ void JsExtender::loadEmails()
 	}
 	xml.clear();
 	xml.addData( buffer );
-	bool error = false, notActivated = false;
 	QString result = "loadFailed", emails;
 	while ( !xml.atEnd() )
 	{
