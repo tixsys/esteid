@@ -740,7 +740,7 @@ bool MainWindow::checkAccessCert()
 
 	if ( certFile.size() && QFile::exists( certFile ) )
 	{
-		QFile f( certFile.toLatin1() );
+		QFile f( certFile );
 		if( f.open( QIODevice::ReadOnly ) )
 		{
 			SslCertificate cert = SslCertificate::fromPKCS12( f.readAll(), certPass.toLatin1() );
