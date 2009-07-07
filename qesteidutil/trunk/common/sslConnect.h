@@ -44,6 +44,7 @@ public:
 	PKCS11_CTX *ctx;
 
 private:
+	void	releaseSlots();
 	SSL		*s;
 	int		m_reader;
 

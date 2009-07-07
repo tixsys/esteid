@@ -125,6 +125,8 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 SSLObj::SSLObj()
 :	ctx( NULL )
 ,	s( NULL )
+,	pslots( NULL )
+,	nslots( 0 )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
@@ -140,7 +142,7 @@ SSLObj::~SSLObj()
 	}
 	if ( ctx != NULL )
 	{
-		PKCS11_release_all_slots(ctx, pslots, nslots);
+		releaseSlots();
 		PKCS11_CTX_unload(ctx);
 		PKCS11_CTX_free(ctx);
 	}
@@ -159,6 +161,8 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 	EVP_PKEY *pubkey = NULL;
 	unsigned int ncerts;
 
+	releaseSlots();
+
 	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
 	if ( result )
 		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
@@ -168,10 +172,7 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	slot = &pslots[reader*4];
 	if (!slot || !slot->token)
-	{
-		PKCS11_release_all_slots(ctx, pslots, nslots);
 		throw std::runtime_error( QObject::tr("no token available").toStdString() );
-	}
 
 	result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
 	authcert=&certs[0];
@@ -182,10 +183,7 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int
 
 	authkey = PKCS11_find_key(authcert);
 	if ( !authkey )
-	{
-		PKCS11_release_all_slots(ctx, pslots, nslots);
 		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
-	}
 
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
@@ -261,6 +259,14 @@ std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
 	return buffer;
+}
+
+void SSLObj::releaseSlots()
+{
+	if( pslots )
+		PKCS11_release_all_slots(ctx, pslots, nslots);
+	pslots = NULL;
+	nslots = 0;
 }
 
 std::string SSLConnect::getValue( RequestType type )
