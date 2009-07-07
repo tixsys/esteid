@@ -230,14 +230,14 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 /*		
 */		if (!m_BdocBridge1->ret)
 		{
-			m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL).pData->buffer);
+			m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL, 1).pData->buffer);
 
 	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);				
 			string strTempFileUrl = UNO_URL_HEAD;
 			strTempFileUrl += m_BdocBridge1->pRetPath;
 			ousBDocContURL = ousBDocFileURL; //<-----Get access to the container in new frame!
 			ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
-
+			ousBDocFileURL = convertPathToURI(ousBDocFileURL);
 			bContFlag = true;
 			
 			Sequence< PropertyValue > loadProps(1);
@@ -277,7 +277,7 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 	{
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
-		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL).pData->buffer);
+		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL, 0).pData->buffer);
 
 		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 		rGlobalDesktop = rDesktop;
@@ -581,7 +581,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			
 			Reference < XModel> xMyModel (xComp, UNO_QUERY);
 			
-			ostrPath = convertURItoPath(xMyModel->getURL());
+			ostrPath = convertURItoPath(xMyModel->getURL(), 0);
 
 //PRINT_DEBUG( "After Converter File OstrPath: %s", ostrPath.pData->buffer);
 		
@@ -624,7 +624,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			{	
 				int iHour;
 				m_BdocBridge->DigiInit();
-				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
+				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
 				
 				//------------Fix sign data string from returned data---------			
 				if (m_BdocBridge->ret < 100)// && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
@@ -795,9 +795,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						if (strBdocUrl.size()>1)
 						{	//if its an open bdoc container			 			
 							m_BdocBridge->DigiInit();
-							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl).pData->buffer);
+							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
 						}
-PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
+						PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
 						//Sign
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
 
@@ -822,6 +822,9 @@ PRINT_DEBUG("Path Sent to LibDigiDoc",ostrPath.pData->buffer);
 //	PRINT_DEBUG ("NewContFile URL: %s\n",strTempFileUrl.c_str());
 								ousBDocContURL = ::rtl::OUString(strNewPath.data(),strNewPath.size(), RTL_TEXTENCODING_UNICODE, 0);; //<-----Get access to the container in new frame!
 								ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+
+								ousBDocContURL = convertPathToURI(ousBDocContURL);
+								ousBDocFileURL = convertPathToURI(ousBDocFileURL);
 
 								bContFlag = true;
 								bPrevContFlag = true;
@@ -975,7 +978,7 @@ PRINT_DEBUG("Return From Macro: %d",any);
 }
 
 //OString SAL_CALL ::BaseDispatch::convertURItoPath(OUString ousURI)
-OString SAL_CALL convertURItoPath(OUString ousURI)
+OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 {
 	OString osPath;
 	strBuffer = "";
@@ -991,26 +994,56 @@ OString SAL_CALL convertURItoPath(OUString ousURI)
 		}
 
 		else if (osPath.pData->buffer[i] == '%')
-		{	//an utf16 character -> change to utf8
+		{	//Some Special character -> change to utf8
 			int iCD1, iCD2;
 			iCD1 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
 			i += 3; 
 			iCD2 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
 			i += 3; 
-			wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
-			strBuffer += (char)utfChar;
+			
+			if (bToOO)
+			{	// if string goes to OO
+				wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+				strBuffer += (char)utfChar;
+			}
+			else
+			{
+				strBuffer += (char)iCD1;
+				strBuffer += (char)iCD2;
+			}
 		}
-		/*if (osPath.pData->buffer[i] == '\\')
-		{
-			strBuffer += "/";
-			i++;
-		}*/
+		else if ((osPath.pData->buffer[i] > 127) && (bToOO))
+		{	// if its a utf8 and string goes to OO
+			wchar_t utfChar = ((osPath.pData->buffer[i] - 192) * 64) + (osPath.pData->buffer[i+1] - 128);
+			strBuffer += (char)utfChar;
+			i += 2;
+		}
+		
 		strBuffer += osPath.pData->buffer[i];
 	}
-
+PRINT_DEBUG("Return URL: %s",strBuffer.c_str());
 	return OString(strBuffer.c_str());
 }
 
+OUString SAL_CALL convertPathToURI(OUString ousPath)
+{
+	//OString osPath;
+	strBuffer = "";
+	//osPath = OUStringToOString(pcPath, RTL_TEXTENCODING_ISO_8859_15);
+	for(int i=0; i<ousPath.getLength(); i++)
+	{
+	if (ousPath.pData->buffer[i] > 127)
+		{
+			wchar_t utfChar = ((ousPath.pData->buffer[i] - 192) * 64) + (ousPath.pData->buffer[i+1] - 128);
+			strBuffer += (char)utfChar;
+			i += 2;
+		}
+
+		strBuffer += ousPath.pData->buffer[i];
+	}
+
+	return OUString(strBuffer.data(), strBuffer.size(), RTL_TEXTENCODING_UNICODE, 0);
+}
 
 int getTimeZoneDiff()
 {

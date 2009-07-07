@@ -157,7 +157,8 @@ public:
 
 void SAL_CALL threadCallMacro(char *pMess);
 
-::rtl::OString SAL_CALL convertURItoPath(const ::rtl::OUString ousURI);
+::rtl::OString SAL_CALL convertURItoPath(const ::rtl::OUString ousURI, bool bToOO);
+::rtl::OUString SAL_CALL convertPathToURI(const ::rtl::OUString ousPath);
 
 int getTimeZoneDiff();
 
