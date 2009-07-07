@@ -207,7 +207,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case HomeCreate:
-		if( Settings().value( "Client/Intro", true ).toBool() )
+		if( Settings().value( "Crypto/Intro", true ).toBool() )
 		{
 			introCheck->setChecked( false );
 			introNext->setEnabled( false );
