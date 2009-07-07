@@ -182,7 +182,7 @@ X509* PKCS11Signer2::getCert() throw(SignException)
 	}
 	catch(const SignException &) {}
 
-	for(int i = 0; i < certificates.size(); ++i)
+	for(size_t i = 0; i < certificates.size(); ++i)
 		X509_free(certificates[i].cert);
 
 	if(selectedCert.label.empty())

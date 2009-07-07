@@ -124,8 +124,9 @@ protected:
 
 private:
 	void throwError( std::string msg, int err, int line ) const throw(SignatureException);
-	DDocPrivate *m_doc;
+
 	int m_id;
+	DDocPrivate *m_doc;
 };
 
 }

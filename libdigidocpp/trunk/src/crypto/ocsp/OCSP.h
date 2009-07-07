@@ -63,9 +63,9 @@ namespace digidoc
           std::string url;
           char* host;
           char* port;
-	  char* proxyHost;
-	  char* proxyPort;
-	  char* path;
+          char* path;
+          char* proxyHost;
+          char* proxyPort;
           bool ssl;
 
           long skew;

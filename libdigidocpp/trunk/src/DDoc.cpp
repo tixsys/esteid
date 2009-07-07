@@ -241,7 +241,7 @@ DDoc::DDoc()
 	d = new DDocPrivate();
 	if( !d->isLoaded() )
 		return;
-	int err = d->f_SignedDoc_new( &d->doc, "DIGIDOC-XML", "1.3" );
+	/*int err =*/ d->f_SignedDoc_new( &d->doc, "DIGIDOC-XML", "1.3" );
 	//throwError( err, "Failed to create new document", __LINE__ );
 }
 DDoc::~DDoc() { delete d; }
