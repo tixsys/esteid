@@ -823,8 +823,9 @@ bool MainWindow::checkAccessCert()
 		return false;
 	}
 
-	QString dest = QString( "%1/%2.p12" )
+	QString dest = QString( "%1%2%3.p12" )
 		.arg( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) )
+		.arg( QDir::separator() )
 		.arg( doc->signCert().subjectInfo( "serialNumber" ) );
 
 	if( QFile::exists( dest ) )
@@ -832,7 +833,7 @@ bool MainWindow::checkAccessCert()
 	QFile file( dest );
 	if ( !file.open( QIODevice::WriteOnly ) )
 	{
-		QMessageBox::warning( this, tr( "Server access certificate" ), tr("Failed to save server access certificate file!") );
+		QMessageBox::warning( this, tr( "Server access certificate" ), tr("Failed to save server access certificate file to %1!").arg( dest ) );
 		return false;
 	}
 	file.write( QByteArray::fromBase64( e.elementsByTagName( "TokenData" ).item(0).toElement().text().toLatin1() ) );
