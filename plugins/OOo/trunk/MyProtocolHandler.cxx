@@ -230,7 +230,7 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 /*		
 */		if (!m_BdocBridge1->ret)
 		{
-			m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL, 1).pData->buffer);
+			m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocFileURL, 0).pData->buffer);
 
 	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge1->pRetPath);				
 			string strTempFileUrl = UNO_URL_HEAD;
@@ -755,7 +755,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 					Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
 	 
-					Any any=rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+					/*Any any=*/rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
 				//----------------------------------------------------------------
 				}
 				
@@ -972,8 +972,8 @@ void SAL_CALL threadCallMacro(char *pData)
 PRINT_DEBUG("In the MacroCallerThread: %s",pData);
 	//----------------------Open Macro--------------------------------
 	Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
-	Any any = rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pData), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-PRINT_DEBUG("Return From Macro: %d",any);	
+	/*Any any = */rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(pData), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+//PRINT_DEBUG("Return From Macro: %d",any);	
 	//----------------------------------------------------------------
 }
 

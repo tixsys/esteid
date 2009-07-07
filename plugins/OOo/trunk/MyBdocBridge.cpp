@@ -646,7 +646,6 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 int My1EstEIDSigner::checkCert ()
 {	
 	string strRetCert;
-
 	MyRealEstEIDSigner m_signer;
 
 /*	X509Cert xCert(m_signer.cardSignCert);
