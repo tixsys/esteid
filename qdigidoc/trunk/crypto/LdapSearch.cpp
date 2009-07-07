@@ -43,7 +43,7 @@ LdapSearch::LdapSearch( QObject *parent )
 		setLastError( tr("Failed to init ldap"), err );
 }
 
-LdapSearch::~LdapSearch() { ldap_unbind_s( ldap ); }
+LdapSearch::~LdapSearch() { if( ldap ) ldap_unbind_s( ldap ); }
 
 void LdapSearch::search( const QString &search )
 {
@@ -100,8 +100,7 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 				name = ldap_get_values( ldap, entry, attr );
 			else if( qstrcmp( attr, "userCertificate;binary" ) == 0 )
 				cert = ldap_get_values_len( ldap, entry, attr );
-			//TODO - leak??
-			//ber_free( pos, 0 );
+			ldap_memfree( attr );
 		}
 		while( (attr = ldap_next_attribute( ldap, entry, pos ) ) );
 		ber_free( pos, 0 );

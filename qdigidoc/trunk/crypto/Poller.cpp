@@ -82,7 +82,7 @@ void Poller::readCert()
 	X509 *cert;
 	GetSlotCertificate( cards[selectedCard], &cert );
 	auth = SslCertificate::fromX509( (Qt::HANDLE)cert );
-	free( cert );
+	X509_free( cert );
 }
 
 void Poller::run()

@@ -111,7 +111,7 @@ void CryptDoc::addKey( const CKey &key )
 		return;
 	}
 
-	DEncEncryptedKey *pkey;
+	DEncEncryptedKey *pkey = NULL;
 	err = dencEncryptedKey_new( m_enc, &pkey, cert, DENC_ENC_METHOD_RSA1_5,
 		NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
