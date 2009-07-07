@@ -38,11 +38,18 @@ Poller::~Poller() { stop(); }
 
 void Poller::read()
 {
-	CK_ULONG count = 20;
-	CK_SLOT_ID slotids[20];
-	int err = GetSlotIds( (CK_SLOT_ID*)&slotids, &count );
+	CK_ULONG count = 0;
+	int err = GetSlotIds( NULL, &count );
 	if( err != ERR_OK )
 		return;
+
+	CK_SLOT_ID_PTR slotids = (CK_SLOT_ID_PTR)malloc(count*sizeof(CK_SLOT_ID));
+	err = GetSlotIds( slotids, &count );
+	if( err != ERR_OK )
+	{
+		free( slotids );
+		return;
+	}
 
 	cards.clear();
 	for( CK_ULONG i = 0; i < count; ++i )
@@ -53,6 +60,7 @@ void Poller::read()
 		if( !cards.contains( serialNumber ) )
 			cards[serialNumber] = slotids[i];
 	}
+	free( slotids );
 
 	if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
 	{
@@ -89,8 +97,8 @@ void Poller::run()
 
 	read();
 
-	CK_SLOT_ID slot;
-	int seq = 0;
+	/*CK_SLOT_ID slot;
+	int seq = 0;*/
 	while( !terminate )
 	{
 		sleep( 1 );
@@ -105,7 +113,8 @@ void Poller::run()
 		select.clear();
 		m.unlock();
 
-		switch( WaitSlotEvent( &slot ) )
+		read();
+/*		switch( WaitSlotEvent( &slot ) )
 		{
 		case CKR_OK:
 			if( seq == 0 )
@@ -119,7 +128,7 @@ void Poller::run()
 			break;
 		default:
 			return;
-		}
+		}*/
 	}
 }
 
