@@ -11,4 +11,9 @@
     <glob pattern="*.ddoc"/>
   </mime-type>
 
+  <mime-type type="application/x-p12d">
+    <comment>PKCS#12 certifikate</comment>
+    <glob pattern="*.p12d"/>
+  </mime-type>
+
 </mime-info>

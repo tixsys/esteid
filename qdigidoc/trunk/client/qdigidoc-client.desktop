@@ -9,4 +9,4 @@ Name=DigiDoc3 Client
 Name[et]=DigiDoc3 klient
 
 Categories=Qt;Office;
-MimeType=application/x-bdoc;application/x-ddoc;
+MimeType=application/x-bdoc;application/x-ddoc;application/x-p12d;
