@@ -32,7 +32,7 @@ var htmlStrings = {
 
 	"labelCardInReaderID": new tr( "Lugejas on ID kaart", "Card in reader", "Карта в считывателе" ),
 	"labelThisIs": new tr( "See on", "This is", "Это" ),
-	"labelIsValid": new tr( "kehtiv", "valid", "действительный" ),
+	"labelIsValid": new tr( "kehtiv", "valid", "действующий" ),
 	"labelIsInValid": new tr( "kehtetu", "expired", "недействителен" ),
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "Карта действительна до" ),
