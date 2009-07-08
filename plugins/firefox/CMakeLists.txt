@@ -56,11 +56,14 @@ add_dependencies( xpi-jar xpi-stage)
 
 add_custom_target( xpi ALL
 	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
+	DEPENDS chrome.manifest
 	DEPENDS esteid
 	DEPENDS npesteid
+	COMMAND ${RM} chrome.manifest
+	COMMAND ${CP} ${PROJECT_SOURCE_DIR}/chrome.manifest .
 	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
 	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
-                chrome/ components/ plugins/ install.rdf
+                chrome/ components/ plugins/ install.rdf chrome.manifest
 	VERBATIM
 )
 add_dependencies( xpi xpi-jar)
@@ -87,6 +90,11 @@ IF(PKG_CONFIG_FOUND)
 	        message(FATAL_ERROR "Unable to determine Gecko SDK path via pkg-config")
         endif(NOT GECKO_SDK_DIR)
     ENDIF(GECKO_SDK_FOUND)
+    pkg_check_modules(NSS nss)
+    IF(NSS_FOUND)
+        include_directories(${NSS_INCLUDE_DIRS})
+        set(GECKO_SDK_LIBRARIES ${GECKO_SDK_LIBRARIES} ${NSS_LIBRARIES} )
+    ENDIF(NSS_FOUND)
 ELSE(PKG_CONFIG_FOUND)
     if(NOT MSVC)
 	set(${THREAD_LIBS} pthread)
@@ -128,6 +136,7 @@ set(GECKO_SDK_INCLUDE_DIRS
     ${GECKO_SDK_DIR}/include/caps
     ${GECKO_SDK_DIR}/include/necko
     ${GECKO_SDK_DIR}/sdk/include
+
 )
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
 
