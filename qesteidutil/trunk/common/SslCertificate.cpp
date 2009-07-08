@@ -23,6 +23,7 @@
 #include "SslCertificate.h"
 
 #include <QDateTime>
+#include <QSslKey>
 #include <QStringList>
 
 #include <openssl/x509v3.h>
@@ -113,7 +114,7 @@ QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteA
 	X509 *cert;
 	EVP_PKEY *key;
 	int ret = PKCS12_parse( p12, passPhrase.data(), &key, &cert, NULL );
-	PKCS12_free(p12);
+	PKCS12_free( p12 );
 
 	if( !ret )
 		return QSslCertificate();
@@ -136,6 +137,82 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 		free( cert );
 	}
 	return QSslCertificate( der, QSsl::Der );
+}
+
+QSslKey SslCertificate::keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
+{
+	BIO *bio = BIO_new( BIO_s_mem() );
+	if( !bio )
+		return QSslKey();
+
+	BIO_write( bio, data.data(), data.size() );
+
+	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
+	BIO_free( bio );
+	if( !p12 )
+		return QSslKey();
+
+	X509 *cert;
+	EVP_PKEY *key;
+	int ret = PKCS12_parse( p12, passPhrase.data(), &key, &cert, NULL );
+	PKCS12_free( p12 );
+
+	if( !ret )
+		return QSslKey();
+
+	QSslKey c = keyFromEVP( Qt::HANDLE(key) );
+
+	X509_free( cert );
+	EVP_PKEY_free( key );
+
+	return c;
+}
+
+QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
+{
+	EVP_PKEY *key = (EVP_PKEY*)evp;
+	unsigned char *data = NULL;
+	int len = 0;
+	QSsl::KeyAlgorithm alg;
+	QSsl::KeyType type;
+
+	switch( EVP_PKEY_type( key->type ) )
+	{
+	case EVP_PKEY_RSA:
+	{
+		RSA *rsa = EVP_PKEY_get1_RSA( key );
+		alg = QSsl::Rsa;
+		type = rsa->d ? QSsl::PrivateKey : QSsl::PublicKey;
+		if( rsa->d )
+			len = i2d_RSAPrivateKey( rsa, &data );
+		else
+			len = i2d_RSAPublicKey( rsa, &data );
+		RSA_free( rsa );
+		break;
+	}
+	case EVP_PKEY_DSA:
+	{
+		DSA *dsa = EVP_PKEY_get1_DSA( key );
+		alg = QSsl::Dsa;
+		type = dsa->priv_key ? QSsl::PrivateKey : QSsl::PublicKey;
+		if( dsa->priv_key )
+			len = i2d_DSAPrivateKey( dsa, &data );
+		else
+			len = i2d_DSAPublicKey( dsa, &data );
+		DSA_free( dsa );
+		break;
+	}
+	default: break;
+	}
+
+	QSslKey k;
+	if( len >= 0 )
+	{
+		k = QSslKey( QByteArray( (char*)data, len ), alg, QSsl::Der, type );
+		free( data );
+	}
+
+	return k;
 }
 
 void* SslCertificate::getExtension( int nid ) const

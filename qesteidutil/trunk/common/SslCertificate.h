@@ -49,6 +49,8 @@ public:
 	static QString formatName( const QString &name );
 	static QSslCertificate fromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );
+	static QSslKey keyFromEVP( const Qt::HANDLE evp );
+	static QSslKey keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	bool		isTempel() const;
 	QHash<int,QString> keyUsage() const;
 	QStringList policies() const;
