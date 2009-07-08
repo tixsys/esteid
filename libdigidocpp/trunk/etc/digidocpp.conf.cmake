@@ -19,26 +19,26 @@
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
     <ocsp issuer="ESTEID-SK">
         <url>http://91.198.206.66</url>
-        <cert>certs/ESTEID-SK OCSP 2005.pem</cert>
+        <cert>certs/ESTEID-SK OCSP 2005.crt</cert>
     </ocsp>
     <ocsp issuer="ESTEID-SK 2007">
         <url>http://91.198.206.66</url>
-        <cert>certs/ESTEID-SK 2007 OCSP.pem</cert>
+        <cert>certs/ESTEID-SK 2007 OCSP.crt</cert>
     </ocsp>
     <ocsp issuer="EID-SK">
         <url>http://91.198.206.66</url>
-        <cert>certs/EID-SK OCSP 2006.pem</cert>
+        <cert>certs/EID-SK OCSP 2006.crt</cert>
     </ocsp>
     <ocsp issuer="EID-SK 2007">
         <url>http://91.198.206.66</url>
-        <cert>certs/EID-SK 2007 OCSP.pem</cert>
+        <cert>certs/EID-SK 2007 OCSP.crt</cert>
     </ocsp>
     <ocsp issuer="KLASS3-SK">
         <url>http://91.198.206.66</url>
-        <cert>certs/KLASS3-SK OCSP 2009.pem</cert>
+        <cert>certs/KLASS3-SK OCSP 2009.crt</cert>
     </ocsp>
     <ocsp issuer="TEST-SK">
         <url>http://www.openxades.org/cgi-bin/ocsp.cgi</url>
-        <cert>certs/TEST-SK OCSP 2005.pem</cert>
+        <cert>certs/TEST-SK OCSP 2005.crt</cert>
     </ocsp>
 </configuration>
