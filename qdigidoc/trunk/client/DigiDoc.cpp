@@ -23,6 +23,7 @@
 #include "DigiDoc.h"
 
 #include "common/SslCertificate.h"
+#include "common/sslConnect.h"
 
 #include "QMobileSigner.h"
 #include "Poller.h"
@@ -56,7 +57,7 @@ QSslCertificate DigiDocSignature::cert() const
 	{
 		X509 *x509 = s->getSigningCertificate().getX509();
 		c = SslCertificate::fromX509( (Qt::HANDLE)x509 );
-		free( x509 );
+		X509_free( x509 );
 	}
 	catch( const Exception & ) {}
 	return c;
@@ -254,6 +255,22 @@ QList<Document> DigiDoc::documents()
 	return list;
 }
 
+QByteArray DigiDoc::getAccessCert( const QString &pin ) const
+{
+	std::vector<unsigned char> buffer;
+
+	poller->lock();
+	SSLConnect *sslConnect = new SSLConnect();
+	try {
+		buffer = sslConnect->getUrl( pin.toStdString(), 0, SSLConnect::AccessCert, "");
+	} catch( ... ) {}
+
+	delete sslConnect;
+	poller->unlock();
+
+	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
+}
+
 QString DigiDoc::fileName() const { return m_fileName; }
 
 void DigiDoc::init()
@@ -361,9 +378,9 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 void DigiDoc::selectCard( const QString &card )
 { poller->selectCard( card ); }
 
-std::string DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
+QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
-	const std::string v = value.toString().toStdString();
+	const QString v = value.toString();
 	digidoc::Conf *i = digidoc::XmlConf::getInstance();
 	if( !i )
 		return v;
@@ -377,7 +394,7 @@ std::string DigiDoc::getConfValue( ConfParameter parameter, const QVariant &valu
 	case PKCS12Pass: r = i->getPKCS12Pass(); break;
 	default: break;
 	}
-	return r.empty() ? v : r;
+	return r.empty() ? v : QString::fromStdString( r );
 }
 
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )

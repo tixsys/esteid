@@ -27,7 +27,6 @@
 #include "common/Settings.h"
 #include "common/PinDialog.h"
 #include "common/SslCertificate.h"
-#include "common/sslConnect.h"
 
 #include "MobileDialog.h"
 #include "Poller.h"
@@ -278,7 +277,7 @@ void MainWindow::buttonClicked( int button )
 				tr("You added %1 files to container, but these are not signed yet.\n"
 					"Should I keep unsigned documents or remove these?")
 				.arg( doc->documents().size() ) );
-			QPushButton *cancel = msgBox.addButton( tr("Remove"), QMessageBox::ActionRole );
+			msgBox.addButton( tr("Remove"), QMessageBox::ActionRole );
 			QPushButton *keep = msgBox.addButton( tr("Keep"), QMessageBox::ActionRole );
 			msgBox.exec();
 
@@ -735,8 +734,8 @@ bool MainWindow::checkAccessCert()
 	Settings s;
 	s.beginGroup( "Client" );
 
-	QString certFile = QString::fromStdString( doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) ) );
-	QString certPass = QString::fromStdString( doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ) );
+	QString certFile = doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	QString certPass = doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
 	if ( certFile.size() && QFile::exists( certFile ) )
 	{
@@ -756,25 +755,11 @@ bool MainWindow::checkAccessCert()
 								QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return false;
 
-	doc->poller->lock();
 	PinDialog p( PinDialog::Pin1Type, doc->signCert(), qApp->activeWindow() );
 	if( !p.exec() )
-	{
-		doc->poller->unlock();
 		return false;
-	}
-	std::vector<unsigned char> buffer;
 
-	SSLConnect *sslConnect = new SSLConnect( this );
-	try {
-		buffer = sslConnect->getUrl( p.text().toStdString(), 0, SSLConnect::AccessCert, "");
-	} catch( ... ) {}
-
-	delete sslConnect;
-	doc->poller->unlock();
-
-	QByteArray result = buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
-
+	QByteArray result = doc->getAccessCert( p.text() );
 	if ( result.isEmpty() )
 	{
 		QMessageBox::warning( this,
@@ -828,10 +813,8 @@ bool MainWindow::checkAccessCert()
 		.arg( QDir::separator() )
 		.arg( doc->signCert().subjectInfo( "serialNumber" ) );
 
-	if( QFile::exists( dest ) )
-		QFile::remove( dest );
 	QFile file( dest );
-	if ( !file.open( QIODevice::WriteOnly ) )
+	if ( !file.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ), tr("Failed to save server access certificate file to %1!").arg( dest ) );
 		return false;
