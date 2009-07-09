@@ -22,12 +22,14 @@
 
 #pragma once
 
-#include "ui_CertificateWidget.h"
+#include <QDialog>
+
+#include <QVariant>
 
 class CertificateDialogPrivate;
 class QSslCertificate;
 
-class CertificateDialog: public QDialog, private Ui::CertificateDialog
+class CertificateDialog: public QDialog
 {
 	Q_OBJECT
 public:

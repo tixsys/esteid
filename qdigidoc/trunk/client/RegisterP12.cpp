@@ -22,7 +22,7 @@
 
 #include "RegisterP12.h"
 
-#include "Settings.h"
+#include <common/Settings.h>
 
 #include <QDesktopServices>
 #include <QFile>

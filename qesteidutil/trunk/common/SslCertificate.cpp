@@ -206,7 +206,7 @@ QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
 	}
 
 	QSslKey k;
-	if( len >= 0 )
+	if( len > 0 )
 	{
 		k = QSslKey( QByteArray( (char*)data, len ), alg, QSsl::Der, type );
 		free( data );

@@ -969,8 +969,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>73</width>
-               <height>24</height>
+               <width>88</width>
+               <height>18</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -1135,7 +1135,7 @@ color: red;</string>
   <customwidget>
    <class>ComboBox</class>
    <extends>QComboBox</extends>
-   <header>ComboBox.h</header>
+   <header location="global">common/ComboBox.h</header>
   </customwidget>
  </customwidgets>
  <resources>

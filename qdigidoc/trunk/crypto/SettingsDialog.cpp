@@ -22,7 +22,7 @@
 
 #include "SettingsDialog.h"
 
-#include "Settings.h"
+#include <common/Settings.h>
 #include "version.h"
 
 #include <QDesktopServices>

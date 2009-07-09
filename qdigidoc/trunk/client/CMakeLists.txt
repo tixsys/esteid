@@ -8,7 +8,6 @@ SET( MOC_HEADERS
 	SettingsDialog.h
 	SignatureDialog.h
 	TreeWidget.h
-	${COMMON}/sslConnect.h
 	)
 SET( HEADERS
 	${MOC_HEADERS}
@@ -27,11 +26,9 @@ SET( SOURCES
 	RegisterP12.cpp
 	SettingsDialog.cpp
 	SignatureDialog.cpp
-	${COMMON}/sslConnect.cpp
 	TreeWidget.cpp
 	)
 QT4_WRAP_UI( UI_HEADERS
-	${COMMON_UIS}
 	ui/MainWindow.ui
 	ui/MobileDialog.ui
 	ui/RegisterP12.ui
@@ -56,10 +53,9 @@ QT4_ADD_TRANSLATION( QM_FILES
 	)
 
 INCLUDE_DIRECTORIES(
-	${COMMON}
 	${CMAKE_SOURCE_DIR}
-	${CMAKE_SOURCE_DIR}/client
-	${CMAKE_BINARY_DIR}/client
+	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_CURRENT_BINARY_DIR}
 	${OPENSSL_INCLUDE_DIR}
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
@@ -86,7 +82,7 @@ if(APPLE)
     endforeach(_file)
 endif(APPLE)
 
-QT4_WRAP_CPP( MOC_SOURCES ${COMMON_MOC_HEADERS} ${MOC_HEADERS} )
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 
 if(MSVC)
 	# disable warning C4290: C++ exception specification ignored
@@ -105,7 +101,6 @@ ADD_EXECUTABLE(
 	qdigidocclient
 	WIN32
 	MACOSX_BUNDLE
-	${COMMON_SOURCES}
 	${SOURCES}
 	${MOC_SOURCES}
 	${QM_FILES}
@@ -132,6 +127,7 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${LIBP11_LIBRARY}
+	qdigidoccommon
 )
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
 

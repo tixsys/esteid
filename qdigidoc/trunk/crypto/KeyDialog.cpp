@@ -22,9 +22,9 @@
 
 #include "KeyDialog.h"
 
-#include "common/CertificateWidget.h"
-#include "common/IKValidator.h"
-#include "common/SslCertificate.h"
+#include <common/CertificateWidget.h>
+#include <common/IKValidator.h>
+#include <common/SslCertificate.h>
 #include "LdapSearch.h"
 
 #include <QDateTime>

@@ -22,6 +22,7 @@
 
 #include "CertificateWidget.h"
 
+#include "ui_CertificateWidget.h"
 #include "SslCertificate.h"
 
 #include <QDateTime>
@@ -31,7 +32,7 @@
 #include <QTextStream>
 #include <QSslKey>
 
-class CertificateDialogPrivate
+class CertificateDialogPrivate: public Ui::CertificateDialog
 {
 public:
 	QSslCertificate cert;
@@ -41,38 +42,38 @@ CertificateDialog::CertificateDialog( QWidget *parent )
 :	QDialog( parent )
 ,	d( new CertificateDialogPrivate )
 {
-	setupUi( this );
-	tabWidget->removeTab( 2 );
+	d->setupUi( this );
+	d->tabWidget->removeTab( 2 );
 }
 
 CertificateDialog::CertificateDialog( const QSslCertificate &cert, QWidget *parent )
 :	QDialog( parent )
 ,	d( new CertificateDialogPrivate )
 {
-	setupUi( this );
+	d->setupUi( this );
 	setCertificate( cert );
-	tabWidget->removeTab( 2 );
+	d->tabWidget->removeTab( 2 );
 }
 
 CertificateDialog::~CertificateDialog() { delete d; }
 
 void CertificateDialog::addItem( const QString &variable, const QString &value, const QVariant &valueext )
 {
-	QTreeWidgetItem *t = new QTreeWidgetItem( parameters );
+	QTreeWidgetItem *t = new QTreeWidgetItem( d->parameters );
 	t->setText( 0, variable );
 	t->setText( 1, value );
 	t->setData( 1, Qt::UserRole, valueext );
-	parameters->addTopLevelItem( t );
+	d->parameters->addTopLevelItem( t );
 }
 
 void CertificateDialog::on_parameters_itemSelectionChanged()
 {
-	if ( !parameters->selectionModel()->hasSelection() || !parameters->selectedItems().size() )
+	if ( !d->parameters->selectionModel()->hasSelection() || !d->parameters->selectedItems().size() )
 		return;
-	if( !parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString().isEmpty() )
-		parameterContent->setPlainText( parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString() );
+	if( !d->parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString().isEmpty() )
+		d->parameterContent->setPlainText( d->parameters->selectedItems().value(0)->data( 1, Qt::UserRole ).toString() );
 	else
-		parameterContent->setPlainText( parameters->selectedItems().value(0)->text( 1 ) );
+		d->parameterContent->setPlainText( d->parameters->selectedItems().value(0)->text( 1 ) );
 }
 
 void CertificateDialog::save()
@@ -121,7 +122,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	s << "<b>" << tr("Valid from") << "</b> " << SslCertificate::toLocalTime( c.effectiveDate() ).toString( "dd.MM.yyyy" ) << " ";
 	s << "<b>" << tr("to") << "</b> "<< SslCertificate::toLocalTime( c.expiryDate() ).toString( "dd.MM.yyyy" );
 	s << "</p>";
-	info->setHtml( i );
+	d->info->setHtml( i );
 
 	addItem( tr("Version"), "V" + c.versionNumber() );
 	addItem( tr("Serial number"), QString( "%1 (0x%2)" )
