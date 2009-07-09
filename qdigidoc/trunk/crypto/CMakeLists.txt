@@ -7,12 +7,14 @@ SET( MOC_HEADERS
 	SettingsDialog.h
 	TreeWidget.h
 	)
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 SET( HEADERS
 	${MOC_HEADERS}
 	version.h
 	)
 SET( SOURCES
 	${HEADERS}
+	${MOC_SOURCES}
 	main.cpp
 	CryptDoc.cpp
 	KeyDialog.cpp
@@ -29,7 +31,7 @@ QT4_WRAP_UI( UI_HEADERS
 	ui/SettingsDialog.ui
 	)
 
-set(QM_DIR ${CMAKE_BINARY_DIR}/crypto)
+set(QM_DIR ${CMAKE_CURRENT_BINARY_DIR})
 configure_file(${COMMON}/translations/common_tr.qrc.cmake ${QM_DIR}/common_tr.qrc)
 configure_file(translations/tr.qrc.cmake ${QM_DIR}/tr.qrc)
 
@@ -55,7 +57,7 @@ INCLUDE_DIRECTORIES(
 	)
 
 if(APPLE)
-    set(APP_CONTENTS_DIR "${CMAKE_SOURCE_DIR}/crypto/mac")
+    set(APP_CONTENTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/mac")
     
     # xCode hacks
     include_directories(/usr/local/include/../include)
@@ -72,8 +74,6 @@ if(APPLE)
     endforeach(_file)
 endif(APPLE)
 
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
-
 IF(WIN32)
 	SET( SOURCES ${SOURCES} qdigidoccrypto.rc )
 ENDIF(WIN32)
@@ -83,7 +83,6 @@ ADD_EXECUTABLE(
 	WIN32
 	MACOSX_BUNDLE
 	${SOURCES}
-	${MOC_SOURCES}
 	${QM_FILES}
 	${RC_SOURCES}
 	${UI_HEADERS}

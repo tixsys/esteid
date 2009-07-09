@@ -9,6 +9,7 @@ SET( MOC_HEADERS
 	SignatureDialog.h
 	TreeWidget.h
 	)
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 SET( HEADERS
 	${MOC_HEADERS}
 	QMobileSigner.h
@@ -16,6 +17,7 @@ SET( HEADERS
 	)
 SET( SOURCES
 	${HEADERS}
+	${MOC_SOURCES}
 	main.cpp
 	DigiDoc.cpp
 	MainWindow.cpp
@@ -36,7 +38,7 @@ QT4_WRAP_UI( UI_HEADERS
 	ui/SignatureDialog.ui
 	)
 
-set(QM_DIR ${CMAKE_BINARY_DIR}/client)
+set(QM_DIR ${CMAKE_CURRENT_BINARY_DIR})
 configure_file(${COMMON}/translations/common_tr.qrc.cmake ${QM_DIR}/common_tr.qrc)
 configure_file(translations/tr.qrc.cmake ${QM_DIR}/tr.qrc)
 
@@ -65,7 +67,7 @@ INCLUDE_DIRECTORIES(
 	)
 
 if(APPLE)
-    set(APP_CONTENTS_DIR "${CMAKE_SOURCE_DIR}/client/mac")
+    set(APP_CONTENTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/mac")
     
     # xCode hacks
     include_directories(/usr/local/include/../include)
@@ -81,8 +83,6 @@ if(APPLE)
         set_source_files_properties(${_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${_file_dir}" )
     endforeach(_file)
 endif(APPLE)
-
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 
 if(MSVC)
 	# disable warning C4290: C++ exception specification ignored
@@ -102,7 +102,6 @@ ADD_EXECUTABLE(
 	WIN32
 	MACOSX_BUNDLE
 	${SOURCES}
-	${MOC_SOURCES}
 	${QM_FILES}
 	${RC_SOURCES}
 	${UI_HEADERS}
