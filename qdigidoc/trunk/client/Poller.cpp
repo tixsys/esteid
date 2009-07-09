@@ -122,7 +122,7 @@ void Poller::readCert()
 
 void Poller::run()
 {
-	s->loadDriver();
+	s->loadDriver( Conf::getInstance()->getPKCS11DriverPath() );
 	read();
 
 	while( !terminate )
