@@ -102,6 +102,8 @@ void digidoc::PKCS11Signer::unloadDriver()
  */
 void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignException)
 {
+    unloadDriver();
+
     // Create PKCS #11 context.
     d->ctx = PKCS11_CTX_new();
 
