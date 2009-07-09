@@ -35,6 +35,8 @@ namespace digidoc
           virtual ~PKCS11Signer();
           X509* getCert() throw(SignException);
           void sign(const Digest& digest, Signature& signature) throw(SignException);
+
+          void loadDriver(const std::string& driver) throw(SignException);
           void unloadDriver();
           void* handle() const;
 
@@ -67,8 +69,6 @@ namespace digidoc
           virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       private:
-          void loadDriver(const std::string& driver) throw(SignException);
-
           PKCS11SignerPrivate *d;
     };
 }

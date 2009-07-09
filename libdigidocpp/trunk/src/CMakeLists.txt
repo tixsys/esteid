@@ -238,7 +238,6 @@ install( FILES
 )
 
 install( FILES
-    util/File.h
     util/String.h
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/util
 )
