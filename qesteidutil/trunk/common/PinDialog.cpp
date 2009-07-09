@@ -34,6 +34,19 @@
 PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent )
 :	QDialog( parent )
 {
+	SslCertificate c = cert;
+	init( type, QString( "%1 %2 %3" )
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+		.arg( c.subjectInfo( "serialNumber" ) ) );
+}
+
+PinDialog::PinDialog( PinType type, const QString &title, QWidget *parent )
+:	QDialog( parent )
+{ init( type, title ); }
+
+void PinDialog::init( PinType type, const QString &title )
+{
 	QDialogButtonBox *buttons = new QDialogButtonBox(
 		QDialogButtonBox::Ok|QDialogButtonBox::Cancel, Qt::Horizontal, this );
 	ok = buttons->button( QDialogButtonBox::Ok );
@@ -50,11 +63,6 @@ PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent
 	l->addWidget( m_text );
 	l->addWidget( buttons );
 
-	SslCertificate c = cert;
-	QString title = QString( "%1 %2 %3" )
-		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-		.arg( c.subjectInfo( "serialNumber" ) );
 	setWindowTitle( title );
 
 	if( type == Pin1Type )

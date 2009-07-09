@@ -24,6 +24,7 @@ set(QT_USE_QTXML true)
 
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
+    common/PinDialog.h
     common/Settings.h
     common/sslConnect.h
     src/DiagnosticsDialog.h
@@ -53,6 +54,7 @@ set(cardlib_SRCS
 
 set(qesteidutil_SRCS
     common/CertificateWidget.cpp
+    common/PinDialog.cpp
     common/SslCertificate.cpp
     common/sslConnect.cpp
     src/DiagnosticsDialog.cpp
@@ -89,18 +91,13 @@ QT4_ADD_TRANSLATION( QM_FILES
 include(${QT_USE_FILE})
 
 find_package(Subversion)
-if (Subversion_FOUND)
-  if (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-      Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
-      message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
-	  add_definitions(-DBUILD_VER=${PROJECT_WC_REVISION})
-      set(SVN_BUILD ${PROJECT_WC_REVISION})
-  else (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-      add_definitions(-DBUILD_VER=0)
-  endif (EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-else (Subversion_FOUND)
+if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+  Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
+  message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
+  add_definitions(-DBUILD_VER=${PROJECT_WC_REVISION})
+else (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
   add_definitions(-DBUILD_VER=0)
-endif (Subversion_FOUND)
+endif (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}

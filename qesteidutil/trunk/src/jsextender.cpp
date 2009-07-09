@@ -24,11 +24,11 @@
 #include <QDesktopServices>
 #include <QDomDocument>
 #include <QFileDialog>
-#include <QInputDialog>
 #include <QtWebKit>
 
 #include "mainwindow.h"
 #include "jsextender.h"
+#include "common/PinDialog.h"
 #include "common/Settings.h"
 #include "SettingsDialog.h"
 
@@ -109,16 +109,17 @@ QString JsExtender::checkPin()
 	{
 		activeDocument = m_mainWindow->eidCard()->getDocumentId();
 		m_dateTime = QDateTime::currentDateTime();
-		bool ok;
-		pin = QInputDialog::getText( m_mainWindow, tr("Authentication"), tr("This action needs authentication\nEnter PIN1"), QLineEdit::Password, QString(), &ok );
-		if( !ok || pin.size() < 4 )
+		PinDialog p( PinDialog::Pin1Type, QString( "%1 %2 %3" )
+			.arg( m_mainWindow->eidCard()->getFirstName() )
+			.arg( m_mainWindow->eidCard()->getSurName() )
+			.arg( m_mainWindow->eidCard()->getId() ), m_mainWindow );
+		if( !p.exec() )
 		{
 			pin = "";
 			throw std::runtime_error( "" );
-		}/* else if ( !m_mainWindow->eidCard()->validatePin1( pin ) ) {
-			pin = "";
-			throw std::runtime_error( "PIN1InvalidRetry" );
-		}*/
+		}
+		else
+			pin = p.text();
 	}
 	QCoreApplication::processEvents();
 	return pin;
@@ -287,12 +288,7 @@ void JsExtender::loadPicture()
 			m_tempFile = file.fileName();
 			if ( pix.save( &file ) )
 			{
-#ifdef WIN32
-				QString url = QString( "file:///" ).append( m_tempFile );
-#else
-				QString url = QString( "file://" ).append( m_tempFile );
-#endif
-				jsCall( "setPicture", url, "" );
+				jsCall( "setPicture", QUrl::fromLocalFile(m_tempFile).toString(), "" );
 				return;
 			}
 		}
