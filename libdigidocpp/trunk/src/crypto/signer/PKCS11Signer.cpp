@@ -73,6 +73,8 @@ digidoc::PKCS11Signer::~PKCS11Signer()
 	delete d;
 }
 
+void* digidoc::PKCS11Signer::handle() const { return d->ctx; }
+
 void digidoc::PKCS11Signer::unloadDriver()
 {
     if(d->ctx == NULL)

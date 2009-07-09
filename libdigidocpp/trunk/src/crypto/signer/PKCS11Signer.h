@@ -36,6 +36,7 @@ namespace digidoc
           X509* getCert() throw(SignException);
           void sign(const Digest& digest, Signature& signature) throw(SignException);
           void unloadDriver();
+          void* handle() const;
 
       protected:
 
