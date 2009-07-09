@@ -9,12 +9,20 @@ SET( MOC_HEADERS
 	SignatureDialog.h
 	TreeWidget.h
 	)
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
+QT4_WRAP_UI( UI_HEADERS
+	ui/MainWindow.ui
+	ui/MobileDialog.ui
+	ui/RegisterP12.ui
+	ui/SettingsDialog.ui
+	ui/SignatureDialog.ui
+	)
 SET( HEADERS
 	${MOC_HEADERS}
+	${UI_HEADERS}
 	QMobileSigner.h
 	version.h
 	)
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 SET( SOURCES
 	${HEADERS}
 	${MOC_SOURCES}
@@ -29,13 +37,6 @@ SET( SOURCES
 	SettingsDialog.cpp
 	SignatureDialog.cpp
 	TreeWidget.cpp
-	)
-QT4_WRAP_UI( UI_HEADERS
-	ui/MainWindow.ui
-	ui/MobileDialog.ui
-	ui/RegisterP12.ui
-	ui/SettingsDialog.ui
-	ui/SignatureDialog.ui
 	)
 
 set(QM_DIR ${CMAKE_CURRENT_BINARY_DIR})
@@ -104,7 +105,6 @@ ADD_EXECUTABLE(
 	${SOURCES}
 	${QM_FILES}
 	${RC_SOURCES}
-	${UI_HEADERS}
 	${RESOURCE_FILES}
 	)
 

@@ -7,13 +7,18 @@ set( MOC_HEADERS
         Settings.h
 	sslConnect.h
         )
-QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
+QT4_WRAP_UI( UI_HEADERS
+	ui/CertificateWidget.ui
+	)
 set( HEADERS
         ${MOC_HEADERS}
+	${UI_HEADERS}
         SslCertificate.h
         )
+QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 set( SOURCES
         ${HEADERS}
+	${MOC_SOURCES}
         CertificateWidget.cpp
         ComboBox.cpp
         Common.cpp
@@ -22,19 +27,15 @@ set( SOURCES
         SslCertificate.cpp
 	sslConnect.cpp
         )
-QT4_WRAP_UI( UI_HEADERS
-        ui/CertificateWidget.ui
-        )
 
 INCLUDE_DIRECTORIES(
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
+	${OPENSSL_INCLUDE_DIR}
 	)
 
 ADD_LIBRARY(
         qdigidoccommon
         STATIC
         ${SOURCES}
-        ${MOC_SOURCES}
-        ${UI_HEADERS}
         )
