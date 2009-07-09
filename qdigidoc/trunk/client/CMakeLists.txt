@@ -62,22 +62,21 @@ INCLUDE_DIRECTORIES(
 	${OPENSSL_INCLUDE_DIR}
 	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
-	${PCSCLITE_INCLUDE_DIR}
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 	${LIBP11_INCLUDE_DIR}
 	)
 
 if(APPLE)
     set(APP_CONTENTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/mac")
-    
+ 
     # xCode hacks
     include_directories(/usr/local/include/../include)
-    
+
     # Bundle resources
     file(GLOB_RECURSE RESOURCE_FILES
         ${APP_CONTENTS_DIR}/Resources/*.icns
         ${APP_CONTENTS_DIR}/Resources/**/*.strings)
-    
+
     foreach(_file ${RESOURCE_FILES})
         get_filename_component(_file_dir ${_file} PATH)
         file(RELATIVE_PATH _file_dir ${APP_CONTENTS_DIR}/Resources ${_file_dir})
@@ -113,7 +112,7 @@ if(APPLE)
         ${APP_CONTENTS_DIR}/Info.plist.cmake
         ${APP_CONTENTS_DIR}/Info.plist
         @ONLY)
-    
+
     set_target_properties(qdigidocclient
     	PROPERTIES
     	MACOSX_BUNDLE_INFO_PLIST ${APP_CONTENTS_DIR}/Info.plist)

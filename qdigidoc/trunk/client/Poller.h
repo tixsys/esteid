@@ -26,33 +26,9 @@
 
 #include <digidocpp/crypto/signer/PKCS11Signer.h>
 
-#include <QHash>
 #include <QMutex>
 #include <QSslCertificate>
-
-class Poller: public QThread
-{
-	Q_OBJECT
-
-public:
-	Poller( QObject *parent = 0 );
-	~Poller();
-
-	void lock();
-	void selectCard( const QString &card );
-	void unlock();
-
-Q_SIGNALS:
-	void dataChanged( const QStringList &cards, const QString &card,
-		const QSslCertificate &sign );
-
-private:
-	void run();
-
-	volatile bool terminate;
-	QMutex m;
-	QString selectedCard;
-};
+#include <QStringList>
 
 namespace digidoc
 {
@@ -62,17 +38,43 @@ class QEstEIDSigner: public PKCS11Signer
 public:
 	QEstEIDSigner( const QString &card = QString() ) throw(SignException);
 
-	QStringList		cards() const;
-	QSslCertificate signCert( const QString &card ) const;
-
 protected:
 	virtual std::string getPin( PKCS11Cert certificate ) throw(SignException);
 	virtual PKCS11Signer::PKCS11Cert selectSigningCertificate(
 		std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException);
 
 private:
-	QHash<QString,QSslCertificate> sign;
 	QString selectedCard;
 };
 
 }
+
+class Poller: public QThread
+{
+	Q_OBJECT
+
+public:
+	Poller( QObject *parent = 0 );
+	~Poller();
+
+	void stop();
+
+Q_SIGNALS:
+	void dataChanged( const QStringList &cards, const QString &card,
+		const QSslCertificate &sign );
+
+private Q_SLOTS:
+	void selectCard( const QString &card );
+
+private:
+	void read();
+	void readCert();
+	void run();
+
+	volatile bool terminate;
+	QMutex m;
+	digidoc::QEstEIDSigner *s;
+	QStringList cards;
+	QString selectedCard, select;
+	QSslCertificate sign;
+};

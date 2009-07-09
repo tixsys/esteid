@@ -259,14 +259,14 @@ QByteArray DigiDoc::getAccessCert( const QString &pin ) const
 {
 	std::vector<unsigned char> buffer;
 
-	poller->lock();
+	poller->stop();
 	SSLConnect *sslConnect = new SSLConnect();
 	try {
 		buffer = sslConnect->getUrl( pin.toStdString(), 0, SSLConnect::AccessCert, "");
 	} catch( ... ) {}
 
 	delete sslConnect;
-	poller->unlock();
+	poller->start();
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }
@@ -376,7 +376,7 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 }
 
 void DigiDoc::selectCard( const QString &card )
-{ poller->selectCard( card ); }
+{ QMetaObject::invokeMethod( poller, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 
 QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
@@ -443,7 +443,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	QEstEIDSigner *s;
 	try
 	{
-		poller->lock();
+		poller->stop();
 		s = new QEstEIDSigner( m_card );
 		s->setSignatureProductionPlace( Signer::SignatureProductionPlace(
 			city.toUtf8().constData(),
@@ -459,7 +459,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	delete s;
-	poller->unlock();
+	poller->start();
 	return result;
 }
 

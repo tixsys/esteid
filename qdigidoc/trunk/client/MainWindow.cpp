@@ -755,7 +755,7 @@ bool MainWindow::checkAccessCert()
 								QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return false;
 
-	PinDialog p( PinDialog::Pin1Type, doc->signCert(), qApp->activeWindow() );
+	PinDialog p( PinDialog::Pin1Type, doc->signCert(), this );
 	if( !p.exec() )
 		return false;
 
