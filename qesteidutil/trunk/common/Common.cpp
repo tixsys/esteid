@@ -56,7 +56,7 @@ QString Common::fileSize( quint64 bytes )
 
 void Common::mailTo( const QUrl &url )
 {
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 	QString file = url.queryItemValue( "attachment" );
 	QByteArray filePath = QDir::toNativeSeparators( file ).toLatin1();
 	QByteArray fileName = QFileInfo( file ).fileName().toLatin1();
@@ -94,9 +94,13 @@ void Common::mailTo( const QUrl &url )
 		if( status == SUCCESS_SUCCESS )
 			return;
 	}
-#else
-	QDesktopServices::openUrl( url );
+#elif defined(Q_OS_MAC)
+	if( QProcess::startDetached( "osascript", QStringList()
+		<< url.queryItemValue( "subject" )
+		<< url.queryItemValue( "attachment" ) )
+		return;
 #endif
+	QDesktopServices::openUrl( url );
 }
 
 bool Common::startDetached( const QString &program )
