@@ -260,8 +260,9 @@ QByteArray DigiDoc::getAccessCert( const QString &pin ) const
 	std::vector<unsigned char> buffer;
 
 	poller->stop();
-	SSLConnect *sslConnect = new SSLConnect();
+	SSLConnect *sslConnect;
 	try {
+		sslConnect = new SSLConnect();
 		buffer = sslConnect->getUrl( pin.toStdString(), 0, SSLConnect::AccessCert, "");
 	} catch( ... ) {}
 
@@ -315,6 +316,13 @@ bool DigiDoc::open( const QString &file )
 	}
 	catch( const Exception &e ) { setLastError( e ); }
 	return false;
+}
+
+void DigiDoc::parseException( const Exception &e, QStringList &causes )
+{
+	causes << QString::fromUtf8( e.getMsg().data() );
+	Q_FOREACH( const Exception &c, e.getCauses() )
+		parseException( c, causes );
 }
 
 QStringList DigiDoc::presentCards() const { return m_cards; }
@@ -417,9 +425,7 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 void DigiDoc::setLastError( const Exception &e )
 {
 	QStringList causes;
-	causes << QString::fromUtf8( e.getMsg().data() );
-	Q_FOREACH( const Exception &c, e.getCauses() )
-		causes << QString::fromUtf8( c.getMsg().data() );
+	parseException( e, causes );
 	setLastError( causes.join( "\n" ) );
 }
 

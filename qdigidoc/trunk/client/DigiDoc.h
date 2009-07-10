@@ -120,6 +120,7 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
+	void parseException( const digidoc::Exception &e, QStringList &causes );
 	void setLastError( const digidoc::Exception &e );
 	void setLastError( const QString &err );
 
