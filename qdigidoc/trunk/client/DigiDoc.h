@@ -98,7 +98,7 @@ public:
 	void save();
 	void saveDocument( unsigned int num, const QString &filepath );
 	QString getConfValue( ConfParameter parameter, const QVariant &value ) const;
-	void setConfValue( ConfParameter parameter, const QVariant &value );
+	static void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
 		const QString &city,
 		const QString &state,

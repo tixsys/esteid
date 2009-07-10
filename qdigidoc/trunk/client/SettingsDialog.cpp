@@ -22,10 +22,10 @@
 
 #include "SettingsDialog.h"
 
-#include <digidocpp/XmlConf.h>
+#include "DigiDoc.h"
+#include "version.h"
 
 #include <common/Settings.h>
-#include "version.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -109,10 +109,11 @@ void SettingsDialog::save()
 	s.setValue( "proxyPort", proxyPort->text() );
 	s.setValue( "pkcs12Cert", p12Cert->text() );
 	s.setValue( "pkcs12Pass", p12Pass->text() );
-	digidoc::XmlConf::getInstance()->setProxyPort( s.value( "proxyPort" ).toString().toStdString() );
-	digidoc::XmlConf::getInstance()->setProxyHost( s.value( "proxyHost" ).toString().toStdString() );
-	digidoc::XmlConf::getInstance()->setPKCS12Cert( s.value( "pkcs12Cert" ).toString().toStdString() );
-	digidoc::XmlConf::getInstance()->setPKCS12Pass( s.value( "pkcs12Pass" ).toString().toStdString() );
+
+	DigiDoc::setConfValue( DigiDoc::ProxyHost, proxyHost->text() );
+	DigiDoc::setConfValue( DigiDoc::ProxyPort, proxyPort->text() );
+	DigiDoc::setConfValue( DigiDoc::PKCS12Cert, p12Cert->text() );
+	DigiDoc::setConfValue( DigiDoc::PKCS12Pass, p12Pass->text() );
 
 	s.endGroup();
 
