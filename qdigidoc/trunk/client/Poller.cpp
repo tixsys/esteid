@@ -63,7 +63,7 @@ void Poller::read()
 	cards.clear();
 	for( unsigned int i = 0; i < numberOfSlots; ++i )
 	{
-		PKCS11_SLOT* slot = slots + i;
+		PKCS11_SLOT* slot = &slots[i];
 
 		if( !slot->token )
 			continue;
@@ -100,7 +100,7 @@ void Poller::readCert()
 	unsigned int numberOfCerts;
 	for( unsigned int i = 0; i < numberOfSlots; ++i )
 	{
-		PKCS11_SLOT* slot = slots + i;
+		PKCS11_SLOT* slot = &slots[i];
 		if( !slot->token )
 			continue;
 
@@ -113,7 +113,7 @@ void Poller::readCert()
 		if( numberOfCerts <= 0 )
 			continue;
 
-		PKCS11_CERT* cert = certs + 0;
+		PKCS11_CERT* cert = &certs[0];
 		sign = SslCertificate::fromX509( (Qt::HANDLE)cert->x509 );
 		break;
 	}

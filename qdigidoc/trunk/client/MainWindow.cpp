@@ -750,10 +750,16 @@ bool MainWindow::checkAccessCert()
 	}
 
 	if ( QMessageBox::question( this,
-								tr( "Server access certificate" ),
-								tr( "Did not find any server access certificate!\nStart downloading?" ),
-								QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
+			tr( "Server access certificate" ),
+			tr( "Did not find any server access certificate!\nStart downloading?" ),
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return false;
+
+	if( !infoSignCard->isChecked() )
+	{
+		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
+		return false;
+	}
 
 	PinDialog p( PinDialog::Pin1Type, doc->signCert(), this );
 	if( !p.exec() )
@@ -763,9 +769,9 @@ bool MainWindow::checkAccessCert()
 	if ( result.isEmpty() )
 	{
 		QMessageBox::warning( this,
-								tr( "Server access certificate" ),
-								tr( "Error downloading server access certificate!" ),
-								QMessageBox::Ok );
+			tr( "Server access certificate" ),
+			tr( "Error downloading server access certificate!" ),
+			QMessageBox::Ok );
 		return false;
 	}
 
@@ -773,9 +779,9 @@ bool MainWindow::checkAccessCert()
 	if ( !domDoc.setContent( result ) )
 	{
 		QMessageBox::warning( this,
-								tr( "Server access certificate" ),
-								tr( "Error parsing server access certificate result!" ),
-								QMessageBox::Ok );
+			tr( "Server access certificate" ),
+			tr( "Error parsing server access certificate result!" ),
+			QMessageBox::Ok );
 		return false;
 	}
 
@@ -783,9 +789,9 @@ bool MainWindow::checkAccessCert()
 	if ( !e.elementsByTagName( "StatusCode" ).size() )
 	{
 		QMessageBox::warning( this,
-								tr( "Server access certificate" ),
-								tr( "Error parsing server access certificate result!" ),
-								QMessageBox::Ok );
+			tr( "Server access certificate" ),
+			tr( "Error parsing server access certificate result!" ),
+			QMessageBox::Ok );
 		return false;
 	}
 
@@ -801,10 +807,10 @@ bool MainWindow::checkAccessCert()
 	if ( statusCode == 2 )
 	{
 		QMessageBox::warning( this,
-								tr( "Server access certificate" ),
-								tr( "Error downloading server access certificate!\n%1" )
-									.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
-								QMessageBox::Ok );
+			tr( "Server access certificate" ),
+			tr( "Error downloading server access certificate!\n%1" )
+				.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
+			QMessageBox::Ok );
 		return false;
 	}
 
