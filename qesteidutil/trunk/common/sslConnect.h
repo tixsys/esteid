@@ -25,6 +25,9 @@
 #include <QObject>
 #include <vector>
 
+#define EESTI "sisene.www.eesti.ee"
+#define SK "www.openxades.org"
+
 class SSLObj;
 class SSLConnect: public QObject
 {

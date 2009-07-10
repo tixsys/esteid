@@ -51,9 +51,6 @@
 #undef OCSP_RESPONSE 
 #endif 
 
-#define EESTI "sisene.www.eesti.ee"
-#define SK "www.openxades.org"
-
 class sslError:public std::runtime_error {
 public:
     std::string desc;
