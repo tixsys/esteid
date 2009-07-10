@@ -22,9 +22,11 @@
 
 #include "sslConnect.h"
 
+#include <libp11.h>
+#include <openssl/ssl.h>
 #include <stdexcept>
 #include <sstream>
-#include <QDebug>
+//#include <QDebug>
 
 #ifdef _WIN32
 #include <winsock2.h>
@@ -49,7 +51,8 @@
 #undef OCSP_RESPONSE 
 #endif 
 
-#include <openssl/ssl.h>
+#define EESTI "sisene.www.eesti.ee"
+#define SK "www.openxades.org"
 
 class sslError:public std::runtime_error {
 public:
@@ -71,6 +74,32 @@ public:
         }
 };
 
+
+
+class SSLObj
+{
+public:
+	SSLObj();
+	~SSLObj();
+
+	bool connectToHost( const std::string &site, const std::string &pin );
+	std::vector<unsigned char> getUrl( const std::string &url );
+	std::vector<unsigned char> getRequest( const std::string &request );
+
+	PKCS11_CTX *ctx;
+
+	void	releaseSlots();
+	SSL		*s;
+
+	int		reader;
+	std::string card;
+
+	unsigned int nslots;
+	PKCS11_SLOT *pslots;
+};
+
+
+
 SSLConnect::SSLConnect( QObject *parent )
 :	QObject( parent )
 ,	obj( 0 )
@@ -91,7 +120,7 @@ SSLConnect::~SSLConnect()
 
 bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
-std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int readerNum, RequestType type, const std::string &value )
+std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, RequestType type, const std::string &value )
 {
 	if ( !obj )
 		obj = new SSLObj();
@@ -108,7 +137,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 		case MobileInfo: site = SK; break;
 		default: site = EESTI; break;
 	}
-	if ( obj->connectToHost( site, pin, readerNum ) )
+	if ( obj->connectToHost( site, pin ) )
 	{
 		switch( type )
 		{
@@ -122,15 +151,25 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, int reade
 	return result;
 }
 
+void SSLConnect::setCard( const std::string &card ) { obj->card = card; }
+void SSLConnect::setReader( int reader ) { obj->reader = reader; }
+
+
+
 SSLObj::SSLObj()
 :	ctx( NULL )
 ,	s( NULL )
+,	reader( -1 )
 ,	nslots( 0 )
 ,	pslots( NULL )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
 		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
+
+	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
+	if ( result )
+		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
 }
 
 SSLObj::~SSLObj()
@@ -152,35 +191,46 @@ SSLObj::~SSLObj()
 	ERR_remove_state(0);
 }
 
-bool SSLObj::connectToHost( const std::string &site, const std::string &pin, int reader )
+bool SSLObj::connectToHost( const std::string &site, const std::string &pin )
 {
-	PKCS11_SLOT *slot;
+	PKCS11_SLOT *slot = 0;
+	if( reader >= 0 )
+	{
+		if ( (unsigned int)reader*4 > nslots )
+			throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );
+
+		slot = &pslots[reader*4];
+		if (!slot || !slot->token)
+			throw std::runtime_error( QObject::tr("no token available").toStdString() );
+	}
+	else
+	{
+		PKCS11_SLOT *tmp;
+		for( unsigned int i = 0; i < nslots; ++i )
+		{
+			tmp = &pslots[i];
+			if( !tmp->token )
+				continue;
+			if( card.compare( tmp->token->serialnr ) == 0 )
+			{
+				slot = tmp;
+				break;
+			}
+		}
+		if( !slot )
+			throw std::runtime_error( QObject::tr("no token available").toStdString() );
+	}
+
 	PKCS11_CERT *certs;
-	PKCS11_KEY *authkey;
-	PKCS11_CERT *authcert;
 	unsigned int ncerts;
-
-	releaseSlots();
-
-	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
-	if ( result )
-		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
-
-	if ( (unsigned int)reader*4 > nslots )
-		throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );
-
-	slot = &pslots[reader*4];
-	if (!slot || !slot->token)
-		throw std::runtime_error( QObject::tr("no token available").toStdString() );
-
-	result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
-	authcert=&certs[0];
+	int result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
+	PKCS11_CERT *authcert = &certs[0];
 	
 	result = PKCS11_login(slot, 0, pin.c_str());
 	if ( result )
 		throw std::runtime_error( "PIN1Invalid" );
 
-	authkey = PKCS11_find_key(authcert);
+	PKCS11_KEY *authkey = PKCS11_find_key(authcert);
 	if ( !authkey )
 		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
 

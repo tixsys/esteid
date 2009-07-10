@@ -263,7 +263,8 @@ QByteArray DigiDoc::getAccessCert( const QString &pin ) const
 	SSLConnect *sslConnect;
 	try {
 		sslConnect = new SSLConnect();
-		buffer = sslConnect->getUrl( pin.toStdString(), 0, SSLConnect::AccessCert, "");
+		sslConnect->setCard( m_card.toStdString() );
+		buffer = sslConnect->getUrl( pin.toStdString(), SSLConnect::AccessCert, "" );
 	} catch( ... ) {}
 
 	delete sslConnect;
