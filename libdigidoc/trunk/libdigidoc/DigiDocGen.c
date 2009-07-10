@@ -1140,7 +1140,7 @@ int generateDataFileXML(SignedDoc* pSigDoc, DataFile* pDataFile,
 				const char* szDataFile, FILE* hFile, DigiDocMemBuf* pMBufXML)
 {
   int err = ERR_OK, len1, len2, j, k;
-  char buf1[2048], buf2[4096], fixedFileName[200], *p, *p2;
+  char buf1[2048], buf2[4096], fixedFileName[FILENAME_MAX], *p, *p2;
   char *name, *value, *fName;
   FILE *fIn = 0;
   EVP_ENCODE_CTX ectx;
@@ -1451,7 +1451,6 @@ int generateDataFileXML(SignedDoc* pSigDoc, DataFile* pDataFile,
   return err;
 }
 
-#define DD_TEMP_FILE_MAX 200
 
 //--------------------------------------------------
 // Creates a new signed XML document
@@ -1467,7 +1466,7 @@ int createSignedXMLDoc(SignedDoc* pSigDoc, const char* szOldFile, const char* sz
   FILE *hFile = 0;
   DataFile* pDf = NULL;
   char ** arrTempFiles = NULL;
-  char buf1[200];
+  char buf1[FILENAME_MAX];
   DigiDocMemBuf mbuf1;
   
   RETURN_IF_NULL_PARAM(pSigDoc);
@@ -1489,12 +1488,12 @@ int createSignedXMLDoc(SignedDoc* pSigDoc, const char* szOldFile, const char* sz
     for(i = 0; i < nFiles; i++) {
       pDf = getDataFile(pSigDoc, i);
       ddocDebug(3, "createSignedXMLDoc", "DataFile: %s - %s", pDf->szId, pDf->szFileName);
-      arrTempFiles[i] = (char*)malloc(DD_TEMP_FILE_MAX); 
+      arrTempFiles[i] = (char*)malloc(FILENAME_MAX); 
       arrTempFiles[i][0] = 0;
       // do not copy newly added files
       if(!strchr((const char*)pDf->szFileName, '/') &&
 	 !strchr((const char*)pDf->szFileName, '\\')) {
-	err = getTempFileName(arrTempFiles[i], DD_TEMP_FILE_MAX);
+	err = getTempFileName(arrTempFiles[i], FILENAME_MAX);
 	// VS: test the new parser based on xmlReader interface
 	//err = ddocXRdrCopyDataFile(pSigDoc, szOldFile, (const char*)arrTempFiles[i], pDf->szId, CHARSET_ISO_8859_1, CHARSET_ISO_8859_1);
 	ddocDebug(3, "createSignedXMLDoc", "Store DataFile: %s to: %s", pDf->szId, (const char*)arrTempFiles[i]);
