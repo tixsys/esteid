@@ -243,7 +243,12 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
     if(d->signSlot->token->loginRequired)
     {
         // Perform PKCS #11 login.
-        if(PKCS11_login(d->signSlot, 0, getPin(d->createPKCS11Cert(d->signSlot, d->signCertificate)).c_str()) != 0)
+        int rv = 0;
+        if(d->signSlot->token->secureLogin)
+            rv = PKCS11_login(d->signSlot, 0, NULL);
+        else
+            rv = PKCS11_login(d->signSlot, 0, getPin(d->createPKCS11Cert(d->signSlot, d->signCertificate)).c_str());
+        if(rv != 0)
         {
             THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->signSlot->token->label,
                     ERR_reason_error_string(ERR_get_error()));
