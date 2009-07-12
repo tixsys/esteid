@@ -179,12 +179,12 @@
     <name>JsExtender</name>
     <message>
         <source>Authentication</source>
-        <translation>Isikutuvastus</translation>
+        <translation type="obsolete">Isikutuvastus</translation>
     </message>
     <message>
         <source>This action needs authentication
 Enter PIN1</source>
-        <translation>See tegevus vajab isikutuvastust
+        <translation type="obsolete">See tegevus vajab isikutuvastust
 Sisesta PIN1</translation>
     </message>
     <message>
@@ -231,27 +231,27 @@ Sisesta PIN1</translation>
     </message>
     <message>
         <source>failed to load pkcs11 module</source>
-        <translation>viga pkcs11 mooduli laadimisel</translation>
+        <translation type="obsolete">viga pkcs11 mooduli laadimisel</translation>
     </message>
     <message>
         <source>failed to list slots</source>
-        <translation>viga pkcs11 slottide lugemisel</translation>
+        <translation type="obsolete">viga pkcs11 slottide lugemisel</translation>
     </message>
     <message>
         <source>token failed</source>
-        <translation>viga &quot;tokeni&quot; laadimisel</translation>
+        <translation type="obsolete">viga &quot;tokeni&quot; laadimisel</translation>
     </message>
     <message>
         <source>no token available</source>
-        <translation>ei leitud ühtegi &quot;tokenit&quot;</translation>
+        <translation type="obsolete">ei leitud ühtegi &quot;tokenit&quot;</translation>
     </message>
     <message>
         <source>no key matching certificate available</source>
-        <translation>ei leitud ühtegi sobivat sertifikaati</translation>
+        <translation type="obsolete">ei leitud ühtegi sobivat sertifikaati</translation>
     </message>
     <message>
         <source>Failed to resolve hostname. Are you connected to the internet?</source>
-        <translation>Puudub internetiühendus!</translation>
+        <translation type="obsolete">Puudub internetiühendus!</translation>
     </message>
 </context>
 <context>
