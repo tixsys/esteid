@@ -123,13 +123,14 @@ void Common::mailTo( const QUrl &url )
 		if( data.contains("thunderbird") )
 			thunderbird = data.split(' ').value(0);
 	}
+	/*
 	else
 	{
 		p.start( "xprop", QStringList() << "-root" << "_DT_SAVE_MODE" );
 		p.waitForFinished();
-		if( p.readAllStandardOutput().contains(" = \"xfce4\"$") )
+		if( p.readAllStandardOutput().contains("xfce4") )
 		{}
-	}
+	}*/
 
 	if( !thunderbird.isEmpty() )
 	{
