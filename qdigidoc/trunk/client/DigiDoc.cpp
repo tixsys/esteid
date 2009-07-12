@@ -299,6 +299,7 @@ void DigiDoc::init()
 	poller = new Poller();
 	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
+	connect( poller, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
 	poller->start();
 }
 

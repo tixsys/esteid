@@ -594,6 +594,13 @@ Start downloading?</source>
     </message>
 </context>
 <context>
+    <name>Poller</name>
+    <message>
+        <source>Failed to load PKCS#11 module</source>
+        <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
+    </message>
+</context>
+<context>
     <name>PrintSheet</name>
     <message>
         <source>SIGNED FILES</source>

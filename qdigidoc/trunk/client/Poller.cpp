@@ -36,19 +36,12 @@ using namespace digidoc;
 Poller::Poller( QObject *parent )
 :	QThread( parent )
 ,	terminate( false )
-{
-	try { s = new QEstEIDSigner(); }
-	catch( const Exception & )
-	{
-		delete s;
-		s = NULL;
-	}
-}
+{}
 
 Poller::~Poller()
 {
 	stop();
-	if( s ) delete s;
+	delete s;
 }
 
 
@@ -122,7 +115,14 @@ void Poller::readCert()
 
 void Poller::run()
 {
-	s->loadDriver( Conf::getInstance()->getPKCS11DriverPath() );
+	try { s = new QEstEIDSigner(); }
+	catch( const Exception & )
+	{
+		Q_EMIT error( tr("Failed to load PKCS#11 module") );
+		//delete s;
+		s = NULL;
+		return;
+	}
 	read();
 
 	while( !terminate )
@@ -154,9 +154,8 @@ void Poller::stop()
 {
 	terminate = true;
 	wait();
-
 	if( s )
-		s->unloadDriver();
+		delete s;
 }
 
 QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)

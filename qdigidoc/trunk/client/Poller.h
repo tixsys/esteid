@@ -62,6 +62,7 @@ public:
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &sign );
+	void error( const QString &msg );
 
 private Q_SLOTS:
 	void selectCard( const QString &card );

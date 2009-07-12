@@ -141,7 +141,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>expired</source>
-        <translation type="unfinished">устарели</translation>
+        <translation>устарели</translation>
     </message>
     <message>
         <source>Loading data</source>
@@ -205,7 +205,7 @@ Digital signing is equal to physical signing. to sing a document you need an ID-
 Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
 Also and active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
@@ -400,6 +400,13 @@ Start downloading?</source>
     <message>
         <source>%v sec</source>
         <translation>%v сек</translation>
+    </message>
+</context>
+<context>
+    <name>Poller</name>
+    <message>
+        <source>Failed to load PKCS#11 module</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

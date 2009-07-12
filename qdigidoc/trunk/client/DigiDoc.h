@@ -118,11 +118,11 @@ private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &sign );
 	void selectCard( const QString &card );
+	void setLastError( const QString &err );
 
 private:
 	void parseException( const digidoc::Exception &e, QStringList &causes );
 	void setLastError( const digidoc::Exception &e );
-	void setLastError( const QString &err );
 
 	digidoc::WDoc	*b;
 	Poller			*poller;
