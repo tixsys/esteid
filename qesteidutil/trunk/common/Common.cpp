@@ -99,6 +99,47 @@ void Common::mailTo( const QUrl &url )
 		<< url.queryItemValue( "subject" )
 		<< url.queryItemValue( "attachment" ) )
 		return;
+#elif defined(Q_OS_LINUX)
+	QByteArray thunderbird;
+	QProcess p;
+	QStringList env = QProcess::systemEnvironment();
+	if( env.indexOf( QRegExp("KDE_FULL_SESSION.*") ) != -1 )
+	{
+		p.start( "kreadconfig", QStringList()
+			<< "--file" << "emaildefaults"
+			<< "--group" << "PROFILE_Default"
+			<< "--key" << "EmailClient" );
+		p.waitForFinished();
+		QByteArray data = p.readAllStandardOutput().trimmed();
+		if( data.contains("thunderbird") )
+			thunderbird = data;
+	}
+	else if( env.indexOf( QRegExp("GNOME_DESKTOP_SESSION_ID.*") ) != -1 )
+	{
+		p.start( "gconftool-2", QStringList()
+			<< "--get" << "/desktop/gnome/url-handlers/mailto/command" );
+		p.waitForFinished();
+		QByteArray data = p.readAllStandardOutput();
+		if( data.contains("thunderbird") )
+			thunderbird = data.split(' ').value(0);
+	}
+	else
+	{
+		p.start( "xprop", QStringList() << "-root" << "_DT_SAVE_MODE" );
+		p.waitForFinished();
+		if( p.readAllStandardOutput().contains(" = \"xfce4\"$") )
+		{}
+	}
+
+	if( !thunderbird.isEmpty() )
+	{
+		bool started = p.startDetached( thunderbird, QStringList() << "-compose"
+			<< QString( "subject='%1',attachment='%2,'" )
+				.arg( url.queryItemValue( "subject" ) )
+				.arg( QUrl::fromLocalFile( url.queryItemValue( "attachment" ) ).toString() ) );
+		if( started )
+			return;
+	}
 #endif
 	QDesktopServices::openUrl( url );
 }
