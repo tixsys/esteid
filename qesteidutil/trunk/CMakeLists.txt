@@ -37,6 +37,7 @@ set(qesteidutil_MOC_HDRS
 )
 
 set(qesteidutil_HDRS
+    ${qesteidutil_MOC_HDRS}
     common/SslCertificate.h
     src/version.h
 )
@@ -52,7 +53,10 @@ set(cardlib_SRCS
     cardlib/types.cpp
 )
 
+QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
 set(qesteidutil_SRCS
+    ${qesteidutil_HDRS}
+    ${qesteidutil_MOC_SRCS}
     common/CertificateWidget.cpp
     common/PinDialog.cpp
     common/SslCertificate.cpp
@@ -75,9 +79,11 @@ QT4_WRAP_UI( UI_HEADERS
 
 set(QM_DIR ${CMAKE_BINARY_DIR})
 configure_file(common/translations/common_tr.qrc.cmake ${QM_DIR}/common_tr.qrc)
+configure_file(src/translations/tr.qrc.cmake ${QM_DIR}/tr.qrc)
 
 QT4_ADD_RESOURCES( qesteidutil_RCC_SRCS
     ${QM_DIR}/common_tr.qrc
+    ${QM_DIR}/tr.qrc
     src/qesteidutil.qrc
 )
 
@@ -86,6 +92,8 @@ QT4_ADD_TRANSLATION( QM_FILES
     common/translations/common_ru.ts
     common/translations/qt_et.ts
     common/translations/qt_ru.ts
+    src/translations/et.ts
+    src/translations/ru.ts
 )
 
 include(${QT_USE_FILE})
@@ -128,8 +136,6 @@ if(APPLE)
     set_source_files_properties(${LIBQJPEG_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS/imageformats" )
 endif(APPLE)
 
-QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
-
 IF(WIN32)
     SET(qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc)
 ENDIF(WIN32)
@@ -137,11 +143,8 @@ ENDIF(WIN32)
 add_executable(qesteidutil WIN32 MACOSX_BUNDLE
     ${cardlib_SRCS}
     ${qesteidutil_SRCS}
-    ${qesteidutil_HDRS}
-    ${qesteidutil_MOC_SRCS}
     ${QM_FILES}
     ${qesteidutil_RCC_SRCS}
-    ${qesteidutil_MOC_HDRS}
     ${UI_HEADERS}
     ${RESOURCE_FILES}
 )
