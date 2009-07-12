@@ -38,11 +38,7 @@ Poller::Poller( QObject *parent )
 ,	terminate( false )
 {}
 
-Poller::~Poller()
-{
-	stop();
-	delete s;
-}
+Poller::~Poller() { stop(); }
 
 
 void Poller::read()
@@ -84,6 +80,7 @@ void Poller::read()
 
 void Poller::readCert()
 {
+	Q_EMIT dataChanged( cards, selectedCard, sign );
 	PKCS11_SLOT* slots;
 	unsigned int numberOfSlots;
 	if( PKCS11_enumerate_slots( (PKCS11_CTX*)s->handle(), &slots, &numberOfSlots ) != 0 )

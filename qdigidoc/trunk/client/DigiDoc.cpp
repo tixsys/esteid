@@ -229,6 +229,10 @@ void DigiDoc::dataChanged( const QStringList &cards, const QString &card,
 	{
 		changed = true;
 		m_card = card;
+	}
+	if( m_signCert != sign )
+	{
+		changed = true;
 		m_signCert = sign;
 	}
 	if( changed )

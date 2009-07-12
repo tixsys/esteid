@@ -553,6 +553,8 @@ void MainWindow::showCardStatus()
 		else
 			infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
 	}
+	else if( !doc->activeCard().isEmpty() )
+		content += tr("Loading data");
 	else if( doc->activeCard().isEmpty() )
 		content += tr("No card in reader");
 	infoCard->setText( content );

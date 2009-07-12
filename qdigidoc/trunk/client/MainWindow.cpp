@@ -656,6 +656,8 @@ void MainWindow::showCardStatus()
 				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
 				.arg( c.subjectInfo( "serialNumber" ) ) );
 		}
+		else if( !doc->activeCard().isEmpty() )
+			content = tr("Loading data");
 		else if( doc->activeCard().isEmpty() )
 			content = tr("No card in reader");
 		infoCard->setText( content );
