@@ -338,6 +338,10 @@ Start downloading?</source>
         <source>Failed to save server access certificate file to %1!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Check internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

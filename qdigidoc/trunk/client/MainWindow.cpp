@@ -43,6 +43,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPrintPreviewDialog>
+#include <QTcpSocket>
 #include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
@@ -295,7 +296,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case SignSign:
 	{
-		if ( !checkAccessCert() )
+		if( !checkConnection() || !checkAccessCert() )
 			break;
 
 		if( infoSignCard->isChecked() )
@@ -337,6 +338,16 @@ void MainWindow::buttonClicked( int button )
 		break;
 	default: break;
 	}
+}
+
+bool MainWindow::checkConnection()
+{
+	QTcpSocket s;
+	s.connectToHost( "ocsp.sk.ee", 80 );
+	bool status = s.waitForConnected();
+	if( !status )
+		showWarning( tr("Check internet connection") );
+	return status;
 }
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
