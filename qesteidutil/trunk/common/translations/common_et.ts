@@ -181,5 +181,33 @@
         <source>Decipher only</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>failed to load pkcs11 module</source>
+        <translation>viga pkcs11 mooduli laadimisel</translation>
+    </message>
+    <message>
+        <source>failed to list slots</source>
+        <translation>viga pkcs11 slottide lugemisel</translation>
+    </message>
+    <message>
+        <source>token failed</source>
+        <translation>viga &quot;tokeni&quot; laadimisel</translation>
+    </message>
+    <message>
+        <source>no token available</source>
+        <translation>ei leitud ühtegi &quot;tokenit&quot;</translation>
+    </message>
+    <message>
+        <source>no key matching certificate available</source>
+        <translation>ei leitud ühtegi sobivat sertifikaati</translation>
+    </message>
+    <message>
+        <source>Failed to resolve hostname. Are you connected to the internet?</source>
+        <translation>Puudub internetiühendus!</translation>
+    </message>
+    <message>
+        <source>Failed to connect to host. Are you connected to the internet?</source>
+        <translation>Puudub internetiühendus!</translation>
+    </message>
 </context>
 </TS>

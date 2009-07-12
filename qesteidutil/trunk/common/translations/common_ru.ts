@@ -181,5 +181,33 @@
         <source>Decipher only</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>failed to load pkcs11 module</source>
+        <translation>ошибка при загрузке модуля pkcs11</translation>
+    </message>
+    <message>
+        <source>failed to list slots</source>
+        <translation>ошибка при чтении слотов pkcs11</translation>
+    </message>
+    <message>
+        <source>token failed</source>
+        <translation>ошибка при загрузке &quot;token&quot;-а</translation>
+    </message>
+    <message>
+        <source>no token available</source>
+        <translation>не найдено ни одного &quot;token&quot;-а</translation>
+    </message>
+    <message>
+        <source>no key matching certificate available</source>
+        <translation>не найдено подходящего сертификата</translation>
+    </message>
+    <message>
+        <source>Failed to resolve hostname. Are you connected to the internet?</source>
+        <translation>Отсутствует подключение к Интернету!</translation>
+    </message>
+    <message>
+        <source>Failed to connect to host. Are you connected to the internet?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
