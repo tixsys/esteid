@@ -131,5 +131,4 @@ private:
 	QString			m_card;
 	QString			m_fileName;
 	QString			m_lastError;
-	QByteArray		env;
 };

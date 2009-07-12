@@ -281,16 +281,14 @@ QString DigiDoc::fileName() const { return m_fileName; }
 
 void DigiDoc::init()
 {
-	if( getenv( "BDOCLIB_CONF_XML" ) == 0 )
+	if( qgetenv( XmlConf::CONF_ENV.c_str() ).isEmpty() )
 	{
 		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,
 			"Estonian ID Card", "digidocpp" ).value( "ConfigFile" ).toByteArray();
-		env = "BDOCLIB_CONF_XML=";
 		if( !path.isEmpty() )
-			env.append( path );
+			qputenv( XmlConf::CONF_ENV.c_str(), path );
 		else
-			env.append( BDOCLIB_CONF_PATH );
-		putenv( env.data() );
+			qputenv( XmlConf::CONF_ENV.c_str(), BDOCLIB_CONF_PATH );
 	}
 
 	try
