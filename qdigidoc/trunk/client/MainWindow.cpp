@@ -394,6 +394,7 @@ void MainWindow::enableSign()
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );
+		signButton->setToolTip( mobile ? QString() : tr("No card in reader") );
 		return;
 	}
 
@@ -409,6 +410,7 @@ void MainWindow::enableSign()
 		}
 	}
 	signButton->setEnabled( !cardOwnerSignature );
+	signButton->setToolTip( cardOwnerSignature ? tr("This container is signed by you") : QString() );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )
