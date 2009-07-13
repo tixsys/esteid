@@ -1,7 +1,7 @@
 /*
  * QEstEidCommon
  *
- * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo KÄ±ster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -33,6 +33,10 @@
 
 #include <windows.h>
 #include <mapi.h>
+#endif
+
+#ifdef Q_OS_MAC
+#include <Carbon/Carbon.h>
 #endif
 
 Common::Common( QObject *parent ): QObject( parent ) {}
@@ -95,10 +99,46 @@ void Common::mailTo( const QUrl &url )
 			return;
 	}
 #elif defined(Q_OS_MAC)
-	if( QProcess::startDetached( "osascript", QStringList()
-		<< url.queryItemValue( "subject" )
-		<< url.queryItemValue( "attachment" ) )
-		return;
+	CFURLRef emailUrl = CFURLCreateWithString(kCFAllocatorDefault, CFSTR("mailto:info@example.com"), NULL), appUrl = NULL;
+	
+	if(LSGetApplicationForURL(emailUrl, kLSRolesEditor, NULL, &appUrl) == noErr) {
+		CFStringRef appPath = CFURLCopyFileSystemPath(appUrl, kCFURLPOSIXPathStyle);
+		
+		if(appPath != NULL) {
+			if(CFStringCompare(appPath, CFSTR("/Applications/Mail.app"), 0) == kCFCompareEqualTo) {
+				if(QProcess::startDetached("/usr/bin/osascript", QStringList() <<
+										   "-e" << "on run argv" <<
+										   "-e" << "set vattachment to (item 1 of argv)" <<
+										   "-e" << "set vsubject to (item 2 of argv)" <<
+										   "-e" << "tell application \"Mail\"" <<
+										   "-e" << "set composeMessage to make new outgoing message at beginning with properties {visible:true}" <<
+										   "-e" << "tell composeMessage" <<
+										   "-e" << "set subject to vsubject" <<
+										   "-e" << "tell content" <<
+										   "-e" << "make new attachment with properties {file name: vattachment} at after the last paragraph" <<
+										   "-e" << "end tell" <<
+										   "-e" << "end tell" <<
+										   "-e" << "activate" <<
+										   "-e" << "end tell" <<
+										   "-e" << "end run" << 
+										   // Commandline arguments
+										   url.queryItemValue("attachment") << 
+										   url.queryItemValue("subject"))) {
+					return;
+				}
+				
+				// url.queryItemValue( "subject" ) << url.queryItemValue( "attachment" ))) {
+			} else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo) {
+				// TODO: Handle Thunderbird here?
+			}
+			
+			CFRelease(appPath);
+		}
+		
+		CFRelease(appUrl);
+	}
+	
+	CFRelease(emailUrl);
 #elif defined(Q_OS_LINUX)
 	QByteArray thunderbird;
 	QProcess p;

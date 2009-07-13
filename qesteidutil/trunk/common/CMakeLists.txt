@@ -35,6 +35,11 @@ INCLUDE_DIRECTORIES(
 	${LIBP11_INCLUDE_DIR}
 	)
 
+if(APPLE)
+    # xCode hacks
+    include_directories(/usr/local/include/../include)
+endif(APPLE)
+
 ADD_LIBRARY(
         qdigidoccommon
         STATIC
