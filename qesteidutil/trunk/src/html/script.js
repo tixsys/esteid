@@ -194,10 +194,13 @@ function readCardData()
 			document.getElementById('birthPlace').innerHTML = (esteidData.getBirthPlace() != "" ? ", " + esteidData.getBirthPlace() : "" );
 			document.getElementById('citizen').innerHTML = esteidData.getCitizen();
 		}
-
+		
+		var pin1Retry = esteidData.getPin1RetryCount();
+		var pin2Retry = esteidData.getPin2RetryCount();
+		
 		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
 		var days = esteidData.authCert.validDays();
-		if ( days > 0 && days <= 105 )
+		if ( pin1Retry > 0 && days > 0 && days <= 105 )
 		{
 			document.getElementById('authCertWillExpire').style.display = 'block';
 			document.getElementById('authCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
@@ -208,7 +211,7 @@ function readCardData()
 
 		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
 		days = esteidData.signCert.validDays();
-		if ( days > 0 && days <= 105 )
+		if ( pin2Retry > 0 && days > 0 && days <= 105 )
 		{
 			document.getElementById('signCertWillExpire').style.display = 'block';
 			document.getElementById('signCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
@@ -216,7 +219,7 @@ function readCardData()
 			document.getElementById('signCertWillExpire').style.display = 'none';
 		document.getElementById('signKeyUsage').innerHTML = esteidData.getSignUsageCount();
 
-		if ( esteidData.getPin1RetryCount() != 0 )
+		if ( pin1Retry != 0 )
 		{
 			document.getElementById('authCertStatus').className=esteidData.authCert.isValid() ? 'statusValid' : 'statusBlocked';
 			document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'certValid' : 'certBlocked' );
@@ -234,7 +237,7 @@ function readCardData()
 		}
 		document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
 		
-		if (esteidData.getPin2RetryCount() != 0 )
+		if ( pin2Retry != 0 )
 		{
 			document.getElementById('signCertStatus').className=esteidData.signCert.isValid() ? 'statusValid' : 'statusBlocked';
 			document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'certValid' : 'certBlocked' );
