@@ -82,6 +82,10 @@ if(APPLE)
         file(RELATIVE_PATH _file_dir ${APP_CONTENTS_DIR}/Resources ${_file_dir})
         set_source_files_properties(${_file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${_file_dir}" )
     endforeach(_file)
+    
+    include_directories(/Developer/Headers/FlatCarbon)
+    find_library(CARBON_LIBRARY Carbon)
+    set(EXTRA_LIBRARIES ${CARBON_LIBRARY})
 endif(APPLE)
 
 if(MSVC)
@@ -125,6 +129,7 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${LIBP11_LIBRARY}
+	${EXTRA_LIBRARIES}
 	qdigidoccommon
 )
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
