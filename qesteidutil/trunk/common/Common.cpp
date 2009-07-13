@@ -126,8 +126,6 @@ void Common::mailTo( const QUrl &url )
 										   url.queryItemValue("subject"))) {
 					return;
 				}
-				
-				// url.queryItemValue( "subject" ) << url.queryItemValue( "attachment" ))) {
 			} else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo) {
 				// TODO: Handle Thunderbird here?
 			}
