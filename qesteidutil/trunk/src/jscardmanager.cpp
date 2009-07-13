@@ -76,6 +76,8 @@ void JsCardManager::pollCard()
 			reader.id = i;
             reader.name = QString::fromStdString(cardMgr->getReaderName(i));
 			reader.state = QString::fromStdString( cardMgr->getReaderState( i ) );
+			if ( reader.state.contains( "PRESENT" ) )
+				reader.state = "PRESENT";
 			reader.connected = false;
 			if ( cardReaders.value(reader.name).state != reader.state )
 			{
