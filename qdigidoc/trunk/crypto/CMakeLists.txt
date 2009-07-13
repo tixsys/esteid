@@ -98,6 +98,10 @@ if(APPLE)
     set_target_properties(qdigidoccrypto
     	PROPERTIES
     	MACOSX_BUNDLE_INFO_PLIST ${APP_CONTENTS_DIR}/Info.plist)
+    
+    include_directories(/Developer/Headers/FlatCarbon)
+    find_library(CARBON_LIBRARY Carbon)
+    set(EXTRA_LIBRARIES ${CARBON_LIBRARY})
 endif(APPLE)
 
 TARGET_LINK_LIBRARIES( qdigidoccrypto
@@ -109,6 +113,7 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 	${OPENSSL_LIBRARIES}
 	${OPENSSLCRYPTO_LIBRARIES}
 	${LDAP_LIBRARIES}
+	${EXTRA_LIBRARIES}
 	qdigidoccommon
 )
 install(TARGETS qdigidoccrypto DESTINATION ${BIN_INSTALL_DIR})
