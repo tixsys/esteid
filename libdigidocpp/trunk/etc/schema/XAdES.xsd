@@ -349,7 +349,7 @@ EncapsulatedPKIDataType and containers for time-stamp tokens -->
   <xsd:complexType name="SignaturePolicyIdentifierType">
     <xsd:choice>
       <xsd:element name="SignaturePolicyId" type="SignaturePolicyIdType"/>
-      <xsd:element name="SignaturePolicyImplied"/>
+      <xsd:element name="SignaturePolicyImplied" type="AnyType"/>
     </xsd:choice>
   </xsd:complexType>
   <xsd:complexType name="SignaturePolicyIdType">
@@ -427,7 +427,7 @@ EncapsulatedPKIDataType and containers for time-stamp tokens -->
       <xsd:choice>
         <xsd:element name="ObjectReference" type="xsd:anyURI" 
           maxOccurs="unbounded"/>
-        <xsd:element name="AllSignedDataObjects"/>
+        <xsd:element name="AllSignedDataObjects" type="AnyType"/>
       </xsd:choice>
       <xsd:element name="CommitmentTypeQualifiers" 
         type="CommitmentTypeQualifiersListType" minOccurs="0"/>
