@@ -45,7 +45,6 @@ const char* CERT_STATUSES[3] = { "GOOD", "REVOKED", "UNKNOWN" };
 //********Constructor for OO reachable bridge class**********
 MyBdocBridge::MyBdocBridge() {
 
-
 }
 
 //===========================================================
@@ -58,11 +57,6 @@ void MyBdocBridge::DigiCheckCert()
 
 //===========================================================
 //*************bridge to bdoc functions**********************
-void MyBdocBridge::teemingilollus1()
-{
-	((My1EstEIDSigner *)this)->sammkampunn();	
-}
-
 //-----------------------------------------------------------
 void MyBdocBridge::DigiInit()
 {
@@ -164,9 +158,31 @@ My1EstEIDSigner::~My1EstEIDSigner()
 {}
 
 //===========================================================
-//******** Mister Antigo's Special Debug Sentence ***********
-void My1EstEIDSigner::sammkampunn() {
-	printf("Samm kampunn huijann\n");
+//******** Parse through all exceptions ***********
+void My1EstEIDSigner::getExceptions(const digidoc::Exception e) 
+{
+#ifdef _WIN32
+	pcErrMsg = _strdup(e.getMsg().c_str());
+#else
+	pcErrMsg = strdup(e.getMsg().c_str());
+#endif
+	if (e.hasCause())
+	{
+		for (size_t u=0; u<e.getCauses().size(); u++)
+		{
+			digidoc::Exception e1 = e.getCauses()[u];
+#ifdef _WIN32
+			eMessages[iCounter].pcEMsg = _strdup(e1.getMsg().c_str());
+#else
+			eMessages[iCounter].pcEMsg = strdup(e1.getMsg().c_str());
+#endif
+			PRINT_DEBUG("ErrorMessage: %s",eMessages[iCounter].pcEMsg);
+
+			iCounter ++;
+
+			getExceptions(e1);
+		}
+	}
 }
 
 //===========================================================
@@ -174,6 +190,7 @@ void My1EstEIDSigner::sammkampunn() {
 int My1EstEIDSigner::initData()
 {
 	int iRet = 0;	
+	iCounter = 0;
 	//set installed BDoc library path
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
@@ -323,61 +340,39 @@ int My1EstEIDSigner::signFile ()
 		}
 		
 	}
-
+	catch(const digidoc::OCSPException& e)
+	{
+		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
+	
+		getExceptions(e);
+		i_ok |= 50;
+	}
 	catch(const digidoc::BDocException& e)
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 		i_ok |= 10;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+
+		getExceptions(e);
 		i_ok |= 20;
-	}
-	catch(const digidoc::OCSPException& e)
-	{
-		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
-		i_ok |= 50;
-	}
+	}	
 	catch(const digidoc::SignException& e)
 	{
 		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		
+		getExceptions(e);
 		i_ok |= 30;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		
+		getExceptions(e);
 		i_ok |= 40;
 	}
 	catch(...)

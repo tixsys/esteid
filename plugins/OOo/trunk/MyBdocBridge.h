@@ -17,7 +17,6 @@ protected:
 	MyBdocBridge();
 public:
 	static MyBdocBridge * getInstance();
-	void teemingilollus1();
 	void DigiSign(const char* pPath, const char* pParam, const char* pPin);
 	void DigiOpen(const char* pPath);
 	void DigiInit();
@@ -36,5 +35,8 @@ public:
 	const char* pSignAddRole;
 
 	const char* pcErrMsg;
-
+	struct {
+		const char* pcEMsg;
+	} eMessages [20];
+	int iCounter;
 };

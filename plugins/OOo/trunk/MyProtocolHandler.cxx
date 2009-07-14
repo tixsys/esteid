@@ -861,14 +861,23 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						}
 
 						else if (m_BdocBridge->ret == 10)
-						{ //Wrong PIN2
-							Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Failure?language=Basic&location=application") ), UNO_QUERY);
+						{ //OCSP Error
+							//Wrong PIN2
+					/*		Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Failure?language=Basic&location=application") ), UNO_QUERY);
 							xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 							muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
 							
 							if (!memcmp(muff.pData->buffer, "*", 1))
 							{ //IF Canceled
 								i_try = 0;
+							}
+							*/
+							
+							for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
+							{
+								
+								::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), ::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg ));
+								PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
 							}
 						}
 						else if (m_BdocBridge->ret == 100)

@@ -47,7 +47,7 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		int signFile ();
 		int openCont ();
 		int checkCert ();
-		void sammkampunn();
+		void getExceptions(const digidoc::Exception e);
 	
 		std::string str_pin;
 		std::string str_signTime;
@@ -80,7 +80,8 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 
 		digidoc::Signature::Type profile;
 		digidoc::BDoc *locBdoc;		
-		bool validateOnline;		
+		bool validateOnline;	
+		
 		
 	//protected:		
 };
