@@ -1,4 +1,6 @@
 #include "EstEIDIncludes.h"
+#include "Sha1Digest.h"
+#include "Sha256Digest.h"
 #include "EstEIDReader.h"
 
 EstEIDReader::EstEIDReader()
@@ -6,6 +8,8 @@ EstEIDReader::EstEIDReader()
     m_module = NULL;
     m_p11 = NULL;
     m_p11_slots = NULL;
+    m_digest = NULL;
+    m_digest_algorithm = (ulong)0xFFFF;
 }
 
 int EstEIDReader::Connect(const char *module)
@@ -19,7 +23,9 @@ int EstEIDReader::Connect(const char *module)
     rv = m_p11->C_Initialize( NULL );
     if( rv != CKR_OK )
     {
+        m_p11->C_Finalize( NULL );
         C_UnloadModule( m_module );
+        m_module = NULL;
         return( rv );
     }
 
@@ -28,13 +34,22 @@ int EstEIDReader::Connect(const char *module)
 
 int EstEIDReader::Disconnect()
 {
+    if( m_digest != NULL )
+    {
+        delete m_digest;
+        m_digest = NULL;
+    }
+
     if( m_module != NULL )
+    {
+        m_p11->C_Finalize( NULL );
         C_UnloadModule( m_module );
+    }
 
     return( 0 );
 }
 
-ulong EstEIDReader::GetSlotCount(int token_present)
+CK_RV EstEIDReader::GetSlotCount(int token_present)
 {
     CK_RV rv;
     ulong slots = 0L;
@@ -46,7 +61,7 @@ ulong EstEIDReader::GetSlotCount(int token_present)
     return( slots );
 }
 
-ulong EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags)
+CK_RV EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags)
 {
     CK_ULONG	m, n, ulCount;
     CK_RV		rv;
@@ -70,10 +85,10 @@ ulong EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList,
 
         for (m = n = 0; n < ulCount; n++) 
         {
-            rv = m_p11->C_GetMechanismInfo(slot, mechs[n], &info);
-            if (rv != CKR_OK)
+            rv = m_p11->C_GetMechanismInfo( slot, mechs[n], &info );
+            if( rv != CKR_OK )
                 continue;
-            if ((info.flags & flags) == flags)
+            if( (info.flags & flags) == flags )
                 mechs[m++] = mechs[n];
         }
         ulCount = m;
@@ -82,7 +97,7 @@ ulong EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList,
     return( ulCount );
 }
 
-ulong EstEIDReader::IsMechanismSupported(ulong slot, ulong flag)
+CK_RV EstEIDReader::IsMechanismSupported(ulong slot, ulong flag)
 {
     CK_MECHANISM_TYPE *mechs = NULL;
     CK_ULONG n, num_mechs = 0;
@@ -108,7 +123,7 @@ ulong EstEIDReader::IsMechanismSupported(ulong slot, ulong flag)
     return( rv );
 }
 
-ulong EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
+CK_RV EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
 {
     CK_RV rv;
 
@@ -117,7 +132,7 @@ ulong EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
     return( rv );
 }
 
-int EstEIDReader::FindObject(CK_SESSION_HANDLE sess, 
+CK_RV EstEIDReader::FindObject(CK_SESSION_HANDLE sess, 
                              CK_OBJECT_CLASS cls, 
                              CK_OBJECT_HANDLE_PTR ret,
                              const unsigned char *id,
@@ -145,20 +160,20 @@ int EstEIDReader::FindObject(CK_SESSION_HANDLE sess,
 
     rv = m_p11->C_FindObjectsInit( sess, attrs, nattrs );
     if( rv != CKR_OK )
-        return( 0 );
+        return( rv );
 
     for( i = 0; i < obj_index; i++ ) 
     {
         rv = m_p11->C_FindObjects( sess, ret, 1, &count );
         if( rv != CKR_OK )
-            return( 0 );
+            return( rv );
         if( count == 0 )
             goto done;
     }
 
     rv = m_p11->C_FindObjects( sess, ret, 1, &count );
     if( rv != CKR_OK )
-        return( 0 );
+        return( rv );
 
 done:	
     if( count == 0 )
@@ -169,201 +184,197 @@ done:
     return( count );
 }
 
-CK_OBJECT_HANDLE EstEIDReader::LocateCertificate(CK_SESSION_HANDLE hSession, 
-                   CK_BYTE_PTR certData, CK_ULONG_PTR certLen, 
-                   char idData[20][20], CK_ULONG idLen[20],
-                   int* pSelKey)
+CK_RV EstEIDReader::GetPkcs11Attr(CK_SESSION_HANDLE session,
+		   CK_OBJECT_HANDLE obj, CK_ATTRIBUTE_TYPE type, void *value,
+		   ulong *size)
 {
-    CK_OBJECT_HANDLE Objects[10];
-    CK_ULONG ulObjectCount = sizeof(Objects)/sizeof(CK_OBJECT_HANDLE), i, j;
-    CK_BYTE buf1[20];
-    CK_OBJECT_HANDLE hCert = CK_INVALID_HANDLE;
-    CK_RV rv;
+	CK_ATTRIBUTE templ;
+	CK_RV rv;
 
-    // Set up a template to search for Certificate token objects
-    // in the given session and thus slot
-    CK_OBJECT_CLASS ObjClass = CKO_CERTIFICATE;	
-    CK_ATTRIBUTE Template1[] = {
-        { CKA_CLASS,     &ObjClass,  sizeof(ObjClass) },
-        { CKA_ID,	     (void*)0,  0 }
-    };
-    CK_ATTRIBUTE Template3[] = {
-        { CKA_CLASS,     &ObjClass,  sizeof(ObjClass) },
-    };
-    CK_ATTRIBUTE Template2[] = {
-        { CKA_VALUE,      (void*)0,	*certLen  },
-        { CKA_ID,	     (void*)0,  0 }
-    };
-    CK_ULONG ulCount = 0;
+	templ.type = type;
+	templ.pValue = value;
+	templ.ulValueLen = *size;
 
-    if( idLen )
-        ulCount = sizeof(Template1)/sizeof(CK_ATTRIBUTE);
-    else
-        ulCount = sizeof(Template3)/sizeof(CK_ATTRIBUTE);
-    *certLen = 0;
+	rv = m_p11->C_GetAttributeValue( session, obj, &templ, 1 );
+	if( rv != CKR_OK )
+        return( rv );
 
-    for( j = 0; j < 20 && !(*certLen); j++ ) 
-    {
-        if(idLen && idLen[j]) {
-            memset(buf1, 0, sizeof(buf1));
-            memcpy(buf1, idData[j], idLen[j]);
-            Template1[1].pValue = buf1;
-            Template1[1].ulValueLen = idLen[j];
-        }
-        rv = m_p11->C_FindObjectsInit( hSession, (idLen ? Template1 : Template3), 1 ); 
-        if( rv == CKR_OK )
-        {
-            rv =  m_p11->C_FindObjects( hSession, Objects,ulObjectCount, &ulObjectCount );
-            if( rv == CKR_OK )
-            {
-                // pick the first cert that is valid
-                // list and ignore any other
-                for(i = 0; i < ulObjectCount; i++) 
-                {
-                    hCert = Objects[i];
-                    memset(certData, 0, *certLen);
-                    ulCount = sizeof(Template2) / sizeof(CK_ATTRIBUTE);
-                    // get cert length
-                    *certLen = 0;
-                    Template2[1].pValue = buf1;
-                    Template2[1].ulValueLen = sizeof(buf1);
-                    rv =  m_p11->C_GetAttributeValue( hSession, hCert, Template2, ulCount );                    
-                    if( rv == CKR_OK && (!idLen ||
-                        (idLen && !memcmp(idData[j], buf1, idLen[1]))) ) 
-                    {
-                            *certLen = Template2[0].ulValueLen;
-                            // now get cert data
-                            Template2[0].pValue = certData;
-                            rv =  m_p11->C_GetAttributeValue( hSession, hCert, Template2, ulCount );                            
-                            if( *certLen > 0 && pSelKey )
-                            {
-                                *pSelKey = j;
-                                break; // found it
-                            }
-
-                    } // if rv == CKR_OK
-                } // for i < ulObjectCount
-            } // if rv
-        } // if rv
-        rv =  m_p11->C_FindObjectsFinal( hSession );
-    } // for j
-    if( hCert == CK_INVALID_HANDLE )
-        *certLen = 0;
-    
-    return( hCert );
+	*size = templ.ulValueLen;
+	
+    return( CKR_OK );
 }
 
-CK_RV EstEIDReader::LocatePrivateKey(CK_SESSION_HANDLE hSession, char idData[20][20], CK_ULONG idLen[20], CK_OBJECT_HANDLE_PTR hKeys)
+CK_MECHANISM_TYPE EstEIDReader::FindMechanism(CK_SLOT_ID slot, CK_FLAGS flags)
 {
-    CK_OBJECT_HANDLE Objects[10];
-    CK_RV rv;
-    CK_ULONG ulObjectCount = sizeof(Objects)/sizeof(CK_OBJECT_HANDLE), i;
-    CK_OBJECT_HANDLE hPrivateKey = CK_INVALID_HANDLE;
-    // Set up a template to search for all Private Key tokens 
-    // Given the session context, that is associated with
-    // one slot we will find only one object
-    CK_OBJECT_CLASS ObjClass = CKO_PRIVATE_KEY;
-    char buf1[20];
-    CK_ATTRIBUTE Template1[] = {
-        { CKA_CLASS,            &ObjClass,  sizeof(ObjClass)    }
-    };	
-    CK_ATTRIBUTE Template2[] = {
-        { CKA_ID,      (void*)0,	idLen[0] }
-    };
-    CK_ULONG ulCount = sizeof(Template1) / sizeof(CK_ATTRIBUTE);
+	CK_MECHANISM_TYPE *mechs = NULL, result;
+	CK_ULONG	count = 0;
 
-    rv = m_p11->C_FindObjectsInit( hSession,Template1,ulCount );
-    if(rv==CKR_OK) 
+	count = GetMechanisms( slot, &mechs, flags );
+	if( count != 0 )
     {
-        // Get list of object handles
-        rv = m_p11->C_FindObjects( hSession,Objects,ulObjectCount, &ulObjectCount );
-        if( rv == CKR_OK )
-        {
-            // get labels of all possible private keys
-            for(i = 0; i < ulObjectCount; i++) 
-            {
-                hKeys[i] = Objects[i];
-                ulCount = sizeof(Template2) / sizeof(CK_ATTRIBUTE);
-                // get key id length
-                rv = m_p11->C_GetAttributeValue( hSession, hKeys[i], Template2, ulCount );
-                if( rv == CKR_OK ) 
-                {
-                    idLen[i] = Template2[0].ulValueLen;
-                    // now get key id data
-                    Template2[0].pValue = buf1;
-                    memset(buf1, 0, sizeof(buf1));
-                    rv = m_p11->C_GetAttributeValue( hSession, hKeys[i], Template2, ulCount );                    
-                    memcpy( idData[i], buf1, idLen[i] );
-                }
-            } // for i < ulObjectsCount
-        }
-    }
-    
-    rv = m_p11->C_FindObjectsFinal( hSession );
-    return rv;  
+		result = mechs[0];
+		free( mechs );
+	}
+
+	return( result );
 }
 
-ulong EstEIDReader::Sign(ulong slot, const char *pin, uchar *data, ulong dlength, 
-                         uchar **hdata, ulong *hlength,
-                         uchar **sdata, ulong *slength)
+CK_RV EstEIDReader::Sign(ulong slot, const char *pin, 
+                         uchar *digest_buffer, ulong digest_length,
+                         uchar **signature_buffer, ulong *signature_length)
 {    
     CK_MECHANISM mech;
     CK_RV rv;
     CK_SESSION_HANDLE session = CK_INVALID_HANDLE;
-    CK_OBJECT_HANDLE key = CK_INVALID_HANDLE;
+    CK_OBJECT_HANDLE key = CK_INVALID_HANDLE, cert = CK_INVALID_HANDLE;    
     
     int flags = CKF_SERIAL_SESSION;
     flags |= CKF_RW_SESSION;
     
     rv = m_p11->C_OpenSession( slot, flags, NULL, NULL, &session );
     if( rv != CKR_OK )
-        return( ESTEID_ERR );
+        return( rv );
 
     rv = m_p11->C_Login( session, CKU_USER, (CK_UTF8CHAR *) pin, pin == NULL ? 0 : strlen(pin) );
     if( rv != CKR_OK )
-        return( ESTEID_ERR );
-
-    if( !FindObject(session, CKO_PRIVATE_KEY, &key, NULL, 0, 0) )
     {
-        m_p11->C_Logout( session );
-        return( ESTEID_ERR );
+        m_p11->C_CloseSession( session );        
+        return( rv );
     }
 
-    //rv = LocatePrivateKey( session, keyId, keyIdLen, hKeys );
-    
-    // get SHA1 digest    
-    if( *hlength >= SHA_DIGEST_LENGTH )
-        *hlength = SHA_DIGEST_LENGTH;
-
-    SHA1( data, dlength, *hdata );    
+    rv = FindObject( session, CKO_PRIVATE_KEY, &key, NULL, 0, 0 );
+    if( key == CK_INVALID_HANDLE )
+    {
+        m_p11->C_Logout( session );
+        m_p11->C_CloseSession( session );
+        return( rv );
+    }
 
     memset( &mech, 0, sizeof(mech) );
-    mech.mechanism = CKM_SHA1_RSA_PKCS;
+    mech.mechanism = m_digest_algorithm;
 
     rv = m_p11->C_SignInit( session, &mech, key );
     if( rv != CKR_OK )
     {
         m_p11->C_Logout( session );
-        return( ESTEID_ERR );
+        m_p11->C_CloseSession( session );
+        return( rv );
     }
 
-    rv = m_p11->C_SignUpdate( session, *hdata, *hlength );    
+    rv = m_p11->C_SignUpdate( session, digest_buffer, digest_length );
     if( rv != CKR_OK )
     {
         m_p11->C_Logout( session );
-        return( ESTEID_ERR );
+        m_p11->C_CloseSession( session );
+        return( rv );
     }
 
-    rv = m_p11->C_SignFinal( session, *sdata, slength );
+    rv = m_p11->C_SignFinal( session, *signature_buffer, signature_length );
     if( rv != CKR_OK )
     {
         m_p11->C_Logout( session );
-        return( ESTEID_ERR );
+        m_p11->C_CloseSession( session );
+        return( rv );
     }
 
     rv = m_p11->C_Logout( session );
     if( rv != CKR_OK )
+        return( rv );
+
+    rv = m_p11->C_CloseSession( session );
+    if( rv != CKR_OK )
+        return( rv );
+
+    return( ESTEID_OK ); // Ok
+}
+
+CK_RV EstEIDReader::InitDigest(size_t algorithm)
+{
+    switch( algorithm )
+    {
+    case SHA1_ALGORITHM:
+        m_digest_algorithm = CKM_SHA1_RSA_PKCS; 
+        if( !m_digest )
+            m_digest = new Sha1Digest();                
+        break;
+    case SHA256_ALGORITHM:
+        m_digest_algorithm = CKM_SHA256_RSA_PKCS;
+        if( !m_digest )
+            m_digest = new Sha256Digest();
+        break;
+    default: 
         return( ESTEID_ERR );
+    }
+    
+    if( !m_digest ) // out of memory ?
+        return( ESTEID_ERR );
+
+    return( m_digest->Init() );
+}
+ 
+CK_RV EstEIDReader::UpdateDigest(uchar *data_buffer, ulong data_length)
+{
+    if( !m_digest )
+        return( ESTEID_ERR );
+
+    return( m_digest->Update(data_buffer, data_length) ); 
+}
+
+CK_RV EstEIDReader::FinalizeDigest(uchar **digest_buffer, ulong *digest_length)
+{
+    if( !m_digest )
+        return( ESTEID_ERR );
+
+    return( m_digest->Final(digest_buffer, digest_length) ); 
+}
+
+CK_RV EstEIDReader::LocateCertificate(ulong slot, PKCS11Cert *cert)
+{
+    CK_RV rv;
+    CK_SESSION_HANDLE session = CK_INVALID_HANDLE;
+    CK_OBJECT_HANDLE obj = CK_INVALID_HANDLE; 
+    CK_CERTIFICATE_TYPE cert_type;
+	ulong size;
+    int flags = CKF_SERIAL_SESSION;    
+
+    rv = m_p11->C_OpenSession( slot, flags, NULL, NULL, &session );
+    if( rv != CKR_OK )
+        return( rv );
+
+    rv = FindObject( session, CKO_CERTIFICATE, &obj, NULL, 0, 0 );
+    if( obj == CK_INVALID_HANDLE )
+    {
+        m_p11->C_CloseSession( session );
+        return( rv );
+    }
+
+    size = sizeof(cert_type);
+	rv = GetPkcs11Attr( session, obj, CKA_CERTIFICATE_TYPE, &cert_type, &size );
+    if( cert_type != CKC_X_509 ) 
+    {
+        m_p11->C_CloseSession( session );
+        return( rv );
+    }
+
+    memset( cert->certLabel, 0, cert->certLabelLength );
+    rv = GetPkcs11Attr( session, obj, CKA_LABEL, cert->certLabel, &cert->certLabelLength );
+    if( rv != CKR_OK ) 
+    {
+        m_p11->C_CloseSession( session );
+        return( rv );
+    }
+
+    memset( cert->certBuffer, 0, cert->certBufferLength );
+    rv = GetPkcs11Attr( session, obj, CKA_VALUE, cert->certBuffer, &cert->certBufferLength );
+    if( rv != CKR_OK )
+    {
+        m_p11->C_CloseSession( session );
+        return( rv );
+    }
+
+    rv = m_p11->C_CloseSession( session );
+    if( rv != CKR_OK )
+        return( rv );
 
     return( ESTEID_OK ); // Ok
 }

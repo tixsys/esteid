@@ -6,7 +6,7 @@
 #include "EstEID.h"
 #include "EstEIDReader.h"
 
-ESTEID_DECLARE_FUNCTION(HANDLE, OpenReader(char *module))
+ESTEID_EXPORT_SPEC HANDLE OpenReader(char *module)
 {
     EstEIDReader *h = new EstEIDReader();
 
@@ -22,7 +22,7 @@ ESTEID_DECLARE_FUNCTION(HANDLE, OpenReader(char *module))
     return( h );
 }
 
-ESTEID_DECLARE_FUNCTION(void, CloseReader(HANDLE h))
+ESTEID_EXPORT_SPEC void CloseReader(HANDLE h)
 {
     if( h )
     {
@@ -32,7 +32,7 @@ ESTEID_DECLARE_FUNCTION(void, CloseReader(HANDLE h))
     }
 }
 
-ESTEID_DECLARE_FUNCTION(ulong, GetSlotCount(HANDLE h, int token_present))
+ESTEID_EXPORT_SPEC ulong GetSlotCount(HANDLE h, int token_present)
 {
     if( h )
     {
@@ -43,7 +43,7 @@ ESTEID_DECLARE_FUNCTION(ulong, GetSlotCount(HANDLE h, int token_present))
     return( 0 );
 }
 
-ESTEID_DECLARE_FUNCTION(ulong, IsMechanismSupported(HANDLE h, ulong slot, ulong flag))
+ESTEID_EXPORT_SPEC ulong IsMechanismSupported(HANDLE h, ulong slot, ulong flag)
 {
     if( h )
     {
@@ -54,7 +54,7 @@ ESTEID_DECLARE_FUNCTION(ulong, IsMechanismSupported(HANDLE h, ulong slot, ulong 
     return( ESTEID_ERR );
 }
 
-ESTEID_DECLARE_FUNCTION(ulong, GetTokenInfo(HANDLE h, ulong slot, CK_TOKEN_INFO_PTR info))
+ESTEID_EXPORT_SPEC ulong GetTokenInfo(HANDLE h, ulong slot, CK_TOKEN_INFO_PTR info)
 {
     if( h )
     {
@@ -65,15 +65,61 @@ ESTEID_DECLARE_FUNCTION(ulong, GetTokenInfo(HANDLE h, ulong slot, CK_TOKEN_INFO_
     return( ESTEID_ERR );
 }
 
-ESTEID_DECLARE_FUNCTION(ulong, Sign(HANDLE h, ulong slot, const char *pin, uchar *data, ulong dlength, 
-                        void **hdata, ulong *hlength,
-                        void **sdata, ulong *slength))
+ESTEID_EXPORT_SPEC ulong Sign(HANDLE h, ulong slot, const char *pin, 
+                        void *digest_buffer, ulong digest_length,
+                        void **signature_buffer, ulong *signature_length)
 {
     if( h )
     {
         EstEIDReader *obj = ((EstEIDReader*)h);
-        return( obj->Sign(slot, pin, data, dlength, (uchar**)hdata, hlength, (uchar**)sdata, slength) );
+        return( obj->Sign(slot, pin, (uchar*)digest_buffer, digest_length, 
+            (uchar**)signature_buffer, signature_length) );
     }
 
     return( ESTEID_ERR );
+}
+
+ESTEID_EXPORT_SPEC ulong InitDigest(HANDLE h, size_t algorithm)
+{
+    if( h )
+    {
+        EstEIDReader *obj = ((EstEIDReader*)h);
+        return( obj->InitDigest(algorithm) );
+    }
+
+    return( ESTEID_ERR );
+}
+
+ESTEID_EXPORT_SPEC ulong UpdateDigest(HANDLE h, uchar *data_buffer, ulong data_length)
+{
+    if( h )
+    {
+        EstEIDReader *obj = ((EstEIDReader*)h);
+        return( obj->UpdateDigest(data_buffer, data_length) );
+    }
+
+    return( ESTEID_ERR );
+}
+
+ESTEID_EXPORT_SPEC ulong FinalizeDigest(HANDLE h, uchar **digest_buffer, ulong *digest_length) 
+{
+    if( h )
+    {
+        EstEIDReader *obj = ((EstEIDReader*)h);
+        return( obj->FinalizeDigest(digest_buffer, digest_length) );
+
+    }
+
+    return( ESTEID_ERR );
+}
+
+ESTEID_EXPORT_SPEC ulong LocateCertificate(HANDLE h, ulong slot, PKCS11Cert *cert)
+{
+    if( h )
+    {
+        EstEIDReader *obj = ((EstEIDReader*)h);
+        return( obj->LocateCertificate(slot, cert) );
+    }
+
+     return( ESTEID_ERR );
 }

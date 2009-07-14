@@ -1,3 +1,6 @@
+#ifndef EST_EID_INCLUDES_H_INCLUDED
+#define EST_EID_INCLUDES_H_INCLUDED
+
 #pragma once
 
 #ifndef ulong
@@ -27,8 +30,26 @@
 #include "openssl/err.h"
 #endif
 
-extern "C"
-{
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
+//extern "C"
+//{
     void *C_LoadModule(const char *name, CK_FUNCTION_LIST_PTR_PTR);
     CK_RV C_UnloadModule(void *module);
+//}
+
+struct PKCS11Cert
+{
+    uchar *certBuffer;
+    ulong certBufferLength;
+    uchar *certLabel;
+    ulong certLabelLength;
+};
+
+#if defined(__cplusplus)
 }
+#endif
+
+#endif // #ifndef EST_EID_INCLUDES_H_INCLUDED

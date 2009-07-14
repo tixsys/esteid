@@ -6,3 +6,7 @@ GetSlotCount
 IsMechanismSupported
 GetTokenInfo
 Sign
+InitDigest
+UpdateDigest
+FinalizeDigest
+LocateCertificate
