@@ -60,6 +60,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.Reasontext = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.EnableTSA = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.urlTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.passwordBox = new System.Windows.Forms.TextBox();
@@ -89,14 +92,14 @@
             // 
             // outputBox
             // 
-            this.outputBox.Location = new System.Drawing.Point(60, 92);
+            this.outputBox.Location = new System.Drawing.Point(60, 77);
             this.outputBox.Name = "outputBox";
             this.outputBox.Size = new System.Drawing.Size(201, 20);
             this.outputBox.TabIndex = 3;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(272, 92);
+            this.button5.Location = new System.Drawing.Point(272, 77);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(74, 20);
             this.button5.TabIndex = 4;
@@ -116,7 +119,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 99);
+            this.label3.Location = new System.Drawing.Point(13, 84);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 15;
@@ -141,7 +144,7 @@
             this.groupBox1.Size = new System.Drawing.Size(385, 177);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "2- PDF MetaAndmed";
+            this.groupBox1.Text = "2- PDF metaandmed";
             // 
             // label9
             // 
@@ -276,7 +279,7 @@
             this.button1.Location = new System.Drawing.Point(255, 153);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(124, 23);
-            this.button1.TabIndex = 17;
+            this.button1.TabIndex = 18;
             this.button1.Text = "Allkirjasta";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -304,7 +307,7 @@
             this.SigVisible.Location = new System.Drawing.Point(182, 121);
             this.SigVisible.Name = "SigVisible";
             this.SigVisible.Size = new System.Drawing.Size(183, 17);
-            this.SigVisible.TabIndex = 16;
+            this.SigVisible.TabIndex = 17;
             this.SigVisible.Text = "Märgi, kui soovid nähtavat allkirja";
             this.SigVisible.UseVisualStyleBackColor = true;
             // 
@@ -322,7 +325,7 @@
             this.Locationtext.Location = new System.Drawing.Point(72, 82);
             this.Locationtext.Name = "Locationtext";
             this.Locationtext.Size = new System.Drawing.Size(293, 20);
-            this.Locationtext.TabIndex = 15;
+            this.Locationtext.TabIndex = 16;
             // 
             // label12
             // 
@@ -338,7 +341,7 @@
             this.Contacttext.Location = new System.Drawing.Point(72, 56);
             this.Contacttext.Name = "Contacttext";
             this.Contacttext.Size = new System.Drawing.Size(293, 20);
-            this.Contacttext.TabIndex = 14;
+            this.Contacttext.TabIndex = 15;
             // 
             // label11
             // 
@@ -354,10 +357,13 @@
             this.Reasontext.Location = new System.Drawing.Point(72, 30);
             this.Reasontext.Name = "Reasontext";
             this.Reasontext.Size = new System.Drawing.Size(293, 20);
-            this.Reasontext.TabIndex = 13;
+            this.Reasontext.TabIndex = 14;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.EnableTSA);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.nameTextBox);
             this.groupBox3.Controls.Add(this.urlTextBox);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.passwordBox);
@@ -369,19 +375,48 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "3- Ajatempel";
             // 
+            // EnableTSA
+            // 
+            this.EnableTSA.AutoSize = true;
+            this.EnableTSA.Checked = true;
+            this.EnableTSA.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.EnableTSA.Location = new System.Drawing.Point(163, 121);
+            this.EnableTSA.Name = "EnableTSA";
+            this.EnableTSA.Size = new System.Drawing.Size(183, 17);
+            this.EnableTSA.TabIndex = 34;
+            this.EnableTSA.Text = "Märgi, kui soovid lisada ajatemplit";
+            this.EnableTSA.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 63);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(27, 13);
+            this.label14.TabIndex = 26;
+            this.label14.Text = "Nimi";
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Location = new System.Drawing.Point(60, 56);
+            this.nameTextBox.MaxLength = 256;
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(201, 20);
+            this.nameTextBox.TabIndex = 12;
+            // 
             // urlTextBox
             // 
-            this.urlTextBox.Enabled = false;
-            this.urlTextBox.Location = new System.Drawing.Point(60, 37);
+            this.urlTextBox.Location = new System.Drawing.Point(60, 34);
             this.urlTextBox.MaxLength = 256;
             this.urlTextBox.Name = "urlTextBox";
             this.urlTextBox.Size = new System.Drawing.Size(201, 20);
             this.urlTextBox.TabIndex = 11;
+            this.urlTextBox.Text = "http://www.edelweb.fr/cgi-bin/service-tsp";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 80);
+            this.label10.Location = new System.Drawing.Point(12, 89);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(37, 13);
             this.label10.TabIndex = 23;
@@ -389,17 +424,17 @@
             // 
             // passwordBox
             // 
-            this.passwordBox.Enabled = false;
-            this.passwordBox.Location = new System.Drawing.Point(60, 80);
+            this.passwordBox.Location = new System.Drawing.Point(60, 86);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(201, 20);
-            this.passwordBox.TabIndex = 12;
+            this.passwordBox.TabIndex = 13;
+            this.passwordBox.UseSystemPasswordChar = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 46);
+            this.label1.Location = new System.Drawing.Point(12, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 24;
@@ -469,6 +504,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox passwordBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.CheckBox EnableTSA;
     }
 }
 

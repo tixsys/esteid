@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.IO;
 
 using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.xml.xmp;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.X509;
-using System.Collections;
 using Org.BouncyCastle.Pkcs;
-using iTextSharp.text.pdf;
-using System.IO;
-using iTextSharp.text.xml.xmp;
+using Org.BouncyCastle.Cms;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.Pkcs;
+using Org.BouncyCastle.Utilities;
 
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Pkcs;
 using System.Security.Cryptography;
-using iTextSharp.text;
+using System.Windows.Forms;
+using System.Resources;
+using System.Reflection;
 
 using EstEIDNative;
 
@@ -35,6 +42,7 @@ namespace EstEIDSigner
     class Timestamp
     {
         private string url;
+        private string username;
         private string password;
 
         public Timestamp()
@@ -44,10 +52,26 @@ namespace EstEIDSigner
         {
             this.url = url;
         }
-        public Timestamp(string url, string cpassword)
+        public Timestamp(string url, string cusername, string cpassword)
         {
             this.url = url;
+            this.username = cusername;
             this.password = cpassword;
+        }
+        public string Url
+        {
+            set { url = value; }
+            get { return url; }
+        }
+        public string User
+        {
+            set { username = value; }
+            get { return username; }
+        }
+        public string Password
+        {
+            set { password = value; }
+            get { return password; }
         }
     }
 
@@ -150,22 +174,34 @@ namespace EstEIDSigner
             xmp.Close();
             return os.ToArray();
         }
+    }
 
+    /// <summary>
+    /// base class for resource string    
+    /// </summary>
+    class ResourceBase
+    {
+        protected ResourceManager resManager = null;
+
+        public ResourceBase()
+        {
+            resManager = new ResourceManager("EstEIDSigner.Properties.Resources",
+                Assembly.GetExecutingAssembly());
+        }
     }
 
     /// <summary>
     /// this is the most important class
-    /// it uses iTextSharp library to sign a PDF document
+    /// it uses iTextSharp library to sign PDF document
     /// </summary>
-    class PDFSigner
+    class PDFSigner : ResourceBase
     {
-        private string inputPDF = "";
-        private string outputPDF = "";
-        private Timestamp stamp;
-        private MetaData metadata;
-        private Appearance appearance;
-        private static byte[] digest;
-        private static byte[] rsadata;
+        public const uint SIGNATURE_LENGTH = 128;
+        private string inputPDF = string.Empty;
+        private string outputPDF = string.Empty;
+        private Timestamp stamp = null;
+        private MetaData metadata = null;
+        private Appearance appearance = null;        
 
         public PDFSigner(string input, string output)
         {
@@ -201,146 +237,62 @@ namespace EstEIDSigner
 
         public void Verify()
         {
-        }
+        }        
 
-        public static X509Certificate2 GetCertificate()
+        private string ReadPin(string label, int maxpin)
         {
-            X509Store st = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-            st.Open(OpenFlags.ReadOnly);
-            X509Certificate2Collection col = st.Certificates;
-            X509Certificate2 card = null;
-            X509Certificate2Collection sel = X509Certificate2UI.SelectFromCollection(col, "Certificates", "Select one to sign", X509SelectionFlag.SingleSelection);
-            if (sel.Count > 0)
+            FormPin form = new FormPin(label, maxpin);
+            DialogResult dr = form.ShowDialog();
+            if (dr == DialogResult.OK)
             {
-                X509Certificate2Enumerator en = sel.GetEnumerator();
-                en.MoveNext();
-                card = en.Current;
+                return form.Pin;
             }
-            st.Close();
-            return card;
+            return "";
         }
 
-        static public byte[] SignMsg(Byte[] msg, X509Certificate2 signerCert, bool detached)
+        private byte[] EstEIDCardSign(EstEIDReader estEidReader, PKCS11Signer signer, Byte[] digest)
         {
-            //  Place message in a ContentInfo object.
-            //  This is required to build a SignedCms object.
-            ContentInfo contentInfo = new ContentInfo(msg);
+            uint rc, slot;
+            const uint rsa_length = SIGNATURE_LENGTH;
+            uint digest_length = rsa_length;
+            string pin = string.Empty;
+            TokenInfo info = null;
 
-            //  Instantiate SignedCms object with the ContentInfo above.
-            //  Has default SubjectIdentifierType IssuerAndSerialNumber.
-            SignedCms signedCms = new SignedCms(contentInfo, detached);
+            HGlobalSafeHandle raw = new HGlobalSafeHandle((int)rsa_length);
+            IntPtr rsaBytes = raw;
+            if (rsaBytes == IntPtr.Zero)
+                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));            
 
-            //  Formulate a CmsSigner object for the signer.
-            CmsSigner cmsSigner = new CmsSigner(signerCert);
+            info = signer.Info;
+            slot = signer.Slot;
 
-            // Include the following line if the top certificate in the
-            // smartcard is not in the trusted list.
-            cmsSigner.IncludeOption = X509IncludeOption.EndCertOnly;
-
-            //  Sign the CMS/PKCS #7 message. The second argument is
-            //  needed to ask for the pin.
-            signedCms.ComputeSignature(cmsSigner, false);
-
-            //  Encode the CMS/PKCS #7 message.
-            return signedCms.Encode();
-        }
-
-        public void SignHashed(string filename, string outfile)
-        {
-            X509Certificate2 card = GetCertificate();
-            if (card == null)
-                throw new ArgumentNullException("Missing certificate");
-            Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
-            Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] { cp.ReadCertificate(card.RawData) };
-
-            PdfReader reader = new PdfReader(filename);
-            PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0');
-            if (metadata != null)
-                stp.XmpMetadata = metadata.getStreamedMetaData();
-            PdfSignatureAppearance sap = stp.SignatureAppearance;
-            if (appearance.Visible)
-                sap.SetVisibleSignature(new Rectangle(100, 100, 300, 200), 1, null);
-            sap.SignDate = DateTime.Now;
-
-            sap.SetCrypto(null, chain, null, null);
-            sap.Reason = appearance.Reason;
-            sap.Location = appearance.Location;
-            sap.Contact = appearance.Contact;
-            sap.Acro6Layers = true;
-            sap.Render = PdfSignatureAppearance.SignatureRender.NameAndDescription;
-            PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKMS, PdfName.ADBE_PKCS7_SHA1);
-            dic.Date = new PdfDate(sap.SignDate);
-            dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
-            if (sap.Reason != null)
-                dic.Reason = sap.Reason;
-            if (sap.Location != null)
-                dic.Location = sap.Location;
-            if (sap.Contact != null)
-                dic.Contact = sap.Contact;
-            sap.CryptoDictionary = dic;
-            int csize = 1536;
-            Hashtable exc = new Hashtable();
-            exc[PdfName.CONTENTS] = csize * 2 + 2;
-            sap.PreClose(exc);
-
-            HashAlgorithm sha = new SHA1CryptoServiceProvider();
-
-            Stream s = sap.RangeStream;
-            int read = 0;
-            byte[] buff = new byte[8192];
-            while ((read = s.Read(buff, 0, 8192)) > 0)
+            if (info.LoginRequired && info.PinIsSet)
             {
-                sha.TransformBlock(buff, 0, read, buff, 0);
+                string label = info.Label;
+                pin = ReadPin(label, (int)info.MinPin);
+
+                if (pin == string.Empty)
+                    return (null);
             }
-            sha.TransformFinalBlock(buff, 0, 0);
-            byte[] pk = SignMsg(sha.Hash, card, false);
 
-            byte[] outc = new byte[csize];
+            rc = estEidReader.Sign(slot, pin, digest, (uint)digest.Length, ref rsaBytes, ref digest_length);
+            // failure ?
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new PKCS11Exception(rc);                
 
-            PdfDictionary dic2 = new PdfDictionary();
-
-            Array.Copy(pk, 0, outc, 0, pk.Length);
-
-            dic2.Put(PdfName.CONTENTS, new PdfString(outc).SetHexWriting(true));
-            sap.Close(dic2);
+            return raw.ToByteArray();
         }
 
-        public void SignDetached(string filename, string outfile)
+        private byte[] ComputeHash(EstEIDReader estEidReader, PdfSignatureAppearance sap)
         {
-            X509Certificate2 card = GetCertificate();
-            if (card == null)
-                throw new ArgumentNullException("Missing certificate");
-            Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
-            Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] { cp.ReadCertificate(card.RawData) };
+            Digest hash = new Digest(estEidReader);
+            const uint hash_length = Digest.SHA1_LENGTH;
+            uint digest_length = 0;
+            uint rc;
 
-            PdfReader reader = new PdfReader(filename);
-            PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0');
-            if (metadata != null)
-                stp.XmpMetadata = metadata.getStreamedMetaData();
-            PdfSignatureAppearance sap = stp.SignatureAppearance;
-            if (appearance.Visible)
-                sap.SetVisibleSignature(new Rectangle(100, 100, 300, 200), 1, null);
-            sap.SignDate = DateTime.Now;
-            sap.SetCrypto(null, chain, null, null);
-            sap.Reason = appearance.Reason;
-            sap.Location = appearance.Location;
-            sap.Contact = appearance.Contact;
-            sap.Acro6Layers = true;
-            sap.Render = PdfSignatureAppearance.SignatureRender.NameAndDescription;
-            PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);
-            dic.Date = new PdfDate(sap.SignDate);
-            dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
-            if (sap.Reason != null)
-                dic.Reason = sap.Reason;
-            if (sap.Location != null)
-                dic.Location = sap.Location;
-            if (sap.Contact != null)
-                dic.Contact = sap.Contact;
-            sap.CryptoDictionary = dic;
-            int csize = 1536;
-            Hashtable exc = new Hashtable();
-            exc[PdfName.CONTENTS] = csize * 2 + 2;
-            sap.PreClose(exc);
+            rc = hash.InitDigest(Digest.HashAlgorithm.SHA1);
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new Exception(resManager.GetString("CARD_HASH_INIT"));
 
             Stream s = sap.RangeStream;
             MemoryStream ss = new MemoryStream();
@@ -349,70 +301,184 @@ namespace EstEIDSigner
             while ((read = s.Read(buff, 0, 8192)) > 0)
             {
                 ss.Write(buff, 0, read);
+                rc = hash.UpdateDigest(buff, (uint)read);
+                if (rc != EstEIDReader.ESTEID_OK)
+                    throw new Exception(resManager.GetString("CARD_HASH_UPDATE"));
             }
-            byte[] pk = SignMsg(ss.ToArray(), card, true);
 
-            byte[] outc = new byte[csize];
+            HGlobalSafeHandle raw = new HGlobalSafeHandle((int)hash_length);
+            IntPtr hashBytes = raw;
+            if (hashBytes == IntPtr.Zero)
+                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
 
-            PdfDictionary dic2 = new PdfDictionary();
+            rc = hash.FinalizeDigest(ref hashBytes, ref digest_length);
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new Exception(resManager.GetString("CARD_HASH_FINALIZE"));            
 
-            Array.Copy(pk, 0, outc, 0, pk.Length);
-
-            dic2.Put(PdfName.CONTENTS, new PdfString(outc).SetHexWriting(true));
-            sap.Close(dic2);
+            return raw.ToByteArray();
         }
 
-        private string ReadPin()
+        private byte[] ComputeHash(EstEIDReader estEidReader, byte[] data)
         {
-            return "";
-        }               
+            uint rc, digest_length = 0;
+            const uint hash_length = Digest.SHA1_LENGTH;
 
-        public bool EstEIDCardSign(Byte[] msg)
+            Digest hash = new Digest(estEidReader);
+
+            rc = hash.InitDigest(Digest.HashAlgorithm.SHA1);
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new Exception(resManager.GetString("CARD_HASH_INIT"));
+
+            rc = hash.UpdateDigest(data, (uint)data.Length);
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new Exception(resManager.GetString("CARD_HASH_UPDATE"));
+
+            HGlobalSafeHandle raw = new HGlobalSafeHandle((int)hash_length);
+            IntPtr hashBytes = raw;
+            if (hashBytes == IntPtr.Zero)
+                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
+
+            rc = hash.FinalizeDigest(ref hashBytes, ref digest_length);
+            if (rc != EstEIDReader.ESTEID_OK)
+                throw new Exception(resManager.GetString("CARD_HASH_FINALIZE"));
+
+            return raw.ToByteArray();
+        }
+
+        private byte[] TimestampAuthorityResponse(EstEIDReader estEidReader, byte[] signedPkcs)
         {
-            EstEIDReader reader = new EstEIDReader();
-            bool b = reader.Open("opensc-pkcs11.dll");
+            ArrayList newSigners = new ArrayList();
 
-            if (b != false)
+            CmsSignedData sd = new CmsSignedData(signedPkcs);
+
+            foreach (SignerInformation si in sd.GetSignerInfos().GetSigners())
             {
-                uint slots = reader.GetSlotCount(1);
-                uint i;
+                // possible TSA URLs
+                //string TsaServerUrl = "http://www.edelweb.fr/cgi-bin/service-tsp"; 
+                //string TsaServerUrl = "http://dse200.ncipher.com/TSS/HttpTspServer";
 
-                for (i = 0; i < slots; i++)
-                {
-                    // use first slot
-                    b = reader.IsMechanismSupported(i, Mechanisms.CKF_SIGN);
-                    if (b)
-                    {       
-                        uint hashLength = 20;
-                        uint rsaLength = 128;
-                        IntPtr hashBytes = Marshal.AllocHGlobal((int)hashLength);
-                        IntPtr rsaBytes = Marshal.AllocHGlobal((int)rsaLength);
-                        reader.Sign(i, ReadPin(), msg, (uint)msg.Length,
-                            ref hashBytes, ref hashLength,
-                            ref rsaBytes, ref rsaLength);
-                        reader.Close();
+                byte[] signedDigest = si.GetSignature();
+                byte[] timeStampHash = ComputeHash(estEidReader, signedDigest);
 
-                        digest = new byte[hashLength];
-                        rsadata = new byte[rsaLength];
-                        Marshal.Copy(hashBytes, digest, 0, digest.Length);
-                        Marshal.Copy(rsaBytes, rsadata, 0, rsadata.Length);
-                        Marshal.FreeHGlobal(hashBytes);
-                        Marshal.FreeHGlobal(rsaBytes);                        
-                        return true;
-                    }
-                }
-                reader.Close();
-                return (digest != null) && (rsadata != null);
+                string TsaServerUrl = stamp.Url;
+                string TsaUser = stamp.User;
+                string TsaPassword = stamp.Password;
+                string error = string.Empty;
+
+                byte[] timeStampToken = X509Utils.GetTimestampToken(TsaServerUrl,
+                    TsaUser,
+                    TsaPassword,
+                    timeStampHash,
+                    ref error);
+
+                if (timeStampToken == null)
+                    throw new Exception(resManager.GetString("TSA_ERROR") + error);
+
+                Hashtable ht = new Hashtable();
+                Asn1Object derObj = new Asn1InputStream(timeStampToken).ReadObject();
+                DerSet derSet = new DerSet(derObj);
+
+                Org.BouncyCastle.Asn1.Cms.Attribute unsignAtt = new Org.BouncyCastle.Asn1.Cms.Attribute(
+                    new DerObjectIdentifier(X509Utils.ID_TIME_STAMP_TOKEN), derSet);
+
+                ht.Add(X509Utils.ID_TIME_STAMP_TOKEN, unsignAtt);
+
+                Org.BouncyCastle.Asn1.Cms.AttributeTable unsignedAtts = new Org.BouncyCastle.Asn1.Cms.AttributeTable(ht);
+
+                newSigners.Add(SignerInformation.ReplaceUnsignedAttributes(si, unsignedAtts));
             }
 
-            return (false);
-        }               
+            SignerInformationStore newSignerInformationStore = new SignerInformationStore(newSigners);
+
+            CmsSignedData newSd = CmsSignedData.ReplaceSigners(sd, newSignerInformationStore);
+
+            // Encode the CMS/PKCS #7 message
+            return newSd.GetEncoded();
+        }
+
+        private PKCS11Signer LocateSigner(EstEIDReader estEidReader)
+        {
+            uint slots;
+            uint i, rc;
+            bool b;
+            X509Certificate2Collection col = null;
+            Mechanism mech = null;
+            PKCS11Signer signer = null;
+            X509Certificate2 cert = null;            
+
+            slots = estEidReader.GetSlotCount(1);
+            if (slots == 0)
+                throw new Exception(resManager.GetString("CARD_MISSING"));
+
+            col = new X509Certificate2Collection();
+            mech = new Mechanism(Mechanism.CKF_SIGN);
+
+            for (i = 1; i < slots; i++)
+            {
+                b = estEidReader.IsMechanismSupported(i, mech);
+                // can't use this cert for signing
+                if (b == false)
+                    continue;
+
+                TokenInfo info = new TokenInfo(estEidReader);
+                rc = info.ReadInfo(i);
+                if (rc != EstEIDReader.ESTEID_OK)
+                    throw new PKCS11Exception(rc);
+
+                PKCS11Cert pkcs11Cert = new PKCS11Cert();
+                rc = estEidReader.LocateCertificate(1, pkcs11Cert);
+                if (rc != EstEIDReader.ESTEID_OK)
+                    throw new PKCS11Exception(rc);
+                
+                cert = new X509Certificate2(pkcs11Cert.CertificateToByteArray());                
+                col.Add(cert);
+                signer = new PKCS11Signer(i, cert, info);            
+
+                // use first slot
+                if (col.Count > 0)
+                    break;
+            }
+
+            // no valid certs found ?
+            if (col.Count == 0)
+                return null;
+
+            // ToDo: Mono doesn't support this
+            X509Certificate2Collection sel = X509Certificate2UI.SelectFromCollection(col,
+                "Sertifikaadid", "Vali sertifikaat digitaalallkirja lisamiseks",
+                X509SelectionFlag.SingleSelection);
+
+            if (sel.Count > 0)
+            {
+                X509Certificate2Enumerator en = sel.GetEnumerator();
+                en.MoveNext();
+                cert = en.Current;                
+                byte[] s1 = cert.PublicKey.EncodedKeyValue.RawData;
+                byte[] s2 = signer.Cert.PublicKey.EncodedKeyValue.RawData;                
+                if (Arrays.AreEqual(s1, s2))
+                    return signer;
+            }
+
+            return null;
+        }
 
         public void SignUsingEstEIDCard(string filename, string outfile)
         {
-            X509Certificate2 card = GetCertificate();
-            if (card == null)
-                throw new ArgumentNullException("Missing certificate");
+            // open EstEID
+            EstEIDReader estEidReader = new EstEIDReader();
+            bool b = estEidReader.Open("opensc-pkcs11.dll");
+            if (b == false)
+                throw new Exception(resManager.GetString("PKCS11_OPEN"));
+
+            PKCS11Signer signer = LocateSigner(estEidReader);
+            if (signer == null)
+                throw new Exception(resManager.GetString("CERT_MISSING"));
+
+            X509Certificate2 card = signer.Cert;
+            Oid oid = card.SignatureAlgorithm;
+
+            if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
+                throw new Exception(resManager.GetString("INVALID_CERT"));
 
             Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
             Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] { cp.ReadCertificate(card.RawData) };
@@ -432,7 +498,6 @@ namespace EstEIDSigner
             sap.Acro6Layers = true;
             sap.Render = PdfSignatureAppearance.SignatureRender.NameAndDescription;
             PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_SHA1);
-            //PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_DETACHED);           
             dic.Date = new PdfDate(sap.SignDate);
             dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
             if (sap.Reason != null)
@@ -441,29 +506,35 @@ namespace EstEIDSigner
                 dic.Location = sap.Location;
             if (sap.Contact != null)
                 dic.Contact = sap.Contact;
-            sap.CryptoDictionary = dic;            
-            //sap.SetExternalDigest(new byte[20], new byte[128], "RSA");
-            int csize = 1536;
+            sap.CryptoDictionary = dic;
+            sap.SetExternalDigest(new byte[SIGNATURE_LENGTH], new byte[Digest.SHA1_LENGTH], "RSA");
+
+            // expect 6K to be enough if TSA response, else 2K ?
+            int csize = (stamp != null) ? 1024 * 6 : 1024 * 2;
             Hashtable exc = new Hashtable();
             exc[PdfName.CONTENTS] = csize * 2 + 2;
             sap.PreClose(exc);
 
-            Stream s = sap.RangeStream;
-            MemoryStream ss = new MemoryStream();
-            int read = 0;
-            byte[] buff = new byte[8192];
-            while ((read = s.Read(buff, 0, 8192)) > 0)
-            {
-                ss.Write(buff, 0, read);
-            }
+            // compute hash based on PDF bytes
+            byte[] digest = ComputeHash(estEidReader, sap);
 
-            bool success = EstEIDCardSign(ss.ToArray());
-            if (success == false)
-                throw new ArgumentNullException("Failed to sign using SmartCard");
+            // sign hash
+            byte[] rsadata = EstEIDCardSign(estEidReader, signer, digest);
+            if (rsadata == null)
+                throw new Exception(resManager.GetString("CARD_INTERNAL_ERROR"));
 
+            // create PKCS#7 object
             PdfPKCS7 pk7 = new PdfPKCS7(null, chain, null, "SHA1", true);
-            pk7.SetExternalDigest(digest, rsadata, "RSA");
-            byte[] pk = pk7.GetEncodedPKCS7();            
+            pk7.SetExternalDigest(rsadata, digest, "RSA");
+            byte[] pk = pk7.GetEncodedPKCS7();
+
+            // user wants to add TSA response ?
+            if (stamp != null && pk != null)
+                pk = TimestampAuthorityResponse(estEidReader, pk);
+
+            // PKCS#7 bytes too large ?
+            if (pk.Length >= csize)
+                throw new Exception(resManager.GetString("MEMORY_ERROR"));
 
             byte[] outc = new byte[csize];
 
@@ -475,10 +546,24 @@ namespace EstEIDSigner
             sap.Close(dic2);
         }
 
+        PdfDictionary ParseSigantureBytes(string filename)
+        {
+            PdfReader reader = new PdfReader(filename);
+            ArrayList ar = reader.AcroFields.GetSignatureNames();
+            PdfDictionary dic = reader.AcroFields.GetSignatureDictionary(ar[0].ToString());
+            AcroFields af = reader.AcroFields;
+            foreach (string strSigName in af.GetSignatureNames())
+            {
+                PdfPKCS7 pk = af.VerifySignature(strSigName);
+            }
+
+            return dic;
+        }
+
         public void Sign()
-        {            
-            //SignHashed(this.inputPDF, this.outputPDF);
-            //SignDetached(this.inputPDF, this.outputPDF);            
+        {
+            //PdfDictionary dic1 = ParseSigantureBytes("E:\\test_notenabled_ms.pdf");
+            //PdfDictionary dic2 = ParseSigantureBytes("E:\\test_notenabled_mm.pdf");
             SignUsingEstEIDCard(this.inputPDF, this.outputPDF);
         }
     }

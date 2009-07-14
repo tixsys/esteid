@@ -15,8 +15,7 @@ namespace EstEIDSigner
         {
             InitializeComponent();
         }
-
-
+        
         private void debug(string txt)
         {
             DebugBox.AppendText(txt + System.Environment.NewLine);
@@ -26,8 +25,8 @@ namespace EstEIDSigner
         {
             System.Windows.Forms.OpenFileDialog openFile;
             openFile = new System.Windows.Forms.OpenFileDialog();
-            openFile.Filter = "PDF files *.pdf|*.pdf";
-            openFile.Title = "Select a file";
+            openFile.Filter = "PDF failid *.pdf|*.pdf";
+            openFile.Title = "Vali fail";
             if (openFile.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -52,8 +51,8 @@ namespace EstEIDSigner
         {
             System.Windows.Forms.SaveFileDialog saveFile;
             saveFile = new System.Windows.Forms.SaveFileDialog();
-            saveFile.Filter = "PDF files (*.pdf)|*.pdf";
-            saveFile.Title = "Save PDF File";
+            saveFile.Filter = "PDF failid (*.pdf)|*.pdf";
+            saveFile.Title = "Salvesta PDF File";
             if (saveFile.ShowDialog() != DialogResult.OK)
                 return;
             outputBox.Text = saveFile.FileName;
@@ -62,11 +61,9 @@ namespace EstEIDSigner
 
         private void button1_Click(object sender, EventArgs e)
         {
-            debug("Alustan ...");
-            
-            Timestamp stamp = new Timestamp(urlTextBox.Text, passwordBox.Text);
-
-            debug("uus MetaData ... ");
+            Timestamp stamp = null;
+            if (EnableTSA.Checked)
+                stamp = new Timestamp(urlTextBox.Text, nameTextBox.Text, passwordBox.Text);            
 
             //Adding Meta Datas
             MetaData metaData = new MetaData();
@@ -76,26 +73,34 @@ namespace EstEIDSigner
             metaData.Keywords = kwBox.Text;
             metaData.Creator = creatorBox.Text;
             metaData.Producer = prodBox.Text;
-
-            debug("uus Appearance ... ");
+            
             Appearance app = new Appearance();
             app.Contact = Contacttext.Text;
             app.Reason = Reasontext.Text;
             app.Location = Locationtext.Text;
             app.Visible = SigVisible.Checked;
+
+            PDFSigner pdfSigner = null;
             
             debug("Allkirjastan dokumenti ... ");
 
             try
             {
-                PDFSigner pdfs = new PDFSigner(inputBox.Text, outputBox.Text, stamp, metaData, app);
-                pdfs.Sign();
+                pdfSigner = new PDFSigner(inputBox.Text, outputBox.Text, stamp, metaData, app);
+                pdfSigner.Sign();
             }
             catch (Exception ex)
             {                
-                debug("Exception : " + ex.ToString());
+                debug("Exception: " + ex.ToString());
+                MessageBox.Show(ex.Message);
+                GC.Collect(); 
+                GC.WaitForPendingFinalizers();
                 return;
             }
+
+            // for some reason Destructors doesn't get called!
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
             debug("Valmis :)");
         }
