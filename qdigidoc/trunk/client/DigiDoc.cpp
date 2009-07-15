@@ -39,6 +39,8 @@
 #include <QFileInfo>
 #include <QSettings>
 
+#include <stdexcept>
+
 #ifndef BDOCLIB_CONF_PATH
 #define BDOCLIB_CONF_PATH "digidocpp.conf"
 #endif
@@ -259,19 +261,19 @@ QList<Document> DigiDoc::documents()
 	return list;
 }
 
-QByteArray DigiDoc::getAccessCert( const QString &pin ) const
+QByteArray DigiDoc::getAccessCert( const QString &pin )
 {
 	std::vector<unsigned char> buffer;
 
 	poller->stop();
-	SSLConnect *sslConnect;
 	try {
-		sslConnect = new SSLConnect();
-		sslConnect->setCard( m_card.toStdString() );
-		buffer = sslConnect->getUrl( pin.toStdString(), SSLConnect::AccessCert, "" );
-	} catch( ... ) {}
+		SSLConnect sslConnect;
+		sslConnect.setCard( m_card.toStdString() );
+		buffer = sslConnect.getUrl( pin.toStdString(), SSLConnect::AccessCert, "" );
+	} catch( const std::runtime_error &e ) {
+		setLastError( e.what() );
+	}
 
-	delete sslConnect;
 	poller->start();
 
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
