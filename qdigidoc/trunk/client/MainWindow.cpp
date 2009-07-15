@@ -835,6 +835,9 @@ bool MainWindow::checkAccessCert()
 		.arg( doc->signCert().subjectInfo( "serialNumber" ) );
 
 	QFile file( dest );
+	QFileInfo fi( file );
+	if ( !QDir( fi.absoluteDir() ).exists() )
+		QDir().mkpath( fi.absolutePath() );
 	if ( !file.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),
