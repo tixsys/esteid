@@ -5,7 +5,7 @@
         see http://www.ietf.org/rfc/rfc4051.txt-->
     <param name="digest.uri">http://www.w3.org/2000/09/xmldsig#sha1</param>
     <!--pkcs11 driver location-->
-    <param name="pkcs11.driver.path">/usr/lib/opensc-pkcs11.so</param>
+    <param name="pkcs11.driver.path">@PKCS11_MODULE@</param>
     <!--Trusted CA certs in PEM format-->
     <param name="cert.store.path">certs</param>
     <param name="manifest.xsd.path">schema/OpenDocument_manifest.xsd</param>
