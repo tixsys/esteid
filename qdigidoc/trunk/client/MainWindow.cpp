@@ -837,7 +837,8 @@ bool MainWindow::checkAccessCert()
 	QFile file( dest );
 	if ( !file.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
-		QMessageBox::warning( this, tr( "Server access certificate" ), tr("Failed to save server access certificate file to %1!").arg( dest ) );
+		QMessageBox::warning( this, tr( "Server access certificate" ),
+										tr("Failed to save server access certificate file to %1!\n%2").arg( dest ).arg( file.errorString() ) );
 		return false;
 	}
 	file.write( QByteArray::fromBase64( e.elementsByTagName( "TokenData" ).item(0).toElement().text().toLatin1() ) );
