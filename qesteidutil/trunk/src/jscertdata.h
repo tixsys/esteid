@@ -56,8 +56,8 @@ public slots:
     QString getSubjSN();
     QString getSubjO();
     QString getSubjOU();
-    QString getValidFrom();
-    QString getValidTo();
+    QString getValidFrom( const QString &locale = "en" );
+    QString getValidTo( const QString &locale = "en" );
     QString getIssuerCN();
     QString getIssuerO();
     QString getIssuerOU();

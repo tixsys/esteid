@@ -141,20 +141,20 @@ QString JsCertData::getSubjOU()
     return m_qcert->subjectInfo(QSslCertificate::OrganizationalUnitName);
 }
 
-QString JsCertData::getValidFrom()
+QString JsCertData::getValidFrom( const QString &locale )
 {
     if (!m_qcert)
         return "";
 
-	return SslCertificate::toLocalTime( m_qcert->effectiveDate() ).toString("dd. MMMM yyyy");
+	return QLocale( locale ).toString( SslCertificate::toLocalTime( m_qcert->effectiveDate() ), "dd. MMMM yyyy" );
 }
 
-QString JsCertData::getValidTo()
+QString JsCertData::getValidTo( const QString &locale )
 {
     if (!m_qcert)
         return "";
 
-	return SslCertificate::toLocalTime( m_qcert->expiryDate() ).toString("dd. MMMM yyyy");
+	return QLocale( locale ).toString( SslCertificate::toLocalTime( m_qcert->expiryDate() ), "dd. MMMM yyyy" );
 }
 
 QString JsCertData::getIssuerCN()

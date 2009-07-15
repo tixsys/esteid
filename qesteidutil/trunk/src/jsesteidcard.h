@@ -58,10 +58,10 @@ public slots:
     QString getMiddleName();
     QString getSex();
     QString getCitizen();
-    QString getBirthDate();
+    QString getBirthDate( const QString &locale = "en" );
     QString getId();
     QString getDocumentId();
-    QString getExpiry();
+    QString getExpiry( const QString &locale = "en" );
     QString getBirthPlace();
     QString getIssueDate();
     QString getResidencePermit();

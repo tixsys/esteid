@@ -289,9 +289,9 @@ QString JsEsteidCard::getCitizen()
     return citizen;
 }
 
-QString JsEsteidCard::getBirthDate()
+QString JsEsteidCard::getBirthDate( const QString &locale )
 {
-    return QDate::fromString( birthDate, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );;
+    return QLocale( locale ).toString( QDate::fromString( birthDate, "dd.MM.yyyy" ), "dd. MMMM yyyy" );
 }
 
 QString JsEsteidCard::getId()
@@ -304,9 +304,9 @@ QString JsEsteidCard::getDocumentId()
     return documentId;
 }
 
-QString JsEsteidCard::getExpiry()
+QString JsEsteidCard::getExpiry( const QString &locale )
 {
-	return QDate::fromString( expiry, "dd.MM.yyyy" ).toString( "dd. MMMM yyyy" );
+	return QLocale( locale ).toString( QDate::fromString( expiry, "dd.MM.yyyy" ), "dd. MMMM yyyy" );
 }
 
 QString JsEsteidCard::getBirthPlace()

@@ -190,7 +190,7 @@ function readCardData()
 			document.getElementById('middleName').innerHTML = esteidData.getMiddleName();
 			document.getElementById('surName').innerHTML = esteidData.getSurName();
 			document.getElementById('id').innerHTML = esteidData.getId();
-			document.getElementById('birthDate').innerHTML = esteidData.getBirthDate();
+			document.getElementById('birthDate').innerHTML = esteidData.getBirthDate( language );
 			document.getElementById('birthPlace').innerHTML = (esteidData.getBirthPlace() != "" ? ", " + esteidData.getBirthPlace() : "" );
 			document.getElementById('citizen').innerHTML = esteidData.getCitizen();
 		}
@@ -198,7 +198,7 @@ function readCardData()
 		var pin1Retry = esteidData.getPin1RetryCount();
 		var pin2Retry = esteidData.getPin2RetryCount();
 		
-		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo();
+		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo( language );
 		var days = esteidData.authCert.validDays();
 		if ( pin1Retry > 0 && days > 0 && days <= 105 )
 		{
@@ -209,7 +209,7 @@ function readCardData()
 
 		document.getElementById('authKeyUsage').innerHTML = esteidData.getAuthUsageCount();
 
-		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo();
+		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo( language );
 		days = esteidData.signCert.validDays();
 		if ( pin2Retry > 0 && days > 0 && days <= 105 )
 		{
