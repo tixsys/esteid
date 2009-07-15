@@ -4,6 +4,7 @@
 #include <openssl/x509.h>
 
 #include "X509Cert.h"
+#include "../../io/IOException.h"
 
 namespace digidoc
 {
@@ -16,7 +17,7 @@ namespace digidoc
       public:
           static void init(X509CertStore* impl);
           static void destroy();
-          static X509CertStore* getInstance();
+          static X509CertStore* getInstance() throw(IOException);
 
           virtual X509_STORE* getCertStore() const throw(IOException) = 0;
           virtual X509* getCert(long certSerial) const throw(IOException) = 0;

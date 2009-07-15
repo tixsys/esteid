@@ -38,7 +38,7 @@ const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
  */
 void digidoc::XmlConf::initialize()
 {
-    if(Conf::getInstance() == NULL)
+    if(!Conf::isInitialized())
     {
         try
         {
@@ -90,7 +90,14 @@ digidoc::XmlConf::XmlConf() throw(IOException)
  */
 digidoc::XmlConf::XmlConf(const std::string& path) throw(IOException)
 {
-    init(path);
+    if(util::File::fileExists(path))
+    {
+        init(path);
+    }
+    else
+    {
+        THROW_IOEXCEPTION("Error loading xml configuration from file '%s'", path.c_str());
+    }
 }
 
 digidoc::XmlConf::~XmlConf()

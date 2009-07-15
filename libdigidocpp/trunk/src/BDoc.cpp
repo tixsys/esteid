@@ -627,6 +627,11 @@ void digidoc::BDoc::parseManifestAndLoadFiles(std::string path) throw(IOExceptio
  */
 void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocException)
 {
+    if (signer == NULL)
+    {
+        THROW_BDOCEXCEPTION("Null pointer in digidoc::BDoc::sign");
+    }
+
     DEBUG("sign(signer = 0x%X, profile=%d)", (unsigned int)signer, profile);
 
     // Create signature by type.

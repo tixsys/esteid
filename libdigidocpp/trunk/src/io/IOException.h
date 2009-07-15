@@ -4,6 +4,8 @@
 #include <string>
 
 #include "../Exception.h"
+#include "../util/String.h"
+#include "../log.h"
 
 namespace digidoc
 {

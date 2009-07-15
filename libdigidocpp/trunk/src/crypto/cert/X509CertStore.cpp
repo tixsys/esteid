@@ -1,4 +1,5 @@
 #include "X509CertStore.h"
+#include "../../io/IOException.h"
 
 /**
  * X.509 certificate store implementation.
@@ -30,7 +31,12 @@ void digidoc::X509CertStore::destroy()
 /**
  * @return returns the X.509 certificate store implementation.
  */
-digidoc::X509CertStore* digidoc::X509CertStore::getInstance()
+digidoc::X509CertStore* digidoc::X509CertStore::getInstance() throw(IOException)
 {
-    return INSTANCE;
+    if (INSTANCE == NULL)
+    {
+        THROW_IOEXCEPTION("X509CertStore is not initialized");
+    }
+    else
+        return INSTANCE;
 }

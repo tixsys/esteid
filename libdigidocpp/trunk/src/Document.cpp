@@ -54,34 +54,39 @@ unsigned long digidoc::Document::getSize() const throw(IOException)
  */
 std::vector<unsigned char> digidoc::Document::calcDigest(Digest* calc) throw(IOException)
 {
-	// If digest is already calculated return it.
-	if(!digest.empty())
-	{
-	    DEBUG("Digest already calculated");
-		return digest;
-	}
+    if(calc == NULL)
+    {
+        THROW_IOEXCEPTION("Null pointer in Documnent::calcDigest");
+    }
 
-	// Calculate digest.
+    // If digest is already calculated return it.
+    if(!digest.empty())
+    {
+        DEBUG("Digest already calculated");
+        return digest;
+    }
+
+    // Calculate digest.
     std::ifstream ifs; 
     std::string fileName = digidoc::util::File::encodeName(path);
     ifs.open(fileName.c_str(), std::ios::in | std::ios::binary);
-	
-	if(!ifs.is_open() || ifs.fail())
+        
+    if(!ifs.is_open() || ifs.fail())
     {
-    	THROW_IOEXCEPTION("Failed to open document file '%s'.", path.c_str());
+        THROW_IOEXCEPTION("Failed to open document file '%s'.", path.c_str());
     }
 
-	unsigned int const BUF_SIZE = 10240;
+        unsigned int const BUF_SIZE = 10240;
     while( ifs )
     {
-	    char buf[BUF_SIZE];
-		ifs.read( buf, BUF_SIZE );
-		int bytesRead = ifs.gcount();
-		if ( bytesRead > 0 )
-		{
-			DEBUG("Added %d bytes from %s", bytesRead, path.c_str());
-			calc->update(reinterpret_cast<unsigned char*>(buf), bytesRead);
-		}
+        char buf[BUF_SIZE];
+        ifs.read( buf, BUF_SIZE );
+        int bytesRead = ifs.gcount();
+        if ( bytesRead > 0 )
+        {
+            DEBUG("Added %d bytes from %s", bytesRead, path.c_str());
+            calc->update(reinterpret_cast<unsigned char*>(buf), bytesRead);
+        }
     }
 
     digest = calc->getDigest();

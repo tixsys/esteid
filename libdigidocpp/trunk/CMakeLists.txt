@@ -30,7 +30,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidocpp.pc DESTINATION ${LIB_INST
 find_package(Iconv REQUIRED)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)
-#find_package(PKCS11H REQUIRED)
+find_package(PKCS11H REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(XercesC REQUIRED)

@@ -20,14 +20,17 @@ Libary dependencies
 
 * zlib 1.2.3 
 * libp11 0.2.4
+* libpkcs11-helper 1.05
 * xerces-c 2.8.0
 * xml-security-c 1.3.1
 * openssl 0.9.8g
 * libopensc2 (runtime PKCS#15 driver)
 * libiconv 1.13
 
-On Ubuntu you can install the libs by running:
-sudo apt-get install libopensc2 libp11-dev libssl-dev libxerces28-dev libxml-security-c-dev
+* libdigidoc (Old C libary for DDOC support)
+
+On Debian you can install the libs by running:
+sudo apt-get install libopensc2 libp11-dev libssl-dev libxerces28-dev libxml-security-c-dev libpkcs11-helper1-dev xsdcxx
 
 GNU libiconv can be downloaded from http://www.gnu.org/software/libiconv/ .
 
@@ -41,16 +44,14 @@ Tools
 
 BUILDING
 
+Build libdigidoc
+
 If all required libs are installed you should be able to build the lib by
 running
 
-cmake . -G "Unix Makefiles"
+cmake . -G "Unix Makefiles"  -DCMAKE_LIBRARY_PATH=$PATH_TO/libdigidoc -DCMAKE_INCLUDE_PATH=$PATH_TO/libdigidoc
 make
 python test/test.py
-
-or 
-
-make -f Makefile.linux tool
 
 CONFIGURATION
 

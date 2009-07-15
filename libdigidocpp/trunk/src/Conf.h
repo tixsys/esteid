@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Exports.h"
+#include "io/IOException.h"
 
 namespace digidoc
 {
@@ -17,7 +18,8 @@ namespace digidoc
       public:
           struct OCSPConf { std::string issuer, url, cert; };
           static void init(Conf* conf);
-          static Conf* getInstance();
+          static bool isInitialized();
+          static Conf* getInstance() throw(IOException);
           virtual std::string getDigestUri() const = 0;
           virtual std::string getManifestXsdPath() const = 0;
           virtual std::string getXadesXsdPath() const = 0;

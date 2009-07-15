@@ -158,6 +158,10 @@ bool DDocPrivate::loadSymbols()
 DSignature::DSignature( int id, DDocPrivate *doc )
 :	m_id( id ), m_doc( doc )
 {
+	if (doc == NULL)
+	{
+		throw SignatureException( __FILE__, __LINE__, "Null pointer in DSignature constructor" );
+	}
 	SignatureInfo *sig = doc->doc->pSignatures[id];
 	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
 	try { setSigningCertificate( cert ); }
