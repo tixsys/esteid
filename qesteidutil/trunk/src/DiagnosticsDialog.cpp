@@ -143,7 +143,6 @@ QString DiagnosticsDialog::getReaderInfo() const
 
 	QHash<QString,QString> readers;
 	SmartCardManager *m = 0;
-	EstEidCard *card = 0;
 	QString reader;
 	try {
 		m = new SmartCardManager();
@@ -153,10 +152,9 @@ QString DiagnosticsDialog::getReaderInfo() const
 			reader = QString::fromStdString( m->getReaderName( i ) );
 			if ( !QString::fromStdString( m->getReaderState( i ) ).contains( "EMPTY" ) )
 			{
-				if ( !card )
-					card = new EstEidCard( *m );
-				card->connect( i, true );
-				readers[reader] = tr( "ID - %1" ).arg( QString::fromStdString( card->readCardID() ) );
+				EstEidCard card( *m );
+				card.connect( i );
+				readers[reader] = tr( "ID - %1" ).arg( QString::fromStdString( card.readCardID() ) );
 			}
 			else
 				readers[reader] = "";
@@ -164,8 +162,6 @@ QString DiagnosticsDialog::getReaderInfo() const
 	} catch( const std::runtime_error &e ) {
 		readers[reader] = tr("Error reading card data:") + e.what();
 	}
-	if ( card )
-		delete card;
 	delete m;
 
 	for( QHash<QString,QString>::const_iterator i = readers.constBegin();
