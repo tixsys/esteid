@@ -137,7 +137,7 @@ digidoc::dsig::SignatureType* digidoc::Signature::parseSignature(const std::stri
     {
         THROW_IOEXCEPTION("Failed to parse signature XML: %s", e.what());
     }
-	return NULL;
+    return NULL;
 }
 
 /**
@@ -258,9 +258,12 @@ void digidoc::Signature::setSignerRole(const Signer::SignerRole& roles)
     }
 
     xades::SignerRoleType signerRole;
-    signerRole.claimedRoles(claimedRoles);
-    signature->object()[0].qualifyingProperties()[0].signedProperties()
+    if(!claimedRoles.claimedRole().empty())
+    {
+        signerRole.claimedRoles(claimedRoles);
+        signature->object()[0].qualifyingProperties()[0].signedProperties()
             ->signedSignatureProperties().signerRole(signerRole);
+    }
 }
 
 /**
