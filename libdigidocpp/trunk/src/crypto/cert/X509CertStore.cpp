@@ -1,5 +1,6 @@
 #include "X509CertStore.h"
 #include "../../io/IOException.h"
+#include "../../log.h"
 
 /**
  * X.509 certificate store implementation.
