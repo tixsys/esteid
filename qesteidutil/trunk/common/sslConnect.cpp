@@ -311,7 +311,7 @@ std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
 
 void SSLObj::releaseSlots()
 {
-	if( pslots )
+	if( pslots != NULL )
 		PKCS11_release_all_slots(ctx, pslots, nslots);
 	pslots = NULL;
 	nslots = 0;

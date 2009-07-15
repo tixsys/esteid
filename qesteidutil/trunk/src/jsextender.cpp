@@ -133,18 +133,14 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 
 	std::vector<unsigned char> buffer;
 
-	SSLConnect *sslConnect;
 	try {
-		sslConnect = new SSLConnect( this );
-		sslConnect->setReader( m_mainWindow->cardManager()->activeReaderNum() );
-		buffer = sslConnect->getUrl( pin.toStdString(), type, def.toStdString() );
+		SSLConnect sslConnect;
+		sslConnect.setReader( m_mainWindow->cardManager()->activeReaderNum() );
+		buffer = sslConnect.getUrl( pin.toStdString(), type, def.toStdString() );
 	} catch( const std::runtime_error &e ) {
-		sslConnect->deleteLater();
 		throw std::runtime_error( e );
 	}
 	
-	sslConnect->deleteLater();
-
 	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
 }
 
