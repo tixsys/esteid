@@ -108,7 +108,6 @@ set(digidocpp_SRCS
     crypto/ocsp/OCSPException.cpp
     crypto/crypt/RSACrypt.cpp
     crypto/signer/PKCS11Signer.cpp
-    crypto/signer/PKCS11Signer2.cpp
     crypto/signer/EstEIDSigner.cpp
     crypto/signer/RSASigner.cpp
     crypto/signer/Signer.cpp
@@ -223,7 +222,6 @@ install( FILES
 install( FILES
     crypto/signer/EstEIDSigner.h
     crypto/signer/PKCS11Signer.h
-    crypto/signer/PKCS11Signer2.h
     crypto/signer/RSASigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h

@@ -447,6 +447,13 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	}
 	err = d->f_calculateSignatureWithEstID( d->doc, info,
 		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
+
+	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
+	{
+		try { pkcs11->loadDriver(); }
+		catch( const Exception & ) {}
+	}
+
 	throwError( err, "Failed to sign document", __LINE__ );
 
 	if( err != ERR_OK )
