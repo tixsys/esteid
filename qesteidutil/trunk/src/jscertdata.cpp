@@ -22,6 +22,7 @@
 
 #include <QDebug>
 #include <QDateTime>
+#include <QLocale>
 #include <QStringList>
 
 #include "jscertdata.h"
