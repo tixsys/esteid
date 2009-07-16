@@ -46,12 +46,12 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
 
 	st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
-		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b><br />";
+		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b>";
 
 	if( extended )
 	{
-		st << s.location() << "<br />";
-		st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
+		st << "<br />" << s.location() << "<br />";
+		st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" );
 	}
 	else
 	{
@@ -67,16 +67,18 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		setToolTip( tooltip );
 	}
 
-	st << tr("Signature is") << " ";
+	st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
+	st << "<td>" << tr("Signature is") << " ";
 	if( s.isValid() )
 		st << "<font color=\"green\">" << tr("valid") << "</font>";
 	else
 		st << "<font color=\"red\">" << tr("not valid") << "</font>";
-
-	st << "<p align=\"right\" style=\"margin: 0px\">";
-	st << "<a href=\"details\">" << tr("Show details") << "</a><br />";
+	st << "</td><td align=\"right\">";
+	st << "<a href=\"details\">" << tr("Show details") << "</a>";
+	st << "</td></tr><tr><td></td>";
+	st << "<td align=\"right\">";
 	st << "<a href=\"remove\">" << tr("Remove") << "</a>";
-	st << "</p>";
+	st << "</td></tr></table>";
 
 	setText( content );
 
