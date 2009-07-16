@@ -24,6 +24,7 @@
 #include <QDesktopServices>
 #include <QDomDocument>
 #include <QFileDialog>
+#include <QLocale>
 #include <QtWebKit>
 
 #include "mainwindow.h"

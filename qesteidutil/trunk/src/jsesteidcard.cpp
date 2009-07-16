@@ -23,6 +23,7 @@
 #include <iostream>
 #include <QDebug>
 #include <QDate>
+#include <QLocale>
 
 #include "jsesteidcard.h"
 #include "common/CertificateWidget.h"
