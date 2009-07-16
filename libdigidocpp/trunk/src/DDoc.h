@@ -28,6 +28,7 @@ public:
 private:
 	void throwError( const std::string &msg, int line ) const throw(BDocException);
 	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
+	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
 
 	DDocPrivate *d;
 };
