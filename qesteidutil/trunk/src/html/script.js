@@ -59,6 +59,7 @@ function cardInserted(i)
 	checkReaderCount();
 	setActive('cert',document.getElementById('buttonCert'));
 
+	var inReader = false;
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
 		{
@@ -75,10 +76,13 @@ function cardInserted(i)
 					extender.closeLoading();
 				}
 			}
-		}
+		} else
+			inReader = true;
 	} catch ( err ) {}
 
-	readCardData();
+	document.getElementById( 'forUpdate' ).innerHTML += ".";
+	if ( !inReader )
+		readCardData();
 }
 
 function cardRemoved(i)
@@ -86,7 +90,8 @@ function cardRemoved(i)
 	//alert("Kaart eemaldati lugejast " + cardManager.getReaderName(i) + " " + activeCardId );
 	checkReaderCount();
 	setActive('cert',document.getElementById('buttonCert'));
-
+	
+	var inReader = false;
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
 		{
@@ -96,11 +101,14 @@ function cardRemoved(i)
 			cardManager.findCard();
 			if ( esteidData.canReadCard() )
 				activeCardId = esteidData.getDocumentId();
-		}
+		} else
+			inReader = true;
 	} catch( err ) {}
 
 	extender.closeLoading();
-	readCardData();
+	document.getElementById( 'forUpdate' ).innerHTML += ".";
+	if ( !inReader )
+		readCardData();
 }
 
 function selectReader()
@@ -117,6 +125,7 @@ function selectReader()
 		activeCardId = esteidData.getDocumentId();
 
 	extender.closeLoading();
+	document.getElementById( 'forUpdate' ).innerHTML += " ";
 	readCardData();
 }
 

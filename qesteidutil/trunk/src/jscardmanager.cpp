@@ -58,7 +58,7 @@ void JsCardManager::pollCard()
 {
 
 	if ( !pollTimer.isActive() )
-		pollTimer.start( 1000 );
+		pollTimer.start( 500 );
 
 	int numReaders = 0;
     try {
