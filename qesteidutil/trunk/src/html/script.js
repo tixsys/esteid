@@ -95,6 +95,8 @@ function cardRemoved(i)
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
 		{
+			if ( cardManager.anyCardsInReader() )
+				extender.showLoading( _('loadCardData') );
 			emailsLoaded = false;
 			activeCardId = "";
 			disableFields();
@@ -532,7 +534,7 @@ function disableFields( translate )
 
 
 	try {
-		if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		if ( !cardManager.anyCardsInReader() )
 		{
 			document.getElementById('cardInfoNoCard').style.display='block';
 			document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );

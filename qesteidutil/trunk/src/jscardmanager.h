@@ -70,6 +70,7 @@ public slots:
 	QString cardId( int readerNum );
 	void showDiagnostics();
 	void findCard();
+	bool anyCardsInReader();
 
 private slots:
     void pollCard();

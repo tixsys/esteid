@@ -79,7 +79,7 @@ void JsCardManager::pollCard()
 			if ( reader.state.contains( "PRESENT" ) )
 				reader.state = "PRESENT";
 			reader.connected = false;
-			if ( cardReaders.value(reader.name).state != reader.state )
+			if ( !cardReaders.contains(reader.name) || ( cardReaders.contains(reader.name) && cardReaders.value(reader.name).state != reader.state ) )
 			{
 				//card in use
 				if ( !reader.state.contains( "EMPTY" ) )
@@ -118,13 +118,14 @@ void JsCardManager::pollCard()
 		} else if ( cardReaders.size() < tmp.size() && insert.isEmpty() )
 			insert = "empty";
 
-		cardReaders = tmp;
 		if ( !remove.isEmpty() )
 		{
 			if ( m_jsEsteidCard->m_card && m_jsEsteidCard->getDocumentId() == cardReaders[remove].cardId )
 				m_jsEsteidCard->setCard( 0 );
+			cardReaders = tmp;
 			emit cardEvent( m_jsCardRemoveFunc, remove != "empty" ? cardReaders[remove].id : -1 );
 		}
+		cardReaders = tmp;
 		if ( !insert.isEmpty() )
 			emit cardEvent( m_jsCardInsertFunc, insert != "empty" ? cardReaders[insert].id : -1 );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
@@ -173,8 +174,8 @@ void JsCardManager::findCard()
 		return;
 
 	try {
-		if ( cardMgr->getReaderCount( true ) <= 0 )
-		return;
+		if ( getReaderCount() < 1 )
+			return;
 	} catch ( const std::runtime_error &e ) {
 		qDebug() << e.what();
 		return;
@@ -184,12 +185,31 @@ void JsCardManager::findCard()
 	QCoreApplication::processEvents();
 	foreach( const ReaderState &reader, cardReaders )
 	{
-		if( reader.connected )
+		if( reader.connected && !reader.name.isEmpty() )
 		{
 			selectReader( reader );
 			return;
 		}
 	}
+}
+
+bool JsCardManager::anyCardsInReader()
+{
+	if ( !cardMgr )
+		return false;
+
+	try {
+		if ( getReaderCount() < 1 )
+			return false;
+	} catch ( const std::runtime_error &e ) {
+		qDebug() << e.what();
+		return false;
+	}
+
+	foreach( const ReaderState &reader, cardReaders )
+		if( reader.connected && !reader.name.isEmpty() )
+			return true;
+	return false;
 }
 
 bool JsCardManager::selectReader(int i)
