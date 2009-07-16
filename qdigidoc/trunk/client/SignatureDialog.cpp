@@ -53,6 +53,19 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		st << s.location() << "<br />";
 		st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" ) << "<br />";
 	}
+	else
+	{
+		QString tooltip;
+		QTextStream t( &tooltip );
+		QString location = s.location();
+		if( !location.isEmpty() )
+			t << location << "<br />";
+		QString role = s.role();
+		if( !role.isEmpty() )
+			t << role << "<br />";
+		t << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" );
+		setToolTip( tooltip );
+	}
 
 	st << tr("Signature is") << " ";
 	if( s.isValid() )

@@ -394,7 +394,7 @@ void MainWindow::enableSign()
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );
-		signButton->setToolTip( mobile ? QString() : tr("No card in reader") );
+		signButton->setToolTip( mobile ? tr("Personal code is not valid") : tr("No card in reader") );
 		return;
 	}
 
@@ -573,7 +573,7 @@ void MainWindow::setCurrentPage( Pages page )
 		Q_FOREACH( const DigiDocSignature &c, signatures )
 		{
 			SignatureWidget *signature = new SignatureWidget( c, i, signatures.size() < 3, viewSignatures );
-			viewSignaturesLayout->insertWidget( i, signature );
+			viewSignaturesLayout->insertWidget( 0, signature );
 			connect( signature, SIGNAL(removeSignature(unsigned int)),
 				SLOT(viewSignaturesRemove(unsigned int)) );
 			if( !cardOwnerSignature )
