@@ -3,6 +3,7 @@
 // Treat all POSIX systems (Linux, MAC) the same way. Treat non-POSIX as Windows.
 
 #include <algorithm>
+#include <iostream>
 #ifndef _WIN32
     #include <unistd.h>
 #endif
@@ -31,6 +32,8 @@
 #else
     #define PATH_DELIMITER '\\'
 #endif
+
+std::stack<std::string> digidoc::util::File::tempFiles;
 
 std::string digidoc::util::File::encodeName(const std::string &fileName)
 {
@@ -182,6 +185,7 @@ std::string digidoc::util::File::tempFileName()
         THROW_IOEXCEPTION("Failed to create a temporary file name.");
     }
 #endif
+    tempFiles.push(fileName);
     return decodeName(fileName);
 }
 
@@ -312,6 +316,7 @@ unsigned long digidoc::util::File::fileSize(const std::string& path) throw(IOExc
 std::vector<std::string> digidoc::util::File::listFiles(const std::string& directory, bool relative,
 		bool listEmptyDirectories, bool unixStyle) throw(IOException)
 {
+    // Why, oh why does this function use vectors, not std::lists? Does anybody need to do heavy random access on the file names?
 	std::string pathDelim; pathDelim += PATH_DELIMITER;
 	if(unixStyle)
 	{
@@ -559,4 +564,63 @@ std::string digidoc::util::File::fullPathUrl(const std::string& fullDirectory, c
     return digidoc::util::String::toUriFormat("file:///" + result + "/" + relativeFilePath);
 #endif
     return digidoc::util::String::toUriFormat("file://" + result + "/" + relativeFilePath);
+}
+
+/**
+ * Deletes the filesystem object named <code>fname</code>. Deleting non-empty directories fails.
+ *
+ * @param fname full file or directory fname.
+ */
+void digidoc::util::File::removeFile(const std::string& fname)
+{
+    std::string _fname = encodeName(fname);
+    int result = result = remove( _fname.c_str() );
+    if ( result != 0 )
+    {
+        WARN( "Tried to remove the temporary file or directory '%s', but failed.", _fname.c_str() );
+    }
+
+}
+
+/**
+ * Tries to delete this directory along with its contents, recursively.
+ *
+ * @param dname full directory name
+ */
+void digidoc::util::File::removeDirectoryRecursively(const std::string& dname) throw(IOException)
+{
+    // First delete recursively all subdirectories
+    std::vector<std::string> subDirs = getDirSubElements(dname, false, false, false);
+    for (std::vector<std::string>::reverse_iterator it = subDirs.rbegin(); it != subDirs.rend(); it++)
+    {
+        removeDirectoryRecursively(*it);
+    }
+
+    // Then delete all files inside this directory
+    std::vector<std::string> subFiles = getDirSubElements(dname, false, true, false);
+    for (std::vector<std::string>::reverse_iterator it = subFiles.rbegin(); it != subFiles.rend(); it++)
+    {
+        WARN( "Deleting the temporary file '%s'", it->c_str() );
+        removeFile(*it);
+    }
+
+    // Then delete the directory itself. It should now be empty.
+    WARN( "Deleting the temporary directory '%s'", dname.c_str() );
+    removeFile(dname);
+}
+
+/**
+ * Tries to delete all temporary files and directories whose names were handled out with tempFileName, tempDirectory and createTempDirectory.
+ * The deletion of directories is recursive.
+ */
+void digidoc::util::File::deleteTempFiles() throw(IOException)
+{
+    while (!tempFiles.empty())
+    {
+        if ( directoryExists(tempFiles.top()) )
+            removeDirectoryRecursively(tempFiles.top());
+        else
+            removeFile(tempFiles.top());
+        tempFiles.pop();
+    }
 }

@@ -58,6 +58,9 @@ void digidoc::terminate()
 
     // Terminate Apache Xerces library.
     xercesc::XMLPlatformUtils::Terminate();
+
+    // Try to delete temporary files created with the util::File::tempFileName, tempDirectory and createTempDirectory functions.
+    util::File::deleteTempFiles();
 }
 
 /**

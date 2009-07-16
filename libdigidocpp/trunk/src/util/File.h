@@ -2,6 +2,7 @@
 #define __FILE_H_INCLUDED__
 
 #include <string>
+#include <stack>
 
 #include "../io/IOException.h"
 
@@ -35,6 +36,10 @@ namespace digidoc
             		  bool listEmptyDirectories = false, bool unixStyle = false) throw(IOException);
               static void copyFile(const std::string& srcPath, const std::string& destPath, bool overwrite = true) throw(IOException);
               static void moveFile(const std::string& srcPath, const std::string& destPath, bool overwrite = true) throw(IOException);
+              static void removeFile(const std::string& fname);
+              static void deleteTempFiles() throw(IOException);
+	      static void removeDirectoryRecursively(const std::string& dname) throw(IOException);
+	      static std::stack<std::string> tempFiles;
 
         private:
               static std::vector<std::string> getDirSubElements(const std::string& directory, bool relative,
