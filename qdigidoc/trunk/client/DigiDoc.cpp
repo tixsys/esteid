@@ -261,7 +261,7 @@ QList<Document> DigiDoc::documents()
 	return list;
 }
 
-QByteArray DigiDoc::getAccessCert( const QString &pin )
+QByteArray DigiDoc::getAccessCert()
 {
 	std::vector<unsigned char> buffer;
 
@@ -269,7 +269,7 @@ QByteArray DigiDoc::getAccessCert( const QString &pin )
 	try {
 		SSLConnect sslConnect;
 		sslConnect.setCard( m_card.toStdString() );
-		buffer = sslConnect.getUrl( pin.toStdString(), SSLConnect::AccessCert, "" );
+		buffer = sslConnect.getUrl( SSLConnect::AccessCert, "" );
 	} catch( const std::runtime_error &e ) {
 		setLastError( e.what() );
 	}
@@ -395,7 +395,9 @@ void DigiDoc::selectCard( const QString &card )
 QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
 	const QString v = value.toString();
-	digidoc::Conf *i = digidoc::XmlConf::getInstance();
+	digidoc::Conf *i = NULL;
+	try { i = digidoc::XmlConf::getInstance(); }
+	catch( const Exception & ) {}
 	if( !i )
 		return v;
 
@@ -413,7 +415,9 @@ QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) 
 
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 {
-	digidoc::Conf *i = digidoc::XmlConf::getInstance();
+	digidoc::Conf *i = NULL;
+	try { i = digidoc::XmlConf::getInstance(); }
+	catch( const Exception & ) {}
 	if( !i )
 		return;
 

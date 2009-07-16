@@ -776,11 +776,7 @@ bool MainWindow::checkAccessCert()
 		return false;
 	}
 
-	PinDialog p( PinDialog::Pin1Type, doc->signCert(), this );
-	if( !p.exec() )
-		return false;
-
-	QByteArray result = doc->getAccessCert( p.text() );
+	QByteArray result = doc->getAccessCert();
 	if ( result.isEmpty() )
 	{
 		QMessageBox::warning( this,
