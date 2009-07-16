@@ -110,34 +110,21 @@ QString JsExtender::checkPin()
 	{
 		activeDocument = m_mainWindow->eidCard()->getDocumentId();
 		m_dateTime = QDateTime::currentDateTime();
-		PinDialog p( PinDialog::Pin1Type, QString( "%1 %2 %3" )
-			.arg( m_mainWindow->eidCard()->getFirstName() )
-			.arg( m_mainWindow->eidCard()->getSurName() )
-			.arg( m_mainWindow->eidCard()->getId() ), m_mainWindow );
-		if( !p.exec() )
-		{
-			pin = "";
-			throw std::runtime_error( "" );
-		}
-		else
-			pin = p.text();
+		return QString();
 	}
-	QCoreApplication::processEvents();
 	return pin;
 }
 
 QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def )
 {
-	QString pin = checkPin();
-	if ( pin.isEmpty() || pin.size() < 4 )
-		throw std::runtime_error( "" );
-
 	std::vector<unsigned char> buffer;
 
 	try {
 		SSLConnect sslConnect;
+		sslConnect.setPin( checkPin() );
 		sslConnect.setReader( m_mainWindow->cardManager()->activeReaderNum() );
-		buffer = sslConnect.getUrl( pin.toStdString(), type, def.toStdString() );
+		buffer = sslConnect.getUrl( type, def.toStdString() );
+		pin = Settings().value( "Util/sessionTime").toInt() ? sslConnect.pin() : QString();
 	} catch( const std::runtime_error &e ) {
 		throw std::runtime_error( e );
 	}

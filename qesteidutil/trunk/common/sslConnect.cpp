@@ -22,10 +22,16 @@
 
 #include "sslConnect.h"
 
+#include "PinDialog.h"
+#include "Settings.h"
+#include "SslCertificate.h"
+
 #include <libp11.h>
 #include <openssl/ssl.h>
 #include <stdexcept>
 #include <sstream>
+#include <QApplication>
+#include <QDateTime>
 //#include <QDebug>
 
 #ifdef _WIN32
@@ -79,17 +85,16 @@ public:
 	SSLObj();
 	~SSLObj();
 
-	bool connectToHost( const std::string &site, const std::string &pin );
+	bool connectToHost( const std::string &site );
 	std::vector<unsigned char> getUrl( const std::string &url );
 	std::vector<unsigned char> getRequest( const std::string &request );
 
 	PKCS11_CTX *ctx;
-
-	void	releaseSlots();
 	SSL		*s;
 
-	int		reader;
 	std::string card;
+	QString pin;
+	int		reader;
 
 	unsigned int nslots;
 	PKCS11_SLOT *pslots;
@@ -99,29 +104,15 @@ public:
 
 SSLConnect::SSLConnect( QObject *parent )
 :	QObject( parent )
-,	obj( 0 )
-{
-	try { obj = new SSLObj(); }
-	catch( sslError &e ) { throw e; }
-	catch( std::runtime_error &e ) { throw e; }
-}
+,	obj( new SSLObj() )
+{}
 
-SSLConnect::~SSLConnect()
-{
-	if ( obj )
-	{
-		delete obj;
-		obj = 0;
-	}
-}
+SSLConnect::~SSLConnect() { delete obj; }
 
 bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
-std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, RequestType type, const std::string &value )
+std::vector<unsigned char> SSLConnect::getUrl( RequestType type, const std::string &value )
 {
-	if ( !obj )
-		obj = new SSLObj();
-
 	std::vector<unsigned char> result;
 
 	if ( !isLoaded() )
@@ -134,7 +125,7 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, RequestTy
 		case MobileInfo: site = SK; break;
 		default: site = EESTI; break;
 	}
-	if ( obj->connectToHost( site, pin ) )
+	if ( obj->connectToHost( site ) )
 	{
 		switch( type )
 		{
@@ -148,7 +139,9 @@ std::vector<unsigned char> SSLConnect::getUrl( const std::string &pin, RequestTy
 	return result;
 }
 
+QString SSLConnect::pin() const { return obj->pin; }
 void SSLConnect::setCard( const std::string &card ) { obj->card = card; }
+void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
 void SSLConnect::setReader( int reader ) { obj->reader = reader; }
 
 
@@ -158,7 +151,6 @@ SSLObj::SSLObj()
 ,	s( NULL )
 ,	reader( -1 )
 ,	nslots( 0 )
-,	pslots( NULL )
 {
 	ctx = PKCS11_CTX_new();
 	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
@@ -178,7 +170,8 @@ SSLObj::~SSLObj()
 	}
 	if ( ctx != NULL )
 	{
-		releaseSlots();
+		if( nslots )
+			PKCS11_release_all_slots(ctx, pslots, nslots);
 		PKCS11_CTX_unload(ctx);
 		PKCS11_CTX_free(ctx);
 	}
@@ -188,7 +181,7 @@ SSLObj::~SSLObj()
 	ERR_remove_state(0);
 }
 
-bool SSLObj::connectToHost( const std::string &site, const std::string &pin )
+bool SSLObj::connectToHost( const std::string &site )
 {
 	PKCS11_SLOT *slot = 0;
 	if( reader >= 0 )
@@ -222,12 +215,38 @@ bool SSLObj::connectToHost( const std::string &site, const std::string &pin )
 	unsigned int ncerts;
 	int result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
 	PKCS11_CERT *authcert = &certs[0];
-	
-	result = PKCS11_login(slot, 0, pin.c_str());
-	if ( result )
-		throw std::runtime_error( "PIN1Invalid" );
 
-	PKCS11_KEY *authkey = PKCS11_find_key(authcert);
+	if( slot->token->loginRequired )
+	{
+		if( !slot->token->secureLogin )
+		{
+			if( !pin.isNull() )
+			{
+				result = PKCS11_login(slot, 0, pin.toUtf8());
+			}
+			else
+			{
+				PinDialog p( PinDialog::Pin1Type,
+					SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
+				if( p.exec() )
+				{
+					result = PKCS11_login(slot, 0, p.text().toUtf8());
+					pin = p.text();
+				}
+				else
+					throw std::runtime_error( "" );
+			}
+		}
+		else
+		{
+			result = PKCS11_login( slot, 0, NULL );
+			pin = "";
+		}
+		if ( result )
+			throw std::runtime_error( "PIN1Invalid" );
+	}
+
+	PKCS11_KEY *authkey = PKCS11_find_key( authcert );
 	if ( !authkey )
 		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
 
@@ -307,14 +326,6 @@ std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
     if (pos!= std::string::npos)
 		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
 	return buffer;
-}
-
-void SSLObj::releaseSlots()
-{
-	if( pslots != NULL )
-		PKCS11_release_all_slots(ctx, pslots, nslots);
-	pslots = NULL;
-	nslots = 0;
 }
 
 std::string SSLConnect::getValue( RequestType type )

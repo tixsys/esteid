@@ -46,12 +46,14 @@ public:
 	~SSLConnect();
 
 	bool isLoaded();
-	std::vector<unsigned char> getUrl( const std::string &pin, RequestType, const std::string &value = "" );
+	std::vector<unsigned char> getUrl( RequestType, const std::string &value = "" );
 
 	static std::string getValue( RequestType type );
 
-	void setReader( int reader );
+	QString pin() const;
 	void setCard( const std::string &card );
+	void setPin( const QString &pin );
+	void setReader( int reader );
 
 private:
 	SSLObj	*obj;
