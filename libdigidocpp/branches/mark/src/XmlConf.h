@@ -35,14 +35,15 @@ public:
     virtual std::string getPKCS12Cert() const;
     virtual std::string getPKCS12Pass() const;
 
+	virtual std::string getUserConfPath() const;
+
     virtual void setProxyHost( const std::string &host );
     virtual void setProxyPort( const std::string &port );
     virtual void setPKCS12Cert( const std::string &cert );
     virtual void setPKCS12Pass( const std::string &pass );
 
     static const std::string CONF_ENV;
-    static const std::string DEFAULT_CONF_LOC;
-
+	static std::string DEFAULT_CONF_LOC;
 
 private:
     void init(const std::string& path) throw(IOException);

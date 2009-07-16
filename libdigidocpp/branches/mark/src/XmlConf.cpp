@@ -4,6 +4,14 @@
 
 #include "XmlConf.h"
 #include <stdlib.h>//getenv
+//#include <iostream>
+//#include <stdio.h>
+//#include <stdarg.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <Winreg.h>
+#endif
 
 #include "log.h"
 #include "util/String.h"
@@ -18,8 +26,11 @@ const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML";
 /**
  * Path to default configuration file
  */
-const std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "bdoclib.conf";
+const std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
 
+
+#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
+#define ENVIRONMENT_PATH "VolatileEnvironment"
 
 const std::string digidoc::XmlConf::DIGEST_URI         = "digest.uri";
 const std::string digidoc::XmlConf::PKCS11_DRIVER_PATH = "pkcs11.driver.path";
@@ -38,6 +49,22 @@ const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
  */
 void digidoc::XmlConf::initialize()
 {
+	//Define Global Conf file location
+#ifdef _WIN32
+	HKEY hkey;
+	DWORD dwSize;
+	TCHAR tcConfPath[1024];
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
+		RegCloseKey(hkey);
+		DEFAULT_CONF_LOC = tcConfPath;
+	}	
+#else
+	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR + "digidocpp.conf";
+#endif
+
     if(!Conf::isInitialized())
     {
         try
@@ -59,7 +86,8 @@ void digidoc::XmlConf::initialize()
  */
 digidoc::XmlConf::XmlConf() throw(IOException)
 {
-    std::string defaultConfLoc("bdoclib.conf");
+
+    std::string defaultConfLoc("digidocpp.conf");
 
     char * envLoc = getenv (CONF_ENV.c_str());
     if(envLoc != NULL)
@@ -68,6 +96,7 @@ digidoc::XmlConf::XmlConf() throw(IOException)
         if(util::File::fileExists(envConfLoc))
         {
             init(envConfLoc);
+			init(getUserConfPath());
             return;
         }
     }
@@ -76,6 +105,7 @@ digidoc::XmlConf::XmlConf() throw(IOException)
     if(util::File::fileExists(DEFAULT_CONF_LOC))
     {
         init(DEFAULT_CONF_LOC);
+		init(getUserConfPath());
     }
     else
     {
@@ -200,6 +230,28 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
 std::string digidoc::XmlConf::getDigestUri() const
 {
     return digestUri;
+}
+
+std::string digidoc::XmlConf::getUserConfPath() const
+{
+	std::string conf = DEFAULT_CONF_LOC;
+#ifdef _WIN32
+	
+	HKEY hkey;
+	DWORD dwSize;
+	TCHAR tcConfPath[1024];
+	if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
+		RegCloseKey(hkey);
+
+		conf = tcConfPath + "\\digidocpp\\digidocpp.conf";
+	}	
+#else
+	conf = getenv(HOME) + "/.digidocpp/digidocpp.conf";
+#endif
+    return conf;
 }
 
 std::string digidoc::XmlConf::getManifestXsdPath() const
