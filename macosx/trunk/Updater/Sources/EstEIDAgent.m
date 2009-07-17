@@ -80,22 +80,23 @@
 				
 				va_end(args);
 				
-NS_DURING
-				NSPipe *pipe = [NSPipe pipe];
-				
-				handle = [pipe fileHandleForWriting];
-				task = [[[NSTask alloc] init] autorelease];
-				
-				[task setLaunchPath:self->m_path];
-				[task setArguments:arguments];
-				[task setStandardInput:pipe];
-				[task launch];
-				
-				[handle writeData:[NSData dataWithBytes:&authorizationExternalForm length:sizeof(AuthorizationExternalForm)]];
-NS_HANDLER
-				[handle closeFile];
-				task = nil;
-NS_ENDHANDLER
+				@try {
+					NSPipe *pipe = [NSPipe pipe];
+					
+					handle = [pipe fileHandleForWriting];
+					task = [[[NSTask alloc] init] autorelease];
+					
+					[task setLaunchPath:self->m_path];
+					[task setArguments:arguments];
+					[task setStandardInput:pipe];
+					[task launch];
+					
+					[handle writeData:[NSData dataWithBytes:&authorizationExternalForm length:sizeof(AuthorizationExternalForm)]];
+				}
+				@catch(id exception) {
+					[handle closeFile];
+					task = nil;
+				}
 			}
 		}
 	}
