@@ -45,7 +45,8 @@ MainWindow::MainWindow( QWidget *parent )
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
 	setupUi( this );
-	
+	cards->hide();
+
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
 #if QT_VERSION >= 0x040500
 	setWindowFlags( windowFlags() | Qt::WindowCloseButtonHint );
@@ -57,9 +58,6 @@ MainWindow::MainWindow( QWidget *parent )
 	
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
-
-	cards->hide();
-	connect( cards, SIGNAL(activated(QString)), SLOT(selectCard()) );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
@@ -91,7 +89,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new CryptDoc( this );
-	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)), Qt::QueuedConnection );
+	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
@@ -455,12 +453,6 @@ void MainWindow::removeKey( int id )
 {
 	doc->removeKey( id );
 	setCurrentPage( View );
-}
-
-void MainWindow::selectCard()
-{
-	infoCard->setText( tr("Loading data") );
-	infoLogo->setText( QString() );
 }
 
 void MainWindow::setCurrentPage( Pages page )

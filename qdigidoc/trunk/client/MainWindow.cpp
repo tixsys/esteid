@@ -54,6 +54,10 @@ MainWindow::MainWindow( QWidget *parent )
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
 	setupUi( this );
+
+	cards->hide();
+	viewSignaturesError->hide();
+
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
 #if QT_VERSION >= 0x040500
 	setWindowFlags( windowFlags() | Qt::WindowCloseButtonHint );
@@ -68,10 +72,6 @@ MainWindow::MainWindow( QWidget *parent )
 
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
-
-	cards->hide();
-	connect( cards, SIGNAL(activated(QString)), SLOT(selectCard()) );
-	viewSignaturesError->hide();
 
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
 	connect( infoMobileCode, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
@@ -122,7 +122,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( qtTranslator );
 
 	doc = new DigiDoc( this );
-	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)), Qt::QueuedConnection );
+	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	doc->init();
@@ -529,12 +529,6 @@ void MainWindow::parseParams()
 	params.clear();
 }
 
-void MainWindow::selectCard()
-{
-	infoCard->setText( tr("Loading data") );
-	infoLogo->setText( QString() );
-}
-
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
@@ -806,44 +800,40 @@ bool MainWindow::checkAccessCert()
 		return false;
 	}
 
-	int statusCode = e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt();
-	//0 - ok
-	//1 - need to order cert manually from SK web
-	//2 - got error, show message from MessageToDisplay element
-	if ( statusCode == 1 )
+	switch( e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt() )
 	{
+	case 1: //need to order cert manually from SK web
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
 		return false;
-	}
-	if ( statusCode == 2 )
-	{
+	case 2: //got error, show message from MessageToDisplay element
 		QMessageBox::warning( this,
 			tr( "Server access certificate" ),
 			tr( "Error downloading server access certificate!\n%1" )
 				.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
 			QMessageBox::Ok );
 		return false;
+	default: break; //ok
 	}
 
-	QString dest = QString( "%1%2%3.p12" )
-		.arg( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) )
-		.arg( QDir::separator() )
-		.arg( doc->signCert().subjectInfo( "serialNumber" ) );
+	QString path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
+	if ( !QDir( path ).exists() )
+		QDir().mkpath( path );
 
-	QFile file( dest );
-	QFileInfo fi( file );
-	if ( !QDir( fi.absoluteDir() ).exists() )
-		QDir().mkpath( fi.absolutePath() );
+	QFile file( QString( "%1/%2.p12" )
+		.arg( path )
+		.arg( doc->signCert().subjectInfo( "serialNumber" ) ) );
 	if ( !file.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),
-										tr("Failed to save server access certificate file to %1!\n%2").arg( dest ).arg( file.errorString() ) );
+			tr("Failed to save server access certificate file to %1!\n%2")
+				.arg( file.fileName() )
+				.arg( file.errorString() ) );
 		return false;
 	}
 	file.write( QByteArray::fromBase64( e.elementsByTagName( "TokenData" ).item(0).toElement().text().toLatin1() ) );
 	file.close();
 
-	s.setValue( "pkcs12Cert", dest );
+	s.setValue( "pkcs12Cert", file.fileName() );
 	s.setValue( "pkcs12Pass", e.elementsByTagName( "TokenPassword" ).item(0).toElement().text() );
 
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
