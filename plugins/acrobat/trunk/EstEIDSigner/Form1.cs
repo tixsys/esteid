@@ -61,6 +61,7 @@ namespace EstEIDSigner
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool failed = false;
             Timestamp stamp = null;
             if (EnableTSA.Checked)
                 stamp = new Timestamp(urlTextBox.Text, nameTextBox.Text, passwordBox.Text);            
@@ -93,16 +94,14 @@ namespace EstEIDSigner
             {                
                 debug("Exception: " + ex.ToString());
                 MessageBox.Show(ex.Message);
-                GC.Collect(); 
-                GC.WaitForPendingFinalizers();
-                return;
+                failed = true;
             }
 
-            // for some reason Destructors doesn't get called!
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            // force Garbage Collector to close pkcs11 bridge
+            GC.Collect();            
 
-            debug("Valmis :)");
+            if (failed == false)
+                debug("Valmis :)");
         }
     }
 }
