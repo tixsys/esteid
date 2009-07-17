@@ -26,7 +26,7 @@ const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML";
 /**
  * Path to default configuration file
  */
-const std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
+std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
 
 
 #define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
@@ -62,7 +62,7 @@ void digidoc::XmlConf::initialize()
 		DEFAULT_CONF_LOC = tcConfPath;
 	}	
 #else
-	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR + "digidocpp.conf";
+	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
 #endif
 
     if(!Conf::isInitialized())
@@ -249,7 +249,8 @@ std::string digidoc::XmlConf::getUserConfPath() const
 		conf = tcConfPath + "\\digidocpp\\digidocpp.conf";
 	}	
 #else
-	conf = getenv(HOME) + "/.digidocpp/digidocpp.conf";
+	conf = getenv("HOME");
+	conf += "/.digidocpp/digidocpp.conf";
 #endif
     return conf;
 }
