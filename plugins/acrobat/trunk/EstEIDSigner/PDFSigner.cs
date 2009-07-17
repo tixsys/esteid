@@ -261,7 +261,7 @@ namespace EstEIDSigner
             HGlobalSafeHandle raw = new HGlobalSafeHandle((int)rsa_length);
             IntPtr rsaBytes = raw;
             if (rsaBytes == IntPtr.Zero)
-                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));            
+                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
 
             info = signer.Info;
             slot = signer.Slot;
@@ -271,8 +271,9 @@ namespace EstEIDSigner
                 string label = info.Label;
                 pin = ReadPin(label, (int)info.MinPin);
 
+                // no pin supplied ?
                 if (pin == string.Empty)
-                    return (null);
+                    throw new Exception(resManager.GetString("NO_PIN_SUPPLIED"));
             }
 
             rc = estEidReader.Sign(slot, pin, digest, (uint)digest.Length, ref rsaBytes, ref digest_length);
@@ -442,11 +443,12 @@ namespace EstEIDSigner
             // no valid certs found ?
             if (col.Count == 0)
                 return null;
+   
+            X509Certificate2Collection sel = X509CertificateUI.SelectFromCollection(col,
+                "Sertifikaadid", "Vali sertifikaat digitaalallkirja lisamiseks");
 
-            // ToDo: Mono doesn't support this
-            X509Certificate2Collection sel = X509Certificate2UI.SelectFromCollection(col,
-                "Sertifikaadid", "Vali sertifikaat digitaalallkirja lisamiseks",
-                X509SelectionFlag.SingleSelection);
+            if (sel == null)
+                throw new Exception(resManager.GetString("CERT_MISSING"));                     
 
             if (sel.Count > 0)
             {
