@@ -6,6 +6,7 @@
 #import "EstEIDWebService.h"
 #import <Carbon/Carbon.h>
 #import <AppKit/AppKit.h>
+#import <WebKit/WebKit.h>
 
 NSString *EstEIDWebServiceEventCardInserted = @"OnCardInserted";
 NSString *EstEIDWebServiceEventCardRemoved = @"OnCardRemoved";
@@ -293,11 +294,30 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 	return self->m_window;
 }
 
+static void Enumeeee(NSView *view, int level)
+{
+	NSEnumerator *enumerator = [[view subviews] objectEnumerator];
+	
+	unsigned int i = 0;
+	
+	NSMutableString *prefix = [NSMutableString string];
+	
+	for(i = 0; i < level; i++) [prefix appendString:@"_"];
+	
+	NSLog(@"%@: %@%@", prefix, view, ([view isKindOfClass:[WebView class]]) ? @" (Webview!)" : @"");
+	
+	while((view = [enumerator nextObject]) != nil) {
+		Enumeeee(view, level + 1);
+	}
+}
+
 - (void)setWindow:(NSWindow *)window
 {
 	if(self->m_window != window) {
 		[self->m_window release];
 		self->m_window = [window retain];
+		
+		Enumeeee([window contentView], 0);
 	}
 }
 

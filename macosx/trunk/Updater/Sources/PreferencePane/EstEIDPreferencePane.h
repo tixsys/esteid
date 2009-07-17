@@ -13,6 +13,7 @@
 	EstEIDAgent *m_agent;
 	IBOutlet SFAuthorizationView *m_authorizationView;
 	IBOutlet NSButton *m_automaticUpdateButton;
+	IBOutlet NSButton *m_idLoginButton;
 	IBOutlet NSButton *m_manualUpdateButton;
 	IBOutlet NSTextField *m_infoTextField;
 	IBOutlet NSTextView *m_infoTextView;
@@ -37,6 +38,12 @@
  * @param sender Typically the object that invoked this method.
  */
 - (IBAction)help:(id)sender;
+
+/**
+ * Enables or disables login with the ID-card.
+ * @param sender Typically the object that invoked this method.
+ */
+- (IBAction)idLogin:(id)sender;
 
 /**
  * Performs manual update or enables/disables automatic updates.

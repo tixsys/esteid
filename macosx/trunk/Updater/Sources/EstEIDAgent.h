@@ -55,22 +55,6 @@
 - (NSString *)path;
 
 /**
- * @name Accessing and Modifying Configuration
- */
-
-/**
- * Returns YES if the receiver is configured to automatically update; NO otherwise.
- * @return YES if the receiver is configured to automatically update; NO otherwise.
- */
-- (BOOL)autoUpdate;
-
-/**
- * Sets the receiver to automatically update or not.
- * @param autoupdate YES to enable automatic updates; NO otherwise.
- */
-- (void)setAutoUpdate:(BOOL)autoupdate;
-
-/**
  * @name Authorization
  */
 

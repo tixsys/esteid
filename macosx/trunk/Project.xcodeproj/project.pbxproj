@@ -94,6 +94,8 @@
 		815DBE0C0FA329B1000531D0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E4C8A20F9C436700997F53 /* SenTestingKit.framework */; };
 		815DBE0D0FA329B6000531D0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E4C8A20F9C436700997F53 /* SenTestingKit.framework */; };
 		815DBFD00FA33D53000531D0 /* EstEIDWebRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */; };
+		816BDA560FF760BD0000C7B6 /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 816BDA550FF760BD0000C7B6 /* types.cpp */; };
+		816BDA570FF760BD0000C7B6 /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 816BDA550FF760BD0000C7B6 /* types.cpp */; };
 		81793D770FA391F00068F85B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
 		81793F720FA3950D0068F85B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
 		817940B10FA3A11A0068F85B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F17C0F55F95000FA51CD /* Carbon.framework */; };
@@ -121,6 +123,7 @@
 		81B0FB860FC70A0700B24817 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
 		81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC760FC70E7400B24817 /* PreferencePane.nib */; };
 		81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC780FC70E8800B24817 /* MainMenu.xib */; };
+		81BA2592100F816200866EDA /* NSTask+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BA2591100F816200866EDA /* NSTask+Additions.m */; };
 		81BF406A0F56E7FB00F60FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF40690F56E7FB00F60FED /* main.m */; };
 		81BF406D0F56E8CB00F60FED /* EstEIDApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */; };
 		81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF40AF0F56ECB200F60FED /* Localizable.strings */; };
@@ -299,6 +302,8 @@
 		814F34A50F94473500A89C70 /* EstEIDPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackage.m; path = Updater/Sources/EstEIDPackage.m; sourceTree = "<group>"; };
 		815DBFCE0FA33D53000531D0 /* EstEIDWebRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebRuntime.h; path = WebPlugIn/Sources/EstEIDWebRuntime.h; sourceTree = "<group>"; };
 		815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebRuntime.m; path = WebPlugIn/Sources/EstEIDWebRuntime.m; sourceTree = "<group>"; };
+		816BDA540FF760BD0000C7B6 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = ../../qesteidutil/trunk/cardlib/types.h; sourceTree = SOURCE_ROOT; };
+		816BDA550FF760BD0000C7B6 /* types.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = types.cpp; path = ../../qesteidutil/trunk/cardlib/types.cpp; sourceTree = SOURCE_ROOT; };
 		817944A40F973E6F007E0C96 /* agent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = agent; sourceTree = BUILT_PRODUCTS_DIR; };
 		81867DB60FA1867A00475BCE /* PINPanel.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PINPanel.nib; path = WebPlugIn/PINPanel.nib; sourceTree = "<group>"; };
 		8197D1360F99F0AF002D8A1D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/Agent/main.m; sourceTree = "<group>"; };
@@ -316,6 +321,8 @@
 		81B0FB850FC70A0700B24817 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Updater/Images/Icon.icns; sourceTree = "<group>"; };
 		81B0FC760FC70E7400B24817 /* PreferencePane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PreferencePane.nib; path = Updater/PreferencePane.nib; sourceTree = "<group>"; };
 		81B0FC780FC70E8800B24817 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Updater/MainMenu.xib; sourceTree = "<group>"; };
+		81BA2590100F816200866EDA /* NSTask+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTask+Additions.h"; path = "Updater/Sources/NSTask+Additions.h"; sourceTree = "<group>"; };
+		81BA2591100F816200866EDA /* NSTask+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTask+Additions.m"; path = "Updater/Sources/NSTask+Additions.m"; sourceTree = "<group>"; };
 		81BF40630F56E78000F60FED /* EstEIDSU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EstEIDSU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BF40690F56E7FB00F60FED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/main.m; sourceTree = "<group>"; };
 		81BF406B0F56E8CB00F60FED /* EstEIDApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDApplicationDelegate.h; path = Updater/Sources/EstEIDApplicationDelegate.h; sourceTree = "<group>"; };
@@ -516,28 +523,30 @@
 		810679C00F9EC772004BFEA0 /* cardlib */ = {
 			isa = PBXGroup;
 			children = (
+				810679D50F9EC79D004BFEA0 /* CardBase.cpp */,
+				810679D60F9EC79D004BFEA0 /* CardBase.h */,
 				810679D70F9EC79D004BFEA0 /* common.h */,
+				810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */,
+				810679D90F9EC79D004BFEA0 /* CTAPIManager.h */,
+				810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */,
+				810679DB0F9EC79D004BFEA0 /* DynamicLibrary.h */,
+				810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */,
+				810679DD0F9EC79D004BFEA0 /* EstEidCard.h */,
+				810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */,
+				810679D30F9EC79D004BFEA0 /* EstEidCardMaintainer.h */,
 				810679D40F9EC79D004BFEA0 /* helperMacro.h */,
 				810679CF0F9EC79D004BFEA0 /* ManagerInterface.h */,
-				810679CC0F9EC79D004BFEA0 /* precompiled.h */,
-				810679D60F9EC79D004BFEA0 /* CardBase.h */,
-				810679D50F9EC79D004BFEA0 /* CardBase.cpp */,
-				810679D90F9EC79D004BFEA0 /* CTAPIManager.h */,
-				810679D80F9EC79D004BFEA0 /* CTAPIManager.cpp */,
-				810679DB0F9EC79D004BFEA0 /* DynamicLibrary.h */,
-				810679DA0F9EC79D004BFEA0 /* DynamicLibrary.cpp */,
-				810679DD0F9EC79D004BFEA0 /* EstEidCard.h */,
-				810679DC0F9EC79D004BFEA0 /* EstEidCard.cpp */,
-				810679D30F9EC79D004BFEA0 /* EstEidCardMaintainer.h */,
-				810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */,
-				810679D10F9EC79D004BFEA0 /* PCSCManager.h */,
 				810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */,
-				810679CB0F9EC79D004BFEA0 /* SCError.h */,
+				810679D10F9EC79D004BFEA0 /* PCSCManager.h */,
+				810679CC0F9EC79D004BFEA0 /* precompiled.h */,
 				810679CA0F9EC79D004BFEA0 /* SCError.cpp */,
-				810679C90F9EC79D004BFEA0 /* SIMCard.h */,
+				810679CB0F9EC79D004BFEA0 /* SCError.h */,
 				810679CD0F9EC79D004BFEA0 /* SIMCard.cpp */,
-				810679CE0F9EC79D004BFEA0 /* SmartCardManager.h */,
+				810679C90F9EC79D004BFEA0 /* SIMCard.h */,
 				810679C80F9EC79D004BFEA0 /* SmartCardManager.cpp */,
+				810679CE0F9EC79D004BFEA0 /* SmartCardManager.h */,
+				816BDA550FF760BD0000C7B6 /* types.cpp */,
+				816BDA540FF760BD0000C7B6 /* types.h */,
 			);
 			name = cardlib;
 			sourceTree = "<group>";
@@ -629,6 +638,8 @@
 				81303BA20F596C970029C4D7 /* NSObject+Additions.m */,
 				81303B9E0F596C7E0029C4D7 /* NSString+Additions.h */,
 				81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */,
+				81BA2590100F816200866EDA /* NSTask+Additions.h */,
+				81BA2591100F816200866EDA /* NSTask+Additions.m */,
 				81C3CE3C0F9627B300EDBB44 /* NSThread+Additions.h */,
 				81C3CE3D0F9627B300EDBB44 /* NSThread+Additions.m */,
 				81BF40690F56E7FB00F60FED /* main.m */,
@@ -1167,6 +1178,7 @@
 				810680E70F9F511C004BFEA0 /* EstEIDReaderManager.mm in Sources */,
 				81F871AC0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */,
 				81DA6DE50FA4C1CD006083A3 /* EstEIDWebService.m in Sources */,
+				816BDA570FF760BD0000C7B6 /* types.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1189,6 +1201,7 @@
 				810679EE0F9EC79D004BFEA0 /* DynamicLibrary.cpp in Sources */,
 				810679EF0F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */,
 				81DA6DE40FA4C1CD006083A3 /* EstEIDWebService.m in Sources */,
+				816BDA560FF760BD0000C7B6 /* types.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,6 +1215,7 @@
 				8197D4940F9A1A36002D8A1D /* NSBundle+Additions.m in Sources */,
 				8197D48B0F9A14DC002D8A1D /* NSObject+Additions.m in Sources */,
 				8197D48A0F9A1338002D8A1D /* NSString+Additions.m in Sources */,
+				81BA2592100F816200866EDA /* NSTask+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

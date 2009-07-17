@@ -42,11 +42,6 @@
 	return self;
 }
 
-- (NSString *)launchdAgentPath
-{
-	return [[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSLocalDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"LaunchAgents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%s.plist", EstEIDAgentIdentifier]];
-}
-
 - (BOOL)isOwnedBySystem
 {
 	struct stat st;
@@ -57,33 +52,6 @@
 - (NSString *)path
 {
 	return self->m_path;
-}
-
-- (BOOL)autoUpdate
-{
-	NSString *path = [self launchdAgentPath];
-	BOOL result = NO;
-	
-	if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
-		
-		if(plist) {
-			id obj = [plist objectForKey:@"Disabled"];
-			
-			if([obj isKindOfClass:[NSNumber class]]) {
-				result = ![(NSNumber *)obj boolValue];
-			}
-			
-			[plist release];
-		}
-	}
-	
-	return result;
-}
-
-- (void)setAutoUpdate:(BOOL)autoUpdate
-{
-	[[self launchWithArguments:@"--launchd", (autoUpdate) ? @"enable" : @"disable", [self launchdAgentPath], nil] waitUntilExit];
 }
 
 - (NSTask *)launchWithArguments:(NSString *)argument, ...
