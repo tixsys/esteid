@@ -64,21 +64,22 @@
 
 - (void)setIdLogin:(BOOL)idLogin
 {
-	NSString *hash = nil;
+	NSMutableArray *hashes = [NSMutableArray array];
+	NSEnumerator *enumerator;
+	NSString *hash;
 	
 	if(idLogin) {
 		while(YES) {
-			NSEnumerator *enumerator = [[[NSTask execute:@"/usr/sbin/sc_auth" withArguments:[NSArray arrayWithObjects:@"hash", nil]] componentsSeparatedByString:@"\n"] objectEnumerator];
-			NSString *hash_1;
+			enumerator = [[[NSTask execute:@"/usr/sbin/sc_auth" withArguments:[NSArray arrayWithObjects:@"hash", nil]] componentsSeparatedByString:@"\n"] objectEnumerator];
 			
-			while((hash_1 = [enumerator nextObject]) != nil) {
-				if([hash_1 hasSuffix:@"Isikutuvastus"] && [hash_1 length] > 53) {
-					hash = [hash_1 substringToIndex:40];
+			while((hash = [enumerator nextObject]) != nil) {
+				if([hash hasSuffix:@"Isikutuvastus"] && [hash length] > 53) {
+					[hashes addObject:[NSString stringWithFormat:@";pubkeyhash;%@", [hash substringToIndex:40]]];
 					break;
 				}
 			}
 			
-			if(hash) {
+			if([hashes count] > 0) {
 				break;
 			} else {
 				NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -94,10 +95,21 @@
 				}
 			}
 		}
+	} else {
+		enumerator = [[[NSTask execute:@"/usr/bin/dscl" withArguments:[NSArray arrayWithObjects:@".", @"-read", [NSString stringWithFormat:@"/Users/%@", [self username]], @"AuthenticationAuthority", nil]] componentsSeparatedByString:@" "] objectEnumerator];
+		
+		while((hash = [enumerator nextObject]) != nil) {
+			if([hash hasPrefix:@";pubkeyhash;"]) {
+				[hashes addObject:[hash stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+			}
+		}
 	}
-	NSLog(@"%d %@ %@", idLogin, [self username], hash);
 	
-	[[self launchWithArguments:@"--idlogin", (idLogin) ? @"enable" : @"disable", [self username], hash, nil] waitUntilExit];
+	enumerator = [hashes objectEnumerator];
+	
+	while((hash = [enumerator nextObject]) != nil) {
+		[[self launchWithArguments:@"--idlogin", (idLogin) ? @"enable" : @"disable", [NSString stringWithFormat:@"/Users/%@", [self username]], hash, nil] waitUntilExit];
+	}
 }
 
 @end

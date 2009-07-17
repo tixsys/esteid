@@ -200,12 +200,24 @@ int main(int argc, char *argv[])
 					} else if(strcmp(argv[2], "disable") == 0) {
 						result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), NO);
 					}
-				// [enable|disable] [user] [hash]
-				} else if(argc >= 4 && strcmp(argv[1], "--idlogin") == 0) {
-					if(argc == 5 && strcmp(argv[2], "enable") == 0) {
-						result = system([[NSString stringWithFormat:@"/usr/sbin/sc_auth accept -u %s -h %s", argv[3], argv[4]] UTF8String]);
-					} else if(argc == 4 && strcmp(argv[2], "disable") == 0) {
-						result = system([[NSString stringWithFormat:@"/usr/sbin/sc_auth remove -u %s", argv[3]] UTF8String]);
+				// [enable|disable] [user] [entry]
+				} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {
+					if(strcmp(argv[2], "enable") == 0) {
+						char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
+						
+						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+							result = 0;
+						} else {
+							fprintf(stderr, "dscl failed.\n");
+						}
+					} else if(strcmp(argv[2], "disable") == 0) {
+						char *args[] = { ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL };
+						
+						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+							result = 0;
+						} else {
+							fprintf(stderr, "dscl failed.\n");
+						}
 					}
 				// [checksum] [file] [target]
 				} else if((argc == 4 || argc == 5) && strcmp(argv[1], "--install") == 0) {
