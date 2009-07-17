@@ -64,7 +64,7 @@
 				AdditionalDependencies="libeay32.lib libpkcs11.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;H:\Work\openssl\openssl-0.9.8k\out32dll&quot;;&quot;H:\Work\Adobe\opensc-0.11.8\src\pkcs11&quot;"
-				ModuleDefinitionFile="EstEIDreader.def"
+				ModuleDefinitionFile=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
