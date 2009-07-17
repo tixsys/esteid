@@ -8,12 +8,6 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace EstEIDNative
 {
-    public class StringP
-    {
-        [MarshalAs(UnmanagedType.LPStr)]
-        public string str;
-    }
-
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct CK_VERSION
     {
@@ -24,14 +18,14 @@ namespace EstEIDNative
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct CK_TOKEN_INFO
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string label;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string manufacturer_id;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        public string model;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        public string serial_number;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+        public byte[] label;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+        public byte[] manufacturer_id;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] model;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] serial_number;
         public uint flags;
         public uint max_session_count;
         public uint session_count;
@@ -45,8 +39,8 @@ namespace EstEIDNative
         public uint free_private_memory;
         public CK_VERSION hardware_version;
         public CK_VERSION firmware_version;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-        public string utc_time;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+        public byte[] utc_time;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -143,6 +137,30 @@ namespace EstEIDNative
 
     /* --------------------------------------------------- */
 
+    class Pkcs11Utf8Conversion
+    {
+        private byte[] b;
+
+        public Pkcs11Utf8Conversion(byte[] bytes)
+        {
+            this.b = bytes;            
+        }
+
+        public static implicit operator string(Pkcs11Utf8Conversion conv)
+        {
+            int len;
+
+            len = conv.b.Length;
+            // PKCS#11 strings have #32 ending
+            while (len > 0 && conv.b[len - 1] == ' ')
+                len--;
+
+            return Encoding.UTF8.GetString(conv.b, 0, len); 
+        }
+    }    
+
+    /* --------------------------------------------------- */
+
     class TokenInfo
     {
         private IntPtr esteidHandler;
@@ -175,21 +193,21 @@ namespace EstEIDNative
         public uint ReadInfo(uint slot)
         {
             return (NativeMethods.GetTokenInfo(esteidHandler, slot, ref tokenInfo));
-        }
+        }        
 
         public string Label
         {
-            get { return tokenInfo.label; }
+            get { return new Pkcs11Utf8Conversion(tokenInfo.label); }
         }
 
         public string Model
         {
-            get { return tokenInfo.model; }
+            get { return new Pkcs11Utf8Conversion(tokenInfo.model); }
         }
 
         public string Serial
         {
-            get { return tokenInfo.serial_number; }
+            get { return new Pkcs11Utf8Conversion(tokenInfo.serial_number); }
         }
 
         public uint MinPin
@@ -204,7 +222,7 @@ namespace EstEIDNative
 
         public string UtcTime
         {
-            get { return tokenInfo.utc_time; }
+            get { return new Pkcs11Utf8Conversion(tokenInfo.utc_time); }
         }
 
         public bool LoginRequired
