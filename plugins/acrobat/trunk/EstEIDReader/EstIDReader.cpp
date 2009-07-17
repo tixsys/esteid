@@ -5,8 +5,6 @@
 
 EstEIDReader::EstEIDReader()
 {
-    m_module = NULL;
-    m_p11 = NULL;
     m_p11_slots = NULL;
     m_digest = NULL;
     m_digest_algorithm = (ulong)0xFFFF;
@@ -16,37 +14,27 @@ int EstEIDReader::Connect(const char *module)
 {
     CK_RV rv;
 
-    m_module = C_LoadModule( module, &m_p11 );
-    if( m_module == NULL )
-        return( 1 );
+    if( Initialized() )
+        return( ESTEID_OK );
 
-    rv = m_p11->C_Initialize( NULL );
-    if( rv != CKR_OK )
-    {
-        m_p11->C_Finalize( NULL );
-        C_UnloadModule( m_module );
-        m_module = NULL;
-        return( rv );
-    }
+    rv = Open( module );
 
-    return( 0 );
+    return( rv );
 }
 
 int EstEIDReader::Disconnect()
 {
+    CK_RV rv;
+
     if( m_digest != NULL )
     {
         delete m_digest;
         m_digest = NULL;
     }
 
-    if( m_module != NULL )
-    {
-        m_p11->C_Finalize( NULL );
-        C_UnloadModule( m_module );
-    }
+    rv = Close();
 
-    return( 0 );
+    return( rv );
 }
 
 CK_RV EstEIDReader::GetSlotCount(int token_present)
@@ -128,7 +116,7 @@ CK_RV EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
     CK_RV rv;
 
     rv = m_p11->C_GetTokenInfo( slot, info );
-    
+
     return( rv );
 }
 

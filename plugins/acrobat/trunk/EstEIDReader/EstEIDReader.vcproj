@@ -45,7 +45,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ESTEIDREADER_EXPORTS;HAVE_CONFIG_H;ENABLE_OPENSSL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="2"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\EstEIDSession.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\EstIDReader.cpp"
 				>
 			</File>
@@ -214,6 +218,10 @@
 			</File>
 			<File
 				RelativePath=".\EstEIDReader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\EstEIDSession.h"
 				>
 			</File>
 			<File
