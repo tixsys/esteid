@@ -37,6 +37,8 @@ public:
 	{
 		Pin1Type,
 		Pin2Type,
+		Pin1PinpadType,
+		Pin2PinpadType,
 	};
 	PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent = 0 );
 	PinDialog( PinType type, const QString &title, QWidget *parent = 0 );

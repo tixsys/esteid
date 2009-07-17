@@ -239,7 +239,12 @@ bool SSLObj::connectToHost( const std::string &site )
 		}
 		else
 		{
+			PinDialog *p = new PinDialog( PinDialog::Pin1PinpadType,
+				SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
+			p->show();
+			QCoreApplication::processEvents();
 			result = PKCS11_login( slot, 0, NULL );
+			p->deleteLater();
 			pin = "";
 		}
 		if ( result )

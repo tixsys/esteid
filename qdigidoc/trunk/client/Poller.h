@@ -30,6 +30,8 @@
 #include <QSslCertificate>
 #include <QStringList>
 
+class PinDialog;
+
 namespace digidoc
 {
 
@@ -44,6 +46,10 @@ protected:
 		std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException);
 
 private:
+	void showPinpad();
+	void hidePinpad();
+
+	PinDialog *pinpad;
 	QString selectedCard;
 };
 

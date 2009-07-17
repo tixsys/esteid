@@ -119,11 +119,27 @@
 <context>
     <name>PinDialog</name>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
+        <source>Selected action requires auth certificate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
+        <source>For using auth certificate enter PIN1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected action requires sign certificate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For using sign certificate enter PIN2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For using auth certificate enter PIN1 with pinpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For using sign certificate enter PIN2 with pinpad</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

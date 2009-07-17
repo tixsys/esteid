@@ -120,11 +120,35 @@
     <name>PinDialog</name>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
+    </message>
+    <message>
+        <source>Selected action requires auth certificate.</source>
+        <translation>Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.</translation>
+    </message>
+    <message>
+        <source>For using auth certificate enter PIN1</source>
+        <translation>Sertifikaadi kasutamiseks sisesta PIN1</translation>
+    </message>
+    <message>
+        <source>Selected action requires sign certificate.</source>
+        <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.</translation>
+    </message>
+    <message>
+        <source>For using sign certificate enter PIN2</source>
+        <translation>Sertifikaadi kasutamiseks sisesta PIN2</translation>
+    </message>
+    <message>
+        <source>For using auth certificate enter PIN1 with pinpad</source>
+        <translation>Sertifikaadi kasutamiseks sisesta PIN1 kaardilugeja sõrmistikult</translation>
+    </message>
+    <message>
+        <source>For using sign certificate enter PIN2 with pinpad</source>
+        <translation>Sertifikaadi kasutamiseks sisesta PIN2 kaardilugeja sõrmistikult</translation>
     </message>
 </context>
 <context>

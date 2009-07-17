@@ -193,3 +193,18 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 
 	return signCert;
 }
+
+void QEstEIDSigner::showPinpad()
+{
+	pinpad = new PinDialog(
+		PinDialog::Pin2PinpadType,
+		SslCertificate::fromX509( Qt::HANDLE(getCert()) ),
+		qApp->activeWindow() );
+	pinpad->show();
+	QCoreApplication::processEvents();
+}
+
+void QEstEIDSigner::hidePinpad()
+{
+	pinpad->deleteLater();
+}
