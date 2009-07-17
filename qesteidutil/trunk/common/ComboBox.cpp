@@ -32,7 +32,7 @@ void ComboBox::hack()
 {
 	QListView *v = new QListView( this );
 	v->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-//	v->setMinimumHeight( 75 );
+	v->setMinimumHeight( 50 );
 	v->setModel( model() );
 	setView( v );
 }
