@@ -206,6 +206,9 @@ int main(int argc, char *argv[])
 						char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
 						
 						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+							int cpid;
+							
+							wait(&cpid);
 							result = 0;
 						} else {
 							fprintf(stderr, "dscl failed.\n");
@@ -214,6 +217,9 @@ int main(int argc, char *argv[])
 						char *args[] = { ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL };
 						
 						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+							int cpid;
+							
+							wait(&cpid);
 							result = 0;
 						} else {
 							fprintf(stderr, "dscl failed.\n");
