@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EstEIDSigner")]
 [assembly: AssemblyDescription("Estonian EID PDF Signer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sertifitseerimiskeskus")]
+[assembly: AssemblyCompany("SmartLink")]
 [assembly: AssemblyProduct("EstEIDSigner")]
 [assembly: AssemblyCopyright("Copyright © SK 2009")]
 [assembly: AssemblyTrademark("")]
