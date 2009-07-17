@@ -5,9 +5,11 @@
 
 class BaseDigest;
 
+#include "EstEIDSession.h"
+
 enum HASH_ALGO { SHA1_ALGORITHM, SHA256_ALGORITHM };
 
-class EstEIDReader
+class EstEIDReader: public EstEIDSession
 {
 public:
     EstEIDReader();
@@ -36,8 +38,6 @@ protected:
         void *value,
         ulong *size);
 private:
-    void *m_module;
-    CK_FUNCTION_LIST_PTR m_p11;
     CK_SLOT_ID_PTR m_p11_slots;
     BaseDigest *m_digest;
     ulong m_digest_algorithm;
