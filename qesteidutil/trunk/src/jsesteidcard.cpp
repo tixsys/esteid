@@ -24,12 +24,19 @@
 #include <QDebug>
 #include <QDate>
 #include <QLocale>
+#include <QTextCodec>
 
 #include "jsesteidcard.h"
 #include "common/CertificateWidget.h"
 #include "common/SslCertificate.h"
 
 using namespace std;
+
+static QString getName( const std::string &data )
+{
+	QTextCodec *c = QTextCodec::codecForName("Windows-1252");
+	return SslCertificate::formatName( c->toUnicode( data.c_str() ) );
+}
 
 JsEsteidCard::JsEsteidCard( QObject *parent )
 :	QObject( parent )
@@ -73,9 +80,9 @@ void JsEsteidCard::reloadData() {
         // Read all personal data
         m_card->readPersonalData(tmp,EstEidCard::SURNAME,EstEidCard::COMMENT4);
 
-        surName = SslCertificate::formatName( tmp[EstEidCard::SURNAME].c_str() );
-        firstName = SslCertificate::formatName( tmp[EstEidCard::FIRSTNAME].c_str() );
-        middleName = SslCertificate::formatName( tmp[EstEidCard::MIDDLENAME].c_str() );
+		surName = getName( tmp[EstEidCard::SURNAME]  );
+		firstName = getName( tmp[EstEidCard::FIRSTNAME] );
+		middleName = getName( tmp[EstEidCard::MIDDLENAME] );
         sex = tmp[EstEidCard::SEX].c_str();
         citizen = tmp[EstEidCard::CITIZEN].c_str();
         birthDate = tmp[EstEidCard::BIRTHDATE].c_str();
