@@ -121,8 +121,9 @@ void digidoc::PKCS11Signer::loadDriver(const std::string& driver) throw(SignExce
 
 void digidoc::PKCS11Signer::loadDriver() throw(SignException)
 {
-	d->driver = Conf::getInstance()->getPKCS11DriverPath();
-	loadDriver(d->driver);
+    if(Conf::getInstance())
+        d->driver = Conf::getInstance()->getPKCS11DriverPath();
+    loadDriver(d->driver);
 }
 
 /**
@@ -252,7 +253,11 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
     {
         int rv = 0;
         if(d->signSlot->token->secureLogin)
+        {
+            showPinpad();
             rv = PKCS11_login(d->signSlot, 0, NULL);
+            hidePinpad();
+        }
         else
             rv = PKCS11_login(d->signSlot, 0, getPin(d->createPKCS11Cert(d->signSlot, d->signCertificate)).c_str());
         if(rv != 0)

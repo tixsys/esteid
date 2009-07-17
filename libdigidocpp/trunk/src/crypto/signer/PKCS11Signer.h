@@ -55,6 +55,8 @@ namespace digidoc
            */
           virtual PKCS11Cert selectSigningCertificate(std::vector<PKCS11Cert> certificates) throw(SignException) = 0;
 
+          virtual void showPinpad() {};
+          virtual void hidePinpad() {};
       public:
           /**
            * Abstract method that returns PIN code for the selected signing certificate.
