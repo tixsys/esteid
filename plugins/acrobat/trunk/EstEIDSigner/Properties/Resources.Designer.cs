@@ -133,15 +133,6 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vale PIN.
-        /// </summary>
-        internal static string CKR_PIN_INCORRECT {
-            get {
-                return ResourceManager.GetString("CKR_PIN_INCORRECT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Valitud sertifikaati ei saa kasutada allkirjastamiseks.
         /// </summary>
         internal static string INVALID_CERT {
@@ -156,6 +147,15 @@ namespace EstEIDSigner.Properties {
         internal static string MEMORY_ERROR {
             get {
                 return ResourceManager.GetString("MEMORY_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PIN-kood on tühi.
+        /// </summary>
+        internal static string NO_PIN_SUPPLIED {
+            get {
+                return ResourceManager.GetString("NO_PIN_SUPPLIED", resourceCulture);
             }
         }
         

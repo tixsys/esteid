@@ -141,14 +141,14 @@
   <data name="CERT_READ_FAILURE" xml:space="preserve">
     <value>Sertifikaadi lugemine ebaõnnestus</value>
   </data>
-  <data name="CKR_PIN_INCORRECT" xml:space="preserve">
-    <value>Vale PIN</value>
-  </data>
   <data name="INVALID_CERT" xml:space="preserve">
     <value>Valitud sertifikaati ei saa kasutada allkirjastamiseks</value>
   </data>
   <data name="MEMORY_ERROR" xml:space="preserve">
     <value>Mälupuhver on täis</value>
+  </data>
+  <data name="NO_PIN_SUPPLIED" xml:space="preserve">
+    <value>PIN-kood on tühi</value>
   </data>
   <data name="OUT_OF_MEMORY" xml:space="preserve">
     <value>Mälu on otsas</value>
