@@ -131,7 +131,7 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	connect( ldap, SIGNAL(error(QString)), SLOT(showError(QString)) );
 
 	validator = new IKValidator( this );
-	on_searchType_activated( 0 );
+	on_searchType_currentIndexChanged( 0 );
 	add->setEnabled( false );
 	progress->setVisible( false );
 }
@@ -238,9 +238,8 @@ void KeyAddDialog::on_search_clicked()
 	}
 }
 
-void KeyAddDialog::on_searchType_activated( int index )
+void KeyAddDialog::on_searchType_currentIndexChanged( int index )
 {
-	searchType->setCurrentIndex( index );
 	if( index == 0 )
 		searchContent->setValidator( validator );
 	else
@@ -252,7 +251,7 @@ void KeyAddDialog::on_searchType_activated( int index )
 
 void KeyAddDialog::on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int )
 {
-	on_searchType_activated( item->data( 0, Qt::UserRole ).toInt() );
+	searchType->setCurrentIndex( item->data( 0, Qt::UserRole ).toInt() );
 	if( searchType->currentIndex() == 0 )
 		searchContent->setText( item->text( 0 ).split( ',' ).value( 2 ) );
 	else
@@ -319,10 +318,14 @@ void KeyAddDialog::showResult( const QList<CKey> &result )
 		skView->addTopLevelItem( i );
 	}
 
-	if( skKeys.isEmpty() )
-		showError( tr("Empty result") );
-
 	disableSearch( false );
 	add->setEnabled( true );
-	add->setFocus();
+
+	if( !skKeys.isEmpty() )
+	{
+		skView->setCurrentIndex( skView->model()->index( 0, 0 ) );
+		add->setFocus();
+	}
+	else
+		showError( tr("Empty result") );
 }

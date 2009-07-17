@@ -80,7 +80,7 @@ private Q_SLOTS:
 	void addFile();
 	void on_add_clicked();
 	void on_search_clicked();
-	void on_searchType_activated( int index );
+	void on_searchType_currentIndexChanged( int index );
 	void on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int column );
 	void showError( const QString &msg );
 	void showResult( const QList<CKey> &result );
