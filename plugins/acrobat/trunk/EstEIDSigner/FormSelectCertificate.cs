@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ * Copyright (C) 2009  Manuel Matonin <manuel@smartlink.ee>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301  USA
+ */ 
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,11 +52,7 @@ namespace EstEIDSigner
             head[2].Text = "Kehtivusaeg";
             head[2].Width = (int)(this.listCertificates.Width * 0.25);
             
-            listCertificates.Columns.AddRange(head);
-
-            /*listCertificates.Columns.Add("Väljastatud", -2, HorizontalAlignment.Center);
-            listCertificates.Columns.Add("Väljastaja", -2, HorizontalAlignment.Center);
-            listCertificates.Columns.Add("Kehtivusaeg", -2, HorizontalAlignment.Center);*/
+            listCertificates.Columns.AddRange(head);            
         }
 
         public int Add(string issuedTo, string issudeBy, string validUntil)
