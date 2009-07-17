@@ -30,7 +30,7 @@
 class IKValidator;
 class LdapSearch;
 
-class KeyWidget: public QLabel
+class KeyWidget: public QWidget
 {
 	Q_OBJECT
 

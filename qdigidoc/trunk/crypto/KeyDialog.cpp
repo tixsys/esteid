@@ -39,23 +39,25 @@
 #include <QTextStream>
 
 KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
-:	QLabel( parent )
+:	QWidget( parent )
 ,	m_id( id )
 ,	m_key( key )
 {
-	connect( this, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
+	setToolTip( key.recipient );
+	QLabel *label = new QLabel( key.recipient, this );
+	label->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
+
 	QString content;
-	QTextStream s( &content );
-	s << key.recipient;
-	s << "<p align=\"right\" style=\"margin: 0px\">";
-	s << "<a href=\"details\">" << tr("Show details") << "</a>";
+	content += "<a href=\"details\">" + tr("Show details") + "</a>";
 	if( !encrypted )
-	{
-		s << "<br />";
-		s << "<a href=\"remove\">" << tr("Remove") << "</a>";
-	}
-	s << "</p>";
-	setText( content );
+		content += "<br /><a href=\"remove\">" + tr("Remove") + "</a>";
+	QLabel *btn = new QLabel( content, this );
+	btn->setAlignment( Qt::AlignRight );
+	connect( btn, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
+
+	QVBoxLayout *l = new QVBoxLayout( this );
+	l->addWidget( label );
+	l->addWidget( btn );
 }
 
 void KeyWidget::link( const QString &url )
