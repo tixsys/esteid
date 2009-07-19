@@ -183,10 +183,7 @@ QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
 		RSA *rsa = EVP_PKEY_get1_RSA( key );
 		alg = QSsl::Rsa;
 		type = rsa->d ? QSsl::PrivateKey : QSsl::PublicKey;
-		if( rsa->d )
-			len = i2d_RSAPrivateKey( rsa, &data );
-		else
-			len = i2d_RSAPublicKey( rsa, &data );
+		len = rsa->d ? i2d_RSAPrivateKey( rsa, &data ) : i2d_RSAPublicKey( rsa, &data );
 		RSA_free( rsa );
 		break;
 	}
@@ -195,10 +192,7 @@ QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
 		DSA *dsa = EVP_PKEY_get1_DSA( key );
 		alg = QSsl::Dsa;
 		type = dsa->priv_key ? QSsl::PrivateKey : QSsl::PublicKey;
-		if( dsa->priv_key )
-			len = i2d_DSAPrivateKey( dsa, &data );
-		else
-			len = i2d_DSAPublicKey( dsa, &data );
+		len = dsa->priv_key ? i2d_DSAPrivateKey( dsa, &data ) : i2d_DSAPublicKey( dsa, &data );
 		DSA_free( dsa );
 		break;
 	}
@@ -209,7 +203,7 @@ QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
 	if( len > 0 )
 	{
 		k = QSslKey( QByteArray( (char*)data, len ), alg, QSsl::Der, type );
-		free( data );
+		OPENSSL_free( data );
 	}
 
 	return k;
