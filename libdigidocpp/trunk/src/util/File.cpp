@@ -574,7 +574,7 @@ std::string digidoc::util::File::fullPathUrl(const std::string& fullDirectory, c
 void digidoc::util::File::removeFile(const std::string& fname)
 {
     std::string _fname = encodeName(fname);
-    int result = result = remove( _fname.c_str() );
+    int result = remove( _fname.c_str() );
     if ( result != 0 )
     {
         WARN( "Tried to remove the temporary file or directory '%s', but failed.", _fname.c_str() );
