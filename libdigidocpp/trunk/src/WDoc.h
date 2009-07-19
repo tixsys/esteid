@@ -32,9 +32,11 @@ public:
 	void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
 
 	void setType( DocumentType type );
-
+	DocumentType documentType() const;
+			
 private:
 	ADoc *m_doc;
+	DocumentType m_type;
 };
 
 }

@@ -101,6 +101,7 @@ void WDoc::setType( DocumentType type )
 	case DDocType: m_doc = new DDoc(); break;
 	default: m_doc = 0;
 	}
+	m_type = type;
 }
 
 void WDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
@@ -117,4 +118,12 @@ unsigned int WDoc::signatureCount() const
 		throw BDocException( __FILE__, __LINE__, "Document not open" );
 
 	return m_doc->signatureCount();
+}
+
+WDoc::DocumentType WDoc::documentType() const
+{
+	if( !m_doc )
+		throw BDocException( __FILE__, __LINE__, "Document not open" );
+
+	return m_type;
 }
