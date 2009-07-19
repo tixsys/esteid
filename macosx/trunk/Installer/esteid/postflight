@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Configure launchd
-#/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable
+# Configure automatic software updates
+/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable
 
 echo "You have succesfully installed the Estonian ID-card software!"
 exit 0

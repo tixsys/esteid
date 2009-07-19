@@ -179,10 +179,14 @@ class Application
 		binaries = Pathname.new(@path).join(@options.binaries).to_s
 		
 		# Cleanup
-		FileUtils.mkdir_p(binaries) unless File.exists? binaries
 		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
+		FileUtils.rm_rf(File.join(binaries, '10.4')) if File.exists? File.join(binaries, '10.4')
+		FileUtils.rm_rf(File.join(binaries, '10.5')) if File.exists? File.join(binaries, '10.5')
+		FileUtils.mkdir_p(binaries) unless File.exists? binaries
+		FileUtils.mkdir_p(File.join(binaries, '10.4')) unless File.exists? File.join(binaries, '10.4')
+		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
 		
 		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
@@ -230,9 +234,11 @@ class Application
 		
 		puts "Building tokend..." if @options.verbose
 		
-		# FIXME: Broken build (10.4)?
+		# NOTE: This is more complicated and time consuming (10.4) so use binary builds instead.
 		#run_command 'xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world'
-		FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
+		#FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
+		run_command "tar -xzf tokend/OpenSC.tokend_tiger.tgz -C #{File.join(binaries, '10.4')}"
+		run_command "tar -xzf tokend/OpenSC.tokend_leopard.tgz -C #{File.join(binaries, '10.5')}"
 		
 		puts "\n" if @options.verbose
 	end
@@ -336,7 +342,9 @@ class Application
 			Dir.mkdir(@tmp)
 		end
 		
-		packages.each do |package|
+		pkgs = packages
+		
+		pkgs.each do |package|
 			# Load package configuration
 			name = package[:name]
 			identifier = package[:identifier]
@@ -481,6 +489,8 @@ class Application
 				
 				outlines = ""
 				choices = ""
+				script = ""
+				scounter = 0
 				
 				# Copy packages
 				files.each do |file|
@@ -492,9 +502,21 @@ class Application
 					pidentifier = plist['CFBundleIdentifier']
 					pversion = plist['CFBundleShortVersionString']
 					psize = plist['IFPkgFlagInstalledSize']
+					installCheck = nil
+					
+					pkgs.each do |pkg|
+						if pkg[:script] != nil and pkg[:identifier] == pidentifier
+							installCheck = "InstallCheck#{scounter}()"
+							script += "function " + installCheck + " {" + pkg[:script] + "}\n"
+							scounter += 1
+							break;
+						end
+					end
 					
 					outlines += "<line choice=\"#{pidentifier}.choice\" />\n"
-					choices += "<choice id=\"#{pidentifier}.choice\">\n"
+					choices += "<choice id=\"#{pidentifier}.choice\" "
+					choices += "selected=\"#{installCheck}\" enabled=\"#{installCheck}\" " unless installCheck.nil?
+					choices += ">\n"
 					choices += "<pkg-ref id=\"#{pidentifier}\" />\n"
 					choices += "</choice>\n"
 					choices += "<pkg-ref id=\"#{pidentifier}\" version=\"#{pversion}\" installKBytes=\"#{psize}\" auth=\"Root\">file:./Contents/Packages/#{File.basename(file)}</pkg-ref>\n"
@@ -504,13 +526,20 @@ class Application
 				file = File.new(File.join(contents, 'distribution.dist'), 'w')
 				file.puts "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
 				file.puts "<installer-script minSpecVersion=\"1.000000\" authoringTool=\"org.esteid.make\" authoringToolVersion=\"#{VERSION}\" authoringToolBuild=\"1\">"
-				file.puts "<options customize=\"never\" allow-external-scripts=\"yes\" rootVolumeOnly=\"true\" />"
+				file.puts "<options customize=\"never\" allow-external-scripts=\"no\" rootVolumeOnly=\"true\" />"
 				# FIXME: Uncomment to build complete installer
 				#file.puts "<background file=\"Background.tiff\" alignment=\"center\" scaling=\"none\" />"
 				#file.puts "<welcome file=\"Welcome.html\" />"
 				#file.puts "<readme file=\"ReadMe.html\" />"
 				#file.puts "<license file=\"License.html\" />"
 				#file.puts "<conclusion file=\"Conclusion.html\" />"
+				
+				if script.length > 0
+					file.puts "<script>"
+					file.puts script
+					file.puts "</script>"
+				end
+				
 				file.puts "<choices-outline>"
 				file.puts outlines
 				file.puts "</choices-outline>"
@@ -582,7 +611,7 @@ class Application
 				FileUtils.cd(Pathname.new(@path).join(@options.packages).to_s) do
 					dmg = dstname + '.dmg'
 					
-					`tar -czf #{dstname + '.tar.gz'} #{dstname + extension}`
+					#`tar -czf #{dstname + '.tar.gz'} #{dstname + extension}`
 					`rm #{dmg}` if File.exists? dmg
 					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{(@options.volname.nil?) ? dstname : @options.volname}" #{dmg}`
 					`setfile -a E #{dmg}`
@@ -761,18 +790,19 @@ class Application
 				:identifier => 'org.esteid.installer.pp',
 				:location => '/Library/PreferencePanes'
 			}, {
-				# For live testing
-				:name => 'esteid',
-				:dstname => 'esteid-dev',
-				:files => File.join(@options.packages, '*.pkg'),
-				:identifier => 'org.esteid.installer.dev',
-				:version => '0.0.1'
-			}, {
-				:name => 'esteid-tokend',
-				:files => File.join(@options.binaries, 'OpenSC.tokend'),
-				:froot => @options.binaries,
+				:name => 'esteid-tokend-leopard',
+				:files => File.join(@options.binaries, '10.5', 'OpenSC.tokend'),
+				:froot => File.join(@options.binaries, '10.5'),
+				:identifier => 'org.esteid.installer.tokend.10.5',
 				:location => '/System/Library/Security/tokend',
-				#:restart => 'RequiredRestart'
+				:script => "return system.version.ProductVersion >= '10.5';"
+			}, {
+				:name => 'esteid-tokend-tiger',
+				:files => File.join(@options.binaries, '10.4', 'OpenSC.tokend'),
+				:froot => File.join(@options.binaries, '10.4'),
+				:identifier => 'org.esteid.installer.tokend.10.4',
+				:location => '/System/Library/Security/tokend',
+				:script => "return system.version.ProductVersion &lt; '10.5';"
 			}, {
 				:name => 'esteid',
 				:files => File.join(@options.packages, '*.pkg'),
