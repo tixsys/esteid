@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+PKMKPIDFORAPP="$1/Contents/Resources/pkmkpidforapp"
+PKMKSENDAE="$1/Contents/Resources/pkmksendae"
+
+# Quit ID-card Utility
+RESULT=`"$PKMKPIDFORAPP" 'org.esteid.qesteidutil' 'ID-card Utility'`
+if [ $RESULT -gt 0 ]; then
+	RESULT=`"$PKMKSENDAE" $RESULT 'quit'`
+fi
+
+exit 0

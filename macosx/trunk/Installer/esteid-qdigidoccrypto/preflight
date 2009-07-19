@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+PKMKPIDFORAPP="$1/Contents/Resources/pkmkpidforapp"
+PKMKSENDAE="$1/Contents/Resources/pkmksendae"
+
+# Quit Digidoc3 Crypto
+RESULT=`"$PKMKPIDFORAPP" 'org.esteid.qdigidoccrypto' 'Digidoc3 Crypto'`
+if [ $RESULT -gt 0 ]; then
+	RESULT=`"$PKMKSENDAE" $RESULT 'quit'`
+fi
+
+exit 0

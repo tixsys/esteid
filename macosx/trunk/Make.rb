@@ -767,11 +767,13 @@ class Application
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
 				:name => 'esteid-qdigidoccrypto',
 				:files => File.join(@options.binaries, 'qdigidoccrypto.app'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Applications/Utilities'
 			}, {
@@ -783,6 +785,7 @@ class Application
 			}, {
 				:name => 'esteid-qdigidocclient',
 				:files => File.join(@options.binaries, 'qdigidocclient.app'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Applications'
 			}, {
