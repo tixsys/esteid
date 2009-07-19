@@ -604,7 +604,7 @@ class Application
 			FileUtils.cp_r(pkgroot, dst)
 			
 			# Hide the file extension
-			`setfile -a E #{dst}`
+			run_command "setfile -a E #{dst}"
 			
 			# Finally create .dmg and .tar.gz files
 			if identifier == 'org.esteid.installer'
@@ -612,9 +612,10 @@ class Application
 					dmg = dstname + '.dmg'
 					
 					#`tar -czf #{dstname + '.tar.gz'} #{dstname + extension}`
-					`rm #{dmg}` if File.exists? dmg
-					`hdiutil create -fs HFS+ -srcfolder "#{dstname + extension}" -volname "#{(@options.volname.nil?) ? dstname : @options.volname}" #{dmg}`
-					`setfile -a E #{dmg}`
+					FileUtils.rm_rf(dmg) if File.exists? dmg
+					run_command "hdiutil create -fs HFS+ -srcfolder \"#{dstname + extension}\" -volname \"#{(@options.volname.nil?) ? dstname : @options.volname}\" #{dmg}"
+					run_command "hdiutil internet-enable -yes #{dmg}"
+					run_command "setfile -a E #{dmg}"
 				end
 			end
 			
