@@ -526,6 +526,7 @@ class Application
 				file = File.new(File.join(contents, 'distribution.dist'), 'w')
 				file.puts "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"
 				file.puts "<installer-script minSpecVersion=\"1.000000\" authoringTool=\"org.esteid.make\" authoringToolVersion=\"#{VERSION}\" authoringToolBuild=\"1\">"
+				file.puts "<title>#{package[:title]}</title>" unless package[:title].nil?
 				file.puts "<options customize=\"never\" allow-external-scripts=\"no\" rootVolumeOnly=\"true\" />"
 				# FIXME: Uncomment to build complete installer
 				#file.puts "<background file=\"Background.tiff\" alignment=\"center\" scaling=\"none\" />"
@@ -806,6 +807,7 @@ class Application
 				:script => "return system.version.ProductVersion &lt; '10.5';"
 			}, {
 				:name => 'esteid',
+				:title => 'ID-card',
 				:files => File.join(@options.packages, '*.pkg'),
 				:identifier => 'org.esteid.installer',
 				:version => '1.0'
