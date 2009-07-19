@@ -134,7 +134,7 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 	if( len >= 0 )
 	{
 		der = QByteArray( (char*)cert, len );
-		free( cert );
+		OPENSSL_free( cert );
 	}
 	return QSslCertificate( der, QSsl::Der );
 }
