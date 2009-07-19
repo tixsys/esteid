@@ -29,9 +29,7 @@ FILE=build/Packages/${NAME}
 
 env
 ./make.rb -V -f --sign build/Manifest.key --arch ${ARCH} installer
-
-hdiutil create -fs HFS+ -srcfolder build/Packages/esteid-dev.mpkg -volname esteid-dev ${FILE}
-setfile -a E ${FILE}
+cp build/Packages/Installer.dmg ${FILE}
 
 if test -n "$2"; then
 	scp ${FILE} $2
