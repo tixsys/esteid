@@ -33,6 +33,15 @@ cp build/Packages/Installer.dmg ${FILE}
 
 if test -n "$2"; then
 	scp ${FILE} $2
+	sftp $2/Repository <<EOT
+	rm Manifest.xml
+	rm Manifest.sig
+	rm Packages/*
+	put build/Repository/Packages/* Packages
+	put build/Repository/Manifest.sig
+	put build/Repository/Manifest.xml
+	quit
+EOT
 fi
 
 echo "${CSUM_NEW}" > ${CSUM_FILE}
