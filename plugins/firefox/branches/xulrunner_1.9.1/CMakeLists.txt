@@ -131,18 +131,17 @@ set(GECKO_SDK_INCLUDE_DIRS
     ${GECKO_SDK_DIR}/include/caps
     ${GECKO_SDK_DIR}/include/necko
     ${GECKO_SDK_DIR}/sdk/include
-
 )
 include_directories(${GECKO_SDK_INCLUDE_DIRS})
 
 # Xulrunner 1.9.1 has npfunctions.h instead of npupp.h
-include(CheckIncludeFiles)
-set(CMAKE_REQUIRED_INCLUDES ${GECKO_SDK_INCLUDE_DIRS})
-check_include_files(npfunctions.h HAVE_NPFUNCTIONS_H)
-configure_file(esteid-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/esteid-config.h )
+find_file(HAVE_NPFUNCTIONS_H npfunctions.h ${GECKO_SDK_INCLUDE_DIRS})
+configure_file(esteid-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/esteid-config.h)
 
 if(WIN32)
   add_definitions(-DXP_WIN -D_USRDLL)
+elseif(UNIX)
+  add_definitions(-DXP_UNIX)
 endif(WIN32)
 
 # XPCOM modules must be built with 2 byte wchar,

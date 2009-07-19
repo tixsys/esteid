@@ -39,7 +39,6 @@
 #define pluginbase_h_
 
 #include "npplat.h"
-#include "typedefs.h"
 
 struct nsPluginCreateData
 {
