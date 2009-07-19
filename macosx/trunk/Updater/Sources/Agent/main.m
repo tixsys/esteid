@@ -148,134 +148,156 @@ int main(int argc, char *argv[])
 	AuthorizationExternalForm externalAuthorization;
 	AuthorizationRef authorization;
 	int result = EXIT_FAILURE;
+	int noauth = 0;
 	
-	if(read(0, &externalAuthorization, sizeof(externalAuthorization)) == sizeof(externalAuthorization)) {
-		if(AuthorizationCreateFromExternalForm(&externalAuthorization, &authorization) == errAuthorizationSuccess) {
-			if(geteuid() != 0 && !(argc == 2 && strcmp(argv[1], "--repair") == 0)) {
+	if(argc > 1) {
+		if(strcmp(argv[argc - 1], "--noauth") == 0) {
+			authorization = NULL;
+			noauth = 1;
+			argc--;
+		}
+	}
+	
+	if(noauth || read(0, &externalAuthorization, sizeof(externalAuthorization)) == sizeof(externalAuthorization)) {
+		if(noauth || AuthorizationCreateFromExternalForm(&externalAuthorization, &authorization) == errAuthorizationSuccess) {
+			if(!noauth && geteuid() != 0 && !(argc > 1 && strcmp(argv[argc - 1], "--repair") == 0)) {
 				char *args[] = { "--repair", NULL };
 				FILE *pipe = NULL;
 				
 				if(AuthorizationExecuteWithPrivileges(authorization, [EstEIDAgentGetExecutablePath() UTF8String], kAuthorizationFlagDefaults, args, &pipe) == errAuthorizationSuccess) {
-					int status;
+					int cpid;
 					
 					fwrite(&externalAuthorization, 1, sizeof(externalAuthorization), pipe);
 					fflush(pipe);
 					fclose(pipe);
 					
-					if(wait(&status) != -1 && WIFEXITED(status)) {
-						result = WEXITSTATUS(status);
+					if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
+						result = WEXITSTATUS(cpid);
 					}
 				}
-			} else {
-				result = 0;
-			}
-			
-			if(result == 0) {
-				result = EXIT_FAILURE;
 				
-				if(argc == 2 && strcmp(argv[1], "--repair") == 0) {
-					int tool = open([EstEIDAgentGetExecutablePath() fileSystemRepresentation], O_NONBLOCK | O_RDONLY | O_EXLOCK, 0);
-					struct stat info;
+				if(result == 0) {
+					char *args[argc];
 					
-					if((tool != -1) && (fstat(tool, &info) == 0)) {
-						int chownerr = (info.st_uid != 0) ? fchown(tool, 0, info.st_gid) : 0;
-						int chmoderr = fchmod(tool, (info.st_mode & (~(S_IWGRP | S_IWOTH))) | S_ISUID);
-						
-						close(tool);
-						
-						if(chownerr == 0 && chmoderr == 0) {
-							result = 0;
-						}
-					}
+					args[argc - 1] = NULL;
+					for(int i = 1; i < argc; i++) args[i - 1] = argv[i];
 					
-					if(result == 0) {
-						fprintf(stderr, "Repair succeeded!\n");
+					if(AuthorizationExecuteWithPrivileges(authorization, [EstEIDAgentGetExecutablePath() UTF8String], kAuthorizationFlagDefaults, args, &pipe) == errAuthorizationSuccess) {
+						int cpid;
+						
+						fwrite(&externalAuthorization, 1, sizeof(externalAuthorization), pipe);
+						fflush(pipe);
+						fclose(pipe);
+						
+						result = (wait(&cpid) != -1 && WIFEXITED(cpid)) ? WEXITSTATUS(cpid) : EXIT_FAILURE;
 					} else {
-						fprintf(stderr, "Repair failed.\n");
+						result = EXIT_FAILURE;
 					}
+				}
+			} else if(argc == 2 && strcmp(argv[1], "--repair") == 0) {
+				int tool = open([EstEIDAgentGetExecutablePath() fileSystemRepresentation], O_NONBLOCK | O_RDONLY | O_EXLOCK, 0);
+				struct stat info;
+				
+				if((tool != -1) && (fstat(tool, &info) == 0)) {
+					int chownerr = (info.st_uid != 0) ? fchown(tool, 0, info.st_gid) : 0;
+					int chmoderr = fchmod(tool, (info.st_mode & (~(S_IWGRP | S_IWOTH))) | S_ISUID);
+					
+					close(tool);
+					
+					if(chownerr == 0 && chmoderr == 0) {
+						result = 0;
+					}
+				}
+				
+				if(result == 0) {
+					fprintf(stderr, "Repair succeeded!\n");
+				} else {
+					fprintf(stderr, "Repair failed.\n");
+				}
 				// [enable|disable] [file]
-				} else if(argc == 4 && strcmp(argv[1], "--launchd") == 0) {
-					if(strcmp(argv[2], "enable") == 0) {
-						result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), YES);
-					} else if(strcmp(argv[2], "disable") == 0) {
-						result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), NO);
-					}
+			} else if(argc == 4 && strcmp(argv[1], "--launchd") == 0) {
+				if(strcmp(argv[2], "enable") == 0) {
+					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), YES);
+				} else if(strcmp(argv[2], "disable") == 0) {
+					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), NO);
+				}
 				// [enable|disable] [user] [entry]
-				} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {
-					if(strcmp(argv[2], "enable") == 0) {
-						char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
+			} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {
+				if(strcmp(argv[2], "enable") == 0) {
+					char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
+					
+					if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+						int cpid;
 						
-						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
-							int cpid;
-							
-							wait(&cpid);
-							result = 0;
-						} else {
-							fprintf(stderr, "dscl failed.\n");
+						if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
+							result = WEXITSTATUS(cpid);
 						}
-					} else if(strcmp(argv[2], "disable") == 0) {
-						char *args[] = { ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL };
-						
-						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
-							int cpid;
-							
-							wait(&cpid);
-							result = 0;
-						} else {
-							fprintf(stderr, "dscl failed.\n");
-						}
+					} else {
+						fprintf(stderr, "dscl failed.\n");
 					}
+				} else if(strcmp(argv[2], "disable") == 0) {
+					char *args[] = { ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL };
+					
+					if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+						int cpid;
+						
+						if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
+							result = WEXITSTATUS(cpid);
+						}
+					} else {
+						fprintf(stderr, "dscl failed.\n");
+					}
+				}
 				// [checksum] [file] [target]
-				} else if((argc == 4 || argc == 5) && strcmp(argv[1], "--install") == 0) {
-					char *tmp1 = strdup("/tmp/esteid-agent/XXXXXX");
-					
-					mkdir("/tmp/esteid-agent", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-					
-					setenv("OLD_PATH", argv[3], 1);
-					setenv("NEW_PATH", mktemp(tmp1), 1);
-					result = system("/bin/cp \"$OLD_PATH\" \"$NEW_PATH\"");
-					
-					if(result == 0) {
-						// Verify the checksum one last time...
-						if([EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
-							char *tmp2 = mkdtemp(strdup("/tmp/esteid-agent/XXXXXX"));
+			} else if((argc == 4 || argc == 5) && strcmp(argv[1], "--install") == 0) {
+				char *tmp1 = strdup("/tmp/esteid-agent/XXXXXX");
+				
+				mkdir("/tmp/esteid-agent", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+				
+				setenv("OLD_PATH", argv[3], 1);
+				setenv("NEW_PATH", mktemp(tmp1), 1);
+				result = system("/bin/cp \"$OLD_PATH\" \"$NEW_PATH\"");
+				
+				if(result == 0) {
+					// Verify the checksum one last time...
+					if([EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
+						char *tmp2 = mkdtemp(strdup("/tmp/esteid-agent/XXXXXX"));
+						
+						setenv("PKG_PATH", tmp2, 1);
+						
+						if((result = system("/usr/bin/ditto -x -k \"$NEW_PATH\" \"$PKG_PATH\"")) == 0) {
+							setenv("TARGET_VOLUME", (argc == 5) ? argv[4] : "/", 1);
 							
-							setenv("PKG_PATH", tmp2, 1);
-							
-							if((result = system("/usr/bin/ditto -x -k \"$NEW_PATH\" \"$PKG_PATH\"")) == 0) {
-								setenv("TARGET_VOLUME", (argc == 5) ? argv[4] : "/", 1);
-								
-								if((result = system("/usr/sbin/installer -pkg \"$PKG_PATH\" -target \"$TARGET_VOLUME\"")) == 0) {
-									fprintf(stderr, "Installed %s successfully\n", argv[3]);
-								}
-								
-								unsetenv("TARGET_VOLUME");
-							} else {
-								fprintf(stderr, "Couldn't unflatten the package\n");
-								result = -10;
+							if((result = system("/usr/sbin/installer -pkg \"$PKG_PATH\" -target \"$TARGET_VOLUME\"")) == 0) {
+								fprintf(stderr, "Installed %s successfully\n", argv[3]);
 							}
 							
-							system("/bin/rm -R \"$PKG_PATH\"");
-							unsetenv("PKG_PATH");
-							free(tmp2);
+							unsetenv("TARGET_VOLUME");
 						} else {
-							fprintf(stderr, "Checksum doesn't match for the specified file\n");
+							fprintf(stderr, "Couldn't unflatten the package\n");
+							result = -10;
 						}
+						
+						system("/bin/rm -R \"$PKG_PATH\"");
+						unsetenv("PKG_PATH");
+						free(tmp2);
 					} else {
-						fprintf(stderr, "Failed to copy %s to %s (error=%d)\n", argv[3], tmp1, result);
+						fprintf(stderr, "Checksum doesn't match for the specified file\n");
 					}
-					
-					system("/bin/rm \"$NEW_PATH\"");
-					unsetenv("OLD_PATH");
-					unsetenv("NEW_PATH");
-					free(tmp1);
-				} else if(argc == 2 && strcmp(argv[1], "--preflight") == 0) {
-					// Do nothing, reserved for future usage.
-					result = 0;
-				} else if(argc == 2 && strcmp(argv[1], "--postflight") == 0) {
-					// Do nothing, reserved for future usage.
-					result = 0;
+				} else {
+					fprintf(stderr, "Failed to copy %s to %s (error=%d)\n", argv[3], tmp1, result);
 				}
+				
+				system("/bin/rm \"$NEW_PATH\"");
+				unsetenv("OLD_PATH");
+				unsetenv("NEW_PATH");
+				free(tmp1);
+			} else if(argc == 2 && strcmp(argv[1], "--preflight") == 0) {
+				// Do nothing, reserved for future usage.
+				result = 0;
+			} else if(argc == 2 && strcmp(argv[1], "--postflight") == 0) {
+				// Do nothing, reserved for future usage.
+				result = 0;
 			}
 		}
 	}
