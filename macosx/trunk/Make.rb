@@ -317,7 +317,7 @@ class Application
 						end
 					end
 					
-					file.puts "\t\t<package id=\"#{identifier}\" version=\"#{version}\" length=\"#{File.stat(path).size}\" sha1=\"#{sha1[-41,40]}\"#{(restart) ? ' restart=\'1\'' : ''}#{(opsystem.nil?) ? '' : ' operatingSystem=\'' + opsystem + '\'' }>Packages/#{name}</package>"
+					file.puts "\t\t<package id=\"#{identifier}\" version=\"#{version}\" length=\"#{File.stat(path).size}\" sha1=\"#{sha1[-41,40]}\"#{(restart) ? ' restart=\'1\'' : ''}#{(opsystem.nil?) ? '' : ' macos=\'' + opsystem + '\'' }>Packages/#{name}</package>"
 				else
 					puts "No package #{package} was found. Stopped." if !@options.quiet
 					raise 'No package'
