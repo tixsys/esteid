@@ -7,7 +7,7 @@
 #import "EstEIDPackage.h"
 #import "NSThread+Additions.h"
 
-#define NO_OP
+//#define NO_OP
 
 @implementation EstEIDInstaller
 
