@@ -763,7 +763,7 @@ class Application
 				:froot => @options.qt,
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
-				:version => '1.0'
+				:version => '4.5.2'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
