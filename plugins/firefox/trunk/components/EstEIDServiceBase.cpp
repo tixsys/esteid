@@ -26,7 +26,7 @@ void EstEIDServiceBase::Worker() {
 
 void EstEIDServiceBase::Poll() {
 	try {
-		int nReaders;
+		size_t nReaders;
 
 		{	idAutoLock lock(this);
 			nReaders = mgr.getReaderCount();
