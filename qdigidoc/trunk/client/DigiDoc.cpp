@@ -522,3 +522,14 @@ QList<DigiDocSignature> DigiDoc::signatures()
 	catch( const Exception &e ) { setLastError( e ); }
 	return list;
 }
+
+WDoc::DocumentType DigiDoc::documentType()
+{
+	if( isNull() )
+	{
+		setLastError( tr("Container is not open") );
+		return WDoc::BDocType;
+	}
+
+	return b->documentType();
+}

@@ -27,9 +27,10 @@
 #include <QSslCertificate>
 #include <QStringList>
 
+#include <digidocpp/WDoc.h>
+
 namespace digidoc
 {
-	class WDoc;
 	class Document;
 	class Exception;
 	class Signer;
@@ -109,6 +110,7 @@ public:
 	QSslCertificate signCert();
 	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
+	digidoc::WDoc::DocumentType documentType();
 
 Q_SIGNALS:
 	void dataChanged();

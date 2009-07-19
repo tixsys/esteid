@@ -44,8 +44,10 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     m_http = new QHttp( this );
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
-    m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
-   //m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
+		m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+	else
+		m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
 
 	mobileResults[ "START" ] = tr( "Signing in process" );
 	mobileResults[ "REQUEST_OK" ] = tr( "Request accepted" );
@@ -58,6 +60,10 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "SENDING_ERROR" ] = tr( "Request sending error" );
 	mobileResults[ "SIM_ERROR" ] = tr( "SIM error" );
 	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
+	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
+
+	statusTimer = new QTimer( this );
+	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 }
 
 void MobileDialog::sslErrors(const QList<QSslError> &)
@@ -67,7 +73,9 @@ void MobileDialog::httpRequestFinished( int id, bool error )
 {
     if ( error)
     {
-        qDebug() << "Download failed: " << m_http->errorString();
+		qDebug() << "Download failed: " << m_http->errorString() << m_http->error();
+		if ( m_http->error() == QHttp::HostNotFound )
+			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) );
         return;
     }
 
@@ -115,7 +123,17 @@ void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 	if ( !getFiles() )
 		return;
 
+	startTime.start();
+	statusTimer->start( 1000 );
+
 	labelError->setText( mobileResults.value( "START" ) );
+
+	QByteArray format = m_doc->documentType() == digidoc::WDoc::BDocType ?
+			"<Format xsi:type=\"xsd:String\">BDOC</Format>"
+			"<Version xsi:type=\"xsd:String\">1.0</Version>" :
+			"<Format xsi:type=\"xsd:String\">DIGIDOC-XML</Format>"
+			"<Version xsi:type=\"xsd:String\">1.3</Version>";
+
 	QByteArray message = "<IDCode xsi:type=\"xsd:String\">" + ssid + "</IDCode>"
 			"<PhoneNo xsi:type=\"xsd:String\">" + cell + "</PhoneNo>"
 			"<Language xsi:type=\"xsd:String\">EST</Language>"
@@ -123,9 +141,7 @@ void MobileDialog::sign( const QByteArray &ssid, const QByteArray &cell )
 			"<MessageToDisplay xsi:type=\"xsd:String\">DigiDoc3</MessageToDisplay>"
 			+ signature.toLatin1() +
 			"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
-			+ files +
-			"<Format xsi:type=\"xsd:String\">DIGIDOC-XML</Format>"
-			"<Version xsi:type=\"xsd:String\">1.3</Version>"
+			+ files + format +
 			"<SignatureID xsi:type=\"xsd:String\">S" + QByteArray::number( m_doc->signatures().size() ) + "</SignatureID>"
 			"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
 			"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>";
@@ -148,8 +164,11 @@ bool MobileDialog::getFiles()
 			return false;
 		}
 		QByteArray digest( (char*)&d[0], d.size() );
+		QFileInfo f( QString::fromStdString( file.getPath() ) );
 		files += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
-			"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"
+			 + (m_doc->documentType() == digidoc::WDoc::BDocType ?
+				"<Id xsi:type=\"xsd:String\">/" + f.fileName() + "</Id>" :
+				"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"	) +
 			"<DigestType xsi:type=\"xsd:String\">sha1</DigestType>"
 			"<DigestValue xsi:type=\"xsd:String\">" + digest.toBase64() + "</DigestValue>"
 			"</DataFileDigest>";
@@ -164,14 +183,6 @@ void MobileDialog::startSessionResult( const QDomElement &element )
     sessionCode=element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
     if ( sessionCode )
 	{
-		if ( !statusTimer )
-		{
-			statusTimer = new QTimer( this );
-			connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
-		}
-		startTime.start();
-		statusTimer->start( 1000 );
-
 		labelCode->setText( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() );
 		if ( !m_timer )
 		{
@@ -212,60 +223,17 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		if ( file.open() )
 		{
 			fName = file.fileName();
-			QByteArray data;
+			qDebug() << fName;
+			QByteArray data = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>";
 
-			data += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-						"<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">";
+			//data += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
+				data += "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">";
 
 			data += element.elementsByTagName( "Signature" ).item(0).toElement().text().toLatin1();
 
-			data += "</SignedDoc>";
-			/*
-			QRegExp rx( "<Exponent>(.*)</Exponent>" );
-			rx.indexIn( data );
-			data.replace( rx.cap(1) + "<SignedProperties", "<SignedProperties" )
-				.replace( "<Exponent>AQAB","<Exponent>F4O3")
-				.replace( "xmlns=\"http://www.w3.org/2000/09/xmldsig#\"", "xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"")
-				.replace( "v1.1.1", "v1.3.2" )
-				.replace( "<ResponderID>", "<ResponderID><ByName>" )
-				.replace( "</ResponderID>", "</ByName></ResponderID>" )
-				.replace( "<Signature ", "<ds:Signature xmlns=\"http://uri.etsi.org/01903/v1.3.2#\" " )
-				.replace( "</Signature>", "</ds:Signature>" )
-				.replace( "<SignedInfo", "<ds:SignedInfo" )
-				.replace( "</SignedInfo>", "</ds:SignedInfo>" )
-				.replace( "<CanonicalizationMethod", "<ds:CanonicalizationMethod" )
-				.replace( "</CanonicalizationMethod>", "</ds:CanonicalizationMethod>" )
-				.replace( "<SignatureMethod", "<ds:SignatureMethod" )
-				.replace( "</SignatureMethod>", "</ds:SignatureMethod>" )
-				.replace( "<Reference", "<ds:Reference" )
-				.replace( "</Reference>", "</ds:Reference>" )
-				.replace( "<DigestMethod", "<ds:DigestMethod" )
-				.replace( "</DigestMethod>", "</ds:DigestMethod>" )
-				.replace( "<DigestValue", "<ds:DigestValue" )
-				.replace( "</DigestValue>", "</ds:DigestValue>" )
-				.replace( "<SignatureValue", "<ds:SignatureValue" )
-				.replace( "</SignatureValue>", "</ds:SignatureValue>" )
-				.replace( "<KeyInfo", "<ds:KeyInfo" )
-				.replace( "</KeyInfo>", "</ds:KeyInfo>" )
-				.replace( "<KeyValue", "<ds:KeyValue" )
-				.replace( "</KeyValue>", "</ds:KeyValue>" )
-				.replace( "<RSAKeyValue", "<ds:RSAKeyValue" )
-				.replace( "</RSAKeyValue>", "</ds:RSAKeyValue>" )
-				.replace( "<Modulus", "<ds:Modulus" )
-				.replace( "</Modulus>", "</ds:Modulus>" )
-				.replace( "<Exponent", "<ds:Exponent" )
-				.replace( "</Exponent>", "</ds:Exponent>" )
-				.replace( "<X509Data", "<ds:X509Data" )
-				.replace( "</X509Data>", "</ds:X509Data>" )
-				.replace( "<X509Certificate", "<ds:X509Certificate" )
-				.replace( "</X509Certificate>", "</ds:X509Certificate>" )
-				.replace( "<Object>", "<ds:Object>" )
-				.replace( "</Object>", "</ds:Object>" )
-				.replace( "<X509IssuerName", "<ds:X509IssuerName" )
-				.replace( "</X509IssuerName>", "</ds:X509IssuerName>" )
-				.replace( "<X509SerialNumber", "<ds:X509SerialNumber" )
-				.replace( "</X509SerialNumber>", "</ds:X509SerialNumber>" );
-*/
+			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
+				data += "</SignedDoc>";
 			file.write( data );
 			file.close();
 			close();

@@ -343,8 +343,8 @@ void MainWindow::buttonClicked( int button )
 bool MainWindow::checkConnection()
 {
 	QTcpSocket s;
-	s.connectToHost( "ocsp.sk.ee", 80 );
-	bool status = s.waitForConnected();
+	s.connectToHost( "62.65.42.42", 80 );
+	bool status = s.waitForConnected( 5000 );
 	if( !status )
 		showWarning( tr("Check internet connection") );
 	return status;
@@ -762,7 +762,7 @@ bool MainWindow::checkAccessCert()
 			tr( "Server access certificate" ),
 			tr( "Did not find any server access certificate!\nStart downloading?" ),
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
-		return false;
+		return true;
 
 	if( !infoSignCard->isChecked() )
 	{
