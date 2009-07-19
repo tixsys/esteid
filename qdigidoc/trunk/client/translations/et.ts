@@ -522,12 +522,17 @@ Start downloading?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to save server access certificate file to %1!</source>
+        <source>Check internet connection</source>
+        <translation>Kontrolli interneti ühendust</translation>
+    </message>
+    <message>
+        <source>Personal code is not valid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Check internet connection</source>
-        <translation>Kontrolli interneti ühendust</translation>
+        <source>Failed to save server access certificate file to %1!
+%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
