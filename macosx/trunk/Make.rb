@@ -267,6 +267,8 @@ class Application
 	def run_repository
 		puts "Creating installer repository..." if @options.verbose
 		
+		pkgs = packages
+		
 		cpkgroot = Pathname.new(@path).join(@options.repository, 'Packages').to_s
 		FileUtils.mkdir_p(cpkgroot) unless File.exists? cpkgroot
 		
@@ -284,7 +286,6 @@ class Application
 			priority = component[:priority]
 			
 			file.puts "\t<component#{(version.nil?) ? '' : ' version=\'' + version + '\''} priority=\"#{(priority.nil?) ? 1 : priority}\">"
-			
 			file.puts "\t\t<title xml:lang=\"en\">#{component[:title]}</title>"
 			file.puts "\t\t<description xml:lang=\"en\"><![CDATA[#{component[:description]}]]></description>"
 			
@@ -307,7 +308,16 @@ class Application
 					sha1 = `openssl dgst -sha1 #{path}`
 					puts sha1 if @options.verbose
 					
-					file.puts "\t\t<package id=\"#{identifier}\" version=\"#{version}\" length=\"#{File.stat(path).size}\" sha1=\"#{sha1[-41,40]}\"#{(restart) ? ' restart=\'1\'' : ''}>Packages/#{name}</package>"
+					opsystem = nil
+					
+					pkgs.each do |pkg|
+						if pkg[:system] != nil and pkg[:identifier] == identifier
+							opsystem = pkg[:system]
+							break;
+						end
+					end
+					
+					file.puts "\t\t<package id=\"#{identifier}\" version=\"#{version}\" length=\"#{File.stat(path).size}\" sha1=\"#{sha1[-41,40]}\"#{(restart) ? ' restart=\'1\'' : ''}#{(opsystem.nil?) ? '' : ' operatingSystem=\'' + opsystem + '\'' }>Packages/#{name}</package>"
 				else
 					puts "No package #{package} was found. Stopped." if !@options.quiet
 					raise 'No package'
@@ -693,12 +703,14 @@ class Application
 							   'esteid-opensc',
 							   'esteid-qt',
 							   'esteid-updater',
-							   'esteid-preferences' ]
+							   'esteid-preferences',
+							   'esteid-tokend-leopard',
+							   'esteid-tokend-tiger' ]
 			}, {
 				:title => 'Internet Plug-in',
 				:description => 'Internet Plug-in description',
 				:priority => 1,
-				:packages => [ 'esteid-webplugin', 'esteid-tokend' ]
+				:packages => [ 'esteid-webplugin' ]
 			}, {
 				:title => 'Finder Plug-in',
 				:description => 'Finder Plug-in description',
@@ -797,14 +809,16 @@ class Application
 				:froot => File.join(@options.binaries, '10.5'),
 				:identifier => 'org.esteid.installer.tokend.10.5',
 				:location => '/System/Library/Security/tokend',
-				:script => "return system.version.ProductVersion >= '10.5';"
+				:script => "return system.version.ProductVersion >= '10.5';",
+				:system => '>=10.5'
 			}, {
 				:name => 'esteid-tokend-tiger',
 				:files => File.join(@options.binaries, '10.4', 'OpenSC.tokend'),
 				:froot => File.join(@options.binaries, '10.4'),
 				:identifier => 'org.esteid.installer.tokend.10.4',
 				:location => '/System/Library/Security/tokend',
-				:script => "return system.version.ProductVersion &lt; '10.5';"
+				:script => "return system.version.ProductVersion &lt; '10.5';",
+				:system => '<10.5'
 			}, {
 				:name => 'esteid',
 				:title => 'ID-card',
