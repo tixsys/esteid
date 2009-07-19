@@ -79,38 +79,44 @@
 	int count = 0;
 	int code = 0;
 	
-NS_DURING
-	[[agent launchWithArguments:@"--preflight", nil] waitUntilExit];
-	
-	while([self isRunning] && (package = [enumerator nextObject]) != nil) {
+	if([agent isOwnedBySystem]) {
+		@try {
+			[[agent launchWithArguments:@"--preflight", nil] waitUntilExit];
+			
+			while([self isRunning] && (package = [enumerator nextObject]) != nil) {
 #ifndef NO_OP
-		NSTask *task = [agent launchWithArguments:@"--install", [[package metadata] sha1], [package path], targetVolume, nil];
-		
-		[task waitUntilExit];
-		
-		if(task && [task terminationStatus] == 0) {
-			NSLog(@"%@: %@ installation was successful!", NSStringFromClass([self class]), [[package metadata] identifier]);
-			count += 1;
-		} else if([task terminationStatus] == -10) {
-			NSLog(@"%@: %@ uncompression error", [[package metadata] identifier]);
-			code = EstEIDPackageUncompressionError;
-			break;
-		} else {
-			NSLog(@"%@: %@ installation failed!", NSStringFromClass([self class]), [[package metadata] identifier]);
-			code = EstEIDPackageInstallError;
-			break;
-		}
+				NSTask *task = [agent launchWithArguments:@"--install", [[package metadata] sha1], [package path], targetVolume, nil];
+				
+				[task waitUntilExit];
+				
+				if(task && [task terminationStatus] == 0) {
+					NSLog(@"%@: %@ installation was successful!", NSStringFromClass([self class]), [[package metadata] identifier]);
+					count += 1;
+				} else if([task terminationStatus] == -10) {
+					NSLog(@"%@: %@ uncompression error", [[package metadata] identifier]);
+					code = EstEIDPackageUncompressionError;
+					break;
+				} else {
+					NSLog(@"%@: %@ installation failed!", NSStringFromClass([self class]), [[package metadata] identifier]);
+					code = EstEIDPackageInstallError;
+					break;
+				}
 #else
-		[NSThread sleepForTimeInterval:3.0F];
-		NSLog(@"%@: %@ installation simulation was successful!", NSStringFromClass([self class]), [[package metadata] identifier]);
-		count += 1;
+				[NSThread sleepForTimeInterval:3.0F];
+				NSLog(@"%@: %@ installation simulation was successful!", NSStringFromClass([self class]), [[package metadata] identifier]);
+				count += 1;
 #endif
+			}
+			
+			[[agent launchWithArguments:@"--postflight", nil] waitUntilExit];
+		}
+		@catch(id exception) {
+			NSLog(@"%@: Installation failed because of a unexpected exception", NSStringFromClass([self class]));
+		}
+	} else {
+		NSLog(@"%@: Agent is not owned by the system!", NSStringFromClass([self class]));
+		NSBeep();
 	}
-	
-	[[agent launchWithArguments:@"--postflight", nil] waitUntilExit];
-NS_HANDLER
-	NSLog(@"%@: Installation failed because of a unexpected exception", NSStringFromClass([self class]));
-NS_ENDHANDLER
 	
 	if([self isRunning]) {
 		NSError *error = (count != [self->m_packages count]) ? [[NSError alloc] initWithDomain:EstEIDPackageErrorDomain code:code userInfo:nil] : nil;

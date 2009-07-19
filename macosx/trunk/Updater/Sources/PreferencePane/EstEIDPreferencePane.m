@@ -180,7 +180,7 @@
 			NSBeep();
 		}
 	} else {
-		[[NSWorkspace sharedWorkspace] launchApplication:@"EstEIDSU"];
+		system("/usr/bin/open -a /Applications/Utilities/EstEIDSU.app");
 	}
 }
 
