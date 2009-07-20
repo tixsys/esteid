@@ -33,7 +33,9 @@ public:
 
 	void setType( DocumentType type );
 	DocumentType documentType() const;
-			
+
+	void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException);
+
 private:
 	ADoc *m_doc;
 	DocumentType m_type;

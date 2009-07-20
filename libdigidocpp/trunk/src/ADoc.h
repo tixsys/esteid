@@ -23,6 +23,7 @@ public:
 	virtual void removeSignature(unsigned int id) throw(BDocException) = 0;
 	virtual unsigned int signatureCount() const = 0;
 	virtual void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException) = 0;
+	virtual void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException) = 0;
 };
 
 }

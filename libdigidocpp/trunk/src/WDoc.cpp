@@ -127,3 +127,11 @@ WDoc::DocumentType WDoc::documentType() const
 
 	return m_type;
 }
+
+void WDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
+{
+	if( !m_doc )
+		throw BDocException( __FILE__, __LINE__, "Document not open" );
+
+	m_doc->getFileDigest( id, digest );
+}

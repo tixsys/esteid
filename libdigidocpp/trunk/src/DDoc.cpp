@@ -490,6 +490,24 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 unsigned int DDoc::signatureCount() const
 { return !d->doc || d->doc->nSignatures < 0 ? 0 : d->doc->nSignatures; }
 
+void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
+{
+	if( !d->isLoaded() )
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
+	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	{
+		std::ostringstream s;
+		s << "Incorrect document id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " documents in container.";
+		throwError( s.str(), __LINE__ );
+	}
+
+	memcpy( digest, d->doc->pDataFiles[id]->mbufDigest.pMem, d->doc->pDataFiles[id]->mbufDigest.nLen );
+}
+
 void DDoc::throwError( const std::string &msg, int line ) const throw(BDocException)
 { throw BDocException( __FILE__, line, msg ); }
 
