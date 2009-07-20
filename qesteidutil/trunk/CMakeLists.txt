@@ -98,6 +98,8 @@ QT4_ADD_TRANSLATION( QM_FILES
 
 include(${QT_USE_FILE})
 
+add_subdirectory( qtsingleapplication )
+
 find_package(Subversion)
 if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
   Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
@@ -113,6 +115,7 @@ include_directories(
     ${PCSCLITE_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
     ${LIBP11_INCLUDE_DIR}
+    qtsingleapplication/src
 )
 
 if(APPLE)
@@ -167,6 +170,7 @@ target_link_libraries(qesteidutil
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${LIBP11_LIBRARY}
+    qtsingleapplication
 )
 
 if(UNIX AND NOT APPLE)

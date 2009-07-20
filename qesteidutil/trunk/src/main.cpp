@@ -20,7 +20,7 @@
  *
  */
 
-#include <QtGui/QApplication>
+#include <qtsingleapplication.h>
 #include <openssl/ssl.h>
 
 #include "mainwindow.h"
@@ -28,16 +28,23 @@
 
 int main(int argc, char *argv[])
 {
-	SSL_load_error_strings();
-	SSL_library_init();
-	
-    QApplication app(argc, argv);
+	QtSingleApplication app(argc, argv);
 	app.setApplicationName( APP );
 	app.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	app.setOrganizationDomain( DOMAINURL );
 	app.setOrganizationName( ORG );
 
-    MainWindow w;
+	if( app.isRunning() )
+	{
+		app.activateWindow();
+		return 0;
+	}
+
+	SSL_load_error_strings();
+	SSL_library_init();
+
+	MainWindow w;
+	app.setActivationWindow( &w );
     w.show();
     return app.exec();
 }
