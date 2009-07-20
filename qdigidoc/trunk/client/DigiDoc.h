@@ -111,6 +111,7 @@ public:
 	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
 	digidoc::WDoc::DocumentType documentType();
+	QByteArray getFileDigest( unsigned int i );
 
 Q_SIGNALS:
 	void dataChanged();

@@ -320,6 +320,7 @@ void MainWindow::buttonClicked( int button )
 			if ( !m->fName.isEmpty() && doc->signMobile( m->fName ) )
 			{
 				doc->save();
+				doc->open( doc->fileName() );
 			} else {
 				m->deleteLater();
 				break;
@@ -767,7 +768,7 @@ bool MainWindow::checkAccessCert()
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return true;
 
-	if( !infoSignCard->isChecked() )
+	if( doc->activeCard().isEmpty() )
 	{
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
 		return false;

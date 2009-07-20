@@ -23,6 +23,8 @@
 #include "MobileDialog.h"
 #include "DigiDoc.h"
 
+#include <common/Settings.h>
+
 #include <digidocpp/Document.h>
 #include <digidocpp/Exception.h>
 #include <digidocpp/crypto/Digest.h>
@@ -44,6 +46,12 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     m_http = new QHttp( this );
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
+
+
+	Settings s;
+	s.beginGroup( "Client" );
+	m_http->setProxy( s.value( "proxyHost" ).toString(), s.value( "proxyPort" ).toInt() );
+
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
 		m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
 	else
@@ -97,7 +105,6 @@ void MobileDialog::httpRequestFinished( int id, bool error )
     {
         QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
 		labelError->setText( error );
-        qDebug() << result;
         return;
     }
 
@@ -155,15 +162,21 @@ bool MobileDialog::getFiles()
 	int i = 0;
 	Q_FOREACH( digidoc::Document file, m_doc->documents() )
 	{
-		std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( URI_SHA1 );
-		std::vector<unsigned char> d;
-		try {
-			 d = file.calcDigest( calc.get() );
-		} catch( const digidoc::IOException &e ) {
-			labelError->setText( QString::fromStdString( e.getMsg() ) );
-			return false;
-		}
-		QByteArray digest( (char*)&d[0], d.size() );
+		QByteArray digest;
+		if ( m_doc->documentType() == digidoc::WDoc::BDocType )
+		{
+			std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( URI_SHA1 );
+			std::vector<unsigned char> d;
+			try {
+				 d = file.calcDigest( calc.get() );
+			} catch( const digidoc::IOException &e ) {
+				labelError->setText( QString::fromStdString( e.getMsg() ) );
+				return false;
+			}
+			digest = QByteArray( (char*)&d[0], d.size() );
+		} else
+			digest = m_doc->getFileDigest( i ).left( digidoc::SHA1Digest::DIGEST_SIZE );
+
 		QFileInfo f( QString::fromStdString( file.getPath() ) );
 		files += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
 			 + (m_doc->documentType() == digidoc::WDoc::BDocType ?
@@ -223,10 +236,9 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		if ( file.open() )
 		{
 			fName = file.fileName();
-			qDebug() << fName;
+
 			QByteArray data = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>";
 
-			//data += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
 				data += "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">";
 

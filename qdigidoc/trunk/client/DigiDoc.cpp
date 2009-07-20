@@ -534,3 +534,21 @@ WDoc::DocumentType DigiDoc::documentType()
 
 	return b->documentType();
 }
+
+QByteArray DigiDoc::getFileDigest( unsigned int i )
+{
+	if( isNull() )
+	{
+		setLastError( tr("Container is not open") );
+		return QByteArray();
+	}
+
+	unsigned char *digest;
+	digest = (unsigned char*)malloc(digidoc::SHA1Digest::DIGEST_SIZE);
+	b->getFileDigest( i, digest );
+
+	QByteArray result( (char*)digest );
+	free( digest );
+
+	return result;
+}

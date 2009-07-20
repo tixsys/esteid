@@ -555,7 +555,7 @@ Start downloading?</source>
     </message>
     <message>
         <source>Request accepted</source>
-        <translation>Päring aksepteeritud</translation>
+        <translation>Päring aktsepteeritud</translation>
     </message>
     <message>
         <source>Request timeout</source>
@@ -579,7 +579,7 @@ Start downloading?</source>
     </message>
     <message>
         <source>Phone absent</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefon ei ole levis</translation>
     </message>
     <message>
         <source>Request sending error</source>
@@ -608,7 +608,8 @@ Start downloading?</source>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connecting to SK server failed!
+Please check your internet connection.</translation>
     </message>
 </context>
 <context>
