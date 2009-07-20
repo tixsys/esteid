@@ -138,8 +138,8 @@ void JsExtender::activateEmail( const QString &email )
 	try {
 		buffer = getUrl( SSLConnect::ActivateEmails, email );
 	} catch( std::runtime_error &e ) {
-		jsCall( "setEmails", "forwardFailed", "" );
 		jsCall( "handleError", e.what() );
+		jsCall( "setEmails", "forwardFailed", "" );
 		return;
 	}
 	if ( !buffer.size() )
@@ -168,8 +168,8 @@ void JsExtender::loadEmails()
 	try {
 		buffer = getUrl( SSLConnect::EmailInfo, "" );
 	} catch( std::runtime_error &e ) {
-		jsCall( "setEmails", "loadFailed", "" );
 		jsCall( "handleError", e.what() );
+		jsCall( "setEmails", "loadFailed", "" );
 		return;
 	}
 
@@ -252,8 +252,8 @@ void JsExtender::loadPicture()
 	try {
 		buffer = getUrl( SSLConnect::PictureInfo, "" );
 	} catch( std::runtime_error &e ) {
-		jsCall( "setPicture", "", result );
 		jsCall( "handleError", e.what() );
+		jsCall( "setPicture", "", result );
 		return;
 	}
 	if ( !buffer.size() )
@@ -339,8 +339,8 @@ void JsExtender::getMidStatus()
 	try {
 		buffer = getUrl( SSLConnect::MobileInfo, header + data );
 	} catch( std::runtime_error &e ) {
-		jsCall( "setMobile", "", result );
 		jsCall( "handleError", e.what() );
+		jsCall( "setMobile", "", result );
 		return;
 	}
 	if ( !buffer.size() )
@@ -387,16 +387,6 @@ void JsExtender::getMidStatus()
 						.arg( e.elementsByTagName( "URL" ).item(0).toElement().text() );
 		jsCall( "setMobile", mResString );
 	}
-
-	/*
-	QHttpRequestHeader header( "POST", "/id/midstatusinfo/", 1, 1 );
-	header.setValue( "host", "www.sk.ee" );
-	header.setContentType( "text/xml" );
-	header.setContentLength( data.length() );
-	m_http.setHost( "www.sk.ee" );
-	m_http.request( header, data );
-	connect( &m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
-	*/
 }
 
 void JsExtender::httpRequestFinished( int, bool error )
