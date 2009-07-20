@@ -25,6 +25,7 @@
 #include <QDomDocument>
 #include <QFileDialog>
 #include <QLocale>
+#include <QMessageBox>
 #include <QtWebKit>
 
 #include "mainwindow.h"
@@ -421,4 +422,14 @@ void JsExtender::closeLoading()
 {
 	if ( m_loading )
 		m_loading->close();
+}
+
+void JsExtender::showMessage( const QString &type, const QString &message, const QString &title )
+{
+	if ( type == "warning" )
+		QMessageBox::warning( m_mainWindow, title.isEmpty() ? m_mainWindow->windowTitle() : title, message, QMessageBox::Ok );
+	else if ( type == "error" )
+		QMessageBox::critical( m_mainWindow, title.isEmpty() ? m_mainWindow->windowTitle() : title, message, QMessageBox::Ok );
+	else
+		QMessageBox::information( m_mainWindow, title.isEmpty() ? m_mainWindow->windowTitle() : title, message, QMessageBox::Ok );
 }

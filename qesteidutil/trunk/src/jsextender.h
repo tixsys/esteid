@@ -87,4 +87,6 @@ public slots:
 
 	void getMidStatus();
 	void httpRequestFinished( int, bool error );
+
+	void showMessage( const QString &type, const QString &message, const QString &title = "" );
 };
