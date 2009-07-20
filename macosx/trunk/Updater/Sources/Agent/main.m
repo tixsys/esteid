@@ -214,14 +214,14 @@ int main(int argc, char *argv[])
 				} else {
 					fprintf(stderr, "Repair failed.\n");
 				}
-				// [enable|disable] [file]
+			// [enable|disable] [file]
 			} else if(argc == 4 && strcmp(argv[1], "--launchd") == 0) {
 				if(strcmp(argv[2], "enable") == 0) {
 					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), YES);
 				} else if(strcmp(argv[2], "disable") == 0) {
 					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), NO);
 				}
-				// [enable|disable] [user] [entry]
+			// [enable|disable] [user] [entry]
 			} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {
 				if(strcmp(argv[2], "enable") == 0) {
 					char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
@@ -248,8 +248,8 @@ int main(int argc, char *argv[])
 						fprintf(stderr, "dscl failed.\n");
 					}
 				}
-				// [checksum] [file] [target]
-			} else if((argc == 4 || argc == 5) && strcmp(argv[1], "--install") == 0) {
+			// [checksum] [file] [identifier] [target]
+			} else if((argc == 5 || argc == 6) && strcmp(argv[1], "--install") == 0) {
 				char *tmp1 = strdup("/tmp/esteid-agent/XXXXXX");
 				
 				mkdir("/tmp/esteid-agent", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
@@ -259,20 +259,29 @@ int main(int argc, char *argv[])
 				result = system("/bin/cp \"$OLD_PATH\" \"$NEW_PATH\"");
 				
 				if(result == 0) {
-					// Verify the checksum one last time...
 					if([EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
-						char *tmp2 = mkdtemp(strdup("/tmp/esteid-agent/XXXXXX"));
+						char *tmp2 = (char *)[[NSString stringWithFormat:@"/tmp/esteid-agent/%s.pkg", argv[4]] UTF8String];
 						
 						setenv("PKG_PATH", tmp2, 1);
+						system("/bin/rm -R \"$PKG_PATH\"");
 						
 						if((result = system("/usr/bin/ditto -x -k \"$NEW_PATH\" \"$PKG_PATH\"")) == 0) {
-							setenv("TARGET_VOLUME", (argc == 5) ? argv[4] : "/", 1);
+							char *args[] = { "-pkg", tmp2, "-target", (argc == 6) ? argv[5] : "/", NULL };
 							
-							if((result = system("/usr/sbin/installer -pkg \"$PKG_PATH\" -target \"$TARGET_VOLUME\"")) == 0) {
-								fprintf(stderr, "Installed %s successfully\n", argv[3]);
+							if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/sbin/installer", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
+								int cpid;
+								
+								if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
+									result = WEXITSTATUS(cpid);
+									
+									if(result == 0) {
+										fprintf(stderr, "Installed %s successfully\n", argv[3]);
+									}
+								}
+							} else {
+								fprintf(stderr, "Install failed.\n");
+								result = EXIT_FAILURE;
 							}
-							
-							unsetenv("TARGET_VOLUME");
 						} else {
 							fprintf(stderr, "Couldn't unflatten the package\n");
 							result = -10;
@@ -280,7 +289,6 @@ int main(int argc, char *argv[])
 						
 						system("/bin/rm -R \"$PKG_PATH\"");
 						unsetenv("PKG_PATH");
-						free(tmp2);
 					} else {
 						fprintf(stderr, "Checksum doesn't match for the specified file\n");
 					}

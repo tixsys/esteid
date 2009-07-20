@@ -7,7 +7,7 @@
 #import "EstEIDPackage.h"
 #import "NSThread+Additions.h"
 
-#define NO_OP
+//#define NO_OP
 
 @implementation EstEIDInstaller
 
@@ -89,7 +89,7 @@
 			
 			while([self isRunning] && (package = [enumerator nextObject]) != nil) {
 #ifndef NO_OP
-				NSTask *task = [agent launchWithArguments:@"--install", [[package metadata] sha1], [package path], targetVolume, nil];
+				NSTask *task = [agent launchWithArguments:@"--install", [[package metadata] sha1], [package path], [[package metadata] identifier], targetVolume, nil];
 				
 				[task waitUntilExit];
 				
