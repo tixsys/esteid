@@ -310,6 +310,11 @@ void MainWindow::buttonClicked( int button )
 		}
 		else
 		{
+			if ( doc->documentType() == digidoc::WDoc::BDocType )
+			{
+				QMessageBox::warning( this, windowTitle(), tr( "BDOC signing with Mobile-ID not supported yet!" ), QMessageBox::Ok );
+				return;
+			}
 			MobileDialog *m = new MobileDialog( doc, this );
 			m->setSignatureInfo( signCityInput->text(),
 				signStateInput->text(), signZipInput->text(),
