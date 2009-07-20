@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mv "$3$2/EstEIDSU.app" ~/.Trash
+
+exit 0
