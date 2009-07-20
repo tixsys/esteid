@@ -118,6 +118,7 @@
 				NSLog(@"%@: Downloaded %@ package to %@", NSStringFromClass([self class]), [metadata identifier], self->m_tmp);
 #endif
 				self->m_locator.x += 1;
+				self->m_locator.y = 0;
 				
 				[package release];
 				[self->m_tmp release];
