@@ -25,7 +25,6 @@ set( QT_USE_QTWEBKIT true )
 set( QT_USE_QTXML true )
 
 include( ${QT_USE_FILE} )
-add_definitions( -DQT_NO_KEYWORDS )
 
 find_package(Subversion)
 if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
@@ -47,6 +46,10 @@ set( COMMON_TS
 	${COMMON}/translations/qt_ru.ts
 	)
 
+add_subdirectory( qtsingleapplication )
+include_directories( qtsingleapplication/src )
+
+add_definitions( -DQT_NO_KEYWORDS )
 add_subdirectory( common )
 add_subdirectory( client )
 add_subdirectory( crypto )

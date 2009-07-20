@@ -24,16 +24,13 @@
 #include "RegisterP12.h"
 #include "version.h"
 
-#include <QApplication>
+#include <qtsingleapplication.h>
 
 #include <openssl/ssl.h>
 
 int main( int argc, char *argv[] )
 {
-	SSL_load_error_strings();
-	SSL_library_init();
-
-	QApplication a( argc, argv );
+	QtSingleApplication a( argc, argv );
 	a.setApplicationName( APP );
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	a.setOrganizationDomain( DOMAINURL );
@@ -58,9 +55,18 @@ int main( int argc, char *argv[] )
 	}
 	else
 	{
+		if( a.isRunning() )
+		{
+			a.activateWindow();
+			return 0;
+		}
+		SSL_load_error_strings();
+		SSL_library_init();
+
 		MainWindow *w = new MainWindow();
 		if( w->isLoaded() )
 		{
+			a.setActivationWindow( w );
 			w->show();
 			ret = a.exec();
 		}

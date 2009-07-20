@@ -24,15 +24,21 @@
 
 #include "version.h"
 
-#include <QApplication>
+#include <qtsingleapplication.h>
 
 int main( int argc, char *argv[] )
 {
-	QApplication a( argc, argv );
+	QtSingleApplication a( argc, argv );
 	a.setApplicationName( APP );
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	a.setOrganizationDomain( DOMAINURL );
 	a.setOrganizationName( ORG );
+
+	if( a.isRunning() )
+	{
+		a.activateWindow();
+		return 0;
+	}
 	a.setStyleSheet(
 		"QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }\n"
 		"* { font: 12px \"Arial, Liberation Sans\"; }"
@@ -43,6 +49,7 @@ int main( int argc, char *argv[] )
 	a.setPalette( p );
 
 	MainWindow m;
+	a.setActivationWindow( &m );
 	m.show();
 	return a.exec();
 }
