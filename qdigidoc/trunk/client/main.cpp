@@ -47,15 +47,25 @@ int main( int argc, char *argv[] )
 	p.setBrush( QPalette::LinkVisited, QBrush( "#509B00" ) );
 	a.setPalette( p );
 
-	QWidget *w;
+	int ret = 0;
 	QStringList args = a.arguments();
 	if( args.size() > 1 && args.value(1).right(4) == "p12d" )
-		w = new RegisterP12( args.value(1) );
+	{
+		RegisterP12 *w = new RegisterP12( args.value(1) );
+		w->show();
+		ret = a.exec();
+		delete w;
+	}
 	else
-		w = new MainWindow();
+	{
+		MainWindow *w = new MainWindow();
+		if( w->isLoaded() )
+		{
+			w->show();
+			ret = a.exec();
+		}
+		delete w;
+	}
 
-	w->show();
-	int ret = a.exec();
-	delete w;
 	return ret;
 }

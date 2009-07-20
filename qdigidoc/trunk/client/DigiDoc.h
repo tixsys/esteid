@@ -89,7 +89,7 @@ public:
 	QList<digidoc::Document> documents();
 	QByteArray getAccessCert();
 	QString fileName() const;
-	void init();
+	bool init();
 	bool isNull() const;
 	QString lastError() const;
 	bool open( const QString &file );

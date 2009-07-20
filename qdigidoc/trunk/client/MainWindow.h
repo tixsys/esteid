@@ -36,6 +36,8 @@ class MainWindow: public QWidget, private Ui::MainWindow
 public:
 	MainWindow( QWidget *parent = 0 );
 
+	bool isLoaded() const;
+
 private Q_SLOTS:
 	void buttonClicked( int button );
 	void enableSign();
@@ -80,4 +82,5 @@ private:
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QStringList lang, params;
 	QPushButton *introNext, *signButton, *viewAddSignature;
+	bool m_loaded;
 };

@@ -50,6 +50,7 @@
 
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
+,	m_loaded( false )
 {
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
@@ -125,7 +126,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
-	doc->init();
+	m_loaded = doc->init();
 
 	Settings s;
 	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
@@ -412,6 +413,8 @@ void MainWindow::enableSign()
 	signButton->setEnabled( !cardOwnerSignature );
 	signButton->setToolTip( cardOwnerSignature ? tr("This container is signed by you") : QString() );
 }
+
+bool MainWindow::isLoaded() const { return m_loaded; }
 
 void MainWindow::on_introCheck_stateChanged( int state )
 { Settings().setValue( "Client/Intro", state == Qt::Unchecked ); }

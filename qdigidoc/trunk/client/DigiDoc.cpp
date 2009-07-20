@@ -281,7 +281,7 @@ QByteArray DigiDoc::getAccessCert()
 
 QString DigiDoc::fileName() const { return m_fileName; }
 
-void DigiDoc::init()
+bool DigiDoc::init()
 {
 	if( qgetenv( "BDOCLIB_CONF_XML" ).isEmpty() )
 	{
@@ -298,13 +298,14 @@ void DigiDoc::init()
 		digidoc::initialize();
 		X509CertStore::init( new DirectoryX509CertStore() );
 	}
-	catch( const Exception &e ) { setLastError( e ); return; }
+	catch( const Exception &e ) { setLastError( e ); return false; }
 
 	poller = new Poller();
 	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
 	connect( poller, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
 	poller->start();
+	return true;
 }
 
 bool DigiDoc::isNull() const { return b == 0; }
