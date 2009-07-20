@@ -89,6 +89,9 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 		self->m_timer = nil;
 	}
 	
+	[self->m_progressIndicator setIndeterminate:NO];
+	[self->m_progressIndicator stopAnimation:nil];
+	
 	if(self->m_progressPanel == [self->m_window attachedSheet]) {
 		[[NSApplication sharedApplication] endSheet:self->m_progressPanel];
 		[self->m_progressPanel orderOut:nil];
@@ -122,8 +125,6 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 	[[EstEIDAgent sharedAgent] deauthorize];
 	[self->m_window orderOut:nil];
 }
-
-// TODO: Improve the user experience during installation
 
 - (IBAction)install:(id)sender
 {
@@ -301,6 +302,9 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 	self->m_installer = [[EstEIDInstaller alloc] initWithPackages:packages];
 	[self->m_installer setDelegate:(id <EstEIDInstallerDelegate>)self];
 	[self->m_installer start];
+	
+	[self->m_progressIndicator setIndeterminate:YES];
+	[self->m_progressIndicator startAnimation:nil];
 }
 
 - (void)packageDownload:(EstEIDPackageDownload *)download progress:(long long)length
@@ -363,8 +367,6 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 - (void)installer:(EstEIDInstaller *)installer progress:(EstEIDPackage *)package
 {
 	NSLog(@"Installed '%@' v", [[package metadata] identifier], [[package metadata] version]);
-	
-	[self->m_progressIndicator setDoubleValue:[self->m_progressIndicator doubleValue] + 1.0F];
 }
 
 - (void)installer:(EstEIDInstaller *)installer failedToInstallWithError:(NSError *)error
