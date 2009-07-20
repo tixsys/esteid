@@ -260,6 +260,7 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 			Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
 			mxFrame->setName(sOldName);
 
+			m_BdocBridge1->Terminate();
 			// dispose the local service manager
 			//Reference< XComponent >::query( xMultiComponentFactoryClient )->dispose();
 		}
@@ -278,6 +279,8 @@ PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
 		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
 		m_BdocBridge1->DigiInit();
 		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL, 0).pData->buffer);
+
+		m_BdocBridge1->Terminate();
 
 		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 		rGlobalDesktop = rDesktop;
@@ -625,7 +628,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				int iHour;
 				m_BdocBridge->DigiInit();
 				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
-				
+				m_BdocBridge->Terminate();
+
 				//------------Fix sign data string from returned data---------			
 				if (m_BdocBridge->ret < 100)// && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
 				{// Container has at least one valid signature
@@ -848,6 +852,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 								// and special search flags. 
 								Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
 								mxFrame->setName(sOldName);
+
 								xComp->dispose();
 							}
 							//----------------------------------------------------------------------
@@ -885,6 +890,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
 							i_try = 0;
 						}
+
+						m_BdocBridge->Terminate();
 					}
 				}
 				else

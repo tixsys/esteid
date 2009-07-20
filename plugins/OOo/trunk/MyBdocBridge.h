@@ -21,6 +21,7 @@ public:
 	void DigiOpen(const char* pPath);
 	void DigiInit();
 	void DigiCheckCert();
+	void Terminate();
 
 	int ret;
 	int iSignCnt;

@@ -44,6 +44,7 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		virtual ~My1EstEIDSigner();
 
 		int initData ();
+		void Terminate ();
 		int signFile ();
 		int openCont ();
 		int checkCert ();

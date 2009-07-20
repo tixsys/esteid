@@ -64,6 +64,12 @@ void MyBdocBridge::DigiInit()
 }
 
 //-----------------------------------------------------------
+void MyBdocBridge::Terminate()
+{
+	((My1EstEIDSigner *)this)->Terminate();
+}
+
+//-----------------------------------------------------------
 void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* pPin)
 {
 	string strPath, strParam;
@@ -562,7 +568,7 @@ int My1EstEIDSigner::openCont ()
 	}
 
 	// Terminate digidoc library.
-	digidoc::terminate();
+	//digidoc::terminate(); //<--deletes temporary files
 
 	return i_ret;
 }
@@ -632,7 +638,6 @@ MyRealEstEIDSigner::~MyRealEstEIDSigner()
 //***********************************************************
 std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
 {	
-	//somehow have to fix return, when PIN is wrong
 	return pin;
 }
 
@@ -659,7 +664,13 @@ int My1EstEIDSigner::checkCert ()
 }
 //===========================================================
 //***********************************************************
+void My1EstEIDSigner::Terminate()
+{	
+	digidoc::terminate();
+}
 
+//===========================================================
+//***********************************************************
 
 
 

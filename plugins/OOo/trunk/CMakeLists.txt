@@ -45,7 +45,7 @@ IF (WIN32)
 	SET (UNOPKG_PLATFORM "Windows")
 	SET (SHAREDLIB_EXT "dll")
 	
-	SET (OO_SDK_HOME "C:/Program Files/OpenOffice.org_3.0_SDK/sdk")
+	SET (OO_SDK_HOME "C:/Program Files/OpenOffice.org 3/Basis/sdk")
 	SET (OO_SDK_URE_HOME "C:/Program Files/OpenOffice.org 3/URE")
 	SET (OFFICE_BASE_PROGRAM_PATH "C:/Program Files/OpenOffice.org 3/Basis/program")
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
