@@ -607,7 +607,7 @@ class Application
 				
 			# Copy the package from temporary destination to the final destination
 			puts "Copying package #{name + extension} to #{@options.packages}" if @options.verbose
-			dstname = (identifier == 'org.esteid.installer' and !@options.name.nil?) ? @options.name : name
+			dstname = (identifier == 'org.esteid.installer' and !@options.name.nil?) ? @options.name : identifier
 			dstname = package[:dstname] unless package[:dstname].nil?
 			dst = Pathname.new(@path).join(@options.packages, dstname + extension).to_s
 			FileUtils.mkdir_p(File.dirname(dst)) unless File.exists? File.dirname(dst)
