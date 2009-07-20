@@ -699,38 +699,38 @@ class Application
 				:description => 'Core components description',
 				:version => '1.0',
 				:priority => 2,
-				:packages => [ 'esteid-digidoc',
-							   'esteid-opensc',
-							   'esteid-qt',
-							   'esteid-updater',
-							   'esteid-preferences',
-							   'esteid-tokend-leopard',
-							   'esteid-tokend-tiger' ]
+				:packages => [ 'org.esteid.installer.digidoc',
+							   'org.esteid.installer.opensc',
+							   'org.esteid.installer.qt',
+							   'org.esteid.installer.su',
+							   'org.esteid.installer.pp',
+							   'org.esteid.installer.tokend.10.5',
+							   'org.esteid.installer.tokend.10.4' ]
 			}, {
 				:title => 'Internet Plug-in',
 				:description => 'Internet Plug-in description',
 				:priority => 1,
-				:packages => [ 'esteid-webplugin' ]
+				:packages => [ 'org.esteid.webplugin' ]
 			}, {
 				:title => 'Finder Plug-in',
 				:description => 'Finder Plug-in description',
 				:priority => 1,
-				:packages => [ 'esteid-contextmenu' ]
+				:packages => [ 'org.esteid.installer.cmi' ]
 			}, {
 				:title => 'ID-card Utility',
 				:description => 'ID-card Utility description',
 				:priority => 1,
-				:packages => [ 'esteid-qesteidutil' ]
+				:packages => [ 'org.esteid.qesteidutil' ]
 			}, {
 				:title => 'ID-card DigiDoc',
 				:description => 'ID-card DigiDoc description',
 				:priority => 1,
-				:packages => [ 'esteid-qdigidocclient' ]
+				:packages => [ 'org.esteid.qdigidocclient' ]
 			}, {
 				:title => 'ID-card Crypto',
 				:description => 'ID-card Crypto description',
 				:priority => 1,
-				:packages => [ 'esteid-qdigidoccrypto' ]
+				:packages => [ 'org.esteid.qdigidoccrypto' ]
 			} ]
 	end
 	
