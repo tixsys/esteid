@@ -654,7 +654,7 @@ void MainWindow::showCardStatus()
 				infoLogo->setText( QString(
 					"<p align=\"center\"><a href=\"openUtility\">"
 					"<img src=\":/images/warning.png\"><br />"
-					"<font color=\"red\">%1</font></a></p>" ).arg( "Open utility" ) );
+					"<font color=\"red\">%1</font></a></p>" ).arg( tr("Open utility") ) );
 			}
 			else if( c.isTempel() )
 				infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );

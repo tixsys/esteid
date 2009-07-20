@@ -534,6 +534,10 @@ Start downloading?</source>
 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open utility</source>
+        <translation>Ava haldusvahend</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -600,6 +604,11 @@ Start downloading?</source>
     <message>
         <source>%v sec</source>
         <translation>%v sek</translation>
+    </message>
+    <message>
+        <source>Connecting to SK server failed!
+Please check your internet connection.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

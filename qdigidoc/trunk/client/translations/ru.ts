@@ -133,7 +133,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>valid</source>
-        <translation type="unfinished">действительны</translation>
+        <translation>действительны</translation>
     </message>
     <message>
         <source>Your certificates will be expire</source>
@@ -347,6 +347,10 @@ Start downloading?</source>
 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open utility</source>
+        <translation>Открыть средство управления</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -409,6 +413,11 @@ Start downloading?</source>
     <message>
         <source>%v sec</source>
         <translation>%v сек</translation>
+    </message>
+    <message>
+        <source>Connecting to SK server failed!
+Please check your internet connection.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
