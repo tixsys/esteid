@@ -803,6 +803,7 @@ class Application
 			}, {
 				:name => 'esteid-preferences',
 				:files => File.join(@options.binaries, 'EstEIDPP.prefPane'),
+				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.pp',
 				:location => '/Library/PreferencePanes'
