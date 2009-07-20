@@ -100,43 +100,58 @@ void Common::mailTo( const QUrl &url )
 	}
 #elif defined(Q_OS_MAC)
 	CFURLRef emailUrl = CFURLCreateWithString(kCFAllocatorDefault, CFSTR("mailto:info@example.com"), NULL), appUrl = NULL;
-	
-	if(LSGetApplicationForURL(emailUrl, kLSRolesEditor, NULL, &appUrl) == noErr) {
+	bool started = false;
+	if(LSGetApplicationForURL(emailUrl, kLSRolesEditor, NULL, &appUrl) == noErr)
+	{
 		CFStringRef appPath = CFURLCopyFileSystemPath(appUrl, kCFURLPOSIXPathStyle);
-		
-		if(appPath != NULL) {
-			if(CFStringCompare(appPath, CFSTR("/Applications/Mail.app"), 0) == kCFCompareEqualTo) {
-				if(QProcess::startDetached("/usr/bin/osascript", QStringList() <<
-										   "-e" << "on run argv" <<
-										   "-e" << "set vattachment to (item 1 of argv)" <<
-										   "-e" << "set vsubject to (item 2 of argv)" <<
-										   "-e" << "tell application \"Mail\"" <<
-										   "-e" << "set composeMessage to make new outgoing message at beginning with properties {visible:true}" <<
-										   "-e" << "tell composeMessage" <<
-										   "-e" << "set subject to vsubject" <<
-										   "-e" << "tell content" <<
-										   "-e" << "make new attachment with properties {file name: vattachment} at after the last paragraph" <<
-										   "-e" << "end tell" <<
-										   "-e" << "end tell" <<
-										   "-e" << "activate" <<
-										   "-e" << "end tell" <<
-										   "-e" << "end run" << 
-										   // Commandline arguments
-										   url.queryItemValue("attachment") << 
-										   url.queryItemValue("subject"))) {
-					return;
-				}
-			} else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo) {
+		if(appPath != NULL)
+		{
+			if(CFStringCompare(appPath, CFSTR("/Applications/Mail.app"), 0) == kCFCompareEqualTo)
+			{
+				started = QProcess::startDetached("/usr/bin/osascript", QStringList() <<
+					"-e" << "on run argv" <<
+					"-e" << "set vattachment to (item 1 of argv)" <<
+					"-e" << "set vsubject to (item 2 of argv)" <<
+					"-e" << "tell application \"Mail\"" <<
+					"-e" << "set composeMessage to make new outgoing message at beginning with properties {visible:true}" <<
+					"-e" << "tell composeMessage" <<
+					"-e" << "set subject to vsubject" <<
+					"-e" << "tell content" <<
+					"-e" << "make new attachment with properties {file name: vattachment} at after the last paragraph" <<
+					"-e" << "end tell" <<
+					"-e" << "end tell" <<
+					"-e" << "activate" <<
+					"-e" << "end tell" <<
+					"-e" << "end run" <<
+					// Commandline arguments
+					url.queryItemValue("attachment") <<
+					url.queryItemValue("subject"));
+			}
+			else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo)
+			{
 				// TODO: Handle Thunderbird here?
 			}
-			
+			else if(CFStringCompare(appPath, CFSTR("/Applications/Microsoft Entourage.app"), 0) == kCFCompareEqualTo)
+			{
+				started = QProcess::startDetached("/usr/bin/osascript", QStringList() <<
+					"-e" << "set vattachment to (item 1 of argv)" <<
+					"-e" << "set vsubject to (item 2 of argv)" <<
+					"-e" << "tell application \"Microsoft Entourage\"" <<
+					"-e" << "set vmessage to make new outgoing message with properties" <<
+					"-e" << "{subject:vsubject, attachments:vattachment}" <<
+					"-e" << "open vmessage" <<
+					"-e" << "end tell" <<
+					// Commandline arguments
+					url.queryItemValue("attachment") <<
+					url.queryItemValue("subject"));
+			}
 			CFRelease(appPath);
 		}
-		
 		CFRelease(appUrl);
 	}
-	
 	CFRelease(emailUrl);
+	if( started )
+		return;
 #elif defined(Q_OS_LINUX)
 	QByteArray thunderbird;
 	QProcess p;
