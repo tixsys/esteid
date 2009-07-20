@@ -179,11 +179,14 @@ function readCardData()
 
 		checkReaderCount();
 
-		document.getElementById('documentId').innerHTML = esteidData.getDocumentId();
+		var pukRetry = esteidData.getPukRetryCount();
+		var esteidIsValid = esteidData.isValid();
+		
+		document.getElementById('documentId').innerHTML = activeCardId;
 		document.getElementById('expiry').innerHTML = esteidData.getExpiry();
 		document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
-		document.getElementById('labelCardValidity').innerHTML = _( esteidData.isValid() ? 'labelIsValid' : 'labelIsInValid' );
-		document.getElementById('labelCardValidity').style.color = esteidData.isValid() ? '#509b00' : '#e80303';
+		document.getElementById('labelCardValidity').innerHTML = _( esteidIsValid ? 'labelIsValid' : 'labelIsInValid' );
+		document.getElementById('labelCardValidity').style.color = esteidIsValid ? '#509b00' : '#e80303';
 
 		if ( esteidData.authCert.isTempel() )
 		{
@@ -244,7 +247,7 @@ function readCardData()
 			document.getElementById('authKeyText').style.display='none';
 			document.getElementById('authKeyBlocked').style.display='block';
 			document.getElementById('authValidButtons').style.display='none';
-			document.getElementById('authBlockedButtons').style.display=(esteidData.getPukRetryCount() == 0 ? 'none' : 'block');
+			document.getElementById('authBlockedButtons').style.display=(pukRetry == 0 ? 'none' : 'block');
 		}
 		document.getElementById('authCertValidTo').className=(esteidData.authCert.isValid() ? 'certValid' : 'certBlocked');
 		
@@ -262,7 +265,7 @@ function readCardData()
 			document.getElementById('signKeyText').style.display='none';
 			document.getElementById('signKeyBlocked').style.display='block';
 			document.getElementById('signValidButtons').style.display='none';
-			document.getElementById('signBlockedButtons').style.display=(esteidData.getPukRetryCount() == 0 ? 'none' : 'block');;
+			document.getElementById('signBlockedButtons').style.display=(pukRetry == 0 ? 'none' : 'block');;
 		}
 		document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
@@ -296,7 +299,7 @@ function readCardData()
 		} else
 			document.getElementById('signUpdateDiv').style.display='none';
 
-		if(esteidData.getPukRetryCount() == 0)
+		if(pukRetry == 0)
 			setActive('puk',document.getElementById('buttonPUK'));
 	} catch ( err ) { }
 }
@@ -567,6 +570,9 @@ function enableFields()
 				divs[i].style.display = 'block';
 		}
 	}
+
+	document.getElementById('buttonChangePUK2').style.display = 'block';
+	document.getElementById('labelPUKBlocked').style.display = 'none';
 }
 
 function checkMobile()
