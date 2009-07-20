@@ -71,3 +71,5 @@ a:hover, a:focus {color: #509b00; text-decoration: underline;}
 label	 {color: #355670; font-weight: bold;}
 
 #statusBar { position: absolute; left: 10px; bottom:5px; width: 500px; height: 20px; }
+
+#firstName, #middleName, #surName, #department, #id, #birthDate, #birthPlace, #citizen, #email { color: #355670; }
