@@ -127,23 +127,26 @@ void Common::mailTo( const QUrl &url )
 					url.queryItemValue("attachment") <<
 					url.queryItemValue("subject"));
 			}
-			else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo)
-			{
-				// TODO: Handle Thunderbird here?
-			}
-			else if(CFStringCompare(appPath, CFSTR("/Applications/Microsoft Entourage.app"), 0) == kCFCompareEqualTo)
+			else if(CFStringFind(appPath, CFSTR("Entourage"), 0).location != kCFNotFound)
 			{
 				started = QProcess::startDetached("/usr/bin/osascript", QStringList() <<
+					"-e" << "on run argv" <<
 					"-e" << "set vattachment to (item 1 of argv)" <<
 					"-e" << "set vsubject to (item 2 of argv)" <<
 					"-e" << "tell application \"Microsoft Entourage\"" <<
 					"-e" << "set vmessage to make new outgoing message with properties" <<
 					"-e" << "{subject:vsubject, attachments:vattachment}" <<
 					"-e" << "open vmessage" <<
+					"-e" << "activate" <<
 					"-e" << "end tell" <<
+					"-e" << "end run" <<
 					// Commandline arguments
 					url.queryItemValue("attachment") <<
 					url.queryItemValue("subject"));
+			}
+			else if(CFStringCompare(appPath, CFSTR("/Applications/Thunderbird.app"), 0) == kCFCompareEqualTo)
+			{
+				// TODO: Handle Thunderbird here? Impossible?
 			}
 			CFRelease(appPath);
 		}
