@@ -7,7 +7,7 @@
 #import "EstEIDPackage.h"
 #import "NSThread+Additions.h"
 
-//#define NO_OP
+#define NO_OP
 
 @implementation EstEIDInstaller
 
@@ -79,7 +79,11 @@
 	int count = 0;
 	int code = 0;
 	
+#ifdef DEBUG
+	if(YES) {
+#else
 	if([agent isOwnedBySystem]) {
+#endif
 		@try {
 			[[agent launchWithArguments:@"--preflight", nil] waitUntilExit];
 			

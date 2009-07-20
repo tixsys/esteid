@@ -24,7 +24,7 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 - (void)p_invalidateInstallButton;
 - (void)p_terminateWithMessage:(NSString *)message title:(NSString *)title;
 
-- (BOOL)p_startProgress:(NSString *)title limit:(double)limit;
+- (BOOL)p_startProgress:(NSString *)title limit:(double)limit timer:(BOOL)timer;
 - (BOOL)p_stopProgress;
 
 @end
@@ -52,7 +52,7 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 	[alert beginSheetModalForWindow:self->m_window modalDelegate:self didEndSelector:@selector(terminateAlertDidEnd: returnCode: contextInfo:) contextInfo:NULL];
 }
 
-- (BOOL)p_startProgress:(NSString *)title limit:(double)limit
+- (BOOL)p_startProgress:(NSString *)title limit:(double)limit timer:(BOOL)timer
 {
 	NSWindow *sheet = [self->m_window attachedSheet];
 	
@@ -74,7 +74,7 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 		[self->m_timer release];
 		
 		self->m_timeInterval = [NSDate timeIntervalSinceReferenceDate];
-		self->m_timer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progress:) userInfo:nil repeats:YES] retain];
+		self->m_timer = (timer) ? [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(progress:) userInfo:nil repeats:YES] retain] : nil;
 	}
 	
 	return YES;
@@ -138,7 +138,7 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 			}
 		}
 		
-		if([packages count] > 0 && [self p_startProgress:NSLocalizedString(@"Progress.Label.Downloading", nil) limit:100.0F]) {
+		if([packages count] > 0 && [self p_startProgress:NSLocalizedString(@"Progress.Label.Downloading", nil) limit:100.0F timer:NO]) {
 			self->m_packageDownload = [[EstEIDPackageDownload alloc] initWithManifestPackages:[packages allObjects] location:[self->m_manifestDownload location] prefix:nil];
 			[self->m_packageDownload setDelegate:(id <EstEIDPackageDownloadDelegate>)self];
 			[self->m_packageDownload start];
@@ -378,7 +378,7 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 {
 	if(![self isSilent]) {
 		[self showWindow:nil];
-		[self p_startProgress:NSLocalizedString(@"Progress.Label.CheckingForUpdates", nil) limit:30.0F * [[[EstEIDConfiguration sharedConfiguration] webServices] count] + 1.0F];
+		[self p_startProgress:NSLocalizedString(@"Progress.Label.CheckingForUpdates", nil) limit:30.0F * [[[EstEIDConfiguration sharedConfiguration] webServices] count] + 1.0F timer:YES];
 	}
 	
 	self->m_manifestDownload = [[EstEIDManifestDownload alloc] initWithLocations:[[EstEIDConfiguration sharedConfiguration] webServices]];
