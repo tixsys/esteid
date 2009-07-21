@@ -219,7 +219,7 @@ void SAL_CALL MyProtocolHandler::initialize( const Sequence< Any >& aArguments )
 
 	ousBDocFileURL = xModel1->getURL();
 	OString muffik = OUStringToOString(ousBDocFileURL, RTL_TEXTENCODING_ASCII_US);
-PRINT_DEBUG ("URL : %s",muffik.pData->buffer);
+PRINT_DEBUG ("file opening URL : %s",muffik.pData->buffer);
 	string strContainerPath = muffik.pData->buffer;
 	//----------------------------------------------------------------------
 	//----------------- If Bdoc Container, open it -------------------------
@@ -891,7 +891,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							i_try = 0;
 						}
 
-						m_BdocBridge->Terminate();
+						if ( (!m_BdocBridge->ret) || (strBdocUrl.size()>1) )
+							m_BdocBridge->Terminate();
 					}
 				}
 				else
@@ -998,6 +999,9 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 {
 	OString osPath;
 	strBuffer = "";
+	wchar_t utfChar;
+	int iCD1, iCD2;
+
 	osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ISO_8859_15);
 	//osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ASCII_US);
 
@@ -1006,20 +1010,19 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 		if (!memcmp(&osPath.pData->buffer[i], "%20", 3))
 		{
 			strBuffer += " ";
-			i += 3;
+			i += 2;
 		}
 
 		else if (osPath.pData->buffer[i] == '%')
 		{	//Some Special character -> change to utf8
-			int iCD1, iCD2;
 			iCD1 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
 			i += 3; 
 			iCD2 = convHexAsciiToInt(osPath.pData->buffer[i+1],osPath.pData->buffer[i+2]);
-			i += 3; 
+			i += 2; 
 			
 			if (bToOO)
 			{	// if string goes to OO
-				wchar_t utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+				utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
 				strBuffer += (char)utfChar;
 			}
 			else
@@ -1030,12 +1033,12 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 		}
 		else if ((osPath.pData->buffer[i] > 127) && (bToOO))
 		{	// if its a utf8 and string goes to OO
-			wchar_t utfChar = ((osPath.pData->buffer[i] - 192) * 64) + (osPath.pData->buffer[i+1] - 128);
+			utfChar = ((osPath.pData->buffer[i] - 192) * 64) + (osPath.pData->buffer[i+1] - 128);
 			strBuffer += (char)utfChar;
-			i += 2;
+			i ++;
 		}
-		
-		strBuffer += osPath.pData->buffer[i];
+		else
+			strBuffer += osPath.pData->buffer[i];
 	}
 PRINT_DEBUG("Return URL: %s",strBuffer.c_str());
 	return OString(strBuffer.c_str());
@@ -1044,18 +1047,19 @@ PRINT_DEBUG("Return URL: %s",strBuffer.c_str());
 OUString SAL_CALL convertPathToURI(OUString ousPath)
 {
 	//OString osPath;
+	wchar_t utfChar;
 	strBuffer = "";
 	//osPath = OUStringToOString(pcPath, RTL_TEXTENCODING_ISO_8859_15);
 	for(int i=0; i<ousPath.getLength(); i++)
 	{
-	if (ousPath.pData->buffer[i] > 127)
+		if (ousPath.pData->buffer[i] > 127)
 		{
-			wchar_t utfChar = ((ousPath.pData->buffer[i] - 192) * 64) + (ousPath.pData->buffer[i+1] - 128);
+			utfChar = ((ousPath.pData->buffer[i] - 192) * 64) + (ousPath.pData->buffer[i+1] - 128);
 			strBuffer += (char)utfChar;
-			i += 2;
+			i ++;
 		}
-
-		strBuffer += ousPath.pData->buffer[i];
+		else
+			strBuffer += ousPath.pData->buffer[i];
 	}
 
 	return OUString(strBuffer.data(), strBuffer.size(), RTL_TEXTENCODING_UNICODE, 0);

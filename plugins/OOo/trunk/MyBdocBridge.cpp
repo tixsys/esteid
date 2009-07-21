@@ -317,6 +317,7 @@ int My1EstEIDSigner::signFile ()
 		}		
 		else //if it's an new container (in openoffice we will have only 1 file per container)
 		{
+PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 			locBdoc = new BDoc();
 			locBdoc->addDocument(Document(str_filepath, "file"));
 			str_bdocpath = str_filepath + ".bdoc";
