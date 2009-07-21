@@ -801,6 +801,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							m_BdocBridge->DigiInit();
 							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
 						}
+						else
+							m_BdocBridge->DigiInit();
 						PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
 						//Sign
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
