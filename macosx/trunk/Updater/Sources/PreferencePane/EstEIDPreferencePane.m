@@ -188,7 +188,26 @@
 
 - (void)willSelect
 {
+	NSEnumerator *enumerator = [[EstEIDReceipt receiptsWithPrefix:@"org.esteid"] objectEnumerator];
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	NSMutableString *info = [NSMutableString string];
 	EstEIDAgent *agent = [self agent];
+	EstEIDReceipt *receipt;
+	
+	while((receipt = [enumerator nextObject]) != nil) {
+		if(![[receipt identifier] hasPrefix:@"org.esteid.installer"]) {
+			NSString *description = [receipt description];
+			
+			if(![description length]) description = [receipt title];
+			if(![description length]) description = [receipt identifier];
+			
+			[info appendFormat:[bundle localizedStringForKey:@"PreferencePane.Label.Version" value:nil table:@"PreferencePane"], description, [receipt version]];
+			[info appendString:@"\n"];
+		}
+	}
+	
+	[self->m_infoTextView setString:info];
+	[self->m_infoTextField setStringValue:[bundle localizedStringForKey:([info length] > 0) ? @"PreferencePane.Label.InstalledSoftware" : @"PreferencePane.Label.NoInstalledSoftware" value:nil table:@"PreferencePane"]];
 	
 	[self->m_automaticUpdateButton setState:([agent autoUpdate]) ? NSOnState : NSOffState];
 	
@@ -204,11 +223,8 @@
 
 - (void)mainViewDidLoad
 {
-	NSEnumerator *enumerator = [[EstEIDReceipt receiptsWithPrefix:@"org.esteid"] objectEnumerator];
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSMutableString *info = [NSMutableString string];
 	SInt32 MacOSXVersionNumber;
-	EstEIDReceipt *receipt;
 	
 	if(Gestalt(gestaltSystemVersion, &MacOSXVersionNumber) == noErr) {
 		// Preference panes are narrower in Tiger and Leopard is too stupid to figure this out itself.
@@ -224,18 +240,6 @@
 		}
 	}
 	
-	while((receipt = [enumerator nextObject]) != nil) {
-		if(![[receipt identifier] hasPrefix:@"org.esteid.installer"]) {
-			NSString *description = [receipt description];
-			
-			if(![description length]) description = [receipt title];
-			if(![description length]) description = [receipt identifier];
-			
-			[info appendFormat:[bundle localizedStringForKey:@"PreferencePane.Label.Version" value:nil table:@"PreferencePane"], description, [receipt version]];
-			[info appendString:@"\n"];
-		}
-	}
-	
 	[self->m_authorizationView setDelegate:self];
 	[self->m_authorizationView setString:[EstEIDAgent identifier]];
 	[self->m_authorizationView updateStatus:nil];
@@ -244,8 +248,6 @@
 	[self->m_automaticUpdateButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Label.CheckForUpdates" value:nil table:@"PreferencePane"]];
 	[self->m_automaticUpdateButton setEnabled:([self->m_authorizationView authorizationState] == SFAuthorizationViewUnlockedState) ? YES : NO];
 	[self->m_idLoginButton setEnabled:([self->m_authorizationView authorizationState] == SFAuthorizationViewUnlockedState) ? YES : NO];
-	[self->m_infoTextView setString:info];
-	[self->m_infoTextField setStringValue:[bundle localizedStringForKey:([info length] > 0) ? @"PreferencePane.Label.InstalledSoftware" : @"PreferencePane.Label.NoInstalledSoftware" value:nil table:@"PreferencePane"]];
 }
 
 #pragma mark SFAuthorizationViewDelegate
