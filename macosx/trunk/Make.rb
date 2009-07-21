@@ -822,7 +822,7 @@ class Application
 				:identifier => 'org.esteid.installer.tokend.10.4',
 				:location => '/System/Library/Security/tokend',
 				:script => "return system.version.ProductVersion &lt; '10.5';",
-				:system => '<10.5'
+				:system => '&lt;10.5'
 			}, {
 				:name => 'esteid',
 				:title => 'ID-card',
