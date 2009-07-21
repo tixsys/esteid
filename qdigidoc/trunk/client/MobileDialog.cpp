@@ -175,7 +175,7 @@ bool MobileDialog::getFiles()
 			}
 			digest = QByteArray( (char*)&d[0], d.size() );
 		} else
-			digest = m_doc->getFileDigest( i ).left( digidoc::SHA1Digest::DIGEST_SIZE );
+			digest = m_doc->getFileDigest( i ).left( 20 );
 
 		QFileInfo f( QString::fromStdString( file.getPath() ) );
 		files += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
