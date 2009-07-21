@@ -96,7 +96,9 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 		[[NSApplication sharedApplication] endSheet:self->m_progressPanel];
 		[self->m_progressPanel orderOut:nil];
 		
-		[self->m_quitButton setHidden:NO];
+		if([[self->m_manifestDownload components] count] > 0) {
+			[self->m_quitButton setHidden:NO];
+		}
 	}
 	
 	return YES;
