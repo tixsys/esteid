@@ -351,6 +351,10 @@ Start downloading?</source>
         <source>Open utility</source>
         <translation>Открыть средство управления</translation>
     </message>
+    <message>
+        <source>Mobile-ID BDOC signing not supported yet!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -556,18 +560,6 @@ Please check your internet connection.</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <source>Certificate permissions</source>
-        <translation type="obsolete">Разрешения сертификата</translation>
-    </message>
-    <message>
-        <source>All users</source>
-        <translation type="obsolete">Все пользователи</translation>
-    </message>
-    <message>
-        <source>Only me</source>
-        <translation type="obsolete">Только я</translation>
-    </message>
-    <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
         <translation>OCSP PKCS#12 сертификат доступа к серверу доступен на&lt;br /&gt;
@@ -607,14 +599,6 @@ Please check your internet connection.</source>
     <message>
         <source>Default file type:</source>
         <translation>Тип файла по умолчанию:</translation>
-    </message>
-    <message>
-        <source>BDoc</source>
-        <translation type="obsolete">BDoc</translation>
-    </message>
-    <message>
-        <source>DDoc</source>
-        <translation type="obsolete">DDoc</translation>
     </message>
     <message>
         <source>Role</source>

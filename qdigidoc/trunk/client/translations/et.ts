@@ -2,121 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
-    <name>CertificateDialog</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="obsolete">Salvesta sertifikaat</translation>
-    </message>
-    <message>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="obsolete">Salvestamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translation type="obsolete">Sertifikaadi info:</translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="obsolete">Selle sertifikaadi otstarve on:</translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="obsolete">Kellele väljastatud:</translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="obsolete">Väljastaja:</translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="obsolete">Kehtiv alates</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="obsolete">kuni</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Versioon</translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="obsolete">Seeria number</translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="obsolete">Signatuuri algoritm</translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="obsolete">Väljaandja</translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="obsolete">Kehtiv kuni</translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="obsolete">Subjekt</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="obsolete">Avalik võti</translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="obsolete">Sertifikaadi reeglid</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="obsolete">Sertifikaat</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Üldine</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Detailid</translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="obsolete">Väli</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Väärtus</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvesta</translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translation type="obsolete">Sertifitseermisahel</translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="obsolete">Sertifikaadi staatus:</translation>
-    </message>
-    <message>
-        <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation type="obsolete">Sertifikaadid (*.cer *.crt *.pem)</translation>
-    </message>
-    <message>
-        <source>Enhanched key usage</source>
-        <translation type="obsolete">Täiendatud võtme kasutus</translation>
-    </message>
-    <message>
-        <source>Key usage</source>
-        <translation type="obsolete">Võtme kastus</translation>
-    </message>
-</context>
-<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -150,18 +35,6 @@
         <translation>Abi</translation>
     </message>
     <message>
-        <source>Estonian</source>
-        <translation type="obsolete">Estonian</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">English</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">Russian</translation>
-    </message>
-    <message>
         <source>Next</source>
         <translation>Edasi</translation>
     </message>
@@ -170,20 +43,12 @@
         <translation>Allkiri</translation>
     </message>
     <message>
-        <source>Add file</source>
-        <translation type="obsolete">Lisa fail</translation>
-    </message>
-    <message>
         <source>Role</source>
         <translation>Roll</translation>
     </message>
     <message>
         <source>Resolution</source>
         <translation>Resolutsioon</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="obsolete">Asukoht</translation>
     </message>
     <message>
         <source>City</source>
@@ -208,14 +73,6 @@
     <message>
         <source>Add signature</source>
         <translation>Lisa allkiri</translation>
-    </message>
-    <message>
-        <source>Save files to disk</source>
-        <translation type="obsolete">Salvesta failid kettale</translation>
-    </message>
-    <message>
-        <source>DigiDoc client</source>
-        <translation type="obsolete">DigiDoc klient</translation>
     </message>
     <message>
         <source>Save container</source>
@@ -267,14 +124,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation>Salvesta fail</translation>
     </message>
     <message>
-        <source>Are you sure you want remove files %1</source>
-        <translation type="obsolete">Oled sa kindel, et tahad eemaldada faile %1?</translation>
-    </message>
-    <message>
-        <source>Failed to send email</source>
-        <translation type="obsolete">Ekirja koostamine ebaõnnestus</translation>
-    </message>
-    <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
         <translation>Protsessi &apos;qdigidoccrypto&apos; käivitamine ebaõnnestus</translation>
     </message>
@@ -311,18 +160,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation>Allkirjad</translation>
     </message>
     <message>
-        <source>Container contains file with same name, ovewrite?</source>
-        <translation type="obsolete">Ümbrikus on samanimeline fail, kirjutan üle?</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvesta</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Kustuta</translation>
-    </message>
-    <message>
         <source>Container:</source>
         <translation>Ümbrik:</translation>
     </message>
@@ -351,20 +188,8 @@ Should I keep unsigned documents or remove these?</source>
         <translation>aegunud</translation>
     </message>
     <message>
-        <source>Auth certificate is</source>
-        <translation type="obsolete">Isikutuvastamise sertifikaat on</translation>
-    </message>
-    <message>
-        <source>Select folder where file will be stored</source>
-        <translation type="obsolete">Vali kataloog kuhu failid salvestatakse</translation>
-    </message>
-    <message>
         <source>Remove signature %1 %2 %3</source>
         <translation>Eemalda allkiri %1 %2 %3</translation>
-    </message>
-    <message>
-        <source>Crypt files for secure transfer</source>
-        <translation type="obsolete">Krüpteeri failid turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Use Mobile ID</source>
@@ -373,10 +198,6 @@ Should I keep unsigned documents or remove these?</source>
     <message>
         <source>Use ID card</source>
         <translation>Kasuta ID kaarti</translation>
-    </message>
-    <message>
-        <source>Remove selected files</source>
-        <translation type="obsolete">Eemalda valitud</translation>
     </message>
     <message>
         <source>This container is </source>
@@ -423,16 +244,8 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Resolutsioon ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Your certificates are expired</source>
-        <translation type="obsolete">Sertifikaadid on aegunud</translation>
-    </message>
-    <message>
         <source>Your certificates will be expire</source>
         <translation>Sertifikaadid hakkavad aeguma</translation>
-    </message>
-    <message>
-        <source>Run ID-Card utility</source>
-        <translation type="obsolete">Käivita ID-kaardi haldusvahend</translation>
     </message>
     <message>
         <source>File already in container</source>
@@ -506,20 +319,22 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
     <message>
         <source>Did not find any server access certificate!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Puudub ligipääsutõend!
+Alustame laadimist?</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga ligipääsutõendi laadimisel!</translation>
     </message>
     <message>
         <source>Error parsing server access certificate result!</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga ligipääsutõendi lugemisel!</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga ligipääsutõendi laadimisel!
+%1</translation>
     </message>
     <message>
         <source>Check internet connection</source>
@@ -527,24 +342,25 @@ Start downloading?</source>
     </message>
     <message>
         <source>Personal code is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Isikukood on vigane</translation>
     </message>
     <message>
         <source>Failed to save server access certificate file to %1!
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga ligipääsutõendi salvestamisel %1!
+%2</translation>
     </message>
     <message>
         <source>Open utility</source>
         <translation>Ava haldusvahend</translation>
     </message>
+    <message>
+        <source>Mobile-ID BDOC signing not supported yet!</source>
+        <translation>BDOC formaadi allkirjastamine mobiiliga hetkel ei tööta!</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
-    <message>
-        <source>Next</source>
-        <translation type="obsolete">Edasi</translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation>Katkesta</translation>
@@ -608,7 +424,9 @@ Start downloading?</source>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translation type="unfinished">Connecting to SK server failed!
+        <translatorcomment>Viga SK serveriga ühenduse saamisel!
+Palun kontrollige internetiühendust.</translatorcomment>
+        <translation>Connecting to SK server failed!
 Please check your internet connection.</translation>
     </message>
 </context>
@@ -650,40 +468,8 @@ Please check your internet connection.</translation>
         <translation>AEG</translation>
     </message>
     <message>
-        <source>SIGNATURE VALIDITY</source>
-        <translation type="obsolete">ALLKIRJA KEHTIVUS</translation>
-    </message>
-    <message>
         <source>SIGNATURE</source>
         <translation>ALLKIRI</translation>
-    </message>
-    <message>
-        <source>IS VALID</source>
-        <translation type="obsolete">KEHTIB</translation>
-    </message>
-    <message>
-        <source>IS NOT VALID</source>
-        <translation type="obsolete">EI KEHTI</translation>
-    </message>
-    <message>
-        <source>ROLE/RESOLUTION</source>
-        <translation type="obsolete">ROLL/RESOLUTSIOON</translation>
-    </message>
-    <message>
-        <source>SIGNER LOCATION (CITY, STATE, INDEX, COUNTRY)</source>
-        <translation type="obsolete">ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
-    </message>
-    <message>
-        <source>CERTIFICATE SERIALNUMBER</source>
-        <translation type="obsolete">SERTIFIKAADI SEERIANUMBER</translation>
-    </message>
-    <message>
-        <source>CERTIFICATE ISSUER NAME</source>
-        <translation type="obsolete">SERTIFIKAADI VÄLJAANDJA NIMI</translation>
-    </message>
-    <message>
-        <source>CERTIFICATE ISSUER PUBLIC KEY HASH</source>
-        <translation type="obsolete">SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
     </message>
     <message>
         <source>NOTES</source>
@@ -744,10 +530,6 @@ Please check your internet connection.</translation>
         <source>PIN acquisition canceled.</source>
         <translation>PIN koodi sisestamine katkestati.</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
-        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
-    </message>
 </context>
 <context>
     <name>RegisterP12</name>
@@ -784,18 +566,6 @@ Please check your internet connection.</translation>
         <translation>Parool</translation>
     </message>
     <message>
-        <source>Certificate permissions</source>
-        <translation type="obsolete">Sertifikaadide load</translation>
-    </message>
-    <message>
-        <source>All users</source>
-        <translation type="obsolete">Kõik kasutajad</translation>
-    </message>
-    <message>
-        <source>Only me</source>
-        <translation type="obsolete">Ainult mina</translation>
-    </message>
-    <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
         <translation>OCSP PKCS#12 serveri ligipääsu sertifikaadid on võimalik saada&lt;br /&gt;
@@ -813,20 +583,12 @@ Please check your internet connection.</translation>
         <translation>Ümbriku loomise vaikekataloog</translation>
     </message>
     <message>
-        <source>Default values</source>
-        <translation type="obsolete">Vaikimisi väärtused</translation>
-    </message>
-    <message>
         <source>Role</source>
         <translation>Roll</translation>
     </message>
     <message>
         <source>Resolution</source>
         <translation>Resolutsioon</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="obsolete">Asukoht</translation>
     </message>
     <message>
         <source>City</source>
@@ -869,24 +631,12 @@ Please check your internet connection.</translation>
         <translation>Vaikimisi faili tüüp:</translation>
     </message>
     <message>
-        <source>BDoc</source>
-        <translation type="obsolete">BDoc</translation>
-    </message>
-    <message>
-        <source>DDoc</source>
-        <translation type="obsolete">DDoc</translation>
-    </message>
-    <message>
         <source>Save last insert role and resolution</source>
         <translation>Jäta viimati sisestatud roll ja resolutsioon meelde</translation>
     </message>
     <message>
         <source>General</source>
         <translation>Üldine</translation>
-    </message>
-    <message>
-        <source>OCSP PKCS12 certificate</source>
-        <translation type="obsolete">Ligipääsutõend</translation>
     </message>
     <message>
         <source>Signature</source>
