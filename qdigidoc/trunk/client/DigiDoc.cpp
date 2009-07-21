@@ -544,7 +544,7 @@ QByteArray DigiDoc::getFileDigest( unsigned int i )
 	}
 
 	unsigned char *digest;
-	digest = (unsigned char*)malloc(digidoc::SHA1Digest::DIGEST_SIZE);
+	digest = (unsigned char*)malloc(20);
 	b->getFileDigest( i, digest );
 
 	QByteArray result( (char*)digest );
