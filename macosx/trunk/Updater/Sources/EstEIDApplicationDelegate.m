@@ -407,6 +407,15 @@ static NSString *EstEIDApplicationDelegateSizeIdentifier = @"size";
 	return [[self->m_manifestDownload components] count];
 }
 
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
+{
+	if([[tableColumn identifier] isEqualToString:EstEIDApplicationDelegateInstallIdentifier]) {
+		EstEIDManifestComponent *component = [[self->m_manifestDownload components] objectAtIndex:rowIndex];
+		
+		[cell setEnabled:([component priority] != EstEIDManifestComponentPriorityCritical) ? YES : NO];
+	}
+}
+
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
 {
 	EstEIDManifestComponent *component = [[self->m_manifestDownload components] objectAtIndex:rowIndex];
