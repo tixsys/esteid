@@ -125,6 +125,8 @@ static int EstEIDAgentLaunchdSetEnabled(NSString *path, BOOL flag)
 							 @"\t\t\t<integer>%d</integer>\n"
 							 @"\t\t</dict>\n"
 #endif
+							 @"\t\t<key>LimitLoadToSessionType</key>\n"
+							 @"\t\t<string>Aqua</string>\n"
 							 @"\t</dict>\n"
 							 @"</plist>\n", identifier, updater, updater, ltime->tm_hour, ltime->tm_min];
 		
@@ -249,28 +251,32 @@ int main(int argc, char *argv[])
 					}
 				}
 			// [checksum] [file] [identifier] [target]
-			} else if((argc == 5 || argc == 6) && strcmp(argv[1], "--install") == 0) {
+			} else if(!noauth && (argc == 5 || argc == 6) && strcmp(argv[1], "--install") == 0) {
 				char *tmp1 = strdup("/tmp/esteid-agent/XXXXXX");
+				char *args_cp[] = { argv[3], mktemp(tmp1), NULL };
+				char *args_rm[] = { "-R", "/tmp/esteid-agent", NULL };
+				struct stat st;
+				int cpid;
+				
+				if(stat("/tmp/esteid-agent", &st) == 0 && AuthorizationExecuteWithPrivileges(authorization, "/bin/rm", kAuthorizationFlagDefaults, args_rm, NULL) == errAuthorizationSuccess) {
+					wait(&cpid);
+				}
 				
 				mkdir("/tmp/esteid-agent", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 				
-				setenv("OLD_PATH", argv[3], 1);
-				setenv("NEW_PATH", mktemp(tmp1), 1);
-				result = system("/bin/cp \"$OLD_PATH\" \"$NEW_PATH\"");
-				
-				if(result == 0) {
-					if([EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
-						char *tmp2 = (char *)[[NSString stringWithFormat:@"/tmp/esteid-agent/%s.pkg", argv[4]] UTF8String];
-						
-						setenv("PKG_PATH", tmp2, 1);
-						system("/bin/rm -R \"$PKG_PATH\"");
-						
-						if((result = system("/usr/bin/ditto -x -k \"$NEW_PATH\" \"$PKG_PATH\"")) == 0) {
-							char *args[] = { "-pkg", tmp2, "-target", (argc == 6) ? argv[5] : "/", NULL };
+				if(stat("/tmp/esteid-agent", &st) == 0 && st.st_uid == 0 && AuthorizationExecuteWithPrivileges(authorization, "/bin/cp", kAuthorizationFlagDefaults, args_cp, NULL) == errAuthorizationSuccess) {
+					char *tmp2 = (char *)[[NSString stringWithFormat:@"/tmp/esteid-agent/%s.pkg", argv[4]] UTF8String];
+					char *args_ditto[] = { "-x", "-k", args_cp[1], tmp2, NULL };
+					
+					wait(&cpid);
+					
+					if(stat(tmp1, &st) == 0 && st.st_uid == 0 && [EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
+						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/ditto", kAuthorizationFlagDefaults, args_ditto, NULL) == errAuthorizationSuccess) {
+							char *args_installer[] = { "-pkg", tmp2, "-target", (argc == 6) ? argv[5] : "/", NULL };
 							
-							if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/sbin/installer", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
-								int cpid;
-								
+							wait(&cpid);
+							
+							if(AuthorizationExecuteWithPrivileges(authorization, "/usr/sbin/installer", kAuthorizationFlagDefaults, args_installer, NULL) == errAuthorizationSuccess) {
 								if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
 									result = WEXITSTATUS(cpid);
 									
@@ -280,25 +286,21 @@ int main(int argc, char *argv[])
 								}
 							} else {
 								fprintf(stderr, "Install failed.\n");
-								result = EXIT_FAILURE;
 							}
 						} else {
-							fprintf(stderr, "Couldn't unflatten the package\n");
-							result = -10;
+							fprintf(stderr, "ditto failed.\n");
 						}
-						
-						system("/bin/rm -R \"$PKG_PATH\"");
-						unsetenv("PKG_PATH");
 					} else {
 						fprintf(stderr, "Checksum doesn't match for the specified file\n");
 					}
 				} else {
-					fprintf(stderr, "Failed to copy %s to %s (error=%d)\n", argv[3], tmp1, result);
+					fprintf(stderr, "copy failed.\n");
 				}
 				
-				system("/bin/rm \"$NEW_PATH\"");
-				unsetenv("OLD_PATH");
-				unsetenv("NEW_PATH");
+				if(AuthorizationExecuteWithPrivileges(authorization, "/bin/rm", kAuthorizationFlagDefaults, args_rm, NULL) == errAuthorizationSuccess) {
+					wait(&cpid);
+				}
+				
 				free(tmp1);
 			} else if(argc == 2 && strcmp(argv[1], "--preflight") == 0) {
 				// Do nothing, reserved for future usage.
