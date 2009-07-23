@@ -632,6 +632,9 @@ void MainWindow::showCardStatus()
 					<< SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) << "</font><br />";
 				s << tr("Register code") << ": <font color=\"black\">"
 					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+				signSigner->setText( QString( "%1 (%2)" )
+					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) )
+					.arg( c.subjectInfo( "serialNumber" ) ) );
 			}
 			else
 			{
@@ -640,6 +643,10 @@ void MainWindow::showCardStatus()
 					<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
 				s << tr("Personal code") << ": <font color=\"black\">"
 					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+				signSigner->setText( QString( "%1 %2 (%3)" )
+					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
+					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
+					.arg( c.subjectInfo( "serialNumber" ) ) );
 			}
 			s << tr("Card in reader") << ": <font color=\"black\">"
 				<< doc->activeCard() << "</font><br />";
@@ -666,11 +673,6 @@ void MainWindow::showCardStatus()
 				infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );
 			else
 				infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
-
-			signSigner->setText( QString( "%1 %2 (%3)" )
-				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-				.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-				.arg( c.subjectInfo( "serialNumber" ) ) );
 		}
 		else if( !doc->activeCard().isEmpty() )
 			content = tr("Loading data");
