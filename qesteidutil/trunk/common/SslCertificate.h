@@ -46,6 +46,7 @@ public:
 
 	QByteArray	authorityKeyIdentifier() const;
 	QStringList enhancedKeyUsage() const;
+	static QString formatDate( const QDateTime &date, const QString &format );
 	static QString formatName( const QString &name );
 	static QSslCertificate fromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );

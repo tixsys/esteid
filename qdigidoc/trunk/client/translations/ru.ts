@@ -806,6 +806,10 @@ Please check your internet connection.</source>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
+    <message>
+        <source>time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TreeWidget</name>

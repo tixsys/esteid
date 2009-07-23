@@ -58,7 +58,10 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	if( extended )
 	{
 		st << "<br />" << s.location() << "<br />";
-		st << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" );
+		st << tr("Signed on") << " "
+			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
+			<< tr("time") << " "
+			<< s.dateTime().toString( "hh:mm" );
 	}
 	else
 	{
@@ -70,7 +73,10 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		QString role = s.role();
 		if( !role.isEmpty() )
 			t << role << "<br />";
-		t << tr("Signed on") << " " << s.dateTime().toString( "dd. MMMM yyyy kell hh:mm" );
+		t << tr("Signed on") << " "
+			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
+			<< tr("time") << " "
+			<< s.dateTime().toString( "hh:mm" );
 		setToolTip( tooltip );
 	}
 

@@ -23,6 +23,7 @@
 #include "SslCertificate.h"
 
 #include <QDateTime>
+#include <QLocale>
 #include <QSslKey>
 #include <QStringList>
 
@@ -80,6 +81,13 @@ QStringList SslCertificate::enhancedKeyUsage() const
 	return list;
 }
 
+QString SslCertificate::formatDate( const QDateTime &date, const QString &format )
+{
+	QString f = format;
+	f.replace( "MMMM", QLocale().monthName( date.date().month() ) );
+	return date.toString( f );
+}
+
 QString SslCertificate::formatName( const QString &name )
 {
 	QString ret = name.toLower();
@@ -132,10 +140,8 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 	int len = i2d_X509( (X509*)x509, &cert );
 	QByteArray der;
 	if( len >= 0 )
-	{
 		der = QByteArray( (char*)cert, len );
-		OPENSSL_free( cert );
-	}
+	OPENSSL_free( cert );
 	return QSslCertificate( der, QSsl::Der );
 }
 
@@ -201,10 +207,8 @@ QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
 
 	QSslKey k;
 	if( len > 0 )
-	{
 		k = QSslKey( QByteArray( (char*)data, len ), alg, QSsl::Der, type );
-		OPENSSL_free( data );
-	}
+	OPENSSL_free( data );
 
 	return k;
 }

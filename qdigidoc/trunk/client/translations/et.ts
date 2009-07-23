@@ -812,6 +812,10 @@ Please check your internet connection.</translation>
         <source>Signature is</source>
         <translation>Allkiri on</translation>
     </message>
+    <message>
+        <source>time</source>
+        <translation>kell</translation>
+    </message>
 </context>
 <context>
     <name>TreeWidget</name>

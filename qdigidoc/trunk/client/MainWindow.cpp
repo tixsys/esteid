@@ -131,7 +131,6 @@ MainWindow::MainWindow( QWidget *parent )
 	m_loaded = doc->init();
 
 	Settings s;
-	QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) );
 	cards->hack();
 	languages->hack();
 	lang << "et" << "en" << "ru";
@@ -430,6 +429,13 @@ void MainWindow::on_introCheck_stateChanged( int state )
 void MainWindow::on_languages_activated( int index )
 {
 	Settings().setValue( "Main/Language", lang[index] );
+
+	switch( index )
+	{
+	case 1: QLocale::setDefault( QLocale( QLocale::English, QLocale::UnitedKingdom ) ); break;
+	case 2: QLocale::setDefault( QLocale( QLocale::Russian, QLocale::RussianFederation ) ); break;
+	default: QLocale::setDefault( QLocale( QLocale::Estonian, QLocale::Estonia ) ); break;
+	}
 	appTranslator->load( ":/translations/" + lang[index] );
 	commonTranslator->load( ":/translations/common_" + lang[index] );
 	qtTranslator->load( ":/translations/qt_" + lang[index] );
