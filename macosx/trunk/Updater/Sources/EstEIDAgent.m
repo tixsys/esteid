@@ -80,6 +80,8 @@
 				
 				va_end(args);
 				
+				[arguments addObject:@"--extauth"];
+				
 				@try {
 					NSPipe *pipe = [NSPipe pipe];
 					

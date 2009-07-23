@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 # Configure automatic software updates
-/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable /Library/LaunchAgents/org.esteid.updater.plist --noauth
+/Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable /Library/LaunchAgents/org.esteid.updater.plist
 
 exit 0

@@ -74,10 +74,58 @@ static NSString *EstEIDAgentGetExecutablePath()
 	return [path autorelease];
 }
 
-static int EstEIDAgentLaunchdSetEnabled(NSString *path, BOOL flag)
+static int EstEIDAgentExecuteCommand(AuthorizationRef authorization, char *command, ...)
+{
+	int result = EXIT_FAILURE;
+	int argc = 0;
+	va_list list;
+	char **argv;
+	char *arg;
+	int cpid;
+	
+	va_start(list, command);
+	while((arg = va_arg(list, char *)) != NULL) argc++;
+	va_end(list);
+	
+	argv = malloc(sizeof(char *) * (argc + 2));
+	
+	if(argv != NULL) {
+		argv[0] = command;
+		argv[argc + 1] = NULL;
+		argc = 1;
+		
+		va_start(list, command);
+		while((arg = va_arg(list, char *)) != NULL) argv[argc++] = arg;
+		va_end(list);
+		
+		if(authorization != NULL) {
+			if(AuthorizationExecuteWithPrivileges(authorization, command, kAuthorizationFlagDefaults, argv + 1, NULL) == errAuthorizationSuccess && wait(&cpid) != -1 && WIFEXITED(cpid)) {
+				result = WEXITSTATUS(cpid);
+			}
+		} else {
+			cpid = fork();
+			
+			if(cpid == 0) {
+				execvp(command, argv);
+				exit(EXIT_FAILURE);
+			} else {
+				if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
+					result = WEXITSTATUS(cpid);
+				}
+			}
+		}
+		
+		free(argv);
+	}
+	
+	return result;
+}
+
+static int EstEIDAgentLaunchdSetEnabled(AuthorizationRef authorization, NSString *path, BOOL flag)
 {
 	NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
 	BOOL launchd = NO;
+	int result = 0;
 	
 	if(plist) {
 		id obj = [plist objectForKey:@"Disabled"];
@@ -135,35 +183,32 @@ static int EstEIDAgentLaunchdSetEnabled(NSString *path, BOOL flag)
 	}
 		
 	if(launchd) {
-		setenv("AGENT_PATH", [path fileSystemRepresentation], 1);
-		if(plist) system("/bin/launchctl unload \"$AGENT_PATH\"");
-		system("/bin/launchctl load \"$AGENT_PATH\"");
-		unsetenv("AGENT_PATH");
+		if(plist) EstEIDAgentExecuteCommand(authorization, "/bin/launchctl", "unload", [path fileSystemRepresentation], NULL);
+		result = EstEIDAgentExecuteCommand(authorization, "/bin/launchctl", "load", [path fileSystemRepresentation], NULL);
 	}
 	
-	return 0;
+	return result;
 }
 
 int main(int argc, char *argv[])
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	AuthorizationExternalForm externalAuthorization;
-	AuthorizationRef authorization;
+	AuthorizationRef authorization = NULL;
 	int result = EXIT_FAILURE;
-	int noauth = 0;
+	int extauth = 0;
 	
 	if(argc > 1) {
-		if(strcmp(argv[argc - 1], "--noauth") == 0) {
-			authorization = NULL;
-			noauth = 1;
+		if(strcmp(argv[argc - 1], "--extauth") == 0) {
+			extauth = 1;
 			argc--;
 		}
 	}
 	
-	if(noauth || read(0, &externalAuthorization, sizeof(externalAuthorization)) == sizeof(externalAuthorization)) {
-		if(noauth || AuthorizationCreateFromExternalForm(&externalAuthorization, &authorization) == errAuthorizationSuccess) {
-			if(!noauth && geteuid() != 0 && !(argc > 1 && strcmp(argv[argc - 1], "--repair") == 0)) {
-				char *args[] = { "--repair", NULL };
+	if(!extauth || read(0, &externalAuthorization, sizeof(externalAuthorization)) == sizeof(externalAuthorization)) {
+		if(!extauth || AuthorizationCreateFromExternalForm(&externalAuthorization, &authorization) == errAuthorizationSuccess) {
+			if(extauth && geteuid() != 0 && !(argc > 1 && strcmp(argv[argc - 1], "--repair") == 0)) {
+				char *args[] = { "--repair", "--extauth", NULL };
 				FILE *pipe = NULL;
 				
 				if(AuthorizationExecuteWithPrivileges(authorization, [EstEIDAgentGetExecutablePath() UTF8String], kAuthorizationFlagDefaults, args, &pipe) == errAuthorizationSuccess) {
@@ -179,8 +224,9 @@ int main(int argc, char *argv[])
 				}
 				
 				if(result == 0) {
-					char *args[argc];
+					char *args[argc + 1];
 					
+					args[argc - 0] = "--extauth";
 					args[argc - 1] = NULL;
 					for(int i = 1; i < argc; i++) args[i - 1] = argv[i];
 					
@@ -198,11 +244,11 @@ int main(int argc, char *argv[])
 				}
 			} else if(argc == 2 && strcmp(argv[1], "--repair") == 0) {
 				int tool = open([EstEIDAgentGetExecutablePath() fileSystemRepresentation], O_NONBLOCK | O_RDONLY | O_EXLOCK, 0);
-				struct stat info;
+				struct stat st;
 				
-				if((tool != -1) && (fstat(tool, &info) == 0)) {
-					int chownerr = (info.st_uid != 0) ? fchown(tool, 0, info.st_gid) : 0;
-					int chmoderr = fchmod(tool, (info.st_mode & (~(S_IWGRP | S_IWOTH))) | S_ISUID);
+				if((tool != -1) && (fstat(tool, &st) == 0)) {
+					int chownerr = (st.st_uid != 0) ? fchown(tool, 0, st.st_gid) : 0;
+					int chmoderr = fchmod(tool, (st.st_mode & (~(S_IWGRP | S_IWOTH))) | S_ISUID);
 					
 					close(tool);
 					
@@ -212,95 +258,61 @@ int main(int argc, char *argv[])
 				}
 				
 				if(result == 0) {
-					fprintf(stderr, "Repair succeeded!\n");
+					fprintf(stderr, "EstEIDAgent: Repair succeeded!\n");
 				} else {
-					fprintf(stderr, "Repair failed.\n");
+					fprintf(stderr, "EstEIDAgent: Repair failed.\n");
 				}
 			// [enable|disable] [file]
 			} else if(argc == 4 && strcmp(argv[1], "--launchd") == 0) {
 				if(strcmp(argv[2], "enable") == 0) {
-					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), YES);
+					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), YES);
 				} else if(strcmp(argv[2], "disable") == 0) {
-					result = EstEIDAgentLaunchdSetEnabled(EstEIDAgentGetString(argv[3]), NO);
+					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), NO);
 				}
 			// [enable|disable] [user] [entry]
 			} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {
 				if(strcmp(argv[2], "enable") == 0) {
-					char *args[] = { ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL };
-					
-					if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
-						int cpid;
-						
-						if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
-							result = WEXITSTATUS(cpid);
-						}
-					} else {
-						fprintf(stderr, "dscl failed.\n");
+					if((result = EstEIDAgentExecuteCommand(authorization, "/usr/bin/dscl", ".", "-append", argv[3], "AuthenticationAuthority", argv[4], NULL)) != 0) {
+						fprintf(stderr, "EstEIDAgent: Couldn't enable id-login for %s.\n", argv[3]);
 					}
 				} else if(strcmp(argv[2], "disable") == 0) {
-					char *args[] = { ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL };
-					
-					if(!noauth && AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/dscl", kAuthorizationFlagDefaults, args, NULL) == errAuthorizationSuccess) {
-						int cpid;
-						
-						if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
-							result = WEXITSTATUS(cpid);
-						}
-					} else {
-						fprintf(stderr, "dscl failed.\n");
+					if((result = EstEIDAgentExecuteCommand(authorization, "/usr/bin/dscl", ".", "-delete", argv[3], "AuthenticationAuthority", argv[4], NULL)) != 0) {
+						fprintf(stderr, "EstEIDAgent: Couldn't disable id-login for %s.\n", argv[3]);
 					}
 				}
 			// [checksum] [file] [identifier] [target]
-			} else if(!noauth && (argc == 5 || argc == 6) && strcmp(argv[1], "--install") == 0) {
+			} else if((argc == 5 || argc == 6) && strcmp(argv[1], "--install") == 0) {
 				char *tmp1 = strdup("/tmp/esteid-agent/XXXXXX");
-				char *args_cp[] = { argv[3], mktemp(tmp1), NULL };
-				char *args_rm[] = { "-R", "/tmp/esteid-agent", NULL };
 				struct stat st;
-				int cpid;
 				
-				if(stat("/tmp/esteid-agent", &st) == 0 && AuthorizationExecuteWithPrivileges(authorization, "/bin/rm", kAuthorizationFlagDefaults, args_rm, NULL) == errAuthorizationSuccess) {
-					wait(&cpid);
+				if(stat("/tmp/esteid-agent", &st) == 0) {
+					EstEIDAgentExecuteCommand(authorization, "/bin/rm", "-R", "/tmp/esteid-agent", NULL);
 				}
 				
 				mkdir("/tmp/esteid-agent", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+				tmp1 = mktemp(tmp1);
 				
-				if(stat("/tmp/esteid-agent", &st) == 0 && st.st_uid == 0 && AuthorizationExecuteWithPrivileges(authorization, "/bin/cp", kAuthorizationFlagDefaults, args_cp, NULL) == errAuthorizationSuccess) {
+				if(stat("/tmp/esteid-agent", &st) == 0 && st.st_uid == 0 && EstEIDAgentExecuteCommand(authorization, "/bin/cp", argv[3], tmp1, NULL) == 0) {
 					char *tmp2 = (char *)[[NSString stringWithFormat:@"/tmp/esteid-agent/%s.pkg", argv[4]] UTF8String];
-					char *args_ditto[] = { "-x", "-k", args_cp[1], tmp2, NULL };
-					
-					wait(&cpid);
 					
 					if(stat(tmp1, &st) == 0 && st.st_uid == 0 && [EstEIDAgentGetString(argv[2]) isEqualToString:EstEIDAgentGetSha1(tmp1)]) {
-						if(AuthorizationExecuteWithPrivileges(authorization, "/usr/bin/ditto", kAuthorizationFlagDefaults, args_ditto, NULL) == errAuthorizationSuccess) {
-							char *args_installer[] = { "-pkg", tmp2, "-target", (argc == 6) ? argv[5] : "/", NULL };
-							
-							wait(&cpid);
-							
-							if(AuthorizationExecuteWithPrivileges(authorization, "/usr/sbin/installer", kAuthorizationFlagDefaults, args_installer, NULL) == errAuthorizationSuccess) {
-								if(wait(&cpid) != -1 && WIFEXITED(cpid)) {
-									result = WEXITSTATUS(cpid);
-									
-									if(result == 0) {
-										fprintf(stderr, "Installed %s successfully\n", argv[3]);
-									}
-								}
+						if(EstEIDAgentExecuteCommand(authorization, "/usr/bin/ditto", "-x", "-k", tmp1, tmp2, NULL) == 0) {
+							if((result = EstEIDAgentExecuteCommand(authorization, "/usr/sbin/installer", "-pkg", tmp2, "-target", (argc == 6) ? argv[5] : "/", NULL)) == 0) {
+								fprintf(stderr, "EstEIDAgent: Installed %s successfully\n", argv[4]);
 							} else {
-								fprintf(stderr, "Install failed.\n");
+								fprintf(stderr, "EstEIDAgent: Installing %s failed.\n", argv[4]);
 							}
 						} else {
-							fprintf(stderr, "ditto failed.\n");
+							fprintf(stderr, "EstEIDAgent: Couldn't uncompress %s.\n", argv[4]);
 						}
 					} else {
-						fprintf(stderr, "Checksum doesn't match for the specified file\n");
+						fprintf(stderr, "EstEIDAgent: Checksum/permissions don't match for %s\n", argv[4]);
 					}
 				} else {
-					fprintf(stderr, "copy failed.\n");
+					fprintf(stderr, "EstEIDAgent: Couldn't copy package %s.\n", argv[4]);
 				}
 				
-				if(AuthorizationExecuteWithPrivileges(authorization, "/bin/rm", kAuthorizationFlagDefaults, args_rm, NULL) == errAuthorizationSuccess) {
-					wait(&cpid);
-				}
-				
+				EstEIDAgentExecuteCommand(authorization, "/bin/rm", "-R", "/tmp/esteid-agent", NULL);
 				free(tmp1);
 			} else if(argc == 2 && strcmp(argv[1], "--preflight") == 0) {
 				// Do nothing, reserved for future usage.
