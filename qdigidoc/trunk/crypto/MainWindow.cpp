@@ -483,7 +483,7 @@ void MainWindow::setCurrentPage( Pages page )
 			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewKeys );
 			connect( key, SIGNAL(remove(int)), SLOT(removeKey(int)) );
 			viewKeysLayout->insertWidget( i, key );
-			hasKey = (k.cert == doc->authCert());
+			hasKey = qMax( hasKey, k.cert == doc->authCert());
 			++i;
 		}
 
