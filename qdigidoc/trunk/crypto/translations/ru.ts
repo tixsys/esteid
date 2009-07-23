@@ -601,6 +601,10 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>Decrypting</source>
         <translation>Расшифровка</translation>
     </message>
+    <message>
+        <source>Open utility</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

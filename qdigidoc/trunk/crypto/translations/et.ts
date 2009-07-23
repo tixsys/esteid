@@ -826,6 +826,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>Decrypting</source>
         <translation>Dekrüpteerimine</translation>
     </message>
+    <message>
+        <source>Open utility</source>
+        <translation>Ava haldusvahend</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

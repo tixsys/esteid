@@ -223,13 +223,14 @@ bool CryptDoc::decrypt( const QString &pin )
 
 	m_ddoc = QString( "%1/%2.ddoc" ).arg( m_ddocTemp ).arg( docName );
 	QFile f( m_ddoc );
-	if( !f.open( QIODevice::WriteOnly ) )
+	if( !f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
 		setLastError( tr("Failed to create temporary files<br />%1").arg( f.errorString() ), -1 );
 		return false;
 	}
 	f.write( (const char*)m_enc->mbufEncryptedData.pMem, m_enc->mbufEncryptedData.nLen );
 	f.close();
+	ddocMemBuf_free( &m_enc->mbufEncryptedData );
 
 	err = ddocSaxReadSignedDocFromFile( &m_doc, f.fileName().toUtf8(), 0, 300 );
 	if( err != ERR_OK )
@@ -242,6 +243,8 @@ bool CryptDoc::decrypt( const QString &pin )
 	{
 		QString file = QString( "%1/%2" ).arg( m_ddocTemp )
 			.arg( QString::fromUtf8( m_doc->pDataFiles[i]->szFileName ) );
+		if( QFile::exists( file ) )
+			QFile::remove( file );
 		err = ddocSaxExtractDataFile( m_doc, m_ddoc.toUtf8(),
 			file.toUtf8(), m_doc->pDataFiles[i]->szId, CHARSET_UTF_8 );
 		if( err == ERR_OK )
