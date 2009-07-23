@@ -88,7 +88,7 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 void SignatureWidget::link( const QString &url )
 {
 	if( url == "details" )
-		SignatureDialog( s, this ).exec();
+		SignatureDialog( s, qobject_cast<QWidget*>(parent()) ).exec();
 	else if( url == "remove" )
 		Q_EMIT removeSignature( num );
 }
