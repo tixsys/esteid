@@ -203,6 +203,8 @@ std::string DSignature::getMediaType() const
 void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
+	if( !n )
+		return;
 	data.resize( n->mbufOcspDigest.nLen );
 	std::copy( (unsigned char*)n->mbufOcspDigest.pMem,
 		(unsigned char*)n->mbufOcspDigest.pMem + n->mbufOcspDigest.nLen, data.begin() );
