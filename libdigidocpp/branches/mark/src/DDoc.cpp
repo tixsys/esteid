@@ -423,18 +423,18 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
 	throwError( err, "Failed to sign document", __LINE__ );
 	err = d->f_addAllDocInfos( d->doc, info );
-	throwError( err, "Failed to sign document", __LINE__ );
+	throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	Signer::SignatureProductionPlace l = signer->getSignatureProductionPlace();
 	err = d->f_setSignatureProductionPlace( info, l.city.c_str(), l.stateOrProvince.c_str(),
 		l.postalCode.c_str(), l.countryName.c_str() );
-	throwError( err, "Failed to sign document", __LINE__ );
+	throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	Signer::SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
 	for( size_t i = 0; i < r.size(); ++i )
 	{
 		err = d->f_addSignerRole( info, 0, r[i].c_str(), -1, 0 );
-		throwError( err, "Failed to sign document", __LINE__ );
+		throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 	}
 
 	std::string pin;
@@ -454,11 +454,11 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		catch( const Exception & ) {}
 	}
 
-	throwError( err, "Failed to sign document", __LINE__ );
+	throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	if( err != ERR_OK )
 		d->f_SignatureInfo_delete( d->doc, info->szId );
-	throwError( err, "Failed to sign document", __LINE__ );
+	throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::string host = Conf::getInstance()->getProxyHost();
 	std::string port = Conf::getInstance()->getProxyPort();
@@ -483,14 +483,30 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		d->f_createOrReplacePrivateConfigItem( NULL, "SIGN_OCSP", "false" );
 
 	err = d->f_notarizeSignature( d->doc, info );
-	if( err != ERR_OK )
-		d->f_SignatureInfo_delete( d->doc, info->szId );
-	throwError( err, "Failed to sign document", __LINE__ );
+	throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 	d->loadSignatures();
 }
 
 unsigned int DDoc::signatureCount() const
 { return !d->doc || d->doc->nSignatures < 0 ? 0 : d->doc->nSignatures; }
+
+void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
+{
+	if( !d->isLoaded() )
+		throwError( "DDoc library not loaded", __LINE__ );
+	if( !d->doc )
+		throwError( "Document not open", __LINE__ );
+
+	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	{
+		std::ostringstream s;
+		s << "Incorrect document id " << id << ", there are only ";
+		s << d->doc->nDataFiles << " documents in container.";
+		throwError( s.str(), __LINE__ );
+	}
+
+	memcpy( digest, d->doc->pDataFiles[id]->mbufDigest.pMem, d->doc->pDataFiles[id]->mbufDigest.nLen );
+}
 
 void DDoc::throwError( const std::string &msg, int line ) const throw(BDocException)
 { throw BDocException( __FILE__, line, msg ); }
@@ -506,4 +522,11 @@ void DDoc::throwError( int err, const std::string &msg, int line ) const throw(B
 		s << ")";
 		throwError( s.str(), line );
 	}
+}
+
+void DDoc::throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException)
+{
+	if( err != ERR_OK )
+		d->f_SignatureInfo_delete( d->doc, id );
+	throwError( err, msg, line );
 }

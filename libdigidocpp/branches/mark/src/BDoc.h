@@ -52,6 +52,7 @@ namespace digidoc
           void removeSignature(unsigned int id) throw(BDocException);
           unsigned int signatureCount() const;
           void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
+          void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException) {}
 
       protected:
           void readFrom(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);

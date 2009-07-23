@@ -246,7 +246,8 @@ std::string digidoc::XmlConf::getUserConfPath() const
 		RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
 		RegCloseKey(hkey);
 
-		conf = tcConfPath + "\\digidocpp\\digidocpp.conf";
+		conf = tcConfPath;
+		conf += "\\digidocpp\\digidocpp.conf";
 	}	
 #else
 	conf = getenv("HOME");

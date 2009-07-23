@@ -24,10 +24,12 @@ public:
 	void removeSignature(unsigned int id) throw(BDocException);
 	unsigned int signatureCount() const;
 	void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
+	void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException);
 
 private:
 	void throwError( const std::string &msg, int line ) const throw(BDocException);
 	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
+	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
 
 	DDocPrivate *d;
 };
