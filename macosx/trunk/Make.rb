@@ -722,13 +722,13 @@ class Application
 				:priority => 1,
 				:packages => [ 'org.esteid.qesteidutil' ]
 			}, {
-				:title => 'ID-card DigiDoc',
-				:description => 'ID-card DigiDoc description',
+				:title => 'DigiDoc3 Client',
+				:description => 'DigiDoc3 Client description',
 				:priority => 1,
 				:packages => [ 'org.esteid.qdigidocclient' ]
 			}, {
-				:title => 'ID-card Crypto',
-				:description => 'ID-card Crypto description',
+				:title => 'Digidoc3 Crypto',
+				:description => 'Digidoc3 Crypto description',
 				:priority => 1,
 				:packages => [ 'org.esteid.qdigidoccrypto' ]
 			} ]
