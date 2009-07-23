@@ -271,7 +271,8 @@ QByteArray DigiDoc::getAccessCert()
 		sslConnect.setCard( m_card.toStdString() );
 		buffer = sslConnect.getUrl( SSLConnect::AccessCert, "" );
 	} catch( const std::runtime_error &e ) {
-		setLastError( e.what() );
+		if( !QByteArray( e.what() ).isEmpty() )
+			setLastError( e.what() );
 	}
 
 	poller->start();
@@ -537,18 +538,15 @@ WDoc::DocumentType DigiDoc::documentType()
 
 QByteArray DigiDoc::getFileDigest( unsigned int i )
 {
+	QByteArray result;
 	if( isNull() )
 	{
 		setLastError( tr("Container is not open") );
-		return QByteArray();
+		return result;
 	}
 
-	unsigned char *digest;
-	digest = (unsigned char*)malloc(20);
-	b->getFileDigest( i, digest );
-
-	QByteArray result( (char*)digest );
-	free( digest );
+	result.resize(20);
+	b->getFileDigest( i, (unsigned char*)result.data() );
 
 	return result;
 }
