@@ -440,15 +440,25 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	}
 
 	std::string pin;
+	int slot = d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 );
 	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
 	{
-		PKCS11Signer::PKCS11Cert c;
-		c.cert = pkcs11->getCert();
-		pin = pkcs11->getPin( c );
-		pkcs11->unloadDriver();
+		try
+		{
+			PKCS11Signer::PKCS11Cert c;
+			c.cert = pkcs11->getCert();
+			slot = pkcs11->slotNumber();
+			pin = pkcs11->getPin( c );
+			pkcs11->unloadDriver();
+		}
+		catch( const Exception &e )
+		{
+			d->f_SignatureInfo_delete( d->doc, info->szId );
+			throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
+		}
 	}
-	err = d->f_calculateSignatureWithEstID( d->doc, info,
-		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
+	err = d->f_calculateSignatureWithEstID( d->doc, info, slot, pin.c_str() );
+	fill(pin.begin(),pin.end(),0);
 
 	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
 	{

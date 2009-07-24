@@ -9,29 +9,39 @@
 
 namespace digidoc
 {
+
+struct SignSlot
+{
+	PKCS11_CERT* certificate;
+	PKCS11_SLOT* slot;
+	int			number;
+};
+
 class PKCS11SignerPrivate
 {
 public:
 	PKCS11SignerPrivate( std::string _driver = "" )
 	: driver(_driver)
 	, ctx(NULL)
-	, signCertificate(NULL)
-	, signSlot(NULL)
 	, slots(NULL)
 	, numberOfSlots(0)
-	{};
+	{
+		sign.certificate = NULL;
+		sign.slot = NULL;
+		sign.number = -1;
+	};
 
     digidoc::PKCS11Signer::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
 
     std::string driver;
 
     PKCS11_CTX* ctx;
-    PKCS11_CERT* signCertificate;
-    PKCS11_SLOT* signSlot;
+    SignSlot sign;
 
     PKCS11_SLOT* slots;
     unsigned int numberOfSlots;
 };
+
 }
 
 /**
@@ -73,6 +83,7 @@ digidoc::PKCS11Signer::~PKCS11Signer()
 }
 
 void* digidoc::PKCS11Signer::handle() const { return d->ctx; }
+int digidoc::PKCS11Signer::slotNumber() const { return d->sign.number; }
 
 void digidoc::PKCS11Signer::unloadDriver()
 {
@@ -141,14 +152,15 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     DEBUG("PKCS11Signer::getCert()");
 
     // If certificate is already selected return it.
-    if(d->signCertificate != NULL && d->signSlot != NULL)
+    if(d->sign.certificate != NULL && d->sign.slot != NULL)
     {
-        return d->signCertificate->x509;
+        return d->sign.certificate->x509;
     }
 
     // Set selected state to 'no certificate selected'.
-    d->signCertificate = NULL;
-    d->signSlot = NULL;
+    d->sign.certificate = NULL;
+    d->sign.slot = NULL;
+    d->sign.number = -1;
     if(d->slots != NULL)
     {
         // Release all slots.
@@ -163,7 +175,8 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
 
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
     std::vector<PKCS11Cert> certificates;
-    std::map<PKCS11_CERT*, PKCS11_SLOT*> certSlotMapping;
+    std::vector<SignSlot> certSlotMapping;
+    int tokenId = 0;
     for(unsigned int i = 0; i < d->numberOfSlots; i++)
     {
         PKCS11_SLOT* slot = d->slots + i;
@@ -186,12 +199,14 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
             }
 
             // List all certificates found on this token.
-            for(unsigned int i = 0; i < numberOfCerts; i++)
+            for(unsigned int j = 0; j < numberOfCerts; j++)
             {
-                PKCS11_CERT* cert = certs + i;
-                certSlotMapping[cert] = slot;
+                PKCS11_CERT* cert = certs + j;
+                SignSlot signSlot = { cert, slot, tokenId };
+                certSlotMapping.push_back( signSlot );
                 certificates.push_back(d->createPKCS11Cert(slot, cert));
             }
+            ++tokenId;
         }
     }
 
@@ -209,22 +224,21 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     }
 
     // Find the corresponding slot and PKCS11 certificate struct.
-    for(std::map<PKCS11_CERT*, PKCS11_SLOT*>::const_iterator iter = certSlotMapping.begin(); iter != certSlotMapping.end(); iter++)
+    for(std::vector<SignSlot>::const_iterator iter = certSlotMapping.begin(); iter != certSlotMapping.end(); iter++)
     {
-        if(iter->first->x509 == selectedCert)
+        if(iter->certificate->x509 == selectedCert)
         {
-            d->signCertificate = iter->first;
-            d->signSlot = iter->second;
+            d->sign = *iter;
             break;
         }
     }
 
-    if(d->signCertificate == NULL || d->signSlot == NULL)
+    if(d->sign.certificate == NULL || d->sign.slot == NULL)
     {
         THROW_SIGNEXCEPTION("Could not find slot for selected certificate.");
     }
 
-    return d->signCertificate->x509;
+    return d->sign.certificate->x509;
 }
 
 /**
@@ -243,31 +257,31 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
             (unsigned int)signature.signature, signature.length);
 
     // Check that sign slot and certificate are selected.
-    if(d->signCertificate == NULL || d->signSlot == NULL)
+    if(d->sign.certificate == NULL || d->sign.slot == NULL)
     {
         THROW_SIGNEXCEPTION("Signing slot or certificate are not selected.");
     }
 
     // Login if required.
-    if(d->signSlot->token->loginRequired)
+    if(d->sign.slot->token->loginRequired)
     {
         int rv = 0;
-        if(d->signSlot->token->secureLogin)
+        if(d->sign.slot->token->secureLogin)
         {
             showPinpad();
-            rv = PKCS11_login(d->signSlot, 0, NULL);
+            rv = PKCS11_login(d->sign.slot, 0, NULL);
             hidePinpad();
         }
         else
-            rv = PKCS11_login(d->signSlot, 0, getPin(d->createPKCS11Cert(d->signSlot, d->signCertificate)).c_str());
+            rv = PKCS11_login(d->sign.slot, 0, getPin(d->createPKCS11Cert(d->sign.slot, d->sign.certificate)).c_str());
         if(rv != 0)
         {
-            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->signSlot->token->label,
+            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->sign.slot->token->label,
                     ERR_reason_error_string(ERR_get_error()));
         }
     }
 
-    PKCS11_KEY* signKey = PKCS11_find_key(d->signCertificate);
+    PKCS11_KEY* signKey = PKCS11_find_key(d->sign.certificate);
     if(signKey == NULL)
     {
         THROW_SIGNEXCEPTION("Could not get key that matches selected certificate.");
