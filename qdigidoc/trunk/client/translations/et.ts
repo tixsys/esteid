@@ -297,7 +297,7 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <translation>&lt;a href=&quot;addFile&quot;&gt;Lisa fail&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>NB: Vigane allkiri</source>
+        <source>NB: Invalid signature</source>
         <translation>NB: Vigane allkiri</translation>
     </message>
     <message>
@@ -357,6 +357,10 @@ Alustame laadimist?</translation>
     <message>
         <source>Mobile-ID BDOC signing not supported yet!</source>
         <translation>BDOC formaadi allkirjastamine mobiiliga hetkel ei tööta!</translation>
+    </message>
+    <message>
+        <source>NB! Test signature</source>
+        <translation>NB! Test allkiri</translation>
     </message>
 </context>
 <context>

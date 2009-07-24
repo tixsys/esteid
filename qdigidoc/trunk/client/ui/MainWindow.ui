@@ -973,8 +973,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>88</width>
-               <height>18</height>
+               <width>288</width>
+               <height>201</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
@@ -1046,9 +1046,6 @@ p, li { white-space: pre-wrap; }
               <property name="styleSheet">
                <string notr="true">font: bold;
 color: red;</string>
-              </property>
-              <property name="text">
-               <string>NB: Vigane allkiri</string>
               </property>
              </widget>
             </item>

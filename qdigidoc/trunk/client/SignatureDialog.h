@@ -33,6 +33,9 @@ class SignatureWidget: public QLabel
 public:
 	SignatureWidget( const DigiDocSignature &s, unsigned int signnum, bool extended, QWidget *parent = 0 );
 
+	bool isTest() const;
+	bool isValid() const;
+
 Q_SIGNALS:
 	void removeSignature( unsigned int num );
 
@@ -42,6 +45,7 @@ private Q_SLOTS:
 private:
 	unsigned int num;
 	DigiDocSignature s;
+	bool test, valid;
 };
 
 class SignatureDialog: public QDialog, private Ui::SignatureDialog

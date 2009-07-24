@@ -35,6 +35,8 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 :	QLabel( parent )
 ,	num( signnum )
 ,	s( signature )
+,	test( false )
+,	valid( false )
 {
 	const SslCertificate cert = s.cert();
 	QString content;
@@ -45,6 +47,7 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	else
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
 
+	test = cert.isTest();
 	if( cert.isTempel() )
 	{
 		st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "CN" ) ) << "</b>";
@@ -82,7 +85,7 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
 	st << "<td>" << tr("Signature is") << " ";
-	if( s.isValid() )
+	if( (valid = s.isValid()) )
 		st << "<font color=\"green\">" << tr("valid") << "</font>";
 	else
 		st << "<font color=\"red\">" << tr("not valid") << "</font>";
@@ -97,6 +100,9 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	connect( this, SIGNAL(linkActivated(QString)), SLOT(link(QString)) );
 }
+
+bool SignatureWidget::isTest() const { return test; }
+bool SignatureWidget::isValid() const { return valid; }
 
 void SignatureWidget::link( const QString &url )
 {

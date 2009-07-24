@@ -293,7 +293,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;a href=&quot;browse&quot;&gt;Размещение конверта на жёсткой диске&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>NB: Vigane allkiri</source>
+        <source>NB: Invalid signature</source>
         <translation>NB: Ошибочная подпись</translation>
     </message>
     <message>
@@ -353,6 +353,10 @@ Start downloading?</source>
     </message>
     <message>
         <source>Mobile-ID BDOC signing not supported yet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NB! Test signature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

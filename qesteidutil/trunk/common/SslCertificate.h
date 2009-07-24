@@ -53,6 +53,7 @@ public:
 	static QSslKey keyFromEVP( const Qt::HANDLE evp );
 	static QSslKey keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	bool		isTempel() const;
+	bool		isTest() const;
 	QHash<int,QString> keyUsage() const;
 	QStringList policies() const;
 	QString		policyInfo( const QString &oid ) const;

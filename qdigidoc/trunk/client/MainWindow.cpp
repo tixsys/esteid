@@ -59,7 +59,6 @@ MainWindow::MainWindow( QWidget *parent )
 	signZipInput->setValidator( new QRegExpValidator( QRegExp( "\\d{0,5}" ), signZipInput ) );
 
 	cards->hide();
-	viewSignaturesError->hide();
 
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
 #if QT_VERSION >= 0x040500
@@ -579,7 +578,7 @@ void MainWindow::setCurrentPage( Pages page )
 			w->deleteLater();
 
 		int i = 0;
-		bool cardOwnerSignature = false;
+		bool cardOwnerSignature = false, invalid = false, test = false;
 		QList<DigiDocSignature> signatures = doc->signatures();
 		Q_FOREACH( const DigiDocSignature &c, signatures )
 		{
@@ -587,11 +586,10 @@ void MainWindow::setCurrentPage( Pages page )
 			viewSignaturesLayout->insertWidget( 0, signature );
 			connect( signature, SIGNAL(removeSignature(unsigned int)),
 				SLOT(viewSignaturesRemove(unsigned int)) );
-			if( !cardOwnerSignature )
-			{
-				cardOwnerSignature =
-					(c.cert().subjectInfo( "serialNumber" ) == doc->signCert().subjectInfo( "serialNumber" ));
-			}
+			cardOwnerSignature = qMax( cardOwnerSignature,
+				c.cert().subjectInfo( "serialNumber" ) == doc->signCert().subjectInfo( "serialNumber" ) );
+			invalid = qMax( invalid, !signature->isValid() );
+			test = qMax( test, signature->isTest() );
 			++i;
 		}
 
@@ -608,6 +606,13 @@ void MainWindow::setCurrentPage( Pages page )
 			viewFileStatus->setText( tr("Container is unsigned") );
 
 		viewSignaturesLabel->setText( signatures.size() == 1 ? tr("Signature") : tr("Signatures") );
+
+		if( invalid )
+			viewSignaturesError->setText( tr("NB! Invalid signature") );
+		else if( test )
+			viewSignaturesError->setText( tr("NB! Test signature") );
+		else
+			viewSignaturesError->setText( QString() );
 		break;
 	}
 	default: break;

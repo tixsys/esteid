@@ -228,6 +228,14 @@ bool SslCertificate::isTempel() const
 	return false;
 }
 
+bool SslCertificate::isTest() const
+{
+	Q_FOREACH( const QString &p, policies() )
+		if( p.left( 19 ) == "1.3.6.1.4.1.10015.3" )
+			return true;
+	return false;
+}
+
 QHash<int,QString> SslCertificate::keyUsage() const
 {
 	QHash<int,QString> list;
