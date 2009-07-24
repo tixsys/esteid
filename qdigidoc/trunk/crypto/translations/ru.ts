@@ -605,6 +605,10 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>Open utility</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

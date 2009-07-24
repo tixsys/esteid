@@ -114,8 +114,7 @@ void MainWindow::addCardCert()
 	CKey key;
 	key.cert = c;
 	key.recipient = c.subjectInfoUtf8( "CN" );
-	doc->addKey( key );
-	setCurrentPage( View );
+	addKeys( QList<CKey>() << key );
 }
 
 bool MainWindow::addFile( const QString &file )
@@ -181,7 +180,17 @@ void MainWindow::addKeys( const QList<CKey> &keys )
 	if( keys.isEmpty() )
 		return;
 	Q_FOREACH( const CKey &key, keys )
+	{
+		if( key.cert.expiryDate() <= QDateTime::currentDateTime() &&
+			QMessageBox::No == QMessageBox::warning( qApp->activeWindow(),
+				qApp->activeWindow()->windowTitle(),
+				tr("Are you sure that you want use certificate for encrypting, which expired on %1?<br />"
+					"When decrypter has updated certificates then decrypting is impossible.")
+					.arg( key.cert.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) ),
+				QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) )
+			continue;
 		doc->addKey( key );
+	}
 	setCurrentPage( View );
 }
 

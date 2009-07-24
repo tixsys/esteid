@@ -830,6 +830,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>Open utility</source>
         <translation>Ava haldusvahend</translation>
     </message>
+    <message>
+        <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
+        <translation>Kas oled kindel, et soovid kasutada krüpteerimiseks sertifikaati, mis aegus %1?&lt;br /&gt;Juhul, kui dekrüpteerija on oma sertifikaate uuendanud, ei ole dekrüpteerimine võimalik.</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
