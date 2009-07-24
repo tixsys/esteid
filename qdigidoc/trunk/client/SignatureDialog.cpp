@@ -38,6 +38,8 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 ,	test( false )
 ,	valid( false )
 {
+	setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
+	setWordWrap( true );
 	const SslCertificate cert = s.cert();
 	QString content;
 	QTextStream st( &content );
