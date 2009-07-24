@@ -208,7 +208,8 @@ void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::str
 	data.resize( n->mbufOcspDigest.nLen );
 	std::copy( (unsigned char*)n->mbufOcspDigest.pMem,
 		(unsigned char*)n->mbufOcspDigest.pMem + n->mbufOcspDigest.nLen, data.begin() );
-	digestMethodUri = n->szDigestType;
+	if( n->szDigestType )
+		digestMethodUri = n->szDigestType;
 }
 
 void DSignature::validateOffline() const throw(SignatureException)
@@ -267,7 +268,16 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	{ throwError( "Failed to create temporary directory", __LINE__ ); }
 
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 300 );
-	throwError( err, "Failed to open ddoc file", __LINE__ );
+	switch( err )
+	{
+	case ERR_OCSP_CERT_REVOKED: break;
+	default:
+		if( d->doc )
+			d->f_SignedDoc_free( d->doc );
+		d->doc = NULL;
+		throwError( err, "Failed to open ddoc file", __LINE__ );
+		return;
+	}
 
 	for( int i = 0; i < d->doc->nDataFiles; ++i)
 	{
@@ -280,7 +290,13 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 			continue;
 		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename.c_str(),
 			file.str().data(), data->szId, CHARSET_UTF_8 );
-		throwError( err, "Failed to exctract files", __LINE__ );
+		if( err != ERR_OK )
+		{
+			if( d->doc )
+				d->f_SignedDoc_free( d->doc );
+			d->doc = NULL;
+			throwError( err, "Failed to exctract files", __LINE__ );
+		}
 	}
 
 	d->loadSignatures();
