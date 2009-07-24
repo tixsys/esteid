@@ -19,6 +19,7 @@ WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 {
 	int len = serializer->getPath().size();
 	std::string ext = serializer->getPath().substr( len - 4, len );
+	transform( ext.begin(), ext.end(), ext.begin(), tolower );
 
 	if( ext == "bdoc" )
 		m_doc = new BDoc( serializer );

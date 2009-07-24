@@ -270,6 +270,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 300 );
 	switch( err )
 	{
+	case ERR_OK:
 	case ERR_OCSP_CERT_REVOKED: break;
 	default:
 		if( d->doc )
