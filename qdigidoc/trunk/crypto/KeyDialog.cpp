@@ -154,7 +154,10 @@ void KeyAddDialog::addFile()
 	CKey k;
 	k.cert = QSslCertificate( &f, QSsl::Pem );
 	if( k.cert.isNull() )
+	{
+		f.reset();
 		k.cert = QSslCertificate( &f, QSsl::Der );
+	}
 	if( k.cert.isNull() )
 	{
 		QMessageBox::warning( this, windowTitle(), tr("Failed to read certificate") );
