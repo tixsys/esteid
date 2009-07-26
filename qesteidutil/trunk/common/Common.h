@@ -33,6 +33,7 @@ class Common: public QObject
 public:
 	Common( QObject *parent = 0 );
 
+	static bool canWrite( const QString &filename );
 	static QString fileSize( quint64 bytes );
 	static bool startDetached( const QString &program );
 	static bool startDetached( const QString &program, const QStringList &arguments );

@@ -175,7 +175,7 @@ bool MainWindow::addFile( const QString &file )
 			select = b == QMessageBox::No;
 		}
 
-		if( !QFileInfo( docname ).isWritable() )
+		if( !Common::canWrite( docname ) )
 		{
 			select = true;
 			QMessageBox::warning( this, windowTitle(),
@@ -188,7 +188,7 @@ bool MainWindow::addFile( const QString &file )
 				this, tr("Save file"), docname, tr("Documents (*.bdoc *.ddoc)") );
 			if( docname.isEmpty() )
 				return false;
-			if( !QFileInfo( docname ).isWritable() )
+			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, windowTitle(),
 					tr( "You dont have permissions to write file %1" ).arg( docname ) );

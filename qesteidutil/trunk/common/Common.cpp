@@ -23,6 +23,7 @@
 #include "Common.h"
 
 #include <QDesktopServices>
+#include <QFileInfo>
 #include <QProcess>
 #include <QUrl>
 
@@ -40,6 +41,23 @@
 #endif
 
 Common::Common( QObject *parent ): QObject( parent ) {}
+
+bool Common::canWrite( const QString &filename )
+{
+#ifdef Q_OS_WIN32
+		qt_ntfs_permission_lookup++;
+#endif
+	bool ret = false;
+	QFileInfo file( filename );
+	if( file.isFile() )
+		ret = file.isWritable();
+	else
+		ret = QFileInfo( file.absolutePath() ).isWritable();
+#ifdef Q_OS_WIN32
+		qt_ntfs_permission_lookup--;
+#endif
+	return ret;
+}
 
 QString Common::fileSize( quint64 bytes )
 {
