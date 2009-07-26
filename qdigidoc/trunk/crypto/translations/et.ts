@@ -2,220 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
-    <name>CertificateDialog</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="obsolete">Salvesta sertifikaat</translation>
-    </message>
-    <message>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="obsolete">Faili salvestamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translation type="obsolete">Sertifikaadi info:</translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="obsolete">Selle sertifikaadi otstarve on:</translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="obsolete">Kellele väljastatud:</translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="obsolete">Väljastaja:</translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="obsolete">Kehtiv alates</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="obsolete">kuni</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Versioon</translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="obsolete">Seerianumber</translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="obsolete">Signatuuri algoritm</translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="obsolete">Väljaandja</translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="obsolete">Kehtiv kuni</translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="obsolete">Subjekt</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="obsolete">Avalik võti</translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="obsolete">Sertifikaadi reeglid</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="obsolete">Sertifikaat</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Üldine</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Detailid</translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="obsolete">Väli</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Väärtus</translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translation type="obsolete">Sertifitseermisahel</translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="obsolete">Sertifikaadi staatus:</translation>
-    </message>
-    <message>
-        <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation type="obsolete">Sertifikaadid (*.cer *.crt *.pem)</translation>
-    </message>
-    <message>
-        <source>Enhanched key usage</source>
-        <translation type="obsolete">Täiendatud võtme kasutus</translation>
-    </message>
-    <message>
-        <source>Key usage</source>
-        <translation type="obsolete">Võtme kasutus</translation>
-    </message>
-</context>
-<context>
-    <name>CertificateWidget</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="obsolete">Salvesta sertifikaat</translation>
-    </message>
-    <message>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="obsolete">Faili salvestamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translation type="obsolete">Sertifikaadi info:</translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="obsolete">Selle sertifikaadi otstarve on:</translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="obsolete">Kellele väljastatud:</translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="obsolete">Väljastaja:</translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="obsolete">Kehtiv alates</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="obsolete">kuni</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Versioon</translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="obsolete">Seerianumber</translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="obsolete">Signatuuri algoritm</translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="obsolete">Väljaandja</translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="obsolete">Kehtiv kuni</translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="obsolete">Subjekt</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="obsolete">Avalik võti</translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="obsolete">Sertifikaadi reeglid</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="obsolete">Sertifikaat</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Üldine</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Detailid</translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="obsolete">Väli</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Väärtus</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvesta</translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translation type="obsolete">Sertifitseermisahel</translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="obsolete">Sertifikaadi staatus:</translation>
-    </message>
-</context>
-<context>
     <name>CryptDoc</name>
     <message>
         <source>Container is not open</source>
@@ -238,14 +24,6 @@
         <translation>Adressaadi lisamine ebaõnnestus</translation>
     </message>
     <message>
-        <source>Failed to create document</source>
-        <translation type="obsolete">Teegi viga: </translation>
-    </message>
-    <message>
-        <source>Recipient does not exist in document recipient list</source>
-        <translation type="obsolete">Adresaat ei ole turvaümbriku adressaatide nimekirjas</translation>
-    </message>
-    <message>
         <source>Failed decrypt data</source>
         <translation>Andmete dekrüpteerimine ebaõnnestus</translation>
     </message>
@@ -262,16 +40,8 @@
         <translation>Turvaümbriku avamine ebaõnnestus</translation>
     </message>
     <message>
-        <source>Missing document</source>
-        <translation type="obsolete">Teegi viga</translation>
-    </message>
-    <message>
         <source>Failed to remove file</source>
         <translation>Faili eemaldamine ebaõnestus</translation>
-    </message>
-    <message>
-        <source>Missing key</source>
-        <translation type="obsolete">Puuduv võti</translation>
     </message>
     <message>
         <source>Failed to remove key</source>
@@ -288,14 +58,6 @@
     <message>
         <source>Failed to save file</source>
         <translation>Faili salvestamine ebaõnestus</translation>
-    </message>
-    <message>
-        <source>Din&apos;t find card certificate</source>
-        <translation type="obsolete">Ei leidnud kaardi sertifikaate</translation>
-    </message>
-    <message>
-        <source>No recipient keys</source>
-        <translation type="obsolete">Puuduvad adressaadi võtmed</translation>
     </message>
     <message>
         <source>Document not open</source>
@@ -319,7 +81,7 @@
     </message>
     <message>
         <source>No keys specified</source>
-        <translation>Ühtegi võtit ei ole valitud</translation>
+        <translation>Ühtegi adressaati ei ole lisatud</translation>
     </message>
     <message>
         <source>Failed to save file &apos;%1&apos;</source>
@@ -329,21 +91,12 @@
 <context>
     <name>KeyAddDialog</name>
     <message>
-        <source>
-Error code: %1</source>
-        <translation type="obsolete">Veakood: %1</translation>
-    </message>
-    <message>
         <source>Add Recipient</source>
         <translation>Lisa adressaat</translation>
     </message>
     <message>
         <source>SK Certificates</source>
         <translation>SK sertifikaadihoidla</translation>
-    </message>
-    <message>
-        <source>SS number:</source>
-        <translation type="obsolete">Isikukood:</translation>
     </message>
     <message>
         <source>Search</source>
@@ -360,10 +113,6 @@ Error code: %1</source>
     <message>
         <source>Expiry date</source>
         <translation>Aegumiskuupäev</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Sulge</translation>
     </message>
     <message>
         <source>Social security number is not valid!</source>
@@ -417,16 +166,8 @@ Error code: %1</source>
 <context>
     <name>KeyDialog</name>
     <message>
-        <source>Recipient</source>
-        <translation type="obsolete">Adressaat</translation>
-    </message>
-    <message>
         <source>Crypt method</source>
         <translation>Krüpteerimismeetod</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="obsolete">ID</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -453,16 +194,8 @@ Error code: %1</source>
         <translation>Näita sertifikaati</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Katkesta</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Sulge</translation>
-    </message>
-    <message>
         <source>Key</source>
-        <translation>Võti</translation>
+        <translation>Adressat</translation>
     </message>
 </context>
 <context>
@@ -506,52 +239,8 @@ Error code: %1</source>
         <translation>Abi</translation>
     </message>
     <message>
-        <source>Estonian</source>
-        <translation type="obsolete">Estonian</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">English</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">Russian</translation>
-    </message>
-    <message>
-        <source>German</source>
-        <translation type="obsolete">German</translation>
-    </message>
-    <message>
-        <source>Latvian</source>
-        <translation type="obsolete">Latvian</translation>
-    </message>
-    <message>
-        <source>Lithuanian</source>
-        <translation type="obsolete">Lithuanian</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Katkesta</translation>
-    </message>
-    <message>
         <source>Next</source>
         <translation>Edasi</translation>
-    </message>
-    <message>
-        <source>Add file</source>
-        <translation type="obsolete">Lisa fail</translation>
-    </message>
-    <message>
-        <source>Send container to email</source>
-        <translation type="obsolete">Saada turvaümbrik e-postiga</translation>
-    </message>
-    <message>
-        <source>Browse container location</source>
-        <translation type="obsolete">Näita allkirjutatud ümbriku asukohta kettal</translation>
-    </message>
-    <message>
-        <source>Save files to disk</source>
-        <translation type="obsolete">Salvesta failid kettale</translation>
     </message>
     <message>
         <source>Open container</source>
@@ -570,28 +259,8 @@ Error code: %1</source>
         <translation>Lisa failid</translation>
     </message>
     <message>
-        <source>Remove checked files</source>
-        <translation type="obsolete">Eemalda valitud</translation>
-    </message>
-    <message>
         <source>Save file</source>
         <translation>Salvesta fail</translation>
-    </message>
-    <message>
-        <source>Are you sure you want remove files %1</source>
-        <translation type="obsolete">Oled kindel, et soovid eemaldada faile %1 ?</translation>
-    </message>
-    <message>
-        <source>Filename</source>
-        <translation type="obsolete">Faili nimi</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="obsolete">Suurus</translation>
-    </message>
-    <message>
-        <source>Failed to send email</source>
-        <translation type="obsolete">E-kirja koostamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Documents (*.cdoc)</source>
@@ -606,45 +275,8 @@ Error code: %1</source>
         <translation>Krüpteeri</translation>
     </message>
     <message>
-        <source>
-Error code: %1</source>
-        <translation type="obsolete">Veakood: %1</translation>
-    </message>
-    <message>
-        <source>DigiDoc crypt</source>
-        <translation type="obsolete">DigiDoc3 krüpto</translation>
-    </message>
-    <message>
         <source>I want to:</source>
         <translation>Ma tahan:</translation>
-    </message>
-    <message>
-        <source>Crypt documents</source>
-        <translation type="obsolete">Krüpteerida faile</translation>
-    </message>
-    <message>
-        <source>View crypted document content</source>
-        <translation type="obsolete">Vaata turvaümbriku sisu</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumente nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks jm ülesannete lahendamiseks. See on ainult viis dokumentide turvaliseks edastamiseks läbi ebaturvalise kanali.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult saaja(te) ID-kaardil.&lt;br /&gt;&lt;br /&gt;Kuna dekrüpteerimist võimaldavav sertifikaat on salvestatud ainult ID-kaardile pole peale ID-kaardi kaotamist, aegumist või tühistamist pole dekrüpteerimine tehniliselt võimalik.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message utf8="true">
-        <source>Jah, ma kasutan ID-kaardi sertifikaadiga krüptimist ainult andmete turvaliseks edastamiseks</source>
-        <translation type="obsolete">Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Container content:</source>
@@ -652,23 +284,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Keys</source>
-        <translation>Võtmed</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Sulge</translation>
-    </message>
-    <message>
-        <source>Add recipient</source>
-        <translation type="obsolete">Lisa adressaat</translation>
+        <translation>Adressaadid</translation>
     </message>
     <message>
         <source>Container contains file with same name, ovewrite?</source>
         <translation>Turvaümbrik sisaldab juba sellise nimega faili, kas kirjutada üle?</translation>
-    </message>
-    <message>
-        <source>Failed to start process &apos;qesteidutil&apos;</source>
-        <translation type="obsolete">Protsessi &apos;qesteidutil&apos; loomine ebaõnnestus</translation>
     </message>
     <message>
         <source>This container contains signature! Open with QDigiDocClient?</source>
@@ -678,14 +298,6 @@ Kas avan Digidoc kliendiga?</translation>
     <message>
         <source>No card in reader</source>
         <translation>Kaarti pole lugejas</translation>
-    </message>
-    <message>
-        <source>Browse location</source>
-        <translation type="obsolete">Näita turvaümbriku asukohta kettal</translation>
-    </message>
-    <message>
-        <source>Send to email</source>
-        <translation type="obsolete">Saada turvaümbrik e-postiga</translation>
     </message>
     <message>
         <source>Name</source>
@@ -750,31 +362,6 @@ Kas avan Digidoc kliendiga?</translation>
         <translation>%1 on juba olemas.&lt;br /&gt;Kas sa tahad seda asendada?</translation>
     </message>
     <message>
-        <source>Select folder where file will be stored</source>
-        <translation type="obsolete">Vali kataloog kuhu fail salvestatakse</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Document encryption.&lt;br /&gt;&lt;br /&gt;
-Document encryption is for safe data transfer over unsecure media, so that only scpecific reciever(s) can open it.&lt;br /&gt;&lt;br /&gt;
-Encryption with ID-card is not ment for long and secure data storage, it is only ment for transfering.&lt;br /&gt;&lt;br /&gt;
-For encryption Sertifitseerimiskeskus&apos; LDAP service ise used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate. Encryption is one-way only, for decryption private key is needed, that is only on reciever&apos;s ID-card.&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-&lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
-Faili krüpteerimise eesmärgiks on muuta selles asuvad andmed võõrastele loetamatuteks.&lt;br /&gt;&lt;br /&gt;
-Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
-Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Failid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, dekrüpteerimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult vastava isiku ID-kaardil.&lt;/p&gt;
-&lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;HOIATUS:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /
-&lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
-&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Failed to start process &apos;%1&apos;</source>
         <translation>Protsessi &apos;%1&apos; loomine ebaõnnestus</translation>
     </message>
@@ -810,10 +397,6 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message utf8="true">
-        <source>DigiDoc3 Krüpto</source>
-        <translation type="obsolete">DigiDoc3 krüpto</translation>
-    </message>
     <message>
         <source>Encrypt documents</source>
         <translation>Krüpteerida faile</translation>
@@ -837,19 +420,6 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>You dont have permissions to write file %1</source>
         <translation>Sul ei ole piisavalt õigusi et kirjutada faili %1</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Selected action requires auth certificate.
-For using auth certificate enter PIN1</source>
-        <translation type="obsolete">Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.
-Sertifikaadi kasutamiseks sisesta PIN1</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
     </message>
 </context>
 <context>

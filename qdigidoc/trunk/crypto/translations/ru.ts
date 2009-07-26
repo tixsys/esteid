@@ -2,101 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
-    <name>CertificateDialog</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="obsolete">Сохранить сертификат</translation>
-    </message>
-    <message>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="obsolete">Сертификаты (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Certificates (*.cer *.crt *.pem)</source>
-        <translation type="obsolete">Сертификаты (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="obsolete">Файл не был сохранён</translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="obsolete">Предназначение сертификата:</translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="obsolete">Выдан:</translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="obsolete">Выдано:</translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="obsolete">Действительно с</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="obsolete">до</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Версия</translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="obsolete">Серийный номер</translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="obsolete">Алгоритм подписи</translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="obsolete">Выдавший</translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="obsolete">Действительно до</translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="obsolete">Субъект</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="obsolete">Открытый ключ</translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="obsolete">Правила сертификатов</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="obsolete">Сертификат</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Общее</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Детали</translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="obsolete">Поле</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Значение</translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="obsolete">Статус сертификата:</translation>
-    </message>
-</context>
-<context>
     <name>CryptDoc</name>
     <message>
         <source>Container is not open</source>
@@ -105,10 +10,6 @@
     <message>
         <source>Container is encrypted</source>
         <translation>Контейнер зашифрован</translation>
-    </message>
-    <message>
-        <source>Din&apos;t find card certificate</source>
-        <translation type="obsolete">Сертификат карты не найден</translation>
     </message>
     <message>
         <source>Failed to add file</source>
@@ -131,10 +32,6 @@
         <translation>Внетренняя ошибка</translation>
     </message>
     <message>
-        <source>Recipient does not exist in document recipient list</source>
-        <translation type="obsolete">Адресата нет в списке получателей документа</translation>
-    </message>
-    <message>
         <source>Failed decrypt data</source>
         <translation>Расшифровка данных неуспешна</translation>
     </message>
@@ -145,10 +42,6 @@
     <message>
         <source>Failed to read decrypted data</source>
         <translation>Чтение расшифрованных данных неуспешно</translation>
-    </message>
-    <message>
-        <source>No recipient keys</source>
-        <translation type="obsolete">Нет ключа получателя</translation>
     </message>
     <message>
         <source>Failed to encrypt data</source>
@@ -218,11 +111,6 @@
         <translation>Личной код некорректен!</translation>
     </message>
     <message>
-        <source>
-Error code: %1</source>
-        <translation type="obsolete">Ошибка:%1</translation>
-    </message>
-    <message>
         <source>Add Recipient</source>
         <translation>Добавить сертификат</translation>
     </message>
@@ -267,10 +155,6 @@ Error code: %1</source>
         <translation>Добавить сертификат из файла</translation>
     </message>
     <message>
-        <source>Close</source>
-        <translation type="obsolete">Закрыть</translation>
-    </message>
-    <message>
         <source>Company name:</source>
         <translation>Учреждение:</translation>
     </message>
@@ -282,16 +166,8 @@ Error code: %1</source>
 <context>
     <name>KeyDialog</name>
     <message>
-        <source>Recipient</source>
-        <translation type="obsolete">Получатель</translation>
-    </message>
-    <message>
         <source>Crypt method</source>
         <translation>Метод шифровки</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="obsolete">ID</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -316,10 +192,6 @@ Error code: %1</source>
     <message>
         <source>Show certificate</source>
         <translation>Показать сертификат</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Закрыть</translation>
     </message>
     <message>
         <source>Key</source>
@@ -371,16 +243,8 @@ Error code: %1</source>
         <translation>В контейнере уже есть файлы с таким именем, перезаписать?</translation>
     </message>
     <message>
-        <source>Failed to start process &apos;qesteidutil&apos;</source>
-        <translation type="obsolete">Создание процесса &apos;qesteidutil&apos; неудачно</translation>
-    </message>
-    <message>
         <source>Select documents</source>
         <translation>Добавить файлы</translation>
-    </message>
-    <message>
-        <source>Select folder where file will be stored</source>
-        <translation type="obsolete">Выбрите папку где будут сохранены файл</translation>
     </message>
     <message>
         <source>Name</source>
@@ -424,10 +288,6 @@ Error code: %1</source>
         <translation>Открыть контейнер</translation>
     </message>
     <message>
-        <source>Failed to send email</source>
-        <translation type="obsolete">Создание эл. письма неуспешно</translation>
-    </message>
-    <message>
         <source>Select folder where files will be stored</source>
         <translation>Выбрите папку где будут сохранены файлы</translation>
     </message>
@@ -456,10 +316,6 @@ Error code: %1</source>
         <translation>&lt;br /&gt;Код ошибки:%1</translation>
     </message>
     <message>
-        <source>DigiDoc crypt</source>
-        <translation type="obsolete">Шифрование DigiDoc</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -468,44 +324,8 @@ Error code: %1</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <source>Estonian</source>
-        <translation type="obsolete">Estonian</translation>
-    </message>
-    <message>
-        <source>English</source>
-        <translation type="obsolete">English</translation>
-    </message>
-    <message>
-        <source>Russian</source>
-        <translation type="obsolete">Russian</translation>
-    </message>
-    <message>
         <source>I want to:</source>
         <translation>Я желаю:</translation>
-    </message>
-    <message>
-        <source>Crypt documents</source>
-        <translation type="obsolete">Зашифровать документ</translation>
-    </message>
-    <message>
-        <source>View crypted document content</source>
-        <translation type="obsolete">Посмотреть содержание зашифрованного документа</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial Baltic&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;a name=&quot;u0&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#000000;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;o&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial Baltic&apos;; color:#000000;&quot;&gt;kumentide krüptimine&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Arial&apos;; color:#000000;&quot;&gt;&lt;a name=&quot;u2&quot;&gt;&lt;/a&gt;Dokumentide krüptimine on viis turvaliselt edastada dokumendid nii, et ainult valitud saaja või saajad saavad neid avada.&lt;br /&gt;&lt;br /&gt;Id-kaardisertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseleturvalisele säilitamisele jm ülesannete lahendamiseks, see on ainultdokumentide edastamise viis.&lt;br /&gt;&lt;br /&gt;Dokumendi krüptimisel kasutatakse Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatideotsimiseks. Dokumendid krüptitakse sertifikaadis sisalduva avalikuvõtmega. Krüptimine on ühesuunaline, de-krüptimiseks on vaja vastavasertifikaadi privaatvõtit, mis on salvestatud ainult vastava isikuID-kaardil.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Yes, I will use ID-card certificate only for secure transfer</source>
@@ -542,14 +362,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ключи</translation>
     </message>
     <message>
-        <source>Filename</source>
-        <translation type="obsolete">Имя файла</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation type="obsolete">Размер</translation>
-    </message>
-    <message>
         <source>Failed to start process &apos;%1&apos;</source>
         <translation>Создание процесса &apos;%1&apos; неудачно</translation>
     </message>
@@ -584,10 +396,6 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Так как сертификат, позволяющий расшифровать данные сохранён только на ID-карте, то после потери, обновления, устаревания или механического повреждения ID-карты расшифровка  данных технически невозможна&lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message utf8="true">
-        <source>DigiDoc3 Krüpto</source>
-        <translation type="obsolete">DigiDoc3 krüpto</translation>
     </message>
     <message>
         <source>Encrypt documents</source>
