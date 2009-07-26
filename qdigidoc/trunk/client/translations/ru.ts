@@ -293,10 +293,6 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;a href=&quot;browse&quot;&gt;Размещение конверта на жёсткой диске&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>NB: Invalid signature</source>
-        <translation>NB: Ошибочная подпись</translation>
-    </message>
-    <message>
         <source>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;saveAs&quot;&gt;Сохранить файлы на жёсткий диск&lt;/a&gt;</translation>
     </message>
@@ -358,6 +354,14 @@ Start downloading?</source>
     <message>
         <source>NB! Test signature</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You dont have permissions to write file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NB! Invalid signature</source>
+        <translation>NB: Ошибочная подпись</translation>
     </message>
 </context>
 <context>

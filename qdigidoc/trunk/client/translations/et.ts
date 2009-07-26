@@ -297,10 +297,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <translation>&lt;a href=&quot;addFile&quot;&gt;Lisa fail&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>NB: Invalid signature</source>
-        <translation>NB: Vigane allkiri</translation>
-    </message>
-    <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
         <translation>%1 on juba olemas.&lt;br /&gt;Soovid asendada?</translation>
     </message>
@@ -361,6 +357,14 @@ Alustame laadimist?</translation>
     <message>
         <source>NB! Test signature</source>
         <translation>NB! Test allkiri</translation>
+    </message>
+    <message>
+        <source>You dont have permissions to write file %1</source>
+        <translation>Sul ei ole piisavalt õigusi et kirjutada faili %1</translation>
+    </message>
+    <message>
+        <source>NB! Invalid signature</source>
+        <translation>NB: Vigane allkiri</translation>
     </message>
 </context>
 <context>

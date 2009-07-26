@@ -128,9 +128,8 @@ bool MainWindow::addFile( const QString &file )
 			.arg( s.value( "DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() );
 
-		bool ask = s.value( "AskSaveAs", false ).toBool();
-		bool select = false;
-		if( !ask && QFile::exists( docname ) )
+		bool select = s.value( "AskSaveAs", false ).toBool();
+		if( !select && QFile::exists( docname ) )
 		{
 			QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
 				tr( "%1 already exists.<br />Do you want replace it?" ).arg( docname ),
@@ -138,12 +137,26 @@ bool MainWindow::addFile( const QString &file )
 			select = b == QMessageBox::No;
 		}
 
-		if( ask || select )
+		if( !QFileInfo( docname ).isWritable() )
+		{
+			select = true;
+			QMessageBox::warning( this, windowTitle(),
+				tr( "You dont have permissions to write file %1" ).arg( docname ) );
+		}
+
+		while( select )
 		{
 			docname = QFileDialog::getSaveFileName(
 				this, tr("Save file"), docname, tr("Documents (*.cdoc)") );
 			if( docname.isEmpty() )
 				return false;
+			if( !QFileInfo( docname ).isWritable() )
+			{
+				QMessageBox::warning( this, windowTitle(),
+					tr( "You dont have permissions to write file %1" ).arg( docname ) );
+			}
+			else
+				select = false;
 		}
 
 		if( QFile::exists( docname ) )
