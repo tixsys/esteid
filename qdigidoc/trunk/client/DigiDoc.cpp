@@ -472,7 +472,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
 		s->setSignerRole( sRole );
-		b->sign( s, Signature::TM /*BES|TM*/ );
+		b->sign( s, Signature::TM );
 		result = true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }

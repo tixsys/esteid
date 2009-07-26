@@ -88,6 +88,7 @@ void Poller::readCert()
 
 void Poller::run()
 {
+	terminate = false;
 	char driver[200];
 	qsnprintf( driver, sizeof(driver), "DIGIDOC_DRIVER_%d_FILE",
 		ConfigItem_lookup_int( "DIGIDOC_DEFAULT_DRIVER", 1 ) );

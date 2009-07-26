@@ -112,6 +112,7 @@ void Poller::readCert()
 
 void Poller::run()
 {
+	terminate = false;
 	try { s = new QEstEIDSigner(); }
 	catch( const Exception & )
 	{
