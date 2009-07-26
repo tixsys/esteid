@@ -164,10 +164,10 @@ include_directories(${CARDLIB})
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-if(UNIX)
-    find_package(PCSC REQUIRED)
-    include_directories(${PCSC_INCLUDE_DIR})
-endif(UNIX)
+if(UNIX AND NOT APPLE)
+    find_package(PCSCLite REQUIRED)
+    include_directories(${PCSCLITE_INCLUDE_DIR})
+endif(UNIX AND NOT APPLE)
 
 # Generate build targets for IDL files in our project
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
