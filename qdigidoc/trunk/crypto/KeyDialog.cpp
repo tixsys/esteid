@@ -45,6 +45,7 @@ KeyWidget::KeyWidget( const CKey &key, int id, bool encrypted, QWidget *parent )
 {
 	setToolTip( key.recipient );
 	QLabel *label = new QLabel( key.recipient, this );
+	label->setWordWrap( true );
 	label->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred );
 
 	QString content;
