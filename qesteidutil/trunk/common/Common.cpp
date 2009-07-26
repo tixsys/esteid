@@ -34,6 +34,8 @@
 
 #include <windows.h>
 #include <mapi.h>
+
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 #ifdef Q_OS_MAC
