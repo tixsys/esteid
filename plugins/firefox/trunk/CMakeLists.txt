@@ -98,7 +98,7 @@ if(NOT GECKO_SDK_FOUND)
     set(NSPR_LIBRARIES plds4 plc4 nspr4 ${THREAD_LIBS} ${CMAKE_DL_LIBS})
     set(GECKO_LIBRARIES xpcomglue_s xpcom)
     if(MSVC)
-        set(GECKO_LIBRARIES "${GECKO_LIBRARIES} xul")
+        set(GECKO_LIBRARIES ${GECKO_LIBRARIES} xul)
     endif(MSVC)
     set(GECKO_SDK_LIBRARIES ${GECKO_LIBRARIES} ${NSPR_LIBRARIES} )
     FIND_PATH(GECKO_SDK_DIR include/xpcom/nsCOMPtr.h
