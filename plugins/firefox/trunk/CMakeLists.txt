@@ -68,13 +68,11 @@ add_custom_target( xpi ALL
 )
 add_dependencies( xpi xpi-jar)
 
-# XPCOM modules
-
 # FIND Gecko SDK
 INCLUDE(FindPkgConfig OPTIONAL)
 
 IF(PKG_CONFIG_FOUND)
-    INCLUDE(FindPkgConfig)
+    # First try to find Gecko SDK using pkg-config
     set(pkgName libxul)
 
     pkg_check_modules(GECKO_SDK ${pkgName})
@@ -90,7 +88,10 @@ IF(PKG_CONFIG_FOUND)
 	        message(FATAL_ERROR "Unable to determine Gecko SDK path via pkg-config")
         endif(NOT GECKO_SDK_DIR)
     ENDIF(GECKO_SDK_FOUND)
-ELSE(PKG_CONFIG_FOUND)
+ENDIF(PKG_CONFIG_FOUND)
+
+if(NOT GECKO_SDK_FOUND)
+    # If locating Gecko SDK using pkg-config failed, try some hardcoded paths
     if(NOT MSVC)
 	set(${THREAD_LIBS} pthread)
     endif(NOT MSVC)
@@ -108,12 +109,11 @@ ELSE(PKG_CONFIG_FOUND)
     if(GECKO_SDK_DIR)
         set(GECKO_SDK_FOUND 1)
     endif(GECKO_SDK_DIR)
-ENDIF(PKG_CONFIG_FOUND)
+endif(NOT GECKO_SDK_FOUND)
 
-IF(NOT GECKO_SDK_FOUND)
-	# FIXME: provide download location to clueless lozer
-	message(FATAL_ERROR "Gecko SDK not found. Please download it.")
-ENDIF(NOT GECKO_SDK_FOUND)
+if(NOT GECKO_SDK_FOUND)
+    message(FATAL_ERROR "Could not find Gecko SDK.")
+endif(NOT GECKO_SDK_FOUND)
 
 set(XPIDL ${GECKO_SDK_DIR}/bin/xpidl)
 set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl)
