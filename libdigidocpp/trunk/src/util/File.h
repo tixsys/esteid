@@ -37,6 +37,7 @@ namespace digidoc
               static void copyFile(const std::string& srcPath, const std::string& destPath, bool overwrite = true) throw(IOException);
               static void moveFile(const std::string& srcPath, const std::string& destPath, bool overwrite = true) throw(IOException);
               static void removeFile(const std::string& fname);
+              static void removeDirectory(const std::string& fname);
               static void deleteTempFiles() throw(IOException);
 	      static void removeDirectoryRecursively(const std::string& dname) throw(IOException);
 	      static std::stack<std::string> tempFiles;
