@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msi.lib dutil.lib wcautil.lib"
+				AdditionalDependencies="msi.lib dutil_x64.lib wcautil_x64.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(WIX)sdk\lib"
 				ModuleDefinitionFile="CustomAction.def"
@@ -295,7 +295,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msi.lib dutil.lib wcautil.lib"
+				AdditionalDependencies="msi.lib dutil_x64.lib wcautil_x64.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(WIX)sdk\lib"
 				ModuleDefinitionFile="CustomAction.def"
