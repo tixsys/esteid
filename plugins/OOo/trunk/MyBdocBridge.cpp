@@ -516,8 +516,15 @@ int My1EstEIDSigner::openCont ()
 				if (!memcmp(&tempname[u], ",CN=", 4))
 				{
 					u += 4;
-					while (memcmp(&tempname[u], ",OU=", 4))
+					while ((memcmp(&tempname[u], ",OU=", 4)) && (u<tempname.size()))
+					{
+						if (!memcmp(&tempname[u], ",serialNumber=", 14))
+						{	//fix for digital stamp - different order
+							u += 14;
+							str_signCert += "\\,";
+						}
 						str_signCert += tempname[u++];
+					}
 				}
 
 			}
