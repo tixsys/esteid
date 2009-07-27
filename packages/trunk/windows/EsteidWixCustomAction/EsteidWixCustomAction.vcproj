@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="EsteidCustomAction"
+	Name="EsteidWixCustomAction"
 	ProjectGUID="{CCC91C65-8576-45CA-8996-6B7370F54DE4}"
-	RootNamespace="EsteidCustomAction"
+	RootNamespace="EsteidWixCustomAction"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
 	>

@@ -1,4 +1,4 @@
-LIBRARY "EsteidCustomAction"
+LIBRARY "EsteidWixCustomAction"
 
 EXPORTS
 
