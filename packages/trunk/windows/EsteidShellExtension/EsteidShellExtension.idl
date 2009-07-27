@@ -1,8 +1,8 @@
-// EsteidExt.idl : IDL source for EsteidExt
+// EsteidShellExtension.idl : IDL source for EsteidShellExtension
 //
 
 // This file will be processed by the MIDL tool to
-// produce the type library (EsteidExt.tlb) and marshalling code.
+// produce the type library (EsteidShellExtension.tlb) and marshalling code.
 
 import "oaidl.idl";
 import "ocidl.idl";
@@ -20,9 +20,9 @@ interface IEsteidShlExt : IDispatch{
 [
 	uuid(F4748FA8-B59E-43FA-9D53-2380EB141AED),
 	version(1.0),
-	helpstring("EsteidExt 1.0 Type Library")
+	helpstring("EsteidShellExtension 1.0 Type Library")
 ]
-library EsteidExtLib
+library EsteidShellExtensionLib
 {
 	importlib("stdole2.tlb");
 	[

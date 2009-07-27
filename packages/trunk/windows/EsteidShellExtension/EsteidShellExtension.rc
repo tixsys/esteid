@@ -76,8 +76,8 @@ BEGIN
             VALUE "FileDescription", "Estonian ID Card Software explorer integration"
             VALUE "FileVersion", "0.1.0.0"
             VALUE "LegalCopyright", "(c) 2009 Smartlink Ltd.  All rights reserved."
-            VALUE "InternalName", "EsteidExt.dll"
-            VALUE "OriginalFilename", "EsteidExt.dll"
+            VALUE "InternalName", "EsteidShellExtension.dll"
+            VALUE "OriginalFilename", "EsteidShellExtension.dll"
             VALUE "ProductName", "Estonian ID Card Software"
             VALUE "ProductVersion", "0.1.0.0"
         END
@@ -94,7 +94,7 @@ END
 // REGISTRY
 //
 
-IDR_ESTEIDEXT           REGISTRY                "EsteidExt.rgs"
+IDR_ESTEIDEXT           REGISTRY                "EsteidShellExtension.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -103,7 +103,7 @@ IDR_ESTEIDEXT           REGISTRY                "EsteidExt.rgs"
 
 STRINGTABLE 
 BEGIN
-    IDS_PROJNAME            "EsteidExt"
+    IDS_PROJNAME            "EsteidShellExtension"
 END
 
 #endif    // English (U.S.) resources

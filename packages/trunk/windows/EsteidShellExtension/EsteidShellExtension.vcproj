@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="EsteidExt"
+	Name="EsteidShellExtension"
 	ProjectGUID="{3C228C81-D4B2-4CF2-B785-138E8496A3D8}"
 	Keyword="AtlProj"
 	TargetFrameworkVersion="131072"
@@ -45,11 +45,11 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/EsteidExt.tlb"
-				HeaderFileName="$(PlatformName)\EsteidExt_i.h"
+				TypeLibraryName="$(IntDir)/EsteidShellExtension.tlb"
+				HeaderFileName="$(PlatformName)\EsteidShellExtension_i.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(PlatformName)\EsteidExt_i.c"
-				ProxyFileName="$(PlatformName)\EsteidExt_p.c"
+				InterfaceIdentifierFileName="$(PlatformName)\EsteidShellExtension_i.c"
+				ProxyFileName="$(PlatformName)\EsteidShellExtension_p.c"
 				ValidateParameters="true"
 			/>
 			<Tool
@@ -81,7 +81,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
-				ModuleDefinitionFile=".\EsteidExt.def"
+				ModuleDefinitionFile=".\EsteidShellExtension.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -135,11 +135,11 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/EsteidExt.tlb"
-				HeaderFileName="$(PlatformName)\EsteidExt_i.h"
+				TypeLibraryName="$(IntDir)/EsteidShellExtension.tlb"
+				HeaderFileName="$(PlatformName)\EsteidShellExtension_i.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(PlatformName)\EsteidExt_i.c"
-				ProxyFileName="$(PlatformName)\EsteidExt_p.c"
+				InterfaceIdentifierFileName="$(PlatformName)\EsteidShellExtension_i.c"
+				ProxyFileName="$(PlatformName)\EsteidShellExtension_p.c"
 				ValidateParameters="true"
 			/>
 			<Tool
@@ -169,7 +169,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
-				ModuleDefinitionFile=".\EsteidExt.def"
+				ModuleDefinitionFile=".\EsteidShellExtension.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -225,11 +225,11 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/EsteidExt.tlb"
-				HeaderFileName="$(PlatformName)\EsteidExt_i.h"
+				TypeLibraryName="$(IntDir)/EsteidShellExtension.tlb"
+				HeaderFileName="$(PlatformName)\EsteidShellExtension_i.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(PlatformName)\EsteidExt_i.c"
-				ProxyFileName="$(PlatformName)\EsteidExt_p.c"
+				InterfaceIdentifierFileName="$(PlatformName)\EsteidShellExtension_i.c"
+				ProxyFileName="$(PlatformName)\EsteidShellExtension_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -260,7 +260,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="2"
-				ModuleDefinitionFile=".\EsteidExt.def"
+				ModuleDefinitionFile=".\EsteidShellExtension.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="17"
@@ -314,11 +314,11 @@
 				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/EsteidExt.tlb"
-				HeaderFileName="$(PlatformName)\EsteidExt_i.h"
+				TypeLibraryName="$(IntDir)/EsteidShellExtension.tlb"
+				HeaderFileName="$(PlatformName)\EsteidShellExtension_i.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(PlatformName)\EsteidExt_i.c"
-				ProxyFileName="$(PlatformName)\EsteidExt_p.c"
+				InterfaceIdentifierFileName="$(PlatformName)\EsteidShellExtension_i.c"
+				ProxyFileName="$(PlatformName)\EsteidShellExtension_p.c"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -347,7 +347,7 @@
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
-				ModuleDefinitionFile=".\EsteidExt.def"
+				ModuleDefinitionFile=".\EsteidShellExtension.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -426,15 +426,15 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\EsteidExt.cpp"
+				RelativePath=".\EsteidShellExtension.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\EsteidExt.def"
+				RelativePath=".\EsteidShellExtension.def"
 				>
 			</File>
 			<File
-				RelativePath=".\EsteidExt.idl"
+				RelativePath=".\EsteidShellExtension.idl"
 				>
 			</File>
 			<File
@@ -514,11 +514,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\EsteidExt.rc"
+				RelativePath=".\EsteidShellExtension.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\EsteidExt.rgs"
+				RelativePath=".\EsteidShellExtension.rgs"
 				>
 			</File>
 			<File
@@ -531,7 +531,7 @@
 			SourceControlFiles="false"
 			>
 			<File
-				RelativePath=".\Win32\EsteidExt_i.c"
+				RelativePath=".\Win32\EsteidShellExtension_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -573,7 +573,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\x64\EsteidExt_i.c"
+				RelativePath=".\x64\EsteidShellExtension_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

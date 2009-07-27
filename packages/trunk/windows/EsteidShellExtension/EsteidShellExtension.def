@@ -1,6 +1,6 @@
-; EsteidExt.def : Declares the module parameters.
+; EsteidShellExtension.def : Declares the module parameters.
 
-LIBRARY      "EsteidExt.DLL"
+LIBRARY      "EsteidShellExtension.DLL"
 
 EXPORTS
 	DllCanUnloadNow		PRIVATE

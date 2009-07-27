@@ -2,10 +2,10 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include "EsteidExt_i.h"
+#include "EsteidShellExtension_i.h"
 #include "dllmain.h"
 
-CEsteidExtModule _AtlModule;
+CEsteidShellExtensionModule _AtlModule;
 
 // DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)

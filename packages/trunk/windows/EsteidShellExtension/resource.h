@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by EsteidExt.rc
+// Used by EsteidShellExtension.rc
 //
 #define IDS_PROJNAME                    100
 #define IDR_ESTEIDEXT                   101

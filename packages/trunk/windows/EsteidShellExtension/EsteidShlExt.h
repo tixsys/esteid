@@ -3,7 +3,7 @@
 #pragma once
 #include "resource.h"       // main symbols
 
-#include "EsteidExt_i.h"
+#include "EsteidShellExtension_i.h"
 
 #include <shlobj.h>
 #include <comdef.h>

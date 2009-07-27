@@ -1,9 +1,9 @@
-// EsteidExt.cpp : Implementation of DLL Exports.
+// EsteidShellExtension.cpp : Implementation of DLL Exports.
 
 
 #include "stdafx.h"
 #include "resource.h"
-#include "EsteidExt_i.h"
+#include "EsteidShellExtension_i.h"
 #include "dllmain.h"
 
 // Used to determine whether the DLL can be unloaded by OLE
