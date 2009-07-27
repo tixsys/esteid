@@ -7,7 +7,8 @@ install(FILES
 
 install(DIRECTORY
     certs
-    schema
     DESTINATION ${DIGIDOCPP_CONFIG_DIR}
     REGEX "\\.svn$|_svn$" EXCLUDE
 )
+
+add_subdirectory(schema)
