@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Certificates (*.pem *.cer *.crt)</source>
-        <translation>sertifikaadid (*.pem *.cer *.crt)</translation>
+        <translation type="unfinished">Sertifikaadid (*.pem *.cer *.crt)</translation>
     </message>
     <message>
         <source>Failed to open certifiacte</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>This certificate is not usable for crypting</source>
-        <translation>See sertifikaadiga ei saa krüpteerida</translation>
+        <translation type="unfinished">Selle sertifikaadiga ei saa krüpteerida</translation>
     </message>
     <message>
         <source>Company name:</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>Key</source>
-        <translation>Adressat</translation>
+        <translation type="unfinished">Adressaat</translation>
     </message>
 </context>
 <context>
