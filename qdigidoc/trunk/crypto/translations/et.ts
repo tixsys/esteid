@@ -329,7 +329,7 @@ Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>Loading data</source>
-        <translation>Laen andmeid</translation>
+        <translation type="unfinished">Loen andmeid</translation>
     </message>
     <message>
         <source>&lt;br /&gt;Error code: %1</source>
