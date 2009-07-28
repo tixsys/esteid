@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <openssl/sha.h>
+
 class BaseDigest
 {
 public:    

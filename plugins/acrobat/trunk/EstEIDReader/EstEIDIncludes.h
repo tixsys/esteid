@@ -11,15 +11,15 @@
 #define uchar unsigned char
 #endif
 
+#ifndef WIN32
+#define HANDLE void*
+#endif
+
 #define ESTEID_OK 0
 #define ESTEID_ERR 1
 
 #include <string.h>
 #include <opensc/pkcs11.h>
-
-#ifdef ENABLE_OPENSSL
-#include "openssl/x509.h"
-#endif
 
 #if defined(__cplusplus)
 extern "C" {

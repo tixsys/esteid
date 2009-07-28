@@ -3,11 +3,11 @@
 
 #pragma once
 
-#ifdef ESTEIDREADER_EXPORTS
+#ifdef ESTEID_READER_EXPORTS
 /* Specified that the function is an exported DLL entry point. */
 #define ESTEID_EXPORT_SPEC extern "C" __declspec(dllexport)
 #else
-#define ESTEID_EXPORT_SPEC extern "C" ESTEID_IMPORT_SPEC
+#define ESTEID_EXPORT_SPEC extern "C"
 #endif
 
 ESTEID_EXPORT_SPEC HANDLE OpenReader(char *module);
