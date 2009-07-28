@@ -26,7 +26,7 @@ using Org.BouncyCastle.Tsp;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Asn1.Cmp;
-
+using iTextSharp.text.pdf;
 
 namespace EstEIDSigner
 {
@@ -128,6 +128,17 @@ namespace EstEIDSigner
             response.Close();
 
             return responseBytes;
+        }
+
+        static public string GetSubjectFields(byte[] cert, string field)
+        {
+            Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
+            Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] 
+            { 
+                cp.ReadCertificate(cert) 
+            };
+
+            return PdfPKCS7.GetSubjectFields(chain[0]).GetField(field);
         }
     }
 }

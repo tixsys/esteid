@@ -103,6 +103,7 @@ namespace EstEIDNative
     {
         private uint mechanism;
 
+        public const uint CKF_HW = (1 << 0);
         public const uint CKF_ENCRYPT = (1 << 8);
         public const uint CKF_DECRYPT = (1 << 9);
         public const uint CKF_DIGEST = (1 << 10);
@@ -252,6 +253,11 @@ namespace EstEIDNative
         public bool PinIsSet
         {
             get { return ((tokenInfo.flags & CKF_USER_PIN_INITIALIZED) != 0); }
+        }
+
+        public uint Flags
+        {
+            get { return (tokenInfo.flags); }
         }
     }
 
@@ -548,12 +554,12 @@ namespace EstEIDNative
             return (0);
         }
 
-        public bool IsMechanismSupported(uint slot, Mechanism mech)
+        public uint IsMechanismSupported(uint slot, Mechanism mech)
         {
             if (esteidHandler != IntPtr.Zero)
-                return (NativeMethods.IsMechanismSupported(esteidHandler, slot, mech) == 0);
+                return (NativeMethods.IsMechanismSupported(esteidHandler, slot, mech));
 
-            return (false);
+            return (ESTEID_ERR);
         }
 
         public uint Sign(uint slot, string pwd,

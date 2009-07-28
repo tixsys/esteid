@@ -266,7 +266,8 @@ namespace EstEIDSigner
             {
                 return form.Pin;
             }
-            return "";
+
+            return (string.Empty);
         }
 
         private byte[] EstEIDCardSign(EstEIDReader estEidReader, PKCS11Signer signer, Byte[] digest)
@@ -419,44 +420,61 @@ namespace EstEIDSigner
         private PKCS11Signer LocateSigner(EstEIDReader estEidReader)
         {
             uint slots;
-            uint i, rc;
-            bool b;
+            uint i, rc;            
             X509Certificate2Collection col = null;
             Mechanism mech = null;
             PKCS11Signer signer = null;
-            X509Certificate2 cert = null;            
+            X509Certificate2 cert = null;
+            ArrayList signers = null;
+            uint flags;
 
             slots = estEidReader.GetSlotCount(1);
             if (slots == 0)
                 throw new Exception(resManager.GetString("CARD_MISSING"));
 
             col = new X509Certificate2Collection();
-            mech = new Mechanism(Mechanism.CKF_SIGN);
+            mech = new Mechanism(Mechanism.CKF_SIGN|Mechanism.CKF_HW);
+            signers = new ArrayList((int)slots);
 
-            for (i = 1; i < slots; i++)
+            for (i = 0; i < slots; i++)
             {
-                b = estEidReader.IsMechanismSupported(i, mech);
-                // can't use this cert for signing
-                if (b == false)
-                    continue;
-
+                rc = estEidReader.IsMechanismSupported(i, mech);
+                // can't use this slot mechanism for signing
+                if (rc != EstEIDReader.ESTEID_OK)
+                {
+                    // Mechanism not supported ?
+                    if (rc == EstEIDReader.ESTEID_ERR)
+                        continue;
+                    throw new PKCS11Exception(rc);
+                }
+                
                 TokenInfo info = new TokenInfo(estEidReader);
                 rc = info.ReadInfo(i);
                 if (rc != EstEIDReader.ESTEID_OK)
                     throw new PKCS11Exception(rc);
 
                 PKCS11Cert pkcs11Cert = new PKCS11Cert();
-                rc = estEidReader.LocateCertificate(1, pkcs11Cert);
+                rc = estEidReader.LocateCertificate(i, pkcs11Cert);
                 if (rc != EstEIDReader.ESTEID_OK)
+                {
+                    // did we find a certificate ?
+                    if (rc == EstEIDReader.ESTEID_ERR)
+                        continue;
                     throw new PKCS11Exception(rc);
-                
-                cert = new X509Certificate2(pkcs11Cert.CertificateToByteArray());                
-                col.Add(cert);
-                signer = new PKCS11Signer(i, cert, info);            
+                }
 
-                // use first slot
-                if (col.Count > 0)
-                    break;
+                byte[] raw = pkcs11Cert.CertificateToByteArray();
+
+                // can we use this cert for signing ?
+                string s = X509Utils.GetSubjectFields(raw, "OU");
+                if (!s.Equals("digital signature"))
+                    continue;
+                
+                cert = new X509Certificate2(raw);
+                col.Add(cert);
+
+                signer = new PKCS11Signer(i, cert, info);
+                signers.Add(signer);
             }
 
             // no valid certs found ?
@@ -475,9 +493,17 @@ namespace EstEIDSigner
                 en.MoveNext();
                 cert = en.Current;                
                 byte[] s1 = cert.PublicKey.EncodedKeyValue.RawData;
-                byte[] s2 = signer.Cert.PublicKey.EncodedKeyValue.RawData;                
-                if (Arrays.AreEqual(s1, s2))
-                    return signer;
+
+                IEnumerator enumerator = signers.GetEnumerator();
+                
+                while (enumerator.MoveNext())
+                {
+                    signer = (PKCS11Signer)enumerator.Current;
+
+                    byte[] s2 = signer.Cert.PublicKey.EncodedKeyValue.RawData;
+                    if (Arrays.AreEqual(s1, s2))
+                        return signer;
+                }
             }
 
             return null;
@@ -579,7 +605,7 @@ namespace EstEIDSigner
             }
 
             return dic;
-        }
+        }           
 
         public void Sign()
         {
