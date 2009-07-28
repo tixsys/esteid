@@ -852,6 +852,15 @@ bool MainWindow::checkAccessCert()
 	default: break; //ok
 	}
 
+	if ( e.elementsByTagName( "TokenData" ).item(0).toElement().text().isEmpty() )
+	{
+		QMessageBox::warning( this,
+			tr( "Server access certificate" ),
+			tr( "Error reading server access certificate - empty content!" ),
+			QMessageBox::Ok );
+		return false;
+	}
+
 	QString path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
 	if ( !QDir( path ).exists() )
 		QDir().mkpath( path );
