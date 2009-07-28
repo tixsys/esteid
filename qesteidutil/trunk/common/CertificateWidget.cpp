@@ -91,7 +91,7 @@ void CertificateDialog::save()
 	QFile f( file );
 	if( f.open( QIODevice::WriteOnly ) )
 	{
-		f.write( d->cert.toPem() );
+		f.write( QFileInfo( file ).suffix().toLower() == "pem" ? d->cert.toPem() : d->cert.toDer() );
 		f.close();
 	}
 	else
