@@ -192,7 +192,7 @@ var eidStrings = {
 	"PUKDifferent": new tr( "Uued PUK koodid on erinevad", "New PUK codes doesn't match", "Новые PUK коды не сходятся" ),
 	"PUKChanged": new tr( "PUK kood muudetud!", "PUK changed!", "PUK код изменён!" ),
 	"PUKUnsuccess": new tr( "PUK koodi muutmine ebaõnnestus!", "Changing PUK failed!", "Смена PUK кода неудачна!" ),
-	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida 2 korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
+	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida %d korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "PUK blocked", "PUK заблокирован." ),
 	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" ),
 	"PUKValidateFailed": new tr( "PUK koodi valideerimine ebaõnnestus", "PUK validation failed", "" )
