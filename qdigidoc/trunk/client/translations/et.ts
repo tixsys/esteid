@@ -432,10 +432,8 @@ Alustame laadimist?</translation>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translatorcomment>Viga SK serveriga ühenduse saamisel!
-Palun kontrollige internetiühendust.</translatorcomment>
-        <translation>Connecting to SK server failed!
-Please check your internet connection.</translation>
+        <translation type="unfinished">Viga SK serveriga ühenduse saamisel!
+Palun kontrollige internetiühendust.</translation>
     </message>
 </context>
 <context>
