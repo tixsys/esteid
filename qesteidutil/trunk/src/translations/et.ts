@@ -156,11 +156,11 @@
     </message>
     <message>
         <source>Smart Card service status: </source>
-        <translation>Smart Card service staatus:</translation>
+        <translation type="unfinished">Smart Card teenuse staatus:</translation>
     </message>
     <message>
         <source>PCSC service status: </source>
-        <translation>PCSC service staatus:</translation>
+        <translation type="unfinished">PCSC teenuse staatus:</translation>
     </message>
     <message>
         <source>Running</source>
