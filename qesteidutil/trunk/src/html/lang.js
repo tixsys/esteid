@@ -119,7 +119,7 @@ var htmlStrings = {
 	"activatingEmail": new tr( "Aktiveerin e-posti seadeid", "Activating e-mail settings", "настройки эл. почты" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "Failed activating e-mail forwards.", "Активация перенаправления с эл. почты провалилась." ),
 	"loadFailed": new tr( "E-posti aadresside laadimine ebaõnnestus.", "Failed loading e-mail settings.", "Активация перенаправления с эл. почты провалилась" ),
-	"emailEnter": new tr( "E-posti aadress sisestamata!", "Enter e-mail address!", "Введите адрес эл. почты!" ),
+	"emailEnter": new tr( "E-posti aadress sisestamata või vigane!", "E-mail address missing or invalid!", "Введите адрес эл. почты!" ),
 	"loadPicture": new tr( "Lae pilt", "Load picture", "Загрузить картинку" ),
 	"savePicture": new tr( "salvesta", "save", "сохранить" ),
 	"savePicFailed": new tr( "Pildi salvestamine ebaõnnestus!", "Saving picture failed!", "Сохранение картинки неуспешно!" ),

@@ -472,9 +472,10 @@ function setEmails( code, msg )
 
 function activateEmail()
 {
-	if ( document.getElementById('emailAddress').value == "" )
+	var txt = document.getElementById('emailAddress').value;
+	if ( txt == "" || txt.indexOf('@') == -1 || txt.indexOf('.') == -1 || txt.indexOf(' ') != -1 )
 	{
-		alert( 'warning', _('emailEnter') );
+		_alert( 'warning', _('emailEnter') );
 		document.getElementById('emailAddress').focus();
 		return;
 	}
