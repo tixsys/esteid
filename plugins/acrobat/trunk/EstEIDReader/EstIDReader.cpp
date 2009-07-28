@@ -21,10 +21,11 @@
 #include "Sha1Digest.h"
 #include "Sha256Digest.h"
 #include "EstEIDReader.h"
+#include <stdlib.h>
 
 EstEIDReader::EstEIDReader()
 {
-    m_p11_slots = NULL;
+    m_slots = NULL;
     m_digest = NULL;
     m_digest_algorithm = (ulong)0xFFFF;
 }
@@ -45,6 +46,11 @@ int EstEIDReader::Disconnect()
 {
     CK_RV rv;
 
+    if( m_slots != NULL )
+    {
+        delete [] m_slots;
+    }
+
     if( m_digest != NULL )
     {
         delete m_digest;
@@ -61,24 +67,38 @@ CK_RV EstEIDReader::GetSlotCount(int token_present)
     CK_RV rv;
     ulong slots = 0L;
 
-    rv = m_p11->C_GetSlotList( token_present, m_p11_slots, &slots );
+    if( m_slots )
+        delete [] m_slots;
+
+    rv = m_p11->C_GetSlotList( token_present, m_slots, &slots );
     if( rv != CKR_OK )
-        return( rv );    
+        return( rv );
+
+    m_slots = new CK_SLOT_ID[slots];
+    if( !m_slots )
+         return( ESTEID_ERR );
+
+    rv = m_p11->C_GetSlotList( token_present, m_slots, &slots );
+    if( rv != CKR_OK )
+        return( rv ); 
 
     return( slots );
 }
 
-CK_RV EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags)
+CK_RV EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags, CK_ULONG *count)
 {
-    CK_ULONG	m, n, ulCount;
-    CK_RV		rv;
+    CK_ULONG m, n;
+    CK_RV rv;
 
-    rv = m_p11->C_GetMechanismList( slot, *pList, &ulCount );
-    *pList = (CK_MECHANISM_TYPE *)calloc( ulCount, sizeof(*pList) );
+    rv = m_p11->C_GetMechanismList( slot, *pList, count );
+    if( rv != CKR_OK )
+        return( rv );
+
+    *pList = (CK_MECHANISM_TYPE *)calloc( *count, sizeof(*pList) );
     if( *pList == NULL )
         return( 0 );
 
-    rv = m_p11->C_GetMechanismList( slot, *pList, &ulCount );
+    rv = m_p11->C_GetMechanismList( slot, *pList, count );
     if( rv != CKR_OK )
     {
         free( *pList );
@@ -90,7 +110,7 @@ CK_RV EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList,
         CK_MECHANISM_TYPE *mechs = *pList;
         CK_MECHANISM_INFO info;
 
-        for (m = n = 0; n < ulCount; n++) 
+        for (m = n = 0; n < *count; n++) 
         {
             rv = m_p11->C_GetMechanismInfo( slot, mechs[n], &info );
             if( rv != CKR_OK )
@@ -98,26 +118,28 @@ CK_RV EstEIDReader::GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList,
             if( (info.flags & flags) == flags )
                 mechs[m++] = mechs[n];
         }
-        ulCount = m;
+        *count = m;
     }
 
-    return( ulCount );
+    return( rv );
 }
 
 CK_RV EstEIDReader::IsMechanismSupported(ulong slot, ulong flag)
 {
     CK_MECHANISM_TYPE *mechs = NULL;
     CK_ULONG n, num_mechs = 0;
-    CK_RV rv = 1;
+    CK_RV rv = ESTEID_ERR;
 
-    num_mechs = GetMechanisms( slot, &mechs, -1 );
+    rv = GetMechanisms( m_slots[slot], &mechs, -1, &num_mechs );
+    if( rv != CKR_OK )
+        return( rv );
 
     for( n = 0; n < num_mechs; n++ ) 
     {
         CK_MECHANISM_INFO info;
 
-        rv = m_p11->C_GetMechanismInfo( slot, mechs[n], &info );
-        if( rv == CKR_OK ) 
+        rv = m_p11->C_GetMechanismInfo( m_slots[slot], mechs[n], &info );
+        if( rv == CKR_OK )
         {
             if( info.flags & flag )
                 break;				
@@ -134,7 +156,7 @@ CK_RV EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
 {
     CK_RV rv;
 
-    rv = m_p11->C_GetTokenInfo( slot, info );
+    rv = m_p11->C_GetTokenInfo( m_slots[slot], info );
 
     return( rv );
 }
@@ -192,38 +214,23 @@ done:
 }
 
 CK_RV EstEIDReader::GetPkcs11Attr(CK_SESSION_HANDLE session,
-		   CK_OBJECT_HANDLE obj, CK_ATTRIBUTE_TYPE type, void *value,
-		   ulong *size)
+           CK_OBJECT_HANDLE obj, CK_ATTRIBUTE_TYPE type, void *value,
+           ulong *size)
 {
-	CK_ATTRIBUTE templ;
-	CK_RV rv;
+    CK_ATTRIBUTE templ;
+    CK_RV rv;
 
-	templ.type = type;
-	templ.pValue = value;
-	templ.ulValueLen = *size;
+    templ.type = type;
+    templ.pValue = value;
+    templ.ulValueLen = *size;
 
-	rv = m_p11->C_GetAttributeValue( session, obj, &templ, 1 );
-	if( rv != CKR_OK )
+    rv = m_p11->C_GetAttributeValue( session, obj, &templ, 1 );
+    if( rv != CKR_OK )
         return( rv );
 
-	*size = templ.ulValueLen;
-	
+    *size = templ.ulValueLen;
+    
     return( CKR_OK );
-}
-
-CK_MECHANISM_TYPE EstEIDReader::FindMechanism(CK_SLOT_ID slot, CK_FLAGS flags)
-{
-	CK_MECHANISM_TYPE *mechs = NULL, result;
-	CK_ULONG	count = 0;
-
-	count = GetMechanisms( slot, &mechs, flags );
-	if( count != 0 )
-    {
-		result = mechs[0];
-		free( mechs );
-	}
-
-	return( result );
 }
 
 CK_RV EstEIDReader::Sign(ulong slot, const char *pin, 
@@ -238,7 +245,7 @@ CK_RV EstEIDReader::Sign(ulong slot, const char *pin,
     int flags = CKF_SERIAL_SESSION;
     flags |= CKF_RW_SESSION;
     
-    rv = m_p11->C_OpenSession( slot, flags, NULL, NULL, &session );
+    rv = m_p11->C_OpenSession( m_slots[slot], flags, NULL, NULL, &session );
     if( rv != CKR_OK )
         return( rv );
 
@@ -341,10 +348,10 @@ CK_RV EstEIDReader::LocateCertificate(ulong slot, PKCS11Cert *cert)
     CK_SESSION_HANDLE session = CK_INVALID_HANDLE;
     CK_OBJECT_HANDLE obj = CK_INVALID_HANDLE; 
     CK_CERTIFICATE_TYPE cert_type;
-	ulong size;
+    ulong size;
     int flags = CKF_SERIAL_SESSION;    
 
-    rv = m_p11->C_OpenSession( slot, flags, NULL, NULL, &session );
+    rv = m_p11->C_OpenSession( m_slots[slot], flags, NULL, NULL, &session );
     if( rv != CKR_OK )
         return( rv );
 
@@ -352,15 +359,15 @@ CK_RV EstEIDReader::LocateCertificate(ulong slot, PKCS11Cert *cert)
     if( obj == CK_INVALID_HANDLE )
     {
         m_p11->C_CloseSession( session );
-        return( rv );
+        return( rv ? rv : ESTEID_ERR );
     }
 
     size = sizeof(cert_type);
-	rv = GetPkcs11Attr( session, obj, CKA_CERTIFICATE_TYPE, &cert_type, &size );
+    rv = GetPkcs11Attr( session, obj, CKA_CERTIFICATE_TYPE, &cert_type, &size );
     if( cert_type != CKC_X_509 ) 
     {
         m_p11->C_CloseSession( session );
-        return( rv );
+        return( rv ? rv : ESTEID_ERR );
     }
 
     memset( cert->certLabel, 0, cert->certLabelLength );

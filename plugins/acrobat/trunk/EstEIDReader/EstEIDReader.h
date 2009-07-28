@@ -26,19 +26,18 @@ public:
     CK_RV FinalizeDigest(uchar **digest_buffer, ulong *digest_length);
     CK_RV LocateCertificate(ulong slot, PKCS11Cert *cert);
 protected:
-    CK_RV GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags);
+    CK_RV GetMechanisms(CK_SLOT_ID slot, CK_MECHANISM_TYPE_PTR *pList, CK_FLAGS flags, CK_ULONG *count);
     CK_RV FindObject(CK_SESSION_HANDLE sess,
         CK_OBJECT_CLASS cls, 
         CK_OBJECT_HANDLE_PTR ret,
         const unsigned char *id,
         size_t id_len, 
-        int obj_index);
-    CK_MECHANISM_TYPE FindMechanism(CK_SLOT_ID slot, CK_FLAGS flags);    
+        int obj_index);    
     CK_RV GetPkcs11Attr(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE o, CK_ATTRIBUTE_TYPE type, 
         void *value,
         ulong *size);
 private:
-    CK_SLOT_ID_PTR m_p11_slots;
+    CK_SLOT_ID_PTR m_slots;
     BaseDigest *m_digest;
     ulong m_digest_algorithm;
 };
