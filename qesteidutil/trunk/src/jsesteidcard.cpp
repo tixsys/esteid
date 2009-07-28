@@ -352,7 +352,7 @@ QString JsEsteidCard::getComment4()
     return comment4;
 }
 
-int JsEsteidCard::getPin1RetryCount()
+int JsEsteidCard::getPin1RetryCount( bool connect )
 {
     if (!m_card)
         return -1;
@@ -362,6 +362,8 @@ int JsEsteidCard::getPin1RetryCount()
 	byte pinSign = -1;
 
 	try {
+		if ( connect )
+			m_card->connect( m_reader );
 		m_card->getRetryCounts(puk,pinAuth,pinSign);
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();

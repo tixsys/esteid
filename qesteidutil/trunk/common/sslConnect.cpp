@@ -230,6 +230,7 @@ bool SSLObj::connectToHost( const std::string &site )
 					SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
 				if( p.exec() )
 				{
+					QCoreApplication::processEvents();
 					result = PKCS11_login(slot, 0, p.text().toUtf8());
 					pin = p.text();
 				}

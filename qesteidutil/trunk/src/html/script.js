@@ -492,14 +492,18 @@ function handleError(msg)
 		extender.closeLoading();
 		return;
 	}
-	if ( msg == "PIN1InvalidRetry" )
+	if ( msg == "PIN1InvalidRetry" || msg == "PIN1Invalid" )
 	{
-		var ret = esteidData.getPin1RetryCount();
+		msg = "PIN1InvalidRetry";
+		var ret = esteidData.getPin1RetryCount( true );
 		if ( ret == -1 || ret > 3 )
 			return;
-		_alert( 'error', _( msg ).replace( /%d/, ret ) );
 		if ( ret == 0 )
+		{
+			_alert( 'error', _("PIN1Blocked") );
 			readCardData();
+		} else
+			_alert( 'error', _( msg ).replace( /%d/, ret ) );		
 		return;
 	}
 	_alert( 'error', _('errorFound') + _( msg ) )

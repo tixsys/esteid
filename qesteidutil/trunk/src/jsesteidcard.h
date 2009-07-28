@@ -73,7 +73,7 @@ public slots:
 	bool canReadCard();
 	bool isValid();
 
-    int getPin1RetryCount();
+    int getPin1RetryCount( bool connect = false );
     int getPin2RetryCount();
     int getPukRetryCount();
 	
