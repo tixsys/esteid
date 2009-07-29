@@ -883,7 +883,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 							for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
 							{
 								
-								::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), ::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg ));
+								::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg )));
 								PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
 							}
 						}
