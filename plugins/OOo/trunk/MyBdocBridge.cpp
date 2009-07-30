@@ -671,6 +671,14 @@ int My1EstEIDSigner::checkCert ()
 		}
 
 	}*/
+
+	if (!m_signer.i_ret)
+	{
+		X509Cert activeCert(m_signer.cardSignCert);
+		if(!activeCert.isValid())
+			m_signer.i_ret = 2;
+	}
+
 	return m_signer.i_ret;
 }
 //===========================================================

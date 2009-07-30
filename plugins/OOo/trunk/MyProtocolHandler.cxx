@@ -619,6 +619,11 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 						i_try = 0;
 					}
+					else if(m_BdocBridge->ret == 2)
+					{ //Invalid certificate						
+						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Sertifikaadi viga!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Teie sertifikaat on aegunud!\nPalun kasutage ID kaardi haldusvahendit,\net uuendata Teie allkirjastamise sertifikaati." )));
+						i_try = 0;
+					}
 				}
 			}
 
