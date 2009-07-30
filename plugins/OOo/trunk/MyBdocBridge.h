@@ -40,4 +40,5 @@ public:
 		const char* pcEMsg;
 	} eMessages [20];
 	int iCounter;
+	int iPinReq;
 };

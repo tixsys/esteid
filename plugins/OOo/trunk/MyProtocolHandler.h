@@ -164,4 +164,6 @@ int getTimeZoneDiff();
 
 int convHexAsciiToInt(char cA, char cB);
 
+//void SAL_CALL threadGetPin2(void * bdocBridge);
+
 #endif

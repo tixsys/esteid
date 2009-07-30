@@ -792,7 +792,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
-			
+//m_BdocBridge->iPinReq = 0;
+//oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadGetPin2;
+//oslThread hThreadShowSign = osl_createThread(pFunc,(void *) m_BdocBridge);
 					//--If OK button--
 					if (memcmp(ostrPin.pData->buffer, "*", 1))
 					{	//sign file --if not success retry					
@@ -1029,8 +1031,17 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 			}
 			else
 			{
-				strBuffer += (char)iCD1;
-				strBuffer += (char)iCD2;
+				/*if (iCD1 > 195)//xC3
+				{
+					strBuffer += (char)((iCD1 - 192) / 3);
+					utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+					strBuffer += (char)utfChar;
+				}
+				else
+				{*/
+					strBuffer += (char)iCD1;
+					strBuffer += (char)iCD2;
+				//}
 			}
 		}
 		else if ((osPath.pData->buffer[i] > 127) && (bToOO))
@@ -1132,3 +1143,21 @@ int convHexAsciiToInt(char cA, char cB)
 	}
 	return num;
 }
+
+/*void getPin2(void * bdocBridge)
+{
+	while(!(((MyBdocBridge*)bdocBridge)->iPinReq));
+
+	Reference < XDesktop > rLocDesktop = rGlobalDesktop;
+	Reference <XComponent> xComp = rLocDesktop->getCurrentComponent();
+
+	Reference < XScriptProviderSupplier > xScriptPS(xComp, UNO_QUERY);
+	Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
+
+	Sequence <sal_Int16> indexes;
+	Sequence <Any> outparam;
+	OUString pParam;
+
+	Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
+	xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;				
+}*/
