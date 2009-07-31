@@ -17,11 +17,11 @@
  * 02110-1301  USA
  */ 
 
+#include <stdlib.h>
 #include "EstEIDIncludes.h"
 #include "Sha1Digest.h"
 #include "Sha256Digest.h"
 #include "EstEIDReader.h"
-#include <stdlib.h>
 
 EstEIDReader::EstEIDReader()
 {
