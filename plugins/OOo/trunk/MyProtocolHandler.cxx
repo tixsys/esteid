@@ -613,7 +613,11 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				else
 				{
 					m_BdocBridge->DigiCheckCert();
-					if (m_BdocBridge->ret == 1)
+					if (!m_BdocBridge->ret)
+					{
+						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->pSerialNr )));
+					}
+					else if (m_BdocBridge->ret == 1)
 					{ //NO card or cardreader
 						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
 						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;

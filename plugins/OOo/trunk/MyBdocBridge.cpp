@@ -53,7 +53,7 @@ MyBdocBridge::MyBdocBridge() {
 void MyBdocBridge::DigiCheckCert()
 {
 	ret = ((My1EstEIDSigner *)this)->checkCert();
-	//pSignName = ((My1EstEIDSigner *)this)->str_signCert.c_str();
+	pSerialNr = (char*)((My1EstEIDSigner *)this)->str_signCert.c_str();
 }
 
 //===========================================================
@@ -659,24 +659,31 @@ int My1EstEIDSigner::checkCert ()
 	string strRetCert;
 	MyRealEstEIDSigner m_signer;
 
-/*	X509Cert xCert(m_signer.cardSignCert);
-	strRetCert = xCert.getSubject();
-	for (size_t u=0; u<strRetCert.size(); u++)
-	{
-		if (!memcmp(&strRetCert[u], ",CN=", 4))
-		{
-			u += 4;
-			while (memcmp(&strRetCert[u], ",OU=", 4))
-				str_signCert += strRetCert[u++];
-		}
-
-	}*/
-
 	if (!m_signer.i_ret)
 	{
 		X509Cert activeCert(m_signer.cardSignCert);
 		if(!activeCert.isValid())
 			m_signer.i_ret = 2;
+
+		else 
+		{
+			string tempname = activeCert.getSubject();
+			for (size_t u=0; u<tempname.size(); u++)
+			{
+				if (!memcmp(&tempname[u], "serialNumber=", 13))
+				{
+					str_signCert = "";
+					u += 13;
+					while ( (u<tempname.size()) && (memcmp(&tempname[u], ",GN=", 4)) )
+					{
+						str_signCert += tempname[u];
+						u++;
+					}
+				}
+				
+			}
+			
+		}
 	}
 
 	return m_signer.i_ret;

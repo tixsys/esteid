@@ -34,7 +34,7 @@ public:
 	const char* pSignCountry;
 	const char* pSignRole;
 	const char* pSignAddRole;
-
+	char* pSerialNr;
 	const char* pcErrMsg;
 	struct {
 		const char* pcEMsg;
