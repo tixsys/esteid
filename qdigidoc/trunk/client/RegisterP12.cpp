@@ -29,11 +29,19 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <QUrl>
+#include <QTranslator>
 
 RegisterP12::RegisterP12( const QString &cert, QWidget *parent )
 :	QWidget( parent )
 {
+	QString lang = Settings().value( "Main/Language", "et" ).toString();
+	QTranslator *appTranslator = new QTranslator( this );
+	QTranslator *qtTranslator = new QTranslator( this );
+	QApplication::instance()->installTranslator( appTranslator );
+	QApplication::instance()->installTranslator( qtTranslator );
+	appTranslator->load( ":/translations/" + lang );
+	qtTranslator->load( ":/translations/qt_" + lang );
+
 	setupUi( this );
 	p12Cert->setText( cert );
 }
@@ -61,13 +69,10 @@ void RegisterP12::on_buttonBox_accepted()
 	}
 
 	Settings s;
-	s.setValue( "Main/pkcs12Cert", dest );
-	s.setValue( "Main/pkcs12Pass", p12Pass->text() );
+	s.setValue( "Client/pkcs12Cert", dest );
+	s.setValue( "Client/pkcs12Pass", p12Pass->text() );
 	close();
 }
-
-void RegisterP12::on_info_linkActivated( const QString &url )
-{ QDesktopServices::openUrl( url ); }
 
 void RegisterP12::on_p12Button_clicked()
 {

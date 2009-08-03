@@ -363,6 +363,10 @@ Start downloading?</source>
         <source>NB! Invalid signature</source>
         <translation>NB: Ошибочная подпись</translation>
     </message>
+    <message>
+        <source>Error reading server access certificate - empty content!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -569,9 +573,9 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
         <translation>OCSP PKCS#12 сертификат доступа к серверу доступен на&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
 <context>

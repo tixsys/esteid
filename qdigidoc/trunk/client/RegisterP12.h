@@ -32,6 +32,5 @@ public:
 
 private Q_SLOTS:
 	void on_buttonBox_accepted();
-	void on_info_linkActivated( const QString &url );
 	void on_p12Button_clicked();
 };

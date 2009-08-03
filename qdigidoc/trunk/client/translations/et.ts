@@ -366,6 +366,10 @@ Alustame laadimist?</translation>
         <source>NB! Invalid signature</source>
         <translation>NB: Vigane allkiri</translation>
     </message>
+    <message>
+        <source>Error reading server access certificate - empty content!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -573,9 +577,9 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
         <translation>OCSP PKCS#12 serveri ligipääsu sertifikaadid on võimalik saada&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=est&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
 <context>

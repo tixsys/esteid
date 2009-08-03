@@ -90,7 +90,10 @@
     <widget class="QLabel" name="info">
      <property name="text">
       <string>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/toend/&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</string>
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
