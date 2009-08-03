@@ -97,7 +97,6 @@ public:
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();
-	void saveDocument( unsigned int num, const QString &filepath );
 	QString getConfValue( ConfParameter parameter, const QVariant &value ) const;
 	static void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
@@ -112,6 +111,9 @@ public:
 	QList<DigiDocSignature> signatures();
 	digidoc::WDoc::DocumentType documentType();
 	QByteArray getFileDigest( unsigned int i );
+
+public Q_SLOTS:
+	void saveDocument( unsigned int num, const QString &filepath );
 
 Q_SIGNALS:
 	void dataChanged();

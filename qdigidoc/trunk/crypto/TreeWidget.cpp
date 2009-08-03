@@ -26,7 +26,9 @@
 #include "CryptDoc.h"
 
 #include <QDesktopServices>
+#include <QFileDialog>
 #include <QHeaderView>
+#include <QKeyEvent>
 #include <QMimeData>
 #include <QUrl>
 
@@ -40,14 +42,43 @@ TreeWidget::TreeWidget( QWidget *parent )
 	header()->setResizeMode( 2, QHeaderView::ResizeToContents );
 	header()->setResizeMode( 3, QHeaderView::ResizeToContents );
 
-	connect( this, SIGNAL(doubleClicked(QModelIndex)), SLOT(doubleClicked(QModelIndex)) );
+	connect( this, SIGNAL(clicked(QModelIndex)), SLOT(clicked(QModelIndex)) );
+	connect( this, SIGNAL(doubleClicked(QModelIndex)), SLOT(openFile(QModelIndex)) );
 }
 
-void TreeWidget::doubleClicked( const QModelIndex &index )
+void TreeWidget::clicked( const QModelIndex &index )
 {
-	QUrl u = url( index );
-	if( !u.isEmpty() )
-		QDesktopServices::openUrl( u );
+	switch( index.column() )
+	{
+	case 2:
+	{
+		QString filepath = QFileDialog::getSaveFileName( this,
+			tr("Save file"), QString( "%1/%2" )
+				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
+				.arg( model()->index( index.row(), 0 ).data().toString() ) );
+		if( !filepath.isEmpty() )
+			Q_EMIT save( index.row(), filepath );
+		break;
+	}
+	case 3: Q_EMIT remove( index.row() ); break;
+	default: break;
+	}
+}
+
+void TreeWidget::keyPressEvent( QKeyEvent *e )
+{
+	switch( e->key() )
+	{
+	case Qt::Key_Delete:
+		Q_EMIT remove( currentIndex().row() );
+		e->accept();
+		break;
+	case Qt::Key_Return:
+		openFile( currentIndex() );
+		e->accept();
+		break;
+	default: return QTreeWidget::keyPressEvent( e );
+	}
 }
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
@@ -90,6 +121,13 @@ void TreeWidget::setContent( const QList<CDocument> &docs )
 
 		addTopLevelItem( i );
 	}
+}
+
+void TreeWidget::openFile( const QModelIndex &index )
+{
+	QUrl u = url( index );
+	if( !u.isEmpty() )
+		QDesktopServices::openUrl( u );
 }
 
 Qt::DropActions TreeWidget::supportedDropActions() const

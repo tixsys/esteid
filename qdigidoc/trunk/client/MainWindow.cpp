@@ -80,11 +80,6 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( infoMobileCell, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
 	connect( infoSignMobile, SIGNAL(toggled(bool)), SLOT(showCardStatus()) );
 
-	connect( signContentView, SIGNAL(clicked(QModelIndex)),
-		SLOT(viewAction(QModelIndex)) );
-	connect( viewContentView, SIGNAL(clicked(QModelIndex)),
-		SLOT(viewAction(QModelIndex)) );
-
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
 	buttonGroup->addButton( settings, HeadSettings );
@@ -128,6 +123,15 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	m_loaded = doc->init();
+
+	connect( signContentView, SIGNAL(remove(unsigned int)),
+		SLOT(removeDocument(unsigned int)) );
+	connect( viewContentView, SIGNAL(remove(unsigned int)),
+		SLOT(removeDocument(unsigned int)) );
+	connect( signContentView, SIGNAL(save(unsigned int,QString)),
+		doc, SLOT(saveDocument(unsigned int,QString)) );
+	connect( viewContentView, SIGNAL(save(unsigned int,QString)),
+		doc, SLOT(saveDocument(unsigned int,QString)) );
 
 	Settings s;
 	cards->hack();
@@ -558,6 +562,12 @@ void MainWindow::parseParams()
 	params.clear();
 }
 
+void MainWindow::removeDocument( unsigned int index )
+{
+	doc->removeDocument( index );
+	setCurrentPage( (Pages)stack->currentIndex() );
+}
+
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
@@ -727,34 +737,6 @@ void MainWindow::showWarning( const QString &msg )
 		u.addQueryItem( "_m", "core" );
 		u.addQueryItem( "_a", "searchclient" );
 		QDesktopServices::openUrl( u );
-	}
-}
-
-void MainWindow::viewAction( const QModelIndex &index )
-{
-	if( index.column() != 2 && index.column()  != 3 )
-		return;
-	QList<digidoc::Document> list = doc->documents();
-	if( list.isEmpty() || index.row() >= list.size() )
-		return;
-
-	switch( index.column() )
-	{
-	case 2:
-	{
-		QString filepath = QFileDialog::getSaveFileName( this,
-			tr("Save file"), QString( "%1/%2" )
-				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
-				.arg( index.model()->index( index.row(), 0 ).data().toString() ) );
-		if( !filepath.isEmpty() )
-			doc->saveDocument( index.row(), filepath );
-		break;
-	}
-	case 3:
-		doc->removeDocument( index.row() );
-		setCurrentPage( (Pages)stack->currentIndex() );
-		break;
-	default: break;
 	}
 }
 

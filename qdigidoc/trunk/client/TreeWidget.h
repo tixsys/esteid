@@ -36,14 +36,18 @@ public:
 
 	void setContent( const QList<digidoc::Document> &docs );
 
-protected:
-	QMimeData* mimeData( const QList<QTreeWidgetItem*> items ) const;
-	QStringList mimeTypes() const;
-	Qt::DropActions supportedDropActions() const;
+Q_SIGNALS:
+	void remove( unsigned int id );
+	void save( unsigned int id, const QString &filepath );
 
 private Q_SLOTS:
+	void clicked( const QModelIndex &index );
 	void openFile( const QModelIndex &index );
 
 private:
+	void keyPressEvent( QKeyEvent *e );
+	QMimeData* mimeData( const QList<QTreeWidgetItem*> items ) const;
+	QStringList mimeTypes() const;
+	Qt::DropActions supportedDropActions() const;
 	QUrl url( const QModelIndex &item ) const;
 };

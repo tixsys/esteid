@@ -93,6 +93,11 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 
+	connect( viewContentView, SIGNAL(remove(int)),
+		SLOT(removeDocument(int)) );
+	connect( viewContentView, SIGNAL(save(int,QString)),
+		doc, SLOT(saveDocument(int,QString)) );
+
 	cards->hack();
 	languages->hack();
 	lang << "et" << "en" << "ru";
@@ -354,34 +359,6 @@ void MainWindow::on_languages_activated( int index )
 	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
-void MainWindow::on_viewContentView_clicked( const QModelIndex &index )
-{
-	if( index.column() != 2 && index.column()  != 3 )
-		return;
-	QList<CDocument> list = doc->documents();
-	if( list.isEmpty() || index.row() >= list.size() )
-		return;
-
-	switch( index.column() )
-	{
-	case 2:
-	{
-		QString filepath = QFileDialog::getSaveFileName( this,
-			tr("Save file"), QString( "%1/%2" )
-				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
-				.arg( index.model()->index( index.row(), 0 ).data().toString() ) );
-		if( !filepath.isEmpty() )
-			doc->saveDocument( index.row(), filepath );
-		break;
-	}
-	case 3:
-		doc->removeDocument( index.row() );
-		setCurrentPage( (Pages)stack->currentIndex() );
-		break;
-	default: break;
-	}
-}
-
 void MainWindow::parseLink( const QString &url )
 {
 	if( url == "addFile" )
@@ -469,6 +446,12 @@ void MainWindow::parseParams()
 	if( !doc->isNull() )
 		setCurrentPage( View );
 	params.clear();
+}
+
+void MainWindow::removeDocument( int index )
+{
+	doc->removeDocument( index );
+	setCurrentPage( View );
 }
 
 void MainWindow::removeKey( int id )

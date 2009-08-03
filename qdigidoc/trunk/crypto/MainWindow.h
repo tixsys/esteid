@@ -41,8 +41,8 @@ private Q_SLOTS:
 	void buttonClicked( int button );
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
-	void on_viewContentView_clicked( const QModelIndex &index );
 	void parseLink( const QString &url );
+	void removeDocument( int index );
 	void showCardStatus();
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err, const QString &errmsg = QString() );

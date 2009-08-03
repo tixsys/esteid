@@ -81,6 +81,8 @@ public:
 	void removeKey( int id );
 	void save();
 	bool saveDDoc( const QString &filename );
+
+public Q_SLOTS:
 	void saveDocument( int id, const QString &filepath );
 
 Q_SIGNALS:

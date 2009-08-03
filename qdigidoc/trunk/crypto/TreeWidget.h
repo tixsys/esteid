@@ -35,14 +35,18 @@ public:
 
 	void setContent( const QList<CDocument> &docs );
 
-protected:
+Q_SIGNALS:
+	void remove( int id );
+	void save( int id, const QString &filepath );
+
+private Q_SLOTS:
+	void clicked( const QModelIndex &index );
+	void openFile( const QModelIndex &index );
+
+private:
+	void keyPressEvent( QKeyEvent *e );
 	QMimeData* mimeData( const QList<QTreeWidgetItem*> items ) const;
 	QStringList mimeTypes() const;
 	Qt::DropActions supportedDropActions() const;
-
-private Q_SLOTS:
-	void doubleClicked( const QModelIndex &index );
-
-private:
 	QUrl url( const QModelIndex &index ) const;
 };
