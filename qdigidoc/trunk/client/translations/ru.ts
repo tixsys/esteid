@@ -529,6 +529,14 @@ Please check your internet connection.</source>
         <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>
         <translation>Неотъемлемой частью этого листа подтверждения подписей является распечатка названных файлов на бумаге в разделе &lt;b&gt;&quot;Подписанные файлы&quot;&lt;/b&gt;.</translation>
     </message>
+    <message>
+        <source>COMPANY</source>
+        <translation>УЧЕРЕЖДЕНИЕ</translation>
+    </message>
+    <message>
+        <source>REGISTER CODE</source>
+        <translation>КОД РЕГИСТРА</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -832,6 +840,10 @@ Please check your internet connection.</source>
     <message>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation>Сохранить файл</translation>
     </message>
 </context>
 </TS>

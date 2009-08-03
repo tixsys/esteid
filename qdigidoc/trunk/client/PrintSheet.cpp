@@ -99,19 +99,27 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	Q_FOREACH( DigiDocSignature sig, d->signatures() )
 	{
 		const SslCertificate cert = sig.cert();
+		bool tempel = cert.isTempel();
 		s
 		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
 		<< "<td class=\"label\" width=\"40\">" << tr("NO.") << "</td>"
-		<< "<td class=\"label\">" << tr("NAME") << "</td>"
-		<< "<td class=\"label\" width=\"200\">" << tr("PERSONAL CODE") << "</td>"
+		<< "<td class=\"label\">" << (tempel ? tr("COMPANY") : tr("NAME")) << "</td>"
+		<< "<td class=\"label\" width=\"200\">" << (tempel ? tr("REGISTER CODE") : tr("PERSONAL CODE")) << "</td>"
 		<< "<td class=\"label\" width=\"160\">" << tr("TIME") << "</td>"
 		<< "</tr>"
 		<< "<tr>"
 		<< "<td class=\"textborder\">" << i << "</td>"
-		<< "<td class=\"textborderright\">"
-		<< SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
-		<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) )
+		<< "<td class=\"textborderright\">";
+		if( !tempel )
+		{
+			s
+			<< SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
+			<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) );
+		}
+		else
+			s << SslCertificate::formatName( cert.subjectInfoUtf8( "CN" ) );
+		s
 		<< "</td>"
 		<< "<td class=\"textborderright\">"
 		<< cert.subjectInfo( "serialNumber" )

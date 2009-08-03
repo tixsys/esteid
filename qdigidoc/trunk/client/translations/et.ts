@@ -368,7 +368,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>Error reading server access certificate - empty content!</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga ligipääsutõendi lugemisel - sisu on tühi!</translation>
     </message>
 </context>
 <context>
@@ -436,7 +436,7 @@ Alustame laadimist?</translation>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translation type="unfinished">Viga SK serveriga ühenduse saamisel!
+        <translation>Viga SK serveriga ühenduse saamisel!
 Palun kontrollige internetiühendust.</translation>
     </message>
 </context>
@@ -532,6 +532,14 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>
         <translation>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;&quot;Allkirjastatud failid&quot;&lt;/b&gt; nimetatud failide esitus paberil.</translation>
+    </message>
+    <message>
+        <source>COMPANY</source>
+        <translation>ASUTUS</translation>
+    </message>
+    <message>
+        <source>REGISTER CODE</source>
+        <translation>REGISTRIKOOD</translation>
     </message>
 </context>
 <context>
@@ -836,6 +844,10 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>Remove</source>
         <translation>Eemalda</translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation>Salvesta fail</translation>
     </message>
 </context>
 </TS>
