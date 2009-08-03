@@ -55,7 +55,14 @@
 #undef PKCS7_ISSUER_AND_SERIAL 
 #undef OCSP_REQUEST 
 #undef OCSP_RESPONSE 
-#endif 
+#endif
+
+// PKCS#11
+#define CKR_OK					(0)
+#define CKR_CANCEL				(1)
+#define CKR_FUNCTION_CANCELED	(0x50)
+
+
 
 class sslError:public std::runtime_error {
 public:
@@ -220,23 +227,16 @@ bool SSLObj::connectToHost( const std::string &site )
 	{
 		if( !slot->token->secureLogin )
 		{
-			if( !pin.isNull() )
-			{
-				result = PKCS11_login(slot, 0, pin.toUtf8());
-			}
-			else
+			if( pin.isNull() )
 			{
 				PinDialog p( PinDialog::Pin1Type,
 					SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
-				if( p.exec() )
-				{
-					QCoreApplication::processEvents();
-					result = PKCS11_login(slot, 0, p.text().toUtf8());
-					pin = p.text();
-				}
-				else
+				if( !p.exec() )
 					throw std::runtime_error( "" );
+				pin = p.text();
 			}
+			QCoreApplication::processEvents();
+			result = PKCS11_login(slot, 0, pin.toUtf8());
 		}
 		else
 		{
@@ -246,10 +246,17 @@ bool SSLObj::connectToHost( const std::string &site )
 			QCoreApplication::processEvents();
 			result = PKCS11_login( slot, 0, NULL );
 			p->deleteLater();
-			pin = "";
+			pin.clear();
 		}
-		if ( result )
-			throw std::runtime_error( "PIN1Invalid" );
+		switch( ERR_get_error() )
+		{
+		case CKR_OK: break;
+		case CKR_CANCEL:
+		case CKR_FUNCTION_CANCELED:
+			throw std::runtime_error( "" ); break;
+		default:
+			throw std::runtime_error( "PIN1Invalid" ); break;
+		}
 	}
 
 	PKCS11_KEY *authkey = PKCS11_find_key( authcert );
