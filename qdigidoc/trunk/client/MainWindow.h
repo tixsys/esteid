@@ -76,7 +76,7 @@ private:
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
 	void parseParams();
-	void setCurrentPage( Pages page );
+	void setCurrentPage( Pages page, bool reload = true );
 
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;

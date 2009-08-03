@@ -461,7 +461,7 @@ void MainWindow::on_languages_activated( int index )
 	signButton->setText( tr("Sign") );
 	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
-	setCurrentPage( (Pages)stack->currentIndex() );
+	setCurrentPage( (Pages)stack->currentIndex(), false );
 }
 
 void MainWindow::parseLink( const QString &link )
@@ -477,7 +477,7 @@ void MainWindow::parseLink( const QString &link )
 				if( !addFile( file ) )
 					return;
 			}
-			setCurrentPage( Sign );
+			setCurrentPage( Sign, false );
 		}
 		else if( doc->isNull() )
 			setCurrentPage( Home );
@@ -565,10 +565,10 @@ void MainWindow::parseParams()
 void MainWindow::removeDocument( unsigned int index )
 {
 	doc->removeDocument( index );
-	setCurrentPage( (Pages)stack->currentIndex() );
+	setCurrentPage( (Pages)stack->currentIndex(), false );
 }
 
-void MainWindow::setCurrentPage( Pages page )
+void MainWindow::setCurrentPage( Pages page, bool reload )
 {
 	stack->setCurrentIndex( page );
 	switch( page )
@@ -577,6 +577,12 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 		signContentView->setContent( doc->documents() );
 		signContentView->setColumnHidden( 3, !doc->signatures().isEmpty() );
+		enableSign();
+		signAddFile->setVisible( doc->signatures().isEmpty() );
+		signButton->setFocus();
+
+		if( !reload )
+			break;
 
 		Settings s;
 		s.beginGroup( "Client" );
@@ -587,10 +593,6 @@ void MainWindow::setCurrentPage( Pages page )
 		signCountryInput->setText( s.value( "Country" ).toString() );
 		signZipInput->setText( s.value( "Zip" ).toString() );
 		s.endGroup();
-
-		enableSign();
-		signAddFile->setVisible( doc->signatures().isEmpty() );
-		signButton->setFocus();
 		break;
 	}
 	case View:
@@ -723,7 +725,7 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	enableSign();
-	setCurrentPage( (Pages)stack->currentIndex() );
+	setCurrentPage( (Pages)stack->currentIndex(), false );
 }
 
 void MainWindow::showWarning( const QString &msg )
@@ -754,7 +756,7 @@ void MainWindow::viewSignaturesRemove( unsigned int num )
 		return;
 	doc->removeSignature( num );
 	doc->save();
-	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
+	setCurrentPage( doc->signatures().isEmpty() ? Sign : View, false );
 }
 
 bool MainWindow::checkAccessCert()
