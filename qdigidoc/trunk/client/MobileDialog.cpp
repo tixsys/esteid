@@ -105,6 +105,7 @@ void MobileDialog::httpRequestFinished( int id, bool error )
     {
         QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
 		labelError->setText( error );
+		statusTimer->stop();
         return;
     }
 
