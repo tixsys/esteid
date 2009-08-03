@@ -29,13 +29,11 @@
 
 #ifdef Q_OS_WIN32
 #include <QDir>
-#include <QFile>
 #include <QLibrary>
+#include <QTemporaryFile>
 
 #include <windows.h>
 #include <mapi.h>
-
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 #ifdef Q_OS_MAC
@@ -47,18 +45,11 @@ Common::Common( QObject *parent ): QObject( parent ) {}
 bool Common::canWrite( const QString &filename )
 {
 #ifdef Q_OS_WIN32
-		qt_ntfs_permission_lookup++;
-#endif
-	bool ret = false;
+	return QTemporaryFile( QFileInfo( filename ).absolutePath().append( "/XXXXXX" ) ).open();
+#else
 	QFileInfo file( filename );
-	if( file.isFile() )
-		ret = file.isWritable();
-	else
-		ret = QFileInfo( file.absolutePath() ).isWritable();
-#ifdef Q_OS_WIN32
-		qt_ntfs_permission_lookup--;
+	return file.isFile() ? file.isWritable() : QFileInfo( file.absolutePath() ).isWritable();
 #endif
-	return ret;
 }
 
 QString Common::fileSize( quint64 bytes )
