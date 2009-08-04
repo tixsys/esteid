@@ -35,15 +35,7 @@ PinDialog::PinDialog( PinType type, const QSslCertificate &cert, QWidget *parent
 :	QDialog( parent )
 {
 	SslCertificate c = cert;
-	if( c.isTempel() )
-		init( type, QString( "%1 %2" )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) ) );
-	else
-		init( type, QString( "%1 %2 %3" )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) ) );
+	init( type, c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" ) );
 }
 
 PinDialog::PinDialog( PinType type, const QString &title, QWidget *parent )

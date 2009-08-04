@@ -110,17 +110,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "</tr>"
 		<< "<tr>"
 		<< "<td class=\"textborder\">" << i << "</td>"
-		<< "<td class=\"textborderright\">";
-		if( !tempel )
-		{
-			s
-			<< SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
-			<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) );
-		}
-		else
-			s << SslCertificate::formatName( cert.subjectInfoUtf8( "CN" ) );
-		s
-		<< "</td>"
+		<< "<td class=\"textborderright\">" << cert.toString( tempel ? "CN" : "GN SN" ) << "</td>"
 		<< "<td class=\"textborderright\">"
 		<< cert.subjectInfo( "serialNumber" )
 		<< "</td>"

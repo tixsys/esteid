@@ -667,24 +667,18 @@ void MainWindow::showCardStatus()
 			if( c.isTempel() )
 			{
 				s << tr("Company") << ": <font color=\"black\">"
-					<< SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) << "</font><br />";
+					<< c.toString( "CN" ) << "</font><br />";
 				s << tr("Register code") << ": <font color=\"black\">"
 					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-				signSigner->setText( QString( "%1 (%2)" )
-					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) )
-					.arg( c.subjectInfo( "serialNumber" ) ) );
+				signSigner->setText( c.toString( "CN (serialNumber)" ) );
 			}
 			else
 			{
 				s << tr("Name") << ": <font color=\"black\">"
-					<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
-					<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+					<< c.toString( "GN SN" ) << "</font><br />";
 				s << tr("Personal code") << ": <font color=\"black\">"
 					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-				signSigner->setText( QString( "%1 %2 (%3)" )
-					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-					.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-					.arg( c.subjectInfo( "serialNumber" ) ) );
+				signSigner->setText( c.toString( "GN SN (serialNumber)" ) );
 			}
 			s << tr("Card in reader") << ": <font color=\"black\">"
 				<< doc->activeCard() << "</font><br />";
@@ -745,10 +739,8 @@ void MainWindow::showWarning( const QString &msg )
 void MainWindow::viewSignaturesRemove( unsigned int num )
 {
 	SslCertificate c = doc->signatures().at( num ).cert();
-	QString msg = tr("Remove signature %1 %2 %3")
-		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-		.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-		.arg( c.subjectInfo( "serialNumber" ) );
+	QString msg = tr("Remove signature %1")
+		.arg( c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" ) );
 	QMessageBox::StandardButton b = QMessageBox::warning( this,
 		windowTitle(), msg,
 		QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel );

@@ -331,6 +331,19 @@ QByteArray SslCertificate::toHex( const QByteArray &in, QChar separator )
 QDateTime SslCertificate::toLocalTime( const QDateTime &datetime )
 { return QDateTime( datetime.date(), datetime.time(), Qt::UTC ).toLocalTime(); }
 
+QString SslCertificate::toString( const QString &format ) const
+{
+	QRegExp r( "[a-zA-Z]+" );
+	QString ret = format;
+	int pos = 0;
+	while( (pos = r.indexIn( format, pos )) != -1 )
+	{
+		ret.replace( r.cap(0), subjectInfoUtf8( r.cap(0).toLatin1() ) );
+		pos += r.matchedLength();
+	}
+	return formatName( ret );
+}
+
 QString SslCertificate::toUtf16( const QString &in ) const
 {
 	QString res;

@@ -50,15 +50,7 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
 
 	test = cert.isTest();
-	if( cert.isTempel() )
-	{
-		st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "CN" ) ) << "</b>";
-	}
-	else
-	{
-		st << "<b>" << SslCertificate::formatName( cert.subjectInfoUtf8( "GN" ) ) << " "
-			<< SslCertificate::formatName( cert.subjectInfoUtf8( "SN" ) ) << "</b>";
-	}
+	st << "<b>" << cert.toString( cert.isTempel() ? "CN" : "GN SN" ) << "</b>";
 
 	if( extended )
 	{
@@ -124,20 +116,7 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	tabWidget->removeTab( 2 );
 
 	const SslCertificate c = s.cert();
-	QString titleText;
-	if( c.isTempel() )
-	{
-		titleText = QString("%1 %2")
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) );
-	}
-	else
-	{
-		titleText = QString("%1 %2 %3")
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) )
-			.arg( SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) )
-			.arg( c.subjectInfo( "serialNumber" ) );
-	}
+	QString titleText = c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" );
 	title->setText( titleText );
 	setWindowTitle( titleText );
 

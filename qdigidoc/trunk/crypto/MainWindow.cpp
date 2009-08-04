@@ -118,7 +118,7 @@ void MainWindow::addCardCert()
 	SslCertificate c = doc->authCert();
 	CKey key;
 	key.cert = c;
-	key.recipient = c.subjectInfoUtf8( "CN" );
+	key.recipient = c.subjectInfoUtf8( QSslCertificate::CommonName );
 	addKeys( QList<CKey>() << key );
 }
 
@@ -512,15 +512,14 @@ void MainWindow::showCardStatus()
 		if( c.isTempel() )
 		{
 			s << tr("Company") << ": <font color=\"black\">"
-				<< SslCertificate::formatName( c.subjectInfoUtf8( "CN" ) ) << "</font><br />";
+				<< c.toString( "CN" ) << "</font><br />";
 			s << tr("Register code") << ": <font color=\"black\">"
 				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
 		}
 		else
 		{
 			s << tr("Name") << ": <font color=\"black\">"
-				<< SslCertificate::formatName( c.subjectInfoUtf8( "GN" ) ) << " "
-				<< SslCertificate::formatName( c.subjectInfoUtf8( "SN" ) ) << "</font><br />";
+				<< c.toString( "GN SN" ) << "</font><br />";
 			s << tr("Personal code") << ": <font color=\"black\">"
 				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
 		}

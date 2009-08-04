@@ -63,6 +63,7 @@ public:
 	QByteArray	subjectKeyIdentifier() const;
 	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
 	static QDateTime	toLocalTime( const QDateTime &datetime );
+	QString		toString( const QString &format ) const;
 	QByteArray	versionNumber() const;
 
 private:
