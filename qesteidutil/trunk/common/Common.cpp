@@ -60,7 +60,7 @@ void Common::browse( const QUrl &url )
 #if defined(Q_OS_WIN32)
 	started = QProcess::startDetached( "explorer", QStringList()
 		<< QString( "/select,\"%1\"" ).arg( QDir::toNativeSeparators( u.toLocalFile() ) ) );
-#elif define(Q_OS_MAC)
+#elif defined(Q_OS_MAC)
 #endif
 	if( started )
 		return;
