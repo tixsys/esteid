@@ -155,6 +155,8 @@ bool MainWindow::addFile( const QString &file )
 				this, tr("Save file"), docname, tr("Documents (*.cdoc)") );
 			if( docname.isEmpty() )
 				return false;
+			if( QFileInfo( docname ).suffix().toLower() != "cdoc" )
+				docname.append( ".cdoc" );
 			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, windowTitle(),

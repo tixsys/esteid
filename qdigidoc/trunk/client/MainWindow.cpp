@@ -192,6 +192,9 @@ bool MainWindow::addFile( const QString &file )
 				this, tr("Save file"), docname, tr("Documents (*.bdoc *.ddoc)") );
 			if( docname.isEmpty() )
 				return false;
+			QString ext = QFileInfo( docname ).suffix().toLower();
+			if( ext != "bdoc" || ext != "ddoc" )
+				docname.append( "." + s.value( "type" ,"bdoc" ).toString() );
 			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, windowTitle(),
