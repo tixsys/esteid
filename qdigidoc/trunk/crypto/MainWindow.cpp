@@ -57,6 +57,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installEventFilter( this );
 	
 	Common *common = new Common( this );
+	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
@@ -129,7 +130,7 @@ bool MainWindow::addFile( const QString &file )
 		Settings s;
 		s.beginGroup( "Crypto" );
 		QFileInfo info( file );
-		QString docname = QString( "%1/%3.cdoc" )
+		QString docname = QString( "%1/%2.cdoc" )
 			.arg( s.value( "DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() );
 
@@ -386,7 +387,9 @@ void MainWindow::parseLink( const QString &url )
 	}
 	else if( url == "browse" )
 	{
-		QDesktopServices::openUrl( QUrl::fromLocalFile( QFileInfo( doc->fileName() ).absolutePath() ) );
+		QUrl url = QUrl::fromLocalFile( doc->fileName() );
+		url.setScheme( "browse" );
+		QDesktopServices::openUrl( url );
 	}
 	else if( url == "email" )
 	{

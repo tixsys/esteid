@@ -52,6 +52,21 @@ bool Common::canWrite( const QString &filename )
 #endif
 }
 
+void Common::browse( const QUrl &url )
+{
+	QUrl u = url;
+	u.setScheme( "file" );
+	bool started = false;
+#if defined(Q_OS_WIN32)
+	started = QProcess::startDetached( "explorer", QStringList()
+		<< QString( "/select,\"%1\"" ).arg( QDir::toNativeSeparators( u.toLocalFile() ) ) );
+#elif define(Q_OS_MAC)
+#endif
+	if( started )
+		return;
+	QDesktopServices::openUrl( QUrl::fromLocalFile( QFileInfo( u.toLocalFile() ).absolutePath() ) );
+}
+
 QString Common::fileSize( quint64 bytes )
 {
 	const quint64 kb = 1024;

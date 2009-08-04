@@ -39,5 +39,6 @@ public:
 	static bool startDetached( const QString &program, const QStringList &arguments );
 
 public Q_SLOTS:
+	void browse( const QUrl &url );
 	void mailTo( const QUrl &url );
 };

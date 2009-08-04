@@ -73,6 +73,7 @@ MainWindow::MainWindow( QWidget *parent )
 	viewContentView->setColumnHidden( 3, true );
 
 	Common *common = new Common( this );
+	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
@@ -487,7 +488,9 @@ void MainWindow::parseLink( const QString &link )
 	}
 	else if( link == "browse" )
 	{
-		QDesktopServices::openUrl( QUrl::fromLocalFile( QFileInfo( doc->fileName() ).absolutePath() ) );
+		QUrl url = QUrl::fromLocalFile( doc->fileName() );
+		url.setScheme( "browse" );
+		QDesktopServices::openUrl( url );
 	}
 	else if( link == "email" )
 	{
