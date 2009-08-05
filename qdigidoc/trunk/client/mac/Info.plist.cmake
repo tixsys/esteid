@@ -71,6 +71,20 @@
 			<key>LSIsAppleDefaultForType</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>*</string>
+			</array>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>None</string>
+		</dict>
 	</array>
 </dict>
 </plist>
