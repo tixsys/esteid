@@ -61,6 +61,16 @@ void Common::browse( const QUrl &url )
 	started = QProcess::startDetached( "explorer", QStringList()
 		<< QString( "/select,\"%1\"" ).arg( QDir::toNativeSeparators( u.toLocalFile() ) ) );
 #elif defined(Q_OS_MAC)
+	started = QProcess::startDetached("/usr/bin/osascript", QStringList() <<
+									  "-e" << "on run argv" <<
+									  "-e" << "set vfile to POSIX file (item 1 of argv)" <<
+									  "-e" << "tell application \"Finder\"" <<
+									  "-e" << "select vfile" <<
+									  "-e" << "activate" <<
+									  "-e" << "end tell" <<
+									  "-e" << "end run" <<
+									  // Commandline arguments
+									  u.toLocalFile());
 #endif
 	if( started )
 		return;
