@@ -203,10 +203,13 @@ std::string DSignature::getMediaType() const
 void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
+	if( !n )
+		return;
 	data.resize( n->mbufOcspDigest.nLen );
 	std::copy( (unsigned char*)n->mbufOcspDigest.pMem,
 		(unsigned char*)n->mbufOcspDigest.pMem + n->mbufOcspDigest.nLen, data.begin() );
-	digestMethodUri = n->szDigestType;
+	if( n->szDigestType )
+		digestMethodUri = n->szDigestType;
 }
 
 void DSignature::validateOffline() const throw(SignatureException)
@@ -265,7 +268,17 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	{ throwError( "Failed to create temporary directory", __LINE__ ); }
 
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 300 );
-	throwError( err, "Failed to open ddoc file", __LINE__ );
+	switch( err )
+	{
+	case ERR_OK:
+	case ERR_OCSP_CERT_REVOKED: break;
+	default:
+		if( d->doc )
+			d->f_SignedDoc_free( d->doc );
+		d->doc = NULL;
+		throwError( err, "Failed to open ddoc file", __LINE__ );
+		return;
+	}
 
 	for( int i = 0; i < d->doc->nDataFiles; ++i)
 	{
@@ -278,7 +291,13 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 			continue;
 		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename.c_str(),
 			file.str().data(), data->szId, CHARSET_UTF_8 );
-		throwError( err, "Failed to exctract files", __LINE__ );
+		if( err != ERR_OK )
+		{
+			if( d->doc )
+				d->f_SignedDoc_free( d->doc );
+			d->doc = NULL;
+			throwError( err, "Failed to exctract files", __LINE__ );
+		}
 	}
 
 	d->loadSignatures();
@@ -438,15 +457,25 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	}
 
 	std::string pin;
+	int slot = d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 );
 	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
 	{
-		PKCS11Signer::PKCS11Cert c;
-		c.cert = pkcs11->getCert();
-		pin = pkcs11->getPin( c );
-		pkcs11->unloadDriver();
+		try
+		{
+			PKCS11Signer::PKCS11Cert c;
+			c.cert = pkcs11->getCert();
+			slot = pkcs11->slotNumber();
+			pin = pkcs11->getPin( c );
+			pkcs11->unloadDriver();
+		}
+		catch( const Exception &e )
+		{
+			d->f_SignatureInfo_delete( d->doc, info->szId );
+			throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
+		}
 	}
-	err = d->f_calculateSignatureWithEstID( d->doc, info,
-		d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 ), pin.c_str() );
+	err = d->f_calculateSignatureWithEstID( d->doc, info, slot, pin.c_str() );
+	fill(pin.begin(),pin.end(),0);
 
 	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
 	{

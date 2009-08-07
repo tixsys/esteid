@@ -188,11 +188,18 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
  */
 void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignException)
 {
-	// Set required signature fields.
-    setSigningCertificate(signer->getCert());
-    setSignatureProductionPlace(signer->getSignatureProductionPlace());
-    setSignerRole(signer->getSignerRole());
-    setSigningTime(util::date::currentTime());
+    // Set required signature fields.
+    try
+    {
+        setSigningCertificate(signer->getCert());
+        setSignatureProductionPlace(signer->getSignatureProductionPlace());
+        setSignerRole(signer->getSignerRole());
+        setSigningTime(util::date::currentTime());
+    }
+    catch( const IOException &e )
+    {
+        THROW_SIGNEXCEPTION_CAUSE( e, "Failed to sign document" );
+    }
 
     // Calculate digest of the Signature->Object->SignedProperties node.
     std::auto_ptr<Digest> calc = Digest::create();

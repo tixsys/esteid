@@ -40,6 +40,7 @@ namespace digidoc
           void loadDriver(const std::string& driver) throw(SignException);
           void unloadDriver();
           void* handle() const;
+          int  slotNumber() const;
 
       protected:
 

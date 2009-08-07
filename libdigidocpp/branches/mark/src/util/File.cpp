@@ -567,7 +567,8 @@ std::string digidoc::util::File::fullPathUrl(const std::string& fullDirectory, c
 }
 
 /**
- * Deletes the filesystem object named <code>fname</code>. Deleting non-empty directories fails.
+ * Deletes the filesystem object named <code>fname</code>. Mysteriously fails to delete empty directories
+ * on Windows, so use removeDirectory instead.
  *
  * @param fname full file or directory fname.
  */
@@ -579,7 +580,24 @@ void digidoc::util::File::removeFile(const std::string& fname)
     {
         WARN( "Tried to remove the temporary file or directory '%s', but failed.", _fname.c_str() );
     }
+}
 
+/**
+ * Deletes the directory named <code>dname</code>. The directory must be empty.
+ *
+ * @param fname full file or directory fname.
+ */
+void digidoc::util::File::removeDirectory(const std::string& dname)
+{
+    std::string _dname = encodeName(dname);
+#ifndef _POSIX_VERSION
+	if (!RemoveDirectory(_dname.c_str()))
+#else
+	if (remove( _dname.c_str() ) != 0)
+#endif
+	{
+		WARN( "Tried to remove the temporary directory '%s', but failed.", _dname.c_str() );
+    }
 }
 
 /**
@@ -606,7 +624,7 @@ void digidoc::util::File::removeDirectoryRecursively(const std::string& dname) t
 
     // Then delete the directory itself. It should now be empty.
     WARN( "Deleting the temporary directory '%s'", dname.c_str() );
-    removeFile(dname);
+    removeDirectory(dname);
 }
 
 /**
@@ -624,3 +642,4 @@ void digidoc::util::File::deleteTempFiles() throw(IOException)
         tempFiles.pop();
     }
 }
+
