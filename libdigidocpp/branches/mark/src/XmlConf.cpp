@@ -85,7 +85,6 @@ void digidoc::XmlConf::initialize()
  */
 digidoc::XmlConf::XmlConf() throw(IOException)
 {
-	FILE * file;
     std::string defaultConfLoc("digidocpp.conf");
 	getUserConfPath();
     char * envLoc = getenv (CONF_ENV.c_str());
