@@ -26,7 +26,7 @@ md build
 cd build
 
 cmake .. -G "NMake Makefiles" ^
-		 -DCMAKE_BUILD_TYPE=Release ^
+		 -DCMAKE_BUILD_TYPE=RelwithDebInfo ^
          -DCMAKE_INSTALL_PREFIX="" ^
          -DCMAKE_INCLUDE_PATH="%include_path%" ^
          -DCMAKE_LIBRARY_PATH="%library_path%" ^

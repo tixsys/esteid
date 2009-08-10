@@ -122,6 +122,7 @@ void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* p
 	}
 
 	((My1EstEIDSigner *)this)->str_pin = pPin;
+	((My1EstEIDSigner *)this)->pi_pinReq = &iPinReq;
 
 	ret = ((My1EstEIDSigner *)this)->signFile();
 
@@ -304,6 +305,7 @@ int My1EstEIDSigner::signFile ()
 		i_ok =	m_signer.i_ret;	 //--- check this!!!!
 		
 		m_signer.pin = str_pin;
+		//&m_signer.i_PinReq = pi_pinReq;
 		// Init certificate store.
 		
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
@@ -648,6 +650,8 @@ MyRealEstEIDSigner::~MyRealEstEIDSigner()
 //***********************************************************
 std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
 {	
+//	((MyBdocBridge *)this)->iPinReq = 1;
+//	while(i_PinReq);
 	//MyProtocolHandler::getPin2();
 	return pin;
 }
@@ -674,7 +678,7 @@ int My1EstEIDSigner::checkCert ()
 				{
 					str_signCert = "";
 					u += 13;
-					while ( (u<tempname.size()) && (memcmp(&tempname[u], ",GN=", 4)) )
+					while ( (u<tempname.size()) && (tempname[u] != ',') )
 					{
 						str_signCert += tempname[u];
 						u++;

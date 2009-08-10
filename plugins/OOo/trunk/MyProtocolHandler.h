@@ -153,7 +153,6 @@ public:
         : BaseDispatch( rxMSF, xFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM("com.sun.star.presentation.PresentationDocument"/*"com.sun.star.drawing.GenericDrawingDocument" */) ) )
 	{}
 };
-//void SAL_CALL threadShowSign(char *pData);
 
 void SAL_CALL threadCallMacro(char *pMess);
 
@@ -164,6 +163,6 @@ int getTimeZoneDiff();
 
 int convHexAsciiToInt(char cA, char cB);
 
-//void SAL_CALL threadGetPin2(void * bdocBridge);
+void SAL_CALL threadGetPin2();
 
 #endif

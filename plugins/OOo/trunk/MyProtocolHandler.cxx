@@ -124,6 +124,7 @@ Reference < XDispatchHelper > rGlobalDispatchHelper;
 const char* pcMessage;
 string strSignData;
 string strBuffer;
+MyBdocBridge * m_BdocBridge;
 //--------------------
 
 void BaseDispatch::ShowMessageBox( const Reference< XFrame >& rFrame, const ::rtl::OUString& aTitle, const ::rtl::OUString& aMsgText )
@@ -568,7 +569,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 	{
 		if ( !aURL.Path.compareToAscii("Command1" ))
 		{
-			MyBdocBridge * m_BdocBridge = MyBdocBridge::getInstance();
+			m_BdocBridge = MyBdocBridge::getInstance();
 
 			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 			Reference <XComponent> xComp = rDesktop->getCurrentComponent();
@@ -801,9 +802,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
-//m_BdocBridge->iPinReq = 0;
-//oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadGetPin2;
-//oslThread hThreadShowSign = osl_createThread(pFunc,(void *) m_BdocBridge);
+
 					//--If OK button--
 					if (memcmp(ostrPin.pData->buffer, "*", 1))
 					{	//sign file --if not success retry					
@@ -814,7 +813,13 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						}
 						else
 							m_BdocBridge->DigiInit();
-						PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
+PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
+
+						m_BdocBridge->iPinReq = 100;
+
+						oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadGetPin2;
+						oslThread hThreadShowSign = osl_createThread(pFunc,(void*)NULL);
+
 						//Sign
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
 
@@ -1040,17 +1045,8 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 			}
 			else
 			{
-				/*if (iCD1 > 195)//xC3
-				{
-					strBuffer += (char)((iCD1 - 192) / 3);
-					utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
-					strBuffer += (char)utfChar;
-				}
-				else
-				{*/
-					strBuffer += (char)iCD1;
-					strBuffer += (char)iCD2;
-				//}
+				strBuffer += (char)iCD1;
+				strBuffer += (char)iCD2;
 			}
 		}
 		else if ((osPath.pData->buffer[i] > 127) && (bToOO))
@@ -1078,6 +1074,7 @@ OUString SAL_CALL convertPathToURI(OUString ousPath)
 		{
 			utfChar = ((ousPath.pData->buffer[i] - 192) * 64) + (ousPath.pData->buffer[i+1] - 128);
 			strBuffer += (char)utfChar;
+
 			i ++;
 		}
 		else
@@ -1153,9 +1150,9 @@ int convHexAsciiToInt(char cA, char cB)
 	return num;
 }
 
-/*void getPin2(void * bdocBridge)
+void threadGetPin2()
 {
-	while(!(((MyBdocBridge*)bdocBridge)->iPinReq));
+	while((m_BdocBridge->iPinReq));
 
 	Reference < XDesktop > rLocDesktop = rGlobalDesktop;
 	Reference <XComponent> xComp = rLocDesktop->getCurrentComponent();
@@ -1168,5 +1165,6 @@ int convHexAsciiToInt(char cA, char cB)
 	OUString pParam;
 
 	Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
-	xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;				
-}*/
+	xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+	m_BdocBridge->iPinReq = 0;
+}

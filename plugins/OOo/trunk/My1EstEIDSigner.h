@@ -27,6 +27,7 @@ namespace digidoc
 			X509 *cardSignCert;
 			std::string pin;
 			int i_ret;
+			int i_PinReq;
 		
 		protected:
 			virtual std::string getPin( PKCS11Cert certificate ) throw(SignException);
@@ -56,7 +57,7 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		std::string str_filepath;
 		std::string str_bdocpath;
 		int i_signatureCounter;
-		
+		int* pi_pinReq;
 
 		struct SignaturePlace
 		{
