@@ -78,7 +78,16 @@ void PCSCManager::construct()
 
 	mSCStartedEvent = (*pSCardAccessStartedEvent)();
 	if (!mSCStartedEvent)
-		throw std::runtime_error("SCardAccessStartedEvent returns NULL");
+	{
+		LPVOID lpMsgBuf;
+		FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 
+						NULL, GetLastError(),
+						MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+						(LPTSTR) &lpMsgBuf,	0, NULL );
+		std::ostringstream buf;
+		buf << "SCardAccessStartedEvent returns NULL\n" << (LPCTSTR)lpMsgBuf;
+		throw std::runtime_error( buf.str() );
+	}
 	//the timeout here is NEEDED under Vista/Longhorn, do not remove it
 	if (WAIT_OBJECT_0 != WaitForSingleObject(mSCStartedEvent,1000) ) {
 		throw std::runtime_error("Smartcard subsystem not started");
@@ -208,7 +217,7 @@ PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
 	PCSCConnection *pc = (PCSCConnection *)c;
 	SCError::check((*pSCardReconnect)(pc->hScard, 
 		SCARD_SHARE_SHARED, (pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0,
-		SCARD_RESET_CARD,&pc->proto));
+		SCARD_LEAVE_CARD,&pc->proto));
 	return pc;
 	}
 
