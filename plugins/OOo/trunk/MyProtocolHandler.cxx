@@ -277,176 +277,13 @@ PRINT_DEBUG ("file opening URL : %s",muffik.pData->buffer);
 
 	else if (bPrevContFlag) //-if it's a new frame after opening a bdoc container
 	{
-		MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
-		m_BdocBridge1->DigiInit();
-		m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL, 0).pData->buffer);
-
-		m_BdocBridge1->Terminate();
-
 		Reference <XDesktop> rDesktop(mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
 		rGlobalDesktop = rDesktop;
 
 		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 		rGlobalDispatchHelper = rDispatchHelper;
-PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
-		if (m_BdocBridge1->ret < 100)// && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
-		{
-			
-			//------------Fix sign data string from returned data---------		
-			strSignData = "";
-			int k,l,m,n,o,p,q,r, iHour;
-			
-			k=l=m=n=o=p=q=r=0;
-			for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
-			{	
-				//Signer Name
-				while (m_BdocBridge1->pSignName[k] != '#')
-				{
-					if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] == ','))
-					{
-						strSignData += ";";
-						k++;
-					}
-					else if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] != ','))
-					{	//convert utf-8 ascii string to unicode char
-						int iCD1, iCD2;
-						iCD1 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
-						k += 3; 
-						iCD2 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
-						k += 2; 
-						strSignData += (char)iCD1;
-						strSignData += (char)iCD2;
-					}
-					else
-						strSignData += m_BdocBridge1->pSignName[k];
-					k++;
-				}
-				k++;
-				strSignData += ";";
 
-PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
-
-
-
-				//Signer Role
-				if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
-				{
-					//strSignData += "Roll: ";
-					while (m_BdocBridge1->pSignRole[l] != '#')
-					{
-						strSignData += m_BdocBridge1->pSignRole[l];
-						l++;
-					}
-					l++;
-				}
-				strSignData += ";";
-
-				//Signer AddRole
-				if (sizeof(m_BdocBridge1->pSignAddRole) > m_BdocBridge1->iSignCnt)
-				{
-					//strSignData += "Resolutsioon: ";
-					while (m_BdocBridge1->pSignAddRole[m] != '#')
-					{
-						strSignData += m_BdocBridge1->pSignAddRole[m];
-						m++;
-					}
-					m++;
-				}
-				strSignData += ";";
-
-				//Signing Time
-				while (m_BdocBridge1->pSignTime[n] != '#')
-				{
-					if (m_BdocBridge1->pSignTime[n] == 'T')
-					{
-						stringstream out;
-						strSignData += " ";
-						iHour = 10*((int)m_BdocBridge1->pSignTime[++n] - 48);
-						iHour += (int)m_BdocBridge1->pSignTime[++n] - 48;
-						iHour += getTimeZoneDiff();						
-						out << iHour;
-						strSignData += out.str();
-					}
-					else if (m_BdocBridge1->pSignTime[n] != 'Z')
-						strSignData += m_BdocBridge1->pSignTime[n];
-											
-					n++;
-				}
-				n++;
-				strSignData += ";";
-			
-				//Signing City
-				if (sizeof(m_BdocBridge1->pSignCity) > m_BdocBridge1->iSignCnt)
-				{
-					//strSignData += "Linn: ";
-					while (m_BdocBridge1->pSignCity[o] != '#')
-					{
-						strSignData += m_BdocBridge1->pSignCity[o];
-						o++;
-					}
-					o++;
-				}
-				strSignData += ";";
-
-				//Signing Region
-				while (m_BdocBridge1->pSignState[p] != '#')
-				{
-					strSignData += m_BdocBridge1->pSignState[p];
-					p++;
-				}
-				p++;
-				strSignData += ";";
-
-				//Signing Postal nr
-				while (m_BdocBridge1->pSignPostal[q] != '#')
-				{
-					strSignData += m_BdocBridge1->pSignPostal[q];
-					q++;
-				}
-				q++;
-				strSignData += ";";
-
-				//Signing Postal nr
-				while (m_BdocBridge1->pSignCountry[r] != '#')
-				{
-					strSignData += m_BdocBridge1->pSignCountry[r];
-					r++;
-				}
-				r++;
-				strSignData += ";";
-
-				strSignData += "_____________________;";
-
-			}
-			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
-			
-			//----------------------------------------------------------------
-PRINT_DEBUG("Signature strData: %s",strSignData.c_str());
-			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
-			oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
-			// create and start the hThreadShowSign with pcSignData as a parameter value		
-			oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
-			//----------------------------------------------------------------
-			
-			if (m_BdocBridge1->ret)	//validation failed
-			{
-			//Change Statusbar
-				pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab kehtetuid või aegunud allkirju!)";
-			}
-
-			else//Change Statusbar			
-				pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!)";
-
-		//----------------------------------------------------------------
-		}
-		else if (m_BdocBridge1->ret >= 10000)
-		{
-			//Change Statusbar
-			pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud! -- Allkirja lugemisel tekkis viga!)";
-		}
-		
-		//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
-		//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);		
+		getSignatures(false);
 	}	
 }
 
@@ -635,156 +472,41 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			//----------------------If We are dealing with BDoc container----------------------
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs && i_try)
 			{	
-				int iHour;
-				m_BdocBridge->DigiInit();
-				m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
 				m_BdocBridge->Terminate();
-
-				//------------Fix sign data string from returned data---------			
-				if (m_BdocBridge->ret < 100)// && (m_BdocBridge->ret < m_BdocBridge->iSignCnt))	
-				{// Container has at least one valid signature
-					strSignData = "";
-					int k,l,m,n,o,p,q,r;
-					k=l=m=n=o=p=q=r=0;
-					for (int cnt=0; cnt<m_BdocBridge->iSignCnt; cnt++)
-					{	
-						//Signer Name
-						while (m_BdocBridge->pSignName[k] != '#')
-						{
-							if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] == ','))
-							{
-								strSignData += ";";
-								k++;
-							}
-							else if ((m_BdocBridge->pSignName[k] == '\\') && (m_BdocBridge->pSignName[k+1] != ','))
-							{	//convert utf-8 ascii string to unicode char
-								int iCD1, iCD2;
-								//wchar_t utfChar;
-								iCD1 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
-								k += 3; 
-								iCD2 = convHexAsciiToInt(m_BdocBridge->pSignName[k+1],m_BdocBridge->pSignName[k+2]);
-								k += 2; 
-								strSignData += (char)iCD1;
-								strSignData += (char)iCD2;
-							}
-							else
-								strSignData += m_BdocBridge->pSignName[k];
-							k++;
-						}
-						k++;
-						strSignData += ";";
-
-						//Signer Role
-						if (sizeof(m_BdocBridge->pSignRole) > m_BdocBridge->iSignCnt)
-						{
-							//strSignData += "Roll: ";
-							while (m_BdocBridge->pSignRole[l] != '#')
-							{
-								strSignData += m_BdocBridge->pSignRole[l];
-								l++;
-							}
-							l++;
-						}
-						strSignData += ";";
-
-						//Signer AddRole
-						if (sizeof(m_BdocBridge->pSignAddRole) > m_BdocBridge->iSignCnt)
-						{
-							//strSignData += "Resolutsioon: ";
-							while (m_BdocBridge->pSignAddRole[m] != '#')
-							{
-								strSignData += m_BdocBridge->pSignAddRole[m];
-								m++;
-							}
-							m++;
-						}
-						strSignData += ";";
-
-						//Signing Time
-						while (m_BdocBridge->pSignTime[n] != '#')
-						{
-							if (m_BdocBridge->pSignTime[n] == 'T')
-							{
-								stringstream out;
-								strSignData += " ";
-								iHour = 10*((int)m_BdocBridge->pSignTime[++n] - 48);
-								iHour += (int)m_BdocBridge->pSignTime[++n] - 48;
-								iHour += getTimeZoneDiff();						
-								out << iHour;
-								strSignData += out.str();
-							}
-							else if (m_BdocBridge->pSignTime[n] != 'Z')
-								strSignData += m_BdocBridge->pSignTime[n];
-													
-							n++;
-						}
-						n++;
-						strSignData += ";";
-					
-						//Signing City
-						if (sizeof(m_BdocBridge->pSignCity) > m_BdocBridge->iSignCnt)
-						{
-							//strSignData += "Linn: ";
-							while (m_BdocBridge->pSignCity[o] != '#')
-							{
-								strSignData += m_BdocBridge->pSignCity[o];
-								o++;
-							}
-							o++;
-						}
-						strSignData += ";";
-
-						//Signing Region
-						while (m_BdocBridge->pSignState[p] != '#')
-						{
-							strSignData += m_BdocBridge->pSignState[p];
-							p++;
-						}
-						p++;
-						strSignData += ";";
-
-						//Signing Postal nr
-						while (m_BdocBridge->pSignPostal[q] != '#')
-						{
-							strSignData += m_BdocBridge->pSignPostal[q];
-							q++;
-						}
-						q++;
-						strSignData += ";";
-
-						//Signing Postal nr
-						while (m_BdocBridge->pSignCountry[r] != '#')
-						{
-							strSignData += m_BdocBridge->pSignCountry[r];
-							r++;
-						}
-						r++;
-						strSignData += ";";
-
-						strSignData += "_____________________;";
-					}
-					strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
-				
-					//-------------Open Signature Viewer Macro------------------------
-					Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
-					Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
-	 
-					/*Any any=*/rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-				//----------------------------------------------------------------
-				}
-				
+				getSignatures(true);
 			}
 			//---------------New File will be signed -> View a Warning------------------
 			else if (bPathIs && i_try)
-			{	
-				strBdocUrl = "";		
-				Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
-				xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-				muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-			
-				//--If Cacel button--
-				if (!memcmp(muff.pData->buffer, "*", 1))
-					i_try = 0;			
+			{
+				//check if container allready exists!
+				string strTmp = ostrPath.pData->buffer;
+				strTmp =+ ".bdoc";
+				FILE* fp = fopen(strTmp.c_str(), "r");
+				if (fp) 
+				    fclose(fp);
+				else
+				{
+					//message about existing container
+					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.ContErrorFunc?language=Basic&location=application") ), UNO_QUERY);
+					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+					muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+				
+					//--If Cacel button--
+					if (!memcmp(muff.pData->buffer, "*", 1))
+						i_try = 0;
+				}
+
+				if (i_try)
+				{
+					strBdocUrl = "";		
+					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
+					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+					muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+				
+					//--If Cacel button--
+					if (!memcmp(muff.pData->buffer, "*", 1))
+						i_try = 0;
+				}
 			}
 			
 					
@@ -817,8 +539,8 @@ PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
 
 						m_BdocBridge->iPinReq = 100;
 
-						oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadGetPin2;
-						oslThread hThreadShowSign = osl_createThread(pFunc,(void*)NULL);
+						//oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadGetPin2;
+						//oslThread hThreadShowSign = osl_createThread(pFunc,(void*)NULL);
 
 						//Sign
 						m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);	
@@ -874,6 +596,8 @@ PRINT_DEBUG("Path Sent to LibDigiDoc: %s",ostrPath.pData->buffer);
 								xComp->dispose();
 							}
 							//----------------------------------------------------------------------
+							else
+								getSignatures(false);
 							i_try = 0;
 						}
 						
@@ -1167,4 +891,189 @@ void threadGetPin2()
 	Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Init?language=Basic&location=application") ), UNO_QUERY);
 	xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 	m_BdocBridge->iPinReq = 0;
+}
+
+int getSignatures(bool bButton)
+{
+	MyBdocBridge * m_BdocBridge1 = MyBdocBridge::getInstance();
+	m_BdocBridge1->DigiInit();
+	m_BdocBridge1->DigiOpen(convertURItoPath(ousBDocContURL, 0).pData->buffer);
+
+	m_BdocBridge1->Terminate();
+
+PRINT_DEBUG("Return from FileOpen: %d", m_BdocBridge1->ret);
+	if (m_BdocBridge1->ret < 100)// && (m_BdocBridge1->ret < m_BdocBridge1->iSignCnt))//check for possible errors
+	{		
+		//------------Fix sign data string from returned data---------		
+		strSignData = "";
+		int k,l,m,n,o,p,q,r, iHour;
+		
+		k=l=m=n=o=p=q=r=0;
+		for (int cnt=0; cnt<m_BdocBridge1->iSignCnt; cnt++)
+		{	
+			//Signer Name
+			while (m_BdocBridge1->pSignName[k] != '#')
+			{
+				if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] == ','))
+				{
+					strSignData += ";";
+					k++;
+				}
+				else if ((m_BdocBridge1->pSignName[k] == '\\') && (m_BdocBridge1->pSignName[k+1] != ','))
+				{	//convert utf-8 ascii string to unicode char
+					int iCD1, iCD2;
+					iCD1 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
+					k += 3; 
+					iCD2 = convHexAsciiToInt(m_BdocBridge1->pSignName[k+1],m_BdocBridge1->pSignName[k+2]);
+					k += 2; 
+					strSignData += (char)iCD1;
+					strSignData += (char)iCD2;
+				}
+				else
+					strSignData += m_BdocBridge1->pSignName[k];
+				k++;
+			}
+			k++;
+			strSignData += ";";
+
+PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
+
+			//Signer Role
+			if (sizeof(m_BdocBridge1->pSignRole) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Roll: ";
+				while (m_BdocBridge1->pSignRole[l] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignRole[l];
+					l++;
+				}
+				l++;
+			}
+			strSignData += ";";
+
+			//Signer AddRole
+			if (sizeof(m_BdocBridge1->pSignAddRole) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Resolutsioon: ";
+				while (m_BdocBridge1->pSignAddRole[m] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignAddRole[m];
+					m++;
+				}
+				m++;
+			}
+			strSignData += ";";
+
+			//Signing Time
+			while (m_BdocBridge1->pSignTime[n] != '#')
+			{
+				if (m_BdocBridge1->pSignTime[n] == 'T')
+				{
+					stringstream out;
+					strSignData += " ";
+					iHour = 10*((int)m_BdocBridge1->pSignTime[++n] - 48);
+					iHour += (int)m_BdocBridge1->pSignTime[++n] - 48;
+					iHour += getTimeZoneDiff();						
+					out << iHour;
+					strSignData += out.str();
+				}
+				else if (m_BdocBridge1->pSignTime[n] != 'Z')
+					strSignData += m_BdocBridge1->pSignTime[n];
+										
+				n++;
+			}
+			n++;
+			strSignData += ";";
+		
+			//Signing City
+			if (sizeof(m_BdocBridge1->pSignCity) > m_BdocBridge1->iSignCnt)
+			{
+				//strSignData += "Linn: ";
+				while (m_BdocBridge1->pSignCity[o] != '#')
+				{
+					strSignData += m_BdocBridge1->pSignCity[o];
+					o++;
+				}
+				o++;
+			}
+			strSignData += ";";
+
+			//Signing Region
+			while (m_BdocBridge1->pSignState[p] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignState[p];
+				p++;
+			}
+			p++;
+			strSignData += ";";
+
+			//Signing Postal nr
+			while (m_BdocBridge1->pSignPostal[q] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignPostal[q];
+				q++;
+			}
+			q++;
+			strSignData += ";";
+
+			//Signing Postal nr
+			while (m_BdocBridge1->pSignCountry[r] != '#')
+			{
+				strSignData += m_BdocBridge1->pSignCountry[r];
+				r++;
+			}
+			r++;
+			strSignData += ";";
+
+			strSignData += "_____________________;";
+
+		}
+		if (!bButton)
+		{
+			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
+			//-------------------Open Macro in new thread---------------------
+			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
+			oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
+			// create and start the hThreadShowSign with pcSignData as a parameter value		
+			oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
+			//----------------------------------------------------------------
+		}
+		else
+		{
+			strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
+			
+			//-------------Open Signature Viewer Macro------------------------
+			//Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+			Reference< XDispatchProvider > rDispatchProvider(rGlobalDesktop,UNO_QUERY);
+
+			rGlobalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+			//----------------------------------------------------------------
+		}
+		
+		
+/*		
+		if (m_BdocBridge1->ret)	//validation failed
+		{
+		//Change Statusbar
+			pcMessage = "macro:///HW.HW.StatusBarCtrl(KEHTETU ALLKIRI!  -- Fail mida soovite avada sisaldab kehtetuid või aegunud allkirju!)";
+		}
+
+		else//Change Statusbar			
+			pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!)";
+
+	//----------------------------------------------------------------
+	}
+	else if (m_BdocBridge1->ret >= 10000)
+	{
+		//Change Statusbar
+		pcMessage = "macro:///HW.HW.StatusBarCtrl(ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud! -- Allkirja lugemisel tekkis viga!)";
+	}
+	
+	//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
+	//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
+*/
+		return 0;
+	}
+	else
+		return 1;
 }

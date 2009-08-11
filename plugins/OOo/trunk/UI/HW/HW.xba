@@ -302,6 +302,20 @@ Function EndStatusBar
 End Function
 
 &apos;****************************************************************
+Function ContErrorFunc
+	Dim oCEDialog as Object
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oCEDialog = CreateUnoDialog(DialogLibraries.HW.ContError)
+	If oCEDialog.Execute() Then
+		ContErrorFunc =&quot;#&quot;
+	Else
+		ContErrorFunc = &quot;*&quot;
+	End If
+	oCEDialog.dispose()
+End Function
+
+	&apos;****************************************************************
 sub test
 	StatusBarCtrl
 	EndStatusBar

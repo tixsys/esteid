@@ -165,4 +165,6 @@ int convHexAsciiToInt(char cA, char cB);
 
 void SAL_CALL threadGetPin2();
 
+int getSignatures(bool bButton);
+
 #endif
