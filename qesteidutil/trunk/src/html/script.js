@@ -291,9 +291,6 @@ function readCardData()
 
 function setActive( content, el )
 {
-	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
-		return;
-
 	if ( el != '' )
 	{
 		if ( typeof el == 'string' )
@@ -304,6 +301,9 @@ function setActive( content, el )
 		el.className = 'buttonSelected';
 	}
 	
+	if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		return;
+
 	var divs = document.getElementsByTagName('div');
 	for( i=0;i<divs.length;i++)
 	{
@@ -371,6 +371,16 @@ function setActive( content, el )
 			if ( !emailsLoaded )
 				document.getElementById('emailsContentCheck').style.display = 'block';
 			document.getElementById('emailsContentCheckID').style.display = 'none';
+			break;
+		case "mobile":
+			document.getElementById('inputCheckMobile').style.display = 'block';
+			try {
+				if ( esteidData.authCert.isTempel() )
+				{
+					document.getElementById('inputCheckMobile').style.display = 'none';
+					break;
+				}
+			} catch ( err ) {}			
 			break;
 		case "puk":
 			if ( esteidData.getPukRetryCount() == 0 )
