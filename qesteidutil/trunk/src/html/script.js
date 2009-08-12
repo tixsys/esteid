@@ -271,7 +271,7 @@ function readCardData()
 
 		//update auth cert button
 		days = esteidData.authCert.validDays();
-		if ( days <= 105 && pin1Retry > 0 )
+		if ( days <= 105 && pin1Retry > 0 && esteidIsValid )
 		{
 			document.getElementById('authUpdateDiv').style.display='block';
 			var width = 0;
@@ -286,7 +286,7 @@ function readCardData()
 
 		//update sign cert button
 		days = esteidData.signCert.validDays();
-		if ( days <= 105 && pin1Retry > 0 )
+		if ( days <= 105 && pin1Retry > 0 && esteidIsValid )
 		{
 			document.getElementById('signUpdateDiv').style.display='block';
 			var width = 0;
