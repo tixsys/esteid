@@ -214,7 +214,7 @@ function readCardData()
 		
 		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo( language );
 		var days = esteidData.authCert.validDays();
-		if ( pin1Retry > 0 && days > 0 && days <= 105 )
+		if ( days > 0 && days <= 105 )
 		{
 			document.getElementById('authCertWillExpire').style.display = 'block';
 			document.getElementById('authCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
@@ -225,7 +225,7 @@ function readCardData()
 
 		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo( language );
 		days = esteidData.signCert.validDays();
-		if ( pin2Retry > 0 && days > 0 && days <= 105 )
+		if ( days > 0 && days <= 105 )
 		{
 			document.getElementById('signCertWillExpire').style.display = 'block';
 			document.getElementById('signCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
@@ -269,9 +269,9 @@ function readCardData()
 		}
 		document.getElementById('signCertValidTo').className=(esteidData.signCert.isValid() ? 'certValid' : 'certBlocked');
 
-		//update auth cert button
+		//update cert button
 		days = esteidData.authCert.validDays();
-		if ( days <= 105 && pin1Retry > 0 && esteidIsValid )
+		if ( ( days <= 105 || esteidData.signCert.validDays() <= 105 ) && pin1Retry > 0 && esteidIsValid )
 		{
 			document.getElementById('authUpdateDiv').style.display='block';
 			var width = 0;
@@ -283,21 +283,6 @@ function readCardData()
 			document.getElementById('authUpdateButton').style.width=width + 'px';
 		} else
 			document.getElementById('authUpdateDiv').style.display='none';
-
-		//update sign cert button
-		days = esteidData.signCert.validDays();
-		if ( days <= 105 && pin1Retry > 0 && esteidIsValid )
-		{
-			document.getElementById('signUpdateDiv').style.display='block';
-			var width = 0;
-			if ( document.getElementById('signValidButtons').style.display == 'block' )
-				width = parseInt(document.defaultView.getComputedStyle(document.getElementById('signValidButtons1'), "").getPropertyValue('width')) + 
-						parseInt(document.defaultView.getComputedStyle(document.getElementById('signValidButtons2'), "").getPropertyValue('width')) + 5;
-			else if ( document.getElementById('signBlockedButtons').style.display == 'block' )
-				width = parseInt(document.defaultView.getComputedStyle(document.getElementById('signBlockedButtons1'), "").getPropertyValue('width'));
-			document.getElementById('signUpdateButton').style.width=width + 'px';
-		} else
-			document.getElementById('signUpdateDiv').style.display='none';
 
 		if(pukRetry == 0)
 			setActive('puk',document.getElementById('buttonPUK'));
@@ -601,8 +586,9 @@ function setMobile( result )
 	document.getElementById('mobileStatus').innerHTML = _(strings[2]);
 }
 
-function updateCert( type )
+function updateCert()
 {
+	_alert( 'warning', 'Not implemented' );
 }
 
 function changePin1()
