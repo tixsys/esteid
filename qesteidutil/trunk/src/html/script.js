@@ -33,7 +33,7 @@ function checkAccessKeys(e)
 
 function checkNumeric(e)
 {
-	if ( e.keyCode == 13 || String.fromCharCode(e.keyCode).match(/[\d]/) )
+	if ( e.keyCode == 13 || e.keyCode == 8 || e.keyCode == 0 || String.fromCharCode(e.keyCode).match(/[\d]/) )
 		return true;
 	return false;
 }
