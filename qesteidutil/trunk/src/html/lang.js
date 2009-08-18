@@ -152,6 +152,7 @@ var eidStrings = {
 	"certValid": new tr( "kehtiv ja kasutatav", "valid and applicable", "действителен и пригоден" ),
 	"certBlocked": new tr( "kehtetu", "expired", "недействительно" ),
 	"validBlocked": new tr( "kehtiv kuid blokeeritud", "valid but blocked", "действительно, но заблокировано" ),
+	"invalidBlocked": new tr( "kehtetu ja blokeeritud", "invalid and blocked", "недействительно и заблокировано" ),
 	
 	"PINCheck": new tr( "PIN1 ja PIN2 ei tohi sisaldada sünnikuupäeva ja -aastat", "PIN1 and PIN2 have to be different than date of birth or year of birth", "PIN1 и PIN2 не должны содержать дату рождения" ),
 	"PIN1Enter": new tr( "Sisesta vana PIN1 kood", "Current PIN1 code", "Введите старый PIN1 код" ),

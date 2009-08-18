@@ -243,7 +243,7 @@ function readCardData()
 			document.getElementById('authBlockedButtons').style.display='none';
 		} else {
 			document.getElementById('authCertStatus').className='statusBlocked';
-			document.getElementById('authCertStatus').innerHTML=_('validBlocked');
+			document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'validBlocked' : 'invalidBlocked' );
 			document.getElementById('authKeyText').style.display='none';
 			document.getElementById('authKeyBlocked').style.display='block';
 			document.getElementById('authValidButtons').style.display='none';
@@ -261,7 +261,7 @@ function readCardData()
 			document.getElementById('signBlockedButtons').style.display='none';
 		} else {
 			document.getElementById('signCertStatus').className='statusBlocked';
-			document.getElementById('signCertStatus').innerHTML=_('validBlocked');
+			document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'validBlocked' : 'invalidBlocked' );
 			document.getElementById('signKeyText').style.display='none';
 			document.getElementById('signKeyBlocked').style.display='block';
 			document.getElementById('signValidButtons').style.display='none';
