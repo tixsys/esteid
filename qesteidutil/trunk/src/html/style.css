@@ -32,7 +32,7 @@ input[type="button"] { cursor: hand; }
 #personalInfo { position: absolute; top:81px; left:180px; width:385; height:138px;
 				background-color: rgba(255,255,255,0.7); border: 1px solid #cddbeb; z-index: 1;-webkit-border-radius: 5px;
 				color: #668696; font-weight: bold; font-family: "Arial, Liberation Sans"; font-size: 12px; line-height: 18px;}
-#personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:250; word-wrap: break-word; }
+#personalInfo ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:240; word-wrap: break-word; }
 
 #smobileContent ul {list-style: none; text-indent:-2.1em; margin-top: 5px; width:500px; word-wrap: break-word; }
 #smobileContent {color: #355670; font-family: "Arial, Liberation Sans"; font-size: 12px;}
