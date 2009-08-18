@@ -581,19 +581,22 @@ function checkMobile()
 function setMobile( result )
 {
 	var strings = result.split(";");
-	setActive('smobile','');
-	if ( strings[2] == "Active" )
+	if ( strings.length > 1 )
 	{
-		document.getElementById('activateMobileButton').style.display = "none";
-		document.getElementById('mobileStatus').style.color = "#509b00";
-	} else {
-		document.getElementById('mobileStatus').style.color = "#e80303";
-		document.getElementById('inputActivateMobile').attributes["onclick"].value = "extender.openUrl('" + strings[3] + "');";
-		document.getElementById('activateMobileButton').style.display = "block";
+		setActive('smobile','');
+		if ( strings[2] == "Active" )
+		{
+			document.getElementById('activateMobileButton').style.display = "none";
+			document.getElementById('mobileStatus').style.color = "#509b00";
+		} else {
+			document.getElementById('mobileStatus').style.color = "#e80303";
+			document.getElementById('inputActivateMobile').attributes["onclick"].value = "extender.openUrl('" + strings[3] + "');";
+			document.getElementById('activateMobileButton').style.display = "block";
+		}
+		document.getElementById('mobileNumber').innerHTML = strings[0];
+		document.getElementById('mobileOperator').innerHTML = strings[1];
+		document.getElementById('mobileStatus').innerHTML = _(strings[2]);
 	}
-	document.getElementById('mobileNumber').innerHTML = strings[0];
-	document.getElementById('mobileOperator').innerHTML = strings[1];
-	document.getElementById('mobileStatus').innerHTML = _(strings[2]);
 }
 
 function updateCert()
