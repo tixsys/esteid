@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#define DEBUG 0
+#define DEBUG 1
 
 #ifdef _WIN32
 #define DEBUG_FILE "c:\\OOoDebug.txt"
@@ -27,3 +27,4 @@
 #else
 #define PRINT_DEBUG(...)           do { } while (0)
 #endif
+

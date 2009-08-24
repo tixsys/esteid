@@ -71,7 +71,8 @@ void MyBdocBridge::Terminate()
 }
 
 //-----------------------------------------------------------
-void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* pPin)
+//void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* pPin)
+void MyBdocBridge::DigiSign()
 {
 	string strPath, strParam;
 	//strPath = pPath;
@@ -121,11 +122,12 @@ void MyBdocBridge::DigiSign(const char* pPath, const char* pParam, const char* p
 		k++;
 	}
 
-	((My1EstEIDSigner *)this)->str_pin = pPin;
-	((My1EstEIDSigner *)this)->pi_pinReq = &iPinReq;
+//	((My1EstEIDSigner *)this)->str_pin = * cp_Pin;
+	((My1EstEIDSigner *)this)->cpPin = &c_Pin[0];
+	iPinReq = 0;
+	((My1EstEIDSigner *)this)->ip_pinReq = &iPinReq;
 
 	ret = ((My1EstEIDSigner *)this)->signFile();
-
 }
 
 //-----------------------------------------------------------
@@ -297,15 +299,18 @@ int My1EstEIDSigner::initData()
 //***********************************************************
 int My1EstEIDSigner::signFile ()
 {
+	
 	int i_ok = 0;
 	try
 	{		
 		MyRealEstEIDSigner m_signer;
+
+		m_signer.pi_pinReq = ip_pinReq;
 		
 		i_ok =	m_signer.i_ret;	 //--- check this!!!!
 		
-		m_signer.pin = str_pin;
-		//&m_signer.i_PinReq = pi_pinReq;
+		//m_signer.pcPin = str_pin.c_str();
+		m_signer.pcPin = cpPin;
 		// Init certificate store.
 		
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
@@ -649,11 +654,21 @@ MyRealEstEIDSigner::~MyRealEstEIDSigner()
 //===========================================================
 //***********************************************************
 std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignException)
-{	
-//	((MyBdocBridge *)this)->iPinReq = 1;
-//	while(i_PinReq);
-	//MyProtocolHandler::getPin2();
-	return pin;
+{
+	* pi_pinReq = 100;
+
+//	while(1)
+//		if (!(* pi_pinReq))
+//			break;
+	* pi_pinReq = 100;
+	for (int e=0; e<1; e++)
+	{
+		if (* pi_pinReq)
+			e--;
+		PRINT_DEBUG("*** Lib Value: %d", * pi_pinReq);
+	}
+	//return pin;
+	return pcPin;
 }
 
 //===========================================================
@@ -701,6 +716,19 @@ void My1EstEIDSigner::Terminate()
 
 //===========================================================
 //***********************************************************
+void MyRealEstEIDSigner::showPinpad()
+{
+	* pi_pinReq = 200;
+//	while(1)
+//		if (!(* pi_pinReq))
+//			break;
+}
 
+//===========================================================
+//***********************************************************
+void MyRealEstEIDSigner::hidePinpad()
+{
+}
 
-
+//===========================================================
+//***********************************************************

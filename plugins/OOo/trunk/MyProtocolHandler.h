@@ -2,7 +2,8 @@
 #define _MyProtocolHandler_HXX
 
 #include <stdio.h>
-
+#include <com/sun/star/script/provider/XScriptProvider.hpp>
+//#include <com/sun/star/frame/XDesktop.hpp>
 #include <com/sun/star/lang/XInitialization.hpp>
 #include <com/sun/star/frame/XDispatchProvider.hpp>
 #include <com/sun/star/frame/XControlNotificationListener.hpp>
@@ -125,6 +126,7 @@ public:
     // XControlNotificationListener
     virtual void SAL_CALL controlEvent( const ::com::sun::star::frame::ControlEvent& Event ) 
         throw (::com::sun::star::uno::RuntimeException); 
+
 };
 
 class WriterDispatch : public BaseDispatch
@@ -163,8 +165,9 @@ int getTimeZoneDiff();
 
 int convHexAsciiToInt(char cA, char cB);
 
-void SAL_CALL threadGetPin2();
+void SAL_CALL threadSign();
 
 int getSignatures(bool bButton);
+
 
 #endif

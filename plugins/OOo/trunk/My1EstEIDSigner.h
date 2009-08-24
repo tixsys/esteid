@@ -25,12 +25,17 @@ namespace digidoc
 			MyRealEstEIDSigner() throw(SignException);
 			virtual ~MyRealEstEIDSigner();
 			X509 *cardSignCert;
-			std::string pin;
+			//std::string pin;
+			const char * pcPin;
 			int i_ret;
-			int i_PinReq;
+			int* pi_pinReq;
 		
 		protected:
 			virtual std::string getPin( PKCS11Cert certificate ) throw(SignException);
+
+		private:
+			void showPinpad();
+			void hidePinpad();
 		
 	};
 
@@ -51,13 +56,14 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		int checkCert ();
 		void getExceptions(const digidoc::Exception e);
 	
-		std::string str_pin;
+		//std::string str_pin;
+		char * cpPin;
 		std::string str_signTime;
 		std::string str_signCert;
 		std::string str_filepath;
 		std::string str_bdocpath;
 		int i_signatureCounter;
-		int* pi_pinReq;
+		int* ip_pinReq;
 
 		struct SignaturePlace
 		{
@@ -84,7 +90,6 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		digidoc::BDoc *locBdoc;		
 		bool validateOnline;	
 		
-		
-	//protected:		
+
 };
 
