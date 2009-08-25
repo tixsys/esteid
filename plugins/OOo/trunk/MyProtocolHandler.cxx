@@ -267,7 +267,6 @@ PRINT_DEBUG ("file opening URL : %s",muffik.pData->buffer);
 		}
 		else
 		{ // We got an error in init
-			//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Digidoc Error!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( m_BdocBridge1->pcErrMsg )));
 			printf("Error: %s\n",m_BdocBridge1->pcErrMsg);
 		}
 		Reference <XCloseable> xCloseable( mxFrame, UNO_QUERY);
@@ -300,10 +299,6 @@ Reference< XDispatch > SAL_CALL MyProtocolHandler::queryDispatch(const URL& aURL
 	{
 		Reference < XTextViewCursorSupplier > xCursor( xCtrl, UNO_QUERY );
 		Reference <XPresentation> xPresentation ( xCtrl, UNO_QUERY );
-		//Reference < XSpreadsheetView > xView( xCtrl, UNO_QUERY );
-		//if ( !xCursor.is() && !xView.is() )
-			// ohne ein entsprechendes Dokument funktioniert der Handler nicht
-		//	return xRet;
 
 		if ( aURL.Path.equalsAscii("Command1" ))
 		{
@@ -409,7 +404,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			m_BdocBridge = MyBdocBridge::getInstance();
 
 			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
-	//		rGlobalDesktop = rDesktop;
+
 			Reference <XComponent> xComp = rDesktop->getCurrentComponent();
 
 			Sequence <Any> outparam;
@@ -425,8 +420,6 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			
 			ostrPath = convertURItoPath(xMyModel->getURL(), 0);
 
-//PRINT_DEBUG( "After Converter File OstrPath: %s", ostrPath.pData->buffer);
-		
 			//for bdoc container
 			muff = OUStringToOString(ousLocBdocContUrl, RTL_TEXTENCODING_ASCII_US);
 			string strBdocUrl;
@@ -522,172 +515,153 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				//--If sign button--
 				if (memcmp(ostrParam.pData->buffer, "*", 1))
 				{
-		//			Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
-		//			xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-		//			ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
+					if (strBdocUrl.size()>1)
+					{	//if its an open bdoc container			 			
+						m_BdocBridge->DigiInit();
+						m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
+					}
+					else
+						m_BdocBridge->DigiInit();
 
-					//--If OK button--
-		//			if (memcmp(ostrPin.pData->buffer, "*", 1))
-		//			{	//sign file --if not success retry					
-						if (strBdocUrl.size()>1)
-						{	//if its an open bdoc container			 			
-							m_BdocBridge->DigiInit();
-							m_BdocBridge->DigiOpen(convertURItoPath(ousLocBdocContUrl, 0).pData->buffer);
-						}
-						else
-							m_BdocBridge->DigiInit();
+					m_BdocBridge->iPinReq = 0;					
+					//Sign
+					m_BdocBridge->pPath = ostrPath.pData->buffer;
+					m_BdocBridge->pParam = ostrParam.pData->buffer;
 
-						m_BdocBridge->iPinReq = 0;					
-//m_BdocBridge->c_Pin = "678";
-						//Sign
-						//m_BdocBridge->DigiSign(ostrPath.pData->buffer, ostrParam.pData->buffer, ostrPin.pData->buffer);
-						m_BdocBridge->pPath = ostrPath.pData->buffer;
-						m_BdocBridge->pParam = ostrParam.pData->buffer;
+					oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadSign;
+					oslThread hThreadShowSign = osl_createThread(pFunc,(void*) NULL);
 
-						//oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadSign;
-						//oslThread hThreadShowSign = osl_createThread(pFunc,(void*) m_BdocBridge);
-						oslWorkerFunction pFunc = (void (SAL_CALL *)(void*)) threadSign;
-						oslThread hThreadShowSign = osl_createThread(pFunc,(void*) NULL);
-
-						//Wait for PIN2 Request
-						while(1)
-						{	
-							if (m_BdocBridge->iPinReq)
-PRINT_DEBUG("*** Value: %d", m_BdocBridge->iPinReq);
-						
-							if (m_BdocBridge->iPinReq == 100)
-							{
-								Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
-								xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-								ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
-
-								//--If OK button--
-								if (memcmp(ostrPin.pData->buffer, "*", 1))
-								{
-									//strcpy(m_BdocBridge->cp_Pin, ostrPin.pData->buffer);
-									//m_BdocBridge->cp_Pin = ostrPin.pData->buffer;
-									int c;
-									for (c=0; c<ostrPin.pData->length; c++)
-										m_BdocBridge->c_Pin[c] = ostrPin.pData->buffer[c];
-									m_BdocBridge->c_Pin[c] = NULL;
-								}
-						//		else
-									//Cancel Signing process
-								m_BdocBridge->iPinReq = 0;
-								break;
-							}	
-							else if (m_BdocBridge->iPinReq == 200)
-							{								
-								::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Testing!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "PinPad!" )));
-
-						//		Reference < XDesktop > rLocDesktop = rGlobalDesktop;
-						//		Reference < XDispatchHelper > rLocalDispatchHelper = rGlobalDispatchHelper;
-						//		Reference< XDispatchProvider > rDispatchProvider(rLocDesktop,UNO_QUERY);
-						//		rLocalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii("macro:///HW.HW.Init"), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-								m_BdocBridge->iPinReq = 0;
-								break;
-							}
-						}
-
-						//while (!m_BdocBridge->iPinReq); //Wait until signing ends
-						for (int e=0; e<1; e++)
-						{
-							if (!m_BdocBridge->iPinReq)
-								e--;
-							PRINT_DEBUG("*** Value: %d", m_BdocBridge->iPinReq);
-						}
-
-						if (!m_BdocBridge->ret)
-						{ //If signing was successfull
-							Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Success?language=Basic&location=application") ), UNO_QUERY);
+					//Wait for PIN2 Request
+					while(1)
+					{
+//PRINT_DEBUG("*** Value: %d", m_BdocBridge->iPinReq);
+						if (m_BdocBridge->iPinReq == 100)
+						{	//if we have regular card reader
+							Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.PIN?language=Basic&location=application") ), UNO_QUERY);
 							xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-							//--------------------------------------------------------------
-							//---------------If New file --> Open bdoc container------------
-							if(!strBdocUrl.size())
+							ostrPin = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
+
+							//--If OK button--
+							if (memcmp(ostrPin.pData->buffer, "*", 1))
 							{
-								string strNewPath = ostrPath.pData->buffer;
-								strNewPath += ".bdoc";
-								m_BdocBridge->DigiInit();
-								m_BdocBridge->DigiOpen(strNewPath.c_str());
+								int c;
+								for (c=0; c<ostrPin.pData->length; c++)
+									m_BdocBridge->c_Pin[c] = ostrPin.pData->buffer[c];
+								m_BdocBridge->c_Pin[c] = NULL;
+								m_BdocBridge->iPinReq = 0;
+							}
+							else	//Cancel Signing process
+								m_BdocBridge->iPinReq = 1;
+					
+							break;								
+						}	
+						else if (m_BdocBridge->iPinReq == 200)
+						{	//if we have a cardreader with Pinpad	
+							printf("PINPAD \n");
+							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "PinPad" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Palun kasutage kaardilugeja klaviatuuri PIN2 sisestamiseks!" )));
+							m_BdocBridge->iPinReq = 0;
+							break;
+						}
+						else if (m_BdocBridge->iPinReq == 10)
+							break;	//if signing procedure has been canceled for some error
+					}
+					//Wait until signing procedure ends
+					//while (!m_BdocBridge->iPinReq); <-- while loop in this condition doesnt work
+					for (int e=0; e<1; e++)
+					{
+						if (m_BdocBridge->iPinReq <= 1)
+							e--;
+					}
+
+					if (!m_BdocBridge->ret)
+					{ //If signing was successfull
+						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Success?language=Basic&location=application") ), UNO_QUERY);
+						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+						//--------------------------------------------------------------
+						//---------------If New file --> Open bdoc container------------
+						if(!strBdocUrl.size())
+						{
+							string strNewPath = ostrPath.pData->buffer;
+							strNewPath += ".bdoc";
+							m_BdocBridge->DigiInit();
+							m_BdocBridge->DigiOpen(strNewPath.c_str());
 
 //	PRINT_DEBUG ("TempFile URL : %s",m_BdocBridge->pRetPath);	
-								string strTempFileUrl = UNO_URL_HEAD;
-								strTempFileUrl += m_BdocBridge->pRetPath;
-								strNewPath = UNO_URL_HEAD + strNewPath;
+							string strTempFileUrl = UNO_URL_HEAD;
+							strTempFileUrl += m_BdocBridge->pRetPath;
+							strNewPath = UNO_URL_HEAD + strNewPath;
 //	PRINT_DEBUG ("NewTempFile URL: %s\n",strTempFileUrl.c_str());
 //	PRINT_DEBUG ("NewContFile URL: %s\n",strTempFileUrl.c_str());
-								ousBDocContURL = ::rtl::OUString(strNewPath.data(),strNewPath.size(), RTL_TEXTENCODING_UNICODE, 0);; //<-----Get access to the container in new frame!
-								ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
+							ousBDocContURL = ::rtl::OUString(strNewPath.data(),strNewPath.size(), RTL_TEXTENCODING_UNICODE, 0);; //<-----Get access to the container in new frame!
+							ousBDocFileURL = ::rtl::OUString(strTempFileUrl.data(),strTempFileUrl.size(), RTL_TEXTENCODING_UNICODE, 0);
 
-								ousBDocContURL = convertPathToURI(ousBDocContURL);
-								ousBDocFileURL = convertPathToURI(ousBDocFileURL);
+							ousBDocContURL = convertPathToURI(ousBDocContURL);
+							ousBDocFileURL = convertPathToURI(ousBDocFileURL);
 
-								bContFlag = true;
-								bPrevContFlag = true;
+							bContFlag = true;
+							bPrevContFlag = true;
 
-								Sequence< PropertyValue > loadProps(1);
-								loadProps[0] = PropertyValue();
-								loadProps[0].Name = OUString::createFromAscii("ReadOnly");
-								loadProps[0].Value <<= sal_True;
+							Sequence< PropertyValue > loadProps(1);
+							loadProps[0] = PropertyValue();
+							loadProps[0].Name = OUString::createFromAscii("ReadOnly");
+							loadProps[0].Value <<= sal_True;
 
-								OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
-								OUString sOldName = mxFrame->getName(); 
-								
-								mxFrame->setName(sTarget); 
-
+							OUString sTarget(RTL_CONSTASCII_USTRINGPARAM("odk_officedev_desk")); 
+							OUString sOldName = mxFrame->getName(); 
 							
-								// Get access to the global component loader of the office 
-								// for synchronous loading of documents. 
-								Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
+							mxFrame->setName(sTarget); 
 
-								// Load the document into the target frame by using our unambigous name 
-								// and special search flags. 
-								Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
-								mxFrame->setName(sOldName);
-
-								xComp->dispose();
-							}
-							//----------------------------------------------------------------------
-							else
-								getSignatures(false);
-							i_try = 0;
-						}
 						
-						else if (m_BdocBridge->ret == 1)
-						{ //NO card or cardreader
-							Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
-							xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-						}
+							// Get access to the global component loader of the office 
+							// for synchronous loading of documents. 
+							Reference < ::com::sun::star::frame::XComponentLoader > xLoader (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))), UNO_QUERY );
 
-						else if (m_BdocBridge->ret == 10)
-						{ //OCSP Error
-							//Wrong PIN2
-					/*		Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Failure?language=Basic&location=application") ), UNO_QUERY);
-							xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-							muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-							
-							if (!memcmp(muff.pData->buffer, "*", 1))
-							{ //IF Canceled
-								i_try = 0;
-							}
-							*/
-							
-							for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
-							{
-								
-								::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg )));
-								PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
-							}
+							// Load the document into the target frame by using our unambigous name 
+							// and special search flags. 
+							Reference <XComponent> xComp2 (xLoader->loadComponentFromURL( ousBDocFileURL, sTarget, 8, loadProps));
+							mxFrame->setName(sOldName);
+
+							xComp->dispose();
 						}
-						else if (m_BdocBridge->ret == 100)
-						{
-							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
+						//----------------------------------------------------------------------
+						else
+							getSignatures(false);
+						i_try = 0;
+					}
+					
+					else if (m_BdocBridge->ret == 1)
+					{ //NO card or cardreader
+						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
+						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+					}
+
+					else if (m_BdocBridge->ret == 10)
+					{ //OCSP Error
+					/*	//Wrong PIN2 <-- use this when error codes from digidoc library are working
+						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Failure?language=Basic&location=application") ), UNO_QUERY);
+						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+						muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
+						
+						if (!memcmp(muff.pData->buffer, "*", 1))
+						{ //IF Canceled
 							i_try = 0;
 						}
+					*/								
+						for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
+						{	// Show all errors								
+							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg )));
+							PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
+						}
+					}
+					else if (m_BdocBridge->ret == 100)
+					{	
+						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
+						i_try = 0;
+					}
 
-						if ( (!m_BdocBridge->ret) || (strBdocUrl.size()>1) )
-							m_BdocBridge->Terminate();
-//					}
+					if ( (!m_BdocBridge->ret) || (strBdocUrl.size()>1) )
+						m_BdocBridge->Terminate();
+
 				}
 				else
 					i_try = 0;
@@ -730,31 +704,7 @@ printf("URL in removeStatusListener: %s\n",osBDocFilePath.pData->buffer);
 
 void SAL_CALL BaseDispatch::controlEvent( const ControlEvent& Event ) throw (RuntimeException)
 {
-	if ( Event.aURL.Protocol.equalsAscii("vnd.demo.digidoc.addon:" ))
-	{
-/***		if ( Event.aURL.Path.equalsAscii( "Command2" ))
-		{
-		    // We get notifications whenever the text inside the combobox has been changed.
-		    // We store the new text into a member.
-		    if ( Event.Event.equalsAscii( "TextChanged" ))
-		    {
-		        rtl::OUString aNewText;
-		        sal_Bool      bHasText( sal_False );
-		        for ( sal_Int32 i = 0; i < Event.aInformation.getLength(); i++ )
-		        {
-		            if ( Event.aInformation[i].Name.equalsAsciiL( "Text", 4 ))
-		            {
-		                bHasText = Event.aInformation[i].Value >>= aNewText;
-		                break;
-		            }
-		        }
-		        
-		        if ( bHasText )
-		            maComboBoxText = aNewText;
-		    }
-		}
-***/	}
-
+	if ( Event.aURL.Protocol.equalsAscii("vnd.demo.digidoc.addon:" ));
 }
  
 BaseDispatch::BaseDispatch( const ::com::sun::star::uno::Reference< ::com::sun::star::lang::XMultiServiceFactory > &rxMSF,
@@ -797,7 +747,6 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 	int iCD1, iCD2;
 
 	osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ISO_8859_15);
-	//osPath = OUStringToOString(ousURI, RTL_TEXTENCODING_ASCII_US);
 
 	for(int i=sizeof(UNO_URL_HEAD)-1; i<osPath.getLength(); i++)
 	{
@@ -840,10 +789,9 @@ PRINT_DEBUG("Return URL: %s",strBuffer.c_str());
 
 OUString SAL_CALL convertPathToURI(OUString ousPath)
 {
-	//OString osPath;
 	wchar_t utfChar;
 	strBuffer = "";
-	//osPath = OUStringToOString(pcPath, RTL_TEXTENCODING_ISO_8859_15);
+
 	for(int i=0; i<ousPath.getLength(); i++)
 	{
 		if (ousPath.pData->buffer[i] > 127)
@@ -930,7 +878,7 @@ int convHexAsciiToInt(char cA, char cB)
 void SAL_CALL threadSign()
 {
 	m_BdocBridge->DigiSign();
-	m_BdocBridge->iPinReq = 1;
+	m_BdocBridge->iPinReq = 10;
 }
 
 int getSignatures(bool bButton)
@@ -1083,15 +1031,15 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 			strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
 			
 			//-------------Open Signature Viewer Macro------------------------
-			//Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 			Reference< XDispatchProvider > rDispatchProvider(rGlobalDesktop,UNO_QUERY);
-
-			rGlobalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+			rGlobalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+				OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
 			//----------------------------------------------------------------
 		}
 		
 		
-/*		
+/*****************************************
+//some preparations for using statusbar
 		if (m_BdocBridge1->ret)	//validation failed
 		{
 		//Change Statusbar
@@ -1111,7 +1059,7 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 	
 	//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
 	//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
-*/
+****************************************/
 		return 0;
 	}
 	else

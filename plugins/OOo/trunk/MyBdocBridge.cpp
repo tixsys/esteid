@@ -5,11 +5,9 @@
 //================================
 //
 #include "MyDebug.h"
-//#include "MyProtocolHandler.h"
 
 #include <stdlib.h>
 #include <stdio.h>
-//#include <conio.h>
 #include <iostream>
 
 #include <digidocpp/BDoc.h>
@@ -122,7 +120,6 @@ void MyBdocBridge::DigiSign()
 		k++;
 	}
 
-//	((My1EstEIDSigner *)this)->str_pin = * cp_Pin;
 	((My1EstEIDSigner *)this)->cpPin = &c_Pin[0];
 	iPinReq = 0;
 	((My1EstEIDSigner *)this)->ip_pinReq = &iPinReq;
@@ -353,8 +350,7 @@ PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 
 			// Destroy certificate store.
 			digidoc::X509CertStore::destroy();
-		}
-		
+		}		
 	}
 	catch(const digidoc::OCSPException& e)
 	{
@@ -403,7 +399,6 @@ PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 	digidoc::terminate();
 	
 	// free memory
-
 	delete locBdoc;
 	locBdoc = 0;
 
@@ -657,17 +652,14 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 {
 	* pi_pinReq = 100;
 
-//	while(1)
-//		if (!(* pi_pinReq))
-//			break;
-	* pi_pinReq = 100;
-	for (int e=0; e<1; e++)
-	{
-		if (* pi_pinReq)
+	for (int e=0; e<1; e++)// <--while loop did'nt work out
+	{//wait until openoffice is ready.
+		if (* pi_pinReq > 1)
 			e--;
-		PRINT_DEBUG("*** Lib Value: %d", * pi_pinReq);
+		else if (* pi_pinReq == 1)
+			throw SignException( __FILE__, __LINE__, "PIN acquisition canceled." );
 	}
-	//return pin;
+
 	return pcPin;
 }
 
@@ -710,7 +702,7 @@ int My1EstEIDSigner::checkCert ()
 //===========================================================
 //***********************************************************
 void My1EstEIDSigner::Terminate()
-{	
+{	//this also deletes all temprorary files
 	digidoc::terminate();
 }
 
@@ -719,9 +711,11 @@ void My1EstEIDSigner::Terminate()
 void MyRealEstEIDSigner::showPinpad()
 {
 	* pi_pinReq = 200;
-//	while(1)
-//		if (!(* pi_pinReq))
-//			break;
+	for (int e=0; e<1; e++)// <--while loop did'nt work out
+	{//wait until openoffice is ready.
+		if (* pi_pinReq)
+			e--;
+	}
 }
 
 //===========================================================

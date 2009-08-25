@@ -17,7 +17,6 @@ protected:
 	MyBdocBridge();
 public:
 	static MyBdocBridge * getInstance();
-//	void DigiSign(const char* pPath, const char* pParam, const char* pPin);
 	void DigiSign();
 	void DigiOpen(const char* pPath);
 	void DigiInit();
@@ -37,8 +36,7 @@ public:
 	const char* pSignAddRole;
 	const char* pPath;
 	const char* pParam;
-	//char* cp_Pin;
-	char c_Pin[13];
+	char c_Pin[13]; //max length for pin2 is 12
 	char* pSerialNr;
 
 	const char* pcErrMsg;
@@ -47,5 +45,5 @@ public:
 	} eMessages [20];
 
 	int iCounter;
-	int iPinReq;
+	volatile int iPinReq;
 };
