@@ -147,7 +147,7 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
-	infoMobileCell->setText( s.value( "MobileNumber" ).toString() );
+	infoMobileCell->setText( s.value( "MobileNumber", "+372" ).toString() );
 	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
 	QStringList args = qApp->arguments();
