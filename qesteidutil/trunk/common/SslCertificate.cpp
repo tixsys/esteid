@@ -83,9 +83,11 @@ QStringList SslCertificate::enhancedKeyUsage() const
 
 QString SslCertificate::formatDate( const QDateTime &date, const QString &format )
 {
-	QString f = format;
-	f.replace( "MMMM", QLocale().monthName( date.date().month() ) );
-	return date.toString( f );
+	int pos = format.indexOf( "MMMM" );
+	if( pos == -1 )
+		return date.toString( format );
+	QString d = date.toString( QString( format ).remove( pos, 4 ) );
+	return d.insert( pos, QLocale().monthName( date.date().month() ) );
 }
 
 QString SslCertificate::formatName( const QString &name )
