@@ -7,6 +7,11 @@
 #include "../../util/String.h"
 #include "PKCS11Signer.h"
 
+// PKCS#11
+#define CKR_OK					(0)
+#define CKR_CANCEL				(1)
+#define CKR_FUNCTION_CANCELED	(0x50)
+
 namespace digidoc
 {
 
@@ -274,10 +279,17 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
         }
         else
             rv = PKCS11_login(d->sign.slot, 0, getPin(d->createPKCS11Cert(d->sign.slot, d->sign.certificate)).c_str());
-        if(rv != 0)
+		switch(ERR_GET_REASON(ERR_get_error()))
         {
+        case CKR_OK: break;
+        case CKR_CANCEL:
+        case CKR_FUNCTION_CANCELED:
+            THROW_SIGNEXCEPTION("PIN acquisition canceled.");
+            break;
+        default:
             THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->sign.slot->token->label,
                     ERR_reason_error_string(ERR_get_error()));
+            break;
         }
     }
 
