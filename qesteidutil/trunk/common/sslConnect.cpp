@@ -32,13 +32,6 @@
 #include <sstream>
 #include <QApplication>
 #include <QDateTime>
-//#include <QDebug>
-
-#ifdef _WIN32
-#include <winsock2.h>
-#else
-#include <netdb.h>
-#endif
 
 #ifndef PKCS11_MODULE
 #  if defined(_WIN32)
@@ -275,30 +268,12 @@ bool SSLObj::connectToHost( const std::string &site )
 
 	s = SSL_new(sctx);
 
-#ifdef WIN32
-    WSADATA wsaData;
-	WORD wVersionRequested = MAKEWORD(2, 2);
-	WSAStartup( wVersionRequested, &wsaData );
-#endif
-
-	struct hostent *ent;
-	if ( !(ent = gethostbyname(site.c_str()) ) )
-		throw std::runtime_error( QObject::tr( "Failed to resolve hostname. Are you connected to the internet?" ).toStdString() );
-
-	unsigned long address = *((unsigned int *)*ent->h_addr_list);
-
-	struct sockaddr_in server_addr;
-	memset (&server_addr, '\0', sizeof(server_addr));
-	server_addr.sin_family      = AF_INET;
-	server_addr.sin_port        = htons(443);
-	server_addr.sin_addr.s_addr = address;
-
-	int sock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-	int err = connect(sock, (struct sockaddr*) &server_addr, sizeof(server_addr));
-	if( err == -1 )
+	BIO *sock = BIO_new_connect( (char*)site.c_str() );
+	BIO_set_conn_port( sock, "https" );
+	if( BIO_do_connect( sock ) <= 0 )
 		throw std::runtime_error( QObject::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
 
-	SSL_set_fd(s, sock);
+	SSL_set_bio( s, sock, sock );
 	sslError::check("SSL_connect", SSL_connect(s) );
 	return true;
 }
