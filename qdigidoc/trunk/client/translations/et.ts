@@ -189,7 +189,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Remove signature %1 %2 %3</source>
-        <translation>Eemalda allkiri %1 %2 %3</translation>
+        <translation type="obsolete">Eemalda allkiri %1 %2 %3</translation>
     </message>
     <message>
         <source>Use Mobile ID</source>
@@ -370,6 +370,10 @@ Alustame laadimist?</translation>
         <source>Error reading server access certificate - empty content!</source>
         <translation>Viga ligipääsutõendi lugemisel - sisu on tühi!</translation>
     </message>
+    <message>
+        <source>Remove signature %1</source>
+        <translation>Eemalda allkiri %1</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -438,6 +442,10 @@ Alustame laadimist?</translation>
 Please check your internet connection.</source>
         <translation>Viga SK serveriga ühenduse saamisel!
 Palun kontrollige internetiühendust.</translation>
+    </message>
+    <message>
+        <source>User is not a Mobile-ID client</source>
+        <translation>Kasutaja ei ole Mobiil-ID klient</translation>
     </message>
 </context>
 <context>

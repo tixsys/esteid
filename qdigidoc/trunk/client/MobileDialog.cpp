@@ -33,7 +33,6 @@
 
 #include <QDebug>
 #include <QDir>
-#include <QSslError>
 #include <QSslKey>
 #include <QSslSocket>
 #include <QTemporaryFile>

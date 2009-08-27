@@ -153,7 +153,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Remove signature %1 %2 %3</source>
-        <translation>Удалить подпись %1 %2 %3</translation>
+        <translation type="obsolete">Удалить подпись %1 %2 %3</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -367,6 +367,10 @@ Start downloading?</source>
         <source>Error reading server access certificate - empty content!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove signature %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
@@ -433,6 +437,10 @@ Start downloading?</source>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User is not a Mobile-ID client</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
