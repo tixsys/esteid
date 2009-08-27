@@ -78,6 +78,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
+	connect( infoLogo, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewContentLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 	connect( viewKeysLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
