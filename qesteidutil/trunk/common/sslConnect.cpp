@@ -248,7 +248,7 @@ bool SSLObj::connectToHost( const std::string &site )
 			p->deleteLater();
 			pin.clear();
 		}
-		switch( ERR_get_error() )
+		switch( ERR_GET_REASON( ERR_get_error() ) )
 		{
 		case CKR_OK: break;
 		case CKR_CANCEL:
