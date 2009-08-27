@@ -24,6 +24,7 @@
 #include "DigiDoc.h"
 
 #include <common/Settings.h>
+#include <common/SslCertificate.h>
 
 #include <digidocpp/Document.h>
 #include <digidocpp/Exception.h>
@@ -32,6 +33,9 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QSslError>
+#include <QSslKey>
+#include <QSslSocket>
 #include <QTemporaryFile>
 
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
@@ -43,13 +47,29 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 {
     setupUi( this );
 
-    m_http = new QHttp( this );
+	Settings s;
+	s.beginGroup( "Client" );
+
+	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	QString certPass = m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
+
+	m_http = new QHttp( this );
+
+	if ( certFile.size() && QFile::exists( certFile ) )
+	{
+		QFile f( certFile );
+		if( f.open( QIODevice::ReadOnly ) )
+		{
+			QSslSocket *ssl = new QSslSocket( this );
+			QByteArray pkcs12Cert = f.readAll();
+			ssl->setPrivateKey( SslCertificate::keyFromPKCS12( pkcs12Cert, certPass.toLatin1() ) );
+			ssl->setLocalCertificate( SslCertificate::fromPKCS12( pkcs12Cert, certPass.toLatin1() ) );
+			m_http->setSocket( ssl );
+		}
+	}
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
 
-
-	Settings s;
-	s.beginGroup( "Client" );
 	m_http->setProxy( s.value( "proxyHost" ).toString(), s.value( "proxyPort" ).toInt() );
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
@@ -69,6 +89,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "SIM_ERROR" ] = tr( "SIM error" );
 	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
 	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
+	mobileResults[ "User is not a Mobile-ID client" ] = tr( "User is not a Mobile-ID client" );
 
 	statusTimer = new QTimer( this );
 	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
@@ -104,6 +125,8 @@ void MobileDialog::httpRequestFinished( int id, bool error )
     if ( result.contains( "Fault" ) )
     {
         QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
+		if ( mobileResults.contains( error.toLatin1() ) )
+			error = mobileResults.value( error.toLatin1() );
 		labelError->setText( error );
 		statusTimer->stop();
         return;
