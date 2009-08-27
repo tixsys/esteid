@@ -566,7 +566,9 @@ void MainWindow::showCardStatus()
 	{
 		Q_FOREACH( const CKey &key, doc->keys() )
 		{
-			hasKey = (key.cert == doc->authCert());
+			if( key.cert != doc->authCert() )
+				continue;
+			hasKey = true;
 			break;
 		}
 	}
