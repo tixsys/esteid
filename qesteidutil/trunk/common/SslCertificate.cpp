@@ -41,7 +41,7 @@ QByteArray SslCertificate::authorityKeyIdentifier() const
 {
 	AUTHORITY_KEYID *id = (AUTHORITY_KEYID *)getExtension( NID_authority_key_identifier );
 	QByteArray out;
-	if( id->keyid )
+	if( id && id->keyid )
 		out = ASN_STRING_to_QByteArray( id->keyid );
 	AUTHORITY_KEYID_free( id );
 	return out;
@@ -60,6 +60,8 @@ QStringList SslCertificate::enhancedKeyUsage() const
 	QStringList list;
 
 	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
+	if( !usage )
+		return list;
 	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
 	{
 		ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
@@ -243,6 +245,8 @@ QHash<int,QString> SslCertificate::keyUsage() const
 	QHash<int,QString> list;
 
 	ASN1_BIT_STRING *keyusage = (ASN1_BIT_STRING*)getExtension( NID_key_usage );
+	if( !keyusage )
+		return list;
 	for( int n = 0; n < 9; ++n )
 	{
 		if( ASN1_BIT_STRING_get_bit( keyusage, n ) )
@@ -272,6 +276,8 @@ QStringList SslCertificate::policies() const
 	QStringList list;
 
 	CERTIFICATEPOLICIES *cp = (CERTIFICATEPOLICIES*)getExtension( NID_certificate_policies );
+	if( !cp )
+		return list;
 	for( int i = 0; i < sk_POLICYINFO_num( cp ); ++i )
 	{
 		POLICYINFO *pi = sk_POLICYINFO_value( cp, i );
@@ -317,6 +323,8 @@ QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
 QByteArray SslCertificate::subjectKeyIdentifier() const
 {
 	ASN1_OCTET_STRING *id = (ASN1_OCTET_STRING *)getExtension( NID_subject_key_identifier );
+	if( id )
+		return QByteArray();
 	QByteArray out = ASN_STRING_to_QByteArray( id );
 	ASN1_OCTET_STRING_free( id );
 	return out;
