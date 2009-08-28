@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QtWebKit>
 
+#include "CertUpdate.h"
 #include "mainwindow.h"
 #include "jsextender.h"
 #include "common/PinDialog.h"
@@ -432,4 +433,35 @@ void JsExtender::showMessage( const QString &type, const QString &message, const
 		QMessageBox::critical( m_mainWindow, title.isEmpty() ? m_mainWindow->windowTitle() : title, message, QMessageBox::Ok );
 	else
 		QMessageBox::information( m_mainWindow, title.isEmpty() ? m_mainWindow->windowTitle() : title, message, QMessageBox::Ok );
+}
+
+bool JsExtender::updateCertAllowed()
+{
+	bool result = false;
+	try {
+		CertUpdate *c = new CertUpdate( m_mainWindow->cardManager()->activeReaderNum(), this );
+		result = c->checkUpdateAllowed();
+	} catch ( std::runtime_error &e ) {
+		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed: %1").arg( e.what() ), QMessageBox::Ok );
+	}
+	if ( !result )
+		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update not allowed!"), QMessageBox::Ok );
+
+	return result;
+}
+
+bool JsExtender::updateCert()
+{
+	bool result = false;
+	try {
+		CertUpdate *c = new CertUpdate( m_mainWindow->cardManager()->activeReaderNum(), this );
+		if ( c->checkUpdateAllowed() )
+		{
+			c->startUpdate();
+			result = true;
+		}
+	} catch ( std::runtime_error &e ) {
+		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed: %1").arg( e.what() ), QMessageBox::Ok );
+	}
+	return result;
 }

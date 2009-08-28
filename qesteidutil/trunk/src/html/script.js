@@ -601,7 +601,14 @@ function setMobile( result )
 
 function updateCert()
 {
-	_alert( 'warning', 'Not implemented' );
+	extender.showLoading( _('updateCert') );
+	if ( !extender.updateCertAllowed() )
+	{
+		extender.closeLoading();
+		return;
+	}
+	extender.updateCert();
+	extender.closeLoading();
 }
 
 function changePin1()

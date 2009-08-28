@@ -494,3 +494,42 @@ void EstEidCard::resetAuth() {
 		setSecEnv(0);
 	} catch (...) {}
 	}
+
+ByteVec EstEidCard::cardChallenge() {
+	byte cmdEntPin[] = {0x00,0x84,0x00,0x00,0x08};
+	ByteVec cmd(MAKEVECTOR(cmdEntPin));
+
+	ByteVec result;
+	try {
+		result = execute(cmd);
+	} catch(CardError e) {
+		if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x85 )) 
+			throw AuthError(e);
+		throw e;
+		}
+	return result;
+}
+
+ByteVec EstEidCard::runCommand( ByteVec vec ) {
+	ByteVec result;
+
+	int retry = 3;
+	while( retry )
+	{
+		try {
+			result = execute(vec);
+			break;
+		} catch(CardError e) {
+			if ( retry == 1 )
+			{
+				if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x85 )) 
+					throw AuthError(e);
+				throw e;
+			} else
+				reconnectWithT0();
+		}
+		retry--;
+	}
+
+	return result;
+}

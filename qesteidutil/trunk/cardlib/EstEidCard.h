@@ -53,7 +53,6 @@ private:
 	ByteVec RSADecrypt_internal(ByteVec cipher);
 	void readPersonalData_internal(vector<std::string>& data,
 		int firstRecord,int lastRecord );
-	void enterPin(PinType pinType,std::string pin,bool forceUnsecure = false);
 	bool validatePin_internal(PinType pinType,std::string pin, byte &retriesLeft,
 		bool forceUnsecure = false);
 	bool changePin_internal(
@@ -71,6 +70,8 @@ public:
 	  CardBase(ref,conn) {}
 	~EstEidCard() {}
 	bool isInReader(unsigned int idx);
+
+	void enterPin(PinType pinType,std::string pin,bool forceUnsecure = false);
 
 	/// Reads the card holder identification code from personal data file
 	std::string readCardID();
@@ -131,4 +132,9 @@ public:
 	void setSecEnv(byte env);
 	/// reset authentication, so next crypto operations will require new pin entry
 	void resetAuth();
+
+	//get random challenge number
+	ByteVec cardChallenge();
+	//execute commands
+	ByteVec runCommand( ByteVec vec );
 };

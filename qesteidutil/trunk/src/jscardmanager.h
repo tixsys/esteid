@@ -45,7 +45,6 @@ class JsCardManager : public QObject
 public:
     JsCardManager(JsEsteidCard *jsEsteidCard);
 	~JsCardManager();
-	int activeReaderNum();
 
 private:
     SmartCardManager *cardMgr;
@@ -71,6 +70,7 @@ public slots:
 	void showDiagnostics();
 	void findCard();
 	bool anyCardsInReader();
+	int activeReaderNum();
 
 private slots:
     void pollCard();

@@ -27,6 +27,7 @@ set(qesteidutil_MOC_HDRS
     common/PinDialog.h
     common/Settings.h
     common/sslConnect.h
+	src/CertUpdate.h
     src/DiagnosticsDialog.h
     src/SettingsDialog.h
     src/jscardmanager.h
@@ -61,6 +62,7 @@ set(qesteidutil_SRCS
     common/PinDialog.cpp
     common/SslCertificate.cpp
     common/sslConnect.cpp
+	src/CertUpdate.cpp
     src/DiagnosticsDialog.cpp
     src/SettingsDialog.cpp
     src/jscardmanager.cpp

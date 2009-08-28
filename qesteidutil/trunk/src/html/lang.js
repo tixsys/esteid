@@ -127,7 +127,8 @@ var htmlStrings = {
 	"loadPicFailed": new tr( "Pildi laadimine ebaõnnestus!", "Loading picture failed!", "Загрузка картинки неуспешна!" ),
 	"loadPicFailed2": new tr( "Pildi laadimine ebaõnnestus - tundmatu pildiformaat!", "Loading picture failed - unknown picture format!", "Загрузка картинки неуспешна- неизвестный формат!" ),
 	"loadPicFailed3": new tr( "Pildi laadimine ebaõnnestus - viga salvestamisel!", "Loading picture failed - error saving file!", "Загрузка картинки неуспешна- ошибка при сохранении!" ),
-	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считываются" )
+	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считываются" ),
+	"updateCert": new tr( "Sertifikaatide uuendamine...", "Updating certificates", "" )
 };
 
 //codes from eesti.ee

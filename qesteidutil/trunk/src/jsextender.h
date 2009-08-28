@@ -89,4 +89,7 @@ public slots:
 	void httpRequestFinished( int, bool error );
 
 	void showMessage( const QString &type, const QString &message, const QString &title = "" );
+
+	bool updateCertAllowed();
+	bool updateCert();
 };

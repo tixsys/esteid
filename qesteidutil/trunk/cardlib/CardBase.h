@@ -60,12 +60,6 @@ protected:
 	ByteVec getTag(int identTag,int len,ByteVec &arr);
 	/// Parses a File Control Infromation block from select file commands
 	FCI parseFCI(ByteVec fci);
-	/// Selects the Master File on card
-	FCI selectMF(bool ignoreFCI = false);
-	/// Selects Data File given by two-byte fileID
-	int selectDF(int fileID,bool ignoreFCI = false);
-	/// Selects Elementary File given by two-byte fileID
-	FCI selectEF(int fileID,bool ignoreFCI = false);
 	/// Reads a record from record-based Elementary File
 	ByteVec readRecord(int numrec);
 	/// Read entire binary Elementary File
@@ -77,6 +71,13 @@ protected:
 	/// perform pin change command. useful if card manager supports direct pin entry
 	virtual void executePinChange(ByteVec cmd, size_t oldPinLen,size_t newPinLen);
 public:
+	/// Selects the Master File on card
+	FCI selectMF(bool ignoreFCI = false);
+	/// Selects Data File given by two-byte fileID
+	int selectDF(int fileID,bool ignoreFCI = false);
+	/// Selects Elementary File given by two-byte fileID
+	FCI selectEF(int fileID,bool ignoreFCI = false);
+
 	/// Constructor, call connect() to connect card to a reader
 	CardBase(ManagerInterface &ref);
 	/// Constructor, connects the card instance to the reader at index idx
