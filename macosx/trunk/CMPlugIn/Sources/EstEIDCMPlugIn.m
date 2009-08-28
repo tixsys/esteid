@@ -4,8 +4,7 @@
 #import "NSMenu+Additions.h"
 
 typedef enum _EstEIDCMPlugInCommand {
-    EstEIDCMPlugInCommandSign = 1,
-	EstEIDCMPlugInCommandCrypt
+    EstEIDCMPlugInCommandSign = 1
 } EstEIDCMPlugInCommand;
 
 typedef enum _EstEIDCMPlugInFilter {
@@ -97,12 +96,13 @@ typedef enum _EstEIDCMPlugInFilter {
 
 - (NSMenu *)contextMenu:(NSArray *)selection
 {
-	if([self filterForSelection:selection] == EstEIDCMPlugInFilterFile) {
+	EstEIDCMPlugInFilter filter = [self filterForSelection:selection];
+	
+	if((filter & EstEIDCMPlugInFilterFile) != 0 && (filter & EstEIDCMPlugInFilterInvalid) == 0 && (filter & EstEIDCMPlugInFilterFolder) == 0) {
 		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 		NSMenu *menu = [[NSMenu alloc] init];
 		
 		[menu addItemWithTitle:[bundle localizedStringForKey:@"Menu.Action.Sign" value:nil table:nil] tag:EstEIDCMPlugInCommandSign];
-		[menu addItemWithTitle:[bundle localizedStringForKey:@"Menu.Action.Crypt" value:nil table:nil] tag:EstEIDCMPlugInCommandCrypt];
 		
 		return [menu autorelease];
 	}
@@ -114,12 +114,17 @@ typedef enum _EstEIDCMPlugInFilter {
 {
     switch(command) {
 		case EstEIDCMPlugInCommandSign:
-			if(!([selection count] == 1 && [[NSWorkspace sharedWorkspace] openFile:[[selection objectAtIndex:0] path] withApplication:@"qdigidocclient"])) {
-				NSBeep();
-			}
-			break;
-		case EstEIDCMPlugInCommandCrypt:
-			if(!([selection count] == 1 && [[NSWorkspace sharedWorkspace] openFile:[[selection objectAtIndex:0] path] withApplication:@"qdigidoccrypto"])) {
+			if([selection count] > 0) {
+				NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-a", @"qdigidocclient", nil];
+				NSEnumerator *enumerator = [selection objectEnumerator];
+				NSURL *url;
+				
+				while((url = [enumerator nextObject]) != nil) {
+					[arguments addObject:[url path]];
+				}
+				
+				[NSTask launchedTaskWithLaunchPath:@"/usr/bin/open" arguments:arguments];
+			} else {
 				NSBeep();
 			}
 			break;
