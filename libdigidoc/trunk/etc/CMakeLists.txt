@@ -17,6 +17,7 @@ set( digidoc_CERTS
     sk-esteid-ocsp-responder.pem
     sk-esteid.pem
     sk-klass3-ocsp-responder-2006.cer
+    sk-klass3-ocsp-responder-2009.pem
     sk-klass3-ocsp-responder.pem
     sk-klass3.pem
     sk-root.pem
