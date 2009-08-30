@@ -44,6 +44,7 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 
 	connect(&pollTimer, SIGNAL(timeout()),
             this, SLOT(pollCard()));
+
 	//wait javascript/html to initialize
 	QTimer::singleShot( 2000, this, SLOT(pollCard()) );
 }
@@ -123,11 +124,11 @@ void JsCardManager::pollCard()
 			if ( m_jsEsteidCard->m_card && m_jsEsteidCard->getDocumentId() == cardReaders[remove].cardId )
 				m_jsEsteidCard->setCard( 0 );
 			cardReaders = tmp;
-			emit cardEvent( m_jsCardRemoveFunc, remove != "empty" ? cardReaders[remove].id : -1 );
+			emit cardEvent( "cardRemoved", remove != "empty" ? cardReaders[remove].id : -1 );
 		}
 		cardReaders = tmp;
 		if ( !insert.isEmpty() )
-			emit cardEvent( m_jsCardInsertFunc, insert != "empty" ? cardReaders[insert].id : -1 );
+			emit cardEvent( "cardInserted", insert != "empty" ? cardReaders[insert].id : -1 );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
 			findCard();
     } catch (std::runtime_error &e) {
@@ -135,7 +136,7 @@ void JsCardManager::pollCard()
 		if ( cardReaders.size() > 0 && numReaders == 0 )
 		{
 			cardReaders = QHash<QString,ReaderState>();
-			emit cardEvent( m_jsCardRemoveFunc, cardReaders.value(0).id );
+			emit cardEvent( "cardRemoved", cardReaders.value(0).id );
 		}
         // For now ignore any errors that might have happened during polling.
         // We don't want to spam users too often.
@@ -275,18 +276,7 @@ QString JsCardManager::getReaderName(int i)
 void JsCardManager::handleError(QString msg)
 {
     qDebug() << "Error: " << msg << endl;
-    emit cardError(m_jsHandleErrorFunc, msg);
-}
-
-void JsCardManager::registerCallBack(QString event, QString function)
-{
-    if (event == "cardInsert") {
-        m_jsCardInsertFunc = function;
-    } else if (event == "cardRemove") {
-        m_jsCardRemoveFunc = function;
-    } else if (event == "handleError") {
-        m_jsHandleErrorFunc = function;
-    }
+    emit cardError( "handleError", msg);
 }
 
 void JsCardManager::showDiagnostics()

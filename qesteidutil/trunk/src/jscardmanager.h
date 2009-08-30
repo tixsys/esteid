@@ -52,9 +52,6 @@ private:
     QTimer pollTimer;
 
     QHash<QString,ReaderState> cardReaders;
-    QString m_jsCardInsertFunc;
-    QString m_jsCardRemoveFunc;
-    QString m_jsHandleErrorFunc;
 
     void handleError(QString msg);
 
@@ -63,7 +60,6 @@ public slots:
     QString getReaderName( int i );
     bool selectReader( int i );
 	bool selectReader( const ReaderState &reader );
-    void registerCallBack( QString event, QString function );
 	bool isInReader( const QString &cardId );
 	bool isInReader( int readerNum );
 	QString cardId( int readerNum );
