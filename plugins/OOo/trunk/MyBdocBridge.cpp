@@ -219,8 +219,7 @@ int My1EstEIDSigner::initData()
 		conf += tcConfPath;
 		_putenv(conf.c_str());
 	#else
-		char* conf = "BDOCLIB_CONF_XML=";
-		conf += BDOCLIB_CONF_PATH;
+		const char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		putenv(conf);	
 	#endif		
 		val = getenv( "BDOCLIB_CONF_XML" );
