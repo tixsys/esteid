@@ -494,12 +494,12 @@ void MainWindow::setCurrentPage( Pages page )
 			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewKeys );
 			connect( key, SIGNAL(remove(int)), SLOT(removeKey(int)) );
 			viewKeysLayout->insertWidget( i, key );
-			hasKey = qMax( hasKey, k.cert == doc->authCert());
+			hasKey = qMax( hasKey, k.cert == doc->authCert() );
 			++i;
 		}
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
-		viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
+		viewCrypt->setEnabled( (!doc->isEncrypted() && viewContentView->model()->rowCount()) || hasKey );
 		break;
 	}
 	default: break;
