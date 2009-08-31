@@ -1,4 +1,4 @@
 DigiDoc extension for Estonian digital signatures
-1.0.1334
+1.0.1355
 
 
