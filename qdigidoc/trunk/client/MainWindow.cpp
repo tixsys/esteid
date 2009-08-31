@@ -442,6 +442,16 @@ void MainWindow::enableSign()
 
 bool MainWindow::isLoaded() const { return m_loaded; }
 
+void MainWindow::keyPressEvent( QKeyEvent *e )
+{
+	if( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_W )
+	{
+		buttonClicked( stack->currentIndex() == Sign ? SignCancel : ViewClose );
+		e->accept();
+	}
+	QWidget::keyPressEvent( e );
+}
+
 void MainWindow::on_introCheck_stateChanged( int state )
 { Settings().setValue( "Client/Intro", state == Qt::Unchecked ); }
 

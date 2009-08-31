@@ -344,6 +344,16 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 		return QWidget::eventFilter( o, e );
 }
 
+void MainWindow::keyPressEvent( QKeyEvent *e )
+{
+	if( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_W )
+	{
+		buttonClicked( ViewClose );
+		e->accept();
+	}
+	QWidget::keyPressEvent( e );
+}
+
 void MainWindow::on_introCheck_stateChanged( int state )
 {
 	Settings().setValue( "Crypto/Intro", state == Qt::Unchecked );

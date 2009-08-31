@@ -67,6 +67,7 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
+	void keyPressEvent( QKeyEvent *e );
 	void parseParams();
 	void setCurrentPage( Pages page );
 
