@@ -69,9 +69,6 @@ MainWindow::MainWindow( QWidget *parent )
 
 	QApplication::instance()->installEventFilter( this );
 	
-	signContentView->setColumnHidden( 2, true );
-	viewContentView->setColumnHidden( 3, true );
-
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
@@ -125,6 +122,8 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	m_loaded = doc->init();
 
+	signContentView->setColumnHidden( 2, true );
+	viewContentView->setColumnHidden( 3, true );
 	connect( signContentView, SIGNAL(remove(unsigned int)),
 		SLOT(removeDocument(unsigned int)) );
 	connect( viewContentView, SIGNAL(remove(unsigned int)),

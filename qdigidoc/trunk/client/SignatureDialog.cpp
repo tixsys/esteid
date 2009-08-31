@@ -49,7 +49,6 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	else
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
 
-	test = cert.isTest();
 	st << "<b>" << cert.toString( cert.isTempel() ? "CN" : "GN SN" ) << "</b>";
 
 	if( extended )
@@ -80,9 +79,12 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
 	st << "<td>" << tr("Signature is") << " ";
 	if( (valid = s.isValid()) )
-		st << "<font color=\"green\">" << tr("valid") << "</font>";
+		st << "<font color=\"green\">" << tr("valid");
 	else
-		st << "<font color=\"red\">" << tr("not valid") << "</font>";
+		st << "<font color=\"red\">" << tr("not valid");
+	if( (test = cert.isTest()) )
+		st << " " << tr("Test signature");
+	st << "</font>";
 	st << "</td><td align=\"right\">";
 	st << "<a href=\"details\">" << tr("Show details") << "</a>";
 	st << "</td></tr><tr><td></td>";

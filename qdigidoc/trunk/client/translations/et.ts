@@ -842,6 +842,10 @@ Palun kontrollige internetiühendust.</translation>
         <source>time</source>
         <translation>kell</translation>
     </message>
+    <message>
+        <source>Test signature</source>
+        <translation>Test allkiri</translation>
+    </message>
 </context>
 <context>
     <name>TreeWidget</name>
