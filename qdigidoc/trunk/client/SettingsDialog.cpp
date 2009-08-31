@@ -35,6 +35,8 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 {
 	setupUi( this );
 
+	signZipInput->setValidator( new QRegExpValidator( QRegExp( "\\d{0,5}" ), signZipInput ) );
+
 	Settings s;
 	s.beginGroup( "Client" );
 

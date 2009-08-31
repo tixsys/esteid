@@ -24,8 +24,6 @@
 
 #include "ui_SettingsDialog.h"
 
-#include <QSettings>
-
 class SettingsDialog: public QDialog, private Ui::SettingsDialog
 {
 	Q_OBJECT
