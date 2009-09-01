@@ -29,6 +29,7 @@
 
 #include <QDesktopServices>
 #include <QFileDialog>
+#include <QRegExpValidator>
 
 SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
