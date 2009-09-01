@@ -374,6 +374,10 @@ Alustame laadimist?</translation>
         <source>Remove signature %1</source>
         <translation>Eemalda allkiri %1</translation>
     </message>
+    <message>
+        <source>You dont have suficient privilegs to write this fail into folder %1</source>
+        <translation>Sul ei ole piisavalt õigusi, et kirjutada fail kataloogi %1</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

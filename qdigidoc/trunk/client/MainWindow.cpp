@@ -183,7 +183,7 @@ bool MainWindow::addFile( const QString &file )
 		{
 			select = true;
 			QMessageBox::warning( this, windowTitle(),
-				tr( "You dont have permissions to write file %1" ).arg( docname ) );
+				tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
 		}
 
 		while( select )
