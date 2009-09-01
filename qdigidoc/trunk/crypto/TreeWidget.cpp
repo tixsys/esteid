@@ -70,15 +70,22 @@ void TreeWidget::keyPressEvent( QKeyEvent *e )
 	switch( e->key() )
 	{
 	case Qt::Key_Delete:
-		Q_EMIT remove( currentIndex().row() );
-		e->accept();
+		if( !isColumnHidden( 3 ) )
+		{
+			Q_EMIT remove( currentIndex().row() );
+			e->accept();
+		}
 		break;
 	case Qt::Key_Return:
-		openFile( currentIndex() );
-		e->accept();
+		if( !isColumnHidden( 2 ) )
+		{
+			openFile( currentIndex() );
+			e->accept();
+		}
 		break;
-	default: return QTreeWidget::keyPressEvent( e );
+	default: break;
 	}
+	QTreeWidget::keyPressEvent( e );
 }
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
@@ -124,11 +131,7 @@ void TreeWidget::setContent( const QList<CDocument> &docs )
 }
 
 void TreeWidget::openFile( const QModelIndex &index )
-{
-	QUrl u = url( index );
-	if( !u.isEmpty() )
-		QDesktopServices::openUrl( u );
-}
+{ QDesktopServices::openUrl( url( index ) ); }
 
 Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }

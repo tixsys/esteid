@@ -71,15 +71,19 @@ void TreeWidget::keyPressEvent( QKeyEvent *e )
 	switch( e->key() )
 	{
 	case Qt::Key_Delete:
-		Q_EMIT remove( currentIndex().row() );
-		e->accept();
+		if( !isColumnHidden( 3 ) )
+		{
+			Q_EMIT remove( currentIndex().row() );
+			e->accept();
+		}
 		break;
 	case Qt::Key_Return:
 		openFile( currentIndex() );
 		e->accept();
 		break;
-	default: return QTreeWidget::keyPressEvent( e );
+	default: break;
 	}
+	QTreeWidget::keyPressEvent( e );
 }
 
 QMimeData* TreeWidget::mimeData( const QList<QTreeWidgetItem*> items ) const
