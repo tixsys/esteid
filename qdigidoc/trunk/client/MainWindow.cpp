@@ -309,6 +309,9 @@ void MainWindow::buttonClicked( int button )
 				setCurrentPage( View );
 				break;
 			}
+
+			if( QFile::exists( doc->fileName() ) )
+				QFile::remove( doc->fileName() );
 		}
 	case IntroBack:
 	case ViewClose:
