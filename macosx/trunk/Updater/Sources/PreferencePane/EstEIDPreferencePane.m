@@ -184,14 +184,11 @@
 	}
 }
 
-#pragma mark NSPreferencePane
-
-- (void)willSelect
+- (void)invalidateInfo
 {
 	NSEnumerator *enumerator = [[EstEIDReceipt receiptsWithPrefix:@"org.esteid"] objectEnumerator];
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 	NSMutableString *info = [NSMutableString string];
-	EstEIDAgent *agent = [self agent];
 	EstEIDReceipt *receipt;
 	
 	while((receipt = [enumerator nextObject]) != nil) {
@@ -207,17 +204,34 @@
 	}
 	
 	[self->m_infoTextView setString:info];
-	[self->m_infoTextField setStringValue:[bundle localizedStringForKey:([info length] > 0) ? @"PreferencePane.Label.InstalledSoftware" : @"PreferencePane.Label.NoInstalledSoftware" value:nil table:@"PreferencePane"]];
+	[self->m_infoTextField setStringValue:[bundle localizedStringForKey:([info length] > 0) ? @"PreferencePane.Label.InstalledSoftware" : @"PreferencePane.Label.NoInstalledSoftware" value:nil table:@"PreferencePane"]];	
+}
+
+- (void)agentDidInstall:(NSNotification *)notification
+{
+	[self invalidateInfo];
+}
+
+#pragma mark NSPreferencePane
+
+- (void)willSelect
+{
+	EstEIDAgent *agent = [self agent];
 	
+	[self invalidateInfo];
 	[self->m_automaticUpdateButton setState:([agent autoUpdate]) ? NSOnState : NSOffState];
 	
 	if(![self->m_idLoginButton isHidden]) {
 		[self->m_idLoginButton setState:([agent idLogin]) ? NSOnState : NSOffState];
 	}
+	
+	[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(agentDidInstall:) name:EstEIDAgentDidInstallNotification object:EstEIDAgentIdentifier];
 }
 
 - (NSPreferencePaneUnselectReply)shouldUnselect
 {
+	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:EstEIDAgentDidInstallNotification object:EstEIDAgentIdentifier];
+	
 	return NSUnselectNow;
 }
 

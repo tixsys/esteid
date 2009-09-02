@@ -5,7 +5,8 @@
 #import <sys/stat.h>
 #import "EstEIDAgent.h"
 
-#define EstEIDAgentIdentifier "org.esteid.updater"
+NSString *EstEIDAgentDidInstallNotification = @"EstEIDAgentDidInstallNotification";
+NSString *EstEIDAgentIdentifier = @"org.esteid.updater";
 
 @implementation EstEIDAgent
 
@@ -26,7 +27,7 @@
 
 + (const char *)identifier
 {
-	return EstEIDAgentIdentifier;
+	return (const char *)[EstEIDAgentIdentifier UTF8String];
 }
 
 - (id)initWithPath:(NSString *)path state:(void *)state
@@ -120,7 +121,7 @@
 				}
 			}
 			
-			items[0].name = EstEIDAgentIdentifier;
+			items[0].name = [EstEIDAgent identifier];
 			items[0].value = 0;
 			items[0].valueLength = 0;
 			items[0].flags = 0;

@@ -58,6 +58,8 @@
 
 - (void)notifyResult:(NSError *)error
 {
+	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:EstEIDAgentDidInstallNotification object:EstEIDAgentIdentifier];
+	
 	if(!error) {
 		[self->m_delegate installerDidFinishInstalling:self];
 	} else {

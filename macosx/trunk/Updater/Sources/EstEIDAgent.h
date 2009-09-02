@@ -2,6 +2,9 @@
 
 #import <Foundation/Foundation.h>
 
+NSString *EstEIDAgentDidInstallNotification;
+NSString *EstEIDAgentIdentifier;
+
 /**
  * Using the EstEIDAgent class, your program can run various operations as an elevated subprocess and can monitor that program's execution.
  * An EstEIDAgent object creates a separate executable entity; it does not share memory space with the process that creates it.
