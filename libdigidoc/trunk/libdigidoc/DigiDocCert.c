@@ -929,7 +929,7 @@ EXP_OPTION int readCertPolicies(X509* pX509, PolicyIdentifier** pPolicies, int* 
     POLICYQUALINFO* pQual;
     X509_EXTENSION* pExt = X509_get_ext(pX509, pos);
     // X509V3_EXT_METHOD *method = X509V3_EXT_get(pExt);
-    pPols = (STACK*)X509V3_EXT_d2i(pExt);
+    pPols = X509V3_EXT_d2i(pExt);
     for(i = 0; i < sk_POLICYINFO_num(pPols); i++) {
       pol = sk_POLICYINFO_value(pPols, i);
       if(*pPolicies && *nPols) {
