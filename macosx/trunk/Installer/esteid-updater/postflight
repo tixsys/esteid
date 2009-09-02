@@ -3,4 +3,16 @@
 # Configure automatic software updates
 /Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable /Library/LaunchAgents/org.esteid.updater.plist
 
+# Install certificates
+for f in /usr/local/etc/libdigidoc/certs/*.pem
+do
+/usr/bin/security import "$f" -k /System/Library/Keychains/SystemCACertificates.keychain
+/usr/bin/security import "$f" -k /System/Library/Keychains/SystemRootCertificates.keychain
+done
+
+/usr/bin/security add-trusted-cert -d -k /System/Library/Keychains/SystemRootCertificates.keychain /usr/local/etc/libdigidoc/certs/JUUR-SK.pem
+
+# Clear tokend cache
+rm -rf /var/db/TokenCache/tokens/*
+
 exit 0
