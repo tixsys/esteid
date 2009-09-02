@@ -40,7 +40,7 @@
 			<string>bdoc.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>text/bdoc</string>
+				<string>application/bdoc</string>
 			</array>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
@@ -60,11 +60,31 @@
 			<string>ddoc.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
-				<string>text/ddoc</string>
+				<string>application/ddoc</string>
 			</array>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>DDOC</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSIsAppleDefaultForType</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>p12d</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>p12d.icns</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-p12d</string>
+			</array>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>P12D</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
