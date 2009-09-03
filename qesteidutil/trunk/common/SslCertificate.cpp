@@ -33,6 +33,24 @@
 static QByteArray ASN_STRING_to_QByteArray( ASN1_OCTET_STRING *str )
 { return QByteArray( (const char *)ASN1_STRING_data(str), ASN1_STRING_length(str) ); }
 
+static bool parsePKCS12Cert( const QByteArray &data, const QByteArray &pass, X509 **cert, EVP_PKEY **key )
+{
+	BIO *bio = BIO_new( BIO_s_mem() );
+	if( !bio )
+		return false;
+
+	BIO_write( bio, data.data(), data.size() );
+
+	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
+	BIO_free( bio );
+	if( !p12 )
+		return false;
+
+	int ret = PKCS12_parse( p12, pass.data(), key, cert, NULL );
+	PKCS12_free( p12 );
+	return ret;
+}
+
 
 SslCertificate::SslCertificate( const QSslCertificate &cert )
 : QSslCertificate( cert ) {}
@@ -57,11 +75,11 @@ QString SslCertificate::decode( const QString &in ) const
 
 QStringList SslCertificate::enhancedKeyUsage() const
 {
-	QStringList list;
-
 	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
 	if( !usage )
-		return list;
+		return QStringList() << QObject::tr("All application policies");
+
+	QStringList list;
 	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
 	{
 		ASN1_OBJECT *obj = sk_ASN1_OBJECT_value( usage, i );
@@ -77,9 +95,6 @@ QStringList SslCertificate::enhancedKeyUsage() const
 		}
 	}
 	sk_ASN1_OBJECT_pop_free( usage, ASN1_OBJECT_free );
-
-	if( list.isEmpty() )
-		list << QObject::tr("All application policies");
 	return list;
 }
 
@@ -112,23 +127,9 @@ QString SslCertificate::formatName( const QString &name )
 
 QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
 {
-	BIO *bio = BIO_new( BIO_s_mem() );
-	if( !bio )
-		return QSslCertificate();
-
-	BIO_write( bio, data.data(), data.size() );
-
-	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
-	BIO_free( bio );
-	if( !p12 )
-		return QSslCertificate();
-
 	X509 *cert;
 	EVP_PKEY *key;
-	int ret = PKCS12_parse( p12, passPhrase.data(), &key, &cert, NULL );
-	PKCS12_free( p12 );
-
-	if( !ret )
+	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
 		return QSslCertificate();
 
 	QSslCertificate c = fromX509( Qt::HANDLE(cert) );
@@ -151,23 +152,9 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 
 QSslKey SslCertificate::keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
 {
-	BIO *bio = BIO_new( BIO_s_mem() );
-	if( !bio )
-		return QSslKey();
-
-	BIO_write( bio, data.data(), data.size() );
-
-	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
-	BIO_free( bio );
-	if( !p12 )
-		return QSslKey();
-
 	X509 *cert;
 	EVP_PKEY *key;
-	int ret = PKCS12_parse( p12, passPhrase.data(), &key, &cert, NULL );
-	PKCS12_free( p12 );
-
-	if( !ret )
+	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
 		return QSslKey();
 
 	QSslKey c = keyFromEVP( Qt::HANDLE(key) );
@@ -323,7 +310,7 @@ QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
 QByteArray SslCertificate::subjectKeyIdentifier() const
 {
 	ASN1_OCTET_STRING *id = (ASN1_OCTET_STRING *)getExtension( NID_subject_key_identifier );
-	if( id )
+	if( !id )
 		return QByteArray();
 	QByteArray out = ASN_STRING_to_QByteArray( id );
 	ASN1_OCTET_STRING_free( id );
