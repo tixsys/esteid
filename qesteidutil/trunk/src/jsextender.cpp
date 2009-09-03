@@ -119,7 +119,7 @@ QString JsExtender::checkPin()
 
 QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def )
 {
-	std::vector<unsigned char> buffer;
+	QByteArray buffer;
 
 	try {
 		SSLConnect sslConnect;
@@ -131,7 +131,7 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 		throw std::runtime_error( e );
 	}
 	
-	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
+	return buffer;
 }
 
 void JsExtender::activateEmail( const QString &email )
