@@ -86,8 +86,8 @@ public:
 	~SSLObj();
 
 	bool connectToHost( const std::string &site );
-	std::vector<unsigned char> getUrl( const std::string &url );
-	std::vector<unsigned char> getRequest( const std::string &request );
+	QByteArray getUrl( const std::string &url ) const;
+	QByteArray getRequest( const std::string &request ) const;
 
 	PKCS11_CTX *ctx;
 	SSL		*s;
@@ -111,12 +111,10 @@ SSLConnect::~SSLConnect() { delete obj; }
 
 bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
-std::vector<unsigned char> SSLConnect::getUrl( RequestType type, const std::string &value )
+QByteArray SSLConnect::getUrl( RequestType type, const std::string &value )
 {
-	std::vector<unsigned char> result;
-
 	if ( !isLoaded() )
-		return result;
+		return QByteArray();
 
 	std::string site;
 	switch( type )
@@ -136,7 +134,7 @@ std::vector<unsigned char> SSLConnect::getUrl( RequestType type, const std::stri
 			case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
 		}
 	}
-	return result;
+	return QByteArray();
 }
 
 QString SSLConnect::pin() const { return obj->pin; }
@@ -278,42 +276,44 @@ bool SSLObj::connectToHost( const std::string &site )
 	return true;
 }
 
-std::vector<unsigned char> SSLObj::getUrl( const std::string &url )
+QByteArray SSLObj::getUrl( const std::string &url ) const
 {
 	std::string req = "GET " + url + " HTTP/1.0\r\n\r\n";
 	return getRequest( req );
 }
 
-std::vector<unsigned char> SSLObj::getRequest( const std::string &request )
+QByteArray SSLObj::getRequest( const std::string &request ) const
 {
-	sslError::check("sslwrite", SSL_write(s,request.c_str(),request.length()) );
+	sslError::check( "sslwrite", SSL_write( s, request.c_str(), request.length() ) );
 
-	std::vector<unsigned char> buffer;
-	buffer.resize(4096 * 4);
-	int readChunk = 4096,bytesRead;
-    size_t bytesTotal = 0;
-	do {
-	    if (bytesTotal > (buffer.size() - readChunk))
-            buffer.resize(buffer.size() + (readChunk * 4));
-        bytesRead = SSL_read(s, &buffer[bytesTotal], readChunk);
-        if (bytesRead != -1)
-			bytesTotal+= bytesRead;
-    } while(bytesRead > 0 );
+	int bytesRead = 0;
+	char readBuffer[4096];
+	QByteArray buffer;
+	do
+	{
+		bytesRead = SSL_read( s, &readBuffer, 4096 );
 
-    int lastErr = SSL_get_error(s,bytesRead);
-    if (lastErr != SSL_ERROR_NONE && lastErr != SSL_ERROR_ZERO_RETURN)
-		sslError::check("SSL_write GET,POST failed", 0);
+		if( bytesRead <= 0 )
+		{
+			switch( SSL_get_error( s, bytesRead ) )
+			{
+			case SSL_ERROR_NONE:
+			case SSL_ERROR_WANT_READ:
+			case SSL_ERROR_WANT_WRITE:
+			case SSL_ERROR_ZERO_RETURN: // Disconnect
+				break;
+			default:
+				sslError::check( "SSL_write GET,POST failed", 0 );
+				break;
+			}
+		}
 
-	buffer[bytesTotal] = '\0';
-	buffer.erase(buffer.begin() + bytesTotal,buffer.end());
-	//qDebug() << QByteArray( (char *)&buffer[0], buffer.size() );
-	std::string pageStr(buffer.size(),'\0');
-	copy(buffer.begin(),buffer.end(),pageStr.begin());
+		if( bytesRead > 0 )
+			buffer.append( (const char*)&readBuffer, bytesRead );
+	} while( bytesRead > 0 );
 
-    size_t pos = pageStr.find("\r\n\r\n");
-    if (pos!= std::string::npos)
-		buffer.erase(buffer.begin(),buffer.begin() + pos + 4);
-	return buffer;
+	int pos = buffer.indexOf( "\r\n\r\n" );
+	return pos ? buffer.mid( pos + 4 ) : buffer;
 }
 
 std::string SSLConnect::getValue( RequestType type )

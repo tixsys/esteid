@@ -263,7 +263,7 @@ QList<Document> DigiDoc::documents()
 
 QByteArray DigiDoc::getAccessCert()
 {
-	std::vector<unsigned char> buffer;
+	QByteArray buffer;
 
 	poller->stop();
 	try {
@@ -277,7 +277,7 @@ QByteArray DigiDoc::getAccessCert()
 
 	poller->start();
 
-	return buffer.size() ? QByteArray( (char *)&buffer[0], buffer.size() ) : QByteArray();
+	return buffer;
 }
 
 QString DigiDoc::fileName() const { return m_fileName; }

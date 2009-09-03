@@ -46,7 +46,7 @@ public:
 	~SSLConnect();
 
 	bool isLoaded();
-	std::vector<unsigned char> getUrl( RequestType, const std::string &value = "" );
+	QByteArray getUrl( RequestType, const std::string &value = "" );
 
 	static std::string getValue( RequestType type );
 
