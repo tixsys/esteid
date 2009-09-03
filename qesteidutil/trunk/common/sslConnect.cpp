@@ -57,24 +57,22 @@
 
 
 
-class sslError:public std::runtime_error {
+class sslError: public std::runtime_error
+{
 public:
-    std::string desc;
-    sslError(std::string op) : std::runtime_error("openssl error") {
-		char buff[128] = "";
+	sslError() : std::runtime_error("openssl error")
+	{
+		unsigned long err = ERR_get_error();
 		std::ostringstream buf;
-		ERR_error_string_n(ERR_get_error(),buff,sizeof(buff));
-		buf << op << " (" << buff << ")";
-        desc = buf.str();
-        }
+		buf << ERR_func_error_string( err ) << " (" << ERR_reason_error_string( err ) << ")";
+		desc = buf.str();
+	}
     ~sslError() throw () {}
-    virtual const char * what() const throw() {	return desc.c_str();}
-    void static check(std::string op,int result) {
-        if (!result) throw sslError(op);
-        }
-    void static check(std::string op,void *result) {
-        if (!result) throw sslError(op);
-        }
+
+	virtual const char *what() const throw() { return desc.c_str(); }
+	void static check( bool result ) { if( !result ) throw sslError(); }
+
+	std::string desc;
 };
 
 
@@ -212,6 +210,8 @@ bool SSLObj::connectToHost( const std::string &site )
 	PKCS11_CERT *certs;
 	unsigned int ncerts;
 	int result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
+	if( !ncerts )
+		throw std::runtime_error( QObject::tr("no certificate available").toStdString() );
 	PKCS11_CERT *authcert = &certs[0];
 
 	if( slot->token->loginRequired )
@@ -257,10 +257,10 @@ bool SSLObj::connectToHost( const std::string &site )
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
 	SSL_CTX *sctx = SSL_CTX_new( SSLv23_client_method() );
-	sslError::check("CTX_use_cert", SSL_CTX_use_certificate(sctx, authcert->x509 ) );
-	sslError::check("CTX_use_privkey", SSL_CTX_use_PrivateKey(sctx,pkey) );
-    sslError::check("CTX_check_privkey", SSL_CTX_check_private_key(sctx) );
-	sslError::check("CTX_ctrl", SSL_CTX_ctrl( sctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
+	sslError::check( SSL_CTX_use_certificate(sctx, authcert->x509 ) );
+	sslError::check( SSL_CTX_use_PrivateKey(sctx,pkey) );
+	sslError::check( SSL_CTX_check_private_key(sctx) );
+	sslError::check( SSL_CTX_ctrl( sctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
 	if ( pkey != NULL )
 		EVP_PKEY_free(pkey); 
 
@@ -272,7 +272,7 @@ bool SSLObj::connectToHost( const std::string &site )
 		throw std::runtime_error( QObject::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
 
 	SSL_set_bio( s, sock, sock );
-	sslError::check("SSL_connect", SSL_connect(s) );
+	sslError::check( SSL_connect(s) );
 	return true;
 }
 
@@ -284,7 +284,7 @@ QByteArray SSLObj::getUrl( const std::string &url ) const
 
 QByteArray SSLObj::getRequest( const std::string &request ) const
 {
-	sslError::check( "sslwrite", SSL_write( s, request.c_str(), request.length() ) );
+	sslError::check( SSL_write( s, request.c_str(), request.length() ) );
 
 	int bytesRead = 0;
 	char readBuffer[4096];
@@ -303,7 +303,7 @@ QByteArray SSLObj::getRequest( const std::string &request ) const
 			case SSL_ERROR_ZERO_RETURN: // Disconnect
 				break;
 			default:
-				sslError::check( "SSL_write GET,POST failed", 0 );
+				sslError::check( 0 );
 				break;
 			}
 		}
