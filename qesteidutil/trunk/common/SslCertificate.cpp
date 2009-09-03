@@ -127,8 +127,8 @@ QString SslCertificate::formatName( const QString &name )
 
 QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
 {
-	X509 *cert;
-	EVP_PKEY *key;
+	X509 *cert = NULL;
+	EVP_PKEY *key = NULL;
 	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
 		return QSslCertificate();
 
@@ -152,13 +152,12 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 
 QSslKey SslCertificate::keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
 {
-	X509 *cert;
-	EVP_PKEY *key;
+	X509 *cert = NULL;
+	EVP_PKEY *key = NULL;
 	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
 		return QSslKey();
 
 	QSslKey c = keyFromEVP( Qt::HANDLE(key) );
-
 	X509_free( cert );
 	EVP_PKEY_free( key );
 
@@ -229,11 +228,11 @@ bool SslCertificate::isTest() const
 
 QHash<int,QString> SslCertificate::keyUsage() const
 {
-	QHash<int,QString> list;
-
 	ASN1_BIT_STRING *keyusage = (ASN1_BIT_STRING*)getExtension( NID_key_usage );
 	if( !keyusage )
-		return list;
+		return QHash<int,QString>();
+
+	QHash<int,QString> list;
 	for( int n = 0; n < 9; ++n )
 	{
 		if( ASN1_BIT_STRING_get_bit( keyusage, n ) )
@@ -254,17 +253,16 @@ QHash<int,QString> SslCertificate::keyUsage() const
 		}
 	}
 	ASN1_BIT_STRING_free( keyusage );
-
 	return list;
 }
 
 QStringList SslCertificate::policies() const
 {
-	QStringList list;
-
 	CERTIFICATEPOLICIES *cp = (CERTIFICATEPOLICIES*)getExtension( NID_certificate_policies );
 	if( !cp )
-		return list;
+		return QStringList();
+
+	QStringList list;
 	for( int i = 0; i < sk_POLICYINFO_num( cp ); ++i )
 	{
 		POLICYINFO *pi = sk_POLICYINFO_value( cp, i );
@@ -275,7 +273,6 @@ QStringList SslCertificate::policies() const
 			list << buf;
 	}
 	sk_POLICYINFO_pop_free( cp, POLICYINFO_free );
-
 	return list;
 }
 
