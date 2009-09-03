@@ -32,6 +32,29 @@
 #include <QFileInfo>
 #include <QTextStream>
 
+/* Workaround Ticket #540
+ * tables dont accept css "word-wrap: wrap-word" instead insert spaces
+ */
+static QString splitWord( const QString &in )
+{
+	QString out;
+	int lastPos = 0;
+	for( int i = 0; i < in.size(); ++i )
+	{
+		if( !in[i].isLetterOrNumber() )
+		{
+			out += in.mid( lastPos, i - lastPos );
+			lastPos = i;
+		}
+		else if( i - lastPos > 50 )
+		{
+			out += in.mid( lastPos, i - lastPos ) + ' ';
+			lastPos = i;
+		}
+	}
+	return out;
+}
+
 PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 :	QWebView( parent )
 {
@@ -54,9 +77,10 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	<< "border-bottom: 1px dashed #000000;"
 	<< "margin-top: 20px;"
 	<< "}"
-	<< ".label { font-size: 11px; padding: 2px; }"
-	<< ".label, TABLE { margin-top: 5px; }"
-	<< ".text, .textborder, .textborderright { font-size: 12px; padding: 3px; }"
+	<< "TABLE { width: 100%; margin-top: 5px; }"
+	<< ".label { font-size: 11px; padding: 2px; margin-top: 5px; }"
+	<< ".text, .textborder, .textborderright "
+	<< "{ font-size: 12px; padding: 3px; word-wrap: break-word; vertical-align: text-top; }"
 	<< ".textborder, .textborderright { border: 1px solid #000000; font-weight: bold; }"
 	<< ".textborderright { border-left: 0px; }"
 	<< "</style>"
@@ -67,32 +91,26 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 	<< "<div id=\"head\">" << tr("VALIDITY CONFIRMATION SHEET") << "</div>"
 	<< "<div class=\"sectionHead\">" << tr("SIGNED FILES") << "</div>"
 
-	<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
+	<< "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 	<< "<tr>"
 	<< "<td class=\"label\" width=\"300\">" << tr("FILE NAME") << "</td>"
 	//<< "<td class=\"label\" width=\"200\">" << tr("FILE TYPE") << "</td>"
 	<< "<td class=\"label\" width=\"100\">" << tr("FILE SIZE") << "</td>"
 	<< "</tr>";
-
 	Q_FOREACH( const digidoc::Document &doc, d->documents() )
 	{
 		QFileInfo f( QString::fromUtf8( doc.getPath().data() ) );
 		s
 		<< "<tr>"
-		<< "<td class=\"textborder\">"
-		<< f.fileName()
-		<< "</td>"
-		/*<< "<td class=\"textborderright\">"
-		<< QString::fromUtf8( doc.getMediaType().data() )
-		<< "</td>"*/
-		<< "<td class=\"textborderright\">"
-		<< Common::fileSize( f.size() )
-		<< "</td>"
+		<< "<td class=\"textborder\">" << f.fileName() << "</td>"
+		//<< "<td class=\"textborderright\">" << QString::fromUtf8( doc.getMediaType().data() ) << "</td>"
+		<< "<td class=\"textborderright\">" << Common::fileSize( f.size() ) << "</td>"
 		<< "</tr>";
 	}
 
 	s
 	<< "</table>"
+
 	<< "<div class=\"sectionHead\">" << tr("SIGNERS") << "</div>";
 
 	int i = 1;
@@ -101,7 +119,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		const SslCertificate cert = sig.cert();
 		bool tempel = cert.isTempel();
 		s
-		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
+		<< "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
 		<< "<td class=\"label\" width=\"40\">" << tr("NO.") << "</td>"
 		<< "<td class=\"label\">" << (tempel ? tr("COMPANY") : tr("NAME")) << "</td>"
@@ -111,12 +129,8 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<tr>"
 		<< "<td class=\"textborder\">" << i << "</td>"
 		<< "<td class=\"textborderright\">" << cert.toString( tempel ? "CN" : "GN SN" ) << "</td>"
-		<< "<td class=\"textborderright\">"
-		<< cert.subjectInfo( "serialNumber" )
-		<< "</td>"
-		<< "<td class=\"textborderright\">"
-		<< sig.dateTime().toString( "dd.MM.yyyy hh:mm:ss" )
-		<< "</td>"
+		<< "<td class=\"textborderright\">" << cert.subjectInfo( "serialNumber" ) << "</td>"
+		<< "<td class=\"textborderright\">" << sig.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) << "</td>"
 		<< "</tr>"
 		<< "</table>"
 
@@ -127,16 +141,16 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<div class=\"label\">" << tr("ROLE / RESOLUTION") << "</div>"
 		<< "<div class=\"textborder\">" << sig.role() << "&nbsp;</div>"
 
-		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
+		<< "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
 		<< "<td class=\"label\">" << tr("PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)") << "</td>"
 		<< "<td class=\"label\" width=\"200\">" << tr("SERIAL NUMBER OF CERTIFICATE") << "</td>"
 		<< "</tr>"
-		<< "<td class=\"textborder\">" << sig.location() << "&nbsp;</td>"
+		<< "<td class=\"textborder\">" << splitWord( sig.location() ) << "&nbsp;</td>"
 		<< "<td class=\"textborderright\">" << cert.serialNumber() << "&nbsp;</td>"
 		<< "</table>"
 
-		<< "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
+		<< "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">"
 		<< "<tr>"
 		<< "<td class=\"label\" width=\"185\">" << tr("ISSUER OF CERTIFICATE") << "</td>"
 		<< "<td class=\"label\">" << tr("HASH VALUE OF ISSUER'S PUBLIC KEY") << "</td>"
@@ -145,7 +159,7 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "<td class=\"textborderright\">" << cert.toHex( cert.authorityKeyIdentifier() ) << "</td>"
 		<< "</table>"
 
-		<< "<div class=\"label\">" << tr("HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)") << "&nbsp;</div>"
+		<< "<div class=\"label\">" << tr("HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)") << "</div>"
 		<< "<div class=\"textborder\">" << cert.toHex( sig.digestValue() ) << "&nbsp;</div>";
 
 		++i;
