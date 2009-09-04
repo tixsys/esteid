@@ -309,7 +309,7 @@ QByteArray SSLObj::getRequest( const std::string &request ) const
 		}
 
 		if( bytesRead > 0 )
-			buffer.append( (const char*)&readBuffer, bytesRead );
+			buffer += QByteArray( (const char*)&readBuffer, bytesRead );
 	} while( bytesRead > 0 );
 
 	int pos = buffer.indexOf( "\r\n\r\n" );
