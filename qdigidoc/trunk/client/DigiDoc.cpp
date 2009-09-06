@@ -268,7 +268,7 @@ QByteArray DigiDoc::getAccessCert()
 	poller->stop();
 	try {
 		SSLConnect sslConnect;
-		sslConnect.setCard( m_card.toStdString() );
+		sslConnect.setCard( m_card );
 		buffer = sslConnect.getUrl( SSLConnect::AccessCert, "" );
 	} catch( const std::runtime_error &e ) {
 		if( !QByteArray( e.what() ).isEmpty() )

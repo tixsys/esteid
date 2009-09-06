@@ -46,12 +46,10 @@ public:
 	~SSLConnect();
 
 	bool isLoaded();
-	QByteArray getUrl( RequestType, const std::string &value = "" );
-
-	static std::string getValue( RequestType type );
+	QByteArray getUrl( RequestType type, const QString &value = "" );
 
 	QString pin() const;
-	void setCard( const std::string &card );
+	void setCard( const QString &card );
 	void setPin( const QString &pin );
 	void setReader( int reader );
 

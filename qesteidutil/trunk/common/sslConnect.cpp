@@ -83,14 +83,14 @@ public:
 	SSLObj();
 	~SSLObj();
 
-	bool connectToHost( const std::string &site );
-	QByteArray getUrl( const std::string &url ) const;
-	QByteArray getRequest( const std::string &request ) const;
+	bool connectToHost( SSLConnect::RequestType type );
+	QByteArray getUrl( const QString &url ) const;
+	QByteArray getRequest( const QByteArray &request ) const;
 
 	PKCS11_CTX *ctx;
 	SSL		*s;
 
-	std::string card;
+	QString card;
 	QString pin;
 	int		reader;
 
@@ -109,34 +109,54 @@ SSLConnect::~SSLConnect() { delete obj; }
 
 bool SSLConnect::isLoaded() { return obj && obj->ctx; }
 
-QByteArray SSLConnect::getUrl( RequestType type, const std::string &value )
+QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 {
 	if ( !isLoaded() )
 		return QByteArray();
 
-	std::string site;
+	if( !obj->connectToHost( type ) )
+		return QByteArray();
+
 	switch( type )
 	{
-		case AccessCert:
-		case MobileInfo: site = SK; break;
-		default: site = EESTI; break;
-	}
-	if ( obj->connectToHost( site ) )
+	case AccessCert:
 	{
-		switch( type )
-		{
-			case AccessCert: return obj->getRequest( getValue( type ) );
-			case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
-			case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
-			case MobileInfo: return obj->getRequest( value );
-			case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
-		}
+		QByteArray request =
+			"<SOAP-ENV:Envelope"
+			"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
+			"	xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
+			"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+			"	xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+			"<SOAP-ENV:Body>"
+			"<m:GetAccessToken"
+			"	xmlns:m=\"urn:GetAccessToken\""
+			"	SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+			"<Language xsi:type=\"xsd:string\">ET</Language>"
+			"<RequestTime xsi:type=\"xsd:string\" />"
+			"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
+			"<SoftwareVersion xsi:type=\"xsd:string\" />"
+			"</m:GetAccessToken>"
+			"</SOAP-ENV:Body>"
+			"</SOAP-ENV:Envelope>";
+		request =
+			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
+			"Host: " + QByteArray(SK) + "\r\n"
+			"Content-Type: text/xml\r\n"
+			"Content-Length: " + QByteArray::number( request.size() ) + "\r\n"
+			"SOAPAction: \"\"\r\n"
+			"Connection: close\r\n\r\n" + request;
+		return obj->getRequest( request );
 	}
-	return QByteArray();
+	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+	case MobileInfo: return obj->getRequest( value.toLatin1() );
+	case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
+	default: return QByteArray();
+	}
 }
 
 QString SSLConnect::pin() const { return obj->pin; }
-void SSLConnect::setCard( const std::string &card ) { obj->card = card; }
+void SSLConnect::setCard( const QString &card ) { obj->card = card; }
 void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
 void SSLConnect::setReader( int reader ) { obj->reader = reader; }
 
@@ -177,8 +197,9 @@ SSLObj::~SSLObj()
 	ERR_remove_state(0);
 }
 
-bool SSLObj::connectToHost( const std::string &site )
+bool SSLObj::connectToHost( SSLConnect::RequestType type )
 {
+	// Find token
 	PKCS11_SLOT *slot = 0;
 	if( reader >= 0 )
 	{
@@ -197,7 +218,7 @@ bool SSLObj::connectToHost( const std::string &site )
 			tmp = &pslots[i];
 			if( !tmp->token )
 				continue;
-			if( card.compare( tmp->token->serialnr ) == 0 )
+			if( card.contains( tmp->token->serialnr ) )
 			{
 				slot = tmp;
 				break;
@@ -207,6 +228,7 @@ bool SSLObj::connectToHost( const std::string &site )
 			throw std::runtime_error( QObject::tr("no token available").toStdString() );
 	}
 
+	// Find token cert
 	PKCS11_CERT *certs;
 	unsigned int ncerts;
 	int result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
@@ -214,6 +236,7 @@ bool SSLObj::connectToHost( const std::string &site )
 		throw std::runtime_error( QObject::tr("no certificate available").toStdString() );
 	PKCS11_CERT *authcert = &certs[0];
 
+	// Login token
 	if( slot->token->loginRequired )
 	{
 		if( !slot->token->secureLogin )
@@ -250,10 +273,10 @@ bool SSLObj::connectToHost( const std::string &site )
 		}
 	}
 
+	// Find token key
 	PKCS11_KEY *authkey = PKCS11_find_key( authcert );
 	if ( !authkey )
 		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
-
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
 	SSL_CTX *sctx = SSL_CTX_new( SSLv23_client_method() );
@@ -266,7 +289,14 @@ bool SSLObj::connectToHost( const std::string &site )
 
 	s = SSL_new(sctx);
 
-	BIO *sock = BIO_new_connect( (char*)site.c_str() );
+	BIO *sock;
+	switch( type )
+	{
+	case SSLConnect::AccessCert:
+	case SSLConnect::MobileInfo: sock = BIO_new_connect( SK ); break;
+	default: sock = BIO_new_connect( EESTI ); break;
+	}
+
 	BIO_set_conn_port( sock, "https" );
 	if( BIO_do_connect( sock ) <= 0 )
 		throw std::runtime_error( QObject::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
@@ -276,15 +306,12 @@ bool SSLObj::connectToHost( const std::string &site )
 	return true;
 }
 
-QByteArray SSLObj::getUrl( const std::string &url ) const
-{
-	std::string req = "GET " + url + " HTTP/1.0\r\n\r\n";
-	return getRequest( req );
-}
+QByteArray SSLObj::getUrl( const QString &url ) const
+{ return getRequest( "GET " + url.toLatin1() + " HTTP/1.0\r\n\r\n" ); }
 
-QByteArray SSLObj::getRequest( const std::string &request ) const
+QByteArray SSLObj::getRequest( const QByteArray &request ) const
 {
-	sslError::check( SSL_write( s, request.c_str(), request.length() ) );
+	sslError::check( SSL_write( s, request.data(), request.length() ) );
 
 	int bytesRead = 0;
 	char readBuffer[4096];
@@ -314,33 +341,4 @@ QByteArray SSLObj::getRequest( const std::string &request ) const
 
 	int pos = buffer.indexOf( "\r\n\r\n" );
 	return pos ? buffer.mid( pos + 4 ) : buffer;
-}
-
-std::string SSLConnect::getValue( RequestType type )
-{
-	std::string value;
-
-	switch( type )
-	{
-		case AccessCert:
-			value += "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
-						"<SOAP-ENV:Body>"
-						"<m:GetAccessToken xmlns:m=\"urn:GetAccessToken\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-						"<Language xsi:type=\"xsd:string\">ET</Language>"
-						"<RequestTime xsi:type=\"xsd:string\" />"
-						"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
-						"<SoftwareVersion xsi:type=\"xsd:string\" />"
-						"</m:GetAccessToken>"
-						"</SOAP-ENV:Body>"
-						"</SOAP-ENV:Envelope>";
-			value = "POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
-					 "Host: " + QString(SK).toStdString() + "\r\n"
-					 "Content-Type: text/xml\r\n"
-					 "Content-Length: " + QString::number( value.size() ).toStdString() + "\r\n"
-					 "SOAPAction: \"\"\r\n"
-					 "Connection: close\r\n\r\n" + value;
-		break;
-		default: break;
-	}
-	return value;
 }
