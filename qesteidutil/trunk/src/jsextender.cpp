@@ -125,7 +125,7 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 		SSLConnect sslConnect;
 		sslConnect.setPin( checkPin() );
 		sslConnect.setReader( m_mainWindow->cardManager()->activeReaderNum() );
-		buffer = sslConnect.getUrl( type, def.toStdString() );
+		buffer = sslConnect.getUrl( type, def );
 		pin = Settings().value( "Util/sessionTime").toInt() ? sslConnect.pin() : QString();
 	} catch( const std::runtime_error &e ) {
 		throw std::runtime_error( e );
