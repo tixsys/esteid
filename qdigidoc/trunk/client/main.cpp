@@ -24,13 +24,13 @@
 #include "RegisterP12.h"
 #include "version.h"
 
-#include <qtsingleapplication.h>
+#include <QApplication>
 
 #include <openssl/ssl.h>
 
 int main( int argc, char *argv[] )
 {
-	QtSingleApplication a( argc, argv );
+	QApplication a( argc, argv );
 	a.setApplicationName( APP );
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
 	a.setOrganizationDomain( DOMAINURL );
@@ -46,32 +46,21 @@ int main( int argc, char *argv[] )
 
 	int ret = 0;
 	QStringList args = a.arguments();
+	QWidget *w;
 	if( args.size() > 1 && args.value(1).right(4) == "p12d" )
 	{
-		RegisterP12 *w = new RegisterP12( args.value(1) );
-		w->show();
-		ret = a.exec();
-		delete w;
+		w = new RegisterP12( args.value(1) );
 	}
 	else
 	{
-		if( a.isRunning() )
-		{
-			a.activateWindow();
-			return 0;
-		}
 		SSL_load_error_strings();
 		SSL_library_init();
 
-		MainWindow *w = new MainWindow();
-		if( w->isLoaded() )
-		{
-			a.setActivationWindow( w );
-			w->show();
-			ret = a.exec();
-		}
-		delete w;
+		w = new MainWindow();
 	}
 
+	w->show();
+	ret = a.exec();
+	delete w;
 	return ret;
 }

@@ -46,9 +46,6 @@ set( COMMON_TS
 	${COMMON}/translations/qt_ru.ts
 	)
 
-add_subdirectory( qtsingleapplication )
-include_directories( qtsingleapplication/src )
-
 add_definitions( -DQT_NO_KEYWORDS )
 add_subdirectory( common )
 add_subdirectory( client )

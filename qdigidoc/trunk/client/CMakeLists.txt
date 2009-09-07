@@ -131,7 +131,6 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 	${LIBP11_LIBRARY}
 	${EXTRA_LIBRARIES}
 	qdigidoccommon
-	qtsingleapplication
 )
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
 
