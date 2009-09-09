@@ -1,0 +1,26 @@
+HKCR
+{
+	EstEIDSigningPluginBHO.SmartCardCerti.1 = s 'SmartCardCertificate Class'
+	{
+		CLSID = s '{151EA824-7FB3-4AF8-9B10-F69FF073730B}'
+	}
+	EstEIDSigningPluginBHO.SmartCardCertifi = s 'SmartCardCertificate Class'
+	{
+		CLSID = s '{151EA824-7FB3-4AF8-9B10-F69FF073730B}'
+		CurVer = s 'EstEIDSigningPluginBHO.SmartCardCerti.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {151EA824-7FB3-4AF8-9B10-F69FF073730B} = s 'SmartCardCertificate Class'
+		{
+			ProgID = s 'EstEIDSigningPluginBHO.SmartCardCerti.1'
+			VersionIndependentProgID = s 'EstEIDSigningPluginBHO.SmartCardCertifi'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{536E87AF-8E4B-47C0-8046-273961378EF3}'
+		}
+	}
+}

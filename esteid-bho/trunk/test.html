@@ -1,0 +1,148 @@
+<html> 
+<head>
+<object id="signer" classid="clsid:28821112-76D5-4C26-9F64-9E20AA91DDF3"></object>
+<script language="javascript" type="text/javascript">
+function CreateControl(DivID)
+{
+  var d = document.getElementById(DivID);
+  d.innerHTML = '<object classid="clsid:28821112-76D5-4C26-9F64-9E20AA91DDF3" id="signer">';
+}
+function setup() {
+//    CreateControl("divCtrl");
+    setupListeners();
+    }
+function setupListeners() {
+    dbgArea.value+= signer.getVersion() + "\r";
+    signer.addEventListener("OnCardInserted",cardInserted);
+    signer.addEventListener("OnCardRemoved",cardRemoved);
+    signer.addEventListener("OnReadersChanged",readersChanged);
+    }
+function removeListeners() {
+    signer.removeEventListener("OnCardInserted",cardInserted);
+    signer.removeEventListener("OnCardRemoved",cardRemoved);
+    signer.removeEventListener("OnReadersChanged",readersChanged);
+}
+function cardInserted(numReader)
+{
+    window.status = "card inserted " + numReader;
+    var item = cards.item(numReader);
+    item.text = "<card!>";
+    signer.selectedReader = numReader;
+    item.text = "<" + signer.lastName + " " + signer.firstName + ">";
+}
+function cardRemoved(numReader)
+{
+    window.status = "card removed " + numReader;
+    var item = cards.item(numReader);
+    item.text = "<no card>";
+}
+function readersChanged() {
+    window.status = "readers changed";
+    var rdrArr = signer.getReaders().split(",");
+    while(readers.length) readers.remove(0);
+    while(cards.length) cards.remove(0);
+    for(e in rdrArr) {
+        var el = document.createElement("option","");
+        var elR = document.createElement("option","");
+        el.text = rdrArr[e];
+        elR.text = "<no card>";
+        if (el.text.length) {
+            readers.add(el);
+            cards.add(elR);
+            }
+        }
+}
+
+function getFirstCertId() {
+    var certList = signer.getCertificateList();
+    var certArr = certList.split(",");
+    if (certArr.length > 1 ) 
+        return certArr[1];
+    }
+function getSecondCertId() {
+    var certList = signer.getCertificateList();
+    var certArr = certList.split(",");
+    if (certArr.length > 1 )
+        return certArr[0];
+    }
+
+function testCerts() {
+    var certList = signer.getCertificateList();
+    var certArr = certList.split(",");
+    for(i = 0; i < certArr.length; i++){
+       dbgArea.value+= certArr[i] + "\r";
+    }
+    if (certArr.length > 1 ) {
+        var cert= signer.getCertificateByThumbprint(certArr[1]);
+        if (cert) {
+            dbgArea.value+= cert.CN + "\r" + cert.issuerCN + "\r" ;
+            signer.signWithCert( testhash.value ,cert);
+            }
+         }
+    }
+    
+function testComponent() {
+    dbgArea.value+= signer.lastName + "\r";
+    dbgArea.value+= signer.firstName + "\r";
+    dbgArea.value+= signer.middleName + "\r";
+    dbgArea.value+= signer.sex + "\r";
+    dbgArea.value+= signer.citizenship + "\r";
+    dbgArea.value+= signer.birthDate + "\r";
+    dbgArea.value+= signer.personalID + "\r";
+    dbgArea.value+= signer.documentID + "\r";
+    dbgArea.value+= signer.expiryDate + "\r";
+    dbgArea.value+= signer.placeOfBirth + "\r";
+    dbgArea.value+= signer.issuedDate + "\r";
+    dbgArea.value+= signer.residencePermit + "\r";
+    dbgArea.value+= signer.comment1 + "\r";
+    dbgArea.value+= signer.comment2 + "\r";
+    dbgArea.value+= signer.comment3 + "\r";
+    dbgArea.value+= signer.comment4 + "\r";
+    dbgArea.value+= signer.authCert.cert + "\r";
+    signedData = signer.signWithCert(testhash.value,signer.signCert);
+    dbgArea.value+= "\r\r" + signedData;
+    }
+function evalAndExec() {
+    var script =testCode.item(testCode.selectedIndex).text;
+    eval(script);
+    }
+</script>
+
+</head>
+<body onload="setup()">
+<div id="divCtrl" style="DISPLAY: none">objectDiv</div>
+<div >
+    <input id="Button1" type="button" value="add Event Listeners" onclick="setupListeners()" style="text-align: left" />
+    <input id="Button2" type="button" value="remove event listeners" onclick="removeListeners()" style="text-align: right"/></div>
+<div >
+<input type="button" value="test component" onclick="testComponent()" style="text-align: left"/>
+<input type="button" value="test certs" onclick="testCerts()" style="text-align: right"/>
+</div>
+
+<div><textarea cols="40" rows="10" id="dbgArea" name="dbgArea"></textarea></div>
+<div>
+<select id="Select4" name="readers" size="4" style="text-align: left">
+    <option selected="selected">empty</option>
+</select>
+<select id="Select3" name="cards" size="4" style="text-align: right">
+    <option selected="selected">empty</option>
+    </select>
+    <div>
+    <div>sample hash
+    <input id="testhash" type="text" value="6b555cd53b389a944167a36a8805d5d3014fe773" size="60" />
+    </div>
+    <div>
+<select id="testCode" name="testCode" size="4" style="text-align: right">
+    <option selected="true">alert(signer.getReaderName(0))</option>
+    <option>alert(signer.getReaders())</option>
+    <option>signer.signWithCert('meh',0)</option>
+    <option>signer.signWithCert('blobofdata',getFirstCertId())</option>
+    <option>signer.signWithCert('blobofdata',signer.getCertificateByThumbprint(getFirstCertId()))</option>
+    <option>dbgArea.value+=signer.signWithCert(testhash.value,signer.getCertificateByThumbprint(getFirstCertId()))</option>
+    <option>dbgArea.value+=signer.signWithCert(testhash.value,signer.getCertificateByThumbprint(getSecondCertId()))</option>
+</select></div>
+<input type="button" id="testcode" value="test code" onclick="evalAndExec();"/>
+    </div>
+</div>
+</body>
+</html>

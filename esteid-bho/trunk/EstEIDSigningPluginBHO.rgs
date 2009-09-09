@@ -1,0 +1,30 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'EstEIDSigningPluginBHO'
+		'EstEIDSigningPluginBHO.DLL'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+
+HKLM {
+  NoRemove SOFTWARE {
+    NoRemove Microsoft {   
+      NoRemove Windows {
+        NoRemove CurrentVersion {
+          NoRemove Explorer {
+            NoRemove 'Browser Helper Objects' {
+              ForceRemove '{B1DDE0C0-E53D-477A-BA90-769C80E14AAB}' = s 'EstEIDSigningPluginBHO' {
+                val 'NoExplorer' = d '1'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
