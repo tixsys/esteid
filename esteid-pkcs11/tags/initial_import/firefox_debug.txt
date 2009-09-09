@@ -1,0 +1,11 @@
+aptitude install libc6-dbg libnspr4-0d-dbg libnss3-1d-dbg
+
+apt-get build-dep libpcsclite-dev libnspr4-dev libnss3-dev
+
+DEB_BUILD_OPTIONS="nostrip" apt-get source -b libpcsclite-dev
+DEB_BUILD_OPTIONS="nostrip" apt-get source -b libnspr4-dev
+DEB_BUILD_OPTIONS="nostrip" apt-get source -b libnss3-dev
+sudo dpkg -i *nss3*deb *nspr4*deb *pcsc*deb
+
+LD_LIBRARY_PATH=/usr/lib/debug  /usr/bin/firefox-3.0 -g -P debugprofile -no-remote
+
