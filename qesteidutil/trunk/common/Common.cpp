@@ -58,8 +58,8 @@ void Common::browse( const QUrl &url )
 	u.setScheme( "file" );
 	bool started = false;
 #if defined(Q_OS_WIN32)
-	started = QProcess::startDetached(
-		QString( "explorer /select,\"%1\"" ).arg( QDir::toNativeSeparators( u.toLocalFile() ) ) );
+	started = QProcess::startDetached( "explorer", QStringList() <<
+		QString( "/select,%1" ).arg( QDir::toNativeSeparators( u.toLocalFile() ) ) );
 #elif defined(Q_OS_MAC)
 	started = QProcess::startDetached("/usr/bin/osascript", QStringList() <<
 									  "-e" << "on run argv" <<
