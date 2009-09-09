@@ -36,6 +36,7 @@ public:
 	Poller( QObject *parent = 0 );
 	~Poller();
 
+	quint64 slot( const QString &card ) const;
 	void stop();
 
 Q_SIGNALS:

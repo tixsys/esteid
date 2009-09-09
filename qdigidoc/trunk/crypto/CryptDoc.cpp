@@ -199,7 +199,10 @@ bool CryptDoc::decrypt( const QString &pin )
 	{
 		DEncEncryptedKey *tmp = m_enc->arrEncryptedKeys[i];
 		if( m_authCert == SslCertificate::fromX509( (Qt::HANDLE)tmp->pCert ) )
+		{
 			key = tmp;
+			break;
+		}
 	}
 	if( !key )
 	{
@@ -207,6 +210,8 @@ bool CryptDoc::decrypt( const QString &pin )
 		return false;
 	}
 
+	createOrReplacePrivateConfigItem( NULL, "DIGIDOC_AUTH_KEY_SLOT",
+		QByteArray::number( poller->slot( m_card ) ) );
 	poller->stop();
 	int err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
 	poller->start();

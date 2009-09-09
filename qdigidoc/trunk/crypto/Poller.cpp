@@ -141,6 +141,8 @@ void Poller::selectCard( const QString &card )
 	m.unlock();
 }
 
+quint64 Poller::slot( const QString &card ) const { return cards.value( card ); }
+
 void Poller::stop()
 {
 	terminate = true;
