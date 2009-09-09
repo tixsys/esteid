@@ -1,0 +1,18 @@
+// SmartCardRemoval.idl : IDL source for SmartCardRemoval
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (SmartCardRemoval.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(29628C6D-EBE5-4F0C-AF2F-0F651B498563),
+	version(1.0),
+	helpstring("SmartCardRemoval 1.0 Type Library")
+]
+library SmartCardRemovalLib
+{
+	importlib("stdole2.tlb");
+};
