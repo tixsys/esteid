@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+  <Product Id="C3E409CC-48BF-4b37-9F0E-BC88B96B17D6" Name="esteidcsp"
+           Language="1033" Version="0.4.0.0" Manufacturer="Kaido Kert"
+           UpgradeCode='E4789AB8-B7AE-4b62-A21D-061D32CB6C03'>
+    <Package Id="ECFF48DA-8BA2-4475-9AD5-EEA93D458520" Description="EstEID CSP module"
+             Comments="Installation package for EstEID CSP DLL"
+             InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="esteidcsp.cab" EmbedCab="yes" />
+    <Property Id='DiskPrompt' Value="you should not see this" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id='SystemFolder'  Name='.' SourceName='.'>
+        <Component Id='CSPLibrary' Guid='FC3A970B-5DAD-43b8-8932-2F1CF4C6A0C2'>
+          <File Id='esteidcspdll'  LongName='esteidcsp.dll' Name='esteidcs.dll' DiskId='1' Source='..\win32\release\esteidcsp.dll' Vital='yes' SelfRegCost='1' />
+        </Component>
+      </Directory>
+    </Directory>
+    <Feature Id="Complete" Level="1">
+      <ComponentRef Id='CSPLibrary' />
+    </Feature>
+  </Product>
+</Wix>
