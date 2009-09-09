@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -144,7 +144,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;UNICODE;_WIN64;_AMD64_"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -210,7 +210,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -224,7 +224,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -292,7 +292,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
@@ -307,7 +307,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;UNICODE;_WIN64;_AMD64_"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -375,7 +375,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS;AVOID_SERVICE_LOAD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -392,7 +392,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;UNICODE;AVOID_SERVICE_LOAD"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -459,7 +459,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src;"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ESTEIDCSP_EXPORTS;_SCL_SECURE_NO_WARNINGS;AVOID_SERVICE_LOAD"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -476,7 +476,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_UNICODE;UNICODE;_WIN64;_AMD64_;AVOID_SERVICE_LOAD"
-				AdditionalIncludeDirectories="..\src"
+				AdditionalIncludeDirectories=".\;.\smartcard++"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -613,46 +613,50 @@
 				>
 			</File>
 			<Filter
-				Name="cardlib"
+				Name="smartcard++"
 				>
 				<File
-					RelativePath="..\src\cardlib\CardBase.cpp"
+					RelativePath=".\smartcard++\CardBase.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\CTAPIManager.cpp"
+					RelativePath=".\smartcard++\CTAPIManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\DynamicLibrary.cpp"
+					RelativePath=".\smartcard++\DynamicLibrary.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\EstEidCard.cpp"
+					RelativePath=".\smartcard++\esteid\EstEidCard.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\EstEidCardMaintainer.cpp"
+					RelativePath=".\smartcard++\esteid\EstEidCardMaintainer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\EstEidCardMaintainer.h"
+					RelativePath=".\smartcard++\esteid\EstEidCardMaintainer.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\ManagerInterface.h"
+					RelativePath=".\smartcard++\locked_allocator.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\PCSCManager.cpp"
+					RelativePath=".\smartcard++\ManagerInterface.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\SCError.cpp"
+					RelativePath=".\smartcard++\PCSCManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\cardlib\SmartCardManager.cpp"
+					RelativePath=".\smartcard++\SCError.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\smartcard++\SmartCardManager.cpp"
 					>
 				</File>
 			</Filter>
@@ -660,19 +664,19 @@
 				Name="utility"
 				>
 				<File
-					RelativePath="..\src\utility\logger.cpp"
+					RelativePath=".\smartcard++\utility\logger.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\monitorThread.cpp"
+					RelativePath=".\smartcard++\utility\monitorThread.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\pinDialog.cpp"
+					RelativePath=".\smartcard++\utility\pinDialog.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\threadObj.cpp"
+					RelativePath=".\smartcard++\utility\threadObj.cpp"
 					>
 				</File>
 			</Filter>
@@ -723,42 +727,46 @@
 				>
 			</File>
 			<Filter
-				Name="cardlib"
+				Name="smartcard++"
 				>
 				<File
-					RelativePath="..\..\cardlib\CardBase.h"
+					RelativePath=".\smartcard++\CardBase.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\common.h"
+					RelativePath=".\smartcard++\common.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\CTAPIManager.h"
+					RelativePath=".\smartcard++\CTAPIManager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\DynamicLibrary.h"
+					RelativePath=".\smartcard++\DynamicLibrary.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\EstEidCard.h"
+					RelativePath=".\smartcard++\esteid\EstEidCard.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\helperMacro.h"
+					RelativePath=".\smartcard++\helperMacro.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\PCSCManager.h"
+					RelativePath=".\smartcard++\locked_allocator.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\SCError.h"
+					RelativePath=".\smartcard++\PCSCManager.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\cardlib\SmartCardManager.h"
+					RelativePath=".\smartcard++\SCError.h"
+					>
+				</File>
+				<File
+					RelativePath=".\smartcard++\SmartCardManager.h"
 					>
 				</File>
 			</Filter>
@@ -766,19 +774,19 @@
 				Name="utility"
 				>
 				<File
-					RelativePath="..\src\utility\logger.h"
+					RelativePath=".\smartcard++\utility\logger.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\monitorThread.h"
+					RelativePath=".\smartcard++\utility\monitorThread.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\pinDialog.h"
+					RelativePath=".\smartcard++\utility\pinDialog.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\utility\threadObj.h"
+					RelativePath=".\smartcard++\utility\threadObj.h"
 					>
 				</File>
 			</Filter>
