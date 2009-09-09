@@ -1,0 +1,10 @@
+; EstEIDSigningPluginBHO.def : Declares the module parameters.
+
+LIBRARY      "EstEIDSigningPluginBHO.DLL"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE
+	DllInstall		PRIVATE

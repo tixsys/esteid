@@ -1,0 +1,29 @@
+EXTRA_DIST = \
+dlldata.c \
+dlldatax.c \
+dlldatax.h \
+dllmain.cpp \
+dllmain.h \
+EstEIDSigningBHO.cpp \
+EstEIDSigningBHO.h \
+EstEIDSigningBHO.rgs \
+EstEIDSigningPluginBHO_2005.vcproj \
+EstEIDSigningPluginBHO.cpp \
+EstEIDSigningPluginBHO.def \
+EstEIDSigningPluginBHO.idl \
+EstEIDSigningPluginBHO.rc \
+EstEIDSigningPluginBHO.rgs \
+_ISmartCardSignerEvents_CP.h  \
+precompiled.cpp \
+precompiled.h \
+resource.h \
+Setup.h \
+SmartCardCertificate.cpp \
+SmartCardCertificate.h \
+SmartCardCertificate.rgs \
+SmartCardSigner.cpp \
+SmartCardSigner.h \
+SmartCardSigner.rgs \
+targetver.h \
+test.html \
+version.rc
