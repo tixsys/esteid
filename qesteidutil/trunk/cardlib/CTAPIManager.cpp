@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
+	\date		$Date: 2009-08-09 21:51:35 +0300 (P, 09 aug 2009) $
 */
-// Revision $Revision: 248 $
+// Revision $Revision: 406 $
 #include "precompiled.h"
 #include "CTAPIManager.h"
 #include "helperMacro.h"
@@ -111,8 +111,11 @@ void CTDriver::CTPort::resetCT(byte unit,std::ostream *mLogger) {
 bool CTDriver::CTPort::init(bool nothrow) {
 	mCtn = dri->nextCtn++;
 	byte res = dri->pCTInit(mCtn, portNum);
-	if (res!=CTERR_OK && !nothrow)
-		throw CTAPIError("init",res,0,0,0);
+	if (res!=CTERR_OK) 
+		if (nothrow)
+			return false;
+		else
+			throw CTAPIError("init",res,0,0,0);
 	isConnected = true;
 	return true;
 	}
@@ -125,7 +128,9 @@ void CTDriver::CTPort::close() {
 	}
 
 CTDriver::CTDriver(const char *libName,int version,std::vector<ushort> probePorts,std::ostream *log) :
-		lib(libName,"",version),nextCtn(100),mLogger(log)  {
+		lib(libName,"",version,false),nextCtn(100),mLogger(log)  {
+	if (! lib.exists()) 
+	  return;
 	pCTInit = (char (CTAPI *)(ushort ctn,ushort pn)) lib.getProc("CT_init");
 	pCTClose= (char (CTAPI *)(ushort ctn)) lib.getProc("CT_close");
 	pCTData = (char (CTAPI *)(ushort ctn,byte * dad,byte * sad,ushort lenc,
@@ -140,7 +145,8 @@ CTDriver::CTDriver(const char *libName,int version,std::vector<ushort> probePort
 				byte cmd[] = {0x20,INS_GETSTATUS,0x00,0x46,0x00}; //get reader 
 				ByteVec resp;
 				CTPort port(this,*it);
-				port.init(true);
+				if (!port.init(true))
+					continue;
 				port.performCmd(CTDAD_CT,MAKEVECTOR(cmd),resp,NULL);
 				port.close();
 				pCTClose(nextCtn);
@@ -160,6 +166,8 @@ CTAPIManager::CTAPIManager(std::ostream *log)
 			if (mLogger) *mLogger << "CTAPIManager : trying " << libNames[i] << " version:" << libVer[i] << std::endl;
 			CTDriver *dri = new CTDriver(libNames[i],libVer[i],
 				std::vector<ushort>(ports[i],ports[i] + MAXPORTS),mLogger);
+			if (dri->mPorts.empty()) 
+				continue;
 			mDrivers.push_back(dri);
 			for(size_t j=0;j < dri->mPorts.size(); j++) {
 				std::vector<cPort>::iterator port = dri->mPorts.begin() + j;

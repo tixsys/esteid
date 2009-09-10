@@ -3,7 +3,7 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-13 13:59:50 +0300 (Mon, 13 Apr 2009) $
+	\date		$Date: 2009-04-13 13:59:50 +0300 (E, 13 apr 2009) $
 */
 // Revision $Revision: 246 $
 

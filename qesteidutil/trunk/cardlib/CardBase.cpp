@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-02-05 14:51:28 +0200 (N, 05 veebr 2009) $
+	\date		$Date: 2009-07-15 21:16:04 +0300 (K, 15 juuli 2009) $
 */
-// Revision $Revision: 158 $
+// Revision $Revision: 361 $
 #include "precompiled.h"
 #include "CardBase.h"
 #include <algorithm>
@@ -115,7 +115,7 @@ CardBase::FCI CardBase::parseFCI(ByteVec fci) {
 
 CardBase::FCI CardBase::selectMF(bool ignoreFCI)
 {
-	byte cmdMF[]= {0x00,0xA4,0x00,ignoreFCI ? 0x08 : 0x00,0x00/*0x02,0x3F,0x00*/}; 
+	byte cmdMF[]= {CLAByte(),0xA4,0x00,ignoreFCI ? 0x08 : 0x00,0x00/*0x02,0x3F,0x00*/}; 
 	ByteVec code;
 	code = execute( MAKEVECTOR(cmdMF));
 	if (ignoreFCI) return FCI();
@@ -124,7 +124,7 @@ CardBase::FCI CardBase::selectMF(bool ignoreFCI)
 
 int CardBase::selectDF(int fileID,bool ignoreFCI)
 {
-	byte cmdSelectDF[] = {0x00,0xA4,0x01,ignoreFCI ? 0x08 : 0x04,0x02};
+	byte cmdSelectDF[] = {CLAByte(),0xA4,0x01,ignoreFCI ? 0x08 : 0x04,0x02};
 	ByteVec cmd(MAKEVECTOR(cmdSelectDF));
 	cmd.push_back(HIBYTE(fileID));
 	cmd.push_back(LOBYTE(fileID));
@@ -136,7 +136,7 @@ int CardBase::selectDF(int fileID,bool ignoreFCI)
 
 CardBase::FCI CardBase::selectEF(int fileID,bool ignoreFCI)
 {
-	byte cmdSelectEF[] = {0x00,0xA4,0x02,ignoreFCI ? 0x08 : 0x04,0x02 };
+	byte cmdSelectEF[] = {CLAByte(),0xA4,0x02,ignoreFCI ? 0x08 : 0x04,0x02 };
 	ByteVec cmd(MAKEVECTOR(cmdSelectEF));
 	cmd.push_back(HIBYTE(fileID));
 	cmd.push_back(LOBYTE(fileID));
@@ -151,7 +151,7 @@ CardBase::FCI CardBase::selectEF(int fileID,bool ignoreFCI)
 
 ByteVec CardBase::readEF(unsigned int  fileLen) 
 {
-	byte cmdReadEF[] = {0x00,0xB0,0x00,0x00,0x00};
+	byte cmdReadEF[] = {CLAByte(),0xB0,0x00,0x00,0x00};
 	ByteVec cmd(MAKEVECTOR(cmdReadEF));
 
 	ByteVec read(0);
@@ -176,7 +176,7 @@ ByteVec CardBase::readEF(unsigned int  fileLen)
 
 ByteVec CardBase::readRecord(int numrec) 
 {
-	byte cmdReadREC[] = {0x00,0xB2,0x00,0x04,0x00}; 
+	byte cmdReadREC[] = {CLAByte(),0xB2,0x00,0x04,0x00}; 
 
 	cmdReadREC[2] = LOBYTE(numrec);
 	return execute(MAKEVECTOR(cmdReadREC));
@@ -238,7 +238,7 @@ ByteVec CardBase::execute(ByteVec cmd,bool noreply)
 		}
 
 	if (SW1 == 0x61) {
-		byte cmdRead[]= {0x00,0xC0,0x00,0x00,0x00}; 
+		byte cmdRead[]= {CLAByte(),0xC0,0x00,0x00,0x00}; 
 		cmdRead[4] = SW2;
 		return execute(MAKEVECTOR(cmdRead));
 		}
@@ -252,4 +252,8 @@ ByteVec CardBase::execute(ByteVec cmd,bool noreply)
 
 void CardBase::endTransaction() {
 	mManager.endTransaction(mConnection,true);
+	}
+
+bool CardBase::hasSecurePinEntry() {
+	return mConnection->isSecure();
 	}

@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
+	\date		$Date: 2009-08-13 16:52:22 +0300 (N, 13 aug 2009) $
 */
-// Revision $Revision: 248 $
+// Revision $Revision: 422 $
 #pragma once
 #include "ManagerInterface.h"
 
@@ -32,9 +32,10 @@ public:
 class AuthError :public CardError {
 public:
 	bool m_blocked;
-	AuthError(byte a,byte b) : CardError(a,b), m_blocked(false) {};
-	AuthError(byte a,byte b,bool block) : CardError(a,b), m_blocked(block) {};
-	AuthError(CardError _base) : CardError(_base) , m_blocked(false) {}
+	bool m_badinput;
+	AuthError(byte a,byte b) : CardError(a,b), m_blocked(false),m_badinput(false) {};
+	AuthError(byte a,byte b,bool block) : CardError(a,b), m_blocked(block),m_badinput(false) {};
+	AuthError(CardError _base) : CardError(_base) , m_blocked(false),m_badinput(false) {}
 };
 
 /// Represents basic ISO7816-4 smartcard
@@ -55,6 +56,9 @@ protected:
 	ManagerInterface &mManager;
 	ConnectionBase	*mConnection;
 	std::ostream	*mLogger;
+
+	/// provide CLA for card APDUs
+	virtual byte CLAByte() { return 0x00; }
 
 	/// helper to parse returned TLVs from card
 	ByteVec getTag(int identTag,int len,ByteVec &arr);
@@ -94,4 +98,6 @@ public:
 	void setLogging(std::ostream *logStream);
 	/// sigh .. just a hack to reset card in some instances
 	void endTransaction();
+	/// check if the manager that we are connected to, supports secure PIN entry
+	bool hasSecurePinEntry();
 };

@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
+	\date		$Date: 2009-07-06 13:21:43 +0300 (E, 06 juuli 2009) $
 */
-// Revision $Revision: 326 $
+// Revision $Revision: 345 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"

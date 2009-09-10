@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2008-10-28 14:47:24 +0200 (T, 28 okt 2008) $
+	\date		$Date: 2009-07-07 08:35:50 +0300 (T, 07 juuli 2009) $
 */
-// Revision $Revision: 132 $
+// Revision $Revision: 346 $
 #pragma once
 #include "EstEidCard.h"
 

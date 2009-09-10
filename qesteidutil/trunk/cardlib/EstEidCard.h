@@ -1,13 +1,14 @@
 /*!
 	\file		EstEidCard.h
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
+	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-06 16:56:19 +0200 (R, 06 märts 2009) $
+	\date		$Date: 2009-07-15 18:34:40 +0300 (K, 15 juuli 2009) $
 */
-// Revision $Revision: 187 $
+// Revision $Revision: 357 $
 #pragma once
 #include "CardBase.h"
+#include "PinString.h"
 
 /// Estonian ID card class. Supplies most of the card functions
 class EstEidCard:
@@ -48,30 +49,30 @@ public:
 		COMMENT1,COMMENT2,COMMENT3,COMMENT4
 		};
 private:
-	void prepareSign_internal(KeyType keyId,std::string pin);
+	void prepareSign_internal(KeyType keyId,PinString pin);
 	ByteVec calcSign_internal(AlgType type,KeyType keyId, ByteVec hash,bool withOID = true);
 	ByteVec RSADecrypt_internal(ByteVec cipher);
 	void readPersonalData_internal(vector<std::string>& data,
 		int firstRecord,int lastRecord );
-	bool validatePin_internal(PinType pinType,std::string pin, byte &retriesLeft,
+	bool validatePin_internal(PinType pinType,PinString pin, byte &retriesLeft,
 		bool forceUnsecure = false);
 	bool changePin_internal(
-		PinType pinType,std::string newPin,std::string oldPin,bool useUnblockCommand=false);
+		PinType pinType,PinString newPin,PinString oldPin,bool useUnblockCommand=false);
 	void reconnectWithT0();
 	void checkProtocol();
 	bool getRetryCounts_internal(byte &puk,byte &pinAuth,byte &pinSign);
 	ByteVec readEFAndTruncate(unsigned int fileLen);
-	
+
 public:
 	EstEidCard(ManagerInterface &ref) : CardBase(ref) {}
-	EstEidCard(ManagerInterface &ref,unsigned int idx) : 
+	EstEidCard(ManagerInterface &ref,unsigned int idx) :
 	  CardBase(ref,idx) {}
 	EstEidCard(ManagerInterface &ref,ConnectionBase *conn)  :
 	  CardBase(ref,conn) {}
 	~EstEidCard() {}
 	bool isInReader(unsigned int idx);
 
-	void enterPin(PinType pinType,std::string pin,bool forceUnsecure = false);
+	void enterPin(PinType pinType,PinString pin,bool forceUnsecure = false);
 
 	/// Reads the card holder identification code from personal data file
 	std::string readCardID();
@@ -93,40 +94,40 @@ public:
 	/// calculate SSL signature for SHA1+MD5 hash. PIN needs to be entered before
 	ByteVec calcSSL(ByteVec hash);
 	/// calculate SSL signature with PIN supplied, supply empty pin if cardmanager supports pin entry
-	ByteVec calcSSL(ByteVec hash,std::string pin);
-	
+	ByteVec calcSSL(ByteVec hash,PinString pin);
+
 	/// calculate signature over SHA1 hash, keyid =0 selects auhtentication key, other values signature key. withOID=false calculates without SHA1 signatures, used for VPN
 	ByteVec calcSignSHA1(ByteVec hash,KeyType keyId,bool withOID = true);
 	/// calculate SHA1 signature with pin
-	ByteVec calcSignSHA1(ByteVec hash,KeyType keyId,std::string pin,bool withOID = true);
+	ByteVec calcSignSHA1(ByteVec hash,KeyType keyId,PinString pin,bool withOID = true);
 
 	/// calculate signature over MD5 hash, keyid =0 selects auhtentication key
 	ByteVec calcSignMD5(ByteVec hash,KeyType keyId,bool withOID = true);
 	/// calculate signature over MD5 hash, with pin
-	ByteVec calcSignMD5(ByteVec hash,KeyType keyId,std::string pin,bool withOID = true);
+	ByteVec calcSignMD5(ByteVec hash,KeyType keyId,PinString pin,bool withOID = true);
 
 	/// decrypt RSA bytes, from 1024 bit/128 byte input vector, using authentication key
 	ByteVec RSADecrypt(ByteVec cipher);
 	/// decrypt RSA with authentication key, with pin supplied
-	ByteVec RSADecrypt(ByteVec cipher,std::string pin);
+	ByteVec RSADecrypt(ByteVec cipher,PinString pin);
 
 	/// enter and validate authentication PIN. AuthError will be thrown if invalid
-	bool validateAuthPin(std::string pin,byte &retriesLeft );
+	bool validateAuthPin(PinString pin,byte &retriesLeft );
 	/// enter and validate signature PIN
-	bool validateSignPin(std::string pin,byte &retriesLeft );
+	bool validateSignPin(PinString pin,byte &retriesLeft );
 	/// enter and validate PUK code
-	bool validatePuk(std::string puk, byte &retriesLeft );
+	bool validatePuk(PinString puk, byte &retriesLeft );
 
 	/// change authentication PIN. For secure pin entry, specify pin lengths in "04" format, i.e. two-byte decimal string
-	bool changeAuthPin(std::string newPin,std::string oldPin, byte &retriesLeft );
+	bool changeAuthPin(PinString newPin,PinString oldPin, byte &retriesLeft );
 	/// change signature PIN
-	bool changeSignPin(std::string newPin,std::string oldPin, byte &retriesLeft );
+	bool changeSignPin(PinString newPin,PinString oldPin, byte &retriesLeft );
 	/// change PUK
-	bool changePUK(std::string newPUK,std::string oldPUK, byte &retriesLeft );
+	bool changePUK(PinString newPUK,PinString oldPUK, byte &retriesLeft );
 	/// unblock signature PIN using PUK. if correct PUK is supplied, the PIN will be first blocked and then unblocked
-	bool unblockAuthPin(std::string newPin,std::string PUK, byte &retriesLeft );
+	bool unblockAuthPin(PinString newPin,PinString PUK, byte &retriesLeft );
 	/// unblock signature PIN
-	bool unblockSignPin(std::string newPin,std::string PUK, byte &retriesLeft );
+	bool unblockSignPin(PinString newPin,PinString PUK, byte &retriesLeft );
 
 	/// set security environment for the card. This does not need to be called directly, normally
 	void setSecEnv(byte env);

@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-21 23:38:31 +0300 (T, 21 apr 2009) $
+	\date		$Date: 2009-07-15 21:16:04 +0300 (K, 15 juuli 2009) $
 */
-// Revision $Revision: 263 $
+// Revision $Revision: 361 $
 #include "precompiled.h"
 #include "SmartCardManager.h"
 #include "PCSCManager.h"
@@ -38,6 +38,10 @@ struct SmartCardConnectionPriv {
 		if (m_manager == MANAGER_CTAPI) return ctConn;
 		throw std::runtime_error("Invalid smartcardconnection");
 		}
+	bool isSecure() {
+		if (m_manager == MANAGER_PCSC) return pcscConn->isSecure();
+		if (m_manager == MANAGER_CTAPI) return ctConn->isSecure();
+		}
 private:
 	const SmartCardConnectionPriv& operator=(const SmartCardConnectionPriv &);
 };
@@ -52,6 +56,11 @@ SmartCardConnection::~SmartCardConnection() {
 	d->m_managerOriginal.deleteConnection(this);
 	delete d;
 	}
+
+bool SmartCardConnection::isSecure() {
+	return d->isSecure();
+	}
+
 
 struct SmartCardManagerPriv {
 	PCSCManager pcscMgr;
@@ -113,6 +122,12 @@ void SmartCardManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd,std:
 bool SmartCardManager::isT1Protocol(ConnectionBase *c) {
 	SmartCardConnection *pc = (SmartCardConnection *)c;
 	return pc->mManager.isT1Protocol(pc->d->getConnection());
+	}
+
+void SmartCardManager::execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
+	SmartCardConnection *pc = (SmartCardConnection *)c;
+	return pc->mManager.execPinEntryCommand(pc->d->getConnection(),
+		cmd);
 	}
 
 uint SmartCardManager::getReaderCount(bool forceRefresh) {

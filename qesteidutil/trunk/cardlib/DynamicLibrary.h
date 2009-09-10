@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2008-10-30 18:16:34 +0200 (N, 30 okt 2008) $
+	\date		$Date: 2009-07-06 13:21:43 +0300 (E, 06 juuli 2009) $
 */
-// Revision $Revision: 134 $
+// Revision $Revision: 345 $
 #pragma once
 
 /// Wraps a dynamically loaded system library
@@ -17,15 +17,16 @@ struct DynamicLibrary {
 	void *mLibhandle;
 	std::string name;
 	const char *m_pathHint;
-	void construct(int version = 1);
+	bool construct(int version = 1,bool do_throw=true);
 	static std::string arrPaths[];
+	bool m_construct;
 public:
 	/// Constructor, loads the library specified by dllName
 	DynamicLibrary(const char *dllName);
 	/// Constructor, loads the library specified by dllName and version, version is only used on linux
 	DynamicLibrary(const char *dllName,int version);
 	/// Constructor, loads the library specified by dllName, using subdirectory hint
-	DynamicLibrary(const char *dllName,const char *pathHint,int version=1);
+	DynamicLibrary(const char *dllName,const char *pathHint,int version=1,bool do_throw = true);
 	~DynamicLibrary();
 	/// get a procedure address from the library
 	fProc getProc(const char *procName);
@@ -33,4 +34,6 @@ public:
 	std::string getVersionStr();
 	/// return loaded library name
 	std::string getName() { return name;}
+	/// exists, returns false when constructed with do_throw=false, and there was an error
+	bool exists();
 	};

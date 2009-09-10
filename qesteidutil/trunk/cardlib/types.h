@@ -15,4 +15,5 @@ typedef	std::vector<byte> ByteVec;
 /// ostream printer
 std::ostream& operator<<(std::ostream &out,const ByteVec &vec);
 
+
 #endif

@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:33:52 +0300 (P, 29 märts 2009) $
+	\date		$Date: 2009-07-15 21:16:04 +0300 (K, 15 juuli 2009) $
 */
-// Revision $Revision: 204 $
+// Revision $Revision: 361 $
 #pragma once
 #include "ManagerInterface.h"
 
@@ -17,6 +17,7 @@ struct SmartCardConnection : public ConnectionBase {
 	SmartCardConnection(int manager,ManagerInterface &iface,unsigned int index,
 		bool force,ManagerInterface &orig);
 	~SmartCardConnection();
+	virtual bool isSecure();
 };
 
 /// Unified class for smarcard managers
@@ -33,6 +34,7 @@ class SmartCardManager : public ManagerInterface {
 	void execCommand(ConnectionBase *c,std::vector<byte> &cmd,std::vector<byte> &recv,
 		unsigned int &recvLen);
 	bool isT1Protocol(ConnectionBase *c);
+	virtual void execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd);
 
 public:
 	SmartCardManager(void);

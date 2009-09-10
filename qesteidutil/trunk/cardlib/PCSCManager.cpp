@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
+	\date		$Date: 2009-08-14 00:57:29 +0300 (R, 14 aug 2009) $
 */
-// Revision $Revision: 326 $
+// Revision $Revision: 424 $
 #include "precompiled.h"
 #include "PCSCManager.h"
 #include "SCError.h"
@@ -107,7 +107,7 @@ PCSCManager::~PCSCManager(void)
 
 void PCSCManager::ensureReaders(uint idx)
 {
-	DWORD ccReaders;
+	DWORD ccReaders = 0;
 	SCError::check((*pSCardListReaders)(mSCardContext,NULL,NULL,&ccReaders));
 	if (ccReaders == 0) {
 		mReaderStates.clear();
@@ -217,7 +217,7 @@ PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
 	PCSCConnection *pc = (PCSCConnection *)c;
 	SCError::check((*pSCardReconnect)(pc->hScard, 
 		SCARD_SHARE_SHARED, (pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0,
-		SCARD_LEAVE_CARD,&pc->proto));
+		SCARD_RESET_CARD,&pc->proto));
 	return pc;
 	}
 

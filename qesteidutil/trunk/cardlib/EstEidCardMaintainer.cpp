@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-17 16:00:47 +0300 (R, 17 apr 2009) $
+	\date		$Date: 2009-07-09 19:31:59 +0300 (N, 09 juuli 2009) $
 */
-// Revision $Revision: 248 $
+// Revision $Revision: 351 $
 #include "precompiled.h"
 #include "EstEidCardMaintainer.h"
 

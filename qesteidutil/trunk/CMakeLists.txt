@@ -48,6 +48,7 @@ set(cardlib_SRCS
     cardlib/CTAPIManager.cpp
     cardlib/DynamicLibrary.cpp
     cardlib/EstEidCard.cpp
+	cardlib/locked_allocator.cpp
     cardlib/PCSCManager.cpp
     cardlib/SCError.cpp
     cardlib/SmartCardManager.cpp

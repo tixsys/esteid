@@ -3,43 +3,51 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-06-18 00:04:15 +0300 (N, 18 juuni 2009) $
+	\date		$Date: 2009-08-23 17:37:19 +0300 (P, 23 aug 2009) $
 */
-// Revision $Revision: 326 $
+// Revision $Revision: 453 $
 #include "precompiled.h"
 #include "DynamicLibrary.h"
 
 #include <string.h>
 
 DynamicLibrary::DynamicLibrary(const char *dllName) :
-	name(dllName),m_pathHint("") {
-	construct();
+	name(dllName),m_pathHint(""),mLibhandle(NULL) {
+	m_construct = construct();
 	}
 
 DynamicLibrary::DynamicLibrary(const char *dllName,int version) :
-	name(dllName),m_pathHint("") {
-	construct(version);
+	name(dllName),m_pathHint(""),mLibhandle(NULL) {
+	m_construct = construct(version);
 	}
 
 DynamicLibrary::DynamicLibrary(const char *dllName,const char *pathHint,
-	int version) : name(dllName) {
+	int version,bool do_throw) : name(dllName),mLibhandle(NULL) {
 	m_pathHint = pathHint;
-	construct(version);
+	m_construct = construct(version , do_throw);
+	}
+
+bool DynamicLibrary::exists() {
+	return mLibhandle != NULL;
 	}
 
 #ifdef _WIN32
 #include <windows.h>
 #pragma comment(lib,"version")
 
-void DynamicLibrary::construct(int ) {
+bool DynamicLibrary::construct(int , bool do_throw) {
 	mLibhandle = LoadLibraryA(name.c_str());
 	if (!mLibhandle)
 		mLibhandle = LoadLibraryA( std::string(std::string(m_pathHint) + "\\" + name).c_str());
 	if (!mLibhandle) {
 		std::ostringstream buf;
 		buf << "Dynamic library '" << name << "' not found in system";
-		throw std::runtime_error(buf.str());
+		if (do_throw)
+		  throw std::runtime_error(buf.str());
+		else 
+		  return false;
 		}
+	return true;
 	}
 
 DynamicLibrary::~DynamicLibrary() {
@@ -72,22 +80,23 @@ std::string DynamicLibrary::getVersionStr() {
 	return strb.str();
 	}
 
-#endif //WIN32
+#endif //_WIN32
 
-#if defined(linux) || defined(__APPLE__)
+#if !defined(_WIN32)
 #include <dlfcn.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
-std::string DynamicLibrary::arrPaths[] = {
-	"","/lib/","/usr/local/lib/","/usr/lib/","/usr/lib/engines/"
-#if defined(__APPLE__)
-	, "/Library/OpenSC/lib/engines/", "/Library/Frameworks/", "/System/Library/Frameworks/"
+std::string DynamicLibrary::arrPaths[] = { "","/lib/","/usr/local/lib/","/usr/pkg/lib","/usr/lib/"
+	,"/lib64/","/usr/lib64/","/usr/lib/engines/"
+#if defined(__APPLE__) 
+	,"/Library/OpenSC/lib/engines/", "/Library/Frameworks/", "/System/Library/Frameworks/"
 #endif
-};
+	};
 
 #include <iostream>
 
-void DynamicLibrary::construct(int version) {
+bool DynamicLibrary::construct(int version,bool do_throw) {
 	size_t i,j;
 	std::ostringstream buf;
 	buf << version;
@@ -124,9 +133,13 @@ void DynamicLibrary::construct(int version) {
 	if (!mLibhandle) {
 		buf.str("");
 		buf << "Dynamic library '" << name << "' not found in system";
-		throw std::runtime_error(buf.str());
+		if (do_throw) 
+		  throw std::runtime_error(buf.str());
+		else
+		  return false;
 		}
 	name = arrStr[i];
+	return true;
 	}
 
 DynamicLibrary::~DynamicLibrary() {

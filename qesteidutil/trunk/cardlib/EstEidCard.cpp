@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-21 23:31:21 +0300 (T, 21 apr 2009) $
+	\date		$Date: 2009-08-13 16:52:22 +0300 (N, 13 aug 2009) $
 */
-// Revision $Revision: 260 $
+// Revision $Revision: 422 $
 #include "precompiled.h"
 #include "EstEidCard.h"
 #include "helperMacro.h"
@@ -20,24 +20,29 @@ bool EstEidCard::isInReader(unsigned int idx) {
 	return string::npos != p ;
 	}
 
-void EstEidCard::enterPin(PinType pinType,string pin,bool forceUnsecure) {
+void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	byte cmdEntPin[] = {0x00,0x20,0x00}; // VERIFY
 	ByteVec cmd(MAKEVECTOR(cmdEntPin));
 	cmd.push_back((byte)pinType);
 	if (pin.length() < 4) {
-		if (pin.length()!= 0 ||!mConnection->isSecure() ) 
-			throw std::runtime_error("bad pin length");
+		if (pin.length()!= 0 ||!mConnection->isSecure() ) {
+//			throw std::runtime_error("bad pin length");
+			AuthError err(0,0);
+			err.m_badinput = true;
+			err.desc = "bad pin length";
+			throw err;
+		}
 	} else {
 		cmd.push_back(LOBYTE(pin.length()));
 		for(unsigned i=0;i<pin.length();i++) cmd.push_back(pin[i]);
 	}
 	try {
-		if (forceUnsecure || !mConnection->isSecure()) 
+		if (forceUnsecure || !mConnection->isSecure())
 			execute(cmd,true);//exec as a normal command
 		else
 			executePinEntry(cmd);
 	} catch(AuthError &ae) {
-		throw AuthError(ae); 
+		throw AuthError(ae);
 	} catch(CardError &e) {
 		if (e.SW1 == 0x63) throw AuthError(e);
 		if (e.SW1 == 0x69 && e.SW2 == 0x83) throw AuthError(e.SW1,e.SW2,true);
@@ -52,7 +57,7 @@ void EstEidCard::setSecEnv(byte env) {
 	execute(cmd,true);
 }
 
-void EstEidCard::prepareSign_internal(KeyType keyId,string pin) { 
+void EstEidCard::prepareSign_internal(KeyType keyId,PinString pin) {
 	selectMF(true);
 	selectDF(FILEID_APP,true);
 	if (keyId == 0 )	enterPin(PIN_AUTH,pin);
@@ -83,7 +88,7 @@ ByteVec EstEidCard::calcSign_internal(AlgType type,KeyType keyId,ByteVec hash,bo
 		cmd.push_back( (byte) (header.size() + hash.size()));
 		cmd.insert(cmd.end(),header.begin(),header.end());
 		}
-	else 
+	else
 		cmd.push_back((byte)hash.size());
 
 	setSecEnv(1);
@@ -93,7 +98,7 @@ ByteVec EstEidCard::calcSign_internal(AlgType type,KeyType keyId,ByteVec hash,bo
 	try {
 		result = execute(cmd);
 	} catch(CardError e) {
-		if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x85 )) 
+		if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x85 ))
 			throw AuthError(e);
 		throw e;
 		}
@@ -103,7 +108,7 @@ ByteVec EstEidCard::calcSign_internal(AlgType type,KeyType keyId,ByteVec hash,bo
 ByteVec EstEidCard::RSADecrypt_internal(ByteVec cipher) {
 	byte modEnv1[] = {0x00,0x22,0x41,0xA4,0x02,0x83,0x00};
 	byte modEnv2[] = {0x00,0x22,0x41,0xB6,0x02,0x83,0x00};
-	byte modEnv0[] = {0x00,0x22,0x41,0xB8,0x05,0x83,0x03,0x80}; 
+	byte modEnv0[] = {0x00,0x22,0x41,0xB8,0x05,0x83,0x03,0x80};
 
 	selectMF(true);
 	selectDF(FILEID_APP,true);
@@ -132,7 +137,7 @@ ByteVec EstEidCard::RSADecrypt_internal(ByteVec cipher) {
 			result = execute(decCmd,false);
 			return result;
 			}*/
-		if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x88  || e.SW2 == 0x85  
+		if (e.SW1 == 0x69 && (e.SW2 == 0x82 || e.SW2 == 0x00 || e.SW2 == 0x88  || e.SW2 == 0x85
 			/*|| e.SW1 == 0x64 */|| e.SW1 == 0x6B ))
 			throw AuthError(e);
 		throw e;
@@ -144,19 +149,19 @@ void EstEidCard::readPersonalData_internal(vector<string>& data,int recStart,int
 	selectMF(true);
 	selectDF(FILEID_APP,true);
 	FCI fileInfo = selectEF(0x5044);
-	
-	if (fileInfo.recCount != 0x10 && fileInfo.recCount != 0x0A ) 
+
+	if (fileInfo.recCount != 0x10 && fileInfo.recCount != 0x0A )
 		throw CardDataError("personal data file does not contain 16 or 10 records");
 	data.resize(std::min(recEnd,0x10) + 1 );
 	for (int i=recStart; i <= recEnd; i++) {
 		ByteVec record = readRecord(i);
 		string& ret = data[i];
-		for (ByteVec::iterator c = record.begin();c!=record.end();c++) 	
+		for (ByteVec::iterator c = record.begin();c!=record.end();c++)
 			ret+= *c ;
 		}
 	}
 
-bool EstEidCard::validatePin_internal(PinType pinType,string pin, byte &retriesLeft,bool forceUnsecure) { 
+bool EstEidCard::validatePin_internal(PinType pinType,PinString pin, byte &retriesLeft,bool forceUnsecure) {
 	UNUSED_ARG(forceUnsecure);
 	checkProtocol();
 	selectMF(true);
@@ -173,21 +178,21 @@ bool EstEidCard::validatePin_internal(PinType pinType,string pin, byte &retriesL
 	}
 
 bool EstEidCard::changePin_internal(
-	PinType pinType,std::string newPin,std::string oldPin,bool useUnblockCmd ) {
+	PinType pinType,PinString newPin,PinString oldPin,bool useUnblockCmd ) {
 	byte cmdChangeCmd[] = {0x00,0x24,0x00};
-	
+
 	if (useUnblockCmd) cmdChangeCmd[1]= 0x2C;
 
 	size_t oldPinLen,newPinLen;
 
 	if (newPin.length() < 4 || oldPin.length() < 4 ) {
 		if (newPin.length()!= 2 || oldPin.length() != 2 ||
-			!mConnection->isSecure() ) 
+			!mConnection->isSecure() )
 			throw std::runtime_error("bad pin length");
 		oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
 		newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
-		oldPin = string(oldPinLen,'0');
-		newPin = string(newPinLen,'0');
+		oldPin = PinString(oldPinLen,'0');
+		newPin = PinString(newPinLen,'0');
 	} else {
 		oldPinLen = oldPin.length();
 		newPinLen = newPin.length();
@@ -203,18 +208,18 @@ bool EstEidCard::changePin_internal(
 	cmd.push_back(LOBYTE(catPins.size()));
 	cmd.insert(cmd.end(),catPins.begin(),catPins.end());
 	try {
-		if (mConnection->isSecure()) 
+		if (mConnection->isSecure())
 			executePinChange(cmd,oldPinLen,newPinLen);
 		else
 			execute(cmd,true);
 	} catch(AuthError &ae) {
 		throw AuthError(ae);
 	} catch(CardError &e) {
-		if (e.SW1 == 0x63) 
+		if (e.SW1 == 0x63)
 			throw AuthError(e);
 		else if (useUnblockCmd && e.SW1==0x6a && e.SW2 == 0x80 ) //unblocking, repeating old pin
 			throw AuthError(e.SW1,e.SW2,true);
-		else 
+		else
 			throw e;
 		}
 
@@ -345,7 +350,7 @@ ByteVec EstEidCard::calcSSL(ByteVec hash) {
 	return calcSign_internal(SSL,AUTH,hash,false);
 	}
 
-ByteVec EstEidCard::calcSSL(ByteVec hash,string pin) {
+ByteVec EstEidCard::calcSSL(ByteVec hash,PinString pin) {
 	Transaction _m(mManager,mConnection);
 
 	prepareSign_internal(AUTH,pin);
@@ -358,7 +363,7 @@ ByteVec EstEidCard::calcSignSHA1(ByteVec hash,KeyType keyId,bool withOID) {
 	return calcSign_internal(SHA1,keyId,hash,withOID);
 	}
 
-ByteVec EstEidCard::calcSignSHA1(ByteVec hash,KeyType keyId,string pin,bool withOID) {
+ByteVec EstEidCard::calcSignSHA1(ByteVec hash,KeyType keyId,PinString pin,bool withOID) {
 	Transaction _m(mManager,mConnection);
 
 	prepareSign_internal(keyId,pin);
@@ -371,7 +376,7 @@ ByteVec EstEidCard::calcSignMD5(ByteVec hash,KeyType keyId,bool withOID) {
 	return calcSign_internal(MD5,keyId,hash,withOID);
 	}
 
-ByteVec EstEidCard::calcSignMD5(ByteVec hash,KeyType keyId,std::string pin,bool withOID) {
+ByteVec EstEidCard::calcSignMD5(ByteVec hash,KeyType keyId,PinString pin,bool withOID) {
 	Transaction _m(mManager,mConnection);
 
 	prepareSign_internal(keyId,pin);
@@ -385,7 +390,7 @@ ByteVec EstEidCard::RSADecrypt(ByteVec cipher) {
 	return RSADecrypt_internal(cipher);
 	}
 
-ByteVec EstEidCard::RSADecrypt(ByteVec cipher,string pin) {
+ByteVec EstEidCard::RSADecrypt(ByteVec cipher,PinString pin) {
 	Transaction _m(mManager,mConnection);
 
 	selectMF(true);
@@ -394,22 +399,22 @@ ByteVec EstEidCard::RSADecrypt(ByteVec cipher,string pin) {
 	return RSADecrypt_internal(cipher);
 	}
 
-bool EstEidCard::validateAuthPin(string pin, byte &retriesLeft ) {
+bool EstEidCard::validateAuthPin(PinString pin, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	return validatePin_internal(PIN_AUTH,pin,retriesLeft);
 	}
 
-bool EstEidCard::validateSignPin(string pin, byte &retriesLeft ) {
+bool EstEidCard::validateSignPin(PinString pin, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	return validatePin_internal(PIN_SIGN,pin,retriesLeft);
 }
 
-bool EstEidCard::validatePuk(string pin, byte &retriesLeft ) {
+bool EstEidCard::validatePuk(PinString pin, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	return validatePin_internal(PUK,pin,retriesLeft);
 }
 
-bool EstEidCard::changeAuthPin(std::string newPin,std::string oldPin, byte &retriesLeft ) {
+bool EstEidCard::changeAuthPin(PinString newPin,PinString oldPin, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PIN_AUTH,oldPin,retriesLeft);
@@ -420,7 +425,7 @@ bool EstEidCard::changeAuthPin(std::string newPin,std::string oldPin, byte &retr
 	return changePin_internal(PIN_AUTH,newPin,oldPin);
 	}
 
-bool EstEidCard::changeSignPin(std::string newPin,std::string oldPin, byte &retriesLeft ) {
+bool EstEidCard::changeSignPin(PinString newPin,PinString oldPin, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PIN_SIGN,oldPin,retriesLeft);
@@ -431,7 +436,7 @@ bool EstEidCard::changeSignPin(std::string newPin,std::string oldPin, byte &retr
 	return changePin_internal(PIN_SIGN,newPin,oldPin);
 	}
 
-bool EstEidCard::changePUK(std::string newPUK,std::string oldPUK, byte &retriesLeft ) {
+bool EstEidCard::changePUK(PinString newPUK,PinString oldPUK, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PUK,oldPUK,retriesLeft);
@@ -442,26 +447,26 @@ bool EstEidCard::changePUK(std::string newPUK,std::string oldPUK, byte &retriesL
 	return changePin_internal(PUK,newPUK,oldPUK);
 	}
 
-bool EstEidCard::unblockAuthPin(std::string newPin,std::string mPUK, byte &retriesLeft ) {
+bool EstEidCard::unblockAuthPin(PinString newPin,PinString mPUK, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PUK,mPUK,retriesLeft);
-	if (newPin.length() < 4) 
+	if (newPin.length() < 4)
 		throw std::runtime_error("secure unblock not implemented yet");
 	for(char i='0'; i < '6'; i++) try { //ENSURE its blocked
-			validatePin_internal(PIN_AUTH,string("0000") + i ,retriesLeft,true);
+			validatePin_internal(PIN_AUTH,PinString("0000") + i ,retriesLeft,true);
 		} catch (...) {}
 	return changePin_internal(PIN_AUTH,newPin,mPUK,true);
 	}
 
-bool EstEidCard::unblockSignPin(std::string newPin,std::string mPUK, byte &retriesLeft ) {
+bool EstEidCard::unblockSignPin(PinString newPin,PinString mPUK, byte &retriesLeft ) {
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PUK,mPUK,retriesLeft);
-	if (newPin.length() < 4) 
+	if (newPin.length() < 4)
 		throw std::runtime_error("secure unblock not implemented yet");
 	for(char i='0'; i < '6'; i++) try { //ENSURE its blocked
-			validatePin_internal(PIN_SIGN,string("0000") + i ,retriesLeft,true);
+			validatePin_internal(PIN_SIGN,PinString("0000") + i ,retriesLeft,true);
 		} catch (...) {}
 	return changePin_internal(PIN_SIGN,newPin,mPUK,true);
 	}
