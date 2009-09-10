@@ -795,7 +795,7 @@ bool MainWindow::checkAccessCert()
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return true;
 
-	if( doc->activeCard().isEmpty() )
+	if( infoSignMobile->isChecked() || doc->activeCard().isEmpty() )
 	{
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
 		return false;
