@@ -82,8 +82,9 @@ bool CertUpdate::checkUpdateAllowed()
 	return result.size() > 20 && result.at( 21 ) == 0x00;
 }
 
-void CertUpdate::startUpdate()
+void CertUpdate::startUpdate( const QString &pin )
 {
+	m_pin = pin;
 	QByteArray result;
 	for( step = 1; step < 36; step++ )
 		result = runStep( step, result );
@@ -112,7 +113,7 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 	case 4:
 		{
 			try {
-				card->enterPin( EstEidCard::PIN_AUTH, "0090" );
+				card->enterPin( EstEidCard::PIN_AUTH, PinString( m_pin.toLatin1() ) );
 			} catch( const AuthError &e ) {
 				throw std::runtime_error( "step4 auth error: " + e.desc );
 			}

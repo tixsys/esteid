@@ -455,9 +455,12 @@ bool JsExtender::updateCert()
 	bool result = false;
 	try {
 		CertUpdate *c = new CertUpdate( m_mainWindow->cardManager()->activeReaderNum(), this );
-		if ( c->checkUpdateAllowed() )
+		if ( c->checkUpdateAllowed() && m_mainWindow->eidCard()->m_authCert )
 		{
-			c->startUpdate();
+			PinDialog p( PinDialog::Pin1Type, m_mainWindow->eidCard()->m_authCert->cert(), qApp->activeWindow() );
+			if( !p.exec() )
+				return false;
+			c->startUpdate( p.text() );
 			result = true;
 		}
 	} catch ( std::runtime_error &e ) {

@@ -86,6 +86,9 @@ function cardInserted(i)
 			inReader = true;
 	} catch ( err ) {}
 
+	if ( activeCardId == "" )
+		document.getElementById('cardInfoNoCard').style.display='block';
+		
 	document.getElementById( 'forUpdate' ).innerHTML += ".";
 	if ( !inReader )
 		readCardData();

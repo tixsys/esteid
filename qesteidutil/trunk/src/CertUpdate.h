@@ -38,9 +38,10 @@ public:
 	~CertUpdate();
 
 	bool checkUpdateAllowed();
-	void startUpdate();
+	void startUpdate( const QString &pin );
 
 private:
+	QString m_pin;
 	EstEidCard *card;
 	SmartCardManager *cardMgr;
 	QTcpSocket *sock;
