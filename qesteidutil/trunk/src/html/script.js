@@ -69,12 +69,18 @@ function cardInserted(i)
 			if ( i != -1 )
 			{
 				extender.showLoading( _('loadCardData') );
-				cardManager.selectReader( i );
-				if ( esteidData.canReadCard() )
+				var retry = 3;
+				while( retry > 0 )
 				{
-					activeCardId = esteidData.getDocumentId();
-					extender.closeLoading();
+					cardManager.selectReader( i );
+					if ( esteidData.canReadCard() )
+					{
+						activeCardId = esteidData.getDocumentId();
+						break;
+					}
+					retry--;
 				}
+				extender.closeLoading();
 			}
 		} else
 			inReader = true;

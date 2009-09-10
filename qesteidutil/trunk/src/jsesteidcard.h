@@ -117,4 +117,6 @@ private:
 	QString comment2;
 	QString comment3;
 	QString comment4;
+
+	bool cardOK;
 };

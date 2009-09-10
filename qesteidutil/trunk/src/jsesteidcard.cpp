@@ -46,6 +46,7 @@ JsEsteidCard::JsEsteidCard( QObject *parent )
     m_signCert = new JsCertData( this );
 	authUsageCount = 0;
 	signUsageCount = 0;
+	cardOK = false;
 }
 
 void JsEsteidCard::setCard(EstEidCard *card, int reader)
@@ -56,6 +57,10 @@ void JsEsteidCard::setCard(EstEidCard *card, int reader)
 		m_card = 0;
 	}
 
+	if ( !card )
+		return;
+
+	cardOK = false;
 	m_reader = reader;
     m_card = card;
 	m_authCert->loadCert(card, JsCertData::AuthCert);
@@ -98,14 +103,17 @@ void JsEsteidCard::reloadData() {
         comment4 = tmp[EstEidCard::COMMENT4].c_str();
 
 		m_card->getKeyUsageCounters( authUsageCount, signUsageCount);
+
+		cardOK = true;
 	} catch (runtime_error &err ) {
-        cout << "Error: " << err.what() << endl;
+        cout << "Error on readPersonalData: " << err.what() << endl;
+		cardOK = false;
     }
 }
 
 bool JsEsteidCard::canReadCard()
 {
-	return m_card && m_authCert && m_signCert && m_authCert->m_qcert && m_signCert->m_qcert;
+	return m_card && m_authCert && m_signCert && m_authCert->m_qcert && m_signCert->m_qcert && cardOK;
 }
 
 bool JsEsteidCard::validatePin1(QString oldVal)
@@ -118,7 +126,7 @@ bool JsEsteidCard::validatePin1(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->validateAuthPin(oldVal.toStdString(), retriesLeft);
+		return m_card->validateAuthPin( PinString( oldVal.toLatin1() ), retriesLeft);
     } catch(AuthError &) {
         return false;
     } catch (std::runtime_error &err) {
@@ -137,8 +145,8 @@ bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->changeAuthPin(newVal.toStdString(),
-                                     oldVal.toStdString(),
+		return m_card->changeAuthPin( PinString( newVal.toLatin1() ),
+                                     PinString( oldVal.toLatin1() ),
                                      retriesLeft);
 	} catch(AuthError &) {
         return false;
@@ -158,7 +166,7 @@ bool JsEsteidCard::validatePin2(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->validateSignPin(oldVal.toStdString(),
+		return m_card->validateSignPin( PinString( oldVal.toLatin1() ),
 										retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -178,8 +186,8 @@ bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->changeSignPin(newVal.toStdString(),
-                                     oldVal.toStdString(),
+		return m_card->changeSignPin( PinString( newVal.toLatin1() ),
+                                     PinString( oldVal.toLatin1() ),
                                      retriesLeft);
 	} catch(AuthError &) {
         return false;
@@ -199,7 +207,7 @@ bool JsEsteidCard::validatePuk(QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->validatePuk(oldVal.toStdString(),
+		return m_card->validatePuk( PinString( oldVal.toLatin1() ),
                                      retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -219,8 +227,8 @@ bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
     byte retriesLeft = 0;
 
     try {
-		return m_card->changePUK(newVal.toStdString(),
-                                 oldVal.toStdString(),
+		return m_card->changePUK( PinString( newVal.toLatin1() ),
+                                 PinString( oldVal.toLatin1() ),
                                  retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -240,8 +248,8 @@ bool JsEsteidCard::unblockPin1(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
-		return m_card->unblockAuthPin(newVal.toStdString(),
-                                      puk.toStdString(),
+		return m_card->unblockAuthPin( PinString( newVal.toLatin1() ),
+                                      PinString( puk.toLatin1() ),
                                       retriesLeft);
     } catch(AuthError &) {
         return false;
@@ -261,8 +269,8 @@ bool JsEsteidCard::unblockPin2(QString newVal, QString puk)
     byte retriesLeft = 0;
 
     try {
-		return m_card->unblockSignPin(newVal.toStdString(),
-                                      puk.toStdString(),
+		return m_card->unblockSignPin( PinString( newVal.toLatin1() ),
+                                      PinString( puk.toLatin1() ),
                                       retriesLeft);
 	} catch(AuthError &) {
         return false;
