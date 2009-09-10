@@ -33,9 +33,9 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 ,	card( 0 )
 ,	cardMgr( 0 )
 ,	sock( 0 )
-,	generateKeys( false )
 ,	step( 0 )
 ,	serverStep( 0 )
+,	generateKeys( false )
 {
 	cardMgr = new SmartCardManager();
 

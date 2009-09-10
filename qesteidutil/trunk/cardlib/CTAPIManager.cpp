@@ -111,11 +111,13 @@ void CTDriver::CTPort::resetCT(byte unit,std::ostream *mLogger) {
 bool CTDriver::CTPort::init(bool nothrow) {
 	mCtn = dri->nextCtn++;
 	byte res = dri->pCTInit(mCtn, portNum);
-	if (res!=CTERR_OK) 
+	if (res!=CTERR_OK)
+	{
 		if (nothrow)
 			return false;
 		else
 			throw CTAPIError("init",res,0,0,0);
+	}
 	isConnected = true;
 	return true;
 	}
