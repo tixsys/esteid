@@ -195,7 +195,7 @@ bool JsCertData::isValid()
     if (!m_qcert)
         return false;
 
-	return SslCertificate::toLocalTime( m_qcert->expiryDate() ) >= QDateTime::currentDateTime().addDays( 0 );
+	return SslCertificate::toLocalTime( m_qcert->expiryDate() ) >= QDateTime::currentDateTime();
 }
 
 int JsCertData::validDays()
