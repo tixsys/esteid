@@ -140,3 +140,4 @@ install(FILES images/digidoc_icon_48x48.png DESTINATION ${SHARE_INSTALL_PREFIX}/
 install(FILES qdigidoc-client.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packages)
 install(FILES images/bdoc_file_icon_24x24.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-bdoc.png)
 install(FILES images/ddoc_file_icon_24x24.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-ddoc.png)
+install(FILES images/p12d_file_icon_128x128.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-p12d.png)
