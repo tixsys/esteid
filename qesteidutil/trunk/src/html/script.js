@@ -165,10 +165,10 @@ function checkReaderCount()
 
 	if ( cards < 2 )
 	{
-		document.getElementById( 'headerMenus' ).style.right = '95px';
+		document.getElementById( 'headerMenus' ).style.right = '100px';
 		reader.style.display = 'none';
 	} else {
-		document.getElementById( 'headerMenus' ).style.right = '185px';
+		document.getElementById( 'headerMenus' ).style.right = '190px';
 		reader.style.display = 'block';
 	}
 }

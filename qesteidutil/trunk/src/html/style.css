@@ -4,14 +4,16 @@ input[type="button"] { cursor: hand; }
 #headerBackground {position: relative; background: #00355f; height: 45px;}
 #headerLogo { float: left; margin: 8px 0px 0px 20px; background-image: url('qrc:/html/images/topLogo.png'); z-index: 20; width: 92px; height: 28px; }
 
-#readerSelect, #headerSelect { background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; }
+#readerSelect { position: absolute; right: 90px; top: 10px; }
+#headerSelect { position: absolute; right: 5px; top: 10px; }
+#readerSelect, #headerSelect { background: #00355f; border: 0px; -webkit-text-fill-color: #FFFFFF; font-family: "Arial, Liberation Sans"; font-size: 12px; }
 #readerSelect:focus, #readerSelect:hover, #headerSelect:focus, #headerSelect:hover { text-decoration: underline; }
 
-#headerMenus { float: right; margin: 10px 8px 0px 0px; color: #afc6d1; font-family: "Arial, Liberation Sans"; font-size: 12px;}
+#headerMenus { position: absolute; right: 100px; top: 14px; color: #afc6d1; font-family: "Arial, Liberation Sans"; font-size: 12px; }
 #headerMenus ul { display: inline; }
 #headerMenus ul li { list-style: none; padding: 0px 5px 0px 10px; margin: 0px; display: inline; border-left: 1px solid #325e80; font-weight: bold; }
 #headerMenus ul li:first-child { border-left: none; padding-left: 0px;}
-#headerMenus a:link {color: #afc6d1; text-decoration: none;}	
+#headerMenus a:link {color: #afc6d1; text-decoration: none;}
 #headerMenus a:hover, #headerMenus a:focus {color: #afc6d1; text-decoration: underline;}	
 
 #topBackground {position: relative; background: #c6ddfa; height: 200px; z-index: -10;}
