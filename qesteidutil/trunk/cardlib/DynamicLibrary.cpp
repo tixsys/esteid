@@ -157,12 +157,17 @@ DynamicLibrary::fProc DynamicLibrary::getProc(const char *procName) {
 	}
 
 void tryReadLink(std::string name,std::string path,std::string &result) {
+	if (!result.empty()) return;
 	char buffer[1024];
-	if (result.length() > 0) return;
 	memset(buffer,0,sizeof(buffer));
 	int link = readlink(std::string(path+name).c_str(),buffer,sizeof(buffer));
 	if (-1!= link) {
-		result = path + buffer;
+		std::string parse(buffer);
+		size_t pos = parse.rfind("/");
+		if(pos != std::string::npos)
+			result = path + parse.substr(pos+1,parse.size()-pos-1);
+		else
+			result = path + buffer;
 		return;
 		}
 	struct stat buff;
@@ -177,8 +182,9 @@ std::string DynamicLibrary::getVersionStr() {
 	for(size_t i = 0;i < sizeof(arrPaths) / sizeof(*arrPaths);i++) {
 		tryReadLink(name,arrPaths[i],result);
 		tryReadLink(name,arrPaths[i] + m_pathHint + "/",result);
+		if(!result.empty()) return result;
 		}
-	if (result.length() == 0) result = "unknown";
+	if (result.empty()) result = "unknown";
 	return result;
 	}
 #endif
