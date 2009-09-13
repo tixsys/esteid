@@ -24,6 +24,7 @@
 
 #include <cardlib/helperMacro.h>
 
+#include <QApplication>
 #include <QDateTime>
 
 #define HEADER 28
@@ -92,6 +93,7 @@ void CertUpdate::startUpdate( const QString &pin )
 
 QByteArray CertUpdate::runStep( int s, QByteArray result )
 {
+	QCoreApplication::processEvents();
 	switch( s )
 	{
 	case 1: card->setSecEnv( 1 ); break;

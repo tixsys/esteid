@@ -616,7 +616,16 @@ function updateCert()
 		extender.closeLoading();
 		return;
 	}
-	extender.updateCert();
+	var ok = false;
+	try {
+	 ok = extender.updateCert();
+	} catch( err ){}
+	if ( ok )
+	{
+		extender.closeLoading();
+		activeCardId = "";
+		cardInserted( cardManager.activeReaderNum() );
+	}
 	extender.closeLoading();
 }
 
