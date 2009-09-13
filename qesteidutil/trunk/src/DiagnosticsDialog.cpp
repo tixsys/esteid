@@ -34,11 +34,11 @@
 #include <QMessageBox>
 #include <QTextStream>
 
-#if defined Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 #include <Windows.h>
-#elif defined Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
 #include <QProcess>
-#elif defined Q_OS_MAC
+#elif defined(Q_OS_MAC)
 #include <Carbon/Carbon.h>
 #endif
 
@@ -55,7 +55,7 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << QCoreApplication::applicationVersion() << "<br />";
 
 	s << "<b>" << tr("OS:") << "</b> ";
-#if defined Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 	switch( QSysInfo::WindowsVersion )
 	{
 	case QSysInfo::WV_2000: s << "Windows 2000"; break;
@@ -65,12 +65,12 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	case QSysInfo::WV_WINDOWS7: s << "Windows 7"; break;
 	default: s << "Unknown version (" << QSysInfo::WindowsVersion << ")";
 	}
-#elif defined Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
 	QProcess p;
 	p.start( "lsb_release", QStringList() << "-s" << "-d" );
 	p.waitForReadyRead();
 	s << p.readAll();
-#elif defined Q_OS_MAC
+#elif defined(Q_OS_MAC)
 	SInt32 major, minor, bugfix;
 	
 	if(Gestalt(gestaltSystemVersionMajor, &major) == noErr && Gestalt(gestaltSystemVersionMinor, &minor) == noErr && Gestalt(gestaltSystemVersionBugFix, &bugfix) == noErr) {
@@ -85,13 +85,13 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << QCoreApplication::libraryPaths().join( ";" ) << "<br />";
 
 	s << "<b>" << tr("Libraries") << "</b><br />";
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 	s << getLibVersion( "advapi32") << "<br />";
 	s << getLibVersion( "libeay32" ) << "<br />";
 	s << getLibVersion( "ssleay32" ) << "<br />";
-#elif defined Q_OS_MAC
+#elif defined(Q_OS_MAC)
 	s << getLibVersion( "PCSC" ) << "<br />";
-#else
+#elif defined(Q_OS_LINUX)
 	s << getLibVersion( "pcsclite" ) << "<br />";
 	s << getLibVersion( "ssl" ) << "<br />";
 	s << getLibVersion( "crypto" ) << "<br />";
@@ -100,7 +100,7 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << "QT (" << QT_VERSION_STR << ")<br />";
 	s << "<br />";
 
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_WIN32)
 	s << "<b>" << tr("Smart Card service status: ") << "</b>";
 #else
 	s << "<b>" << tr("PCSC service status: ") << "</b>";
@@ -167,7 +167,7 @@ QString DiagnosticsDialog::getReaderInfo() const
 	return d;
 }
 
-#ifdef WIN32
+#if defined(Q_OS_WIN32)
 bool DiagnosticsDialog::isPCSCRunning() const
 {
 	bool result = false;
@@ -185,6 +185,14 @@ bool DiagnosticsDialog::isPCSCRunning() const
 		CloseServiceHandle( h );
 	}
 	return result;
+}
+#elif defined(Q_OS_LINUX)
+bool DiagnosticsDialog::isPCSCRunning() const
+{
+	QProcess p;
+	p.start( "pidof", QStringList() << "pcscd" );
+	p.waitForFinished();
+	return !p.readAll().trimmed().isEmpty();
 }
 #else
 bool DiagnosticsDialog::isPCSCRunning() const { return true; }
