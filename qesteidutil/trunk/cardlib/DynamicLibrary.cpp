@@ -162,10 +162,8 @@ void tryReadLink(std::string name,std::string path,std::string &result) {
 	memset(buffer,0,sizeof(buffer));
 	int link = readlink(std::string(path+name).c_str(),buffer,sizeof(buffer));
 	if (-1!= link) {
-		std::string parse(buffer);
-		size_t pos = parse.rfind("/");
-		if(pos != std::string::npos)
-			result = path + parse.substr(pos+1,parse.size()-pos-1);
+		if(std::string(buffer).rfind("/") != std::string::npos)
+			result = buffer;
 		else
 			result = path + buffer;
 		return;
