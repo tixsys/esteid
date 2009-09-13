@@ -97,7 +97,7 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	s << getLibVersion( "crypto" ) << "<br />";
 #endif
 	s << getLibVersion( "opensc-pkcs11" ) << "<br />";
-	s << "QT (" << QT_VERSION_STR << ")<br />";
+	s << "QT (" << qVersion() << ")<br />";
 	s << "<br />";
 
 #if defined(Q_OS_WIN32)
