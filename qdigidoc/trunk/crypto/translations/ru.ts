@@ -421,6 +421,14 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>You dont have permissions to write file %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Documents (*.cdoc *.CDOC)</source>
+        <translation>Документы(*.cdoc *:CDOC)</translation>
+    </message>
+    <message>
+        <source>DigiDoc3 Crypto</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -458,6 +466,10 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     <message>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation>Сохранить файл</translation>
     </message>
 </context>
 </TS>

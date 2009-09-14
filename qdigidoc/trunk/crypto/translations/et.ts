@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Certificates (*.pem *.cer *.crt)</source>
-        <translation type="unfinished">Sertifikaadid (*.pem *.cer *.crt)</translation>
+        <translation>Sertifikaadid (*.pem *.cer *.crt)</translation>
     </message>
     <message>
         <source>Failed to open certifiacte</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>This certificate is not usable for crypting</source>
-        <translation type="unfinished">Selle sertifikaadiga ei saa krüpteerida</translation>
+        <translation>Selle sertifikaadiga ei saa krüpteerida</translation>
     </message>
     <message>
         <source>Company name:</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished">Adressaat</translation>
+        <translation>Adressaat</translation>
     </message>
 </context>
 <context>
@@ -329,7 +329,7 @@ Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>Loading data</source>
-        <translation type="unfinished">Loen andmeid</translation>
+        <translation>Loen andmeid</translation>
     </message>
     <message>
         <source>&lt;br /&gt;Error code: %1</source>
@@ -421,6 +421,14 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>You dont have permissions to write file %1</source>
         <translation>Sul ei ole piisavalt õigusi et kirjutada faili %1</translation>
     </message>
+    <message>
+        <source>Documents (*.cdoc *.CDOC)</source>
+        <translation>Turvaümbrikud (*.cdoc *.CDOC)</translation>
+    </message>
+    <message>
+        <source>DigiDoc3 Crypto</source>
+        <translation>DigiDoc3 Krüpto</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -458,6 +466,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>Remove</source>
         <translation>Eemalda</translation>
+    </message>
+    <message>
+        <source>Save file</source>
+        <translation>Salvesta fail</translation>
     </message>
 </context>
 </TS>

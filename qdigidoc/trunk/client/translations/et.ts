@@ -378,6 +378,14 @@ Alustame laadimist?</translation>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
         <translation>Sul ei ole piisavalt õigusi, et kirjutada fail kataloogi %1</translation>
     </message>
+    <message>
+        <source>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</source>
+        <translation>Dokumendid (*.bdoc *.BDOC *.ddoc *.DDOC)</translation>
+    </message>
+    <message>
+        <source>DigiDoc3 client</source>
+        <translation>DigiDoc3 klient</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

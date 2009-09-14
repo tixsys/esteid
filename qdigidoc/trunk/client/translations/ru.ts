@@ -375,6 +375,14 @@ Start downloading?</source>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DigiDoc3 client</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
