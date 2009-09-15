@@ -30,5 +30,5 @@ class Settings : public QSettings
 
 public:
 	Settings( QObject *parent = 0 )
-	: QSettings( "Estonian ID Card", QString(), parent ) {};
+	: QSettings( "Estonian ID Card", QString(), parent ) {}
 };

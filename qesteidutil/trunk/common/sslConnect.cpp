@@ -293,8 +293,8 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	switch( type )
 	{
 	case SSLConnect::AccessCert:
-	case SSLConnect::MobileInfo: sock = BIO_new_connect( SK ); break;
-	default: sock = BIO_new_connect( EESTI ); break;
+	case SSLConnect::MobileInfo: sock = BIO_new_connect( (char*)SK ); break;
+	default: sock = BIO_new_connect( (char*)EESTI ); break;
 	}
 
 	BIO_set_conn_port( sock, "https" );
