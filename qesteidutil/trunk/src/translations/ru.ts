@@ -124,7 +124,11 @@ Enter PIN1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preferences...</source>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

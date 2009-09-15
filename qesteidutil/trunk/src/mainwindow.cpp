@@ -69,8 +69,10 @@ MainWindow::MainWindow( QWidget *parent )
 #if defined(Q_OS_MAC)
 	QMenuBar *bar = new QMenuBar;
 	QMenu *menu = bar->addMenu( tr("&File") );
-	QAction *pref = menu->addAction( tr("Preferences..."), m_jsExtender, SLOT(showSettings()) );
+	QAction *pref = menu->addAction( tr("Settings"), m_jsExtender, SLOT(showSettings()) );
+	QAction *close = menu->addAction( tr("Close"), qApp, SLOT(quit()) );
 	pref->setMenuRole( QAction::PreferencesRole );
+	close->setShortcut( Qt::CTRL + Qt::Key_W );
 #endif
 
 	load(QUrl("qrc:/html/index.html"));

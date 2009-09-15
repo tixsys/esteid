@@ -2,109 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et_EE" sourcelanguage="en">
 <context>
-    <name>CertificateWidget</name>
-    <message>
-        <source>Save certificate</source>
-        <translation type="obsolete">Salvesta sertifikaat</translation>
-    </message>
-    <message>
-        <source>Certificates (*.pem *.crt *.cer)</source>
-        <translation type="obsolete">Sertifikaadid (*.pem *.crt *.cer)</translation>
-    </message>
-    <message>
-        <source>Failed to save file</source>
-        <translation type="obsolete">Salvestamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>Certificate Information:</source>
-        <translation type="obsolete">Sertifikaadi info:</translation>
-    </message>
-    <message>
-        <source>This certificate is intended for following purpose(s):</source>
-        <translation type="obsolete">Seda sertifikaati kasutatakse järgmistel eesmärkidel:</translation>
-    </message>
-    <message>
-        <source>Issued to:</source>
-        <translation type="obsolete">Väljastatud kellel:</translation>
-    </message>
-    <message>
-        <source>Issued by:</source>
-        <translation type="obsolete">Väljastaja:</translation>
-    </message>
-    <message>
-        <source>Valid from</source>
-        <translation type="obsolete">Kehtiv alates</translation>
-    </message>
-    <message>
-        <source>to</source>
-        <translation type="obsolete">kuni</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="obsolete">Versioon</translation>
-    </message>
-    <message>
-        <source>Serial number</source>
-        <translation type="obsolete">Seeria number</translation>
-    </message>
-    <message>
-        <source>Signature algorithm</source>
-        <translation type="obsolete">Allkirja algoritm</translation>
-    </message>
-    <message>
-        <source>Issuer</source>
-        <translation type="obsolete">Väljaandja</translation>
-    </message>
-    <message>
-        <source>Vaild to</source>
-        <translation type="obsolete">Kehtiv kuni</translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation type="obsolete">Subjekt</translation>
-    </message>
-    <message>
-        <source>Public key</source>
-        <translation type="obsolete">Avatud võti</translation>
-    </message>
-    <message>
-        <source>Certificate policies</source>
-        <translation type="obsolete">Sertifikaadi reeglid</translation>
-    </message>
-    <message>
-        <source>Certificate</source>
-        <translation type="obsolete">Sertifikaat</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Üldine</translation>
-    </message>
-    <message>
-        <source>Details</source>
-        <translation type="obsolete">Detailid</translation>
-    </message>
-    <message>
-        <source>Field</source>
-        <translation type="obsolete">Väli</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Väärtus</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Salvesta</translation>
-    </message>
-    <message>
-        <source>Certification Path</source>
-        <translation type="obsolete">Sertifikaadi asukoht</translation>
-    </message>
-    <message>
-        <source>Certificate status:</source>
-        <translation type="obsolete">Sertifikaadi staatus:</translation>
-    </message>
-</context>
-<context>
     <name>DiagnosticsDialog</name>
     <message>
         <source>Diagnostics</source>
@@ -227,51 +124,12 @@ Sisesta PIN1</translation>
         <translation>&amp;Fail</translation>
     </message>
     <message>
-        <source>Preferences...</source>
+        <source>Settings</source>
         <translation>Seaded</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>Proves your identity to a remote computer</source>
-        <translation type="obsolete">Isikutuvastus</translation>
-    </message>
-    <message>
-        <source>Protects e-mail messages</source>
-        <translation type="obsolete">Kaitseb e-posti teateid</translation>
-    </message>
-    <message>
-        <source>OCSP signing</source>
-        <translation type="obsolete">OCSP allkirjastamine</translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation type="obsolete">Kõik rakenduste reeglid</translation>
-    </message>
-    <message>
-        <source>failed to load pkcs11 module</source>
-        <translation type="obsolete">viga pkcs11 mooduli laadimisel</translation>
-    </message>
-    <message>
-        <source>failed to list slots</source>
-        <translation type="obsolete">viga pkcs11 slottide lugemisel</translation>
-    </message>
-    <message>
-        <source>token failed</source>
-        <translation type="obsolete">viga &quot;tokeni&quot; laadimisel</translation>
-    </message>
-    <message>
-        <source>no token available</source>
-        <translation type="obsolete">ei leitud ühtegi &quot;tokenit&quot;</translation>
-    </message>
-    <message>
-        <source>no key matching certificate available</source>
-        <translation type="obsolete">ei leitud ühtegi sobivat sertifikaati</translation>
-    </message>
-    <message>
-        <source>Failed to resolve hostname. Are you connected to the internet?</source>
-        <translation type="obsolete">Puudub internetiühendus!</translation>
+        <source>Close</source>
+        <translation>Sulge</translation>
     </message>
 </context>
 <context>
