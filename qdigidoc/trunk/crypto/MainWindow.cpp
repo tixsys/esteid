@@ -106,7 +106,7 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.indexOf(
 		Settings().value( "Main/Language", "et" ).toString() ) );
 
-	QAction *close = QAction( tr("Close"), qApp, SLOT(quit()) );
+	QAction *close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
 	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
 	addAction( close );
