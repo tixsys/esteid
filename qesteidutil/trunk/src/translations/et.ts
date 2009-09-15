@@ -156,11 +156,11 @@
     </message>
     <message>
         <source>Smart Card service status: </source>
-        <translation type="unfinished">Smart Card teenuse staatus:</translation>
+        <translation>Smart Card teenuse staatus:</translation>
     </message>
     <message>
         <source>PCSC service status: </source>
-        <translation type="unfinished">PCSC teenuse staatus:</translation>
+        <translation>PCSC teenuse staatus:</translation>
     </message>
     <message>
         <source>Running</source>
@@ -203,12 +203,32 @@ Sisesta PIN1</translation>
         <source>Save picture</source>
         <translation>Salvesta pilt</translation>
     </message>
+    <message>
+        <source>Certificate update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate update failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate update not allowed!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>ID-card utility</source>
         <translation>ID-kaardi haldusvahend</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Fail</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Seaded</translation>
     </message>
 </context>
 <context>

@@ -20,10 +20,14 @@
  *
  */
 
-#include <QApplication>
-#include <QtWebKit>
-
 #include "mainwindow.h"
+
+#include "jsextender.h"
+#include "jscardmanager.h"
+
+#include <QApplication>
+#include <QMenuBar>
+#include <QWebFrame>
 
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )
@@ -61,6 +65,13 @@ MainWindow::MainWindow( QWidget *parent )
 
  	m_jsExtender->registerObject("esteidData", jsEsteidCard);
 	m_jsExtender->registerObject("cardManager", jsCardManager);
+
+#if defined(Q_OS_MAC)
+	QMenuBar *bar = new QMenuBar;
+	QMenu *menu = bar->addMenu( tr("&File") );
+	QAction *pref = menu->addAction( tr("Preferences..."), m_jsExtender, SLOT(showSettings()) );
+	pref->setMenuRole( QAction::PreferencesRole );
+#endif
 
 	load(QUrl("qrc:/html/index.html"));
 }

@@ -100,12 +100,32 @@ Enter PIN1</source>
         <source>JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Certificate update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate update failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate update not allowed!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>ID-card utility</source>
         <translation>Oбсуживание ID- карты</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

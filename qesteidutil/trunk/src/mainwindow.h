@@ -23,12 +23,11 @@
 #pragma once
 
 #include <QWebView>
-#include <QTranslator>
 
-#include "jsextender.h"
-#include "jscardmanager.h"
-#include "jsesteidcard.h"
-#include "jscertdata.h"
+class JsCardManager;
+class JsEsteidCard;
+class JsExtender;
+class QTranslator;
 
 class MainWindow : public QWebView
 {
