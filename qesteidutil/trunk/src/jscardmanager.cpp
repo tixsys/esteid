@@ -280,4 +280,4 @@ void JsCardManager::handleError(QString msg)
 }
 
 void JsCardManager::showDiagnostics()
-{ (new DiagnosticsDialog( 0 ) )->show(); }
+{ (new DiagnosticsDialog( qApp->activeWindow() ) )->show(); }

@@ -105,7 +105,7 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 #else
 	s << "<b>" << tr("PCSC service status: ") << "</b>";
 #endif
-	s << (isPCSCRunning() ? tr("Running") : tr("Not running"));
+	s << " " << (isPCSCRunning() ? tr("Running") : tr("Not running"));
 	s << "<br /><br />";
 
 	s << "<b>" << tr("Card readers") << "</b><br />";
