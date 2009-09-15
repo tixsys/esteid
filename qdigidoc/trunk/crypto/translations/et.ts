@@ -429,6 +429,14 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>DigiDoc3 Crypto</source>
         <translation>DigiDoc3 Krüpto</translation>
     </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Fail</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Seaded</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

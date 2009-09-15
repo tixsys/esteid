@@ -106,6 +106,13 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.indexOf(
 		Settings().value( "Main/Language", "et" ).toString() ) );
 
+#if defined(Q_OS_MAC)
+	QMenuBar *bar = new QMenuBar;
+	QMenu *menu = bar->addMenu( tr("&File") );
+	QAction *pref = menu->addAction( tr("Preferences..."), this, SLOT(showSettings()) );
+	pref->setMenuRole( QAction::PreferencesRole );
+#endif
+
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
@@ -221,7 +228,7 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HeadSettings:
-		SettingsDialog( this ).exec();
+		showSettings();
 		break;
 	case HeadHelp:
 		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
@@ -589,6 +596,8 @@ void MainWindow::showCardStatus()
 	cards->setVisible( doc->presentCards().size() > 1 );
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 }
+
+void MainWindow::showSettings() { SettingsDialog( this ).exec(); }
 
 void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
 {

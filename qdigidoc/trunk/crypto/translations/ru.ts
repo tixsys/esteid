@@ -429,6 +429,14 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>DigiDoc3 Crypto</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

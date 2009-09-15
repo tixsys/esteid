@@ -386,6 +386,14 @@ Alustame laadimist?</translation>
         <source>DigiDoc3 client</source>
         <translation>DigiDoc3 klient</translation>
     </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Fail</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Seaded</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

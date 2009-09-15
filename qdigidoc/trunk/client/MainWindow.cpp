@@ -149,6 +149,13 @@ MainWindow::MainWindow( QWidget *parent )
 	infoMobileCell->setText( s.value( "MobileNumber", "+372" ).toString() );
 	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
+#if defined(Q_OS_MAC)
+	QMenuBar *bar = new QMenuBar;
+	QMenu *menu = bar->addMenu( tr("&File") );
+	QAction *pref = menu->addAction( tr("Preferences..."), this, SLOT(showSettings()) );
+	pref->setMenuRole( QAction::PreferencesRole );
+#endif
+
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
@@ -240,7 +247,7 @@ void MainWindow::buttonClicked( int button )
 	switch( button )
 	{
 	case HeadSettings:
-		SettingsDialog( this ).exec();
+		showSettings();
 		break;
 	case HeadHelp:
 		QDesktopServices::openUrl( QUrl( "http://support.sk.ee/" ) );
@@ -739,6 +746,8 @@ void MainWindow::showCardStatus()
 	enableSign();
 	setCurrentPage( (Pages)stack->currentIndex(), false );
 }
+
+void MainWindow::showSettings() { SettingsDialog( this ).exec(); }
 
 void MainWindow::showWarning( const QString &msg )
 {

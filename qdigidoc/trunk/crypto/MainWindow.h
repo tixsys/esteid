@@ -44,6 +44,7 @@ private Q_SLOTS:
 	void parseLink( const QString &url );
 	void removeDocument( int index );
 	void showCardStatus();
+	void showSettings();
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err, const QString &errmsg = QString() );
 
