@@ -75,15 +75,22 @@ void CryptDoc::addFile( const QString &file, const QString &mime )
 	if( isEncrypted() )
 		return setLastError( tr("Container is encrypted") );
 
-	DataFile *data;
+	DataFile *data = 0;
 	int err = DataFile_new( &data, m_doc, NULL, file.toUtf8(),
 		CONTENT_EMBEDDED_BASE64, mime.toUtf8(), 0, NULL, 0, NULL, CHARSET_UTF_8 );
 	if( err != ERR_OK )
+	{
+		if( data )
+			DataFile_delete( m_doc, data->szId );
 		return setLastError( tr("Failed to add file"), err );
+	}
 
 	err = calculateDataFileSizeAndDigest( m_doc, data->szId, file.toUtf8(), DIGEST_SHA1 );
 	if( err != ERR_OK )
+	{
+		DataFile_delete( m_doc, data->szId );
 		setLastError( tr("Failed to calculate digest"), err );
+	}
 }
 
 void CryptDoc::addKey( const CKey &key )
