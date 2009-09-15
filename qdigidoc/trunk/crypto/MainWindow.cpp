@@ -109,8 +109,10 @@ MainWindow::MainWindow( QWidget *parent )
 #if defined(Q_OS_MAC)
 	QMenuBar *bar = new QMenuBar;
 	QMenu *menu = bar->addMenu( tr("&File") );
-	QAction *pref = menu->addAction( tr("Preferences..."), this, SLOT(showSettings()) );
+	QAction *pref = menu->addAction( tr("Settings"), this, SLOT(showSettings()) );
+	QAction *close = menu->addAction( tr("Close"), qApp, SLOT(quit()) );
 	pref->setMenuRole( QAction::PreferencesRole );
+	close->setShortcut( Qt::CTRL + Qt::Key_W );
 #endif
 
 	QStringList args = qApp->arguments();

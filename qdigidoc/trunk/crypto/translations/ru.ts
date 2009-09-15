@@ -434,7 +434,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preferences...</source>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

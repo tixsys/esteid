@@ -391,8 +391,8 @@ Alustame laadimist?</translation>
         <translation>&amp;Fail</translation>
     </message>
     <message>
-        <source>Preferences...</source>
-        <translation>Seaded</translation>
+        <source>Close</source>
+        <translation>Sulge</translation>
     </message>
 </context>
 <context>
