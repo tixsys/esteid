@@ -39,6 +39,7 @@ private Q_SLOTS:
 	void addCardCert();
 	void addKeys( const QList<CKey> &keys );
 	void buttonClicked( int button );
+	void closeDoc();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
 	void parseLink( const QString &url );
@@ -68,7 +69,6 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
-	void keyPressEvent( QKeyEvent *e );
 	void parseParams();
 	void setCurrentPage( Pages page );
 

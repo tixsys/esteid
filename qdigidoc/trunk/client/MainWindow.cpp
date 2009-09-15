@@ -149,13 +149,16 @@ MainWindow::MainWindow( QWidget *parent )
 	infoMobileCell->setText( s.value( "MobileNumber", "+372" ).toString() );
 	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
+	QAction *close = new QAction( tr("Close"), this );
+	close->setShortcut( Qt::CTRL + Qt::Key_W );
+	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
+	addAction( close );
 #if defined(Q_OS_MAC)
 	QMenuBar *bar = new QMenuBar;
 	QMenu *menu = bar->addMenu( tr("&File") );
 	QAction *pref = menu->addAction( tr("Settings"), this, SLOT(showSettings()) );
-	QAction *close = menu->addAction( tr("Close"), qApp, SLOT(quit()) );
 	pref->setMenuRole( QAction::PreferencesRole );
-	close->setShortcut( Qt::CTRL + Qt::Key_W );
+	menu->addAction( close );
 #endif
 
 	QStringList args = qApp->arguments();
@@ -389,6 +392,9 @@ bool MainWindow::checkConnection()
 	return status;
 }
 
+void MainWindow::closeDoc()
+{ buttonClicked( stack->currentIndex() == Sign ? SignCancel : ViewClose ); }
+
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
 	if( e->mimeData()->hasUrls() && stack->currentIndex() != View )
@@ -453,16 +459,6 @@ void MainWindow::enableSign()
 }
 
 bool MainWindow::isLoaded() const { return m_loaded; }
-
-void MainWindow::keyPressEvent( QKeyEvent *e )
-{
-	if( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_W )
-	{
-		buttonClicked( stack->currentIndex() == Sign ? SignCancel : ViewClose );
-		e->accept();
-	}
-	QWidget::keyPressEvent( e );
-}
 
 void MainWindow::on_introCheck_stateChanged( int state )
 { Settings().setValue( "Client/Intro", state == Qt::Unchecked ); }

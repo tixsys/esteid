@@ -106,13 +106,16 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.indexOf(
 		Settings().value( "Main/Language", "et" ).toString() ) );
 
+	QAction *close = QAction( tr("Close"), qApp, SLOT(quit()) );
+	close->setShortcut( Qt::CTRL + Qt::Key_W );
+	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
+	addAction( close );
 #if defined(Q_OS_MAC)
 	QMenuBar *bar = new QMenuBar;
 	QMenu *menu = bar->addMenu( tr("&File") );
 	QAction *pref = menu->addAction( tr("Settings"), this, SLOT(showSettings()) );
-	QAction *close = menu->addAction( tr("Close"), qApp, SLOT(quit()) );
 	pref->setMenuRole( QAction::PreferencesRole );
-	close->setShortcut( Qt::CTRL + Qt::Key_W );
+	menu->addAction( close );
 #endif
 
 	QStringList args = qApp->arguments();
@@ -324,6 +327,8 @@ void MainWindow::buttonClicked( int button )
 	}
 }
 
+void MainWindow::closeDoc() { buttonClicked( ViewClose ); }
+
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
 	if( e->mimeData()->hasUrls() && !doc->isEncrypted() )
@@ -351,16 +356,6 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 	}
 	else
 		return QWidget::eventFilter( o, e );
-}
-
-void MainWindow::keyPressEvent( QKeyEvent *e )
-{
-	if( e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_W )
-	{
-		buttonClicked( ViewClose );
-		e->accept();
-	}
-	QWidget::keyPressEvent( e );
 }
 
 void MainWindow::on_introCheck_stateChanged( int state )

@@ -40,6 +40,7 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
+	void closeDoc();
 	void enableSign();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
@@ -76,7 +77,6 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
-	void keyPressEvent( QKeyEvent *e );
 	void parseParams();
 	void setCurrentPage( Pages page, bool reload = true );
 
