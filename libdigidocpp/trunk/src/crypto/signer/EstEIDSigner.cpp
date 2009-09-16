@@ -134,11 +134,13 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 				fputc( '*', stdout );
 				break;
 			case EOF:
+			{
 				fputs( "[EOF]\n", stdout );
 				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with [EOF].");
 				e.setCode( Exception::PINCanceled );
 				throw e;
 				break;
+			}
 			case 0: 
 			case 0xE0:  // FN Keys (0 or E0) start of two-character FN code
 				c = ( c << 4 ) | _getch();
@@ -161,17 +163,21 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 				fputs( "\b \b", stdout );
 				break;
 			case  3: // CTRL+C 
+			{
 				fputs( "^C\n", stdout );
 				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with ^C.");
 				e.setCode( Exception::PINCanceled );
 				throw e;
 				break;
+			}
 			case  26: // CTRL+Z
+			{
 				fputs( "^Z\n", stdout );
 				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with ^Z.");
 				e.setCode( Exception::PINCanceled );
 				throw e;
 				break;
+			}
 			case  27: // ESC 
 				fputc('\n', stdout );
 				printf( prompt.c_str(), certificate.token.label.c_str() );
