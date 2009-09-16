@@ -326,11 +326,27 @@ bool DigiDoc::open( const QString &file )
 	return false;
 }
 
-void DigiDoc::parseException( const Exception &e, QStringList &causes )
+void DigiDoc::parseException( const Exception &e, QStringList &causes, bool &breakLoop )
 {
-	causes << QString::fromUtf8( e.getMsg().data() );
+	switch( e.code() )
+	{
+	case Exception::PINIncorrect:
+		setLastError( tr("PIN Incorrect") );
+		breakLoop = true;
+		return;
+	case Exception::PINCanceled:
+		breakLoop = true;
+		return;
+	default:
+		causes << QString::fromUtf8( e.getMsg().data() );
+		break;
+	}
 	Q_FOREACH( const Exception &c, e.getCauses() )
-		parseException( c, causes );
+	{
+		parseException( c, causes, breakLoop );
+		if( breakLoop )
+			return;
+	}
 }
 
 QStringList DigiDoc::presentCards() const { return m_cards; }
@@ -437,8 +453,10 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 void DigiDoc::setLastError( const Exception &e )
 {
 	QStringList causes;
-	parseException( e, causes );
-	setLastError( causes.join( "\n" ) );
+	bool breakLoop = false;
+	parseException( e, causes, breakLoop );
+	if( !breakLoop )
+		setLastError( causes.join( "\n" ) );
 }
 
 void DigiDoc::setLastError( const QString &err ) { Q_EMIT error( m_lastError = err ); }

@@ -126,7 +126,7 @@ private Q_SLOTS:
 	void setLastError( const QString &err );
 
 private:
-	void parseException( const digidoc::Exception &e, QStringList &causes );
+	void parseException( const digidoc::Exception &e, QStringList &causes, bool &breakLoop );
 	void setLastError( const digidoc::Exception &e );
 
 	digidoc::WDoc	*b;

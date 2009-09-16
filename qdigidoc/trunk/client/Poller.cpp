@@ -165,8 +165,11 @@ std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
 {
 	PinDialog p( PinDialog::Pin2Type, SslCertificate::fromX509( (Qt::HANDLE)c.cert ), qApp->activeWindow() );
 	if( !p.exec() )
-		throw SignException( __FILE__, __LINE__,
-			QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
+	{
+		SignException e( __FILE__, __LINE__, QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
+		e.setCode( Exception::PINCanceled );
+		throw e;
+	}
 	return p.text().toStdString();
 }
 
