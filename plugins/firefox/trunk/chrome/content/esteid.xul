@@ -3,12 +3,14 @@
          xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <statusbar id="status-bar">
-        <statusbarpanel id="esteidpanel" label="Loading..." />
+        <statusbarpanel id="esteidpanel" label="Loading..."
+                        onclick="alert(logmsg);" />
 <!--        <html:object id="buttplug" type="trivial/very"
                      style="width: 1px; height: 1px;
                             margin: 0px; padding: 0px;
                             visibility: hidden;" /> -->
     </statusbar>
     <!-- <window></window> -->
+    <script src="config.js"/>
     <script src="esteid.js"/>
 </overlay>

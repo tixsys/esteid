@@ -21,4 +21,7 @@ function EstEIDtest() {
     }
 }
 
+// Configure EstEID certificates and modules
+window.addEventListener("load", ConfigureEstEID, false);
+// Load plugin to show it's version on status bar
 window.addEventListener("load", EstEIDtest, false);
