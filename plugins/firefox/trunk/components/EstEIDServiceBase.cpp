@@ -112,7 +112,9 @@ std::string EstEIDServiceBase::signSHA1(std::string hash,
 
     EstEidCard card(mgr, reader);
 
-    return toHex(card.calcSignSHA1(bhash, keyId, pin));
+    // FIXME: Ugly, ugly hack! This needs to be implemented correctly
+    //        in order to protect PIN codes in program memory.
+    return toHex(card.calcSignSHA1(bhash, keyId, PinString(pin.c_str())));
 }
 
 bool EstEIDServiceBase::getRetryCounts(byte &puk,
