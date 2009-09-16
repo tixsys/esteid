@@ -222,6 +222,7 @@ set(esteid_module_SRCS
     ${CARDLIB}/SCError.cpp
     ${CARDLIB}/SIMCard.cpp
     ${CARDLIB}/SmartCardManager.cpp
+    ${CARDLIB}/locked_allocator.cpp
 )
 
 set(esteid_plugin_SRCS
