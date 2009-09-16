@@ -337,6 +337,10 @@ void DigiDoc::parseException( const Exception &e, QStringList &causes, bool &bre
 	case Exception::PINCanceled:
 		breakLoop = true;
 		return;
+	case Exception::PINLocked:
+		setLastError( tr("PIN Locked") );
+		breakLoop = true;
+		return;
 	default:
 		causes << QString::fromUtf8( e.getMsg().data() );
 		break;

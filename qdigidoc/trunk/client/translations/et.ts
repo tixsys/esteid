@@ -23,6 +23,14 @@
         <source>Missing signature</source>
         <translation>Allkiri puudub</translation>
     </message>
+    <message>
+        <source>PIN Incorrect</source>
+        <translation>PIN vigane</translation>
+    </message>
+    <message>
+        <source>PIN Locked</source>
+        <translation>PIN on lukus</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

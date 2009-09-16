@@ -23,6 +23,14 @@
         <source>Cannot add signature to empty container</source>
         <translation>Нельзя добавить подпись в пустой контейнер</translation>
     </message>
+    <message>
+        <source>PIN Incorrect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
