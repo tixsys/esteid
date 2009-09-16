@@ -12,6 +12,7 @@
 #define CKR_CANCEL				(1)
 #define CKR_FUNCTION_CANCELED	(0x50)
 #define CKR_PIN_INCORRECT		(0xa0)
+#define CKR_PIN_LOCKED			(0xa4)
 
 namespace digidoc
 {
@@ -295,6 +296,13 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
         {
             SignException e( __FILE__, __LINE__, "PIN Incorrect" );
             e.setCode( Exception::PINIncorrect );
+            throw e;
+            break;
+        }
+        case CKR_PIN_LOCKED:
+        {
+            SignException e( __FILE__, __LINE__, "PIN Locked" );
+            e.setCode( Exception::PINLocked );
             throw e;
             break;
         }

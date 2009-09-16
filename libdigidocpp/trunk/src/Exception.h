@@ -23,6 +23,7 @@ namespace digidoc
               None              = 0,
               PINCanceled       = 2,
               PINIncorrect      = 1,
+              PINLocked         = 3,
           };
           typedef std::vector<Exception> Causes;
 
