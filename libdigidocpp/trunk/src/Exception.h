@@ -19,23 +19,28 @@ namespace digidoc
     {
 
       public:
+          enum ExceptionCode {
+              None              = 0,
+              PINCanceled       = 2,
+              PINIncorrect      = 1,
+          };
           typedef std::vector<Exception> Causes;
 
           Exception(const std::string& file, int line, const std::string& msg);
           Exception(const std::string& file, int line, const std::string& msg, const Exception& cause);
+          ExceptionCode code() const;
           std::string getMsg() const;
           bool hasCause() const;
           Causes getCauses() const;
-          void addCause(const Exception& cause)
-          {
-              this->causes.push_back(cause);
-          }
+          void addCause(const Exception& cause);
+          void setCode( ExceptionCode Code );
 
       protected:
           std::string file;
           int line;
           std::string msg;
           Causes causes;
+          ExceptionCode m_code;
 
     };
 }

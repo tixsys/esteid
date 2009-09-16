@@ -11,6 +11,7 @@
 #define CKR_OK					(0)
 #define CKR_CANCEL				(1)
 #define CKR_FUNCTION_CANCELED	(0x50)
+#define CKR_PIN_INCORRECT		(0xa0)
 
 namespace digidoc
 {
@@ -279,13 +280,24 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
         }
         else
             rv = PKCS11_login(d->sign.slot, 0, getPin(d->createPKCS11Cert(d->sign.slot, d->sign.certificate)).c_str());
-		switch(ERR_GET_REASON(ERR_get_error()))
+        switch(ERR_GET_REASON(ERR_get_error()))
         {
         case CKR_OK: break;
         case CKR_CANCEL:
         case CKR_FUNCTION_CANCELED:
-            THROW_SIGNEXCEPTION("PIN acquisition canceled.");
+        {
+            SignException e( __FILE__, __LINE__, "PIN acquisition canceled.");
+            e.setCode( Exception::PINCanceled );
+            throw e;
             break;
+        }
+        case CKR_PIN_INCORRECT:
+        {
+            SignException e( __FILE__, __LINE__, "PIN Incorrect" );
+            e.setCode( Exception::PINIncorrect );
+            throw e;
+            break;
+        }
         default:
             THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->sign.slot->token->label,
                     ERR_reason_error_string(ERR_get_error()));

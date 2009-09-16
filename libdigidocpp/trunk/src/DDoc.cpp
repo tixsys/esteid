@@ -542,7 +542,17 @@ void DDoc::throwError( const std::string &msg, int line ) const throw(BDocExcept
 
 void DDoc::throwError( int err, const std::string &msg, int line ) const throw(BDocException)
 {
-	if( err != ERR_OK )
+	switch( err )
+	{
+	case ERR_OK: break;
+	case ERR_PKCS_LOGIN:
+	{
+		BDocException e( __FILE__, line, "PIN Incorrect" );
+		e.setCode( Exception::PINIncorrect );
+		throw e;
+		break;
+	}
+	default:
 	{
 		std::ostringstream s;
 		s << msg << "\n (error: " << err;
@@ -550,6 +560,8 @@ void DDoc::throwError( int err, const std::string &msg, int line ) const throw(B
 			s << "; message: " << d->f_getErrorString( err );
 		s << ")";
 		throwError( s.str(), line );
+		break;
+	}
 	}
 }
 

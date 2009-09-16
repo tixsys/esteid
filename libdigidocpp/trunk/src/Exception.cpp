@@ -1,17 +1,18 @@
 #include "Exception.h"
 
+using namespace digidoc;
 
 /**
  * @param file filename, where the exception was thrown.
  * @param line line of the file, where the exception was thrown.
  * @param msg error message.
  */
-digidoc::Exception::Exception(const std::string& file, int line, const std::string& msg)
+Exception::Exception(const std::string& file, int line, const std::string& msg)
  : file(file)
  , line(line)
  , msg(msg)
-{
-}
+ , m_code(None)
+{}
 
 /**
  * Convenience constructor when there is just one cause for this Exception.
@@ -23,29 +24,27 @@ digidoc::Exception::Exception(const std::string& file, int line, const std::stri
  * @see hasCause()
  * @see getCause()
  */
-digidoc::Exception::Exception(const std::string& file, int line, const std::string& msg, const Exception& cause)
+Exception::Exception(const std::string& file, int line, const std::string& msg, const Exception& cause)
  : file(file)
  , line(line)
  , msg(msg)
-{
-    addCause(cause);
-}
+ , m_code(None)
+{ addCause(cause); }
+
+Exception::ExceptionCode Exception::code() const { return m_code; }
 
 /**
  * @return returns error message.
  */
-std::string digidoc::Exception::getMsg() const
-{
-    return msg;
-}
+std::string Exception::getMsg() const { return msg; }
+
+void Exception::addCause(const Exception& cause) { causes.push_back(cause); }
+
 
 /**
  * @return returns whether the exception has cause.
  */
-bool digidoc::Exception::hasCause() const
-{
-    return !causes.empty();
-}
+bool Exception::hasCause() const { return !causes.empty(); }
 
 /**
  * Returns exception causes (other exceptions that caused this exception).
@@ -53,7 +52,6 @@ bool digidoc::Exception::hasCause() const
  * @return returns exception causes if the exception has cause otherwise empty collection.
  * @see hasCause()
  */
-digidoc::Exception::Causes digidoc::Exception::getCauses() const
-{
-    return causes;
-}
+Exception::Causes Exception::getCauses() const { return causes; }
+
+void Exception::setCode( ExceptionCode code ) { m_code = code; }
