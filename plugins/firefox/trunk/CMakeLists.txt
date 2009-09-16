@@ -16,7 +16,7 @@ set(CARDLIB ${CMAKE_SOURCE_DIR}/cardlib)
 
 # Set project version
 set( MAJOR 0)
-set( MINOR 2)
+set( MINOR 3)
 
 find_package(Subversion)
 if(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
