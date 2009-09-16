@@ -4,4 +4,4 @@
 
 resource 'STR#' (126) { { "Estonian Electronic Identification Card Plug-in", "EstEID Plug-in" } };
 resource 'STR#' (127) { { "EstEID Module" } };
-resource 'STR#' (128) { { "application/esteid", "" } };
+resource 'STR#' (128) { { "application/x-esteid", "" } };

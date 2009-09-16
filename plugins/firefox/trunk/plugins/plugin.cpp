@@ -18,7 +18,7 @@ nsIServiceManager * gServiceManager = NULL;
 
 // Unix needs this
 #ifdef XP_UNIX
-#define MIME_TYPES_HANDLED  "application/esteid"
+#define MIME_TYPES_HANDLED  "application/x-esteid"
 #define PLUGIN_NAME         "Estonian ID-Card Plugin for Mozilla"
 #define MIME_TYPES_DESCRIPTION  MIME_TYPES_HANDLED"::"PLUGIN_NAME
 #define PLUGIN_DESCRIPTION  PLUGIN_NAME " (XPCOM bridge)"

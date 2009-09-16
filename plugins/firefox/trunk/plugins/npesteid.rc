@@ -24,7 +24,7 @@ BEGIN
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "npesteid\0"
             VALUE "LegalCopyright", "LGPL\0"
-	    VALUE "MIMEType", "application/esteid\0"
+	    VALUE "MIMEType", "application/x-esteid\0"
             VALUE "OriginalFilename", "npesteid.dll\0"
             VALUE "ProductName", "Estonian ID-Card Plugin\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"

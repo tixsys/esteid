@@ -32,7 +32,7 @@ HKCR
 		{
 			NoRemove 'Content Type'
 			{
-				'application/esteid-plugin'
+				'application/x-esteid'
 				{ 
 					val CLSID = s '{28821112-76D5-4C26-9F64-9E20AA91DDF3}'
 				}
