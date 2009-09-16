@@ -330,11 +330,15 @@ void DigiDoc::parseException( const Exception &e, QStringList &causes, bool &bre
 {
 	switch( e.code() )
 	{
-	case Exception::PINIncorrect:
-		setLastError( tr("PIN Incorrect") );
+	case Exception::PINCanceled:
 		breakLoop = true;
 		return;
-	case Exception::PINCanceled:
+	case Exception::PINFailed:
+		setLastError( 0, tr("PIN Login failed") );
+		breakLoop = true;
+		return;
+	case Exception::PINIncorrect:
+		setLastError( tr("PIN Incorrect") );
 		breakLoop = true;
 		return;
 	case Exception::PINLocked:

@@ -31,6 +31,10 @@
         <source>PIN Locked</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PIN Login failed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
