@@ -22,6 +22,7 @@ namespace digidoc
           enum ExceptionCode {
               None              = 0,
               PINCanceled       = 2,
+              PINFailed         = 4,
               PINIncorrect      = 1,
               PINLocked         = 3,
           };

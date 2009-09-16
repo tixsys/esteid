@@ -1,6 +1,7 @@
 #include <memory.h>
 #include <map>
 #include <libp11.h>
+#include <sstream>
 
 #include "../../log.h"
 #include "../../Conf.h"
@@ -307,8 +308,12 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
             break;
         }
         default:
-            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->sign.slot->token->label,
-                    ERR_reason_error_string(ERR_get_error()));
+            std::ostringstream s;
+            s << "Failed to login to token '" << d->sign.slot->token->label
+                << "': " << ERR_reason_error_string(ERR_get_error());
+            SignException e( __FILE__, __LINE__, s.str() );
+            e.setCode( Exception::PINFailed );
+            throw e;
             break;
         }
     }
