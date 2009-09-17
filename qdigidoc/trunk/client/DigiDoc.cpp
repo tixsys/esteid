@@ -326,43 +326,35 @@ bool DigiDoc::open( const QString &file )
 	return false;
 }
 
-void DigiDoc::parseException( const Exception &e, QStringList &causes, bool &breakLoop )
+bool DigiDoc::parseException( const Exception &e, QStringList &causes )
 {
 	switch( e.code() )
 	{
 	case Exception::CertificateRevoked:
 		setLastError( tr("Certificate status revoked") );
-		breakLoop = true;
-		return;
+		return false;
 	case Exception::CertificateUnknown:
 		setLastError( tr("Certificate status unknown") );
-		breakLoop = true;
-		return;
+		return false;
 	case Exception::PINCanceled:
-		breakLoop = true;
-		return;
+		return false;
 	case Exception::PINFailed:
 		setLastError( tr("PIN Login failed") );
-		breakLoop = true;
-		return;
+		return false;
 	case Exception::PINIncorrect:
 		setLastError( tr("PIN Incorrect") );
-		breakLoop = true;
-		return;
+		return false;
 	case Exception::PINLocked:
 		setLastError( tr("PIN Locked") );
-		breakLoop = true;
-		return;
+		return false;
 	default:
 		causes << QString::fromUtf8( e.getMsg().data() );
 		break;
 	}
 	Q_FOREACH( const Exception &c, e.getCauses() )
-	{
-		parseException( c, causes, breakLoop );
-		if( breakLoop )
-			return;
-	}
+		if( !parseException( c, causes ) )
+			return false;
+	return true;
 }
 
 QStringList DigiDoc::presentCards() const { return m_cards; }
@@ -469,9 +461,7 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 void DigiDoc::setLastError( const Exception &e )
 {
 	QStringList causes;
-	bool breakLoop = false;
-	parseException( e, causes, breakLoop );
-	if( !breakLoop )
+	if( parseException( e, causes ) )
 		setLastError( causes.join( "\n" ) );
 }
 
