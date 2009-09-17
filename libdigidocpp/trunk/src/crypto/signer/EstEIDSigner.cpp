@@ -33,8 +33,7 @@ digidoc::EstEIDSigner::~EstEIDSigner()
 }
 
 /**
- * Implements signing certificate selector for EstEID ID-Cards. Select signing
- * certificate, which has label 'Allkirjastamine'.
+ * Implements signing certificate selector for EstEID ID-Cards.
  *
  * @param certificates list of certificates to choose from. List of all certificates
  *        found ID-card.
@@ -44,17 +43,10 @@ digidoc::EstEIDSigner::~EstEIDSigner()
 digidoc::PKCS11Signer::PKCS11Cert digidoc::EstEIDSigner::selectSigningCertificate(
         std::vector<PKCS11Signer::PKCS11Cert> certificates) throw(SignException)
 {
-    // Find EstEID signing certificate (PKCS11 cert label is string 'Allkirjastamine').
-    for(std::vector<PKCS11Signer::PKCS11Cert>::const_iterator iter = certificates.begin(); iter != certificates.end(); iter++)
-    {
-        if(iter->label == std::string("Allkirjastamine"))
-        {
-            return *iter;
-        }
-    }
-
-    THROW_SIGNEXCEPTION("Could not find certificate with label 'Allkirjastamine'.");
-	return certificates[0];
+    // Find EstEID signing certificate
+    if(certificates.empty())
+        THROW_SIGNEXCEPTION("Could not find certificate with label 'Allkirjastamine'.");
+    return certificates[0];
 }
 
 /**

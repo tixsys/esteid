@@ -40,6 +40,7 @@ public:
 	};
 
     digidoc::PKCS11Signer::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
+    bool checkCert( X509 *cert ) const;
 
     std::string driver;
 
@@ -210,6 +211,8 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
             for(unsigned int j = 0; j < numberOfCerts; j++)
             {
                 PKCS11_CERT* cert = certs + j;
+                if(!d->checkCert(cert->x509))
+                    break;
                 SignSlot signSlot = { cert, slot, tokenId };
                 certSlotMapping.push_back( signSlot );
                 certificates.push_back(d->createPKCS11Cert(slot, cert));
@@ -332,6 +335,27 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
     }
 }
 
+bool digidoc::PKCS11SignerPrivate::checkCert( X509 *cert ) const
+{
+    if(!cert)
+        return false;
+    ASN1_BIT_STRING *keyusage = (ASN1_BIT_STRING*)X509_get_ext_d2i(cert, NID_key_usage, NULL, NULL);
+    if(!keyusage)
+        return false;
+
+    bool ret = false;
+    for(int n = 0; n < 9; ++n)
+    {
+        if(ASN1_BIT_STRING_get_bit(keyusage, n) && n == 1)
+        {
+            ret = true;
+            break;
+        }
+    }
+    ASN1_BIT_STRING_free( keyusage );
+    return ret;
+}
+
 /**
  * Helper method, creates PKCS11Cert struct. NB! token should not be NULL.
  *
@@ -341,7 +365,7 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
  */
 digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
 {
-	digidoc::PKCS11Signer::PKCS11Cert certificate;
+    digidoc::PKCS11Signer::PKCS11Cert certificate;
     certificate.token.label = slot->token->label;
     certificate.token.manufacturer = slot->token->manufacturer;
     certificate.token.model = slot->token->model;
