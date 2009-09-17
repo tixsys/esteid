@@ -182,18 +182,16 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 		try
 		{
 			const QString card = QString::fromStdString( cert.token.serialNr );
-			if( selectedCard.isEmpty() )
-				selectedCard = card;
-			if( cert.label == std::string("Allkirjastamine") )
+			if( selectedCard.isEmpty() || selectedCard == card )
 			{
-				if( selectedCard == card )
-					signCert = cert;
+				selectedCard = card;
+				signCert = cert;
 			}
 		}
 		catch( const Exception & ) {}
 	}
-	if( signCert.label != std::string("Allkirjastamine") )
-		SignException( __FILE__, __LINE__, "Could not find certificate with label 'Allkirjastamine'." );
+	if( signCert.label.empty() )
+		SignException( __FILE__, __LINE__, "Could not find sign certificate." );
 
 	return signCert;
 }
