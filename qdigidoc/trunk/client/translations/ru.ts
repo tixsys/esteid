@@ -43,6 +43,10 @@
         <source>Certificate status unknown</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Check your computer time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -591,6 +595,10 @@ Please check your internet connection.</source>
     <message>
         <source>PIN acquisition canceled.</source>
         <translation>Введение PIN кода было прервано.</translation>
+    </message>
+    <message>
+        <source>Could not find sign certificate.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

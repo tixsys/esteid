@@ -33,15 +33,19 @@
     </message>
     <message>
         <source>PIN Login failed</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN koodi valideerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Certificate status revoked</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaat on kehtetu</translation>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaadi staatus on teadmata</translation>
+    </message>
+    <message>
+        <source>Check your computer time</source>
+        <translation>Kontrolli oma arvuti kella</translation>
     </message>
 </context>
 <context>
@@ -595,6 +599,10 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>PIN acquisition canceled.</source>
         <translation>PIN koodi sisestamine katkestati.</translation>
+    </message>
+    <message>
+        <source>Could not find sign certificate.</source>
+        <translation>Ei leidnud allkirjastamise sertifikaati.</translation>
     </message>
 </context>
 <context>

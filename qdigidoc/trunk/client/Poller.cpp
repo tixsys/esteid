@@ -191,7 +191,7 @@ PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
 		catch( const Exception & ) {}
 	}
 	if( signCert.label.empty() )
-		SignException( __FILE__, __LINE__, "Could not find sign certificate." );
+		SignException( __FILE__, __LINE__, QObject::tr("Could not find sign certificate.").toUtf8().constData() );
 
 	return signCert;
 }
