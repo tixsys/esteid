@@ -35,6 +35,14 @@
         <source>PIN Login failed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Certificate status revoked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Certificate status unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

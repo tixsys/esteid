@@ -330,6 +330,14 @@ void DigiDoc::parseException( const Exception &e, QStringList &causes, bool &bre
 {
 	switch( e.code() )
 	{
+	case Exception::CertificateRevoked:
+		setLastError( tr("Certificate status revoked") );
+		breakLoop = true;
+		return;
+	case Exception::CertificateUnknown:
+		setLastError( tr("Certificate status unknown") );
+		breakLoop = true;
+		return;
 	case Exception::PINCanceled:
 		breakLoop = true;
 		return;
