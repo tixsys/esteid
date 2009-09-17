@@ -39,6 +39,11 @@
 #include <QTranslator>
 #include <QUrl>
 
+#if defined(Q_OS_MAC)
+#include <QMenu>
+#include <QMenuBar>
+#endif
+
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 {
