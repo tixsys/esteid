@@ -336,6 +336,9 @@ bool DigiDoc::parseException( const Exception &e, QStringList &causes )
 	case Exception::CertificateUnknown:
 		setLastError( tr("Certificate status unknown") );
 		return false;
+	case Exception::OCSPTimeSlot:
+		setLastError( tr("Check your computer time") );
+		return false;
 	case Exception::PINCanceled:
 		return false;
 	case Exception::PINFailed:
