@@ -552,6 +552,20 @@ void DDoc::throwError( int err, const std::string &msg, int line ) const throw(B
 		throw e;
 		break;
 	}
+	case ERR_OCSP_CERT_REVOKED:
+	{
+		BDocException e( __FILE__, line, "Certificate status: revoked" );
+		e.setCode( Exception::CertificateRevoked );
+		throw e;
+		break;
+	}
+	case ERR_OCSP_CERT_UNKNOWN:
+	{
+		BDocException e( __FILE__, line, "Certificate status: unknown" );
+		e.setCode( Exception::CertificateUnknown );
+		throw e;
+		break;
+	}
 	default:
 	{
 		std::ostringstream s;
