@@ -23,6 +23,7 @@ namespace digidoc
               CertificateRevoked = 5,
               CertificateUnknown = 6,
               None               = 0,
+              OCSPTimeSlot       = 7,
               PINCanceled        = 2,
               PINFailed          = 4,
               PINIncorrect       = 1,

@@ -468,7 +468,9 @@ digidoc::OCSP::CertStatus digidoc::OCSP::validateResponse(OCSP_REQUEST* req, OCS
     // Check that response creation time is in valid time slot.
     if(!OCSP_check_validity(thisUpdate, nextUpdate, skew, maxAge))
     {
-		THROW_OCSPEXCEPTION(respStatus, "OCSP response not in valid time slot.");
+        OCSPException e( __FILE__, __LINE__, "OCSP response not in valid time slot.", respStatus );
+        e.setCode( Exception::OCSPTimeSlot );
+        throw e;
     }
 
     // Return certificate status.
