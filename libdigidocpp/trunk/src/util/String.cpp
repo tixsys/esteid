@@ -142,7 +142,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 std::string digidoc::util::String::getSystemEncoding()
 {
 #if defined(_WIN32)
-    return "WINDOWS-1252";
+    return "WINDOWS-1257";
 #elif defined(__APPLE__)
     return "UTF-8";
 #else
