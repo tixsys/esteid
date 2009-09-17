@@ -77,46 +77,23 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
  */
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)
 {
-    std::string charset("");
-    iconv_t ic_descr;
+    std::string charset = getSystemEncoding();
 
+    // no conversion needed for UTF-8
+    if((charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0))
+        return str_in;
+
+    iconv_t ic_descr = iconv_t(-1);
     try
     {
-        charset.append(getSystemEncoding());  
-    
-        if( (charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0) )
-        {
-	    	// no conversion needed for UTF-8 
-		    return str_in;
-	    }
-          
-        if(charset.compare("C") == 0)
-        {
-            INFO("System locale is C, continuing without conversion.");
-            charset = "LATIN1";
-        }
-
-        if(to_UTF)
-        {
-            //direction of conversion: from platform specific encoding to UTF-8
-            ic_descr = iconv_open("UTF-8", charset.c_str()); // to_encoding, from_encoding
-        }
-        else
-        {
-            //direction of conversion: from UTF-8 to platform specific encoding
-            ic_descr = iconv_open(charset.c_str(), "UTF-8");
-        }
+        ic_descr = to_UTF ? iconv_open("UTF-8", charset.c_str()) : iconv_open(charset.c_str(), "UTF-8");
     }
-
-    catch(std::exception& e)
-    {
-        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
-        return str_in;
-    }
+    catch(std::exception &) {}
 
     if( ic_descr == iconv_t(-1))
     {
-        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
+        INFO("Could not get the iconv descriptor for converting to/from charset %s,"
+             "continuing without conversion.", charset.c_str());
         return str_in; 
     }
 
@@ -144,7 +121,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
             case EINVAL:
             default:
                 iconv_close(ic_descr);
-                THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
+                return str_in;
                 break;
             }
         }
@@ -164,32 +141,21 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
  */
 std::string digidoc::util::String::getSystemEncoding()
 {
-    std::string encoding("");
+#if defined (_WIN32)
+    return "WINDOWS-1252";
+#elif defined(__APPLE__)
+    return "UTF-8";
+#else
     const char *env_lang = getenv("LANG");
+    if(!env_lang || strcmp(env_lang, "C"))
+        return "ISO8859-1";
 
-    if(env_lang)
-    {
-        encoding.append(env_lang);
-    }
-
-    if(encoding.empty())
-    {   
-        encoding.append("C");
-        INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
-        return encoding;
-    }
-
-    // Is LANG in a format such as en_US.ISO-8859-1 ?
+    std::string encoding(env_lang);
     size_t locale_start = encoding.rfind(".");
-
     if(locale_start != std::string::npos)
-    {
-        size_t newline = encoding.find("\n");
-        encoding = encoding.substr(locale_start+1, newline);
-    }
-
-    // else just return what was read from LANG
+        return encoding.substr(locale_start+1);
     return encoding;
+#endif
 }
 
 

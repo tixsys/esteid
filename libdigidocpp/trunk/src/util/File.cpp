@@ -36,22 +36,10 @@
 std::stack<std::string> digidoc::util::File::tempFiles;
 
 std::string digidoc::util::File::encodeName(const std::string &fileName)
-{
-#ifndef __APPLE__
-	try { return digidoc::util::String::convertUTF8(fileName,false); }
-	catch( const digidoc::Exception & ) {}
-#endif
-	return fileName;
-}
+{ return digidoc::util::String::convertUTF8(fileName,false); }
 
 std::string digidoc::util::File::decodeName(const std::string &localFileName)
-{
-#ifndef __APPLE__
-	try { return digidoc::util::String::convertUTF8(localFileName,true); }
-	catch( const digidoc::Exception & ) {}
-#endif
-	return std::string(localFileName);
-}
+{ return digidoc::util::String::convertUTF8(localFileName,true); }
 
 /**
  * Checks whether file exists and is type of file.
