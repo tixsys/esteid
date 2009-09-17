@@ -72,7 +72,8 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	m_http->setProxy( s.value( "proxyHost" ).toString(), s.value( "proxyPort" ).toInt() );
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+		//m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
+		m_http->setHost( "www.sk.ee", QHttp::ConnectionModeHttps, 8097 );
 	else
 		m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
 

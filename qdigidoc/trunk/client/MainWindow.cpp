@@ -351,10 +351,7 @@ void MainWindow::buttonClicked( int button )
 		else
 		{
 			if ( doc->documentType() == digidoc::WDoc::BDocType )
-			{
-				QMessageBox::warning( this, windowTitle(), tr( "Mobile-ID BDOC signing not supported yet!" ), QMessageBox::Ok );
-				return;
-			}
+				QMessageBox::warning( this, windowTitle(), tr( "Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!" ), QMessageBox::Ok );
 			MobileDialog *m = new MobileDialog( doc, this );
 			m->setSignatureInfo( signCityInput->text(),
 				signStateInput->text(), signZipInput->text(),
