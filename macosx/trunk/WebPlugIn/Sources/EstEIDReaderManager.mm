@@ -344,7 +344,8 @@ NSString *EstEIDReaderRetryCounterPIN2 = @"pin2";
 				return nil;
 			}
 			
-			return CPlusStringToNSString(toHex(card.calcSignSHA1(bytes, EstEidCard::SIGN, cpin)));
+			// FIXME: Remove this stuff
+			return CPlusStringToNSString(toHex(card.calcSignSHA1(bytes, EstEidCard::SIGN, PinString(cpin.c_str()))));
 		}
 		catch(std::runtime_error err) {
 			if(error) {

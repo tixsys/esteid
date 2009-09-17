@@ -142,6 +142,8 @@
 		81E4CBD50F9C77E500997F53 /* NSMenu+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8104BF1D0F5A8C5600387224 /* NSMenu+Additions.m */; };
 		81E4CC130F9C792700997F53 /* EstEIDWebService+Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */; };
 		81E4CC160F9C797400997F53 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F874C10F560ABF00FCAB5D /* WebKit.framework */; };
+		81E834B810621DB60073645C /* locked_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81E834B610621DB60073645C /* locked_allocator.cpp */; };
+		81E834B910621DB60073645C /* locked_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81E834B610621DB60073645C /* locked_allocator.cpp */; };
 		81F86EF70FA08E1100832B54 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F86EF30FA08E1100832B54 /* Localizable.strings */; };
 		81F86EF80FA08E1100832B54 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81F86EF50FA08E1100832B54 /* InfoPlist.strings */; };
 		81F871AC0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F871AB0FA0FB8A00832B54 /* EstEIDPINPanel.m */; };
@@ -356,6 +358,8 @@
 		81E4CC0A0F9C783700997F53 /* Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Tests.plist; path = WebPlugIn/Tests.plist; sourceTree = "<group>"; };
 		81E4CC0C0F9C786C00997F53 /* EstEIDWebService+Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EstEIDWebService+Test.h"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.h"; sourceTree = "<group>"; };
 		81E4CC0D0F9C786C00997F53 /* EstEIDWebService+Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "EstEIDWebService+Test.m"; path = "WebPlugIn/Sources/Tests/EstEIDWebService+Test.m"; sourceTree = "<group>"; };
+		81E834B610621DB60073645C /* locked_allocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = locked_allocator.cpp; path = ../../qesteidutil/trunk/cardlib/locked_allocator.cpp; sourceTree = SOURCE_ROOT; };
+		81E834B710621DB60073645C /* locked_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = locked_allocator.h; path = ../../qesteidutil/trunk/cardlib/locked_allocator.h; sourceTree = SOURCE_ROOT; };
 		81F86EF40FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81F86EF60FA08E1100832B54 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = WebPlugIn/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81F86EF90FA08E1800832B54 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = WebPlugIn/et.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -535,6 +539,8 @@
 				810679D20F9EC79D004BFEA0 /* EstEidCardMaintainer.cpp */,
 				810679D30F9EC79D004BFEA0 /* EstEidCardMaintainer.h */,
 				810679D40F9EC79D004BFEA0 /* helperMacro.h */,
+				81E834B710621DB60073645C /* locked_allocator.h */,
+				81E834B610621DB60073645C /* locked_allocator.cpp */,
 				810679CF0F9EC79D004BFEA0 /* ManagerInterface.h */,
 				810679D00F9EC79D004BFEA0 /* PCSCManager.cpp */,
 				810679D10F9EC79D004BFEA0 /* PCSCManager.h */,
@@ -1179,6 +1185,7 @@
 				81F871AC0FA0FB8A00832B54 /* EstEIDPINPanel.m in Sources */,
 				81DA6DE50FA4C1CD006083A3 /* EstEIDWebService.m in Sources */,
 				816BDA570FF760BD0000C7B6 /* types.cpp in Sources */,
+				81E834B910621DB60073645C /* locked_allocator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1202,6 +1209,7 @@
 				810679EF0F9EC79D004BFEA0 /* EstEidCard.cpp in Sources */,
 				81DA6DE40FA4C1CD006083A3 /* EstEIDWebService.m in Sources */,
 				816BDA560FF760BD0000C7B6 /* types.cpp in Sources */,
+				81E834B810621DB60073645C /* locked_allocator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
