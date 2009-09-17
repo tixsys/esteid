@@ -20,11 +20,13 @@ namespace digidoc
 
       public:
           enum ExceptionCode {
-              None              = 0,
-              PINCanceled       = 2,
-              PINFailed         = 4,
-              PINIncorrect      = 1,
-              PINLocked         = 3,
+              CertificateRevoked = 5,
+              CertificateUnknown = 6,
+              None               = 0,
+              PINCanceled        = 2,
+              PINFailed          = 4,
+              PINIncorrect       = 1,
+              PINLocked          = 3,
           };
           typedef std::vector<Exception> Causes;
 

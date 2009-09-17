@@ -197,9 +197,26 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
         THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to get OCSP response");
     }
 
-    if(status == digidoc::OCSP::GOOD) { DEBUG("OCSP status: GOOD"); }
-    else if(status == digidoc::OCSP::REVOKED) { DEBUG("OCSP status: REVOKED"); }
-    else if(status == digidoc::OCSP::UNKNOWN) { DEBUG("OCSP status: UNKNOWN"); }
+    switch(status)
+    {
+    case digidoc::OCSP::GOOD: DEBUG("OCSP status: GOOD"); break;
+    case digidoc::OCSP::REVOKED:
+    {
+        DEBUG("OCSP status: REVOKED");
+        SignatureException e( __FILE__, __LINE__, "Certificate status: revoked" );
+        e.setCode( Exception::CertificateRevoked );
+        throw e;
+        break;
+    }
+    case digidoc::OCSP::UNKNOWN:
+    {
+        DEBUG("OCSP status: UNKNOWN");
+        SignatureException e( __FILE__, __LINE__, "Certificate status: unknown" );
+        e.setCode( Exception::CertificateUnknown );
+        throw e;
+        break;
+    }
+    }
     DEBUG("OCSP response size %d", ocspResponse.size());
 
     // FIXME: get from ocsp instead
