@@ -8,9 +8,9 @@ FORMS	= idupdater.ui
 HEADERS = idupdater.h   InstallChecker.h   ProcessStarter.h   ScheduledUpdateTask.h
 SOURCES = idupdater.cpp InstallChecker.cpp ProcessStarter.cpp ScheduledUpdateTask.cpp
 SOURCES += main.cpp
-INCLUDEPATH += ../../ ../../smartcard++
-HEADERS += ../../smartcard++/DynamicLibrary.h  precompiled.h
-SOURCES += ../../smartcard++/DynamicLibrary.cpp
+INCLUDEPATH += ./ smartcard++
+HEADERS += smartcard++/DynamicLibrary.h  precompiled.h
+SOURCES += smartcard++/DynamicLibrary.cpp
 
 unix {
   UI_DIR = .ui
