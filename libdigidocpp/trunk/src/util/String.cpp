@@ -92,7 +92,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 
     if( ic_descr == iconv_t(-1))
     {
-        INFO("Could not get the iconv descriptor for converting to/from charset %s,"
+        INFO("Could not get the iconv descriptor for converting to/from charset %s, "
              "continuing without conversion.", charset.c_str());
         return str_in; 
     }
@@ -137,17 +137,17 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 /**
  * Helper method for getting the platform encoding.
  *
- * @return Returns the platform encoding read from the LANG environment variable. 
+ * @return Returns the platform encoding.
  */
 std::string digidoc::util::String::getSystemEncoding()
 {
-#if defined (_WIN32)
+#if defined(_WIN32)
     return "WINDOWS-1252";
 #elif defined(__APPLE__)
     return "UTF-8";
 #else
     const char *env_lang = getenv("LANG");
-    if(!env_lang || strcmp(env_lang, "C"))
+    if(!env_lang || strcmp(env_lang, "C") == 0)
         return "ISO8859-1";
 
     std::string encoding(env_lang);
