@@ -111,7 +111,7 @@ MainWindow::MainWindow( QWidget *parent )
 	on_languages_activated( lang.indexOf(
 		Settings().value( "Main/Language", "et" ).toString() ) );
 
-	QAction *close = new QAction( tr("Close"), this );
+	close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
 	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
 	addAction( close );
@@ -332,7 +332,13 @@ void MainWindow::buttonClicked( int button )
 	}
 }
 
-void MainWindow::closeDoc() { buttonClicked( ViewClose ); }
+void MainWindow::closeDoc()
+{
+	if( SettingsDialog *d = findChild<SettingsDialog*>() )
+		d->reject();
+	else
+		buttonClicked( ViewClose );
+}
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
@@ -601,7 +607,12 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 }
 
-void MainWindow::showSettings() { SettingsDialog( this ).exec(); }
+void MainWindow::showSettings()
+{
+	SettingsDialog e( this );
+	e.addAction( close );
+	e.exec();
+}
 
 void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
 {

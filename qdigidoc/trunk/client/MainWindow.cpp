@@ -154,7 +154,7 @@ MainWindow::MainWindow( QWidget *parent )
 	infoMobileCell->setText( s.value( "MobileNumber", "+372" ).toString() );
 	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
-	QAction *close = new QAction( tr("Close"), this );
+	close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
 	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
 	addAction( close );
@@ -395,7 +395,12 @@ bool MainWindow::checkConnection()
 }
 
 void MainWindow::closeDoc()
-{ buttonClicked( stack->currentIndex() == Sign ? SignCancel : ViewClose ); }
+{
+	if( SettingsDialog *d = findChild<SettingsDialog*>() )
+		d->reject();
+	else
+		buttonClicked( stack->currentIndex() == Sign ? SignCancel : ViewClose );
+}
 
 void MainWindow::dragEnterEvent( QDragEnterEvent *e )
 {
@@ -747,7 +752,12 @@ void MainWindow::showCardStatus()
 	setCurrentPage( (Pages)stack->currentIndex(), false );
 }
 
-void MainWindow::showSettings() { SettingsDialog( this ).exec(); }
+void MainWindow::showSettings()
+{
+	SettingsDialog e( this );
+	e.addAction( close );
+	e.exec();
+}
 
 void MainWindow::showWarning( const QString &msg )
 {

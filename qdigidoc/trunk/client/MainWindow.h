@@ -80,6 +80,7 @@ private:
 	void parseParams();
 	void setCurrentPage( Pages page, bool reload = true );
 
+	QAction *close;
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QStringList lang, params;

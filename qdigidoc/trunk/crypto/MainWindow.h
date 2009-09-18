@@ -72,6 +72,7 @@ private:
 	void parseParams();
 	void setCurrentPage( Pages page );
 
+	QAction		*close;
 	CryptDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QStringList	lang, params;
