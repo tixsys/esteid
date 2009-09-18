@@ -175,7 +175,10 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
     char dst[1024] = {0}; 
 
     std::string legal_chars = "-_.!~*'();/?:@&=+$,";
-
+#ifdef _WIN32
+    char *locale = setlocale( LC_ALL, NULL );
+    setlocale( LC_ALL, "C" );
+#endif
     for(size_t i=0, j=0; i<str_in.length(); i++)
     {
         if( (!(isalnum((str_in.c_str())[i])) ) && ( legal_chars.find((str_in.c_str())[i]) == std::string::npos) )
@@ -192,5 +195,8 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
             j++;
         }
     }
+#ifdef _WIN32
+    setlocale( LC_ALL, locale );
+#endif
     return std::string(dst);
 }
