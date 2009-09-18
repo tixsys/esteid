@@ -1,6 +1,5 @@
 // http://www.codeproject.com/KB/vista-security/interaction-in-vista.aspx
 //#define NO_PROCESS
-#include "precompiled.h"
 #include "ProcessStarter.h"
 
 #include <windows.h>
