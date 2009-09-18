@@ -518,7 +518,9 @@ void MainWindow::setCurrentPage( Pages page )
 		}
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
-		viewCrypt->setEnabled( (!doc->isEncrypted() && viewContentView->model()->rowCount()) || hasKey );
+		viewCrypt->setEnabled(
+			(!doc->isEncrypted() && viewContentView->model()->rowCount()) ||
+			(doc->isEncrypted() && hasKey) );
 		break;
 	}
 	default: break;
