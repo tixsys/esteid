@@ -33,6 +33,10 @@ const std::string digidoc::BDoc::MANIFEST_NAMESPACE = "urn:oasis:names:tc:opendo
  */
 void digidoc::initialize()
 {
+#ifdef _WIN32
+    // Fix std::fstream file input
+    setlocale( LC_ALL, ".ACP" );
+#endif
     // Initialize OpenSSL library.
     SSL_load_error_strings();
     SSL_library_init();
