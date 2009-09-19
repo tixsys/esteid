@@ -304,8 +304,7 @@ std::string digidoc::X509Cert::toString(X509_NAME* name) throw(IOException)
     }
 
     // Convert the X509_NAME struct to string.
-    X509_NAME_print_ex(mem, name, 0, XN_FLAG_RFC2253);
-    if(ERR_peek_error() != 0)
+    if(X509_NAME_print_ex(mem, name, 0, XN_FLAG_RFC2253) < 0)
     {
         THROW_IOEXCEPTION("Failed to convert X509_NAME struct to string: %s", ERR_reason_error_string(ERR_get_error()));
     }

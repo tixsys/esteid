@@ -263,7 +263,7 @@ digidoc::OCSP::CertStatus digidoc::OCSP::checkCert(X509* cert, X509* issuer,
         if(!PKCS12_parse(p12, pass.c_str(), &key, &cert, NULL))
         {
             PKCS12_free(p12);
-            THROW_IOEXCEPTION("Failed to parse PKCS12 certificate.");
+            THROW_IOEXCEPTION("Failed to parse PKCS12 certificate (%s).", ERR_reason_error_string(ERR_get_error()));
         }
         PKCS12_free(p12);
 
