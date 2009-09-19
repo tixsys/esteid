@@ -27,6 +27,7 @@
 #include <QSslKey>
 #include <QStringList>
 
+#include <openssl/err.h>
 #include <openssl/x509v3.h>
 #include <openssl/pkcs12.h>
 
@@ -37,17 +38,19 @@ static bool parsePKCS12Cert( const QByteArray &data, const QByteArray &pass, X50
 {
 	BIO *bio = BIO_new( BIO_s_mem() );
 	if( !bio )
-		return false;
+	{ ERR_get_error(); return false; }
 
 	BIO_write( bio, data.data(), data.size() );
 
 	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
 	BIO_free( bio );
 	if( !p12 )
-		return false;
+	{ ERR_get_error(); return false; }
 
 	int ret = PKCS12_parse( p12, pass.data(), key, cert, NULL );
 	PKCS12_free( p12 );
+	if(!ret)
+		ERR_get_error();
 	return ret;
 }
 
