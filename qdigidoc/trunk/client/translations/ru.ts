@@ -47,6 +47,10 @@
         <source>Check your computer time</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -174,10 +178,6 @@ Should I keep unsigned documents or remove these?</source>
     <message>
         <source>No card in reader</source>
         <translation>В считывателе нет карты</translation>
-    </message>
-    <message>
-        <source>Remove signature %1 %2 %3</source>
-        <translation type="obsolete">Удалить подпись %1 %2 %3</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -372,10 +372,6 @@ Start downloading?</source>
         <translation>Открыть средство управления</translation>
     </message>
     <message>
-        <source>Mobile-ID BDOC signing not supported yet!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NB! Test signature</source>
         <translation type="unfinished"></translation>
     </message>
@@ -413,6 +409,10 @@ Start downloading?</source>
     </message>
     <message>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

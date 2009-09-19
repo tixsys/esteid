@@ -322,7 +322,12 @@ bool DigiDoc::open( const QString &file )
 		b = new WDoc( s );
 		return true;
 	}
-	catch( const Exception &e ) { setLastError( e ); }
+	catch( const Exception &e )
+	{
+		QStringList causes;
+		parseException( e, causes );
+		setLastError( tr("An error occurred while opening the document.<br />%1").arg( causes.join("\n") ) );
+	}
 	return false;
 }
 

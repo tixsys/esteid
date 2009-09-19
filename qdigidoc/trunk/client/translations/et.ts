@@ -47,6 +47,10 @@
         <source>Check your computer time</source>
         <translation>Kontrolli oma arvuti kella</translation>
     </message>
+    <message>
+        <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
+        <translation>Ümbriku avamisel tekkis viga.&lt;br /&gt;%1</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -212,10 +216,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation>aegunud</translation>
     </message>
     <message>
-        <source>Remove signature %1 %2 %3</source>
-        <translation type="obsolete">Eemalda allkiri %1 %2 %3</translation>
-    </message>
-    <message>
         <source>Use Mobile ID</source>
         <translation>Kasuta Mobiil-ID</translation>
     </message>
@@ -375,10 +375,6 @@ Alustame laadimist?</translation>
         <translation>Ava haldusvahend</translation>
     </message>
     <message>
-        <source>Mobile-ID BDOC signing not supported yet!</source>
-        <translation>BDOC formaadi allkirjastamine mobiiliga hetkel ei tööta!</translation>
-    </message>
-    <message>
         <source>NB! Test signature</source>
         <translation>NB! Test allkiri</translation>
     </message>
@@ -417,6 +413,10 @@ Alustame laadimist?</translation>
     <message>
         <source>Close</source>
         <translation>Sulge</translation>
+    </message>
+    <message>
+        <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
