@@ -946,7 +946,7 @@ EXP_OPTION int findResponder(X509** ppResp, const char* szCN,
       }
     } // if p1
     j++;
-  } while(x509 || j < 1); // until any potential cert found and I have tried to find one of the multiple certs
+  } while(x509 || j < 10); // until any potential cert found and I have tried to find one of the multiple certs
   RETURN_IF_NOT(err == ERR_OK, ERR_CERT_READ);
   ddocDebug(3, "findResponder", "CN: %s hash: %s index: %d, search notary: %s", 
 	    (szCN ? szCN : "NULL"), (szHash ? szHash : "NULL"), (*ppResp ? "OK" : "NULL"), err);
