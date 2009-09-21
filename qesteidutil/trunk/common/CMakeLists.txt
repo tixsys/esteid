@@ -6,7 +6,6 @@ set( MOC_HEADERS
 	PinDialog.h
 	Settings.h
 	sslConnect.h
-	sslConnect_p.h
 	)
 QT4_WRAP_UI( UI_HEADERS
 	ui/CertificateWidget.ui
