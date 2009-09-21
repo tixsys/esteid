@@ -276,7 +276,8 @@ void MainWindow::buttonClicked( int button )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeSign:
-		if( Settings().value( "Client/Intro", true ).toBool() )
+		if( stack->currentIndex() == Home &&
+			Settings().value( "Client/Intro", true ).toBool() )
 		{
 			introCheck->setChecked( false );
 			setCurrentPage( Intro );
