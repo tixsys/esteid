@@ -531,25 +531,19 @@ void MainWindow::setCurrentPage( Pages page )
 void MainWindow::showCardStatus()
 {
 	QString content;
+	bool hasKey = false;
 	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
+	{
 		content = Common::tokenInfo( Common::AuthCert, doc->activeCard(), doc->authCert() );
+		Q_FOREACH( const CKey &key, doc->keys() )
+			hasKey = qMax( hasKey, key.cert == doc->authCert() );
+	}
 	else if( !doc->activeCard().isEmpty() )
 		content = tr("Loading data");
 	else if( doc->activeCard().isEmpty() )
 		content = tr("No card in reader");
 	infoCard->setText( content );
 
-	bool hasKey = false;
-	if( !doc->authCert().isNull() )
-	{
-		Q_FOREACH( const CKey &key, doc->keys() )
-		{
-			if( key.cert != doc->authCert() )
-				continue;
-			hasKey = true;
-			break;
-		}
-	}
 	viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
 
 	cards->clear();
