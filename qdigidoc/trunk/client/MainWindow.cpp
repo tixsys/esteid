@@ -106,13 +106,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
-	connect( infoLogo, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( signAddFile, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewBrowse, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewEmail, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewPrint, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewSaveAs, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-
+	connect( infoCard, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 
 	appTranslator = new QTranslator( this );
 	commonTranslator = new QTranslator( this );
@@ -677,7 +671,6 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 
 void MainWindow::showCardStatus()
 {
-	infoLogo->setText( QString() );
 	signSigner->setText( QString() );
 
 	if( infoSignMobile->isChecked() )
@@ -692,50 +685,9 @@ void MainWindow::showCardStatus()
 		QString content;
 		if( !doc->activeCard().isEmpty() && !doc->signCert().isNull() )
 		{
-			const SslCertificate c = doc->signCert();
-			QTextStream s( &content );
-
-			if( c.isTempel() )
-			{
-				s << tr("Company") << ": <font color=\"black\">"
-					<< c.toString( "CN" ) << "</font><br />";
-				s << tr("Register code") << ": <font color=\"black\">"
-					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-				signSigner->setText( c.toString( "CN (serialNumber)" ) );
-			}
-			else
-			{
-				s << tr("Name") << ": <font color=\"black\">"
-					<< c.toString( "GN SN" ) << "</font><br />";
-				s << tr("Personal code") << ": <font color=\"black\">"
-					<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-				signSigner->setText( c.toString( "GN SN (serialNumber)" ) );
-			}
-			s << tr("Card in reader") << ": <font color=\"black\">"
-				<< doc->activeCard() << "</font><br />";
-
-			bool willExpire = SslCertificate::toLocalTime( c.expiryDate() ) <= QDateTime::currentDateTime().addDays( 105 );
-			s << tr("Sign certificate is") << " ";
-			if( doc->signCert().isValid()  )
-			{
-				s << "<font color=\"green\">" << tr("valid") << "</font>";
-				if( willExpire )
-					s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
-			}
-			else
-				s << "<font color=\"red\">" << tr("expired") << "</font>";
-
-			if( !c.isValid() || willExpire )
-			{
-				infoLogo->setText( QString(
-					"<p align=\"center\"><a href=\"openUtility\">"
-					"<img src=\":/images/warning.png\"><br />"
-					"<font color=\"red\">%1</font></a></p>" ).arg( tr("Open utility") ) );
-			}
-			else if( c.isTempel() )
-				infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );
-			else
-				infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
+			content = Common::tokenInfo( Common::SignCert, doc->activeCard(), doc->signCert() );
+			SslCertificate c( doc->signCert() );
+			signSigner->setText( c.toString( c.isTempel() ? "CN (serialNumber)" : "GN SN (serialNumber)" ) );
 		}
 		else if( !doc->activeCard().isEmpty() )
 			content = tr("Loading data");
@@ -809,8 +761,7 @@ bool MainWindow::checkAccessCert()
 		}
 	}
 
-	if ( QMessageBox::question( this,
-			tr( "Server access certificate" ),
+	if ( QMessageBox::question( this, tr( "Server access certificate" ),
 			tr( "Did not find any server access certificate!\nStart downloading?" ),
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
 		return true;
@@ -824,30 +775,24 @@ bool MainWindow::checkAccessCert()
 	QByteArray result = doc->getAccessCert();
 	if ( result.isEmpty() )
 	{
-		QMessageBox::warning( this,
-			tr( "Server access certificate" ),
-			tr( "Error downloading server access certificate!" ),
-			QMessageBox::Ok );
+		QMessageBox::warning( this, tr( "Server access certificate" ),
+			tr( "Error downloading server access certificate!" ), QMessageBox::Ok );
 		return false;
 	}
 
 	QDomDocument domDoc;
 	if ( !domDoc.setContent( result ) )
 	{
-		QMessageBox::warning( this,
-			tr( "Server access certificate" ),
-			tr( "Error parsing server access certificate result!" ),
-			QMessageBox::Ok );
+		QMessageBox::warning( this, tr( "Server access certificate" ),
+			tr( "Error parsing server access certificate result!" ), QMessageBox::Ok );
 		return false;
 	}
 
 	QDomElement e = domDoc.documentElement();
 	if ( !e.elementsByTagName( "StatusCode" ).size() )
 	{
-		QMessageBox::warning( this,
-			tr( "Server access certificate" ),
-			tr( "Error parsing server access certificate result!" ),
-			QMessageBox::Ok );
+		QMessageBox::warning( this, tr( "Server access certificate" ),
+			tr( "Error parsing server access certificate result!" ), QMessageBox::Ok );
 		return false;
 	}
 
@@ -857,8 +802,7 @@ bool MainWindow::checkAccessCert()
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
 		return false;
 	case 2: //got error, show message from MessageToDisplay element
-		QMessageBox::warning( this,
-			tr( "Server access certificate" ),
+		QMessageBox::warning( this, tr( "Server access certificate" ),
 			tr( "Error downloading server access certificate!\n%1" )
 				.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
 			QMessageBox::Ok );
@@ -866,12 +810,11 @@ bool MainWindow::checkAccessCert()
 	default: break; //ok
 	}
 
-	if ( e.elementsByTagName( "TokenData" ).item(0).toElement().text().isEmpty() )
+	QString cert = e.elementsByTagName( "TokenData" ).item(0).toElement().text();
+	if ( cert.isEmpty() )
 	{
-		QMessageBox::warning( this,
-			tr( "Server access certificate" ),
-			tr( "Error reading server access certificate - empty content!" ),
-			QMessageBox::Ok );
+		QMessageBox::warning( this, tr( "Server access certificate" ),
+			tr( "Error reading server access certificate - empty content!" ), QMessageBox::Ok );
 		return false;
 	}
 
@@ -890,7 +833,7 @@ bool MainWindow::checkAccessCert()
 				.arg( file.errorString() ) );
 		return false;
 	}
-	file.write( QByteArray::fromBase64( e.elementsByTagName( "TokenData" ).item(0).toElement().text().toLatin1() ) );
+	file.write( QByteArray::fromBase64( cert.toLatin1() ) );
 	file.close();
 
 	s.setValue( "pkcs12Cert", file.fileName() );

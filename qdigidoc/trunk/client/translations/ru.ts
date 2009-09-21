@@ -144,34 +144,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation>Подписи</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>Personal code</source>
-        <translation>Личный код</translation>
-    </message>
-    <message>
-        <source>Card in reader</source>
-        <translation>Карта в считывателе</translation>
-    </message>
-    <message>
-        <source>Sign certificate is</source>
-        <translation>Сертификаты подписи</translation>
-    </message>
-    <message>
-        <source>valid</source>
-        <translation>действительны</translation>
-    </message>
-    <message>
-        <source>Your certificates will be expire</source>
-        <translation>Сертификаты будут недействительны</translation>
-    </message>
-    <message>
-        <source>expired</source>
-        <translation>устарели</translation>
-    </message>
-    <message>
         <source>Loading data</source>
         <translation>Читаю данные</translation>
     </message>
@@ -325,14 +297,6 @@ p, li { white-space: pre-wrap; }
         <translation>%1 уже существует.&lt;br /&gt;Заменить?</translation>
     </message>
     <message>
-        <source>Company</source>
-        <translation>Учереждение</translation>
-    </message>
-    <message>
-        <source>Register code</source>
-        <translation>Код регистра</translation>
-    </message>
-    <message>
         <source>Server access certificate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -366,10 +330,6 @@ Start downloading?</source>
         <source>Failed to save server access certificate file to %1!
 %2</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open utility</source>
-        <translation>Открыть средство управления</translation>
     </message>
     <message>
         <source>NB! Test signature</source>

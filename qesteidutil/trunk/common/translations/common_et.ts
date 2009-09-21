@@ -117,15 +117,54 @@
     </message>
 </context>
 <context>
+    <name>Common</name>
+    <message>
+        <source>Company</source>
+        <translation>Asutus</translation>
+    </message>
+    <message>
+        <source>Register code</source>
+        <translation>Registrikood</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Personal code</source>
+        <translation>Isikukood</translation>
+    </message>
+    <message>
+        <source>Card in reader</source>
+        <translation>Lugejas on kaart</translation>
+    </message>
+    <message>
+        <source>Auth certificate is</source>
+        <translation>Isikutuvastuse sertifikaat on</translation>
+    </message>
+    <message>
+        <source>Sign certificate is</source>
+        <translation>Allkirjastamise sertifikaat on</translation>
+    </message>
+    <message>
+        <source>valid</source>
+        <translation>kehtiv</translation>
+    </message>
+    <message>
+        <source>Your certificates will be expire</source>
+        <translation>Sertifikaadid hakkavad aeguma</translation>
+    </message>
+    <message>
+        <source>expired</source>
+        <translation>aegunud</translation>
+    </message>
+    <message>
+        <source>Open utility</source>
+        <translation>Ava haldusvahend</translation>
+    </message>
+</context>
+<context>
     <name>PinDialog</name>
-    <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires auth certificate.&lt;br /&gt;For using auth certificate enter PIN1</source>
-        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN1</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Selected action requires sign certificate.&lt;br /&gt;For using sign certificate enter PIN2</source>
-        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.&lt;br /&gt;Sertifikaadi kasutamiseks sisesta PIN2</translation>
-    </message>
     <message>
         <source>Selected action requires auth certificate.</source>
         <translation>Valitud tegevuse jaoks on vaja kasutada isikutuvastuse sertifikaati.</translation>
@@ -226,12 +265,12 @@
         <translation>ei leitud ühtegi sobivat sertifikaati</translation>
     </message>
     <message>
-        <source>Failed to resolve hostname. Are you connected to the internet?</source>
+        <source>Failed to connect to host. Are you connected to the internet?</source>
         <translation>Puudub internetiühendus!</translation>
     </message>
     <message>
-        <source>Failed to connect to host. Are you connected to the internet?</source>
-        <translation>Puudub internetiühendus!</translation>
+        <source>no certificate available</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

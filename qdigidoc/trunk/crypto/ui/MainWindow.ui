@@ -109,7 +109,7 @@ min-width: 0px;
 #help:hover, #help:focus
 { text-decoration: underline; }
 
-#infoFrame
+#infoCard
 {
 background-color: rgba( 255, 255, 255, 153 );
 border-radius: 3px;
@@ -320,40 +320,22 @@ color: #71889A;
          </spacer>
         </item>
         <item>
-         <widget class="QFrame" name="infoFrame">
+         <widget class="QLabel" name="infoCard">
           <property name="minimumSize">
            <size>
             <width>387</width>
             <height>115</height>
            </size>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <property name="margin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="infoCard">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Arial, Liberation Sans</family>
-               <pointsize>-1</pointsize>
-               <weight>75</weight>
-               <italic>false</italic>
-               <bold>true</bold>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="infoLogo"/>
-           </item>
-          </layout>
+          <property name="font">
+           <font>
+            <family>Arial, Liberation Sans</family>
+            <pointsize>-1</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
          </widget>
         </item>
        </layout>
@@ -765,5 +747,73 @@ For encryption AS Sertifitseerimiskeskus' LDAP service is used, to search for re
  <resources>
   <include location="../images/images.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>viewLinks</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewContentLinks</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewKeysLinks</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>infoCard</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>parseLink(QString)</slot>
+ </slots>
 </ui>

@@ -326,11 +326,11 @@ padding: 5px;
             <height>115</height>
            </size>
           </property>
-          <layout class="QGridLayout" name="infoFrameLayout">
+          <layout class="QVBoxLayout" name="infoFrameLayout">
            <property name="margin">
             <number>0</number>
            </property>
-           <item row="0" column="0">
+           <item>
             <layout class="QHBoxLayout" name="infoSignLayout">
              <item>
               <widget class="QRadioButton" name="infoSignCard">
@@ -364,10 +364,7 @@ padding: 5px;
              </item>
             </layout>
            </item>
-           <item row="0" column="1" rowspan="3">
-            <widget class="QLabel" name="infoLogo"/>
-           </item>
-           <item row="1" column="0">
+           <item>
             <widget class="QStackedWidget" name="infoStack">
              <property name="currentIndex">
               <number>0</number>
@@ -1138,5 +1135,105 @@ color: red;</string>
  <resources>
   <include location="../images/images.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>infoCard</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signAddFile</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewBrowse</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewEmail</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewPrint</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewSaveAs</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>parseLink(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>69</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>parseLink(QString)</slot>
+ </slots>
 </ui>

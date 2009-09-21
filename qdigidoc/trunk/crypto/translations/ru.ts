@@ -247,34 +247,6 @@
         <translation>Добавить файлы</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Имя</translation>
-    </message>
-    <message>
-        <source>Personal code</source>
-        <translation>Личный код</translation>
-    </message>
-    <message>
-        <source>Card in reader</source>
-        <translation>В считывателе карта</translation>
-    </message>
-    <message>
-        <source>Auth certificate is</source>
-        <translation>Сертификаты подписи</translation>
-    </message>
-    <message>
-        <source>valid</source>
-        <translation>действителен</translation>
-    </message>
-    <message>
-        <source>Your certificates will be expire</source>
-        <translation>Срок действия сертификатов истечёт</translation>
-    </message>
-    <message>
-        <source>expired</source>
-        <translation>истёк</translation>
-    </message>
-    <message>
         <source>This container contains signature! Open with QDigiDocClient?</source>
         <translation>Это файл с дигитальной подписью!
 Открыть c помощью Digidoc?</translation>
@@ -366,14 +338,6 @@
         <translation>Создание процесса &apos;%1&apos; неудачно</translation>
     </message>
     <message>
-        <source>Company</source>
-        <translation>Учреждение</translation>
-    </message>
-    <message>
-        <source>Register code</source>
-        <translation>Код регистра</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
@@ -408,10 +372,6 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     <message>
         <source>Decrypting</source>
         <translation>Расшифровка</translation>
-    </message>
-    <message>
-        <source>Open utility</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>

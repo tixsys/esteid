@@ -24,6 +24,7 @@
 
 #include <QObject>
 
+class QSslCertificate;
 class QStringList;
 class QUrl;
 
@@ -31,12 +32,18 @@ class Common: public QObject
 {
 	Q_OBJECT
 public:
+	enum CertType
+	{
+		AuthCert,
+		SignCert,
+	};
 	Common( QObject *parent = 0 );
 
 	static bool canWrite( const QString &filename );
 	static QString fileSize( quint64 bytes );
 	static bool startDetached( const QString &program );
 	static bool startDetached( const QString &program, const QStringList &arguments );
+	static QString tokenInfo( CertType type, const QString &card, const QSslCertificate &cert );
 
 public Q_SLOTS:
 	void browse( const QUrl &url );

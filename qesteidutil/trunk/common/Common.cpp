@@ -22,9 +22,11 @@
 
 #include "Common.h"
 
+#include <QDateTime>
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QProcess>
+#include <QTextStream>
 #include <QUrl>
 
 #ifdef Q_OS_WIN32
@@ -39,6 +41,8 @@
 #ifdef Q_OS_MAC
 #include <Carbon/Carbon.h>
 #endif
+
+#include "SslCertificate.h"
 
 Common::Common( QObject *parent ): QObject( parent ) {}
 
@@ -247,4 +251,54 @@ bool Common::startDetached( const QString &program, const QStringList &arguments
 #else
 	return QProcess::startDetached( program, arguments );
 #endif
+}
+
+QString Common::tokenInfo( CertType type, const QString &card, const QSslCertificate &cert )
+{
+	QString content;
+	QTextStream s( &content );
+	SslCertificate c( cert );
+
+	s << "<table width=\"100%\"><tr><td>";
+	if( c.isTempel() )
+	{
+		s << tr("Company") << ": <font color=\"black\">"
+			<< c.toString( "CN" ) << "</font><br />";
+		s << tr("Register code") << ": <font color=\"black\">"
+			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+	}
+	else
+	{
+		s << tr("Name") << ": <font color=\"black\">"
+			<< c.toString( "GN SN" ) << "</font><br />";
+		s << tr("Personal code") << ": <font color=\"black\">"
+			<< c.subjectInfo( "serialNumber" ) << "</font><br />";
+	}
+	s << tr("Card in reader") << ": <font color=\"black\">" << card << "</font><br />";
+
+	bool willExpire = SslCertificate::toLocalTime( c.expiryDate() ) <= QDateTime::currentDateTime().addDays( 105 );
+	s << (type == AuthCert ? tr("Auth certificate is") : tr("Sign certificate is") ) << " ";
+	if( c.isValid() )
+	{
+		s << "<font color=\"green\">" << tr("valid") << "</font>";
+		if( willExpire )
+			s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
+	}
+	else
+		s << "<font color=\"red\">" << tr("expired") << "</font>";
+
+	s << "</td><td align=\"right\">";
+	if( !c.isValid() || willExpire )
+	{
+		s << "<p align=\"center\"><a href=\"openUtility\">"
+			"<img src=\":/images/warning.png\"><br />"
+			"<font color=\"red\">" << tr("Open utility") << "</font></a></p>";
+	}
+	else if( c.isTempel() )
+		s << "<img src=\":/images/ico_stamp_blue_75.png\">";
+	else
+		s << "<img src=\":/images/ico_person_blue_75.png\">";
+	s << "</td></tr></table>";
+
+	return content;
 }

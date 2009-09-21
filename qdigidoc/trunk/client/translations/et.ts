@@ -192,30 +192,6 @@ Should I keep unsigned documents or remove these?</source>
         <translation>Ümbrik:</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Nimi</translation>
-    </message>
-    <message>
-        <source>Personal code</source>
-        <translation>Isikukood</translation>
-    </message>
-    <message>
-        <source>Card in reader</source>
-        <translation>Lugejas on kaart</translation>
-    </message>
-    <message>
-        <source>Sign certificate is</source>
-        <translation>Allkirjastamise sertifikaat on</translation>
-    </message>
-    <message>
-        <source>valid</source>
-        <translation>kehtiv</translation>
-    </message>
-    <message>
-        <source>expired</source>
-        <translation>aegunud</translation>
-    </message>
-    <message>
         <source>Use Mobile ID</source>
         <translation>Kasuta Mobiil-ID</translation>
     </message>
@@ -266,10 +242,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial, Liberation Sans&apos;; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Resolutsioon ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Your certificates will be expire</source>
-        <translation>Sertifikaadid hakkavad aeguma</translation>
     </message>
     <message>
         <source>File already in container</source>
@@ -325,14 +297,6 @@ Digitaalallkirja andmiseks on vajalik interneti ühendus.
         <translation>%1 on juba olemas.&lt;br /&gt;Soovid asendada?</translation>
     </message>
     <message>
-        <source>Company</source>
-        <translation>Asutus</translation>
-    </message>
-    <message>
-        <source>Register code</source>
-        <translation>Registrikood</translation>
-    </message>
-    <message>
         <source>Server access certificate</source>
         <translation>Ligipääsutõend</translation>
     </message>
@@ -369,10 +333,6 @@ Alustame laadimist?</translation>
 %2</source>
         <translation>Viga ligipääsutõendi salvestamisel %1!
 %2</translation>
-    </message>
-    <message>
-        <source>Open utility</source>
-        <translation>Ava haldusvahend</translation>
     </message>
     <message>
         <source>NB! Test signature</source>

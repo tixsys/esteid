@@ -83,11 +83,6 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( buttonGroup, SIGNAL(buttonClicked(int)),
 		SLOT(buttonClicked(int)) );
 
-	connect( infoLogo, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewContentLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-	connect( viewKeysLinks, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
-
 	appTranslator = new QTranslator( this );
 	commonTranslator = new QTranslator( this );
 	qtTranslator = new QTranslator( this );
@@ -535,57 +530,13 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	infoLogo->setText( QString() );
 	QString content;
 	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
-	{
-		const SslCertificate c = doc->authCert();
-		QTextStream s( &content );
-
-		if( c.isTempel() )
-		{
-			s << tr("Company") << ": <font color=\"black\">"
-				<< c.toString( "CN" ) << "</font><br />";
-			s << tr("Register code") << ": <font color=\"black\">"
-				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-		}
-		else
-		{
-			s << tr("Name") << ": <font color=\"black\">"
-				<< c.toString( "GN SN" ) << "</font><br />";
-			s << tr("Personal code") << ": <font color=\"black\">"
-				<< c.subjectInfo( "serialNumber" ) << "</font><br />";
-		}
-		s << tr("Card in reader") << ": <font color=\"black\">"
-			<< doc->activeCard() << "</font><br />";
-
-		bool willExpire = SslCertificate::toLocalTime( c.expiryDate() ) <= QDateTime::currentDateTime().addDays( 100 );
-		s << tr("Auth certificate is") << " ";
-		if( doc->authCert().isValid()  )
-		{
-			s << "<font color=\"green\">" << tr("valid") << "</font>";
-			if( willExpire )
-				s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
-		}
-		else
-			s << "<font color=\"red\">" << tr("expired") << "</font>";
-
-		if( !c.isValid() || willExpire )
-		{
-			infoLogo->setText( QString(
-				"<p align=\"center\"><a href=\"openUtility\">"
-				"<img src=\":/images/warning.png\"><br />"
-				"<font color=\"red\">%1</font></a></p>" ).arg( tr("Open utility") ) );
-		}
-		else if( c.isTempel() )
-			infoLogo->setText( "<img src=\":/images/ico_stamp_blue_75.png\">" );
-		else
-			infoLogo->setText( "<img src=\":/images/ico_person_blue_75.png\">" );
-	}
+		content = Common::tokenInfo( Common::AuthCert, doc->activeCard(), doc->authCert() );
 	else if( !doc->activeCard().isEmpty() )
-		content += tr("Loading data");
+		content = tr("Loading data");
 	else if( doc->activeCard().isEmpty() )
-		content += tr("No card in reader");
+		content = tr("No card in reader");
 	infoCard->setText( content );
 
 	bool hasKey = false;

@@ -300,34 +300,6 @@ Kas avan Digidoc kliendiga?</translation>
         <translation>Kaarti pole lugejas</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Nimi</translation>
-    </message>
-    <message>
-        <source>Personal code</source>
-        <translation>Isikukood</translation>
-    </message>
-    <message>
-        <source>Card in reader</source>
-        <translation>Lugejas on kaart</translation>
-    </message>
-    <message>
-        <source>Auth certificate is</source>
-        <translation>Isikutuvastuse sertifikaat on</translation>
-    </message>
-    <message>
-        <source>valid</source>
-        <translation>kehtiv</translation>
-    </message>
-    <message>
-        <source>Your certificates will be expire</source>
-        <translation>Sertifikaadid hakkavad aeguma</translation>
-    </message>
-    <message>
-        <source>expired</source>
-        <translation>aegunud</translation>
-    </message>
-    <message>
         <source>Loading data</source>
         <translation>Loen andmeid</translation>
     </message>
@@ -366,14 +338,6 @@ Kas avan Digidoc kliendiga?</translation>
         <translation>Protsessi &apos;%1&apos; loomine ebaõnnestus</translation>
     </message>
     <message>
-        <source>Company</source>
-        <translation>Asutus</translation>
-    </message>
-    <message>
-        <source>Register code</source>
-        <translation>Registri kood</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
@@ -408,10 +372,6 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>Decrypting</source>
         <translation>Dekrüpteerimine</translation>
-    </message>
-    <message>
-        <source>Open utility</source>
-        <translation>Ava haldusvahend</translation>
     </message>
     <message>
         <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
