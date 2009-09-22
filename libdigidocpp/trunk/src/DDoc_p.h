@@ -3,6 +3,7 @@
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocGen.h>
 
+#include "BDocException.h"
 #include "Signature.h"
 
 #ifdef WIN32
@@ -68,7 +69,6 @@ public:
 	DDocPrivate();
 	~DDocPrivate();
 
-	bool isLoaded() const;
 	bool loadSymbols();
 
 	DDocLibrary lib;
@@ -79,6 +79,11 @@ public:
 
 	void loadSignatures();
 	std::vector<DSignature*> signatures;
+
+	void throwDocOpenError( int line ) const throw(BDocException);
+	void throwError( const std::string &msg, int line ) const throw(BDocException);
+	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
+	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
 
 	sym_addAllDocInfos			f_addAllDocInfos;
 	sym_addSignerRole			f_addSignerRole;

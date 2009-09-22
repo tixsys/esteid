@@ -27,10 +27,6 @@ public:
 	void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException);
 
 private:
-	void throwError( const std::string &msg, int line ) const throw(BDocException);
-	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
-	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
-
 	DDocPrivate *d;
 };
 
