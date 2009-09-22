@@ -1,11 +1,8 @@
 #if !defined(__STRING_H_INCLUDED__)
 #define __STRING_H_INCLUDED__
 
-#include <memory>
 #include <string>
 #include <stdarg.h>
-#include "../io/IOException.h"
-#include "../BDocException.h"
 
 namespace digidoc
 {

@@ -3,9 +3,6 @@
 
 #include <openssl/x509.h>
 
-#include <string>
-#include <vector>
-
 #include "SignException.h"
 
 namespace digidoc

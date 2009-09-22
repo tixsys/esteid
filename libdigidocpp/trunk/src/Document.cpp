@@ -4,6 +4,7 @@
 
 #include "log.h"
 #include "Document.h"
+#include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
 

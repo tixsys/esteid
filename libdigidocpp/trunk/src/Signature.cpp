@@ -14,6 +14,7 @@
 #include "log.h"
 #include "Conf.h"
 #include "Signature.h"
+#include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
 #include "util/DateTime.h"
@@ -375,6 +376,7 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
 	{
         THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to create Xerces DOM from signature XML.");
 	}
+	return std::vector<unsigned char>();
 }
 
 /**

@@ -14,6 +14,7 @@
 #include "SignatureBES.h"
 #include "SignatureTM.h"
 #include "SignatureMobile.h"
+#include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
 #include "xml/OpenDocument_manifest.hxx"

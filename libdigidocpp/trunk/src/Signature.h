@@ -1,10 +1,7 @@
 #if !defined(__SIGNATURE_H_INCLUDED__)
 #define __SIGNATURE_H_INCLUDED__
 
-#include <string>
-
 #include "SignatureException.h"
-#include "crypto/Digest.h"
 #include "crypto/cert/X509Cert.h"
 #include "crypto/ocsp/OCSP.h"
 #include "crypto/signer/Signer.h"
@@ -13,12 +10,13 @@
 
 namespace digidoc
 {
+    class Digest;
     class EXP_DIGIDOC Signature
     {
       friend class BDoc;
 
       public:
-		  enum Type { BES, TM, MOBILE };
+          enum Type { BES, TM, MOBILE };
 
           virtual ~Signature();
           virtual std::string getMediaType() const = 0;
@@ -30,9 +28,9 @@ namespace digidoc
           Signer::SignerRole getSignerRole() const;
           std::string getSigningTime() const;
           X509Cert getSigningCertificate() const throw(SignatureException);
-		  std::vector<unsigned char> getSignatureValue() const;
+          std::vector<unsigned char> getSignatureValue() const;
 
-		  virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) = 0;
+          virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) = 0;
 
       protected:
           Signature();
