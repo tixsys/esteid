@@ -48,7 +48,7 @@ add_custom_target( xpi-stage
 set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
 add_custom_target( xpi-jar
 	COMMAND ${RM} ${CHROME_JAR}
-	COMMAND zip -pr ${CHROME_JAR} content/* skin/*
+	COMMAND zip -pr ${CHROME_JAR} content/*
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/chrome
 )
 
