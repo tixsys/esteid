@@ -266,8 +266,9 @@ void KeyAddDialog::on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int )
 
 void KeyAddDialog::saveHistory()
 {
-	Q_FOREACH( const CKey &k, skKeys )
+	Q_FOREACH( const QModelIndex &index, skView->selectionModel()->selectedRows() )
 	{
+		const CKey k = skKeys.value( index.row() );
 		if( usedView->findItems( k.recipient, Qt::MatchExactly ).isEmpty() )
 		{
 			QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
