@@ -4,6 +4,8 @@ project(esteidcsp)
 add_definitions(
     -D_UNICODE
     -DUNICODE
+    # Release builds don't compile without this definition.
+    # http://social.msdn.microsoft.com/Forums/en-US/vcplus2008prerelease/thread/fa969def-911e-4760-867d-5a06a37ed048
     -D_SECURE_SCL=0
 )
 
