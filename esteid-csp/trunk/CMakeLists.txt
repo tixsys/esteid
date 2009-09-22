@@ -1,28 +1,49 @@
-include_directories (../.. ../../src ../ ../../..)
+cmake_minimum_required(VERSION 2.6)
+project(esteidcsp)
 
-set(ESTEIDCSP_SOURCES
-  csp_c_exports.cpp	Csp.cpp
-  csp.def		CSPErrors.cpp
-  CspEstEid.cpp		Csp_Hash.cpp
-  Csp_Key.cpp		CSPTypes.cpp
-  esteidcsp.cpp		esteidcsp.rc
-  precompiled.cpp	RegKey.cpp)
+add_definitions(
+    -D_UNICODE
+    -DUNICODE
+    -D_SECURE_SCL=0
+)
 
-set(ESTEIDCSP_HEADERS
-  CSPErrors.h		CSPEstEid.h
-  CSPTypes.h		precompiled.h
-  RegKey.h		resource.h
-  Setup.h		utility.h
-  Csp.h)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
 
-add_definitions(-D_WINDOWS  -D_USRDLL -DESTEIDCSP_EXPORTS -D_SCL_SECURE_NO_WARNINGS -D_UNICODE -DUNICODE)
+include_directories(
+    ${CARDLIB}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-link_directories (${ESTEIDUTIL_BINARY_DIR}/smartcard++/ ${ESTEIDUTIL_BINARY_DIR}/src/utility) 
-link_libraries (smartcard++ utility)
+set(esteidcsp_SRCS
+    csp_c_exports.cpp
+    Csp.cpp
+    csp.def
+    CspEstEid.cpp
+    Csp_Hash.cpp
+    Csp_Key.cpp
+    CSPTypes.cpp
+    esteidcsp.cpp
+    esteidcsp.rc
+    precompiled.cpp
+    RegKey.cpp
+    ${CARDLIB}/CardBase.cpp
+    ${CARDLIB}/CTAPIManager.cpp
+    ${CARDLIB}/DynamicLibrary.cpp
+    ${CARDLIB}/esteid/EstEidCard.cpp
+    ${CARDLIB}/esteid/EstEidCardMaintainer.cpp
+    ${CARDLIB}/locked_allocator.cpp
+    ${CARDLIB}/PCSCManager.cpp
+    ${CARDLIB}/SCError.cpp
+    ${CARDLIB}/SmartCardManager.cpp
+    ${CARDLIB}/utility/logger.cpp
+    ${CARDLIB}/utility/monitorThread.cpp
+    ${CARDLIB}/utility/pinDialog.cpp
+    ${CARDLIB}/utility/threadObj.cpp
+)
 
-add_library (esteidcsp SHARED ${ESTEIDCSP_SOURCES} ${ESTEIDCSP_HEADERS}) 
+add_library(esteidcsp SHARED ${esteidcsp_SRCS})
 
-find_program(CSPSIGNEXE NAMES cspsign.exe cspSign.exe PATHS ../../../../ PATH_SUFFIXES cspdk)
+find_program(CSPSIGNEXE NAMES cspsign.exe cspSign.exe PATHS ../ PATH_SUFFIXES cspdk)
 
 if(CSPSIGNEXE)
   get_target_property(ESTEIDCSP_DLL_FULLPATH esteidcsp LOCATION)
@@ -33,4 +54,4 @@ else(CSPSIGNEXE)
   message( STATUS "cspsign.exe not found, post-build command not added" )
 endif(CSPSIGNEXE)
 
-install(TARGETS esteidcsp DESTINATION esteidutil/lib)
+install(TARGETS esteidcsp DESTINATION lib)
