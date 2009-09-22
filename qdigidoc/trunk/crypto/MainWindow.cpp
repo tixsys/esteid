@@ -60,7 +60,7 @@ MainWindow::MainWindow( QWidget *parent )
 #endif
 
 	QApplication::instance()->installEventFilter( this );
-	
+
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );

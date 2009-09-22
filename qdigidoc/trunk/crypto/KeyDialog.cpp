@@ -238,7 +238,7 @@ void KeyAddDialog::on_search_clicked()
 		if( searchType->currentIndex() == 0 )
 			ldap->search( QString( "(serialNumber=%1)" ).arg( searchContent->text() ) );
 		else
-			ldap->search( QString( "(cn=%1*)" ).arg( searchContent->text() ) );
+			ldap->search( QString( "(cn=*%1*)" ).arg( searchContent->text() ) );
 	}
 }
 
