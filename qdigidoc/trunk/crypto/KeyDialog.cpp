@@ -212,14 +212,33 @@ void KeyAddDialog::loadHistory()
 
 void KeyAddDialog::on_add_clicked()
 {
-	if( skKeys.isEmpty() )
+	if( !skView->selectionModel()->hasSelection() )
 		return;
 
-	saveHistory();
 	QList<CKey> keys;
 	Q_FOREACH( const QModelIndex &index, skView->selectionModel()->selectedRows() )
+	{
+		const CKey k = skKeys.value( index.row() );
 		keys << skKeys.value( index.row() );
+		if( usedView->findItems( k.recipient, Qt::MatchExactly ).isEmpty() )
+		{
+			QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
+			i->setText( 0, k.recipient );
+			i->setText( 1, k.cert.issuerInfo( "CN" ) );
+			i->setText( 2, SslCertificate::toLocalTime( k.cert.expiryDate() ).toString( "dd.MM.yyyy" ) );
+			i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
+			usedView->addTopLevelItem( i );
+		}
+	}
 	Q_EMIT selected( keys );
+
+	saveHistory();
+}
+
+void KeyAddDialog::on_remove_clicked()
+{
+	qDeleteAll( usedView->selectedItems() );
+	saveHistory();
 }
 
 void KeyAddDialog::on_search_clicked()
@@ -266,20 +285,6 @@ void KeyAddDialog::on_usedView_itemDoubleClicked( QTreeWidgetItem *item, int )
 
 void KeyAddDialog::saveHistory()
 {
-	Q_FOREACH( const QModelIndex &index, skView->selectionModel()->selectedRows() )
-	{
-		const CKey k = skKeys.value( index.row() );
-		if( usedView->findItems( k.recipient, Qt::MatchExactly ).isEmpty() )
-		{
-			QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
-			i->setText( 0, k.recipient );
-			i->setText( 1, k.cert.issuerInfo( "CN" ) );
-			i->setText( 2, SslCertificate::toLocalTime( k.cert.expiryDate() ).toString( "dd.MM.yyyy" ) );
-			i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
-			usedView->addTopLevelItem( i );
-		}
-	}
-
 	QString path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
 	QDir().mkpath( path );
 	QFile f( path.append( "/certhistory.txt" ) );
