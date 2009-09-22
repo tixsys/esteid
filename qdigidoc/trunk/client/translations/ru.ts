@@ -25,31 +25,31 @@
     </message>
     <message>
         <source>PIN Incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный PIN</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN заблокирован</translation>
     </message>
     <message>
         <source>PIN Login failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Введенный PIN неверен</translation>
     </message>
     <message>
         <source>Certificate status revoked</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат недействителен</translation>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Статус сертификата неизвестен</translation>
     </message>
     <message>
         <source>Check your computer time</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверьте время Вашего компьютера</translation>
     </message>
     <message>
         <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>При открытии документа произошла ошибка&lt;br /&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -320,11 +320,11 @@ Start downloading?</source>
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверьте подключение к интернету</translation>
     </message>
     <message>
         <source>Personal code is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный личный код</translation>
     </message>
     <message>
         <source>Failed to save server access certificate file to %1!
@@ -333,11 +333,11 @@ Start downloading?</source>
     </message>
     <message>
         <source>NB! Test signature</source>
-        <translation type="unfinished"></translation>
+        <translation>NB! Пробная подпись</translation>
     </message>
     <message>
         <source>You dont have permissions to write file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>У Вас недостаточно прав для записи файла %1</translation>
     </message>
     <message>
         <source>NB! Invalid signature</source>
@@ -345,35 +345,35 @@ Start downloading?</source>
     </message>
     <message>
         <source>Error reading server access certificate - empty content!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove signature %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить подпись %1</translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
-        <translation type="unfinished"></translation>
+        <translation>У Вас недостаточно прав для записи файла в каталог %1</translation>
     </message>
     <message>
         <source>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</source>
-        <translation type="unfinished"></translation>
+        <translation>Документы (*.bdoc *.BDOC *.ddoc *.DDOC)</translation>
     </message>
     <message>
         <source>DigiDoc3 client</source>
-        <translation type="unfinished"></translation>
+        <translation>DigiDoc3 клиент</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -441,18 +441,19 @@ Start downloading?</source>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при подключении с SK сервером
+Пожалуйста проверьте подключение к интернету.</translation>
     </message>
     <message>
         <source>User is not a Mobile-ID client</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>Poller</name>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -499,7 +500,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>NO.</source>
-        <translation>НО</translation>
+        <translation>Номер</translation>
     </message>
     <message>
         <source>VALIDITY OF SIGNATURE</source>
@@ -558,7 +559,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Could not find sign certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат подписи не найден.</translation>
     </message>
 </context>
 <context>
@@ -844,11 +845,11 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"></translation>
+        <translation>Время</translation>
     </message>
     <message>
         <source>Test signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Пробная подпись</translation>
     </message>
 </context>
 <context>

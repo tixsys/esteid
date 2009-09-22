@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Check your computer time</source>
-        <translation>Kontrolli oma arvuti kella</translation>
+        <translation>Kontrollige oma arvuti kella</translation>
     </message>
     <message>
         <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
@@ -340,7 +340,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>You dont have permissions to write file %1</source>
-        <translation>Sul ei ole piisavalt õigusi et kirjutada faili %1</translation>
+        <translation>Teil ei ole piisavalt õigusi et kirjutada faili %1</translation>
     </message>
     <message>
         <source>NB! Invalid signature</source>
@@ -376,7 +376,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -449,6 +449,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>User is not a Mobile-ID client</source>
+        <translatorcomment>Пользователь не является клиентом Mobiil-ID</translatorcomment>
         <translation>Kasutaja ei ole Mobiil-ID klient</translation>
     </message>
 </context>
@@ -456,6 +457,7 @@ Palun kontrollige internetiühendust.</translation>
     <name>Poller</name>
     <message>
         <source>Failed to load PKCS#11 module</source>
+        <translatorcomment>Неудачная загрузка модуля PKCS#11</translatorcomment>
         <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
     </message>
 </context>
