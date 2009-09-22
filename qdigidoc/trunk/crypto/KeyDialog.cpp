@@ -292,14 +292,13 @@ void KeyAddDialog::saveHistory()
 		return;
 
 	QTextStream s( &f );
-	QTreeWidgetItem *top = usedView->invisibleRootItem();
-	for( int i = 0; i < top->childCount(); ++i )
+	for( int i = 0; i < usedView->topLevelItemCount(); ++i )
 	{
-		QTreeWidgetItem *child = top->child( i );
-		s << child->text( 0 ) << ';';
-		s << child->text( 1 ) << ';';
-		s << child->text( 2 ) << ';';
-		s << child->data( 0, Qt::UserRole ).toInt() << '\n';
+		QTreeWidgetItem *item = usedView->topLevelItem( i );
+		s << item->text( 0 ) << ';';
+		s << item->text( 1 ) << ';';
+		s << item->text( 2 ) << ';';
+		s << item->data( 0, Qt::UserRole ).toInt() << '\n';
 	}
 	f.close();
 }

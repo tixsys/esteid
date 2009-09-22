@@ -162,6 +162,10 @@
         <source>Empty result</source>
         <translation>Ei leidnud midagi</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eemalda</translation>
+    </message>
 </context>
 <context>
     <name>KeyDialog</name>

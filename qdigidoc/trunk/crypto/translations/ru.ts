@@ -162,6 +162,10 @@
         <source>Empty result</source>
         <translation>Ничего не найдено</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
 </context>
 <context>
     <name>KeyDialog</name>
