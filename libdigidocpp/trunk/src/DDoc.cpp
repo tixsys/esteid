@@ -19,6 +19,8 @@ using namespace digidoc;
 
 #ifdef _WIN32
 
+#include "XmlConf.h"
+
 DDocLibrary::DDocLibrary()
 { h = LoadLibrary( LIBDIGIDOC_NAME ); }
 
