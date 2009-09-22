@@ -159,8 +159,7 @@ bool MainWindow::addFile( const QString &file )
 		if( !Common::canWrite( docname ) )
 		{
 			select = true;
-			QMessageBox::warning( this, windowTitle(),
-				tr( "You dont have permissions to write file %1" ).arg( docname ) );
+			showWarning( tr("You dont have permissions to write file %1").arg( docname ) );
 		}
 
 		while( select )
@@ -172,10 +171,7 @@ bool MainWindow::addFile( const QString &file )
 			if( QFileInfo( docname ).suffix().toLower() != "cdoc" )
 				docname.append( ".cdoc" );
 			if( !Common::canWrite( docname ) )
-			{
-				QMessageBox::warning( this, windowTitle(),
-					tr( "You dont have permissions to write file %1" ).arg( docname ) );
-			}
+				showWarning( tr("You dont have permissions to write file %1").arg( docname ) );
 			else
 				select = false;
 		}
@@ -183,6 +179,12 @@ bool MainWindow::addFile( const QString &file )
 		if( QFile::exists( docname ) )
 			QFile::remove( docname );
 		doc->create( docname );
+	}
+
+	if( !QFile::exists( file ) )
+	{
+		showWarning( tr("File does not exists %1").arg( file ) );
+		return false;
 	}
 
 	// Check if file exist and ask confirmation to overwrite
@@ -559,14 +561,9 @@ void MainWindow::showSettings()
 	e.exec();
 }
 
-void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
+void MainWindow::showWarning( const QString &msg )
 {
-	QString s( msg );
-	if( err != -1 )
-		s += tr("<br />Error code: %1").arg( err );
-	if( !errmsg.isEmpty() )
-		s += QString(" (%1)").arg( errmsg );
-	QMessageBox d( QMessageBox::Warning, windowTitle(), s, QMessageBox::Close | QMessageBox::Help, this );
+	QMessageBox d( QMessageBox::Warning, windowTitle(), msg, QMessageBox::Close | QMessageBox::Help, this );
 	if( d.exec() == QMessageBox::Help )
 	{
 		QUrl u( "http://support.sk.ee/" );
@@ -576,4 +573,14 @@ void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg
 		u.addQueryItem( "_a", "searchclient" );
 		QDesktopServices::openUrl( u );
 	}
+}
+
+void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
+{
+	QString s( msg );
+	if( err != -1 )
+		s += tr("<br />Error code: %1").arg( err );
+	if( !errmsg.isEmpty() )
+		s += QString(" (%1)").arg( errmsg );
+	showWarning( s );
 }

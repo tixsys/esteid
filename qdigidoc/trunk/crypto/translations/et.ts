@@ -397,6 +397,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>Close</source>
         <translation>Sulge</translation>
     </message>
+    <message>
+        <source>File does not exists %1</source>
+        <translation>Valitud faili ei eksisteeri %1</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
