@@ -4,10 +4,6 @@
 
 #pragma once
 
-// Release builds don't compile without this definition.
-// FIXME: What does it do?
-#define _SECURE_SCL 0
-
 #ifndef STRICT
 #define STRICT
 #endif

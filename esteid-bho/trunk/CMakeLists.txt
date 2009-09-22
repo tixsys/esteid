@@ -1,52 +1,78 @@
-include_directories (../.. ../../src ../ ../../.. ${CMAKE_CURRENT_SOURCE_DIR}/Win32/ ./)
+cmake_minimum_required(VERSION 2.6)
+project(EstEIDSigningPluginBHO)
 
-set(ESTEIDSIGNINGPLUGINBHO_SOURCES
-  dlldatax.c		dllmain.cpp
-  EstEIDSigningBHO.cpp	EstEIDSigningPluginBHO.cpp
-  precompiled.cpp	SmartCardCertificate.cpp
-  SmartCardSigner.cpp	EstEIDSigningPluginBHO.def
-  EstEIDSigningBHO.rgs	EstEIDSigningPluginBHO.rc
-  EstEIDSigningPluginBHO.rgs	SmartCardCertificate.rgs
-  SmartCardSigner.rgs)
+add_definitions(
+    -D_UNICODE
+    -DUNICODE
+    -D_MERGE_PROXYSTUB
 
-set(ESTEIDSIGNINGPLUGINBHO_HEADERS
-  _ISmartCardSignerEvents_CP.h	CardMonitorThread.h
-  dlldatax.h		dllmain.h
-  EstEIDSigningBHO.h	precompiled.h
-  Resource.h		Setup.h
-  SmartCardCertificate.h	SmartCardSigner.h
-  targetver.h)
+    # Release builds don't compile without this definition.
+    # http://social.msdn.microsoft.com/Forums/en-US/vcplus2008prerelease/thread/fa969def-911e-4760-867d-5a06a37ed048
+    -D_SECURE_SCL=0
+)
 
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Win32)
-set_source_files_properties(
-  ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.c
-  ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.h
-  PROPERTIES GENERATED 1)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
 
-add_library (EstEIDSigningPluginBHO SHARED 
-  ${ESTEIDSIGNINGPLUGINBHO_SOURCES} 
-  ${ESTEIDSIGNINGPLUGINBHO_HEADERS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.c 
-  ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.h)
- 
-add_definitions(-DUNICODE -D_UNICODE -D_WINDOWS -D_USRDLL)
+include_directories(
+    ${CARDLIB}
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-link_directories (${ESTEIDUTIL_BINARY_DIR}/smartcard++/ ${ESTEIDUTIL_BINARY_DIR}/src/utility) 
-target_link_libraries (EstEIDSigningPluginBHO smartcard++ utility)
+set(bho_SRCS 
+    ${CMAKE_CURRENT_BINARY_DIR}/EstEIDSigningPluginBHO_i.c
+    dlldatax.c
+    dllmain.cpp
+    EstEIDSigningBHO.cpp
+    EstEIDSigningBHO.rgs
+    EstEIDSigningPluginBHO.cpp
+    EstEIDSigningPluginBHO.def
+    EstEIDSigningPluginBHO.rc
+    EstEIDSigningPluginBHO.rgs
+    precompiled.cpp
+    SmartCardCertificate.cpp
+    SmartCardCertificate.rgs
+    SmartCardSigner.cpp
+    SmartCardSigner.rgs
+    ${CARDLIB}/CardBase.cpp
+    ${CARDLIB}/CTAPIManager.cpp
+    ${CARDLIB}/DynamicLibrary.cpp
+    ${CARDLIB}/esteid/EstEidCard.cpp
+    ${CARDLIB}/locked_allocator.cpp
+    ${CARDLIB}/PCSCManager.cpp
+    ${CARDLIB}/SCError.cpp
+    ${CARDLIB}/SmartCardManager.cpp
+    ${CARDLIB}/utility/converters.cpp
+    ${CARDLIB}/utility/monitorThread.cpp
+    ${CARDLIB}/utility/pinDialog.cpp
+    ${CARDLIB}/utility/threadObj.cpp
+)
 
-add_custom_command(TARGET EstEIDSigningPluginBHO PRE_BUILD
-  COMMAND Midl.Exe ARGS
-    /nologo
-    /I ${CMAKE_SOURCE_DIR}
-    /char signed
-    /env win32
-    /Oicf
-    /tlb ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO.tlb
-    /h ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.h
-    /iid ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_i.c
-    /proxy ${CMAKE_CURRENT_SOURCE_DIR}/Win32/EstEIDSigningPluginBHO_p.c
-    /no_robust
-    ${CMAKE_CURRENT_SOURCE_DIR}/EstEIDSigningPluginBHO.idl
-    VERBATIM)
+if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set(MIDL_TARGET "x64")
+else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set(MIDL_TARGET "win32")
+endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
 
-install(TARGETS EstEIDSigningPluginBHO DESTINATION esteidutil/lib)
+add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/EstEIDSigningPluginBHO_i.h
+           ${CMAKE_CURRENT_BINARY_DIR}/EstEIDSigningPluginBHO_i.c
+           ${CMAKE_CURRENT_BINARY_DIR}/EstEIDSigningPluginBHO_p.c
+    COMMAND Midl.Exe EstEIDSigningPluginBHO.idl
+                     /nologo
+                     /I ${CMAKE_SOURCE_DIR}
+                     /char signed
+                     /env ${MIDL_TARGET}
+                     /Oicf
+                     /tlb EstEIDSigningPluginBHO.tlb
+                     /h EstEIDSigningPluginBHO_i.h
+                     /iid EstEIDSigningPluginBHO_i.c
+                     /proxy EstEIDSigningPluginBHO_p.c
+                     /no_robust
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    VERBATIM
+)
+
+add_library(EstEIDSigningPluginBHO SHARED ${bho_SRCS})
+
+install(TARGETS EstEIDSigningPluginBHO DESTINATION lib)
