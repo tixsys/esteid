@@ -176,6 +176,7 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
     {
         THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
     }
+    return digidoc::OCSP::GOOD;
 }
 
 /**
@@ -209,7 +210,7 @@ void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignE
     // Calculate SHA1 digest of the Signature->SignedInfo node.
     calc = Digest::create(NID_sha1);
     std::vector<unsigned char> sha1 = calcDigestOnNode(calc.get(), DSIG_NAMESPACE, "SignedInfo");
-    Signer::Digest sigDigestSha1 = { NID_sha1, &sha1[0], SHA1Digest::DIGEST_SIZE };
+    Signer::Digest sigDigestSha1 = { NID_sha1, &sha1[0], calc->getSize() };
 
     // Sign the calculated SAH1 digest and add the signature value (SHA1-RSA) to the signature.
     std::vector<unsigned char> buf(128);
