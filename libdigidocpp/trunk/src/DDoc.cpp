@@ -187,6 +187,13 @@ void DDocPrivate::throwError( int err, const std::string &msg, int line ) const 
 		throw e;
 		break;
 	}
+	case ERR_OCSP_RESP_NOT_TRUSTED:
+	{
+		BDocException e( __FILE__, line, "Failed to find ocsp responder." );
+		e.setCode( Exception::OCSPResponderMissing );
+		throw e;
+		break;
+	}
 	default:
 	{
 		std::ostringstream s;
