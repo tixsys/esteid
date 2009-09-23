@@ -139,23 +139,11 @@ void CryptDoc::cleanProperties()
 
 void CryptDoc::clear()
 {
-	if( m_enc != 0 )
-		dencEncryptedData_free( m_enc );
-	if( m_doc != 0 )
-		SignedDoc_free( m_doc );
+	dencEncryptedData_free( m_enc );
 	m_enc = 0;
-	m_doc = 0;
+	deleteDDoc();
 	m_fileName.clear();
 	m_lastError.clear();
-	if( !m_ddocTemp.isEmpty() )
-	{
-		QDir d( m_ddocTemp );
-		Q_FOREACH( const QString &file, d.entryList() )
-			d.remove( file );
-		d.rmdir( m_ddocTemp );
-		m_ddoc.clear();
-		m_ddocTemp.clear();
-	}
 }
 
 void CryptDoc::create( const QString &file )
@@ -283,6 +271,21 @@ bool CryptDoc::decrypt( const QString &pin )
 	return !isEncrypted();
 }
 
+void CryptDoc::deleteDDoc()
+{
+	SignedDoc_free( m_doc );
+	m_doc = 0;
+	if( m_ddocTemp.isEmpty() )
+		return;
+
+	QDir d( m_ddocTemp );
+	Q_FOREACH( const QString &file, d.entryList() )
+		d.remove( file );
+	d.rmdir( m_ddocTemp );
+	m_ddoc.clear();
+	m_ddocTemp.clear();
+}
+
 QList<CDocument> CryptDoc::documents()
 {
 	QList<CDocument> list;
@@ -399,8 +402,7 @@ bool CryptDoc::encrypt()
 		return false;
 	}
 
-	SignedDoc_free( m_doc );
-	m_doc = 0;
+	deleteDDoc();
 	return isEncrypted();
 }
 
