@@ -38,6 +38,5 @@ digidoc::X509CertStore* digidoc::X509CertStore::getInstance() throw(IOException)
     {
         THROW_IOEXCEPTION("X509CertStore is not initialized");
     }
-    else
-        return INSTANCE;
+    return INSTANCE;
 }

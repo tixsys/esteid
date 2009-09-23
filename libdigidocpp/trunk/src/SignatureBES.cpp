@@ -153,7 +153,9 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
     Conf::OCSPConf ocspConf = conf->getOCSP(cert.getIssuerName());
     if(ocspConf.issuer.empty())
     {
-        THROW_SIGNATUREEXCEPTION("Failed to load ocsp issuer certificate.");
+        SignatureException e(__FILE__, __LINE__, "Failed to find ocsp responder.");
+        e.setCode( Exception::OCSPResponderMissing );
+        throw e;
     }
     STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope ocspCertsScope(&ocspCerts);

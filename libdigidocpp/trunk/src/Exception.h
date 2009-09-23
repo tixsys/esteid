@@ -20,14 +20,15 @@ namespace digidoc
 
       public:
           enum ExceptionCode {
-              CertificateRevoked = 5,
-              CertificateUnknown = 6,
-              None               = 0,
-              OCSPTimeSlot       = 7,
-              PINCanceled        = 2,
-              PINFailed          = 4,
-              PINIncorrect       = 1,
-              PINLocked          = 3,
+              CertificateRevoked   = 5,
+              CertificateUnknown   = 6,
+              None                 = 0,
+              OCSPResponderMissing = 8,
+              OCSPTimeSlot         = 7,
+              PINCanceled          = 2,
+              PINFailed            = 4,
+              PINIncorrect         = 1,
+              PINLocked            = 3,
           };
           typedef std::vector<Exception> Causes;
 

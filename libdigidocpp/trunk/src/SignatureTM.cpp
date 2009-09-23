@@ -71,7 +71,9 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
     Conf::OCSPConf ocspConf = conf->getOCSP(getSigningCertificate().getIssuerName());
     if(ocspConf.issuer.empty())
     {
-       THROW_SIGNATUREEXCEPTION("Failed to load ocsp issuer certificate.");
+        SignatureException e(__FILE__, __LINE__, "Failed to find ocsp responder.");
+        e.setCode( Exception::OCSPResponderMissing );
+        throw e;
     }
     OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
     STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
@@ -171,7 +173,9 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
     Conf::OCSPConf ocspConf = conf->getOCSP(cert_.getIssuerName());
     if(ocspConf.issuer.empty())
     {
-        THROW_SIGNEXCEPTION("Failed to load ocsp issuer certificate.");
+        SignatureException e(__FILE__, __LINE__, "Failed to find ocsp responder.");
+        e.setCode( Exception::OCSPResponderMissing );
+        throw e;
     }
     OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
     STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
