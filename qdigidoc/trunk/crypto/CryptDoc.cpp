@@ -127,6 +127,16 @@ void CryptDoc::addKey( const CKey &key )
 
 QSslCertificate CryptDoc::authCert() const { return m_authCert; }
 
+void CryptDoc::cleanProperties()
+{
+	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
+	{
+		DEncEncryptionProperty *p = m_enc->encProperties.arrEncryptionProperties[i];
+		if( qstrncmp( p->szName, "orig_file", 9 ) == 0 )
+			dencEncryptedData_DeleteEncryptionProperty( m_enc, i );
+	}
+}
+
 void CryptDoc::clear()
 {
 	if( m_enc != 0 )
@@ -269,12 +279,7 @@ bool CryptDoc::decrypt( const QString &pin )
 			setLastError( tr("Failed to save file '%1'").arg( file ), err );
 	}
 
-	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
-	{
-		DEncEncryptionProperty *p = m_enc->encProperties.arrEncryptionProperties[i];
-		if( qstrncmp( p->szName, "orig_file", 9 ) == 0 )
-			dencEncryptedData_DeleteEncryptionProperty( m_enc, i );
-	}
+	cleanProperties();
 	return !isEncrypted();
 }
 
@@ -339,6 +344,7 @@ bool CryptDoc::encrypt()
 		return false;
 	}
 #else // To avoid full file path
+	err = dencEncryptedData_SetMimeType( m_enc, DENC_ENCDATA_TYPE_DDOC );
 	char id[50];
 	for( int i = 0; i < m_doc->nDataFiles; ++i )
 	{
@@ -352,6 +358,7 @@ bool CryptDoc::encrypt()
 			data->szId );
 		if( err != ERR_OK )
 		{
+			cleanProperties();
 			setLastError( tr("Failed to encrypt data"), err );
 			return false;
 		}
@@ -362,12 +369,14 @@ bool CryptDoc::encrypt()
 	err = createSignedDoc( m_doc, NULL, f.fileName().toUtf8() );
 	if( err != ERR_OK )
 	{
+		cleanProperties();
 		setLastError( tr("Failed to encrypt data"), err );
 		return false;
 	}
 
 	if( !f.open( QIODevice::ReadOnly ) )
 	{
+		cleanProperties();
 		setLastError( tr("Failed to encrypt data") );
 		return false;
 	}
@@ -375,6 +384,7 @@ bool CryptDoc::encrypt()
 	err = dencEncryptedData_AppendData( m_enc, f.readAll(), f.size() );
 	if( err != ERR_OK )
 	{
+		cleanProperties();
 		setLastError( tr("Failed to encrypt data"), err );
 		return false;
 	}
@@ -384,6 +394,7 @@ bool CryptDoc::encrypt()
 	err = dencEncryptedData_encryptData( m_enc, DENC_COMPRESS_NEVER );
 	if( err != ERR_OK )
 	{
+		cleanProperties();
 		setLastError( tr("Failed to encrypt data"), err );
 		return false;
 	}

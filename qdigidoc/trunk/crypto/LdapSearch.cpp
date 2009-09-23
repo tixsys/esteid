@@ -47,7 +47,7 @@ LdapSearch::~LdapSearch() { if( ldap ) ldap_unbind_s( ldap ); }
 
 void LdapSearch::search( const QString &search )
 {
-	char *attrs[3] = { "cn", "userCertificate;binary", '\0' };
+	char *attrs[3] = { (char*)"cn", (char*)"userCertificate;binary", '\0' };
 
 	int err = ldap_search_ext( ldap, "c=EE", LDAP_SCOPE_SUBTREE,
 		search.toUtf8().data(), attrs, 0, NULL, NULL, NULL, 0, &msg_id );

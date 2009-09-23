@@ -96,6 +96,7 @@ private Q_SLOTS:
 
 private:
 	void setLastError( const QString &err, int code = -1 );
+	void cleanProperties();
 
 	QSslCertificate	m_authCert;
 	QStringList		m_cards;
