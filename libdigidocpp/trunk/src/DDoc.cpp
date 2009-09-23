@@ -99,7 +99,7 @@ DDocPrivate::DDocPrivate()
 
 DDocPrivate::~DDocPrivate()
 {
-	for( std::vector<DSignature*>::iterator i = signatures.begin();
+	for( std::vector<DSignature*>::const_iterator i = signatures.begin();
 		i != signatures.end(); ++i )
 		delete *i;
 	if( !f_SignedDoc_free || !f_cleanupConfigStore || !f_finalizeDigiDocLib )
@@ -111,7 +111,7 @@ DDocPrivate::~DDocPrivate()
 
 void DDocPrivate::loadSignatures()
 {
-	for( std::vector<DSignature*>::iterator i = signatures.begin();
+	for( std::vector<DSignature*>::const_iterator i = signatures.begin();
 		i != signatures.end(); ++i )
 		delete *i;
 	signatures.clear();
@@ -486,12 +486,16 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		l.postalCode.c_str(), l.countryName.c_str() );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
+	std::ostringstream role;
 	Signer::SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
-	for( size_t i = 0; i < r.size(); ++i )
+	for( Signer::SignerRole::TRoles::const_iterator i = r.begin(); i != r.end(); ++i )
 	{
-		err = d->f_addSignerRole( info, 0, r[i].c_str(), -1, 0 );
-		d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
+		role << *i;
+		if( i + 1 != r.end() )
+			role << " / ";
 	}
+	err = d->f_addSignerRole( info, 0, role.str().c_str(), -1, 0 );
+	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::string pin;
 	int slot = d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 );
