@@ -12,5 +12,5 @@
 #define VER_STR(x)	VER_STR_HELPER(x)
 
 #define ORG "Estonian ID Card"
-#define APP "QEstEidUtil"
+#define APP "ID kaardi haldusvahend"
 #define DOMAINURL "eesti.ee"
