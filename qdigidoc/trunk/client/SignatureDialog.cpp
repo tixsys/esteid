@@ -78,12 +78,14 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>";
 	st << "<td>" << tr("Signature is") << " ";
-	if( (valid = s.isValid()) )
-		st << "<font color=\"green\">" << tr("valid");
-	else
-		st << "<font color=\"red\">" << tr("not valid");
+	switch( s.validate() )
+	{
+	case DigiDocSignature::Valid: st << "<font color=\"green\">" << tr("valid"); valid = true; break;
+	case DigiDocSignature::Invalid: st << "<font color=\"red\">" << tr("not valid"); break;
+	case DigiDocSignature::Unknown: st << "<font color=\"red\">" << tr("unknown"); break;
+	}
 	if( (test = cert.isTest()) )
-		st << " " << tr("Test signature");
+		st << " (" << tr("Test signature") << ")";
 	st << "</font>";
 	st << "</td><td align=\"right\">";
 	st << "<a href=\"details\">" << tr("Show details") << "</a>";
@@ -122,11 +124,18 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	title->setText( titleText );
 	setWindowTitle( titleText );
 
-	if( s.isValid() )
-		error->setText( tr("Signature is valid") );
-	else
+	switch( s.validate() )
+	{
+	case DigiDocSignature::Valid: error->setText( tr("Signature is valid") ); break;
+	case DigiDocSignature::Invalid:
 		error->setText( tr("Signature is not valid (%1)")
 			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
+		break;
+	case DigiDocSignature::Unknown:
+		error->setText( tr("Signature status unknown (%1)")
+			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
+		break;
+	}
 
 	const QStringList l = s.locations();
 	signerCity->setText( l.value( 0 ) );

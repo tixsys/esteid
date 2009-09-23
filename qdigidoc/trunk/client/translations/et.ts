@@ -555,6 +555,10 @@ Palun kontrollige internetiühendust.</translation>
         <source>REGISTER CODE</source>
         <translation>REGISTRIKOOD</translation>
     </message>
+    <message>
+        <source>UNKNOWN</source>
+        <translation>Teadmata</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -821,6 +825,10 @@ Palun kontrollige internetiühendust.</translation>
         <source>Subject name</source>
         <translation>Pealkirja nimi</translation>
     </message>
+    <message>
+        <source>Signature status unknown (%1)</source>
+        <translation>Allkirja staatus on teadmata (%1)</translation>
+    </message>
 </context>
 <context>
     <name>SignatureWidget</name>
@@ -855,6 +863,10 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>Test signature</source>
         <translation>Test allkiri</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation>teadmata</translation>
     </message>
 </context>
 <context>

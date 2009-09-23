@@ -44,13 +44,19 @@ class Poller;
 class DigiDocSignature
 {
 public:
+	enum SignatureStatus
+	{
+		Valid,
+		Invalid,
+		Unknown,
+	};
 	DigiDocSignature( const digidoc::Signature *signature, DigiDoc *parent );
 
 	QSslCertificate	cert() const;
 	QDateTime	dateTime() const;
 	QString		digestMethod() const;
 	QByteArray	digestValue() const;
-	bool		isValid();
+	SignatureStatus validate();
 	QString		lastError() const;
 	QString		location() const;
 	QStringList locations() const;

@@ -550,6 +550,10 @@ Please check your internet connection.</source>
         <source>REGISTER CODE</source>
         <translation>КОД РЕГИСТРА</translation>
     </message>
+    <message>
+        <source>UNKNOWN</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -816,6 +820,10 @@ Please check your internet connection.</source>
         <source>Subject name</source>
         <translation>Название заглавия</translation>
     </message>
+    <message>
+        <source>Signature status unknown (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SignatureWidget</name>
@@ -850,6 +858,10 @@ Please check your internet connection.</source>
     <message>
         <source>Test signature</source>
         <translation>Пробная подпись</translation>
+    </message>
+    <message>
+        <source>unknown</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

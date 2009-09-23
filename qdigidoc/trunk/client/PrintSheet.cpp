@@ -135,8 +135,14 @@ PrintSheet::PrintSheet( DigiDoc *d, QWidget *parent )
 		<< "</table>"
 
 		<< "<div class=\"label\">" << tr("VALIDITY OF SIGNATURE") << "</div>"
-		<< "<div class=\"textborder\">" << tr("SIGNATURE") << " "
-		<< (sig.isValid() ? tr("VALID") : tr("NOT VALID")) << "</div>"
+		<< "<div class=\"textborder\">" << tr("SIGNATURE") << " ";
+		switch( sig.validate() )
+		{
+		case DigiDocSignature::Valid: s << tr("VALID"); break;
+		case DigiDocSignature::Invalid: s << tr("NOT VALID"); break;
+		case DigiDocSignature::Unknown: s << tr("UNKNOWN"); break;
+		}
+		s << "</div>"
 
 		<< "<div class=\"label\">" << tr("ROLE / RESOLUTION") << "</div>"
 		<< "<div class=\"textborder\">" << sig.role() << "&nbsp;</div>"

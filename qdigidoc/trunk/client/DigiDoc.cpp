@@ -98,18 +98,30 @@ QByteArray DigiDocSignature::digestValue() const
 	return QByteArray();
 }
 
-bool DigiDocSignature::isValid()
+DigiDocSignature::SignatureStatus DigiDocSignature::validate()
 {
 	try
 	{
 		s->validateOffline();
 		if( s->getMediaType() == "signature/bdoc-1.0/BES" )
-			return s->validateOnline() == OCSP::GOOD;
+		{
+			switch( s->validateOnline() )
+			{
+			case OCSP::GOOD: return Valid;
+			case OCSP::REVOKED: return Invalid;
+			case OCSP::UNKNOWN: return Unknown;
+			}
+		}
 		else
-			return true;
+			return Valid;
 	}
-	catch( const Exception &e ) { setLastError( e ); }
-	return false;
+	catch( const Exception &e )
+	{
+		setLastError( e );
+		if( e.code() == Exception::OCSPResponderMissing )
+			return Unknown;
+	}
+	return Invalid;
 }
 
 QString DigiDocSignature::lastError() const { return m_lastError; }
