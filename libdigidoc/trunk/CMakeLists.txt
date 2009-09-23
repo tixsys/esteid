@@ -24,7 +24,7 @@ find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
 find_package( Iconv REQUIRED )
 if(UNIX)
-    find_package( LibDL REQUIRED )
+    find_package( LibDL )
 endif(UNIX)
 
 configure_file(

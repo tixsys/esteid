@@ -4,7 +4,7 @@ project( EstEIDReader )
 set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
 
 if( UNIX )
-  find_package( LibDL REQUIRED )
+  find_package( LibDL )
 endif( UNIX )
 
 find_package( OpenSC REQUIRED )

@@ -39,7 +39,7 @@ find_package(XSD REQUIRED)
 find_package(ZLIB REQUIRED)
 
 if(UNIX)
-	find_package(LibDL REQUIRED)
+	find_package(LibDL)
 endif(UNIX)
 
 set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
