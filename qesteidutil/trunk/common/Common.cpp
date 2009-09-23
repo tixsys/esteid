@@ -134,9 +134,8 @@ void Common::mailTo( const QUrl &url )
 	SendMail mapi = (SendMail)lib.resolve("MAPISendMail");
 	if( mapi )
 	{
-		int status = mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
-		if( status == SUCCESS_SUCCESS )
-			return;
+		mapi( NULL, 0, &message, MAPI_LOGON_UI|MAPI_DIALOG, 0 );
+		return;
 	}
 #elif defined(Q_OS_MAC)
 	CFURLRef emailUrl = CFURLCreateWithString(kCFAllocatorDefault, CFSTR("mailto:info@example.com"), NULL), appUrl = NULL;
