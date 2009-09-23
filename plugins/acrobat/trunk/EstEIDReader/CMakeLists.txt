@@ -51,3 +51,5 @@ target_link_libraries(
         ${OPENSC_LIBRARY} 
         ${LIBDL_LIBRARIES}
 	)
+
+install( TARGETS EstEIDReader DESTINATION lib )
