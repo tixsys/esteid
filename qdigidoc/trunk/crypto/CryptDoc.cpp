@@ -280,7 +280,10 @@ void CryptDoc::deleteDDoc()
 
 	QDir d( m_ddocTemp );
 	Q_FOREACH( const QString &file, d.entryList() )
+	{
+		QFile::setPermissions( file, QFile::ReadOwner|QFile::WriteOwner );
 		d.remove( file );
+	}
 	d.rmdir( m_ddocTemp );
 	m_ddoc.clear();
 	m_ddocTemp.clear();
