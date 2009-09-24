@@ -133,18 +133,18 @@ void digidoc::SignatureBES::validateOffline() const throw(SignatureException)
  */
 digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(SignatureException)
 {
-	// FIXME: Add exception handling.
+    // FIXME: Add exception handling.
 
-	// Get signing signature.
-	X509Cert cert = getSigningCertificate();
+    // Get signing signature.
+    X509Cert cert = getSigningCertificate();
 
-	// Get issuer certificate.
-	X509* issuerCert = X509CertStore::getInstance()->getCert(*(cert.getIssuerNameAsn1()));
-	X509_scope issuerCertScope(&issuerCert);
-	if(issuerCert == NULL)
-	{
-		THROW_SIGNATUREEXCEPTION("Failed to load issuer certificate.");
-	}
+    // Get issuer certificate.
+    X509* issuerCert = X509CertStore::getInstance()->getCert(*(cert.getIssuerNameAsn1()));
+    X509_scope issuerCertScope(&issuerCert);
+    if(issuerCert == NULL)
+    {
+        THROW_SIGNATUREEXCEPTION("Failed to load issuer certificate.");
+    }
 
     Conf* conf = Conf::getInstance();
 
@@ -161,18 +161,18 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
     X509Stack_scope ocspCertsScope(&ocspCerts);
 
     // Check the certificate validity from OCSP server.
-	OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
-	ocsp.setSkew(120);//XXX: load from conf
-	ocsp.setOCSPCerts(ocspCerts);
-	std::auto_ptr<Digest> calc = Digest::create();
-	calc->update(getSignatureValue());
+    OCSP ocsp(ocspConf.url);
+    ocsp.setSkew(120);//XXX: load from conf
+    ocsp.setOCSPCerts(ocspCerts);
+    std::auto_ptr<Digest> calc = Digest::create();
+    calc->update(getSignatureValue());
     try
     {
-	    return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
+        return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
     }
     catch(const IOException& e)
     {
-       THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
+        THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
     }
     catch(const OCSPException& e)
     {

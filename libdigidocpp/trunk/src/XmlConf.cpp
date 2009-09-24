@@ -3,12 +3,12 @@
  */
 
 #include "XmlConf.h"
-#include <stdlib.h>//getenv
 
 #include "log.h"
-#include "util/String.h"
 #include "util/File.h"
 #include "xml/conf.hxx"
+
+#include <stdlib.h>//getenv
 
 /**
  * Environment variable name, that is used for loading configuration

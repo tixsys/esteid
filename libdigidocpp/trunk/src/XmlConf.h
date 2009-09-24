@@ -9,7 +9,6 @@
 #define XMLCONF_H_
 
 #include "Conf.h"
-#include "io/IOException.h"
 
 namespace digidoc
 {

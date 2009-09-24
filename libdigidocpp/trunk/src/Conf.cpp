@@ -1,7 +1,5 @@
 #include "Conf.h"
-#include "io/IOException.h"
 #include "log.h"
-
 
 //std::auto_ptr<digidoc::Conf> digidoc::Conf::INSTANCE = std::auto_ptr<digidoc::Conf>(new digidoc::Conf());
 digidoc::Conf* digidoc::Conf::INSTANCE = NULL;
@@ -10,9 +8,8 @@ digidoc::Conf* digidoc::Conf::getInstance() throw(IOException)
 {
     if (INSTANCE == NULL)
     {
-	THROW_IOEXCEPTION("Conf is not initialized");
+        THROW_IOEXCEPTION("Conf is not initialized");
     }
-    else
 	return INSTANCE;
 }
 

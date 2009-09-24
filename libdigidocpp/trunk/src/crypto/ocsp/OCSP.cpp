@@ -1,11 +1,10 @@
-#include <openssl/err.h>
-#include <openssl/ocsp.h>
-#include <openssl/pkcs12.h>
-#include "../../log.h"
-#include "../../util/String.h"
 #include "OCSP.h"
+
+#include "../../log.h"
 #include "../../Conf.h"
 
+#include <openssl/err.h>
+#include <openssl/pkcs12.h>
 
 /**
  * Initialize OCSP certificate validator.
@@ -14,12 +13,10 @@
  * @throws IOException exception is thrown if provided OCSP URL is in incorrect format.
  * @see setUrl(const std::string& url)
  */
-digidoc::OCSP::OCSP(const std::string& url, const std::string &phost,const std::string &pport) throw(IOException)
+digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
  : host(NULL)
  , port(NULL)
  , path(NULL)
- , proxyHost(const_cast<char*>(phost.c_str()))
- , proxyPort(const_cast<char*>(pport.c_str()))
  , ssl(false)
  , skew(50)
  , maxAge(10)
@@ -33,11 +30,12 @@ digidoc::OCSP::OCSP(const std::string& url, const std::string &phost,const std::
 {
     setUrl(url);
     //proxy support
-    if ( proxyHost != 0 && *proxyHost != '\0' )
+    digidoc::Conf *c = digidoc::Conf::getInstance();
+    if(!c->getProxyHost().empty())
     {
-	host = proxyHost;
-	if( proxyPort != 0 && *proxyPort != '\0' )
-             port = proxyPort;
+        host = const_cast<char*>(c->getProxyHost().c_str());
+        if(!c->getProxyPort().empty())
+            port = const_cast<char*>(c->getProxyPort().c_str());
         path = const_cast<char*>(url.c_str());
     }
 }

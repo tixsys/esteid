@@ -75,7 +75,7 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
         e.setCode( Exception::OCSPResponderMissing );
         throw e;
     }
-    OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
+    OCSP ocsp(ocspConf.url);
     STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope x509StackScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
@@ -177,19 +177,27 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
         e.setCode( Exception::OCSPResponderMissing );
         throw e;
     }
-    OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
-    X509Stack_scope ocspCertsScope(&ocspCerts);
-    ocsp.setOCSPCerts(ocspCerts);
-    ocsp.setMaxAge(5); // FIXME: remove or move to conf
-    ocsp.setSkew(120); // FIXME: remove or move to conf
 
-    // Make OCSP request.
-    std::vector<unsigned char> ocspResponse;
-    struct tm producedAt;
-    OCSP::CertStatus status;
+    STACK_OF(X509)* ocspCerts = 0;
     try
     {
+        ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
+    }
+    catch(const IOException& e)
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to load OCSP certificate");
+    }
+    X509Stack_scope ocspCertsScope(&ocspCerts);
+
+    OCSP::CertStatus status = OCSP::UNKNOWN;
+    std::vector<unsigned char> ocspResponse;
+    struct tm producedAt;
+    try
+    {
+        OCSP ocsp(ocspConf.url);
+        ocsp.setOCSPCerts(ocspCerts);
+        ocsp.setMaxAge(5); // FIXME: remove or move to conf
+        ocsp.setSkew(120); // FIXME: remove or move to conf
         status = ocsp.checkCert(cert, issuer, nonce, ocspResponse, producedAt);
     }
     catch(const IOException& e)

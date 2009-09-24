@@ -1,10 +1,6 @@
 #if !defined(__CONF_H_INCLUDED__)
 #define __CONF_H_INCLUDED__
 
-#include <memory>
-#include <string>
-
-#include "Exports.h"
 #include "io/IOException.h"
 
 namespace digidoc
