@@ -87,6 +87,10 @@
         <source>Failed to save file &apos;%1&apos;</source>
         <translation>Сохранение файла неуспешно &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Failed to encrypt data.&lt;br /&gt;File does not exsist %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyAddDialog</name>

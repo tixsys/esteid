@@ -87,6 +87,10 @@
         <source>Failed to save file &apos;%1&apos;</source>
         <translation>Faili salvestamine ebaõnnestus &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Failed to encrypt data.&lt;br /&gt;File does not exsist %1</source>
+        <translation>Andmete krüpteerimine ebaõnnestus&lt;br /&gt;Valitud faili ei eksisteeri %1</translation>
+    </message>
 </context>
 <context>
     <name>KeyAddDialog</name>

@@ -348,17 +348,25 @@ bool CryptDoc::encrypt()
 	}
 #else // To avoid full file path
 	err = dencEncryptedData_SetMimeType( m_enc, DENC_ENCDATA_TYPE_DDOC );
-	char id[50];
 	for( int i = 0; i < m_doc->nDataFiles; ++i )
 	{
 		DataFile *data = m_doc->pDataFiles[i];
-		qsnprintf( id, 50, "orig_file%d", i );
+		QFileInfo file( QString::fromUtf8( data->szFileName ) );
+
+		if( !file.exists() )
+		{
+			cleanProperties();
+			setLastError( tr("Failed to encrypt data.<br />File does not exsist %1").arg( file.filePath() ) );
+			return false;
+		}
+
 		int err = dencOrigContent_add( m_enc,
-			id,
-			QFileInfo( QString::fromUtf8( data->szFileName ) ).fileName().toUtf8(),
+			QString("orig_file%1").arg(i).toUtf8(),
+			file.fileName().toUtf8(),
 			Common::fileSize( data->nSize ).toUtf8(),
 			data->szMimeType,
 			data->szId );
+
 		if( err != ERR_OK )
 		{
 			cleanProperties();
