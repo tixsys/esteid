@@ -29,15 +29,6 @@ digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
  , signKey(NULL)
 {
     setUrl(url);
-    //proxy support
-    digidoc::Conf *c = digidoc::Conf::getInstance();
-    if(!c->getProxyHost().empty())
-    {
-        host = const_cast<char*>(c->getProxyHost().c_str());
-        if(!c->getProxyPort().empty())
-            port = const_cast<char*>(c->getProxyPort().c_str());
-        path = const_cast<char*>(url.c_str());
-    }
 }
 
 /**
@@ -45,9 +36,8 @@ digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
  */
 digidoc::OCSP::~OCSP()
 {
-    if(sconnection) { BIO_free_all(sconnection); }
-    if(connection) { BIO_free_all(connection); }
-    if(ctx) { SSL_CTX_free(ctx); }
+    BIO_free_all(connection);
+    SSL_CTX_free(ctx);
 }
 
 /**
@@ -56,8 +46,9 @@ digidoc::OCSP::~OCSP()
  * @param url full OCSP URL (e.g. http://www.openxades.org/cgi-bin/ocsp.cgi).
  * @throws IOException exception is thrown if provided OCSP URL is in incorrect format.
  */
-void digidoc::OCSP::setUrl( const std::string& url ) throw(IOException)
+void digidoc::OCSP::setUrl( const std::string& _url ) throw(IOException)
 {
+    url = _url;
     // Parse OCSP connection URL.
     int sslFlag = 0;
     int result = OCSP_parse_url(const_cast<char*>(url.c_str()), &host, &port, &path, &sslFlag);
@@ -242,28 +233,23 @@ digidoc::OCSP::CertStatus digidoc::OCSP::checkCert(X509* cert, X509* issuer,
     // Connect to OCSP server.
     connect();
 
-    std::string file = digidoc::Conf::getInstance()->getPKCS12Cert();
-    std::string pass = digidoc::Conf::getInstance()->getPKCS12Pass();
-    if(!file.empty())
+    // Sign request with PKCS#12 certificate
+    digidoc::Conf *c = digidoc::Conf::getInstance();
+    if(!c->getPKCS12Cert().empty())
     {
         BIO *bio = BIO_new(BIO_s_file());
-        BIO_read_filename(bio, file.c_str());
+        BIO_read_filename(bio, c->getPKCS12Cert().c_str());
         PKCS12 *p12 = d2i_PKCS12_bio(bio, NULL);
-        if(!p12)
-        {
-            BIO_free(bio);
-            THROW_IOEXCEPTION("Failed to read PKCS12 certificate.");
-        }
         BIO_free(bio);
+        if(!p12)
+            THROW_IOEXCEPTION("Failed to read PKCS12 certificate.");
 
         X509 *cert;
         EVP_PKEY *key;
-        if(!PKCS12_parse(p12, pass.c_str(), &key, &cert, NULL))
-        {
-            PKCS12_free(p12);
-            THROW_IOEXCEPTION("Failed to parse PKCS12 certificate (%s).", ERR_reason_error_string(ERR_get_error()));
-        }
+        int res = PKCS12_parse(p12, c->getPKCS12Pass().c_str(), &key, &cert, NULL);
         PKCS12_free(p12);
+        if(!res)
+            THROW_IOEXCEPTION("Failed to parse PKCS12 certificate (%s).", ERR_reason_error_string(ERR_get_error()));
 
         setSignCert(cert, key);
     }
@@ -285,28 +271,39 @@ digidoc::OCSP::CertStatus digidoc::OCSP::checkCert(X509* cert, X509* issuer,
  */
 void digidoc::OCSP::connect() throw(IOException)
 {
-	// Release old connection if it exists.
-	if(sconnection) { BIO_free_all(sconnection); }
-	if(connection) { BIO_free_all(connection); }
-	if(ctx) { SSL_CTX_free(ctx); }
+    // Release old connection if it exists.
+    BIO_free_all(connection);
+    SSL_CTX_free(ctx);
+    connection = sconnection = NULL;
+    ctx = NULL;
 
-	// Establish a connection to the OCSP responder.
-	connection = BIO_new_connect(host);
-	if(connection == NULL)
-	{
-		THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host);
-	}
+    // proxy host
+    digidoc::Conf *c = digidoc::Conf::getInstance();
+    if(!c->getProxyHost().empty())
+    {
+        host = const_cast<char*>(c->getProxyHost().c_str());
+        if(!c->getProxyPort().empty())
+            port = const_cast<char*>(c->getProxyPort().c_str());
+        path = const_cast<char*>(url.c_str());
+    }
 
-	if( port != NULL && BIO_set_conn_port(connection, port) <= 0 )
-	{
-		THROW_IOEXCEPTION("Failed to set port of the connection: %s", port);
-	}
+    // Establish a connection to the OCSP responder.
+    connection = BIO_new_connect(host);
+    if(connection == NULL)
+    {
+        THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host);
+    }
 
-	if(ssl)
-		connectSSL();
+    if( port != NULL && BIO_set_conn_port(connection, port) <= 0 )
+    {
+        THROW_IOEXCEPTION("Failed to set port of the connection: %s", port);
+    }
 
-	if ( !BIO_do_connect(connection) )
-		THROW_IOEXCEPTION( "Failed to connect to host: '%s'", host );
+    if(ssl)
+        connectSSL();
+
+    if ( !BIO_do_connect(connection) )
+        THROW_IOEXCEPTION( "Failed to connect to host: '%s'", host );
 }
 
 /**
@@ -388,11 +385,35 @@ OCSP_REQUEST* digidoc::OCSP::createRequest(X509* cert, X509* issuer, const std::
  */
 OCSP_RESPONSE* digidoc::OCSP::sendRequest(OCSP_REQUEST* req) throw(IOException)
 {
-    // Send the request and get a response.
-    OCSP_RESPONSE* resp = OCSP_sendreq_bio(connection, path, req);
-    if(resp == NULL)
+    OCSP_RESPONSE* resp = 0;
+
+    // Auth proxy
+    digidoc::Conf *c = digidoc::Conf::getInstance();
+    if(!c->getProxyUser().empty() || !c->getProxyPass().empty())
     {
-        THROW_IOEXCEPTION("Failed to send OCSP request.");
+        BIO *b64 = BIO_new(BIO_f_base64());
+        BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+        BIO *hash = BIO_push(b64, BIO_new(BIO_s_mem()));
+        BIO_printf(hash, "%s:%s", c->getProxyUser().c_str(), c->getProxyPass().c_str());
+        BIO_flush(hash);
+        char *base64 = 0;
+        BIO_get_mem_data(hash, &base64);
+
+        char data[256];
+        memset(&data, 0, 256);
+
+        // HACK/FIXME to alter openssl OCSP request http header
+        static char post_hdr[] = "%s HTTP/1.0\r\n"
+            "Proxy-Authorization: Basic %s\r\n";
+        sprintf((char*)&data, post_hdr, path, base64);
+
+        if(!(resp = OCSP_sendreq_bio(connection, (char*)&data, req)))
+            THROW_IOEXCEPTION("Failed to send OCSP request.");
+    }
+    else
+    {
+        if(!(resp = OCSP_sendreq_bio(connection, path, req)))
+            THROW_IOEXCEPTION("Failed to send OCSP request.");
     }
 
     return resp;

@@ -29,6 +29,8 @@ const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
 const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
 const std::string digidoc::XmlConf::PROXY_HOST         = "proxy.host";
 const std::string digidoc::XmlConf::PROXY_PORT         = "proxy.port";
+const std::string digidoc::XmlConf::PROXY_USER         = "proxy.user";
+const std::string digidoc::XmlConf::PROXY_PASS         = "proxy.pass";
 const std::string digidoc::XmlConf::PKCS12_CERT        = "pkcs12.cert";
 const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
 
@@ -150,6 +152,14 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             {
                 proxyPort = *it;
             }
+            else if(PROXY_USER.compare(it->name()) == 0)
+            {
+                proxyUser = *it;
+            }
+            else if(PROXY_PASS.compare(it->name()) == 0)
+            {
+                proxyPass = *it;
+            }
             else if(PKCS12_CERT.compare(it->name()) == 0)
             {
                 pkcs12Cert = *it;
@@ -260,6 +270,16 @@ std::string digidoc::XmlConf::getProxyPort() const
     return proxyPort;
 }
 
+std::string digidoc::XmlConf::getProxyUser() const
+{
+    return proxyUser;
+}
+
+std::string digidoc::XmlConf::getProxyPass() const
+{
+    return proxyPass;
+}
+
 std::string digidoc::XmlConf::getPKCS12Cert() const
 {
     return pkcs12Cert;
@@ -278,6 +298,16 @@ void digidoc::XmlConf::setProxyHost( const std::string &host )
 void digidoc::XmlConf::setProxyPort( const std::string &port )
 {
     proxyPort = port;
+}
+
+void digidoc::XmlConf::setProxyUser( const std::string &user )
+{
+    proxyUser = user;
+}
+
+void digidoc::XmlConf::setProxyPass( const std::string &pass )
+{
+    proxyPass = pass;
 }
 
 void digidoc::XmlConf::setPKCS12Cert( const std::string &cert )

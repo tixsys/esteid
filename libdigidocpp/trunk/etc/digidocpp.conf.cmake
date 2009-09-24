@@ -13,6 +13,8 @@
     <param name="dsig.xsd.path">schema/xmldsig-core-schema.xsd</param>
     <!--<param name="proxy.host"></param>-->
     <!--<param name="proxy.port"></param>-->
+    <!--<param name="proxy.user"></param>-->
+    <!--<param name="proxy.pass"></param>-->
     <!--<param name="pkcs12.cert"></param>-->
     <!--<param name="pkcs12.pass"></param>-->
 
