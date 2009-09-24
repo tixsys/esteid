@@ -709,6 +709,10 @@ Please check your internet connection.</source>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SignatureDialog</name>

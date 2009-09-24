@@ -140,8 +140,10 @@ MainWindow::MainWindow( QWidget *parent )
 		s.value( "Main/Language", "et" ).toString() ) );
 
 	s.beginGroup( "Client" );
-	doc->setConfValue( DigiDoc::ProxyHost, s.value( "proxyPort" ) );
-	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyHost" ) );
+	doc->setConfValue( DigiDoc::ProxyHost, s.value( "proxyHost" ) );
+	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyPort" ) );
+	doc->setConfValue( DigiDoc::ProxyUser, s.value( "proxyUser" ) );
+	doc->setConfValue( DigiDoc::ProxyPass, s.value( "proxyPass" ) );
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 

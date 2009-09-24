@@ -61,6 +61,8 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 
 	proxyHost->setText( s.value( "proxyHost" ).toString() );
 	proxyPort->setText( s.value( "proxyPort" ).toString() );
+	proxyUser->setText( s.value( "proxyUser" ).toString() );
+	proxyPass->setText( s.value( "proxyPass" ).toString() );
 	p12Cert->setText( s.value( "pkcs12Cert" ).toString() );
 	p12Pass->setText( s.value( "pkcs12Pass" ).toString() );
 
@@ -110,11 +112,15 @@ void SettingsDialog::save()
 	}
 	s.setValue( "proxyHost", proxyHost->text() );
 	s.setValue( "proxyPort", proxyPort->text() );
+	s.setValue( "proxyUser", proxyUser->text() );
+	s.setValue( "proxyPass", proxyPass->text() );
 	s.setValue( "pkcs12Cert", p12Cert->text() );
 	s.setValue( "pkcs12Pass", p12Pass->text() );
 
 	DigiDoc::setConfValue( DigiDoc::ProxyHost, proxyHost->text() );
 	DigiDoc::setConfValue( DigiDoc::ProxyPort, proxyPort->text() );
+	DigiDoc::setConfValue( DigiDoc::ProxyUser, proxyUser->text() );
+	DigiDoc::setConfValue( DigiDoc::ProxyPass, proxyPass->text() );
 	DigiDoc::setConfValue( DigiDoc::PKCS12Cert, p12Cert->text() );
 	DigiDoc::setConfValue( DigiDoc::PKCS12Pass, p12Pass->text() );
 

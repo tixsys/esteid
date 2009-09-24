@@ -69,7 +69,11 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
     connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
     connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
 
-	m_http->setProxy( s.value( "proxyHost" ).toString(), s.value( "proxyPort" ).toInt() );
+	m_http->setProxy(
+		s.value( "proxyHost" ).toString(),
+		s.value( "proxyPort" ).toInt(),
+		s.value( "proxyUser" ).toString(),
+		s.value( "proxyPass" ).toString() );
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
 		//m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
@@ -186,10 +190,10 @@ bool MobileDialog::getFiles()
 	int i = 0;
 	Q_FOREACH( digidoc::Document file, m_doc->documents() )
 	{
-		QByteArray digest;
+		QByteArray digest, name = "sha1";
 		if ( m_doc->documentType() == digidoc::WDoc::BDocType )
 		{
-			std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create( URI_SHA1 );
+			std::auto_ptr<digidoc::Digest> calc = digidoc::Digest::create();
 			std::vector<unsigned char> d;
 			try {
 				 d = file.calcDigest( calc.get() );
@@ -198,15 +202,15 @@ bool MobileDialog::getFiles()
 				return false;
 			}
 			digest = QByteArray( (char*)&d[0], d.size() );
+			name = QString::fromStdString( calc->getName() ).toLatin1();
 		} else
 			digest = m_doc->getFileDigest( i ).left( 20 );
 
 		QFileInfo f( QString::fromStdString( file.getPath() ) );
 		files += "<DataFileDigest xsi:type=\"m:DataFileDigest\">"
-			 + (m_doc->documentType() == digidoc::WDoc::BDocType ?
-				"<Id xsi:type=\"xsd:String\">/" + f.fileName() + "</Id>" :
-				"<Id xsi:type=\"xsd:String\">D" + QByteArray::number( i ) + "</Id>"	) +
-			"<DigestType xsi:type=\"xsd:String\">sha1</DigestType>"
+			"<Id xsi:type=\"xsd:String\">" + (m_doc->documentType() == digidoc::WDoc::BDocType ?
+				"/" + f.fileName() : "D" + QByteArray::number( i ) ) + "</Id>"
+			"<DigestType xsi:type=\"xsd:String\">" + name + "</DigestType>"
 			"<DigestValue xsi:type=\"xsd:String\">" + digest.toBase64() + "</DigestValue>"
 			"</DataFileDigest>";
 		i++;

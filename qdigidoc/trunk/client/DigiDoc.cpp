@@ -452,6 +452,8 @@ QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) 
 	{
 	case ProxyHost: r = i->getProxyHost(); break;
 	case ProxyPort: r = i->getProxyPort(); break;
+	case ProxyUser: r = i->getProxyUser(); break;
+	case ProxyPass: r = i->getProxyPass(); break;
 	case PKCS12Cert: r = i->getPKCS12Cert(); break;
 	case PKCS12Pass: r = i->getPKCS12Pass(); break;
 	default: break;
@@ -470,8 +472,10 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 	const std::string v = value.toString().toStdString();
 	switch( parameter )
 	{
-	case ProxyHost: i->setProxyPort( v ); break;
-	case ProxyPort: i->setProxyHost( v ); break;
+	case ProxyHost: i->setProxyHost( v ); break;
+	case ProxyPort: i->setProxyPort( v ); break;
+	case ProxyUser: i->setProxyUser( v ); break;
+	case ProxyPass: i->setProxyPass( v ); break;
 	case PKCS12Cert: i->setPKCS12Cert( v ); break;
 	case PKCS12Pass: i->setPKCS12Pass( v ); break;
 	default: break;

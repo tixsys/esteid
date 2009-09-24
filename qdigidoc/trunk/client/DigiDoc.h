@@ -81,6 +81,8 @@ public:
 	{
 		ProxyHost,
 		ProxyPort,
+		ProxyUser,
+		ProxyPass,
 		PKCS12Cert,
 		PKCS12Pass,
 	};

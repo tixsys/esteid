@@ -714,6 +714,10 @@ Palun kontrollige internetiühendust.</translation>
         <source>Password</source>
         <translation>Parool</translation>
     </message>
+    <message>
+        <source>Username</source>
+        <translation>Kasutajanimi</translation>
+    </message>
 </context>
 <context>
     <name>SignatureDialog</name>
