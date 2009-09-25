@@ -1,9 +1,6 @@
 #if !defined(__SIGNATUREBES_H_INCLUDED__)
 #define __SIGNATUREBES_H_INCLUDED__
 
-#include <string>
-
-#include "Signature.h"
 #include "BDoc.h"
 
 namespace digidoc

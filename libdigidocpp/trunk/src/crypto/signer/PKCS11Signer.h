@@ -1,8 +1,6 @@
 #if !defined(__PKCS11SIGNER_H_INCLUDED__)
 #define __PKCS11SIGNER_H_INCLUDED__
 
-#include <string>
-
 #include "Signer.h"
 
 namespace digidoc

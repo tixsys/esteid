@@ -1,9 +1,12 @@
 #include "DDoc_p.h"
 #include "DDoc.h"
 
+#include "crypto/cert/X509Cert.h"
 #include "crypto/signer/PKCS11Signer.h"
+#include "io/ISerialize.h"
 #include "util/File.h"
 #include "Conf.h"
+#include "Document.h"
 
 using namespace digidoc;
 

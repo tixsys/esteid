@@ -10,6 +10,7 @@
 #include "log.h"
 #include "BDoc.h"
 #include "Conf.h"
+#include "Document.h"
 #include "XmlConf.h"
 #include "SignatureBES.h"
 #include "SignatureTM.h"
@@ -17,6 +18,7 @@
 #include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
+#include "io/ISerialize.h"
 #include "xml/OpenDocument_manifest.hxx"
 
 /**

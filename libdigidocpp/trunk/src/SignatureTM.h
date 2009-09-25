@@ -8,7 +8,6 @@
 #ifndef SIGNATURETM_H_
 #define SIGNATURETM_H_
 
-#include <time.h>
 #include "SignatureBES.h"
 
 

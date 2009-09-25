@@ -6,6 +6,7 @@
 
 #include "log.h"
 #include "Conf.h"
+#include "Document.h"
 #include "SignatureBES.h"
 #include "crypto/OpenSSLHelpers.h"
 #include "crypto/Digest.h"

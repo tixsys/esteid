@@ -2,7 +2,6 @@
 #define __SIGNATURE_H_INCLUDED__
 
 #include "SignatureException.h"
-#include "crypto/cert/X509Cert.h"
 #include "crypto/ocsp/OCSP.h"
 #include "crypto/signer/Signer.h"
 #include "io/IOException.h"
@@ -11,6 +10,7 @@
 namespace digidoc
 {
     class Digest;
+    class X509Cert;
     class EXP_DIGIDOC Signature
     {
       friend class BDoc;

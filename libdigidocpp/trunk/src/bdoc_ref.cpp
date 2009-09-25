@@ -18,6 +18,7 @@ inline bool	OemToChar( char const*, char* )
 #include "log.h"
 #include "BDoc.h"
 #include "Conf.h"
+#include "Document.h"
 #include "crypto/crypt/RSACrypt.h"
 #include "crypto/signer/Signer.h"
 #include "crypto/signer/RSASigner.h"

@@ -1,19 +1,7 @@
 #if !defined(__BDOC_H_INCLUDED__)
 #define __BDOC_H_INCLUDED__
 
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "ADoc.h"
-#include "BDocException.h"
-#include "Document.h"
-#include "Signature.h"
-#include "io/IOException.h"
-#include "io/ISerialize.h"
-#include "crypto/signer/Signer.h"
-
-
 
 namespace digidoc
 {

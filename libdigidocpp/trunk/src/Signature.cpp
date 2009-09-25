@@ -14,6 +14,7 @@
 #include "log.h"
 #include "Conf.h"
 #include "Signature.h"
+#include "crypto/cert/X509Cert.h"
 #include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"

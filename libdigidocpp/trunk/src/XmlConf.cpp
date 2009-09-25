@@ -6,6 +6,7 @@
 
 #include "log.h"
 #include "util/File.h"
+#include "util/String.h"
 #include "xml/conf.hxx"
 
 #include <stdlib.h>//getenv

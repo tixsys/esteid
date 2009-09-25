@@ -2,6 +2,8 @@
 
 #include "BDoc.h"
 #include "DDoc.h"
+#include "Document.h"
+#include "io/ISerialize.h"
 
 using namespace digidoc;
 

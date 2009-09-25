@@ -1,9 +1,9 @@
 #if !defined(__SIGNER_H_INCLUDED__)
 #define __SIGNER_H_INCLUDED__
 
-#include <openssl/x509.h>
-
 #include "SignException.h"
+
+#include <openssl/x509.h>
 
 namespace digidoc
 {

@@ -1,11 +1,10 @@
 #if !defined(__DIGEST_H_INCLUDED__)
 #define __DIGEST_H_INCLUDED__
 
-#include <openssl/sha.h>
+#include "../io/IOException.h"
 
 #include <memory>
-
-#include "../io/IOException.h"
+#include <openssl/sha.h>
 
 #define URI_SHA1 "http://www.w3.org/2000/09/xmldsig#sha1"
 #define URI_SHA224 "http://www.w3.org/2001/04/xmldsig-more#sha224"

@@ -1,6 +1,7 @@
 #include "log.h"
 #include "BDoc.h"
 #include "Conf.h"
+#include "Document.h"
 #include "crypto/cert/DirectoryX509CertStore.h"
 #include "crypto/signer/EstEIDSigner.h"
 #include "io/ZipSerialize.h"
