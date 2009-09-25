@@ -2,7 +2,7 @@
 #define __BDOC_H_INCLUDED__
 
 #include "ADoc.h"
-#include <Document.h>
+#include "Document.h"
 #include "io/ISerialize.h"
 
 namespace digidoc
