@@ -2,6 +2,7 @@
 #define __SIGNEXCEPTION_H_INCLUDED__
 
 #include "../../Exception.h"
+#include "../../util/String.h"
 
 namespace digidoc
 {

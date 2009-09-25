@@ -1,9 +1,8 @@
 #if !defined(__OCSPEXCEPTION_H_INCLUDED__)
 #define __OCSPEXCEPTION_H_INCLUDED__
 
-#include <string>
-
 #include "../../Exception.h"
+#include "../../util/String.h"
 
 namespace digidoc
 {
