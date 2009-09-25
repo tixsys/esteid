@@ -546,7 +546,9 @@ void MainWindow::showCardStatus()
 		content = tr("No card in reader");
 	infoCard->setText( content );
 
-	viewCrypt->setEnabled( !doc->isEncrypted() || hasKey );
+	viewCrypt->setEnabled(
+		(!doc->isEncrypted() && viewContentView->model()->rowCount()) ||
+		(doc->isEncrypted() && hasKey) );
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );
