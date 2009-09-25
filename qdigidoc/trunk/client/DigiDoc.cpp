@@ -29,6 +29,7 @@
 #include "Poller.h"
 
 #include <digidocpp/BDoc.h>
+#include <digidocpp/Document.h>
 #include <digidocpp/XmlConf.h>
 #include <digidocpp/WDoc.h>
 #include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
