@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Failed to add file</source>
-        <translation>Добавление файла неуспешно</translation>
+        <translation>Неудачное добавление файла</translation>
     </message>
     <message>
         <source>Failed to calculate digest</source>
-        <translation>Вычисление хэша неуспешно</translation>
+        <translation>Неудачное вычисление хэша</translation>
     </message>
     <message>
         <source>Key already exists</source>
@@ -25,39 +25,39 @@
     </message>
     <message>
         <source>Failed to add key</source>
-        <translation>Добавление ключа неуспешно</translation>
+        <translation>Неудачное добавление ключа</translation>
     </message>
     <message>
         <source>Internal error</source>
-        <translation>Внетренняя ошибка</translation>
+        <translation>Внутренняя ошибка</translation>
     </message>
     <message>
         <source>Failed decrypt data</source>
-        <translation>Расшифровка данных неуспешна</translation>
+        <translation>Неудачная расшифровка данных</translation>
     </message>
     <message>
         <source>Failed to create temporary files&lt;br /&gt;%1</source>
-        <translation>Создание временных файлов неуспешно&lt;br /&gt;%1</translation>
+        <translation>Неудачное создание временных файлов&lt;br /&gt;%1</translation>
     </message>
     <message>
         <source>Failed to read decrypted data</source>
-        <translation>Чтение расшифрованных данных неуспешно</translation>
+        <translation>Неудачное чтение расшифрованных данных</translation>
     </message>
     <message>
         <source>Failed to encrypt data</source>
-        <translation>Зашифровка данных неуспешна</translation>
+        <translation>Неудачная зашифровка данных</translation>
     </message>
     <message>
         <source>Failed to open crypted document</source>
-        <translation>Открытие зашифрованного файла неуспешно</translation>
+        <translation>Открытие зашифрованного файла прошла неуспешно</translation>
     </message>
     <message>
         <source>Failed to remove file</source>
-        <translation>Удаление файлу неуспешно</translation>
+        <translation>Неудачное удаление файла</translation>
     </message>
     <message>
         <source>Failed to remove key</source>
-        <translation>Удаление ключа неуспешно</translation>
+        <translation>Неудачное удаление ключа</translation>
     </message>
     <message>
         <source>Container is not crypted</source>
@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>Failed to save encrpyted file</source>
-        <translation>Сохранение зашифрованного файла неуспешно</translation>
+        <translation>Неудачное сохранение зашифрованного файла</translation>
     </message>
     <message>
         <source>Document not open</source>
@@ -73,7 +73,7 @@
     </message>
     <message>
         <source>Failed to save file</source>
-        <translation>Сохранение файла неуспешно</translation>
+        <translation>Неудачное сохранение файла</translation>
     </message>
     <message>
         <source>You do not have the key to decrypt this document</source>
@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>Failed to save file &apos;%1&apos;</source>
-        <translation>Сохранение файла неуспешно &apos;%1&apos;</translation>
+        <translation>Неудачное сохранение файла &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to encrypt data.&lt;br /&gt;File does not exsist %1</source>
@@ -221,7 +221,7 @@
     <name>LdapSearch</name>
     <message>
         <source>Failed to init ldap</source>
-        <translation>Инициализация LDAP неуспешна</translation>
+        <translation>Инициализация LDAP неудалась</translation>
     </message>
     <message>
         <source>Failed to init ldap search</source>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>Select folder where files will be stored</source>
-        <translation>Выбрите папку где будут сохранены файлы</translation>
+        <translation>Выберите папку куда будут сохранены файлы</translation>
     </message>
     <message>
         <source>Container: &lt;b&gt;%1&lt;/b&gt;</source>
@@ -362,8 +362,8 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Шифрование файлов&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 Цель шифрования файла- сделать данные нечитаемыми для посторонних лиц.&lt;br /&gt;&lt;br /&gt;
-Шифрование Id-картой не предназначено для долгосрочного хранения данных и других заданий. Это только метод для передачи файлов по небезопасному каналу связиi.&lt;br /&gt;&lt;br /&gt;
-Для шифрования файлов используется AS Sertifitseerimiskeskus LDAP услуга для поиска сертификатов. Файлы шифруются открытым ключом, содержащимся в сертификате.Шифрование односторонне, для расшифровки нужен личный ключ соответствующего сертификата, что храниться только на ID-карте это человекаl.&lt;/p&gt;
+Шифрование ID-картой не предназначено для долгосрочного хранения данных и других заданий. Это только метод для передачи файлов по небезопасному каналу связи.&lt;br /&gt;&lt;br /&gt;
+Для шифрования файлов используется AS Sertifitseerimiskeskus LDAP услуга для поиска сертификатов. Файлы шифруются открытым ключом, содержащимся в сертификате.Шифрование односторонне, для расшифровки нужен личный ключ соответствующего сертификата, что храниться только на ID-карте это человека.&lt;/p&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;ПРЕДУПРЕЖДЕНИЕ:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Так как сертификат, позволяющий расшифровать данные сохранён только на ID-карте, то после потери, обновления, устаревания или механического повреждения ID-карты расшифровка  данных технически невозможна&lt;/b&gt;
 &lt;/p&gt;
@@ -383,11 +383,11 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите использовать для зашифровки сертификат, который просрочился %1?&lt;br /&gt;В случае, когда расшифровщик обновит сертификат, расшифровка будет невозможна.</translation>
     </message>
     <message>
         <source>You dont have permissions to write file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>У Вас недостаточно прав, для записи файла %1</translation>
     </message>
     <message>
         <source>Documents (*.cdoc *.CDOC)</source>
@@ -399,11 +399,11 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <source>File does not exists %1</source>

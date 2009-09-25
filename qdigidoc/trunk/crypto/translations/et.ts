@@ -357,12 +357,12 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 Faili krüpteerimise eesmärgiks on muuta selles asuvad andmed võõrastele loetamatuteks.&lt;br /&gt;&lt;br /&gt;
-Id-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
+ID-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
 Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Failid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, dekrüpteerimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult vastava isiku ID-kaardil.&lt;/p&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;HOIATUS:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
@@ -395,7 +395,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
     <message>
         <source>DigiDoc3 Crypto</source>
-        <translation>DigiDoc3 Krüpto</translation>
+        <translation type="unfinished">DigiDoc3 Krüpto</translation>
     </message>
     <message>
         <source>&amp;File</source>
