@@ -75,6 +75,29 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
  * @param str_in The string to be converted.
  * @return Returns the input string in UTF-8.
  */
+#ifdef _WIN32
+std::string digidoc::util::String::convertUTF8(const std::string &in, bool to_UTF)
+{
+    int inFormat = to_UTF ? CP_ACP : CP_UTF8;
+    int outFormat = to_UTF ? CP_UTF8 : CP_ACP;
+
+    int len1 = MultiByteToWideChar(inFormat, 0, in.data(), in.size(), 0, 0);
+    wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len1);
+    memset(conv, 0, len1);
+    len1 = MultiByteToWideChar(inFormat, 0, in.data(), in.size(), conv, len1);
+
+    int len2 = WideCharToMultiByte(outFormat, 0, conv, len1, 0, 0, 0, 0);
+    char *out = (char*)malloc(sizeof(char)*len2);
+    memset(out, 0, len2);
+    len2 = WideCharToMultiByte(outFormat, 0, conv, len1, out, len2, 0, 0);
+
+    std::string outstr( out, len2 );
+    free( conv );
+    free( out );
+
+    return outstr;
+}
+#else
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)
 {
     std::string charset = getSystemEncoding();
@@ -132,7 +155,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 
     return out;
 }
-
+#endif
 
 /**
  * Helper method for getting the platform encoding.
