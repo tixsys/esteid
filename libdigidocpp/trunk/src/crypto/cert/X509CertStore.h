@@ -1,10 +1,7 @@
 #if !defined(__X509CERTSTORE_H_INCLUDED__)
 #define __X509CERTSTORE_H_INCLUDED__
 
-#include <openssl/x509.h>
-
 #include "X509Cert.h"
-#include "../../io/IOException.h"
 
 namespace digidoc
 {
