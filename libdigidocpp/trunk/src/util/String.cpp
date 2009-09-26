@@ -7,6 +7,10 @@
 #include "../log.h"
 #include "String.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #ifdef ICONV_SECOND_ARGUMENT_IS_CONST
      #define ICONV_CONST const
 #else
