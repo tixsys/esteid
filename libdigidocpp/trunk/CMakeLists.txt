@@ -27,7 +27,9 @@ configure_file(
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidocpp.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
+if(UNIX AND !APPLE)
 find_package(Iconv REQUIRED)
+endif(UNIX AND !APPLE)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)
 #find_package(PKCS11H REQUIRED)

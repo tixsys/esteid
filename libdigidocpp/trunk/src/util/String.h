@@ -24,7 +24,6 @@ namespace digidoc
 
           private:
               static std::string formatArgList(const char *fmt, va_list args);
-              static std::string getSystemEncoding();
 
         };
 

@@ -9,15 +9,12 @@
 
 #include "log.h"
 #include "BDoc.h"
-#include "Conf.h"
 #include "Document.h"
 #include "XmlConf.h"
-#include "SignatureBES.h"
 #include "SignatureTM.h"
 #include "SignatureMobile.h"
 #include "crypto/Digest.h"
 #include "util/File.h"
-#include "util/String.h"
 #include "io/ISerialize.h"
 #include "xml/OpenDocument_manifest.hxx"
 
@@ -36,10 +33,6 @@ const std::string digidoc::BDoc::MANIFEST_NAMESPACE = "urn:oasis:names:tc:opendo
  */
 void digidoc::initialize()
 {
-#ifdef _WIN32
-    // Fix std::fstream file input
-    setlocale( LC_ALL, ".ACP" );
-#endif
     // Initialize OpenSSL library.
     SSL_load_error_strings();
     SSL_library_init();

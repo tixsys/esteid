@@ -1,14 +1,15 @@
-#include <memory.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <iostream>
-#include <iconv.h>
-#include <errno.h>
-#include "../log.h"
 #include "String.h"
 
-#ifdef _WIN32
+#include "../log.h"
+
+#include <memory.h>
+#include <stdlib.h>
+#include <errno.h>
+
+#if defined(_WIN32)
 #include <windows.h>
+#elif !defined(__APPLE__)
+#include <iconv.h>
 #endif
 
 #ifdef ICONV_SECOND_ARGUMENT_IS_CONST
@@ -104,7 +105,18 @@ std::string digidoc::util::String::convertUTF8(const std::string &in, bool to_UT
 #else
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)
 {
-    std::string charset = getSystemEncoding();
+#if defined(__APPLE__)
+    return str_in;
+#else
+    std::string charset("ISO8859-1");
+    const char *env_lang = getenv("LANG");
+    if(env_lang && strcmp(env_lang, "C") != 0)
+    {
+        charset = env_lang;
+        size_t locale_start = charset.rfind(".");
+        if(locale_start != std::string::npos)
+            charset = charset.substr(locale_start+1);
+    }
 
     // no conversion needed for UTF-8
     if((charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0))
@@ -158,33 +170,9 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
     iconv_close(ic_descr);
 
     return out;
-}
-#endif
-
-/**
- * Helper method for getting the platform encoding.
- *
- * @return Returns the platform encoding.
- */
-std::string digidoc::util::String::getSystemEncoding()
-{
-#if defined(_WIN32)
-    return std::string("WINDOWS-").append(setlocale( LC_ALL, NULL ));
-#elif defined(__APPLE__)
-    return "UTF-8";
-#else
-    const char *env_lang = getenv("LANG");
-    if(!env_lang || strcmp(env_lang, "C") == 0)
-        return "ISO8859-1";
-
-    std::string encoding(env_lang);
-    size_t locale_start = encoding.rfind(".");
-    if(locale_start != std::string::npos)
-        return encoding.substr(locale_start+1);
-    return encoding;
 #endif
 }
-
+#endif
 
 /**
  * Helper method for converting strings with non-ascii characters to the URI format (%HH for each non-ascii character).
@@ -202,10 +190,6 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
     char dst[1024] = {0}; 
 
     std::string legal_chars = "-_.!~*'();/?:@&=+$,";
-#ifdef _WIN32
-    char *locale = setlocale( LC_ALL, NULL );
-    setlocale( LC_ALL, "C" );
-#endif
     for(size_t i=0, j=0; i<str_in.length(); i++)
     {
         if( (!(isalnum((str_in.c_str())[i])) ) && ( legal_chars.find((str_in.c_str())[i]) == std::string::npos) )
@@ -222,8 +206,5 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
             j++;
         }
     }
-#ifdef _WIN32
-    setlocale( LC_ALL, locale );
-#endif
     return std::string(dst);
 }
