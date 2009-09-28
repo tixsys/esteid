@@ -43,7 +43,7 @@ std::string digidoc::util::File::decodeName(const std::string &localFileName)
 
 #if _WIN32
 std::wstring digidoc::util::File::fstreamName(const std::string &fileName)
-{ return digidoc::util::String::toWideChar(CP_UTF8, fileName);
+{ return digidoc::util::String::toWideChar(CP_UTF8, fileName); }
 #else
 std::string digidoc::util::File::fstreamName(const std::string &fileName)
 { return digidoc::util::File::encodeName(fileName); }
