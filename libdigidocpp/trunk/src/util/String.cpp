@@ -70,7 +70,7 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
 }
 
 #ifdef _WIN32
-static std::string digidoc::util::String::toMultiByte(int format, const std::wstring &in)
+std::string digidoc::util::String::toMultiByte(int format, const std::wstring &in)
 {
     int len = WideCharToMultiByte(format, 0, in.data(), in.size(), 0, 0, 0, 0);
     char *conv = (char*)malloc(sizeof(char)*len);
@@ -81,7 +81,7 @@ static std::string digidoc::util::String::toMultiByte(int format, const std::wst
     return out;
 }
 
-static std::wstring digidoc::util::String::toWideChar(int format, const std::string &in);
+std::wstring digidoc::util::String::toWideChar(int format, const std::string &in);
 {
     int len = MultiByteToWideChar(format, 0, in.data(), in.size(), 0, 0);
     wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len);
