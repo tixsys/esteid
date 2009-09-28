@@ -69,7 +69,7 @@
     </message>
     <message>
         <source>Enhanched key usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительное использование ключа</translation>
     </message>
     <message>
         <source>Certificate policies</source>
@@ -77,7 +77,7 @@
     </message>
     <message>
         <source>Key usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Использование ключа</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -167,27 +167,27 @@
     <name>PinDialog</name>
     <message>
         <source>Selected action requires auth certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Даннаяй опперация требует личный сертификат.</translation>
     </message>
     <message>
         <source>For using auth certificate enter PIN1</source>
-        <translation type="unfinished"></translation>
+        <translation>Для использования сертификата введите PIN1</translation>
     </message>
     <message>
         <source>Selected action requires sign certificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для данной опперации необходим сертификат подписи.</translation>
     </message>
     <message>
         <source>For using sign certificate enter PIN2</source>
-        <translation type="unfinished"></translation>
+        <translation>Для использования  сертификата подписи введите PIN1</translation>
     </message>
     <message>
         <source>For using auth certificate enter PIN1 with pinpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Для использования личного сертификата введите PIN1 с клавиатуры считывателя</translation>
     </message>
     <message>
         <source>For using sign certificate enter PIN2 with pinpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Для использования сертификата подписи  введите PIN2 с клавиатуры считывателя</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>Protects e-mail messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Защищает е-майл сообщения</translation>
     </message>
     <message>
         <source>OCSP signing</source>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Digital signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Дигитальная подпись</translation>
     </message>
     <message>
         <source>Non repudiation</source>
@@ -218,15 +218,15 @@
     </message>
     <message>
         <source>Key encipherment</source>
-        <translation type="unfinished"></translation>
+        <translation>Зашифровка ключа</translation>
     </message>
     <message>
         <source>Data encipherment</source>
-        <translation type="unfinished"></translation>
+        <translation>Зашифровка данных</translation>
     </message>
     <message>
         <source>Key agreement</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтверждение ключа</translation>
     </message>
     <message>
         <source>Key certificate sign</source>
@@ -266,11 +266,11 @@
     </message>
     <message>
         <source>Failed to connect to host. Are you connected to the internet?</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствует подключение к интернету!</translation>
     </message>
     <message>
         <source>no certificate available</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет доступного сертификата</translation>
     </message>
 </context>
 </TS>

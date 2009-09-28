@@ -93,13 +93,13 @@ var htmlStrings = {
 	"inputUpdateCert": new tr( "Uuenda sertifikaat", "Update certificate", "Обнови сертификат" ),
 	"inputUnblock": new tr ( "Tühista blokeering", "Revoke blocking", "Отменить блокировку" ),
 	
-	"labelCurrentPIN1": new tr( "Vana PIN1 kood", "Current PIN1 code", "Старый PIN1 код" ),
+	"labelCurrentPIN1": new tr( "Kehtiv PIN1 kood", "Current PIN1 code", "Старый PIN1 код" ),
 	"labelNewPIN1": new tr( "Uus PIN1 kood", "New PIN1 code", "Новый PIN1 код" ),
 	"labelNewPIN12": new tr( "Uus PIN1 kood uuesti", "Repeat new PIN1 code", "Новый PIN1 код заново" ),
-	"labelCurrentPIN2": new tr( "Vana PIN2 kood", "Current PIN2 code", "Старый PIN2 код" ),
+	"labelCurrentPIN2": new tr( "Kehtiv PIN2 kood", "Current PIN2 code", "Старый PIN2 код" ),
 	"labelNewPIN2": new tr( "Uus PIN2 kood", "New PIN2 code", "Новый PIN2 код" ),
 	"labelNewPIN22": new tr( "Uus PIN2 kood uuesti", "Repeat new PIN2 code", "Новый PIN2 код заново" ),
-	"labelCurrentPUK": new tr( "Vana PUK kood", "Current PUK code", "Старый PUK код" ),
+	"labelCurrentPUK": new tr( "Kehtiv PUK kood", "Current PUK code", "Старый PUK код" ),
 	"labelNewPUK": new tr( "Uus PUK kood", "New PUK code", "Новый PUK код" ),
 	"labelNewPUK2": new tr( "Uus PUK kood uuesti", "Repeat new PUK code", "Новый PUK код заново" ),
 	"labelPUK": new tr( "PUK kood", "PUK code", "PUK код" ),
@@ -156,7 +156,7 @@ var eidStrings = {
 	"invalidBlocked": new tr( "kehtetu ja blokeeritud", "invalid and blocked", "недействительно и заблокировано" ),
 	
 	"PINCheck": new tr( "PIN1 ja PIN2 ei tohi sisaldada sünnikuupäeva ja -aastat", "PIN1 and PIN2 have to be different than date of birth or year of birth", "PIN1 и PIN2 не должны содержать дату рождения" ),
-	"PIN1Enter": new tr( "Sisesta vana PIN1 kood", "Current PIN1 code", "Введите старый PIN1 код" ),
+	"PIN1Enter": new tr( "Sisesta kehtiv PIN1 kood", "Current PIN1 code", "Введите старый PIN1 код" ),
 	"PIN1Length": new tr( "PIN1 pikkus peab olema 4-12 numbrit", "PIN1 length has to be between 4 and 12", "Длина PIN1 должна быть 4-12 номера" ),
 	"PIN1InvalidRetry": new tr( "Vale PIN1 kood. Saad veel proovida %d korda.", "Wrong PIN1 code. You can try %d more times.", "Неверный PIN1 код. Попыток ещё: %d" ),
 	"PIN1Invalid": new tr( "Vale PIN1 kood.", "Wrong PIN1 code.", "Неверный PIN1 код." ),
@@ -168,10 +168,10 @@ var eidStrings = {
 	"PIN1UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "Unblock failed.\nYour new PIN1 has to be different than current!", "Снятие блокировки неуспешно.\nНовый PIN должен отличаться от старого!" ),
 	"PIN1UnblockSuccess": new tr( "PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN1 changed and you current sertificates blocking has been removed!", "PIN1 код изменён и сертификат разблокирован!" ),
 	"PIN1Blocked": new tr( "PIN1 blokeeritud.", "PIN1 blocked", "PIN1 заблокирован." ),
-	"PIN1NewOldSame": new tr( "Vana ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "Старый и новый PIN1 должны отличаться!" ),
+	"PIN1NewOldSame": new tr( "Kehtiv ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "Старый и новый PIN1 должны отличаться!" ),
 	"PIN1ValidateFailed": new tr( "PIN1 koodi valideerimine ebaõnnestus", "PIN1 validation failed", "Не удалось распознать PIN1" ),
 
-	"PIN2Enter": new tr( "Sisesta vana PIN2 kood", "Current PIN2 code", "Введите старый PIN2 код" ),
+	"PIN2Enter": new tr( "Sisesta kehtiv PIN2 kood", "Current PIN2 code", "Введите старый PIN2 код" ),
 	"PIN2Length": new tr( "PIN2 pikkus peab olema 5-12 numbrit", "PIN2 length has to be between 5 and 12", "Длина PIN2 должна быть 5-12 номера" ),
 	"PIN2InvalidRetry": new tr( "Vale PIN2 kood. Saad veel proovida %d korda.", "Wrong PIN2 code. You can try %d more times.", "Неверный PIN2 код. Попыток ещё: %d" ),
 	"PIN2NewDifferent": new tr( "Uued PIN2 koodid on erinevad.", "New PIN2 codes doesn't match", "Новые PIN2 коды не сходятся" ),
@@ -183,12 +183,12 @@ var eidStrings = {
 	"PIN2UnblockFailed": new tr( "Blokeeringu tühistamine ebaõnnestus.\nUus PIN peab erinema eelmisest PINist!", "Unblock failed.\nYour new PIN2 has to be different than current!", "Снятие блокировки неуспешно.\nНовый PIN должен отличаться от старого!" ),
 	"PIN2UnblockSuccess": new tr( "PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN2 changed and you current sertificates blocking has been removed!", "PIN2 код изменён и сертификат разблокирован!" ),
 	"PIN2Blocked": new tr( "PIN2 blokeeritud.", "PIN2 blocked", "PIN2 заблокирован." ),
-	"PIN2NewOldSame": new tr( "Vana ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "Старый и новый PIN2 должны отличаться!" ),
+	"PIN2NewOldSame": new tr( "Kehtiv ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "Старый и новый PIN2 должны отличаться!" ),
 	"PIN2ValidateFailed": new tr( "PIN2 koodi valideerimine ebaõnnestus", "PIN2 validation failed", "Не удалось распознать PIN2" ),
 
 	"PUKEnter": new tr( "Sisesta PUK kood.", "Enter PUK code.", "Введите PUK код" ),
 	"PUKLength": new tr( "PUK koodi pikkus peab olema 8-12 numbrit.", "PUK length has to be between 8 and 12.", "Длина PUK должна быть 8-12 номера" ),
-	"PUKEnterOld": new tr( "Sisesta vana PUK kood.", "Enter current PUK code.", "Введите старый PUK код" ),
+	"PUKEnterOld": new tr( "Sisesta kehtiv PUK kood.", "Enter current PUK code.", "Введите старый PUK код" ),
 	"PUKEnterNew": new tr( "Sisesta uus PUK kood.", "Enter new PUK code.", "Неверный PUK код. Попыток ещё" ),
 	"PUKRetry": new tr( "Korda uut PUK koodi.", "Retry your new PUK code.", "Повторите новый PUK код" ),
 	"PUKDifferent": new tr( "Uued PUK koodid on erinevad", "New PUK codes doesn't match", "Новые PUK коды не сходятся" ),
@@ -196,7 +196,7 @@ var eidStrings = {
 	"PUKUnsuccess": new tr( "PUK koodi muutmine ebaõnnestus!", "Changing PUK failed!", "Смена PUK кода неудачна!" ),
 	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida %d korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "PUK blocked", "PUK заблокирован." ),
-	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" ),
+	"PUKNewOldSame": new tr( "Kehtiv ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" ),
 	"PUKValidateFailed": new tr( "PUK koodi valideerimine ebaõnnestus", "PUK validation failed", "Не удалось распознать PUK" )
 };
 

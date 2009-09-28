@@ -197,7 +197,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Use ID card</source>
-        <translation>Kasuta ID kaarti</translation>
+        <translation>Kasuta ID-kaarti</translation>
     </message>
     <message>
         <source>This container is </source>
@@ -282,7 +282,7 @@ Also and active internet connection is needed.&lt;/p&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirja sertifikaat.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirjastamise sertifikaat.&lt;br /&gt;&lt;br /&gt;
 Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
 Digitaalallkirja andmiseks on vajalik interneti ühendus.
 &lt;/p&gt;

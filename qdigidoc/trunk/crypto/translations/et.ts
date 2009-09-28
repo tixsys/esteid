@@ -365,7 +365,7 @@ Faili krüpteerimise eesmärgiks on muuta selles asuvad andmed võõrastele loet
 ID-kaardi sertifikaatidega krüptimine ei ole mõeldud andmete pikaajaliseks turvaliseks säilitamiseks ja muude ülesannete lahendamiseks. See on ainult viis failide edastamiseks üle ebaturvalise sideknanali.&lt;br /&gt;&lt;br /&gt;
 Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(te) sertifikaatide otsimiseks. Failid krüptitakse sertifikaadis sisalduva avaliku võtmega. Krüptimine on ühesuunaline, dekrüpteerimiseks on vaja vastava sertifikaadi privaatvõtit, mis on salvestatud ainult vastava isiku ID-kaardil.&lt;/p&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;HOIATUS:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
-&lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole peale ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
+&lt;b&gt;Kuna dekrüpteerimist võimaldav sertifikaat on salvestatud ainult ID-kaardile, pole pärast ID-kaardi kaotamist, aegumist, uuendamist või mehaanilist kiibi vigastamist dekrüpteerimine tehniliselt võimalik&lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
