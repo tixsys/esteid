@@ -457,7 +457,6 @@ Palun kontrollige internetiühendust.</translation>
     <name>Poller</name>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translatorcomment>Неудачная загрузка модуля PKCS#11</translatorcomment>
         <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
     </message>
 </context>

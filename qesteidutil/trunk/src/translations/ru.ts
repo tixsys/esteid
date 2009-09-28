@@ -102,15 +102,15 @@ Enter PIN1</source>
     </message>
     <message>
         <source>Certificate update</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление сертификата</translation>
     </message>
     <message>
         <source>Certificate update failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неудачное обновление сертификата: %1</translation>
     </message>
     <message>
         <source>Certificate update not allowed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление сертификата не разрешено!</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@ Enter PIN1</source>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Файл</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -129,7 +129,7 @@ Enter PIN1</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>

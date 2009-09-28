@@ -89,7 +89,7 @@
     </message>
     <message>
         <source>Failed to encrypt data.&lt;br /&gt;File does not exsist %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Зашифрировка данных неудалась&lt;br /&gt;Выбраный файл не существует %1</translation>
     </message>
 </context>
 <context>
@@ -395,7 +395,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>DigiDoc3 Crypto</source>
-        <translation type="unfinished"></translation>
+        <translation>DigiDoc3 Crypto</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -407,7 +407,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>File does not exists %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбраный файл не существует %1</translation>
     </message>
 </context>
 <context>

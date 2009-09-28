@@ -102,15 +102,15 @@ Sisesta PIN1</translation>
     </message>
     <message>
         <source>Certificate update</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaati uuendus</translation>
     </message>
     <message>
         <source>Certificate update failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaati uuendus ebaõnnestunud: %1</translation>
     </message>
     <message>
         <source>Certificate update not allowed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaati uuendamine ei ole lubatud!</translation>
     </message>
 </context>
 <context>

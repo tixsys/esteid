@@ -177,7 +177,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>I want to:</source>
-        <translation>Я желаю</translation>
+        <translation>Я желаю:</translation>
     </message>
     <message>
         <source>Sign documents</source>
@@ -298,25 +298,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Server access certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка допуска</translation>
     </message>
     <message>
         <source>Did not find any server access certificate!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствует справка допуска!
+Начнём загрузку?</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при загрузке справки допуска!</translation>
     </message>
     <message>
         <source>Error parsing server access certificate result!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при чтении справки допуска!</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при загрузке справки допуска!
+%1</translation>
     </message>
     <message>
         <source>Check internet connection</source>
@@ -329,7 +331,8 @@ Start downloading?</source>
     <message>
         <source>Failed to save server access certificate file to %1!
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при сохранении справки допуска! %1!
+%2</translation>
     </message>
     <message>
         <source>NB! Test signature</source>
@@ -453,7 +456,7 @@ Please check your internet connection.</source>
     <name>Poller</name>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translation></translation>
+        <translation>Неудачная загрузка модуля PKCS#11</translation>
     </message>
 </context>
 <context>
@@ -500,7 +503,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>NO.</source>
-        <translation>Номер</translation>
+        <translation>№</translation>
     </message>
     <message>
         <source>VALIDITY OF SIGNATURE</source>
@@ -552,7 +555,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>
@@ -711,7 +714,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользователя</translation>
     </message>
 </context>
 <context>
@@ -790,7 +793,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Show certificate</source>
-        <translation>Показать сертификат</translation>
+        <translation>См. сертификат</translation>
     </message>
     <message>
         <source>Signature</source>
@@ -826,7 +829,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Signature status unknown (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный статус пользователя (%1)</translation>
     </message>
 </context>
 <context>
@@ -865,7 +868,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>

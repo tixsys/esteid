@@ -1,4 +1,4 @@
-var defaultLanguage = "et";
+﻿var defaultLanguage = "et";
 var language = defaultLanguage;
 
 var helpUrl_et = "http://support.sk.ee/";
@@ -17,7 +17,7 @@ var htmlStrings = {
 	"mobileNotActive": new tr( "Kasutaja Mobiil-id sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "Mobile-id not active. Not possible to display info.", "Пользовательские сертификаты ID-карты неактивны, получение информации невозможно!" ),
 	"mobileInternalError": new tr( "Teenuse sisemine viga!", "Service internal error!", "Внутренняя ошибка услуги!" ),
 	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "Mobile interface not ready!", "Интерфейс ещё не работает!" ),
-	"noIDCert": new tr( "Server ei suutnud lugeda või valideerida ID kaardi sertifikaati!", "Server could not read or validate ID card certificate!", ""),
+	"noIDCert": new tr( "Server ei suutnud lugeda või valideerida ID kaardi sertifikaati!", "Server could not read or validate ID card certificate!", "Сервер не смог прочитать или распознать сертификат ID карты!"),
 
 	"linkDiagnostics": new tr( "Diagnostika", "Diagnostics", "Диагностика" ),
 	"linkSettings": new tr( "Seaded", "Settings", "Настройки" ),
@@ -53,7 +53,7 @@ var htmlStrings = {
 	"labelSignCertBlocked": new tr( "Allkirjastamise sertifikaat on blokeeritud.", "Signing certificate is blocked.", "Сертификат подписи заблокирован." ),
 	"labelCertUnblock": new tr( "Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK-kood.", "To unblock certificate you have to enter PUK code.", "Для разблокировки сертификата введите PUK код." ),
 	"labelCertUnblock1": new tr( "PUK-koodi leiad ID-kaardi koodide ümbrikus, kui sa pole seda vahepeal muutnud.", "You can find your PUK code inside ID-card codes envelope.", "PUK код можно найти в конверте кодов." ),
-	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.", "", "Если вы не знаете PUK код своей ID- карты, посетите цент обслуживания, где вы сможете получить новые сертификаты и конверт с кодами." ),
+	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta teeninduskeskust kus saad kaardile laadida uued sertifikaadid ning saad uue koodiümbriku.", "If you do not know PUK code for your ID-card, please visit service center where you can download the new certificates and get the new codes.", "Если вы не знаете PUK код своей ID- карты, посетите цент обслуживания, где вы сможете получить новые сертификаты и конверт с кодами." ),
 	
 	"labelChangingPIN1": new tr( "PIN1 koodi vahetus", "Change PIN1 code", "Замена кода PIN1" ),
 	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "PIN1 code is used for accessing identification certificates.", "PIN1 - код, который используют для доступа к сертификатам индентификации личности." ),
@@ -105,7 +105,7 @@ var htmlStrings = {
 	"labelPUK": new tr( "PUK kood", "PUK code", "PUK код" ),
 	
 	"labelEmailAddress": new tr( "E-posti aadress kuhu suunatakse Teie @eesti.ee kirjad", "Email addres where your @eesti.ee emails will be forwarded", "Адрес эл. почты, куда перенаправляют Вашу почту с @eesti.ee" ),
-	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "For more detailed official email adress forwarding, please visit", "Более полную информации о настройке пересылки эл. почты найдёте в портале" ),
+	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "For more detailed official email address forwarding, please visit", "Более полную информации о настройке пересылки эл. почты найдёте в портале" ),
 	
 	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "Mobile-id is possibility to use mobile phone instead of ID-card for identification and digital signing.", "Mobiil-ID это возможность идентифицировать личность и давать подпись мобильным телефоном, вместо ID- карты." ),
 	"labelMobile2": new tr( "Mobiil-ID kasutamiseks on vajalik uus SIM-kaart, mille sa saad omale mobiilsideoperaatori käest. Kui selline kaart on sul juba olemas, tuleb teenus aktiveerida.", "To use Mobile-id it is needed to use a SIM card that supports this feature. If such a SIM card is already purchased, then it has to be activated.", "Для использования Mobiil-ID нужна новая SIM- карта, которую можно получить у мобильного оператора. Если такая карта уже есть, то услугу следует активировать." ),
@@ -128,7 +128,7 @@ var htmlStrings = {
 	"loadPicFailed2": new tr( "Pildi laadimine ebaõnnestus - tundmatu pildiformaat!", "Loading picture failed - unknown picture format!", "Загрузка картинки неуспешна- неизвестный формат!" ),
 	"loadPicFailed3": new tr( "Pildi laadimine ebaõnnestus - viga salvestamisel!", "Loading picture failed - error saving file!", "Загрузка картинки неуспешна- ошибка при сохранении!" ),
 	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считываются" ),
-	"updateCert": new tr( "Sertifikaatide uuendamine...", "Updating certificates", "" )
+	"updateCert": new tr( "Sertifikaatide uuendamine...", "Updating certificates", "Обновление сертификатов" )
 };
 
 //codes from eesti.ee
@@ -169,7 +169,7 @@ var eidStrings = {
 	"PIN1UnblockSuccess": new tr( "PIN1 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN1 changed and you current sertificates blocking has been removed!", "PIN1 код изменён и сертификат разблокирован!" ),
 	"PIN1Blocked": new tr( "PIN1 blokeeritud.", "PIN1 blocked", "PIN1 заблокирован." ),
 	"PIN1NewOldSame": new tr( "Vana ja uus PIN1 peavad olema erinevad!", "Old and new PIN1 has to be different!", "Старый и новый PIN1 должны отличаться!" ),
-	"PIN1ValidateFailed": new tr( "PIN1 koodi valideerimine ebaõnnestus", "PIN1 validation failed", "" ),
+	"PIN1ValidateFailed": new tr( "PIN1 koodi valideerimine ebaõnnestus", "PIN1 validation failed", "Не удалось распознать PIN1" ),
 
 	"PIN2Enter": new tr( "Sisesta vana PIN2 kood", "Current PIN2 code", "Введите старый PIN2 код" ),
 	"PIN2Length": new tr( "PIN2 pikkus peab olema 5-12 numbrit", "PIN2 length has to be between 5 and 12", "Длина PIN2 должна быть 5-12 номера" ),
@@ -184,7 +184,7 @@ var eidStrings = {
 	"PIN2UnblockSuccess": new tr( "PIN2 kood on muudetud ja sertifikaadi blokeering tühistatud!", "PIN2 changed and you current sertificates blocking has been removed!", "PIN2 код изменён и сертификат разблокирован!" ),
 	"PIN2Blocked": new tr( "PIN2 blokeeritud.", "PIN2 blocked", "PIN2 заблокирован." ),
 	"PIN2NewOldSame": new tr( "Vana ja uus PIN2 peavad olema erinevad!", "Old and new PIN2 has to be different!", "Старый и новый PIN2 должны отличаться!" ),
-	"PIN2ValidateFailed": new tr( "PIN2 koodi valideerimine ebaõnnestus", "PIN2 validation failed", "" ),
+	"PIN2ValidateFailed": new tr( "PIN2 koodi valideerimine ebaõnnestus", "PIN2 validation failed", "Не удалось распознать PIN2" ),
 
 	"PUKEnter": new tr( "Sisesta PUK kood.", "Enter PUK code.", "Введите PUK код" ),
 	"PUKLength": new tr( "PUK koodi pikkus peab olema 8-12 numbrit.", "PUK length has to be between 8 and 12.", "Длина PUK должна быть 8-12 номера" ),
@@ -197,7 +197,7 @@ var eidStrings = {
 	"PUKInvalidRetry": new tr( "Vale PUK kood. Saad veel proovida %d korda.", "Wrong PUK code. You can try %d more times.", "Неверный PUK код. Попыток ещё: %d" ),
 	"PUKBlocked": new tr( "PUK kood blokeeritud.", "PUK blocked", "PUK заблокирован." ),
 	"PUKNewOldSame": new tr( "Vana ja uus PUK peavad olema erinevad!", "Old and new PUK has to be different!", "Старый и новый PUK должны отличаться!" ),
-	"PUKValidateFailed": new tr( "PUK koodi valideerimine ebaõnnestus", "PUK validation failed", "" )
+	"PUKValidateFailed": new tr( "PUK koodi valideerimine ebaõnnestus", "PUK validation failed", "Не удалось распознать PUK" )
 };
 
 function selectLanguage()
