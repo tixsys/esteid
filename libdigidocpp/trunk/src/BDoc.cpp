@@ -1,22 +1,20 @@
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <sstream>
-
-#include <openssl/ssl.h>
-#include <xercesc/dom/DOM.hpp>
-#include <xsec/utils/XSECPlatformUtils.hpp>
-
 #include "log.h"
 #include "BDoc.h"
 #include "Document.h"
 #include "XmlConf.h"
-#include "SignatureTM.h"
 #include "SignatureMobile.h"
 #include "crypto/Digest.h"
 #include "util/File.h"
 #include "io/ISerialize.h"
 #include "xml/OpenDocument_manifest.hxx"
+
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <sstream>
+
+#include <xercesc/dom/DOM.hpp>
+#include <xsec/utils/XSECPlatformUtils.hpp>
 
 /**
  * Mimetype prefix.
@@ -372,8 +370,8 @@ std::string digidoc::BDoc::createMimetype() throw(IOException)
     DEBUG("BDoc::createMimetype()");
 
     // Create mimetype file.
-    std::string fileName = util::File::encodeName(util::File::tempFileName());
-    std::ofstream ofs(fileName.c_str());
+    std::string fileName = util::File::tempFileName();
+    std::ofstream ofs(util::File::fstreamName(fileName).c_str());
     ofs << getMimeType();
     ofs.close();
 
@@ -399,7 +397,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
 {
     DEBUG("digidoc::BDoc::createManifest()");
 
-    std::string fileName = digidoc::util::File::encodeName(util::File::tempFileName());
+    std::string fileName = util::File::tempFileName();
 
     try
     {
@@ -428,7 +426,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         map["manifest"].name = MANIFEST_NAMESPACE;
         DEBUG("Serializing manifest XML to '%s'", fileName.c_str());
         // all XML data must be in UTF-8
-        std::ofstream ofs(fileName.c_str());
+        std::ofstream ofs(digidoc::util::File::fstreamName(fileName).c_str());
         manifest::manifest(ofs, manifest, map, "", xml_schema::Flags::dont_initialize);
         ofs.close();
 
@@ -459,7 +457,7 @@ void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocExcept
     DEBUG("BDoc::readMimetype(path = '%s')", path.c_str());
     // Read mimetype from file.
     std::string fileName = util::File::path(path, "mimetype");
-    std::ifstream ifs(fileName.c_str());
+    std::ifstream ifs(util::File::File::fstreamName(fileName).c_str());
     std::string mimetype;
     ifs >> mimetype;
     ifs.close();

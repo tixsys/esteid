@@ -1,12 +1,10 @@
-#include <fstream>
-
-#include <openssl/objects.h>
-
 #include "log.h"
 #include "Document.h"
 #include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
+
+#include <fstream>
 
 /**
  * Initializes the document object.
@@ -68,16 +66,13 @@ std::vector<unsigned char> digidoc::Document::calcDigest(Digest* calc) throw(IOE
     }
 
     // Calculate digest.
-    std::ifstream ifs; 
-    std::string fileName = digidoc::util::File::encodeName(path);
-    ifs.open(fileName.c_str(), std::ios::in | std::ios::binary);
-        
+    std::ifstream ifs(digidoc::util::File::fstreamName(path).c_str(), std::ios::in | std::ios::binary);
     if(!ifs.is_open() || ifs.fail())
     {
         THROW_IOEXCEPTION("Failed to open document file '%s'.", path.c_str());
     }
 
-        unsigned int const BUF_SIZE = 10240;
+    unsigned int const BUF_SIZE = 10240;
     while( ifs )
     {
         char buf[BUF_SIZE];

@@ -69,6 +69,29 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
     return s;
 }
 
+#ifdef _WIN32
+static std::string digidoc::util::String::toMultiByte(int format, const std::wstring &in)
+{
+    int len = WideCharToMultiByte(format, 0, in.data(), in.size(), 0, 0, 0, 0);
+    char *conv = (char*)malloc(sizeof(char)*len);
+    memset(conv, 0, len);
+    len = WideCharToMultiByte(format, 0, in.data(), in.size(), conv, len, 0, 0);
+    std::string out(conv, len);
+    free(conv);
+    return out;
+}
+
+static std::wstring digidoc::util::String::toWideChar(int format, const std::string &in);
+{
+    int len = MultiByteToWideChar(format, 0, in.data(), in.size(), 0, 0);
+    wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len);
+    memset(conv, 0, len);
+    len = MultiByteToWideChar(format, 0, in.data(), in.size(), conv, len);
+    std::wstring out(conv, len);
+    free(conv);
+    return out;
+}
+#endif
 
 /**
  * Helper method for converting from non-UTF-8 encoded strings to UTF-8.
@@ -85,22 +108,7 @@ std::string digidoc::util::String::convertUTF8(const std::string &in, bool to_UT
 {
     int inFormat = to_UTF ? CP_ACP : CP_UTF8;
     int outFormat = to_UTF ? CP_UTF8 : CP_ACP;
-
-    int len1 = MultiByteToWideChar(inFormat, 0, in.data(), in.size(), 0, 0);
-    wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len1);
-    memset(conv, 0, len1);
-    len1 = MultiByteToWideChar(inFormat, 0, in.data(), in.size(), conv, len1);
-
-    int len2 = WideCharToMultiByte(outFormat, 0, conv, len1, 0, 0, 0, 0);
-    char *out = (char*)malloc(sizeof(char)*len2);
-    memset(out, 0, len2);
-    len2 = WideCharToMultiByte(outFormat, 0, conv, len1, out, len2, 0, 0);
-
-    std::string outstr( out, len2 );
-    free( conv );
-    free( out );
-
-    return outstr;
+    return toMultiByte(outFormat, toWideChar(inFormat, in));
 }
 #else
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)

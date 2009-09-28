@@ -1,16 +1,3 @@
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <sstream>
-
-#include <openssl/objects.h>
-#include <openssl/err.h>
-
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-
-#include <xsec/canon/XSECC14n20010315.hpp>
-
 #include "log.h"
 #include "Conf.h"
 #include "Signature.h"
@@ -22,6 +9,18 @@
 #include "xml/OpenDocument_manifest.hxx"
 #include "xml/xmldsig-core-schema.hxx"
 #include "xml/XAdES.hxx"
+
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <sstream>
+
+#include <openssl/err.h>
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+
+#include <xsec/canon/XSECC14n20010315.hpp>
 
 const std::string digidoc::Signature::XADES_NAMESPACE = "http://uri.etsi.org/01903/v1.3.2#";
 const std::string digidoc::Signature::DSIG_NAMESPACE = "http://www.w3.org/2000/09/xmldsig#";
@@ -463,7 +462,7 @@ void digidoc::Signature::saveToXml(const std::string path) const throw(IOExcepti
     // Serialize XML to file.
     DEBUG("Serializing XML to '%s'", path.c_str());
 
-    std::ofstream ofs(path.c_str());
+    std::ofstream ofs(digidoc::util::File::fstreamName(path).c_str());
 	try 
 	{
 		dsig::signature(ofs, *signature, createNamespaceMap());

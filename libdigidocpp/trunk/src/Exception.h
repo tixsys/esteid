@@ -1,10 +1,10 @@
 #if !defined(__EXCEPTION_H_INCLUDED__)
 #define __EXCEPTION_H_INCLUDED__
 
+#include "Exports.h"
+
 #include <string>
 #include <vector>
-
-#include "Exports.h"
 
 namespace digidoc
 {

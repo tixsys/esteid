@@ -41,6 +41,14 @@ std::string digidoc::util::File::encodeName(const std::string &fileName)
 std::string digidoc::util::File::decodeName(const std::string &localFileName)
 { return digidoc::util::String::convertUTF8(localFileName,true); }
 
+#if _WIN32
+std::wstring digidoc::util::File::fstreamName(const std::string &fileName)
+{ return digidoc::util::String::toWideChar(CP_UTF8, fileName);
+#else
+std::string digidoc::util::File::fstreamName(const std::string &fileName)
+{ return digidoc::util::File::encodeName(fileName); }
+#endif
+
 /**
  * Checks whether file exists and is type of file.
  *
@@ -371,10 +379,8 @@ void digidoc::util::File::copyFile(const std::string& srcPath, const std::string
     }
 
     // Copy file.
-    std::string _srcPath = encodeName(srcPath);
-    std::string _destPath = encodeName(destPath);
-    std::ifstream ifs(_srcPath.c_str(), std::ios::binary);
-    std::ofstream ofs(_destPath.c_str(), std::ios::binary | std::ios::trunc);
+    std::ifstream ifs(fstreamName(srcPath).c_str(), std::ios::binary);
+    std::ofstream ofs(fstreamName(destPath).c_str(), std::ios::binary | std::ios::trunc);
 
     ofs << ifs.rdbuf();
 
@@ -383,7 +389,7 @@ void digidoc::util::File::copyFile(const std::string& srcPath, const std::string
 
     if(ifs.fail() || ofs.fail())
     {
-        THROW_IOEXCEPTION("Failed to copy file '%s' to '%s'.", _srcPath.c_str(), _destPath.c_str());
+        THROW_IOEXCEPTION("Failed to copy file '%s' to '%s'.", srcPath.c_str(), destPath.c_str());
     }
 }
 
