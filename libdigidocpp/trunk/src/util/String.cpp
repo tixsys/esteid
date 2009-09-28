@@ -81,7 +81,7 @@ std::string digidoc::util::String::toMultiByte(int format, const std::wstring &i
     return out;
 }
 
-std::wstring digidoc::util::String::toWideChar(int format, const std::string &in);
+std::wstring digidoc::util::String::toWideChar(int format, const std::string &in)
 {
     int len = MultiByteToWideChar(format, 0, in.data(), in.size(), 0, 0);
     wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len);
