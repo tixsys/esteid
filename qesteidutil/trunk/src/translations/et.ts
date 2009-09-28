@@ -8,8 +8,8 @@
         <translation>Diagnostika</translation>
     </message>
     <message>
-        <source>Version:</source>
-        <translation>Versioon:</translation>
+        <source>ID-card utility version:</source>
+        <translation>ID-kaardi haldusvahendi versioon</translation>
     </message>
     <message>
         <source>Library paths:</source>
@@ -75,16 +75,6 @@
 <context>
     <name>JsExtender</name>
     <message>
-        <source>Authentication</source>
-        <translation type="obsolete">Isikutuvastus</translation>
-    </message>
-    <message>
-        <source>This action needs authentication
-Enter PIN1</source>
-        <translation type="obsolete">See tegevus vajab isikutuvastust
-Sisesta PIN1</translation>
-    </message>
-    <message>
         <source> - %1 (active)</source>
         <translation> - %1 (aktiivne)</translation>
     </message>
@@ -137,12 +127,6 @@ Sisesta PIN1</translation>
     <message>
         <source>Settings</source>
         <translation>Seaded</translation>
-    </message>
-    <message>
-        <source>Save password for specified period in minutes
-0 - always ask</source>
-        <translation type="obsolete">Salvesta parool määratud minutiteks
-0 - küsi iga kord</translation>
     </message>
     <message>
         <source>Check updates</source>

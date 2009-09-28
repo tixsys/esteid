@@ -4,7 +4,7 @@
 <context>
     <name>DiagnosticsDialog</name>
     <message>
-        <source>Version:</source>
+        <source>ID-card utility version:</source>
         <translation>Версия:</translation>
     </message>
     <message>
@@ -75,16 +75,6 @@
 <context>
     <name>JsExtender</name>
     <message>
-        <source>Authentication</source>
-        <translation type="obsolete">Идентификация личности</translation>
-    </message>
-    <message>
-        <source>This action needs authentication
-Enter PIN1</source>
-        <translation type="obsolete">Для данного действия нужно идентифицировать личность.
-Введите PIN1</translation>
-    </message>
-    <message>
         <source> - %1 (active)</source>
         <translation> - %1 (активно)</translation>
     </message>
@@ -130,33 +120,6 @@ Enter PIN1</source>
     <message>
         <source>Close</source>
         <translation>Закрыть</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>failed to load pkcs11 module</source>
-        <translation type="obsolete">ошибка при загрузке модуля pkcs11</translation>
-    </message>
-    <message>
-        <source>failed to list slots</source>
-        <translation type="obsolete">ошибка при чтении слотов pkcs11</translation>
-    </message>
-    <message>
-        <source>token failed</source>
-        <translation type="obsolete">ошибка при загрузке &quot;token&quot;-а</translation>
-    </message>
-    <message>
-        <source>no token available</source>
-        <translation type="obsolete">не найдено ни одного &quot;token&quot;-а</translation>
-    </message>
-    <message>
-        <source>no key matching certificate available</source>
-        <translation type="obsolete">не найдено подходящего сертификата</translation>
-    </message>
-    <message>
-        <source>Failed to resolve hostname. Are you connected to the internet?</source>
-        <translation type="obsolete">Отсутствует подключение к Интернету!</translation>
     </message>
 </context>
 <context>

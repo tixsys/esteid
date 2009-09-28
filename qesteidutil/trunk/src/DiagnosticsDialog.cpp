@@ -51,7 +51,7 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 	QString info;
 	QTextStream s( &info );
 
-	s << "<b>" << tr("Version:") << "</b> ";
+	s << "<b>" << tr("ID-card utility version:") << "</b> ";
 	s << QCoreApplication::applicationVersion() << "<br />";
 
 	s << "<b>" << tr("OS:") << "</b> ";
@@ -119,8 +119,8 @@ QString DiagnosticsDialog::getLibVersion( const QString &lib ) const
 {
 	try
 	{
-		DynamicLibrary l( lib.toLatin1() );
-		return QString( "%1 (%2)" ).arg( lib ).arg( QString::fromStdString( l.getVersionStr() ) );
+		return QString( "%1 (%2)" ).arg( lib )
+			.arg( QString::fromStdString( DynamicLibrary( lib.toLatin1() ).getVersionStr() ) );
 	}
 	catch( const std::runtime_error & )
 	{ return tr("%1 - failed to get version info").arg( lib ); }
@@ -206,12 +206,11 @@ void DiagnosticsDialog::save()
 	if( filename.isEmpty() )
 		return;
 	QFile f( filename );
-	if( !f.open( QIODevice::WriteOnly ) )
+	if( f.open( QIODevice::WriteOnly ) )
 	{
-		QMessageBox::warning( this, tr("Error occured"), tr("Failed write to file!") );
-		return;
+		QTextStream( &f ) << diagnosticsText->toPlainText();
+		f.close();
 	}
-	QTextStream s( &f );
-	s << diagnosticsText->toPlainText();
-	f.close();
+	else
+		QMessageBox::warning( this, tr("Error occured"), tr("Failed write to file!") );
 }
