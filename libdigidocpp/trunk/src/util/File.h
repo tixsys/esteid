@@ -5,10 +5,6 @@
 
 #include <stack>
 
-#if _WIN32
-#include <windows.h>
-#endif
-
 namespace digidoc
 {
     namespace util

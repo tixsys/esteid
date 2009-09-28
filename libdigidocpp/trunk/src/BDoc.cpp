@@ -457,7 +457,7 @@ void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocExcept
     DEBUG("BDoc::readMimetype(path = '%s')", path.c_str());
     // Read mimetype from file.
     std::string fileName = util::File::path(path, "mimetype");
-    std::ifstream ifs(util::File::File::fstreamName(fileName).c_str());
+    std::ifstream ifs(util::File::fstreamName(fileName).c_str());
     std::string mimetype;
     ifs >> mimetype;
     ifs.close();
