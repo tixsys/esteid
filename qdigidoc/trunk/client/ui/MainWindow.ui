@@ -335,7 +335,7 @@ padding: 5px;
              <item>
               <widget class="QRadioButton" name="infoSignCard">
                <property name="text">
-                <string>Use ID card</string>
+                <string>Use ID-card</string>
                </property>
                <property name="checked">
                 <bool>true</bool>
@@ -587,9 +587,9 @@ padding: 5px;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px 'Arial,Liberation Sans';&quot;&gt;
 Digital signing.&lt;br /&gt;&lt;br /&gt;
-Digital signing is equal to physical signing. to sing a document you need an ID-card with a valid and usable signing certificate.&lt;br /&gt;&lt;br /&gt;
+Digital signing is equal to physical signing. To sign a document you need an ID-card with a valid and usable signature certificate.&lt;br /&gt;&lt;br /&gt;
 Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
-Also and active internet connection is needed.&lt;/p&gt;
+Also an active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">

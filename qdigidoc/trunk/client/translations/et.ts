@@ -196,7 +196,7 @@ Should I keep unsigned documents or remove these?</source>
         <translation>Kasuta Mobiil-ID</translation>
     </message>
     <message>
-        <source>Use ID card</source>
+        <source>Use ID-card</source>
         <translation>Kasuta ID-kaarti</translation>
     </message>
     <message>
@@ -273,9 +273,9 @@ p, li { white-space: pre-wrap; }
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 Digital signing.&lt;br /&gt;&lt;br /&gt;
-Digital signing is equal to physical signing. to sing a document you need an ID-card with a valid and usable signing certificate.&lt;br /&gt;&lt;br /&gt;
+Digital signing is equal to physical signing. To sign a document you need an ID-card with a valid and usable signature certificate.&lt;br /&gt;&lt;br /&gt;
 Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
-Also and active internet connection is needed.&lt;/p&gt;
+Also an active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
