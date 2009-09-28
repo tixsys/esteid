@@ -5,7 +5,7 @@ set( MOC_HEADERS
 	IKValidator.h
 	PinDialog.h
 	Settings.h
-
+	sslConnect.h
 	)
 QT4_WRAP_UI( UI_HEADERS
 	ui/CertificateWidget.ui
@@ -25,7 +25,7 @@ set( SOURCES
 	IKValidator.cpp
 	PinDialog.cpp
 	SslCertificate.cpp
-	
+	sslConnect.cpp
 	)
 
 INCLUDE_DIRECTORIES(
