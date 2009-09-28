@@ -4,6 +4,10 @@
 #include <string>
 #include <stdarg.h>
 
+#if _WIN32
+#include <windows.h>
+#endif
+
 namespace digidoc
 {
     namespace util
