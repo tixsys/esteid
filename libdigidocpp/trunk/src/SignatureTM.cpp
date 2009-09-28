@@ -5,21 +5,10 @@
 #include "SignatureTM.h"
 #include "Conf.h"
 #include "crypto/Digest.h"
-#include "crypto/cert/X509Cert.h"
-#include "crypto/cert/X509CertStore.h"
 #include "crypto/cert/DirectoryX509CertStore.h"
 #include "crypto/ocsp/OCSP.h"
 #include "util/DateTime.h"
 #include "log.h"
-
-#include <openssl/objects.h>
-#include <openssl/pem.h>
-#include <openssl/ssl.h>
-
-
-#include <openssl/ssl.h>
-#include <openssl/conf.h>
-
 
 /**
  * TM profile signature media type.
@@ -76,7 +65,15 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
         throw e;
     }
     OCSP ocsp(ocspConf.url);
-    STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
+    STACK_OF(X509)* ocspCerts = 0;
+    try
+    {
+        ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
+    }
+    catch( const Exception &e )
+    {
+        THROW_SIGNATUREEXCEPTION_CAUSE( e, "OCSP certificate loading failed" );
+    }
     X509Stack_scope x509StackScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     //ocsp.setCertStore(digidoc::X509CertStore::getInstance()->getCertStore());
