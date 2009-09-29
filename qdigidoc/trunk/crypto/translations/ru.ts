@@ -235,6 +235,14 @@
         <source>Empty result</source>
         <translation>Ничего не найдено</translation>
     </message>
+    <message>
+        <source>LDAP server is unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error Code: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

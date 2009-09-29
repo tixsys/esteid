@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="et">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS>
+<TS version="2.0" language="et">
 <context>
     <name>CryptDoc</name>
     <message>
@@ -221,7 +221,7 @@
     <name>LdapSearch</name>
     <message>
         <source>Failed to init ldap</source>
-        <translation>Puudub ühendus LDAP serveriga</translation>
+        <translation>LDAP initsialiseerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to init ldap search</source>
@@ -234,6 +234,14 @@
     <message>
         <source>Empty result</source>
         <translation>Ei leidnud midagi</translation>
+    </message>
+    <message>
+        <source>LDAP server is unavailable.</source>
+        <translation>Ei saa ühendust LDAP serveriga</translation>
+    </message>
+    <message>
+        <source>Error Code: %1 (%2)</source>
+        <translation>Veakood: %1 (%2)</translation>
     </message>
 </context>
 <context>

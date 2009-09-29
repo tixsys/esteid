@@ -61,7 +61,18 @@ void LdapSearch::setLastError( const QString &msg, int err )
 {
 	QString res = msg;
 	if( err != -1 )
-		res += QString( "<br />Error Code: %1 (%2)" ).arg( err ).arg( ldap_err2string( err ) );
+	{
+		res += "<br />";
+		switch( err )
+		{
+		case LDAP_UNAVAILABLE:
+			res += tr("LDAP server is unavailable.");
+			break;
+		default:
+			res += tr( "Error Code: %1 (%2)" ).arg( err ).arg( ldap_err2string( err ) );
+			break;
+		}
+	}
 	Q_EMIT error( res );
 }
 
