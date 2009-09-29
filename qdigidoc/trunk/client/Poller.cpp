@@ -25,7 +25,6 @@
 #include "common/PinDialog.h"
 #include "common/SslCertificate.h"
 
-#include <digidocpp/XmlConf.h>
 #include <libp11.h>
 
 #include <QApplication>

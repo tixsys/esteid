@@ -28,9 +28,8 @@
 #include "QMobileSigner.h"
 #include "Poller.h"
 
-#include <digidocpp/BDoc.h>
+#include <digidocpp/Conf.h>
 #include <digidocpp/Document.h>
-#include <digidocpp/XmlConf.h>
 #include <digidocpp/WDoc.h>
 #include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
 #include <digidocpp/io/ZipSerialize.h>
@@ -186,8 +185,7 @@ DigiDoc::DigiDoc( QObject *parent )
 
 DigiDoc::~DigiDoc()
 {
-	if( poller )
-		delete poller;
+	delete poller;
 	clear();
 	X509CertStore::destroy();
 	digidoc::terminate();
@@ -197,19 +195,24 @@ QString DigiDoc::activeCard() const { return m_card; }
 
 void DigiDoc::addFile( const QString &file )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-	if( b->signatureCount() > 0 )
-		return setLastError( tr("Cannot add files to signed container") );
-
+	if( !checkDoc( b->signatureCount() > 0, tr("Cannot add files to signed container") ) )
+		return;
 	try { b->addDocument( Document( file.toUtf8().constData(), "file" ) ); }
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
+bool DigiDoc::checkDoc( bool status, const QString &msg )
+{
+	if( isNull() )
+		setLastError( tr("Container is not open") );
+	else if( status )
+		setLastError( msg );
+	return !isNull() && !status;
+}
+
 void DigiDoc::clear()
 {
-	if( b != 0 )
-		delete b;
+	delete b;
 	b = 0;
 	m_fileName.clear();
 	m_lastError.clear();
@@ -257,12 +260,8 @@ void DigiDoc::dataChanged( const QStringList &cards, const QString &card,
 QList<Document> DigiDoc::documents()
 {
 	QList<Document> list;
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
+	if( !checkDoc() )
 		return list;
-	}
-
 	try
 	{
 		unsigned int count = b->documentCount();
@@ -382,33 +381,24 @@ QStringList DigiDoc::presentCards() const { return m_cards; }
 
 void DigiDoc::removeDocument( unsigned int num )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
-	if( num >= b->documentCount() )
-		return setLastError( tr("Missing document") );
-
+	if( !checkDoc( num >= b->documentCount(), tr("Missing document") ) )
+		return;
 	try { b->removeDocument( num ); }
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
 void DigiDoc::removeSignature( unsigned int num )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
-	if( num >= b->signatureCount() )
-		return setLastError( tr("Missing signature") );
-
+	if( !checkDoc( num >= b->signatureCount(), tr("Missing signature") ) )
+		return;
 	try { b->removeSignature( num ); }
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
 void DigiDoc::save()
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
+	if( !checkDoc() );
+		return;
 	try
 	{
 		std::auto_ptr<ISerialize> s(new ZipSerialize(m_fileName.toUtf8().constData()));
@@ -419,12 +409,8 @@ void DigiDoc::save()
 
 void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
-	if( num >= b->documentCount() )
-		return setLastError( tr("Missing document") );
-
+	if( !checkDoc( num >= b->documentCount(), tr("Missing document") ) )
+		return;
 	try
 	{
 		digidoc::Document doc = b->getDocument( num );
@@ -443,7 +429,7 @@ QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) 
 {
 	const QString v = value.toString();
 	digidoc::Conf *i = NULL;
-	try { i = digidoc::XmlConf::getInstance(); }
+	try { i = digidoc::Conf::getInstance(); }
 	catch( const Exception & ) {}
 	if( !i )
 		return v;
@@ -465,7 +451,7 @@ QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) 
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 {
 	digidoc::Conf *i = NULL;
-	try { i = digidoc::XmlConf::getInstance(); }
+	try { i = digidoc::Conf::getInstance(); }
 	catch( const Exception & ) {}
 	if( !i )
 		return;
@@ -495,16 +481,8 @@ void DigiDoc::setLastError( const QString &err ) { Q_EMIT error( m_lastError = e
 bool DigiDoc::sign( const QString &city, const QString &state, const QString &zip,
 	const QString &country, const QString &role, const QString &role2 )
 {
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
+	if( !checkDoc( b->documentCount() == 0, tr("Cannot add signature to empty container") ) )
 		return false;
-	}
-	if( b->documentCount() == 0 )
-	{
-		setLastError( tr("Cannot add signature to empty container") );
-		return false;
-	}
 
 	bool result = false;
 	QEstEIDSigner *s;
@@ -534,16 +512,8 @@ QSslCertificate DigiDoc::signCert() { return m_signCert; }
 
 bool DigiDoc::signMobile( const QString &fName )
 {
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
+	if( checkDoc( b->documentCount() == 0, tr("Cannot add signature to empty container") ) )
 		return false;
-	}
-	if( b->documentCount() == 0 )
-	{
-		setLastError( tr("Cannot add signature to empty container") );
-		return false;
-	}
 
 	bool result = false;
 	try
@@ -558,12 +528,8 @@ bool DigiDoc::signMobile( const QString &fName )
 QList<DigiDocSignature> DigiDoc::signatures()
 {
 	QList<DigiDocSignature> list;
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
+	if( !checkDoc() )
 		return list;
-	}
-
 	try
 	{
 		unsigned int count = b->signatureCount();
@@ -575,27 +541,14 @@ QList<DigiDocSignature> DigiDoc::signatures()
 }
 
 WDoc::DocumentType DigiDoc::documentType()
-{
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
-		return WDoc::BDocType;
-	}
-
-	return b->documentType();
-}
+{ return checkDoc() ? b->documentType() : WDoc::BDocType; }
 
 QByteArray DigiDoc::getFileDigest( unsigned int i )
 {
 	QByteArray result;
-	if( isNull() )
-	{
-		setLastError( tr("Container is not open") );
+	if( !checkDoc() )
 		return result;
-	}
-
 	result.resize(20);
 	b->getFileDigest( i, (unsigned char*)result.data() );
-
 	return result;
 }

@@ -134,6 +134,7 @@ private Q_SLOTS:
 	void setLastError( const QString &err );
 
 private:
+	bool checkDoc( bool status = false, const QString &msg = QString() );
 	bool parseException( const digidoc::Exception &e, QStringList &causes );
 	void setLastError( const digidoc::Exception &e );
 
