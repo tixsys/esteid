@@ -286,12 +286,11 @@ QString Common::tokenInfo( CertType type, const QString &card, const QSslCertifi
 	else
 		s << "<font color=\"red\">" << tr("expired") << "</font>";
 
-	s << "</td><td align=\"right\">";
+	s << "</td><td align=\"center\" width=\"75\">";
 	if( !c.isValid() || willExpire )
 	{
-		s << "<p align=\"center\"><a href=\"openUtility\">"
-			"<img src=\":/images/warning.png\"><br />"
-			"<font color=\"red\">" << tr("Open utility") << "</font></a></p>";
+		s << "<a href=\"openUtility\"><img src=\":/images/warning.png\"><br />"
+			"<font color=\"red\">" << tr("Open utility") << "</font></a>";
 	}
 	else if( c.isTempel() )
 		s << "<img src=\":/images/ico_stamp_blue_75.png\">";
