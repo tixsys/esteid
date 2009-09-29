@@ -1,7 +1,7 @@
 /*
- * QEstEidUtil
+ * QEstEidCommon
  *
- * Copyright (C) 2009 Jargo KÃµster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -21,12 +21,12 @@
  */
 
 #include "sslConnect.h"
+#include "sslConnect_p.h"
 
 #include "PinDialog.h"
 #include "Settings.h"
 #include "SslCertificate.h"
 
-#include <libp11.h>
 #include <openssl/ssl.h>
 #include <stdexcept>
 #include <sstream>
@@ -77,6 +77,15 @@ public:
 
 
 
+SSLThread::SSLThread( PKCS11_SLOT *slot, QObject *parent )
+: QThread(parent), m_result(CKR_OK), m_slot(slot) {}
+
+int SSLThread::result() const { return m_result; }
+
+void SSLThread::run() { m_result = PKCS11_login( m_slot, 0, NULL ); }
+
+
+
 class SSLObj
 {
 public:
@@ -97,68 +106,6 @@ public:
 	unsigned int nslots;
 	PKCS11_SLOT *pslots;
 };
-
-
-
-SSLConnect::SSLConnect( QObject *parent )
-:	QObject( parent )
-,	obj( new SSLObj() )
-{}
-
-SSLConnect::~SSLConnect() { delete obj; }
-
-bool SSLConnect::isLoaded() { return obj && obj->ctx; }
-
-QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
-{
-	if ( !isLoaded() )
-		return QByteArray();
-
-	if( !obj->connectToHost( type ) )
-		return QByteArray();
-
-	switch( type )
-	{
-	case AccessCert:
-	{
-		QByteArray request =
-			"<SOAP-ENV:Envelope"
-			"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
-			"	xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
-			"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-			"	xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
-			"<SOAP-ENV:Body>"
-			"<m:GetAccessToken"
-			"	xmlns:m=\"urn:GetAccessToken\""
-			"	SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-			"<Language xsi:type=\"xsd:string\">ET</Language>"
-			"<RequestTime xsi:type=\"xsd:string\" />"
-			"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
-			"<SoftwareVersion xsi:type=\"xsd:string\" />"
-			"</m:GetAccessToken>"
-			"</SOAP-ENV:Body>"
-			"</SOAP-ENV:Envelope>";
-		request =
-			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
-			"Host: " + QByteArray(SK) + "\r\n"
-			"Content-Type: text/xml\r\n"
-			"Content-Length: " + QByteArray::number( request.size() ) + "\r\n"
-			"SOAPAction: \"\"\r\n"
-			"Connection: close\r\n\r\n" + request;
-		return obj->getRequest( request );
-	}
-	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
-	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
-	case MobileInfo: return obj->getRequest( value.toLatin1() );
-	case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
-	default: return QByteArray();
-	}
-}
-
-QString SSLConnect::pin() const { return obj->pin; }
-void SSLConnect::setCard( const QString &card ) { obj->card = card; }
-void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
-void SSLConnect::setReader( int reader ) { obj->reader = reader; }
 
 
 
@@ -254,13 +201,25 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		}
 		else
 		{
+			pin.clear();
 			PinDialog *p = new PinDialog( PinDialog::Pin1PinpadType,
 				SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
+			p->setWindowModality( Qt::ApplicationModal );
 			p->show();
-			QCoreApplication::processEvents();
-			result = PKCS11_login( slot, 0, NULL );
+			SSLThread *t = new SSLThread( slot );
+			t->start();
+			do
+			{
+				QCoreApplication::processEvents();
+				qApp->thread()->wait( 1 );
+			}
+			while( t->isRunning() && p->isVisible() );
+			bool hidden = p->isHidden();
+			result = t->result();
 			p->deleteLater();
-			pin.clear();
+			t->deleteLater();
+			if( hidden )
+				throw std::runtime_error( "" );
 		}
 		switch( ERR_GET_REASON( ERR_get_error() ) )
 		{
@@ -342,3 +301,65 @@ QByteArray SSLObj::getRequest( const QByteArray &request ) const
 	int pos = buffer.indexOf( "\r\n\r\n" );
 	return pos ? buffer.mid( pos + 4 ) : buffer;
 }
+
+
+
+SSLConnect::SSLConnect( QObject *parent )
+:	QObject( parent )
+,	obj( new SSLObj() )
+{}
+
+SSLConnect::~SSLConnect() { delete obj; }
+
+bool SSLConnect::isLoaded() { return obj && obj->ctx; }
+
+QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
+{
+	if ( !isLoaded() )
+		return QByteArray();
+
+	if( !obj->connectToHost( type ) )
+		return QByteArray();
+
+	switch( type )
+	{
+	case AccessCert:
+	{
+		QByteArray request =
+			"<SOAP-ENV:Envelope"
+			"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
+			"	xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
+			"	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+			"	xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
+			"<SOAP-ENV:Body>"
+			"<m:GetAccessToken"
+			"	xmlns:m=\"urn:GetAccessToken\""
+			"	SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
+			"<Language xsi:type=\"xsd:string\">ET</Language>"
+			"<RequestTime xsi:type=\"xsd:string\" />"
+			"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
+			"<SoftwareVersion xsi:type=\"xsd:string\" />"
+			"</m:GetAccessToken>"
+			"</SOAP-ENV:Body>"
+			"</SOAP-ENV:Envelope>";
+		request =
+			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
+			"Host: " + QByteArray(SK) + "\r\n"
+			"Content-Type: text/xml\r\n"
+			"Content-Length: " + QByteArray::number( request.size() ) + "\r\n"
+			"SOAPAction: \"\"\r\n"
+			"Connection: close\r\n\r\n" + request;
+		return obj->getRequest( request );
+	}
+	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+	case MobileInfo: return obj->getRequest( value.toLatin1() );
+	case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
+	default: return QByteArray();
+	}
+}
+
+QString SSLConnect::pin() const { return obj->pin; }
+void SSLConnect::setCard( const QString &card ) { obj->card = card; }
+void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
+void SSLConnect::setReader( int reader ) { obj->reader = reader; }

@@ -1,7 +1,7 @@
 /*
  * QEstEidCommon
  *
- * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo KÃµster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -22,36 +22,21 @@
 
 #pragma once
 
-#include <QObject>
+#include <QThread>
 
-#define EESTI "sisene.www.eesti.ee"
-#define SK "www.openxades.org"
+#include <libp11.h>
 
-class SSLObj;
-class SSLConnect: public QObject
+class SSLThread: public QThread
 {
 	Q_OBJECT
-
 public:
-	enum RequestType {
-		EmailInfo,
-		ActivateEmails,
-		MobileInfo,
-		PictureInfo,
-		AccessCert
-	};
-
-	SSLConnect( QObject *parent = 0 );
-	~SSLConnect();
-
-	bool isLoaded();
-	QByteArray getUrl( RequestType type, const QString &value = "" );
-
-	QString pin() const;
-	void setCard( const QString &card );
-	void setPin( const QString &pin );
-	void setReader( int reader );
+	SSLThread( PKCS11_SLOT *slot, QObject *parent = 0 );
+	int result() const;
+	void wait();
 
 private:
-	SSLObj	*obj;
+	void run();
+
+	int			m_result;
+	PKCS11_SLOT *m_slot;
 };
