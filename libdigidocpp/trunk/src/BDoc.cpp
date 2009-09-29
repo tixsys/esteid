@@ -1,7 +1,7 @@
 #include "log.h"
 #include "BDoc.h"
+#include "Conf.h"
 #include "Document.h"
-#include "XmlConf.h"
 #include "SignatureMobile.h"
 #include "crypto/Digest.h"
 #include "util/File.h"
@@ -11,10 +11,6 @@
 #include <fstream>
 #include <iostream>
 #include <set>
-#include <sstream>
-
-#include <xercesc/dom/DOM.hpp>
-#include <xsec/utils/XSECPlatformUtils.hpp>
 
 /**
  * Mimetype prefix.
@@ -25,41 +21,6 @@ const std::string digidoc::BDoc::MIMETYPE_PREFIX = "application/vnd.bdoc-";
  * XML namespace of the manifest XML file.
  */
 const std::string digidoc::BDoc::MANIFEST_NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0";
-
-/**
- * Initializes libraries used in digidoc implementation.
- */
-void digidoc::initialize()
-{
-    // Initialize OpenSSL library.
-    SSL_load_error_strings();
-    SSL_library_init();
-    OPENSSL_config(NULL);
-
-    // Initialize Apache Xerces library.
-    xercesc::XMLPlatformUtils::Initialize();
-
-    // Initialize Apache XML Security library.
-    XSECPlatformUtils::Initialise();
-
-    //Use Xml based configuration
-    XmlConf::initialize();
-}
-
-/**
- * Terminates libraries used in digidoc implementation.
- */
-void digidoc::terminate()
-{
-    // Terminate Apache XML Security library.
-    XSECPlatformUtils::Terminate();
-
-    // Terminate Apache Xerces library.
-    xercesc::XMLPlatformUtils::Terminate();
-
-    // Try to delete temporary files created with the util::File::tempFileName, tempDirectory and createTempDirectory functions.
-    util::File::deleteTempFiles();
-}
 
 /**
  * Initialize BDOC container.

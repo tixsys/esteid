@@ -7,6 +7,9 @@
 namespace digidoc
 {
 
+EXP_DIGIDOC void initialize();
+EXP_DIGIDOC void terminate();
+
 class Document;
 class ISerialize;
 

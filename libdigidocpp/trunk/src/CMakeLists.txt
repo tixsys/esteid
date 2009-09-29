@@ -86,6 +86,7 @@ if(WIN32)
 endif(WIN32)
 
 set(digidocpp_SRCS
+    ADoc.cpp
     BDoc.cpp
     BDocException.cpp
     DDoc.cpp
