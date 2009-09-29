@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="et">
+<!DOCTYPE TS><TS version="1.1" language="et">
+<defaultcodec></defaultcodec>
 <context>
     <name>CertificateDialog</name>
     <message>
@@ -194,35 +194,35 @@
     <name>QObject</name>
     <message>
         <source>Proves your identity to a remote computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuvastab Teie isiksust arvuti kaugopereerimisel</translation>
     </message>
     <message>
         <source>Protects e-mail messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaitseb e-mail sõnumeid</translation>
     </message>
     <message>
         <source>OCSP signing</source>
-        <translation type="unfinished"></translation>
+        <translation>OCSP allkirjastamine</translation>
     </message>
     <message>
         <source>All application policies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõik tarkvara poliisid</translation>
     </message>
     <message>
         <source>Digital signature</source>
-        <translation type="unfinished"></translation>
+        <translation>Digitaalne allkiri</translation>
     </message>
     <message>
         <source>Non repudiation</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagasilükkamata</translation>
     </message>
     <message>
         <source>Key encipherment</source>
-        <translation type="unfinished"></translation>
+        <translation>Võti krüptimine</translation>
     </message>
     <message>
         <source>Data encipherment</source>
-        <translation type="unfinished"></translation>
+        <translation>Andmete krüptimine</translation>
     </message>
     <message>
         <source>Key agreement</source>

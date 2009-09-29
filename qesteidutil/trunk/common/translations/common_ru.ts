@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru">
+<!DOCTYPE TS><TS version="1.1" language="ru">
+<defaultcodec></defaultcodec>
 <context>
     <name>CertificateDialog</name>
     <message>
@@ -109,11 +109,11 @@
     </message>
     <message>
         <source>Authority key identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор личного ключа</translation>
     </message>
     <message>
         <source>Subject key identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Идентификатор ключа заглавия</translation>
     </message>
 </context>
 <context>
@@ -194,7 +194,7 @@
     <name>QObject</name>
     <message>
         <source>Proves your identity to a remote computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтверждает Вашу личность на отдалённом компьютере</translation>
     </message>
     <message>
         <source>Protects e-mail messages</source>
@@ -202,11 +202,11 @@
     </message>
     <message>
         <source>OCSP signing</source>
-        <translation type="unfinished"></translation>
+        <translation>OCSP подписывание</translation>
     </message>
     <message>
         <source>All application policies</source>
-        <translation type="unfinished"></translation>
+        <translation>Все полисы приложений</translation>
     </message>
     <message>
         <source>Digital signature</source>
@@ -214,7 +214,7 @@
     </message>
     <message>
         <source>Non repudiation</source>
-        <translation type="unfinished"></translation>
+        <translation>Не отрицательно</translation>
     </message>
     <message>
         <source>Key encipherment</source>
@@ -230,19 +230,19 @@
     </message>
     <message>
         <source>Key certificate sign</source>
-        <translation type="unfinished"></translation>
+        <translation>Подпись ключа сертификата</translation>
     </message>
     <message>
         <source>CRL sign</source>
-        <translation type="unfinished"></translation>
+        <translation>CRL подпись</translation>
     </message>
     <message>
         <source>Encipher only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только зашифровка</translation>
     </message>
     <message>
         <source>Decipher only</source>
-        <translation type="unfinished"></translation>
+        <translation>Только разшифровка</translation>
     </message>
     <message>
         <source>failed to load pkcs11 module</source>

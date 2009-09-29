@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="et">
+<!DOCTYPE TS><TS version="1.1" language="et">
+<defaultcodec></defaultcodec>
 <context>
     <name>CryptDoc</name>
     <message>
@@ -69,7 +69,7 @@
     </message>
     <message>
         <source>Key already exists</source>
-        <translation>Adresaat on juba lisatud</translation>
+        <translation>Adressaat on juba lisatud</translation>
     </message>
     <message>
         <source>Failed to create temporary files&lt;br /&gt;%1</source>
@@ -317,7 +317,7 @@ Kas avan Digidoc kliendiga?</translation>
     </message>
     <message>
         <source>Yes, I will use ID-card certificate only for secure transfer</source>
-        <translation>Jah, ma kasutan ID-kaardi krüpteerimisfunktsioni vaid andmete turvaliseks edastamiseks</translation>
+        <translation>Jah, ma kasutan ID-kaardi krüpteerimisfunktsiooni vaid andmete turvaliseks edastamiseks</translation>
     </message>
     <message>
         <source>Container:</source>
