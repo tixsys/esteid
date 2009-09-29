@@ -221,7 +221,7 @@
     <name>LdapSearch</name>
     <message>
         <source>Failed to init ldap</source>
-        <translation>LDAP initsialiseerimine ebaõnnestus</translation>
+        <translation>Puudub ühendus LDAP serveriga</translation>
     </message>
     <message>
         <source>Failed to init ldap search</source>
