@@ -510,7 +510,7 @@ namespace EstEIDNative
             : base(message, exception)
         {
         }  
-    }
+    }    
 
     /* --------------------------------------------------- */
 
@@ -519,7 +519,9 @@ namespace EstEIDNative
         private IntPtr esteidHandler;
         public const uint ESTEID_OK = 0;
         public const uint ESTEID_ERR = 1;
-
+        
+        /// <summary>Wrapper class that handles communication between PKCS11 driver and this application.</summary>
+        /// <remarks>It needs EstEIDReader.dll for its communication.</remarks>
         public EstEIDReader()
         {
             esteidHandler = IntPtr.Zero;

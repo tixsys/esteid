@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACTION_CANCELED" xml:space="preserve">
+    <value>Allkirjastamine katkestati</value>
+  </data>
   <data name="CARD_HASH_FINALIZE" xml:space="preserve">
     <value>Viga krüptoräsi sulgemisel</value>
   </data>
@@ -134,6 +137,12 @@
   </data>
   <data name="CARD_TOKEN_INFO" xml:space="preserve">
     <value>GetTokenInfo {0} ebaõnnestus</value>
+  </data>
+  <data name="CERTS_MISSING" xml:space="preserve">
+    <value>Id-kaardilt ei leitud vastavaid sertifikaate</value>
+  </data>
+  <data name="CERT_DONT_MATCH" xml:space="preserve">
+    <value>Valitud sertifikaat ja Id-kaardil paiknev sertifikaat ei ole identsed</value>
   </data>
   <data name="CERT_MISSING" xml:space="preserve">
     <value>Puudub sertifikaat</value>

@@ -33,10 +33,12 @@ namespace EstEIDSigner
 
         public FormSelectCertificate(string title, string message)
         {
+            this.Font = new Font("Verdana", (float)8.25);
+
             InitializeComponent();
 
             this.Text = title;
-            this.Message.Text = message;
+            this.Message.Text = message;            
 
             ColumnHeader[] head = new ColumnHeader[3];
 

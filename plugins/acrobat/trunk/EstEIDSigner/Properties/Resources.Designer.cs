@@ -61,6 +61,15 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allkirjastamine katkestati.
+        /// </summary>
+        internal static string ACTION_CANCELED {
+            get {
+                return ResourceManager.GetString("ACTION_CANCELED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Viga krüptoräsi sulgemisel.
         /// </summary>
         internal static string CARD_HASH_FINALIZE {
@@ -115,6 +124,15 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valitud sertifikaat ja Id-kaardil paiknev sertifikaat ei ole identsed.
+        /// </summary>
+        internal static string CERT_DONT_MATCH {
+            get {
+                return ResourceManager.GetString("CERT_DONT_MATCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Puudub sertifikaat.
         /// </summary>
         internal static string CERT_MISSING {
@@ -129,6 +147,15 @@ namespace EstEIDSigner.Properties {
         internal static string CERT_READ_FAILURE {
             get {
                 return ResourceManager.GetString("CERT_READ_FAILURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id-kaardilt ei leitud vastavaid sertifikaate.
+        /// </summary>
+        internal static string CERTS_MISSING {
+            get {
+                return ResourceManager.GetString("CERTS_MISSING", resourceCulture);
             }
         }
         

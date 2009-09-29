@@ -31,6 +31,8 @@ namespace EstEIDSigner
     {
         public FormPin(string s, int maxpin)
         {
+            this.Font = new Font("Verdana", (float)8.25);
+
             InitializeComponent();
             labelExtra.Text = s;
             textBoxPin.MaxLength = maxpin;

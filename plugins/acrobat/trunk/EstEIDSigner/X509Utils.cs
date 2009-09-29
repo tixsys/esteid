@@ -138,7 +138,42 @@ namespace EstEIDSigner
                 cp.ReadCertificate(cert) 
             };
 
-            return PdfPKCS7.GetSubjectFields(chain[0]).GetField(field);
+            if (chain[0] != null)
+                return PdfPKCS7.GetSubjectFields(chain[0]).GetField(field);
+            
+            return string.Empty;
+        }
+
+        static public string GetSubjectFields(X509Certificate cert, string field)
+        {
+            return PdfPKCS7.GetSubjectFields(cert).GetField(field);
+        }
+
+        static public string GetIssuerFields(byte[] cert, string field)
+        {
+            Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
+            Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] 
+            { 
+                cp.ReadCertificate(cert) 
+            };
+
+            if (chain[0] != null)
+                return PdfPKCS7.GetIssuerFields(chain[0]).GetField(field);
+
+            return string.Empty;
+        }
+
+        static public string GetIssuerFields(X509Certificate cert, string field)
+        {
+            return PdfPKCS7.GetIssuerFields(cert).GetField(field);
+        }
+
+        static public Org.BouncyCastle.X509.X509Certificate[] LoadCertificate(byte[] raw)
+        {
+            Org.BouncyCastle.X509.X509CertificateParser cp = new Org.BouncyCastle.X509.X509CertificateParser();
+            Org.BouncyCastle.X509.X509Certificate[] chain = new Org.BouncyCastle.X509.X509Certificate[] { cp.ReadCertificate(raw) };
+
+            return chain;
         }
     }
 }
