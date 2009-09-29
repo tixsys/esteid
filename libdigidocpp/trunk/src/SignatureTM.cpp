@@ -193,8 +193,8 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
     {
         OCSP ocsp(ocspConf.url);
         ocsp.setOCSPCerts(ocspCerts);
-        ocsp.setMaxAge(5); // FIXME: remove or move to conf
-        ocsp.setSkew(120); // FIXME: remove or move to conf
+        ocsp.setMaxAge(2*60); // FIXME: remove or move to conf
+        ocsp.setSkew(15*60); // FIXME: remove or move to conf
         status = ocsp.checkCert(cert, issuer, nonce, ocspResponse, producedAt);
     }
     catch(const IOException& e)

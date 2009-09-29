@@ -18,8 +18,8 @@ digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
  , port(NULL)
  , path(NULL)
  , ssl(false)
- , skew(50)
- , maxAge(10)
+ , skew(5*60)
+ , maxAge(1*60)
  , connection(NULL)
  , sconnection(NULL)
  , ctx(NULL)
@@ -100,7 +100,7 @@ void digidoc::OCSP::setSignCert(X509* signCert, EVP_PKEY* signKey)
 
 /**
  * @param skew maximum time difference between OCSP server and host computer in seconds.
- *        Default is 5 seconds.
+ *        Default is 5 minutes.
  */
 void digidoc::OCSP::setSkew(long skew)
 {
@@ -109,7 +109,7 @@ void digidoc::OCSP::setSkew(long skew)
 
 /**
  * @param maxAge how old can the precomputed OCSP responses be in seconds. Default is
- *        1 second. The value is validated with OCSP response field producedAt.
+ *        1 minute. The value is validated with OCSP response field producedAt.
  */
 void digidoc::OCSP::setMaxAge(long maxAge)
 {
