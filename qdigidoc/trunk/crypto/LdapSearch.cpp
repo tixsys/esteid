@@ -54,7 +54,7 @@ void LdapSearch::search( const QString &search )
 	if( err )
 		setLastError( tr("Failed to init ldap search"), err );
 	else
-		startTimer( 1 * 000 );
+		startTimer( 1000 );
 }
 
 void LdapSearch::setLastError( const QString &msg, int err )
