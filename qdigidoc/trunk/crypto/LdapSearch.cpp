@@ -78,7 +78,7 @@ void LdapSearch::setLastError( const QString &msg, int err )
 
 void LdapSearch::timerEvent( QTimerEvent *e )
 {
-	LDAPMessage *result;
+	LDAPMessage *result = 0;
 	LDAP_TIMEVAL t = { 5, 0 };
 	int err = ldap_result( ldap, msg_id, LDAP_MSG_ALL, &t, &result );
 	//int count = ldap_count_messages( ldap, result );
@@ -101,8 +101,8 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 	QList<CKey> list;
 	do
 	{
-		char **name;
-		berval **cert;
+		char **name = 0;
+		berval **cert = 0;
 		BerElement *pos;
 		char *attr = ldap_first_attribute( ldap, entry, &pos );
 		do
@@ -116,10 +116,13 @@ void LdapSearch::timerEvent( QTimerEvent *e )
 		while( (attr = ldap_next_attribute( ldap, entry, pos ) ) );
 		ber_free( pos, 0 );
 
-		CKey key;
-		key.cert = QSslCertificate( QByteArray( cert[0]->bv_val, cert[0]->bv_len ), QSsl::Der );
-		key.recipient = QString::fromUtf8( name[0] );
-		list << key;
+		if( ldap_count_values(name) && ldap_count_values_len(cert) )
+		{
+			CKey key;
+			key.cert = QSslCertificate( QByteArray( cert[0]->bv_val, cert[0]->bv_len ), QSsl::Der );
+			key.recipient = QString::fromUtf8( name[0] );
+			list << key;
+		}
 
 		ldap_value_free( name );
 		ldap_value_free_len( cert );
