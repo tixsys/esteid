@@ -77,11 +77,11 @@ bool CertUpdate::checkUpdateAllowed()
 {
 	QByteArray result = QByteArray::fromHex( runStep( step ) );
 	if ( result.isEmpty() || result.size() != 22 )
-		throw std::runtime_error( "step0" );
+		throwError( tr("Check internet connection") );
 	if ( result.at(4) == 0x06 )
 		generateKeys = true;
 	if ( !(result.size() > 20 && result.at( 21 ) == 0x00) )
-		throw std::runtime_error( tr("update not allowed!").toStdString() );
+		throwError( tr("update not allowed!") );
 	return true;
 }
 
@@ -92,6 +92,9 @@ void CertUpdate::startUpdate( const QString &pin )
 	for( step = 1; step < 36; step++ )
 		result = runStep( step, result );
 }
+
+void CertUpdate::throwError( const QString &msg )
+{ throw std::runtime_error( msg.toStdString() ); }
 
 QByteArray CertUpdate::runStep( int s, QByteArray result )
 {
@@ -528,7 +531,7 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 QByteArray CertUpdate::queryServer( int s, QByteArray result )
 {
 	if ( !checkConnection() )
-		throw std::runtime_error( tr("Check internet connection").toStdString() );
+		throwError( tr("Check internet connection") );
 
 	const char serviceCode[] = { 0x31, 0x00 };
 	QByteArray packet;

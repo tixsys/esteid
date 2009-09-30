@@ -41,6 +41,8 @@ public:
 	void startUpdate( const QString &pin );
 
 private:
+	void throwError( const QString &msg );
+
 	QString m_pin;
 	EstEidCard *card;
 	SmartCardManager *cardMgr;
