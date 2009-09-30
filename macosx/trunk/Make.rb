@@ -86,10 +86,12 @@ class Application
 		release = Pathname.new(@path).join(@options.digidoc, 'lib').to_s
 		digidoc2 = File.join(release, 'libdigidoc.dylib')
 		digidoc = File.join(release, 'libdigidocpp.dylib')
+		libp11 = File.join(release, 'libp11.dylib')
 		
 		FileUtils.mkdir_p(release) unless File.exists? release
 		FileUtils.rm_rf(digidoc2) if File.exists? digidoc2
 		FileUtils.rm_rf(digidoc) if File.exists? digidoc
+		FileUtils.rm_rf(libp11) if File.exists? libp11
 		
 		conf_root = Pathname.new(@path).join(@options.digidoc, 'etc', 'digidocpp')
 		conf = File.join(conf_root, 'digidocpp.conf')
@@ -101,6 +103,9 @@ class Application
 		FileUtils.rm_rf(conf_schema) if File.exists? conf_schema
 		FileUtils.mkdir_p(conf_certs) unless File.exists? conf_certs
 		FileUtils.mkdir_p(conf_schema) unless File.exists? conf_schema
+		
+		puts "Copying file libp11.dylib" if @options.verbose
+		FileUtils.cp('/usr/local/lib/libp11.dylib', libp11)
 		
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/trunk').to_s) do	
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
