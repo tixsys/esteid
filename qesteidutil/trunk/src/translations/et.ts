@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et_EE" sourcelanguage="en">
 <context>
+    <name>CertUpdate</name>
+    <message>
+        <source>update not allowed!</source>
+        <translation>uuendamine ei ole lubatud!</translation>
+    </message>
+    <message>
+        <source>Check internet connection</source>
+        <translation>kontrollige interneti ühendust</translation>
+    </message>
+</context>
+<context>
     <name>DiagnosticsDialog</name>
     <message>
         <source>Diagnostics</source>
@@ -9,7 +20,7 @@
     </message>
     <message>
         <source>ID-card utility version:</source>
-        <translation>ID-kaardi haldusvahendi versioon</translation>
+        <translation>ID-kaardi haldusvahendi versioon:</translation>
     </message>
     <message>
         <source>Library paths:</source>
@@ -92,15 +103,19 @@
     </message>
     <message>
         <source>Certificate update</source>
-        <translation>Sertifikaati uuendus</translation>
+        <translation>Sertifikaatide uuendus</translation>
     </message>
     <message>
         <source>Certificate update failed: %1</source>
-        <translation>Sertifikaati uuendus ebaõnnestunud: %1</translation>
+        <translation>Sertifikaatide uuendamine ebaõnnestus: %1</translation>
     </message>
     <message>
         <source>Certificate update not allowed!</source>
-        <translation>Sertifikaati uuendamine ei ole lubatud!</translation>
+        <translation type="obsolete">Sertifikaati uuendamine ei ole lubatud!</translation>
+    </message>
+    <message>
+        <source>Certificate update failed:&lt;br /&gt;%1</source>
+        <translation>Sertifikaatide uuendamine ebaõnnestus:&lt;br /&gt;%1</translation>
     </message>
 </context>
 <context>

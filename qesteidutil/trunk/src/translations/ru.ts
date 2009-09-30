@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU" sourcelanguage="en">
 <context>
+    <name>CertUpdate</name>
+    <message>
+        <source>update not allowed!</source>
+        <translation>oбновление не разрешено!</translation>
+    </message>
+    <message>
+        <source>Check internet connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DiagnosticsDialog</name>
     <message>
         <source>ID-card utility version:</source>
@@ -100,7 +111,11 @@
     </message>
     <message>
         <source>Certificate update not allowed!</source>
-        <translation>Обновление сертификата не разрешено!</translation>
+        <translation type="obsolete">Обновление сертификата не разрешено!</translation>
+    </message>
+    <message>
+        <source>Certificate update failed:&lt;br /&gt;%1</source>
+        <translation>Неудачное обновление сертификата:&lt;br /&gt;%1</translation>
     </message>
 </context>
 <context>

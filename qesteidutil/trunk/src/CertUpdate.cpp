@@ -80,7 +80,9 @@ bool CertUpdate::checkUpdateAllowed()
 		throw std::runtime_error( "step0" );
 	if ( result.at(4) == 0x06 )
 		generateKeys = true;
-	return result.size() > 20 && result.at( 21 ) == 0x00;
+	if ( !(result.size() > 20 && result.at( 21 ) == 0x00) )
+		throw std::runtime_error( tr("update not allowed!").toStdString() );
+	return true;
 }
 
 void CertUpdate::startUpdate( const QString &pin )
@@ -526,7 +528,7 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 QByteArray CertUpdate::queryServer( int s, QByteArray result )
 {
 	if ( !checkConnection() )
-		return QByteArray();
+		throw std::runtime_error( tr("Check internet connection").toStdString() );
 
 	const char serviceCode[] = { 0x31, 0x00 };
 	QByteArray packet;
