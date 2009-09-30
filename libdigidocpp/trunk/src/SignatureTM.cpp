@@ -256,16 +256,15 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
  */
 void digidoc::SignatureTM::createTMProperties()
 {
-    xades::QualifyingPropertiesType qp = signature->object()[0].qualifyingProperties()[0];
-
-    xades::UnsignedPropertiesType usProp;
+    xades::CertificateValuesType certValue;
 
     xades::UnsignedSignaturePropertiesType usSignatureProp;
+    usSignatureProp.certificateValues().push_back(certValue);
+
+    xades::UnsignedPropertiesType usProp;
     usProp.unsignedSignatureProperties(usSignatureProp);
 
-
     signature->object()[0].qualifyingProperties()[0].unsignedProperties(usProp);
-
 }
 
 
@@ -362,14 +361,9 @@ void digidoc::SignatureTM::addCertificateValue(const std::string& certId, const 
     std::vector<unsigned char> certBytes = x509.encodeDER();
     xades::CertificateValuesType::EncapsulatedX509CertificateType certData(
         xml_schema::Base64Binary(&certBytes[0], certBytes.size()));
-
-    xades::CertificateValuesType certValue;
-    certValue.id(xml_schema::Id(certId.c_str()));
-    certValue.encapsulatedX509Certificate().push_back(certData);
-
+    certData.id(xml_schema::Id(certId.c_str()));
     signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties()
-        ->certificateValues().push_back(certValue);
-
+        ->certificateValues()[0].encapsulatedX509Certificate().push_back(certData);
 }
 
 /**
