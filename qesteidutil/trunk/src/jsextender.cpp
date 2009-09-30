@@ -438,6 +438,13 @@ void JsExtender::showMessage( const QString &type, const QString &message, const
 
 bool JsExtender::updateCertAllowed()
 {
+	QMessageBox::StandardButton b = QMessageBox::warning( m_mainWindow, tr("Certificate update"),
+		tr("For updating certificates please close all programs which are interacting with smartcard "
+		   "(qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)<br />"
+		   "After updating certificates it is not possible decypt documents!"),
+		QMessageBox::Yes|QMessageBox::No, QMessageBox::No );
+	if( b == QMessageBox::No )
+		return false;
 	bool result = false;
 	try {
 		CertUpdate *c = new CertUpdate( m_mainWindow->cardManager()->activeReaderNum(), this );

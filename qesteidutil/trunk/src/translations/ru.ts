@@ -117,6 +117,10 @@
         <source>Certificate update failed:&lt;br /&gt;%1</source>
         <translation>Неудачное обновление сертификата:&lt;br /&gt;%1</translation>
     </message>
+    <message>
+        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
