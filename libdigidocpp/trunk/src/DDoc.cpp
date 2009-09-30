@@ -16,7 +16,7 @@ using namespace digidoc;
 #  elif defined(_WIN32)
 #    define LIBDIGIDOC_NAME "digidoc.dll"
 #  else
-#    define LIBDIGIDOC_NAME "libdigidoc.so"
+#    define LIBDIGIDOC_NAME "libdigidoc.so.2"
 #  endif
 #endif
 
