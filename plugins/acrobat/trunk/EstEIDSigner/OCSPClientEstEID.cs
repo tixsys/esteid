@@ -54,7 +54,8 @@ namespace EstEIDSigner
         {
             UNKNOWN = -2,
             REVOKED = -1,
-            GOOD = 0
+            GOOD = 0,
+            ERROR = 1
         }
 
         /// <summary>Class that carries OCSP request and handles response.</summary>        
@@ -155,7 +156,7 @@ namespace EstEIDSigner
             if (ocspResponse.Status != 0)
             {
                 this.lastError = "Invalid OCSP status: " + ocspResponse.Status;
-                return 1;
+                return (int)CertStatus.ERROR;
             }
 
             BasicOcspResp basicResponse = (BasicOcspResp)ocspResponse.GetResponseObject();
@@ -169,7 +170,7 @@ namespace EstEIDSigner
                     if (verifyResult != true)
                     {
                         this.lastError = "OCSP response verify failed";
-                        return 1;
+                        return (int)CertStatus.ERROR;
                     }
                 }
 
@@ -186,7 +187,7 @@ namespace EstEIDSigner
                     if (responses.Length != 1)
                     {
                         this.lastError = "Invalid OCSP responses count: " + responses.Length;
-                        return 1;
+                        return (int)CertStatus.ERROR;
                     }
 
                     SingleResp resp = responses[0];
@@ -201,7 +202,7 @@ namespace EstEIDSigner
                     if (valid == false)
                     {
                         this.lastError = "OCSP response not in valid time slot";
-                        return (int)CertStatus.REVOKED;
+                        return (int)CertStatus.ERROR;
                     }
 
                     Object status = resp.GetCertStatus();
@@ -231,7 +232,7 @@ namespace EstEIDSigner
                 this.lastError = "OCSP response was empty";
 
             // failed
-            return 1;
+            return (int)CertStatus.ERROR;
         }
 
         public byte[] GetEncoded() 
@@ -259,10 +260,10 @@ namespace EstEIDSigner
             response.Close();
 
             int verify = VerifyOCSPResponse();
-            if (verify != 0)
+            if (verify != (int)CertStatus.GOOD)
                 return null;
 
-            return ((BasicOcspResp)ocspResponse.GetResponseObject()).GetEncoded();            
+            return ((BasicOcspResp)ocspResponse.GetResponseObject()).GetEncoded();
         }
     }
 }
