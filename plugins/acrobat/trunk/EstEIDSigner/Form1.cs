@@ -63,6 +63,21 @@ namespace EstEIDSigner
             debug(txt);
         }
 
+        private void InitReader()
+        {
+            reader = new PdfReader(inputBox.Text);
+
+            MetaData md = new MetaData();
+            md.Info = reader.Info;
+
+            authorBox.Text = md.Author;
+            titleBox.Text = md.Title;
+            subjectBox.Text = md.Subject;
+            kwBox.Text = md.Keywords;
+            creatorBox.Text = md.Creator;
+            prodBox.Text = md.Producer; 
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.OpenFileDialog openFile;
@@ -74,17 +89,7 @@ namespace EstEIDSigner
 
             inputBox.Text = openFile.FileName;
 
-            reader = new PdfReader(inputBox.Text);
-
-            MetaData md = new MetaData();
-            md.Info = reader.Info;
-
-            authorBox.Text = md.Author;
-            titleBox.Text = md.Title;
-            subjectBox.Text = md.Subject;
-            kwBox.Text = md.Keywords;
-            creatorBox.Text = md.Creator;
-            prodBox.Text = md.Producer;            
+            InitReader();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -135,7 +140,7 @@ namespace EstEIDSigner
         {
             if (!File.Exists(inputBox.Text))
             {
-                MessageBox.Show("Allkirjastamiseks on vaja valida PDF dokument!", "Hoiatus");
+                MessageBox.Show("Allkirjastamiseks on vaja valida olemasolev PDF dokument!", "Hoiatus");
                 return;
             }
 
@@ -175,6 +180,10 @@ namespace EstEIDSigner
                 status("Loen seadeid ... ");
                 LoadPKCS12Config();
 
+                // if user copy-pasted filename into PDF input field then force init...
+                if (reader == null)
+                    InitReader();
+
                 status("Allkirjastan dokumenti ...");
 
                 pdfSigner = new PDFSigner(reader, inputBox.Text, outputBox.Text, stamp, metaData, app, store);
@@ -190,7 +199,7 @@ namespace EstEIDSigner
             }
             catch (RevocationException ex)
             {
-                status("Kehtivussertifikaat on kehtetu!");
+                status("Kehtivussertifikaadi viga!");
                 MessageBox.Show(ex.Message);
             }
             catch (AlreadySignedException ex)
