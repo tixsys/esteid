@@ -272,17 +272,12 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		if ( file.open() )
 		{
 			fName = file.fileName();
-
-			QByteArray data = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>";
-
+			file.write( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n" );
 			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
-				data += "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">";
-
-			data += element.elementsByTagName( "Signature" ).item(0).toElement().text().toLatin1();
-
+				file.write( "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">\n" );
+			file.write( element.elementsByTagName( "Signature" ).item(0).toElement().text().toUtf8() );
 			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
-				data += "</SignedDoc>";
-			file.write( data );
+				file.write( "</SignedDoc>" );
 			file.close();
 			close();
 		}
