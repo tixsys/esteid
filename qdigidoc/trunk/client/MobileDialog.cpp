@@ -40,8 +40,8 @@
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :   QDialog( parent )
 ,   m_doc( doc )
-,   m_timer( 0 )
-,	statusTimer( 0 )
+,   m_timer( new QTimer( this ) )
+,	statusTimer( new QTimer( this ) )
 ,   sessionCode( 0 )
 {
     setupUi( this );
@@ -95,7 +95,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
 	mobileResults[ "User is not a Mobile-ID client" ] = tr( "User is not a Mobile-ID client" );
 
-	statusTimer = new QTimer( this );
+	connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
 	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 }
 
@@ -251,11 +251,6 @@ void MobileDialog::startSessionResult( const QDomElement &element )
     if ( sessionCode )
 	{
 		labelCode->setText( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() );
-		if ( !m_timer )
-		{
-			m_timer = new QTimer( this );
-			connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
-		}
 		m_timer->start( 5000 );
 	} else
 		labelError->setText( mobileResults.value( element.elementsByTagName( "message" ).item(0).toElement().text().toLatin1() ) );
@@ -329,7 +324,7 @@ QString MobileDialog::insertBody( MobileAction maction, const QString &body ) co
 
 void MobileDialog::updateStatus()
 {
-	if ( statusTimer && statusTimer->isActive() && startTime.isValid() )
+	if ( statusTimer->isActive() && startTime.isValid() )
 	{
 		signProgressBar->setValue( startTime.elapsed() / 1000 );
 		if ( signProgressBar->value() >= signProgressBar->maximum() )
