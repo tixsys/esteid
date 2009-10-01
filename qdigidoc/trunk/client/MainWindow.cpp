@@ -354,7 +354,7 @@ void MainWindow::buttonClicked( int button )
 				signStateInput->text(), signZipInput->text(),
 				signCountryInput->text(), signRoleInput->text(),
 				signResolutionInput->text() );
-			m->sign( infoMobileCode->text().toLatin1(), infoMobileCell->text().toLatin1() );
+			m->sign( infoMobileCode->text(), infoMobileCell->text() );
 			m->exec();
 			if ( !m->fName.isEmpty() && doc->signMobile( m->fName ) )
 			{

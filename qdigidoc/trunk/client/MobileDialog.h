@@ -42,7 +42,7 @@ public:
     MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
 	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 							const QString &country, const QString &role, const QString &role2 );
-	void sign( const QByteArray &ssid, const QByteArray &cell );
+	void sign( const QString &ssid, const QString &cell );
 	QString fName;
 
 private Q_SLOTS:
@@ -64,8 +64,7 @@ private:
 	QHttp *m_http;
 	QTimer *m_timer, *statusTimer;
 	QTime startTime;
-	QString signature;
-	QByteArray files;
+	QString signature, files;
 
     int sessionCode;
     QHash< int, QByteArray > m_callBackList;
@@ -74,5 +73,5 @@ private:
     void startSession();
 
 	bool getFiles();
-    QByteArray insertBody( MobileAction action, const QByteArray &body ) const;
+	QString insertBody( MobileAction action, const QString &body ) const;
 };
