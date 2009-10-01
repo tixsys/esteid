@@ -60,6 +60,11 @@ private:
 		GetMobileCreateSignatureStatus
     };
 
+	bool getFiles();
+	QString escapeChars( const QString &in ) const;
+	QString insertBody( MobileAction action, const QString &body ) const;
+	void startSession();
+
 	DigiDoc *m_doc;
 	QHttp *m_http;
 	QTimer *m_timer, *statusTimer;
@@ -69,9 +74,4 @@ private:
     int sessionCode;
     QHash< int, QByteArray > m_callBackList;
 	QHash< QByteArray, QString > mobileResults;
-
-    void startSession();
-
-	bool getFiles();
-	QString insertBody( MobileAction action, const QString &body ) const;
 };

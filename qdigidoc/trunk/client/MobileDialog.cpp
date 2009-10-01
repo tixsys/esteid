@@ -99,6 +99,22 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 }
 
+QString MobileDialog::escapeChars( const QString &in ) const
+{
+	QString out;
+	out.reserve( in.size() );
+	for( QString::ConstIterator i = in.constBegin(); i != in.constEnd(); ++i )
+	{
+		if( *i == '\'' ) out += "&apos;";
+		else if( *i == '\"' ) out += "&quot;";
+		else if( *i == '<' ) out += "&lt;";
+		else if( *i == '>' ) out += "&gt;";
+		else if( *i == '&' ) out += "&amp;";
+		else out += *i;
+	}
+	return out;
+}
+
 void MobileDialog::sslErrors(const QList<QSslError> &)
 { m_http->ignoreSslErrors(); }
 
@@ -151,7 +167,11 @@ void MobileDialog::setSignatureInfo( const QString &city, const QString &state, 
 		"<PostalCode xsi:type=\"xsd:String\">%3</PostalCode>"
 		"<CountryName xsi:type=\"xsd:String\">%4</CountryName>"
 		"<Role xsi:type=\"xsd:String\">%5</Role>")
-		.arg( city ).arg( state ).arg( zip ).arg( country ).arg( roles.join(" / ") );
+		.arg( escapeChars( city ) )
+		.arg( escapeChars( state ) )
+		.arg( escapeChars( zip ) )
+		.arg( escapeChars( country ) )
+		.arg( escapeChars( roles.join(" / ") ) );
 }
 
 void MobileDialog::sign( const QString &ssid, const QString &cell )
@@ -178,7 +198,7 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 		"<SignatureID xsi:type=\"xsd:String\">S%7</SignatureID>"
 		"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
 		"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>" )
-		.arg( ssid ).arg( cell ).arg( signature ).arg( files )
+		.arg( escapeChars( ssid ) ).arg( escapeChars( cell ) ).arg( signature ).arg( files )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "BDOC" : "DIGIDOC-XML" )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "1.0" : "1.3" )
 		.arg( m_doc->signatures().size() );
@@ -218,7 +238,7 @@ bool MobileDialog::getFiles()
 			"</DataFileDigest>" )
 			.arg( m_doc->documentType() == digidoc::WDoc::BDocType ?
 				"/" + f.fileName() : "D" + QString::number( i ) )
-			.arg( name ).arg( digest.toBase64().constData() );
+			.arg( escapeChars( name ) ).arg( digest.toBase64().constData() );
 		i++;
 	}
 	files += "</DataFiles>";
