@@ -506,7 +506,7 @@ QSslCertificate DigiDoc::signCert() { return m_signCert; }
 
 bool DigiDoc::signMobile( const QString &fName )
 {
-	if( checkDoc( b->documentCount() == 0, tr("Cannot add signature to empty container") ) )
+	if( !checkDoc( b->documentCount() == 0, tr("Cannot add signature to empty container") ) )
 		return false;
 
 	bool result = false;
