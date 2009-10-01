@@ -348,25 +348,19 @@ bool DigiDoc::parseException( const Exception &e, QStringList &causes )
 	switch( e.code() )
 	{
 	case Exception::CertificateRevoked:
-		setLastError( tr("Certificate status revoked") );
-		return false;
+		setLastError( tr("Certificate status revoked") ); return false;
 	case Exception::CertificateUnknown:
-		setLastError( tr("Certificate status unknown") );
-		return false;
+		setLastError( tr("Certificate status unknown") ); return false;
 	case Exception::OCSPTimeSlot:
-		setLastError( tr("Check your computer time") );
-		return false;
+		setLastError( tr("Check your computer time") ); return false;
 	case Exception::PINCanceled:
 		return false;
 	case Exception::PINFailed:
-		setLastError( tr("PIN Login failed") );
-		return false;
+		setLastError( tr("PIN Login failed") ); return false;
 	case Exception::PINIncorrect:
-		setLastError( tr("PIN Incorrect") );
-		return false;
+		setLastError( tr("PIN Incorrect") ); return false;
 	case Exception::PINLocked:
-		setLastError( tr("PIN Locked") );
-		return false;
+		setLastError( tr("PIN Locked") ); return false;
 	default:
 		causes << QString::fromUtf8( e.getMsg().data() );
 		break;
@@ -397,8 +391,8 @@ void DigiDoc::removeSignature( unsigned int num )
 
 void DigiDoc::save()
 {
-	if( !checkDoc() );
-		return;
+	/*if( !checkDoc() );
+		return; */
 	try
 	{
 		std::auto_ptr<ISerialize> s(new ZipSerialize(m_fileName.toUtf8().constData()));
