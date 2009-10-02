@@ -163,7 +163,11 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="p12Pass"/>
+        <widget class="QLineEdit" name="p12Pass">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
        </item>
        <item row="2" column="1">
         <spacer name="tabPKCS12Spacer">
