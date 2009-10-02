@@ -81,7 +81,26 @@ function testCerts() {
          }
     }
     
+function testSignCert() {
+    dbgArea.value+= signer.signCert.CN + "\r";
+    dbgArea.value+= signer.signCert.serial + "\r";
+    dbgArea.value+= signer.signCert.keyUsage + "\r";
+    }
+function testAuthCert() {
+    dbgArea.value+= signer.authCert.CN + "\r";
+    dbgArea.value+= signer.authCert.serial + "\r";
+    dbgArea.value+= signer.authCert.keyUsage + "\r";
+    }
+    
 function testComponent() {
+
+    dbgArea.value+= "CN=" + signer.signCert.CN + "\r";
+    dbgArea.value+= "validFrom=" + signer.signCert.validFrom + "\r";
+    dbgArea.value+= "validTo=" + signer.signCert.validTo + "\r";
+    dbgArea.value+= "issuerCN=" + signer.signCert.issuerCN + "\r";
+    dbgArea.value+= "keyusage=" + signer.signCert.keyUsage + "\r";
+    dbgArea.value+= "serial=" +signer.signCert.serial + "\r";
+    
     dbgArea.value+= signer.lastName + "\r";
     dbgArea.value+= signer.firstName + "\r";
     dbgArea.value+= signer.middleName + "\r";
@@ -117,6 +136,8 @@ function evalAndExec() {
 <div >
 <input type="button" value="test component" onclick="testComponent()" style="text-align: left"/>
 <input type="button" value="test certs" onclick="testCerts()" style="text-align: right"/>
+<input type="button" value="test Sign cert" onclick="testSignCert()" style="text-align: right"/>
+<input type="button" value="test Auth cert" onclick="testAuthCert()" style="text-align: right"/>
 </div>
 
 <div><textarea cols="40" rows="10" id="dbgArea" name="dbgArea"></textarea></div>

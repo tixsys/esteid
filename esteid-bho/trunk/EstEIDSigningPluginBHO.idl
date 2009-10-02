@@ -75,6 +75,9 @@ interface ISmartCardCertificate : IDispatch{
 	[propget, id(8), helpstring("property thumbPrint")] HRESULT thumbPrint([out, retval] BSTR* pVal);
 	[propget, id(9), helpstring("property privateKeyContainer")] HRESULT privateKeyContainer([out, retval] BSTR* pVal);
 	[id(10), helpstring("method _loadArrayFrom")] HRESULT _loadArrayFrom([in] BSTR privateKeyContainer, [in] ULONG length, [in] BYTE* data);
+	[propget, id(11), helpstring("property DN")] HRESULT DN([out, retval] BSTR* pVal);
+	[propget, id(12), helpstring("property issuerDN")] HRESULT issuerDN([out, retval] BSTR* pVal);
+	[propget, id(13), helpstring("property serial")] HRESULT serial([out, retval] BSTR* pVal);
 };
 [
 	uuid(536E87AF-8E4B-47C0-8046-273961378EF3),

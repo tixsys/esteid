@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:48:22 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-10-01 10:28:54 +0300 (N, 01 okt 2009) $
 */
-// Revision $Revision: 205 $
+// Revision $Revision: 467 $
 
 // SmartCardCertificate.h : Declaration of the CSmartCardCertificate
 
@@ -33,9 +33,10 @@ class ATL_NO_VTABLE CSmartCardCertificate :
 	public IDispatchImpl<ISmartCardCertificate, &IID_ISmartCardCertificate, &LIBID_EstEIDSigningPluginBHOLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CSmartCardCertificate()
+	CSmartCardCertificate() : cert(NULL)
 	{
 	}
+	virtual ~CSmartCardCertificate(); 
 
 DECLARE_REGISTRY_RESOURCEID(IDR_SMARTCARDCERTIFICATE)
 
@@ -66,20 +67,38 @@ END_COM_MAP()
 public:
 
 	STDMETHOD(get_CN)(BSTR* pVal);
+	STDMETHOD(get_DN)(BSTR* pVal);
 	STDMETHOD(get_validFrom)(BSTR* pVal);
 	STDMETHOD(get_validTo)(BSTR* pVal);
 	STDMETHOD(get_issuerCN)(BSTR* pVal);
+	STDMETHOD(get_issuerDN)(BSTR* pVal);
 	STDMETHOD(get_keyUsage)(BSTR* pVal);
 	STDMETHOD(get_cert)(BSTR* pVal);
 	STDMETHOD(get_certID)(BSTR* pVal);
 	STDMETHOD(get_thumbPrint)(BSTR* pVal);
+	STDMETHOD(get_serial)(BSTR* pVal);
 	STDMETHOD(get_privateKeyContainer)(BSTR* pVal);
 	STDMETHOD(_loadArrayFrom)(BSTR privateKeyContainer, ULONG length, BYTE* data);
 private:
+	enum stringFields {
+		CN,
+		DN,
+		validFrom,
+		validTo,
+		issuerCN,
+		issuerDN,
+		keyUsage,
+		serial
+	};
+
 	/// hold the actual cert data
 	std::vector<unsigned char> m_certBlob;
+	/// keep the cert context
+	PCCERT_CONTEXT cert;
 	/// where the key is <CSP:NAME:CONTAINER:KEYID|CARD:NAME:ID|PKCS11MOD:SLOT:xx> 
 	_bstr_t m_privateKeyContainer;
+	///
+	STDMETHOD(get_internal)(BSTR* pVal,stringFields field);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SmartCardCertificate), CSmartCardCertificate)
