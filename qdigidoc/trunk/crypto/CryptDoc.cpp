@@ -227,8 +227,14 @@ bool CryptDoc::decrypt( const QString &pin )
 	}
 
 	QString docName = QFileInfo( m_fileName ).fileName();
-	m_ddocTemp = QString( "%1/%2" ).arg( QDir::tempPath() ).arg( docName ); 
-	if( !QDir().exists( m_ddocTemp ) )
+	m_ddocTemp = QString( "%1/%2" ).arg( QDir::tempPath() ).arg( docName );
+	if( QDir().exists( m_ddocTemp ) )
+	{
+		QDir d( m_ddocTemp );
+		Q_FOREACH( const QFileInfo &file, d.entryInfoList( QDir::NoDotAndDotDot|QDir::Files ) )
+			QFile::remove( file.absoluteFilePath() );
+	}
+	else
 		QDir().mkdir( m_ddocTemp );
 
 	m_ddoc = QString( "%1/%2.ddoc" ).arg( m_ddocTemp ).arg( docName );
