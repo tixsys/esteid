@@ -12,8 +12,8 @@
         <translation>Salvestamine ebaõnnestus</translation>
     </message>
     <message>
-        <source>Certificate Information:</source>
-        <translation>Sertifikaadi info:</translation>
+        <source>Certificate Information</source>
+        <translation>Sertifikaadi info</translation>
     </message>
     <message>
         <source>This certificate is intended for following purpose(s):</source>

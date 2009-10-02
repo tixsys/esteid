@@ -104,7 +104,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	SslCertificate c = cert;
 	QString i;
 	QTextStream s( &i );
-	s << "<b>" << tr("Certificate Information:") << "</b><br />";
+	s << "<b>" << tr("Certificate Information") << "</b><br />";
 	s << "<hr>";
 	s << "<b>" << tr("This certificate is intended for following purpose(s):") << "</b>";
 	s << "<ul>";

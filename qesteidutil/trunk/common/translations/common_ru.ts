@@ -16,7 +16,7 @@
         <translation>Файл не был сохранён</translation>
     </message>
     <message>
-        <source>Certificate Information:</source>
+        <source>Certificate Information</source>
         <translation>Информация о сертификате</translation>
     </message>
     <message>
