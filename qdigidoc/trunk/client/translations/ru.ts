@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru">
+<!DOCTYPE TS><TS version="1.1" language="ru">
+<defaultcodec></defaultcodec>
 <context>
     <name>DigiDoc</name>
     <message>
@@ -278,7 +278,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;email&quot;&gt;Отослать контейнер на эл. почту&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;email&quot;&gt;Отослать контейнет по эл. почте&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</source>
@@ -286,7 +286,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;browse&quot;&gt;Размещение конверта на жёсткой диске&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;browse&quot;&gt;Открыть папку с контейнером&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</source>

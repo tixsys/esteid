@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>For using sign certificate enter PIN2</source>
-        <translation type="unfinished">Для использования  сертификата подписи введите PIN2</translation>
+        <translation>Для использования  сертификата подписи введите PIN2</translation>
     </message>
     <message>
         <source>For using auth certificate enter PIN1 with pinpad</source>
