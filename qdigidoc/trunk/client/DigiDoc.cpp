@@ -29,7 +29,9 @@
 #include "Poller.h"
 
 #include <digidocpp/Conf.h>
+#include <digidocpp/DDoc.h>
 #include <digidocpp/Document.h>
+#include <digidocpp/SignatureTM.h>
 #include <digidocpp/WDoc.h>
 #include <digidocpp/crypto/cert/DirectoryX509CertStore.h>
 #include <digidocpp/io/ZipSerialize.h>
@@ -77,7 +79,18 @@ QString DigiDocSignature::digestMethod() const
 	{
 		std::vector<unsigned char> data;
 		std::string method;
-		s->getRevocationOCSPRef( data, method );
+		Signature *sc = const_cast<Signature*>(s);
+		if( s->getMediaType() == SignatureTM::MEDIA_TYPE )
+		{
+			SignatureTM *tm = static_cast<SignatureTM*>(sc);
+			tm->getRevocationOCSPRef( data, method );
+		}
+		else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
+			s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
+		{
+			SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
+			ddoc->getRevocationOCSPRef( data, method );
+		}
 		return QString::fromStdString( method );
 	}
 	catch( const Exception & ) {}
@@ -90,7 +103,18 @@ QByteArray DigiDocSignature::digestValue() const
 	{
 		std::vector<unsigned char> data;
 		std::string method;
-		s->getRevocationOCSPRef( data, method );
+		Signature *sc = const_cast<Signature*>(s);
+		if( s->getMediaType() == SignatureTM::MEDIA_TYPE )
+		{
+			SignatureTM *tm = static_cast<SignatureTM*>(sc);
+			tm->getRevocationOCSPRef( data, method );
+		}
+		else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
+			s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
+		{
+			SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
+			ddoc->getRevocationOCSPRef( data, method );
+		}
 		if( data.size() > 0 )
 			return QByteArray( (const char*)&data[0], data.size() );
 	}
