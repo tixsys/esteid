@@ -109,11 +109,11 @@
     </message>
     <message>
         <source>Authority key identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõendi identifikaator</translation>
     </message>
     <message>
         <source>Subject key identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Objektivõtme identifikaator</translation>
     </message>
 </context>
 <context>
@@ -226,23 +226,23 @@
     </message>
     <message>
         <source>Key agreement</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktsepteeritud võti</translation>
     </message>
     <message>
         <source>Key certificate sign</source>
-        <translation type="unfinished"></translation>
+        <translation>Võtme sertifikaadi allkiri</translation>
     </message>
     <message>
         <source>CRL sign</source>
-        <translation type="unfinished"></translation>
+        <translation>CRL allkiri</translation>
     </message>
     <message>
         <source>Encipher only</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainult krüptimine</translation>
     </message>
     <message>
         <source>Decipher only</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainult dekrüptimine</translation>
     </message>
     <message>
         <source>failed to load pkcs11 module</source>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>no certificate available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei ole kättesaadavaid sertifikaate</translation>
     </message>
 </context>
 </TS>
