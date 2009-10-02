@@ -183,6 +183,7 @@ install( FILES
     BDocException.h
     BDoc.h
     Conf.h
+    DDoc.h
     Document.h
     Exception.h
     Exports.h

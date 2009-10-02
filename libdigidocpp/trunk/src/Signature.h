@@ -30,8 +30,6 @@ namespace digidoc
           X509Cert getSigningCertificate() const throw(SignatureException);
           std::vector<unsigned char> getSignatureValue() const;
 
-          virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) = 0;
-
       protected:
           Signature();
           Signature(const std::string& path) throw(SignatureException);

@@ -7,6 +7,27 @@ namespace digidoc
 
 class DDocPrivate;
 
+class SignatureDDOC: public Signature
+{
+public:
+	SignatureDDOC( int id, DDocPrivate *doc );
+
+	virtual std::string getMediaType() const;
+	virtual void validateOffline() const throw(SignatureException);
+	virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
+
+	virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
+
+protected:
+	virtual void sign(Signer* signer) throw(SignatureException, SignException);
+
+private:
+	void throwError( std::string msg, int err, int line ) const throw(SignatureException);
+
+	int m_id;
+	DDocPrivate *m_doc;
+};
+
 class DDoc: public ADoc
 {
 public:

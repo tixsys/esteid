@@ -102,7 +102,7 @@ DDocPrivate::DDocPrivate()
 
 DDocPrivate::~DDocPrivate()
 {
-	for( std::vector<DSignature*>::const_iterator i = signatures.begin();
+	for( std::vector<SignatureDDOC*>::const_iterator i = signatures.begin();
 		i != signatures.end(); ++i )
 		delete *i;
 	if( !f_SignedDoc_free || !f_cleanupConfigStore || !f_finalizeDigiDocLib )
@@ -114,12 +114,12 @@ DDocPrivate::~DDocPrivate()
 
 void DDocPrivate::loadSignatures()
 {
-	for( std::vector<DSignature*>::const_iterator i = signatures.begin();
+	for( std::vector<SignatureDDOC*>::const_iterator i = signatures.begin();
 		i != signatures.end(); ++i )
 		delete *i;
 	signatures.clear();
 	for( int i = 0; i < doc->nSignatures; ++i )
-		signatures.push_back( new DSignature( i, this ) );
+		signatures.push_back( new SignatureDDOC( i, this ) );
 }
 
 bool DDocPrivate::loadSymbols()
@@ -219,11 +219,11 @@ void DDocPrivate::throwSignError( const char *id, int err, const std::string &ms
 
 
 
-DSignature::DSignature( int id, DDocPrivate *doc )
+SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 :	m_id( id ), m_doc( doc )
 {
 	if( doc == NULL )
-		throw SignatureException( __FILE__, __LINE__, "Null pointer in DSignature constructor" );
+		throw SignatureException( __FILE__, __LINE__, "Null pointer in SignatureDDOC constructor" );
 
 	SignatureInfo *sig = doc->doc->pSignatures[id];
 	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
@@ -256,14 +256,14 @@ DSignature::DSignature( int id, DDocPrivate *doc )
 	setSigningTime( xml_schema::DateTime( ts.year, ts.mon, ts.day, ts.hour, ts.min, ts.sec ) );
 }
 
-std::string DSignature::getMediaType() const
+std::string SignatureDDOC::getMediaType() const
 {
 	std::ostringstream s;
 	s << m_doc->doc->szFormat << "/" << m_doc->doc->szFormatVer;
 	return s.str();
 }
 
-void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
+void SignatureDDOC::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
 	if( !n )
@@ -275,23 +275,23 @@ void DSignature::getRevocationOCSPRef(std::vector<unsigned char>& data, std::str
 		digestMethodUri = n->szDigestType;
 }
 
-void DSignature::validateOffline() const throw(SignatureException)
+void SignatureDDOC::validateOffline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(
 		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
 	throwError( "Failed to validate signature", err, __LINE__ );
 }
 
-OCSP::CertStatus DSignature::validateOnline() const throw(SignatureException)
+OCSP::CertStatus SignatureDDOC::validateOnline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(
 		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
 	throwError( "Failed to validate signature", err, __LINE__ );
 	return OCSP::GOOD;
 }
-void DSignature::sign(Signer* signer) throw(SignatureException, SignException) {}
+void SignatureDDOC::sign(Signer* signer) throw(SignatureException, SignException) {}
 
-void DSignature::throwError( std::string msg, int err, int line ) const throw(SignatureException)
+void SignatureDDOC::throwError( std::string msg, int err, int line ) const throw(SignatureException)
 {
 	if( err == ERR_OK )
 		return;

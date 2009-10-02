@@ -61,7 +61,7 @@ private:
 #endif
 };
 
-class DSignature;
+class SignatureDDOC;
 
 class DDocPrivate
 {
@@ -78,7 +78,7 @@ public:
 	bool ready;
 
 	void loadSignatures();
-	std::vector<DSignature*> signatures;
+	std::vector<SignatureDDOC*> signatures;
 
 	void throwDocOpenError( int line ) const throw(BDocException);
 	void throwError( const std::string &msg, int line ) const throw(BDocException);
@@ -111,27 +111,6 @@ public:
 	sym_SignedDoc_free			f_SignedDoc_free;
 	sym_SignedDoc_new			f_SignedDoc_new;
 	sym_verifySignatureAndNotary f_verifySignatureAndNotary;
-};
-
-class DSignature: public Signature
-{
-public:
-	DSignature( int id, DDocPrivate *doc );
-
-	virtual std::string getMediaType() const;
-	virtual void validateOffline() const throw(SignatureException);
-	virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
-
-	virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
-
-protected:
-	virtual void sign(Signer* signer) throw(SignatureException, SignException);
-
-private:
-	void throwError( std::string msg, int err, int line ) const throw(SignatureException);
-
-	int m_id;
-	DDocPrivate *m_doc;
 };
 
 }
