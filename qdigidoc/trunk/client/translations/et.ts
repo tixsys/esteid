@@ -454,13 +454,6 @@ Palun kontrollige internetiühendust.</translation>
     </message>
 </context>
 <context>
-    <name>Poller</name>
-    <message>
-        <source>Failed to load PKCS#11 module</source>
-        <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
-    </message>
-</context>
-<context>
     <name>PrintSheet</name>
     <message>
         <source>SIGNED FILES</source>
@@ -560,14 +553,38 @@ Palun kontrollige internetiühendust.</translation>
     </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>QSigner</name>
+    <message>
+        <source>Failed to load PKCS#11 module</source>
+        <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
+    </message>
     <message>
         <source>PIN acquisition canceled.</source>
         <translation>PIN koodi sisestamine katkestati.</translation>
     </message>
     <message>
-        <source>Could not find sign certificate.</source>
-        <translation>Ei leidnud allkirjastamise sertifikaati.</translation>
+        <source>Signing certificate is not selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to login token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN Incorrect</source>
+        <translation>PIN vigane</translation>
+    </message>
+    <message>
+        <source>PIN Locked</source>
+        <translation>PIN on lukus</translation>
+    </message>
+    <message>
+        <source>Failed to login to token &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to sign document</source>
+        <translation>Dokumendi allkirjastamine ebaõnnestus</translation>
     </message>
 </context>
 <context>

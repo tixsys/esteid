@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ru">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS>
+<TS version="2.0" language="ru">
 <context>
     <name>DigiDoc</name>
     <message>
@@ -453,13 +453,6 @@ Please check your internet connection.</source>
     </message>
 </context>
 <context>
-    <name>Poller</name>
-    <message>
-        <source>Failed to load PKCS#11 module</source>
-        <translation>Неудачная загрузка модуля PKCS#11</translation>
-    </message>
-</context>
-<context>
     <name>PrintSheet</name>
     <message>
         <source>SIGNED FILES</source>
@@ -559,14 +552,38 @@ Please check your internet connection.</source>
     </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>QSigner</name>
+    <message>
+        <source>Failed to load PKCS#11 module</source>
+        <translation>Неудачная загрузка модуля PKCS#11</translation>
+    </message>
     <message>
         <source>PIN acquisition canceled.</source>
         <translation>Введение PIN кода было прервано.</translation>
     </message>
     <message>
-        <source>Could not find sign certificate.</source>
-        <translation>Сертификат подписи не найден.</translation>
+        <source>Signing certificate is not selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to login token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN Incorrect</source>
+        <translation>Неверный PIN</translation>
+    </message>
+    <message>
+        <source>PIN Locked</source>
+        <translation>PIN заблокирован</translation>
+    </message>
+    <message>
+        <source>Failed to login to token &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to sign document</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
