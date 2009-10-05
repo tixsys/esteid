@@ -66,9 +66,21 @@ function ConfigureEstEID() {
     /* Set platform specific paths */
     if(platform == "Windows") {
         var EstEidInstallDir;
-        var win32Dir = "C:\\WINDOWS\\System32\\";
+        var win32Dir;
 
-        /* On Windows try to find EstEID stuff location from registry */
+        /* Load sysdir location from registry */
+        try {
+            var key = Cc[nsWindowsRegKey].createInstance(Ci.nsIWindowsRegKey);
+            key.open(Ci.nsIWindowsRegKey.ROOT_KEY_LOCAL_MACHINE,
+                     "Software\\Microsoft\\Windows NT\\CurrentVersion",
+                     Ci.nsIWindowsRegKey.ACCESS_READ);
+            win32Dir = key.readStringValue("SystemRoot");
+        } catch(e) {
+            var win32Dir = "C:\\WINDOWS";
+        }
+        win32Dir += "\\System32\\";
+
+        /* Load EstEID stuff location from registry */
         try {
             var key = Cc[nsWindowsRegKey].createInstance(Ci.nsIWindowsRegKey);
             key.open(Ci.nsIWindowsRegKey.ROOT_KEY_LOCAL_MACHINE,
