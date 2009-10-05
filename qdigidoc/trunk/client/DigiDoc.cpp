@@ -26,7 +26,7 @@
 #include "common/sslConnect.h"
 
 #include "QMobileSigner.h"
-#include "Poller.h"
+#include "QSigner.h"
 
 #include <digidocpp/Conf.h>
 #include <digidocpp/DDoc.h>

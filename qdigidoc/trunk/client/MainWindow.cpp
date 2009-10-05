@@ -29,7 +29,6 @@
 #include "common/SslCertificate.h"
 
 #include "MobileDialog.h"
-#include "Poller.h"
 #include "PrintSheet.h"
 #include "SettingsDialog.h"
 #include "SignatureDialog.h"

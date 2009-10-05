@@ -2,8 +2,8 @@ SET( MOC_HEADERS
 	DigiDoc.h
 	MainWindow.h
 	MobileDialog.h
-	Poller.h
 	PrintSheet.h
+	QSigner.h
 	RegisterP12.h
 	SettingsDialog.h
 	SignatureDialog.h
@@ -30,8 +30,8 @@ SET( SOURCES
 	DigiDoc.cpp
 	MainWindow.cpp
 	MobileDialog.cpp
-	Poller.cpp
 	PrintSheet.cpp
+	QSigner.cpp
 	QMobileSigner.cpp
 	RegisterP12.cpp
 	SettingsDialog.cpp

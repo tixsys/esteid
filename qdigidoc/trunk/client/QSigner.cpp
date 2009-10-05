@@ -20,7 +20,7 @@
  *
  */
 
-#include "Poller.h"
+#include "QSigner.h"
 
 #include "common/PinDialog.h"
 #include "common/SslCertificate.h"
