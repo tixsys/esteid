@@ -80,7 +80,7 @@ QString DigiDocSignature::digestMethod() const
 		std::vector<unsigned char> data;
 		std::string method;
 		Signature *sc = const_cast<Signature*>(s);
-		if( s->getMediaType() == SignatureTM::MEDIA_TYPE )
+		if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
 		{
 			SignatureTM *tm = static_cast<SignatureTM*>(sc);
 			tm->getRevocationOCSPRef( data, method );
