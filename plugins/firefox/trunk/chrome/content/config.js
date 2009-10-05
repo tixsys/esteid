@@ -141,12 +141,16 @@ function ConfigureEstEID() {
                           .QueryInterface(Ci.nsIPKCS11Module);
         /* Remove modules that have recognized names but different DLLs */
         if (module) {
-            if(module.libName == EstEidDll)
+            if(module.libName == EstEidDll) {
                 needtoload = false;
-            else if(module.name == EstEidModName)
+            }
+            else if(module.name == EstEidModName ||
+                    EstEidLegacyNames.indexOf(module.name) >= 0) {
+
+                log("DEBUG: marking module for removal: " +
+                    module.name + ":" module.libName);
                 modulesToRemove.push(module.name);
-            else if(EstEidLegacyNames.indexOf(module.name) >= 0)
-                modulesToRemove.push(module.name);
+            }
         }
         try { modules.next(); } catch(e) { break; }
     }
