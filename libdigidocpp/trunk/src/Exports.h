@@ -1,5 +1,5 @@
 #ifdef WIN32
-  #ifdef libdigidocpp_EXPORTS
+  #ifdef digidocpp_EXPORTS
     #define EXP_DIGIDOC __declspec(dllexport)
   #else
     #define EXP_DIGIDOC __declspec(dllimport)
