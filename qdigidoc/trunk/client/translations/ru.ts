@@ -270,7 +270,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;addFile&quot;&gt;Добавить файлl&lt;/a&gt;</translation>
+        <translation type="unfinished">&lt;a href=&quot;addFile&quot;&gt;Добавить файл&lt;/a&gt;</translation>
     </message>
     <message>
         <source>This container is </source>
