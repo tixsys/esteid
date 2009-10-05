@@ -382,10 +382,6 @@ Alustame laadimist?</translation>
 <context>
     <name>MobileDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation>Katkesta</translation>
-    </message>
-    <message>
         <source>Signing in process</source>
         <translation>Toimub allkirjastamine</translation>
     </message>
@@ -434,8 +430,8 @@ Alustame laadimist?</translation>
         <translation>Allkirjastan Mobiil-ID -ga</translation>
     </message>
     <message>
-        <source>Control code</source>
-        <translation>Kontrollkood</translation>
+        <source>Control code: %1</source>
+        <translation>Kontrollkood: %1</translation>
     </message>
     <message>
         <source>%v sec</source>

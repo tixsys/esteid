@@ -250,7 +250,8 @@ void MobileDialog::startSessionResult( const QDomElement &element )
     sessionCode=element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
     if ( sessionCode )
 	{
-		labelCode->setText( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() );
+		code->setText( tr("Control code: %1")
+			.arg( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() ) );
 		m_timer->start( 5000 );
 	} else
 		labelError->setText( mobileResults.value( element.elementsByTagName( "message" ).item(0).toElement().text().toLatin1() ) );

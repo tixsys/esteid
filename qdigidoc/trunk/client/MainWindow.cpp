@@ -774,15 +774,6 @@ bool MainWindow::checkAccessCert()
 	}
 
 	QByteArray result = doc->getAccessCert();
-	QFile f( "debug_accesscert.txt" );
-	if( f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
-	{
-		f.write( QDateTime::currentDateTime().toString().toLatin1() );
-		f.write( "\n-------------------------------\n" );
-		f.write( result );
-		f.close();
-	}
-
 	if ( result.isEmpty() )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),

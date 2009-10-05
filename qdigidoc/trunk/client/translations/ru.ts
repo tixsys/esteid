@@ -382,10 +382,6 @@ Start downloading?</source>
 <context>
     <name>MobileDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation>Прервать</translation>
-    </message>
-    <message>
         <source>Signing in process</source>
         <translation>Подписывание</translation>
     </message>
@@ -434,8 +430,8 @@ Start downloading?</source>
         <translation>Подписывается с Mobiil-ID</translation>
     </message>
     <message>
-        <source>Control code</source>
-        <translation>Контрольный код</translation>
+        <source>Control code: %1</source>
+        <translation>Контрольный код: %1</translation>
     </message>
     <message>
         <source>%v sec</source>
