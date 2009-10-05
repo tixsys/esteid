@@ -579,9 +579,14 @@ public class SignedProperties implements Serializable
                	bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
                	bos.write(ConvertUtils.str2data("\" Id=\""));                	
                	bos.write(ConvertUtils.str2data(m_id));
-               	bos.write(ConvertUtils.str2data("\" Target=\""));
-               	bos.write(ConvertUtils.str2data(m_target));
-               	bos.write(ConvertUtils.str2data("\">\n"));
+               	bos.write(ConvertUtils.str2data("\""));
+                if(m_target!=null)//Lauri fix, if target does not exist ignore the attribute
+                {
+                    bos.write(ConvertUtils.str2data(" Target=\""));
+                    bos.write(ConvertUtils.str2data(m_target));
+                    bos.write(ConvertUtils.str2data("\""));
+                }
+               	bos.write(ConvertUtils.str2data(">\n"));
            	}
             bos.write(ConvertUtils.str2data("<SignedSignatureProperties>\n<SigningTime>"));
             bos.write(ConvertUtils.str2data(ConvertUtils.date2string(m_signingTime, m_sig.getSignedDoc())));

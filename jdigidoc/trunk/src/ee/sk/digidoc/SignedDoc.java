@@ -218,6 +218,7 @@ public class SignedDoc implements Serializable
     
     /**
      * Helper method to validate a version
+     * Lauri Lyys: 2009 oct, fixed the version validation exception message, also supporting ignoreCase on bdoc format
      * @param str input data
      * @return exception or null for ok
      */
@@ -225,20 +226,27 @@ public class SignedDoc implements Serializable
     {
     	//A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
         DigiDocException ex = null;
-        if(str == null || 
-          (!str.equals(VERSION_1_0) && !str.equals(VERSION_1_1) && 
-           !str.equals(VERSION_1_2) && !str.equals(VERSION_1_3) &&
-         //IS FIX version fix
-		   !str.equals(VERSION_1_4) && !str.equals(BDOC_VERSION_1_0)) ||
-		   
-		 //IS FIX version fix
-          (str.equals(VERSION_1_0) && m_format != null && !m_format.equals(FORMAT_SK_XML) && !FORMAT_BDOC.equals(m_format)) ||
-          ((str.equals(VERSION_1_1) || str.equals(VERSION_1_2) || 
-          	str.equals(VERSION_1_3) || str.equals(VERSION_1_4)) 
-            && m_format != null && !m_format.equals(FORMAT_DIGIDOC_XML)))
+        if(str == null ||  (!str.equals(VERSION_1_0) && !str.equals(VERSION_1_1) && !str.equals(VERSION_1_2) && !str.equals(VERSION_1_3) && !str.equals(VERSION_1_4) && !str.equals(BDOC_VERSION_1_0)))
         {
         	ex = new DigiDocException(DigiDocException.ERR_DIGIDOC_VERSION, 
                     "Currently supports only versions 1.0, 1.1, 1.2, 1.3 and 1.4 but not "+str, null);
+        }
+        else if(str.equals(VERSION_1_0) && m_format != null && !m_format.equals(FORMAT_SK_XML) && !FORMAT_BDOC.equalsIgnoreCase(m_format))
+        {
+        	ex = new DigiDocException(DigiDocException.ERR_DIGIDOC_VERSION,
+                    "Version is 1.0 but does not support"+m_format, null);
+        }
+        else if(
+                (str.equals(VERSION_1_1)
+                    || str.equals(VERSION_1_2)
+                    || str.equals(VERSION_1_3)
+                    || str.equals(VERSION_1_4)
+                )
+                && m_format != null
+                && !m_format.equals(FORMAT_DIGIDOC_XML))
+        {
+        	ex = new DigiDocException(DigiDocException.ERR_DIGIDOC_VERSION, 
+                    "Currently supports versions 1.0, 1.1, 1.2, 1.3 and 1.4 but not "+m_format, null);
         }
         //L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
         return ex;

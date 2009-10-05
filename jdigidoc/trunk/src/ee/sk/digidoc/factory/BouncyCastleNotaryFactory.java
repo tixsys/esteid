@@ -181,6 +181,11 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
     				}
     			}
     		}
+                else{
+                    if(m_logger.isDebugEnabled())
+                        	m_logger.debug("Responder: " + certKey + " not found! ");
+
+                }
     		i++;
     	} while(cert2 != null || i < 2);
     	if(m_logger.isInfoEnabled() && cert1 != null && key != null)

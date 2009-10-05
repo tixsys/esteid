@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -89,7 +91,7 @@ import ee.sk.utils.ConvertUtils;
  */
 public class SimpleBDigiDocFactory implements DigiDocFactory {
 	Logger m_logger = Logger.getLogger(SimpleBDigiDocFactory.class);
-	
+        private static String Encoding="UTF8";
 	private static String F_mimetypeFile="mimetype";
 	private static String F_mainfestFile="META-INF/manifest.xml";
 	private static String F_rootName="manifest:manifest";
@@ -189,7 +191,7 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 						}
 						String path=pathNode.getNodeValue();
 						//A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1.2
-						path = ConvertUtils.data2str(path.getBytes(), "UTF-8");
+						//path = ConvertUtils.data2str(path.getBytes(), "UTF-8");//Lauri commented this out, beacause this data is already UTF-8, by applying it twice it will breake the string.
 						//L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1.2
 						if(stype.startsWith(F_entrySignatureType)){
 							//signature/BDOC-0.7/TM
@@ -498,10 +500,18 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 				//data file
 				for (int j = 0; j < sDoc.countDataFiles(); j++) {
 					DataFile d=sDoc.getDataFile(j);
-					if(uRI.equals(d.getFileName())){
+                                        
+                                        try {
+                                            //signature.xml ds:Reference URI is URL encoded, so must decode this
+                                            String ecUri = java.net.URLDecoder.decode(uRI, Encoding);
+                                            if(ecUri.equals(d.getFileName())){
 						dataFile=d;
 						break;
-					}
+                                            }
+                                        } catch (UnsupportedEncodingException ex) {
+                                            java.util.logging.Logger.getLogger(SimpleBDigiDocFactory.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+					
 				}
 				if(dataFile==null){
 					throw new IllegalArgumentException("Reference URI "+uRI+" does not point to file");
@@ -1002,8 +1012,11 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 	 */
 	public static String readFile( String fileName ) throws IOException {
 		File f = new File(fileName);
-		FileReader r = new FileReader(f);
-		return readFileReader(  new BufferedReader(r) ); 
+		//FileReader r = new FileReader(f);
+                InputStreamReader isr = new InputStreamReader(new java.io.FileInputStream(fileName), Encoding);
+		return readFileReader(  new BufferedReader(isr) );
+
+               // return readFileReader(isr);
 	}//readFile()
 	
 	/**
@@ -1015,7 +1028,7 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String readFileReader( BufferedReader br ) throws IOException {
+	public static String readFileReader(BufferedReader br ) throws IOException {
 		StringBuffer ret = new StringBuffer();
 		String line;
 		
@@ -1100,8 +1113,8 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 	 */
 	public Signature readSignature(SignedDoc sdoc, InputStream sigStream)throws DigiDocException {
 		Signature ssi  = new Signature(sDoc);
-		BufferedReader br=new BufferedReader(new InputStreamReader( sigStream ));
 		try {
+                        BufferedReader br=new BufferedReader(new InputStreamReader( sigStream, Encoding ));
 			this.new SignatureXMLHandler(ssi,br);
 			br.close();
 			sDoc.addSignature(ssi);
@@ -1152,10 +1165,10 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 				}
 			}
 			sDoc= new SignedDoc();
-			BufferedReader br=new BufferedReader(new InputStreamReader( zp.getInputStream(ze_manifest)));
+			BufferedReader br=new BufferedReader(new InputStreamReader( zp.getInputStream(ze_manifest), Encoding));
 			ManifestXMLHandler xmH = this.getManifestXMLHandler(br);
 			br.close();
-			String mimeFileC=readFileReader(br=new BufferedReader(new InputStreamReader( zp.getInputStream(ze_mime))));
+			String mimeFileC=readFileReader(br=new BufferedReader(new InputStreamReader( zp.getInputStream(ze_mime), Encoding)));
 			br.close();
 			if (mimeFileC.startsWith(SignedDoc.FORMAT_BDOC_MIME)){
 				//let's find version from "application/vnd.bdoc-0.7"
@@ -1175,6 +1188,7 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
  			for (Iterator iterator = dFiles.iterator(); iterator.hasNext();) {
 				DataFile dfile = (DataFile) iterator.next();
 				String fullPathName=dfile.getFileName();
+                                
 				ZipEntry ze=zp.getEntry(fullPathName);
 				if(ze==null){
 					//perhaps different separator
