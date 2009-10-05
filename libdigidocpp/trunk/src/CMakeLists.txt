@@ -166,10 +166,12 @@ target_link_libraries(digidocpp
     ${ZLIB_LIBRARIES}
     ${EXTRA_LIBS}
 )
-set_target_properties(digidocpp PROPERTIES
-                                VERSION ${DIGIDOCPP_VERSION}
-                                SOVERSION 0
-                      )
+set_target_properties(digidocpp
+    PROPERTIES
+    VERSION ${DIGIDOCPP_VERSION}
+    SOVERSION 0
+    COMPILE_FLAGS "-fvisibility=hidden"
+    )
 install(TARGETS digidocpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(digidoc-demo main_demo.cpp)
