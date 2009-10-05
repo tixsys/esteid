@@ -204,12 +204,12 @@ void DigiDocSignature::setLastError( const Exception &e )
 DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
-,	poller(0)
+,	signer(0)
 {}
 
 DigiDoc::~DigiDoc()
 {
-	delete poller;
+	delete signer;
 	clear();
 	X509CertStore::destroy();
 	digidoc::terminate();
@@ -301,7 +301,7 @@ QByteArray DigiDoc::getAccessCert()
 {
 	QByteArray buffer;
 
-	poller->stop();
+	signer->unloadDriver();
 	try {
 		SSLConnect sslConnect;
 		sslConnect.setCard( m_card );
@@ -311,7 +311,7 @@ QByteArray DigiDoc::getAccessCert()
 			setLastError( e.what() );
 	}
 
-	poller->start();
+	signer->start();
 
 	return buffer;
 }
@@ -337,11 +337,11 @@ bool DigiDoc::init()
 	}
 	catch( const Exception &e ) { setLastError( e ); return false; }
 
-	poller = new Poller();
-	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
+	signer = new QSigner();
+	connect( signer, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
-	connect( poller, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
-	poller->start();
+	connect( signer, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
+	signer->start();
 	return true;
 }
 
@@ -441,7 +441,7 @@ void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
 }
 
 void DigiDoc::selectCard( const QString &card )
-{ QMetaObject::invokeMethod( poller, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
+{ QMetaObject::invokeMethod( signer, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 
 QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
@@ -503,12 +503,9 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		return false;
 
 	bool result = false;
-	QEstEIDSigner *s;
 	try
 	{
-		poller->stop();
-		s = new QEstEIDSigner( m_card );
-		s->setSignatureProductionPlace( Signer::SignatureProductionPlace(
+		signer->setSignatureProductionPlace( Signer::SignatureProductionPlace(
 			city.toUtf8().constData(),
 			state.toUtf8().constData(),
 			zip.toUtf8().constData(),
@@ -516,13 +513,11 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		Signer::SignerRole sRole( role.toUtf8().constData() );
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
-		s->setSignerRole( sRole );
-		b->sign( s, Signature::TM );
+		signer->setSignerRole( sRole );
+		b->sign( signer, Signature::TM );
 		result = true;
 	}
 	catch( const Exception &e ) { setLastError( e ); }
-	delete s;
-	poller->start();
 	return result;
 }
 

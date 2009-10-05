@@ -25,187 +25,268 @@
 #include "common/PinDialog.h"
 #include "common/SslCertificate.h"
 
+#include <digidocpp/Conf.h>
+
 #include <libp11.h>
 
 #include <QApplication>
+#include <QMutex>
 #include <QStringList>
+
+#define CKR_OK					(0)
+#define CKR_CANCEL				(1)
+#define CKR_FUNCTION_CANCELED	(0x50)
+#define CKR_PIN_INCORRECT		(0xa0)
+#define CKR_PIN_LOCKED			(0xa4)
+
+class QSignerPrivate
+{
+public:
+	QSignerPrivate(): terminate(false), handle(0), slotCount(0) {}
+	volatile bool	terminate;
+	QMutex			m;
+	QHash<QString,int>	cards;
+	QString			selectedCard, select;
+	QSslCertificate	sign;
+	PKCS11_CTX		*handle;
+	PKCS11_SLOT*	slots;
+	unsigned int	slotCount;
+};
+
+
 
 using namespace digidoc;
 
-Poller::Poller( QObject *parent )
+QSigner::QSigner( QObject *parent )
 :	QThread( parent )
-,	terminate( false )
+,	d( new QSignerPrivate )
 {}
 
-Poller::~Poller() { stop(); }
+QSigner::~QSigner() { unloadDriver(); }
 
+X509* QSigner::getCert() throw(digidoc::SignException) { return (X509*)d->sign.handle(); }
 
-void Poller::read()
+std::string QSigner::getPin( PKCS11Cert certificate ) throw(digidoc::SignException)
 {
-	PKCS11_SLOT* slots;
-	unsigned int numberOfSlots;
+	PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
+	if( !p.exec() )
+		throwException( tr("PIN acquisition canceled."), Exception::None, __LINE__ );
+	return p.text().toUtf8().constData();
+}
 
-	if( PKCS11_enumerate_slots( (PKCS11_CTX*)s->handle(), &slots, &numberOfSlots ) )
+void QSigner::loadDriver() throw(SignException)
+{
+	try { loadDriver( Conf::getInstance()->getPKCS11DriverPath() ); }
+	catch( const Exception &e )
+	{ throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__, e ); }
+}
+
+void QSigner::loadDriver( const std::string &name ) throw(SignException)
+{
+	if( !d->handle &&
+		(!(d->handle = PKCS11_CTX_new()) || PKCS11_CTX_load( d->handle, name.c_str() )) )
+	{
+		PKCS11_CTX_free( d->handle );
+		d->handle = 0;
+		throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__ );
+	}
+	if( !isRunning() )
+		start();
+}
+
+void QSigner::read()
+{
+	if( d->slotCount )
+		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	if( PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) )
 		return;
 
-	cards.clear();
-	for( unsigned int i = 0; i < numberOfSlots; ++i )
+	d->cards.clear();
+	for( unsigned int i = 0, j = 0; i < d->slotCount; ++i )
 	{
-		PKCS11_SLOT* slot = &slots[i];
-
+		PKCS11_SLOT* slot = &d->slots[i];
 		if( !slot->token )
 			continue;
 
 		QString serialNumber = QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed();
-		if( !cards.contains( serialNumber ) )
-			cards << serialNumber;
+		if( !d->cards.contains( serialNumber ) )
+			d->cards[serialNumber] = j + 1;
+		++j;
 	}
-	PKCS11_release_all_slots( (PKCS11_CTX*)s->handle(), slots, numberOfSlots );
+	PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	d->slotCount = 0;
 
-	if( !selectedCard.isEmpty() && !cards.contains( selectedCard ) )
+	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
 	{
-		sign = QSslCertificate();
-		selectedCard.clear();
+		d->sign = QSslCertificate();
+		d->selectedCard.clear();
 	}
 
-	if( selectedCard.isEmpty() && !cards.isEmpty() )
+	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
 	{
-		selectedCard = cards.first();
+		d->selectedCard = d->cards.keys().first();
 		readCert();
 	}
 
-	Q_EMIT dataChanged( cards, selectedCard, sign );
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 }
 
-void Poller::readCert()
+void QSigner::readCert()
 {
-	Q_EMIT dataChanged( cards, selectedCard, sign );
-	PKCS11_SLOT* slots;
-	unsigned int numberOfSlots;
-	if( PKCS11_enumerate_slots( (PKCS11_CTX*)s->handle(), &slots, &numberOfSlots ) != 0 )
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+	if( d->slotCount )
+		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	if( PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) )
 		return;
 
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
-	for( unsigned int i = 0; i < numberOfSlots; ++i )
+	for( unsigned int i = 0, j = 0; i < d->slotCount; ++i )
 	{
-		PKCS11_SLOT* slot = &slots[i];
-		if( !slot->token )
+		PKCS11_SLOT* slot = &d->slots[i];
+		if( !slot->token ||
+			d->selectedCard != QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed() ||
+			PKCS11_enumerate_certs( slot->token, &certs, &numberOfCerts ) ||
+			numberOfCerts <= 0 )
 			continue;
 
-		if( selectedCard != QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed() )
-			continue;
-
-		if( PKCS11_enumerate_certs( slot->token, &certs, &numberOfCerts ) )
-			continue;
-
-		if( numberOfCerts <= 0 )
-			continue;
-
-		PKCS11_CERT* cert = &certs[0];
-		sign = SslCertificate::fromX509( (Qt::HANDLE)cert->x509 );
-		break;
+		SslCertificate cert = SslCertificate::fromX509( (Qt::HANDLE)(&certs[0])->x509 );
+		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
+		{
+			d->sign = cert;
+			d->cards[d->selectedCard] = j;
+			break;
+		}
+		++j;
 	}
-	PKCS11_release_all_slots( (PKCS11_CTX*)s->handle(), slots, numberOfSlots );
+	PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	d->slotCount = 0;
 }
 
-void Poller::run()
+void QSigner::run()
 {
-	terminate = false;
-	try { s = new QEstEIDSigner(); }
-	catch( const Exception & )
-	{
-		Q_EMIT error( tr("Failed to load PKCS#11 module") );
-		//delete s;
-		s = NULL;
-		return;
-	}
-	read();
+	d->terminate = false;
 
-	while( !terminate )
+	try { loadDriver(); }
+	catch( const Exception & )
+	{ Q_EMIT error( tr("Failed to load PKCS#11 module") ); return; }
+
+	read();
+	while( !d->terminate )
 	{
 		sleep( 1 );
 
-		m.lock();
-		if( !select.isEmpty() && cards.contains( select ) )
+		d->m.lock();
+		if( !d->select.isEmpty() && d->cards.contains( d->select ) )
 		{
-			selectedCard = select;
+			d->selectedCard = d->select;
 			readCert();
-			Q_EMIT dataChanged( cards, selectedCard, sign );
+			Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 		}
-		select.clear();
-		m.unlock();
+		d->select.clear();
+		d->m.unlock();
 
 		read();
 	}
 }
 
-void Poller::selectCard( const QString &card )
+void QSigner::selectCard( const QString &card )
 {
-	m.lock();
-	select = card;
-	m.unlock();
+	d->m.lock();
+	d->select = card;
+	d->m.unlock();
 }
 
-void Poller::stop()
+void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
 {
-	terminate = true;
-	wait();
-	if( s )
-		delete s;
-}
+	d->m.lock();
+	if( d->sign.isNull() )
+		throwException( tr("Signing certificate is not selected."), Exception::None, __LINE__ );
 
-QEstEIDSigner::QEstEIDSigner( const QString &card ) throw(SignException)
-:	PKCS11Signer()
-,	selectedCard( card )
-{}
+	PKCS11_SLOT *slot;
+	if( d->slotCount )
+		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	if( slotNumber() < 0 ||
+		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
+		(unsigned int)slotNumber() >= d->slotCount )
+		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
 
-std::string QEstEIDSigner::getPin( PKCS11Cert c ) throw(SignException)
-{
-	PinDialog p( PinDialog::Pin2Type, SslCertificate::fromX509( (Qt::HANDLE)c.cert ), qApp->activeWindow() );
-	if( !p.exec() )
+	int j = 0;
+	for( unsigned int i = 0; i < d->slotCount; ++i )
 	{
-		SignException e( __FILE__, __LINE__, QObject::tr("PIN acquisition canceled.").toUtf8().constData() );
-		e.setCode( Exception::PINCanceled );
-		throw e;
-	}
-	return p.text().toStdString();
-}
-
-PKCS11Signer::PKCS11Cert QEstEIDSigner::selectSigningCertificate(
-	std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException)
-{
-	PKCS11Signer::PKCS11Cert signCert;
-	Q_FOREACH( const PKCS11Signer::PKCS11Cert &cert, certificates )
-	{
-		try
+		if( !(&d->slots[i])->token )
+			continue;
+		if( j == slotNumber() )
 		{
-			const QString card = QString::fromStdString( cert.token.serialNr );
-			if( selectedCard.isEmpty() || selectedCard == card )
-			{
-				selectedCard = card;
-				signCert = cert;
-			}
+			slot = &d->slots[i];
+			break;
 		}
-		catch( const Exception & ) {}
+		++j;
 	}
-	if( signCert.label.empty() )
-		SignException( __FILE__, __LINE__, QObject::tr("Could not find sign certificate.").toUtf8().constData() );
 
-	return signCert;
+	if( !slot )
+		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+
+	if( slot->token->loginRequired )
+	{
+		int rv = CKR_OK;
+		if( slot->token->secureLogin )
+			rv = PKCS11_login( slot, 0, NULL );
+		else
+			rv = PKCS11_login( slot, 0, getPin( PKCS11Cert() ).c_str() );
+		switch(ERR_GET_REASON(ERR_get_error()))
+		{
+		case CKR_OK: break;
+		case CKR_CANCEL:
+		case CKR_FUNCTION_CANCELED:
+			throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+		case CKR_PIN_INCORRECT:
+			throwException( tr("PIN Incorrect"), Exception::PINIncorrect, __LINE__ );
+		case CKR_PIN_LOCKED:
+			throwException( tr("PIN Locked"), Exception::PINLocked, __LINE__ );
+		default:
+			throwException( tr("Failed to login to token '%1': %2")
+				.arg( slot->token->label ).arg( ERR_reason_error_string(ERR_get_error()) ),
+				Exception::PINFailed, __LINE__ );
+		}
+	}
+
+	PKCS11_CERT *certs;
+	unsigned int certCount;
+	if( PKCS11_enumerate_certs( slot->token, &certs, &certCount ) ||
+		!certCount || !&certs[0] )
+		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+
+	PKCS11_KEY* signKey = PKCS11_find_key( &certs[0] );
+	if( !signKey )
+		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+
+	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), signKey) != 1 )
+		throwException( tr("Failed to sign document"), Exception::None, __LINE__ );
+
+	d->m.unlock();
 }
 
-void QEstEIDSigner::showPinpad()
+int QSigner::slotNumber() const { return d->cards.value( d->selectedCard, -1 ); }
+
+void QSigner::throwException( const QString &msg, Exception::ExceptionCode code, int line ) throw(SignException)
 {
-	pinpad = new PinDialog(
-		PinDialog::Pin2PinpadType,
-		SslCertificate::fromX509( Qt::HANDLE(getCert()) ),
-		qApp->activeWindow() );
-	pinpad->show();
-	QCoreApplication::processEvents();
+	d->m.unlock();
+	SignException e( __FILE__, line, msg.toStdString() );
+	e.setCode( code );
+	throw e;
 }
 
-void QEstEIDSigner::hidePinpad()
+int QSigner::type() const { return PKCS11SignerAbstract::Type; }
+
+void QSigner::unloadDriver()
 {
-	pinpad->deleteLater();
+	d->terminate = true;
+	wait();
+	if( d->slotCount )
+		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+	if( d->handle )
+		PKCS11_CTX_unload( d->handle );
+	PKCS11_CTX_free( d->handle );
+	d->handle = 0;
 }

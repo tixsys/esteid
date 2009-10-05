@@ -23,47 +23,28 @@
 #pragma once
 
 #include <QThread>
-
 #include <digidocpp/crypto/signer/PKCS11Signer.h>
 
-#include <QMutex>
-#include <QSslCertificate>
-#include <QStringList>
-
+class QSslCertificate;
 class PinDialog;
+class QSignerPrivate;
 
-namespace digidoc
-{
-
-class QEstEIDSigner: public PKCS11Signer
-{
-public:
-	QEstEIDSigner( const QString &card = QString() ) throw(SignException);
-
-protected:
-	virtual std::string getPin( PKCS11Cert certificate ) throw(SignException);
-	virtual PKCS11Signer::PKCS11Cert selectSigningCertificate(
-		std::vector<PKCS11Signer::PKCS11Cert> certificates ) throw(SignException);
-
-private:
-	void showPinpad();
-	void hidePinpad();
-
-	PinDialog *pinpad;
-	QString selectedCard;
-};
-
-}
-
-class Poller: public QThread
+class QSigner: public QThread, public digidoc::PKCS11SignerAbstract
 {
 	Q_OBJECT
 
 public:
-	Poller( QObject *parent = 0 );
-	~Poller();
+	QSigner( QObject *parent = 0 );
+	~QSigner();
 
-	void stop();
+	void loadDriver() throw(digidoc::SignException);
+	void loadDriver( const std::string &name ) throw(digidoc::SignException);
+	X509 *getCert() throw(digidoc::SignException);
+	std::string getPin( PKCS11Cert certificate ) throw(digidoc::SignException);
+	void sign( const Digest& digest, Signature& signature ) throw(digidoc::SignException);
+	int slotNumber() const;
+	int type() const;
+	void unloadDriver();
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
@@ -74,14 +55,10 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
+	void throwException( const QString &msg, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
 	void read();
 	void readCert();
 	void run();
 
-	volatile bool terminate;
-	QMutex m;
-	digidoc::QEstEIDSigner *s;
-	QStringList cards;
-	QString selectedCard, select;
-	QSslCertificate sign;
+	QSignerPrivate *d;
 };

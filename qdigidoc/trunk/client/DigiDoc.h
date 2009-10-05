@@ -39,7 +39,7 @@ namespace digidoc
 
 class DigiDoc;
 class QDateTime;
-class Poller;
+class QSigner;
 
 class DigiDocSignature
 {
@@ -139,7 +139,7 @@ private:
 	void setLastError( const digidoc::Exception &e );
 
 	digidoc::WDoc	*b;
-	Poller			*poller;
+	QSigner			*signer;
 	QSslCertificate	m_signCert;
 	QStringList		m_cards;
 	QString			m_card;
