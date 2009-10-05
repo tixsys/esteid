@@ -365,15 +365,15 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Шифрование файлов&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
-Цель шифрования файла- сделать данные нечитаемыми для посторонних лиц.&lt;br /&gt;&lt;br /&gt;
-Шифрование ID-картой не предназначено для долгосрочного хранения данных и других заданий. Это только метод для передачи файлов по небезопасному каналу связи.&lt;br /&gt;&lt;br /&gt;
-Для шифрования файлов используется AS Sertifitseerimiskeskus LDAP услуга для поиска сертификатов. Файлы шифруются открытым ключом, содержащимся в сертификате.Шифрование односторонне, для расшифровки нужен личный ключ соответствующего сертификата, что храниться только на ID-карте это человека.&lt;/p&gt;
+Цель шифрования файла - сделать данные нечитаемыми для посторонних лиц.&lt;br /&gt;&lt;br /&gt;
+Шифрование сертификатом ID-карты не предназначено для долгосрочного хранения зашифрованных данных или других задач, это лишь метод для передачи файлов по небезопасному каналу связи.&lt;br /&gt;&lt;br /&gt;
+Для шифрования файлов используется предоставляемая AS Sertifitseerimiskeskus LDAP-услуга для поиска сертификатов. Файлы шифруются открытым ключом, содержащимся в сертификате. Шифрование является односторонним, для расшифровки необходим персональный ключ сертификата получателя файла, встроенный в его ID-карту.&lt;/p&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;ПРЕДУПРЕЖДЕНИЕ:&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
-&lt;b&gt;Так как сертификат, позволяющий расшифровать данные сохранён только на ID-карте, то после потери, обновления, устаревания или механического повреждения ID-карты расшифровка  данных технически невозможна&lt;/b&gt;
+&lt;b&gt;Так как сертификат, позволяющий расшифровать данные, встроен только в конкретную ID-карту, то после утери, обновления, истечения срока действия или механического повреждения этой ID-карты расшифровка данных становится технически невозможной.&lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
