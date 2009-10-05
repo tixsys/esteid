@@ -477,6 +477,10 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		d->loadSignatures();
 		return;
 	}
+	PKCS11SignerAbstract *pkcs11 = 0;
+	if( signer->type() != PKCS11SignerAbstract::Type ||
+		!(pkcs11 = static_cast<PKCS11SignerAbstract*>(signer)) )
+		d->throwError( "Failed to sign document", __LINE__ );
 
 	SignatureInfo *info;
 	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
@@ -484,13 +488,13 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	err = d->f_addAllDocInfos( d->doc, info );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
-	Signer::SignatureProductionPlace l = signer->getSignatureProductionPlace();
+	Signer::SignatureProductionPlace l = pkcs11->getSignatureProductionPlace();
 	err = d->f_setSignatureProductionPlace( info, l.city.c_str(), l.stateOrProvince.c_str(),
 		l.postalCode.c_str(), l.countryName.c_str() );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::ostringstream role;
-	Signer::SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
+	Signer::SignerRole::TRoles r = pkcs11->getSignerRole().claimedRoles;
 	for( Signer::SignerRole::TRoles::const_iterator i = r.begin(); i != r.end(); ++i )
 	{
 		role << *i;
@@ -502,30 +506,24 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 
 	std::string pin;
 	int slot = d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 );
-	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
+	try
 	{
-		try
-		{
-			PKCS11Signer::PKCS11Cert c;
-			c.cert = pkcs11->getCert();
-			slot = pkcs11->slotNumber();
-			pin = pkcs11->getPin( c );
-			pkcs11->unloadDriver();
-		}
-		catch( const Exception &e )
-		{
-			d->f_SignatureInfo_delete( d->doc, info->szId );
-			throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
-		}
+		PKCS11SignerAbstract::PKCS11Cert c;
+		c.cert = pkcs11->getCert();
+		slot = pkcs11->slotNumber();
+		pin = pkcs11->getPin( c );
+		pkcs11->unloadDriver();
+	}
+	catch( const Exception &e )
+	{
+		d->f_SignatureInfo_delete( d->doc, info->szId );
+		throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
 	}
 	err = d->f_calculateSignatureWithEstID( d->doc, info, slot, pin.c_str() );
 	fill(pin.begin(),pin.end(),0);
 
-	if( PKCS11Signer *pkcs11 = static_cast<PKCS11Signer*>(signer) )
-	{
-		try { pkcs11->loadDriver(); }
-		catch( const Exception & ) {}
-	}
+	try { pkcs11->loadDriver(); }
+	catch( const Exception & ) {}
 
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 

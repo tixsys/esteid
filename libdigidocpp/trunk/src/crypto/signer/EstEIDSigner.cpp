@@ -40,8 +40,8 @@ digidoc::EstEIDSigner::~EstEIDSigner()
  * @return should return the selected certificate.
  * @throws SignException throws exception if no suitable certificate was found.
  */
-digidoc::PKCS11Signer::PKCS11Cert digidoc::EstEIDSigner::selectSigningCertificate(
-        std::vector<PKCS11Signer::PKCS11Cert> certificates) throw(SignException)
+digidoc::PKCS11SignerAbstract::PKCS11Cert digidoc::EstEIDSigner::selectSigningCertificate(
+        std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates) throw(SignException)
 {
     // Find EstEID signing certificate
     if(certificates.empty())
@@ -100,7 +100,7 @@ void digidoc::EstEIDConsolePinSigner::setPrompt(const std::string& prompt)
  * @return returns PIN code.
  * @throws SignException throws an exception if the login process is canceled.
  */
-std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) throw(SignException)
+std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11SignerAbstract::PKCS11Cert certificate) throw(SignException)
 {
     char pin[16];
     size_t pinMax = 16;

@@ -20,7 +20,7 @@ namespace digidoc
           virtual ~EstEIDSigner();
 
       protected:
-          virtual PKCS11Signer::PKCS11Cert selectSigningCertificate(std::vector<PKCS11Signer::PKCS11Cert> certificates) throw(SignException);
+          virtual PKCS11SignerAbstract::PKCS11Cert selectSigningCertificate(std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates) throw(SignException);
 
     };
 
@@ -39,7 +39,7 @@ namespace digidoc
           void setPrompt(const std::string& prompt);
 
       protected:
-          virtual std::string getPin(PKCS11Cert certificate) throw(SignException);
+          virtual std::string getPin(PKCS11SignerAbstract::PKCS11Cert certificate) throw(SignException);
 
       private:
           std::string prompt;

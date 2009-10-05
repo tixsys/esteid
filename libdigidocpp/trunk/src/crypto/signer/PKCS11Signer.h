@@ -5,6 +5,22 @@
 
 namespace digidoc
 {
+    class EXP_DIGIDOC PKCS11SignerAbstract: public Signer
+    {
+      public:
+        enum { Type = 1 };
+        struct PKCS11Token { std::string label, manufacturer, model, serialNr; };
+        struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
+
+        virtual X509* getCert() throw(SignException) = 0;
+        virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
+        virtual void loadDriver() throw(SignException) = 0;
+        virtual void loadDriver(const std::string& driver) throw(SignException) = 0;
+        virtual void unloadDriver() = 0;
+        virtual int  slotNumber() const = 0;
+        virtual int  type() { return Type; }
+    };
+
     /**
      * Implements <code>Signer</code> interface for ID-Cards, which support PKCS #11 protocol.
      *
@@ -22,12 +38,10 @@ namespace digidoc
      * @author Janari Põld
      */
 	class PKCS11SignerPrivate;
-    class EXP_DIGIDOC PKCS11Signer : public Signer
+    class EXP_DIGIDOC PKCS11Signer : public PKCS11SignerAbstract
     {
 
       public:
-          struct PKCS11Token { std::string label; std::string manufacturer; std::string model; std::string serialNr; };
-          struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
           PKCS11Signer() throw(SignException);
           PKCS11Signer(const std::string& driver) throw(SignException);
           virtual ~PKCS11Signer();
@@ -37,8 +51,20 @@ namespace digidoc
           void loadDriver() throw(SignException);
           void loadDriver(const std::string& driver) throw(SignException);
           void unloadDriver();
-          void* handle() const;
           int  slotNumber() const;
+
+          /**
+           * Abstract method that returns PIN code for the selected signing certificate.
+           * If PIN code is not needed this method is never called. To cancel the login
+           * this method should throw an exception.
+           *
+           * @param certificate certificate that is used for signing and needs a PIN
+           *        for login.
+           * @return returns the PIN code to login.
+           * @throws SignException should throw an exception if the login operation
+           *         should be canceled.
+           */
+          virtual std::string getPin(PKCS11SignerAbstract::PKCS11Cert certificate) throw(SignException) = 0;
 
       protected:
 
@@ -52,23 +78,10 @@ namespace digidoc
            * @throws SignException should throw an exception if no suitable certificate
            *         is in the list or the operation should be canceled.
            */
-          virtual PKCS11Cert selectSigningCertificate(std::vector<PKCS11Cert> certificates) throw(SignException) = 0;
+          virtual PKCS11SignerAbstract::PKCS11Cert selectSigningCertificate(std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates) throw(SignException) = 0;
 
           virtual void showPinpad() {};
           virtual void hidePinpad() {};
-      public:
-          /**
-           * Abstract method that returns PIN code for the selected signing certificate.
-           * If PIN code is not needed this method is never called. To cancel the login
-           * this method should throw an exception.
-           *
-           * @param certificate certificate that is used for signing and needs a PIN
-           *        for login.
-           * @return returns the PIN code to login.
-           * @throws SignException should throw an exception if the login operation
-           *         should be canceled.
-           */
-          virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       private:
           PKCS11SignerPrivate *d;

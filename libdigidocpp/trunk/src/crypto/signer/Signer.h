@@ -16,6 +16,7 @@ namespace digidoc
     {
 
       public:
+          enum { Type = 0 };
           struct EXP_DIGIDOC SignatureProductionPlace
           {
               SignatureProductionPlace();
@@ -55,6 +56,7 @@ namespace digidoc
       public:
           virtual X509* getCert() throw(SignException) = 0;
           virtual void sign(const Digest& digest, Signature& signature) throw(SignException) = 0;
+          virtual int type() const { return Type; }
           void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);
           SignatureProductionPlace getSignatureProductionPlace() const;
           void setSignerRole(const SignerRole& signerRole);
