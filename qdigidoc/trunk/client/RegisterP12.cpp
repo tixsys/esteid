@@ -77,7 +77,7 @@ void RegisterP12::on_buttonBox_accepted()
 void RegisterP12::on_p12Button_clicked()
 {
 	QString cert = QFileDialog::getOpenFileName( this, tr("Select PKCS#12 certificate"),
-		p12Cert->text(), tr("PKCS#12 Certificates (*.p12 *.p12d)") );
+		QFileInfo( p12Cert->text() ).path(), tr("PKCS#12 Certificates (*.p12 *.p12d)") );
 	if( !cert.isEmpty() )
 		p12Cert->setText( cert );
 }

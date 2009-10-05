@@ -74,6 +74,8 @@ void SettingsDialog::on_p12Button_clicked()
 	QString cert = Settings().value( "Client/pkcs12Cert" ).toString();
 	if( cert.isEmpty() )
 		cert = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
+	else
+		cert = QFileInfo( cert ).path();
 	cert = QFileDialog::getOpenFileName( this, tr("Select PKCS#12 certificate"), cert,
 		tr("PKCS#12 Certificates (*.p12 *.p12d)") );
 	if( !cert.isEmpty() )

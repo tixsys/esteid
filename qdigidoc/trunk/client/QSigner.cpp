@@ -224,7 +224,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		++j;
 	}
 
-	if( !d->slot )
+	if( !d->slot || !d->slot->token )
 		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
 
 	if( d->slot->token->loginRequired )
