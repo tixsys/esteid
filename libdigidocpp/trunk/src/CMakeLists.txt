@@ -166,11 +166,15 @@ target_link_libraries(digidocpp
     ${ZLIB_LIBRARIES}
     ${EXTRA_LIBS}
 )
+if(UNIX)
+    set(VISIBILITY_FLAG "-fvisibility=hidden")
+endif(UNIX)
+
 set_target_properties(digidocpp
     PROPERTIES
     VERSION ${DIGIDOCPP_VERSION}
     SOVERSION 0
-    COMPILE_FLAGS "-fvisibility=hidden"
+    COMPILE_FLAGS ${VISIBILITY_FLAG}
     )
 install(TARGETS digidocpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
