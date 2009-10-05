@@ -5,7 +5,7 @@
 
 namespace digidoc
 {
-    class SignatureBES : public Signature
+    class EXP_DIGIDOC SignatureBES : public Signature
     {
 
       public:

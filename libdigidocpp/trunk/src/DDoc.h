@@ -7,7 +7,7 @@ namespace digidoc
 
 class DDocPrivate;
 
-class SignatureDDOC: public Signature
+class EXP_DIGIDOC SignatureDDOC: public Signature
 {
 public:
 	SignatureDDOC( int id, DDocPrivate *doc );
@@ -28,7 +28,7 @@ private:
 	DDocPrivate *m_doc;
 };
 
-class DDoc: public ADoc
+class EXP_DIGIDOC DDoc: public ADoc
 {
 public:
 	DDoc();

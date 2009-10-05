@@ -14,7 +14,7 @@
 namespace digidoc
 {
 
-class SignatureTM: public digidoc::SignatureBES
+class EXP_DIGIDOC SignatureTM: public digidoc::SignatureBES
 {
 public:
     SignatureTM(BDoc& _bdoc);
