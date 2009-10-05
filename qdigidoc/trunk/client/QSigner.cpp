@@ -42,15 +42,16 @@
 class QSignerPrivate
 {
 public:
-	QSignerPrivate(): terminate(false), handle(0), slotCount(0) {}
-	volatile bool	terminate;
+	QSignerPrivate(): login(false), terminate(false), handle(0), slotCount(0), loginResult(CKR_OK) {}
+	volatile bool	login, terminate;
 	QMutex			m;
 	QHash<QString,int>	cards;
 	QString			selectedCard, select;
 	QSslCertificate	sign;
 	PKCS11_CTX		*handle;
-	PKCS11_SLOT*	slots;
+	PKCS11_SLOT     *slot, *slots;
 	unsigned int	slotCount;
+	int				loginResult;
 };
 
 
@@ -113,8 +114,6 @@ void QSigner::read()
 			d->cards[serialNumber] = j + 1;
 		++j;
 	}
-	PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
-	d->slotCount = 0;
 
 	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
 	{
@@ -134,11 +133,6 @@ void QSigner::read()
 void QSigner::readCert()
 {
 	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
-	if( d->slotCount )
-		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
-	if( PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) )
-		return;
-
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
 	for( unsigned int i = 0, j = 0; i < d->slotCount; ++i )
@@ -159,8 +153,6 @@ void QSigner::readCert()
 		}
 		++j;
 	}
-	PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
-	d->slotCount = 0;
 }
 
 void QSigner::run()
@@ -176,17 +168,25 @@ void QSigner::run()
 	{
 		sleep( 1 );
 
-		d->m.lock();
-		if( !d->select.isEmpty() && d->cards.contains( d->select ) )
+		if( d->m.tryLock() )
 		{
-			d->selectedCard = d->select;
-			readCert();
-			Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
-		}
-		d->select.clear();
-		d->m.unlock();
+			if( !d->select.isEmpty() && d->cards.contains( d->select ) )
+			{
+				d->selectedCard = d->select;
+				readCert();
+				Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+			}
+			d->select.clear();
 
-		read();
+			read();
+			d->m.unlock();
+		}
+
+		if( d->login )
+		{
+			d->loginResult = PKCS11_login( d->slot, 0, NULL );
+			d->login = false;
+		}
 	}
 }
 
@@ -203,7 +203,6 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	if( d->sign.isNull() )
 		throwException( tr("Signing certificate is not selected."), Exception::None, __LINE__ );
 
-	PKCS11_SLOT *slot;
 	if( d->slotCount )
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
 	if( slotNumber() < 0 ||
@@ -211,6 +210,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		(unsigned int)slotNumber() >= d->slotCount )
 		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
 
+	d->slot = 0;
 	int j = 0;
 	for( unsigned int i = 0; i < d->slotCount; ++i )
 	{
@@ -218,22 +218,35 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			continue;
 		if( j == slotNumber() )
 		{
-			slot = &d->slots[i];
+			d->slot = &d->slots[i];
 			break;
 		}
 		++j;
 	}
 
-	if( !slot )
+	if( !d->slot )
 		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
 
-	if( slot->token->loginRequired )
+	if( d->slot->token->loginRequired )
 	{
 		int rv = CKR_OK;
-		if( slot->token->secureLogin )
-			rv = PKCS11_login( slot, 0, NULL );
+		if( d->slot->token->secureLogin )
+		{
+			d->login = true;
+			PinDialog *p = new PinDialog( PinDialog::Pin2PinpadType, d->sign, qApp->activeWindow() );
+			p->show();
+			do
+			{
+				qApp->thread()->wait( 1 );
+				QCoreApplication::processEvents();
+			} while( d->login && p->isVisible() );
+			if( !p->isVisible() )
+				throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+			p->deleteLater();
+			rv = d->loginResult;
+		}
 		else
-			rv = PKCS11_login( slot, 0, getPin( PKCS11Cert() ).c_str() );
+			rv = PKCS11_login( d->slot, 0, getPin( PKCS11Cert() ).c_str() );
 		switch(ERR_GET_REASON(ERR_get_error()))
 		{
 		case CKR_OK: break;
@@ -246,14 +259,14 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			throwException( tr("PIN Locked"), Exception::PINLocked, __LINE__ );
 		default:
 			throwException( tr("Failed to login to token '%1': %2")
-				.arg( slot->token->label ).arg( ERR_reason_error_string(ERR_get_error()) ),
+				.arg( d->slot->token->label ).arg( ERR_reason_error_string(ERR_get_error()) ),
 				Exception::PINFailed, __LINE__ );
 		}
 	}
 
 	PKCS11_CERT *certs;
 	unsigned int certCount;
-	if( PKCS11_enumerate_certs( slot->token, &certs, &certCount ) ||
+	if( PKCS11_enumerate_certs( d->slot->token, &certs, &certCount ) ||
 		!certCount || !&certs[0] )
 		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
 
