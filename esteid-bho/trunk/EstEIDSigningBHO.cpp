@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-03-29 17:48:22 +0300 (Sun, 29 Mar 2009) $
+	\date		$Date: 2009-10-05 08:56:42 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 205 $
+// Revision $Revision: 471 $
 
 // EstEIDSigningBHO.cpp : Implementation of CEstEIDSigningBHO
 
@@ -18,7 +18,7 @@
 
 HRESULT CEstEIDSigningBHO::FinalConstruct()
 {
-	m_signer.CoCreateInstance(CLSID_SmartCardSigner);
+//	m_signer.CoCreateInstance(CLSID_SmartCardSigner);
 	return S_OK;
 }
 
@@ -47,10 +47,11 @@ STDMETHODIMP CEstEIDSigningBHO::SetSite(IUnknown* pUnkSite) {
 }
 STDMETHODIMP CEstEIDSigningBHO::GetExternal(  //return a signer object
     /* [out] */ IDispatch **ppDispatch) {
-	CComPtr<IDispatch> in;
+/*	CComPtr<IDispatch> in;
 	in = m_signer;
 	*ppDispatch = in.Detach();
-	return S_OK;
+*/
+	return S_FALSE;
 };
 
 void STDMETHODCALLTYPE CEstEIDSigningBHO::OnDocumentComplete(IDispatch *pDisp, VARIANT *pvarURL) {
