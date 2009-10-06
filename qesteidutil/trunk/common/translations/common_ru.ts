@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="ru">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS>
+<TS version="2.0" language="ru">
 <context>
     <name>CertificateDialog</name>
     <message>
@@ -198,7 +198,7 @@
     </message>
     <message>
         <source>Protects e-mail messages</source>
-        <translation>Защищает е-майл сообщения</translation>
+        <translation>Защищает сообщения электронной почты</translation>
     </message>
     <message>
         <source>OCSP signing</source>

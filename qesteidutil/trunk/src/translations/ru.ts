@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверте подключение к интернету</translation>
     </message>
 </context>
 <context>
@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!</source>
-        <translation type="unfinished"></translation>
+        <translation>Для обновления сертификата пожалуйста закройте все окна типа qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!</translation>
     </message>
 </context>
 <context>
