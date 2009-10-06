@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-14 00:57:29 +0300 (Fri, 14 Aug 2009) $
+	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 424 $
+// Revision $Revision: 470 $
 #include "precompiled.h"
 #include <smartcard++/PCSCManager.h>
 #include <smartcard++/SCError.h>
@@ -43,6 +43,8 @@ PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME),mOwnCo
 void PCSCManager::construct()
 {
 #ifdef _WIN32
+	osVersionInfo.dwOSVersionInfoSize = sizeof(osVersionInfo);
+	GetVersionEx(&osVersionInfo);
 	pSCardAccessStartedEvent = ( HANDLE(SCAPI *)() )
 		mLibrary.getProc("SCardAccessStartedEvent");
 	pSCardReleaseStartedEvent = (void(SCAPI *)(HANDLE))mLibrary.getProc("SCardReleaseStartedEvent");
@@ -76,12 +78,14 @@ void PCSCManager::construct()
 		LPDWORD ,LPDWORD ,LPBYTE ,LPDWORD ))
 		mLibrary.getProc("SCardStatus" SUFFIX);
 
-	mSCStartedEvent = (*pSCardAccessStartedEvent)();
-	if (!mSCStartedEvent)
-		throw std::runtime_error("SCardAccessStartedEvent returns NULL");
-	//the timeout here is NEEDED under Vista/Longhorn, do not remove it
-	if (WAIT_OBJECT_0 != WaitForSingleObject(mSCStartedEvent,1000) ) {
-		throw std::runtime_error("Smartcard subsystem not started");
+	if (!((osVersionInfo.dwMajorVersion == 5) && (osVersionInfo.dwMinorVersion == 0) )) { //win2K
+		mSCStartedEvent = (*pSCardAccessStartedEvent)();
+		if (!mSCStartedEvent)
+			throw std::runtime_error("SCardAccessStartedEvent returns NULL");
+		//the timeout here is NEEDED under Vista/Longhorn, do not remove it
+		if (WAIT_OBJECT_0 != WaitForSingleObject(mSCStartedEvent,1000) ) {
+			throw std::runtime_error("Smartcard subsystem not started");
+			}
 		}
 #endif
 }

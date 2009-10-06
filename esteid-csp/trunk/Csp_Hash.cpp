@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-11 23:21:07 +0300 (Tue, 11 Aug 2009) $
+	\date		$Date: 2009-10-05 09:51:33 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 416 $
+// Revision $Revision: 472 $
 
 #include "precompiled.h"
 #include "Csp.h"
@@ -79,12 +79,14 @@ BOOL Csp::CPSignHash(
 		CSPContext * it = *findContext(hProv);
 		CSPHashContext * hash = *it->findHashContext(hHash);
 		packData dat(pbSignature,pcbSigLen);
-		DWORD bufSz = 0;
-		CryptGetHashParam(*hash->m_wrapHash,HP_HASHVAL, NULL, &bufSz, 0);
-		std::vector<BYTE> buffer(bufSz,'\0');
-		CryptGetHashParam(*hash->m_wrapHash,HP_HASHVAL,&buffer[0],&bufSz,0);
-		std::vector<BYTE> signature = hash->sign(buffer,dwKeySpec);
-		dat.setValue(signature);
+		if (hash->signature.empty()) {
+			DWORD bufSz = 0;
+			CryptGetHashParam(*hash->m_wrapHash,HP_HASHVAL, NULL, &bufSz, 0);
+			std::vector<BYTE> buffer(bufSz,'\0');
+			CryptGetHashParam(*hash->m_wrapHash,HP_HASHVAL,&buffer[0],&bufSz,0);
+			hash->signature = hash->sign(buffer,dwKeySpec);
+			}
+		dat.setValue(hash->signature);
 		ret.SetOk();
 	} catch(std::runtime_error &err) {
 		ret.logReturn(err);

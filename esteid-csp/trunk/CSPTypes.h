@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-11 23:21:07 +0300 (Tue, 11 Aug 2009) $
+	\date		$Date: 2009-10-05 09:51:33 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 416 $
+// Revision $Revision: 472 $
 
 #pragma once
 
@@ -142,6 +142,7 @@ struct CSPHashContext {
 	HCRYPTHASH m_hashId;
 	ALG_ID m_algId;
 	WrapHash *m_wrapHash;
+	std::vector<BYTE> signature;
 	CSPHashContext() : m_wrapHash(NULL) {}
 	~CSPHashContext() { if (m_wrapHash) delete m_wrapHash;}
 	bool operator==(const HCRYPTHASH) const;

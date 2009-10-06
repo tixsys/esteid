@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-06 13:21:43 +0300 (Mon, 06 Jul 2009) $
+	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 345 $
+// Revision $Revision: 470 $
 #pragma once
 #include <smartcard++/ManagerInterface.h>
 #include <smartcard++/DynamicLibrary.h>
@@ -60,6 +60,7 @@ class PCSCManager : public ManagerInterface {
 	bool mOwnContext;
 #ifdef _WIN32
 	HANDLE mSCStartedEvent;
+	OSVERSIONINFO osVersionInfo;
 #endif
 	SCARDCONTEXT mSCardContext;
 	std::vector<char > mReaders;
