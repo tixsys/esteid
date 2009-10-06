@@ -50,6 +50,7 @@ public:
 	QString pin() const;
 	void setCard( const QString &card );
 	void setPin( const QString &pin );
+	void setPKCS11( const QString &pkcs11 );
 	void setReader( int reader );
 
 private:

@@ -304,6 +304,7 @@ QByteArray DigiDoc::getAccessCert()
 	signer->unloadDriver();
 	try {
 		SSLConnect sslConnect;
+		sslConnect.setPKCS11( getConfValue( PKCS11Module ) );
 		sslConnect.setCard( m_card );
 		buffer = sslConnect.getUrl( SSLConnect::AccessCert, "" );
 	} catch( const std::runtime_error &e ) {
@@ -445,16 +446,14 @@ void DigiDoc::selectCard( const QString &card )
 
 QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
 {
-	const QString v = value.toString();
 	digidoc::Conf *i = NULL;
 	try { i = digidoc::Conf::getInstance(); }
-	catch( const Exception & ) {}
-	if( !i )
-		return v;
+	catch( const Exception & ) { return value.toString(); }
 
 	std::string r;
 	switch( parameter )
 	{
+	case PKCS11Module: r = i->getPKCS11DriverPath(); break;
 	case ProxyHost: r = i->getProxyHost(); break;
 	case ProxyPort: r = i->getProxyPort(); break;
 	case ProxyUser: r = i->getProxyUser(); break;
@@ -463,16 +462,14 @@ QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) 
 	case PKCS12Pass: r = i->getPKCS12Pass(); break;
 	default: break;
 	}
-	return r.empty() ? v : QString::fromStdString( r );
+	return r.empty() ? value.toString() : QString::fromStdString( r );
 }
 
 void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 {
 	digidoc::Conf *i = NULL;
 	try { i = digidoc::Conf::getInstance(); }
-	catch( const Exception & ) {}
-	if( !i )
-		return;
+	catch( const Exception & ) { return; }
 
 	const std::string v = value.toString().toStdString();
 	switch( parameter )

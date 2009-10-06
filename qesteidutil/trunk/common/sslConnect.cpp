@@ -101,6 +101,7 @@ public:
 
 	QString card;
 	QString pin;
+	QString pkcs11;
 	int		reader;
 
 	unsigned int nslots;
@@ -112,17 +113,10 @@ public:
 SSLObj::SSLObj()
 :	ctx( NULL )
 ,	s( NULL )
+,	pkcs11( PKCS11_MODULE )
 ,	reader( -1 )
 ,	nslots( 0 )
-{
-	ctx = PKCS11_CTX_new();
-	if ( PKCS11_CTX_load(ctx, PKCS11_MODULE) )
-		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
-
-	int result = PKCS11_enumerate_slots(ctx, &pslots, &nslots);
-	if ( result )
-		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
-}
+{}
 
 SSLObj::~SSLObj()
 {
@@ -146,6 +140,16 @@ SSLObj::~SSLObj()
 
 bool SSLObj::connectToHost( SSLConnect::RequestType type )
 {
+	if( !(ctx = PKCS11_CTX_new()) || PKCS11_CTX_load( ctx, pkcs11.toUtf8() ) )
+	{
+		PKCS11_CTX_free(ctx);
+		ctx = 0;
+		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
+	}
+
+	if( PKCS11_enumerate_slots( ctx, &pslots, &nslots ) )
+		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
+
 	// Find token
 	PKCS11_SLOT *slot = 0;
 	if( reader >= 0 )
@@ -362,4 +366,5 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 QString SSLConnect::pin() const { return obj->pin; }
 void SSLConnect::setCard( const QString &card ) { obj->card = card; }
 void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
+void SSLConnect::setPKCS11( const QString &pkcs11 ) { obj->pkcs11 = pkcs11; }
 void SSLConnect::setReader( int reader ) { obj->reader = reader; }

@@ -26,6 +26,7 @@
 
 #include <QSslCertificate>
 #include <QStringList>
+#include <QVariant>
 
 #include <digidocpp/WDoc.h>
 
@@ -79,6 +80,7 @@ class DigiDoc: public QObject
 public:
 	enum ConfParameter
 	{
+		PKCS11Module,
 		ProxyHost,
 		ProxyPort,
 		ProxyUser,
@@ -105,7 +107,7 @@ public:
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();
-	QString getConfValue( ConfParameter parameter, const QVariant &value ) const;
+	QString getConfValue( ConfParameter parameter, const QVariant &value = QVariant() ) const;
 	static void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
 		const QString &city,
