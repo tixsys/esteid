@@ -7,7 +7,7 @@
 
 using namespace digidoc;
 
-WDoc::WDoc(): m_doc(NULL) { setType( BDocType ); }
+WDoc::WDoc(): m_doc(NULL) { setType( DDocType ); }
 WDoc::WDoc( DocumentType type ): m_doc(NULL) { setType( type ); }
 WDoc::WDoc( ADoc *doc ) { m_doc = doc; }
 
