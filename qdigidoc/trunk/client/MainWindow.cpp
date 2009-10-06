@@ -180,7 +180,7 @@ bool MainWindow::addFile( const QString &file )
 		QString docname = QString( "%1/%2.%3" )
 			.arg( s.value( "DefaultDir", info.absolutePath() ).toString() )
 			.arg( info.fileName() )
-			.arg( s.value( "type" ,"bdoc" ).toString() );
+			.arg( s.value( "type" ,"ddoc" ).toString() );
 
 		bool select = s.value( "AskSaveAs", false ).toBool();
 		if( !select && QFile::exists( docname ) )
@@ -206,7 +206,7 @@ bool MainWindow::addFile( const QString &file )
 				return false;
 			QString ext = QFileInfo( docname ).suffix().toLower();
 			if( ext != "bdoc" || ext != "ddoc" )
-				docname.append( "." + s.value( "type" ,"bdoc" ).toString() );
+				docname.append( "." + s.value( "type" ,"ddoc" ).toString() );
 			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, windowTitle(),
