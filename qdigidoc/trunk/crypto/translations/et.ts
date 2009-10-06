@@ -237,7 +237,7 @@
     </message>
     <message>
         <source>LDAP server is unavailable.</source>
-        <translation>Ei saa ühendust LDAP serveriga</translation>
+        <translation>Ei saa ühendust LDAP serveriga.</translation>
     </message>
     <message>
         <source>Error Code: %1 (%2)</source>
