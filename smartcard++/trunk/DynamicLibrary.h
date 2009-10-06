@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-06 13:21:43 +0300 (Mon, 06 Jul 2009) $
+	\date		$Date: 2009-10-05 22:16:29 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 345 $
+// Revision $Revision: 473 $
 #pragma once
 
 /// Wraps a dynamically loaded system library
@@ -14,9 +14,9 @@
  belong here */
 struct DynamicLibrary {
 	typedef void (*fProc)();
-	void *mLibhandle;
 	std::string name;
 	const char *m_pathHint;
+	void *mLibhandle;
 	bool construct(int version = 1,bool do_throw=true);
 	static std::string arrPaths[];
 	bool m_construct;

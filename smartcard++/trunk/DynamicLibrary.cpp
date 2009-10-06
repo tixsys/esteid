@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-23 17:37:19 +0300 (Sun, 23 Aug 2009) $
+	\date		$Date: 2009-10-05 22:16:29 +0300 (E, 05 okt 2009) $
 */
-// Revision $Revision: 453 $
+// Revision $Revision: 473 $
 #include "precompiled.h"
 #include <smartcard++/DynamicLibrary.h>
 
@@ -147,10 +147,11 @@ DynamicLibrary::~DynamicLibrary() {
 
 DynamicLibrary::fProc DynamicLibrary::getProc(const char *procName) {
 	std::ostringstream buf;
+	dlerror();
 	void * ptr = dlsym(mLibhandle,procName);
 	fProc proc = NULL;
 	memcpy(&proc,&ptr,sizeof(ptr)); //hack around not being able to copy void to fn ptr
-	if (dlerror() == 0)
+	if (dlerror() == NULL)
 		return proc;
 	buf << "proc not found:" << procName;
 	throw std::runtime_error(buf.str().c_str());
