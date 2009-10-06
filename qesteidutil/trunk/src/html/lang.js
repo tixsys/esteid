@@ -13,7 +13,7 @@ var htmlStrings = {
 	"Revoked": new tr( "sertifikaadid on tunnistatud kehtetuks. Mobiil-ID kasutamiseks on vajalik hankida operaatorilt uus Mobiil-ID SIM kaart.", "certificates are revoked. To use Mobile-ID, a new SIM card must be requested from service provider.", "сертификаты признаны недействительными. Для использования Mobiil-ID следует взять новую Mobiil-ID SIM карту у оператора." ),
 	"Unknown": new tr( "sertifikaadi olek teadmata.", "certificates status is unknown", "состояние сертификата неизвестно." ),
 	"Expired": new tr( "sertifikaadid on aegunud. Vajalik on operaatorilt uue SIM kaardi hankimine.", "certificates are expired. New SIM card has to be requested from Service provider.", "сертификаты устарели. У оператора следует взять новую SIM карту." ),
-	"mobileNoCert": new tr( "Kasutajal puuduvad Mobiil-ID sertifikaadid!", "User has no Mobile-ID certificates.", "Упользователя отсутствуют сертивикаты Mobiil-ID!" ),
+	"mobileNoCert": new tr( "Kasutajal puuduvad Mobiil-ID sertifikaadid!", "User has no Mobile-ID certificates.", "У пользователя отсутствуют Mobiil-ID сертификаты!" ),
 	"mobileNotActive": new tr( "Kasutaja Mobiil-id sertifikaadid ei ole aktiivsed, info kuvamine ei ole võimalik!", "Mobile-id not active. Not possible to display info.", "Пользовательские сертификаты ID-карты неактивны, получение информации невозможно!" ),
 	"mobileInternalError": new tr( "Teenuse sisemine viga!", "Service internal error!", "Внутренняя ошибка услуги!" ),
 	"mobileInterfaceNotReady": new tr( "Liides ei ole veel töökorras!", "Mobile interface not ready!", "Интерфейс ещё не работает!" ),
