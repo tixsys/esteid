@@ -148,7 +148,7 @@ function ConfigureEstEID() {
                     EstEidLegacyNames.indexOf(module.name) >= 0) {
 
                 log("DEBUG: marking module for removal: " +
-                    module.name + ":" module.libName);
+                    module.name + ":" + module.libName);
                 modulesToRemove.push(module.name);
             }
         }
