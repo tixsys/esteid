@@ -5,6 +5,7 @@
 "PINPanel.Label.Hash" = "Hash:";
 "PINPanel.Label.Name" = "Name:";
 "PINPanel.Label.PIN2" = "PIN2:";
+"PINPanel.Label.SecureEntry" = "Press OK to use pinpad";
 "PINPanel.Message.PIN2" = "Please insert your PIN2 code.";
 "PINPanel.Label.Details" = "Details";
 "PINPanel.Action.Cancel" = "Cancel";

@@ -141,6 +141,24 @@ NSString *EstEIDReaderRetryCounterPIN2 = @"pin2";
 	self->m_personName = nil;
 }
 
+- (BOOL)allowsSecureEntry
+{
+	if(EstEIDReaderManagerStateIsValid(self->m_state)) {
+		try {
+			EstEidCard card(*self->m_state->internal, [self index]);
+			
+			return card.hasSecurePinEntry();
+		}
+		catch(std::runtime_error err) {
+#if DEBUG
+			NSLog(@"%@: hasSecurePinEntry failure", NSStringFromClass([self class]));
+#endif
+		}
+	}
+	
+	return NO;
+}
+
 - (BOOL)isEmpty
 {
 	return (self->m_connected) ? NO : YES;

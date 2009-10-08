@@ -215,13 +215,15 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 				}
 				
 				if([certificate isValid]) {
+					id <EstEIDReader> reader = [self->m_readerManager selectedReader];
 					EstEIDPINPanel *panel = [[EstEIDPINPanel alloc] init];
 					NSString *result;
 					
+					[panel setAllowsSecureEntry:[reader allowsSecureEntry]];
 					[panel setDelegate:(id <EstEIDPINPanelDelegate>)self];
 					[panel setHash:[hash uppercaseString]];
 					[panel setURL:url];
-					[panel setName:[[self->m_readerManager selectedReader] personName]];
+					[panel setName:[reader personName]];
 					[panel beginSheetForWindow:[self window]];
 					[panel runModal];
 					result = [panel userInfo];

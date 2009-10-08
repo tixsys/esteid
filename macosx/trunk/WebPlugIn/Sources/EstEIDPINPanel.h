@@ -44,6 +44,8 @@
 - (BOOL)showsDetails;
 - (void)setShowsDetails:(BOOL)flag animate:(BOOL)animate;
 
+- (BOOL)allowsSecureEntry;
+- (void)setAllowsSecureEntry:(BOOL)allowsSecureEntry;
 - (NSString *)error;
 - (void)setError:(NSString *)error fatal:(BOOL)fatal;
 - (NSString *)hash;

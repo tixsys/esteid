@@ -21,6 +21,22 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 	self->m_delegate = delegate;
 }
 
+- (BOOL)allowsSecureEntry
+{
+	return ([[[self->m_pinTextField cell] placeholderString] length] > 0) ? YES : NO;
+}
+
+- (void)setAllowsSecureEntry:(BOOL)allowsSecureEntry
+{
+	if(allowsSecureEntry) {
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		
+		[[self->m_pinTextField cell] setPlaceholderString:[bundle localizedStringForKey:@"PINPanel.Label.SecureEntry" value:nil table:nil]];
+	} else {
+		[[self->m_pinTextField cell] setPlaceholderString:@""];
+	}
+}
+
 - (id)userInfo
 {
 	return self->m_userInfo;
@@ -73,6 +89,10 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 - (void)beginSheetForWindow:(NSWindow *)window modalDelegate:(id)delegate didEndSelector:(SEL)selector contextInfo:(void *)info
 {
 	[[NSApplication sharedApplication] beginSheet:[self window] modalForWindow:window modalDelegate:delegate didEndSelector:selector contextInfo:info];
+	
+	if([self allowsSecureEntry]) {
+		[self->m_nameTextField selectText:nil];
+	}
 }
 
 - (void)runModal
@@ -159,15 +179,16 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 - (IBAction)ok:(id)sender
 {
 	//NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	BOOL allowsSecureEntry = [self allowsSecureEntry];
 	NSString *pin = [self PIN];
 	
 	if([pin length] == 0) {
-		//[bundle localizedStringForKey:@"PINPanel.Error.PIN.None" value:nil table:nil];
-		NSBeep();
-		return;
-	}
-	
-	if([pin length] < 5 || [pin length] > 12) {
+		if(!allowsSecureEntry) {
+			//[bundle localizedStringForKey:@"PINPanel.Error.PIN.None" value:nil table:nil];
+			NSBeep();
+			return;
+		}
+	} else if([pin length] < 5 || [pin length] > 12) {
 		//[bundle localizedStringForKey:@"PINPanel.Error.PIN.Length" value:nil table:nil];
 		NSBeep();
 		return;

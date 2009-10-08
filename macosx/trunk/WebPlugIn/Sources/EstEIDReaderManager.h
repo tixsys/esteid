@@ -49,6 +49,8 @@ extern NSString *EstEIDReaderRetryCounterPIN2;
  * @name Accessing Reader Data
  */
 
+- (BOOL)allowsSecureEntry;
+
 /**
  * Returns YES if the reader is empty; NO otherwise.
  * @return YES if the reader is empty; NO otherwise.
