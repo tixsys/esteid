@@ -4,26 +4,35 @@
 #include "precompiled.h"
 #include "esteidcm.h"
 
-#include "cardlib/EstEidCard.h"
-#include "cardlib/PCSCManager.h"
-#include "cardlib/SCError.h"
+#include "smartcard++/esteid/EstEidCard.h"
+#include "smartcard++/PCSCManager.h"
+#include "smartcard++/SCError.h"
 #include <algorithm>
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <fstream>
 #include <string>
 #include <time.h>
+#include "nullstream.h"
 
 using std::wstring;
 using std::string;
 using std::runtime_error;
 
 FILE *debugfp = NULL;
+#ifdef DEBUG
 std::ofstream logStream;
+#else
+onullstream logStream;
+#endif
 
 #define DEFUN(a) a
 
 #pragma comment(lib,"crypt32.lib")
+
+typedef struct _BCRYPT_PKCS1_PADDING_INFO_adhoc {
+  LPCWSTR pszAlgId;
+} BCRYPT_PKCS1_PADDING_INFO_adhoc;
 
 #define KEYLEN 1024
 #define _ENC_ (X509_ASN_ENCODING | PKCS_7_ASN_ENCODING)
@@ -86,7 +95,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
 #ifndef DEBUG
-			logStream.setstate(std::ios_base::eofbit);
+//			logStream.setstate(std::ios_base::eofbit);
 #else
 		{
 				 _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
@@ -225,6 +234,7 @@ CardAcquireContext(
 		if (NULL == pCardData->pfnCspFree) return ret(E_PARAM);
 
 		pCardData->pvVendorSpecific = pCardData->pfnCspAlloc(sizeof(cardFiles));
+		if (!pCardData->pvVendorSpecific) return ret(E_MEMORY);
 		BYTE empty_appdir[] = {1,'m','s','c','p',0,0,0,0};
 		BYTE empty_cardcf[6]={0,0,0,0,0,0};
 		BYTE empty_cardid[16]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
@@ -339,7 +349,6 @@ CardSetContainerProperty(
 		", cbDataLen=%u, dwFlags=0x%08X"
 		,bContainerIndex,NULLWSTR(wszProperty),cbDataLen,dwFlags);
 	return ret(E_UNSUPPORTED);
-	return ret(E_OK);
 }
 DWORD WINAPI 
 CardGetProperty(
@@ -417,9 +426,6 @@ CardGetProperty(
 		*p = CP_CACHE_MODE_SESSION_ONLY;
 		return ret(E_OK);
 		}
-/*	if (wstring(CP_CARD_SUPPORTS_RETRY_COUNT) == wszProperty) {
-		return ret(E_UNSUPPORTED);
-		}*/
 	if (wstring(L"Supports Windows x.509 Enrollment") == wszProperty) {
 		DWORD *p = (DWORD *)pbData;
 		if (pdwDataLen) *pdwDataLen = sizeof(*p);
@@ -536,19 +542,9 @@ CardGetProperty(
 		}
 	if (wstring(CP_CARD_PIN_STRENGTH_CHANGE) == wszProperty) {
 		return ret(E_UNSUPPORTED);
-		DWORD *p = (DWORD *)pbData;
-		if (pdwDataLen) *pdwDataLen = sizeof(*p);
-		if (cbData < sizeof(*p)) return ret(E_SCBUFFER);
-		*p = CARD_PIN_STRENGTH_PLAINTEXT;
-		return ret(E_OK);
 		}
 	if (wstring(CP_CARD_PIN_STRENGTH_UNBLOCK) == wszProperty) {
 		return ret(E_UNSUPPORTED);
-		DWORD *p = (DWORD *)pbData;
-		if (pdwDataLen) *pdwDataLen = sizeof(*p);
-		if (cbData < sizeof(*p)) return ret(E_SCBUFFER);
-		*p = CARD_PIN_STRENGTH_PLAINTEXT;
-		return ret(E_OK);
 		}
 	dbgPrintf("fell through..");
 	return ret(E_PARAM);
@@ -643,23 +639,7 @@ CardCreateContainer(
     __in      DWORD       dwKeySize,
     __in      PBYTE       pbKeyData) {
 	return ret(E_UNSUPPORTED);
-
-	if (!pCardData) return ret(E_PARAM);
-	dbgPrintf("CardCreateContainer  bContainerIndex=%u, dwFlags=0x%08X"
-		", dwKeySpec=%u, dwKeySize=%u"
-		,bContainerIndex,dwFlags,dwKeySpec,dwKeySize);
-
-		if (CARD_CREATE_CONTAINER_KEY_IMPORT == dwFlags ) return ret(E_UNSUPPORTED);
-		if (CARD_CREATE_CONTAINER_KEY_GEN != dwFlags ) return ret(E_PARAM);
-
-		if (dwKeySpec != AT_SIGNATURE && dwKeySpec != AT_KEYEXCHANGE) return ret(E_UNSUPPORTED);
-
-		if (dwKeySize != 1024) return ret(E_PARAM);
-
-		RSAPRIV *a = (RSAPRIV*)pbKeyData;
-//dwKeySpec = AT_SIGNATURE || AT_KEYEXCHANGE
-		return ret(E_OK);
-		}
+	}
 
 
 typedef struct {
@@ -784,7 +764,7 @@ CardAuthenticatePin(
 		}
 
 	char *pin = (char *)pbPin;
-	string tmp(pin , pin+cbPin );
+	PinString tmp(pin , pin+cbPin );
 	BYTE remaining = 0,dummy = 0xFA;
 	//TODO: validate the presented pin here
 	try {
@@ -844,7 +824,7 @@ CardAuthenticateEx(
 
 	char *pin = (char *)pbPinData;
 
-	string tmp(pin , pin+cbPinData );
+	PinString tmp(pin , pin+cbPinData );
 	BYTE remaining = 0,dummy = 0xFA;
 	byte puk,pinAuth = 0,pinSign = 0;
 	if (PinId != AUTH_PIN_ID && PinId != SIGN_PIN_ID /*&& PinId != PUKK_PIN_ID*/) 
@@ -1146,24 +1126,6 @@ CardWriteFile(
 	dbgPrintf("CardWriteFile pszDirectoryName=%s, pszFileName=%s, dwFlags=0x%08X, cbData=%u"
 		,NULLSTR(pszDirectoryName),NULLSTR(pszFileName),dwFlags,cbData);
 	return ret(E_UNSUPPORTED);
-
-		if (!strcmp(pszFileName,"cardcf")) {
-			DWORD sz = sizeof(((cardFiles *)pCardData->pvVendorSpecific)->file_cardcf);
-			if (cbData > sz) return ret(E_CARDFULL);
-			CopyMemory(((cardFiles *)pCardData->pvVendorSpecific)->file_cardcf,pbData,cbData);
-			return ret(E_OK);
-			}
-		if (!strcmp(pszFileName,"cmapfile")) {
-			CONTAINERMAPREC *p = (CONTAINERMAPREC *)pbData;
-			PWCHAR text= (PWCHAR) p->GuidInfo;
-
-			DWORD sz = sizeof(file_cmap);
-			if (cbData > sz ) return ret(E_CARDFULL);
-			CopyMemory(file_cmap,pbData,cbData);
-			return ret(E_OK);
-			}
-		return ret(E_OK);
-
 }
 
 
@@ -1186,9 +1148,9 @@ CardQueryFreeSpace(
 		return ret(E_REVISION);
 
 	pCardFreeSpaceInfo->dwVersion = CARD_FREE_SPACE_INFO_CURRENT_VERSION;
-	pCardFreeSpaceInfo->dwBytesAvailable = 1024 * 1024; //entire MB :P
+	pCardFreeSpaceInfo->dwBytesAvailable = 0;
 	pCardFreeSpaceInfo->dwKeyContainersAvailable = 0;
-	pCardFreeSpaceInfo->dwMaxKeyContainers = 1;
+	pCardFreeSpaceInfo->dwMaxKeyContainers = 2;
 	return ret(E_OK);
 	}
 
@@ -1378,7 +1340,7 @@ CardSignData(
 			dbgPrintf("unsupported paddingtype");
 			return ret(E_UNSUPPORTED);
 			}
-		BCRYPT_PKCS1_PADDING_INFO *pinf = (BCRYPT_PKCS1_PADDING_INFO *)pInfo->pPaddingInfo;
+		BCRYPT_PKCS1_PADDING_INFO_adhoc *pinf = (BCRYPT_PKCS1_PADDING_INFO_adhoc *)pInfo->pPaddingInfo;
 		if (!pinf->pszAlgId) 
 			hashAlg = CALG_SSL3_SHAMD5;
 		else {
@@ -1458,16 +1420,8 @@ CardDeauthenticate(
     __in    DWORD       dwFlags
 	){
 	dbgPrintf("CardDeauthenticate:dummy");
-	//return ret(E_UNSUPPORTED);
-
-	if (!pCardData) return ret(E_PARAM);
-	if (dwFlags) return ret(E_PARAM);
-
-	PCSCManager mgr(pCardData->hSCardCtx);
-	EstEidCard scard(mgr,mgr.connect(pCardData->hScard));
-	scard.setLogging(&logStream);
-	scard.resetAuth();
-	return ret(E_OK);}
+	return ret(E_UNSUPPORTED);
+}
 
 DWORD WINAPI CardDeauthenticateEx(
     __in   PCARD_DATA                             pCardData,
@@ -1476,12 +1430,4 @@ DWORD WINAPI CardDeauthenticateEx(
 	) {
 	dbgPrintf("CardDeauthenticateEx:dummy");
 	return ret(E_UNSUPPORTED);
-
-	if (!pCardData) return ret(E_PARAM);
-	if (dwFlags) return ret(E_PARAM);
-
-//	PCSCManager mgr(pCardData->hSCardCtx);
-//	EstEidCard scard(mgr,mgr.connect(pCardData->hScard));
-//	scard.resetAuth();
-	return ret(E_OK);
 }
