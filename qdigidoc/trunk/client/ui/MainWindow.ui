@@ -593,7 +593,7 @@ padding: 5px;
             <item>
              <widget class="QLabel" name="label">
               <property name="pixmap">
-               <pixmap resource="../images/images.qrc">:/images/EL_Sotsiaalfond_horisontaal.jpg</pixmap>
+               <pixmap resource="../images/images.qrc">:/images/EL_Regionaalareng_horisontaal.jpg</pixmap>
               </property>
              </widget>
             </item>
