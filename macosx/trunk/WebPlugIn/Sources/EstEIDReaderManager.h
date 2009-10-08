@@ -13,6 +13,7 @@ typedef enum _EstEIDReaderError {
 	EstEIDReaderErrorUnknown = 0,
 	EstEIDReaderErrorInvalidPIN,
 	EstEIDReaderErrorInvalidHash,
+	EstEIDReaderErrorLockedPIN,
 	EstEIDReaderErrorState
 } EstEIDReaderError;
 

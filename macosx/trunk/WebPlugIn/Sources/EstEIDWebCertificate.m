@@ -115,6 +115,13 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 	return self;
 }
 
+- (BOOL)isValid
+{
+	NSTimeInterval timeInterval = [NSDate timeIntervalSinceReferenceDate];
+	
+	return ([self->m_validFrom timeIntervalSinceReferenceDate] < timeInterval && timeInterval < [self->m_validTo timeIntervalSinceReferenceDate]) ? YES : NO;
+}
+
 - (NSString *)CN
 {
 	return self->m_CN;

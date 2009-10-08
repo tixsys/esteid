@@ -93,6 +93,22 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 	}
 }
 
+- (NSString *)error
+{
+	return [self->m_errorLabel stringValue];
+}
+
+- (void)setError:(NSString *)error fatal:(BOOL)fatal
+{
+	if([error length] > 0) {
+		[self->m_errorLabel setStringValue:error];
+		[self->m_okButton setEnabled:!fatal];
+	} else {
+		[self->m_errorLabel setStringValue:@""];
+		[self->m_okButton setEnabled:YES];
+	}
+}
+
 - (NSString *)hash
 {
 	return [self->m_hashTextField stringValue];

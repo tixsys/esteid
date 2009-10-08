@@ -1,4 +1,6 @@
 /* PIN Panel */
+"PINPanel.Error.PIN2.Locked" = "PIN2 is blocked!";
+"PINPanel.Error.PIN2.Invalid" = "PIN2 was entered incorrectly!";
 "PINPanel.Label.URL" = "URL:";
 "PINPanel.Label.Hash" = "Hash:";
 "PINPanel.Label.Name" = "Name:";

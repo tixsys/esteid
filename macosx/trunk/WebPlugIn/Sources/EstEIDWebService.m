@@ -14,8 +14,34 @@ NSString *EstEIDWebServiceEventReadersChanged = @"OnReadersChanged";
 NSString *EstEIDWebServiceExceptionInvalidArguments = @"InvalidArguments";
 NSString *EstEIDWebServiceExceptionInvalidEvent = @"InvalidEvent";
 NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
+NSString *EstEIDWebServiceExceptionInvalidCard = @"InvalidCard";
+NSString *EstEIDWebServiceExceptionInvalidCertificate = @"InvalidCertificate";
+NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 
 @implementation EstEIDWebService
+
+- (BOOL)isHTTPS
+{
+	return [[self->m_url scheme] isEqualToString:@"https"];
+}
+
+- (BOOL)isValid
+{
+	NSTimeInterval timeInterval = [NSDate timeIntervalSinceReferenceDate];
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	NSString *expiryDate = [self expiryDate];
+	BOOL result = NO;
+	
+	[formatter setDateFormat:@"dd.MM.yyyy"];
+	
+	if(expiryDate && timeInterval < [[formatter dateFromString:expiryDate] timeIntervalSinceReferenceDate]) {
+		result = YES;
+	}
+	
+	[formatter release];
+	
+	return result;
+}
 
 - (void)handleEvent:(int)reader listeners:(NSArray *)listeners
 {
@@ -32,95 +58,119 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 - (EstEIDWebCertificate *)authCertificate
 {
-	NSData *data = [[self->m_readerManager selectedReader] authCertificate];
+	NSData *data;
 	
-	return (data) ? [[[EstEIDWebCertificate alloc] initWithData:data] autorelease] : nil;
+	if(![self isHTTPS]) {
+		@throw EstEIDWebServiceExceptionSecurity;
+	}
+	
+	return ((data = [[self->m_readerManager selectedReader] authCertificate]) != nil) ? [[[EstEIDWebCertificate alloc] initWithData:data] autorelease] : nil;
 }
 
 - (EstEIDWebCertificate *)signCertificate
 {
-	NSData *data = [[self->m_readerManager selectedReader] signCertificate];
+	NSData *data;
 	
-	return (data) ? [[[EstEIDWebCertificate alloc] initWithData:data] autorelease] : nil;
+	if(![self isHTTPS]) {
+		@throw EstEIDWebServiceExceptionSecurity;
+	}
+	
+	return ((data = [[self->m_readerManager selectedReader] signCertificate]) != nil) ? [[[EstEIDWebCertificate alloc] initWithData:data] autorelease] : nil;
 }
 
 - (NSString *)lastName
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataLastNameKey];
 }
 
 - (NSString *)firstName
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataFirstNameKey];
 }
 
 - (NSString *)middleName
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataMiddleNameKey];
 }
 
 - (NSString *)sex
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataSexKey];
 }
 
 - (NSString *)citizenship
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataCitizenKey];
 }
 
 - (NSString *)birthDate
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataBirthDateKey];
 }
 
 - (NSString *)personalID
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataIDKey];
 }
 
 - (NSString *)documentID
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataDocumentIDKey];
 }
 
 - (NSString *)expiryDate
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataExpiryKey];
 }
 
 - (NSString *)placeOfBirth
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataBirthPlaceKey];
 }
 
 - (NSString *)issuedDate
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataIssueDateKey];
 }
 
 - (NSString *)residencePermit
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataResidencePermitKey];
 }
 
 - (NSString *)comment1
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment1Key];
 }
 
 - (NSString *)comment2
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment2Key];
 }
 
 - (NSString *)comment3
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment3Key];
 }
 
 - (NSString *)comment4
 {
+	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment4Key];
 }
 
@@ -142,6 +192,10 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 - (NSString *)sign:(NSArray *)arguments
 {
+	if(![self isHTTPS]) {
+		@throw EstEIDWebServiceExceptionSecurity;
+	}
+	
 	if([arguments count] == 2) {
 		NSString *hash = [arguments objectAtIndex:0];
 		NSString *url = [arguments objectAtIndex:1];
@@ -155,6 +209,12 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 				EstEIDWebCertificate *certificate = [self signCertificate];
 				
 				if(certificate) {
+					if(![self isValid]) {
+						@throw EstEIDWebServiceExceptionInvalidCard;
+					}
+				}
+				
+				if([certificate isValid]) {
 					EstEIDPINPanel *panel = [[EstEIDPINPanel alloc] init];
 					NSString *result;
 					
@@ -168,6 +228,8 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 					[panel release];
 					
 					return result;
+				} else if(certificate) {
+					@throw EstEIDWebServiceExceptionInvalidCertificate;
 				} else {
 					return nil;
 				}
@@ -266,9 +328,24 @@ NSString *EstEIDWebServiceExceptionInvalidHash = @"InvalidHash";
 
 - (BOOL)pinPanelShouldEnd:(EstEIDPINPanel *)pinPanel
 {
-	NSError *error;
+	NSError *error = nil;
 	
 	[pinPanel setUserInfo:[[[self->m_readerManager selectedReader] sign:[pinPanel hash] pin:[pinPanel PIN] error:&error] uppercaseString]]; 
+	
+	if([[error domain] isEqualToString:EstEIDReaderErrorDomain]) {
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		
+		NSBeep();
+		
+		switch([error code]) {
+			case EstEIDReaderErrorLockedPIN:
+				[pinPanel setError:[bundle localizedStringForKey:@"PINPanel.Error.PIN2.Locked" value:nil table:nil] fatal:YES];
+				break;
+			case EstEIDReaderErrorInvalidPIN:
+				[pinPanel setError:[bundle localizedStringForKey:@"PINPanel.Error.PIN2.Invalid" value:nil table:nil] fatal:NO];
+				break;
+		}
+	}
 	
 	return ([pinPanel userInfo]) ? YES : NO;
 }

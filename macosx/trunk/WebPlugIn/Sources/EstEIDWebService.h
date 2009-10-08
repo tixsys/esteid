@@ -17,6 +17,8 @@ extern NSString *EstEIDWebServiceEventReadersChanged;
 	EstEIDReaderManager *m_readerManager;
 }
 
+- (BOOL)isHTTPS;
+
 /**
  * @name JavaScript Properties
  */

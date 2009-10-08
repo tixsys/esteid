@@ -347,12 +347,27 @@ NSString *EstEIDReaderRetryCounterPIN2 = @"pin2";
 			// FIXME: Remove this stuff
 			return CPlusStringToNSString(toHex(card.calcSignSHA1(bytes, EstEidCard::SIGN, PinString(cpin.c_str()))));
 		}
-		catch(std::runtime_error err) {
-			if(error) {
-				*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorUnknown userInfo:nil];
+		catch(AuthError err) {
+			NSLog(@"%@: Couldn't sign hash %@ because of '%s'.", NSStringFromClass([self class]), hash, err.what());
+			
+			if(err.m_blocked) {
+				if(error) {
+					*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorLockedPIN userInfo:nil];
+				}
+			} else {
+				if(error) {
+					*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorInvalidPIN userInfo:nil];
+				}
 			}
 			
+			return nil;
+		}
+		catch(std::runtime_error err) {
 			NSLog(@"%@: Couldn't sign hash %@ because of '%s'", NSStringFromClass([self class]), hash, err.what());
+		}
+		
+		if(error) {
+			*error = [NSError errorWithDomain:EstEIDReaderErrorDomain code:EstEIDReaderErrorUnknown userInfo:nil];
 		}
 	} else {
 		if(error) {

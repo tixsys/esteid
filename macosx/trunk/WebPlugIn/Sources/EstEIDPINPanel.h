@@ -21,6 +21,7 @@
 	IBOutlet NSButton *m_detailsButton;
 	IBOutlet NSBox *m_detailsBox;
 	IBOutlet NSTextField *m_detailsLabel;
+	IBOutlet NSTextField *m_errorLabel;
 	IBOutlet NSTextField *m_hashLabel;
 	IBOutlet NSTextField *m_hashTextField;
 	IBOutlet NSTextField *m_messageLabel;
@@ -43,6 +44,8 @@
 - (BOOL)showsDetails;
 - (void)setShowsDetails:(BOOL)flag animate:(BOOL)animate;
 
+- (NSString *)error;
+- (void)setError:(NSString *)error fatal:(BOOL)fatal;
 - (NSString *)hash;
 - (void)setHash:(NSString *)hash;
 - (NSString *)name;
