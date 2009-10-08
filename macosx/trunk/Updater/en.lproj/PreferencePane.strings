@@ -1,9 +1,12 @@
 "PreferencePane.Action.CheckNow" = "Check For Updates";
 "PreferencePane.Action.Cancel" = "Cancel";
 "PreferencePane.Action.Retry" = "Try Again";
+"PreferencePane.Action.UpdateFrequencyNever" = "Don't check for updates automatically";
+"PreferencePane.Action.UpdateFrequencyDaily" = "Check for updates every day";
+"PreferencePane.Action.UpdateFrequencyWeekly" = "Check for updates every week";
+"PreferencePane.Action.UpdateFrequencyMonthly" = "Check for updates every month";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Please make sure that your id-card is inserted to the card reader and then try again.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "Failed to enable id-card login.";
-"PreferencePane.Label.CheckForUpdates" = "Automatically update";
 "PreferencePane.Label.InstalledSoftware" = "Installed software:";
 "PreferencePane.Label.NoInstalledSoftware" = "No installed software!";
 "PreferencePane.Label.Version" = "%@ (version %@)";

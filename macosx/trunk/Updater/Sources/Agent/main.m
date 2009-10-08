@@ -12,6 +12,15 @@
 #import <unistd.h>
 #import <dlfcn.h>
 
+typedef enum _EstEIDAgentUpdateFrequency {
+	EstEIDAgentUpdateFrequencyNever = 0,
+	EstEIDAgentUpdateFrequencyDaily = 1,
+	EstEIDAgentUpdateFrequencyWeekly = 2,
+	EstEIDAgentUpdateFrequencyMonthly = 3
+} EstEIDAgentUpdateFrequency;
+
+#define EstEIDAgentUpdateFrequencyTotal 4
+
 static inline NSString *EstEIDAgentGetString(const char *str)
 {
 	return [[[NSString alloc] initWithBytes:str length:strlen(str) encoding:NSUTF8StringEncoding] autorelease];
@@ -121,27 +130,58 @@ static int EstEIDAgentExecuteCommand(AuthorizationRef authorization, char *comma
 	return result;
 }
 
-static int EstEIDAgentLaunchdSetEnabled(AuthorizationRef authorization, NSString *path, BOOL flag)
+static int EstEIDAgentLaunchdSetEnabled(AuthorizationRef authorization, NSString *path, EstEIDAgentUpdateFrequency frequency)
 {
 	NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
+	time_t ctime = time(NULL);
+	struct tm *ltime = localtime(&ctime);
 	BOOL launchd = NO;
 	int result = 0;
 	
 	if(plist) {
 		id obj = [plist objectForKey:@"Disabled"];
 		
-		if([obj isKindOfClass:[NSNumber class]] && [(NSNumber *)obj boolValue] == flag) {
+		if(frequency == EstEIDAgentUpdateFrequencyNever) {
+			if([obj isKindOfClass:[NSNumber class]] && [(NSNumber *)obj boolValue] == NO) {
+				NSMutableDictionary *plist_1 = [[NSMutableDictionary alloc] init];
+				
+				[plist_1 addEntriesFromDictionary:plist];
+				[plist_1 setObject:[NSNumber numberWithBool:YES] forKey:@"Disabled"];
+				launchd = [plist_1 writeToFile:path atomically:YES];
+				[plist_1 release];
+				[plist release];
+			}
+		} else {
 			NSMutableDictionary *plist_1 = [[NSMutableDictionary alloc] init];
+			NSDictionary *period = [plist objectForKey:@"StartCalendarInterval"];
+			NSMutableDictionary *period_1 = [NSMutableDictionary dictionary];
+			
+			if([period isKindOfClass:[NSDictionary class]]) {
+				[period_1 setValue:[period objectForKey:@"Hour"] forKey:@"Hour"];
+				[period_1 setValue:[period objectForKey:@"Minute"] forKey:@"Minute"];
+			} else {
+				[period_1 setValue:[NSNumber numberWithInt:ltime->tm_hour] forKey:@"Hour"];
+				[period_1 setValue:[NSNumber numberWithInt:ltime->tm_min] forKey:@"Minute"];
+			}
+			
+			switch(frequency) {
+				case EstEIDAgentUpdateFrequencyWeekly:
+					[period_1 setObject:[NSNumber numberWithInt:ltime->tm_wday + 1] forKey:@"Weekday"];
+					break;
+				case EstEIDAgentUpdateFrequencyMonthly:
+					[period_1 setObject:[NSNumber numberWithInt:ltime->tm_mday % 27 + 1] forKey:@"Day"];
+					break;
+			}
 			
 			[plist_1 addEntriesFromDictionary:plist];
-			[plist_1 setObject:[NSNumber numberWithBool:!flag] forKey:@"Disabled"];
+			[plist_1 setObject:[NSNumber numberWithBool:NO] forKey:@"Disabled"];
+			[plist_1 setObject:period_1 forKey:@"StartCalendarInterval"];
+			
 			launchd = [plist_1 writeToFile:path atomically:YES];
 			[plist_1 release];
 			[plist release];
 		}
-	} else if(flag) {
-		time_t ctime = time(NULL);
-		struct tm *ltime = localtime(&ctime);
+	} else if(frequency != EstEIDAgentUpdateFrequencyNever) {
 		const char *identifier = "org.esteid.updater";
 		NSString *updater = @"/Applications/Utilities/EstEIDSU.app/Contents/MacOS/EstEIDSU";
 		NSString *plist_1 = [[NSString alloc] initWithFormat:
@@ -171,12 +211,17 @@ static int EstEIDAgentLaunchdSetEnabled(AuthorizationRef authorization, NSString
 							 @"\t\t\t<integer>%d</integer>\n"
 							 @"\t\t\t<key>Minute</key>\n"
 							 @"\t\t\t<integer>%d</integer>\n"
+							 @"%@"
 							 @"\t\t</dict>\n"
 #endif
 							 @"\t\t<key>LimitLoadToSessionType</key>\n"
 							 @"\t\t<string>Aqua</string>\n"
 							 @"\t</dict>\n"
-							 @"</plist>\n", identifier, updater, updater, ltime->tm_hour, ltime->tm_min];
+							 @"</plist>\n", identifier, updater, updater, ltime->tm_hour, ltime->tm_min,
+							 (frequency == EstEIDAgentUpdateFrequencyWeekly) ?
+							 [NSString stringWithFormat:@"\t\t\t<key>Weekday</key>\n\t\t\t\n<integer>%d</integer>\n", (int)(ltime->tm_wday + 1)] :
+							 ((frequency == EstEIDAgentUpdateFrequencyMonthly) ?
+							  [NSString stringWithFormat:@"\t\t\t<key>Day</key>\n\t\t\t\n<integer>%d</integer>\n", (int)(ltime->tm_mday % 27 + 1)] : @"")];
 		
 		launchd = [plist_1 writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 		[plist_1 release];
@@ -262,12 +307,18 @@ int main(int argc, char *argv[])
 				} else {
 					fprintf(stderr, "EstEIDAgent: Repair failed.\n");
 				}
-			// [enable|disable] [file]
+			// [enable|disable|0|1|2|3] [file]
 			} else if(argc == 4 && strcmp(argv[1], "--launchd") == 0) {
 				if(strcmp(argv[2], "enable") == 0) {
-					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), YES);
+					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), EstEIDAgentUpdateFrequencyDaily);
 				} else if(strcmp(argv[2], "disable") == 0) {
-					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), NO);
+					result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), EstEIDAgentUpdateFrequencyNever);
+				} else {
+					int frequency = [EstEIDAgentGetString(argv[2]) intValue];
+					
+					if(frequency >= 0 && frequency < EstEIDAgentUpdateFrequencyTotal) {
+						result = EstEIDAgentLaunchdSetEnabled(authorization, EstEIDAgentGetString(argv[3]), frequency);
+					}
 				}
 			// [enable|disable] [user] [entry]
 			} else if(argc == 5 && strcmp(argv[1], "--idlogin") == 0) {

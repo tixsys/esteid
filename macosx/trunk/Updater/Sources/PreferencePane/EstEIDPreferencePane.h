@@ -12,11 +12,11 @@
     @private
 	EstEIDAgent *m_agent;
 	IBOutlet SFAuthorizationView *m_authorizationView;
-	IBOutlet NSButton *m_automaticUpdateButton;
 	IBOutlet NSButton *m_idLoginButton;
 	IBOutlet NSButton *m_manualUpdateButton;
 	IBOutlet NSTextField *m_infoTextField;
 	IBOutlet NSTextView *m_infoTextView;
+	IBOutlet NSPopUpButton *m_updateFrequencyPopUpButton;
 }
 
 /**

@@ -30,8 +30,6 @@
 			<dict>
 				<key>m_authorizationView</key>
 				<string>SFAuthorizationView</string>
-				<key>m_automaticUpdateButton</key>
-				<string>NSButton</string>
 				<key>m_idLoginButton</key>
 				<string>NSButton</string>
 				<key>m_infoTextField</key>
@@ -40,6 +38,8 @@
 				<string>NSTextView</string>
 				<key>m_manualUpdateButton</key>
 				<string>NSButton</string>
+				<key>m_updateFrequencyPopUpButton</key>
+				<string>NSPopUpButton</string>
 				<key>view</key>
 				<string>NSView</string>
 			</dict>

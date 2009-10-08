@@ -7,12 +7,19 @@
 #import "EstEIDPreferencePane.h"
 #import "EstEIDReceipt.h"
 
+typedef enum _EstEIDAgentUpdateFrequency {
+	EstEIDAgentUpdateFrequencyNever = 0,
+	EstEIDAgentUpdateFrequencyDaily = 1,
+	EstEIDAgentUpdateFrequencyWeekly = 2,
+	EstEIDAgentUpdateFrequencyMonthly = 3
+} EstEIDAgentUpdateFrequency;
+
 @interface EstEIDAgent(Additions)
 
-- (BOOL)autoUpdate;
-- (void)setAutoUpdate:(BOOL)autoUpdate;
 - (BOOL)idLogin;
 - (void)setIdLogin:(BOOL)idLogin;
+- (EstEIDAgentUpdateFrequency)updateFrequency;
+- (void)setUpdateFrequency:(EstEIDAgentUpdateFrequency)updateFrequency;
 
 @end
 
@@ -30,10 +37,10 @@
 	return [[[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSLocalDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"LaunchAgents"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%s.plist", [EstEIDAgent identifier]]];
 }
 
-- (BOOL)autoUpdate
+- (EstEIDAgentUpdateFrequency)updateFrequency
 {
+	EstEIDAgentUpdateFrequency result = EstEIDAgentUpdateFrequencyNever;
 	NSString *path = [self launchdAgentPath];
-	BOOL result = NO;
 	
 	if([[NSFileManager defaultManager] fileExistsAtPath:path]) {
 		NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:path];
@@ -41,8 +48,17 @@
 		if(plist) {
 			id obj = [plist objectForKey:@"Disabled"];
 			
-			if([obj isKindOfClass:[NSNumber class]]) {
-				result = ![(NSNumber *)obj boolValue];
+			if([obj isKindOfClass:[NSNumber class]] && ![(NSNumber *)obj boolValue]) {
+				result = EstEIDAgentUpdateFrequencyDaily;
+				obj = [plist objectForKey:@"StartCalendarInterval"];
+				
+				if([obj isKindOfClass:[NSDictionary class]]) {
+					if([(NSDictionary *)obj objectForKey:@"Day"]) {
+						result = EstEIDAgentUpdateFrequencyMonthly;
+					} else if([(NSDictionary *)obj objectForKey:@"Weekday"]) {
+						result = EstEIDAgentUpdateFrequencyWeekly;
+					}
+				}
 			}
 			
 			[plist release];
@@ -52,9 +68,9 @@
 	return result;
 }
 
-- (void)setAutoUpdate:(BOOL)autoUpdate
+- (void)setUpdateFrequency:(EstEIDAgentUpdateFrequency)updateFrequency
 {
-	[[self launchWithArguments:@"--launchd", (autoUpdate) ? @"enable" : @"disable", [self launchdAgentPath], nil] waitUntilExit];
+	[[self launchWithArguments:@"--launchd", [NSString stringWithFormat:@"%d", updateFrequency], [self launchdAgentPath], nil] waitUntilExit];
 }
 
 - (BOOL)idLogin
@@ -163,18 +179,18 @@
 
 - (IBAction)update:(id)sender
 {
-	if(sender == self->m_automaticUpdateButton) {
+	if(sender == self->m_updateFrequencyPopUpButton) {
 		EstEIDAgent *agent = [self agent];
 		
 		if(agent) {
 			if([agent isOwnedBySystem]) {
-				[agent setAutoUpdate:([self->m_automaticUpdateButton state] == NSOnState) ? YES : NO];
+				[agent setUpdateFrequency:[self->m_updateFrequencyPopUpButton indexOfSelectedItem]];
 			} else {
 				NSLog(@"%@: Agent is not owned by the system!", NSStringFromClass([self class]));
 				NSBeep();
 			}
 			
-			[self->m_automaticUpdateButton setState:([agent autoUpdate]) ? NSOnState : NSOffState];
+			[self->m_updateFrequencyPopUpButton selectItemAtIndex:[agent updateFrequency]];
 		} else {
 			NSLog(@"%@: Couldn't find agent!", NSStringFromClass([self class]));
 			NSBeep();
@@ -219,7 +235,7 @@
 	EstEIDAgent *agent = [self agent];
 	
 	[self invalidateInfo];
-	[self->m_automaticUpdateButton setState:([agent autoUpdate]) ? NSOnState : NSOffState];
+	[self->m_updateFrequencyPopUpButton selectItemAtIndex:(int)[agent updateFrequency]];
 	
 	if(![self->m_idLoginButton isHidden]) {
 		[self->m_idLoginButton setState:([agent idLogin]) ? NSOnState : NSOffState];
@@ -259,8 +275,11 @@
 	[self->m_authorizationView updateStatus:nil];
 	[self->m_authorizationView setAutoupdate:YES];
 	[self->m_manualUpdateButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.CheckNow" value:nil table:@"PreferencePane"]];
-	[self->m_automaticUpdateButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Label.CheckForUpdates" value:nil table:@"PreferencePane"]];
-	[self->m_automaticUpdateButton setEnabled:([self->m_authorizationView authorizationState] == SFAuthorizationViewUnlockedState) ? YES : NO];
+	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyNever" value:nil table:@"PreferencePane"]];
+	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyDaily" value:nil table:@"PreferencePane"]];
+	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyWeekly" value:nil table:@"PreferencePane"]];
+	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyMonthly" value:nil table:@"PreferencePane"]];
+	[self->m_updateFrequencyPopUpButton setEnabled:([self->m_authorizationView authorizationState] == SFAuthorizationViewUnlockedState) ? YES : NO];
 	[self->m_idLoginButton setEnabled:([self->m_authorizationView authorizationState] == SFAuthorizationViewUnlockedState) ? YES : NO];
 }
 
@@ -280,13 +299,13 @@
 
 - (void)authorizationViewDidAuthorize:(SFAuthorizationView *)view
 {
-	[self->m_automaticUpdateButton setEnabled:YES];
+	[self->m_updateFrequencyPopUpButton setEnabled:YES];
 	[self->m_idLoginButton setEnabled:YES];
 }
 
 - (void)authorizationViewDidDeauthorize:(SFAuthorizationView *)view
 {
-	[self->m_automaticUpdateButton setEnabled:NO];
+	[self->m_updateFrequencyPopUpButton setEnabled:NO];
 	[self->m_idLoginButton setEnabled:NO];
 }
 

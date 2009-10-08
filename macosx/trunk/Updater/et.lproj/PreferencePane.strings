@@ -1,9 +1,12 @@
 "PreferencePane.Action.CheckNow" = "Kontrolli uuendusi";
 "PreferencePane.Action.Cancel" = "Katkesta";
 "PreferencePane.Action.Retry" = "Proovi uuesti";
+"PreferencePane.Action.UpdateFrequencyNever" = "Ära kontrolli automaatselt uuendusi";
+"PreferencePane.Action.UpdateFrequencyDaily" = "Kontrolli uuendusi iga päev";
+"PreferencePane.Action.UpdateFrequencyWeekly" = "Kontrolli uuendusi iga nädal";
+"PreferencePane.Action.UpdateFrequencyMonthly" = "Kontrolli uuendusi iga kuu";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "ID-kaardiga login seadistamine ebaõnnestus!";
-"PreferencePane.Label.CheckForUpdates" = "Kontrolli automaatselt tarkvarauuendusi";
 "PreferencePane.Label.InstalledSoftware" = "Paigaldatud tarkvara:";
 "PreferencePane.Label.NoInstalledSoftware" = "Ei leidnud paigaldatud tarkvara!";
 "PreferencePane.Label.Version" = "%@ (versioon %@)";
