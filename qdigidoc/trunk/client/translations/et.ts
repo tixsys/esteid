@@ -281,10 +281,10 @@ Also an active internet connection is needed.&lt;/p&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Dokumendi allakirjutamine.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart, millel on kehtiv ja kasutatav allkirjastamise sertifikaat.&lt;br /&gt;&lt;br /&gt;
-Dokumendi allakirjutamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkirja andmiseks on vajalik interneti ühendus.
+Dokumendi allkirjastamine.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart või Mobiil-ID, millel on kehtiv ja kasutatav allkirjastamine sertifikaat.&lt;br /&gt;&lt;br /&gt;
+Dokumendi allkirjastamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
+Digitaalallkirja andmiseks on vajalik internetiühendus.
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
