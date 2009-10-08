@@ -2,6 +2,6 @@
   <qresource prefix="images" >
     <file >background.png</file>
     <file >digidoc_icon_48x48.png</file>
-    <file >EL_Sotsiaalfond_horisontaal.jpg</file>
+    <file >EL_Regionaalareng_horisontaal.jpg</file>
   </qresource>
 </RCC>
