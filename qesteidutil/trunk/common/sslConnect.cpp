@@ -78,11 +78,9 @@ public:
 
 
 SSLThread::SSLThread( PKCS11_SLOT *slot, QObject *parent )
-: QThread(parent), m_result(CKR_OK), m_slot(slot) {}
+: QThread(parent), m_slot(slot) {}
 
-int SSLThread::result() const { return m_result; }
-
-void SSLThread::run() { m_result = PKCS11_login( m_slot, 0, NULL ); }
+void SSLThread::run() { PKCS11_login( m_slot, 0, NULL ); }
 
 
 
@@ -147,7 +145,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
 	}
 
-	if( PKCS11_enumerate_slots( ctx, &pslots, &nslots ) )
+	if( PKCS11_enumerate_slots( ctx, &pslots, &nslots ) || !nslots )
 		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
 
 	// Find token
@@ -156,34 +154,27 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	{
 		if ( (unsigned int)reader*4 > nslots )
 			throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );
-
 		slot = &pslots[reader*4];
-		if (!slot || !slot->token)
-			throw std::runtime_error( QObject::tr("no token available").toStdString() );
 	}
 	else
 	{
-		PKCS11_SLOT *tmp;
 		for( unsigned int i = 0; i < nslots; ++i )
 		{
-			tmp = &pslots[i];
-			if( !tmp->token )
-				continue;
-			if( card.contains( tmp->token->serialnr ) )
+			if( (&pslots[i])->token &&
+				card.contains( (&pslots[i])->token->serialnr ) )
 			{
-				slot = tmp;
+				slot = &pslots[i];
 				break;
 			}
 		}
-		if( !slot )
-			throw std::runtime_error( QObject::tr("no token available").toStdString() );
 	}
+	if( !slot || !slot->token )
+		throw std::runtime_error( QObject::tr("no token available").toStdString() );
 
 	// Find token cert
 	PKCS11_CERT *certs;
 	unsigned int ncerts;
-	int result = PKCS11_enumerate_certs(slot->token, &certs, &ncerts);
-	if( !ncerts )
+	if( PKCS11_enumerate_certs(slot->token, &certs, &ncerts) || !ncerts )
 		throw std::runtime_error( QObject::tr("no certificate available").toStdString() );
 	PKCS11_CERT *authcert = &certs[0];
 
@@ -201,7 +192,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 				pin = p.text();
 			}
 			QCoreApplication::processEvents();
-			result = PKCS11_login(slot, 0, pin.toUtf8());
+			PKCS11_login(slot, 0, pin.toUtf8());
 		}
 		else
 		{
@@ -219,7 +210,6 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 			}
 			while( t->isRunning() && p->isVisible() );
 			bool hidden = p->isHidden();
-			result = t->result();
 			p->deleteLater();
 			t->deleteLater();
 			if( hidden )
