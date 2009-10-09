@@ -204,7 +204,10 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		throwException( tr("Signing certificate is not selected."), Exception::None, __LINE__ );
 
 	if( d->slotCount )
+	{
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+		d->slotCount = 0;
+	}
 	if( slotNumber() < 0 ||
 		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
 		(unsigned int)slotNumber() >= d->slotCount )
