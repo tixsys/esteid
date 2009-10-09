@@ -11,6 +11,10 @@
 #include <nsCOMPtr.h>
 #include <nsIWindowWatcher.h>
 #include <nsIPrompt.h>
+#include <nsIDOMWindow.h>
+#include <nsIDOMDocument.h>
+#include <nsIDOMHTMLDocument.h>
+
 
 #include <stdio.h>
 #include <iostream>
@@ -53,6 +57,9 @@ nsEstEID::Init()
     	ESTEID_ERROR("Card Error %s\n", e.what());
     	return NS_ERROR_UNEXPECTED;
     }
+
+    eidgui = do_GetService(NS_ESTEIDPRIVATE_CONTRACTID);
+
     return NS_OK;
 }
 
@@ -98,11 +105,13 @@ NS_IMETHODIMP nsEstEID::GetVersion(nsACString & _retval)
 NS_IMETHODIMP nsEstEID::AddEventListener(const char *type,
                                          nsIEstEIDListener *listener)
 {
+	ESTEID_WHITELIST_REQUIRED;
+
 	if(!type || !listener)
 		ESTEID_ERROR_INVALID_ARG;
 
 	unsigned int lt;
-	for(lt = 0; lt < sizeof(ListenerNames); lt++)
+	for(lt = 0; lt < MAX_LISTENERS; lt++)
 		if(ListenerNames[lt].Equals(type)) break;
 
 	if(lt >= MAX_LISTENERS)
@@ -118,11 +127,13 @@ NS_IMETHODIMP nsEstEID::AddEventListener(const char *type,
 NS_IMETHODIMP nsEstEID::RemoveEventListener(const char *type,
                                             nsIEstEIDListener *listener)
 {
+	ESTEID_WHITELIST_REQUIRED;
+
 	if(!type || !listener)
 		ESTEID_ERROR_INVALID_ARG;
 
 	unsigned int lt;
-	for(lt = 0; lt < sizeof(ListenerNames); lt++)
+	for(lt = 0; lt < MAX_LISTENERS; lt++)
 		if(ListenerNames[lt].Equals(type)) break;
 
 	if(lt >= MAX_LISTENERS)
@@ -138,6 +149,8 @@ NS_IMETHODIMP nsEstEID::RemoveEventListener(const char *type,
 }
 
 NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval) {
+	ESTEID_WHITELIST_REQUIRED;
+
 	if(!aHash || !url)
 		ESTEID_ERROR_INVALID_ARG;
 
@@ -146,42 +159,41 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		return NS_ERROR_INVALID_ARG;
 	}
 
-	nsCOMPtr<nsIWindowWatcher> ww =
-		do_GetService(NS_WINDOWWATCHER_CONTRACTID);
-	if(!ww) return NS_ERROR_FAILURE;
-	ESTEID_DEBUG("AskPINFF: got access to WindowWatcher\n");
+	if(!eidgui) return NS_ERROR_FAILURE;
 
-	nsCOMPtr<nsIPrompt> prompter;
-	ww->GetNewPrompter(0, getter_AddRefs(prompter));
-	if(!prompter) return NS_ERROR_FAILURE;
-	ESTEID_DEBUG("AskPINFF: prompter activated\n");
+	char *pin = nsnull;
+	// PRUnichar *pin = nsnull;
+	if(pin) {
+		ESTEID_DEBUG("PIN: %s\n", pin);
+	}
 
-	nsCString warn;
-
+	PRBool retrying = false;
+	PRInt16 tries = 3;
 	while(true) {
 		nsresult rv;
-		PRUnichar *pass = nsnull;
-		PRBool ok;
-		nsCString tmp1, tmp2;
-		tmp1 += warn;
-		tmp1 += "Dokumendi Allkirjastamine\n";
-		rv = GetFirstName(tmp2);
-		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
-		tmp1 += tmp2;
-		rv = GetLastName(tmp2);
-		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
-		tmp1 += " "; tmp1 += tmp2; tmp1 += " (PIN2)\n";
+		// PRUnichar *pass = nsnull;
+		char *pass = nsnull;
+		nsString subject;
 
-		prompter->PromptPassword(nsnull,
-				NS_ConvertASCIItoUTF16(tmp1).get(),
-				&pass, 0, 0, &ok);
+		/* Extract subject line from Certificate */
+		nsCOMPtr <nsIEstEIDCertificate> ss;
+		rv = GetSignCert(getter_AddRefs(ss));
+		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
+		rv = ss->GetCN(subject);
+		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
 
-		if(!ok)	return NS_ERROR_ABORT;
+		eidgui->PromptForSignPIN(parentWin, subject,
+			           url, aHash, pageURL, retrying, tries, &pass);
+
+		retrying = true;
+
+		if(!pass)	return NS_ERROR_ABORT;
 
 		try {
 			try {
 				std::string hash(aHash);
-				std::string pin(NS_LossyConvertUTF16toASCII(pass).get());
+				//std::string pin(NS_LossyConvertUTF16toASCII(pass).get());
+				std::string pin(pass);
 				*_retval = PL_strdup(
 				    service->signSHA1(hash,EstEidCard::SIGN,pin).c_str());
 				return NS_OK;
@@ -197,8 +209,7 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 				}
 
 				service->getRetryCounts(puk, pin1, pin2);
-				warn.Assign("!! VALE PIN !!\nKatseid jäänud: ");
-				warn.AppendInt(pin2); warn.Append("\n");
+				tries = pin2;
 			}
 		} catch(std::runtime_error &e) {
 			ESTEID_ERROR("Card Error %s\n", e.what());
@@ -306,19 +317,84 @@ nsresult nsEstEID::_GetCert(nsIEstEIDCertificate **_retval, CertId id) {
 		return rv;
 }
 
+bool nsEstEID::_isWhitelisted() {
+	if(!onPage) return true;
+	if(!eidgui) return false;
+
+	PRBool wl = false;
+	nsresult rv = eidgui->IsWhiteListed(pageURL, &wl);
+
+	//if(pageURL.EqualsLiteral("https://id.smartlink.ee/plugin_tests/test.html")) {
+	if(NS_SUCCEEDED(rv) && wl) {
+		return true;
+	} else {
+		if(!wlNotified && eidgui) {
+			wlNotified = true;
+			eidgui->ShowNotification(parentWin, pageURL);
+		}
+		return false;
+	}
+}
+
+/* Extract the page URL from DOMWindow passed to us by plugin code */
+NS_IMETHODIMP nsEstEID::InitDOMWindow(nsISupports *win)
+{
+    ESTEID_DEBUG("InitDOMWindow()\n");
+    onPage = true;
+
+    nsCOMPtr <nsIDOMDocument> dd;
+    nsCOMPtr <nsIDOMHTMLDocument> dhd;
+
+    if(!win)
+        return NS_ERROR_INVALID_ARG;
+
+    win->QueryInterface(NS_GET_IID(nsIDOMWindow), getter_AddRefs(parentWin));
+    if(!parentWin)
+        return NS_ERROR_INVALID_ARG;
+
+    nsresult rv = parentWin->GetDocument(getter_AddRefs(dd));
+    if(!NS_SUCCEEDED(rv))
+        return NS_ERROR_INVALID_ARG;
+
+    dd->QueryInterface(NS_GET_IID(nsIDOMHTMLDocument), getter_AddRefs(dhd));
+    if(!dd)
+        return NS_ERROR_INVALID_ARG;
+
+    rv = dhd->GetURL(pageURL);
+    if(!NS_SUCCEEDED(rv))
+        return NS_ERROR_INVALID_ARG;
+
+    ESTEID_DEBUG("InitDOMWindow: page URL is %s\n",
+                       NS_ConvertUTF16toUTF8(pageURL).get());
+    return NS_OK;
+}
+
+NS_IMETHODIMP nsEstEID::KillListeners() {
+	ESTEID_DEBUG("KillListeners\n");
+	for(unsigned int lt = 0; lt < MAX_LISTENERS; lt++) {
+		vector <ListenerPtr> *l = & _Listeners[lt];
+		l->clear();
+	}
+}
+
 /*
  * Attribute Getters
  */
 
 NS_IMETHODIMP nsEstEID::GetAuthCert(nsIEstEIDCertificate **_retval) {
+	ESTEID_WHITELIST_REQUIRED;
+
 	return _GetCert(_retval, AUTH);
 }
 NS_IMETHODIMP nsEstEID::GetSignCert(nsIEstEIDCertificate **_retval) {
+	ESTEID_WHITELIST_REQUIRED;
+
 	return _GetCert(_retval, SIGN);
 }
 
 #define ESTEID_PD_GETTER_IMP(index, attr) \
     NS_IMETHODIMP nsEstEID::Get##attr(nsACString & _retval) { \
+	    ESTEID_WHITELIST_REQUIRED; \
         nsresult rv = _UpdatePersonalData(); \
         if(NS_FAILED(rv)) return rv; \
         if(_PersonalData.size() <= index) \

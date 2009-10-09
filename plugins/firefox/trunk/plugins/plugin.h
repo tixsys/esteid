@@ -35,7 +35,6 @@ private:
   NPP mInstance;
   NPBool mInitialized;
   nsIEstEID* mScriptablePeer;
-  // nsCOMPtr <nsIEstEID> mScriptablePeer;
 };
 
 #endif // __PLUGIN_H__

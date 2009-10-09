@@ -16,7 +16,7 @@ set(CARDLIB ${CMAKE_SOURCE_DIR}/cardlib)
 
 # Set project version
 set( MAJOR 0)
-set( MINOR 3)
+set( MINOR 4)
 
 find_package(Subversion)
 if(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
@@ -48,17 +48,18 @@ add_custom_target( xpi-stage
 set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
 add_custom_target( xpi-jar
 	COMMAND ${RM} ${CHROME_JAR}
-	COMMAND zip -pr ${CHROME_JAR} content/*
+	COMMAND zip -pr ${CHROME_JAR} content/* locale/* skin/*
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/chrome
 )
 
 add_dependencies( xpi-jar xpi-stage)
 
 add_custom_target( xpi ALL
-	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
-	DEPENDS chrome.manifest
 	DEPENDS esteid
 	DEPENDS npesteid
+	DEPENDS ${PROJECT_BINARY_DIR}/components/nsEstEIDPrivate.js
+	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
+	DEPENDS chrome.manifest
 	COMMAND ${RM} chrome.manifest
 	COMMAND ${CP} ${PROJECT_SOURCE_DIR}/chrome.manifest .
 	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
@@ -67,6 +68,13 @@ add_custom_target( xpi ALL
 	VERBATIM
 )
 add_dependencies( xpi xpi-jar)
+add_dependencies( xpi jsesteid)
+
+add_custom_target(run
+	DEPENDS run-in-ff.sh
+	COMMAND ${PROJECT_SOURCE_DIR}/run-in-ff.sh esteid-${PROJECT_VERSION}.xpi
+)
+add_dependencies(run xpi)
 
 # FIND Gecko SDK
 INCLUDE(FindPkgConfig OPTIONAL)
@@ -119,7 +127,7 @@ if(NOT GECKO_SDK_FOUND)
 endif(NOT GECKO_SDK_FOUND)
 
 set(XPIDL ${GECKO_SDK_DIR}/bin/xpidl)
-set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl)
+set(XPIDL_FLAGS -I${GECKO_SDK_DIR}/idl -I${CMAKE_SOURCE_DIR}/components)
 
 message( STATUS "Gecko SDK found in ${GECKO_SDK_DIR}")
 
@@ -155,7 +163,16 @@ endif(WIN32)
 # In addition, when compiling with MSVC, we link VC Runtime statically.
 # TODO: generate version_script
 if(MSVC)
-    set(XPCOM_CPP_FLAGS "/FI xpcom-config.h /MT /Zc:wchar_t-")
+    # Build with static MSVC runtime
+    foreach(flag_var
+            CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+            CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+        if(${flag_var} MATCHES "/MD")
+            string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+        endif(${flag_var} MATCHES "/MD")
+    endforeach(flag_var)
+
+    set(XPCOM_CPP_FLAGS "/FI xpcom-config.h /Zc:wchar_t-")
     set(XPCOM_LINK_FLAGS )
     set(NPAPI_LINK_FLAGS "/def:${CMAKE_SOURCE_DIR}/plugins/npesteid.def")
 elseif(UNIX)
@@ -211,6 +228,7 @@ set(esteid_module_SRCS
     components/nsEstEIDService.cpp
     components/nsEstEIDCertificate.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
+    ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEIDPrivate.h
 
     components/converters.cpp
     ${CARDLIB}/CardBase.cpp
@@ -228,6 +246,7 @@ set(esteid_module_SRCS
 set(esteid_plugin_SRCS
     plugins/plugin.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
+    ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEIDPrivate.h
 
     ${PLUGINGATE}/np_entry.cpp
     ${PLUGINGATE}/npn_gate.cpp
@@ -237,6 +256,16 @@ set(esteid_plugin_SRCS
 set(esteid_plugin_WIN
     plugins/npesteid.rc
     plugins/npesteid.def
+)
+
+# TODO: A more generic way to list XPCOM components written in JS
+set(COMP_DEST "${CMAKE_CURRENT_BINARY_DIR}/components")
+add_custom_command(
+    OUTPUT ${COMP_DEST}/nsEstEIDPrivate.js
+    COMMAND ${CP} nsEstEIDPrivate.js ${COMP_DEST}
+    DEPENDS ${COMP_DEST}/nsIEstEIDPrivate.xpt
+    DEPENDS components/nsEstEIDPrivate.js
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/components
 )
 
 # TODO: Find a better way to pass special CFLAGS to targets

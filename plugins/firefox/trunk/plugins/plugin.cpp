@@ -10,6 +10,7 @@
 #include "nsISupportsUtils.h" // this is where some useful macros defined
 #include "nsStringAPI.h"
 #include "nsIEstEID.h"
+#include "nsIEstEIDPrivate.h"
 
 #include <stdio.h>
 
@@ -52,7 +53,10 @@ NPError NS_PluginGetValue(NPPVariable aVariable, void *aValue)
 // general initialization and shutdown
 //
 NPError NS_PluginInitialize()
+// NPError NP_LOADDS NPP_Initialize()
 {
+  ESTEID_DEBUG("NPP_Initialize\n");
+
   // this is probably a good place to get the service manager
   // note that Mozilla will add reference, so do not forget to release
   nsISupports * sm = NULL;
@@ -65,14 +69,16 @@ NPError NS_PluginInitialize()
   if(sm) {
     sm->QueryInterface(NS_GET_IID(nsIServiceManager), (void**)&gServiceManager);
     NS_RELEASE(sm);
-    ESTEID_DEBUG("EstEIDPluginInstance: Service manager initialized\n");
+    ESTEID_DEBUG("NPP_Initialize: Service manager initialized\n");
   }
 
   return NPERR_NO_ERROR;
 }
 
 void NS_PluginShutdown()
+//void NP_LOADDS NPP_Shutdown()
 {
+  ESTEID_DEBUG("NPP_Shutdown\n");
   // we should release the service manager
   NS_IF_RELEASE(gServiceManager);
   gServiceManager = NULL;
@@ -127,9 +133,19 @@ NPBool EstEIDPluginInstance::initXPCOM() {
   /* Get a pointer to EstEID XPCOM object so we can expose it
      for scripting */
   if (gServiceManager) {
+/*
     ESTEID_DEBUG("EstEIDPluginInstance: Trying to aquire %s\n", NS_ESTEID_CONTRACTID);
     gServiceManager->GetServiceByContractID(NS_ESTEID_CONTRACTID,
         NS_GET_IID(nsIEstEID), (void **)&mScriptablePeer);
+*/
+    ESTEID_DEBUG("EstEIDPluginInstance: Trying to aquire %s\n", NS_ESTEIDPRIVATE_CONTRACTID);
+    nsCOMPtr <nsIEstEIDPrivate> tmp;
+    gServiceManager->GetServiceByContractID(NS_ESTEIDPRIVATE_CONTRACTID,
+        NS_GET_IID(nsIEstEIDPrivate), getter_AddRefs(tmp));
+    if(tmp) {
+        tmp->CreatePluginInstance(&mScriptablePeer);
+    }
+
     if(mScriptablePeer) {
         nsCString ver;
         mScriptablePeer->GetVersion(ver);
@@ -148,6 +164,12 @@ NPBool EstEIDPluginInstance::initXPCOM() {
 NPBool EstEIDPluginInstance::init(NPWindow* aWindow)
 {
   ESTEID_DEBUG("EstEIDPluginInstance::init()\n");
+
+  nsISupports *dw = NULL;
+  NPN_GetValue(mInstance, NPNVDOMWindow, &dw);
+  mScriptablePeer->InitDOMWindow(dw);
+  NS_RELEASE(dw);
+
   // FIXME: Is this needed?
   if(aWindow == NULL)
     return PR_FALSE;
@@ -160,6 +182,8 @@ void EstEIDPluginInstance::shut()
 {
   ESTEID_DEBUG("EstEIDPluginInstance::shut()\n");
   mInitialized = PR_FALSE;
+  if(mScriptablePeer)
+      mScriptablePeer->KillListeners();
 }
 
 NPBool EstEIDPluginInstance::isInitialized()

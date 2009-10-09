@@ -7,6 +7,7 @@
 #include "cardlib.h"
 
 #include "nsIEstEID.h"
+#include "nsIEstEIDPrivate.h"
 #include "nsEstEIDService.h"
 
 /* Mozilla includes */
@@ -46,6 +47,7 @@ private:
   nsresult _UpdateCertData(CertId);
   nsresult _GetCert(nsIEstEIDCertificate **, CertId);
   void _FireListeners(ListenerType, PRUint16);
+  bool _isWhitelisted();
 
   // Dynamic data
   vector <std::string> _PersonalData;
@@ -56,6 +58,20 @@ private:
 
   // Pointer to the service singleton
   EstEIDServiceBase* service;
+
+  // Pointer to plugin window (if any)
+  nsCOMPtr <nsIDOMWindow> parentWin;
+
+  // Current page URL (if any)
+  nsString pageURL;
+
+  // A flag to indicate if we are called from a plugin
+  bool onPage;
+
+  // A flag to indicate that we have already shown the whitelist message
+  bool wlNotified;
+
+  nsCOMPtr<nsIEstEIDPrivate> eidgui;
 };
 
 static const nsCString ListenerNames[] = {
@@ -67,5 +83,8 @@ static const nsCString ListenerNames[] = {
 #define SETNRET(a, b) return b;
 #define ESTEID_OK                     SETNRET(0, NS_OK)
 #define ESTEID_ERROR_INVALID_ARG      SETNRET(4, NS_ERROR_INVALID_ARG)
+#define ESTEID_ERROR_NO_PERMISSION    SETNRET(8, NS_ERROR_NOT_AVAILABLE)
+
+#define ESTEID_WHITELIST_REQUIRED if(!_isWhitelisted()) ESTEID_ERROR_NO_PERMISSION
 
 #endif // nsEstEID_h

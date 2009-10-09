@@ -1,0 +1,35 @@
+#include "nsISupports.idl"
+#include "nsISecurityCheckedComponent.idl"
+#include "nsIDOMWindow.idl"
+#include "nsIEstEID.idl"
+
+/**
+ * This is a private interface that is used by Estonian
+ * ID-card signing plugin for deep integration with Firefox.
+ * It is used for showing native UI windows and manipulating
+ * Firefox internals like cert stores and security modules.
+ * This interface is only accessible for scripts with XPCOM access
+ * and is not visible for web applications.
+ */
+[scriptable, uuid(be28a086-2234-429b-9bc4-74a652538c64)]
+interface nsIEstEIDPrivate : nsISupports
+{
+  boolean isWhiteListed(in AString pageUrl);
+  string promptForSignPIN(in nsIDOMWindow aParent, in AString subject,
+                          in string docUrl, in string docHash,
+                          in AString pageUrl, in boolean retry,
+                          in short tries);
+
+  void showNotification(in nsIDOMWindow aWindow, in AString pageUrl);
+  void showSettings(in nsIDOMWindow aWindow, in AString pageUrl);
+  void   logMessage(in AString msg);
+  void debugMessage(in AString msg);
+  void errorMessage(in AString msg);
+  nsIEstEID createPluginInstance();
+};
+
+%{C++
+
+#define NS_ESTEIDPRIVATE_CONTRACTID "@id.eesti.ee/esteid-private;1"
+
+%}

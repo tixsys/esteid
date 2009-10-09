@@ -111,10 +111,17 @@ interface nsIEstEID : nsISupports
    * 5 - Card error
    * 6 - Manager error
    * 7 - Unknown error
+   * 8 - Permission denied
    */
   /* readonly attribute int errorCode; */
   /** Error message  */
   /* readonly attribute AString errorMessage; */ 
+
+  /** This method is used internally by browser specific implementation
+    * and is not available for scripting
+    */
+  [noscript] void initDOMWindow(in nsISupports win);
+  [noscript] void killListeners();
 };
 
 %{C++
