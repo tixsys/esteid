@@ -66,7 +66,11 @@ $(document).ready(function()
         success: function(obj) {
             //1. Files are loaded to server, BdocServlet servlet sends back signature hash and digidoc file name in json result
             Info("Files successfully uploaded to server, prepearing signing process", 50);
-
+            if(obj.status=='ERROR')
+            {
+                Error(obj.message);
+                return;
+            }
             var sigHex = null;
             try {
                 //2. IdCard will raise the PIN2 dialog and will compare the hash with BdocServlet.doGet digidoc stream

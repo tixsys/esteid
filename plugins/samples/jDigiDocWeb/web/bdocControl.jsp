@@ -19,7 +19,7 @@
 
             try{
             DigiDocFactory digFac = ConfigManager.instance().getDigiDocFactory();
-            String filename=rootPath+"docks\\"+doc+".bdoc";
+            String filename=rootPath+"docks/"+doc+".bdoc";
             sdoc = digFac.readSignedDoc(filename);
             }
             catch(Exception ex)

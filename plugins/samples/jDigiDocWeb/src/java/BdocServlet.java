@@ -71,6 +71,7 @@ public class BdocServlet extends HttpServlet {
 
     public void uploadFilesAndCertToGenerateHash(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
+         String jsonResult="";
         try {
             String ddocFileName = "";
             String cert = "";
@@ -92,12 +93,13 @@ public class BdocServlet extends HttpServlet {
                     } else {
                         String itemName = fileItem.getName();
                         if (!"".equals(itemName)) {
-                            File file = new File(myPath + "docks\\Files\\" + itemName);
+                            File file = new File(myPath + "/docks/Files/" + itemName);
                             fileItem.write(file);
                             sdoc.addDataFile(file, "file", DataFile.CONTENT_EMBEDDED);
                         }
                     }
                 }
+                
                 CertificateFactory cf = CertificateFactory.getInstance("X.509");
                 X509Certificate certificate =(X509Certificate)cf.generateCertificate(new ByteArrayInputStream(Base64Util.decode(cert)));
                 Signature signature = sdoc.prepareSignature(certificate, null, null);
@@ -105,15 +107,15 @@ public class BdocServlet extends HttpServlet {
                 HttpSession sess = request.getSession(true);
                 sess.setAttribute("docName", ddocFileName);
                 sess.setAttribute("sig", signature);//put signature into session
-                String jsonResult="{'hash':'"+hash+"','doc':'"+ddocFileName+"'}";
-                response.setContentType("text/plain");
-                response.getWriter().write(jsonResult);//send hash back to client plugin
+                 jsonResult="{'status':'OK','hash':'"+hash+"','doc':'"+ddocFileName+"'}";
+               
             }
         }catch (Exception ex) {
             Logger.getLogger(BdocServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.setContentType("text/plain");
-            response.getWriter().write("ERROR: " + ex.getMessage());
-        } 
+            jsonResult="{'status':'ERROR','message':'"+ex.getMessage()+"'}";
+        }
+          response.setContentType("text/plain");
+          response.getWriter().write(jsonResult);//send hash back to client plugin
     }
 
     public void sendDocumentStreamToBrowserClientForVerification(HttpServletRequest req, HttpServletResponse res) throws IOException
@@ -132,6 +134,7 @@ public class BdocServlet extends HttpServlet {
         } else {
             res.setContentType("text/plain");
             res.getWriter().write("ERROR: No signing operation in progress");
+            res.getWriter().write("{'status':'ERROR','message':'No signing operation in progress'}");
         }
     }
 
@@ -150,7 +153,7 @@ public class BdocServlet extends HttpServlet {
                     sig.setSignatureValue(SignedDoc.hex2bin(sigHex));
                     //sig.getConfirmation();
                     SignedDoc sdoc = sig.getSignedDoc();
-                    File file = new File(myPath + "\\docks\\" + documentName + ".bdoc");
+                    File file = new File(myPath + "/docks/" + documentName + ".bdoc");
                     if(file.exists())
                     {
                         file.delete();
@@ -193,7 +196,7 @@ public class BdocServlet extends HttpServlet {
         // Find out our filesystem path
         myPath = getServletContext().getRealPath("/").toString();
         log("working directory set to: " + myPath);
-        new File("docks\\Files\\").mkdirs();
+        
         // Load configuration file
         ConfigManager.init(myPath + "WEB-INF/jdigidoc.cfg");
     }
