@@ -92,7 +92,7 @@ public:
 
 	bool connectToHost( SSLConnect::RequestType type );
 	QByteArray getUrl( const QString &url ) const;
-	QByteArray getRequest( const QByteArray &request ) const;
+	QByteArray getRequest( const QString &request ) const;
 
 	PKCS11_CTX *ctx;
 	SSL		*s;
@@ -260,11 +260,12 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 }
 
 QByteArray SSLObj::getUrl( const QString &url ) const
-{ return getRequest( "GET " + url.toLatin1() + " HTTP/1.0\r\n\r\n" ); }
+{ return getRequest( QString( "GET %1 HTTP/1.0\r\n\r\n" ).arg( url ) ); }
 
-QByteArray SSLObj::getRequest( const QByteArray &request ) const
+QByteArray SSLObj::getRequest( const QString &request ) const
 {
-	sslError::check( SSL_write( s, request.data(), request.length() ) );
+	QByteArray data = request.toUtf8();
+	sslError::check( SSL_write( s, data.data(), data.length() ) );
 
 	int bytesRead = 0;
 	char readBuffer[4096];
@@ -331,14 +332,15 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"</m:GetAccessToken>"
 			"</SOAP-ENV:Body>"
 			"</SOAP-ENV:Envelope>";
-		request =
+		return obj->getRequest( QString(
 			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
-			"Host: " + QByteArray(SK) + "\r\n"
+			"Host: %1\r\n"
 			"Content-Type: text/xml\r\n"
-			"Content-Length: " + QByteArray::number( request.size() ) + "\r\n"
+			"Content-Length: %2\r\n"
 			"SOAPAction: \"\"\r\n"
-			"Connection: close\r\n\r\n" + request;
-		return obj->getRequest( request );
+			"Connection: close\r\n\r\n"
+			"%3" )
+			.arg( SK ).arg( request.size() ).arg( request.data() ) );
 	}
 	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
 	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
