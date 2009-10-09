@@ -105,8 +105,6 @@ NS_IMETHODIMP nsEstEID::GetVersion(nsACString & _retval)
 NS_IMETHODIMP nsEstEID::AddEventListener(const char *type,
                                          nsIEstEIDListener *listener)
 {
-	ESTEID_WHITELIST_REQUIRED;
-
 	if(!type || !listener)
 		ESTEID_ERROR_INVALID_ARG;
 
@@ -127,8 +125,6 @@ NS_IMETHODIMP nsEstEID::AddEventListener(const char *type,
 NS_IMETHODIMP nsEstEID::RemoveEventListener(const char *type,
                                             nsIEstEIDListener *listener)
 {
-	ESTEID_WHITELIST_REQUIRED;
-
 	if(!type || !listener)
 		ESTEID_ERROR_INVALID_ARG;
 
@@ -247,6 +243,9 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 void nsEstEID::_FireListeners(ListenerType lt, PRUint16 reader) {
     vector <ListenerPtr> *l = & _Listeners[lt];
     vector <ListenerPtr>::iterator i;
+
+    /* Only send events to whitelisted sites */
+    if(!_isWhitelisted()) return;
 
     std::cout << "Listeners to fire: " << l->size() << std::endl;
 
