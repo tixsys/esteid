@@ -1,7 +1,10 @@
 #ifndef EstEIDServiceBase_h
 #define EstEIDServiceBase_h
 
-#include "cardlib.h"
+#include <smartcard++.h>
+
+#define PDATA_MIN EstEidCard::SURNAME
+#define PDATA_MAX EstEidCard::COMMENT4
 
 typedef unsigned int readerID;
 
@@ -84,7 +87,7 @@ private:
     void _Poll(EstEidCard & card);
 
     vector <bool> cardPresent;
-    PCSCManager mgr;
+    SmartCardManager mgr;
 
     /* Singleton instance variable */
     static EstEIDServiceBase* sEstEIDService;

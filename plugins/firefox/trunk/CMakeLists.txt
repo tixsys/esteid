@@ -12,7 +12,11 @@ project(xpi)
 # Define directories
 # set( CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/build)
 set(PLUGINGATE plugins/plugingate)
-set(CARDLIB ${CMAKE_SOURCE_DIR}/cardlib)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+include_directories(
+    ${CARDLIB}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 # Set project version
 set( MAJOR 0)
@@ -186,8 +190,6 @@ else(MSVC)
     message(FATAL_ERROR "Unsupported platform.")
 endif(MSVC)
 
-include_directories(${CARDLIB})
-
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
@@ -234,11 +236,11 @@ set(esteid_module_SRCS
     ${CARDLIB}/CardBase.cpp
     ${CARDLIB}/CTAPIManager.cpp
     ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/EstEidCard.cpp
-    ${CARDLIB}/EstEidCardMaintainer.cpp
+    ${CARDLIB}/esteid/EstEidCard.cpp
+    ${CARDLIB}/esteid/EstEidCardMaintainer.cpp
     ${CARDLIB}/PCSCManager.cpp
     ${CARDLIB}/SCError.cpp
-    ${CARDLIB}/SIMCard.cpp
+#    ${CARDLIB}/SIMCard.cpp
     ${CARDLIB}/SmartCardManager.cpp
     ${CARDLIB}/locked_allocator.cpp
 )

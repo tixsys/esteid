@@ -4,8 +4,6 @@
 #define ESTEID_DEBUG printf
 #define ESTEID_ERROR printf
 
-#include "cardlib.h"
-
 #include "nsIEstEID.h"
 #include "nsIEstEIDPrivate.h"
 #include "nsEstEIDService.h"
