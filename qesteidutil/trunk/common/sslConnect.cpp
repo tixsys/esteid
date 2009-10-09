@@ -315,13 +315,8 @@ SSLConnect::SSLConnect( QObject *parent )
 
 SSLConnect::~SSLConnect() { delete obj; }
 
-bool SSLConnect::isLoaded() { return obj && obj->ctx; }
-
 QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 {
-	if ( !isLoaded() )
-		return QByteArray();
-
 	if( !obj->connectToHost( type ) )
 		return QByteArray();
 

@@ -44,7 +44,6 @@ public:
 	SSLConnect( QObject *parent = 0 );
 	~SSLConnect();
 
-	bool isLoaded();
 	QByteArray getUrl( RequestType type, const QString &value = "" );
 
 	QString pin() const;
