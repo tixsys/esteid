@@ -375,6 +375,8 @@ NS_IMETHODIMP nsEstEID::KillListeners() {
 		vector <ListenerPtr> *l = & _Listeners[lt];
 		l->clear();
 	}
+
+	return NS_OK;
 }
 
 /*
