@@ -1083,12 +1083,10 @@ public class SimpleBDigiDocFactory implements DigiDocFactory {
 			m_rootCerts = new Hashtable();
 			if (m_logger.isDebugEnabled())
 				m_logger.debug("Loading CA certs");
-			int nCerts =
-				ConfigManager.instance().getIntProperty("DIGIDOC_CA_CERTS", 0);
+                        ConfigManager config = ConfigManager.instance();
+			int nCerts = config.getIntProperty("DIGIDOC_CA_CERTS", 0);
 			for (int i = 0; i < nCerts; i++) {
-				String certFile =
-					ConfigManager.instance().getProperty(
-						"DIGIDOC_CA_CERT" + (i + 1));
+				String certFile =config.getFilePathProperty("DIGIDOC_CA_CERT" + (i + 1));
 				if (m_logger.isDebugEnabled())
 					m_logger.debug("CA: " + ("DIGIDOC_CA_CERT" + (i + 1)) + " file: " + certFile);
 				X509Certificate cert =

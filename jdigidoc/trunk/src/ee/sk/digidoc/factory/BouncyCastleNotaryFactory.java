@@ -770,10 +770,8 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
             	if(m_logger.isDebugEnabled()) {
                 	m_logger.debug("SIG: " + ((sig == null) ? "NULL" : sig.getId()));
                 	m_logger.debug("UP: " + ((sig.getUnsignedProperties() == null) ? "NULL" : "OK: " + sig.getUnsignedProperties().getNotary().getId()));
-                	m_logger.debug("RESP-CERT: " + ((sig.getUnsignedProperties().
-        					getRespondersCertificate() == null) ? "NULL" : "OK"));
-                	X509Certificate notCer = sig.getUnsignedProperties().
-					getRespondersCertificate();
+                	m_logger.debug("RESP-CERT: " + ((sig.getUnsignedProperties().getRespondersCertificate() == null) ? "NULL" : "OK"));
+                	X509Certificate notCer = sig.getUnsignedProperties().getRespondersCertificate();
                 	if(notCer != null)
                 		m_logger.debug("NotCer: " + notCer.getSerialNumber() +
                 				" - " + notCer.getSubjectDN().getName());
@@ -782,10 +780,8 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
                 		m_logger.debug("CID: " + cid.getType() + " id: " + cid.getId() +
                 				", " + cid.getSerial() + " issuer: " + cid.getIssuer());
             	}
-            	String ddocRespCertNr = sig.getUnsignedProperties().
-					getRespondersCertificate().getSerialNumber().toString();
-            	X509Certificate notaryCert = getNotaryCert(SignedDoc.
-            			getCommonName(respondIDstr), ddocRespCertNr);
+            	String ddocRespCertNr = sig.getUnsignedProperties().getRespondersCertificate().getSerialNumber().toString();
+            	X509Certificate notaryCert = getNotaryCert(SignedDoc.getCommonName(respondIDstr), ddocRespCertNr);
             	if(notaryCert == null)
             		throw new DigiDocException(DigiDocException.ERR_OCSP_RECPONDER_NOT_TRUSTED, 
             				"No certificate for responder: \'" + respondIDstr + "\' found in local certificate store!", null);
@@ -1199,12 +1195,13 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
             	getIntProperty("DIGIDOC_OCSP_COUNT", 0);
             for(int i = 1; i <= nCerts; i++) {
             	String ocspCN = ConfigManager.instance().getProperty("DIGIDOC_OCSP" + i + "_CN");
-            	String ocspCertFile = ConfigManager.instance().getProperty("DIGIDOC_OCSP" + i + "_CERT");
-            	String ocspCAFile = ConfigManager.instance().getProperty("DIGIDOC_OCSP" + i + "_CA_CERT");
+            	String ocspCertFile = ConfigManager.instance().getFilePathProperty("DIGIDOC_OCSP" + i + "_CERT");
+            	String ocspCAFile = ConfigManager.instance().getFilePathProperty("DIGIDOC_OCSP" + i + "_CA_CERT");
             	String ocspCACN = ConfigManager.instance().getProperty("DIGIDOC_OCSP" + i + "_CA_CN");
             	if(m_logger.isDebugEnabled())
-                    	m_logger.debug("Responder: " + ocspCN + " cert: " + 
-                    	ocspCertFile + " ca-cert: " + ocspCAFile);
+                {
+                    	m_logger.debug("Responder: " + ocspCN + " cert: " + ocspCertFile+" CA: " + ocspCACN + " ca-cert: " + ocspCAFile);
+                }
             	//System.out.println("Responder: " + ocspCN + " cert: " + 
                 //    	ocspCertFile + " ca-cert: " + ocspCAFile);
             	if(ocspCertFile != null)
@@ -1214,11 +1211,12 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
             	int j = 1;
             	String certFile = null;
             	do {
-            		certFile = ConfigManager.instance().getProperty("DIGIDOC_OCSP" + i + "_CERT_" + j);
+            		certFile = ConfigManager.instance().getFilePathProperty("DIGIDOC_OCSP" + i + "_CERT_" + j);
             		if(certFile != null) {
             			if(m_logger.isDebugEnabled())
-                        	m_logger.debug("Responder: " + ocspCN + " cert: " + 
-                        	ocspCertFile + " ca-cert: " + ocspCAFile);
+                                {
+                                    m_logger.debug("Responder: " + ocspCN + " cert: " + ocspCertFile + " ca-cert: " + ocspCAFile);
+                                }
             			m_ocspCerts.put(ocspCN + "-" + j, SignedDoc.readCertificate(certFile));            			
             		}
             		j++;

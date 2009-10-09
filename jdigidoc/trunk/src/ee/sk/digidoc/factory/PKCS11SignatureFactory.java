@@ -119,6 +119,9 @@ public class PKCS11SignatureFactory implements SignatureFactory
                     }
                 }
             );
+            if(m_logger.isInfoEnabled())
+       			m_logger.info("PKCS11 module loaded");
+
             //System.out.println("PKCS11 module loaded");    
             // A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1.1
 
@@ -139,11 +142,21 @@ public class PKCS11SignatureFactory implements SignatureFactory
                     if (slotInfo.isTokenPresent()) { // indicates, if there is a token present in this slot
                         Token tok = availSlots[i].getToken();
                         if(m_logger.isDebugEnabled())
-       						m_logger.debug("Token: " + tok);
-                        if(isSignatureToken(tok))
-                            tokensVector.add(tok); // get an object for handling the token that is currently present in this slot
-                        else
-							authTokensVector.add(tok);
+                        {
+                            m_logger.debug("Token: " + tok);
+                        }
+                        try{
+                            if(isSignatureToken(tok))
+                                tokensVector.add(tok); // get an object for handling the token that is currently present in this slot
+                            else
+                                authTokensVector.add(tok);
+                        }
+                        catch(Exception ex)
+                        {
+                            if(m_logger.isDebugEnabled())
+                                m_logger.error("Error on reading slot token information", ex);
+
+                        }
                     }
                 } // end for
                 m_availableTokens = new Token[tokensVector.size()]; // create an specified size array of available tokens
@@ -219,6 +232,7 @@ public class PKCS11SignatureFactory implements SignatureFactory
             sess.closeSession();
             
         } catch(Exception e) {
+                
             DigiDocException.handleException(e, DigiDocException.ERR_READ_TOKEN_INFO);
         } // end catch
         return rc;

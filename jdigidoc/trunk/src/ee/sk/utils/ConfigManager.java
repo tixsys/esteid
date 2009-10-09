@@ -58,6 +58,22 @@ public class ConfigManager {
     private static EncryptedDataParser m_dencFac = null;
     /** XML-ENC parses for large encrypted files */
     private static EncryptedStreamParser m_dstrFac = null;
+    private static String managerPath;
+    private static String managerFileName;
+
+    /**
+     * @return the managerPath
+     */
+    public static String getManagerPath() {
+        return managerPath;
+    }
+
+    /**
+     * @return the managerFileName
+     */
+    public static String getManagerFileName() {
+        return managerFileName;
+    }
     /** loh4j logger */
     private Logger m_logger = null;
     
@@ -104,6 +120,9 @@ public class ConfigManager {
         		m_props = new Properties();
             InputStream isCfg = null;
             URL url = null;
+            java.io.File cfgFile=new java.io.File(cfgFileName);
+            managerFileName=cfgFile.getName();
+            managerPath = cfgFile.getParent();
             if(cfgFileName.startsWith("http")) {
                 url = new URL(cfgFileName);
                 isCfg = url.openStream();
@@ -233,8 +252,14 @@ public class ConfigManager {
     {
     	DigiDocFactory digFac = null;
         try {
-            digFac = (DigiDocFactory)Class.
-                    forName(getProperty("DIGIDOC_FACTORY_IMPL")).newInstance();
+            String property = getProperty("DIGIDOC_FACTORY_IMPL");
+            if(property==null)
+            {
+                DigiDocException.handleException(
+                        new Exception("DIGIDOC_FACTORY_IMPL property is not configured in "+getManagerPath()+"\\"+getManagerFileName())
+                        , DigiDocException.ERR_DIG_FAC_INIT);
+            }
+            digFac = (DigiDocFactory)Class.forName(property).newInstance();
             //A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1        
             digFac.init();            
         } catch(DigiDocException ex) {
@@ -254,10 +279,15 @@ public class ConfigManager {
     {
     	DigiDocFactory digFac = null;
         try {
+            String property = getProperty("BDIGIDOC_FACTORY_IMPL");
+             if(digFac==null)
+                DigiDocException.handleException(new Exception("BDIGIDOC_FACTORY_IMPL property is not configured in "+getManagerPath()+"\\"+getManagerFileName())
+                        , DigiDocException.ERR_DIG_FAC_INIT);
+
             digFac = (DigiDocFactory)Class.
-                    forName(getProperty("BDIGIDOC_FACTORY_IMPL")).newInstance();
-       //L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1             
-            digFac.init();            
+                    forName(property).newInstance();
+       //L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
+                       digFac.init();            
         } catch(DigiDocException ex) {
             throw ex;
         } catch(Exception ex) {
@@ -351,11 +381,27 @@ public class ConfigManager {
     /**
      * Retrieves the value for the spcified key
      * @param key property name
+     * Lauri fixes the space issue. (when config file property ends with whitespaces(
      */
     public String getProperty(String key) {
-        return m_props.getProperty(key);        
+        String prop= m_props.getProperty(key);
+        if(prop!=null)
+            return prop.trim();
+        return null;
     }
-   
+
+     /**
+     * Retrieves the value for the spcified key
+     * @param key property name
+     */
+    public String getFilePathProperty(String key) {
+        String filePath= getProperty(key);
+        if(filePath==null) return null;
+        if(filePath.startsWith("."))
+            return managerPath+filePath.substring(1);
+        return filePath;
+    }
+
     /**
      * Retrieves a string value for the spcified key
      * @param key property name
