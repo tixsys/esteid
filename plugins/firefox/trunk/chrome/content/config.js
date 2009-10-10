@@ -16,6 +16,11 @@ const nsPKCS11                = "@mozilla.org/security/pkcs11;1";
 const nsHttpProtocolHandler   = "@mozilla.org/network/protocol;1?name=http";
 const nsWindowsRegKey         = "@mozilla.org/windows-registry-key;1";
 
+const brdBundleURL = "chrome://branding/locale/brand.properties";
+const extBundleURL = "chrome://mozapps/locale/extensions/extensions.properties";
+const eidBundleURL = "chrome://esteid/locale/esteid.properties";
+const eidIconURL   = "chrome://esteid/skin/id-16.png";
+
 const EstEidModName = "Estonian ID Card";
 const soName = "onepin-opensc-pkcs11";
 
@@ -26,6 +31,68 @@ function PEM2Base64(pem) {
     var begin = pem.indexOf(beginCert);
     var end = pem.indexOf(endCert);
     return pem.substring(begin + beginCert.length, end);
+}
+
+function requestRestart() {
+    var restartLabel, restartKey, restartMessage;
+
+    var nb  = gBrowser.getNotificationBox();
+    var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
+                  getService(Components.interfaces.nsIStringBundleService);
+
+    /* Load restart button label and accelerator key
+     * from extension manager string bundle
+     * toolkit/mozapps/extensions/content/extensions.xul
+     * toolkit/mozapps/extensions/content/extensions.js
+     */ 
+    try {
+        var sb = sbs.createBundle(brdBundleURL);
+        var appName = sb.GetStringFromName("brandShortName");
+        sb = sbs.createBundle(extBundleURL);
+        restartLabel = sb.formatStringFromName("restartButton", [appName], 1);
+        restartKey   = sb.GetStringFromName("restartAccessKey");
+    } catch(e) {
+        alert(e);
+        restartLabel = "Restart Now";
+        restartKey = null;
+    }
+    try {
+        var sb = sbs.createBundle(eidBundleURL);
+        restartMessage = sb.GetStringFromName("pkcs11RestartMessage");
+    } catch(e) {
+        restartMessage = "Turvamooduli laadimise lõpetamine vajab restarti";
+    }
+
+    var buttons = [{
+        label: restartLabel,
+        accessKey: restartKey,
+        popup: null,
+        callback: doRestart
+    }];
+    nb.appendNotification(restartMessage, "restart-app",
+                          eidIconURL,
+                          nb.PRIORITY_WARNING_MEDIUM , buttons);
+}
+
+ /* Based on wizardFinish() in
+  * toolkit/mozapps/plugins/content/pluginInstallerWizard.js
+  */
+function doRestart() {
+    // Notify all windows that an application quit has been requested.
+    var os = Components.classes["@mozilla.org/observer-service;1"]
+                       .getService(Components.interfaces.nsIObserverService);
+    var cancelQuit = Components.classes["@mozilla.org/supports-PRBool;1"]
+                               .createInstance(Components.interfaces.nsISupportsPRBool);
+    os.notifyObservers(cancelQuit, "quit-application-requested", "restart");
+
+    // Something aborted the quit process.
+    if (!cancelQuit.data) {
+      var nsIAppStartup = Components.interfaces.nsIAppStartup;
+      var appStartup = Components.classes["@mozilla.org/toolkit/app-startup;1"]
+                                 .getService(nsIAppStartup);
+      appStartup.quit(nsIAppStartup.eAttemptQuit | nsIAppStartup.eRestart);
+      return true;
+   }
 }
 
 function ConfigureEstEID() {
@@ -122,6 +189,7 @@ function ConfigureEstEID() {
     log("Picked Module: " + EstEidDll);
 
     var modulesToRemove = new Array();
+    var restartNeeded = false;
 
     /* Search security module database */
     var secmoddb = Cc[nsModDB].createInstance(Ci.nsIPKCS11ModuleDB);
@@ -141,6 +209,9 @@ function ConfigureEstEID() {
                 debug("Marking module for removal: " +
                       module.name + ":" + module.libName);
                 modulesToRemove.push(module.name);
+
+                /* It's impossible to reload the same DLL */
+                if(module.libName == EstEidDll) restartNeeded = true;
             }
         }
         try { modules.next(); } catch(e) { break; }
@@ -247,6 +318,8 @@ function ConfigureEstEID() {
     }
 
     debug("Esteid Certs: " + EstEIDcertIDs.join("\n"));
+
+    if(restartNeeded) requestRestart();
 }
 
 //delay of popups until after the browser is loaded, kind of a hack
