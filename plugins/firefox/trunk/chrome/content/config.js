@@ -35,13 +35,15 @@ function PEM2Base64(pem) {
 
 function requestRestart() {
     var restartLabel, restartKey, restartMessage;
+    var nb;
 
-    if(!gBrowser) {
+    try {
+        nb = gBrowser.getNotificationBox();
+    } catch(e) {
         error("Module reloading requires browser restart");
         return;
     }
 
-    var nb = gBrowser.getNotificationBox();
     var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
                   getService(Components.interfaces.nsIStringBundleService);
 
