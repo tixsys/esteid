@@ -36,18 +36,12 @@ function PEM2Base64(pem) {
 function requestRestart() {
     var restartLabel, restartKey, restartMessage;
 
-    /* An easier way would be to use gBrowser.getNotificationBox()
-     * but this will not work when we are called from a wiki page
-     * https://id.eesti.ee/idtrac/wiki/FirefoxModuleInstaller
-     * Remove this madness when this page is removed!
-     */
-    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-                       .getService(Components.interfaces.nsIWindowMediator);
-    var mw = wm.getMostRecentWindow("navigator:browser");
-    var gb = mw.getBrowser();
-    var db = gb.getBrowserForDocument(window.document);
-    var nb = gb.getNotificationBox(db);
+    if(!gBrowser) {
+        error("Module reloading requires browser restart");
+        return;
+    }
 
+    var nb = gBrowser.getNotificationBox();
     var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
                   getService(Components.interfaces.nsIStringBundleService);
 
