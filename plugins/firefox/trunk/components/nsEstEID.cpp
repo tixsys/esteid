@@ -47,7 +47,7 @@ nsEstEID::Init()
     	return NS_ERROR_UNEXPECTED;
 
 	nsresult rv = obs->AddObserver(this,
-			NS_LITERAL_CSTRING("esteid-card-changed").get(), PR_FALSE);
+			NS_LITERAL_CSTRING("esteid-card-changed").get(), PR_TRUE);
     if(NS_FAILED(rv))
     	return rv;
 
@@ -244,10 +244,10 @@ void nsEstEID::_FireListeners(ListenerType lt, PRUint16 reader) {
     vector <ListenerPtr> *l = & _Listeners[lt];
     vector <ListenerPtr>::iterator i;
 
+    std::cout << "Listeners to fire: " << l->size() << std::endl;
+
     /* Only send events to whitelisted sites */
     if(!_isWhitelisted()) return;
-
-    std::cout << "Listeners to fire: " << l->size() << std::endl;
 
     for (i = l->begin(); i != l->end(); i++ )
         (*i)->HandleEvent(reader);
@@ -323,11 +323,13 @@ bool nsEstEID::_isWhitelisted() {
 	PRBool wl = false;
 	nsresult rv = eidgui->IsWhiteListed(pageURL, &wl);
 
-	//if(pageURL.EqualsLiteral("https://id.smartlink.ee/plugin_tests/test.html")) {
 	if(NS_SUCCEEDED(rv) && wl) {
 		return true;
 	} else {
 		if(!wlNotified && eidgui) {
+			ESTEID_DEBUG("Showing Notification from %s\n",
+					NS_ConvertUTF16toUTF8(pageURL).get());
+
 			wlNotified = true;
 			eidgui->ShowNotification(parentWin, pageURL);
 		}
@@ -339,7 +341,6 @@ bool nsEstEID::_isWhitelisted() {
 NS_IMETHODIMP nsEstEID::InitDOMWindow(nsISupports *win)
 {
     ESTEID_DEBUG("InitDOMWindow()\n");
-    onPage = true;
 
     nsCOMPtr <nsIDOMDocument> dd;
     nsCOMPtr <nsIDOMHTMLDocument> dhd;
@@ -347,16 +348,18 @@ NS_IMETHODIMP nsEstEID::InitDOMWindow(nsISupports *win)
     if(!win)
         return NS_ERROR_INVALID_ARG;
 
-    win->QueryInterface(NS_GET_IID(nsIDOMWindow), getter_AddRefs(parentWin));
-    if(!parentWin)
-        return NS_ERROR_INVALID_ARG;
-
-    nsresult rv = parentWin->GetDocument(getter_AddRefs(dd));
+    nsresult rv = win->QueryInterface(NS_GET_IID(nsIDOMWindow),
+									  getter_AddRefs(parentWin));
     if(!NS_SUCCEEDED(rv))
         return NS_ERROR_INVALID_ARG;
 
-    dd->QueryInterface(NS_GET_IID(nsIDOMHTMLDocument), getter_AddRefs(dhd));
-    if(!dd)
+    rv = parentWin->GetDocument(getter_AddRefs(dd));
+    if(!NS_SUCCEEDED(rv))
+        return NS_ERROR_INVALID_ARG;
+
+    rv = dd->QueryInterface(NS_GET_IID(nsIDOMHTMLDocument),
+							getter_AddRefs(dhd));
+    if(!NS_SUCCEEDED(rv))
         return NS_ERROR_INVALID_ARG;
 
     rv = dhd->GetURL(pageURL);
@@ -365,17 +368,32 @@ NS_IMETHODIMP nsEstEID::InitDOMWindow(nsISupports *win)
 
     ESTEID_DEBUG("InitDOMWindow: page URL is %s\n",
                        NS_ConvertUTF16toUTF8(pageURL).get());
+
+    onPage = true;
+
+    // Display a notification if not whitelisted
+    _isWhitelisted();
+
     return NS_OK;
 }
 
 NS_IMETHODIMP nsEstEID::KillListeners() {
 	ESTEID_DEBUG("KillListeners\n");
+
 	for(unsigned int lt = 0; lt < MAX_LISTENERS; lt++) {
 		vector <ListenerPtr> *l = & _Listeners[lt];
 		l->clear();
 	}
 
-	return NS_OK;
+	nsCOMPtr<nsIObserverService> obs =
+		do_GetService(NS_OBSERVERSERVICE_CONTRACTID);
+	if(!obs)
+		return NS_ERROR_UNEXPECTED;
+
+	nsresult rv = obs->RemoveObserver(this,
+			NS_LITERAL_CSTRING("esteid-card-changed").get());
+
+	return rv;
 }
 
 /*
