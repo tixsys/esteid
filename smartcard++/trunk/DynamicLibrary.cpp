@@ -12,17 +12,17 @@
 #include <string.h>
 
 DynamicLibrary::DynamicLibrary(const char *dllName) :
-	name(dllName),m_pathHint(""),mLibhandle(NULL) {
+	mLibhandle(NULL),name(dllName),m_pathHint("") {
 	m_construct = construct();
 	}
 
 DynamicLibrary::DynamicLibrary(const char *dllName,int version) :
-	name(dllName),m_pathHint(""),mLibhandle(NULL) {
+	mLibhandle(NULL),name(dllName),m_pathHint("") {
 	m_construct = construct(version);
 	}
 
 DynamicLibrary::DynamicLibrary(const char *dllName,const char *pathHint,
-	int version,bool do_throw) : name(dllName),mLibhandle(NULL) {
+	int version,bool do_throw) : mLibhandle(NULL),name(dllName) {
 	m_pathHint = pathHint;
 	m_construct = construct(version , do_throw);
 	}
@@ -158,12 +158,15 @@ DynamicLibrary::fProc DynamicLibrary::getProc(const char *procName) {
 	}
 
 void tryReadLink(std::string name,std::string path,std::string &result) {
+	if (!result.empty()) return;
 	char buffer[1024];
-	if (result.length() > 0) return;
 	memset(buffer,0,sizeof(buffer));
 	int link = readlink(std::string(path+name).c_str(),buffer,sizeof(buffer));
 	if (-1!= link) {
-		result = path + buffer;
+		if(std::string(buffer).rfind("/") != std::string::npos)
+			result = buffer;
+		else
+			result = path + buffer;
 		return;
 		}
 	struct stat buff;
@@ -178,8 +181,9 @@ std::string DynamicLibrary::getVersionStr() {
 	for(size_t i = 0;i < sizeof(arrPaths) / sizeof(*arrPaths);i++) {
 		tryReadLink(name,arrPaths[i],result);
 		tryReadLink(name,arrPaths[i] + m_pathHint + "/",result);
+		if(!result.empty()) return result;
 		}
-	if (result.length() == 0) result = "unknown";
+	if (result.empty()) result = "unknown";
 	return result;
 	}
 #endif

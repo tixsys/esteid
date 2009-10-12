@@ -14,9 +14,9 @@
  belong here */
 struct DynamicLibrary {
 	typedef void (*fProc)();
+	void *mLibhandle;
 	std::string name;
 	const char *m_pathHint;
-	void *mLibhandle;
 	bool construct(int version = 1,bool do_throw=true);
 	static std::string arrPaths[];
 	bool m_construct;

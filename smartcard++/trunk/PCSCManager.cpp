@@ -80,8 +80,16 @@ void PCSCManager::construct()
 
 	if (!((osVersionInfo.dwMajorVersion == 5) && (osVersionInfo.dwMinorVersion == 0) )) { //win2K
 		mSCStartedEvent = (*pSCardAccessStartedEvent)();
-		if (!mSCStartedEvent)
-			throw std::runtime_error("SCardAccessStartedEvent returns NULL");
+		if (!mSCStartedEvent) {
+			LPVOID lpMsgBuf;
+			FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, 
+							NULL, GetLastError(),
+							MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+							(LPTSTR) &lpMsgBuf,	0, NULL );
+			std::ostringstream buf;
+			buf << "SCardAccessStartedEvent returns NULL\n" << (LPCTSTR)lpMsgBuf;
+			throw std::runtime_error(buf.str());
+			}
 		//the timeout here is NEEDED under Vista/Longhorn, do not remove it
 		if (WAIT_OBJECT_0 != WaitForSingleObject(mSCStartedEvent,1000) ) {
 			throw std::runtime_error("Smartcard subsystem not started");
@@ -121,9 +129,14 @@ void PCSCManager::ensureReaders(uint idx)
 		if (mReaderStates.size() ==  0 )
 			throw SCError(SCARD_E_READER_UNAVAILABLE);
 		}
-
-	SCError::check((*pSCardGetStatusChange)
-		(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+	
+#ifdef __APPLE__
+	for(int i = 0; i < mReaderStates.size(); i++) {
+		SCError::check((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
+	}
+#else
+	SCError::check((*pSCardGetStatusChange)(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+#endif
 	if (idx >= mReaderStates.size())
 		throw std::range_error("ensureReaders: Index out of bounds");
 }
