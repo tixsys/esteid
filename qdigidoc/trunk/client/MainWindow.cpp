@@ -773,7 +773,7 @@ bool MainWindow::checkAccessCert()
 		return false;
 	}
 
-	QByteArray result = doc->getAccessCert();
+	QString result = doc->getAccessCert();
 	if ( result.isEmpty() )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),
@@ -797,7 +797,7 @@ bool MainWindow::checkAccessCert()
 		return false;
 	}
 
-	switch( e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt() )
+	switch( e.elementsByTagName( "StatusCode" ).item(0).toElement().text().toInt() )
 	{
 	case 1: //need to order cert manually from SK web
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );

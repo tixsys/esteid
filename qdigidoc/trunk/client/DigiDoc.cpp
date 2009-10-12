@@ -297,16 +297,16 @@ QList<Document> DigiDoc::documents()
 	return list;
 }
 
-QByteArray DigiDoc::getAccessCert()
+QString DigiDoc::getAccessCert()
 {
-	QByteArray buffer;
+	QString buffer;
 
 	signer->unloadDriver();
 	try {
 		SSLConnect sslConnect;
 		sslConnect.setPKCS11( getConfValue( PKCS11Module ) );
 		sslConnect.setCard( m_card );
-		buffer = sslConnect.getUrl( SSLConnect::AccessCert, "" );
+		buffer = QString::fromUtf8( sslConnect.getUrl( SSLConnect::AccessCert, "" ) );
 	} catch( const std::runtime_error &e ) {
 		if( !QByteArray( e.what() ).isEmpty() )
 			setLastError( e.what() );

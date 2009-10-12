@@ -97,7 +97,7 @@ public:
 	void create( const QString &file );
 	void clear();
 	QList<digidoc::Document> documents();
-	QByteArray getAccessCert();
+	QString getAccessCert();
 	QString fileName() const;
 	bool init();
 	bool isNull() const;
