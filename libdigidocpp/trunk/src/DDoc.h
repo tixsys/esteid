@@ -13,6 +13,7 @@ public:
 	SignatureDDOC( int id, DDocPrivate *doc );
 
 	virtual std::string getMediaType() const;
+	virtual std::string getProducedAt() const;
 	virtual void validateOffline() const throw(SignatureException);
 	virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
 

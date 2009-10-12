@@ -263,6 +263,12 @@ std::string SignatureDDOC::getMediaType() const
 	return s.str();
 }
 
+std::string SignatureDDOC::getProducedAt() const
+{
+	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
+	return n ? std::string( n->timeProduced ) : std::string();
+}
+
 void SignatureDDOC::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;

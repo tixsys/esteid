@@ -37,6 +37,15 @@ std::string digidoc::SignatureTM::getMediaType() const
     return MEDIA_TYPE;
 }
 
+std::string digidoc::SignatureTM::getProducedAt() const
+{
+    const xades::OCSPIdentifierType::ProducedAtType &producedAt =
+        signature->object()[0].qualifyingProperties()[0].unsignedProperties()
+            ->unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
+            ->oCSPRef()[0].oCSPIdentifier().producedAt();
+    return util::date::xsd2string(producedAt);
+}
+
 /**
  * Do TM offline validations.
  * <ul>

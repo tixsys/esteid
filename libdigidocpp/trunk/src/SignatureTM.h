@@ -21,6 +21,7 @@ public:
     SignatureTM(const std::string& path, BDoc& _bdoc) throw(SignatureException);
     virtual ~SignatureTM();
     virtual std::string getMediaType() const;
+    virtual std::string getProducedAt() const;
     virtual void validateOffline() const throw(SignatureException);
 
     void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
