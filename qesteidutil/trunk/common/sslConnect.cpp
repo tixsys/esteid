@@ -181,25 +181,25 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	// Login token
 	if( slot->token->loginRequired )
 	{
+		PinDialog *p = new PinDialog(
+			slot->token->secureLogin ? PinDialog::Pin1PinpadType : PinDialog::Pin1Type,
+			SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
+		p->setWindowModality( Qt::ApplicationModal );
 		if( !slot->token->secureLogin )
 		{
 			if( pin.isNull() )
 			{
-				PinDialog p( PinDialog::Pin1Type,
-					SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
-				if( !p.exec() )
+				if( !p->exec() )
 					throw std::runtime_error( "" );
-				pin = p.text();
+				pin = p->text();
+				p->deleteLater();
+				QCoreApplication::processEvents();
 			}
-			QCoreApplication::processEvents();
 			PKCS11_login(slot, 0, pin.toUtf8());
 		}
 		else
 		{
 			pin.clear();
-			PinDialog *p = new PinDialog( PinDialog::Pin1PinpadType,
-				SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
-			p->setWindowModality( Qt::ApplicationModal );
 			p->show();
 			SSLThread *t = new SSLThread( slot );
 			t->start();
@@ -315,7 +315,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 	{
 	case AccessCert:
 	{
-		QByteArray request =
+		QString request = QString(
 			"<SOAP-ENV:Envelope"
 			"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
 			"	xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\""
@@ -325,13 +325,14 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"<m:GetAccessToken"
 			"	xmlns:m=\"urn:GetAccessToken\""
 			"	SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
-			"<Language xsi:type=\"xsd:string\">ET</Language>"
+			"<Language xsi:type=\"xsd:string\">%1</Language>"
 			"<RequestTime xsi:type=\"xsd:string\" />"
 			"<SoftwareName xsi:type=\"xsd:string\">DigiDoc3</SoftwareName>"
 			"<SoftwareVersion xsi:type=\"xsd:string\" />"
 			"</m:GetAccessToken>"
 			"</SOAP-ENV:Body>"
-			"</SOAP-ENV:Envelope>";
+			"</SOAP-ENV:Envelope>" )
+			.arg( Settings().value( "Main/Language", "et" ).toString().toUpper() );
 		return obj->getRequest( QString(
 			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
 			"Host: %1\r\n"
@@ -340,7 +341,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"SOAPAction: \"\"\r\n"
 			"Connection: close\r\n\r\n"
 			"%3" )
-			.arg( SK ).arg( request.size() ).arg( request.data() ) );
+			.arg( SK ).arg( request.size() ).arg( request ) );
 	}
 	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
 	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
