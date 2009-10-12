@@ -57,6 +57,7 @@ public:
 
 private Q_SLOTS:
 	void showCertificate();
+	void showOCSPCertificate();
 
 private:
 	void addItem( QTreeWidget *view, const QString &variable, const QString &value );

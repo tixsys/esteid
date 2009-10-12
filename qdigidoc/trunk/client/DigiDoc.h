@@ -51,6 +51,14 @@ public:
 		Invalid,
 		Unknown,
 	};
+	enum SignatureType
+	{
+		BESType,
+		TMType,
+		TSType,
+		DDocType,
+		UnknownType,
+	};
 	DigiDocSignature( const digidoc::Signature *signature, DigiDoc *parent );
 
 	QSslCertificate	cert() const;
@@ -62,9 +70,11 @@ public:
 	QString		location() const;
 	QStringList locations() const;
 	QString		mediaType() const;
+	QSslCertificate ocspCert() const;
 	DigiDoc		*parent() const;
 	QString		role() const;
 	QStringList	roles() const;
+	SignatureType type() const;
 
 private:
 	void setLastError( const digidoc::Exception &e );

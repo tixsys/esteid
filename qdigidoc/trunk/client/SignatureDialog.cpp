@@ -117,7 +117,6 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 ,	s( signature )
 {
 	setupUi( this );
-	tabWidget->removeTab( 2 );
 
 	const SslCertificate c = s.cert();
 	QString titleText = c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" );
@@ -160,14 +159,18 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	t->resizeColumnToContents( 0 );
 
 	// OCSP info
-	t = ocspView;
-	addItem( t, tr("Signature type"), "" );
-	addItem( t, tr("Type"), s.digestMethod() );
-	addItem( t, tr("Certificate serialnumber"), "" );
-	addItem( t, tr("Time"), "" );
-	addItem( t, tr("SHA1 hash"), "" );
-	addItem( t, tr("Subject name"), "" );
-	t->resizeColumnToContents( 0 );
+	if( s.type() == DigiDocSignature::DDocType ||
+		s.type() == DigiDocSignature::TMType )
+	{
+		SslCertificate ocsp = s.ocspCert();
+		addItem( ocspView, tr("Certificate issuer"), ocsp.issuerInfo( QSslCertificate::CommonName ) );
+		addItem( ocspView, tr("Certificate serialnumber"), ocsp.serialNumber() );
+		addItem( ocspView, tr("Time"), s.dateTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
+		addItem( ocspView, tr("Hash value of validity confirmation"), ocsp.toHex( s.digestValue() ) );
+		ocspView->resizeColumnToContents( 0 );
+	}
+	else
+		tabWidget->removeTab( 2 );
 }
 
 void SignatureDialog::addItem( QTreeWidget *view, const QString &variable, const QString &value )
@@ -180,3 +183,6 @@ void SignatureDialog::addItem( QTreeWidget *view, const QString &variable, const
 
 void SignatureDialog::showCertificate()
 { CertificateDialog( s.cert(), this ).exec(); }
+
+void SignatureDialog::showOCSPCertificate()
+{ CertificateDialog( s.ocspCert(), this ).exec(); }

@@ -96,16 +96,15 @@ QString DigiDocSignature::digestMethod() const
 		std::vector<unsigned char> data;
 		std::string method;
 		Signature *sc = const_cast<Signature*>(s);
-		if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
+		switch( type() )
 		{
-			SignatureTM *tm = static_cast<SignatureTM*>(sc);
-			tm->getRevocationOCSPRef( data, method );
-		}
-		else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
-			s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
-		{
-			SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
-			ddoc->getRevocationOCSPRef( data, method );
+		case TMType:
+			static_cast<SignatureTM*>(sc)->getRevocationOCSPRef( data, method );
+			break;
+		case DDocType:
+			static_cast<SignatureDDOC*>(sc)->getRevocationOCSPRef( data, method );
+			break;
+		default: return QString();
 		}
 		return QString::fromStdString( method );
 	}
@@ -120,16 +119,15 @@ QByteArray DigiDocSignature::digestValue() const
 		std::vector<unsigned char> data;
 		std::string method;
 		Signature *sc = const_cast<Signature*>(s);
-		if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
+		switch( type() )
 		{
-			SignatureTM *tm = static_cast<SignatureTM*>(sc);
-			tm->getRevocationOCSPRef( data, method );
-		}
-		else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
-			s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
-		{
-			SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
-			ddoc->getRevocationOCSPRef( data, method );
+		case TMType:
+			static_cast<SignatureTM*>(sc)->getRevocationOCSPRef( data, method );
+			break;
+		case DDocType:
+			static_cast<SignatureDDOC*>(sc)->getRevocationOCSPRef( data, method );
+			break;
+		default: return QByteArray();
 		}
 		if( data.size() > 0 )
 			return QByteArray( (const char*)&data[0], data.size() );
@@ -143,7 +141,7 @@ DigiDocSignature::SignatureStatus DigiDocSignature::validate()
 	try
 	{
 		s->validateOffline();
-		if( s->getMediaType() == "signature/bdoc-1.0/BES" )
+		if( type() == BESType )
 		{
 			switch( s->validateOnline() )
 			{
@@ -187,6 +185,30 @@ QStringList DigiDocSignature::locations() const
 QString DigiDocSignature::mediaType() const
 { return QString::fromUtf8( s->getMediaType().data() ); }
 
+QSslCertificate DigiDocSignature::ocspCert() const
+{
+	Signature *sc = const_cast<Signature*>(s);
+	try
+	{
+		switch( type() )
+		{
+		case TMType:
+		{
+			X509Cert cert = static_cast<SignatureTM*>(sc)->getOCSPCertificate();
+			return SslCertificate::fromX509( Qt::HANDLE(cert.getX509()) );
+		}
+		case DDocType:
+		{
+			X509Cert cert = static_cast<SignatureDDOC*>(sc)->getOCSPCertificate();
+			return SslCertificate::fromX509( Qt::HANDLE(cert.getX509()) );
+		}
+		default: return QSslCertificate();
+		}
+	}
+	catch( const Exception & ) {}
+		return QSslCertificate();
+}
+
 DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 
 QString DigiDocSignature::role() const
@@ -213,6 +235,20 @@ void DigiDocSignature::setLastError( const Exception &e )
 	Q_FOREACH( const Exception &c, e.getCauses() )
 		causes << QString::fromUtf8( c.getMsg().data() );
 	m_lastError = causes.join( "\n" );
+}
+
+DigiDocSignature::SignatureType DigiDocSignature::type() const
+{
+	if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
+		return TMType;
+	if( s->getMediaType().compare( "signature/bdoc-1.0/TS" ) == 0 )
+		return TSType;
+	if( s->getMediaType().compare( "signature/bdoc-1.0/BES" ) == 0 )
+		return BESType;
+	if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
+		s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
+		return DDocType;
+	return UnknownType;
 }
 
 

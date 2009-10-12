@@ -303,7 +303,7 @@
    <sender>ocspShowCert</sender>
    <signal>clicked()</signal>
    <receiver>SignatureDialog</receiver>
-   <slot>showCertificate()</slot>
+   <slot>showOCSPCertificate()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>335</x>
@@ -318,5 +318,6 @@
  </connections>
  <slots>
   <slot>showCertificate()</slot>
+  <slot>showOCSPCertificate()</slot>
  </slots>
 </ui>
