@@ -76,11 +76,11 @@ bool CertUpdate::checkConnection() const
 bool CertUpdate::checkUpdateAllowed()
 {
 	QByteArray result = QByteArray::fromHex( runStep( step ) );
-	if ( result.isEmpty() || result.size() != 22 )
+	if ( result.isEmpty() || result.size() != 22 || result.size() < 22 )
 		throwError( tr("Check internet connection") );
-	if ( result.value(4) == 0x06 )
+	if ( result.at(4) == 0x06 )
 		generateKeys = true;
-	if ( !(result.size() > 20 && result.value( 21 ) == 0x00) )
+	if ( !(result.size() > 20 && result.at( 21 ) == 0x00) )
 		throwError( tr("update not allowed!") );
 	return true;
 }
@@ -150,14 +150,14 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 				qDebug() << "runtime8: " << e.what();
 				throw std::runtime_error( "step8 runtime error" );
 			}
-			if ( result.isEmpty() || result.size() != 33 )
+			if ( result.isEmpty() || result.size() != 33 || result.size() < 22 )
 				throw std::runtime_error( "step8" );
 
-			if( result.value(11) == 0x12 )
+			if( result.at(11) == 0x12 )
 				authKey = 0x11;
 			else
 				authKey = 0x12;
-			if( result.value(21) == 0x01 )
+			if( result.at(21) == 0x01 )
 				signKey = 0x02;
 			else
 				signKey = 0x01;
@@ -320,10 +320,10 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 				qDebug() << "runtime21: " << e.what();
 				throw std::runtime_error( "step21 runtime error" );
 			}
-			if ( result.isEmpty() || result.size() != 147 )
+			if ( result.isEmpty() || result.size() != 147 || result.size() < 134 )
 				throw std::runtime_error( "step21a" );
 		
-			if ((unsigned char)result.value( 132 ) == 0x34 && (unsigned char)result.value( 133 ) >= 0x80 )
+			if ((unsigned char)result.at( 132 ) == 0x34 && (unsigned char)result.at( 133 ) >= 0x80 )
 			{
 				runStep( 3 );
 				runStep( 4 );
@@ -398,14 +398,14 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 				qDebug() << "runtime25: " << e.what();
 				throw std::runtime_error( "step25 runtime error" );
 			}
-			if ( result.isEmpty() || result.size() != 147 )
+			if ( result.isEmpty() || result.size() != 147 || result.size() < 134 )
 				throw std::runtime_error( "step25a" );
 
 			QByteArray tmpResult = QByteArray::fromHex( queryServer( s, result ).remove( 0, 16 ) );
 			if ( tmpResult.isEmpty() || tmpResult.size() != 114 )
 				throw std::runtime_error( "step25b" );
 
-			if ( (unsigned char)result.value( 133 ) >= 0x80 )
+			if ( (unsigned char)result.at( 133 ) >= 0x80 )
 			{
 				runStep( 3 );
 				runStep( 4 );
