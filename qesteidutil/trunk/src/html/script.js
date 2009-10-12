@@ -411,9 +411,11 @@ function setActive( content, el )
 			{
 				document.getElementById('buttonChangePUK2').style.display = 'none';
 				document.getElementById('labelPUKBlocked').style.display = 'block';
+				document.getElementById('chanePIN4PUK').style.display = 'none';
 			} else {
 				document.getElementById('buttonChangePUK2').style.display = 'block';
 				document.getElementById('labelPUKBlocked').style.display = 'none';
+				document.getElementById('chanePIN4PUK').style.display = 'block';
 			}
 			break;
 	}
@@ -597,6 +599,7 @@ function enableFields()
 
 	document.getElementById('buttonChangePUK2').style.display = 'block';
 	document.getElementById('labelPUKBlocked').style.display = 'none';
+	document.getElementById('chanePIN4PUK').style.display = 'block';
 }
 
 function checkMobile()
