@@ -106,22 +106,14 @@ namespace EstEIDSigner
 
         private void OpenCertStore()
         {
-            try
+            if (store == null)
             {
-                if (store == null)
-                {
-                    string path = System.Configuration.ConfigurationSettings.AppSettings["cert_path"];
-                    if (path == null || path.Length == 0)
-                        path = Directory.GetCurrentDirectory();
-                    store = new DirectoryX509CertStore(path);
-                    if (store.Open() == false)
-                        debug("Sertifikaatide lugemine ebaõnnestus kataloogist: " + path);
-                }
-            }
-            catch (Exception ex)
-            {
-                debug(ex.ToString());
-                MessageBox.Show(ex.Message);
+                string path = System.Configuration.ConfigurationSettings.AppSettings["cert_path"];
+                if (path == null || path.Length == 0)
+                    path = Directory.GetCurrentDirectory();
+                store = new DirectoryX509CertStore(path);
+                if (store.Open() == false)
+                    throw new Exception("Sertifikaatide lugemine ebaõnnestus kataloogist: " + path);             
             }
         }
 
@@ -140,7 +132,13 @@ namespace EstEIDSigner
         {
             if (!File.Exists(inputBox.Text))
             {
-                MessageBox.Show("Allkirjastamiseks on vaja valida olemasolev PDF dokument!", "Hoiatus");
+                MessageBox.Show("Allkirjastamiseks on vaja valida olemasolev PDF dokument!", "Viga");
+                return;
+            }
+
+            if (outputBox.Text.Length == 0)
+            {
+                MessageBox.Show("Allkirjastamiseks on vaja valida väljund PDF dokumendi nimi!", "Viga");
                 return;
             }
 
@@ -200,18 +198,18 @@ namespace EstEIDSigner
             catch (RevocationException ex)
             {
                 status("Kehtivussertifikaadi viga!");
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Viga");
             }
             catch (AlreadySignedException ex)
             {
                 status("Dokument on juba allkirjastatud!!");
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Viga");
             }
             catch (Exception ex)
             {
                 status("Tekkis viga ...");
                 debug(ex.ToString());
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Viga");
             }
 
             // force Garbage Collector to close pkcs11 bridge
