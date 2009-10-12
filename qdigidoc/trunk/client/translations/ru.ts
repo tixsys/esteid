@@ -278,7 +278,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;email&quot;&gt;Отослать контейнет по эл. почте&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;email&quot;&gt;Отослать контейнер по эл. почте&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</source>
