@@ -31,6 +31,7 @@ class SSLThread: public QThread
 	Q_OBJECT
 public:
 	SSLThread( PKCS11_SLOT *slot, QObject *parent = 0 );
+	int loginOk;
 
 private:
 	void run();
