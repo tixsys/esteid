@@ -6,7 +6,7 @@
 	\date		$Date: 2009-08-13 16:52:22 +0300 (Thu, 13 Aug 2009) $
 */
 // Revision $Revision: 422 $
-#include "precompiled.h"
+#include <smartcard++/precompiled.h>
 #include <smartcard++/esteid/EstEidCard.h>
 #include <smartcard++/helperMacro.h>
 #include <smartcard++/SCError.h>

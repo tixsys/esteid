@@ -44,16 +44,16 @@ set(qesteidutil_HDRS
     src/version.h
 )
 
-set(cardlib_SRCS
-    cardlib/CardBase.cpp
-    cardlib/CTAPIManager.cpp
-    cardlib/DynamicLibrary.cpp
-    cardlib/EstEidCard.cpp
-    cardlib/locked_allocator.cpp
-    cardlib/PCSCManager.cpp
-    cardlib/SCError.cpp
-    cardlib/SmartCardManager.cpp
-    cardlib/types.cpp
+set(smartcard_SRCS
+    smartcard++/CardBase.cpp
+    smartcard++/CTAPIManager.cpp
+    smartcard++/DynamicLibrary.cpp
+    smartcard++/esteid/EstEidCard.cpp
+    smartcard++/locked_allocator.cpp
+    smartcard++/PCSCManager.cpp
+    smartcard++/SCError.cpp
+    smartcard++/SmartCardManager.cpp
+    smartcard++/types.cpp
 )
 
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
@@ -148,7 +148,7 @@ IF(WIN32)
 ENDIF(WIN32)
     
 add_executable(qesteidutil WIN32 MACOSX_BUNDLE
-    ${cardlib_SRCS}
+    ${smartcard_SRCS}
     ${qesteidutil_SRCS}
     ${QM_FILES}
     ${qesteidutil_RCC_SRCS}

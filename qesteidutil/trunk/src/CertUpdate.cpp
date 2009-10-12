@@ -22,7 +22,7 @@
 
 #include "CertUpdate.h"
 
-#include <cardlib/helperMacro.h>
+#include <smartcard++/helperMacro.h>
 
 #include <QApplication>
 #include <QDateTime>

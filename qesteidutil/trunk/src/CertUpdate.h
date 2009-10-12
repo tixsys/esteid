@@ -26,7 +26,7 @@
 #include <QTcpSocket>
 
 #include "jscardmanager.h"
-#include "cardlib/EstEidCard.h"
+#include "smartcard++/esteid/EstEidCard.h"
 
 class CertUpdate: public QObject
 {
