@@ -21,10 +21,11 @@ public:
     SignatureTM(const std::string& path, BDoc& _bdoc) throw(SignatureException);
     virtual ~SignatureTM();
     virtual std::string getMediaType() const;
-    virtual std::string getProducedAt() const;
-    virtual void validateOffline() const throw(SignatureException);
-
+    X509Cert getOCSPCertificate() const;
+    std::string getProducedAt() const;
+    std::string getResponderID() const;
     void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
+    virtual void validateOffline() const throw(SignatureException);
 
     static const std::string MEDIA_TYPE;
 protected:
@@ -40,6 +41,7 @@ private:
             const std::vector<unsigned char>& ocspResponseHash, const struct tm& producedAt );
 
     void getOCSPResponseValue(std::vector<unsigned char>& data) const;
+    xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional& unsignedSignatureProperties() const;
 };
 
 }

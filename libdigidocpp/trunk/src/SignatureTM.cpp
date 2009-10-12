@@ -37,13 +37,39 @@ std::string digidoc::SignatureTM::getMediaType() const
     return MEDIA_TYPE;
 }
 
+digidoc::X509Cert digidoc::SignatureTM::getOCSPCertificate() const
+{
+    const xades::UnsignedSignaturePropertiesType::CertificateValuesType::EncapsulatedX509CertificateSequence &certs =
+        unsignedSignatureProperties()->certificateValues()[0].encapsulatedX509Certificate();
+    xades::UnsignedSignaturePropertiesType::CertificateValuesType::EncapsulatedX509CertificateSequence::const_iterator i = certs.begin();
+
+    try
+    {
+        for( ; i != certs.end(); ++i )
+        {
+            if( i->id() && i->id().get().find( "RESPONDER_CERT" ) != std::string::npos )
+                return X509Cert( std::vector<unsigned char>( i->data(), i->data() + i->size() ) );
+        }
+        if( certs.begin() != certs.end() )
+            return X509Cert( std::vector<unsigned char>(
+                certs.begin()->data(), certs.begin()->data() + certs.begin()->size() ) );
+    }
+    catch( const Exception & ) {}
+    return X509Cert();
+}
+
 std::string digidoc::SignatureTM::getProducedAt() const
 {
     const xades::OCSPIdentifierType::ProducedAtType &producedAt =
-        signature->object()[0].qualifyingProperties()[0].unsignedProperties()
-            ->unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
-            ->oCSPRef()[0].oCSPIdentifier().producedAt();
+        unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
+        ->oCSPRef()[0].oCSPIdentifier().producedAt();
     return util::date::xsd2string(producedAt);
+}
+
+std::string digidoc::SignatureTM::getResponderID() const
+{
+    return unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
+        ->oCSPRef()[0].oCSPIdentifier().responderID().byName().get();
 }
 
 /**
@@ -102,9 +128,8 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
 
     std::vector<unsigned char> respNonce = ocsp.getNonce(respBuf);
 
-    xml_schema::Uri method = signature->object()[0].qualifyingProperties()[0].unsignedProperties()
-            ->unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
-            ->oCSPRef()[0].digestAlgAndValue()->digestMethod().algorithm();
+    xml_schema::Uri method = unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
+        ->oCSPRef()[0].digestAlgAndValue()->digestMethod().algorithm();
 
     std::auto_ptr<Digest> calc = Digest::create(std::string(method));
     calc->update(getSignatureValue());
@@ -311,8 +336,7 @@ void digidoc::SignatureTM::setCompleteRevocationRefs(const std::string& responde
     completeRevocationRefs.id(xml_schema::Id("S0-REVOCREFS"));
     //return completeRevocationRefs;
 
-    signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties()
-        ->completeRevocationRefs().push_back(completeRevocationRefs);
+    unsignedSignatureProperties()->completeRevocationRefs().push_back(completeRevocationRefs);
 }
 
 /**
@@ -345,9 +369,7 @@ void digidoc::SignatureTM::setOCSPCertificate(const X509Cert& x509)
 
     //certificateRefs.certRefs(certList);
 
-    signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties()
-        ->completeCertificateRefs().push_back(certificateRefs);
-
+    unsignedSignatureProperties()->completeCertificateRefs().push_back(certificateRefs);
 
     //CertificateValues
     addCertificateValue(std::string("S0-RESPONDER_CERT"), x509);
@@ -371,8 +393,7 @@ void digidoc::SignatureTM::addCertificateValue(const std::string& certId, const 
     xades::CertificateValuesType::EncapsulatedX509CertificateType certData(
         xml_schema::Base64Binary(&certBytes[0], certBytes.size()));
     certData.id(xml_schema::Id(certId.c_str()));
-    signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties()
-        ->certificateValues()[0].encapsulatedX509Certificate().push_back(certData);
+    unsignedSignatureProperties()->certificateValues()[0].encapsulatedX509Certificate().push_back(certData);
 }
 
 /**
@@ -390,8 +411,7 @@ void digidoc::SignatureTM::setOCSPResponseValue(const std::vector<unsigned char>
     ocspValue.encapsulatedOCSPValue().push_back(ocspValueData);
     revocationValues.oCSPValues(ocspValue);
 
-    signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties()
-        ->revocationValues().push_back(revocationValues);
+    unsignedSignatureProperties()->revocationValues().push_back(revocationValues);
 }
 /**
  * Get value of UnsignedProperties\UnsignedSignatureProperties\RevocationValues\OCSPValues\EncapsulatedOCSPValue
@@ -401,8 +421,7 @@ void digidoc::SignatureTM::setOCSPResponseValue(const std::vector<unsigned char>
 void digidoc::SignatureTM::getOCSPResponseValue(std::vector<unsigned char>& data) const
 {
     //FIXME: check that all elements exist
-    xades::RevocationValuesType t = signature->object()[0].qualifyingProperties()[0]
-        .unsignedProperties()->unsignedSignatureProperties()->revocationValues()[0];
+    xades::RevocationValuesType t = unsignedSignatureProperties()->revocationValues()[0];
 
     xades::OCSPValuesType tt = t.oCSPValues().get();
     xades::OCSPValuesType::EncapsulatedOCSPValueType resp = tt.encapsulatedOCSPValue()[0];
@@ -427,8 +446,7 @@ void digidoc::SignatureTM::getRevocationOCSPRef(std::vector<unsigned char>& data
     const throw(SignatureException)
 {
     xades::UnsignedSignaturePropertiesType::CompleteRevocationRefsSequence crrSeq =
-        signature->object()[0].qualifyingProperties()[0]
-            .unsignedProperties()->unsignedSignatureProperties()->completeRevocationRefs();
+        unsignedSignatureProperties()->completeRevocationRefs();
 
     if(!crrSeq.empty())
     {
@@ -459,4 +477,6 @@ void digidoc::SignatureTM::getRevocationOCSPRef(std::vector<unsigned char>& data
     THROW_SIGNATUREEXCEPTION("Missing UnsignedProperties/UnsignedSignatureProperties/CompleteRevocationRefs/OCSPRefs/OCSPRef/DigestAlgAndValue element or its parent");
 }
 
-
+digidoc::xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional&
+digidoc::SignatureTM::unsignedSignatureProperties() const
+{ return signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties(); }

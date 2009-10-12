@@ -614,13 +614,13 @@ digidoc::X509Cert digidoc::Signature::getSigningCertificate() const throw(Signat
     std::copy(data, data+certBlock.size(), &x509Bytes[0]);
     try
     {
-        X509Cert cert(x509Bytes);
-        return cert;
+        return X509Cert(x509Bytes);
     }
     catch( const IOException &e )
     {
         THROW_SIGNATUREEXCEPTION_CAUSE( e, "Failed to read X509 certificate" );
     }
+    return X509Cert();
 }
 
 /**

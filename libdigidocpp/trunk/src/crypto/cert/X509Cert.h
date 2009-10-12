@@ -14,6 +14,7 @@ namespace digidoc
     {
 
       public:
+          X509Cert();
           X509Cert(X509* cert) throw(IOException);
           X509Cert(std::vector<unsigned char> bytes) throw(IOException);
           X509Cert(const X509Cert& copy) throw(IOException);

@@ -7,6 +7,8 @@
 #include "X509Cert.h"
 #include "X509CertStore.h"
 
+digidoc::X509Cert::X509Cert(): cert(NULL) {}
+
 /**
  * Creates copy of the X509 certificate.
  *

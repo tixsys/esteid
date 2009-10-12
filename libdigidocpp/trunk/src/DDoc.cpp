@@ -64,6 +64,7 @@ DDocPrivate::DDocPrivate()
 ,	f_DataFile_new(0)
 ,	f_ddocReadNewSignaturesFromDdoc(0)
 ,	f_ddocSaxReadSignedDocFromFile(0)
+,	f_ddocSigInfo_GetOCSPRespondersCert(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
 ,	f_finalizeDigiDocLib(0)
 ,	f_getErrorString(0)
@@ -138,6 +139,7 @@ bool DDocPrivate::loadSymbols()
 	(f_DataFile_new = (sym_DataFile_new)lib.resolve("DataFile_new")) &&
 	(f_ddocReadNewSignaturesFromDdoc = (sym_ddocReadNewSignaturesFromDdoc)lib.resolve("ddocReadNewSignaturesFromDdoc")) &&
 	(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) &&
+	(f_ddocSigInfo_GetOCSPRespondersCert = (sym_ddocSigInfo_GetOCSPRespondersCert)lib.resolve("ddocSigInfo_GetOCSPRespondersCert")) &&
 	(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) &&
 	(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) &&
 	(f_getErrorString = (sym_getErrorString)lib.resolve("getErrorString")) &&
@@ -263,10 +265,23 @@ std::string SignatureDDOC::getMediaType() const
 	return s.str();
 }
 
+X509Cert SignatureDDOC::getOCSPCertificate() const
+{
+	try { return X509Cert( m_doc->f_ddocSigInfo_GetOCSPRespondersCert( m_doc->doc->pSignatures[m_id] ) ); }
+	catch( const Exception & ) {}
+	return X509Cert();
+}
+
 std::string SignatureDDOC::getProducedAt() const
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
 	return n ? std::string( n->timeProduced ) : std::string();
+}
+
+std::string SignatureDDOC::getResponderID() const
+{
+	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
+	return n ? std::string( (const char*)n->mbufRespId.pMem, n->mbufRespId.nLen ) : std::string();
 }
 
 void SignatureDDOC::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
