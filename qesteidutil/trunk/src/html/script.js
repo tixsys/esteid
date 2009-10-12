@@ -53,6 +53,12 @@ function handlekey(nextItem)
 		el.click();
 }
 
+function checkEnter( e, obj )
+{
+	if ( e.keyCode == 13 && ( typeof obj.click != "undefined" ) && obj.click )
+		obj.click();
+}
+
 function cardInserted(i)
 {
 	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
