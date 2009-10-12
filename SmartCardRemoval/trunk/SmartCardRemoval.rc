@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,8,0,27
- PRODUCTVERSION 0,8,0,27
+ FILEVERSION 0,8,0,28
+ PRODUCTVERSION 0,8,0,28
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,11 +69,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "FileVersion", "0.8.0.27"
+            VALUE "FileVersion", "0.8.0.28"
             VALUE "InternalName", "SmartCardRemoval.exe"
             VALUE "OriginalFilename", "SmartCardRemoval.exe"
             VALUE "ProductName", "SmartCardRemoval monitor service"
-            VALUE "ProductVersion", "0.8.0.27"
+            VALUE "ProductVersion", "0.8.0.28"
         END
     END
     BLOCK "VarFileInfo"
