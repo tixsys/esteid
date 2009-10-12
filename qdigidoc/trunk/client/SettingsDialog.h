@@ -31,6 +31,8 @@ class SettingsDialog: public QDialog, private Ui::SettingsDialog
 public:
 	SettingsDialog( QWidget *parent = 0 );
 
+	void setP12Cert( const QString &cert );
+
 	static void saveSignatureInfo(
 		const QString &role,
 		const QString &resolution,

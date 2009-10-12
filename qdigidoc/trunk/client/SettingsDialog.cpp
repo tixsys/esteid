@@ -79,10 +79,7 @@ void SettingsDialog::on_p12Button_clicked()
 	cert = QFileDialog::getOpenFileName( this, tr("Select PKCS#12 certificate"), cert,
 		tr("PKCS#12 Certificates (*.p12 *.p12d)") );
 	if( !cert.isEmpty() )
-	{
-		Settings().setValue( "Client/pkcs12Cert", cert );
-		p12Cert->setText( cert );
-	}
+		setP12Cert( cert );
 }
 
 void SettingsDialog::on_selectDefaultDir_clicked()
@@ -171,4 +168,11 @@ void SettingsDialog::saveMobileInfo( const QString &code, const QString &number 
 		s.setValue( "MobileNumber", number );
 	}
 	s.endGroup();
+}
+
+void SettingsDialog::setP12Cert( const QString &cert )
+{
+	Settings().setValue( "Client/pkcs12Cert", cert );
+	p12Cert->setText( cert );
+	tabWidget->setCurrentIndex( 1 );
 }

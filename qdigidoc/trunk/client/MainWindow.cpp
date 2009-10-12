@@ -419,8 +419,18 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 	if( e->type() == QEvent::FileOpen )
 	{
 		QFileOpenEvent *o = static_cast<QFileOpenEvent*>(e);
-		params << o->file();
-		buttonClicked( HomeSign );
+		if( o->file().right( 4 ).toLower() == "p12d" )
+		{
+			SettingsDialog s( this );
+			s.addAction( close );
+			s.setP12Cert( o->file() );
+			s.exec();
+		}
+		else
+		{
+			params << o->file();
+			buttonClicked( HomeSign );
+		}
 		return true;
 	}
 	else
