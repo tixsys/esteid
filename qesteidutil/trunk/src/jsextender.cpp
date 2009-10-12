@@ -131,7 +131,7 @@ QByteArray JsExtender::getUrl( SSLConnect::RequestType type, const QString &def 
 	} catch( const std::runtime_error &e ) {
 		throw std::runtime_error( e );
 	}
-	
+	m_mainWindow->eidCard()->reconnect();
 	return buffer;
 }
 
