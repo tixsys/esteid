@@ -46,7 +46,22 @@ namespace EstEIDSigner
 
             InitializeComponent();
 
-            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string fullPath = Environment.GetCommandLineArgs()[0];
+            string configName = System.IO.Path.GetFileName(fullPath);
+            string fullConfigPath = EstEIDSignerGlobals.ConfigDirectory + configName;
+
+            try
+            {
+                config = ConfigurationManager.OpenExeConfiguration(fullConfigPath);                
+
+                // it may happen that conf file doesn't exist even if OpenExeConfiguration succeeds...
+                if (!config.HasFile)
+                    MessageBox.Show("Konfiguratsiooni faili ei leitud: " + config.FilePath, "Viga");
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show(ex.Message, "Viga");
+            }
 
             LoadConfig();            
         }
@@ -218,14 +233,15 @@ namespace EstEIDSigner
 
         private void LoadConfig()
         {
-            string s;
-            bool b;
+            string s = "False";
+            bool b = false;
 
             try
             {
-                s = ConfigurationSettings.AppSettings["debug"];
+                if (config.AppSettings.Settings["debug"] != null)
+                    s = config.AppSettings.Settings["debug"].Value;
+                
                 b = System.Convert.ToBoolean(s);
-
                 if (!b)
                 {
                     DebugBox.Hide();
@@ -233,11 +249,15 @@ namespace EstEIDSigner
                     MaximumSize = new Size(this.Width, groupBox3.Bottom + 50);
                 }
 
-                s = ConfigurationSettings.AppSettings["enable_tsa"];
-                b = System.Convert.ToBoolean(s);
+                if (config.AppSettings.Settings["enable_tsa"] != null)
+                    s = config.AppSettings.Settings["enable_tsa"].Value;
+                
+                b = System.Convert.ToBoolean(s);                
                 this.EnableTSA.Checked = b;
 
-                s = ConfigurationSettings.AppSettings["visible_signature"];
+                if (config.AppSettings.Settings["visible_signature"] != null)
+                    s = config.AppSettings.Settings["visible_signature"].Value;
+
                 b = System.Convert.ToBoolean(s);
                 this.SigVisible.Checked = b;
             }
