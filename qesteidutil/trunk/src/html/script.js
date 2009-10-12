@@ -33,14 +33,14 @@ function checkAccessKeys(e)
 
 function checkNumeric(e)
 {
-	if ( e.keyCode == 13 || e.keyCode == 8 || e.keyCode == 0 || String.fromCharCode(e.keyCode).match(/[\d]/) )
+	if ( e.keyCode == 13 || e.keyCode == 9 || e.keyCode == 8 || e.keyCode == 0 || String.fromCharCode(e.keyCode).match(/[\d]/) )
 		return true;
 	return false;
 }
 
 function handlekey(nextItem)
 {
-	if ( window.event.keyCode != 13 )
+	if ( window.event.keyCode != 13 && window.event.keyCode != 9 )
 		return;
 
 	var el = document.getElementById(nextItem)
