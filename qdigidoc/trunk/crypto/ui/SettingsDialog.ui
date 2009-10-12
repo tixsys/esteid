@@ -59,7 +59,7 @@
    <item>
     <widget class="QCheckBox" name="showIntro">
      <property name="text">
-      <string>Show signing intro</string>
+      <string>Show encrypting intro</string>
      </property>
     </widget>
    </item>

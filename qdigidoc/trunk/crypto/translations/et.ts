@@ -433,7 +433,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <translation>Vali kataloog</translation>
     </message>
     <message>
-        <source>Show signing intro</source>
+        <source>Show encrypting intro</source>
         <translation>Näita krüpteerimisel sissejuhatust</translation>
     </message>
     <message>
