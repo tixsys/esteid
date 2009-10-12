@@ -659,12 +659,17 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 			.arg( QDir::toNativeSeparators( doc->fileName() ) ) );
 		viewFileName->setToolTip( QDir::toNativeSeparators( doc->fileName() ) );
 
-		if( !signatures.isEmpty() && cardOwnerSignature )
-			viewFileStatus->setText( tr("This container is signed by you") );
-		else if( !signatures.isEmpty() && !cardOwnerSignature )
-			viewFileStatus->setText( tr("You have not signed this container") );
+		if( !doc->signCert().isNull() )
+		{
+			if( !signatures.isEmpty() && cardOwnerSignature )
+				viewFileStatus->setText( tr("This container is signed by you") );
+			else if( !signatures.isEmpty() && !cardOwnerSignature )
+				viewFileStatus->setText( tr("You have not signed this container") );
+			else
+				viewFileStatus->setText( tr("Container is unsigned") );
+		}
 		else
-			viewFileStatus->setText( tr("Container is unsigned") );
+			viewFileStatus->clear();
 
 		viewSignaturesLabel->setText( signatures.size() == 1 ? tr("Signature") : tr("Signatures") );
 
@@ -673,7 +678,7 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 		else if( test )
 			viewSignaturesError->setText( tr("NB! Test signature") );
 		else
-			viewSignaturesError->setText( QString() );
+			viewSignaturesError->clear();
 		break;
 	}
 	default: break;
@@ -682,7 +687,7 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 
 void MainWindow::showCardStatus()
 {
-	signSigner->setText( QString() );
+	signSigner->clear();
 
 	if( infoSignMobile->isChecked() )
 	{
