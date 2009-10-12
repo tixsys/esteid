@@ -60,3 +60,4 @@ add_custom_command(
 )
 
 add_executable(SmartCardRemoval WIN32 ${SOURCES})
+install(TARGETS SmartCardRemoval DESTINATION bin)
