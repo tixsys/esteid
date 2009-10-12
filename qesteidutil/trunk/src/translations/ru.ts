@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>
 <TS version="2.0" language="ru_RU" sourcelanguage="en">
 <context>
     <name>CertUpdate</name>
@@ -126,7 +125,7 @@
     <name>MainWindow</name>
     <message>
         <source>ID-card utility</source>
-        <translation>Oбсуживание ID- карты</translation>
+        <translation>Oбсуживание ID-карты</translation>
     </message>
     <message>
         <source>&amp;File</source>
