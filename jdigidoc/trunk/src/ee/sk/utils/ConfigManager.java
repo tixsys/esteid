@@ -136,9 +136,11 @@ public class ConfigManager {
             isCfg.close();
             url = null; 
 			bOk = true;
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
+
             System.err.println("Cannot read config file: " + 
                 cfgFileName + " Reason: " + ex.toString());
+            
         }
         // initialize
         return bOk;
