@@ -131,6 +131,12 @@ void JsCardManager::pollCard()
 			emit cardEvent( "cardInserted", insert != "empty" ? cardReaders[insert].id : -1 );
 		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
 			findCard();
+		else if ( foundConnected && !m_jsEsteidCard->canReadCard() ) //card connected but not fully readable, let's try again
+		{
+			findCard();
+			if ( m_jsEsteidCard->canReadCard() )
+				emit cardEvent( "cardInserted", activeReaderNum() );
+		}
     } catch (std::runtime_error &e) {
 		qDebug() << e.what();
 		if ( cardReaders.size() > 0 && numReaders == 0 )

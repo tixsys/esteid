@@ -80,17 +80,18 @@ function cardInserted(i)
 					}
 					retry--;
 				}
-				extender.closeLoading();
+				if ( activeCardId != '' || !cardManager.anyCardsInReader() )
+					extender.closeLoading();
 			}
 		} else
 			inReader = true;
 	} catch ( err ) {}
 
-	if ( activeCardId == "" )
+	if ( activeCardId == "" && !cardManager.anyCardsInReader() )
 		document.getElementById('cardInfoNoCard').style.display='block';
 		
 	document.getElementById( 'forUpdate' ).innerHTML += ".";
-	if ( !inReader )
+	if ( !inReader && activeCardId != '' )
 		readCardData();
 }
 
@@ -109,9 +110,17 @@ function cardRemoved(i)
 			emailsLoaded = false;
 			activeCardId = "";
 			disableFields();
-			cardManager.findCard();
-			if ( esteidData.canReadCard() )
-				activeCardId = esteidData.getDocumentId();
+			var retry = 3;
+			while( retry > 0 )
+			{
+				cardManager.findCard();
+				if ( esteidData.canReadCard() )
+				{
+					activeCardId = esteidData.getDocumentId();
+					break;
+				}
+				retry--;
+			}
 		} else
 			inReader = true;
 	} catch( err ) {}
