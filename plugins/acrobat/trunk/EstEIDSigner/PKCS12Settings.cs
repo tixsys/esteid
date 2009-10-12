@@ -17,8 +17,6 @@
  * 02110-1301  USA
  */
 
-#define WIN32
-
 using System;
 using System.IO;
 using Microsoft.Win32;
