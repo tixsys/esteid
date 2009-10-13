@@ -62,7 +62,6 @@ DDocPrivate::DDocPrivate()
 ,	f_createSignedDoc(0)
 ,	f_DataFile_delete(0)
 ,	f_DataFile_new(0)
-,	f_ddocReadNewSignaturesFromDdoc(0)
 ,	f_ddocSaxReadSignedDocFromFile(0)
 ,	f_ddocSigInfo_GetOCSPRespondersCert(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
@@ -137,7 +136,6 @@ bool DDocPrivate::loadSymbols()
 	(f_createSignedDoc = (sym_createSignedDoc)lib.resolve("createSignedDoc")) &&
 	(f_DataFile_delete = (sym_DataFile_delete)lib.resolve("DataFile_delete")) &&
 	(f_DataFile_new = (sym_DataFile_new)lib.resolve("DataFile_new")) &&
-	(f_ddocReadNewSignaturesFromDdoc = (sym_ddocReadNewSignaturesFromDdoc)lib.resolve("ddocReadNewSignaturesFromDdoc")) &&
 	(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) &&
 	(f_ddocSigInfo_GetOCSPRespondersCert = (sym_ddocSigInfo_GetOCSPRespondersCert)lib.resolve("ddocSigInfo_GetOCSPRespondersCert")) &&
 	(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) &&
@@ -494,7 +492,30 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	if ( type == Signature::MOBILE )
 	{
 		std::string file = signer->signaturePath();
-		d->f_ddocReadNewSignaturesFromDdoc(d->doc, file.c_str());
+		SignedDoc *sigDoc = 0;
+		int err = d->f_ddocSaxReadSignedDocFromFile( &sigDoc, file.c_str(), 0, 0 );
+		d->throwError( err, "Failed to sign document", __LINE__ );
+
+		SignatureInfo **signatures = (SignatureInfo**)realloc( d->doc->pSignatures,
+			(d->doc->nSignatures + sigDoc->nSignatures) * sizeof(void *));
+		if( !signatures )
+		{
+			d->f_SignedDoc_free( sigDoc );
+			d->throwError( "Failed to sign document", __LINE__ );
+		}
+
+		d->doc->pSignatures = signatures;
+		for( int i = 0; i < sigDoc->nSignatures; ++i )
+		{
+			d->doc->pSignatures[d->doc->nSignatures + i] = sigDoc->pSignatures[i]; // take ownership
+			sigDoc->pSignatures[i] = 0;
+			// from ddocReadNewSignaturesFromDdoc
+			((char*)d->doc->pSignatures[d->doc->nSignatures + i]->pDocs[0]->szDigest)[0] = 0x0A;
+		}
+		d->doc->nSignatures += sigDoc->nSignatures;
+		sigDoc->nSignatures = 0;
+
+		d->f_SignedDoc_free( sigDoc );
 		d->loadSignatures();
 		return;
 	}

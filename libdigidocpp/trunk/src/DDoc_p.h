@@ -24,7 +24,6 @@ typedef int (*sym_createSignedDoc)( SignedDoc*, const char*, const char* );
 typedef int (*sym_DataFile_delete)( SignedDoc*, const char* );
 typedef int (*sym_DataFile_new)( DataFile**, SignedDoc*, const char*, const char*,
 	const char*, const char*, long, const byte*, int, const char*, const char* );
-typedef int (*sym_ddocReadNewSignaturesFromDdoc)( SignedDoc*, const char* );
 typedef int (*sym_ddocSaxReadSignedDocFromFile)( SignedDoc**, const char*, int, int );
 typedef X509* (*sym_ddocSigInfo_GetOCSPRespondersCert)( const SignatureInfo * );
 typedef X509* (*sym_ddocSigInfo_GetSignersCert)( const SignatureInfo * );
@@ -97,7 +96,6 @@ public:
 	sym_createSignedDoc			f_createSignedDoc;
 	sym_DataFile_delete			f_DataFile_delete;
 	sym_DataFile_new			f_DataFile_new;
-	sym_ddocReadNewSignaturesFromDdoc f_ddocReadNewSignaturesFromDdoc;
 	sym_ddocSaxReadSignedDocFromFile f_ddocSaxReadSignedDocFromFile;
 	sym_ddocSigInfo_GetOCSPRespondersCert f_ddocSigInfo_GetOCSPRespondersCert;
 	sym_ddocSigInfo_GetSignersCert f_ddocSigInfo_GetSignersCert;
