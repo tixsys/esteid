@@ -79,7 +79,16 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 		s << "Mac OS 10.3";
 	}
 #endif
+
+#if defined(Q_OS_WIN)
+#	if defined(Q_OS_WIN64)
+		s << " (" << 64 << ")<br /><br />";
+#	else
+		s << " (" << 32 << ")<br /><br />";
+#	endif
+#else
 	s << " (" << QSysInfo::WordSize << ")<br /><br />";
+#endif
 
 	s << "<b>" << tr("Library paths:") << "</b> ";
 	s << QCoreApplication::libraryPaths().join( ";" ) << "<br />";
