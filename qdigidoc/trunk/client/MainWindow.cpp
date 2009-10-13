@@ -367,8 +367,8 @@ void MainWindow::buttonClicked( int button )
 		}
 		SettingsDialog::saveSignatureInfo( signRoleInput->text(),
 			signResolutionInput->text(), signCityInput->text(),
-			signStateInput->text(), signZipInput->text(),
-			signCountryInput->text() );
+			signStateInput->text(), signCountryInput->text(),
+			signZipInput->text() );
 		SettingsDialog::saveMobileInfo( infoMobileCode->text(), infoMobileCell->text() );
 		setCurrentPage( View );
 		break;
