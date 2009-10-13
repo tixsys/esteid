@@ -151,7 +151,7 @@ function selectReader()
 		activeCardId = esteidData.getDocumentId();
 
 	extender.closeLoading();
-	document.getElementById( 'forUpdate' ).innerHTML += " ";
+	document.getElementById( 'forUpdate' ).innerHTML += ".";
 	readCardData();
 }
 
