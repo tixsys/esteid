@@ -82,6 +82,10 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	else
 		m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
 
+	lang["et"] = "EST";
+	lang["en"] = "ENG";
+	lang["ru"] = "RUS";
+
 	mobileResults[ "START" ] = tr( "Signing in process" );
 	mobileResults[ "REQUEST_OK" ] = tr( "Request accepted" );
 	mobileResults[ "EXPIRED_TRANSACTION" ] = tr( "Request timeout" );
@@ -156,7 +160,7 @@ void MobileDialog::httpRequestFinished( int id, bool error )
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
-										const QString &country, const QString &role, const QString &role2 )
+	const QString &country, const QString &role, const QString &role2 )
 {
 	QStringList roles = QStringList() << role << role2;
 	roles.removeAll( "" );
@@ -186,18 +190,22 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 	QString message = QString(
 		"<IDCode xsi:type=\"xsd:String\">%1</IDCode>"
 		"<PhoneNo xsi:type=\"xsd:String\">%2</PhoneNo>"
-		"<Language xsi:type=\"xsd:String\">EST</Language>"
+		"<Language xsi:type=\"xsd:String\">%3</Language>"
 		"<ServiceName xsi:type=\"xsd:String\">Testimine</ServiceName>"
 		"<MessageToDisplay xsi:type=\"xsd:String\">DigiDoc3</MessageToDisplay>"
-		"%3"
-		"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
 		"%4"
-		"<Format xsi:type=\"xsd:String\">%5</Format>"
-		"<Version xsi:type=\"xsd:String\">%6</Version>"
-		"<SignatureID xsi:type=\"xsd:String\">S%7</SignatureID>"
+		"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+		"%5"
+		"<Format xsi:type=\"xsd:String\">%6</Format>"
+		"<Version xsi:type=\"xsd:String\">%7</Version>"
+		"<SignatureID xsi:type=\"xsd:String\">S%8</SignatureID>"
 		"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
 		"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>" )
-		.arg( escapeChars( ssid ) ).arg( escapeChars( cell ) ).arg( signature ).arg( files )
+		.arg( escapeChars( ssid ) )
+		.arg( escapeChars( cell ) )
+		.arg( m_lang.value( Settings().value("Main/Language", "et" ).toByteArray(), "EST" ) )
+		.arg( signature )
+		.arg( files )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "BDOC" : "DIGIDOC-XML" )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "1.0" : "1.3" )
 		.arg( m_doc->signatures().size() );
@@ -324,14 +332,14 @@ QString MobileDialog::insertBody( MobileAction maction, const QString &body ) co
 
 void MobileDialog::updateStatus()
 {
-	if ( statusTimer->isActive() && startTime.isValid() )
+	if ( !statusTimer->isActive() || !startTime.isValid() )
+		return;
+
+	signProgressBar->setValue( startTime.elapsed() / 1000 );
+	if ( signProgressBar->value() >= signProgressBar->maximum() )
 	{
-		signProgressBar->setValue( startTime.elapsed() / 1000 );
-		if ( signProgressBar->value() >= signProgressBar->maximum() )
-		{
-			m_timer->stop();
-			statusTimer->stop();
-			labelError->setText( mobileResults.value( "EXPIRED_TRANSACTION" ) );
-		}
+		m_timer->stop();
+		statusTimer->stop();
+		labelError->setText( mobileResults.value( "EXPIRED_TRANSACTION" ) );
 	}
 }

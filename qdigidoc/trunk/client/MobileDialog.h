@@ -36,29 +36,29 @@ class DigiDoc;
 
 class MobileDialog : public QDialog, private Ui::MobileDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
+	MobileDialog( DigiDoc *doc, QWidget *parent = 0 );
 	void setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 							const QString &country, const QString &role, const QString &role2 );
 	void sign( const QString &ssid, const QString &cell );
 	QString fName;
 
 private Q_SLOTS:
-    void sslErrors(const QList<QSslError> &);
-    void httpRequestFinished( int id, bool error );
+	void sslErrors(const QList<QSslError> &);
+	void httpRequestFinished( int id, bool error );
 
-    void startSessionResult( const QDomElement &element );
-    void getSignStatusResult( const QDomElement &element );
+	void startSessionResult( const QDomElement &element );
+	void getSignStatusResult( const QDomElement &element );
 	void getSignStatus();
 	void updateStatus();
 
 private:
-    enum MobileAction {
+	enum MobileAction {
 		MobileCreateSignature,
 		GetMobileCreateSignatureStatus
-    };
+	};
 
 	bool getFiles();
 	QString escapeChars( const QString &in ) const;
@@ -71,7 +71,7 @@ private:
 	QTime startTime;
 	QString signature, files;
 
-    int sessionCode;
-    QHash< int, QByteArray > m_callBackList;
-	QHash< QByteArray, QString > mobileResults;
+	int sessionCode;
+	QHash< int, QByteArray > m_callBackList;
+	QHash< QByteArray, QString > lang, mobileResults;
 };
