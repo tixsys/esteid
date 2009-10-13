@@ -38,22 +38,25 @@
 #include <QTemporaryFile>
 
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
-:   QDialog( parent )
-,   m_doc( doc )
-,   m_timer( new QTimer( this ) )
+:	QDialog( parent )
+,	m_doc( doc )
+,	m_http( new QHttp( this ) )
+,	m_timer( new QTimer( this ) )
 ,	statusTimer( new QTimer( this ) )
-,   sessionCode( 0 )
+,	sessionCode( 0 )
 {
-    setupUi( this );
+	setupUi( this );
+
+	connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
+	connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
+	connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
+	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 
 	Settings s;
 	s.beginGroup( "Client" );
 
 	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	QString certPass = m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-
-	m_http = new QHttp( this );
-
 	if ( certFile.size() && QFile::exists( certFile ) )
 	{
 		QFile f( certFile );
@@ -66,8 +69,6 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 			m_http->setSocket( ssl );
 		}
 	}
-    connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
-    connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
 
 	m_http->setProxy(
 		s.value( "proxyHost" ).toString(),
@@ -94,9 +95,6 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
 	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
 	mobileResults[ "User is not a Mobile-ID client" ] = tr( "User is not a Mobile-ID client" );
-
-	connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
-	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 }
 
 QString MobileDialog::escapeChars( const QString &in ) const
