@@ -442,7 +442,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Show encrypting intro</source>
-        <translation>Показывать подсказку при подписывании</translation>
+        <translation>Показывать подсказку для шифрования</translation>
     </message>
 </context>
 <context>
