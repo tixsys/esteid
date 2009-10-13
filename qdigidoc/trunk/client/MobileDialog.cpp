@@ -118,47 +118,48 @@ void MobileDialog::sslErrors(const QList<QSslError> &)
 
 void MobileDialog::httpRequestFinished( int id, bool error )
 {
-    if ( error)
-    {
+	if ( error )
+	{
 		qDebug() << "Download failed: " << m_http->errorString() << m_http->error();
 		if ( m_http->error() == QHttp::HostNotFound )
 			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) );
-        return;
-    }
+		return;
+	}
 
-    //not in callback list
-    if ( !m_callBackList.contains( id ) )
-        return;
+	//not in callback list
+	if ( !m_callBackList.contains( id ) )
+		return;
 
-    QByteArray result = m_http->readAll();
-    if ( result.isEmpty() )
-        return;
+	QByteArray result = m_http->readAll();
+	if ( result.isEmpty() )
+		return;
 
-    QDomDocument doc;
-    if ( !doc.setContent( result ) )
-        return;
+	QDomDocument doc;
+	if ( !doc.setContent( QString::fromUtf8( result ) ) )
+		return;
 
-    QDomElement e = doc.documentElement();
+	QDomElement e = doc.documentElement();
 
-    if ( result.contains( "Fault" ) )
-    {
-        QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
+	if ( result.contains( "Fault" ) )
+	{
+		QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
 		if ( mobileResults.contains( error.toLatin1() ) )
 			error = mobileResults.value( error.toLatin1() );
 		labelError->setText( error );
 		statusTimer->stop();
-        return;
-    }
+		return;
+	}
 
-    QMetaObject::invokeMethod( this, (const char *)m_callBackList.value( id ),
-                               Q_ARG( QDomElement, e ) );
-    m_callBackList.remove( id );
+	QMetaObject::invokeMethod( this, (const char *)m_callBackList.value( id ),
+	    Q_ARG( QDomElement, e ) );
+	m_callBackList.remove( id );
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
 										const QString &country, const QString &role, const QString &role2 )
 {
 	QStringList roles = QStringList() << role << role2;
+	roles.removeAll( "" );
 	signature = QString(
 		"<City xsi:type=\"xsd:String\">%1</City>"
 		"<StateOrProvince xsi:type=\"xsd:String\">%2</StateOrProvince>"
@@ -245,8 +246,8 @@ bool MobileDialog::getFiles()
 
 void MobileDialog::startSessionResult( const QDomElement &element )
 {
-    sessionCode=element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
-    if ( sessionCode )
+	sessionCode = element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
+	if ( sessionCode )
 	{
 		code->setText( tr("Control code: %1")
 			.arg( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() ) );
