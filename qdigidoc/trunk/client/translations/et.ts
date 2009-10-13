@@ -610,10 +610,6 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Ligipääsutõend</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translation>Parool</translation>
     </message>
@@ -657,10 +653,6 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>Zip</source>
         <translation>Indeks</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Select folder</source>
@@ -826,24 +818,16 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Tundmatu viga</translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation>Tüüp</translation>
-    </message>
-    <message>
         <source>Time</source>
         <translation>Aeg</translation>
     </message>
     <message>
-        <source>SHA1 hash</source>
-        <translation>SHA1 räsi</translation>
-    </message>
-    <message>
-        <source>Subject name</source>
-        <translation>Pealkirja nimi</translation>
-    </message>
-    <message>
         <source>Signature status unknown (%1)</source>
         <translation>Allkirja staatus on teadmata (%1)</translation>
+    </message>
+    <message>
+        <source>Hash value of validity confirmation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

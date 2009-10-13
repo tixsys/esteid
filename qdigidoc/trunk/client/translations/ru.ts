@@ -270,7 +270,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&quot;addFile&quot;&gt;Добавить файл&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;addFile&quot;&gt;Добавить файл&lt;/a&gt;</translation>
     </message>
     <message>
         <source>This container is </source>
@@ -609,10 +609,6 @@ Please check your internet connection.</source>
         <translation>Сертификат доступа</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
@@ -640,10 +636,6 @@ Please check your internet connection.</source>
     <message>
         <source>Same folder</source>
         <translation>Та же папка</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Ask container name</source>
@@ -825,24 +817,16 @@ Please check your internet connection.</source>
         <translation>Подтвердить</translation>
     </message>
     <message>
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <source>SHA1 hash</source>
-        <translation>SHA1 хэш</translation>
-    </message>
-    <message>
-        <source>Subject name</source>
-        <translation>Название заглавия</translation>
-    </message>
-    <message>
         <source>Signature status unknown (%1)</source>
         <translation>Неизвестный статус пользователя (%1)</translation>
+    </message>
+    <message>
+        <source>Hash value of validity confirmation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
