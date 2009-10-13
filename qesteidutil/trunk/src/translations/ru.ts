@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
 <TS version="2.0" language="ru_RU" sourcelanguage="en">
 <context>
     <name>CertUpdate</name>
@@ -118,7 +119,7 @@
     </message>
     <message>
         <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!</source>
-        <translation>Для обновления сертификата пожалуйста закройте все окна типа qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!</translation>
+        <translation type="unfinished">Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!</translation>
     </message>
 </context>
 <context>
