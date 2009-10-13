@@ -24,11 +24,20 @@ WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	transform( ext.begin(), ext.end(), ext.begin(), tolower );
 
 	if( ext == "bdoc" )
+	{
 		m_doc = new BDoc( serializer );
+		m_type = BDocType;
+	}
 	else if( ext == "ddoc" )
+	{
 		m_doc = new DDoc( serializer );
+		m_type = DDocType;
+	}
 	else
+	{
+		m_type = BDocType;
 		throw IOException( __FILE__, __LINE__, "Unknow document format" );
+	}
 }
 
 void WDoc::addDocument(const Document& document) throw(BDocException)
