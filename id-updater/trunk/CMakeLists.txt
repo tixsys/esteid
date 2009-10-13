@@ -9,6 +9,9 @@ add_definitions(
     -DUNICODE
 )
 
+set(UPDATER_URL "http://ftp.id.eesti.ee/pub/id/updater/" CACHE STRING "URL to download manifest.xml" )
+add_definitions(-DUPDATER_URL="${UPDATER_URL}")
+
 if(MSVC)
     # http://www.qtcentre.org/forum/f-installation-5/t-wchar-to-qstring-giving-error-in-vs2005-4625.html
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t-")

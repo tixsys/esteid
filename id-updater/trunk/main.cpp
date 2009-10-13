@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	ProcessStarter proc(argv[0],"");
 	bool quitNow = proc.Run();
 //	run << "executed proc.run, result : " << quitNow << std::endl;
-	QString url = "http://kaidokert.com/work/updater/";
+	QString url = UPDATER_URL;
 	int urlAt = args.indexOf("-url");
 	if (urlAt > 0 && urlAt < args.size()-1 ) 
 		url = args[urlAt+1];
