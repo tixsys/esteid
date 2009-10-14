@@ -52,13 +52,17 @@ void Poller::read()
 	}
 
 	cards.clear();
+	tokens.clear();
 	for( CK_ULONG i = 0; i < count; ++i )
 	{
 		CK_TOKEN_INFO tokeninfo;
 		err = GetTokenInfo( &tokeninfo, slotids[i] );
 		QString serialNumber = QByteArray( (const char*)tokeninfo.serialNumber, 16 ).trimmed();
 		if( !cards.contains( serialNumber ) )
+		{
 			cards[serialNumber] = slotids[i];
+			tokens[serialNumber] = i;
+		}
 	}
 	free( slotids );
 
@@ -142,6 +146,7 @@ void Poller::selectCard( const QString &card )
 }
 
 quint64 Poller::slot( const QString &card ) const { return cards.value( card ); }
+quint64 Poller::token( const QString &card ) const { return tokens.value( card ); }
 
 void Poller::stop()
 {

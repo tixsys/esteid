@@ -37,6 +37,7 @@ public:
 	~Poller();
 
 	quint64 slot( const QString &card ) const;
+	quint64 token( const QString &card ) const;
 	void stop();
 
 Q_SIGNALS:
@@ -54,7 +55,7 @@ private:
 	Qt::HANDLE lib;
 	volatile bool terminate;
 	QMutex m;
-	QHash<QString,quint64> cards;
+	QHash<QString,quint64> cards, tokens;
 	QString selectedCard, select;
 	QSslCertificate auth;
 };

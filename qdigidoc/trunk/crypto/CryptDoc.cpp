@@ -216,7 +216,7 @@ bool CryptDoc::decrypt( const QString &pin )
 	}
 
 	createOrReplacePrivateConfigItem( NULL, "DIGIDOC_AUTH_KEY_SLOT",
-		QByteArray::number( poller->slot( m_card ) ) );
+		QByteArray::number( poller->token( m_card ) ) );
 	poller->stop();
 	int err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
 	poller->start();
