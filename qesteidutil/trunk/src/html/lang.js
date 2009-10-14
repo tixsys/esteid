@@ -149,7 +149,7 @@ var eestiStrings = {
 
 var eidStrings = {
 	"noCard": new tr( "Ei leitud ühtegi ID-kaarti", "No card found", "Не найдена ID- карта" ),
-	"noReaders": new tr( "Ühtegi kiipkaardi lugejat pole ühendatud", "No readers found", "Не обнаружено считывающее устройство" ),
+	"noReaders": new tr( "Ühtegi kiipkaardi lugejat pole ühendatud", "No readers found", "Считывающее устройство не обнаружено" ),
 	"certValid": new tr( "kehtiv ja kasutatav", "valid and applicable", "действителен и пригоден" ),
 	"certBlocked": new tr( "kehtetu", "expired", "недействительно" ),
 	"validBlocked": new tr( "kehtiv kuid blokeeritud", "valid but blocked", "действительно, но заблокировано" ),
