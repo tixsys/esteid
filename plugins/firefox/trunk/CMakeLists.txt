@@ -21,16 +21,18 @@ include_directories(
 # Set project version
 set( MAJOR 0)
 set( MINOR 4)
+set( PATCH SVNXX)
 
 find_package(Subversion)
 if(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
     Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
-    message(STATUS "Current SVN revision is ${PROJECT_WC_LAST_CHANGED_REV}")
-    set(PROJECT_VERSION "${MAJOR}.${MINOR}.${PROJECT_WC_LAST_CHANGED_REV}")
+    message(STATUS "Current subversion revision is ${PROJECT_WC_LAST_CHANGED_REV}")
+    set(PATCH ${PROJECT_WC_LAST_CHANGED_REV})
 else(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-    message( "Unable to determine SVN revision")
-    set(PROJECT_VERSION "${MAJOR}.${MINOR}")
+    message( "Unable to determine subversion revision")
 endif(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+
+set(PROJECT_VERSION "${MAJOR}.${MINOR}.${PATCH}")
 
 message( STATUS "Current project version is ${PROJECT_VERSION}")
 add_definitions( -DESTEID_MOZPLUG_VERSION="${PROJECT_VERSION}")
