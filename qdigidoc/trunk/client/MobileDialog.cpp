@@ -289,8 +289,7 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 		if ( status != "SIGNATURE" )
 			return;
 
-		QTemporaryFile file( QString( "%1%2XXXXXX.xml" )
-							.arg( QDir::tempPath() ).arg( QDir::separator() ) );
+		QTemporaryFile file( QString( "%1/XXXXXX.xml" ).arg( QDir::tempPath() ) );
 		file.setAutoRemove( false );
 		if ( file.open() )
 		{

@@ -60,8 +60,6 @@ MainWindow::MainWindow( QWidget *parent )
 
 	setupUi( this );
 
-	signZipInput->setValidator( new QRegExpValidator( QRegExp( "\\d{0,5}" ), signZipInput ) );
-
 	cards->hide();
 
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
