@@ -386,10 +386,8 @@ bool CryptDoc::encrypt()
 	}
 #endif
 
-	DigiDocMemBuf doc;
-	doc.pMem = 0;
-	doc.nLen = 0;
-	err = createSignedDocInMemory( m_doc, 0, &doc );
+	QFile f( QString( m_fileName ).append( ".ddoc" ) );
+	err = createSignedDoc( m_doc, NULL, f.fileName().toUtf8() );
 	if( err != ERR_OK )
 	{
 		cleanProperties();
@@ -397,13 +395,22 @@ bool CryptDoc::encrypt()
 		return false;
 	}
 
-	err = dencEncryptedData_AppendData( m_enc, (const char*)doc.pMem, doc.nLen );
+	if( !f.open( QIODevice::ReadOnly ) )
+	{
+		cleanProperties();
+		setLastError( tr("Failed to encrypt data") );
+		return false;
+	}
+
+	err = dencEncryptedData_AppendData( m_enc, f.readAll(), f.size() );
 	if( err != ERR_OK )
 	{
 		cleanProperties();
 		setLastError( tr("Failed to encrypt data"), err );
 		return false;
 	}
+	f.close();
+	f.remove();
 
 	err = dencEncryptedData_encryptData( m_enc, DENC_COMPRESS_NEVER );
 	if( err != ERR_OK )
