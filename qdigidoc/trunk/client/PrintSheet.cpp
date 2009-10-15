@@ -52,6 +52,7 @@ static QString splitWord( const QString &in )
 			lastPos = i;
 		}
 	}
+	out += in.mid( lastPos );
 	return out;
 }
 
