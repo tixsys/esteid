@@ -721,6 +721,10 @@ Please check your internet connection.</source>
         <source>Username</source>
         <translation>Имя пользователя</translation>
     </message>
+    <message>
+        <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SignatureDialog</name>

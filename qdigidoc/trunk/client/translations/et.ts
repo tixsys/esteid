@@ -722,6 +722,10 @@ Palun kontrollige internetiühendust.</translation>
         <source>Username</source>
         <translation>Kasutajanimi</translation>
     </message>
+    <message>
+        <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SignatureDialog</name>

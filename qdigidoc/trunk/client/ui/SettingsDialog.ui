@@ -115,6 +115,16 @@
         </layout>
        </item>
        <item>
+        <widget class="QLabel" name="typeInfo">
+         <property name="text">
+          <string>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="tabGeneralSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
