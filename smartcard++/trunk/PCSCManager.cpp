@@ -131,7 +131,7 @@ void PCSCManager::ensureReaders(uint idx)
 		}
 	
 #ifdef __APPLE__
-	for(unsigned int i = 0; i < mReaderStates.size(); i++) {
+	for(size_t i = 0; i < mReaderStates.size(); i++) {
 		SCError::check((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
 	}
 #else
