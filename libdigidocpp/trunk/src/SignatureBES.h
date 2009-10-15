@@ -33,7 +33,6 @@ namespace digidoc
           // offline checks
           void checkSignature() const throw(SignatureException);
           void checkSignedInfo() const throw(SignatureException);
-          void checkCanonicalizationMethod() const throw(SignatureException);
           void checkSignatureMethod() const throw(SignatureException);
           void checkReferences() const throw(SignatureException);
           void checkSignatureValue() const throw(SignatureException);

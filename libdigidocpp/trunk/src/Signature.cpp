@@ -21,6 +21,7 @@
 #include <xercesc/parsers/XercesDOMParser.hpp>
 
 #include <xsec/canon/XSECC14n20010315.hpp>
+#include <xsec/dsig/DSIGConstants.hpp>
 
 const std::string digidoc::Signature::XADES_NAMESPACE = "http://uri.etsi.org/01903/v1.3.2#";
 const std::string digidoc::Signature::DSIG_NAMESPACE = "http://www.w3.org/2000/09/xmldsig#";
@@ -73,7 +74,10 @@ digidoc::dsig::SignatureType* digidoc::Signature::createEmptySignature()
 {
     DEBUG("digidoc::Signature::createEmptySignature");
     // Signature->SignedInfo
-    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri("http://www.w3.org/TR/2001/REC-xml-c14n-20010315"));
+    // Default canonicalization method
+    // Can be either URI_ID_EXC_C14N_NOC or URI_ID_C14N11_NOC
+    // URI_ID_C14N_NOC is not recommended when xml:id attributes are in use
+    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri(URI_ID_EXC_C14N_NOC));
     dsig::SignatureMethodType signatureMethod(xml_schema::Uri("http://www.w3.org/2000/09/xmldsig#rsa-sha1"));//XXX: static const or dynamic
     dsig::SignedInfoType signedInfo(canonicalizationMethod, signatureMethod);
 
@@ -311,7 +315,7 @@ std::vector<unsigned char> digidoc::Signature::getSignatureValue() const
 }
 
 /**
- * Canonicalize XML node using Canonical XML 1.0 specification (http://www.w3.org/TR/2001/REC-xml-c14n-20010315).
+ * Canonicalize XML node using one of the supported methods in XML-DSIG
  * Using Xerces for parsing XML to preserve the white spaces "as is" and get
  * the same digest value on XML node each time.
  *
@@ -352,23 +356,43 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
             		nodeList->getLength(), tagName.c_str(), ns.c_str());
         }
 
-
-        // Canocalize XML using "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" implementation.
+        // Canocalize XML using one of the three methods supported by XML-DSIG
 	    XSECC14n20010315 canonicalizer(dom.get(), nodeList->item(0));
 	    canonicalizer.setCommentsProcessing(false);
 	    canonicalizer.setUseNamespaceStack(true);
-	    canonicalizer.setExclusive();
 
+        // Find the method identifier
+        dsig::SignedInfoType& signedInfo = signature->signedInfo();
+        dsig::CanonicalizationMethodType& canonMethod = signedInfo.canonicalizationMethod();
+        dsig::CanonicalizationMethodType::AlgorithmType& algorithmType = canonMethod.algorithm();
 
-	    //std::vector<unsigned char> c14n;
+        DEBUG("C14N algorithmType = '%s'", algorithmType.c_str());
+
+        // Set processing flags according to algorithm type.
+               if(algorithmType == URI_ID_C14N_NOC) {
+            // Default behaviour, nothing needs to be changed
+        } else if(algorithmType == URI_ID_EXC_C14N_NOC) {
+	    // Exclusive mode needs to include xml-dsig in root element 
+	    // in order to maintain compatibility with existing implementations
+	    canonicalizer.setExclusive((char*)"ds");
+#ifdef URI_ID_C14N11_NOC
+        } else if(algorithmType == URI_ID_C14N11_NOC) {
+	    canonicalizer.setInclusive11();
+#endif
+        } else {
+            // Unknown algorithm.
+            THROW_SIGNATUREEXCEPTION("Unsupported SignedInfo canonicalization method '%s'", algorithmType.c_str());
+        }
+
+	    std::vector<unsigned char> c14n;
 	    unsigned char buffer[1024];
 	    int bytes = 0;
 	    while((bytes = canonicalizer.outputBuffer(buffer, 1024)) > 0)
 	    {
 		    calc->update(buffer, bytes);
-	        //for(int i = 0; i < bytes; i++) { c14n.push_back(buffer[i]); }
+	        for(int i = 0; i < bytes; i++) { c14n.push_back(buffer[i]); }
 	    }
-	    //DEBUG("c14n = '%s'", std::string(reinterpret_cast<char*>(&c14n[0]), 0, c14n.size()).c_str());
+	    DEBUG("c14n = '%s'", std::string(reinterpret_cast<char*>(&c14n[0]), 0, c14n.size()).c_str());
 
 	    return calc->getDigest();
 	}
@@ -479,9 +503,9 @@ void digidoc::Signature::saveToXml(const std::string path) const throw(IOExcepti
     }
 
     // TODO: remove printing to std out.
-    INFO("------------------------------------------------------------------------------------------------------------");
-    dsig::signature(std::cout, *signature, createNamespaceMap());
-    INFO("------------------------------------------------------------------------------------------------------------");
+    //INFO("------------------------------------------------------------------------------------------------------------");
+    //dsig::signature(std::cout, *signature, createNamespaceMap());
+    //INFO("------------------------------------------------------------------------------------------------------------");
 }
 
 /**

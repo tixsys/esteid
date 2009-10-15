@@ -257,23 +257,8 @@ void digidoc::SignatureBES::checkSignature() const throw(SignatureException)
 /// @throws SignatureException on a problem in signature
 void digidoc::SignatureBES::checkSignedInfo() const throw(SignatureException)
 {
-    checkCanonicalizationMethod();
     checkSignatureMethod();
     checkReferences();
-}
-
-/// validate CanonicalizationMethod offline
-///
-/// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkCanonicalizationMethod() const throw(SignatureException)
-{
-    dsig::SignedInfoType& signedInfo = signature->signedInfo();
-    dsig::CanonicalizationMethodType& canonMethod = signedInfo.canonicalizationMethod();
-    dsig::CanonicalizationMethodType::AlgorithmType& algorithmType = canonMethod.algorithm();
-    if ( algorithmType != "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" )
-    {
-        THROW_SIGNATUREEXCEPTION("SignedInfo canonicalization method algorithm is wrong");
-    }
 }
 
 /// validate SignatureMethod offline
