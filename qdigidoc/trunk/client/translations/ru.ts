@@ -723,7 +723,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если вы хотите поменяеть формат файла с .bdoc на .ddoc или наоборот, необходимо перезапустить Digidoc клиент.</translation>
     </message>
 </context>
 <context>

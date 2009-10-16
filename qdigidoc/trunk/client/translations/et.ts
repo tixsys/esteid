@@ -724,7 +724,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kui soovite vahetada ümbriku formaati .bdoc&apos;ist .ddoc&apos;iks või vastupidi, on vaja Digidocile restart teha.</translation>
     </message>
 </context>
 <context>
