@@ -74,10 +74,16 @@ digidoc::dsig::SignatureType* digidoc::Signature::createEmptySignature()
 {
     DEBUG("digidoc::Signature::createEmptySignature");
     // Signature->SignedInfo
+
     // Default canonicalization method
-    // Can be either URI_ID_EXC_C14N_NOC or URI_ID_C14N11_NOC
-    // URI_ID_C14N_NOC is not recommended when xml:id attributes are in use
-    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri(URI_ID_EXC_C14N_NOC));
+    // Should be either URI_ID_EXC_C14N_NOC or URI_ID_C14N11_NOC
+    // because URI_ID_C14N_NOC is not recommended when xml:id
+    // attributes are in use ....
+    // http://www.w3.org/TR/DSig-usage chapter 2.1
+    // But the people that created the BDOC-1.0 standard do not 
+    // seem to give a damn about W3C recommendations ...
+    // http://www.signature.lt/-TOOLS/BDoc-1.0.pdf chapter 5.2
+    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri(URI_ID_C14N_NOC));
     dsig::SignatureMethodType signatureMethod(xml_schema::Uri("http://www.w3.org/2000/09/xmldsig#rsa-sha1"));//XXX: static const or dynamic
     dsig::SignedInfoType signedInfo(canonicalizationMethod, signatureMethod);
 
