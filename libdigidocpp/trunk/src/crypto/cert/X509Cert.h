@@ -38,6 +38,8 @@ namespace digidoc
 
           int verify(X509_STORE* store = NULL) const throw(IOException);
 
+          int compareIssuerToString(std::string) const throw(IOException);
+
       protected:
           X509* cert;
 

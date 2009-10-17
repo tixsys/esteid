@@ -269,7 +269,7 @@ void digidoc::SignatureBES::checkSignatureMethod() const throw(SignatureExceptio
     dsig::SignedInfoType& signedInfo = signature->signedInfo();
     dsig::SignatureMethodType& sigMethod = signedInfo.signatureMethod();
     dsig::SignatureMethodType::AlgorithmType& algorithmType = sigMethod.algorithm();
-    if ( algorithmType != "http://www.w3.org/2000/09/xmldsig#rsa-sha1" )//FIXME: const or dynamic
+    if ( algorithmType != URI_ID_RSA_SHA1 )//FIXME: const or dynamic
     {
         THROW_SIGNATUREEXCEPTION("Unsupported SignedInfo signature method \"%s\"", algorithmType.c_str());
     }
@@ -376,10 +376,9 @@ void digidoc::SignatureBES::checkKeyInfo() const throw(SignatureException)
 	dsig::X509IssuerSerialType::X509IssuerNameType certIssuerName = certs[0].issuerSerial().x509IssuerName();
 	dsig::X509IssuerSerialType::X509SerialNumberType certSerialNumber = certs[0].issuerSerial().x509SerialNumber();
 
-	//XXX: issuer name can be in different formats, compare using OpenSSL xxx_cmp() or write own
 	try
 	{
-		if ( certIssuerName != x509.getIssuerName() || x509.getSerial() != certSerialNumber )
+		if ( x509.compareIssuerToString(certIssuerName) || x509.getSerial() != certSerialNumber )
 		{
 			DEBUG("certIssuerName: \"%s\"", certIssuerName.c_str());
 			DEBUG("x509.getCertIssuerName() \"%s\"", x509.getIssuerName().c_str());

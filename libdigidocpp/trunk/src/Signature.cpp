@@ -84,7 +84,7 @@ digidoc::dsig::SignatureType* digidoc::Signature::createEmptySignature()
     // seem to give a damn about W3C recommendations ...
     // http://www.signature.lt/-TOOLS/BDoc-1.0.pdf chapter 5.2
     dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri(URI_ID_C14N_NOC));
-    dsig::SignatureMethodType signatureMethod(xml_schema::Uri("http://www.w3.org/2000/09/xmldsig#rsa-sha1"));//XXX: static const or dynamic
+    dsig::SignatureMethodType signatureMethod(xml_schema::Uri(URI_ID_RSA_SHA1));//XXX: static const or dynamic
     dsig::SignedInfoType signedInfo(canonicalizationMethod, signatureMethod);
 
     // Signature->SignatureValue
@@ -377,6 +377,8 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
         // Set processing flags according to algorithm type.
                if(algorithmType == URI_ID_C14N_NOC) {
             // Default behaviour, nothing needs to be changed
+        } else if(algorithmType == URI_ID_C14N_COM) {
+            canonicalizer.setCommentsProcessing(true);
         } else if(algorithmType == URI_ID_EXC_C14N_NOC) {
 	    // Exclusive mode needs to include xml-dsig in root element 
 	    // in order to maintain compatibility with existing implementations
@@ -384,6 +386,9 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
 #ifdef URI_ID_C14N11_NOC
         } else if(algorithmType == URI_ID_C14N11_NOC) {
 	    canonicalizer.setInclusive11();
+        } else if(algorithmType == URI_ID_C14N11_COM) {
+	    canonicalizer.setInclusive11();
+            canonicalizer.setCommentsProcessing(true);
 #endif
         } else {
             // Unknown algorithm.
