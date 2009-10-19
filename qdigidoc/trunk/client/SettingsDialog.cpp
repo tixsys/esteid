@@ -25,7 +25,9 @@
 #include "DigiDoc.h"
 #include "version.h"
 
+#include <common/CertificateWidget.h>
 #include <common/Settings.h>
+#include <common/SslCertificate.h>
 
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -79,6 +81,9 @@ void SettingsDialog::on_p12Button_clicked()
 		setP12Cert( cert );
 }
 
+void SettingsDialog::on_p12Cert_textChanged( const QString &text )
+{ showP12Cert->setEnabled( QFile::exists( text ) ); }
+
 void SettingsDialog::on_selectDefaultDir_clicked()
 {
 	QString dir = Settings().value( "Client/DefaultDir" ).toString();
@@ -91,6 +96,20 @@ void SettingsDialog::on_selectDefaultDir_clicked()
 		defaultDir->setText( dir );
 	}
 	defaultSameDir->setChecked( defaultDir->text().isEmpty() );
+}
+
+void SettingsDialog::on_showP12Cert_clicked()
+{
+	QFile f( p12Cert->text() );
+	if( !f.open( QIODevice::ReadOnly ) )
+		return;
+
+	QSslCertificate cert = SslCertificate::fromPKCS12( f.readAll(), p12Pass->text().toLatin1() );
+	f.close();
+	if( cert.isNull() )
+		return;
+	CertificateDialog d( cert );
+	d.exec();
 }
 
 void SettingsDialog::save()

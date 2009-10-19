@@ -179,7 +179,7 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <spacer name="tabPKCS12Spacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -191,6 +191,30 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="2" column="1">
+        <layout class="QHBoxLayout" name="p12ButtonLayout">
+         <item>
+          <spacer name="p12ButtonSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="showP12Cert">
+           <property name="text">
+            <string>Show certificate</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

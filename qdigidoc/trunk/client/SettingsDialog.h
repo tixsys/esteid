@@ -47,6 +47,8 @@ public:
 
 private Q_SLOTS:
 	void on_p12Button_clicked();
+	void on_p12Cert_textChanged( const QString &text );
 	void on_selectDefaultDir_clicked();
+	void on_showP12Cert_clicked();
 	void save();
 };
