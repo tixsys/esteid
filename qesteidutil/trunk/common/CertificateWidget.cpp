@@ -164,10 +164,14 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 		c.toHex( c.publicKey().toDer() ) );
 
 	QStringList enhancedKeyUsage = c.enhancedKeyUsage();
-	addItem( tr("Enhanched key usage"), enhancedKeyUsage.join( ", " ), enhancedKeyUsage.join( "\n" ) );
-	addItem( tr("Certificate policies"), c.policies().join( ", " ) );
+	if( !enhancedKeyUsage.isEmpty() )
+		addItem( tr("Enhanched key usage"), enhancedKeyUsage.join( ", " ), enhancedKeyUsage.join( "\n" ) );
+	QStringList policies = c.policies();
+	if( !policies.isEmpty() )
+		addItem( tr("Certificate policies"), policies.join( ", " ) );
 	addItem( tr("Authority key identifier"), c.toHex( c.authorityKeyIdentifier() ) );
 	addItem( tr("Subject key identifier"), c.toHex( c.subjectKeyIdentifier() ) );
 	QStringList keyUsage = c.keyUsage().values();
-	addItem( tr("Key usage"), keyUsage.join( ", " ), keyUsage.join( "\n" ) );
+	if( !keyUsage.isEmpty() )
+		addItem( tr("Key usage"), keyUsage.join( ", " ), keyUsage.join( "\n" ) );
 }
