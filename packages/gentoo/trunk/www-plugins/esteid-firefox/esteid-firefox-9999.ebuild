@@ -9,7 +9,7 @@ inherit cmake-utils mozextension subversion
 ESVN_REPO_URI="https://id.eesti.ee/svn/plugins/firefox/trunk/"
 
 MY_PN="esteid"
-MY_PV="0.2"
+MY_PV="0.4.0"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Estonian ID Card Mozilla signing extension"
