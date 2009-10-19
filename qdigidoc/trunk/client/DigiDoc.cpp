@@ -407,8 +407,7 @@ bool DigiDoc::open( const QString &file )
 	m_fileName = file;
 	try
 	{
-		std::auto_ptr<ISerialize> s(new ZipSerialize(file.toUtf8().constData()));
-		b = new WDoc( s );
+		b = new WDoc( file.toUtf8().constData() );
 		return true;
 	}
 	catch( const Exception &e )
