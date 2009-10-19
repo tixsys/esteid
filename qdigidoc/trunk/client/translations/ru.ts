@@ -208,8 +208,7 @@ Also an active internet connection is needed.&lt;/p&gt;
 Подписывание документов.&lt;br /&gt;&lt;br /&gt;
 Цифровая подпись аналогична физической подписи. Для цифровой подписи нужна ID-карта, которая имеет действующие сертификаты .&lt;br /&gt;&lt;br /&gt;
 При подписывании документов нужен PIN2 код.&lt;br /&gt;&lt;br /&gt;
-Для цифровой подписи необходимо подключение к интернету.
-&lt;/p&gt;
+Для цифровой подписи необходимо подключение к интернету.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -377,6 +376,21 @@ Start downloading?</source>
     <message>
         <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Server access certificate is not valid!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server access certificate is about to expire!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to read server access certificate!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -724,6 +738,10 @@ Please check your internet connection.</source>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
         <translation type="unfinished">Если вы хотите поменяеть формат файла с .bdoc на .ddoc или наоборот, необходимо открытый файл Digidoc клиентом открыть заного.</translation>
+    </message>
+    <message>
+        <source>Show certificate</source>
+        <translation>См. сертификат</translation>
     </message>
 </context>
 <context>

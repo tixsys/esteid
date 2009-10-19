@@ -277,15 +277,14 @@ Digital signing is equal to physical signing. To sign a document you need an ID-
 Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
 Also an active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 Dokumendi allkirjastamine.&lt;br /&gt;&lt;br /&gt;
 Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart või Mobiil-ID, millel on kehtiv ja kasutatav allkirjastamise sertifikaat.&lt;br /&gt;&lt;br /&gt;
 Dokumendi allkirjastamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkirja andmiseks on vajalik internetiühendus.
-&lt;/p&gt;
+Digitaalallkirja andmiseks on vajalik internetiühendus.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -377,6 +376,21 @@ Alustame laadimist?</translation>
     <message>
         <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Server access certificate is not valid!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server access certificate is about to expire!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to read server access certificate!
+Start downloading?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -725,6 +739,10 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
         <translation type="unfinished">Kui soovite vahetada ümbriku formaati .bdoc&apos;ist .ddoc&apos;iks või vastupidi, tuleb Digidoci kliendiga avatud fail uuesti avada.</translation>
+    </message>
+    <message>
+        <source>Show certificate</source>
+        <translation>Näita sertifikaati</translation>
     </message>
 </context>
 <context>

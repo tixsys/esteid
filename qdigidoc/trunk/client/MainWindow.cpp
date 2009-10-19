@@ -760,25 +760,39 @@ bool MainWindow::checkAccessCert()
 	Settings s;
 	s.beginGroup( "Client" );
 
-	QString certFile = doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-	QString certPass = doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
+	QFile f( doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) ) );
 
-	if ( certFile.size() && QFile::exists( certFile ) )
-	{
-		QFile f( certFile );
-		if( f.open( QIODevice::ReadOnly ) )
-		{
-			SslCertificate cert = SslCertificate::fromPKCS12( f.readAll(), certPass.toLatin1() );
-			f.close();
-			if ( !cert.isNull() && cert.isValid() && cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) )
-				return true;
-		}
-	}
-
-	if ( QMessageBox::question( this, tr( "Server access certificate" ),
+	if( !f.exists() &&
+		QMessageBox::warning( this, tr( "Server access certificate" ),
 			tr( "Did not find any server access certificate!\nStart downloading?" ),
-			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes )  != QMessageBox::Yes )
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
 		return true;
+
+	if( f.open( QIODevice::ReadOnly ) )
+	{
+		QSslCertificate cert = SslCertificate::fromPKCS12( f.readAll(),
+			doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
+		f.close();
+
+		if( !cert.isValid() &&
+			QMessageBox::warning( this, tr( "Server access certificate" ),
+				tr( "Server access certificate is not valid!\nStart downloading?" ),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+			return true;
+
+		if( cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) &&
+			QMessageBox::question( this, tr( "Server access certificate" ),
+				tr( "Server access certificate is about to expire!\nStart downloading?" ),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+			return true;
+	}
+	else
+	{
+		if( QMessageBox::warning( this, tr( "Server access certificate" ),
+				tr( "Failed to read server access certificate!\nStart downloading?" ),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+			return true;
+	}
 
 	if( infoSignMobile->isChecked() || doc->activeCard().isEmpty() )
 	{
@@ -803,14 +817,15 @@ bool MainWindow::checkAccessCert()
 	}
 
 	QDomElement e = domDoc.documentElement();
-	if ( !e.elementsByTagName( "StatusCode" ).size() )
+	QDomNodeList status = e.elementsByTagName( "StatusCode" );
+	if( status.isEmpty() )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),
 			tr( "Error parsing server access certificate result!" ), QMessageBox::Ok );
 		return false;
 	}
 
-	switch( e.elementsByTagName( "StatusCode" ).item(0).toElement().text().toInt() )
+	switch( status.item(0).toElement().text().toInt() )
 	{
 	case 1: //need to order cert manually from SK web
 		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
@@ -836,21 +851,20 @@ bool MainWindow::checkAccessCert()
 	if ( !QDir( path ).exists() )
 		QDir().mkpath( path );
 
-	QFile file( QString( "%1/%2.p12" )
-		.arg( path )
-		.arg( doc->signCert().subjectInfo( "serialNumber" ) ) );
-	if ( !file.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
+	f.setFileName( QString( "%1/%2.p12" )
+		.arg( path ).arg( doc->signCert().subjectInfo( "serialNumber" ) ) );
+	if ( !f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
 		QMessageBox::warning( this, tr( "Server access certificate" ),
 			tr("Failed to save server access certificate file to %1!\n%2")
-				.arg( file.fileName() )
-				.arg( file.errorString() ) );
+				.arg( f.fileName() )
+				.arg( f.errorString() ) );
 		return false;
 	}
-	file.write( QByteArray::fromBase64( cert.toLatin1() ) );
-	file.close();
+	f.write( QByteArray::fromBase64( cert.toLatin1() ) );
+	f.close();
 
-	s.setValue( "pkcs12Cert", file.fileName() );
+	s.setValue( "pkcs12Cert", f.fileName() );
 	s.setValue( "pkcs12Pass", e.elementsByTagName( "TokenPassword" ).item(0).toElement().text() );
 
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
