@@ -612,12 +612,12 @@ void digidoc::util::File::removeDirectoryRecursively(const std::string& dname) t
     std::vector<std::string> subFiles = getDirSubElements(dname, false, true, false);
     for (std::vector<std::string>::reverse_iterator it = subFiles.rbegin(); it != subFiles.rend(); it++)
     {
-        WARN( "Deleting the temporary file '%s'", it->c_str() );
+        DEBUG( "Deleting the temporary file '%s'", it->c_str() );
         removeFile(*it);
     }
 
     // Then delete the directory itself. It should now be empty.
-    WARN( "Deleting the temporary directory '%s'", dname.c_str() );
+    DEBUG( "Deleting the temporary directory '%s'", dname.c_str() );
     removeDirectory(dname);
 }
 

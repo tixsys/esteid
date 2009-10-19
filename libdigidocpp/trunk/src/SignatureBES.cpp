@@ -524,6 +524,8 @@ const throw(SignatureException)
         THROW_SIGNATUREEXCEPTION("SignedInfo reference to SignedProperties does not have attribute 'URI'");
     }
 
+/*  This check is pointless. It might make sense to check the syntax of the
+ *  URL, but this is better left for the resolvers to handle.
     std::string foundUri = uriOpt.get();
     std::string expectedUri =
         std::string("#") + id() + "-SignedProperties";
@@ -532,6 +534,7 @@ const throw(SignatureException)
     {
         THROW_SIGNATUREEXCEPTION("SignedInfo reference to SignedProperties attribute 'URI' is invalid");
     }
+*/
 
     // check DigestMethod
     const dsig::DigestMethodType& digestMethod = refType.digestMethod();

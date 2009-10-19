@@ -6,6 +6,7 @@
 #include "crypto/Digest.h"
 #include "util/File.h"
 #include "io/ISerialize.h"
+#include "io/ZipSerialize.h"
 #include "xml/OpenDocument_manifest.hxx"
 
 #include <fstream>
@@ -28,6 +29,17 @@ const std::string digidoc::BDoc::MANIFEST_NAMESPACE = "urn:oasis:names:tc:opendo
 digidoc::BDoc::BDoc()
  : version("1.0")
 {
+}
+
+/**
+ * Opens BDOC container from a file
+ */
+
+digidoc::BDoc::BDoc(std::string path) throw(IOException, BDocException)
+ : version("1.0")
+{
+    std::auto_ptr<ISerialize> serializer(new ZipSerialize(path));
+    readFrom(serializer);
 }
 
 /**

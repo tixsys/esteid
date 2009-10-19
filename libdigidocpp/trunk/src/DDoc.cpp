@@ -335,6 +335,18 @@ DDoc::DDoc()
 }
 DDoc::~DDoc() { delete d; }
 
+/**
+ * Opens DDOC container from a file
+ */
+
+digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
+ :	d( new DDocPrivate )
+{
+	d->filename = path;
+	loadFile();
+}
+
+
 DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 :	d( new DDocPrivate )
 {
@@ -342,6 +354,10 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		d->throwError( "DDoc library not loaded", __LINE__ );
 
 	d->filename = serializer->getPath();
+        loadFile();
+}
+
+void DDoc::loadFile() {
 	try
 	{
 		util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );

@@ -11,7 +11,7 @@ Exception::Exception(const std::string& file, int line, const std::string& msg)
  : file(file)
  , line(line)
  , msg(msg)
- , m_code(None)
+ , m_code(NoException)
 {}
 
 /**
@@ -28,7 +28,7 @@ Exception::Exception(const std::string& file, int line, const std::string& msg, 
  : file(file)
  , line(line)
  , msg(msg)
- , m_code(None)
+ , m_code(NoException)
 { addCause(cause); }
 
 Exception::ExceptionCode Exception::code() const { return m_code; }

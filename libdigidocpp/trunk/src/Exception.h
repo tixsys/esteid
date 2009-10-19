@@ -22,7 +22,7 @@ namespace digidoc
           enum ExceptionCode {
               CertificateRevoked   = 5,
               CertificateUnknown   = 6,
-              None                 = 0,
+              NoException          = 0,
               OCSPResponderMissing = 8,
               OCSPTimeSlot         = 7,
               PINCanceled          = 2,

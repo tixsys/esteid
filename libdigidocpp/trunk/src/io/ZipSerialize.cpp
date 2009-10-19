@@ -130,7 +130,6 @@ void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOE
     {
         THROW_IOEXCEPTION("Failed to open current file inside ZIP container. ZLib error: %d", unzResult);
     }
-    std::cout << "Extracted file " << fileName << " into the temp directory." << std::endl;
 
 	if(fileName[fileName.size()-1] == '/')
 	{

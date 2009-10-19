@@ -34,6 +34,7 @@ class EXP_DIGIDOC DDoc: public ADoc
 {
 public:
 	DDoc();
+	DDoc(std::string path) throw(IOException, BDocException);
 	DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
 	virtual ~DDoc();
 
@@ -51,6 +52,7 @@ public:
 
 private:
 	DDocPrivate *d;
+	void loadFile();
 };
 
 }

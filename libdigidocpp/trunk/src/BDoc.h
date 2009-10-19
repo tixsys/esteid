@@ -26,6 +26,7 @@ namespace digidoc
 
       public:
           BDoc();
+          BDoc(std::string path) throw(IOException, BDocException);
           BDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
           virtual ~BDoc();
           void save() throw(IOException, BDocException);
@@ -37,7 +38,7 @@ namespace digidoc
           const Signature* getSignature(unsigned int id) const throw(BDocException);
           void removeSignature(unsigned int id) throw(BDocException);
           unsigned int signatureCount() const;
-          void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
+          void sign(Signer* signer, Signature::Type profile = Signature::TM) throw(BDocException);
           void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException) {}
 
       protected:
