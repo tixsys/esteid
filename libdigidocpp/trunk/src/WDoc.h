@@ -17,6 +17,7 @@ public:
 	WDoc();
 	WDoc( DocumentType type );
 	WDoc( ADoc *doc );
+	WDoc(std::string path) throw(IOException, BDocException);
 	WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
 	~WDoc();
 

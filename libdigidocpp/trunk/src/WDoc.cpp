@@ -17,10 +17,32 @@ WDoc::~WDoc()
 		delete m_doc;
 }
 
+WDoc::WDoc(std::string path) throw(IOException, BDocException)
+{
+	std::string ext = path.substr( path.size() - 4 );
+	transform( ext.begin(), ext.end(), ext.begin(), tolower );
+
+	if( ext == "bdoc" )
+	{
+		m_doc = new BDoc( path );
+		m_type = BDocType;
+	}
+	else if( ext == "ddoc" )
+	{
+		m_doc = new DDoc( path );
+		m_type = DDocType;
+	}
+	else
+	{
+		m_type = BDocType;
+		throw IOException( __FILE__, __LINE__, "Unknown document format" );
+	}
+}
+
 WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	int len = serializer->getPath().size();
-	std::string ext = serializer->getPath().substr( len - 4, len );
+	std::string ext = serializer->getPath().substr( len - 4 );
 	transform( ext.begin(), ext.end(), ext.begin(), tolower );
 
 	if( ext == "bdoc" )
@@ -36,7 +58,7 @@ WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	else
 	{
 		m_type = BDocType;
-		throw IOException( __FILE__, __LINE__, "Unknow document format" );
+		throw IOException( __FILE__, __LINE__, "Unknown document format" );
 	}
 }
 
