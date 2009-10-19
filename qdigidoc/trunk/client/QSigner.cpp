@@ -71,7 +71,7 @@ std::string QSigner::getPin( PKCS11Cert certificate ) throw(digidoc::SignExcepti
 {
 	PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
 	if( !p.exec() )
-		throwException( tr("PIN acquisition canceled."), Exception::None, __LINE__ );
+		throwException( tr("PIN acquisition canceled."), Exception::NoException, __LINE__ );
 	return p.text().toUtf8().constData();
 }
 
@@ -201,7 +201,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 {
 	d->m.lock();
 	if( d->sign.isNull() )
-		throwException( tr("Signing certificate is not selected."), Exception::None, __LINE__ );
+		throwException( tr("Signing certificate is not selected."), Exception::NoException, __LINE__ );
 
 	if( d->slotCount )
 	{
@@ -211,7 +211,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	if( slotNumber() < 0 ||
 		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
 		(unsigned int)slotNumber() >= d->slotCount )
-		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	d->slot = 0;
 	int j = 0;
@@ -228,7 +228,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	}
 
 	if( !d->slot || !d->slot->token )
-		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	if( d->slot->token->loginRequired )
 	{
@@ -271,14 +271,14 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	unsigned int certCount;
 	if( PKCS11_enumerate_certs( d->slot->token, &certs, &certCount ) ||
 		!certCount || !&certs[0] )
-		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	PKCS11_KEY* signKey = PKCS11_find_key( &certs[0] );
 	if( !signKey )
-		throwException( tr("Failed to login token"), Exception::None, __LINE__ );
+		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), signKey) != 1 )
-		throwException( tr("Failed to sign document"), Exception::None, __LINE__ );
+		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
 
 	d->m.unlock();
 }
