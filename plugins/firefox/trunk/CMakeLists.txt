@@ -21,7 +21,7 @@ include_directories(
 # Set project version
 set( MAJOR 0)
 set( MINOR 4)
-set( PATCH SVNXX)
+set( PATCH 0)
 
 find_package(Subversion)
 if(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
