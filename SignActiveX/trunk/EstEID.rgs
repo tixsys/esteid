@@ -1,0 +1,26 @@
+HKCR
+{
+	EIDCard.EstEID.1 = s 'EstEID Class'
+	{
+		CLSID = s '{544B7288-0B12-494C-93C4-99EE206E6BB0}'
+	}
+	EIDCard.EstEID = s 'EstEID Class'
+	{
+		CLSID = s '{544B7288-0B12-494C-93C4-99EE206E6BB0}'
+		CurVer = s 'EIDCard.EstEID.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {544B7288-0B12-494C-93C4-99EE206E6BB0} = s 'EstEID Class'
+		{
+			ProgID = s 'EIDCard.EstEID.1'
+			VersionIndependentProgID = s 'EIDCard.EstEID'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			'TypeLib' = s '{968A4827-03BA-4848-A3D6-4B3B468B4951}'
+		}
+	}
+}
