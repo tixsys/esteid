@@ -1,0 +1,44 @@
+// EIDCard.idl : IDL source for EIDCard.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (EIDCard.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(E145248B-C030-4EF3-ABE9-79EAAE0AE8A5),
+		dual,
+		helpstring("ISign Interface"),
+		pointer_default(unique)
+	]
+	interface ISign : IDispatch
+	{
+		[id(1), helpstring("method getInfo")] HRESULT getInfo([out, retval] BSTR* infoText);
+		[id(2), helpstring("method getSigningCertificate")] HRESULT getSigningCertificate([out, retval] BSTR* Certificate);
+		[id(3), helpstring("method getSignedHash")] HRESULT getSignedHash([in] BSTR sHash, [in] long selectedCert, [out, retval] BSTR* SignedHash);
+		[propget, id(4), helpstring("property selectedCertNumber")] HRESULT selectedCertNumber([out, retval] long *pVal);
+		[propput, id(4), helpstring("property selectedCertNumber")] HRESULT selectedCertNumber([in] long newVal);
+	};
+
+[
+	uuid(968A4827-03BA-4848-A3D6-4B3B468B4951),
+	version(1.0),
+	helpstring("EIDCard 1.0 Type Library")
+]
+library EIDCARDLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(FC5B7BD2-584A-4153-92D7-4C5840E4BC28),
+		helpstring("Sign Class")
+	]
+	coclass Sign
+	{
+		[default] interface ISign;
+	};
+
+};
