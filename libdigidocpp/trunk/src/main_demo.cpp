@@ -179,7 +179,7 @@ int list(int argc, char* argv[])
             }
 
             // Get signature production place info.
-            Signer::SignatureProductionPlace spp = sig->getProductionPlace();
+            SignatureProductionPlace spp = sig->getProductionPlace();
             if(!spp.isEmpty())
             {
                 printf("    Signature production place:\n");
@@ -190,7 +190,7 @@ int list(int argc, char* argv[])
             }
 
             // Get signer role info.
-            Signer::SignerRole roles = sig->getSignerRole();
+            SignerRole roles = sig->getSignerRole();
             if(!roles.isEmpty())
             {
                 printf("    Signer role(s):\n");
@@ -319,11 +319,11 @@ int create(int argc, char* argv[])
         DemoEstEIDConsolePinSigner signer(pkcs11Driver);
 
         // Add signature production place.
-        Signer::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
+        SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
         signer.setSignatureProductionPlace(spp);
 
         // Add signer role(s).
-        Signer::SignerRole role("CEO");
+        SignerRole role("CEO");
         // Add additional roles.
         role.claimedRoles.push_back("Taxi driver");
         signer.setSignerRole(role);

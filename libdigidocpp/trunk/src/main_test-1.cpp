@@ -565,10 +565,10 @@ int testPKCS11Signer(int argc, char* argv[])
         PKCS11ConsolePinSigner signer("/usr/lib/opensc-pkcs11.so");
         //digidoc::PKCS11Signer signer("C:\\dev\\tools\\Copy of opensc-0.11.6\\src\\pkcs11\\opensc-pkcs11.dll", selectSignCertificate, getPin);
 
-        digidoc::Signer::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
+        digidoc::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
         signer.setSignatureProductionPlace(spp);
 
-        digidoc::Signer::SignerRole role("chief o'brian");
+        digidoc::SignerRole role("chief o'brian");
         signer.setSignerRole(role);
 
         //X509* cert = signer.getCert();
@@ -621,9 +621,9 @@ int testSignBDoc(digidoc::Signature::Type signingType, int argc, char* argv[])
         //digidoc::DummySigner signer(x509);
 
     	PKCS11ConsolePinSigner signer("/usr/lib/opensc-pkcs11.so");
-        digidoc::Signer::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
+        digidoc::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
 
-        digidoc::Signer::SignerRole role("chief o'brian");
+        digidoc::SignerRole role("chief o'brian");
         signer.setSignerRole(role);
         signer.setSignatureProductionPlace(spp);
 
@@ -716,16 +716,16 @@ int testOpenBDocBES(int argc, char* argv[])
             dumpException(e);
         }
 
-        digidoc::Signer::SignatureProductionPlace productionPlace = signature->getProductionPlace();
+        digidoc::SignatureProductionPlace productionPlace = signature->getProductionPlace();
         std::cout << "\tSignatureProductionPlace:" << std::endl;
         std::cout << "\t\tcity[" << productionPlace.city << "]" << std::endl;
         std::cout << "\t\tstateOrProvince[" << productionPlace.stateOrProvince << "]" << std::endl;
         std::cout << "\t\tpostalCode[" << productionPlace.postalCode << "]" << std::endl;
         std::cout << "\t\tcountryName[" << productionPlace.countryName << "]" << std::endl;
 
-        digidoc::Signer::SignerRole signerRole = signature->getSignerRole();
+        digidoc::SignerRole signerRole = signature->getSignerRole();
         std::cout << "\tClaimedRoles:" << std::endl;
-        for ( digidoc::Signer::SignerRole::TRoles::const_iterator it = signerRole.claimedRoles.begin()
+        for ( digidoc::SignerRole::TRoles::const_iterator it = signerRole.claimedRoles.begin()
             ; it != signerRole.claimedRoles.end()
             ; it++ )
         {
@@ -750,9 +750,9 @@ int testTMValidate()
     try
     {
         PKCS11ConsolePinSigner signer("/usr/lib/opensc-pkcs11.so");
-        digidoc::Signer::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
+        digidoc::SignatureProductionPlace spp("Tallinn", "Harjumaa", "12345", "Estonia");
 
-        digidoc::Signer::SignerRole role("chief o'brian");
+        digidoc::SignerRole role("chief o'brian");
         signer.setSignerRole(role);
         signer.setSignatureProductionPlace(spp);
 

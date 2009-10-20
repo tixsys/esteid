@@ -235,7 +235,7 @@ SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 	s.length = sig->pSigValue->mbufSignatureValue.nLen;
 	setSignatureValue( s );
 
-	Signer::SignatureProductionPlace l;
+	SignatureProductionPlace l;
 	if( sig->sigProdPlace.szCity )
 		l.city = sig->sigProdPlace.szCity;
 	if( sig->sigProdPlace.szStateOrProvince )
@@ -246,7 +246,7 @@ SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 		l.countryName = sig->sigProdPlace.szCountryName;
 	setSignatureProductionPlace( l );
 
-	Signer::SignerRole r;
+	SignerRole r;
 	for( int i = 0; i < sig->signerRole.nClaimedRoles; ++i )
 		r.claimedRoles.push_back( sig->signerRole.pClaimedRoles[i] );
 	setSignerRole( r );
@@ -546,14 +546,14 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	err = d->f_addAllDocInfos( d->doc, info );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
-	Signer::SignatureProductionPlace l = pkcs11->getSignatureProductionPlace();
+	SignatureProductionPlace l = pkcs11->getSignatureProductionPlace();
 	err = d->f_setSignatureProductionPlace( info, l.city.c_str(), l.stateOrProvince.c_str(),
 		l.postalCode.c_str(), l.countryName.c_str() );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::ostringstream role;
-	Signer::SignerRole::TRoles r = pkcs11->getSignerRole().claimedRoles;
-	for( Signer::SignerRole::TRoles::const_iterator i = r.begin(); i != r.end(); ++i )
+	SignerRole::TRoles r = pkcs11->getSignerRole().claimedRoles;
+	for( SignerRole::TRoles::const_iterator i = r.begin(); i != r.end(); ++i )
 	{
 		role << *i;
 		if( i + 1 != r.end() )

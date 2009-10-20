@@ -238,7 +238,7 @@ void digidoc::Signature::setSigningCertificate(const X509Cert& x509)
  *
  * @param spp signature production place.
  */
-void digidoc::Signature::setSignatureProductionPlace(const Signer::SignatureProductionPlace& spp)
+void digidoc::Signature::setSignatureProductionPlace(const SignatureProductionPlace& spp)
 {
     DEBUG("setSignatureProductionPlace(spp={city='%s',stateOrProvince='%s',postalCode='%s',countryName='%s'})", spp.city.c_str(), spp.countryName.c_str(), spp.postalCode.c_str(), spp.stateOrProvince.c_str());
 
@@ -258,7 +258,7 @@ void digidoc::Signature::setSignatureProductionPlace(const Signer::SignatureProd
  *
  * @param roles signer roles.
  */
-void digidoc::Signature::setSignerRole(const Signer::SignerRole& roles)
+void digidoc::Signature::setSignerRole(const SignerRole& roles)
 {
     //DEBUG("setSignerRole(signerRole={claimedRoles={'%s'}})", roles.claimedRoles[0].c_str())
 
@@ -535,9 +535,9 @@ xml_schema::NamespaceInfomap digidoc::Signature::createNamespaceMap()
  *
  * @return returns structure containing the address of signing place.
  */
-digidoc::Signer::SignatureProductionPlace digidoc::Signature::getProductionPlace() const
+digidoc::SignatureProductionPlace digidoc::Signature::getProductionPlace() const
 {
-    Signer::SignatureProductionPlace productionPlace;
+    SignatureProductionPlace productionPlace;
 
     const xades::SignedSignaturePropertiesType& signedSigProps = getSignedSignatureProperties();
 
@@ -568,9 +568,9 @@ digidoc::Signer::SignatureProductionPlace digidoc::Signature::getProductionPlace
  *
  * @return returns the claimed role of the signer.
  */
-digidoc::Signer::SignerRole digidoc::Signature::getSignerRole() const
+digidoc::SignerRole digidoc::Signature::getSignerRole() const
 {
-    Signer::SignerRole roles;
+    SignerRole roles;
 
     // SignedSignatureProperties
     const xades::SignedSignaturePropertiesType& signedSigProps =

@@ -13,7 +13,6 @@ include_directories(
     ${ZLIB_INCLUDE_DIR}
 )
 
-
 set(SCHEMA_DIR ${CMAKE_SOURCE_DIR}/etc/schema)
 set(XML_DIR ${CMAKE_CURRENT_BINARY_DIR}/xml)
 
@@ -100,6 +99,7 @@ set(digidocpp_SRCS
     SignatureTM.cpp
     SignatureMobile.cpp
     SignatureException.cpp
+    SignatureAttributes.cpp
     WDoc.cpp
     crypto/Digest.cpp
     crypto/cert/X509Cert.cpp
