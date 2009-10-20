@@ -633,8 +633,7 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 	{
 		viewContentView->setContent( doc->documents() );
 
-		Q_FOREACH( SignatureWidget *w, viewSignatures->findChildren<SignatureWidget*>() )
-			w->deleteLater();
+		qDeleteAll( viewSignatures->findChildren<SignatureWidget*>() );
 
 		int i = 0;
 		bool cardOwnerSignature = false, invalid = false, test = false;
@@ -696,18 +695,16 @@ void MainWindow::showCardStatus()
 	else
 	{
 		infoStack->setCurrentIndex( 0 );
-		QString content;
 		if( !doc->activeCard().isEmpty() && !doc->signCert().isNull() )
 		{
-			content = Common::tokenInfo( Common::SignCert, doc->activeCard(), doc->signCert() );
+			infoCard->setText( Common::tokenInfo( Common::SignCert, doc->activeCard(), doc->signCert() ) );
 			SslCertificate c( doc->signCert() );
 			signSigner->setText( c.toString( c.isTempel() ? "CN (serialNumber)" : "GN SN (serialNumber)" ) );
 		}
 		else if( !doc->activeCard().isEmpty() )
-			content = tr("Loading data");
+			infoCard->setText( tr("Loading data") );
 		else if( doc->activeCard().isEmpty() )
-			content = tr("No card in reader");
-		infoCard->setText( content );
+			infoCard->setText( tr("No card in reader") );
 	}
 
 	cards->clear();

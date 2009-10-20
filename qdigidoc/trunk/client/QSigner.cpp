@@ -63,7 +63,7 @@ QSigner::QSigner( QObject *parent )
 ,	d( new QSignerPrivate )
 {}
 
-QSigner::~QSigner() { unloadDriver(); }
+QSigner::~QSigner() { unloadDriver(); delete d; }
 
 X509* QSigner::getCert() throw(digidoc::SignException) { return (X509*)d->sign.handle(); }
 
