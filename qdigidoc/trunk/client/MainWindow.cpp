@@ -70,7 +70,7 @@ MainWindow::MainWindow( QWidget *parent )
 #endif
 
 	QApplication::instance()->installEventFilter( this );
-	
+
 	Common *common = new Common( this );
 	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
@@ -759,13 +759,14 @@ bool MainWindow::checkAccessCert()
 
 	QFile f( doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) ) );
 
-	if( !f.exists() &&
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Did not find any server access certificate!\nStart downloading?" ),
-			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
-		return true;
-
-	if( f.open( QIODevice::ReadOnly ) )
+	if( !f.exists() )
+	{
+		if( QMessageBox::warning( this, tr( "Server access certificate" ),
+				tr( "Did not find any server access certificate!\nStart downloading?" ),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+			return true;
+	}
+	else if( f.open( QIODevice::ReadOnly ) )
 	{
 		QSslCertificate cert = SslCertificate::fromPKCS12( f.readAll(),
 			doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
@@ -777,7 +778,7 @@ bool MainWindow::checkAccessCert()
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
 			return true;
 
-		if( cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) &&
+		if( cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) ||
 			QMessageBox::question( this, tr( "Server access certificate" ),
 				tr( "Server access certificate is about to expire!\nStart downloading?" ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )

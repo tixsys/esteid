@@ -71,7 +71,7 @@ std::string QSigner::getPin( PKCS11Cert certificate ) throw(digidoc::SignExcepti
 {
 	PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
 	if( !p.exec() )
-		throwException( tr("PIN acquisition canceled."), Exception::NoException, __LINE__ );
+		throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
 	return p.text().toUtf8().constData();
 }
 
