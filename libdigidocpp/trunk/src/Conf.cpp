@@ -27,3 +27,9 @@ bool digidoc::Conf::isInitialized()
 {
     return INSTANCE != NULL;
 }
+
+void digidoc::Conf::destroy()
+{
+    delete INSTANCE;
+    INSTANCE = NULL;
+}

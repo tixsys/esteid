@@ -13,9 +13,12 @@ namespace digidoc
 
       public:
           struct OCSPConf { std::string issuer, url, cert; };
+          virtual ~Conf() {}
           static void init(Conf* conf);
           static bool isInitialized();
           static Conf* getInstance() throw(IOException);
+          static void destroy();
+
           virtual std::string getDigestUri() const = 0;
           virtual std::string getManifestXsdPath() const = 0;
           virtual std::string getXadesXsdPath() const = 0;

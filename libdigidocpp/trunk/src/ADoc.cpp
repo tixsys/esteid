@@ -30,6 +30,8 @@ void digidoc::initialize()
  */
 void digidoc::terminate()
 {
+    XmlConf::destroy();
+
     // Terminate Apache XML Security library.
     XSECPlatformUtils::Terminate();
 
