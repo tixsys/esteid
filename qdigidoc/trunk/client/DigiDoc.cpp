@@ -174,7 +174,7 @@ QString DigiDocSignature::location() const
 QStringList DigiDocSignature::locations() const
 {
 	QStringList l;
-	const Signer::SignatureProductionPlace p = s->getProductionPlace();
+	const SignatureProductionPlace p = s->getProductionPlace();
 	l << QString::fromUtf8( p.city.data() ).trimmed();
 	l << QString::fromUtf8( p.stateOrProvince.data() ).trimmed();
 	l << QString::fromUtf8( p.postalCode.data() ).trimmed();
@@ -221,8 +221,8 @@ QString DigiDocSignature::role() const
 QStringList DigiDocSignature::roles() const
 {
 	QStringList list;
-	const Signer::SignerRole::TRoles roles = s->getSignerRole().claimedRoles;
-	Signer::SignerRole::TRoles::const_iterator i = roles.begin();
+	const SignerRole::TRoles roles = s->getSignerRole().claimedRoles;
+	SignerRole::TRoles::const_iterator i = roles.begin();
 	for( ; i != roles.end(); ++i )
 		list << QString::fromUtf8( i->data() ).trimmed();
 	return list;
@@ -553,12 +553,12 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	bool result = false;
 	try
 	{
-		signer->setSignatureProductionPlace( Signer::SignatureProductionPlace(
+		signer->setSignatureProductionPlace( SignatureProductionPlace(
 			city.toUtf8().constData(),
 			state.toUtf8().constData(),
 			zip.toUtf8().constData(),
 			country.toUtf8().constData() ) );
-		Signer::SignerRole sRole( role.toUtf8().constData() );
+		SignerRole sRole( role.toUtf8().constData() );
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
 		signer->setSignerRole( sRole );
