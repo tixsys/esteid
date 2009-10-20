@@ -193,11 +193,12 @@ install( FILES
     Document.h
     Exception.h
     Exports.h
+    Signature.h
+    SignatureAttributes.h
     SignatureBES.h
     SignatureException.h
-    Signature.h
-    SignatureTM.h
     SignatureMobile.h
+    SignatureTM.h
     WDoc.h
     XmlConf.h
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}
