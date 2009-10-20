@@ -12,6 +12,7 @@ namespace digidoc
     {
 
       public:
+          virtual ~X509CertStore() {}
           static void init(X509CertStore* impl);
           static void destroy();
           static X509CertStore* getInstance() throw(IOException);
