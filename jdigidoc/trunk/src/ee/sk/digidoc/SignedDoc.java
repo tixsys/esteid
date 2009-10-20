@@ -424,8 +424,7 @@ public class SignedDoc implements Serializable
 
          // write manifest file
     		manifestBos.write(ConvertUtils.str2data("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"));
-    		manifestBos.write(ConvertUtils.str2data("<!DOCTYPE manifest:manifest PUBLIC \"-//OpenOffice.org//DTD Manifest 1.0//EN\" "));
-    		manifestBos.write(ConvertUtils.str2data("\"Manifest.dtd\">\n<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n"));
+    		manifestBos.write(ConvertUtils.str2data("<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n"));
     		manifestBos.write(ConvertUtils.str2data("<manifest:file-entry manifest:media-type=\"application/vnd.bdoc-"));
     		manifestBos.write(ConvertUtils.str2data(this.getVersion()));
     		manifestBos.write(ConvertUtils.str2data("\" manifest:full-path=\"/\" />\n"));

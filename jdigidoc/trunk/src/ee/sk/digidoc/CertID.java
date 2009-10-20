@@ -427,9 +427,13 @@ public class CertID implements Serializable
         			bos.write(ConvertUtils.str2data(m_id));
         			bos.write(ConvertUtils.str2data("\">"));
         		}
-        		bos.write(ConvertUtils.str2data("\n<CertDigest>\n<DigestMethod Algorithm=\""));
+			bos.write(ConvertUtils.str2data("\n<CertDigest>\n<DigestMethod Algorithm=\""));
         		bos.write(ConvertUtils.str2data(m_digestAlgorithm));
-        		bos.write(ConvertUtils.str2data("\">\n</DigestMethod>\n<DigestValue>"));
+                        bos.write(ConvertUtils.str2data("\" xmlns=\""));
+                        bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+        		bos.write(ConvertUtils.str2data("\">\n</DigestMethod>\n<DigestValue xmlns=\""));
+                        bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+                        bos.write(ConvertUtils.str2data("\">"));
         		bos.write(ConvertUtils.str2data(Base64Util.encode(m_digestValue, 0)));
         		bos.write(ConvertUtils.str2data("</DigestValue>\n</CertDigest>\n"));
         		// In version 1.3 we use correct <IssuerSerial> content 

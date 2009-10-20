@@ -282,7 +282,7 @@ public class ConfigManager {
     	DigiDocFactory digFac = null;
         try {
             String property = getProperty("BDIGIDOC_FACTORY_IMPL");
-             if(digFac==null)
+             if(property==null)
                 DigiDocException.handleException(new Exception("BDIGIDOC_FACTORY_IMPL property is not configured in "+getManagerPath()+"\\"+getManagerFileName())
                         , DigiDocException.ERR_DIG_FAC_INIT);
 

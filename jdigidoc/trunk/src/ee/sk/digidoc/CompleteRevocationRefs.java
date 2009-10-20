@@ -393,7 +393,11 @@ public class CompleteRevocationRefs implements Serializable
             	m_unsignedProps.getSignature().getSignedDoc())));
             bos.write(ConvertUtils.str2data("</ProducedAt>\n</OCSPIdentifier>\n<DigestAlgAndValue>\n<DigestMethod Algorithm=\""));
             bos.write(ConvertUtils.str2data(m_digestAlgorithm));
-            bos.write(ConvertUtils.str2data("\"></DigestMethod>\n<DigestValue>"));
+            bos.write(ConvertUtils.str2data("\" xmlns=\""));
+            bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+            bos.write(ConvertUtils.str2data("\"></DigestMethod>\n<DigestValue xmlns=\""));
+            bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+            bos.write(ConvertUtils.str2data("\">"));
             bos.write(ConvertUtils.str2data(Base64Util.encode(m_digestValue, 0)));
             bos.write(ConvertUtils.str2data("</DigestValue>\n</DigestAlgAndValue>"));
             bos.write(ConvertUtils.str2data("</OCSPRef>\n</OCSPRefs>\n"));

@@ -569,7 +569,11 @@ public class SignedProperties implements Serializable
              //A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
             }else if(m_sig.getSignedDoc().getFormat().equals(SignedDoc.FORMAT_BDOC))
             {
-           		bos.write(ConvertUtils.str2data("<SignedProperties Id=\""));                	
+           		//bos.write(ConvertUtils.str2data("<SignedProperties Id=\""));                	
+                        // FIXME: Adding xmlns as an ugly hack to make canonization happy (temporarily)
+           		bos.write(ConvertUtils.str2data("<SignedProperties xmlns=\""));
+               	bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xades_123));
+               	bos.write(ConvertUtils.str2data("\" Id=\""));                	
                	bos.write(ConvertUtils.str2data(m_id));
                	bos.write(ConvertUtils.str2data("\">\n"));
             }
@@ -603,7 +607,11 @@ public class SignedProperties implements Serializable
             }
             bos.write(ConvertUtils.str2data("\n<CertDigest>\n<DigestMethod Algorithm=\""));
             bos.write(ConvertUtils.str2data(m_certDigestAlgorithm));
-            bos.write(ConvertUtils.str2data("\">\n</DigestMethod>\n<DigestValue>"));
+            bos.write(ConvertUtils.str2data("\" xmlns=\""));
+            bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+            bos.write(ConvertUtils.str2data("\">\n</DigestMethod>\n<DigestValue xmlns=\""));
+            bos.write(ConvertUtils.str2data(SignedDoc.xmlns_xmldsig));
+            bos.write(ConvertUtils.str2data("\">"));
             bos.write(ConvertUtils.str2data(Base64Util.encode(m_certDigestValue, 0)));
             bos.write(ConvertUtils.str2data("</DigestValue>\n</CertDigest>\n"));
             // In version 1.3 we use correct <IssuerSerial> content 
@@ -631,9 +639,9 @@ public class SignedProperties implements Serializable
             bos.write(ConvertUtils.str2data("</Cert></SigningCertificate>\n"));
             
          	//A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1 
-            if (m_sig.getSignedDoc().getFormat().equals(SignedDoc.FORMAT_BDOC)){
+            /* if (m_sig.getSignedDoc().getFormat().equals(SignedDoc.FORMAT_BDOC)){
             	bos.write(ConvertUtils.str2data("<SignaturePolicyIdentifier>\n<SignaturePolicyImplied>\n</SignaturePolicyImplied>\n</SignaturePolicyIdentifier>"));
-            }
+            } */
             //L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
             if(m_address != null) {
                 bos.write(ConvertUtils.str2data("\n"));

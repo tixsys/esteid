@@ -25,9 +25,6 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 
 import ee.sk.digidoc.Base64Util;

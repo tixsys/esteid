@@ -1086,7 +1086,7 @@ public class Signature implements Serializable
             		}
             		bos.write(ConvertUtils.str2data("\" Target=\"#"));
             		bos.write(ConvertUtils.str2data(m_id));
-            		bos.write(ConvertUtils.str2data("\">"));
+            		bos.write(ConvertUtils.str2data("\">\n"));
             	} else // in versions prior to 1.3 we used atributes in wrong places
             		bos.write(ConvertUtils.str2data("\n<Object><QualifyingProperties>"));
             	if(m_sigProp != null)

@@ -222,7 +222,7 @@ public class Base64Util  {
         int slack = rawLen - offset - 1;
         if(m_logger.isDebugEnabled())
         	m_logger.debug("raw: " + rawLen + " offset " + offset + " slack: " + slack);
-        int end = (slack >= 2) ? 2 : slack;
+        // int end = (slack >= 2) ? 2 : slack;
         for (int i = 0; i < 3; i++) {
             byte b = (offset + i < raw.length) ? raw[offset + i] : 0;
             int neuter = (b < 0) ? b + 256 : b;
