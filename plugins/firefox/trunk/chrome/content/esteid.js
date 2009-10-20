@@ -1,4 +1,5 @@
 var logmsg = "";
+var errflag = false;
 
 function log(a) {
   try {
@@ -22,6 +23,7 @@ function error(a) {
   } catch(e) {
     logmsg += "ERROR: " + a + "\n";
   }
+  errflag = true;
 }
 
 function showNormalIcon() {
@@ -48,17 +50,24 @@ function LoadEstEID() {
         log("Plugin Version: " + com.getVersion() + "\n");
         var elt = document.getElementById('esteidpanel');
 	elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
-        showNormalIcon();
     } catch (anError) {
         error(anError);
-	showErrorIcon();
     }
+
+    try {
+        ConfigureEstEID();
+    } catch (anError) {
+        error(anError);
+    }
+
+    if(errflag) showErrorIcon();
+    else        showNormalIcon();
+
+    errflag = false;
 }
 
 var eidui = Components.classes["@id.eesti.ee/esteid-private;1"]
                       .getService(Components.interfaces.nsIEstEIDPrivate);
 
-// Load plugin to show it's version on status bar
 window.addEventListener("load", LoadEstEID, false);
-// Configure EstEID certificates and modules
-window.addEventListener("load", ConfigureEstEID, false);
+//window.addEventListener("unload", UnLoadEstEID, false);

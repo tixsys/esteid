@@ -166,7 +166,9 @@ function ConfigureEstEID() {
         var libdir = (bits == 64) ? "/usr/lib64/" : "/usr/lib/";
         certDir = "/etc/digidocpp/certs";
         moduleDlls = [ libdir + soName + ".so",
-                       libdir + "pkcs11/" + soName + ".so" ];
+                       libdir + "pkcs11/" + soName + ".so",
+                       "/usr/pkg/lib/" + soName + ".so",
+                       "/usr/local/lib/" + soName + ".so" ];
     } else {
         error("Unknown plaform " + platform);
         return;
@@ -193,7 +195,10 @@ function ConfigureEstEID() {
             break;
         }
     }
-    log("Picked Module: " + EstEidDll);
+    if(EstEidDll)
+        log("Picked Module: " + EstEidDll);
+    else
+        error("Unable to find security module in any of the following locations: " + moduleDlls);
 
     var modulesToRemove = new Array();
     var restartNeeded = false;
@@ -287,12 +292,17 @@ function ConfigureEstEID() {
     var EstEIDcertIDs = new Array();
 
     /* Open Certificate directory */
-    var dir = Cc[nsLocalFile].createInstance(Ci.nsILocalFile);
-    dir.initWithPath(certDir);
-    var i = dir.directoryEntries;
+    var i = null;
+    try {
+        var dir = Cc[nsLocalFile].createInstance(Ci.nsILocalFile);
+        dir.initWithPath(certDir);
+        i = dir.directoryEntries;
+    } catch(e) {
+        error("Unable to open certificate directory " + certDir + ": " + e);
+    }
 
     /* Read files, one by one */
-    while(i.hasMoreElements()) {
+    while(i && i.hasMoreElements()) {
         var file = i.getNext().QueryInterface(Ci.nsILocalFile);
         if(file.isReadable()) {
             var fS = Cc[nsFileInputStream]

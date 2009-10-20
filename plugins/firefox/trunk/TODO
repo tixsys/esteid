@@ -1,3 +1,4 @@
+* Check PKCS#11 slot flags and re-load module if "friendly" is missing
 * More sane personal Data file field name array population
 * somehow append service, to ContractID
 * pcsc_stringify_error

@@ -61,6 +61,23 @@ nsEstEIDPrivate.prototype = {
   _log: "",
   _wl: ["www.swedbank.ee"],
   _sdlg: null,
+  _nbIcon: "chrome://esteid/skin/id-16.png",
+
+  _getNotificationBox: function(aWindow) {
+    /* https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
+     * browser/base/content/browser.js
+     * https://developer.mozilla.org/en/XUL%3anotificationbox
+     */
+    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                       .getService(Components.interfaces.nsIWindowMediator);
+    var mw = wm.getMostRecentWindow("navigator:browser");
+    var gb = mw.getBrowser();
+    var db = gb.getBrowserForDocument(aWindow.document);
+    var nb = gb.getNotificationBox(db);
+
+    return nb;
+  },
+
 
   _urlToHost: function(url) {
     // We only support https URLs so we can parse the URL like this
@@ -132,38 +149,42 @@ nsEstEIDPrivate.prototype = {
 
   showNotification: function(aWindow, pageUrl) {
     var jsSucks = this;
+    var nb = this._getNotificationBox(aWindow);
+    var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
+                getService(Components.interfaces.nsIStringBundleService);
+    var sb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
 
-    /* https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
-     * browser/base/content/browser.js
-     * https://developer.mozilla.org/en/XUL%3anotificationbox
-     */
-    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-                       .getService(Components.interfaces.nsIWindowMediator);
-    var mw = wm.getMostRecentWindow("navigator:browser");
-    var gb = mw.getBrowser();
-    var db = gb.getBrowserForDocument(aWindow.document);
-    var nb = gb.getNotificationBox(db);
+    /* Remove a previous notification if any (happens with page reloads) */
+    var tmp = nb.getNotificationWithValue("esteid-blocked");
+    if(tmp) nb.removeNotification(tmp);
 
-    // let iconURL = "chrome://mozapps/skin/plugins/pluginGeneric-16.png";
-    let iconURL = "chrome://esteid/skin/id-16.png";
-    let messageString = "See leht proovib kasutada ID-kaarti";
+    /* Show Error notification if the URL can't be added (eg. not https) */
+    if(!this._urlToHost(pageUrl)) {
+        var messageString = sb.GetStringFromName("blockedInsecure");
+        nb.appendNotification(messageString, "esteid-blocked", this._nbIcon,
+                              nb.PRIORITY_WARNING_MEDIUM);
+      return;
+    }
+
+    /* Show normal notification */
+    var messageString = sb.GetStringFromName("blocked");
     let buttons = [{
-        label: "Luba",
-        accessKey: null,
+        label: sb.GetStringFromName("allowButton"),
+        accessKey: sb.GetStringFromName("allowAccessKey"),
         popup: null,
         callback: function() { jsSucks._addToWhitelist(pageUrl); }
       },{
-        label: "Keela",
-        accessKey: null,
+        label: sb.GetStringFromName("denyButton"),
+        accessKey: sb.GetStringFromName("denyAccessKey"),
         popup: null,
         callback: function() { return; }
       },{
-        label: "Ava seaded",
-        accessKey: null,
+        label: sb.GetStringFromName("prefsButton"),
+        accessKey: sb.GetStringFromName("prefsAccessKey"),
         popup: null,
         callback: function() { jsSucks.showSettings(aWindow, pageUrl); }
     }];
-    nb.appendNotification(messageString, "esteid-blocked", iconURL,
+    nb.appendNotification(messageString, "esteid-blocked", this._nbIcon,
                           nb.PRIORITY_WARNING_MEDIUM , buttons);
   },
   createPluginInstance: function() {
