@@ -11,8 +11,8 @@
 #define dSTRING_ITEM_LEN  255
 #define dNAME_ITEM_LEN   1024
 #define dCSPTYPE_NOTDEFINED -1
-psData_CSP_Path
-static char * = "SOFTWARE\\Microsoft\\Cryptography\\Defaults\\Provider\\";
+
+static char *psData_CSP_Path = "SOFTWARE\\Microsoft\\Cryptography\\Defaults\\Provider\\";
 static char *psData_Extra_CSP_Name = "Advanced Setec SetCSP";
 static char *psData_Ignore_CSP_Name ="XXXEstEID";
 static char *psData_Est_CSP_Name = "EstEID";
@@ -137,7 +137,7 @@ DigiCrypt_ReleaseFirstAllowedCSP();
 psCspName=DigiCrypt_GetFirstAllowedCSPNameNew();
 
 //very dummy thing.. i check from csp creators why i should do so...
-if(!lstrcmp(psCspName,"EstEID Card CSP"))
+if(!lstrcmp(psCspName,"EstEID NewCard CSP"))
    fRes = CryptAcquireContext(&hProv,"XXX",psCspName,2, CRYPT_SILENT);
 // end dummy//
 
