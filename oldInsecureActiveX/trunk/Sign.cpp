@@ -251,6 +251,14 @@ STDMETHODIMP CSign::getSigningCertificate(BSTR *Certificate)
    DWORD selectedCert=-1;
    DWORD dwResult;
    PCCERT_CONTEXT pCertContext;
+   int ret;
+
+   ret = MessageBox(NULL, "This web site is trying to access your ID card.\nDo you want to continue?",
+                          "Accessing ID Card",
+                          MB_OKCANCEL | MB_ICONWARNING);
+
+   if (ret == IDCANCEL)
+       return S_FALSE;
 
    pCertContext=NULL;
 
