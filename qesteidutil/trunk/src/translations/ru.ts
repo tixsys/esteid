@@ -110,16 +110,12 @@
         <translation>Неудачное обновление сертификата: %1</translation>
     </message>
     <message>
-        <source>Certificate update not allowed!</source>
-        <translation type="obsolete">Обновление сертификата не разрешено!</translation>
-    </message>
-    <message>
         <source>Certificate update failed:&lt;br /&gt;%1</source>
         <translation>Неудачное обновление сертификата:&lt;br /&gt;%1</translation>
     </message>
     <message>
-        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!</source>
-        <translation type="unfinished">Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!</translation>
+        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!&lt;br /&gt;Do you want to continue?</source>
+        <translation>Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!&lt;br /&gt;?</translation>
     </message>
 </context>
 <context>

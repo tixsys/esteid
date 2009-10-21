@@ -110,16 +110,12 @@
         <translation>Sertifikaatide uuendamine ebaõnnestus: %1</translation>
     </message>
     <message>
-        <source>Certificate update not allowed!</source>
-        <translation type="obsolete">Sertifikaati uuendamine ei ole lubatud!</translation>
-    </message>
-    <message>
         <source>Certificate update failed:&lt;br /&gt;%1</source>
         <translation>Sertifikaatide uuendamine ebaõnnestus:&lt;br /&gt;%1</translation>
     </message>
     <message>
-        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!</source>
-        <translation>Sertifikaatite uuendamiseks palun sulgege kõik rakendused, mis kasutavad ID-kaarti (ID-kaardi klient, haldusvahend, Firefox, Safari, Internet Explorer...)&lt;br /&gt;Pärast sertifikaatide uuendamist ei ole võimalik enam dekrüpteerida vana sertifikaadiga krüpteeritud dokumente!</translation>
+        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!&lt;br /&gt;Do you want to continue?</source>
+        <translation>Sertifikaatite uuendamiseks palun sulgege kõik rakendused, mis kasutavad ID-kaarti (ID-kaardi klient, haldusvahend, Firefox, Safari, Internet Explorer...)&lt;br /&gt;Pärast sertifikaatide uuendamist ei ole võimalik enam dekrüpteerida vana sertifikaadiga krüpteeritud dokumente!&lt; br /&gt;Kas soovite jätkata sertifikaatide uuendamisega?</translation>
     </message>
 </context>
 <context>
