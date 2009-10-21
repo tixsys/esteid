@@ -89,20 +89,3 @@ DIGIDOC_OCSP_URL=http://ocsp.sk.ee
 TSA_URL=http://ns.szikszi.hu:8080/tsa
 TSA_CERT=tsa_ns.crt
 TSA_CA_CERT=ts_cacert.crt
-
-
-#MSSP settings
-#DIGIDOC_MSSP_ENDPOINT=https://www.pilet.ee:8091/MSSP_GW
-DIGIDOC_MSSP_ENDPOINT=https://linux.test.sk.sise:8091/MSSP_GW
-#DIGIDOC_MSSP_GW_CERT=msspgw-cert.pem
-DIGIDOC_MSSP_MAJOR=1
-DIGIDOC_MSSP_MINOR=1
-DIGIDOC_MSSP_MSG_MODE=1
-DIGIDOC_MSSP_AP_USERID=digidoc
-DIGIDOC_MSSP_AP_PASSWD=digidoc
-DIGIDOC_MSSP_URL=http://www.sk.ee
-DIGIDOC_MSSP_TIMEOUT=60
-DIGIDOC_MSSP_MSG_MODE=asynchClientServer
-DIGIDOC_MSSP_CERT_URL_HOST=http://localhost
-DIGIDOC_MSSP_AUTH_CERT_DIR=/certs/wpki/sig/
-DIGIDOC_MSSP_SIGN_CERT_DIR=/certs/wpki/auth/
