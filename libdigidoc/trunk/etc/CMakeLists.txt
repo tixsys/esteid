@@ -29,7 +29,5 @@ set( digidoc_CERTS
     test_ocsp_020305-040305.pem
     test_ocsp_040305-080308.pem
     test_ocsp_2006.cer
-    tsa_ns.crt
-    ts_cacert.crt
 )
 install(FILES ${digidoc_CERTS} DESTINATION ${DIGIDOC_CERTS_PATH})
