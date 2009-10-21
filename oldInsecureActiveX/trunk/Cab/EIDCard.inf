@@ -4,6 +4,6 @@ EIDCard.dll=EIDCard.dll
 [EIDCard.dll]
 file-win32-x86=thiscab
 clsid={FC5B7BD2-584A-4153-92D7-4C5840E4BC28}
-FileVersion=1,0,2,8
+FileVersion=1,0,2,9
 DestDir=11
 RegisterServer=yes

@@ -6,7 +6,7 @@
 #include "resource.h"       // main symbols
 #include <atlctl.h>
 //versiooni tekst
-#define INFOTEXT "EIDCard Sign Module 1.0.2.8 version 20-October-2009"
+#define INFOTEXT "EIDCard Sign Module 1.0.2.9 version 20-October-2009"
 #define ENCODING (X509_ASN_ENCODING | PKCS_7_ASN_ENCODING)
 #define KEYPATH "SOFTWARE\\Microsoft\\Cryptography\\Defaults\\Provider\\"
 #define MAX_LEN 1000
