@@ -12,5 +12,5 @@
 #define VER_STR(x)	VER_STR_HELPER(x)
 
 #define ORG "Estonian ID Card"
-#define APP "DigiDoc krÃ¼pto"
+#define APP "DigiDoc krüpto"
 #define DOMAINURL "eesti.ee"
