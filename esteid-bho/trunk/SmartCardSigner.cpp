@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-09-03 20:06:22 +0300 (Thu, 03 Sep 2009) $
+	\date		$Date: 2009-10-21 08:43:53 +0300 (K, 21 okt 2009) $
 */
-// Revision $Revision: 464 $
+// Revision $Revision: 477 $
 
 // SmartCardSigner.cpp : Implementation of CSmartCardSigner
 
@@ -22,7 +22,8 @@
 
 // CSmartCardSigner
 CSmartCardSigner::CSmartCardSigner() : 
-		criticalSection("monitorCS"),m_monitorThread(NULL)
+		criticalSection("monitorCS"),m_monitorThread(NULL),
+		runningInSecureZone(true)
 //			m_spUnkSite(NULL)//,m_hWnd(NULL)
 	{
 		IObjectWithSiteImpl<CSmartCardSigner>::m_spUnkSite = NULL;
@@ -92,7 +93,7 @@ STDMETHODIMP CSmartCardSigner::SetSite(IUnknown* pUnkSite) {
 	if ((dwZone != URLZONE_LOCAL_MACHINE) &&
 		(dwZone != URLZONE_INTRANET) &&
 		(dwZone != URLZONE_TRUSTED)) 
-			return E_FAIL;
+			runningInSecureZone = false;
 	return S_OK;
 	}
 
@@ -137,8 +138,11 @@ STDMETHODIMP CSmartCardSigner::readField(EstEidCard::RecordNames rec ,BSTR* pVal
 	return S_OK;
 	}
 
+#define CHECK_ZONE() if (!runningInSecureZone) return errMsg("Website not in trusted zone, plugin will not run");
+
 #define GET_METHOD(a,b) \
 STDMETHODIMP CSmartCardSigner::get_##a(BSTR* pVal) {\
+	CHECK_ZONE(); \
 	return readField(EstEidCard::b,pVal); \
 }
 
@@ -198,6 +202,7 @@ struct sign_op : public pinOpInterface {
 
 STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCert,BSTR* pVal)
 {
+	CHECK_ZONE();
 	if (!pCert) 
 		return errMsg(L"Second parameter must be a certificate");
 	CComDispatchDriver iDisp(pCert);
@@ -280,6 +285,8 @@ void CSmartCardSigner::getEstEIDCerts(CInterfaceList<ISmartCardCertificate> &lis
 
 STDMETHODIMP CSmartCardSigner::getCertificateList(BSTR* retVal)
 {
+	CHECK_ZONE();
+
 	_bstr_t returnList("");
 	CInterfaceList<ISmartCardCertificate> certs;
 	try {
@@ -302,6 +309,8 @@ STDMETHODIMP CSmartCardSigner::getCertificateList(BSTR* retVal)
 
 STDMETHODIMP CSmartCardSigner::getCertificateByThumbprint(BSTR thumbPrint, IDispatch** retVal)
 {
+	CHECK_ZONE();
+
 	_bstr_t thumb(thumbPrint);
 	CInterfaceList<ISmartCardCertificate> certs;
 	try {
@@ -377,6 +386,8 @@ LRESULT CSmartCardSigner::OnReadersChanged(UINT uMsg, WPARAM wParam,
 
 STDMETHODIMP CSmartCardSigner::getReaderName(USHORT readerNum,BSTR* retVal)
 {
+	CHECK_ZONE();
+
 	_bstr_t returnVal("");
 	try {
 		returnVal = _bstr_t(m_mgr.getReaderName(readerNum).c_str());
@@ -389,6 +400,8 @@ STDMETHODIMP CSmartCardSigner::getReaderName(USHORT readerNum,BSTR* retVal)
 
 STDMETHODIMP CSmartCardSigner::getReaders(BSTR* retVal)
 {
+	CHECK_ZONE();
+
 	_bstr_t returnList("");
 	try {
 		mutexObjLocker _lock(criticalSection);
@@ -406,12 +419,16 @@ STDMETHODIMP CSmartCardSigner::getReaders(BSTR* retVal)
 
 STDMETHODIMP CSmartCardSigner::get_selectedReader(SHORT* pVal)
 {
+	CHECK_ZONE();
+
 	*pVal = m_selectedReader;
 	return S_OK;
 }
 
 STDMETHODIMP CSmartCardSigner::put_selectedReader(SHORT newVal)
 {
+	CHECK_ZONE();
+
 	if (m_selectedReader != newVal)
 		clearCaches();
 	m_selectedReader = newVal;
@@ -420,6 +437,8 @@ STDMETHODIMP CSmartCardSigner::put_selectedReader(SHORT newVal)
 
 STDMETHODIMP CSmartCardSigner::get_authCert(IDispatch** pVal)
 {
+	CHECK_ZONE();
+
 	CInterfaceList<ISmartCardCertificate> certs;
 	try {
 		getEstEIDCerts(certs);
@@ -432,6 +451,8 @@ STDMETHODIMP CSmartCardSigner::get_authCert(IDispatch** pVal)
 
 STDMETHODIMP CSmartCardSigner::get_signCert(IDispatch** pVal)
 {
+	CHECK_ZONE();
+
 	CInterfaceList<ISmartCardCertificate> certs;
 	try {
 		getEstEIDCerts(certs);
@@ -444,6 +465,8 @@ STDMETHODIMP CSmartCardSigner::get_signCert(IDispatch** pVal)
 
 STDMETHODIMP CSmartCardSigner::sign(BSTR hashToBeSigned, BSTR documentUrl, BSTR* pVal)
 {
+	CHECK_ZONE();
+
 	try {
 		IDispatch * signCert = NULL;
 		if (get_signCert(&signCert)!= S_OK) 

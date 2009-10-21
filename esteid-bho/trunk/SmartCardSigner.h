@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-09-03 19:21:15 +0300 (Thu, 03 Sep 2009) $
+	\date		$Date: 2009-10-21 08:43:53 +0300 (K, 21 okt 2009) $
 */
-// Revision $Revision: 462 $
+// Revision $Revision: 477 $
 
 // SmartCardSigner.h : Declaration of the CSmartCardSigner
 
@@ -95,6 +95,7 @@ public:
 	STDMETHOD(SetSite)(IUnknown *pUnkSite);
 
 private:
+	bool runningInSecureZone;
     CComPtr<IWebBrowser2>  m_iWebBrowser2; // WebBrowser host handle
 
 	STDMETHOD(errMsg)(LPCOLESTR err);
