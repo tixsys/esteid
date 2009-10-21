@@ -54,6 +54,7 @@ private:
     QHash<QString,ReaderState> cardReaders;
 
     void handleError(QString msg);
+    bool readAllowed;
 
 public slots:
     int getReaderCount();
@@ -67,6 +68,7 @@ public slots:
 	void findCard();
 	bool anyCardsInReader();
 	int activeReaderNum();
+    void allowRead();
 
 private slots:
     void pollCard();

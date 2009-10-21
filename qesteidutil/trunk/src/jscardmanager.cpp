@@ -35,6 +35,7 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 :	QObject( jsEsteidCard )
 ,	cardMgr( 0 )
 ,	m_jsEsteidCard( jsEsteidCard )
+,   readAllowed( true )
 {
 	try {
 		cardMgr = new SmartCardManager();
@@ -60,6 +61,9 @@ void JsCardManager::pollCard()
 
 	if ( !pollTimer.isActive() )
 		pollTimer.start( 500 );
+
+    if ( !readAllowed )
+        return;
 
 	int numReaders = 0;
     try {
@@ -124,18 +128,20 @@ void JsCardManager::pollCard()
 			if ( m_jsEsteidCard->m_card && m_jsEsteidCard->getDocumentId() == cardReaders[remove].cardId )
 				m_jsEsteidCard->setCard( 0 );
 			cardReaders = tmp;
-			emit cardEvent( "cardRemoved", remove != "empty" ? cardReaders[remove].id : -1 );
+            readAllowed = false;
+            emit cardEvent( "cardRemoved", remove != "empty" ? cardReaders[remove].id : -1 );
 		}
 		cardReaders = tmp;
 		if ( !insert.isEmpty() )
-			emit cardEvent( "cardInserted", insert != "empty" ? cardReaders[insert].id : -1 );
-		else if ( !foundConnected ) // Didn't find any connected reader, lets find one
-			findCard();
-		else if ( foundConnected && !m_jsEsteidCard->canReadCard() ) //card connected but not fully readable, let's try again
-		{
+        {
+            readAllowed = false;
+            emit cardEvent( "cardInserted", insert != "empty" ? cardReaders[insert].id : -1 );
+        } else if ( !foundConnected ) {// Didn't find any connected reader, lets find one
+            findCard();
+        } else if ( foundConnected && !m_jsEsteidCard->canReadCard() ) { //card connected but not fully readable, let's try again
 			findCard();
 			if ( m_jsEsteidCard->canReadCard() )
-				emit cardEvent( "cardInserted", activeReaderNum() );
+                emit cardEvent( "cardInserted", activeReaderNum() );
 		}
     } catch (std::runtime_error &e) {
 		qDebug() << e.what();
@@ -243,7 +249,7 @@ bool JsCardManager::selectReader( const ReaderState &reader )
 		m_jsEsteidCard->setCard(card, reader.id);
         return true;
     } catch (std::runtime_error &err) {
-		//ignore Another application is using
+        //ignore Another application is using
 		if ( QString::fromStdString( err.what() ).contains( "Another " ) )
 			return false;
         handleError(err.what());
@@ -287,3 +293,6 @@ void JsCardManager::handleError(QString msg)
 
 void JsCardManager::showDiagnostics()
 { (new DiagnosticsDialog( qApp->activeWindow() ) )->show(); }
+
+void JsCardManager::allowRead()
+{ readAllowed = true; }

@@ -99,6 +99,7 @@ function cardInserted(i)
 	document.getElementById( 'forUpdate' ).innerHTML += ".";
 	if ( !inReader && activeCardId != '' )
 		readCardData();
+    cardManager.allowRead();
 }
 
 function cardRemoved(i)
@@ -135,6 +136,7 @@ function cardRemoved(i)
 	document.getElementById( 'forUpdate' ).innerHTML += ".";
 	if ( !inReader )
 		readCardData();
+    cardManager.allowRead();
 }
 
 function selectReader()
