@@ -849,7 +849,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Hash value of validity confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Räsi väärtus kehtivuse kinnitamisel</translation>
     </message>
 </context>
 <context>

@@ -848,7 +848,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Hash value of validity confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Хеш-значение при подтверждении действия</translation>
     </message>
 </context>
 <context>
