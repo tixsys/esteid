@@ -23,7 +23,7 @@ set(RMDIR ${CMAKE_COMMAND} -E remove_directory)
 set(CP ${CMAKE_COMMAND} -E copy)
 set(CPDIR ${CMAKE_COMMAND} -E copy_directory)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Modules")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 #-------------------------------------------------
 #----------------Init OS specific-----------------
