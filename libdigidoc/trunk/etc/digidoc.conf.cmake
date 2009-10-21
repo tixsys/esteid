@@ -83,9 +83,3 @@ DIGIDOC_OCSP_RESPONDER_CERT_9_URL=http://ocsp.sk.ee
 #DIGIDOC_OCSP_URL=http://www.openxades.org/cgi-bin/ocsp.cgi
 DIGIDOC_OCSP_URL=http://ocsp.sk.ee
 #DIGIDOC_OCSP_URL=http://www.sk.ee:9080/cgi-bin/ocsp.cgi
-
-# TSA settings
-#TSA_POLICY=
-TSA_URL=http://ns.szikszi.hu:8080/tsa
-TSA_CERT=tsa_ns.crt
-TSA_CA_CERT=ts_cacert.crt
