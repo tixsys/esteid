@@ -462,8 +462,9 @@ public class SignedDoc implements Serializable
                 zos.closeEntry();
                 
                 manifestBos.write(ConvertUtils.str2data("<manifest:file-entry manifest:media-type=\""));
-                manifestBos.write(ConvertUtils.str2data("signature/"));
-                manifestBos.write(ConvertUtils.str2data(getFormat()));
+                manifestBos.write(ConvertUtils.str2data("signature/bdoc"));
+                // BDOC is always in lower case, no matter what
+                //manifestBos.write(ConvertUtils.str2data(getFormat()));
                 manifestBos.write(ConvertUtils.str2data("-"));
                 manifestBos.write(ConvertUtils.str2data(getVersion()));
                 // TODO DIGIDOC_WITH_TS  /TS or /TM
