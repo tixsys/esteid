@@ -14,7 +14,7 @@
    <string>Certificate</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#parameterContent { font: 10pt &quot;Liberation Mono, Courier New&quot;; }</string>
+   <string notr="true">#parameterContent { font-family: &quot;Liberation Mono, Courier New&quot;; }</string>
   </property>
   <layout class="QVBoxLayout" name="WidgetLayout">
    <item>
