@@ -170,6 +170,18 @@
         <source>Remove</source>
         <translation>Eemalda</translation>
     </message>
+    <message>
+        <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
+        <translation>Kas oled kindel, et soovid kasutada krüpteerimiseks sertifikaati, mis aegus %1?&lt;br /&gt;Juhul, kui dekrüpteerija on oma sertifikaate uuendanud, ei ole dekrüpteerimine võimalik.</translation>
+    </message>
+    <message>
+        <source>Keys added successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to add keys</source>
+        <translation>Adressaadi lisamine ebaõnnestus</translation>
+    </message>
 </context>
 <context>
     <name>KeyDialog</name>
@@ -365,7 +377,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
 &lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;Failide krüpteerimine&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
@@ -388,10 +400,6 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>Decrypting</source>
         <translation>Dekrüpteerimine</translation>
-    </message>
-    <message>
-        <source>Are you sure that you want use certificate for encrypting, which expired on %1?&lt;br /&gt;When decrypter has updated certificates then decrypting is impossible.</source>
-        <translation>Kas oled kindel, et soovid kasutada krüpteerimiseks sertifikaati, mis aegus %1?&lt;br /&gt;Juhul, kui dekrüpteerija on oma sertifikaate uuendanud, ei ole dekrüpteerimine võimalik.</translation>
     </message>
     <message>
         <source>You dont have permissions to write file %1</source>
