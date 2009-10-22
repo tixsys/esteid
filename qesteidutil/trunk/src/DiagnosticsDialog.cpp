@@ -81,11 +81,12 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 #endif
 
 #if defined(Q_OS_WIN)
-#	if defined(Q_OS_WIN64)
-		s << " (" << 64 << ")<br /><br />";
-#	else
-		s << " (" << 32 << ")<br /><br />";
-#	endif
+	SYSTEM_INFO sysInfo;
+	GetSystemInfo( &sysInfo );
+	QString bits = "32";
+	if ( sysInfo.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 )
+		bits = "64";
+	s << " (" << bits << ")<br /><br />";
 #else
 	s << " (" << QSysInfo::WordSize << ")<br /><br />";
 #endif
