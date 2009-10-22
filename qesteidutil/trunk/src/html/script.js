@@ -7,6 +7,7 @@ function checkAccessKeys(e)
 {
 	if ( !e.altKey )
 		return;
+		
 	var letter = String.fromCharCode(e.keyCode);
 	
 	var buttons = document.getElementById('leftMenus').getElementsByTagName('input');
@@ -33,14 +34,14 @@ function checkAccessKeys(e)
 
 function checkNumeric(e)
 {
-	if ( e.keyCode == 13 || e.keyCode == 9 || e.keyCode == 8 || e.keyCode == 0 || String.fromCharCode(e.keyCode).match(/[\d]/) )
+	if ( e.charCode == 13 || e.charCode == 9 || e.charCode == 8 || e.charCode == 0 || String.fromCharCode(e.charCode).match(/[\d]/) )
 		return true;
 	return false;
 }
 
 function handlekey(nextItem)
 {
-	if ( window.event.keyCode != 13 && window.event.keyCode != 9 )
+	if ( window.event.charCode != 13 && window.event.charCode != 9 )
 		return;
 
 	var el = document.getElementById(nextItem)
@@ -55,7 +56,7 @@ function handlekey(nextItem)
 
 function checkEnter( e, obj )
 {
-	if ( e.keyCode == 13 && ( typeof obj.click != "undefined" ) && obj.click )
+	if ( e.charCode == 13 && ( typeof obj.click != "undefined" ) && obj.click )
 		obj.click();
 }
 
