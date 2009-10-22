@@ -23,7 +23,7 @@
 #include "TreeWidget.h"
 
 #include "common/Common.h"
-#include "CryptDoc.h"
+#include "CryptoDoc.h"
 
 #include <QDesktopServices>
 #include <QFileDialog>

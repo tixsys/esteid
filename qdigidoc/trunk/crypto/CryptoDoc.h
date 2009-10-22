@@ -53,12 +53,12 @@ public:
 
 class Poller;
 
-class CryptDoc: public QObject
+class CryptoDoc: public QObject
 {
 	Q_OBJECT
 public:
-	CryptDoc( QObject *parent = 0 );
-	~CryptDoc();
+	CryptoDoc( QObject *parent = 0 );
+	~CryptoDoc();
 
 	QString activeCard() const;
 	void addFile( const QString &file, const QString &mime );

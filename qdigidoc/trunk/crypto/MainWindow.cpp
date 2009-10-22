@@ -90,7 +90,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( commonTranslator );
 	QApplication::instance()->installTranslator( qtTranslator );
 
-	doc = new CryptDoc( this );
+	doc = new CryptoDoc( this );
 	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 	connect( doc, SIGNAL(error(QString,int,QString)), SLOT(showWarning(QString,int,QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );

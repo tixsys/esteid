@@ -22,6 +22,8 @@
 
 #include "LdapSearch.h"
 
+#include "CryptoDoc.h"
+
 #include <QTimerEvent>
 
 #ifndef Q_OS_WIN32

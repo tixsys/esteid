@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
-    <name>CryptDoc</name>
+    <name>CryptoDoc</name>
     <message>
         <source>Container is not open</source>
         <translation>Turvaümbrik ei ole avatud</translation>

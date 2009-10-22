@@ -20,7 +20,7 @@
  *
  */
 
-#include "CryptDoc.h"
+#include "CryptoDoc.h"
 
 #include "common/Common.h"
 #include "common/SslCertificate.h"
@@ -41,7 +41,7 @@
 #include <QInputDialog>
 #include <QTemporaryFile>
 
-CryptDoc::CryptDoc( QObject *parent )
+CryptoDoc::CryptoDoc( QObject *parent )
 :	QObject( parent )
 ,	m_enc(0)
 ,	m_doc(0)
@@ -59,16 +59,16 @@ CryptDoc::CryptDoc( QObject *parent )
 	poller->start();
 }
 
-CryptDoc::~CryptDoc()
+CryptoDoc::~CryptoDoc()
 {
 	delete poller;
 	cleanupConfigStore( NULL );
 	finalizeDigiDocLib();
 }
 
-QString CryptDoc::activeCard() const { return m_card; }
+QString CryptoDoc::activeCard() const { return m_card; }
 
-void CryptDoc::addFile( const QString &file, const QString &mime )
+void CryptoDoc::addFile( const QString &file, const QString &mime )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -93,7 +93,7 @@ void CryptDoc::addFile( const QString &file, const QString &mime )
 	}
 }
 
-void CryptDoc::addKey( const CKey &key )
+void CryptoDoc::addKey( const CKey &key )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -125,9 +125,9 @@ void CryptDoc::addKey( const CKey &key )
 		setLastError( tr("Failed to add key"), err );
 }
 
-QSslCertificate CryptDoc::authCert() const { return m_authCert; }
+QSslCertificate CryptoDoc::authCert() const { return m_authCert; }
 
-void CryptDoc::cleanProperties()
+void CryptoDoc::cleanProperties()
 {
 	for( int i = m_enc->encProperties.nEncryptionProperties - 1; i >= 0; --i )
 	{
@@ -137,7 +137,7 @@ void CryptDoc::cleanProperties()
 	}
 }
 
-void CryptDoc::clear()
+void CryptoDoc::clear()
 {
 	dencEncryptedData_free( m_enc );
 	m_enc = 0;
@@ -146,7 +146,7 @@ void CryptDoc::clear()
 	m_lastError.clear();
 }
 
-void CryptDoc::create( const QString &file )
+void CryptoDoc::create( const QString &file )
 {
 	clear();
 	const char *format = "DIGIDOC-XML"; //ConfigItem_lookup("DIGIDOC_FORMAT");
@@ -166,7 +166,7 @@ void CryptDoc::create( const QString &file )
 	m_fileName = file;
 }
 
-void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
+void CryptoDoc::dataChanged( const QStringList &cards, const QString &card,
 	const QSslCertificate &auth )
 {
 	bool changed = false;
@@ -189,7 +189,7 @@ void CryptDoc::dataChanged( const QStringList &cards, const QString &card,
 		Q_EMIT dataChanged();
 }
 
-bool CryptDoc::decrypt( const QString &pin )
+bool CryptoDoc::decrypt( const QString &pin )
 {
 	if( isNull() )
 	{
@@ -277,7 +277,7 @@ bool CryptDoc::decrypt( const QString &pin )
 	return !isEncrypted();
 }
 
-void CryptDoc::deleteDDoc()
+void CryptoDoc::deleteDDoc()
 {
 	SignedDoc_free( m_doc );
 	m_doc = 0;
@@ -296,7 +296,7 @@ void CryptDoc::deleteDDoc()
 	m_ddocTemp.clear();
 }
 
-QList<CDocument> CryptDoc::documents()
+QList<CDocument> CryptoDoc::documents()
 {
 	QList<CDocument> list;
 	if( isNull() )
@@ -332,7 +332,7 @@ QList<CDocument> CryptDoc::documents()
 	return list;
 }
 
-bool CryptDoc::encrypt()
+bool CryptoDoc::encrypt()
 {
 	if( isNull() )
 	{
@@ -424,19 +424,19 @@ bool CryptDoc::encrypt()
 	return isEncrypted();
 }
 
-QString CryptDoc::fileName() const { return m_fileName; }
+QString CryptoDoc::fileName() const { return m_fileName; }
 
-bool CryptDoc::isEncrypted() const
+bool CryptoDoc::isEncrypted() const
 {
 	return m_enc &&
 		(m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_COMPRESSED ||
 		m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED);
 }
 
-bool CryptDoc::isNull() const { return m_enc == 0; }
-bool CryptDoc::isSigned() const { return m_doc && m_doc->nSignatures; }
+bool CryptoDoc::isNull() const { return m_enc == 0; }
+bool CryptoDoc::isSigned() const { return m_doc && m_doc->nSignatures; }
 
-QList<CKey> CryptDoc::keys()
+QList<CKey> CryptoDoc::keys()
 {
 	QList<CKey> list;
 	if( isNull() )
@@ -457,9 +457,9 @@ QList<CKey> CryptDoc::keys()
 	return list;
 }
 
-QString CryptDoc::lastError() const { return m_lastError; }
+QString CryptoDoc::lastError() const { return m_lastError; }
 
-bool CryptDoc::open( const QString &file )
+bool CryptoDoc::open( const QString &file )
 {
 	clear();
 	m_fileName = file;
@@ -469,9 +469,9 @@ bool CryptDoc::open( const QString &file )
 	return err == ERR_OK;
 }
 
-QStringList CryptDoc::presentCards() const { return m_cards; }
+QStringList CryptoDoc::presentCards() const { return m_cards; }
 
-void CryptDoc::removeDocument( int id )
+void CryptoDoc::removeDocument( int id )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -487,7 +487,7 @@ void CryptDoc::removeDocument( int id )
 		setLastError( tr("Failed to remove file"), err );
 }
 
-void CryptDoc::removeKey( int id )
+void CryptoDoc::removeKey( int id )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -503,7 +503,7 @@ void CryptDoc::removeKey( int id )
 		setLastError( tr("Failed to remove key"), err );
 }
 
-void CryptDoc::save()
+void CryptoDoc::save()
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -515,7 +515,7 @@ void CryptDoc::save()
 		setLastError( tr("Failed to save encrpyted file"), err );
 }
 
-bool CryptDoc::saveDDoc( const QString &filename )
+bool CryptoDoc::saveDDoc( const QString &filename )
 {
 	if( !m_doc )
 	{
@@ -529,7 +529,7 @@ bool CryptDoc::saveDDoc( const QString &filename )
 	return err == ERR_OK;
 }
 
-void CryptDoc::saveDocument( int id, const QString &filepath )
+void CryptoDoc::saveDocument( int id, const QString &filepath )
 {
 	if( isNull() )
 		return setLastError( tr("Container is not open") );
@@ -549,10 +549,10 @@ void CryptDoc::saveDocument( int id, const QString &filepath )
 		return setLastError( tr("Failed to save file"), err );
 }
 
-void CryptDoc::selectCard( const QString &card )
+void CryptoDoc::selectCard( const QString &card )
 { QMetaObject::invokeMethod( poller, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 
-void CryptDoc::setLastError( const QString &err, int code )
+void CryptoDoc::setLastError( const QString &err, int code )
 {
 	QString errMsg;
 	if( code > 0 ) errMsg = getErrorString( code );

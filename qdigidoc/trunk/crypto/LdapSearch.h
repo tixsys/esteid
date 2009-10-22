@@ -22,7 +22,9 @@
 
 #pragma once
 
-#include "CryptDoc.h"
+#include <QObject>
+
+class CKey;
 
 #ifdef Q_OS_WIN32
 #include <Winldap.h>

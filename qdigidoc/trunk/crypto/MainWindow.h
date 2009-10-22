@@ -24,8 +24,8 @@
 
 #include "ui_MainWindow.h"
 
-#include "CryptDoc.h"
-
+class CKey;
+class CryptoDoc;
 class QTranslator;
 
 class MainWindow: public QWidget, private Ui::MainWindow
@@ -74,7 +74,7 @@ private:
 	void showWarning( const QString &msg );
 
 	QAction		*close;
-	CryptDoc	*doc;
+	CryptoDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QStringList	lang, params;
 	QPushButton *introNext, *viewCrypt;

@@ -25,7 +25,7 @@
 #include "ui_KeyAddDialog.h"
 #include "ui_KeyDialog.h"
 
-#include "CryptDoc.h"
+#include "CryptoDoc.h"
 
 class IKValidator;
 class LdapSearch;
