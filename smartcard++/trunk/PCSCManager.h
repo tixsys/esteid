@@ -13,6 +13,7 @@
 #include <PCSC/wintypes.h>
 #include <PCSC/pcsclite.h>
 #include <PCSC/winscard.h>
+#include <arpa/inet.h>
 #else
 #pragma warning(push)
 #pragma warning(disable:4201)
