@@ -127,9 +127,6 @@ MainWindow::MainWindow( QWidget *parent )
 	}
 }
 
-void MainWindow::addCardCert()
-{ addKeys( QList<CKey>() << CKey( doc->authCert() ) ); }
-
 bool MainWindow::addFile( const QString &file )
 {
 	if( doc->isNull() )
@@ -203,25 +200,6 @@ bool MainWindow::addFile( const QString &file )
 
 	doc->addFile( file, "" );
 	return true;
-}
-
-void MainWindow::addKeys( const QList<CKey> &keys )
-{
-	if( keys.isEmpty() )
-		return;
-	Q_FOREACH( const CKey &key, keys )
-	{
-		if( key.cert.expiryDate() <= QDateTime::currentDateTime() &&
-			QMessageBox::No == QMessageBox::warning( qApp->activeWindow(),
-				qApp->activeWindow()->windowTitle(),
-				tr("Are you sure that you want use certificate for encrypting, which expired on %1?<br />"
-					"When decrypter has updated certificates then decrypting is impossible.")
-					.arg( key.cert.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) ),
-				QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) )
-			continue;
-		doc->addKey( key );
-	}
-	setCurrentPage( View );
 }
 
 void MainWindow::buttonClicked( int button )
@@ -376,7 +354,7 @@ void MainWindow::on_languages_activated( int index )
 	languages->setCurrentIndex( index );
 	introNext->setText( tr( "Next" ) );
 	showCardStatus();
-	setCurrentPage( (Pages)stack->currentIndex() );
+	updateView();
 }
 
 void MainWindow::parseLink( const QString &url )
@@ -396,9 +374,8 @@ void MainWindow::parseLink( const QString &url )
 		if( doc->isEncrypted() )
 			return;
 
-		KeyAddDialog *key = new KeyAddDialog( this );
-		connect( key, SIGNAL(addCardCert()), SLOT(addCardCert()) );
-		connect( key, SIGNAL(selected(QList<CKey>)), SLOT(addKeys(QList<CKey>)) );
+		KeyAddDialog *key = new KeyAddDialog( doc, this );
+		connect( key, SIGNAL(updateView()), SLOT(updateView()) );
 		key->move( pos() );
 		key->show();
 	}
@@ -578,3 +555,5 @@ void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg
 	}
 	showWarning( s );
 }
+
+void MainWindow::updateView() { setCurrentPage( Pages(stack->currentIndex()) ); }

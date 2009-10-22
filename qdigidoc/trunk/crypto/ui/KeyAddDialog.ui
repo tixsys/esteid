@@ -103,6 +103,9 @@
           </spacer>
          </item>
          <item>
+          <widget class="QLabel" name="keyAddStatus"/>
+         </item>
+         <item>
           <widget class="QPushButton" name="add">
            <property name="text">
             <string>Add cert</string>

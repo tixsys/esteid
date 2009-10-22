@@ -99,10 +99,10 @@ void CryptoDoc::addFile( const QString &file, const QString &mime )
 	}
 }
 
-void CryptoDoc::addKey( const CKey &key )
+bool CryptoDoc::addKey( const CKey &key )
 {
 	if( isEncryptedWarning() )
-		return;
+		return false;
 	if( keys().contains( key ) )
 	{
 		setLastError( tr("Key already exists") );
@@ -115,7 +115,7 @@ void CryptoDoc::addKey( const CKey &key )
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed to add key"), err );
-		return;
+		return false;
 	}
 
 	DEncEncryptedKey *pkey = NULL;
@@ -123,6 +123,7 @@ void CryptoDoc::addKey( const CKey &key )
 		NULL, key.recipient.toUtf8(), NULL, NULL );
 	if( err != ERR_OK )
 		setLastError( tr("Failed to add key"), err );
+	return err == ERR_OK;
 }
 
 QSslCertificate CryptoDoc::authCert() const { return m_authCert; }

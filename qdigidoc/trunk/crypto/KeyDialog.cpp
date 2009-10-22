@@ -103,15 +103,16 @@ void KeyDialog::showCertificate()
 
 
 
-KeyAddDialog::KeyAddDialog( QWidget *parent )
+KeyAddDialog::KeyAddDialog( CryptoDoc *_doc, QWidget *parent )
 :	QWidget( parent )
+,	doc( _doc )
 {
 	setupUi( this );
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
 
 	connect( buttonBox->addButton( tr("Add cert from card"), QDialogButtonBox::ActionRole ),
-		SIGNAL(clicked()), SIGNAL(addCardCert()) );
+		SIGNAL(clicked()), SLOT(addCardCert()) );
 	connect( buttonBox->addButton( tr("Add cert from file"), QDialogButtonBox::ActionRole ),
 		SIGNAL(clicked()), SLOT(addFile()) );
 
@@ -136,6 +137,9 @@ KeyAddDialog::KeyAddDialog( QWidget *parent )
 	add->setEnabled( false );
 	progress->setVisible( false );
 }
+
+void KeyAddDialog::addCardCert()
+{ addKeys( QList<CKey>() << CKey( doc->authCert() ) ); }
 
 void KeyAddDialog::addFile()
 {
@@ -167,9 +171,29 @@ void KeyAddDialog::addFile()
 		QMessageBox::warning( this, windowTitle(), tr("This certificate is not usable for crypting") );
 	}
 	else
-		Q_EMIT selected( QList<CKey>() << k );
+		addKeys( QList<CKey>() << k );
 
 	f.close();
+}
+
+void KeyAddDialog::addKeys( const QList<CKey> &keys )
+{
+	if( keys.isEmpty() )
+		return;
+	bool status = true;
+	Q_FOREACH( const CKey &key, keys )
+	{
+		if( key.cert.expiryDate() <= QDateTime::currentDateTime() &&
+			QMessageBox::No == QMessageBox::warning( this, windowTitle(),
+				tr("Are you sure that you want use certificate for encrypting, which expired on %1?<br />"
+					"When decrypter has updated certificates then decrypting is impossible.")
+					.arg( key.cert.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) ),
+				QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) )
+			continue;
+		status = qMin( status, doc->addKey( key ) );
+	}
+	Q_EMIT updateView();
+	keyAddStatus->setText( status ? tr("Keys added successfully") : tr("Failed to add keys") );
 }
 
 void KeyAddDialog::disableSearch( bool disable )
@@ -226,7 +250,7 @@ void KeyAddDialog::on_add_clicked()
 			usedView->addTopLevelItem( i );
 		}
 	}
-	Q_EMIT selected( keys );
+	addKeys( keys );
 
 	saveHistory();
 }

@@ -27,6 +27,7 @@
 
 #include "CryptoDoc.h"
 
+class CryptoDoc;
 class IKValidator;
 class LdapSearch;
 
@@ -70,14 +71,15 @@ class KeyAddDialog: public QWidget, private Ui::KeyAddDialog
 	Q_OBJECT
 
 public:
-	KeyAddDialog( QWidget *parent = 0 );
+	KeyAddDialog( CryptoDoc *doc, QWidget *parent = 0 );
 
 Q_SIGNALS:
-	void addCardCert();
-	void selected( const QList<CKey> &keys );
+	void updateView();
 
 private Q_SLOTS:
+	void addCardCert();
 	void addFile();
+	void addKeys( const QList<CKey> &keys );
 	void on_add_clicked();
 	void on_remove_clicked();
 	void on_search_clicked();
@@ -91,7 +93,8 @@ private:
 	void loadHistory();
 	void saveHistory();
 
+	CryptoDoc	*doc;
 	IKValidator *validator;
-	LdapSearch *ldap;
+	LdapSearch	*ldap;
 	QList<CKey> skKeys;
 };

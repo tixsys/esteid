@@ -67,7 +67,7 @@ public:
 
 	QString activeCard() const;
 	void addFile( const QString &file, const QString &mime );
-	void addKey( const CKey &key );
+	bool addKey( const CKey &key );
 	QSslCertificate authCert() const;
 	void create( const QString &file );
 	void clear();

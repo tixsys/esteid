@@ -36,8 +36,6 @@ public:
 	MainWindow( QWidget *parent = 0 );
 
 private Q_SLOTS:
-	void addCardCert();
-	void addKeys( const QList<CKey> &keys );
 	void buttonClicked( int button );
 	void closeDoc();
 	void on_introCheck_stateChanged( int state );
@@ -48,6 +46,7 @@ private Q_SLOTS:
 	void showSettings();
 	void removeKey( int id );
 	void showWarning( const QString &msg, int err, const QString &errmsg = QString() );
+	void updateView();
 
 private:
 	enum Pages {
