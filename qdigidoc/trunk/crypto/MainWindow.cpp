@@ -532,19 +532,17 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	QString content;
 	bool hasKey = false;
 	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
 	{
-		content = Common::tokenInfo( Common::AuthCert, doc->activeCard(), doc->authCert() );
+		infoCard->setText( Common::tokenInfo( Common::AuthCert, doc->activeCard(), doc->authCert() ) );
 		Q_FOREACH( const CKey &key, doc->keys() )
 			hasKey = qMax( hasKey, key.cert == doc->authCert() );
 	}
 	else if( !doc->activeCard().isEmpty() )
-		content = tr("Loading data");
+		infoCard->setText( tr("Loading data") );
 	else if( doc->activeCard().isEmpty() )
-		content = tr("No card in reader");
-	infoCard->setText( content );
+		infoCard->setText( tr("No card in reader") );
 
 	viewCrypt->setEnabled(
 		(!doc->isEncrypted() && viewContentView->model()->rowCount()) ||
@@ -580,9 +578,16 @@ void MainWindow::showWarning( const QString &msg )
 void MainWindow::showWarning( const QString &msg, int err, const QString &errmsg )
 {
 	QString s( msg );
-	if( err != -1 )
-		s += tr("<br />Error code: %1").arg( err );
-	if( !errmsg.isEmpty() )
-		s += QString(" (%1)").arg( errmsg );
+	switch( err )
+	{
+	case 60:
+		s += "<br />" + tr("Wrong PIN or PIN is blocked");
+		break;
+	case -1: break;
+	default:
+		s += "<br />" + tr("Error code: %1").arg( err );
+		if( !errmsg.isEmpty() )
+			s += QString(" (%1)").arg( errmsg );
+	}
 	showWarning( s );
 }

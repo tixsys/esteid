@@ -320,8 +320,8 @@ Kas avan Digidoc kliendiga?</translation>
         <translation>Loen andmeid</translation>
     </message>
     <message>
-        <source>&lt;br /&gt;Error code: %1</source>
-        <translation>&lt;br /&gt;Veakood: %1</translation>
+        <source>Error code: %1</source>
+        <translation>Veakood: %1</translation>
     </message>
     <message>
         <source>Yes, I will use ID-card certificate only for secure transfer</source>
@@ -416,6 +416,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <message>
         <source>File does not exists %1</source>
         <translation>Valitud faili ei eksisteeri %1</translation>
+    </message>
+    <message>
+        <source>Wrong PIN or PIN is blocked</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

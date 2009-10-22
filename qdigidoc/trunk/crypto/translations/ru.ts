@@ -300,8 +300,8 @@
         <translation>В считывателе нет карты</translation>
     </message>
     <message>
-        <source>&lt;br /&gt;Error code: %1</source>
-        <translation>&lt;br /&gt;Код ошибки:%1</translation>
+        <source>Error code: %1</source>
+        <translation>Код ошибки:%1</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -416,6 +416,10 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     <message>
         <source>File does not exists %1</source>
         <translation>Выбраный файл не существует %1</translation>
+    </message>
+    <message>
+        <source>Wrong PIN or PIN is blocked</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
