@@ -69,6 +69,7 @@ function cardInserted(i)
 	try {
 		if ( !cardManager.isInReader( activeCardId ) )
 		{
+			disableFields();
 			document.getElementById('cardInfoNoCard').style.display='none';
 			activeCardId = "";
 			emailsLoaded = false;
