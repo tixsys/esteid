@@ -10,6 +10,11 @@ typedef unsigned char byte;
 typedef unsigned short word;
 typedef unsigned long dword;
 typedef unsigned short ushort;
+#ifdef _WIN32
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned long uint32_t;
+#endif
 /// shorthand for std::vector<unsigned char>, used everywhere
 typedef	std::vector<byte> ByteVec;
 /// ostream printer
