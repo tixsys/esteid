@@ -184,10 +184,10 @@ function checkReaderCount()
 	if ( cards < 2 )
 	{
 		document.getElementById( 'headerMenus' ).style.right = '100px';
-		reader.style.display = 'none';
+                document.getElementById( 'readerSelectDiv' ).style.display = 'none';
 	} else {
-		document.getElementById( 'headerMenus' ).style.right = '200px';
-		reader.style.display = 'block';
+                document.getElementById( 'headerMenus' ).style.right = '200px';
+                document.getElementById( 'readerSelectDiv' ).style.display = 'block';
 	}
 }
 
