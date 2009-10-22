@@ -185,7 +185,7 @@ function checkReaderCount()
 		document.getElementById( 'headerMenus' ).style.right = '100px';
 		reader.style.display = 'none';
 	} else {
-		document.getElementById( 'headerMenus' ).style.right = '190px';
+		document.getElementById( 'headerMenus' ).style.right = '200px';
 		reader.style.display = 'block';
 	}
 }
