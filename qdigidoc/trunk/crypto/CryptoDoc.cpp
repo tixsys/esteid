@@ -41,6 +41,14 @@
 #include <QInputDialog>
 #include <QTemporaryFile>
 
+void CKey::setCert( const QSslCertificate &c )
+{
+	cert = c;
+	recipient = SslCertificate(c).subjectInfoUtf8( QSslCertificate::CommonName );
+}
+
+
+
 CryptoDoc::CryptoDoc( QObject *parent )
 :	QObject( parent )
 ,	m_enc(0)
@@ -95,13 +103,10 @@ void CryptoDoc::addKey( const CKey &key )
 {
 	if( isEncryptedWarning() )
 		return;
-	Q_FOREACH( const CKey &k, keys() )
+	if( keys().contains( key ) )
 	{
-		if( k.cert == key.cert )
-		{
-			setLastError( tr("Key already exists") );
-			return;
-		}
+		setLastError( tr("Key already exists") );
+		return false;
 	}
 
 	X509 *cert = NULL;

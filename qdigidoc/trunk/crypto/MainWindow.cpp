@@ -27,7 +27,6 @@
 #include "common/Common.h"
 #include "common/PinDialog.h"
 #include "common/Settings.h"
-#include "common/SslCertificate.h"
 
 #include <QApplication>
 #include <QDateTime>
@@ -35,6 +34,7 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSslCertificate>
 #include <QTextStream>
 #include <QTranslator>
 #include <QUrl>
@@ -128,13 +128,7 @@ MainWindow::MainWindow( QWidget *parent )
 }
 
 void MainWindow::addCardCert()
-{
-	SslCertificate c = doc->authCert();
-	CKey key;
-	key.cert = c;
-	key.recipient = c.subjectInfoUtf8( QSslCertificate::CommonName );
-	addKeys( QList<CKey>() << key );
-}
+{ addKeys( QList<CKey>() << CKey( doc->authCert() ) ); }
 
 bool MainWindow::addFile( const QString &file )
 {
@@ -509,21 +503,19 @@ void MainWindow::setCurrentPage( Pages page )
 		Q_FOREACH( KeyWidget *w, viewKeys->findChildren<KeyWidget*>() )
 			w->deleteLater();
 
-		int i = 0;
-		bool hasKey = false;
-		Q_FOREACH( const CKey &k, doc->keys() )
+		int j = 0;
+		QList<CKey> keys = doc->keys();
+		for( QList<CKey>::const_iterator i = keys.constBegin(); i != keys.constEnd(); ++i )
 		{
-			KeyWidget *key = new KeyWidget( k, i, doc->isEncrypted(), viewKeys );
+			KeyWidget *key = new KeyWidget( *i, j, doc->isEncrypted(), viewKeys );
 			connect( key, SIGNAL(remove(int)), SLOT(removeKey(int)) );
-			viewKeysLayout->insertWidget( i, key );
-			hasKey = qMax( hasKey, k.cert == doc->authCert() );
-			++i;
+			viewKeysLayout->insertWidget( j++, key );
 		}
 
 		viewCrypt->setText( doc->isEncrypted() ? tr("Decrypt") : tr("Encrypt") );
 		viewCrypt->setEnabled(
 			(!doc->isEncrypted() && viewContentView->model()->rowCount()) ||
-			(doc->isEncrypted() && hasKey) );
+			(doc->isEncrypted() && keys.contains( CKey( doc->authCert() ) )) );
 		break;
 	}
 	default: break;
@@ -532,13 +524,8 @@ void MainWindow::setCurrentPage( Pages page )
 
 void MainWindow::showCardStatus()
 {
-	bool hasKey = false;
 	if( !doc->activeCard().isEmpty() && !doc->authCert().isNull() )
-	{
 		infoCard->setText( Common::tokenInfo( Common::AuthCert, doc->activeCard(), doc->authCert() ) );
-		Q_FOREACH( const CKey &key, doc->keys() )
-			hasKey = qMax( hasKey, key.cert == doc->authCert() );
-	}
 	else if( !doc->activeCard().isEmpty() )
 		infoCard->setText( tr("Loading data") );
 	else if( doc->activeCard().isEmpty() )
@@ -546,7 +533,7 @@ void MainWindow::showCardStatus()
 
 	viewCrypt->setEnabled(
 		(!doc->isEncrypted() && viewContentView->model()->rowCount()) ||
-		(doc->isEncrypted() && hasKey) );
+		(doc->isEncrypted() && doc->keys().contains( CKey( doc->authCert() ) )) );
 
 	cards->clear();
 	cards->addItems( doc->presentCards() );

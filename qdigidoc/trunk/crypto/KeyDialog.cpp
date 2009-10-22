@@ -152,12 +152,11 @@ void KeyAddDialog::addFile()
 		return;
 	}
 
-	CKey k;
-	k.cert = QSslCertificate( &f, QSsl::Pem );
+	CKey k( QSslCertificate( &f, QSsl::Pem ) );
 	if( k.cert.isNull() )
 	{
 		f.reset();
-		k.cert = QSslCertificate( &f, QSsl::Der );
+		k.setCert( QSslCertificate( &f, QSsl::Der ) );
 	}
 	if( k.cert.isNull() )
 	{
@@ -168,10 +167,7 @@ void KeyAddDialog::addFile()
 		QMessageBox::warning( this, windowTitle(), tr("This certificate is not usable for crypting") );
 	}
 	else
-	{
-		k.recipient = SslCertificate( k.cert ).subjectInfoUtf8( QSslCertificate::CommonName );
 		Q_EMIT selected( QList<CKey>() << k );
-	}
 
 	f.close();
 }

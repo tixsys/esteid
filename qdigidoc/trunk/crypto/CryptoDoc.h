@@ -44,6 +44,11 @@ public:
 class CKey
 {
 public:
+	CKey() {};
+	CKey( const QSslCertificate &cert ) { setCert( cert ); }
+	void setCert( const QSslCertificate &cert );
+	bool operator==( const CKey &other ) const { return other.cert == cert; }
+
 	QSslCertificate cert;
 	QString id;
 	QString name;
