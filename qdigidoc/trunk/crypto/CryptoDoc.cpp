@@ -70,10 +70,8 @@ QString CryptoDoc::activeCard() const { return m_card; }
 
 void CryptoDoc::addFile( const QString &file, const QString &mime )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
+	if( isEncryptedWarning() )
+		return;
 
 	DataFile *data = 0;
 	int err = DataFile_new( &data, m_doc, NULL, file.toUtf8(),
@@ -95,11 +93,8 @@ void CryptoDoc::addFile( const QString &file, const QString &mime )
 
 void CryptoDoc::addKey( const CKey &key )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
-
+	if( isEncryptedWarning() )
+		return;
 	Q_FOREACH( const CKey &k, keys() )
 	{
 		if( k.cert == key.cert )
@@ -433,6 +428,15 @@ bool CryptoDoc::isEncrypted() const
 		m_enc->nDataStatus == DENC_DATA_STATUS_ENCRYPTED_AND_NOT_COMPRESSED);
 }
 
+bool CryptoDoc::isEncryptedWarning()
+{
+	if( isNull() )
+		setLastError( tr("Container is not open") );
+	if( isEncrypted() )
+		setLastError( tr("Container is encrypted") );
+	return isNull() || isEncrypted();
+}
+
 bool CryptoDoc::isNull() const { return m_enc == 0; }
 bool CryptoDoc::isSigned() const { return m_doc && m_doc->nSignatures; }
 
@@ -473,11 +477,8 @@ QStringList CryptoDoc::presentCards() const { return m_cards; }
 
 void CryptoDoc::removeDocument( int id )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
+	if( isEncryptedWarning() )
+		return;
 
 	if( !m_doc || id >= m_doc->nDataFiles || !m_doc->pDataFiles[id] )
 		return setLastError( tr("Internal error") );
@@ -489,11 +490,8 @@ void CryptoDoc::removeDocument( int id )
 
 void CryptoDoc::removeKey( int id )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
+	if( isEncryptedWarning() )
+		return;
 
 	if( !m_enc || id >= m_enc->nEncryptedKeys || !m_enc->arrEncryptedKeys[id] )
 		return setLastError( tr("Internal error") );
@@ -531,10 +529,8 @@ bool CryptoDoc::saveDDoc( const QString &filename )
 
 void CryptoDoc::saveDocument( int id, const QString &filepath )
 {
-	if( isNull() )
-		return setLastError( tr("Container is not open") );
-	if( isEncrypted() )
-		return setLastError( tr("Container is encrypted") );
+	if( isEncryptedWarning() )
+		return;
 
 	if( !m_doc || id >= m_doc->nDataFiles || !m_doc->pDataFiles[id] )
 		return setLastError( tr("Internal error") );

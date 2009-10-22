@@ -95,6 +95,7 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
+	bool isEncryptedWarning();
 	void setLastError( const QString &err, int code = -1 );
 	void cleanProperties();
 	void deleteDDoc();
