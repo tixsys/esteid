@@ -73,6 +73,9 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardBeginTransaction");
 	pSCardEndTransaction=(LONG(SCAPI *)(SCARDHANDLE ,DWORD ))
 		mLibrary.getProc("SCardEndTransaction");
+	pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
+		mLibrary.getProc("SCardControl");
+	
 #ifdef _WIN32
 	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD ,
 		LPDWORD ,LPDWORD ,LPBYTE ,LPDWORD ))
@@ -227,10 +230,44 @@ PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
 void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 {
 	PCSCConnection *pc = (PCSCConnection *)c;
+	DWORD i, feature_len, rcount;
+	PCSC_TLV_STRUCTURE *pcsc_tlv;
+	BYTE feature_buf[256], rbuf[256];
+	LONG rv;
+	
 	SCError::check((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader,
 		SCARD_SHARE_SHARED,
 		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
 		, & pc->hScard,& pc->proto));
+	// Is there a pinpad?
+	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
+	if (rv == SCARD_S_SUCCESS) {
+		if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) == 0) {
+			feature_len /= sizeof(PCSC_TLV_STRUCTURE);
+			pcsc_tlv = (PCSC_TLV_STRUCTURE *)feature_buf;
+			for (i = 0; i < feature_len; i++) {
+				if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_DIRECT) {
+					pc->verify_ioctl = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_START) {
+					pc->verify_ioctl_start = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_FINISH) {
+					pc->verify_ioctl_finish = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_DIRECT) {
+					pc->modify_ioctl = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_START) {
+					pc->modify_ioctl_start = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_FINISH) {
+					pc->modify_ioctl_finish = ntohl(pcsc_tlv[i].value);
+				} else if (pcsc_tlv[i].tag == FEATURE_IFD_PIN_PROPERTIES) {
+					if ((*pSCardControl)(pc->hScard,  ntohl(pcsc_tlv[i].value), NULL, 0, rbuf, sizeof(rbuf), &rcount) == SCARD_S_SUCCESS) {
+						PIN_PROPERTIES_STRUCTURE *caps = (PIN_PROPERTIES_STRUCTURE *)rbuf;
+						if (caps->wLcdLayout > 0)
+							pc->display=true; 
+					}
+				}	
+			}
+		}
+	}
 }
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
