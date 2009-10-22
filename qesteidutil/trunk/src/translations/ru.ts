@@ -115,7 +115,11 @@
     </message>
     <message>
         <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!&lt;br /&gt;Do you want to continue?</source>
-        <translation>Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!&lt;br /&gt;?</translation>
+        <translation type="obsolete">Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!&lt;br /&gt;?</translation>
+    </message>
+    <message>
+        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it will no longer be possible to decrypt documents that were encrypted with the old certificate.&lt;br /&gt;Do you want to continue?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
