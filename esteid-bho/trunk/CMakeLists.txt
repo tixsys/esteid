@@ -74,5 +74,6 @@ add_custom_command(
 )
 
 add_library(EstEIDSigningPluginBHO SHARED ${bho_SRCS})
+target_link_libraries(EstEIDSigningPluginBHO ws2_32)
 
 install(TARGETS EstEIDSigningPluginBHO DESTINATION lib)
