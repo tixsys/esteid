@@ -261,7 +261,7 @@ void MainWindow::buttonClicked( int button )
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ),
 			tr("Documents (*.bdoc *.BDOC *.ddoc *.DDOC)") );
 		if( !file.isEmpty() && doc->open( file ) )
-			setCurrentPage( View );
+			setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
 		break;
 	}
 	case HomeCrypt:
