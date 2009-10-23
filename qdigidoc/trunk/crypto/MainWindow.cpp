@@ -233,9 +233,27 @@ void MainWindow::buttonClicked( int button )
 	{
 		if( !params.isEmpty() )
 		{
-			parseParams();
-			break;
+			Q_FOREACH( const QString &param, params )
+			{
+				const QFileInfo f( param );
+				if( !f.isFile() )
+					continue;
+				if( doc->isNull() && f.suffix().toLower() == "cdoc" )
+				{
+					doc->open( f.absoluteFilePath() );
+					break;
+				}
+				else if( !addFile( f.absoluteFilePath() ) )
+					break;
+			}
+			params.clear();
+			if( !doc->isNull() )
+			{
+				setCurrentPage( View );
+				break;
+			}
 		}
+
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
 			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
 		if( !list.isEmpty() )
@@ -425,26 +443,6 @@ void MainWindow::parseLink( const QString &url )
 		if( !Common::startDetached( "qesteidutil" ) )
 			showWarning( tr("Failed to start process '%1'").arg( "qesteidutil" ), -1 );
 	}
-}
-
-void MainWindow::parseParams()
-{
-	Q_FOREACH( const QString &param, params )
-	{
-		const QFileInfo f( param );
-		if( !f.isFile() )
-			continue;
-		if( doc->isNull() && f.suffix().toLower() == "cdoc" )
-		{
-			doc->open( f.absoluteFilePath() );
-			break;
-		}
-		else if( !addFile( f.absoluteFilePath() ) )
-			break;
-	}
-	if( !doc->isNull() )
-		setCurrentPage( View );
-	params.clear();
 }
 
 void MainWindow::removeDocument( int index )

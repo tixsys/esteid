@@ -265,7 +265,7 @@ void MainWindow::buttonClicked( int button )
 		break;
 	}
 	case HomeCrypt:
-		if( !Common::startDetached( "qdigidoccrypto", QStringList() << doc->fileName() ) )
+		if( !Common::startDetached( "qdigidoccrypto" ) )
 			showWarning( tr("Failed to start process 'qdigidoccrypto'") );
 		break;
 	case HomeSign:
