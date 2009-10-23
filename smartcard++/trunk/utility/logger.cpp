@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-06-17 23:57:20 +0300 (Wed, 17 Jun 2009) $
+	\date		$Date: 2009-10-23 09:49:09 +0300 (R, 23 okt 2009) $
 */
-// Revision $Revision: 323 $
+// Revision $Revision: 479 $
 
 #include "precompiled.h"
 #include <fstream>
@@ -113,8 +113,10 @@ logger::logger(const std::string name) :
       m_name(name),
       m_streambuffer(), std::ostream(&m_streambuffer) { 
   clear();
+#if defined(_DEBUG) || defined(DEBUG)
   addTarget(log_to_CONSOLE);
   addTarget(log_to_FILE);
+#endif
   addTarget(log_to_SYSTEMLOG);
   }
 
