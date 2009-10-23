@@ -279,11 +279,15 @@ set_source_files_properties(${esteid_module_SRCS} ${esteid_plugin_SRCS}
   PROPERTIES
   COMPILE_FLAGS "${XPCOM_CPP_FLAGS}")
 
+if(WIN32)
+    set(WIN_LIBRARIES ws2_32)
+endif(WIN32)
+
 add_library(esteid MODULE ${esteid_module_SRCS})
 add_library(npesteid MODULE ${esteid_plugin_SRCS} ${esteid_plugin_WIN})
 add_dependencies(esteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
-target_link_libraries(esteid ${GECKO_SDK_LIBRARIES})
+target_link_libraries(esteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES})
 target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(esteid PROPERTIES
 				PREFIX ""
