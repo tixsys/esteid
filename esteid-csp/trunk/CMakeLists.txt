@@ -44,6 +44,7 @@ set(esteidcsp_SRCS
 )
 
 add_library(esteidcsp SHARED ${esteidcsp_SRCS})
+target_link_libraries(esteidcsp ws2_32)
 
 find_program(CSPSIGNEXE NAMES cspsign.exe cspSign.exe PATHS ../ PATH_SUFFIXES cspdk)
 
