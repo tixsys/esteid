@@ -60,4 +60,6 @@ add_custom_command(
 )
 
 add_executable(SmartCardRemoval WIN32 ${SOURCES})
+target_link_libraries(SmartCardRemoval ws2_32)
+
 install(TARGETS SmartCardRemoval DESTINATION bin)
