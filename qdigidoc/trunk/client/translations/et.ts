@@ -380,17 +380,20 @@ Alustame laadimist?</translation>
     <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõend ei ole kehtiv!
+Alustame laadimist?</translation>
     </message>
     <message>
         <source>Server access certificate is about to expire!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõend aegub varsti!
+Alustame laadimist?</translation>
     </message>
     <message>
         <source>Failed to read server access certificate!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei õnnestunud liigipääsutõendit laadida!
+Alustame laadimist?</translation>
     </message>
 </context>
 <context>
@@ -738,7 +741,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
-        <translation type="unfinished">Kui soovite vahetada ümbriku formaati .bdoc&apos;ist .ddoc&apos;iks või vastupidi, tuleb Digidoci kliendiga avatud fail uuesti avada.</translation>
+        <translation>Juba avatud ümbriku formaati pole võimalik muuta. See seade kehtib ainult uutele ümbrikutele.</translation>
     </message>
     <message>
         <source>Show certificate</source>
@@ -849,7 +852,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Hash value of validity confirmation</source>
-        <translation type="unfinished">Räsi väärtus kehtivuse kinnitamisel</translation>
+        <translation>Räsi väärtus kehtivuse kinnitamisel</translation>
     </message>
 </context>
 <context>

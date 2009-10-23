@@ -380,17 +380,20 @@ Start downloading?</source>
     <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка допуска не действительна!
+Начнём загрузку?</translation>
     </message>
     <message>
         <source>Server access certificate is about to expire!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Срок действия справки допуска скоро истечёт!
+Начнём загрузку?</translation>
     </message>
     <message>
         <source>Failed to read server access certificate!
 Start downloading?</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить справку допуска!
+Начнём загрузку?</translation>
     </message>
 </context>
 <context>
@@ -466,7 +469,7 @@ Please check your internet connection.</source>
     <name>PrintSheet</name>
     <message>
         <source>SIGNED FILES</source>
-        <translation>ПОДПИСАННЫЕ ФАИЛЫ</translation>
+        <translation>ПОДПИСАННЫЕ ФАЙЛЫ</translation>
     </message>
     <message>
         <source>FILE NAME</source>
@@ -593,7 +596,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Failed to sign document</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось подписать документ</translation>
     </message>
 </context>
 <context>
@@ -737,7 +740,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
-        <translation type="unfinished">Если вы хотите поменяеть формат файла с .bdoc на .ddoc или наоборот, необходимо открытый файл Digidoc клиентом открыть заного.</translation>
+        <translation>Невозможно изменить формат уже открытого конверта. Настройки будут действительны только для новых конвертов.</translation>
     </message>
     <message>
         <source>Show certificate</source>

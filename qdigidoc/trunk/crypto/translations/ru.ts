@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Keys added successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрессат успешно добавлен</translation>
     </message>
     <message>
         <source>Failed to add keys</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>LDAP server is unavailable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу подключиться к LDAP серверу.</translation>
     </message>
     <message>
         <source>Error Code: %1 (%2)</source>
@@ -427,7 +427,7 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     </message>
     <message>
         <source>Wrong PIN or PIN is blocked</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправильный PIN или PIN заблокирован</translation>
     </message>
 </context>
 <context>

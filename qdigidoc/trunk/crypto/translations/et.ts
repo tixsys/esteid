@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Keys added successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Adressaat on edukalt lisatud</translation>
     </message>
     <message>
         <source>Failed to add keys</source>
@@ -427,7 +427,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
     <message>
         <source>Wrong PIN or PIN is blocked</source>
-        <translation type="unfinished"></translation>
+        <translation>Vale PIN või PIN on lukkus</translation>
     </message>
 </context>
 <context>

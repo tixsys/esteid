@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it will no longer be possible to decrypt documents that were encrypted with the old certificate.&lt;br /&gt;Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaatite uuendamiseks palun sulgege kõik rakendused, mis kasutavad ID-kaarti (ID-kaardi klient, haldusvahend, Firefox, Safari, Internet Explorer...)&lt;br /&gt;Pärast sertifikaatide uuendamist ei ole võimalik enam dekrüpteerida vana sertifikaadiga krüpteeritud dokumente!&lt; br /&gt;Kas soovite jätkata sertifikaatide uuendamisega?</translation>
     </message>
 </context>
 <context>
