@@ -20,14 +20,12 @@
  *
  */
 
-#include "sslConnect.h"
 #include "sslConnect_p.h"
 
 #include "PinDialog.h"
 #include "Settings.h"
 #include "SslCertificate.h"
 
-#include <openssl/ssl.h>
 #include <stdexcept>
 #include <sstream>
 #include <QApplication>
@@ -81,30 +79,6 @@ SSLThread::SSLThread( PKCS11_SLOT *slot, QObject *parent )
 : QThread(parent), loginOk(0), m_slot(slot) {}
 
 void SSLThread::run() { loginOk = PKCS11_login( m_slot, 0, NULL ); }
-
-
-
-class SSLObj
-{
-public:
-	SSLObj();
-	~SSLObj();
-
-	bool connectToHost( SSLConnect::RequestType type );
-	QByteArray getUrl( const QString &url ) const;
-	QByteArray getRequest( const QString &request ) const;
-
-	PKCS11_CTX *ctx;
-	SSL		*s;
-
-	QString card;
-	QString pin;
-	QString pkcs11;
-	int		reader;
-
-	unsigned int nslots;
-	PKCS11_SLOT *pslots;
-};
 
 
 

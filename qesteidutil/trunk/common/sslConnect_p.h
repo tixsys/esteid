@@ -22,9 +22,35 @@
 
 #pragma once
 
+#include "sslConnect.h"
+
 #include <QThread>
 
 #include <libp11.h>
+
+#include <openssl/ssl.h>
+
+class SSLObj
+{
+public:
+	SSLObj();
+	~SSLObj();
+
+	bool connectToHost( SSLConnect::RequestType type );
+	QByteArray getUrl( const QString &url ) const;
+	QByteArray getRequest( const QString &request ) const;
+
+	PKCS11_CTX *ctx;
+	SSL		*s;
+
+	QString card;
+	QString pin;
+	QString pkcs11;
+	int		reader;
+
+	unsigned int nslots;
+	PKCS11_SLOT *pslots;
+};
 
 class SSLThread: public QThread
 {
