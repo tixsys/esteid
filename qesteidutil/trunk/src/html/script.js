@@ -535,6 +535,13 @@ function handleError(msg)
 	_alert( 'error', _('errorFound') + _( msg ) )
 }
 
+function handleNotice(msg)
+{
+	if ( msg == "" )
+		return;
+	_alert( 'notice', _( msg ) )
+}
+
 function disableFields( translate )
 {
 	var divs = document.getElementsByTagName('div');

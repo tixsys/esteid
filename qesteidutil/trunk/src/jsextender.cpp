@@ -367,11 +367,11 @@ void JsExtender::getMidStatus()
 			return;
 		}
 		MobileResult mRes = (MobileResult)e.elementsByTagName( "ResponseStatus" ).item(0).toElement().text().toInt();
-		QString mResString;
+		QString mResString, mNotice;
 		switch( mRes )
 		{
-			case NoCert: mResString = "mobileNoCert"; break;
-			case NotActive: mResString = "mobileNotActive"; break;
+			case NoCert: mNotice = "mobileNoCert"; break;
+			case NotActive: mNotice = "mobileNotActive"; break;
 			case NoIDCert: mResString = "noIDCert"; break;
 			case InternalError: mResString = "mobileInternalError"; break;
 			case InterfaceNotReady: mResString = "mobileInterfaceNotReady"; break;
@@ -381,6 +381,11 @@ void JsExtender::getMidStatus()
 		if ( !mResString.isEmpty() )
 		{
 			jsCall( "handleError", mResString );
+			return;
+		}
+		if ( !mNotice.isEmpty() )
+		{
+			jsCall( "handleNotice", mNotice );
 			return;
 		}
 		mResString = QString( "%1;%2;%3;%4" )
