@@ -99,6 +99,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
 	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
 	mobileResults[ "User is not a Mobile-ID client" ] = tr( "User is not a Mobile-ID client" );
+	mobileResults[ "ID and phone number do not match" ] = tr( "ID and phone number do not match" );
 }
 
 QString MobileDialog::escapeChars( const QString &in ) const

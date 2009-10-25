@@ -465,6 +465,10 @@ Palun kontrollige internetiühendust.</translation>
         <translatorcomment>Пользователь не является клиентом Mobiil-ID</translatorcomment>
         <translation>Kasutaja ei ole Mobiil-ID klient</translation>
     </message>
+    <message>
+        <source>ID and phone number do not match</source>
+        <translation>Isikukood ja telefoni number ei klapi</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
@@ -577,7 +581,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Signing certificate is not selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Allkirjastamise sertifikaat ei ole valitud</translation>
     </message>
     <message>
         <source>Failed to login token</source>

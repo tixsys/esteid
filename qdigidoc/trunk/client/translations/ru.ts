@@ -464,6 +464,10 @@ Please check your internet connection.</source>
         <source>User is not a Mobile-ID client</source>
         <translation></translation>
     </message>
+    <message>
+        <source>ID and phone number do not match</source>
+        <translation>Личный код и номер телефона не совпадают</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
