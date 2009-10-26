@@ -182,31 +182,32 @@ bool EstEidCard::changePin_internal(
 	byte cmdChangeCmd[] = {0x00,0x24,0x00};
 
 	if (useUnblockCmd) cmdChangeCmd[1]= 0x2C;
+	ByteVec cmd(MAKEVECTOR(cmdChangeCmd));
 
 	size_t oldPinLen,newPinLen;
+	if (!mConnection->isSecure()) {
+		if (newPin.length() < 4 || oldPin.length() < 4 ) {
+			if (!mConnection->isSecure() )
+				throw std::runtime_error("bad pin length");
+			oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
+			newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
+			oldPin = PinString(oldPinLen,'0');
+			newPin = PinString(newPinLen,'0');
+		} else {
+			oldPinLen = oldPin.length();
+			newPinLen = newPin.length();
+		}
 
-	if (newPin.length() < 4 || oldPin.length() < 4 ) {
-		if (newPin.length()!= 2 || oldPin.length() != 2 ||
-			!mConnection->isSecure() )
-			throw std::runtime_error("bad pin length");
-		oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
-		newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
-		oldPin = PinString(oldPinLen,'0');
-		newPin = PinString(newPinLen,'0');
-	} else {
-		oldPinLen = oldPin.length();
-		newPinLen = newPin.length();
+		ByteVec catPins;
+		catPins.resize(oldPinLen + newPinLen);
+		copy(oldPin.begin(), oldPin.end(), catPins.begin());
+		copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
+
+		
+		cmd.push_back((byte)pinType);
+		cmd.push_back(LOBYTE(catPins.size()));
+		cmd.insert(cmd.end(),catPins.begin(),catPins.end());
 	}
-
-	ByteVec catPins;
-	catPins.resize(oldPinLen + newPinLen);
-	copy(oldPin.begin(), oldPin.end(), catPins.begin());
-	copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
-
-	ByteVec cmd(MAKEVECTOR(cmdChangeCmd));
-	cmd.push_back((byte)pinType);
-	cmd.push_back(LOBYTE(catPins.size()));
-	cmd.insert(cmd.end(),catPins.begin(),catPins.end());
 	try {
 		if (mConnection->isSecure())
 			executePinChange(cmd,oldPinLen,newPinLen);

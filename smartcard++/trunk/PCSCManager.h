@@ -85,6 +85,63 @@ typedef struct
         uint32_t value; /**< This value is always in BIG ENDIAN format as documented in PCSC v2 part 10 ch 2.2 page 2. You can use ntohl() for example */
 } PCSC_TLV_STRUCTURE;
 
+/** structure used with \ref FEATURE_VERIFY_PIN_DIRECT */
+typedef struct
+{
+	uint8_t bTimerOut;	/**< timeout is seconds (00 means use default timeout) */
+	uint8_t bTimerOut2; /**< timeout in seconds after first key stroke */
+	uint8_t bmFormatString; /**< formatting options */
+	uint8_t bmPINBlockString; /**< bits 7-4 bit size of PIN length in APDU,
+	                        * bits 3-0 PIN block size in bytes after
+	                        * justification and formatting */
+	uint8_t bmPINLengthFormat; /**< bits 7-5 RFU,
+	                         * bit 4 set if system units are bytes, clear if
+	                         * system units are bits,
+	                         * bits 3-0 PIN length position in system units */
+	uint16_t wPINMaxExtraDigit; /**< 0xXXYY where XX is minimum PIN size in digits,
+	                            and YY is maximum PIN size in digits */
+	uint8_t bEntryValidationCondition; /**< Conditions under which PIN entry should
+	                                 * be considered complete */
+	uint8_t bNumberMessage; /**< Number of messages to display for PIN verification */
+	uint16_t wLangId; /**< Language for messages */
+	uint8_t bMsgIndex; /**< Message index (should be 00) */
+	uint8_t bTeoPrologue[3]; /**< T=1 block prologue field to use (fill with 00) */
+	uint32_t ulDataLength; /**< length of Data to be sent to the ICC */
+	uint8_t abData[1]; /**< Data to send to the ICC */
+} PIN_VERIFY_STRUCTURE;
+
+/** structure used with \ref FEATURE_MODIFY_PIN_DIRECT */
+typedef struct
+{
+	uint8_t bTimerOut;	/**< timeout is seconds (00 means use default timeout) */
+	uint8_t bTimerOut2; /**< timeout in seconds after first key stroke */
+	uint8_t bmFormatString; /**< formatting options */
+	uint8_t bmPINBlockString; /**< bits 7-4 bit size of PIN length in APDU,
+	                        * bits 3-0 PIN block size in bytes after
+	                        * justification and formatting */
+	uint8_t bmPINLengthFormat; /**< bits 7-5 RFU,
+	                         * bit 4 set if system units are bytes, clear if
+	                         * system units are bits,
+	                         * bits 3-0 PIN length position in system units */
+	uint8_t bInsertionOffsetOld; /**< Insertion position offset in bytes for
+	                             the current PIN */
+	uint8_t bInsertionOffsetNew; /**< Insertion position offset in bytes for
+	                             the new PIN */
+	uint16_t wPINMaxExtraDigit;
+	                         /**< 0xXXYY where XX is minimum PIN size in digits,
+	                            and YY is maximum PIN size in digits */
+	uint8_t bConfirmPIN; /**< Flags governing need for confirmation of new PIN */
+	uint8_t bEntryValidationCondition; /**< Conditions under which PIN entry should
+	                                 * be considered complete */
+	uint8_t bNumberMessage; /**< Number of messages to display for PIN verification*/
+	uint16_t wLangId; /**< Language for messages */
+	uint8_t bMsgIndex1; /**< index of 1st prompting message */
+	uint8_t bMsgIndex2; /**< index of 2d prompting message */
+	uint8_t bMsgIndex3; /**< index of 3d prompting message */
+	uint8_t bTeoPrologue[3]; /**< T=1 block prologue field to use (fill with 00) */
+	uint32_t ulDataLength; /**< length of Data to be sent to the ICC */
+	uint8_t abData[1]; /**< Data to send to the ICC */
+} PIN_MODIFY_STRUCTURE;
 
 /// Holds connection parameters for PCSC card connection
 struct PCSCConnection : public ConnectionBase {
@@ -154,6 +211,9 @@ class PCSCManager : public ManagerInterface {
 	void endTransaction(ConnectionBase *c,bool forceReset = false);
 	void execCommand(ConnectionBase *c,std::vector<BYTE> &cmd,std::vector<BYTE> &recv,
 		unsigned int &recvLen);
+	void execPinCommand(ConnectionBase *c, DWORD ioctl, std::vector<byte> &cmd);
+	void execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd);
+	void execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd, size_t oldPinLen, size_t newPinLen);
 	bool isT1Protocol(ConnectionBase *c);
 
 public:

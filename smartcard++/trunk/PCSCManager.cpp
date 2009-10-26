@@ -9,6 +9,7 @@
 #include "precompiled.h"
 #include <smartcard++/PCSCManager.h>
 #include <smartcard++/SCError.h>
+#include <smartcard++/CardBase.h> //for exceptions
 
 #ifdef _WIN32
 #define LIBNAME "winscard"
@@ -240,6 +241,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
 		, & pc->hScard,& pc->proto));
 	// Is there a pinpad?
+	//pc->verify_ioctl = pc->verify_ioctl_start = pc->modify_ioctl = pc->modify_ioctl_start = 0;
 	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
 	if (rv == SCARD_S_SUCCESS) {
 		if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) == 0) {
@@ -316,6 +318,99 @@ void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 				&recv[0] , &ret));
 	recvLen = (uint)(ret);
 }
+
+void PCSCManager::execPinCommand(ConnectionBase *c, DWORD ioctl, std::vector<byte> &cmd) {
+	PCSCConnection *pc = (PCSCConnection *)c;
+	int offset = 0, count = 0;
+	BYTE sbuf[256], rbuf[256];
+	DWORD ioctl2, slen, rlen=sizeof(rbuf);
+	
+	PIN_VERIFY_STRUCTURE *pin_verify  = (PIN_VERIFY_STRUCTURE *)sbuf;
+	PIN_MODIFY_STRUCTURE *pin_modify  = (PIN_MODIFY_STRUCTURE *)sbuf;
+	
+	// build PC/SC block. FIXME: hardcoded for EstEID!!!
+	if (ioctl == pc->verify_ioctl_start || ioctl == pc->verify_ioctl) {	
+		/* PIN verification control message */
+		pin_verify->bTimerOut = 30;
+		pin_verify->bTimerOut2 = 30;
+		pin_verify->bmFormatString |= 0x02;
+		pin_verify->bmPINBlockString = 0x00;
+		pin_verify->bmPINLengthFormat = 0x00;
+		pin_verify->wPINMaxExtraDigit = (4 << 8 ) + 12; // little endian!
+		pin_verify->bEntryValidationCondition = 0x02; /* Keypress only */
+		pin_verify->bNumberMessage = pc->display ? 0xFF: 0x00; /* Default message */
+
+		/* Ignore language and T=1 parameters. */
+		pin_verify->wLangId = 0x0000;
+		pin_verify->bMsgIndex = 0x00;
+		pin_verify->bTeoPrologue[0] = 0x00;
+		pin_verify->bTeoPrologue[1] = 0x00;
+		pin_verify->bTeoPrologue[2] = 0x00;
+
+		/* APDU itself */
+		pin_verify->abData[offset++] = 0x00;
+		pin_verify->abData[offset++] = 0x20;
+		pin_verify->abData[offset++] = 0x00;
+		pin_verify->abData[offset++] = 0x01;
+		pin_verify->ulDataLength = 0x0004;
+		count = sizeof(PIN_VERIFY_STRUCTURE) + offset -1;
+	} else {
+		pin_modify->bTimerOut = 30;
+		pin_modify->bTimerOut2 = 30;
+		pin_modify->bmFormatString |= 0x02;
+		pin_modify->bmPINBlockString = 0x00;
+		pin_modify->bmPINLengthFormat = 0x00;
+		pin_modify->bInsertionOffsetOld = 0x00;
+		pin_modify->bInsertionOffsetNew = 0x00;
+		pin_modify->wPINMaxExtraDigit = (5 << 8 ) + 12;
+		pin_modify->bConfirmPIN = 0x03;
+		pin_modify->bEntryValidationCondition = 0x02;
+		pin_modify->bNumberMessage = pc->display ? 0x03 : 0x00;
+		pin_modify->wLangId =0x0000;
+		pin_modify->bMsgIndex1 = 0x00;
+		pin_modify->bMsgIndex2 = 0x01;
+		pin_modify->bMsgIndex3 = 0x02;
+		pin_modify->bTeoPrologue[0] = 0x00;
+		pin_modify->bTeoPrologue[1] = 0x00;
+		pin_modify->bTeoPrologue[2] = 0x00;
+
+		/* APDU itself */
+		pin_modify->abData[offset++] = 0x00;
+		pin_modify->abData[offset++] = 0x24;
+		pin_modify->abData[offset++] = 0x00;
+		pin_modify->abData[offset++] = 0x02;
+		pin_modify->ulDataLength = 0x0004; /* APDU size */
+		count = sizeof(PIN_MODIFY_STRUCTURE) + offset -1;
+	}
+	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, sizeof(sbuf), rbuf, sizeof(rbuf), &rlen));
+
+	// finish a two phase operation
+	if ((ioctl == pc->verify_ioctl_start) || (ioctl == pc->modify_ioctl_start)) {
+		rlen = sizeof(rbuf);
+		ioctl2 = (ioctl == pc->verify_ioctl_start) ? pc->verify_ioctl_finish : pc->modify_ioctl_finish;
+		SCError::check((*pSCardControl)(pc->hScard, ioctl2, NULL, 0, rbuf, sizeof(rbuf), &rlen));
+	}
+	byte SW1 = rbuf[rlen - 2];
+	byte SW2 = rbuf[rlen - 1];
+	if (SW1 != 0x90) {
+		if (SW1==0x64 && ( SW2 == 0x00 || SW2 == 0x01 || SW2 == 0x02) ) {
+			throw AuthError(SW1,SW2);
+		}
+		throw CardError(SW1, SW2);
+	}
+}
+
+void PCSCManager::execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
+	PCSCConnection *pc = (PCSCConnection *)c;
+	execPinCommand(c, pc->verify_ioctl_start ? pc->verify_ioctl_start : pc->verify_ioctl, cmd);
+}
+
+void PCSCManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd, size_t oldPinLen, size_t newPinLen) {
+	PCSCConnection *pc = (PCSCConnection *)c;
+	execPinCommand(c, pc->modify_ioctl_start ? pc->modify_ioctl_start : pc->modify_ioctl, cmd);
+}
+         
+
 
 bool PCSCManager::isT1Protocol(ConnectionBase *c) {
 	PCSCConnection *pc = (PCSCConnection *)c;
