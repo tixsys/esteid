@@ -2,8 +2,8 @@
  * This JavaScript will handle CA certificate import and load required
  * security modules into browser.
  *
- * IMPORTANT NOTE: global functions log and debug must be defined before
- * running the code in ConfigureEstEID();
+ * IMPORTANT NOTE: global functions esteid_log esteid_error and esteid_debug
+ * must be defined before running the code in ConfigureEstEID();
  */
 
 const nsNSSCertCache          = "@mozilla.org/security/nsscertcache;1";
@@ -40,7 +40,7 @@ function requestRestart() {
     try {
         nb = gBrowser.getNotificationBox();
     } catch(e) {
-        error("Module reloading requires browser restart");
+        esteid_error("Module reloading requires browser restart");
         return;
     }
 
@@ -117,13 +117,13 @@ function ConfigureEstEID() {
     var oscpu = httpHandler.oscpu;
     var platform = httpHandler.platform;
 
-    log("OSCPU: " + oscpu);
-    log("Platform: " + platform);
+    esteid_log("OSCPU: " + oscpu);
+    esteid_log("Platform: " + platform);
 
     var bits = (oscpu.indexOf(" x86_64") < 0 &&
                 oscpu.indexOf(" x64") < 0) ? 32 : 64;
 
-    log("Detected " + bits + " bit browser");
+    esteid_log("Detected " + bits + " bit browser");
 
     var certDir;
     var moduleDlls;
@@ -153,7 +153,7 @@ function ConfigureEstEID() {
                      Ci.nsIWindowsRegKey.ACCESS_READ);
             EstEidInstallDir = key.readStringValue("Installed");
         } catch(e) {
-            error("Unable to read EstEID path from registry: " + e);
+            esteid_error("Unable to read EstEID path from registry: " + e);
             EstEidInstallDir = "C:\\Program Files\\Estonian ID Card\\";
         }
         certDir = EstEidInstallDir + "certs";
@@ -170,12 +170,12 @@ function ConfigureEstEID() {
                        "/usr/pkg/lib/" + soName + ".so",
                        "/usr/local/lib/" + soName + ".so" ];
     } else {
-        error("Unknown plaform " + platform);
+        esteid_error("Unknown plaform " + platform);
         return;
     }
 
-    log("Cert Dir: " + certDir);
-    debug("Module Dlls: " + moduleDlls);
+    esteid_log("Cert Dir: " + certDir);
+    esteid_debug("Module Dlls: " + moduleDlls);
 
     var EstEidDll;
     var needtoload = false;
@@ -196,9 +196,9 @@ function ConfigureEstEID() {
         }
     }
     if(EstEidDll)
-        log("Picked Module: " + EstEidDll);
+        esteid_log("Picked Module: " + EstEidDll);
     else
-        error("Unable to find security module in any of the following locations: " + moduleDlls);
+        esteid_error("Unable to find security module in any of the following locations: " + moduleDlls);
 
     var modulesToRemove = new Array();
     var restartNeeded = false;
@@ -218,7 +218,7 @@ function ConfigureEstEID() {
             else if(module.name == EstEidModName ||
                     /(opensc-pkcs11|esteid-pkcs11)\.(so|dll)$/
                                                 .test(module.libName)) {
-                debug("Marking module for removal: " +
+                esteid_debug("Marking module for removal: " +
                       module.name + ":" + module.libName);
                 modulesToRemove.push(module.name);
 
@@ -239,7 +239,7 @@ function ConfigureEstEID() {
             try {
                 pkcs11.deleteModule(modName);
             } catch(e) {
-                error("Unable to remove module: " + e);
+                esteid_error("Unable to remove module: " + e);
             }
         } catch(e) {
             var pkcs11 = window.pkcs11;
@@ -247,7 +247,7 @@ function ConfigureEstEID() {
             do {
                 res = pkcs11.deletemodule(modName);
             } while(res == -2); // Bug user until he/she clicks OK
-            if(res < 0) error("Unable to remove module");
+            if(res < 0) esteid_error("Unable to remove module");
         }
     }
 
@@ -259,7 +259,7 @@ function ConfigureEstEID() {
             try {
                 pkcs11.addModule(EstEidModName, EstEidDll, 0x1<<28, 0);
             } catch(e) {
-                error("Unable to load module: " + e);
+                esteid_error("Unable to load module: " + e);
             }
         } catch(e) {
             var pkcs11 = window.pkcs11;
@@ -267,7 +267,7 @@ function ConfigureEstEID() {
             do {
                 res = pkcs11.addmodule(EstEidModName, EstEidDll, 0x1<<28, 0);
             } while(res == -2); // Bug user until he/she clicks OK
-            if(res < 0) error("Unable to load module");
+            if(res < 0) esteid_error("Unable to load module");
         }
     }
 
@@ -298,7 +298,7 @@ function ConfigureEstEID() {
         dir.initWithPath(certDir);
         i = dir.directoryEntries;
     } catch(e) {
-        error("Unable to open certificate directory " + certDir + ": " + e);
+        esteid_error("Unable to open certificate directory " + certDir + ": " + e);
     }
 
     /* Read files, one by one */
@@ -326,15 +326,15 @@ function ConfigureEstEID() {
 
                 EstEIDcertIDs.push(cert.sha1Fingerprint);
                 if(caCertIDs.indexOf(cert.sha1Fingerprint) >= 0) continue;
-                log("Adding to store: " + file.leafName);
+                esteid_log("Adding to store: " + file.leafName);
                 certdb2.addCertFromBase64(pem, "C,C,P", "");
             } catch(e) {
-                error("Unable to parse " + file.leafName + ": " + e);
+                esteid_error("Unable to parse " + file.leafName + ": " + e);
             }
         }
     }
 
-    debug("Esteid Certs: " + EstEIDcertIDs.join("\n"));
+    esteid_debug("Esteid Certs: " + EstEIDcertIDs.join("\n"));
 
     if(restartNeeded) requestRestart();
 }

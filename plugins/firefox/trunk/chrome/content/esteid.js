@@ -1,7 +1,7 @@
 var logmsg = "";
 var errflag = false;
 
-function log(a) {
+function esteid_log(a) {
   try {
     eidui.logMessage(a);
   } catch(e) {
@@ -9,7 +9,7 @@ function log(a) {
   }
 }
 
-function debug(a) {
+function esteid_debug(a) {
   try {
     eidui.debugMessage(a);
   } catch(e) {
@@ -17,7 +17,7 @@ function debug(a) {
   }
 }
 
-function error(a) {
+function esteid_error(a) {
   try {
     eidui.errorMessage(a);
   } catch(e) {
@@ -47,17 +47,17 @@ function LoadEstEID() {
                             .createInstance(Components.interfaces.nsIEstEID);
         // var com = document.getElementById('eidplugin');
 
-        log("Plugin Version: " + com.getVersion() + "\n");
+        esteid_log("Plugin Version: " + com.getVersion() + "\n");
         var elt = document.getElementById('esteidpanel');
 	elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
     } catch (anError) {
-        error(anError);
+        esteid_error(anError);
     }
 
     try {
         ConfigureEstEID();
     } catch (anError) {
-        error(anError);
+        esteid_error(anError);
     }
 
     if(errflag) showErrorIcon();
