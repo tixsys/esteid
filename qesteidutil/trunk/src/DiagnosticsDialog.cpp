@@ -82,22 +82,10 @@ DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
 
 #if defined(Q_OS_WIN)
 	QString bits = "32";
-	typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
-	LPFN_ISWOW64PROCESS fnIsWow64Process;
-	BOOL bIsWow64 = false;
-	//check if kernel32 supports this function
-	fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress( GetModuleHandle(TEXT("kernel32")), "IsWow64Process" );
-	if ( fnIsWow64Process != NULL )
-	{
-		if ( fnIsWow64Process( GetCurrentProcess(), &bIsWow64 ) )
-			if ( bIsWow64 )
-				bits = "64";
-	} else {
-		SYSTEM_INFO sysInfo;
-		GetSystemInfo( &sysInfo );
-		if ( sysInfo.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 )
-			bits = "64";
-	}
+	SYSTEM_INFO sysInfo;
+	GetNativeSystemInfo( &sysInfo );
+	if ( sysInfo.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 )
+		bits = "64";
 	s << " (" << bits << ")<br /><br />";
 #else
 	s << " (" << QSysInfo::WordSize << ")<br /><br />";
