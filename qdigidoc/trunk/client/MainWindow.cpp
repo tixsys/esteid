@@ -75,7 +75,10 @@ MainWindow::MainWindow( QWidget *parent )
 	QDesktopServices::setUrlHandler( "browse", common, "browse" );
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
+	Settings s;
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
+	infoMobileCode->setText( s.value( "Client/MobileCode" ).toString() );
+	infoMobileCell->setText( s.value( "Client/MobileNumber", "+372" ).toString() );
 	connect( infoMobileCode, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
 	connect( infoMobileCell, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
 	connect( infoSignMobile, SIGNAL(toggled(bool)), SLOT(showCardStatus()) );
@@ -129,7 +132,6 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( viewContentView, SIGNAL(save(unsigned int,QString)),
 		doc, SLOT(saveDocument(unsigned int,QString)) );
 
-	Settings s;
 	cards->hack();
 	languages->hack();
 	lang << "et" << "en" << "ru";
@@ -143,9 +145,6 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::ProxyPass, s.value( "proxyPass" ) );
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-
-	infoMobileCell->setText( s.value( "MobileNumber", "+372" ).toString() );
-	infoMobileCode->setText( s.value( "MobileCode" ).toString() );
 
 	close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
@@ -367,7 +366,6 @@ void MainWindow::buttonClicked( int button )
 			signResolutionInput->text(), signCityInput->text(),
 			signStateInput->text(), signCountryInput->text(),
 			signZipInput->text() );
-		SettingsDialog::saveMobileInfo( infoMobileCode->text(), infoMobileCell->text() );
 		setCurrentPage( View );
 		break;
 	}
@@ -437,6 +435,12 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 
 void MainWindow::enableSign()
 {
+	Settings s;
+	s.beginGroup( "Client" );
+	s.setValue( "MobileCode", infoMobileCode->text() );
+	s.setValue( "MobileNumber", infoMobileCell->text() );
+	s.endGroup();
+
 	bool mobile = infoSignMobile->isChecked();
 
 	if( mobile )

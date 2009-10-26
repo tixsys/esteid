@@ -174,18 +174,6 @@ void SettingsDialog::saveSignatureInfo(
 	s.endGroup();
 }
 
-void SettingsDialog::saveMobileInfo( const QString &code, const QString &number )
-{
-	Settings s;
-	s.beginGroup( "Client" );
-	if( s.value( "Overwrite", "false" ).toBool() )
-	{
-		s.setValue( "MobileCode", code );
-		s.setValue( "MobileNumber", number );
-	}
-	s.endGroup();
-}
-
 void SettingsDialog::setP12Cert( const QString &cert )
 {
 	Settings().setValue( "Client/pkcs12Cert", cert );
