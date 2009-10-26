@@ -131,7 +131,19 @@ void TreeWidget::setContent( const QList<CDocument> &docs )
 }
 
 void TreeWidget::openFile( const QModelIndex &index )
-{ QDesktopServices::openUrl( url( index ) ); }
+{
+	QUrl u = url( index );
+#ifdef Q_OS_WIN32
+	QList<QByteArray> exts = qgetenv( "PATHEXT" ).split(';');
+	QFileInfo f( u.toLocalFile() );
+	Q_FOREACH( const QByteArray &ext, exts )
+	{
+		if( QString( ext ).contains( f.suffix(), Qt::CaseInsensitive ) )
+			return;
+	}
+#endif
+	QDesktopServices::openUrl( u );
+}
 
 Qt::DropActions TreeWidget::supportedDropActions() const
 { return Qt::CopyAction; }

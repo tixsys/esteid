@@ -100,7 +100,19 @@ QStringList TreeWidget::mimeTypes() const
 { return QStringList() << "text/uri-list"; }
 
 void TreeWidget::openFile( const QModelIndex &index )
-{ QDesktopServices::openUrl( url( index ) ); }
+{
+	QUrl u = url( index );
+#ifdef Q_OS_WIN32
+	QList<QByteArray> exts = qgetenv( "PATHEXT" ).split(';');
+	QFileInfo f( u.toLocalFile() );
+	Q_FOREACH( const QByteArray &ext, exts )
+	{
+		if( QString( ext ).contains( f.suffix(), Qt::CaseInsensitive ) )
+			return;
+	}
+#endif
+	QDesktopServices::openUrl( u );
+}
 
 void TreeWidget::setContent( const QList<digidoc::Document> &docs )
 {
