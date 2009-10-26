@@ -53,8 +53,11 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	if( extended )
 	{
-		st << "<br />" << s.location() << "<br />";
-		st << tr("Signed on") << " "
+		if( !s.location().isEmpty() )
+			st << "<br />" << s.location();
+		if( !s.role().isEmpty() )
+			st << "<br />" << s.role();
+		st << "<br />" << tr("Signed on") << " "
 			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
 			<< tr("time") << " "
 			<< s.dateTime().toString( "hh:mm" );
@@ -63,12 +66,10 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	{
 		QString tooltip;
 		QTextStream t( &tooltip );
-		QString location = s.location();
-		if( !location.isEmpty() )
-			t << location << "<br />";
-		QString role = s.role();
-		if( !role.isEmpty() )
-			t << role << "<br />";
+		if( !s.location().isEmpty() )
+			t << s.location() << "<br />";
+		if( !s.role().isEmpty() )
+			t << s.role() << "<br />";
 		t << tr("Signed on") << " "
 			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
 			<< tr("time") << " "
