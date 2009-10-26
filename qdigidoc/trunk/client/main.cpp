@@ -28,8 +28,18 @@
 
 #include <openssl/ssl.h>
 
+#ifdef Q_OS_LINUX
+#include <QFile>
+QByteArray cryptoFileEncoder( const QString &filename ) { return filename.toUtf8(); }
+QString cryptoFileDecoder( const QByteArray &filename ) { return QString::fromUtf8( filename ); }
+#endif
+
 int main( int argc, char *argv[] )
 {
+#ifdef Q_OS_LINUX
+	QFile::setEncodingFunction( cryptoFileEncoder );
+	QFile::setDecodingFunction( cryptoFileDecoder );
+#endif
 	QApplication a( argc, argv );
 	a.setApplicationName( APP );
 	a.setApplicationVersion( VER_STR( FILE_VER_DOT ) );
