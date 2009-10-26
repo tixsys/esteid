@@ -196,7 +196,7 @@
      </widget>
      <widget class="QWidget" name="ocsp">
       <attribute name="title">
-       <string>Verify</string>
+       <string>OCSP</string>
       </attribute>
       <layout class="QGridLayout" name="verifyLayout">
        <item row="0" column="0" colspan="2">

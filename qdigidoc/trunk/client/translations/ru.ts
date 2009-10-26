@@ -842,7 +842,7 @@ Please check your internet connection.</source>
         <translation>Значение</translation>
     </message>
     <message>
-        <source>Verify</source>
+        <source>OCSP</source>
         <translation>Подтвердить</translation>
     </message>
     <message>

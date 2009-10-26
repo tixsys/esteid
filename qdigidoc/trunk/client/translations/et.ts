@@ -831,7 +831,7 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Väärtus</translation>
     </message>
     <message>
-        <source>Verify</source>
+        <source>OCSP</source>
         <translation>Kehtivuskinnitus</translation>
     </message>
     <message>
