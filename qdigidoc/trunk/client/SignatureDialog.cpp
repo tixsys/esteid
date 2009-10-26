@@ -28,8 +28,10 @@
 #include <digidocpp/Document.h>
 
 #include <QDateTime>
+#include <QDesktopServices>
 #include <QSslKey>
 #include <QTextStream>
+#include <QUrl>
 
 SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned int signnum, bool extended, QWidget *parent )
 :	QLabel( parent )
@@ -128,11 +130,11 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	{
 	case DigiDocSignature::Valid: error->setText( tr("Signature is valid") ); break;
 	case DigiDocSignature::Invalid:
-		error->setText( tr("Signature is not valid (%1)")
+		error->setText( tr("Signature is not valid <a href=\"help\">Help</a><br />(%1)")
 			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
 		break;
 	case DigiDocSignature::Unknown:
-		error->setText( tr("Signature status unknown (%1)")
+		error->setText( tr("Signature status unknown <a href=\"help\">Help</a><br />(%1)")
 			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
 		break;
 	}
@@ -184,6 +186,16 @@ void SignatureDialog::addItem( QTreeWidget *view, const QString &variable, const
 
 void SignatureDialog::showCertificate()
 { CertificateDialog( s.cert(), this ).exec(); }
+
+void SignatureDialog::showHelp()
+{
+	QUrl u( "http://support.sk.ee/" );
+	u.addQueryItem( "searchquery", s.lastError() );
+	u.addQueryItem( "searchtype", "all" );
+	u.addQueryItem( "_m", "core" );
+	u.addQueryItem( "_a", "searchclient" );
+	QDesktopServices::openUrl( u );
+}
 
 void SignatureDialog::showOCSPCertificate()
 { CertificateDialog( s.ocspCert(), this ).exec(); }

@@ -15,7 +15,11 @@
     <widget class="QLabel" name="title"/>
    </item>
    <item>
-    <widget class="QLabel" name="error"/>
+    <widget class="QLabel" name="error">
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -315,9 +319,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>error</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>SignatureDialog</receiver>
+   <slot>showHelp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>showCertificate()</slot>
   <slot>showOCSPCertificate()</slot>
+  <slot>showHelp()</slot>
  </slots>
 </ui>

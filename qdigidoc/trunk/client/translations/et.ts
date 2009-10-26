@@ -839,10 +839,6 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Allkiri on kehtiv</translation>
     </message>
     <message>
-        <source>Signature is not valid (%1)</source>
-        <translation>Allkiri ei ole kehtiv (%1)</translation>
-    </message>
-    <message>
         <source>Unknown error</source>
         <translation>Tundmatu viga</translation>
     </message>
@@ -851,12 +847,16 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Aeg</translation>
     </message>
     <message>
-        <source>Signature status unknown (%1)</source>
-        <translation>Allkirja staatus on teadmata (%1)</translation>
-    </message>
-    <message>
         <source>Hash value of validity confirmation</source>
         <translation>Räsi väärtus kehtivuse kinnitamisel</translation>
+    </message>
+    <message>
+        <source>Signature is not valid &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
+        <translation>Allkiri ei ole kehtiv &lt;a href=&quot;help&quot;&gt;Abi&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+    </message>
+    <message>
+        <source>Signature status unknown &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
+        <translation>Allkirja staatus on teadmata &lt;a href=&quot;help&quot;&gt;Abi&lt;/a&gt;&lt;br /&gt;(%1)</translation>
     </message>
 </context>
 <context>

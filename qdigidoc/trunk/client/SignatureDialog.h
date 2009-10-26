@@ -57,6 +57,7 @@ public:
 
 private Q_SLOTS:
 	void showCertificate();
+	void showHelp();
 	void showOCSPCertificate();
 
 private:

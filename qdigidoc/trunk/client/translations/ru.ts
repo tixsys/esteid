@@ -758,10 +758,6 @@ Please check your internet connection.</source>
         <translation>Подпись действительна</translation>
     </message>
     <message>
-        <source>Signature is not valid (%1)</source>
-        <translation>Подпись недействительна (%1)</translation>
-    </message>
-    <message>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
@@ -850,12 +846,16 @@ Please check your internet connection.</source>
         <translation>Время</translation>
     </message>
     <message>
-        <source>Signature status unknown (%1)</source>
-        <translation>Неизвестный статус пользователя (%1)</translation>
-    </message>
-    <message>
         <source>Hash value of validity confirmation</source>
         <translation>Хеш-значение при подтверждении действия</translation>
+    </message>
+    <message>
+        <source>Signature is not valid &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
+        <translation type="unfinished">Подпись недействительна &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+    </message>
+    <message>
+        <source>Signature status unknown &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
+        <translation type="unfinished">Неизвестный статус пользователя &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;(%1)</translation>
     </message>
 </context>
 <context>
