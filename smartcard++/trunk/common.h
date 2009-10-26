@@ -10,6 +10,11 @@
 #ifdef _WIN32
 #include <tchar.h>
 #endif
+
+#ifdef __APPLE__
+typedef void *LPVOID;
+#define __COREFOUNDATION_CFPLUGINCOM__
+#endif
 /*! \mainpage Smartcard++ documentation
 *
 * \section intro_sec Introduction
