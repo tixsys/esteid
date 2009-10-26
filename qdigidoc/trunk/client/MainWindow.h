@@ -77,13 +77,12 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
-	void parseParams();
 	void setCurrentPage( Pages page, bool reload = true );
 
-	QAction *close;
+	QAction *closeAction;
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
 	QStringList lang, params;
 	QPushButton *introNext, *signButton, *viewAddSignature;
-	bool m_loaded;
+	bool m_loaded, quitOnClose;
 };

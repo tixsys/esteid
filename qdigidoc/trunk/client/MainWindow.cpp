@@ -55,6 +55,7 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
 ,	m_loaded( false )
+,	quitOnClose( false )
 {
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
@@ -146,21 +147,22 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
-	close = new QAction( tr("Close"), this );
-	close->setShortcut( Qt::CTRL + Qt::Key_W );
-	connect( close, SIGNAL(triggered()), this, SLOT(closeDoc()) );
-	addAction( close );
+	closeAction = new QAction( tr("Close"), this );
+	closeAction->setShortcut( Qt::CTRL + Qt::Key_W );
+	connect( closeAction, SIGNAL(triggered()), this, SLOT(closeDoc()) );
+	addAction( closeAction );
 #if defined(Q_OS_MAC)
 	QMenuBar *bar = new QMenuBar;
 	QMenu *menu = bar->addMenu( tr("&File") );
 	QAction *pref = menu->addAction( tr("Settings"), this, SLOT(showSettings()) );
 	pref->setMenuRole( QAction::PreferencesRole );
-	menu->addAction( close );
+	menu->addAction( closeAction );
 #endif
 
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
+		quitOnClose = true;
 		args.removeAt( 0 );
 		params = args;
 		buttonClicked( HomeSign );
@@ -279,7 +281,25 @@ void MainWindow::buttonClicked( int button )
 	{
 		if( !params.isEmpty() )
 		{
-			parseParams();
+			Q_FOREACH( const QString &param, params )
+			{
+				const QFileInfo f( param );
+				if( !f.isFile() )
+					continue;
+				const QString suffix = f.suffix().toLower();
+				if( doc->isNull() && (suffix == "bdoc" || suffix == "ddoc") )
+				{
+					if( doc->open( f.absoluteFilePath() ) )
+						setCurrentPage( View );
+					params.clear();
+					return;
+				}
+				else if( !addFile( f.absoluteFilePath() ) )
+					break;
+			}
+			params.clear();
+			if( !doc->isNull() )
+				setCurrentPage( Sign );
 			break;
 		}
 		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
@@ -326,6 +346,8 @@ void MainWindow::buttonClicked( int button )
 	case IntroBack:
 	case ViewClose:
 		doc->clear();
+		if( quitOnClose )
+			close();
 		setCurrentPage( Home );
 		break;
 	case SignSign:
@@ -418,7 +440,7 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 		if( o->file().right( 4 ).toLower() == "p12d" )
 		{
 			SettingsDialog s( this );
-			s.addAction( close );
+			s.addAction( closeAction );
 			s.setP12Cert( o->file() );
 			s.exec();
 		}
@@ -577,29 +599,6 @@ void MainWindow::parseLink( const QString &link )
 	}
 }
 
-void MainWindow::parseParams()
-{
-	Q_FOREACH( const QString &param, params )
-	{
-		const QFileInfo f( param );
-		if( !f.isFile() )
-			continue;
-		const QString suffix = f.suffix().toLower();
-		if( doc->isNull() && (suffix == "bdoc" || suffix == "ddoc") )
-		{
-			if( doc->open( f.absoluteFilePath() ) )
-				setCurrentPage( View );
-			params.clear();
-			return;
-		}
-		else if( !addFile( f.absoluteFilePath() ) )
-			break;
-	}
-	if( !doc->isNull() )
-		setCurrentPage( Sign );
-	params.clear();
-}
-
 void MainWindow::removeDocument( unsigned int index )
 {
 	doc->removeDocument( index );
@@ -723,7 +722,7 @@ void MainWindow::showCardStatus()
 void MainWindow::showSettings()
 {
 	SettingsDialog e( this );
-	e.addAction( close );
+	e.addAction( closeAction );
 	e.exec();
 }
 
