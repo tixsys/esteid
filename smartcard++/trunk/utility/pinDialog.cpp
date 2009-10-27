@@ -201,11 +201,11 @@ pinDialog::pinDialog(const void * opsysParam,std::string prompt) : m_minLen(4),
 pinDialog::pinDialog(const void * opsysParam,EstEidCard::KeyType key) : m_key(key) {
 	d = new pinDialogPriv(*this,opsysParam);
 	if (m_key == EstEidCard::AUTH) {
-		m_prompt = "Enter authentication PIN";
+		m_prompt = "ID-kaart (PIN1)";
 		m_minLen = 4;
 		}
 	else if (m_key == EstEidCard::SIGN) {
-		m_prompt = "Enter signature PIN";
+		m_prompt = "ID-kaart (PIN2)";
 		m_minLen = 5;
 		}
 	else
