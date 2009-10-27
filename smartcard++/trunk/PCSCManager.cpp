@@ -241,7 +241,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
 		, & pc->hScard,& pc->proto));
 	// Is there a pinpad?
-	//pc->verify_ioctl = pc->verify_ioctl_start = pc->modify_ioctl = pc->modify_ioctl_start = 0;
+	pc->verify_ioctl = pc->verify_ioctl_start = pc->modify_ioctl = pc->modify_ioctl_start = 0;
 	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
 	if (rv == SCARD_S_SUCCESS) {
 		if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) == 0) {
