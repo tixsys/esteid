@@ -53,7 +53,7 @@ var htmlStrings = {
 	"labelSignCertBlocked": new tr( "Allkirjastamise sertifikaat on blokeeritud.", "Signing certificate is blocked.", "Сертификат подписи заблокирован." ),
 	"labelCertUnblock": new tr( "Sertfikaadi blokeeringu tühistamiseks sisesta kaardi PUK kood.", "To unblock certificate you have to enter PUK code.", "Для разблокировки сертификата введите PUK код." ),
 	"labelCertUnblock1": new tr( "PUK koodi leiad ID-kaardi koodiümbrikus, kui sa pole seda vahepeal muutnud.", "You can find your PUK code inside ID-card codes envelope.", "PUK-код находится в конверте с кодами, который выдаётся при получении ID-карты или смене сертификатов." ),
-	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta klienditeeninduspunkti, kust saad uue koodiümbriku.", "If you do not know PUK code for your ID-card, please visit service center where you can get the new codes.", "Если вы не знаете PUK код своей ID-карты, посетите цент обслуживания, где вы сможете получить конверт с кодами." ),
+	"labelCertUnblock2": new tr( "Kui sa ei tea oma ID-kaardi PUK koodi, külasta klienditeeninduspunkti, kust saad uue koodiümbriku.", "If you do not know PUK code for your ID-card, please visit service center where you can get the new codes.", "Если вы не знаете PUK код своей ID-карты, посетите центр обслуживания, где вы сможете получить конверт с кодами." ),
 	
 	"labelChangingPIN1": new tr( "PIN1 koodi vahetus", "Change PIN1 code", "Замена кода PIN1" ),
 	"labelChangingPIN11": new tr( "PIN1 on kood, mida kasutatakse isikutuvastamise sertifikaadile ligipääsemiseks.", "PIN1 code is used for accessing identification certificates.", "PIN1 - код, используемый для доступа к сертификатам индентификации личности." ),
@@ -72,7 +72,7 @@ var htmlStrings = {
 	
 	"labelInputPUK": new tr( "PUK kood on kood, millega saab tühistada sertifikaadi blokeeringu kui PIN1 või PIN2 koodi on 3 korda järjest valesti sisestatud.", "PUK-code ise used for unblocking certificates, when PIN1 or PIN2 has been entered 3 times incorrectly.", "PUK-код - это код, разблокирующий заблокированные сертификаты, если код PIN1 или PIN2 был введён неверно 3 раза подряд." ),
 	"labelInputPUK2": new tr( "PUK kood on kirjas koodiümbrikus, mida väljastatakse koos ID-kaardiga või sertifikaatide vahetamisel.", "PUK code is written in the envelpole, that was given with the ID-card or when certificates were changed.", "PUK-код находится в конверте с кодами, который выдаётся при получении ID-карты или смене сертификатов." ),
-	"labelPUKBlocked": new tr( "PUK kood on blokeeritud!", "PUK code is blocked!", "PUK код заблокирован!" ),
+	"labelPUKBlocked": new tr( "PUK kood on blokeeritud! Uue PUK koodi saamiseks, külasta klienditeeninduspunkti, kust saad koodiümbriku uute koodidega. Lisainfo: http://www.pass.ee/index.php/pass/est/kui_sul_on_id_kaart/kui_koodid_kaovad", "PUK code is blocked! For getting new PUK code for your ID-card, please visit service center where you can get the new codes. Aditional information: http://www.pass.ee/index.php/pass/eng/id_card", "PUK код заблокирован! Для получения нового PUK кода для своей ID-карты, посетите центр обслуживания, где вы сможете получить конверт с кодами. Дополнительная информация: http://www.pass.ee/index.php/pass/rus/id_kartochka" ),
 
 	"inputCert": new tr( "Sertifikaadid", "Certificates", "Сертификаты" ),
 	"inputEmail": new tr( "@eesti.ee e-post", "@eesti.ee e-mail", "@eesti.ee" ),
