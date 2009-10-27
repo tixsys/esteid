@@ -1,8 +1,8 @@
 <!ENTITY esteid.SignPromptTitle "Signature requested">
 <!ENTITY esteid.SignDetailsTitle "Signature request details">
-<!ENTITY esteid.SignDetailsHeader "This web page has asked for Your digital signature">
-<!ENTITY esteid.SignDetailsText "The content on the page should of made it absolutely clear what it is that it wants You to agree to. If You have any doubts about the exact content of the signed data, please click on the link below to verify what You are signing.">
-<!ENTITY esteid.SignDetailsWarning "NB! Digital signatures are legally binding">
+<!ENTITY esteid.SignDetailsHeader "This web page is asking for your digital signature.">
+<!ENTITY esteid.SignDetailsText "The content on the page should make it absolutely clear what you are signing. If you have any doubts, please click on the link below to verify the document.">
+<!ENTITY esteid.SignDetailsWarning "NB! Digital signatures are legally binding.">
 <!ENTITY esteid.SignDetailsDocLabel "Document: ">
 <!ENTITY esteid.SignDetailsHashLabel "Hash: ">
 <!ENTITY esteid.PrefsTitle "ID-Card signer preferences">
@@ -12,4 +12,4 @@
 <!ENTITY esteid.RemoveHost "Delete">
 <!ENTITY esteid.Whitelist "Whitelist">
 <!ENTITY esteid.Log "Log">
-<!ENTITY esteid.WhiteListCaption "Sites that can use Your ID-card">
+<!ENTITY esteid.WhiteListCaption "Sites that can use your ID-card">
