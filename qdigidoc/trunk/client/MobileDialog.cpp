@@ -63,9 +63,9 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 		if( f.open( QIODevice::ReadOnly ) )
 		{
 			QSslSocket *ssl = new QSslSocket( this );
-			QByteArray pkcs12Cert = f.readAll();
-			ssl->setPrivateKey( SslCertificate::keyFromPKCS12( pkcs12Cert, certPass.toLatin1() ) );
-			ssl->setLocalCertificate( SslCertificate::fromPKCS12( pkcs12Cert, certPass.toLatin1() ) );
+			PKCS12Certificate pkcs12Cert( &f, certPass.toLatin1() );
+			ssl->setPrivateKey( pkcs12Cert.key() );
+			ssl->setLocalCertificate( pkcs12Cert.certificate() );
 			m_http->setSocket( ssl );
 		}
 	}

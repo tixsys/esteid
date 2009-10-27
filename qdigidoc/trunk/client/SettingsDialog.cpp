@@ -104,11 +104,11 @@ void SettingsDialog::on_showP12Cert_clicked()
 	if( !f.open( QIODevice::ReadOnly ) )
 		return;
 
-	QSslCertificate cert = SslCertificate::fromPKCS12( f.readAll(), p12Pass->text().toLatin1() );
+	PKCS12Certificate cert( &f, p12Pass->text().toLatin1() );
 	f.close();
-	if( cert.isNull() )
+	if( cert.certificate().isNull() )
 		return;
-	CertificateDialog d( cert );
+	CertificateDialog d( cert.certificate() );
 	d.exec();
 }
 

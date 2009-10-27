@@ -34,25 +34,6 @@
 static QByteArray ASN_STRING_to_QByteArray( ASN1_OCTET_STRING *str )
 { return QByteArray( (const char *)ASN1_STRING_data(str), ASN1_STRING_length(str) ); }
 
-static bool parsePKCS12Cert( const QByteArray &data, const QByteArray &pass, X509 **cert, EVP_PKEY **key )
-{
-	BIO *bio = BIO_new( BIO_s_mem() );
-	if( !bio )
-	{ ERR_get_error(); return false; }
-
-	BIO_write( bio, data.data(), data.size() );
-
-	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
-	BIO_free( bio );
-	if( !p12 )
-	{ ERR_get_error(); return false; }
-
-	int ret = PKCS12_parse( p12, pass.data(), key, cert, NULL );
-	PKCS12_free( p12 );
-	if(!ret)
-		ERR_get_error();
-	return ret;
-}
 
 
 SslCertificate::SslCertificate( const QSslCertificate &cert )
@@ -128,20 +109,6 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
-QSslCertificate SslCertificate::fromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
-{
-	X509 *cert = NULL;
-	EVP_PKEY *key = NULL;
-	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
-		return QSslCertificate();
-
-	QSslCertificate c = fromX509( Qt::HANDLE(cert) );
-	X509_free( cert );
-	EVP_PKEY_free( key );
-
-	return c;
-}
-
 QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 {
 	unsigned char *cert = NULL;
@@ -151,20 +118,6 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 		der = QByteArray( (char*)cert, len );
 	OPENSSL_free( cert );
 	return QSslCertificate( der, QSsl::Der );
-}
-
-QSslKey SslCertificate::keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase )
-{
-	X509 *cert = NULL;
-	EVP_PKEY *key = NULL;
-	if( !parsePKCS12Cert( data, passPhrase, &cert, &key ) )
-		return QSslKey();
-
-	QSslKey c = keyFromEVP( Qt::HANDLE(key) );
-	X509_free( cert );
-	EVP_PKEY_free( key );
-
-	return c;
 }
 
 QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
@@ -399,3 +352,78 @@ QByteArray SslCertificate::versionNumber() const
 		return QByteArray();
 	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->version )) + 1 );
 }
+
+
+
+class PKCS12CertificatePrivate
+{
+public:
+	PKCS12CertificatePrivate(): error(PKCS12Certificate::Unknown) {}
+	void init( const QByteArray &data, const QByteArray &pin );
+	void setLastError();
+
+	QSslCertificate cert;
+	QSslKey key;
+	PKCS12Certificate::ErrorType error;
+	QString errorString;
+};
+
+void PKCS12CertificatePrivate::init( const QByteArray &data, const QByteArray &pin )
+{
+	BIO *bio = BIO_new( BIO_s_mem() );
+	if( !bio )
+		return setLastError();
+
+	BIO_write( bio, data.data(), data.size() );
+
+	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
+	BIO_free( bio );
+	if( !p12 )
+		return setLastError();
+
+	X509 *c = NULL;
+	EVP_PKEY *k = NULL;
+	int ret = PKCS12_parse( p12, pin.data(), &k, &c, NULL );
+	PKCS12_free( p12 );
+	if( !ret )
+		return setLastError();
+
+	cert = SslCertificate::fromX509( Qt::HANDLE(c) );
+	key = SslCertificate::keyFromEVP( Qt::HANDLE(k) );
+
+	X509_free( c );
+	EVP_PKEY_free( k );
+}
+
+void PKCS12CertificatePrivate::setLastError()
+{
+	unsigned long err = ERR_get_error();
+	if( ERR_GET_LIB(err) == ERR_LIB_PKCS12 )
+	{
+		switch( ERR_GET_REASON(err) )
+		{
+		case PKCS12_R_MAC_VERIFY_FAILURE: error = PKCS12Certificate::InvalidPassword; break;
+		default: error = PKCS12Certificate::Unknown; break;
+		}
+	}
+	else
+		error = PKCS12Certificate::Unknown;
+	errorString = ERR_error_string( err, NULL );
+}
+
+
+
+PKCS12Certificate::PKCS12Certificate( QIODevice *device, const QByteArray &pin )
+:	d(new PKCS12CertificatePrivate)
+{ if( device ) d->init( device->readAll(), pin ); }
+
+PKCS12Certificate::PKCS12Certificate( const QByteArray &data, const QByteArray &pin )
+:	d(new PKCS12CertificatePrivate)
+{ d->init( data, pin ); }
+
+PKCS12Certificate::~PKCS12Certificate() { delete d; }
+QSslCertificate PKCS12Certificate::certificate() const { return d->cert; }
+PKCS12Certificate::ErrorType PKCS12Certificate::error() const { return d->error; }
+QString PKCS12Certificate::errorString() const { return d->errorString; }
+bool PKCS12Certificate::isNull() const { return d->cert.isNull() && d->key.isNull(); }
+QSslKey PKCS12Certificate::key() const { return d->key; }

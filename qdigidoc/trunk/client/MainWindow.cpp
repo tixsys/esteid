@@ -771,17 +771,24 @@ bool MainWindow::checkAccessCert()
 	}
 	else if( f.open( QIODevice::ReadOnly ) )
 	{
-		QSslCertificate cert = SslCertificate::fromPKCS12( f.readAll(),
+		PKCS12Certificate p12Cert( &f,
 			doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
 		f.close();
 
-		if( !cert.isValid() &&
+		if( p12Cert.error() == PKCS12Certificate::InvalidPassword )
+		{
+			QMessageBox::warning( this, tr( "Server access certificate" ),
+				tr( "Server access certificate password is not valid!" ) );
+			return false;
+		}
+
+		if( !p12Cert.certificate().isValid() &&
 			QMessageBox::warning( this, tr( "Server access certificate" ),
 				tr( "Server access certificate is not valid!\nStart downloading?" ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
 			return true;
 
-		if( cert.expiryDate() > QDateTime::currentDateTime().addDays( 8 ) ||
+		if( p12Cert.certificate().expiryDate() > QDateTime::currentDateTime().addDays( 8 ) ||
 			QMessageBox::question( this, tr( "Server access certificate" ),
 				tr( "Server access certificate is about to expire!\nStart downloading?" ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )

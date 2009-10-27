@@ -395,6 +395,10 @@ Start downloading?</source>
         <translation>Ei õnnestunud liigipääsutõendit laadida!
 Alustame laadimist?</translation>
     </message>
+    <message>
+        <source>Server access certificate password is not valid!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

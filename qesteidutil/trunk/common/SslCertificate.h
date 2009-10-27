@@ -48,10 +48,8 @@ public:
 	QStringList enhancedKeyUsage() const;
 	static QString formatDate( const QDateTime &date, const QString &format );
 	static QString formatName( const QString &name );
-	static QSslCertificate fromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	static QSslCertificate fromX509( const Qt::HANDLE x509 );
 	static QSslKey keyFromEVP( const Qt::HANDLE evp );
-	static QSslKey keyFromPKCS12( const QByteArray &data, const QByteArray &passPhrase );
 	bool		isTempel() const;
 	bool		isTest() const;
 	QHash<int,QString> keyUsage() const;
@@ -71,4 +69,27 @@ private:
 	QString decode( const QString &data ) const;
 	QString	toUtf16( const QString &data ) const;
 	QString	toUtf8( const QString &data ) const;
+};
+
+class PKCS12CertificatePrivate;
+class PKCS12Certificate
+{
+public:
+	enum ErrorType
+	{
+		InvalidPassword = 1,
+		Unknown = -1,
+	};
+	PKCS12Certificate( QIODevice *device, const QByteArray &pin );
+	PKCS12Certificate( const QByteArray &data, const QByteArray &pin );
+	~PKCS12Certificate();
+
+	QSslCertificate certificate() const;
+	ErrorType error() const;
+	QString errorString() const;
+	bool isNull() const;
+	QSslKey	key() const;
+
+private:
+	PKCS12CertificatePrivate *d;
 };

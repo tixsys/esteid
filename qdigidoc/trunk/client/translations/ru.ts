@@ -395,6 +395,10 @@ Start downloading?</source>
         <translation>Не удалось загрузить справку допуска!
 Начнём загрузку?</translation>
     </message>
+    <message>
+        <source>Server access certificate password is not valid!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
