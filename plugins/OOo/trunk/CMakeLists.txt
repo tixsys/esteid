@@ -121,7 +121,7 @@ find_package(Subversion)
 if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 	Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
 	message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
-	set(BUILD_VER ${PROJECT_WC_REVISION})
+	set(BUILD_VER "1.0.${PROJECT_WC_REVISION}")
 else (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 	set(BUILD_VER 0)
 endif (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
@@ -252,6 +252,6 @@ add_custom_target( zip-oxt ALL
 		
 	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
 	COMMAND ${MKDIR} ${OUT_BIN}
-	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}.oxt . 	
+	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}${BUILD_VER}.oxt . 	
 	)
 
