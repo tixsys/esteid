@@ -54,7 +54,7 @@ add_custom_target( xpi-stage
 set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
 add_custom_target( xpi-jar
 	COMMAND ${RM} ${CHROME_JAR}
-	COMMAND zip -pr ${CHROME_JAR} content/* locale/* skin/*
+	COMMAND zip -pr ${CHROME_JAR} content/* locale/* skin/* -x '*/.svn/*'
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/chrome
 )
 
@@ -81,6 +81,12 @@ add_custom_target(run
 	COMMAND ${PROJECT_SOURCE_DIR}/run-in-ff.sh esteid-${PROJECT_VERSION}.xpi
 )
 add_dependencies(run xpi)
+
+add_custom_target(runtb
+	DEPENDS run-in-tb.sh
+	COMMAND ${PROJECT_SOURCE_DIR}/run-in-tb.sh esteid-${PROJECT_VERSION}.xpi
+)
+add_dependencies(runtb xpi)
 
 # FIND Gecko SDK
 INCLUDE(FindPkgConfig OPTIONAL)
