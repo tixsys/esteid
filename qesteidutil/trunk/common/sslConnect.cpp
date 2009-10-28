@@ -78,6 +78,8 @@ public:
 SSLThread::SSLThread( PKCS11_SLOT *slot, QObject *parent )
 : QThread(parent), loginOk(0), m_slot(slot) {}
 
+SSLThread::~SSLThread() { wait(); }
+
 void SSLThread::run() { loginOk = PKCS11_login( m_slot, 0, NULL ); }
 
 
@@ -187,7 +189,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 			bool hidden = p->isHidden();
 			p->deleteLater();
 			loginOk = t->loginOk;
-			t->deleteLater();
+			delete t;
 			if( hidden )
 				throw std::runtime_error( "" );
 		}
