@@ -13,5 +13,5 @@ skin esteid default jar:chrome/esteid.jar!/skin/
 # Locales
 # default_locale: en-US
 locale esteid en-US jar:chrome/esteid.jar!/locale/en-US/
-# locale esteid et-EE jar:chrome/esteid.jar!/locale/et-EE/
-#locale esteid ru-RU jar:chrome/esteid.jar!/locale/ru-RU/
+locale esteid et-EE jar:chrome/esteid.jar!/locale/et-EE/
+locale esteid ru-RU jar:chrome/esteid.jar!/locale/ru-RU/
