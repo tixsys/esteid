@@ -51,7 +51,7 @@ public:
 	PKCS11_CTX		*handle;
 	PKCS11_SLOT     *slot, *slots;
 	unsigned int	slotCount;
-	int				loginResult;
+	unsigned long	loginResult;
 };
 
 
@@ -184,7 +184,8 @@ void QSigner::run()
 
 		if( d->login )
 		{
-			d->loginResult = PKCS11_login( d->slot, 0, NULL );
+			if( PKCS11_login( d->slot, 0, NULL ) < 0 )
+				d->loginResult = ERR_GET_REASON(ERR_get_error());
 			d->login = false;
 		}
 	}
@@ -232,7 +233,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 
 	if( d->slot->token->loginRequired )
 	{
-		int rv = CKR_OK;
+		unsigned long err = CKR_OK;
 		if( d->slot->token->secureLogin )
 		{
 			d->login = true;
@@ -246,11 +247,14 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			if( !p->isVisible() )
 				throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
 			p->deleteLater();
-			rv = d->loginResult;
+			err = d->loginResult;
 		}
 		else
-			rv = PKCS11_login( d->slot, 0, getPin( PKCS11Cert() ).c_str() );
-		switch(ERR_GET_REASON(ERR_get_error()))
+		{
+			if( PKCS11_login( d->slot, 0, getPin( PKCS11Cert() ).c_str() ) < 0 )
+				err = ERR_GET_REASON(ERR_get_error());
+		}
+		switch( err )
 		{
 		case CKR_OK: break;
 		case CKR_CANCEL:
