@@ -156,8 +156,12 @@ DigiDocSignature::SignatureStatus DigiDocSignature::validate()
 	catch( const Exception &e )
 	{
 		setLastError( e );
-		if( e.code() == Exception::OCSPResponderMissing )
-			return Unknown;
+		switch( e.code() )
+		{
+		case Exception::OCSPResponderMissing:
+		case Exception::OCSPCertMissing: return Unknown;
+		default: break;
+		}
 	}
 	return Invalid;
 }

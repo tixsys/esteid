@@ -881,7 +881,7 @@ p, li { white-space: pre-wrap; }
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <layout class="QVBoxLayout" name="signContentFrameLayoue">
              <item>
               <widget class="TreeWidget" name="signContentView">
                <property name="frameShape">
@@ -1091,7 +1091,7 @@ color: red;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QVBoxLayout" name="viewContentFrameLayout">
              <item>
               <widget class="TreeWidget" name="viewContentView">
                <property name="frameShape">
