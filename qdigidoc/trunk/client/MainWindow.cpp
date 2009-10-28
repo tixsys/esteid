@@ -437,7 +437,8 @@ bool MainWindow::eventFilter( QObject *o, QEvent *e )
 	if( e->type() == QEvent::FileOpen )
 	{
 		QFileOpenEvent *o = static_cast<QFileOpenEvent*>(e);
-		if( o->file().right( 4 ).toLower() == "p12d" )
+		QStringList exts = QStringList() << "p12" << "p12d";
+		if( exts.contains( QFileInfo( o->file() ).suffix(), Qt::CaseInsensitive ) )
 		{
 			SettingsDialog s( this );
 			s.addAction( closeAction );

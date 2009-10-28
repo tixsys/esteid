@@ -135,6 +135,7 @@ void TreeWidget::openFile( const QModelIndex &index )
 	QUrl u = url( index );
 #ifdef Q_OS_WIN32
 	QList<QByteArray> exts = qgetenv( "PATHEXT" ).split(';');
+	exts << ".PIF" << ".SCR";
 	QFileInfo f( u.toLocalFile() );
 	Q_FOREACH( const QByteArray &ext, exts )
 	{

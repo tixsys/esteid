@@ -25,6 +25,7 @@
 #include "version.h"
 
 #include <QApplication>
+#include <QFileInfo>
 
 #include <openssl/ssl.h>
 
@@ -57,7 +58,8 @@ int main( int argc, char *argv[] )
 	int ret = 0;
 	QStringList args = a.arguments();
 	QWidget *w;
-	if( args.size() > 1 && args.value(1).right(4).toLower() == "p12d" )
+	QStringList exts = QStringList() << "p12" << "p12d";
+	if( args.size() > 1 && exts.contains( QFileInfo( args.value(1) ).suffix(), Qt::CaseInsensitive ) )
 	{
 		w = new RegisterP12( args.value(1) );
 	}
