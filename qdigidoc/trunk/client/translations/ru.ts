@@ -468,6 +468,14 @@ Please check your internet connection.</source>
         <source>ID and phone number do not match</source>
         <translation>Личный код и номер телефона не совпадают</translation>
     </message>
+    <message>
+        <source>Empty HTTP result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse XML document</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

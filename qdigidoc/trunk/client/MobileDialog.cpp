@@ -123,41 +123,51 @@ void MobileDialog::sslErrors(const QList<QSslError> &)
 
 void MobileDialog::httpRequestFinished( int id, bool error )
 {
-	if ( error )
+	if( !m_callBackList.contains( id ) )
+		return;
+	QByteArray func = m_callBackList[id];
+	m_callBackList.remove( id );
+
+	if( error )
 	{
-		qDebug() << "Download failed: " << m_http->errorString() << m_http->error();
-		if ( m_http->error() == QHttp::HostNotFound )
-			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) );
-		return;
-	}
-
-	//not in callback list
-	if ( !m_callBackList.contains( id ) )
-		return;
-
-	QByteArray result = m_http->readAll();
-	if ( result.isEmpty() )
-		return;
-
-	QDomDocument doc;
-	if ( !doc.setContent( QString::fromUtf8( result ) ) )
-		return;
-
-	QDomElement e = doc.documentElement();
-
-	if ( result.contains( "Fault" ) )
-	{
-		QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
-		if ( mobileResults.contains( error.toLatin1() ) )
-			error = mobileResults.value( error.toLatin1() );
-		labelError->setText( error );
+		switch( m_http->error() )
+		{
+		case QHttp::HostNotFound:
+			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) ); break;
+		default:
+			labelError->setText( m_http->errorString() ); break;
+		}
 		statusTimer->stop();
 		return;
 	}
 
-	QMetaObject::invokeMethod( this, (const char *)m_callBackList.value( id ),
-	    Q_ARG( QDomElement, e ) );
-	m_callBackList.remove( id );
+	QByteArray result = m_http->readAll();
+	if( result.isEmpty() )
+	{
+		labelError->setText( tr("Empty HTTP result") );
+		statusTimer->stop();
+		return;
+	}
+
+	QDomDocument doc;
+	if( !doc.setContent( QString::fromUtf8( result ) ) )
+	{
+		labelError->setText( tr("Failed to parse XML document") );
+		statusTimer->stop();
+		return;
+	}
+
+	QDomElement e = doc.documentElement();
+	if( result.contains( "Fault" ) )
+	{
+		QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
+		if( mobileResults.contains( error.toLatin1() ) )
+			error = mobileResults.value( error.toLatin1() );
+		labelError->setText( error );
+		statusTimer->stop();
+	}
+	else
+		QMetaObject::invokeMethod( this, func, Q_ARG( QDomElement, e ) );
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,

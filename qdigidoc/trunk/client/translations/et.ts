@@ -469,6 +469,14 @@ Palun kontrollige internetiühendust.</translation>
         <source>ID and phone number do not match</source>
         <translation>Isikukood ja telefoni number ei klapi</translation>
     </message>
+    <message>
+        <source>Empty HTTP result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse XML document</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
