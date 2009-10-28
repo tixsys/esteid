@@ -1,6 +1,6 @@
-/* Localized versions of Info.plist keys */
+п»ї/* Localized versions of Info.plist keys */
 
-CFBundleDisplayName = "Обновление ID-карты";
+CFBundleDisplayName = "РћР±РЅРѕРІР»РµРЅРёРµ ID-РєР°СЂС‚С‹";
 CFBundleGetInfoString = "v1.0, Copyright 2009 __COMPANY_NAME__.";
 NSHumanReadableCopyright = "Copyright (c) 2009, __COMPANY_NAME__.";
-NSPrefPaneIconLabel = "ID-карта";
+NSPrefPaneIconLabel = "ID-РєР°СЂС‚Р°";
