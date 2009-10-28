@@ -102,6 +102,9 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	mobileResults[ "ID and phone number do not match" ] = tr( "ID and phone number do not match" );
 }
 
+QString MobileDialog::elementText( const QDomElement &element, const QString &tag ) const
+{ return element.elementsByTagName( tag ).item(0).toElement().text(); }
+
 QString MobileDialog::escapeChars( const QString &in ) const
 {
 	QString out;
@@ -117,9 +120,6 @@ QString MobileDialog::escapeChars( const QString &in ) const
 	}
 	return out;
 }
-
-void MobileDialog::sslErrors(const QList<QSslError> &)
-{ m_http->ignoreSslErrors(); }
 
 void MobileDialog::httpRequestFinished( int id, bool error )
 {
@@ -160,7 +160,7 @@ void MobileDialog::httpRequestFinished( int id, bool error )
 	QDomElement e = doc.documentElement();
 	if( result.contains( "Fault" ) )
 	{
-		QString error = e.elementsByTagName( "message" ).item(0).toElement().text();
+		QString error = elementText( e, "message" );
 		if( mobileResults.contains( error.toLatin1() ) )
 			error = mobileResults.value( error.toLatin1() );
 		labelError->setText( error );
@@ -224,6 +224,9 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 	m_callBackList.insert( id, "startSessionResult" );
 }
 
+void MobileDialog::sslErrors( const QList<QSslError> & )
+{ m_http->ignoreSslErrors(); }
+
 bool MobileDialog::getFiles()
 {
 	files = "<DataFiles xsi:type=\"m:DataFileDigestList\">";
@@ -265,14 +268,14 @@ bool MobileDialog::getFiles()
 
 void MobileDialog::startSessionResult( const QDomElement &element )
 {
-	sessionCode = element.elementsByTagName( "Sesscode" ).item(0).toElement().text().toInt();
+	sessionCode = elementText( element, "Sesscode" ).toInt();
 	if ( sessionCode )
 	{
-		code->setText( tr("Control code: %1")
-			.arg( element.elementsByTagName( "ChallengeID" ).item(0).toElement().text() ) );
+		code->setText( tr("Control code: %1").arg( elementText( element, "ChallengeID" ) ) );
 		m_timer->start( 5000 );
-	} else
-		labelError->setText( mobileResults.value( element.elementsByTagName( "message" ).item(0).toElement().text().toLatin1() ) );
+	}
+	else
+		labelError->setText( mobileResults.value( elementText( element, "message" ).toLatin1() ) );
 }
 
 void MobileDialog::getSignStatus()
@@ -287,10 +290,10 @@ void MobileDialog::getSignStatus()
 
 void MobileDialog::getSignStatusResult( const QDomElement &element )
 {
-	QString status = element.elementsByTagName( "Status" ).item(0).toElement().text();
+	QString status = elementText( element, "Status" );
 	labelError->setText( mobileResults.value( status.toLatin1() ) );
 
-	//qDebug() << status << element.elementsByTagName( "Signature" ).item(0).toElement().text();
+	//qDebug() << status << elementText( elements, "Signature" );
 
 	if ( status != "REQUEST_OK" && status != "OUTSTANDING_TRANSACTION" )
 	{
@@ -308,7 +311,7 @@ void MobileDialog::getSignStatusResult( const QDomElement &element )
 			file.write( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n" );
 			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
 				file.write( "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">\n" );
-			file.write( element.elementsByTagName( "Signature" ).item(0).toElement().text().toUtf8() );
+			file.write( elementText( element, "Signature" ).toUtf8() );
 			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
 				file.write( "</SignedDoc>" );
 			file.close();

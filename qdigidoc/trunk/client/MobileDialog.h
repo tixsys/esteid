@@ -62,6 +62,7 @@ private:
 
 	bool getFiles();
 	QString escapeChars( const QString &in ) const;
+	QString elementText( const QDomElement &element, const QString &tag ) const;
 	QString insertBody( MobileAction action, const QString &body ) const;
 	void startSession();
 
