@@ -1,15 +1,15 @@
-<!ENTITY esteid.SignPromptTitle "Signature requested">
-<!ENTITY esteid.SignDetailsTitle "Signature request details">
-<!ENTITY esteid.SignDetailsHeader "This web page is asking for your digital signature.">
-<!ENTITY esteid.SignDetailsText "The content on the page should have made it absolutely clear what you are signing. If you have any doubts, please click on the link below to verify the document.">
-<!ENTITY esteid.SignDetailsWarning "NB! Digital signatures are legally binding.">
-<!ENTITY esteid.SignDetailsDocLabel "Document: ">
-<!ENTITY esteid.SignDetailsHashLabel "Hash: ">
-<!ENTITY esteid.PrefsTitle "ID-Card signer preferences">
-<!ENTITY esteid.WrongPin "Wrong PIN!">
-<!ENTITY esteid.TriesLeft "Tries left: ">
-<!ENTITY esteid.AddHost "Add">
-<!ENTITY esteid.RemoveHost "Delete">
-<!ENTITY esteid.Whitelist "Whitelist">
-<!ENTITY esteid.Log "Log">
-<!ENTITY esteid.WhiteListCaption "Sites that can use your ID-card">
+﻿<!ENTITY esteid.SignPromptTitle "Allkiri on kohustuslik">
+<!ENTITY esteid.SignDetailsTitle "Allkirja päringu detailid">
+<!ENTITY esteid.SignDetailsHeader "See veebileht küsib Teie digitaalallkirja.">
+<!ENTITY esteid.SignDetailsText "Lehekülje sisu peaks sulle selgeks tegema mida sa allkirjastad. Kui sul on kahtlusi, vajuta allolevale lingile, et kontrollida dokumenti.">
+<!ENTITY esteid.SignDetailsWarning "NB! Digitaalne allkiri on õiguslikult siduv">
+<!ENTITY esteid.SignDetailsDocLabel "Dokument: ">
+<!ENTITY esteid.SignDetailsHashLabel "Räsi: ">
+<!ENTITY esteid.PrefsTitle "ID-kaardi allkirjastaja sätted">
+<!ENTITY esteid.WrongPin "Vale PIN!">
+<!ENTITY esteid.TriesLeft "Katseid jäänud: ">
+<!ENTITY esteid.AddHost "Lisa">
+<!ENTITY esteid.RemoveHost "Kustuta">
+<!ENTITY esteid.Whitelist "Lubatud lehtede nimekiri">
+<!ENTITY esteid.Log "Logi">
+<!ENTITY esteid.WhiteListCaption "Veebilehed, mida võib ID-kaart kasutada">

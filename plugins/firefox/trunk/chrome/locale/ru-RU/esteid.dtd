@@ -1,15 +1,15 @@
-<!ENTITY esteid.SignPromptTitle "Signature requested">
-<!ENTITY esteid.SignDetailsTitle "Signature request details">
-<!ENTITY esteid.SignDetailsHeader "This web page is asking for your digital signature.">
-<!ENTITY esteid.SignDetailsText "The content on the page should have made it absolutely clear what you are signing. If you have any doubts, please click on the link below to verify the document.">
-<!ENTITY esteid.SignDetailsWarning "NB! Digital signatures are legally binding.">
-<!ENTITY esteid.SignDetailsDocLabel "Document: ">
-<!ENTITY esteid.SignDetailsHashLabel "Hash: ">
-<!ENTITY esteid.PrefsTitle "ID-Card signer preferences">
-<!ENTITY esteid.WrongPin "Wrong PIN!">
-<!ENTITY esteid.TriesLeft "Tries left: ">
-<!ENTITY esteid.AddHost "Add">
-<!ENTITY esteid.RemoveHost "Delete">
-<!ENTITY esteid.Whitelist "Whitelist">
-<!ENTITY esteid.Log "Log">
-<!ENTITY esteid.WhiteListCaption "Sites that can use your ID-card">
+﻿<!ENTITY esteid.SignPromptTitle "Подпись обязательна">
+<!ENTITY esteid.SignDetailsTitle "Детали по запросу подписи">
+<!ENTITY esteid.SignDetailsHeader "Эта веб-страница нуждается в Вашей дигитальной подписи.">
+<!ENTITY esteid.SignDetailsText "Содержание веб-страницы должно Вам полностью объяснить, что Вы подписываете. Если у вас есть сомнения, щёлкните на линк, чтобы проверить документ.">
+<!ENTITY esteid.SignDetailsWarning "NB! Дигитальная подпись юридически  связана">
+<!ENTITY esteid.SignDetailsDocLabel "Документ: ">
+<!ENTITY esteid.SignDetailsHashLabel "Хэш: ">
+<!ENTITY esteid.PrefsTitle "Предпочтения подписывающего ID-картой">
+<!ENTITY esteid.WrongPin "Неправильный PIN!">
+<!ENTITY esteid.TriesLeft "Попыток осталось: ">
+<!ENTITY esteid.AddHost "Добавить">
+<!ENTITY esteid.RemoveHost "Удалить">
+<!ENTITY esteid.Whitelist "Список разрешенных веб-страниц">
+<!ENTITY esteid.Log "Лог">
+<!ENTITY esteid.WhiteListCaption "Веб-страницы, которые ID-карта может использовать">
