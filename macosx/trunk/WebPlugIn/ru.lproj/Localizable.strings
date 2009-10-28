@@ -1,12 +1,12 @@
 /* PIN Panel */
-"PINPanel.Error.PIN2.Locked" = "PIN2 is blocked!";
-"PINPanel.Error.PIN2.Invalid" = "PIN2 was entered incorrectly!";
+"PINPanel.Error.PIN2.Locked" = "PIN2 заблокирован!";
+"PINPanel.Error.PIN2.Invalid" = "PIN2 введён неверно!";
 "PINPanel.Label.URL" = "URL:";
-"PINPanel.Label.Hash" = "Hash:";
-"PINPanel.Label.Name" = "Name:";
+"PINPanel.Label.Hash" = "Хэш:";
+"PINPanel.Label.Name" = "Имя:";
 "PINPanel.Label.PIN2" = "PIN2:";
-"PINPanel.Label.SecureEntry" = "Press OK to use pinpad";
-"PINPanel.Message.PIN2" = "Please insert your PIN2 code.";
+"PINPanel.Label.SecureEntry" = "Нажмите OK для использования клавиатуры считывателя";
+"PINPanel.Message.PIN2" = "Пожалуйста введите PIN2.";
 "PINPanel.Label.Details" = "Details";
-"PINPanel.Action.Cancel" = "Cancel";
+"PINPanel.Action.Cancel" = "Отмена";
 "PINPanel.Action.OK" = "OK";
