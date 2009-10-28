@@ -351,21 +351,27 @@ QList<Document> DigiDoc::documents()
 
 QString DigiDoc::getAccessCert()
 {
-	QString buffer;
-
 	signer->unloadDriver();
-	try {
-		SSLConnect sslConnect;
-		sslConnect.setPKCS11( getConfValue( PKCS11Module ) );
-		sslConnect.setCard( m_card );
-		buffer = QString::fromUtf8( sslConnect.getUrl( SSLConnect::AccessCert, "" ) );
-	} catch( const std::runtime_error &e ) {
-		if( !QByteArray( e.what() ).isEmpty() )
-			setLastError( e.what() );
+
+	SSLConnect *s = new SSLConnect( this );
+	s->setPKCS11( getConfValue( PKCS11Module ) );
+	s->setCard( m_card );
+	s->waitForFinished( SSLConnect::AccessCert );
+
+	QString buffer = QString::fromUtf8( s->result() );
+	switch( s->error() )
+	{
+	case SSLConnect::PinCanceledError: break;
+	case SSLConnect::PinInvalidError:
+	case SSLConnect::UnkownError:
+		if( !s->errorString().isEmpty() )
+			setLastError( s->errorString() );
+		break;
 	}
 
-	signer->start();
+	delete s;
 
+	signer->start();
 	return buffer;
 }
 

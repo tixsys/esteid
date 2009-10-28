@@ -50,6 +50,10 @@ public:
 
 	unsigned int nslots;
 	PKCS11_SLOT *pslots;
+
+	SSLConnect::ErrorType error;
+	QString errorString;
+	QByteArray result;
 };
 
 class SSLThread: public QThread

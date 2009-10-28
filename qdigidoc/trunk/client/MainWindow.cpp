@@ -811,11 +811,7 @@ bool MainWindow::checkAccessCert()
 
 	QString result = doc->getAccessCert();
 	if ( result.isEmpty() )
-	{
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Error downloading server access certificate!" ), QMessageBox::Ok );
 		return false;
-	}
 
 	QDomDocument domDoc;
 	if ( !domDoc.setContent( result ) )

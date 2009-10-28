@@ -40,17 +40,25 @@ public:
 		PictureInfo,
 		AccessCert
 	};
+	enum ErrorType {
+		PinCanceledError = 1,
+		PinInvalidError = 2,
+		UnkownError = -1,
+	};
 
 	SSLConnect( QObject *parent = 0 );
 	~SSLConnect();
 
+	ErrorType error() const;
+	QString errorString() const;
 	QByteArray getUrl( RequestType type, const QString &value = "" );
-
 	QString pin() const;
+	QByteArray result() const;
 	void setCard( const QString &card );
 	void setPin( const QString &pin );
 	void setPKCS11( const QString &pkcs11 );
 	void setReader( int reader );
+	void waitForFinished( RequestType type, const QString &value = "" );
 
 private:
 	SSLObj	*obj;

@@ -94,6 +94,7 @@ SSLObj::SSLObj()
 ,	pkcs11( PKCS11_MODULE )
 ,	reader( -1 )
 ,	nslots( 0 )
+,	error( SSLConnect::UnkownError )
 {}
 
 SSLObj::~SSLObj()
@@ -334,8 +335,37 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 	}
 }
 
+SSLConnect::ErrorType SSLConnect::error() const { return obj->error; }
+QString SSLConnect::errorString() const { return obj->errorString; }
 QString SSLConnect::pin() const { return obj->pin; }
+QByteArray SSLConnect::result() const { return obj->result; }
 void SSLConnect::setCard( const QString &card ) { obj->card = card; }
 void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
 void SSLConnect::setPKCS11( const QString &pkcs11 ) { obj->pkcs11 = pkcs11; }
 void SSLConnect::setReader( int reader ) { obj->reader = reader; }
+
+void SSLConnect::waitForFinished( RequestType type, const QString &value )
+{
+	try { obj->result = getUrl( type, value ); }
+	catch( const std::runtime_error &e )
+	{
+		if( qstrcmp( e.what(), "" ) == 0 )
+		{
+			obj->error = SSLConnect::PinCanceledError;
+			obj->errorString = tr("PIN canceled");
+		}
+		else if( qstrcmp( e.what(), "PIN1Invalid" ) == 0 )
+		{
+			obj->error = SSLConnect::PinInvalidError;
+			obj->errorString = tr("Invalid PIN");
+		}
+		else
+		{
+			obj->error = SSLConnect::UnkownError;
+			obj->errorString = e.what();
+		}
+		return;
+	}
+	obj->error = SSLConnect::UnkownError;
+	obj->errorString.clear();
+}
