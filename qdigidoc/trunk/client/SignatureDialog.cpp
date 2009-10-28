@@ -127,18 +127,28 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	title->setText( titleText );
 	setWindowTitle( titleText );
 
+	QString msg;
+	QTextStream st( &msg );
 	switch( s.validate() )
 	{
-	case DigiDocSignature::Valid: error->setText( tr("Signature is valid") ); break;
+	case DigiDocSignature::Valid:
+		st << tr("Signature is valid"); break;
 	case DigiDocSignature::Invalid:
-		error->setText( tr("Signature is not valid <a href=\"help\">Help</a><br />(%1)")
-			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
+		st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>"
+			<< "<td>" << tr("Signature is not valid") << "</td>"
+			<< "<td align=\"right\"><a href=\"help\">" << tr("Help") << "</a></td>"
+			<< "</tr></table>"
+			<< "(" << (s.lastError().isEmpty() ? tr("Unknown error") : s.lastError()) << ")";
 		break;
 	case DigiDocSignature::Unknown:
-		error->setText( tr("Signature status unknown <a href=\"help\">Help</a><br />(%1)")
-			.arg( s.lastError().isEmpty() ? tr("Unknown error") : s.lastError() ) );
+		st << "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"><tr>"
+			<< "<td>" << tr("Signature status unknown") << "</td>"
+			<< "<td align=\"right\"><a href=\"help\">" << tr("Help") << "</a></td>"
+			<< "</tr></table>"
+			<< "(" << (s.lastError().isEmpty() ? tr("Unknown error") : s.lastError()) << ")";
 		break;
 	}
+	error->setText( msg );
 
 	const QStringList l = s.locations();
 	signerCity->setText( l.value( 0 ) );

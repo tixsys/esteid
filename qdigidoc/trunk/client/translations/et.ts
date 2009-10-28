@@ -306,10 +306,6 @@ Start downloading?</source>
 Alustame laadimist?</translation>
     </message>
     <message>
-        <source>Error downloading server access certificate!</source>
-        <translation>Viga ligipääsutõendi laadimisel!</translation>
-    </message>
-    <message>
         <source>Error parsing server access certificate result!</source>
         <translation>Viga ligipääsutõendi lugemisel!</translation>
     </message>
@@ -855,12 +851,16 @@ Palun kontrollige internetiühendust.</translation>
         <translation>Räsi väärtus kehtivuse kinnitamisel</translation>
     </message>
     <message>
-        <source>Signature is not valid &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation>Allkiri ei ole kehtiv &lt;a href=&quot;help&quot;&gt;Abi&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+        <source>Signature is not valid</source>
+        <translation>Allkirja staatus on teadmata</translation>
     </message>
     <message>
-        <source>Signature status unknown &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation>Allkirja staatus on teadmata &lt;a href=&quot;help&quot;&gt;Abi&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+        <source>Help</source>
+        <translation>Abi</translation>
+    </message>
+    <message>
+        <source>Signature status unknown</source>
+        <translation>Signature status unknown</translation>
     </message>
 </context>
 <context>

@@ -306,10 +306,6 @@ Start downloading?</source>
 Начнём загрузку?</translation>
     </message>
     <message>
-        <source>Error downloading server access certificate!</source>
-        <translation>Ошибка при загрузке справки допуска!</translation>
-    </message>
-    <message>
         <source>Error parsing server access certificate result!</source>
         <translation>Ошибка при чтении справки допуска!</translation>
     </message>
@@ -854,12 +850,16 @@ Please check your internet connection.</source>
         <translation>Хеш-значение при подтверждении действия</translation>
     </message>
     <message>
-        <source>Signature is not valid &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation>Подпись недействительна &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+        <source>Signature is not valid</source>
+        <translation>Подпись недействительна</translation>
     </message>
     <message>
-        <source>Signature status unknown &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation>Неизвестный статус пользователя &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;(%1)</translation>
+        <source>Help</source>
+        <translation>Помощь</translation>
+    </message>
+    <message>
+        <source>Signature status unknown</source>
+        <translation>Неизвестный статус пользователя</translation>
     </message>
 </context>
 <context>
