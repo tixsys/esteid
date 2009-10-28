@@ -1,6 +1,6 @@
 /* Localized versions of Info.plist keys */
 
-CFBundleDisplayName = "ID-card Updater";
+CFBundleDisplayName = "Обновление ID-карты";
 CFBundleGetInfoString = "v1.0, Copyright 2009 __COMPANY_NAME__.";
 NSHumanReadableCopyright = "Copyright (c) 2009, __COMPANY_NAME__.";
-NSPrefPaneIconLabel = "ID-card";
+NSPrefPaneIconLabel = "ID-карта";
