@@ -1,0 +1,7 @@
+"KeychainTool.Action.Cancel" = "Katkesta";
+"KeychainTool.Action.Next" = "Edasi";
+"KeychainTool.Action.Save" = "Salvesta";
+"PreferencePane.Action.Retry" = "Proovi uuesti";
+"KeychainTool.Title" = "Eesti ID-kaardi Keychain Abivahend";
+"KeychainTool.Alert.IdLogin.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
+"KeychainTool.Alert.IdLogin.CardNotFound.Title" = "Autentimissertifikaadi lugemine ebaõnnestus";

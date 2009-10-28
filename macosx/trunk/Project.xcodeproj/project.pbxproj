@@ -124,9 +124,29 @@
 		8197D48A0F9A1338002D8A1D /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
 		8197D48B0F9A14DC002D8A1D /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
 		8197D4940F9A1A36002D8A1D /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
+		819ACB7B10987DC800D99810 /* CardBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027810877355006FB22C /* CardBase.cpp */; };
+		819ACB7C10987DC800D99810 /* CTAPIManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026710877355006FB22C /* CTAPIManager.cpp */; };
+		819ACB7D10987DC800D99810 /* DynamicLibrary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027010877355006FB22C /* DynamicLibrary.cpp */; };
+		819ACB7E10987DC800D99810 /* EstEidCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027C10877355006FB22C /* EstEidCard.cpp */; };
+		819ACB7F10987DC800D99810 /* EstEidCardMaintainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027E10877355006FB22C /* EstEidCardMaintainer.cpp */; };
+		819ACB8010987DC800D99810 /* EstEIDKTApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B94E4B109849470059E208 /* EstEIDKTApplicationDelegate.m */; };
+		819ACB8110987DC800D99810 /* locked_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026610877355006FB22C /* locked_allocator.cpp */; };
+		819ACB8210987DC800D99810 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B94E4C109849470059E208 /* main.m */; };
+		819ACB8310987DC800D99810 /* PCSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026410877355006FB22C /* PCSCManager.cpp */; };
+		819ACB8410987DC800D99810 /* precompiled.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026F10877355006FB22C /* precompiled.cpp */; };
+		819ACB8510987DC800D99810 /* SCError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027210877355006FB22C /* SCError.cpp */; };
+		819ACB8610987DC800D99810 /* SIMCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027A10877355006FB22C /* SIMCard.cpp */; };
+		819ACB8710987DC800D99810 /* SmartCardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027910877355006FB22C /* SmartCardManager.cpp */; };
+		819ACB8810987DC800D99810 /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026910877355006FB22C /* types.cpp */; };
+		819ACB981098800D00D99810 /* EstEIDKTCertificate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */; };
+		819ACCD21098AB7B00D99810 /* KeychainTool.app in Resources */ = {isa = PBXBuildFile; fileRef = 81B94E3E109841D90059E208 /* KeychainTool.app */; };
 		81B0FB860FC70A0700B24817 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
 		81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC760FC70E7400B24817 /* PreferencePane.nib */; };
 		81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC780FC70E8800B24817 /* MainMenu.xib */; };
+		81B94F0310984B0A0059E208 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81F873B10FA13A7500832B54 /* AppKit.framework */; };
+		81B94F1C10984B380059E208 /* KeychainTool.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81B94F1A10984B380059E208 /* KeychainTool.strings */; };
+		81B94F2010984BE80059E208 /* KeychainTool.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B94F1F10984BE80059E208 /* KeychainTool.xib */; };
+		81B9504E109864BF0059E208 /* KeychainTool.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 81B9504C109864BF0059E208 /* KeychainTool.rtf */; };
 		81BA2592100F816200866EDA /* NSTask+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BA2591100F816200866EDA /* NSTask+Additions.m */; };
 		81BF406A0F56E7FB00F60FED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF40690F56E7FB00F60FED /* main.m */; };
 		81BF406D0F56E8CB00F60FED /* EstEIDApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BF406C0F56E8CB00F60FED /* EstEIDApplicationDelegate.m */; };
@@ -167,6 +187,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 817944A30F973E6F007E0C96;
 			remoteInfo = Launcher;
+		};
+		819ACCCF1098AB6A00D99810 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81B94E3D109841D90059E208 /* KeychainTool */;
+			remoteInfo = KeychainTool;
 		};
 		81E4C8DC0F9C455E00997F53 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -327,9 +354,23 @@
 		8197D3AB0F9A0D46002D8A1D /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/PreferencePane.strings; sourceTree = "<group>"; };
 		8197D3D20F9A1023002D8A1D /* EstEIDReceipt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDReceipt.h; path = Updater/Sources/EstEIDReceipt.h; sourceTree = "<group>"; };
 		8197D3D30F9A1023002D8A1D /* EstEIDReceipt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDReceipt.m; path = Updater/Sources/EstEIDReceipt.m; sourceTree = "<group>"; };
+		819ACB961098800D00D99810 /* EstEIDKTCertificate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDKTCertificate.h; path = Updater/Sources/KeychainTool/EstEIDKTCertificate.h; sourceTree = "<group>"; };
+		819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EstEIDKTCertificate.mm; path = Updater/Sources/KeychainTool/EstEIDKTCertificate.mm; sourceTree = "<group>"; };
 		81B0FB850FC70A0700B24817 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Updater/Images/Icon.icns; sourceTree = "<group>"; };
 		81B0FC760FC70E7400B24817 /* PreferencePane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PreferencePane.nib; path = Updater/PreferencePane.nib; sourceTree = "<group>"; };
 		81B0FC780FC70E8800B24817 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Updater/MainMenu.xib; sourceTree = "<group>"; };
+		81B94E3E109841D90059E208 /* KeychainTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeychainTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81B94E4A109849470059E208 /* EstEIDKTApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDKTApplicationDelegate.h; path = Updater/Sources/KeychainTool/EstEIDKTApplicationDelegate.h; sourceTree = "<group>"; };
+		81B94E4B109849470059E208 /* EstEIDKTApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDKTApplicationDelegate.m; path = Updater/Sources/KeychainTool/EstEIDKTApplicationDelegate.m; sourceTree = "<group>"; };
+		81B94E4C109849470059E208 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/KeychainTool/main.m; sourceTree = "<group>"; };
+		81B94E5010984A260059E208 /* KeychainTool.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = KeychainTool.plist; path = Updater/KeychainTool.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.info-plist"; sourceTree = "<group>"; };
+		81B94F1B10984B380059E208 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = Updater/en.lproj/KeychainTool.strings; sourceTree = "<group>"; };
+		81B94F1D10984B5F0059E208 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/KeychainTool.strings; sourceTree = "<group>"; };
+		81B94F1E10984B9D0059E208 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/KeychainTool.strings; sourceTree = "<group>"; };
+		81B94F1F10984BE80059E208 /* KeychainTool.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KeychainTool.xib; path = Updater/KeychainTool.xib; sourceTree = "<group>"; };
+		81B9504D109864BF0059E208 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Updater/en.lproj/KeychainTool.rtf; sourceTree = "<group>"; };
+		81B9504F109864D00059E208 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = et; path = Updater/et.lproj/KeychainTool.rtf; sourceTree = "<group>"; };
+		81B95050109864DA0059E208 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = ru; path = Updater/ru.lproj/KeychainTool.rtf; sourceTree = "<group>"; };
 		81BA2590100F816200866EDA /* NSTask+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTask+Additions.h"; path = "Updater/Sources/NSTask+Additions.h"; sourceTree = "<group>"; };
 		81BA2591100F816200866EDA /* NSTask+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTask+Additions.m"; path = "Updater/Sources/NSTask+Additions.m"; sourceTree = "<group>"; };
 		81BF40630F56E78000F60FED /* EstEIDSU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EstEIDSU.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -342,7 +383,7 @@
 		81BF40B50F56ECBB00F60FED /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81BF40B60F56ECBB00F60FED /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = Updater/et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		81BF40B90F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		81BF40BA0F56ECC700F60FED /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81BF40BA0F56ECC700F60FED /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = Updater/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81C3CB1F0F95DBD400EDBB44 /* EstEIDPackageDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDPackageDownload.h; path = Updater/Sources/EstEIDPackageDownload.h; sourceTree = "<group>"; };
 		81C3CB200F95DBD400EDBB44 /* EstEIDPackageDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDPackageDownload.m; path = Updater/Sources/EstEIDPackageDownload.m; sourceTree = "<group>"; };
 		81C3CE370F9625B100EDBB44 /* EstEIDAsynchronousTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDAsynchronousTask.h; path = Updater/Sources/EstEIDAsynchronousTask.h; sourceTree = "<group>"; };
@@ -398,6 +439,14 @@
 				817944E80F97408A007E0C96 /* Foundation.framework in Frameworks */,
 				817944E60F97407D007E0C96 /* Security.framework in Frameworks */,
 				817944E70F974084007E0C96 /* SecurityFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81B94E3C109841D90059E208 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81B94F0310984B0A0059E208 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +523,7 @@
 		089C166AFE841209C02AAC07 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				81BC85D910873A6300EBD608 /* smartcard++ */,
 				8122F0480F55F35400FA51CD /* CMPlugIn */,
 				8122F0470F55F34E00FA51CD /* Updater */,
 				8122F04A0F55F36A00FA51CD /* WebPlugIn */,
@@ -525,6 +575,7 @@
 				81BF40630F56E78000F60FED /* EstEIDSU.app */,
 				81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */,
 				817944A40F973E6F007E0C96 /* agent */,
+				81B94E3E109841D90059E208 /* KeychainTool.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -536,6 +587,10 @@
 				8122F1070F55F5D500FA51CD /* Sources */,
 				81BF40A00F56ECA300F60FED /* Info.plist */,
 				81BF40B10F56ECB200F60FED /* InfoPlist.strings */,
+				81B9504C109864BF0059E208 /* KeychainTool.rtf */,
+				81B94E5010984A260059E208 /* KeychainTool.plist */,
+				81B94F1A10984B380059E208 /* KeychainTool.strings */,
+				81B94F1F10984BE80059E208 /* KeychainTool.xib */,
 				81BF40AF0F56ECB200F60FED /* Localizable.strings */,
 				81B0FC780FC70E8800B24817 /* MainMenu.xib */,
 				81B0FC760FC70E7400B24817 /* PreferencePane.nib */,
@@ -578,6 +633,7 @@
 			isa = PBXGroup;
 			children = (
 				817944290F973D79007E0C96 /* Agent */,
+				81B94E451098479F0059E208 /* KeychainTool */,
 				8197D3780F9A0986002D8A1D /* PreferencePane */,
 				81E4C8C50F9C438B00997F53 /* Tests */,
 				8197D3880F9A0C85002D8A1D /* EstEIDAgent.h */,
@@ -628,7 +684,6 @@
 		8122F1080F55F5DC00FA51CD /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				81BC85D910873A6300EBD608 /* smartcard++ */,
 				81E4CBBE0F9C75A700997F53 /* Tests */,
 				81F871AA0FA0FB8A00832B54 /* EstEIDPINPanel.h */,
 				81F871AB0FA0FB8A00832B54 /* EstEIDPINPanel.m */,
@@ -679,6 +734,18 @@
 				8197D3850F9A0C65002D8A1D /* EstEIDPreferencePane.m */,
 			);
 			name = PreferencePane;
+			sourceTree = "<group>";
+		};
+		81B94E451098479F0059E208 /* KeychainTool */ = {
+			isa = PBXGroup;
+			children = (
+				81B94E4A109849470059E208 /* EstEIDKTApplicationDelegate.h */,
+				81B94E4B109849470059E208 /* EstEIDKTApplicationDelegate.m */,
+				819ACB961098800D00D99810 /* EstEIDKTCertificate.h */,
+				819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */,
+				81B94E4C109849470059E208 /* main.m */,
+			);
+			name = KeychainTool;
 			sourceTree = "<group>";
 		};
 		81BC85D910873A6300EBD608 /* smartcard++ */ = {
@@ -789,6 +856,24 @@
 			productReference = 817944A40F973E6F007E0C96 /* agent */;
 			productType = "com.apple.product-type.tool";
 		};
+		81B94E3D109841D90059E208 /* KeychainTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "KeychainTool" */;
+			buildPhases = (
+				81B94E3A109841D90059E208 /* Resources */,
+				81B94E3B109841D90059E208 /* Sources */,
+				81B94E3C109841D90059E208 /* Frameworks */,
+				819ACCFF1098ABF700D99810 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KeychainTool;
+			productName = KeychainTool;
+			productReference = 81B94E3E109841D90059E208 /* KeychainTool.app */;
+			productType = "com.apple.product-type.application";
+		};
 		81BF40620F56E78000F60FED /* Updater */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 81BF40680F56E78100F60FED /* Build configuration list for PBXNativeTarget "Updater" */;
@@ -801,6 +886,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				819ACCD01098AB6A00D99810 /* PBXTargetDependency */,
 				8179467E0F975E19007E0C96 /* PBXTargetDependency */,
 			);
 			name = Updater;
@@ -922,6 +1008,7 @@
 			targets = (
 				817944A30F973E6F007E0C96 /* Updater Agent */,
 				81F875990F560E9A00FCAB5D /* Updater Preference Pane */,
+				81B94E3D109841D90059E208 /* KeychainTool */,
 				81BF40620F56E78000F60FED /* Updater */,
 				81E4C8CB0F9C43F200997F53 /* Updater Tests */,
 				8122F1110F55F75500FA51CD /* Finder Plug-In */,
@@ -944,10 +1031,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		81B94E3A109841D90059E208 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81B94F1C10984B380059E208 /* KeychainTool.strings in Resources */,
+				81B94F2010984BE80059E208 /* KeychainTool.xib in Resources */,
+				81B9504E109864BF0059E208 /* KeychainTool.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		81BF405F0F56E78000F60FED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				819ACCD21098AB7B00D99810 /* KeychainTool.app in Resources */,
 				8179469C0F975FE7007E0C96 /* agent in Resources */,
 				81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */,
 				81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */,
@@ -1015,6 +1113,19 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		819ACCFF1098ABF700D99810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "revision = `svn info WebPlugIn | grep -E \"Last Changed Rev: ([0-9]+)\" | cut -c 19-`.strip\ninfoPlist = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['WRAPPER_NAME']}/Contents/Info.plist\"\n\nputs \"\"\n\nunless revision.to_i > 0\n\tputs \"Failed to read revision #{revision}\"\n\texit -1\nend\n\nunless File.file? infoPlist\n\tputs \"Failed to read Info.plist at #{infoPlist}\"\n\texit -1\nend\n\nputs \"Revision at '#{revision}'\"\n\nfile = File.new(infoPlist)\nlines = file.readlines\nchanges = false\nfile.close\n\nlines.each do |line|\n\tchanges = true if line.gsub!(/\\$REVISION/, revision)\nend\n\nif changes\n\tfile = File.new(infoPlist, 'w')\n\t\n\tlines.each do |line|\n\t\tfile.write(line)\n\tend\n\t\n\tfile.close\nend";
+		};
 		81E4C8CA0F9C43F200997F53 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1124,6 +1235,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				8197D1370F99F0AF002D8A1D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		81B94E3B109841D90059E208 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				819ACB7B10987DC800D99810 /* CardBase.cpp in Sources */,
+				819ACB7C10987DC800D99810 /* CTAPIManager.cpp in Sources */,
+				819ACB7D10987DC800D99810 /* DynamicLibrary.cpp in Sources */,
+				819ACB7E10987DC800D99810 /* EstEidCard.cpp in Sources */,
+				819ACB7F10987DC800D99810 /* EstEidCardMaintainer.cpp in Sources */,
+				819ACB8010987DC800D99810 /* EstEIDKTApplicationDelegate.m in Sources */,
+				819ACB8110987DC800D99810 /* locked_allocator.cpp in Sources */,
+				819ACB8210987DC800D99810 /* main.m in Sources */,
+				819ACB8310987DC800D99810 /* PCSCManager.cpp in Sources */,
+				819ACB8410987DC800D99810 /* precompiled.cpp in Sources */,
+				819ACB8510987DC800D99810 /* SCError.cpp in Sources */,
+				819ACB8610987DC800D99810 /* SIMCard.cpp in Sources */,
+				819ACB8710987DC800D99810 /* SmartCardManager.cpp in Sources */,
+				819ACB8810987DC800D99810 /* types.cpp in Sources */,
+				819ACB981098800D00D99810 /* EstEIDKTCertificate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,6 +1378,11 @@
 			target = 817944A30F973E6F007E0C96 /* Updater Agent */;
 			targetProxy = 8179467D0F975E19007E0C96 /* PBXContainerItemProxy */;
 		};
+		819ACCD01098AB6A00D99810 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81B94E3D109841D90059E208 /* KeychainTool */;
+			targetProxy = 819ACCCF1098AB6A00D99810 /* PBXContainerItemProxy */;
+		};
 		81E4C8DD0F9C455E00997F53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 81E4C8CB0F9C43F200997F53 /* Updater Tests */;
@@ -1316,6 +1454,26 @@
 				8197D3AB0F9A0D46002D8A1D /* ru */,
 			);
 			name = PreferencePane.strings;
+			sourceTree = "<group>";
+		};
+		81B94F1A10984B380059E208 /* KeychainTool.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81B94F1B10984B380059E208 /* en */,
+				81B94F1D10984B5F0059E208 /* et */,
+				81B94F1E10984B9D0059E208 /* ru */,
+			);
+			name = KeychainTool.strings;
+			sourceTree = "<group>";
+		};
+		81B9504C109864BF0059E208 /* KeychainTool.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81B9504D109864BF0059E208 /* en */,
+				81B9504F109864D00059E208 /* et */,
+				81B95050109864DA0059E208 /* ru */,
+			);
+			name = KeychainTool.rtf;
 			sourceTree = "<group>";
 		};
 		81BF40AF0F56ECB200F60FED /* Localizable.strings */ = {
@@ -1491,6 +1649,67 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = agent;
 				SDKROOT = macosx10.4;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		81B94E41109841DA0059E208 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"$(SRCROOT)/WebPlugIn",
+				);
+				INFOPLIST_FILE = Updater/KeychainTool.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					/usr/local/lib/libcrypto.a,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KeychainTool;
+			};
+			name = Debug;
+		};
+		81B94E42109841DA0059E208 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					"$(SRCROOT)/WebPlugIn",
+				);
+				INFOPLIST_FILE = Updater/KeychainTool.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+					/usr/local/lib/libcrypto.a,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = KeychainTool;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1897,6 +2116,15 @@
 			buildConfigurations = (
 				817944A60F973E70007E0C96 /* Debug */,
 				817944A70F973E70007E0C96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "KeychainTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81B94E41109841DA0059E208 /* Debug */,
+				81B94E42109841DA0059E208 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

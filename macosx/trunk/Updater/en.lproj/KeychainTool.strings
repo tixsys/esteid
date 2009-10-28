@@ -1,0 +1,7 @@
+"KeychainTool.Action.Cancel" = "Cancel";
+"KeychainTool.Action.Next" = "Next";
+"KeychainTool.Action.Save" = "Save";
+"KeychainTool.Action.Retry" = "Try Again";
+"KeychainTool.Title" = "Estonian ID-card Keychain Tool";
+"KeychainTool.Alert.CardNotFound.Message" = "Please make sure that your ID-card is inserted to the card reader and then try again.";
+"KeychainTool.Alert.CardNotFound.Title" = "Failed to read authentification certificate.";

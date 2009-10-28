@@ -1,8 +1,5 @@
 /* Copyright (c) 2009 Janek Priimann */
 
-// Oh cool!
-#define __COREFOUNDATION_CFPLUGINCOM__
-
 #import "common.h"
 #import "PCSCManager.h"
 #import "SmartCardManager.h"
