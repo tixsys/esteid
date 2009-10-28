@@ -1,5 +1,6 @@
 // http://www.codeproject.com/KB/vista-security/interaction-in-vista.aspx
 //#define NO_PROCESS
+#include "precompiled.h"
 #include "ProcessStarter.h"
 
 #include <windows.h>
@@ -20,8 +21,14 @@ ProcessStarter::ProcessStarter(const std::string& processPath, const std::string
 	GetTempPathA(sizeof(tpath),tpath);
 	strcat(tpath,"process-starter.log");
 	log.open(tpath);
+	log << "began log .. " << std::endl;
 #endif
 }
+
+ProcessStarter::~ProcessStarter() {
+	log << "end log" << std::endl;
+}
+
 #if !defined(WIN32) || defined(NO_PROCESS)
 bool ProcessStarter::Run() {return false;}
 #else
@@ -132,7 +139,10 @@ ProcessStarter::_phandle ProcessStarter::GetCurrentUserTokenOld()
 	TCHAR domain[MAX_PATH]= { L'\0' }; 
 	DWORD szUsername = MAX_PATH, szDomain = MAX_PATH;
 	GetProcessToken(pid,&primTok,szUsername,username,szDomain,domain);
-	log << "ProcessStarter::szUserName is " << username << std::endl;
+	log << "ProcessStarter::szUserName is ";
+	char * pn = (char*)&username[0];
+	while(*pn) {log << *pn; pn++; pn++;}
+	log << std::endl;
     return &primTok;
 }
 
@@ -141,15 +151,17 @@ bool ProcessStarter::Run(bool forceRun)
 	OSVERSIONINFO version = {sizeof(OSVERSIONINFO)};
 
 	GetVersionEx(&version);
-	if (version.dwMajorVersion <= 5 && !forceRun) //dont need this on XP/Win2K
+	if ((version.dwMajorVersion == 5 && version.dwMinorVersion == 0 ) && !forceRun) { //dont need this on XP/Win2K 
+		log << "not being forced to run .." << std::endl;
 		return false;
+		}
 
 	char winDir[260];
 	GetSystemDirectoryA(winDir,sizeof(winDir));
 
 	PHANDLE primaryToken = 0;
 	try {
-		if (version.dwMajorVersion <= 5) //win2K/XP
+		if ((version.dwMajorVersion == 5) && (version.dwMinorVersion == 0) ) //win2K
 			primaryToken = GetCurrentUserTokenOld();
 		else
 			primaryToken = GetCurrentUserToken();
@@ -159,13 +171,17 @@ bool ProcessStarter::Run(bool forceRun)
     if (primaryToken == 0)
     {
 		log << "primtok = 0" << std::endl;
-        return false;
+		if (!forceRun) 
+	        return false;
+
     }
 
     STARTUPINFOA StartupInfo;
     PROCESS_INFORMATION processInfo;
 	memset(&StartupInfo,0,sizeof(StartupInfo));
     StartupInfo.cb = sizeof(StartupInfo);
+	if (version.dwMajorVersion <= 5)
+		StartupInfo.lpDesktop = "winsta0\\default";
 #if 0
 	std::string command = std::string("\"") + winDir + 
 			"\\cmd.exe\" /C \""+ processPath_ + " " + arguments_ + "\"";
@@ -176,11 +192,11 @@ bool ProcessStarter::Run(bool forceRun)
         command += " " + arguments_;
     }
 #endif
-	log << "command:" << command << std::endl;
+	log << "command:'" << command << "'" << std::endl;
 
     void* lpEnvironment = NULL;
 	if (!forceRun) {
-		BOOL resultEnv = CreateEnvironmentBlock(&lpEnvironment, primaryToken, FALSE);
+		BOOL resultEnv = CreateEnvironmentBlock(&lpEnvironment, *primaryToken, TRUE);
 		if (resultEnv == 0)
 		{                                
 			long nError = GetLastError();                                
@@ -188,17 +204,29 @@ bool ProcessStarter::Run(bool forceRun)
 		log << "CreateEnvironmentBlock ok" << std::endl;
 		}
 
-    BOOL result = CreateProcessAsUserA(*primaryToken, 0, (LPSTR)(command.c_str()), 
-		NULL,NULL,
-		FALSE, CREATE_NO_WINDOW | CREATE_UNICODE_ENVIRONMENT, 
-		lpEnvironment, 0, &StartupInfo, &processInfo);
+	BOOL result;
+	if (!primaryToken) {
+		result = CreateProcessA(0,(LPSTR)(command.c_str()), 
+			NULL,NULL,
+			FALSE, CREATE_NO_WINDOW | CREATE_UNICODE_ENVIRONMENT, 
+			lpEnvironment, 0, &StartupInfo, &processInfo);
+		}
+	else {
+		log << "creating as user " << std::endl;
+		result = CreateProcessAsUserA(*primaryToken, 0, (LPSTR)(command.c_str()), 
+			NULL,NULL,
+			FALSE, CREATE_NO_WINDOW | CREATE_UNICODE_ENVIRONMENT, 
+			lpEnvironment, 0, &StartupInfo, &processInfo);
+		}
 
-	log << "CreateProcessAsUserA " << result << " err 0x" 
-		<< std::hex << std::setfill('0') << std::setw(8) << GetLastError() << std::endl;
-	if (result != FALSE)
-		log << "launched" << std::endl;
-	else
+	if (result != FALSE) {
+		log << "launched PID=" << processInfo.dwProcessId << std::endl;
+		}
+	else {
 		log << "didnt launch" << std::endl;
+		log << "CreateProcessAsUserA " << result << " err 0x" 
+			<< std::hex << std::setfill('0') << std::setw(8) << GetLastError() << std::endl;
+		}
     if (!forceRun) 
 		CloseHandle(primaryToken);
     return (result != FALSE);

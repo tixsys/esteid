@@ -217,16 +217,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="m_uninstallButton" >
-         <property name="text" >
-          <string>Uninst&amp;all</string>
-         </property>
-         <property name="shortcut" >
-          <string>Alt+A</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="m_cancelButton" >
          <property name="text" >
           <string>Ca&amp;ncel</string>
@@ -273,22 +263,6 @@
     <hint type="destinationlabel" >
      <x>338</x>
      <y>334</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_uninstallButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>startUninstall()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>443</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>324</x>
-     <y>325</y>
     </hint>
    </hints>
   </connection>

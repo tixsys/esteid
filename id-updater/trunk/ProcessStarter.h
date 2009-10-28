@@ -17,6 +17,7 @@ class ProcessStarter
 	typedef _handle *_phandle;
 public:
     ProcessStarter(const std::string& processPath, const std::string& arguments = "");
+	~ProcessStarter();
     bool Run(bool forceRun = false);
     
 	_phandle GetCurrentUserToken();

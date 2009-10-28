@@ -29,7 +29,6 @@ idupdater::~idupdater() {
 
 void idupdater::enableInstall(bool enable,bool enableCheck) {
 	m_installButton->setEnabled(enable);
-	m_uninstallButton->setEnabled(enable);
 	m_checkUpdatesButton->setEnabled(enableCheck);
 	if (enable && m_autoupdate)
 		m_installButton->click();
@@ -40,7 +39,7 @@ void idupdater::status(QString msg) {
 	}
 void idupdater::fail(QString msg) {
 	m_updateStatus->setText("Failed: " + msg);
-	enableInstall(true);
+	enableInstall(false);
 	}
 
 void idupdater::netReplyFinished(QNetworkReply* reply) {
@@ -48,6 +47,7 @@ void idupdater::netReplyFinished(QNetworkReply* reply) {
 	status("Check completed");
 	QDomDocument doc;
 	doc.setContent(reply);
+	if (!doc.hasChildNodes()) return fail("could not load a valid update file");
 	QDomNodeList nodes = doc.elementsByTagName("product");
 	if (nodes.length() != 1 ) return fail("expected one product");
 	product = nodes.item(0).toElement();

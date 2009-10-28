@@ -2,7 +2,7 @@
 
 #pragma comment(lib,"Mstask.lib")
 ScheduledUpdateTask::ScheduledUpdateTask(std::wstring path, std::wstring name) 
-	: m_command(path)
+	: m_command(path),m_name(name)
 {
 	pITS.CoCreateInstance(CLSID_CTaskScheduler,NULL);
 	CComPtr<IUnknown> iUnk;
@@ -16,7 +16,15 @@ ScheduledUpdateTask::ScheduledUpdateTask(std::wstring path, std::wstring name)
 	pIPersistFile = iUnk;
 }
 
-bool ScheduledUpdateTask::configure(Interval interval) {
+bool ScheduledUpdateTask::remove() {
+	WORD triggerIndex = 0;
+	pITask->DeleteTrigger(triggerIndex);
+	pITask.Release();
+	pITS->Delete(m_name.c_str());
+	return true;
+	}
+
+bool ScheduledUpdateTask::configure(Interval interval,bool autoupdate) {
 	if (!pITask || !pIPersistFile) 
 		return false;
 	OSVERSIONINFO version = {sizeof(OSVERSIONINFO)};
@@ -26,6 +34,8 @@ bool ScheduledUpdateTask::configure(Interval interval) {
 	pITask->SetComment(L"Id-updater scheduled task");
 	pITask->SetApplicationName(m_command.c_str());
 	pITask->SetAccountInformation(L"",NULL);
+	if (autoupdate) 
+		pITask->SetParameters(L"-autoupdate");
 	if (version.dwMajorVersion <= 5)
 		pITask->SetFlags(TASK_FLAG_INTERACTIVE);
 	if (interval == NEVER) 

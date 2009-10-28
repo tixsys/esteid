@@ -16,6 +16,10 @@
 #pragma comment(lib,"msi")
 #pragma comment (lib, "wintrust")
 
+#ifndef INSTALLER_COMMANDLINE
+#define INSTALLER_COMMANDLINE " REINSTALLMODE=vomus ADDLOCAL=ALL ADDDEFAULT=ALL ALLUSERS=1"
+#endif
+
 InstallChecker::InstallChecker(void)
 {
 }
@@ -83,7 +87,7 @@ struct msiPack {
 		std::string tmp(m_msiFile.length(),'0');
 		std::copy(m_msiFile.begin(),m_msiFile.end(),tmp.begin());
 		std::string param(std::string("/I \"") 
-			+ tmp + "\" REINSTALLMODE=vomus REINSTALL=ALL");
+			+ tmp + "\" " INSTALLER_COMMANDLINE);
 		ProcessStarter msiexec(winDir,param);
 		return msiexec.Run(true);
 /*		MsiSetInternalUI(INSTALLUILEVEL_FULL,0);
