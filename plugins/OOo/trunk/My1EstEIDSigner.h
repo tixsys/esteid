@@ -1,5 +1,6 @@
 #include "MyBdocBridge.h"
 
+
 /*/**************** GURU Antix typed this with hisfingertips **************
 
 class My1EstEIDSigner : // public digidoc::EstEIDSigner,
@@ -29,10 +30,10 @@ namespace digidoc
 			const char * pcPin;
 			int i_ret;
 			volatile int* pi_pinReq;
-		
+
 		protected:
 			virtual std::string getPin( PKCS11Cert certificate ) throw(SignException);
-
+			
 		private:
 			void showPinpad();
 			void hidePinpad();
@@ -90,6 +91,6 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 		digidoc::BDoc *locBdoc;		
 		bool validateOnline;	
 		
-
+	
 };
 

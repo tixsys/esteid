@@ -19,6 +19,7 @@
 #include <digidocpp/io/ZipSerialize.h>
 #include <digidocpp/crypto/signer/PKCS11Signer.h>
 #include <digidocpp/crypto/signer/EstEIDSigner.h>
+#include <digidocpp/SignatureAttributes.h>
 
 #ifndef BDOCLIB_CONF_PATH
 #define BDOCLIB_CONF_PATH "digidocpp.conf"
@@ -331,11 +332,13 @@ PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 		if (!i_ok)
 		{
 			// Add signature production place.
-			Signer::SignatureProductionPlace spp(signPlace.str_city, signPlace.str_stateOrProvince, signPlace.str_postalCode, signPlace.str_countryName);
-       			m_signer.setSignatureProductionPlace(spp);
+			//Signer::SignatureProductionPlace spp(signPlace.str_city, signPlace.str_stateOrProvince, signPlace.str_postalCode, signPlace.str_countryName);
+			digidoc::SignatureProductionPlace spp(signPlace.str_city, signPlace.str_stateOrProvince, signPlace.str_postalCode, signPlace.str_countryName);
+       		
+			m_signer.setSignatureProductionPlace(spp);
 
 			// Add signer role(s).
-			Signer::SignerRole role(signerRoles.str_role);
+			digidoc::SignerRole role(signerRoles.str_role);
 			// Add additional roles.
 			role.claimedRoles.push_back(signerRoles.str_additionalRole);
 			m_signer.setSignerRole(role);
@@ -465,7 +468,7 @@ int My1EstEIDSigner::openCont ()
 			}
 
 			// Get signature production place info.
-			Signer::SignatureProductionPlace spp = sig->getProductionPlace();
+			digidoc::SignatureProductionPlace spp = sig->getProductionPlace();
 			if(!spp.isEmpty())
 			{
 				signPlace.str_city += spp.city.c_str();
@@ -486,7 +489,7 @@ int My1EstEIDSigner::openCont ()
 			}
 
 			// Get signer role info.
-			Signer::SignerRole roles = sig->getSignerRole();
+			digidoc::SignerRole roles = sig->getSignerRole();
 			if(!roles.isEmpty())
 			{
 				signerRoles.str_role += roles.claimedRoles.at(0);

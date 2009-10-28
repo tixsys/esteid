@@ -117,6 +117,15 @@ set(BDOC_INCLUDES
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 )
 
+find_package(Subversion)
+if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+	Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
+	message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
+	set(BUILD_VER ${PROJECT_WC_REVISION})
+else (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+	set(BUILD_VER 0)
+endif (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+
 
 # FIXME: Find a sane way to construct these!!
 FOREACH(iDir ${UNO_INCLUDES})
@@ -215,7 +224,7 @@ CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.
 CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
-CONFIGURE_FILE(pkg-description.txt ${OUT_MISC}/${COMP_NAME}/pkg-description.txt COPYONLY)
+CONFIGURE_FILE(pkg-description.txt.in ${OUT_MISC}/${COMP_NAME}/pkg-description.txt)
 #CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
 #CONFIGURE_FILE(bdoc2oo.jar ${OUT_MISC}/${COMP_NAME}/bdoc2oo.jar COPYONLY)
 
