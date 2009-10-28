@@ -273,4 +273,15 @@
         <translation>Нет доступного сертификата</translation>
     </message>
 </context>
+<context>
+    <name>SSLConnect</name>
+    <message>
+        <source>PIN canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid PIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

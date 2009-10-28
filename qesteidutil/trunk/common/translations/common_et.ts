@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="et">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS>
+<TS version="2.0" language="et">
 <context>
     <name>CertificateDialog</name>
     <message>
@@ -271,6 +271,17 @@
     <message>
         <source>no certificate available</source>
         <translation>Ei ole kättesaadavaid sertifikaate</translation>
+    </message>
+</context>
+<context>
+    <name>SSLConnect</name>
+    <message>
+        <source>PIN canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid PIN</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
