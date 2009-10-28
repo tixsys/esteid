@@ -129,3 +129,14 @@ bool EstEIDServiceBase::getRetryCounts(byte &puk,
     EstEidCard card(mgr, reader);
 	return card.getRetryCounts(puk, pinAuth, pinSign);
 }
+
+bool EstEIDServiceBase::hasSecurePinEntry() {
+    return hasSecurePinEntry(findFirstEstEID());
+}
+
+bool EstEIDServiceBase::hasSecurePinEntry(readerID reader) {
+    idAutoLock lock(this);
+
+    EstEidCard card(mgr, reader);
+    return card.hasSecurePinEntry();
+}

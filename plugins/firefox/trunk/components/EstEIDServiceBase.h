@@ -49,6 +49,9 @@ public:
     bool getRetryCounts(byte &puk, byte &pinAuth,byte &pinSign);
     bool getRetryCounts(byte &puk, byte &pinAuth,byte &pinSign, readerID);
 
+    bool hasSecurePinEntry();
+    bool hasSecurePinEntry(readerID);
+
     std::string signSHA1(std::string hash, EstEidCard::KeyType keyId,
     		std::string pin);
     std::string signSHA1(std::string hash, EstEidCard::KeyType keyId,

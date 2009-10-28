@@ -178,6 +178,12 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		rv = ss->GetCN(subject);
 		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
 
+                if(service->hasSecurePinEntry()) {
+                    eidgui->DebugMessage(NS_LITERAL_STRING("PinPAD detected, using regular prompt because we are too stupid to use it (yet)"));
+                } else {
+                    eidgui->DebugMessage(NS_LITERAL_STRING("No PinPAD available, using regular prompt"));
+                }
+
 		eidgui->PromptForSignPIN(parentWin, subject,
 			           url, aHash, pageURL, retrying, tries, &pass);
 
