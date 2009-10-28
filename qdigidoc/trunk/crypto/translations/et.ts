@@ -427,7 +427,7 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
     <message>
         <source>Wrong PIN or PIN is blocked</source>
-        <translation>Vale PIN või PIN on lukkus</translation>
+        <translation type="unfinished">Vale PIN või PIN on lukus</translation>
     </message>
 </context>
 <context>

@@ -397,7 +397,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>Server access certificate password is not valid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligipääsutõendi parool on vale!</translation>
     </message>
 </context>
 <context>
@@ -585,11 +585,11 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Signing certificate is not selected.</source>
-        <translation>Allkirjastamise sertifikaat ei ole valitud</translation>
+        <translation>Allkirjastamise sertifikaat ei ole valitud.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaardilt lugemine ebaõnnestunud</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
@@ -601,7 +601,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaardilt lugemine ebaõnnestunud &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>

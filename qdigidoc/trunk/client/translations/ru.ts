@@ -397,7 +397,7 @@ Start downloading?</source>
     </message>
     <message>
         <source>Server access certificate password is not valid!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль справки допуска неверен!</translation>
     </message>
 </context>
 <context>
@@ -584,11 +584,11 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Signing certificate is not selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат подписи не выбран.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation type="unfinished"></translation>
+        <translation>Считывание с карты прошло неуспешно</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
@@ -600,7 +600,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Считывание с карты прошло неуспешно &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>
@@ -855,11 +855,11 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Signature is not valid &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation type="unfinished">Подпись недействительна &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</translation>
+        <translation>Подпись недействительна &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</translation>
     </message>
     <message>
         <source>Signature status unknown &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;&lt;br /&gt;(%1)</source>
-        <translation type="unfinished">Неизвестный статус пользователя &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;(%1)</translation>
+        <translation>Неизвестный статус пользователя &lt;a href=&quot;help&quot;&gt;Help&lt;/a&gt;(%1)</translation>
     </message>
 </context>
 <context>
