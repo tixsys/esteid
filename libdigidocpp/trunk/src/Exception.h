@@ -24,6 +24,7 @@ namespace digidoc
               CertificateUnknown   = 6,
               NoException          = 0,
               OCSPResponderMissing = 8,
+              OCSPCertMissing      = 9,
               OCSPTimeSlot         = 7,
               PINCanceled          = 2,
               PINFailed            = 4,

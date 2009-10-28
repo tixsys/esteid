@@ -197,6 +197,13 @@ void DDocPrivate::throwError( int err, const std::string &msg, int line ) const 
 		throw e;
 		break;
 	}
+	case ERR_OCSP_CERT_NOTFOUND:
+	{
+		BDocException e( __FILE__, line, "OCSP certificate loading failed");
+		e.setCode( Exception::OCSPCertMissing );
+		throw e;
+		break;
+	}
 	default:
 	{
 		std::ostringstream s;

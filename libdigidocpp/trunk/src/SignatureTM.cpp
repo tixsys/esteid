@@ -107,8 +107,10 @@ void digidoc::SignatureTM::validateOffline() const throw(SignatureException)
     }
     catch( const Exception &e )
     {
-        THROW_SIGNATUREEXCEPTION_CAUSE( e, "OCSP certificate loading failed" );
-    }
+        SignatureException e(__FILE__, __LINE__, "OCSP certificate loading failed");
+        e.setCode( Exception::OCSPCertMissing );
+        throw e;
+	}
     X509Stack_scope x509StackScope(&ocspCerts);
     ocsp.setOCSPCerts(ocspCerts);
     //ocsp.setCertStore(digidoc::X509CertStore::getInstance()->getCertStore());
