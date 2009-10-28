@@ -240,6 +240,16 @@ void Common::mailTo( const QUrl &url )
 	QDesktopServices::openUrl( url );
 }
 
+void Common::showHelp( const QString &msg )
+{
+	QUrl u( "http://support.sk.ee/" );
+	u.addQueryItem( "searchquery", msg );
+	u.addQueryItem( "searchtype", "all" );
+	u.addQueryItem( "_m", "core" );
+	u.addQueryItem( "_a", "searchclient" );
+	QDesktopServices::openUrl( u );
+}
+
 bool Common::startDetached( const QString &program )
 { return startDetached( program, QStringList() ); }
 

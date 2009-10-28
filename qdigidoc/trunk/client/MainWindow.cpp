@@ -731,14 +731,7 @@ void MainWindow::showWarning( const QString &msg )
 {
 	QMessageBox d( QMessageBox::Warning, "QDigDocClient", msg, QMessageBox::Close | QMessageBox::Help, this );
 	if( d.exec() == QMessageBox::Help )
-	{
-		QUrl u( "http://support.sk.ee/" );
-		u.addQueryItem( "searchquery", msg );
-		u.addQueryItem( "searchtype", "all" );
-		u.addQueryItem( "_m", "core" );
-		u.addQueryItem( "_a", "searchclient" );
-		QDesktopServices::openUrl( u );
-	}
+		Common::showHelp( msg );
 }
 
 void MainWindow::viewSignaturesRemove( unsigned int num )

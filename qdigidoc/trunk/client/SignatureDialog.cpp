@@ -23,6 +23,7 @@
 #include "SignatureDialog.h"
 
 #include <common/CertificateWidget.h>
+#include <common/Common.h>
 #include <common/SslCertificate.h>
 
 #include <digidocpp/Document.h>
@@ -188,14 +189,7 @@ void SignatureDialog::showCertificate()
 { CertificateDialog( s.cert(), this ).exec(); }
 
 void SignatureDialog::showHelp()
-{
-	QUrl u( "http://support.sk.ee/" );
-	u.addQueryItem( "searchquery", s.lastError() );
-	u.addQueryItem( "searchtype", "all" );
-	u.addQueryItem( "_m", "core" );
-	u.addQueryItem( "_a", "searchclient" );
-	QDesktopServices::openUrl( u );
-}
+{ Common::showHelp( s.lastError() ); }
 
 void SignatureDialog::showOCSPCertificate()
 { CertificateDialog( s.ocspCert(), this ).exec(); }
