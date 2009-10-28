@@ -76,11 +76,15 @@ public:
 
 
 SSLThread::SSLThread( PKCS11_SLOT *slot, QObject *parent )
-: QThread(parent), loginOk(0), m_slot(slot) {}
+: QThread(parent), loginResult(CKR_OK), m_slot(slot) {}
 
 SSLThread::~SSLThread() { wait(); }
 
-void SSLThread::run() { loginOk = PKCS11_login( m_slot, 0, NULL ); }
+void SSLThread::run()
+{
+	if( PKCS11_login( m_slot, 0, NULL ) < 0 )
+		loginResult = ERR_GET_REASON( ERR_get_error() );
+}
 
 
 
@@ -155,13 +159,13 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	PKCS11_CERT *authcert = &certs[0];
 
 	// Login token
-	int loginOk = 0;
 	if( slot->token->loginRequired )
 	{
 		PinDialog *p = new PinDialog(
 			slot->token->secureLogin ? PinDialog::Pin1PinpadType : PinDialog::Pin1Type,
 			SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ), qApp->activeWindow() );
 		p->setWindowModality( Qt::ApplicationModal );
+		unsigned long err = CKR_OK;
 		if( !slot->token->secureLogin )
 		{
 			if( pin.isNull() )
@@ -172,7 +176,8 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 				p->deleteLater();
 				QCoreApplication::processEvents();
 			}
-			loginOk = PKCS11_login(slot, 0, pin.toUtf8());
+			if( PKCS11_login(slot, 0, pin.toUtf8()) < 0 )
+				err = ERR_GET_REASON( ERR_get_error() );
 		}
 		else
 		{
@@ -188,12 +193,12 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 			while( t->isRunning() && p->isVisible() );
 			bool hidden = p->isHidden();
 			p->deleteLater();
-			loginOk = t->loginOk;
+			err = t->loginResult;
 			delete t;
 			if( hidden )
 				throw std::runtime_error( "" );
 		}
-		switch( ERR_GET_REASON( ERR_get_error() ) )
+		switch( err )
 		{
 		case CKR_OK: break;
 		case CKR_CANCEL:
@@ -202,8 +207,6 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		default:
 			throw std::runtime_error( "PIN1Invalid" ); break;
 		}
-		if ( loginOk != 0 )
-			throw std::runtime_error( "PIN1Invalid" );
 	}
 
 	// Find token key

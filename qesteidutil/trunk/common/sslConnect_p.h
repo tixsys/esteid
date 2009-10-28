@@ -58,7 +58,7 @@ class SSLThread: public QThread
 public:
 	SSLThread( PKCS11_SLOT *slot, QObject *parent = 0 );
 	~SSLThread();
-	int loginOk;
+	unsigned long loginResult;
 
 private:
 	void run();
