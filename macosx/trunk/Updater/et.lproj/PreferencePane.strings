@@ -1,5 +1,6 @@
 "PreferencePane.Action.CheckNow" = "Kontrolli uuendusi";
 "PreferencePane.Action.Cancel" = "Katkesta";
+"PreferencePane.Action.KeychainTool" = "Keychain abivahend";
 "PreferencePane.Action.Retry" = "Proovi uuesti";
 "PreferencePane.Action.UpdateFrequencyNever" = "Ära kontrolli automaatselt uuendusi";
 "PreferencePane.Action.UpdateFrequencyDaily" = "Kontrolli uuendusi iga päev";

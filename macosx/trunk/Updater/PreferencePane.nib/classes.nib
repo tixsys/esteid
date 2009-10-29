@@ -19,6 +19,8 @@
 				<string>id</string>
 				<key>idLogin</key>
 				<string>id</string>
+				<key>keychainTool</key>
+				<string>id</string>
 				<key>update</key>
 				<string>id</string>
 			</dict>
@@ -36,6 +38,8 @@
 				<string>NSTextField</string>
 				<key>m_infoTextView</key>
 				<string>NSTextView</string>
+				<key>m_keychainToolButton</key>
+				<string>NSButton</string>
 				<key>m_manualUpdateButton</key>
 				<string>NSButton</string>
 				<key>m_updateFrequencyPopUpButton</key>

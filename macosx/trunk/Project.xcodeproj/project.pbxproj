@@ -27,6 +27,7 @@
 			);
 			dependencies = (
 				81E7C3D70F9B642900414C34 /* PBXTargetDependency */,
+				81A316471099C9DF003BD18B /* PBXTargetDependency */,
 				81E7C3D90F9B643000414C34 /* PBXTargetDependency */,
 				81E7C3DB0F9B643300414C34 /* PBXTargetDependency */,
 				81E7C3DD0F9B643700414C34 /* PBXTargetDependency */,
@@ -196,8 +197,15 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 81B94E3D109841D90059E208 /* KeychainTool */;
+			remoteGlobalIDString = 81B94E3D109841D90059E208;
 			remoteInfo = KeychainTool;
+		};
+		81A316461099C9DF003BD18B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81B94E3D109841D90059E208 /* Keychain Tool */;
+			remoteInfo = "Keychain Tool";
 		};
 		81E4C8DC0F9C455E00997F53 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1387,6 +1395,11 @@
 			isa = PBXTargetDependency;
 			target = 81B94E3D109841D90059E208 /* Keychain Tool */;
 			targetProxy = 819ACCCF1098AB6A00D99810 /* PBXContainerItemProxy */;
+		};
+		81A316471099C9DF003BD18B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81B94E3D109841D90059E208 /* Keychain Tool */;
+			targetProxy = 81A316461099C9DF003BD18B /* PBXContainerItemProxy */;
 		};
 		81E4C8DD0F9C455E00997F53 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

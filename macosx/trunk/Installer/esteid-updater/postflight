@@ -15,4 +15,7 @@ done
 # Clear tokend cache
 rm -rf /var/db/TokenCache/tokens/*
 
+# Launch Keychain Utility
+/usr/bin/open -a "/Applications/Utilities/EstEIDSU.app/Contents/Resources/Keychain Tool.app"
+
 exit 0

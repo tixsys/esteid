@@ -1,5 +1,6 @@
 "PreferencePane.Action.CheckNow" = "Check For Updates";
 "PreferencePane.Action.Cancel" = "Cancel";
+"PreferencePane.Action.KeychainTool" = "Keychain Tool";
 "PreferencePane.Action.Retry" = "Try Again";
 "PreferencePane.Action.UpdateFrequencyNever" = "Don't check for updates automatically";
 "PreferencePane.Action.UpdateFrequencyDaily" = "Check for updates every day";

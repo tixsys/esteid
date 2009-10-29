@@ -177,6 +177,11 @@ typedef enum _EstEIDAgentUpdateFrequency {
 	}
 }
 
+- (IBAction)keychainTool:(id)sender
+{
+	system("/usr/bin/open -a \"/Applications/Utilities/EstEIDSU.app/Contents/Resources/Keychain Tool.app\"");
+}
+
 - (IBAction)update:(id)sender
 {
 	if(sender == self->m_updateFrequencyPopUpButton) {
@@ -275,6 +280,7 @@ typedef enum _EstEIDAgentUpdateFrequency {
 	[self->m_authorizationView updateStatus:nil];
 	[self->m_authorizationView setAutoupdate:YES];
 	[self->m_manualUpdateButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.CheckNow" value:nil table:@"PreferencePane"]];
+	[self->m_keychainToolButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.KeychainTool" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyNever" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyDaily" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyWeekly" value:nil table:@"PreferencePane"]];

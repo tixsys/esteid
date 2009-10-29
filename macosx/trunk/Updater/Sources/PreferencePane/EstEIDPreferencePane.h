@@ -13,6 +13,7 @@
 	EstEIDAgent *m_agent;
 	IBOutlet SFAuthorizationView *m_authorizationView;
 	IBOutlet NSButton *m_idLoginButton;
+	IBOutlet NSButton *m_keychainToolButton;
 	IBOutlet NSButton *m_manualUpdateButton;
 	IBOutlet NSTextField *m_infoTextField;
 	IBOutlet NSTextView *m_infoTextView;
@@ -50,5 +51,7 @@
  * @param sender Typically the object that invoked this method.
  */
 - (IBAction)update:(id)sender;
+
+- (IBAction)keychainTool:(id)sender;
 
 @end
