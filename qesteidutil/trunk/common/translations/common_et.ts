@@ -277,11 +277,11 @@
     <name>SSLConnect</name>
     <message>
         <source>PIN canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN sisestamine katkestati</translation>
     </message>
     <message>
         <source>Invalid PIN</source>
-        <translation type="unfinished"></translation>
+        <translation>Vale PIN</translation>
     </message>
 </context>
 </TS>
