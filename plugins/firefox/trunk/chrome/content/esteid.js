@@ -33,25 +33,30 @@ function showNormalIcon() {
 
 function showErrorIcon() {
   var elt = document.getElementById('eidicon');
-  elt.src = "chrome://global/skin/icons/error-16.png";
+  elt.src = "chrome://esteid/skin/id-error-16.png";
 }
 
 function showWarnIcon() {
   var elt = document.getElementById('eidicon');
-  elt.src = "chrome://global/skin/icons/warning-16.png";
+  elt.src = "chrome://esteid/skin/id-warning-16.png";
+}
+
+function isBrowser() {
+    var com = document.getElementById('esteidbrowserpanel');
+    return (com != null);
 }
 
 function LoadEstEID() {
-    try {
-        var com = Components.classes["@id.eesti.ee/esteid;1"]
-                            .createInstance(Components.interfaces.nsIEstEID);
-        // var com = document.getElementById('eidplugin');
+    if(isBrowser()) {
+        try {
+            var com = document.getElementById('eidplugin');
 
-        esteid_log("Plugin Version: " + com.getVersion() + "\n");
-        var elt = document.getElementById('esteidpanel');
-	elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
-    } catch (anError) {
-        esteid_error(anError);
+            esteid_log("Plugin Version: " + com.getVersion() + "\n");
+            var elt = document.getElementById('esteidbrowserpanel');
+	    elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
+        } catch (anError) {
+            esteid_error(anError);
+        }
     }
 
     try {

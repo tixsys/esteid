@@ -272,14 +272,20 @@ function ConfigureEstEID() {
     }
 
     /* Find CA Certificates and construct a list of fingerprints */
+    var caCertIDs = new Array();
     var certdb    = Cc[nsX509CertDB]  .createInstance(Ci.nsIX509CertDB);
     var certdb2   = certdb.QueryInterface(Ci.nsIX509CertDB2);
-    var certcache = Cc[nsNSSCertCache].createInstance(Ci.nsINSSCertCache);
 
+/*  This works as documented with FF >= 3.0,
+ *  but we need Thunderbird 2.0 support as well so
+ *  we are currently using code that relies on undocumented
+ *  behaviour below :(
+ *  FIXME: Use this code after dropping 2.0 support
+
+    var certcache = Cc[nsNSSCertCache].createInstance(Ci.nsINSSCertCache);
     certcache.cacheAllCerts();
     var certList = certcache.getX509CachedCerts().getEnumerator();
 
-    var caCertIDs = new Array();
     while (certList.hasMoreElements()) {
         var next = certList.getNext();
         var cert = next.QueryInterface(Ci.nsIX509Cert);
@@ -287,6 +293,22 @@ function ConfigureEstEID() {
         if (cert && cert2 && cert2.certType == Ci.nsIX509Cert.CA_CERT) {
             caCertIDs.push(cert.sha1Fingerprint);
         }
+    }
+*/
+
+    var cnt = new Object(); var nicks = new Object(); 
+    certdb.findCertNicknames(null, Ci.nsIX509Cert.CA_CERT, cnt, nicks);
+    nicks = nicks.value;
+    esteid_debug("Found " + nicks.length + " CA certs from database");
+    for(var i = 0; i < nicks.length; i++) {
+        /* UNDOCUMENTED CRAP!
+         * The strings in array do NOT contain a nickname but
+         * are actually in format: \001Token Name\001Cert Name\001DbKey
+         * See: security/manager/ssl/src/nsNSSCertificateDB.cpp
+         */
+        var tmp = nicks[i].split("\001");
+        var cert = certdb.findCertByDBKey(tmp[tmp.length-1], null);
+        caCertIDs.push(cert.sha1Fingerprint);
     }
 
     var EstEIDcertIDs = new Array();
@@ -319,14 +341,23 @@ function ConfigureEstEID() {
             try {
                 var pem = PEM2Base64(data);
                 var cert = certdb.constructX509FromBase64(pem);
-                var cert2 = cert.QueryInterface(Ci.nsIX509Cert2);
 
                 /* If NOT a CA cert go to next file */
-                if(cert2.certType != Ci.nsIX509Cert.CA_CERT) continue;
+
+                /* FIXME: Remove else block along with Thunderbird 2.0 support */
+                if(Ci.nsIX509Cert2) {
+                    var cert2 = cert.QueryInterface(Ci.nsIX509Cert2);
+                    if(cert2.certType != Ci.nsIX509Cert.CA_CERT) continue;
+                } else {
+                    var r = cert.verifyForUsage(Ci.nsIX509Cert.CERT_USAGE_SSLCA);
+                    if(r != Ci.nsIX509Cert.VERIFIED_OK &&
+                       r != Ci.nsIX509Cert.ISSUER_NOT_TRUSTED &&
+                       r != Ci.nsIX509Cert.ISSUER_UNKNOWN) continue;
+                }
 
                 EstEIDcertIDs.push(cert.sha1Fingerprint);
                 if(caCertIDs.indexOf(cert.sha1Fingerprint) >= 0) continue;
-                esteid_log("Adding to store: " + file.leafName);
+                esteid_log("Adding to database: " + file.leafName);
                 certdb2.addCertFromBase64(pem, "C,C,P", "");
             } catch(e) {
                 esteid_error("Unable to parse " + file.leafName + ": " + e);

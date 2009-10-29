@@ -76,11 +76,11 @@ add_custom_target( xpi ALL
 add_dependencies( xpi xpi-jar)
 add_dependencies( xpi jsesteid)
 
-add_custom_target(run
+add_custom_target(runff
 	DEPENDS run-in-ff.sh
 	COMMAND ${PROJECT_SOURCE_DIR}/run-in-ff.sh esteid-${PROJECT_VERSION}.xpi
 )
-add_dependencies(run xpi)
+add_dependencies(runff xpi)
 
 add_custom_target(runtb
 	DEPENDS run-in-tb.sh

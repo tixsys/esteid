@@ -1,4 +1,131 @@
-Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
+try {
+  Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
+} catch(e) {
+  // Ugly, ugly copy-paste from modules/XPCOMUtils.jsm to support
+  // thunderbird 2.0 that does not have XPCOMUtils.
+  // Remove when this old beast is abandoned for good
+
+// FIXME: Remove this code as soon as possible
+// ======================   CUT HERE   =============================
+const Ci = Components.interfaces;
+const Cr = Components.results;
+
+var XPCOMUtils = {
+  generateQI: function(interfaces) {
+    return makeQI([i.name for each(i in interfaces)]);
+  },
+  generateModule: function(componentsArray, postRegister, preUnregister) {
+    let classes = [];
+    for each (let component in componentsArray) {
+      classes.push({
+        cid:          component.prototype.classID,
+        className:    component.prototype.classDescription,
+        contractID:   component.prototype.contractID,
+        factory:      this._getFactory(component),
+        categories:   component.prototype._xpcom_categories
+      });
+    }
+
+    return { // nsIModule impl.
+      getClassObject: function(compMgr, cid, iid) {
+        // We only support nsIFactory queries, not nsIClassInfo
+        if (!iid.equals(Ci.nsIFactory))
+          throw Cr.NS_ERROR_NOT_IMPLEMENTED;
+
+        for each (let classDesc in classes) {
+          if (classDesc.cid.equals(cid))
+            return classDesc.factory;
+        }
+
+        throw Cr.NS_ERROR_FACTORY_NOT_REGISTERED;
+      },
+
+      registerSelf: function(compMgr, fileSpec, location, type) {
+        var componentCount = 0;
+        debug("*** registering " + fileSpec.leafName + ": [ ");
+        compMgr.QueryInterface(Ci.nsIComponentRegistrar);
+
+        for each (let classDesc in classes) {
+          debug((componentCount++ ? ", " : "") + classDesc.className);
+          compMgr.registerFactoryLocation(classDesc.cid,
+                                          classDesc.className,
+                                          classDesc.contractID,
+                                          fileSpec,
+                                          location,
+                                          type);
+          if (classDesc.categories) {
+            let catMan = XPCOMUtils.categoryManager;
+            for each (let cat in classDesc.categories) {
+              let defaultValue = (cat.service ? "service," : "") +
+                                 classDesc.contractID;
+              catMan.addCategoryEntry(cat.category,
+                                      cat.entry || classDesc.className,
+                                      cat.value || defaultValue,
+                                      true, true);
+            }
+          }
+        }
+
+        if (postRegister)
+          postRegister(compMgr, fileSpec, componentsArray);
+        debug(" ]\n");
+      },
+
+      unregisterSelf: function(compMgr, fileSpec, location) {
+        var componentCount = 0;
+        debug("*** unregistering " + fileSpec.leafName + ": [ ");
+        compMgr.QueryInterface(Ci.nsIComponentRegistrar);
+        if (preUnregister)
+          preUnregister(compMgr, fileSpec, componentsArray);
+
+        for each (let classDesc in classes) {
+          debug((componentCount++ ? ", " : "") + classDesc.className);
+          if (classDesc.categories) {
+            let catMan = XPCOMUtils.categoryManager;
+            for each (let cat in classDesc.categories) {
+              catMan.deleteCategoryEntry(cat.category,
+                                         cat.entry || classDesc.className,
+                                         true);
+            }
+          }
+          compMgr.unregisterFactoryLocation(classDesc.cid, fileSpec);
+        }
+        debug(" ]\n");
+      },
+
+      canUnload: function(compMgr) {
+        return true;
+      }
+    };
+  },
+  _getFactory: function(component) {
+    var factory = component.prototype._xpcom_factory;
+    if (!factory) {
+      factory = {
+        createInstance: function(outer, iid) {
+          if (outer)
+            throw Cr.NS_ERROR_NO_AGGREGATION;
+          return (new component()).QueryInterface(iid);
+        }
+      }
+    }
+    return factory;
+  }
+};
+function makeQI(interfaceNames) {
+  return function XPCOMUtils_QueryInterface(iid) {
+    if (iid.equals(Ci.nsISupports))
+      return this;
+    for each(let interfaceName in interfaceNames) {
+      if (Ci[interfaceName].equals(iid))
+        return this;
+    }
+
+    throw Cr.NS_ERROR_NO_INTERFACE;
+  };
+}
+}
+// ======================   CUT HERE   =============================
 
 var nsEstEIDPrivateInterface_list =
     [Components.interfaces.nsIEstEIDPrivate,
