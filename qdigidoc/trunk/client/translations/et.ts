@@ -593,7 +593,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Kaardilt lugemine ebaõnnestunud</translation>
+        <translation>Vale PIN</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>

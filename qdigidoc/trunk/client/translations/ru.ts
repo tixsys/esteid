@@ -592,7 +592,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Считывание с карты прошло неуспешно</translation>
+        <translation>Неверный PIN</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
