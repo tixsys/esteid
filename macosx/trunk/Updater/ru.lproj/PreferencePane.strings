@@ -1,6 +1,6 @@
 ﻿"PreferencePane.Action.CheckNow" = "Проверить на обновления";
 "PreferencePane.Action.Cancel" = "Отмена";
-"PreferencePane.Action.KeychainTool" = "Keychain Tool";
+"PreferencePane.Action.KeychainTool" = "Инструмент Keychain";
 "PreferencePane.Action.Retry" = "Попробовать заново";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Пожалуйста убедитесь, что id-карта вставлена в считыватель и попробуйте заново.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "Неудачный вход с -картой.";
