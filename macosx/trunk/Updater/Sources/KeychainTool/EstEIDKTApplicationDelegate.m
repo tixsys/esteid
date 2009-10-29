@@ -2,6 +2,9 @@
 
 #import "EstEIDKTApplicationDelegate.h"
 #import "EstEIDKTCertificate.h"
+#import "NSString+Additions.h"
+
+static NSString *EstEIDKTApplicationDelegateWebsiteColumn = @"website";
 
 @implementation EstEIDKTApplicationDelegate
 
@@ -10,25 +13,32 @@
 	return (EstEIDKTApplicationDelegate *)[[NSApplication sharedApplication] delegate];
 }
 
-- (IBAction)changeLanguage:(id)sender
+- (NSString *)pathForResource:(NSString *)resource ofType:(NSString *)type
 {
-	switch([self->m_languagePopUpButton selectedTag]) {
+	return [[NSBundle mainBundle] pathForResource:resource ofType:type];
+}
+
+- (NSString *)stringForKey:(NSString *)key
+{
+	/*switch([self->m_languagePopUpButton selectedTag]) {
 		case EstEIDKTLanguageEstonian:
-			
 			break;
 		case EstEIDKTLanguageRussian:
-			
 			break;
-		//case EstEIDKTLanguageEnglish:
-		//	break;
-		default:
-			[self->m_prevButton setTitle:NSLocalizedStringFromTable(@"KeychainTool.Action.Cancel", @"KeychainTool", nil)];
-			[self->m_nextButton setTitle:NSLocalizedStringFromTable(@"KeychainTool.Action.Next", @"KeychainTool", nil)];
-			[self->m_saveButton setTitle:NSLocalizedStringFromTable(@"KeychainTool.Action.Save", @"KeychainTool", nil)];
-			[self->m_window setTitle:NSLocalizedStringFromTable(@"KeychainTool.Title", @"KeychainTool", nil)];
-			[self->m_textView readRTFDFromFile:[[NSBundle mainBundle] pathForResource:@"KeychainTool" ofType:@"rtf"]];
+		case EstEIDKTLanguageEnglish:
 			break;
-	}
+	}*/
+	
+	return NSLocalizedStringFromTable(key, @"KeychainTool", nil);
+}
+
+- (IBAction)changeLanguage:(id)sender
+{
+	[self->m_prevButton setTitle:[self stringForKey:@"KeychainTool.Action.Cancel"]];
+	[self->m_nextButton setTitle:[self stringForKey:@"KeychainTool.Action.Next"]];
+	[self->m_saveButton setTitle:[self stringForKey:@"KeychainTool.Action.Save"]];
+	[self->m_window setTitle:[self stringForKey:@"KeychainTool.Title"]];
+	[self->m_textView readRTFDFromFile:[self pathForResource:@"KeychainTool" ofType:@"rtf"]];
 }
 
 - (IBAction)prev:(id)sender
@@ -55,23 +65,61 @@
 				self->m_certificate = [[EstEIDKTCertificate alloc] init];
 				
 				if(self->m_certificate) {
+					[self->m_websites removeAllObjects];
+					[self->m_websites addObjectsFromArray:[self->m_certificate websites]];
 					[self->m_infoTextField setStringValue:[self->m_certificate CN]];
 					[self->m_tabView selectLastTabViewItem:nil];
 				} else {
-					NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedStringFromTable(@"KeychainTool.Alert.CardNotFound.Title", @"KeychainTool", nil)
-													 defaultButton:NSLocalizedStringFromTable(@"KeychainTool.Action.Retry", @"KeychainTool", nil)
-												   alternateButton:NSLocalizedStringFromTable(@"KeychainTool.Action.Cancel", @"KeychainTool", nil)
+					NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.CardNotFound.Title"]
+													 defaultButton:[self stringForKey:@"KeychainTool.Action.Retry"]
+												   alternateButton:[self stringForKey:@"KeychainTool.Action.Cancel"]
 													   otherButton:nil
-										 informativeTextWithFormat:NSLocalizedStringFromTable(@"KeychainTool.Alert.CardNotFound.Message", @"KeychainTool", nil), nil];
+										 informativeTextWithFormat:[self stringForKey:@"KeychainTool.Alert.CardNotFound.Message"], nil];
+					
+					NSBeep();
 					
 					if([alert runModal] != NSAlertAlternateReturn) {
 						retry = YES;
 					}
 				}
 				break;
-			case 1:
-				// Launch agent tool
-				break;
+			case 1: {
+				NSEnumerator *enumerator = [self->m_websites objectEnumerator];
+				NSString *website;
+				
+				while((website = [enumerator nextObject]) != nil) {
+					if(![NSURL URLWithString:website]) {
+						NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.InvalidURL.Title"]
+														 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]
+													   alternateButton:nil
+														   otherButton:nil
+											 informativeTextWithFormat:[NSString stringWithFormat:[self stringForKey:@"KeychainTool.Alert.InvalidURL.Message"], website], nil];
+						
+						NSBeep();
+						[alert runModal];
+						return;
+					}
+				}
+				
+				if([self->m_certificate setWebsites:self->m_websites]) {
+					NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.SaveSuccess.Title"]
+													 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]
+												   alternateButton:nil
+													   otherButton:nil
+										 informativeTextWithFormat:[self stringForKey:@"KeychainTool.Alert.SaveSuccess.Message"], nil];
+					
+					[alert runModal];
+				} else {
+					NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.SaveFailure.Title"]
+													 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]
+												   alternateButton:nil
+													   otherButton:nil
+										 informativeTextWithFormat:[self stringForKey:@"KeychainTool.Alert.SaveFailure.Message"], nil];
+					
+					NSBeep();
+					[alert runModal];
+				}
+				} break;
 		}
 	} while(retry);
 }
@@ -80,27 +128,61 @@
 
 - (int)numberOfRowsInTableView:(NSTableView *)tableView
 {
-	return 0;
+	return [self->m_websites count] + 1;
 }
 
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
 {
+	if([[tableColumn identifier] isEqualToString:EstEIDKTApplicationDelegateWebsiteColumn]) {
+		[cell setPlaceholderString:[self stringForKey:@"KeychainTool.Placeholder.Website"]];
+	}
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
 {
-	return nil;
+	if([[tableColumn identifier] isEqualToString:EstEIDKTApplicationDelegateWebsiteColumn]) {
+		if(rowIndex < [self->m_websites count]) {
+			return [self->m_websites objectAtIndex:rowIndex];
+		}
+	}
+	
+	return @"";
 }
 
 - (void)tableView:(NSTableView *)tableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)tableColumn row:(int)rowIndex
 {
-	
+	if([[tableColumn identifier] isEqualToString:EstEIDKTApplicationDelegateWebsiteColumn]) {
+		NSString *value = [anObject trimmedString];
+		
+		if(rowIndex < [self->m_websites count]) {
+			if([value length] == 0) {
+				[self->m_websites removeObjectAtIndex:rowIndex];
+				[self->m_tableView reloadData];
+			} else if(![self->m_websites containsObject:value]) {
+				[self->m_websites replaceObjectAtIndex:rowIndex withObject:value];
+				[self->m_tableView reloadData];
+			}
+		} else {
+			if([value length] > 0 && ![self->m_websites containsObject:value]) {
+				[self->m_websites addObject:value];
+				[self->m_tableView reloadData];
+			}
+		}
+	}
 }
 
 #pragma mark NSTableView+Delegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
+}
+
+- (void)tableViewOnDelete:(NSTableView *)tableView row:(int)rowIndex
+{
+	if(rowIndex < [self->m_websites count]) {
+		[self->m_websites removeObjectAtIndex:rowIndex];
+		[self->m_tableView reloadData];
+	}
 }
 
 #pragma mark NSApplication+Delegate
@@ -118,9 +200,21 @@
 
 #pragma mark NSObject
 
+- (id)init
+{
+	self = [super init];
+	
+	if(self) {
+		self->m_websites = [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
 - (void)dealloc
 {
 	[self->m_certificate release];
+	[self->m_websites release];
 	
 	[super dealloc];
 }

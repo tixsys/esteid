@@ -130,6 +130,18 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 	return self->m_CN;
 }
 
+- (NSArray *)websites
+{
+	NSMutableArray *websites = [NSMutableArray array];
+	
+	return websites;
+}
+
+- (BOOL)setWebsites:(NSArray *)websites
+{
+	return NO;
+}
+
 #pragma mark NSObject
 
 - (id)init
@@ -152,7 +164,6 @@ static NSDate *X509DateToNSDate(ASN1_TIME *date)
 		
 		delete manager;
 	}
-	// SCError?
 	catch(std::runtime_error err) {
 		[self release];
 		self = nil;

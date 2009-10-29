@@ -114,4 +114,9 @@
 	return result;
 }
 
+- (NSString *)trimmedString
+{
+	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
 @end

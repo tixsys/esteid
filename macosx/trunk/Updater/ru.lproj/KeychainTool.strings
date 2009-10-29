@@ -1,7 +1,15 @@
 "KeychainTool.Action.Cancel" = "Отмена";
+"KeychainTool.Action.Close" = "Close";
 "KeychainTool.Action.Next" = "Next";
 "KeychainTool.Action.Save" = "Save";
 "KeychainTool.Action.Retry" = "Попробовать заново";
+"KeychainTool.Alert.CardNotFound.Message" = "Пожалуйста убедитесь, что id-карта вставлена в считыватель и попробуйте заново.";
+"KeychainTool.Alert.CardNotFound.Title" = "Failed to read authentification certificate.";
+"KeychainTool.Alert.InvalidURL.Title" = "Invalid website address";
+"KeychainTool.Alert.InvalidURL.Message" = "'%@' is not a valid website address.";
+"KeychainTool.Alert.SaveFailure.Title" = "Save Failed";
+"KeychainTool.Alert.SaveFailure.Message" = "Couldn't save the new list of websites.";
+"KeychainTool.Alert.SaveSuccess.Title" = "Save Succeeded";
+"KeychainTool.Alert.SaveSuccess.Message" = "Saved the new list of websites successfully!";
+"KeychainTool.Placeholder.Website" = "Insert a new website here";
 "KeychainTool.Title" = "Estonian ID-card Keychain Tool";
-"KeychainTool.Alert.IdLogin.CardNotFound.Message" = "Пожалуйста убедитесь, что id-карта вставлена в считыватель и попробуйте заново.";
-"KeychainTool.Alert.IdLogin.CardNotFound.Title" = "Failed to read authentification certificate.";

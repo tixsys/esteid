@@ -14,6 +14,7 @@ typedef enum _EstEIDTKLanguage {
 {
 	@private
 	EstEIDKTCertificate *m_certificate;
+	NSMutableArray *m_websites;
 	IBOutlet NSPopUpButton *m_languagePopUpButton;
 	IBOutlet NSButton *m_prevButton;
 	IBOutlet NSButton *m_nextButton;
@@ -30,5 +31,8 @@ typedef enum _EstEIDTKLanguage {
 - (IBAction)changeLanguage:(id)sender;
 - (IBAction)prev:(id)sender;
 - (IBAction)next:(id)sender;
+
+- (NSString *)pathForResource:(NSString *)resource ofType:(NSString *)type;
+- (NSString *)stringForKey:(NSString *)key;
 
 @end

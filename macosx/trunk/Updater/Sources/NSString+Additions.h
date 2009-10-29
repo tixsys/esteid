@@ -50,4 +50,10 @@
  */
 - (NSString *)sha1String;
 
+/**
+ * @name Helpers
+ */
+
+- (NSString *)trimmedString;
+
 @end

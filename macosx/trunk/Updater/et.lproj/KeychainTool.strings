@@ -1,7 +1,15 @@
 "KeychainTool.Action.Cancel" = "Katkesta";
+"KeychainTool.Action.Close" = "Sulge";
 "KeychainTool.Action.Next" = "Edasi";
 "KeychainTool.Action.Save" = "Salvesta";
 "PreferencePane.Action.Retry" = "Proovi uuesti";
+"KeychainTool.Alert.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
+"KeychainTool.Alert.CardNotFound.Title" = "Autentimissertifikaadi lugemine ebaõnnestus";
+"KeychainTool.Alert.InvalidURL.Title" = "Mittesobiv veebiaadress";
+"KeychainTool.Alert.InvalidURL.Message" = "'%@' ei ole sobiv veebiaadress.";
+"KeychainTool.Alert.SaveFailure.Title" = "Salvestamine ebaõnnestus";
+"KeychainTool.Alert.SaveFailure.Message" = "Ei õnnestunud salvestada uut nimekirja veebiaadressidega.";
+"KeychainTool.Alert.SaveSuccess.Title" = "Salvestamine õnnestus";
+"KeychainTool.Alert.SaveSuccess.Message" = "Uue veebiaadresside nimekirja salvestamine õnnestus!";
+"KeychainTool.Placeholder.Website" = "Sisesta uus veebisait siia";
 "KeychainTool.Title" = "Eesti ID-kaardi Keychain Abivahend";
-"KeychainTool.Alert.IdLogin.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
-"KeychainTool.Alert.IdLogin.CardNotFound.Title" = "Autentimissertifikaadi lugemine ebaõnnestus";

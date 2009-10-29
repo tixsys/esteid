@@ -13,5 +13,7 @@
 - (id)initWithData:(NSData *)data;
 
 - (NSString *)CN;
+- (NSArray *)websites;
+- (BOOL)setWebsites:(NSArray *)websites;
 
 @end
