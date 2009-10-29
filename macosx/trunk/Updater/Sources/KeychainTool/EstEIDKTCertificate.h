@@ -5,8 +5,7 @@
 @interface EstEIDKTCertificate : NSObject
 {
 	@private
-	NSString *m_CN;
-	void *m_x509;
+	void *m_internal;
 }
 
 - (id)init;

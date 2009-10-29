@@ -68,7 +68,6 @@
 		81303BA30F596C970029C4D7 /* NSObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303BA20F596C970029C4D7 /* NSObject+Additions.m */; };
 		81303CC90F597FCD0029C4D7 /* NSBundle+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303CC80F597FCD0029C4D7 /* NSBundle+Additions.m */; };
 		81303D9A0F5998D30029C4D7 /* EstEIDManifestDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303D990F5998D30029C4D7 /* EstEIDManifestDownload.m */; };
-		8145A1910FF11BED003A9708 /* Info.r in Rez */ = {isa = PBXBuildFile; fileRef = 8145A1080FF11948003A9708 /* Info.r */; };
 		814F310A0F93F0C700A89C70 /* EstEIDManifestPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31090F93F0C700A89C70 /* EstEIDManifestPackage.m */; };
 		814F31F10F9407BE00A89C70 /* EstEIDInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F31F00F9407BE00A89C70 /* EstEIDInstaller.m */; };
 		814F34A60F94473500A89C70 /* EstEIDPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 814F34A50F94473500A89C70 /* EstEIDPackage.m */; };
@@ -139,10 +138,11 @@
 		819ACB8710987DC800D99810 /* SmartCardManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A027910877355006FB22C /* SmartCardManager.cpp */; };
 		819ACB8810987DC800D99810 /* types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026910877355006FB22C /* types.cpp */; };
 		819ACB981098800D00D99810 /* EstEIDKTCertificate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */; };
-		819ACCD21098AB7B00D99810 /* KeychainTool.app in Resources */ = {isa = PBXBuildFile; fileRef = 81B94E3E109841D90059E208 /* KeychainTool.app */; };
+		819ACCD21098AB7B00D99810 /* Keychain Tool.app in Resources */ = {isa = PBXBuildFile; fileRef = 81B94E3E109841D90059E208 /* Keychain Tool.app */; };
 		819ACD53109939B600D99810 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
 		819ACD9010993C3600D99810 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
 		819ACDC01099424100D99810 /* NSTableView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 819ACDBF1099424100D99810 /* NSTableView+Additions.m */; };
+		819ACE2B10994BC100D99810 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
 		81B0FB860FC70A0700B24817 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
 		81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC760FC70E7400B24817 /* PreferencePane.nib */; };
 		81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC780FC70E8800B24817 /* MainMenu.xib */; };
@@ -364,7 +364,7 @@
 		81B0FB850FC70A0700B24817 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Updater/Images/Icon.icns; sourceTree = "<group>"; };
 		81B0FC760FC70E7400B24817 /* PreferencePane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PreferencePane.nib; path = Updater/PreferencePane.nib; sourceTree = "<group>"; };
 		81B0FC780FC70E8800B24817 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Updater/MainMenu.xib; sourceTree = "<group>"; };
-		81B94E3E109841D90059E208 /* KeychainTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeychainTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		81B94E3E109841D90059E208 /* Keychain Tool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Keychain Tool.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81B94E4A109849470059E208 /* EstEIDKTApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDKTApplicationDelegate.h; path = Updater/Sources/KeychainTool/EstEIDKTApplicationDelegate.h; sourceTree = "<group>"; };
 		81B94E4B109849470059E208 /* EstEIDKTApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDKTApplicationDelegate.m; path = Updater/Sources/KeychainTool/EstEIDKTApplicationDelegate.m; sourceTree = "<group>"; };
 		81B94E4C109849470059E208 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Updater/Sources/KeychainTool/main.m; sourceTree = "<group>"; };
@@ -451,6 +451,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				819ACE2B10994BC100D99810 /* Security.framework in Frameworks */,
 				81B94F0310984B0A0059E208 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,7 +581,7 @@
 				81BF40630F56E78000F60FED /* EstEIDSU.app */,
 				81E4C8CC0F9C43F200997F53 /* EstEIDSU.octest */,
 				817944A40F973E6F007E0C96 /* agent */,
-				81B94E3E109841D90059E208 /* KeychainTool.app */,
+				81B94E3E109841D90059E208 /* Keychain Tool.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -863,9 +864,9 @@
 			productReference = 817944A40F973E6F007E0C96 /* agent */;
 			productType = "com.apple.product-type.tool";
 		};
-		81B94E3D109841D90059E208 /* KeychainTool */ = {
+		81B94E3D109841D90059E208 /* Keychain Tool */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "KeychainTool" */;
+			buildConfigurationList = 81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "Keychain Tool" */;
 			buildPhases = (
 				81B94E3A109841D90059E208 /* Resources */,
 				81B94E3B109841D90059E208 /* Sources */,
@@ -876,9 +877,9 @@
 			);
 			dependencies = (
 			);
-			name = KeychainTool;
+			name = "Keychain Tool";
 			productName = KeychainTool;
-			productReference = 81B94E3E109841D90059E208 /* KeychainTool.app */;
+			productReference = 81B94E3E109841D90059E208 /* Keychain Tool.app */;
 			productType = "com.apple.product-type.application";
 		};
 		81BF40620F56E78000F60FED /* Updater */ = {
@@ -961,7 +962,6 @@
 			buildPhases = (
 				81F874890F56085100FCAB5D /* Resources */,
 				81F8748A0F56085100FCAB5D /* Sources */,
-				8145A1980FF11BFA003A9708 /* Rez */,
 				81F8748B0F56085100FCAB5D /* Frameworks */,
 				81F0FBA80FD6CE6B0093DA43 /* ShellScript */,
 			);
@@ -1015,7 +1015,7 @@
 			targets = (
 				817944A30F973E6F007E0C96 /* Updater Agent */,
 				81F875990F560E9A00FCAB5D /* Updater Preference Pane */,
-				81B94E3D109841D90059E208 /* KeychainTool */,
+				81B94E3D109841D90059E208 /* Keychain Tool */,
 				81BF40620F56E78000F60FED /* Updater */,
 				81E4C8CB0F9C43F200997F53 /* Updater Tests */,
 				8122F1110F55F75500FA51CD /* Finder Plug-In */,
@@ -1053,7 +1053,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				819ACCD21098AB7B00D99810 /* KeychainTool.app in Resources */,
+				819ACCD21098AB7B00D99810 /* Keychain Tool.app in Resources */,
 				8179469C0F975FE7007E0C96 /* agent in Resources */,
 				81BF40B30F56ECB200F60FED /* Localizable.strings in Resources */,
 				81BF40B40F56ECB200F60FED /* InfoPlist.strings in Resources */,
@@ -1108,17 +1108,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXRezBuildPhase section */
-		8145A1980FF11BFA003A9708 /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8145A1910FF11BED003A9708 /* Info.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXRezBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		819ACCFF1098ABF700D99810 /* ShellScript */ = {
@@ -1390,7 +1379,7 @@
 		};
 		819ACCD01098AB6A00D99810 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 81B94E3D109841D90059E208 /* KeychainTool */;
+			target = 81B94E3D109841D90059E208 /* Keychain Tool */;
 			targetProxy = 819ACCCF1098AB6A00D99810 /* PBXContainerItemProxy */;
 		};
 		81E4C8DD0F9C455E00997F53 /* PBXTargetDependency */ = {
@@ -1690,7 +1679,7 @@
 					/usr/local/lib/libcrypto.a,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = KeychainTool;
+				PRODUCT_NAME = "Keychain Tool";
 			};
 			name = Debug;
 		};
@@ -1719,7 +1708,7 @@
 					/usr/local/lib/libcrypto.a,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = KeychainTool;
+				PRODUCT_NAME = "Keychain Tool";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2130,7 +2119,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "KeychainTool" */ = {
+		81B94E43109841DA0059E208 /* Build configuration list for PBXNativeTarget "Keychain Tool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				81B94E41109841DA0059E208 /* Debug */,
