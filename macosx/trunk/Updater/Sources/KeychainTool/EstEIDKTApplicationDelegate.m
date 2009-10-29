@@ -147,6 +147,8 @@ static NSString *EstEIDKTApplicationLanguageKey = @"language";
 										 informativeTextWithFormat:[self stringForKey:@"KeychainTool.Alert.SaveSuccess.Message"], nil];
 					
 					[alert runModal];
+					
+					[[NSApplication sharedApplication] terminate:nil];
 				} else {
 					NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.SaveFailure.Title"]
 													 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]
