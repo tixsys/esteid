@@ -62,6 +62,8 @@ MainWindow::MainWindow( QWidget *parent )
 	setupUi( this );
 
 	cards->hide();
+	cards->hack();
+	languages->hack();
 
 	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
 #if QT_VERSION >= 0x040500
@@ -77,6 +79,7 @@ MainWindow::MainWindow( QWidget *parent )
 	QDesktopServices::setUrlHandler( "mailto", common, "mailTo" );
 
 	Settings s;
+	// Mobile
 	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
 	infoMobileCode->setText( s.value( "Client/MobileCode" ).toString() );
 	infoMobileCell->setText( s.value( "Client/MobileNumber", "+372" ).toString() );
@@ -84,6 +87,7 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( infoMobileCell, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
 	connect( infoSignMobile, SIGNAL(toggled(bool)), SLOT(showCardStatus()) );
 
+	// Buttons
 	QButtonGroup *buttonGroup = new QButtonGroup( this );
 
 	buttonGroup->addButton( settings, HeadSettings );
@@ -109,19 +113,25 @@ MainWindow::MainWindow( QWidget *parent )
 
 	connect( infoCard, SIGNAL(linkActivated(QString)), SLOT(parseLink(QString)) );
 
-	appTranslator = new QTranslator( this );
-	commonTranslator = new QTranslator( this );
-	qtTranslator = new QTranslator( this );
-	QApplication::instance()->installTranslator( appTranslator );
-	QApplication::instance()->installTranslator( commonTranslator );
-	QApplication::instance()->installTranslator( qtTranslator );
-
+	// Digidoc
 	doc = new DigiDoc( this );
 	connect( cards, SIGNAL(activated(QString)), doc, SLOT(selectCard(QString)) );
 	connect( doc, SIGNAL(error(QString)), SLOT(showWarning(QString)) );
 	connect( doc, SIGNAL(dataChanged()), SLOT(showCardStatus()) );
 	m_loaded = doc->init();
 
+	// Translations
+	appTranslator = new QTranslator( this );
+	commonTranslator = new QTranslator( this );
+	qtTranslator = new QTranslator( this );
+	QApplication::instance()->installTranslator( appTranslator );
+	QApplication::instance()->installTranslator( commonTranslator );
+	QApplication::instance()->installTranslator( qtTranslator );
+	lang << "et" << "en" << "ru";
+	on_languages_activated( lang.indexOf(
+		s.value( "Main/Language", "et" ).toString() ) );
+
+	// Views
 	signContentView->setColumnHidden( 2, true );
 	viewContentView->setColumnHidden( 3, true );
 	connect( signContentView, SIGNAL(remove(unsigned int)),
@@ -133,13 +143,8 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( viewContentView, SIGNAL(save(unsigned int,QString)),
 		doc, SLOT(saveDocument(unsigned int,QString)) );
 
-	cards->hack();
-	languages->hack();
-	lang << "et" << "en" << "ru";
-	on_languages_activated( lang.indexOf(
-		s.value( "Main/Language", "et" ).toString() ) );
-
 	s.beginGroup( "Client" );
+	// Settings
 	doc->setConfValue( DigiDoc::ProxyHost, s.value( "proxyHost" ) );
 	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyPort" ) );
 	doc->setConfValue( DigiDoc::ProxyUser, s.value( "proxyUser" ) );
@@ -147,6 +152,14 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
+	signRoleInput->setText( s.value( "Role" ).toString() );
+	signResolutionInput->setText( s.value( "Resolution" ).toString() );
+	signCityInput->setText( s.value( "City" ).toString() );
+	signStateInput->setText( s.value( "State" ).toString() );
+	signCountryInput->setText( s.value( "Country" ).toString() );
+	signZipInput->setText( s.value( "Zip" ).toString() );
+
+	// Actions
 	closeAction = new QAction( tr("Close"), this );
 	closeAction->setShortcut( Qt::CTRL + Qt::Key_W );
 	connect( closeAction, SIGNAL(triggered()), this, SLOT(closeDoc()) );
@@ -159,6 +172,7 @@ MainWindow::MainWindow( QWidget *parent )
 	menu->addAction( closeAction );
 #endif
 
+	// Arguments
 	QStringList args = qApp->arguments();
 	if( args.size() > 1 )
 	{
@@ -520,7 +534,7 @@ void MainWindow::on_languages_activated( int index )
 	signButton->setText( tr("Sign") );
 	viewAddSignature->setText( tr("Add signature") );
 	showCardStatus();
-	setCurrentPage( (Pages)stack->currentIndex(), false );
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::parseLink( const QString &link )
@@ -536,7 +550,7 @@ void MainWindow::parseLink( const QString &link )
 				if( !addFile( file ) )
 					return;
 			}
-			setCurrentPage( Sign, false );
+			setCurrentPage( Sign );
 		}
 		else if( doc->isNull() )
 			setCurrentPage( Home );
@@ -603,10 +617,10 @@ void MainWindow::parseLink( const QString &link )
 void MainWindow::removeDocument( unsigned int index )
 {
 	doc->removeDocument( index );
-	setCurrentPage( (Pages)stack->currentIndex(), false );
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
-void MainWindow::setCurrentPage( Pages page, bool reload )
+void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
 	switch( page )
@@ -618,19 +632,6 @@ void MainWindow::setCurrentPage( Pages page, bool reload )
 		enableSign();
 		signAddFile->setVisible( doc->signatures().isEmpty() );
 		signButton->setFocus();
-
-		if( !reload )
-			break;
-
-		Settings s;
-		s.beginGroup( "Client" );
-		signRoleInput->setText( s.value( "Role" ).toString() );
-		signResolutionInput->setText( s.value( "Resolution" ).toString() );
-		signCityInput->setText( s.value( "City" ).toString() );
-		signStateInput->setText( s.value( "State" ).toString() );
-		signCountryInput->setText( s.value( "Country" ).toString() );
-		signZipInput->setText( s.value( "Zip" ).toString() );
-		s.endGroup();
 		break;
 	}
 	case View:
@@ -717,7 +718,7 @@ void MainWindow::showCardStatus()
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
 
 	enableSign();
-	setCurrentPage( (Pages)stack->currentIndex(), false );
+	setCurrentPage( (Pages)stack->currentIndex() );
 }
 
 void MainWindow::showSettings()
@@ -746,7 +747,7 @@ void MainWindow::viewSignaturesRemove( unsigned int num )
 		return;
 	doc->removeSignature( num );
 	doc->save();
-	setCurrentPage( doc->signatures().isEmpty() ? Sign : View, false );
+	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
 }
 
 bool MainWindow::checkAccessCert()

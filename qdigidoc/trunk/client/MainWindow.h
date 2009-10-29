@@ -77,7 +77,7 @@ private:
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );
-	void setCurrentPage( Pages page, bool reload = true );
+	void setCurrentPage( Pages page );
 
 	QAction *closeAction;
 	DigiDoc	*doc;
