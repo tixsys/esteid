@@ -5,6 +5,7 @@
 #import "NSString+Additions.h"
 
 static NSString *EstEIDKTApplicationDelegateWebsiteColumn = @"website";
+static NSString *EstEIDKTApplicationLanguageKey = @"language";
 
 @implementation EstEIDKTApplicationDelegate
 
@@ -15,30 +16,67 @@ static NSString *EstEIDKTApplicationDelegateWebsiteColumn = @"website";
 
 - (NSString *)pathForResource:(NSString *)resource ofType:(NSString *)type
 {
+	switch([self->m_languagePopUpButton selectedTag]) {
+		case EstEIDKTLanguageEstonian:
+			return [[NSBundle mainBundle] pathForResource:resource ofType:type inDirectory:nil forLocalization:@"et"];
+		case EstEIDKTLanguageRussian:
+			return [[NSBundle mainBundle] pathForResource:resource ofType:type inDirectory:nil forLocalization:@"ru"];
+		case EstEIDKTLanguageEnglish:
+			return [[NSBundle mainBundle] pathForResource:resource ofType:type inDirectory:nil forLocalization:@"en"];
+	}
+			
 	return [[NSBundle mainBundle] pathForResource:resource ofType:type];
 }
 
 - (NSString *)stringForKey:(NSString *)key
 {
-	/*switch([self->m_languagePopUpButton selectedTag]) {
-		case EstEIDKTLanguageEstonian:
-			break;
-		case EstEIDKTLanguageRussian:
-			break;
-		case EstEIDKTLanguageEnglish:
-			break;
-	}*/
+	NSString *value = nil;
 	
-	return NSLocalizedStringFromTable(key, @"KeychainTool", nil);
+	switch([self->m_languagePopUpButton selectedTag]) {
+		case EstEIDKTLanguageEstonian: {
+			static NSDictionary *et = nil;
+			
+			if(!et) {
+				et = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"KeychainTool" ofType:@"strings" inDirectory:nil forLocalization:@"et"]];
+			}
+			
+			value = [et objectForKey:key];
+			} break;
+		case EstEIDKTLanguageRussian: {
+			static NSDictionary *ru = nil;
+			
+			if(!ru) {
+				ru = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"KeychainTool" ofType:@"strings" inDirectory:nil forLocalization:@"ru"]];
+			}
+			
+			value = [ru objectForKey:key];
+			} break;
+		case EstEIDKTLanguageEnglish:
+			{
+				static NSDictionary *en = nil;
+				
+				if(!en) {
+					en = [[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"KeychainTool" ofType:@"strings" inDirectory:nil forLocalization:@"en"]];
+				}
+				
+				value = [en objectForKey:key];
+			} break;
+	}
+	
+	return (value) ? value : NSLocalizedStringFromTable(key, @"KeychainTool", nil);
 }
 
 - (IBAction)changeLanguage:(id)sender
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
 	[self->m_prevButton setTitle:[self stringForKey:@"KeychainTool.Action.Cancel"]];
 	[self->m_nextButton setTitle:[self stringForKey:@"KeychainTool.Action.Next"]];
 	[self->m_saveButton setTitle:[self stringForKey:@"KeychainTool.Action.Save"]];
 	[self->m_window setTitle:[self stringForKey:@"KeychainTool.Title"]];
 	[self->m_textView readRTFDFromFile:[self pathForResource:@"KeychainTool" ofType:@"rtf"]];
+	
+	[defaults setInteger:[self->m_languagePopUpButton selectedTag] forKey:EstEIDKTApplicationLanguageKey];
 }
 
 - (IBAction)prev:(id)sender
@@ -189,6 +227,12 @@ static NSString *EstEIDKTApplicationDelegateWebsiteColumn = @"website";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	if([defaults objectForKey:EstEIDKTApplicationLanguageKey]) {
+		[self->m_languagePopUpButton selectItemWithTag:[defaults integerForKey:EstEIDKTApplicationLanguageKey]];
+	}
+	
 	[self changeLanguage:nil];
 	[self->m_window orderFront:nil];
 }
