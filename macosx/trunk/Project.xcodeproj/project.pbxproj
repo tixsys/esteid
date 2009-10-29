@@ -143,6 +143,7 @@
 		819ACD9010993C3600D99810 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 81303B9F0F596C7E0029C4D7 /* NSString+Additions.m */; };
 		819ACDC01099424100D99810 /* NSTableView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 819ACDBF1099424100D99810 /* NSTableView+Additions.m */; };
 		819ACE2B10994BC100D99810 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813039800F5944D30029C4D7 /* Security.framework */; };
+		819AD10A1099A6A100D99810 /* EstEIDKTIdentityPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = 819AD1091099A6A100D99810 /* EstEIDKTIdentityPreference.m */; };
 		81B0FB860FC70A0700B24817 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FB850FC70A0700B24817 /* Icon.icns */; };
 		81B0FC770FC70E7400B24817 /* PreferencePane.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC760FC70E7400B24817 /* PreferencePane.nib */; };
 		81B0FC790FC70E8800B24817 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81B0FC780FC70E8800B24817 /* MainMenu.xib */; };
@@ -361,6 +362,8 @@
 		819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = EstEIDKTCertificate.mm; path = Updater/Sources/KeychainTool/EstEIDKTCertificate.mm; sourceTree = "<group>"; };
 		819ACDBE1099424100D99810 /* NSTableView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTableView+Additions.h"; path = "Updater/Sources/KeychainTool/NSTableView+Additions.h"; sourceTree = "<group>"; };
 		819ACDBF1099424100D99810 /* NSTableView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTableView+Additions.m"; path = "Updater/Sources/KeychainTool/NSTableView+Additions.m"; sourceTree = "<group>"; };
+		819AD1081099A6A100D99810 /* EstEIDKTIdentityPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDKTIdentityPreference.h; path = Updater/Sources/KeychainTool/EstEIDKTIdentityPreference.h; sourceTree = "<group>"; };
+		819AD1091099A6A100D99810 /* EstEIDKTIdentityPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDKTIdentityPreference.m; path = Updater/Sources/KeychainTool/EstEIDKTIdentityPreference.m; sourceTree = "<group>"; };
 		81B0FB850FC70A0700B24817 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = Updater/Images/Icon.icns; sourceTree = "<group>"; };
 		81B0FC760FC70E7400B24817 /* PreferencePane.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PreferencePane.nib; path = Updater/PreferencePane.nib; sourceTree = "<group>"; };
 		81B0FC780FC70E8800B24817 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Updater/MainMenu.xib; sourceTree = "<group>"; };
@@ -749,6 +752,8 @@
 				81B94E4B109849470059E208 /* EstEIDKTApplicationDelegate.m */,
 				819ACB961098800D00D99810 /* EstEIDKTCertificate.h */,
 				819ACB971098800D00D99810 /* EstEIDKTCertificate.mm */,
+				819AD1081099A6A100D99810 /* EstEIDKTIdentityPreference.h */,
+				819AD1091099A6A100D99810 /* EstEIDKTIdentityPreference.m */,
 				819ACDBE1099424100D99810 /* NSTableView+Additions.h */,
 				819ACDBF1099424100D99810 /* NSTableView+Additions.m */,
 				81B94E4C109849470059E208 /* main.m */,
@@ -1256,6 +1261,7 @@
 				819ACB8710987DC800D99810 /* SmartCardManager.cpp in Sources */,
 				819ACB8810987DC800D99810 /* types.cpp in Sources */,
 				819ACDC01099424100D99810 /* NSTableView+Additions.m in Sources */,
+				819AD10A1099A6A100D99810 /* EstEIDKTIdentityPreference.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

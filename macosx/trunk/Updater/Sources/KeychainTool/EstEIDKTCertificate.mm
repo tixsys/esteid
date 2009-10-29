@@ -7,10 +7,7 @@
 #import "SmartCardManager.h"
 #import "EstEidCard.h"
 #import "EstEIDKTCertificate.h"
-
-OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CFDataRef *persistentItemRef);
-
-#pragma mark -
+#import "EstEIDKTIdentityPreference.h"
 
 @implementation EstEIDKTCertificate
 
@@ -66,12 +63,15 @@ OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CF
 						case BER_TAG_PKIX_UTF8_STRING:
 							encoding = kCFStringEncodingUTF8;
 							cn = &tvpPtr->value;
+							break;
 						case BER_TAG_T61_STRING:
 							encoding = kCFStringEncodingISOLatin1;
 							cn = &tvpPtr->value;
+							break;
 						case BER_TAG_PKIX_BMP_STRING:
 							encoding = kCFStringEncodingUnicode;
 							cn = &tvpPtr->value;
+							break;
 						default:
 							break;
 					}
@@ -93,9 +93,9 @@ OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CF
 	return CN;
 }
 
-- (NSArray *)websites
+- (NSDictionary *)identityPreferences
 {
-	NSMutableArray *websites = [NSMutableArray array];
+	NSMutableDictionary *identityPreferences = [NSMutableDictionary dictionary];
 	SecKeychainAttribute attributes[1];
 	SecKeychainSearchRef search;
 	SecKeychainAttributeList list;
@@ -124,19 +124,22 @@ OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CF
 			if(SecKeychainItemCopyAttributesAndData(item, &attrInfo, NULL, &attributes, 0, NULL) == noErr) {
 				for(int i = 0; i < attributes->count; i++) {
 					SecKeychainAttribute attr = attributes->attr[i];
-					NSString *website = nil;
+					NSString *key = nil;
 					
 					switch(attr.tag) {
 						case kSecServiceItemAttr:
-							website = [[[NSString alloc] initWithData:[NSData dataWithBytes:attr.data length:attr.length] encoding:NSUTF8StringEncoding] autorelease];
+							key = [[[NSString alloc] initWithData:[NSData dataWithBytes:attr.data length:attr.length] encoding:NSUTF8StringEncoding] autorelease];
 							break;
 						case kSecGenericItemAttr:
 							// TODO: Epic! How the fsk do I make it work with 10.4 too?!!?!?
 							break;
 					}
 					
-					if(website) {
-						[websites addObject:website];
+					if(key) {
+						EstEIDKTIdentityPreference *identityPreference = [[EstEIDKTIdentityPreference alloc] initWithItem:item];
+						
+						[identityPreferences setValue:identityPreference forKey:key];
+						[identityPreference release];
 					}
 				}
 				
@@ -149,16 +152,77 @@ OSStatus SecKeychainItemCreatePersistentReference(SecKeychainItemRef itemRef, CF
 		CFRelease(search);
 	}
 	
+	return identityPreferences;
+	
+}
+
+- (NSArray *)websites
+{
+	NSMutableArray *websites = [NSMutableArray array];
+	
+	[websites addObjectsFromArray:[[self identityPreferences] allKeys]];
 	[websites sortUsingSelector:@selector(compare:)];
 	
 	return websites;
 }
 
+/*
+ 10.4 capable workaround:
+ 
+ security set-identity-preference -h
+ 
+ Usage: set-identity-preference [-c identity] [-s service] [-u keyUsage] [-Z hash] [keychain...]
+	-c  Specify identity by common name of the certificate
+	-s  Specify service (may be a URL, RFC822 email address, DNS host, or other name) for which this identity is to be preferred
+	-u  Specify key usage (optional) - see man page for values
+	-Z  Specify identity by SHA-1 hash of certificate (optional)
+	
+	Set the preferred identity to use for a service.
+ */
 - (BOOL)setWebsites:(NSArray *)websites
 {
-	// SecCertificateAddToKeychain(SecCertificateRef certificate, SecKeychainRef keychain);
+	SecKeychainRef keychain;
+	BOOL result = YES;
 	
-	return NO;
+	if(SecKeychainCopyDefault(&keychain) == noErr) {
+		NSDictionary *identityPreferences = [self identityPreferences];
+		NSEnumerator *enumerator = [identityPreferences keyEnumerator];
+		NSString *cn = [self CN];
+		NSString *website;
+		
+		SecCertificateAddToKeychain((SecCertificateRef)self->m_internal, keychain);
+		
+		while((website = [enumerator nextObject]) != nil) {
+			if(![websites containsObject:website]) {
+				EstEIDKTIdentityPreference *identityPreference = [identityPreferences objectForKey:website];
+				
+				if(SecKeychainItemDelete([identityPreference item]) != noErr) {
+					result = NO;
+				}
+			}
+		}
+		
+		enumerator = [websites objectEnumerator];
+		
+		while((website = [enumerator nextObject]) != nil) {
+			@try {
+				NSTask *task = [[[NSTask alloc] init] autorelease];
+				
+				[task setLaunchPath:@"/usr/bin/security"];
+				[task setArguments:[NSArray arrayWithObjects:@"set-identity-preference", @"-c", cn, @"-s", website, nil]];
+				[task launch];
+				[task waitUntilExit];
+			}
+			@catch(NSException *e) {
+				NSLog(@"%@: %@", NSStringFromClass([self class]), e);
+				result = NO;
+			}
+		}
+	} else {
+		result = NO;
+	}
+	
+	return result;
 }
 
 #pragma mark NSObject
