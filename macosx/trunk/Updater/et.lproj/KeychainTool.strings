@@ -1,7 +1,7 @@
-"KeychainTool.Action.Cancel" = "Katkesta";
+﻿"KeychainTool.Action.Cancel" = "Katkesta";
 "KeychainTool.Action.Close" = "Sulge";
 "KeychainTool.Action.Next" = "Edasi";
-"KeychainTool.Action.Save" = "Salvesta";
+"KeychainTool.Action.Save" = "Kinnita";
 "PreferencePane.Action.Retry" = "Proovi uuesti";
 "KeychainTool.Alert.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
 "KeychainTool.Alert.CardNotFound.Title" = "Autentimissertifikaadi lugemine ebaõnnestus";
