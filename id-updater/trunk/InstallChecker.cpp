@@ -17,7 +17,7 @@
 #pragma comment (lib, "wintrust")
 
 #ifndef INSTALLER_COMMANDLINE
-#define INSTALLER_COMMANDLINE " REINSTALLMODE=vomus ADDLOCAL=ALL ADDDEFAULT=ALL ALLUSERS=1"
+#define INSTALLER_COMMANDLINE " REINSTALLMODE=vomus ALLUSERS=1"
 #endif
 
 InstallChecker::InstallChecker(void)
@@ -80,14 +80,19 @@ struct msiPack {
 		if (hProduct) 
 			MsiCloseHandle(hProduct);
 		}
-	bool install() {
+	bool install(bool reducedUI) {
 		char winDir[MAX_PATH];
+		char tempDir[MAX_PATH];
+		GetTempPathA(sizeof(tempDir),tempDir);
 		GetSystemDirectoryA(winDir,sizeof(winDir));
 		strcat(winDir,"\\msiexec.exe");
 		std::string tmp(m_msiFile.length(),'0');
 		std::copy(m_msiFile.begin(),m_msiFile.end(),tmp.begin());
 		std::string param(std::string("/I \"") 
 			+ tmp + "\" " INSTALLER_COMMANDLINE);
+		if (reducedUI )
+			param+= " /qb+";
+		param+= std::string(" /l* ") + tempDir + "\esteid_inst.log";
 		ProcessStarter msiexec(winDir,param);
 		return msiexec.Run(true);
 /*		MsiSetInternalUI(INSTALLUILEVEL_FULL,0);
@@ -105,9 +110,9 @@ struct msiPack {
 		}
 	};
 
-bool InstallChecker::installPackage(std::wstring filePath) {
+bool InstallChecker::installPackage(std::wstring filePath, bool reducedUI) {
 	msiPack pack(filePath);
-	return pack.install();
+	return pack.install(reducedUI);
 	}
 
 bool InstallChecker::verifyPackage(std::wstring filePath,bool withUI) {
@@ -145,7 +150,7 @@ void InstallChecker::getInstalledVersion(std::wstring upgradeCode,std::wstring &
 	version = L"1.20";
 	}
 
-bool InstallChecker::installPackage(std::wstring filePath) {
+bool InstallChecker::installPackage(std::wstring filePath, bool) {
 	return true;
 	}
 
