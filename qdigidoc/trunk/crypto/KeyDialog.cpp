@@ -189,7 +189,7 @@ void KeyAddDialog::addKeys( const QList<CKey> &keys )
 					"When decrypter has updated certificates then decrypting is impossible.")
 					.arg( key.cert.expiryDate().toString( "dd.MM.yyyy hh:mm:ss" ) ),
 				QMessageBox::Yes|QMessageBox::No, QMessageBox::No ) )
-			continue;
+			return;
 		status = qMin( status, doc->addKey( key ) );
 	}
 	Q_EMIT updateView();
