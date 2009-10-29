@@ -204,7 +204,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 81B94E3D109841D90059E208 /* Keychain Tool */;
+			remoteGlobalIDString = 81B94E3D109841D90059E208;
 			remoteInfo = "Keychain Tool";
 		};
 		81E4C8DC0F9C455E00997F53 /* PBXContainerItemProxy */ = {
@@ -1699,6 +1699,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Keychain Tool";
+				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
@@ -1728,6 +1729,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Keychain Tool";
+				SDKROOT = macosx10.4;
 				ZERO_LINK = NO;
 			};
 			name = Release;
