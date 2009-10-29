@@ -1,7 +1,7 @@
 "KeychainTool.Action.Cancel" = "Cancel";
 "KeychainTool.Action.Close" = "Close";
 "KeychainTool.Action.Next" = "Next";
-"KeychainTool.Action.Save" = "Save";
+"KeychainTool.Action.Save" = "Confirm";
 "KeychainTool.Action.Retry" = "Try Again";
 "KeychainTool.Alert.CardNotFound.Message" = "Please make sure that your ID-card is inserted to the card reader and then try again.";
 "KeychainTool.Alert.CardNotFound.Title" = "Failed to read authentification certificate.";
