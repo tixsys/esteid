@@ -35,14 +35,17 @@ set(updater_SRCS
 )
 set(updater_MOC_HDRS idupdater.h)
 set(updater_UIS idupdater.ui)
+set(updater_RCS idupdater.qrc)
 
 QT4_WRAP_CPP(updater_MOC_SRCS ${updater_MOC_HDRS})
 QT4_WRAP_UI(updater_UIS_H ${updater_UIS})
+QT4_ADD_RESOURCES(updater_RCC_SRCS ${updater_RCS})
 
 add_executable(id-updater WIN32
     ${updater_SRCS}
     ${updater_MOC_SRCS}
     ${updater_UIS_H}
+    ${updater_RCC_SRCS}
 )
 target_link_libraries(id-updater
     ${QT_QTMAIN_LIBRARY}
