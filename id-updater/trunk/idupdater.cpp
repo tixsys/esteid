@@ -5,26 +5,83 @@
 #include <QDomDocument>
 #include <QDir>
 #include <QTime>
+#include <QMenu>
+#include <QCloseEvent>
 #include "InstallChecker.h"
 
 idupdater::idupdater(QString baseUrl,bool autocheck,bool autoupdate) : QMainWindow(),
 	m_autocheck(autocheck),m_autoupdate(autoupdate),m_baseUrl(baseUrl) {
+
+	Q_INIT_RESOURCE(idupdater);
 	
 	setupUi(this);
+
+	createActions();
+	createTrayIcon();
+
 	manager = new QNetworkAccessManager(this);
 	downloadManager = new QNetworkAccessManager(this);
 	connect(manager, SIGNAL(finished(QNetworkReply*)),
 		this, SLOT(netReplyFinished(QNetworkReply*)));
 	connect(downloadManager, SIGNAL(finished(QNetworkReply*)),
 		this, SLOT(netDownloadFinished(QNetworkReply*)));
+	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 	groupBoxProduct->setVisible(false);
+
 	enableInstall(false);
+
+	trayIcon->show();
+
 	if (m_autocheck) 
 		m_checkUpdatesButton->click();
+
+	if (m_autoupdate)
+		QApplication::postEvent(this,new QCloseEvent());
+	setWindowIcon(QIcon(":/appicon.bmp"));
 }
 
 idupdater::~idupdater() {
 	delete manager;
+	}
+
+void idupdater::createActions() {
+	restoreAction = new QAction("&Restore", this);
+	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+
+	quitAction = new QAction("&Quit", this);
+	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+	}
+
+void idupdater::createTrayIcon() {
+     trayIconMenu = new QMenu(this);
+     trayIconMenu->addAction(restoreAction);
+     trayIconMenu->addAction(quitAction);
+
+     trayIcon = new QSystemTrayIcon(this);
+     trayIcon->setContextMenu(trayIconMenu);
+	 trayIcon->setIcon(QIcon(":/appicon.bmp"));
+	}
+
+void idupdater::iconActivated(QSystemTrayIcon::ActivationReason reason)  {
+	switch (reason) {
+		case QSystemTrayIcon::Trigger:
+		case QSystemTrayIcon::DoubleClick:
+			showNormal();
+			break;
+		default:;
+		}
+	}
+
+ void idupdater::closeEvent(QCloseEvent *event) {
+     if (trayIcon->isVisible()) {
+         hide();
+         event->ignore();
+	     }
+	}
+
+void idupdater::cancel() {
+	QApplication::quit();
 	}
 
 void idupdater::enableInstall(bool enable,bool enableCheck) {
@@ -63,7 +120,7 @@ void idupdater::netReplyFinished(QNetworkReply* reply) {
 	
 	enableInstall( version != availableVersion);
 	if (version == availableVersion && m_autocheck) 
-		close();
+		cancel();
 	}
 
 void idupdater::netDownloadFinished(QNetworkReply* reply) {
@@ -75,9 +132,9 @@ void idupdater::netDownloadFinished(QNetworkReply* reply) {
 		QString tgt = QDir::toNativeSeparators(tmp.fileName());
 		if (!InstallChecker::verifyPackage(tgt.toStdWString()))
 			return fail("Downloaded package integrity check failed");
-		if (InstallChecker::installPackage(tgt.toStdWString())) {
+		if (InstallChecker::installPackage(tgt.toStdWString(),m_autoupdate)) {
 			status("Package installed");
-			close();
+			cancel();
 			}
 		else 
 			return fail("Package installation failed");

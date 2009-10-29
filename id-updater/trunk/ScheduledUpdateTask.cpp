@@ -36,6 +36,8 @@ bool ScheduledUpdateTask::configure(Interval interval,bool autoupdate) {
 	pITask->SetAccountInformation(L"",NULL);
 	if (autoupdate) 
 		pITask->SetParameters(L"-autoupdate");
+	else
+		pITask->SetParameters(L"");
 	if (version.dwMajorVersion <= 5)
 		pITask->SetFlags(TASK_FLAG_INTERACTIVE);
 	if (interval == NEVER) 

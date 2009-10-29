@@ -3,6 +3,7 @@
 
 #include <QtNetwork/QNetworkAccessManager>
 #include <QDomElement>
+#include <QSystemTrayIcon>
 
 class idupdater : public QMainWindow, private Ui::MainWindow {
     Q_OBJECT
@@ -20,6 +21,8 @@ private slots:
 	void netReplyFinished(QNetworkReply*);
 	void netDownloadFinished(QNetworkReply*);
 	void downloadProgress(qint64 recvd,qint64 total);
+	void iconActivated(QSystemTrayIcon::ActivationReason reason);
+	void cancel();
 
 private:
 	bool m_autocheck,m_autoupdate;
@@ -30,4 +33,16 @@ private:
 	void fail(QString);
 	QNetworkAccessManager *manager;
 	QNetworkAccessManager *downloadManager;
+
+	QSystemTrayIcon *trayIcon;
+	QMenu *trayIconMenu;
+
+	QAction *restoreAction;
+	QAction *quitAction;
+
+	void createTrayIcon();
+	void createActions();
+
+protected:
+     void closeEvent(QCloseEvent *event);
 };

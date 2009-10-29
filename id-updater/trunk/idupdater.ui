@@ -12,10 +12,6 @@
   <property name="windowTitle" >
    <string>Id-updater</string>
   </property>
-  <property name="windowIcon" >
-   <iconset>
-    <normaloff>appicon.ico</normaloff>appicon.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QVBoxLayout" name="verticalLayout" >
     <item>
@@ -219,10 +215,10 @@
        <item>
         <widget class="QPushButton" name="m_cancelButton" >
          <property name="text" >
-          <string>Ca&amp;ncel</string>
+          <string>&amp;Quit</string>
          </property>
          <property name="shortcut" >
-          <string>Alt+N</string>
+          <string>Alt+Q</string>
          </property>
         </widget>
        </item>
@@ -270,7 +266,7 @@
    <sender>m_cancelButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>close()</slot>
+   <slot>cancel()</slot>
    <hints>
     <hint type="sourcelabel" >
      <x>586</x>
