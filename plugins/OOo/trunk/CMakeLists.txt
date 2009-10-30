@@ -9,10 +9,15 @@ SET (COMP_NAME "OOoDigiDocPlugin")
 
 IF (WIN32)
 	SET (OS "WIN")
-ENDIF (WIN32)
-IF(UNIX)
+#ENDIF (WIN32)
+
+ELSEIF(APPLE)
+	SET (OS "MACOSX")
+#ENDIF (APPLE)
+
+ELSEIF(UNIX)
 	SET (OS "LINUX")
-ENDIF(UNIX)
+ENDIF(WIN32)
 
 #set(CMAKE_BUILD_TYPE Debug)
 project (${COMP_NAME})
@@ -49,9 +54,7 @@ IF (WIN32)
 	SET (OO_SDK_URE_HOME "C:/Program Files/OpenOffice.org 3/URE")
 	SET (OFFICE_BASE_PROGRAM_PATH "C:/Program Files/OpenOffice.org 3/Basis/program")
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
-ENDIF (WIN32)
-
-IF (UNIX)
+ELSEIF (UNIX)
 	IF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
 		SET (PROCTYPE "x86")
 	ELSE (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
@@ -66,7 +69,24 @@ IF (UNIX)
 	SET (OFFICE_BASE_PROGRAM_PATH "/usr/lib/openoffice/basis3.0/program")
 	SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
-ENDIF(UNIX)
+	
+	IF(APPLE)
+		IF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
+			SET (PROCTYPE "x86")
+		ELSE (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
+			SET (PROCTYPE "${CMAKE_SYSTEM_PROCESSOR}")
+		ENDIF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
+
+		SET (UNOPKG_PLATFORM "MacOSX_${PROCTYPE}")
+
+		SET (SHAREDLIB_EXT "dylib")
+		SET (OO_SDK_HOME "/Applications/OpenOffice.org.app/Contents/basis-link/OpenOffice.org3.1_SDK")
+		SET (OO_SDK_URE_HOME "/Applications/OpenOffice.org.app/Contents/basis-link/ure-link")
+		SET (OFFICE_BASE_PROGRAM_PATH "/Applications/OpenOffice.org.app/Contents/basis-link/program")
+		SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
+		SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
+	ENDIF(APPLE)
+ENDIF (WIN32)
 
 #Common
 SET (OO_SDK_URE_LIB_DIR "${OO_SDK_URE_HOME}/lib")
@@ -94,9 +114,10 @@ ADD_CUSTOM_COMMAND(
 	)
 
 #ADD_CUSTOM_COMMAND(
-#   OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
-#   COMMAND ${OO_SDK_HOME}/bin/cppumaker -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
-#   )
+#	OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
+#	COMMAND ${OO_SDK_HOME}/bin/cppumaker -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
+#	)
+
 
 INCLUDE_DIRECTORIES(
 	${CMAKE_SOURCE_DIR}
@@ -162,7 +183,10 @@ IF (WIN32)
 ENDIF (WIN32)
 
 IF (UNIX)
-        set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+	set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+	IF (APPLE)
+		set(UNO_DEFINITIONS "-DUNX -DGCC -DMACOSX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")		
+	ENDIF (APPLE)
         set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOCPP_CONF}\\\"" )
 ENDIF (UNIX)
 
@@ -178,7 +202,8 @@ set_source_files_properties(${BDOCFILES}
   PROPERTIES
   COMPILE_FLAGS "${BDOC_CPP_FLAGS}")
 
-add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
+#add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
+add_library(${COMP_NAME}.uno SHARED ${UNOFILES} ${BDOCFILES})
 
 #-------------------------------------------------
 #---------------Link to the Libraries-------------
@@ -199,6 +224,10 @@ target_link_libraries(${COMP_NAME}.uno
 
 IF (UNIX)
 	SET(LINK_FLAG_SCRIPT "-Wl,-z,defs -Wl,--version-script,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
+	IF (APPLE)
+		#SET(LINK_FLAG_SCRIPT "-Wl,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
+		SET(LINK_FLAG_SCRIPT "-Wl,-exported_symbols_list,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")		
+	ENDIF (APPLE)
 	set_target_properties(${COMP_NAME}.uno PROPERTIES
 				PREFIX ""
 				LINK_FLAGS "${LINK_FLAG_SCRIPT}"
@@ -239,19 +268,36 @@ FIND_PATH(TARGET_GUI_DIR dialog.xlb ${OUT_MISC}/${COMP_NAME}/HW)
 execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn			#remove svn folders	
 				COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)		
 				#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	) #FIX Filter extension first
-		
+#--------------------------------------		
+# Hack for Mac linked path problem #
+IF (APPLE)
+	add_custom_target( hackmac
 
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+
+		COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		)
+ENDIF (APPLE)
+#--------------------------------------
 
 add_custom_target( zip-oxt ALL
 #	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
 #		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-		
+#	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.so 
+#		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}	
 		
 	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
 	COMMAND ${MKDIR} ${OUT_BIN}
 	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}${BUILD_VER}.oxt . 	
 	)
-
+IF (APPLE)
+	add_dependencies( zip-oxt hackmac)
+ENDIF (APPLE)
