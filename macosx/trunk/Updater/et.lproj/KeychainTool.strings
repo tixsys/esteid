@@ -2,7 +2,7 @@
 "KeychainTool.Action.Close" = "Sulge";
 "KeychainTool.Action.Next" = "Edasi";
 "KeychainTool.Action.Save" = "Kinnita";
-"PreferencePane.Action.Retry" = "Proovi uuesti";
+"KeychainTool.Action.Retry" = "Proovi uuesti";
 "KeychainTool.Alert.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
 "KeychainTool.Alert.CardNotFound.Title" = "Autentimissertifikaadi lugemine ebaõnnestus";
 "KeychainTool.Alert.InvalidURL.Title" = "Mittesobiv veebiaadress";
