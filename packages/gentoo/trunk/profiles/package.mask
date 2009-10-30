@@ -1,2 +1,5 @@
+# Renamed to esteid-mozilla
+www-plugins/esteid-firefox
+
 # Don't let people install these accidentally
 =dev-libs/opensc-9999
