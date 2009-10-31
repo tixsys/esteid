@@ -43,16 +43,26 @@ SET (OUT_SLB "${OUT}/slb")
 SET (OUT_MISC "${OUT}/misc")
 SET (OUT_OBJ "${OUT}/obj")
 SET (OUT_CLASS "${OUT}/class")
+SET (BUILD_HOME "${CMAKE_CURRENT_BINARY_DIR}")
 
+#Set path
+SET (OO_SDK_HOME "$ENV{OO_SDK_HOME}")
+SET (OO_SDK_URE_HOME "$ENV{OO_SDK_URE_HOME}")
+SET (OFFICE_BASE_PROGRAM_PATH "$ENV{OFFICE_BASE_PROGRAM_PATH}")
+SET (OO_SDK_URE_LIB_DIR "$ENV{OO_SDK_URE_LIB_DIR}")
 
+SET (OOSDK_INCLUDE_DIR "${OO_SDK_HOME}/include")
+SET (SETTINGS "${OO_SDK_HOME}/settings")
+SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")	
+SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
+
+MESSAGE("IN ENV $ENV{OO_SDK_HOME}")
+MESSAGE("IN VAR ${OO_SDK_HOME}")
 
 IF (WIN32)
 	SET (UNOPKG_PLATFORM "Windows")
 	SET (SHAREDLIB_EXT "dll")
-	
-	SET (OO_SDK_HOME "C:/Program Files/OpenOffice.org 3/Basis/sdk")
-	SET (OO_SDK_URE_HOME "C:/Program Files/OpenOffice.org 3/URE")
-	SET (OFFICE_BASE_PROGRAM_PATH "C:/Program Files/OpenOffice.org 3/Basis/program")
+
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
 ELSEIF (UNIX)
 	IF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
@@ -64,36 +74,15 @@ ELSEIF (UNIX)
 	SET (UNOPKG_PLATFORM "Linux_${PROCTYPE}")
 	SET (SHAREDLIB_EXT "so")
 	
-	SET (OO_SDK_HOME "/usr/lib/openoffice/basis3.0/sdk")
-	SET (OO_SDK_URE_HOME "/usr/lib/ure")
-	SET (OFFICE_BASE_PROGRAM_PATH "/usr/lib/openoffice/basis3.0/program")
 	SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
 	SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
 	
-	IF(APPLE)
-		IF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
-			SET (PROCTYPE "x86")
-		ELSE (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
-			SET (PROCTYPE "${CMAKE_SYSTEM_PROCESSOR}")
-		ENDIF (CMAKE_SYSTEM_PROCESSOR MATCHES "i.86")
-
+	IF(APPLE)		
 		SET (UNOPKG_PLATFORM "MacOSX_${PROCTYPE}")
-
 		SET (SHAREDLIB_EXT "dylib")
-		SET (OO_SDK_HOME "/Applications/OpenOffice.org.app/Contents/basis-link/OpenOffice.org3.1_SDK")
-		SET (OO_SDK_URE_HOME "/Applications/OpenOffice.org.app/Contents/basis-link/ure-link")
-		SET (OFFICE_BASE_PROGRAM_PATH "/Applications/OpenOffice.org.app/Contents/basis-link/program")
-		SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
-		SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
 	ENDIF(APPLE)
 ENDIF (WIN32)
 
-#Common
-SET (OO_SDK_URE_LIB_DIR "${OO_SDK_URE_HOME}/lib")
-SET (OOSDK_INCLUDE_DIR "${OO_SDK_HOME}/include")
-SET (SETTINGS "${OO_SDK_HOME}/settings")
-SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")	
-SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
 
 #-------------------------------------------------
 #----------------Load modules Include-------------
@@ -138,6 +127,7 @@ set(BDOC_INCLUDES
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 )
 
+# SVN number for build
 find_package(Subversion)
 if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 	Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
@@ -207,13 +197,12 @@ add_library(${COMP_NAME}.uno SHARED ${UNOFILES} ${BDOCFILES})
 
 #-------------------------------------------------
 #---------------Link to the Libraries-------------
-#----------------This is win specific-------------
 target_link_libraries(${COMP_NAME}.uno 
 	${LIBDIGIDOCPP_LIBRARY}
-	${OPENSSL_LIBRARIES}
-	${OPENSSLCRYPTO_LIBRARIES}
-	${ZLIB_LIBRARIES}
-	${XERCESC_LIBRARIES}
+#	${OPENSSL_LIBRARIES}
+#	${OPENSSLCRYPTO_LIBRARIES}
+#	${ZLIB_LIBRARIES}
+#	${XERCESC_LIBRARIES}
 	
 	${CPPU_LIBRARY} 
 	${CPPUHELPER_LIBRARY} 
@@ -286,6 +275,16 @@ IF (APPLE)
 ENDIF (APPLE)
 #--------------------------------------
 
+#--------------------------------------
+#Win problem hack
+IF (WIN32)
+	add_custom_target( hackwin
+	COMMAND ${CP} ${CMAKE_CURRENT_BINARY_DIR}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+		${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		)
+ENDIF (WIN32)
+#--------------------------------------
+
 add_custom_target( zip-oxt ALL
 #	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
 #		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
@@ -301,3 +300,6 @@ add_custom_target( zip-oxt ALL
 IF (APPLE)
 	add_dependencies( zip-oxt hackmac)
 ENDIF (APPLE)
+IF (WIN32)
+	add_dependencies( zip-oxt hackwin)
+ENDIF(WIN32)
