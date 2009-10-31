@@ -61,7 +61,7 @@ QStringList SslCertificate::enhancedKeyUsage() const
 {
 	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
 	if( !usage )
-		return QStringList() << QObject::tr("All application policies");
+		return QStringList() << QT_TR_NOOP("All application policies");
 
 	QStringList list;
 	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
@@ -70,11 +70,11 @@ QStringList SslCertificate::enhancedKeyUsage() const
 		switch( OBJ_obj2nid( obj ) )
 		{
 		case NID_client_auth:
-			list << QObject::tr("Proves your identity to a remote computer"); break;
+			list << QT_TR_NOOP("Proves your identity to a remote computer"); break;
 		case NID_email_protect:
-			list << QObject::tr("Protects e-mail messages"); break;
+			list << QT_TR_NOOP("Protects e-mail messages"); break;
 		case NID_OCSP_sign:
-			list << QObject::tr("OCSP signing"); break;
+			list << QT_TR_NOOP("OCSP signing"); break;
 		default: break;
 		}
 	}
@@ -195,15 +195,15 @@ QHash<int,QString> SslCertificate::keyUsage() const
 		{
 			switch( n )
 			{
-			case DigitalSignature: list[n] = QObject::tr("Digital signature"); break;
-			case NonRepudiation: list[n] = QObject::tr("Non repudiation"); break;
-			case KeyEncipherment: list[n] = QObject::tr("Key encipherment"); break;
-			case DataEncipherment: list[n] = QObject::tr("Data encipherment"); break;
-			case KeyAgreement: list[n] = QObject::tr("Key agreement"); break;
-			case KeyCertificateSign: list[n] = QObject::tr("Key certificate sign"); break;
-			case CRLSign: list[n] = QObject::tr("CRL sign"); break;
-			case EncipherOnly: list[n] = QObject::tr("Encipher only"); break;
-			case DecipherOnly: list[n] = QObject::tr("Decipher only"); break;
+			case DigitalSignature: list[n] = QT_TR_NOOP("Digital signature"); break;
+			case NonRepudiation: list[n] = QT_TR_NOOP("Non repudiation"); break;
+			case KeyEncipherment: list[n] = QT_TR_NOOP("Key encipherment"); break;
+			case DataEncipherment: list[n] = QT_TR_NOOP("Data encipherment"); break;
+			case KeyAgreement: list[n] = QT_TR_NOOP("Key agreement"); break;
+			case KeyCertificateSign: list[n] = QT_TR_NOOP("Key certificate sign"); break;
+			case CRLSign: list[n] = QT_TR_NOOP("CRL sign"); break;
+			case EncipherOnly: list[n] = QT_TR_NOOP("Encipher only"); break;
+			case DecipherOnly: list[n] = QT_TR_NOOP("Decipher only"); break;
 			default: break;
 			}
 		}

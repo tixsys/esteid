@@ -191,7 +191,50 @@
     </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>SSLConnect</name>
+    <message>
+        <source>PIN canceled</source>
+        <translation>Введение PIN отменено</translation>
+    </message>
+    <message>
+        <source>Invalid PIN</source>
+        <translation>Неверный PIN</translation>
+    </message>
+    <message>
+        <source>failed to load pkcs11 module</source>
+        <translation>ошибка при загрузке модуля pkcs11</translation>
+    </message>
+    <message>
+        <source>failed to list slots</source>
+        <translation>ошибка при чтении слотов pkcs11</translation>
+    </message>
+    <message>
+        <source>token failed</source>
+        <translation>ошибка при загрузке &quot;token&quot;-а</translation>
+    </message>
+    <message>
+        <source>no token available</source>
+        <translation>не найдено ни одного &quot;token&quot;-а</translation>
+    </message>
+    <message>
+        <source>no certificate available</source>
+        <translation>Нет доступного сертификата</translation>
+    </message>
+    <message>
+        <source>no key matching certificate available</source>
+        <translation>не найдено подходящего сертификата</translation>
+    </message>
+    <message>
+        <source>Failed to connect to host. Are you connected to the internet?</source>
+        <translation>Отсутствует подключение к интернету!</translation>
+    </message>
+</context>
+<context>
+    <name>SslCertificate</name>
+    <message>
+        <source>All application policies</source>
+        <translation>Все полисы приложений</translation>
+    </message>
     <message>
         <source>Proves your identity to a remote computer</source>
         <translation>Подтверждает Вашу личность на отдалённом компьютере</translation>
@@ -203,10 +246,6 @@
     <message>
         <source>OCSP signing</source>
         <translation>OCSP подписывание</translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation>Все полисы приложений</translation>
     </message>
     <message>
         <source>Digital signature</source>
@@ -243,45 +282,6 @@
     <message>
         <source>Decipher only</source>
         <translation>Только разшифровка</translation>
-    </message>
-    <message>
-        <source>failed to load pkcs11 module</source>
-        <translation>ошибка при загрузке модуля pkcs11</translation>
-    </message>
-    <message>
-        <source>failed to list slots</source>
-        <translation>ошибка при чтении слотов pkcs11</translation>
-    </message>
-    <message>
-        <source>token failed</source>
-        <translation>ошибка при загрузке &quot;token&quot;-а</translation>
-    </message>
-    <message>
-        <source>no token available</source>
-        <translation>не найдено ни одного &quot;token&quot;-а</translation>
-    </message>
-    <message>
-        <source>no key matching certificate available</source>
-        <translation>не найдено подходящего сертификата</translation>
-    </message>
-    <message>
-        <source>Failed to connect to host. Are you connected to the internet?</source>
-        <translation>Отсутствует подключение к интернету!</translation>
-    </message>
-    <message>
-        <source>no certificate available</source>
-        <translation>Нет доступного сертификата</translation>
-    </message>
-</context>
-<context>
-    <name>SSLConnect</name>
-    <message>
-        <source>PIN canceled</source>
-        <translation>Введение PIN отменено</translation>
-    </message>
-    <message>
-        <source>Invalid PIN</source>
-        <translation>Неверный PIN</translation>
     </message>
 </context>
 </TS>

@@ -123,18 +123,18 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	{
 		PKCS11_CTX_free(ctx);
 		ctx = 0;
-		throw std::runtime_error( QObject::tr( "failed to load pkcs11 module" ).toStdString() );
+		throw std::runtime_error( SSLConnect::tr( "failed to load pkcs11 module" ).toStdString() );
 	}
 
 	if( PKCS11_enumerate_slots( ctx, &pslots, &nslots ) || !nslots )
-		throw std::runtime_error( QObject::tr( "failed to list slots" ).toStdString() );
+		throw std::runtime_error( SSLConnect::tr( "failed to list slots" ).toStdString() );
 
 	// Find token
 	PKCS11_SLOT *slot = 0;
 	if( reader >= 0 )
 	{
 		if ( (unsigned int)reader*4 > nslots )
-			throw std::runtime_error( QObject::tr( "token failed" ).toStdString() );
+			throw std::runtime_error( SSLConnect::tr( "token failed" ).toStdString() );
 		slot = &pslots[reader*4];
 	}
 	else
@@ -150,13 +150,13 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		}
 	}
 	if( !slot || !slot->token )
-		throw std::runtime_error( QObject::tr("no token available").toStdString() );
+		throw std::runtime_error( SSLConnect::tr("no token available").toStdString() );
 
 	// Find token cert
 	PKCS11_CERT *certs;
 	unsigned int ncerts;
 	if( PKCS11_enumerate_certs(slot->token, &certs, &ncerts) || !ncerts )
-		throw std::runtime_error( QObject::tr("no certificate available").toStdString() );
+		throw std::runtime_error( SSLConnect::tr("no certificate available").toStdString() );
 	PKCS11_CERT *authcert = &certs[0];
 
 	// Login token
@@ -213,7 +213,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	// Find token key
 	PKCS11_KEY *authkey = PKCS11_find_key( authcert );
 	if ( !authkey )
-		throw std::runtime_error( QObject::tr("no key matching certificate available").toStdString() );
+		throw std::runtime_error( SSLConnect::tr("no key matching certificate available").toStdString() );
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
 	SSL_CTX *sctx = SSL_CTX_new( SSLv23_client_method() );
@@ -236,7 +236,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 
 	BIO_set_conn_port( sock, "https" );
 	if( BIO_do_connect( sock ) <= 0 )
-		throw std::runtime_error( QObject::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
+		throw std::runtime_error( SSLConnect::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
 
 	SSL_set_bio( s, sock, sock );
 	sslError::check( SSL_connect(s) );

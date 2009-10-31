@@ -191,7 +191,50 @@
     </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>SSLConnect</name>
+    <message>
+        <source>PIN canceled</source>
+        <translation>PIN sisestamine katkestati</translation>
+    </message>
+    <message>
+        <source>Invalid PIN</source>
+        <translation>Vale PIN</translation>
+    </message>
+    <message>
+        <source>failed to load pkcs11 module</source>
+        <translation>viga pkcs11 mooduli laadimisel</translation>
+    </message>
+    <message>
+        <source>failed to list slots</source>
+        <translation>viga pkcs11 slottide lugemisel</translation>
+    </message>
+    <message>
+        <source>token failed</source>
+        <translation>viga &quot;tokeni&quot; laadimisel</translation>
+    </message>
+    <message>
+        <source>no token available</source>
+        <translation>ei leitud ühtegi &quot;tokenit&quot;</translation>
+    </message>
+    <message>
+        <source>no certificate available</source>
+        <translation>Ei ole kättesaadavaid sertifikaate</translation>
+    </message>
+    <message>
+        <source>no key matching certificate available</source>
+        <translation>ei leitud ühtegi sobivat sertifikaati</translation>
+    </message>
+    <message>
+        <source>Failed to connect to host. Are you connected to the internet?</source>
+        <translation>Puudub internetiühendus!</translation>
+    </message>
+</context>
+<context>
+    <name>SslCertificate</name>
+    <message>
+        <source>All application policies</source>
+        <translation>Kõik tarkvara poliisid</translation>
+    </message>
     <message>
         <source>Proves your identity to a remote computer</source>
         <translation>Tuvastab Teie isiksust arvuti kaugopereerimisel</translation>
@@ -203,10 +246,6 @@
     <message>
         <source>OCSP signing</source>
         <translation>OCSP allkirjastamine</translation>
-    </message>
-    <message>
-        <source>All application policies</source>
-        <translation>Kõik tarkvara poliisid</translation>
     </message>
     <message>
         <source>Digital signature</source>
@@ -243,45 +282,6 @@
     <message>
         <source>Decipher only</source>
         <translation>Ainult dekrüptimine</translation>
-    </message>
-    <message>
-        <source>failed to load pkcs11 module</source>
-        <translation>viga pkcs11 mooduli laadimisel</translation>
-    </message>
-    <message>
-        <source>failed to list slots</source>
-        <translation>viga pkcs11 slottide lugemisel</translation>
-    </message>
-    <message>
-        <source>token failed</source>
-        <translation>viga &quot;tokeni&quot; laadimisel</translation>
-    </message>
-    <message>
-        <source>no token available</source>
-        <translation>ei leitud ühtegi &quot;tokenit&quot;</translation>
-    </message>
-    <message>
-        <source>no key matching certificate available</source>
-        <translation>ei leitud ühtegi sobivat sertifikaati</translation>
-    </message>
-    <message>
-        <source>Failed to connect to host. Are you connected to the internet?</source>
-        <translation>Puudub internetiühendus!</translation>
-    </message>
-    <message>
-        <source>no certificate available</source>
-        <translation>Ei ole kättesaadavaid sertifikaate</translation>
-    </message>
-</context>
-<context>
-    <name>SSLConnect</name>
-    <message>
-        <source>PIN canceled</source>
-        <translation>PIN sisestamine katkestati</translation>
-    </message>
-    <message>
-        <source>Invalid PIN</source>
-        <translation>Vale PIN</translation>
     </message>
 </context>
 </TS>
