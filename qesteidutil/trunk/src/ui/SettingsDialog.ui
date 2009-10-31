@@ -98,28 +98,7 @@ QPushButton::hover, QPushButton::focus { background-image: url(:/html/images/but
    <item row="1" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QComboBox" name="updateInterval">
-       <item>
-        <property name="text">
-         <string>Once a day</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Once a week</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Once a month</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Never</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QComboBox" name="updateInterval"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">

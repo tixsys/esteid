@@ -23,6 +23,8 @@
 #include "SettingsDialog.h"
 #include "common/Settings.h"
 
+#include <QProcess>
+
 SettingsDialog::SettingsDialog( QWidget *parent )
 :	QDialog( parent )
 {
@@ -34,6 +36,10 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 	sessionTime->setValue( s.value( "sessionTime", 0 ).toInt() );
 
 #ifdef WIN32
+	updateInterval->addItem( tr("Once a day"), "-daily" );
+	updateInterval->addItem( tr("Once a week"), "-weekly" );
+	updateInterval->addItem( tr("Once a month"), "-monthly" );
+	updateInterval->addItem( tr("Never"), "-remove" );
 	int interval = updateInterval->findText( s.value( "updateInterval" ).toString() );
 	if ( interval == -1 )
 		interval = 0;
@@ -55,6 +61,15 @@ void SettingsDialog::accept()
 	
 	s.setValue( "updateInterval", updateInterval->currentText() );
 	s.setValue( "autoUpdate", autoUpdate->isChecked() );
+
+#ifdef WIN32
+	QStringList list;
+	if ( !autoUpdate->isChecked() )
+		list << "-remove";
+	else
+		list << updateInterval->itemData( updateInterval->currentIndex() ).toString();
+	QProcess::startDetached( "id-updater.exe", list );
+#endif
 
 	done( 1 );
 }
