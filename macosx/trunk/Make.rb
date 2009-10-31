@@ -40,6 +40,7 @@ class Application
 		@options.opensc = 'build/OpenSC'
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
+		@options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
 		@options.sign = nil
 	end
 	
@@ -187,11 +188,38 @@ class Application
 		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
+		FileUtils.rm_rf(File.join(binaries, @options.mozappid)) if File.exists? File.join(binaries, @options.mozappid)
 		FileUtils.rm_rf(File.join(binaries, '10.4')) if File.exists? File.join(binaries, '10.4')
 		FileUtils.rm_rf(File.join(binaries, '10.5')) if File.exists? File.join(binaries, '10.5')
+		FileUtils.rm_rf(File.join(binaries, '10.6')) if File.exists? File.join(binaries, '10.6')
 		FileUtils.mkdir_p(binaries) unless File.exists? binaries
 		FileUtils.mkdir_p(File.join(binaries, '10.4')) unless File.exists? File.join(binaries, '10.4')
 		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
+		FileUtils.mkdir_p(File.join(binaries, '10.6')) unless File.exists? File.join(binaries, '10.6')
+		
+		puts "Creating Mozilla extension..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
+			run_command 'rm -fR build' if File.exists? 'build'
+			run_command 'mkdir build'
+			
+			FileUtils.cd('build') do
+				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386" ..'
+				run_command 'xcodebuild -project xpi.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+				run_command "ditto -xk *.xpi #{@options.mozappid}"
+				
+				# Clean-up extension?
+				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
+				run_command "cp -R  #{@options.mozappid}/components/Release/* #{@options.mozappid}/components/"
+				run_command "rm -rf #{@options.mozappid}/components/Release"
+				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
+				run_command "cp -R  #{@options.mozappid}/plugins/Release/* #{@options.mozappid}/plugins/"
+				run_command "rm -rf #{@options.mozappid}/plugins/Release"
+				
+				puts "Copying Mozilla extension..." if @options.verbose
+				FileUtils.cp_r(@options.mozappid, binaries)
+			end
+		end
 		
 		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
@@ -232,6 +260,7 @@ class Application
 			puts "Copying qdigidoccrypto.app..." if @options.verbose
 			FileUtils.cp_r('crypto/Release/qdigidoccrypto.app', binaries)
 		end
+		
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
@@ -374,7 +403,12 @@ class Application
 			if patterns.instance_of? Array
 				patterns.each { |pattern| files.concat(Dir.glob(Pathname.new(@path).join(pattern).to_s)) }
 			else
-				files.concat(Dir.glob(Pathname.new(@path).join(patterns).to_s))
+				if File.exists? Pathname.new(@path).join(patterns).to_s
+				puts patterns
+					files.push(Pathname.new(@path).join(patterns).to_s)
+				else
+					files.concat(Dir.glob(Pathname.new(@path).join(patterns).to_s))
+				end
 			end
 			
 			# Check if we're not dealing with a meta-package ie a package that contains other packages
@@ -400,6 +434,12 @@ class Application
 					plist = Plist.parse_xml(file)
 					identifier = plist['CFBundleIdentifier'] if identifier.nil?
 					version = plist['CFBundleShortVersionString'] if version.nil?
+				end
+				
+				file = Pathname.new(files.first).join('install.rdf').to_s
+				
+				if File.exists? file
+					version = `grep -s "<em:version>" #{file} | tr -s " " | cut -c 14-21`.strip
 				end
 				
 				if identifier.nil?
@@ -648,7 +688,7 @@ class Application
 		puts "\tdigidoc"
 		puts "\tbinaries"
 		puts "\tclean"
-		puts "\tcomponents"
+		puts "\trepository"
 		puts "\tinstaller"
 		puts "\tpackages"
 		puts ""
@@ -712,10 +752,10 @@ class Application
 							   'org.esteid.installer.tokend.10.5',
 							   'org.esteid.installer.tokend.10.4' ]
 			}, {
-				:title => 'Internet Plug-in',
+				:title => 'Internet Plug-ins',
 				:description => 'Internet Plug-in description',
 				:priority => 1,
-				:packages => [ 'org.esteid.webplugin' ]
+				:packages => [ 'org.esteid.webplugin', 'org.esteid.installer.mozilla' ]
 			}, {
 				:title => 'Finder Plug-in',
 				:description => 'Finder Plug-in description',
@@ -788,6 +828,12 @@ class Application
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'
 			}, {
+				:name => 'esteid-mozilla',
+				:files => File.join(@options.binaries, @options.mozappid),
+				:froot => @options.binaries,
+				:identifier => 'org.esteid.installer.mozilla',
+				:location => '/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}'
+			}, {
 				:name => 'esteid-qdigidocclient',
 				:files => File.join(@options.binaries, 'qdigidocclient.app'),
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
@@ -812,6 +858,14 @@ class Application
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.pp',
 				:location => '/Library/PreferencePanes'
+			#}, {
+			#	:name => 'esteid-tokend-snowleopard',
+			#	:files => File.join(@options.binaries, '10.6', 'OpenSC.tokend'),
+			#	:froot => File.join(@options.binaries, '10.6'),
+			#	:identifier => 'org.esteid.installer.tokend.10.6',
+			#	:location => '/System/Library/Security/tokend',
+			#	:script => "return system.version.ProductVersion >= '10.6';",
+			#	:system => '10.6>='
 			}, {
 				:name => 'esteid-tokend-leopard',
 				:files => File.join(@options.binaries, '10.5', 'OpenSC.tokend'),
