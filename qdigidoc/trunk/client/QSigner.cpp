@@ -307,7 +307,9 @@ void QSigner::unloadDriver()
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
 	d->slotCount = 0;
 	if( d->handle )
+	{
 		PKCS11_CTX_unload( d->handle );
-	PKCS11_CTX_free( d->handle );
-	d->handle = 0;
+		PKCS11_CTX_free( d->handle );
+		d->handle = 0;
+	}
 }
