@@ -1,19 +1,23 @@
 <?xml version="1.0"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-
-  <mime-type type="application/x-bdoc">
-    <comment>BDOC container</comment>
-    <glob pattern="*.bdoc"/>
-  </mime-type>
-
-  <mime-type type="application/x-ddoc">
-    <comment>DDOC container</comment>
-    <glob pattern="*.ddoc"/>
-  </mime-type>
-
-  <mime-type type="application/x-p12d">
-    <comment>PKCS#12 certifikate</comment>
-    <glob pattern="*.p12d"/>
-  </mime-type>
-
+	<mime-type type="application/x-bdoc">
+		<sub-class-of type="application/zip"/>
+		<comment>DigiDoc3 signed document</comment>
+		<comment xml:lang="et">DigiDoc3 allkirjastatud dokument</comment>
+		<comment xml:lang="ru">FIXME</comment>
+		<glob pattern="*.bdoc"/>
+	</mime-type>
+	<mime-type type="application/x-ddoc">
+		<sub-class-of type="application/xml"/>
+		<comment>DigiDoc3 signed document</comment>
+		<comment xml:lang="et">DigiDoc3 allkirjastatud dokument</comment>
+		<comment xml:lang="ru">FIXME</comment>
+		<glob pattern="*.ddoc"/>
+	</mime-type>
+	<mime-type type="application/x-p12d">
+		<comment>DigiDoc3 PKCS#12 certifikate</comment>
+		<comment xml:lang="et">DigiDoc3 PKCS#12 ligipääsutõend</comment>
+		<comment xml:lang="ru">FIXME</comment>
+		<glob pattern="*.p12d"/>
+	</mime-type>
 </mime-info>
