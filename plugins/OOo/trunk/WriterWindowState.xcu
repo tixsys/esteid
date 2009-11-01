@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="WriterWindowState" oor:package="org.openoffice.Office.UI">
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="WriterWindowState" oor:package="ee.smartlink.digidoc.UI">
  <node oor:name="UIElements">
   <node oor:name="States">
    <node oor:name="private:resource/toolbar/addon_com.sun.star.comp.framework.addon.digidoc" oor:op="replace">
