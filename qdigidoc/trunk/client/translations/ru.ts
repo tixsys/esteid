@@ -398,9 +398,12 @@ Start downloading?</source>
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
         <translation>
-            <numerusform>В контейнер добавлено %1 файл(а), но они не подписаны. Оставить неподписанный контейнер или стереть?</numerusform>
-            <numerusform>В контейнер добавлено %1 файл(а), но они не подписаны. Оставить неподписанный контейнер или стереть?</numerusform>
-            <numerusform></numerusform>
+            <numerusform>В контейнер добавлено %n файл(а), но они не подписаны.
+Оставить неподписанный контейнер или стереть?</numerusform>
+            <numerusform>В контейнер добавлено %n файл(а), но они не подписаны.
+Оставить неподписанный контейнер или стереть?</numerusform>
+            <numerusform>В контейнер добавлено %n файл(а), но они не подписаны.
+Оставить неподписанный контейнер или стереть?</numerusform>
         </translation>
     </message>
 </context>
@@ -478,11 +481,11 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Empty HTTP result</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустой HTTP ответ</translation>
     </message>
     <message>
         <source>Failed to parse XML document</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при разборе XML документа</translation>
     </message>
 </context>
 <context>

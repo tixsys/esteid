@@ -396,9 +396,11 @@ Alustame laadimist?</translation>
     <message numerus="yes">
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
-        <translation type="unfinished">
-            <numerusform>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
-            <numerusform>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
+        <translation>
+            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allakirjutanud.
+Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
+            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allakirjutanud.
+Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
         </translation>
     </message>
 </context>
@@ -476,11 +478,11 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Empty HTTP result</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühi HTTP tulemus</translation>
     </message>
     <message>
         <source>Failed to parse XML document</source>
-        <translation type="unfinished"></translation>
+        <translation>XML dokumendi parsimine ebaõnnestus</translation>
     </message>
 </context>
 <context>
