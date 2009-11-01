@@ -1,214 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="et">
+<TS version="2.0" language="en">
 <context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
-        <translation>Ümbrik ei ole avatud</translation>
+        <translation>Container is not open</translation>
     </message>
     <message>
         <source>Cannot add files to signed container</source>
-        <translation>Ei saa lisada faile allakirjutatud ümbrikule</translation>
+        <translation>Cannot add files to signed container</translation>
     </message>
     <message>
         <source>Missing document</source>
-        <translation>Puuduv dokument</translation>
+        <translation>Missing document</translation>
     </message>
     <message>
         <source>Cannot add signature to empty container</source>
-        <translation>Ei saa lisada allkirja tühjale ümbrikule</translation>
+        <translation>Cannot add signature to empty container</translation>
     </message>
     <message>
         <source>Missing signature</source>
-        <translation>Allkiri puudub</translation>
+        <translation>Missing signature</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
-        <translation>PIN vigane</translation>
+        <translation>PIN Incorrect</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN on lukus</translation>
+        <translation>PIN Locked</translation>
     </message>
     <message>
         <source>PIN Login failed</source>
-        <translation>PIN koodi valideerimine ebaõnnestus</translation>
+        <translation>PIN Login failed</translation>
     </message>
     <message>
         <source>Certificate status revoked</source>
-        <translation>Sertifikaat on kehtetu</translation>
+        <translation>Certificate status revoked</translation>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation>Sertifikaadi staatus on teadmata</translation>
+        <translation>Certificate status unknown</translation>
     </message>
     <message>
         <source>Check your computer time</source>
-        <translation>Kontrollige oma arvuti kella</translation>
+        <translation>Check your computer time</translation>
     </message>
     <message>
         <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
-        <translation>Ümbriku avamisel tekkis viga.&lt;br /&gt;%1</translation>
+        <translation>An error occurred while opening the document.&lt;br /&gt;%1</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Settings</source>
-        <translation>Seaded</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Abi</translation>
+        <translation>Help</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation>Edasi</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation>Allkiri</translation>
+        <translation>Signature</translation>
     </message>
     <message>
         <source>Role</source>
-        <translation>Roll</translation>
+        <translation>Role</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Resolutsioon</translation>
+        <translation>Resolution</translation>
     </message>
     <message>
         <source>City</source>
-        <translation>Linn</translation>
+        <translation>City</translation>
     </message>
     <message>
         <source>State</source>
-        <translation>Maakond</translation>
+        <translation>State</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>Riik</translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation>Indeks</translation>
+        <translation>Zip</translation>
     </message>
     <message>
         <source>Sign</source>
-        <translation>Kirjutan alla</translation>
+        <translation>Sign</translation>
     </message>
     <message>
         <source>Add signature</source>
-        <translation>Lisa allkiri</translation>
+        <translation>Add signature</translation>
     </message>
     <message>
         <source>Save container</source>
-        <translation>Salvesta Ümbrik</translation>
+        <translation>Save container</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eemalda</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Keep</source>
-        <translation>Jätan alles</translation>
+        <translation>Keep</translation>
     </message>
     <message>
         <source>Open container</source>
-        <translation>Ava ümbrik</translation>
+        <translation>Open container</translation>
     </message>
     <message>
         <source>Select folder where files will be stored</source>
-        <translation>Vali kataloog kuhu failid salvestatakse</translation>
+        <translation>Select folder where files will be stored</translation>
     </message>
     <message>
         <source>This container is signed by you</source>
-        <translation>See ümbrik on sinu poolt allakirjutatud</translation>
+        <translation>This container is signed by you</translation>
     </message>
     <message>
         <source>You have not signed this container</source>
-        <translation>Sa pole seda ümbrikut allkirjastanud</translation>
+        <translation>You have not signed this container</translation>
     </message>
     <message>
         <source>Container is unsigned</source>
-        <translation>Ümbrik ei ole allakirjutatud</translation>
+        <translation>Container is unsigned</translation>
     </message>
     <message>
         <source>Select documents</source>
-        <translation>Lisa failid</translation>
+        <translation>Select documents</translation>
     </message>
     <message>
         <source>Skip this intro</source>
-        <translation>Ära rohkem mulle seda sissejuhatust näita</translation>
+        <translation>Skip this intro</translation>
     </message>
     <message>
         <source>Save file</source>
-        <translation>Salvesta fail</translation>
+        <translation>Save file</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
-        <translation>Protsessi &apos;qdigidoccrypto&apos; käivitamine ebaõnnestus</translation>
+        <translation>Failed to start process &apos;qdigidoccrypto&apos;</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>
-        <translation>Protsessi &apos;qesteidutil&apos; käivitamine ebaõnnestus</translation>
+        <translation>Failed to start process &apos;qesteidutil&apos;</translation>
     </message>
     <message>
         <source>Documents (*.bdoc *.ddoc)</source>
-        <translation>Dokumendid (*.bdoc *.ddoc)</translation>
+        <translation>Documents (*.bdoc *.ddoc)</translation>
     </message>
     <message>
         <source>No card in reader</source>
-        <translation>Kaarti pole lugejas</translation>
+        <translation>No card in reader</translation>
     </message>
     <message>
         <source>I want to:</source>
-        <translation>Ma tahan:</translation>
+        <translation>I want to:</translation>
     </message>
     <message>
         <source>Sign documents</source>
-        <translation>Allkirjastada dokumenti</translation>
+        <translation>Sign documents</translation>
     </message>
     <message>
         <source>View signed document content</source>
-        <translation>Vaadata allkirjastatud dokumendi sisu</translation>
+        <translation>View signed document content</translation>
     </message>
     <message>
         <source>Container content:</source>
-        <translation>Ümbriku sisu:</translation>
+        <translation>Container content:</translation>
     </message>
     <message>
         <source>Container:</source>
-        <translation>Ümbrik:</translation>
+        <translation>Container:</translation>
     </message>
     <message>
         <source>Use Mobile ID</source>
-        <translation>Kasuta Mobiil-ID</translation>
+        <translation>Use Mobile ID</translation>
     </message>
     <message>
         <source>Use ID-card</source>
-        <translation>Kasuta ID-kaarti</translation>
+        <translation>Use ID-card</translation>
     </message>
     <message>
         <source>This container is </source>
-        <translation>See ümbrik on</translation>
+        <translation>This container is </translation>
     </message>
     <message>
         <source>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;saveAs&quot;&gt;Salvesta failid kettale&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;saveAs&quot;&gt;Save files to disk&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;email&quot;&gt;Saada ümbrik e-postiga&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;email&quot;&gt;Send container to email&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;print&quot;&gt;Trüki kinnitusleht&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;print&quot;&gt;Print summary&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;browse&quot;&gt;Näita ümbriku asukohta kettal&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;browse&quot;&gt;Browse container location&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -232,31 +232,31 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial, Liberation Sans&apos;; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Resolutsioon ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Resolution ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>File already in container</source>
-        <translation>Fail on juba ümbrikus</translation>
+        <translation>File already in container</translation>
     </message>
     <message>
         <source>%1&lt;br /&gt;already in container, ovewrite?</source>
-        <translation>%1&lt;br /&gt;on juba ümbrikus. Kas kirjutan üle?</translation>
+        <translation>%1&lt;br /&gt;already in container, ovewrite?</translation>
     </message>
     <message>
         <source>Loading data</source>
-        <translation>Loen andmeid</translation>
+        <translation>Loading data</translation>
     </message>
     <message>
         <source>Mobile number:</source>
-        <translation>Telefoni number:</translation>
+        <translation>Mobile number:</translation>
     </message>
     <message>
         <source>Personal code:</source>
-        <translation>Isikukood:</translation>
+        <translation>Personal code:</translation>
     </message>
     <message>
         <source>Encrypt files for secure transfer</source>
-        <translation>Krüpteerida faile turvaliseks edastamiseks</translation>
+        <translation>Encrypt files for secure transfer</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -272,133 +272,135 @@ Also an active internet connection is needed.&lt;/p&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;
 &lt;/head&gt;&lt;body&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
-Dokumendi allkirjastamine.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkiri on samaväärne füüsilise allkirjaga. Digitaalallkirja andmiseks on vajalik ID-kaart või Mobiil-ID, millel on kehtiv ja kasutatav allkirjastamise sertifikaat.&lt;br /&gt;&lt;br /&gt;
-Dokumendi allkirjastamisel on vajalik PIN2 kood.&lt;br /&gt;&lt;br /&gt;
-Digitaalallkirja andmiseks on vajalik internetiühendus.&lt;/p&gt;
+Digital signing.&lt;br /&gt;&lt;br /&gt;
+Digital signing is equal to physical signing. To sign a document you need an ID-card with a valid and usable signature certificate.&lt;br /&gt;&lt;br /&gt;
+Signing is done via PIN2 code&lt;br /&gt;&lt;br /&gt;
+Also an active internet connection is needed.&lt;/p&gt;
 &lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;addFile&quot;&gt;Lisa fail&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;addFile&quot;&gt;Add file&lt;/a&gt;</translation>
     </message>
     <message>
         <source>%1 already exists.&lt;br /&gt;Do you want replace it?</source>
-        <translation>%1 on juba olemas.&lt;br /&gt;Soovid asendada?</translation>
+        <translation>%1 already exists.&lt;br /&gt;Do you want replace it?</translation>
     </message>
     <message>
         <source>Server access certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>Server access certificate</translation>
     </message>
     <message>
         <source>Did not find any server access certificate!
 Start downloading?</source>
-        <translation>Puudub ligipääsutõend!
-Alustame laadimist?</translation>
+        <translation>Did not find any server access certificate!
+Start downloading?</translation>
     </message>
     <message>
         <source>Error parsing server access certificate result!</source>
-        <translation>Viga ligipääsutõendi lugemisel!</translation>
+        <translation>Error parsing server access certificate result!</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!
 %1</source>
-        <translation>Viga ligipääsutõendi laadimisel!
+        <translation>Error downloading server access certificate!
 %1</translation>
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation>Kontrolli interneti ühendust</translation>
+        <translation>Check internet connection</translation>
     </message>
     <message>
         <source>Personal code is not valid</source>
-        <translation>Isikukood on vigane</translation>
+        <translation>Personal code is not valid</translation>
     </message>
     <message>
         <source>Failed to save server access certificate file to %1!
 %2</source>
-        <translation>Viga ligipääsutõendi salvestamisel %1!
+        <translation>Failed to save server access certificate file to %1!
 %2</translation>
     </message>
     <message>
         <source>NB! Test signature</source>
-        <translation>NB! Test allkiri</translation>
+        <translation>NB! Test signature</translation>
     </message>
     <message>
         <source>You dont have permissions to write file %1</source>
-        <translation>Teil ei ole piisavalt õigusi et kirjutada faili %1</translation>
+        <translation>You dont have permissions to write file %1</translation>
     </message>
     <message>
         <source>NB! Invalid signature</source>
-        <translation>NB: Vigane allkiri</translation>
+        <translation>NB! Invalid signature</translation>
     </message>
     <message>
         <source>Error reading server access certificate - empty content!</source>
-        <translation>Viga ligipääsutõendi lugemisel - sisu on tühi!</translation>
+        <translation>Error reading server access certificate - empty content!</translation>
     </message>
     <message>
         <source>Remove signature %1</source>
-        <translation>Eemalda allkiri %1</translation>
+        <translation>Remove signature %1</translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
-        <translation>Sul ei ole piisavalt õigusi, et kirjutada fail kataloogi %1</translation>
+        <translation>You dont have suficient privilegs to write this fail into folder %1</translation>
     </message>
     <message>
         <source>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</source>
-        <translation>Dokumendid (*.bdoc *.BDOC *.ddoc *.DDOC)</translation>
+        <translation>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</translation>
     </message>
     <message>
         <source>DigiDoc3 client</source>
-        <translation>DigiDoc3 klient</translation>
+        <translation>DigiDoc3 client</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fail</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sulge</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
-        <translation>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</translation>
+        <translation>Mobile-ID BDOC signing works for now SK development environment!</translation>
     </message>
     <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
-        <translation>Ligipääsutõend ei ole kehtiv!
-Alustame laadimist?</translation>
+        <translation>Server access certificate is not valid!
+Start downloading?</translation>
     </message>
     <message>
         <source>Server access certificate is about to expire!
 Start downloading?</source>
-        <translation>Ligipääsutõend aegub varsti!
-Alustame laadimist?</translation>
+        <translation>Server access certificate is about to expire!
+Start downloading?</translation>
     </message>
     <message>
         <source>Failed to read server access certificate!
 Start downloading?</source>
-        <translation>Ei õnnestunud liigipääsutõendit laadida!
-Alustame laadimist?</translation>
+        <translation>Failed to read server access certificate!
+Start downloading?</translation>
     </message>
     <message>
         <source>Server access certificate password is not valid!</source>
-        <translation>Ligipääsutõendi parool on vale!</translation>
+        <translation>Server access certificate password is not valid!</translation>
     </message>
     <message numerus="yes">
         <source>Signature(s)</source>
         <translation>
-            <numerusform>Allkiri</numerusform>
-            <numerusform>Allkirjad</numerusform>
+            <numerusform>Signature</numerusform>
+            <numerusform>Signatures</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
         <translation type="unfinished">
-            <numerusform>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
-            <numerusform>Olete lisanud ümbrikusse %1 faili, kuid pole neid allakirjutanud. Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
+            <numerusform>You added %n file to container, but these are not signed yet.
+Should I keep unsigned documents or remove these?</numerusform>
+            <numerusform>You added %n files to container, but these are not signed yet.
+Should I keep unsigned documents or remove these?</numerusform>
         </translation>
     </message>
 </context>
@@ -406,323 +408,323 @@ Should I keep unsigned documents or remove these?</source>
     <name>MobileDialog</name>
     <message>
         <source>Signing in process</source>
-        <translation>Toimub allkirjastamine</translation>
+        <translation>Signing in process</translation>
     </message>
     <message>
         <source>Request accepted</source>
-        <translation>Päring aktsepteeritud</translation>
+        <translation>Request accepted</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation>Päringu kannatus katkes</translation>
+        <translation>Request timeout</translation>
     </message>
     <message>
         <source>User denied or cancelled</source>
-        <translation>Kasutaja keeldus või katkestas</translation>
+        <translation>User denied or cancelled</translation>
     </message>
     <message>
         <source>Got signature</source>
-        <translation>Sain allkirja</translation>
+        <translation>Got signature</translation>
     </message>
     <message>
         <source>Request pending</source>
-        <translation>Päring ootel</translation>
+        <translation>Request pending</translation>
     </message>
     <message>
         <source>Mobile-ID not ready, try again later</source>
-        <translation>Mobiil-ID pole valmis, proovi hiljem uuesti</translation>
+        <translation>Mobile-ID not ready, try again later</translation>
     </message>
     <message>
         <source>Phone absent</source>
-        <translation>Telefon ei ole levis</translation>
+        <translation>Phone absent</translation>
     </message>
     <message>
         <source>Request sending error</source>
-        <translation>Päringu saatmise viga</translation>
+        <translation>Request sending error</translation>
     </message>
     <message>
         <source>SIM error</source>
-        <translation>SIM kaardi viga</translation>
+        <translation>SIM error</translation>
     </message>
     <message>
         <source>Service internal error</source>
-        <translation>Teenuse sisemine viga</translation>
+        <translation>Service internal error</translation>
     </message>
     <message>
         <source>Signing with Mobile-ID</source>
-        <translation>Allkirjastan Mobiil-ID -ga</translation>
+        <translation>Signing with Mobile-ID</translation>
     </message>
     <message>
         <source>Control code: %1</source>
-        <translation>Kontrollkood: %1</translation>
+        <translation>Control code: %1</translation>
     </message>
     <message>
         <source>%v sec</source>
-        <translation>%v sek</translation>
+        <translation>%v sec</translation>
     </message>
     <message>
         <source>Connecting to SK server failed!
 Please check your internet connection.</source>
-        <translation>Viga SK serveriga ühenduse saamisel!
-Palun kontrollige internetiühendust.</translation>
+        <translation>Connecting to SK server failed!
+Please check your internet connection.</translation>
     </message>
     <message>
         <source>User is not a Mobile-ID client</source>
-        <translation>Kasutaja ei ole Mobiil-ID klient</translation>
+        <translation>User is not a Mobile-ID client</translation>
     </message>
     <message>
         <source>ID and phone number do not match</source>
-        <translation>Isikukood ja telefoni number ei klapi</translation>
+        <translation>ID and phone number do not match</translation>
     </message>
     <message>
         <source>Empty HTTP result</source>
-        <translation type="unfinished"></translation>
+        <translation>Empty HTTP result</translation>
     </message>
     <message>
         <source>Failed to parse XML document</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to parse XML document</translation>
     </message>
 </context>
 <context>
     <name>PrintSheet</name>
     <message>
         <source>SIGNED FILES</source>
-        <translation>ALLKIRJASTATUD FAILID</translation>
+        <translation>SIGNED FILES</translation>
     </message>
     <message>
         <source>FILE NAME</source>
-        <translation>FAILI NIMI</translation>
+        <translation>FILE NAME</translation>
     </message>
     <message>
         <source>FILE SIZE</source>
-        <translation>FAILI SUURUS</translation>
+        <translation>FILE SIZE</translation>
     </message>
     <message>
         <source>SIGNERS</source>
-        <translation>ALLKIRJASTAJAD</translation>
+        <translation>SIGNERS</translation>
     </message>
     <message>
         <source>NAME</source>
-        <translation>NIMI</translation>
+        <translation>NAME</translation>
     </message>
     <message>
         <source>PERSONAL CODE</source>
-        <translation>ISIKUKOOD</translation>
+        <translation>PERSONAL CODE</translation>
     </message>
     <message>
         <source>TIME</source>
-        <translation>AEG</translation>
+        <translation>TIME</translation>
     </message>
     <message>
         <source>SIGNATURE</source>
-        <translation>ALLKIRI</translation>
+        <translation>SIGNATURE</translation>
     </message>
     <message>
         <source>NOTES</source>
-        <translation>MÄRKUSED</translation>
+        <translation>NOTES</translation>
     </message>
     <message>
         <source>VALIDITY CONFIRMATION SHEET</source>
-        <translation>DIGITAALALLKIRJADE KINNITUSLEHT</translation>
+        <translation>VALIDITY CONFIRMATION SHEET</translation>
     </message>
     <message>
         <source>NO.</source>
-        <translation>nr.</translation>
+        <translation>NO.</translation>
     </message>
     <message>
         <source>VALIDITY OF SIGNATURE</source>
-        <translation>ALLKIRJA KEHTIVUS</translation>
+        <translation>VALIDITY OF SIGNATURE</translation>
     </message>
     <message>
         <source>VALID</source>
-        <translation>KEHTIB</translation>
+        <translation>VALID</translation>
     </message>
     <message>
         <source>NOT VALID</source>
-        <translation>KETHETU</translation>
+        <translation>NOT VALID</translation>
     </message>
     <message>
         <source>ROLE / RESOLUTION</source>
-        <translation>ROLL/RESOLUTSIOON</translation>
+        <translation>ROLE / RESOLUTION</translation>
     </message>
     <message>
         <source>PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)</source>
-        <translation>ALLKIRJASTAJA ASUKOHT (LINN, MAAKOND, INDEKS, RIIK)</translation>
+        <translation>PLACE OF CONFIRMATION (CITY, STATE, ZIP, COUNTRY)</translation>
     </message>
     <message>
         <source>SERIAL NUMBER OF CERTIFICATE</source>
-        <translation>SERTIFIKAADI SEERIANUMBER</translation>
+        <translation>SERIAL NUMBER OF CERTIFICATE</translation>
     </message>
     <message>
         <source>ISSUER OF CERTIFICATE</source>
-        <translation>SERTIFIKAADI VÄLJAANDJA NIMI</translation>
+        <translation>ISSUER OF CERTIFICATE</translation>
     </message>
     <message>
         <source>HASH VALUE OF ISSUER&apos;S PUBLIC KEY</source>
-        <translation>SERTIFIKAADI VÄLJAANDJA AVALIKU VÕTME LÜHEND</translation>
+        <translation>HASH VALUE OF ISSUER&apos;S PUBLIC KEY</translation>
     </message>
     <message>
         <source>HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)</source>
-        <translation>KEHTIVUSKINNITUSE SÕNUMILÜHEND</translation>
+        <translation>HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)</translation>
     </message>
     <message>
         <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>
-        <translation>Selle kinnituslehe lahutamatu osa on lõigus &lt;b&gt;&quot;Allkirjastatud failid&quot;&lt;/b&gt; nimetatud failide esitus paberil.</translation>
+        <translation>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</translation>
     </message>
     <message>
         <source>COMPANY</source>
-        <translation>ASUTUS</translation>
+        <translation>COMPANY</translation>
     </message>
     <message>
         <source>REGISTER CODE</source>
-        <translation>REGISTRIKOOD</translation>
+        <translation>REGISTER CODE</translation>
     </message>
     <message>
         <source>UNKNOWN</source>
-        <translation>Teadmata</translation>
+        <translation>UNKNOWN</translation>
     </message>
 </context>
 <context>
     <name>QSigner</name>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
+        <translation>Failed to load PKCS#11 module</translation>
     </message>
     <message>
         <source>PIN acquisition canceled.</source>
-        <translation>PIN koodi sisestamine katkestati.</translation>
+        <translation>PIN acquisition canceled.</translation>
     </message>
     <message>
         <source>Signing certificate is not selected.</source>
-        <translation>Allkirjastamise sertifikaat ei ole valitud.</translation>
+        <translation>Signing certificate is not selected.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Vale PIN</translation>
+        <translation>Failed to login token</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
-        <translation>PIN vigane</translation>
+        <translation>PIN Incorrect</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN on lukus</translation>
+        <translation>PIN Locked</translation>
     </message>
     <message>
         <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation>Kaardilt lugemine ebaõnnestunud &apos;%1&apos;: %2</translation>
+        <translation>Failed to login to token &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>
-        <translation>Dokumendi allkirjastamine ebaõnnestus</translation>
+        <translation>Failed to sign document</translation>
     </message>
 </context>
 <context>
     <name>RegisterP12</name>
     <message>
         <source>No OCSP PKCS#12 certificate selected</source>
-        <translation>Ükski OCSP PKCS#12 sertifikaat ei ole valitud</translation>
+        <translation>No OCSP PKCS#12 certificate selected</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation>Faili kopeerimine ebaõnnestus</translation>
+        <translation>Failed to copy file</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation>Valige PKCS#12 sertifikaat</translation>
+        <translation>Select PKCS#12 certificate</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation>PKCS#12 Sertifikaadid (*.p12 *.p12d)</translation>
+        <translation>PKCS#12 Certificates (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
-        <translation>Ligipääsutõend paigaldamine</translation>
+        <translation>OCSP PKCS#12 certificate installer</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>OCSP PKCS#12 certificate</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parool</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation>OCSP PKCS#12 serveri ligipääsu sertifikaadid on võimalik saada&lt;br /&gt;
-&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=est&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
+        <translation>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
+&lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
-        <translation>Seaded</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>Container default location</source>
-        <translation>Ümbriku loomise vaikekataloog</translation>
+        <translation>Container default location</translation>
     </message>
     <message>
         <source>Role</source>
-        <translation>Roll</translation>
+        <translation>Role</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Resolutsioon</translation>
+        <translation>Resolution</translation>
     </message>
     <message>
         <source>City</source>
-        <translation>Linn</translation>
+        <translation>City</translation>
     </message>
     <message>
         <source>State</source>
-        <translation>Maakond</translation>
+        <translation>State</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>Riik</translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation>Indeks</translation>
+        <translation>Zip</translation>
     </message>
     <message>
         <source>Select folder</source>
-        <translation>Vali kataloog</translation>
+        <translation>Select folder</translation>
     </message>
     <message>
         <source>Show signing intro</source>
-        <translation>Näita allkirjastamisel sissejuhatust</translation>
+        <translation>Show signing intro</translation>
     </message>
     <message>
         <source>Same folder</source>
-        <translation>Samasse kataloogi</translation>
+        <translation>Same folder</translation>
     </message>
     <message>
         <source>Ask container name</source>
-        <translation>Küsi dokumendi nime</translation>
+        <translation>Ask container name</translation>
     </message>
     <message>
         <source>Default file type:</source>
-        <translation>Vaikimisi faili tüüp:</translation>
+        <translation>Default file type:</translation>
     </message>
     <message>
         <source>Save last insert role and resolution</source>
-        <translation>Jäta viimati sisestatud roll ja resolutsioon meelde</translation>
+        <translation>Save last insert role and resolution</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Üldine</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation>Allkiri</translation>
+        <translation>Signature</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation>Proksi</translation>
+        <translation>Proxy</translation>
     </message>
     <message>
         <source>Host</source>
@@ -734,142 +736,142 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Select PKCS#12 certificate</source>
-        <translation>Valige PKCS#12 sertifikaat</translation>
+        <translation>Select PKCS#12 certificate</translation>
     </message>
     <message>
         <source>PKCS#12 Certificates (*.p12 *.p12d)</source>
-        <translation>PKCS#12 Sertifikaadid (*.p12 *.p12d)</translation>
+        <translation>PKCS#12 Certificates (*.p12 *.p12d)</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>OCSP PKCS#12 certificate</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Sertifikaat</translation>
+        <translation>Certificate</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parool</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Kasutajanimi</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</source>
-        <translation>Juba avatud ümbriku formaati pole võimalik muuta. See seade kehtib ainult uutele ümbrikutele.</translation>
+        <translation>If you change file format from .bdoc to .ddoc or vise versa, opened file will not change.</translation>
     </message>
     <message>
         <source>Show certificate</source>
-        <translation>Näita sertifikaati</translation>
+        <translation>Show certificate</translation>
     </message>
 </context>
 <context>
     <name>SignatureDialog</name>
     <message>
         <source>Signing time</source>
-        <translation>Allkirjastamise aeg</translation>
+        <translation>Signing time</translation>
     </message>
     <message>
         <source>Signature type</source>
-        <translation>Allkirja tüüp</translation>
+        <translation>Signature type</translation>
     </message>
     <message>
         <source>Signature format</source>
-        <translation>Allkirja formaat</translation>
+        <translation>Signature format</translation>
     </message>
     <message>
         <source>Signed file count</source>
-        <translation>Allkirjastatud failide arv</translation>
+        <translation>Signed file count</translation>
     </message>
     <message>
         <source>Certificate serialnumber</source>
-        <translation>Sertifikaadi seerianumber</translation>
+        <translation>Certificate serialnumber</translation>
     </message>
     <message>
         <source>Certificate valid at</source>
-        <translation>Sertifikaat kehtib alates</translation>
+        <translation>Certificate valid at</translation>
     </message>
     <message>
         <source>Certificate valid until</source>
-        <translation>Sertifikaat kehtib kuni</translation>
+        <translation>Certificate valid until</translation>
     </message>
     <message>
         <source>Certificate issuer</source>
-        <translation>Sertifikaadi väljaandja</translation>
+        <translation>Certificate issuer</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation>Allkirjastaja</translation>
+        <translation>Signer</translation>
     </message>
     <message>
         <source>Signer location</source>
-        <translation>Allkirjastaja asukoht</translation>
+        <translation>Signer location</translation>
     </message>
     <message>
         <source>City</source>
-        <translation>Linn</translation>
+        <translation>City</translation>
     </message>
     <message>
         <source>State</source>
-        <translation>Maakond</translation>
+        <translation>State</translation>
     </message>
     <message>
         <source>Country</source>
-        <translation>Riik</translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>Zip</source>
-        <translation>Indeks</translation>
+        <translation>Zip</translation>
     </message>
     <message>
         <source>Role / resolution</source>
-        <translation>Roll / resolutsioon</translation>
+        <translation>Role / resolution</translation>
     </message>
     <message>
         <source>Show certificate</source>
-        <translation>Näita sertifikaati</translation>
+        <translation>Show certificate</translation>
     </message>
     <message>
         <source>Signature</source>
-        <translation>Allkiri</translation>
+        <translation>Signature</translation>
     </message>
     <message>
         <source>Attribute</source>
-        <translation>Atribuut</translation>
+        <translation>Attribute</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Väärtus</translation>
+        <translation>Value</translation>
     </message>
     <message>
         <source>OCSP</source>
-        <translation>Kehtivuskinnitus</translation>
+        <translation>OCSP</translation>
     </message>
     <message>
         <source>Signature is valid</source>
-        <translation>Allkiri on kehtiv</translation>
+        <translation>Signature is valid</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Tundmatu viga</translation>
+        <translation>Unknown error</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Aeg</translation>
+        <translation>Time</translation>
     </message>
     <message>
         <source>Hash value of validity confirmation</source>
-        <translation>Räsi väärtus kehtivuse kinnitamisel</translation>
+        <translation>Hash value of validity confirmation</translation>
     </message>
     <message>
         <source>Signature is not valid</source>
-        <translation>Allkirja staatus on teadmata</translation>
+        <translation>Signature is not valid</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Abi</translation>
+        <translation>Help</translation>
     </message>
     <message>
         <source>Signature status unknown</source>
@@ -880,54 +882,54 @@ Palun kontrollige internetiühendust.</translation>
     <name>SignatureWidget</name>
     <message>
         <source>valid</source>
-        <translation>kehtiv</translation>
+        <translation>valid</translation>
     </message>
     <message>
         <source>not valid</source>
-        <translation>kehtetu</translation>
+        <translation>not valid</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation>Vaata üksikasju</translation>
+        <translation>Show details</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eemalda</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Signed on</source>
-        <translation>Allkirjastati</translation>
+        <translation>Signed on</translation>
     </message>
     <message>
         <source>Signature is</source>
-        <translation>Allkiri on</translation>
+        <translation>Signature is</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>kell</translation>
+        <translation>time</translation>
     </message>
     <message>
         <source>Test signature</source>
-        <translation>Test allkiri</translation>
+        <translation>Test signature</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation>teadmata</translation>
+        <translation>unknown</translation>
     </message>
 </context>
 <context>
     <name>TreeWidget</name>
     <message>
         <source>Save</source>
-        <translation>Salvesta</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eemalda</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <source>Save file</source>
-        <translation>Salvesta fail</translation>
+        <translation>Save file</translation>
     </message>
 </context>
 </TS>

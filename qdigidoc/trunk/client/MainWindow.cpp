@@ -340,9 +340,8 @@ void MainWindow::buttonClicked( int button )
 		if( !doc->documents().isEmpty() )
 		{
 			QMessageBox msgBox( QMessageBox::Question, tr("Save container"),
-				tr("You added %1 files to container, but these are not signed yet.\n"
-					"Should I keep unsigned documents or remove these?")
-				.arg( doc->documents().size() ) );
+				tr("You added %n file(s) to container, but these are not signed yet.\n"
+					"Should I keep unsigned documents or remove these?", "", doc->documents().size()) );
 			msgBox.addButton( tr("Remove"), QMessageBox::ActionRole );
 			QPushButton *keep = msgBox.addButton( tr("Keep"), QMessageBox::ActionRole );
 			msgBox.exec();
@@ -673,7 +672,7 @@ void MainWindow::setCurrentPage( Pages page )
 		else
 			viewFileStatus->clear();
 
-		viewSignaturesLabel->setText( signatures.size() == 1 ? tr("Signature") : tr("Signatures") );
+		viewSignaturesLabel->setText( tr( "Signature(s)", "", signatures.size() ) );
 
 		if( invalid )
 			viewSignaturesError->setText( tr("NB! Invalid signature") );

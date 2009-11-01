@@ -99,11 +99,6 @@
         <translation>Сохранить контейнер</translation>
     </message>
     <message>
-        <source>You added %1 files to container, but these are not signed yet.
-Should I keep unsigned documents or remove these?</source>
-        <translation>В контейнер добавлено %1 файл(а), но они не подписаны. Оставить неподписанный контейнер или стереть?</translation>
-    </message>
-    <message>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -138,10 +133,6 @@ Should I keep unsigned documents or remove these?</source>
     <message>
         <source>Signature</source>
         <translation>Подпись</translation>
-    </message>
-    <message>
-        <source>Signatures</source>
-        <translation>Подписи</translation>
     </message>
     <message>
         <source>Loading data</source>
@@ -394,6 +385,23 @@ Start downloading?</source>
     <message>
         <source>Server access certificate password is not valid!</source>
         <translation>Пароль справки допуска неверен!</translation>
+    </message>
+    <message numerus="yes">
+        <source>Signature(s)</source>
+        <translation>
+            <numerusform>Подпись</numerusform>
+            <numerusform>Подписи</numerusform>
+            <numerusform>Подписи</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You added %n file(s) to container, but these are not signed yet.
+Should I keep unsigned documents or remove these?</source>
+        <translation>
+            <numerusform>В контейнер добавлено %1 файл(а), но они не подписаны. Оставить неподписанный контейнер или стереть?</numerusform>
+            <numerusform>В контейнер добавлено %1 файл(а), но они не подписаны. Оставить неподписанный контейнер или стереть?</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

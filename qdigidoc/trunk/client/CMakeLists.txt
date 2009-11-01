@@ -51,6 +51,7 @@ QT4_ADD_RESOURCES( RC_SOURCES
 	)
 QT4_ADD_TRANSLATION( QM_FILES
 	${COMMON_TS}
+	translations/en.ts
 	translations/et.ts
 	translations/ru.ts
 	)
