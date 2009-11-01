@@ -92,7 +92,7 @@ find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
-find_package( XercesC REQUIRED )
+#find_package( XercesC REQUIRED )
 find_package( XSD REQUIRED )
 
 
@@ -114,15 +114,15 @@ INCLUDE_DIRECTORIES(
 )
 
 set(UNO_INCLUDES 
-	\"${OOSDK_INCLUDE_DIR}\"
-	\"${OOSDK_INCLUDE_DIR}/stl\"
-	\"${OUT_INC}\"
+	${OOSDK_INCLUDE_DIR}
+	${OOSDK_INCLUDE_DIR}/stl
+	${OUT_INC}
 )
 
 set(BDOC_INCLUDES
 	${OPENSSL_INCLUDE_DIR}
 	${ZLIB_INCLUDE_DIR}
-	${XERCESC_INCLUDE_DIR}
+#	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 )
@@ -164,20 +164,24 @@ SET(BDOCFILES
         MyBdocBridge.cpp
 )
    
+if(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
+        add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
+endif(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
+
+
 #TODO:add all definitions from settinks mk
 IF (WIN32)
 	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
 	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS")
 	add_definitions(${CC_DEFINES} ${CC_FLAGS})
-	add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
 ENDIF (WIN32)
 
-IF (UNIX)
-	set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+IF (UNIX)	
 	IF (APPLE)
-		set(UNO_DEFINITIONS "-DUNX -DGCC -DMACOSX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")		
-	ENDIF (APPLE)
-        set(BDOC_DEFINITIONS "-DBDOCLIB_CONF_PATH=\\\"${LIBDIGIDOCPP_CONF}\\\"" )
+		set(UNO_DEFINITIONS "-DUNX -DGCC -DMACOSX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+	ELSEIF(APPLE)
+		set(UNO_DEFINITIONS "-DUNX -DGCC -DLINUX -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+	ENDIF (APPLE) 
 ENDIF (UNIX)
 
 
@@ -257,23 +261,24 @@ FIND_PATH(TARGET_GUI_DIR dialog.xlb ${OUT_MISC}/${COMP_NAME}/HW)
 execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn			#remove svn folders	
 				COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)		
 				#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	) #FIX Filter extension first
+
+
 #--------------------------------------		
 # Hack for Mac linked path problem #
 IF (APPLE)
 	add_custom_target( hackmac
+		
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-
-		COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+		COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 		)
 ENDIF (APPLE)
-#--------------------------------------
 
 #--------------------------------------
 #Win problem hack
@@ -283,20 +288,29 @@ IF (WIN32)
 		${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
 		)
 ENDIF (WIN32)
-#--------------------------------------
 
+#--------------------------------------
+# Some compilers put a Release folder into a target folder
+IF (IS_DIRECTORY ${OUT_LIB}/Release)
+	set( COMP_LIB "${OUT_LIB}/Release")
+ELSE (IS_DIRECTORY ${OUT_LIB}/Release)
+	set( COMP_LIB "${OUT_LIB}")
+ENDIF (IS_DIRECTORY ${OUT_LIB}/Release)
+IF (APPLE)
+	set( COMP_LIB "${OUT_LIB}/Release")
+ENDIF (APPLE)
+
+#--------------------------------------
 add_custom_target( zip-oxt ALL
-#	COMMAND ${CP} ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT} #VC++ lükkab debugi või releasi folderi vahele
-#		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
+
+	COMMAND ${CP} ${COMP_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
 		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-#	COMMAND ${CP} ${OUT_LIB}/${COMP_NAME}.uno.so 
-#		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}	
 		
 	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
 	COMMAND ${MKDIR} ${OUT_BIN}
 	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}${BUILD_VER}.oxt . 	
 	)
+
 IF (APPLE)
 	add_dependencies( zip-oxt hackmac)
 ENDIF (APPLE)
