@@ -396,7 +396,7 @@ Start downloading?</translation>
     <message numerus="yes">
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>You added %n file to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</numerusform>
             <numerusform>You added %n files to container, but these are not signed yet.
@@ -609,10 +609,6 @@ Please check your internet connection.</translation>
     <message>
         <source>PIN Locked</source>
         <translation>PIN Locked</translation>
-    </message>
-    <message>
-        <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation>Failed to login to token &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>

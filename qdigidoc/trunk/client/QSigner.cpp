@@ -265,9 +265,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		case CKR_PIN_LOCKED:
 			throwException( tr("PIN Locked"), Exception::PINLocked, __LINE__ );
 		default:
-			throwException( tr("Failed to login to token '%1': %2")
-				.arg( d->slot->token->label ).arg( ERR_reason_error_string(ERR_get_error()) ),
-				Exception::PINFailed, __LINE__ );
+			throwException( tr("Failed to login token"), Exception::PINFailed, __LINE__ );
 		}
 	}
 
@@ -275,11 +273,11 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	unsigned int certCount;
 	if( PKCS11_enumerate_certs( d->slot->token, &certs, &certCount ) ||
 		!certCount || !&certs[0] )
-		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
 
 	PKCS11_KEY* signKey = PKCS11_find_key( &certs[0] );
 	if( !signKey )
-		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
 
 	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), signKey) != 1 )
 		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
@@ -292,7 +290,10 @@ int QSigner::slotNumber() const { return d->cards.value( d->selectedCard, -1 ); 
 void QSigner::throwException( const QString &msg, Exception::ExceptionCode code, int line ) throw(SignException)
 {
 	d->m.unlock();
-	SignException e( __FILE__, line, msg.toStdString() );
+	QString t = msg;
+	t += "\n";
+	t += QString::fromUtf8( ERR_reason_error_string(ERR_get_error()) );
+	SignException e( __FILE__, line, t.toStdString() );
 	e.setCode( code );
 	throw e;
 }

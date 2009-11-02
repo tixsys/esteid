@@ -600,7 +600,7 @@ Palun kontrollige internetiühendust.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Vale PIN</translation>
+        <translation>Tokeni login ebaõnnestus</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
@@ -609,10 +609,6 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>PIN Locked</source>
         <translation>PIN on lukus</translation>
-    </message>
-    <message>
-        <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation>Kaardilt lugemine ebaõnnestunud &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>

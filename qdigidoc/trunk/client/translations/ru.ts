@@ -603,7 +603,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Неверный PIN</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
@@ -612,10 +612,6 @@ Please check your internet connection.</source>
     <message>
         <source>PIN Locked</source>
         <translation>PIN заблокирован</translation>
-    </message>
-    <message>
-        <source>Failed to login to token &apos;%1&apos;: %2</source>
-        <translation>Считывание с карты прошло неуспешно &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <source>Failed to sign document</source>
