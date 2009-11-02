@@ -648,6 +648,7 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
         }
         catch(const Exception& e)
         {
+            delete signature;
             THROW_BDOCEXCEPTION_CAUSE(e, "Failed to calculate digests for document '%s'.", iter->getPath().c_str());
         }
     }
@@ -659,10 +660,12 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
     }
     catch(const SignatureException& e)
     {
+        delete signature;
         THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
     }
     catch(const SignException& e)
     {
+        delete signature;
         THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
     }
 
