@@ -243,9 +243,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			{
 				qApp->thread()->wait( 1 );
 				QCoreApplication::processEvents();
-			} while( d->login && p->isVisible() );
-			if( !p->isVisible() )
-				throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+			} while( d->login );
 			p->deleteLater();
 			err = d->loginResult;
 		}

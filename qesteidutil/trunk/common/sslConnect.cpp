@@ -191,13 +191,10 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 				QCoreApplication::processEvents();
 				qApp->thread()->wait( 1 );
 			}
-			while( t->isRunning() && p->isVisible() );
-			bool hidden = p->isHidden();
+			while( t->isRunning() );
 			p->deleteLater();
 			err = t->loginResult;
 			delete t;
-			if( hidden )
-				throw std::runtime_error( "" );
 		}
 		switch( err )
 		{
