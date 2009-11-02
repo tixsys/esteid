@@ -38,6 +38,7 @@ class Application
 		@options.digidoc = 'build/Digidoc'
 		@options.qt = 'build/Qt'
 		@options.opensc = 'build/OpenSC'
+		@options.drivers = 'build/Drivers'
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
@@ -750,7 +751,8 @@ class Application
 							   'org.esteid.installer.su',
 							   'org.esteid.installer.pp',
 							   'org.esteid.installer.tokend.10.5',
-							   'org.esteid.installer.tokend.10.4' ]
+							   'org.esteid.installer.tokend.10.4',
+							   'org.esteid.installer.drivers.10.5' ]
 			}, {
 				:title => 'Internet Plug-ins',
 				:description => 'Internet Plug-in description',
@@ -808,7 +810,7 @@ class Application
 				:froot => @options.qt,
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
-				:version => '4.5.2'
+				:version => '4.5.3'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
@@ -882,6 +884,15 @@ class Application
 				:location => '/System/Library/Security/tokend',
 				:script => "return system.version.ProductVersion &lt; '10.5';",
 				:system => '10.5&lt;'
+			}, {
+				:name => 'esteid-drivers-leopard',
+				:files => [ File.join(@options.drivers, '*/**') ],
+				:froot => @options.drivers,
+				:identifier => 'org.esteid.installer.drivers.10.5',
+				:location => '/usr/libexec/SmartCardServices/drivers',
+				:version => '1.0',
+				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
+				:system => '10.5>='
 			}, {
 				:name => 'esteid',
 				:title => 'ID-card',
