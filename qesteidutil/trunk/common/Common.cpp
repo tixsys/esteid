@@ -229,11 +229,17 @@ void Common::mailTo( const QUrl &url )
 
 	if( !thunderbird.isEmpty() )
 	{
-		bool started = p.startDetached( thunderbird, QStringList() << "-compose"
+		if( p.startDetached( thunderbird, QStringList() << "-compose"
 			<< QString( "subject='%1',attachment='%2,'" )
 				.arg( url.queryItemValue( "subject" ) )
-				.arg( QUrl::fromLocalFile( url.queryItemValue( "attachment" ) ).toString() ) );
-		if( started )
+				.arg( QUrl::fromLocalFile( url.queryItemValue( "attachment" ) ).toString() ) ) );
+			return;
+	}
+	else
+	{
+		if( p.startDetached( "xdg-email", QStringList()
+				<< "--subject" << url.queryItemValue( "subject" )
+				<< "--attach" << url.queryItemValue( "attachment" ) ) )
 			return;
 	}
 #endif
