@@ -10,3 +10,9 @@
 "PINPanel.Label.Details" = "Detailid";
 "PINPanel.Action.Cancel" = "Tühista";
 "PINPanel.Action.OK" = "Allkirjasta";
+"Whitelist.Alert.Blocked.Title" = "Blokeeritud veebileht soovib ligipääsu ID-kaardile";
+"Whitelist.Alert.Blocked.Message" = "Kas soovid lubada eelnevalt blokeeritud veebilehel '%@' ligipääsu ID-kaardile?";
+"Whitelist.Alert.Unknown.Title" = "Veebileht soovib ligipääsu ID-kaardile";
+"Whitelist.Alert.Unknown.Message" = "Kas soovid lubada veebilehel '%@' ligipääsu ID-kaardile?";
+"Whitelist.Action.Allow" = "Luba";
+"Whitelist.Action.Deny" = "Keela";

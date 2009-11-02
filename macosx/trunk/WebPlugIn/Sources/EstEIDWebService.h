@@ -15,9 +15,10 @@ extern NSString *EstEIDWebServiceEventReadersChanged;
 	NSWindow *m_window;
 	NSMutableDictionary *m_eventListeners;
 	EstEIDReaderManager *m_readerManager;
+	BOOL m_whitelistCheck;
 }
 
-- (BOOL)isHTTPS;
+- (BOOL)isAllowed;
 
 /**
  * @name JavaScript Properties

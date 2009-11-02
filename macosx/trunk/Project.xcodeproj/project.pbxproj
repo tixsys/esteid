@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		817A8CD9109E7799001A92E9 /* Safari */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 817A8CE5109E77C4001A92E9 /* Build configuration list for PBXAggregateTarget "Safari" */;
+			buildPhases = (
+				817A8CE0109E77B7001A92E9 /* ShellScript */,
+			);
+			dependencies = (
+				817A8CDD109E77A2001A92E9 /* PBXTargetDependency */,
+			);
+			name = Safari;
+			productName = Safari;
+		};
 		81E4C8D90F9C452F00997F53 /* Tests */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 81E4C8E60F9C457600997F53 /* Build configuration list for PBXAggregateTarget "Tests" */;
@@ -84,6 +96,7 @@
 		817944E70F974084007E0C96 /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8104C1150F5AE9C100387224 /* SecurityFoundation.framework */; };
 		817944E80F97408A007E0C96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8122F07E0F55F43600FA51CD /* Foundation.framework */; };
 		8179469C0F975FE7007E0C96 /* agent in Resources */ = {isa = PBXBuildFile; fileRef = 817944A40F973E6F007E0C96 /* agent */; };
+		817A8D09109E7A03001A92E9 /* EstEIDWhitelist.m in Sources */ = {isa = PBXBuildFile; fileRef = 817A8D08109E7A03001A92E9 /* EstEIDWhitelist.m */; };
 		81867DB70FA1867A00475BCE /* PINPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = 81867DB60FA1867A00475BCE /* PINPanel.nib */; };
 		818A028010877355006FB22C /* PCSCManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026410877355006FB22C /* PCSCManager.cpp */; };
 		818A028110877355006FB22C /* locked_allocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 818A026610877355006FB22C /* locked_allocator.cpp */; };
@@ -192,6 +205,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 817944A30F973E6F007E0C96;
 			remoteInfo = Launcher;
+		};
+		817A8CDC109E77A2001A92E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 81F8748C0F56085100FCAB5D /* Internet Plug-In */;
+			remoteInfo = "Internet Plug-In";
 		};
 		819ACCCF1098AB6A00D99810 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -324,6 +344,8 @@
 		815DBFCE0FA33D53000531D0 /* EstEIDWebRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWebRuntime.h; path = WebPlugIn/Sources/EstEIDWebRuntime.h; sourceTree = "<group>"; };
 		815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWebRuntime.m; path = WebPlugIn/Sources/EstEIDWebRuntime.m; sourceTree = "<group>"; };
 		817944A40F973E6F007E0C96 /* agent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = agent; sourceTree = BUILT_PRODUCTS_DIR; };
+		817A8D07109E7A03001A92E9 /* EstEIDWhitelist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EstEIDWhitelist.h; path = WebPlugIn/Sources/EstEIDWhitelist.h; sourceTree = "<group>"; };
+		817A8D08109E7A03001A92E9 /* EstEIDWhitelist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EstEIDWhitelist.m; path = WebPlugIn/Sources/EstEIDWhitelist.m; sourceTree = "<group>"; };
 		81867DB60FA1867A00475BCE /* PINPanel.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = PINPanel.nib; path = WebPlugIn/PINPanel.nib; sourceTree = "<group>"; };
 		818A026310877355006FB22C /* locked_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = locked_allocator.h; path = "WebPlugIn/smartcard++/locked_allocator.h"; sourceTree = "<group>"; };
 		818A026410877355006FB22C /* PCSCManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PCSCManager.cpp; path = "WebPlugIn/smartcard++/PCSCManager.cpp"; sourceTree = "<group>"; };
@@ -714,6 +736,8 @@
 				815DBFCF0FA33D53000531D0 /* EstEIDWebRuntime.m */,
 				81DA6DE20FA4C1CD006083A3 /* EstEIDWebService.h */,
 				81DA6DE30FA4C1CD006083A3 /* EstEIDWebService.m */,
+				817A8D07109E7A03001A92E9 /* EstEIDWhitelist.h */,
+				817A8D08109E7A03001A92E9 /* EstEIDWhitelist.m */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -1037,6 +1061,7 @@
 				81E4CBC30F9C75CB00997F53 /* Internet Plug-In Tests */,
 				81E7C3C90F9B633000414C34 /* Main */,
 				81E4C8D90F9C452F00997F53 /* Tests */,
+				817A8CD9109E7799001A92E9 /* Safari */,
 			);
 		};
 /* End PBXProject section */
@@ -1123,6 +1148,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		817A8CE0109E77B7001A92E9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -R ~/Library/Internet\\ Plug-Ins/EstEIDWP.plugin\ncp -R ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/EstEIDWP.plugin ~/Library/Internet\\ Plug-Ins/EstEIDWP.plugin\nopen -a Safari https://id.smartlink.ee/plugin_tests/test.html";
+		};
 		819ACCFF1098ABF700D99810 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1366,6 +1404,7 @@
 				818A028910877355006FB22C /* SIMCard.cpp in Sources */,
 				818A028A10877355006FB22C /* EstEidCard.cpp in Sources */,
 				818A028B10877355006FB22C /* EstEidCardMaintainer.cpp in Sources */,
+				817A8D09109E7A03001A92E9 /* EstEIDWhitelist.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1390,6 +1429,11 @@
 			isa = PBXTargetDependency;
 			target = 817944A30F973E6F007E0C96 /* Updater Agent */;
 			targetProxy = 8179467D0F975E19007E0C96 /* PBXContainerItemProxy */;
+		};
+		817A8CDD109E77A2001A92E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 81F8748C0F56085100FCAB5D /* Internet Plug-In */;
+			targetProxy = 817A8CDC109E77A2001A92E9 /* PBXContainerItemProxy */;
 		};
 		819ACCD01098AB6A00D99810 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1667,6 +1711,27 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = agent;
 				SDKROOT = macosx10.4;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		817A8CDA109E779A001A92E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Safari;
+			};
+			name = Debug;
+		};
+		817A8CDB109E779A001A92E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Safari;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2136,6 +2201,15 @@
 			buildConfigurations = (
 				817944A60F973E70007E0C96 /* Debug */,
 				817944A70F973E70007E0C96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		817A8CE5109E77C4001A92E9 /* Build configuration list for PBXAggregateTarget "Safari" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				817A8CDA109E779A001A92E9 /* Debug */,
+				817A8CDB109E779A001A92E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

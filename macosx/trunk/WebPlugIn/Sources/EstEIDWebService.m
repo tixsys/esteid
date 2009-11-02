@@ -4,6 +4,7 @@
 #import "EstEIDPINPanel.h"
 #import "EstEIDWebCertificate.h"
 #import "EstEIDWebService.h"
+#import "EstEIDWhitelist.h"
 #import <Carbon/Carbon.h>
 #import <AppKit/AppKit.h>
 
@@ -20,9 +21,52 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 
 @implementation EstEIDWebService
 
-- (BOOL)isHTTPS
+- (BOOL)isAllowed
 {
-	return [[self->m_url scheme] isEqualToString:@"https"];
+	if([[self->m_url scheme] isEqualToString:@"https"]) {
+		EstEIDWhitelist *whitelist = [EstEIDWhitelist sharedWhitelist];
+		
+		if(!self->m_whitelistCheck) {
+			NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+			NSAlert *alert;
+			
+			switch([whitelist statusForWebsite:self->m_url]) {
+				case EstEIDWebsiteAllowed:
+					// Do nothing
+					break;
+				case EstEIDWebsiteUnknown:
+					alert = [NSAlert alertWithMessageText:[bundle localizedStringForKey:@"Whitelist.Alert.Unknown.Title" value:nil table:nil]
+											defaultButton:[bundle localizedStringForKey:@"Whitelist.Action.Allow" value:nil table:nil]
+										  alternateButton:[bundle localizedStringForKey:@"Whitelist.Action.Deny" value:nil table:nil]
+											  otherButton:nil
+								informativeTextWithFormat:[NSString stringWithFormat:[bundle localizedStringForKey:@"Whitelist.Alert.Unknown.Message" value:nil table:nil], [self->m_url host]], nil];
+					
+					NSBeep();
+					
+					[whitelist setStatus:([alert runModal] == NSAlertDefaultReturn) ? EstEIDWebsiteAllowed : EstEIDWebsiteBlocked forWebsite:self->m_url];
+					break;
+				case EstEIDWebsiteBlocked:
+					alert = [NSAlert alertWithMessageText:[bundle localizedStringForKey:@"Whitelist.Alert.Blocked.Title" value:nil table:nil]
+													 defaultButton:[bundle localizedStringForKey:@"Whitelist.Action.Deny" value:nil table:nil]
+												   alternateButton:[bundle localizedStringForKey:@"Whitelist.Action.Allow" value:nil table:nil]
+													   otherButton:nil
+										 informativeTextWithFormat:[NSString stringWithFormat:[bundle localizedStringForKey:@"Whitelist.Alert.Blocked.Message" value:nil table:nil], [self->m_url host]], nil];
+					
+					NSBeep();
+					
+					if([alert runModal] == NSAlertAlternateReturn) {
+						[whitelist setStatus:EstEIDWebsiteAllowed forWebsite:self->m_url];
+					}
+					break;
+			}
+			
+			self->m_whitelistCheck = YES;
+		}
+		
+		return ([whitelist statusForWebsite:self->m_url] == EstEIDWebsiteAllowed) ? YES : NO;
+	}
+	
+	return NO;
 }
 
 - (BOOL)isValid
@@ -60,7 +104,7 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 {
 	NSData *data;
 	
-	if(![self isHTTPS]) {
+	if(![self isAllowed]) {
 		@throw EstEIDWebServiceExceptionSecurity;
 	}
 	
@@ -71,7 +115,7 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 {
 	NSData *data;
 	
-	if(![self isHTTPS]) {
+	if(![self isAllowed]) {
 		@throw EstEIDWebServiceExceptionSecurity;
 	}
 	
@@ -80,97 +124,97 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 
 - (NSString *)lastName
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataLastNameKey];
 }
 
 - (NSString *)firstName
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataFirstNameKey];
 }
 
 - (NSString *)middleName
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataMiddleNameKey];
 }
 
 - (NSString *)sex
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataSexKey];
 }
 
 - (NSString *)citizenship
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataCitizenKey];
 }
 
 - (NSString *)birthDate
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataBirthDateKey];
 }
 
 - (NSString *)personalID
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataIDKey];
 }
 
 - (NSString *)documentID
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataDocumentIDKey];
 }
 
 - (NSString *)expiryDate
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataExpiryKey];
 }
 
 - (NSString *)placeOfBirth
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataBirthPlaceKey];
 }
 
 - (NSString *)issuedDate
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataIssueDateKey];
 }
 
 - (NSString *)residencePermit
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataResidencePermitKey];
 }
 
 - (NSString *)comment1
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment1Key];
 }
 
 - (NSString *)comment2
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment2Key];
 }
 
 - (NSString *)comment3
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment3Key];
 }
 
 - (NSString *)comment4
 {
-	if(![self isHTTPS]) @throw EstEIDWebServiceExceptionSecurity;
+	if(![self isAllowed]) @throw EstEIDWebServiceExceptionSecurity;
 	return [[[self->m_readerManager selectedReader] personData] objectForKey:EstEIDReaderPersonDataComment4Key];
 }
 
@@ -192,7 +236,7 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 
 - (NSString *)sign:(NSArray *)arguments
 {
-	if(![self isHTTPS]) {
+	if(![self isAllowed]) {
 		@throw EstEIDWebServiceExceptionSecurity;
 	}
 	

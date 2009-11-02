@@ -10,3 +10,9 @@
 "PINPanel.Label.Details" = "Details";
 "PINPanel.Action.Cancel" = "Cancel";
 "PINPanel.Action.OK" = "OK";
+"Whitelist.Alert.Blocked.Title" = "Blocked website wants to access ID-card";
+"Whitelist.Alert.Blocked.Message" = "Do you want to allow previously blocked website '%@' to access your ID-card?";
+"Whitelist.Alert.Unknown.Title" = "Website wants to access ID-card";
+"Whitelist.Alert.Unknown.Message" = "Do you want to allow website '%@' to access your ID-card?";
+"Whitelist.Action.Allow" = "Allow";
+"Whitelist.Action.Deny" = "Deny";
