@@ -152,13 +152,6 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
-	signRoleInput->setText( s.value( "Role" ).toString() );
-	signResolutionInput->setText( s.value( "Resolution" ).toString() );
-	signCityInput->setText( s.value( "City" ).toString() );
-	signStateInput->setText( s.value( "State" ).toString() );
-	signCountryInput->setText( s.value( "Country" ).toString() );
-	signZipInput->setText( s.value( "Zip" ).toString() );
-
 	// Actions
 	closeAction = new QAction( tr("Close"), this );
 	closeAction->setShortcut( Qt::CTRL + Qt::Key_W );
@@ -329,6 +322,15 @@ void MainWindow::buttonClicked( int button )
 		}
 		else if( doc->isNull() )
 			setCurrentPage( Home );
+
+		Settings s;
+		s.beginGroup( "Client" );
+		signRoleInput->setText( s.value( "Role" ).toString() );
+		signResolutionInput->setText( s.value( "Resolution" ).toString() );
+		signCityInput->setText( s.value( "City" ).toString() );
+		signStateInput->setText( s.value( "State" ).toString() );
+		signCountryInput->setText( s.value( "Country" ).toString() );
+		signZipInput->setText( s.value( "Zip" ).toString() );
 		break;
 	}
 	case SignCancel:
@@ -628,8 +630,8 @@ void MainWindow::setCurrentPage( Pages page )
 	{
 		signContentView->setContent( doc->documents() );
 		signContentView->setColumnHidden( 3, !doc->signatures().isEmpty() );
-		enableSign();
 		signAddFile->setVisible( doc->signatures().isEmpty() );
+		enableSign();
 		signButton->setFocus();
 		break;
 	}
