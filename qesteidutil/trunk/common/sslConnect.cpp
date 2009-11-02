@@ -52,6 +52,8 @@
 #define CKR_OK					(0)
 #define CKR_CANCEL				(1)
 #define CKR_FUNCTION_CANCELED	(0x50)
+#define CKR_PIN_INCORRECT		(0xa0)
+#define CKR_PIN_LOCKED			(0xa4)
 
 
 
@@ -89,8 +91,9 @@ void SSLThread::run()
 
 
 SSLObj::SSLObj()
-:	ctx( NULL )
-,	s( NULL )
+:	p11( NULL )
+,	sctx( NULL )
+,	ssl( NULL )
 ,	pkcs11( PKCS11_MODULE )
 ,	reader( -1 )
 ,	nslots( 0 )
@@ -99,17 +102,18 @@ SSLObj::SSLObj()
 
 SSLObj::~SSLObj()
 {
-	if ( s != NULL )
+	if( ssl )
 	{
-		SSL_shutdown(s);
-		SSL_free(s);
+		SSL_shutdown( ssl );
+		SSL_free( ssl );
 	}
-	if ( ctx != NULL )
+	SSL_CTX_free( sctx );
+	if( p11 )
 	{
 		if( nslots )
-			PKCS11_release_all_slots(ctx, pslots, nslots);
-		PKCS11_CTX_unload(ctx);
-		PKCS11_CTX_free(ctx);
+			PKCS11_release_all_slots( p11, pslots, nslots );
+		PKCS11_CTX_unload( p11 );
+		PKCS11_CTX_free( p11 );
 	}
 
 	CRYPTO_cleanup_all_ex_data();
@@ -119,14 +123,14 @@ SSLObj::~SSLObj()
 
 bool SSLObj::connectToHost( SSLConnect::RequestType type )
 {
-	if( !(ctx = PKCS11_CTX_new()) || PKCS11_CTX_load( ctx, pkcs11.toUtf8() ) )
+	if( !(p11 = PKCS11_CTX_new()) || PKCS11_CTX_load( p11, pkcs11.toUtf8() ) )
 	{
-		PKCS11_CTX_free(ctx);
-		ctx = 0;
+		PKCS11_CTX_free( p11 );
+		p11 = 0;
 		throw std::runtime_error( SSLConnect::tr( "failed to load pkcs11 module" ).toStdString() );
 	}
 
-	if( PKCS11_enumerate_slots( ctx, &pslots, &nslots ) || !nslots )
+	if( PKCS11_enumerate_slots( p11, &pslots, &nslots ) || !nslots )
 		throw std::runtime_error( SSLConnect::tr( "failed to list slots" ).toStdString() );
 
 	// Find token
@@ -202,6 +206,10 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		case CKR_CANCEL:
 		case CKR_FUNCTION_CANCELED:
 			throw std::runtime_error( "" ); break;
+		case CKR_PIN_INCORRECT:
+			throw std::runtime_error( "PIN1Invalid" ); break;
+		case CKR_PIN_LOCKED:
+			throw std::runtime_error( "PINLocked" ); break;
 		default:
 			throw std::runtime_error( "PIN1Invalid" ); break;
 		}
@@ -213,15 +221,13 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 		throw std::runtime_error( SSLConnect::tr("no key matching certificate available").toStdString() );
 	EVP_PKEY *pkey = PKCS11_get_private_key( authkey );
 
-	SSL_CTX *sctx = SSL_CTX_new( SSLv23_client_method() );
+	sctx = SSL_CTX_new( SSLv23_client_method() );
 	sslError::check( SSL_CTX_use_certificate(sctx, authcert->x509 ) );
 	sslError::check( SSL_CTX_use_PrivateKey(sctx,pkey) );
 	sslError::check( SSL_CTX_check_private_key(sctx) );
 	sslError::check( SSL_CTX_ctrl( sctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
-	if ( pkey != NULL )
-		EVP_PKEY_free(pkey); 
 
-	s = SSL_new(sctx);
+	ssl = SSL_new( sctx );
 
 	BIO *sock;
 	switch( type )
@@ -235,8 +241,8 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	if( BIO_do_connect( sock ) <= 0 )
 		throw std::runtime_error( SSLConnect::tr( "Failed to connect to host. Are you connected to the internet?" ).toStdString() );
 
-	SSL_set_bio( s, sock, sock );
-	sslError::check( SSL_connect(s) );
+	SSL_set_bio( ssl, sock, sock );
+	sslError::check( SSL_connect( ssl ) );
 	return true;
 }
 
@@ -246,18 +252,18 @@ QByteArray SSLObj::getUrl( const QString &url ) const
 QByteArray SSLObj::getRequest( const QString &request ) const
 {
 	QByteArray data = request.toUtf8();
-	sslError::check( SSL_write( s, data.data(), data.length() ) );
+	sslError::check( SSL_write( ssl, data.data(), data.length() ) );
 
 	int bytesRead = 0;
 	char readBuffer[4096];
 	QByteArray buffer;
 	do
 	{
-		bytesRead = SSL_read( s, &readBuffer, 4096 );
+		bytesRead = SSL_read( ssl, &readBuffer, 4096 );
 
 		if( bytesRead <= 0 )
 		{
-			switch( SSL_get_error( s, bytesRead ) )
+			switch( SSL_get_error( ssl, bytesRead ) )
 			{
 			case SSL_ERROR_NONE:
 			case SSL_ERROR_WANT_READ:

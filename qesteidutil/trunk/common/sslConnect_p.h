@@ -40,8 +40,9 @@ public:
 	QByteArray getUrl( const QString &url ) const;
 	QByteArray getRequest( const QString &request ) const;
 
-	PKCS11_CTX *ctx;
-	SSL		*s;
+	PKCS11_CTX *p11;
+	SSL_CTX *sctx;
+	SSL		*ssl;
 
 	QString card;
 	QString pin;
