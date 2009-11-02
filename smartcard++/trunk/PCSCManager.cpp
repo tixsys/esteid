@@ -6,16 +6,18 @@
 	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
 */
 // Revision $Revision: 470 $
-#include "precompiled.h"
-#include <smartcard++/PCSCManager.h>
-#include <smartcard++/SCError.h>
-#include <smartcard++/CardBase.h> //for exceptions
 
 #ifdef _WIN32
+// This must be included first because other crap may pull in the conflicting ws2def.h
 #include <winsock2.h>
 #else
 #include <arpa/inet.h>
 #endif
+
+#include "precompiled.h"
+#include <smartcard++/PCSCManager.h>
+#include <smartcard++/SCError.h>
+#include <smartcard++/CardBase.h> //for exceptions
 
 #ifndef CM_IOCTL_GET_FEATURE_REQUEST
 
@@ -385,7 +387,7 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 	
 	int offset = 0, count = 0;
 	BYTE sbuf[256], rbuf[256];
-	DWORD ioctl = 0, ioctl2 = 0, slen, rlen=sizeof(rbuf);
+	DWORD ioctl = 0, ioctl2 = 0, rlen=sizeof(rbuf);
 	
 	// build PC/SC block. FIXME: hardcoded for EstEID!!!
 	if (verify) {
@@ -438,7 +440,7 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 	}
 
 	/* Copy APDU itself */
-	for (int i = 0; i < cmd.size(); i++)
+	for (uint i = 0; i < cmd.size(); i++)
 		sbuf[offset + i] = cmd[i];
 
 	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, count,
