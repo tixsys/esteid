@@ -26,6 +26,7 @@ void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	cmd.push_back((byte)pinType);
 	if (pin.length() < 4) {
 		if (pin.length()!= 0 ||!mConnection->isSecure() ) {
+// FIXME: why is this commented out?
 //			throw std::runtime_error("bad pin length");
 			AuthError err(0,0);
 			err.m_badinput = true;
