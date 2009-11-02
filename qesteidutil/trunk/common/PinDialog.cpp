@@ -67,14 +67,18 @@ void PinDialog::init( PinType type, const QString &title )
 		regexp.setPattern( "\\d{5,12}" );
 		break;
 	case Pin1PinpadType:
+#if QT_VERSION >= 0x040500
 		setWindowFlags( (windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint );
+#endif
 		label->setText( QString( "<b>%1</b><br />%2<br />%3" )
 			.arg( title )
 			.arg( tr("Selected action requires auth certificate.") )
 			.arg( tr("For using auth certificate enter PIN1 with pinpad") ) );
 		return;
 	case Pin2PinpadType:
+#if QT_VERSION >= 0x040500
 		setWindowFlags( (windowFlags() | Qt::CustomizeWindowHint) & ~Qt::WindowCloseButtonHint );
+#endif
 		label->setText( QString( "<b>%1</b><br />%2<br />%3" )
 			.arg( title )
 			.arg( tr("Selected action requires sign certificate.") )
