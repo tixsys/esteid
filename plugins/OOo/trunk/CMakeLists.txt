@@ -94,7 +94,7 @@ find_package( LibDigiDocpp REQUIRED )
 find_package( OpenSSL REQUIRED )
 find_package( OpenSSLCrypto REQUIRED )
 find_package( ZLIB REQUIRED )
-#find_package( XercesC REQUIRED )
+find_package( XercesC REQUIRED )
 find_package( XSD REQUIRED )
 
 
@@ -115,16 +115,24 @@ INCLUDE_DIRECTORIES(
 	${CMAKE_BINARY_DIR}
 )
 
-set(UNO_INCLUDES 
-	${OOSDK_INCLUDE_DIR}
-	${OOSDK_INCLUDE_DIR}/stl
-	${OUT_INC}
-)
+IF (WIN32)
+	set(UNO_INCLUDES 
+		\"${OOSDK_INCLUDE_DIR}\"
+		\"${OOSDK_INCLUDE_DIR}/stl\"
+		\"${OUT_INC}\"
+	)
+ELSE (WIN32)
+	set(UNO_INCLUDES 
+		${OOSDK_INCLUDE_DIR}
+		${OOSDK_INCLUDE_DIR}/stl
+		${OUT_INC}
+	)
+ENDIF (WIN32)
 
 set(BDOC_INCLUDES
 	${OPENSSL_INCLUDE_DIR}
 	${ZLIB_INCLUDE_DIR}
-#	${XERCESC_INCLUDE_DIR}
+	${XERCESC_INCLUDE_DIR}
 	${XSD_INCLUDE_DIR}
 	${LIBDIGIDOCPP_INCLUDE_DIR}
 )

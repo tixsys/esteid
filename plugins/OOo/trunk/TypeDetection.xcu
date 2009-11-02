@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="TypeDetection" oor:package="ee.smartlink.digidoc">
+<oor:component-data xmlns:oor="http://openoffice.org/2001/registry" xmlns:xs="http://www.w3.org/2001/XMLSchema" oor:name="TypeDetection" oor:package="org.openoffice.Office">
  <node oor:name="Types">
   <node oor:name="BDocFilter">
    <prop oor:name="Data" oor:type="xs:string">
