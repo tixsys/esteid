@@ -10,6 +10,9 @@
 #include "xml/conf.hxx"
 
 #include <stdlib.h>//getenv
+#ifdef _WIN32
+#include <direct.h>
+#endif
 
 /**
  * Environment variable name, that is used for loading configuration
