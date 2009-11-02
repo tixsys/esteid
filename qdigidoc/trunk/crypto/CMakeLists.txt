@@ -119,7 +119,27 @@ TARGET_LINK_LIBRARIES( qdigidoccrypto
 install(TARGETS qdigidoccrypto DESTINATION ${BIN_INSTALL_DIR})
 
 install(FILES qdigidoc-crypto.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
-install(FILES images/crypto_64.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME qdigidoc-crypto.png)
-
 install(FILES qdigidoc-crypto.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packages)
-install(FILES images/cdoc_file_icon_24x24.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-cdoc.png)
+
+if(UNIX AND NOT APPLE)
+    # Install icons
+    foreach(RES 16 22 32 48 128)
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
+
+        set(SRC images/qdigidoc_crypto_document_${RES}x${RES}.png)
+        set(TGT application-x-cdoc.png)
+        install(
+            FILES ${SRC}
+            DESTINATION ${ICONDIR}
+            RENAME ${TGT}
+        )
+
+        set(SRC images/crypto_${RES}x${RES}.png)
+        set(TGT qdigidoc-crypto.png)
+        install(
+            FILES ${SRC}
+            DESTINATION ${ICONDIR}
+            RENAME ${TGT}
+        )
+    endforeach(RES)
+endif(UNIX AND NOT APPLE)

@@ -136,9 +136,28 @@ TARGET_LINK_LIBRARIES( qdigidocclient
 install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
 
 install(FILES qdigidoc-client.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
-install(FILES images/digidoc_icon_48x48.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME qdigidoc-client.png)
-
 install(FILES qdigidoc-client.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packages)
-install(FILES images/bdoc_file_icon_24x24.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-bdoc.png)
-install(FILES images/ddoc_file_icon_24x24.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-ddoc.png)
-install(FILES images/p12d_file_icon_128x128.png DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps RENAME application-x-p12d.png)
+
+if(UNIX AND NOT APPLE)
+    # Install icons
+    foreach(RES 16 22 32 48 128)
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
+
+        foreach(TGT application-x-bdoc.png application-x-ddoc.png application-x-p12d.png)
+            set(SRC images/qdigidoc_client_document_${RES}x${RES}.png)
+            install(
+                FILES ${SRC}
+                DESTINATION ${ICONDIR}
+                RENAME ${TGT}
+            )
+        endforeach(TGT)
+
+        set(SRC images/digidoc_icon_${RES}x${RES}.png)
+        set(TGT qdigidoc-client.png)
+        install(
+            FILES ${SRC}
+            DESTINATION ${ICONDIR}
+            RENAME ${TGT}
+        )
+    endforeach(RES)
+endif(UNIX AND NOT APPLE)

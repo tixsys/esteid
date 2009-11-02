@@ -37,4 +37,4 @@ BEGIN
 END
 /* End of Version info */
 
-IDI_ICON1   ICON  DISCARDABLE  "images/crypto_64.ico"
+IDI_ICON1   ICON  DISCARDABLE  "images/crypto_48x48.ico"

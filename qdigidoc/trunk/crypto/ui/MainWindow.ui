@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../images/images.qrc">
-    <normaloff>:/images/crypto_64.png</normaloff>:/images/crypto_64.png</iconset>
+    <normaloff>:/images/crypto_48x48.png</normaloff>:/images/crypto_48x48.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">* {
