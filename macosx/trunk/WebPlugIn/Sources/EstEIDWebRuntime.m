@@ -617,9 +617,13 @@ NPError NPP_SetValue(NPP plugin, NPNVariable variable, void *value)
 // Mach-o entry points (Safari, Firefox)
 NPError NP_Initialize(NPNetscapeFuncs *browserFuncs)
 {
-	browser = browserFuncs;
-    
-    return NPERR_NO_ERROR;
+	if(NSClassFromString(@"BrowserWebView") != NULL) {
+		browser = browserFuncs;
+		
+		return NPERR_NO_ERROR;
+	}
+	
+	return NPERR_GENERIC_ERROR;
 }
 
 NPError NP_GetEntryPoints(NPPluginFuncs *pluginFuncs)
