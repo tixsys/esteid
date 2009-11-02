@@ -48,6 +48,7 @@ public:
 
 
 private:
+    std::string fullpath() const;
     void init(const std::string& path) throw(IOException);
 
     std::string digestUri;

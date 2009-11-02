@@ -319,15 +319,52 @@ void SignatureDDOC::sign(Signer* signer) throw(SignatureException, SignException
 
 void SignatureDDOC::throwError( std::string msg, int err, int line ) const throw(SignatureException)
 {
-	if( err == ERR_OK )
-		return;
-
-	std::ostringstream s;
-	s << msg;
-	s << "; error: " << err;
-	if( m_doc->f_getErrorString )
-		s << "; message: " << m_doc->f_getErrorString( err );
-	throw SignatureException( __FILE__, line, s.str() );
+	switch( err )
+	{
+	case ERR_OK: break;
+	case ERR_PKCS_LOGIN:
+	{
+		SignatureException e( __FILE__, line, "PIN Incorrect" );
+		e.setCode( Exception::PINIncorrect );
+		throw e;
+		break;
+	}
+	case ERR_OCSP_CERT_REVOKED:
+	{
+		SignatureException e( __FILE__, line, "Certificate status: revoked" );
+		e.setCode( Exception::CertificateRevoked );
+		throw e;
+		break;
+	}
+	case ERR_OCSP_CERT_UNKNOWN:
+	{
+		SignatureException e( __FILE__, line, "Certificate status: unknown" );
+		e.setCode( Exception::CertificateUnknown );
+		throw e;
+		break;
+	}
+	case ERR_OCSP_RESP_NOT_TRUSTED:
+	{
+		SignatureException e( __FILE__, line, "Failed to find ocsp responder." );
+		e.setCode( Exception::OCSPResponderMissing );
+		throw e;
+		break;
+	}
+	case ERR_OCSP_CERT_NOTFOUND:
+	{
+		SignatureException e( __FILE__, line, "OCSP certificate loading failed");
+		e.setCode( Exception::OCSPCertMissing );
+		throw e;
+		break;
+	}
+	default:
+		std::ostringstream s;
+		s << msg;
+		s << "; error: " << err;
+		if( m_doc->f_getErrorString )
+			s << "; message: " << m_doc->f_getErrorString( err );
+		throw SignatureException( __FILE__, line, s.str() );
+	}
 }
 
 
