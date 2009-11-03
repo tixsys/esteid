@@ -1,5 +1,5 @@
-#include <stl/vector>
-#include <stl/hash_map>
+#include <vector>
+#include <hash_map>
 #include <com/sun/star/frame/XFrame.hpp>
 #include <com/sun/star/frame/XStatusListener.hpp>
 #include <com/sun/star/frame/FeatureStateEvent.hpp>
@@ -26,9 +26,14 @@ struct eqObjectName_Impl
 
 typedef std::vector < com::sun::star::uno::Reference < com::sun::star::frame::XStatusListener > > StatusListeners;
 
-typedef std::hash_map <	
-	::rtl::OUString, 
-	StatusListeners, hashObjectName_Impl, eqObjectName_Impl > ListenerMap;
+typedef std::hash_map
+<
+	::rtl::OUString,
+	StatusListeners,
+	hashObjectName_Impl,
+	eqObjectName_Impl
+>
+ListenerMap;
 
 // For every frame there is *one* Dispatch object for all possible commands
 // this struct contains an array of listeners for every supported command

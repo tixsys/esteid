@@ -213,16 +213,11 @@ add_library(${COMP_NAME}.uno SHARED ${UNOFILES} ${BDOCFILES})
 #---------------Link to the Libraries-------------
 target_link_libraries(${COMP_NAME}.uno 
 	${LIBDIGIDOCPP_LIBRARY}
-#	${OPENSSL_LIBRARIES}
-#	${OPENSSLCRYPTO_LIBRARIES}
-#	${ZLIB_LIBRARIES}
-#	${XERCESC_LIBRARIES}
 	
 	${CPPU_LIBRARY} 
 	${CPPUHELPER_LIBRARY} 
 	${SAL_LIBRARY} 
 	${SALHELPER_LIBRARY} 
-	${STLPORT_LIBRARY}
 	)
 
 IF (UNIX)

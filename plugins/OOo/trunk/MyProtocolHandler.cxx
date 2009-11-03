@@ -36,6 +36,7 @@
 #include <iostream>
 #include <time.h>
 #include <sstream>
+#include <string.h>
 #include "MyBdocBridge.h"
 #include "MyDebug.h"
 
