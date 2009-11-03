@@ -41,6 +41,7 @@ nsEstEID::~nsEstEID()
 nsresult
 nsEstEID::Init()
 {
+	onPage = false;
 	nsCOMPtr<nsIObserverService> obs =
 		do_GetService(NS_OBSERVERSERVICE_CONTRACTID);
     if(!obs)
@@ -336,6 +337,9 @@ bool nsEstEID::_isWhitelisted() {
 			ESTEID_DEBUG("Showing Notification from %s\n",
 					NS_ConvertUTF16toUTF8(pageURL).get());
 
+			nsString tmp(NS_LITERAL_STRING("Denied access to card from "));
+			tmp += pageURL;
+			eidgui->LogMessage(tmp);
 			wlNotified = true;
 			eidgui->ShowNotification(parentWin, pageURL);
 		}
