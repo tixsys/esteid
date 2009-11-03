@@ -220,6 +220,10 @@ target_link_libraries(${COMP_NAME}.uno
 	${SALHELPER_LIBRARY} 
 	)
 
+IF(STLPORT_FOUND)
+	target_link_libraries(${COMP_NAME}.uno ${STLPORT_LIBRARY})
+ENDIF(STLPORT_FOUND)
+
 IF (UNIX)
 	SET(LINK_FLAG_SCRIPT "-Wl,-z,defs -Wl,--version-script,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
 	IF (APPLE)
