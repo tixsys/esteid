@@ -603,7 +603,7 @@ Please check your internet connection.</source>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation type="unfinished"></translation>
+        <translation>Неудачный вход в токен</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
