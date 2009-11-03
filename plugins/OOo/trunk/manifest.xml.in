@@ -14,8 +14,6 @@
 
   <manifest:file-entry manifest:full-path="HW/" manifest:media-type="application/vnd.sun.star.basic-library"/>
 
-  <manifest:file-entry manifest:media-type="application/vnd.sun.star.package-bundle-description" 
-                       manifest:full-path="pkg-description.txt"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="Addons.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"

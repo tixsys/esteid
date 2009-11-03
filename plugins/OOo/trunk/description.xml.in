@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006" xmlns:d="http://openoffice.org/extensions/description/2006" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <version value="@BUILD_VER@"/>
+    <identifier value="ee.smartlink.ooo.digidoc"/>
+    <display-name>
+        <name lang="en-US">DigiDoc extension for Estonian digital signatures</name>
+    </display-name>
+    <dependencies>
+        <OpenOffice.org-minimal-version value="2.0" d:name="OpenOffice.org 2.0"/>
+    </dependencies>
+    <publisher>
+        <name xlink:href="http://id.smartlink.ee" lang="en">Estonian ID Card Project</name>
+    </publisher>
+<!--
+    <icon>
+        <default xlink:href="ID.png" />
+    </icon>
+-->
+</description>

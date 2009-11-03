@@ -259,7 +259,7 @@ CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.
 CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
 CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
 CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
-CONFIGURE_FILE(pkg-description.txt.in ${OUT_MISC}/${COMP_NAME}/pkg-description.txt)
+CONFIGURE_FILE(description.xml.in ${OUT_MISC}/${COMP_NAME}/description.xml)
 #CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
 #CONFIGURE_FILE(bdoc2oo.jar ${OUT_MISC}/${COMP_NAME}/bdoc2oo.jar COPYONLY)
 
