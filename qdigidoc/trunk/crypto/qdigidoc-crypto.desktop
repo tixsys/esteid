@@ -1,4 +1,4 @@
-[Desktop Entry]
+﻿[Desktop Entry]
 Encoding=UTF-8
 Type=Application
 
@@ -7,6 +7,7 @@ Icon=qdigidoc-crypto
 
 Name=DigiDoc3 Crypto
 Name[et]=DigiDoc3 krüpto
+Name[ru]=DigiDoc3 Crypto
 
 Categories=Qt;Office;
 MimeType=application/x-cdoc;
