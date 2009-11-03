@@ -366,8 +366,7 @@ QString DigiDoc::getAccessCert()
 	switch( s->error() )
 	{
 	case SSLConnect::PinCanceledError: break;
-	case SSLConnect::PinInvalidError:
-	case SSLConnect::UnknownError:
+	default:
 		if( !s->errorString().isEmpty() )
 			setLastError( s->errorString() );
 		break;
