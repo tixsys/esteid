@@ -1,9 +1,9 @@
-[Desktop Entry]
+п»ї[Desktop Entry]
 Version=1.0
 Type=Application
 Name=ID-card Utility
 Name[et]=ID-kaardi haldusvahend
-Name[ru]=Oбсуживание ID-карты
+Name[ru]=OР±СЃСѓР¶РёРІР°РЅРёРµ ID-РєР°СЂС‚С‹
 Exec=qesteidutil %F
 Icon=qesteidutil
 Terminal=false
