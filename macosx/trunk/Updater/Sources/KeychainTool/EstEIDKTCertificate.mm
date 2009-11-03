@@ -2,6 +2,7 @@
 
 #import <CommonCrypto/CommonDigest.h>
 #import <Security/Security.h>
+#import <dlfcn.h>
 #import "common.h"
 #import "PCSCManager.h"
 #import "SmartCardManager.h"
@@ -9,41 +10,17 @@
 #import "EstEIDKTCertificate.h"
 #import "EstEIDKTIdentityPreference.h"
 
-@implementation EstEIDKTCertificate
-
-- (id)initWithData:(NSData *)data
-{
-	self = [super init];
-	
-	if(self) {
-		SecCertificateRef internal;
-		CSSM_DATA cssmd;
-		
-		cssmd.Data = (uint8 *)[data bytes];
-		cssmd.Length = [data length];
-		
-		if(SecCertificateCreateFromData(&cssmd, CSSM_CERT_UNKNOWN, CSSM_CERT_ENCODING_UNKNOWN, &internal) == noErr) {
-			self->m_internal = internal;
-		} else {
-			[self release];
-			self = nil;
-		}
-	}
-	
-	return self;
-}
-
-- (NSString *)CN
+static NSString *EstEIDKTCertificateGetCommonName(SecCertificateRef certificate)
 {
 	NSString *CN = nil;
 	CSSM_CL_HANDLE CLhandle;
 	CSSM_HANDLE FRHandle;
 	CSSM_DATA *value;
 	CSSM_DATA data;
-	UInt32 count;
+	uint32 count;
 	
-	if(SecCertificateGetCLHandle((SecCertificateRef)self->m_internal, &CLhandle) == noErr &&
-	   SecCertificateGetData((SecCertificateRef)self->m_internal, &data) == noErr &&
+	if(SecCertificateGetCLHandle(certificate, &CLhandle) == noErr &&
+	   SecCertificateGetData(certificate, &data) == noErr &&
 	   CSSM_CL_CertGetFirstFieldValue(CLhandle, &data, &CSSMOID_X509V1SubjectNameCStruct, &FRHandle, &count, &value) == CSSM_OK &&
 	   count > 0 && value && value->Data) {
 		CSSM_X509_NAME_PTR x509Name = (CSSM_X509_NAME_PTR)value->Data;
@@ -91,6 +68,63 @@
 	}
 	
 	return CN;
+}
+
+#pragma mark -
+
+@implementation EstEIDKTCertificate
+
+- (id)initWithData:(NSData *)data
+{
+	self = [super init];
+	
+	if(self) {
+		SecCertificateRef internal;
+		CSSM_DATA cssmd;
+		
+		cssmd.Data = (uint8 *)[data bytes];
+		cssmd.Length = [data length];
+		
+		if(SecCertificateCreateFromData(&cssmd, CSSM_CERT_UNKNOWN, CSSM_CERT_ENCODING_UNKNOWN, &internal) == noErr) {
+			SecIdentitySearchRef search;
+			NSString *cn;
+			
+			self->m_internal = internal;
+			cn = [self CN];
+			
+			if(SecIdentitySearchCreate(NULL, CSSM_KEYUSE_SIGN, &search) == noErr && [cn length] > 0) {
+				SecIdentityRef identity;
+				
+				while(SecIdentitySearchCopyNext(search, &identity) == noErr) {
+					SecCertificateRef certificate;
+					
+					if(SecIdentityCopyCertificate(identity, &certificate) == noErr) {
+						if([EstEIDKTCertificateGetCommonName(certificate) isEqualToString:cn]) {
+							CFRelease(self->m_internal);
+							self->m_internal = certificate;
+							break;
+						} else {
+							CFRelease(certificate);
+						}
+					}
+					
+					CFRelease(identity);
+				}
+				
+				CFRelease(search);
+			}
+		} else {
+			[self release];
+			self = nil;
+		}
+	}
+	
+	return self;
+}
+
+- (NSString *)CN
+{
+	return EstEIDKTCertificateGetCommonName((SecCertificateRef)self->m_internal);
 }
 
 - (NSDictionary *)identityPreferences
@@ -183,12 +217,13 @@
 	BOOL result = YES;
 	
 	if(SecKeychainCopyDefault(&keychain) == noErr) {
+		OSStatus (*secIdentityCreateWithCertificate)(CFTypeRef keychainOrArray, SecCertificateRef certificateRef, SecIdentityRef *identityRef) = (OSStatus (*)(CFTypeRef, SecCertificateRef, SecIdentityRef *))dlsym(RTLD_DEFAULT, "SecIdentityCreateWithCertificate");
+		OSStatus (*secIdentitySetPreference)(SecIdentityRef identity, CFStringRef name, CSSM_KEYUSE keyUsage) = (OSStatus (*)(SecIdentityRef, CFStringRef, CSSM_KEYUSE))dlsym(RTLD_DEFAULT, "SecIdentitySetPreference");
 		NSDictionary *identityPreferences = [self identityPreferences];
 		NSEnumerator *enumerator = [identityPreferences keyEnumerator];
+		SecIdentityRef identity = NULL;
 		NSString *cn = [self CN];
 		NSString *website;
-		
-		SecCertificateAddToKeychain((SecCertificateRef)self->m_internal, keychain);
 		
 		while((website = [enumerator nextObject]) != nil) {
 			if(![websites containsObject:website]) {
@@ -202,24 +237,46 @@
 		
 		enumerator = [websites objectEnumerator];
 		
+		if(secIdentityCreateWithCertificate != NULL) {
+			OSStatus error;
+			
+			if((error = secIdentityCreateWithCertificate(NULL, (SecCertificateRef)self->m_internal, &identity)) != noErr) {
+				NSLog(@"%@: Creating identity for '%@' failed with error %d", NSStringFromClass([self class]), cn, error);
+			}
+		}
+		
 		while((website = [enumerator nextObject]) != nil) {
-			@try {
-				NSTask *task = [[[NSTask alloc] init] autorelease];
+			if(secIdentitySetPreference != NULL && identity != NULL) {
+				OSStatus error;
 				
-				[task setLaunchPath:@"/usr/bin/security"];
-				[task setArguments:[NSArray arrayWithObjects:@"set-identity-preference", @"-c", cn, @"-s", website, nil]];
-				[task launch];
-				[task waitUntilExit];
-				
-				if([task terminationStatus] != 0) {
-					NSLog(@"%@: Saving '%@' failed", NSStringFromClass([self class]), website);
+				if((error = secIdentitySetPreference(identity, (CFStringRef)website, CSSM_KEYUSE_SIGN)) != noErr && error != errSecDuplicateItem) {
+					NSLog(@"%@: Setting identity preference for '%@' failed with error %d", NSStringFromClass([self class]), website, error);
+					result = NO;
+				}
+			} else {
+				// TODO: Figure out 10.4
+				@try {
+					NSTask *task = [[[NSTask alloc] init] autorelease];
+					
+					[task setLaunchPath:@"/usr/bin/security"];
+					[task setArguments:[NSArray arrayWithObjects:@"set-identity-preference", @"-c", cn, @"-s", website, nil]];
+					[task launch];
+					[task waitUntilExit];
+					
+					if([task terminationStatus] != 0) {
+						NSLog(@"%@: Saving '%@' failed", NSStringFromClass([self class]), website);
+						result = NO;
+					}
+				}
+				@catch(NSException *e) {
+					NSLog(@"%@: %@, %@", NSStringFromClass([self class]), website, e);
 					result = NO;
 				}
 			}
-			@catch(NSException *e) {
-				NSLog(@"%@: %@, %@", NSStringFromClass([self class]), website, e);
-				result = NO;
-			}
+		}
+		
+		if(identity) {
+			CFRelease(identity);
 		}
 	} else {
 		result = NO;

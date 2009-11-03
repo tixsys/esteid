@@ -8,7 +8,7 @@
 "KeychainTool.Alert.InvalidURL.Title" = "Mittesobiv veebiaadress";
 "KeychainTool.Alert.InvalidURL.Message" = "'%@' ei ole sobiv veebiaadress.";
 "KeychainTool.Alert.SaveFailure.Title" = "Salvestamine ebaõnnestus";
-"KeychainTool.Alert.SaveFailure.Message" = "Ei õnnestunud salvestada uut nimekirja veebiaadressidega.";
+"KeychainTool.Alert.SaveFailure.Message" = "Ei õnnestunud salvestada uut nimekirja veebiaadressidega. Palun kontrolli, et ID-kaart oleks jätkuvalt ühendatud kaardilugejaga.";
 "KeychainTool.Alert.SaveSuccess.Title" = "Salvestamine õnnestus";
 "KeychainTool.Alert.SaveSuccess.Message" = "Uue veebiaadresside nimekirja salvestamine õnnestus!";
 "KeychainTool.Placeholder.Website" = "Sisesta uus veebisait siia (https://...)";

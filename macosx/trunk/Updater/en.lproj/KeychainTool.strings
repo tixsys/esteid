@@ -8,7 +8,7 @@
 "KeychainTool.Alert.InvalidURL.Title" = "Invalid website address";
 "KeychainTool.Alert.InvalidURL.Message" = "'%@' is not a valid website address.";
 "KeychainTool.Alert.SaveFailure.Title" = "Save Failed";
-"KeychainTool.Alert.SaveFailure.Message" = "Couldn't save the new list of websites.";
+"KeychainTool.Alert.SaveFailure.Message" = "Couldn't save the new list of websites. Please make sure that your ID-card is still connected to the reader.";
 "KeychainTool.Alert.SaveSuccess.Title" = "Save Succeeded";
 "KeychainTool.Alert.SaveSuccess.Message" = "Saved the new list of websites successfully!";
 "KeychainTool.Placeholder.Website" = "Insert a new website here (https://...)";
