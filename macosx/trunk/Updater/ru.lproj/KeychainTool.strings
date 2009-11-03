@@ -11,5 +11,5 @@
 "KeychainTool.Alert.SaveFailure.Message" = "Не удалось сохранить новый список веб-страниц.";
 "KeychainTool.Alert.SaveSuccess.Title" = "Сохранение удалось";
 "KeychainTool.Alert.SaveSuccess.Message" = "Успешное сохранение нового списка веб-страниц!";
-"KeychainTool.Placeholder.Website" = "Вставьте сюда новую веб-страничку";
+"KeychainTool.Placeholder.Website" = "Вставьте сюда новую веб-страничку (https://...)";
 "KeychainTool.Title" = "Инструмент Keychain Эстонской ID-карты";

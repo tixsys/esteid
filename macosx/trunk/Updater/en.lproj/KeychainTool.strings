@@ -11,5 +11,5 @@
 "KeychainTool.Alert.SaveFailure.Message" = "Couldn't save the new list of websites.";
 "KeychainTool.Alert.SaveSuccess.Title" = "Save Succeeded";
 "KeychainTool.Alert.SaveSuccess.Message" = "Saved the new list of websites successfully!";
-"KeychainTool.Placeholder.Website" = "Insert a new website here";
+"KeychainTool.Placeholder.Website" = "Insert a new website here (https://...)";
 "KeychainTool.Title" = "Estonian ID-card Keychain Tool";

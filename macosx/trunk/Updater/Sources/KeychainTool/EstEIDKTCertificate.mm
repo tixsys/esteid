@@ -167,8 +167,6 @@
 }
 
 /*
- 10.4 capable workaround:
- 
  security set-identity-preference -h
  
  Usage: set-identity-preference [-c identity] [-s service] [-u keyUsage] [-Z hash] [keychain...]
@@ -212,9 +210,14 @@
 				[task setArguments:[NSArray arrayWithObjects:@"set-identity-preference", @"-c", cn, @"-s", website, nil]];
 				[task launch];
 				[task waitUntilExit];
+				
+				if([task terminationStatus] != 0) {
+					NSLog(@"%@: Saving '%@' failed", NSStringFromClass([self class]), website);
+					result = NO;
+				}
 			}
 			@catch(NSException *e) {
-				NSLog(@"%@: %@", NSStringFromClass([self class]), e);
+				NSLog(@"%@: %@, %@", NSStringFromClass([self class]), website, e);
 				result = NO;
 			}
 		}

@@ -126,7 +126,7 @@ static NSString *EstEIDKTApplicationLanguageKey = @"language";
 				NSString *website;
 				
 				while((website = [enumerator nextObject]) != nil) {
-					if(![NSURL URLWithString:website]) {
+					if(![NSURL URLWithString:website] || ![[website lowercaseString] hasPrefix:@"https://"]) {
 						NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.InvalidURL.Title"]
 														 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]
 													   alternateButton:nil
@@ -148,7 +148,7 @@ static NSString *EstEIDKTApplicationLanguageKey = @"language";
 					
 					[alert runModal];
 					
-					[[NSApplication sharedApplication] terminate:nil];
+					//[[NSApplication sharedApplication] terminate:nil];
 				} else {
 					NSAlert *alert = [NSAlert alertWithMessageText:[self stringForKey:@"KeychainTool.Alert.SaveFailure.Title"]
 													 defaultButton:[self stringForKey:@"KeychainTool.Action.Close"]

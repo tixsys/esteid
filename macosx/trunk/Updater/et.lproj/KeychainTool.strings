@@ -11,5 +11,5 @@
 "KeychainTool.Alert.SaveFailure.Message" = "Ei õnnestunud salvestada uut nimekirja veebiaadressidega.";
 "KeychainTool.Alert.SaveSuccess.Title" = "Salvestamine õnnestus";
 "KeychainTool.Alert.SaveSuccess.Message" = "Uue veebiaadresside nimekirja salvestamine õnnestus!";
-"KeychainTool.Placeholder.Website" = "Sisesta uus veebisait siia";
+"KeychainTool.Placeholder.Website" = "Sisesta uus veebisait siia (https://...)";
 "KeychainTool.Title" = "Eesti ID-kaardi Keychain Abivahend";
