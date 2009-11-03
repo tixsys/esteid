@@ -36,6 +36,7 @@ void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	} else {
 		cmd.push_back(LOBYTE(pin.length()));
 		for(unsigned i=0;i<pin.length();i++) cmd.push_back(pin[i]);
+		forceUnsecure = true; // Use normal command for sending PIN
 	}
 	try {
 		if (forceUnsecure || !mConnection->isSecure())
