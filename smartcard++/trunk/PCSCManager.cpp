@@ -77,10 +77,12 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardListReaders"  SUFFIX);
 	pSCardTransmit = (LONG(SCAPI *)(SCARDHANDLE,LPCSCARD_IO_REQUEST,LPCBYTE,DWORD,LPSCARD_IO_REQUEST,LPBYTE,LPDWORD))
 		mLibrary.getProc("SCardTransmit");
-#ifndef __APPLE__
-	pSCardGetAttrib = (LONG(SCAPI *)(SCARDHANDLE,DWORD,LPBYTE,LPDWORD))
-		mLibrary.getProc("SCardGetAttrib");
-#endif
+	try {
+		pSCardGetAttrib = (LONG(SCAPI *)(SCARDHANDLE,DWORD,LPBYTE,LPDWORD))
+			mLibrary.getProc("SCardGetAttrib");
+	} catch(std::runtime_error &e) {
+		pSCardGetAttrib = NULL; // proc not found, Old PC/SC API
+	}
 	pSCardConnect = (LONG(SCAPI *)(SCARDCONTEXT ,CSTRTYPE ,DWORD ,DWORD ,SCARDHANDLE *,LPDWORD ))
 		mLibrary.getProc("SCardConnect"  SUFFIX);
 	pSCardReconnect = (LONG(SCAPI *)(SCARDHANDLE , DWORD ,DWORD ,DWORD ,LPDWORD ))
@@ -91,8 +93,18 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardBeginTransaction");
 	pSCardEndTransaction=(LONG(SCAPI *)(SCARDHANDLE ,DWORD ))
 		mLibrary.getProc("SCardEndTransaction");
-	pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
-		mLibrary.getProc("SCardControl");
+
+	if(pSCardGetAttrib)
+#ifdef __APPLE__
+		pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
+			mLibrary.getProc("SCardControl132");
+#else
+		pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
+			mLibrary.getProc("SCardControl");
+#endif
+	else
+		// Old API no usable pSCardControl
+		pSCardControl = NULL;
 	
 #ifdef _WIN32
 	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD ,
@@ -259,9 +271,11 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 		, & pc->hScard,& pc->proto));
 
 	// Is there a pinpad?
-	pc->verify_ioctl = pc->verify_ioctl_start = 0;
-	pc->modify_ioctl = pc->modify_ioctl_start = 0;
+	pc->verify_ioctl = pc->verify_ioctl_start = pc->verify_ioctl_finish = 0;
+	pc->modify_ioctl = pc->modify_ioctl_start = pc->modify_ioctl_finish = 0;
 	pc->pinpad = pc->display = false;
+
+	if(!pSCardControl) return; // PC/SC API is too old to support PinPADs
 
 	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
 	if (rv == SCARD_S_SUCCESS) {
@@ -374,6 +388,9 @@ void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 
 
 void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byte> &cmd) {
+	if(!pSCardControl)
+		throw std::runtime_error("PC/SC API is too old");
+
 	PCSCConnection *pc = (PCSCConnection *)c;
 
 	/* Force T=0 for PinPad commands. T=1 is terminally broken.
