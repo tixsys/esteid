@@ -10,6 +10,8 @@
 "PINPanel.Label.Details" = "Детали";
 "PINPanel.Action.Cancel" = "Отмена";
 "PINPanel.Action.OK" = "OK";
+
+/* Whitelist */
 "Whitelist.Alert.Blocked.Title" = "Заблокированная веб-страница хочет получит доступ к ID-карте";
 "Whitelist.Alert.Blocked.Message" = "Хотите ли Вы дать ранее заблокированной веб-странице '%@' допуск к Вашей ID-карте?";
 "Whitelist.Alert.Unknown.Title" = "Веб-страница хочет получит доступ к ID-карте";
