@@ -6,10 +6,27 @@
 	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
 */
 // Revision $Revision: 470 $
+
+#ifdef _WIN32
+// This must be included first because other crap may pull in the conflicting ws2def.h
+#include <winsock2.h>
+#else
+#include <arpa/inet.h>
+#endif
+
 #include "precompiled.h"
 #include <smartcard++/PCSCManager.h>
 #include <smartcard++/SCError.h>
 #include <smartcard++/CardBase.h> //for exceptions
+
+#ifndef CM_IOCTL_GET_FEATURE_REQUEST
+
+// FIXME: We should use internal-winscard.h from OpenSC project instead
+//        This will clean up PCSCManager.h header considerably and
+//        allows us to use Mingw32 for building
+
+#include "internal-pcsc22.h"
+#endif
 
 #ifdef _WIN32
 #define LIBNAME "winscard"
@@ -60,10 +77,12 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardListReaders"  SUFFIX);
 	pSCardTransmit = (LONG(SCAPI *)(SCARDHANDLE,LPCSCARD_IO_REQUEST,LPCBYTE,DWORD,LPSCARD_IO_REQUEST,LPBYTE,LPDWORD))
 		mLibrary.getProc("SCardTransmit");
-#ifndef __APPLE__
-	pSCardGetAttrib = (LONG(SCAPI *)(SCARDHANDLE,DWORD,LPBYTE,LPDWORD))
-		mLibrary.getProc("SCardGetAttrib");
-#endif
+	try {
+		pSCardGetAttrib = (LONG(SCAPI *)(SCARDHANDLE,DWORD,LPBYTE,LPDWORD))
+			mLibrary.getProc("SCardGetAttrib");
+	} catch(std::runtime_error &e) {
+		pSCardGetAttrib = NULL; // proc not found, Old PC/SC API
+	}
 	pSCardConnect = (LONG(SCAPI *)(SCARDCONTEXT ,CSTRTYPE ,DWORD ,DWORD ,SCARDHANDLE *,LPDWORD ))
 		mLibrary.getProc("SCardConnect"  SUFFIX);
 	pSCardReconnect = (LONG(SCAPI *)(SCARDHANDLE , DWORD ,DWORD ,DWORD ,LPDWORD ))
@@ -74,8 +93,18 @@ void PCSCManager::construct()
 		mLibrary.getProc("SCardBeginTransaction");
 	pSCardEndTransaction=(LONG(SCAPI *)(SCARDHANDLE ,DWORD ))
 		mLibrary.getProc("SCardEndTransaction");
-	pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
-		mLibrary.getProc("SCardControl");
+
+	if(pSCardGetAttrib)
+#ifdef __APPLE__
+		pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
+			mLibrary.getProc("SCardControl132");
+#else
+		pSCardControl=(LONG (SCAPI *)(SCARDHANDLE, DWORD, LPCVOID, DWORD, LPVOID, DWORD, LPDWORD))
+			mLibrary.getProc("SCardControl");
+#endif
+	else
+		// Old API no usable pSCardControl
+		pSCardControl = NULL;
 	
 #ifdef _WIN32
 	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD ,
@@ -240,8 +269,14 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 		SCARD_SHARE_SHARED,
 		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
 		, & pc->hScard,& pc->proto));
+
 	// Is there a pinpad?
-	pc->verify_ioctl = pc->verify_ioctl_start = pc->modify_ioctl = pc->modify_ioctl_start = 0;
+	pc->verify_ioctl = pc->verify_ioctl_start = pc->verify_ioctl_finish = 0;
+	pc->modify_ioctl = pc->modify_ioctl_start = pc->modify_ioctl_finish = 0;
+	pc->pinpad = pc->display = false;
+
+	if(!pSCardControl) return; // PC/SC API is too old to support PinPADs
+
 	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
 	if (rv == SCARD_S_SUCCESS) {
 		if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) == 0) {
@@ -270,6 +305,22 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 			}
 		}
 	}
+
+	if((pc->verify_ioctl || (pc->verify_ioctl_start && pc->verify_ioctl_finish)) &&
+	   (pc->modify_ioctl || (pc->modify_ioctl_start && pc->modify_ioctl_finish)))
+		pc->pinpad = true;
+
+	/* Force T=0 for PinPad readers. T=1 is terminally broken. */
+	if(pc->proto != SCARD_PROTOCOL_T0 && pc->pinpad) {
+		pc->mForceT0 = true;
+		deleteConnection(c);
+
+		SCError::check((*pSCardConnect)(mSCardContext,
+				(CSTRTYPE) mReaderStates[idx].szReader,
+				SCARD_SHARE_SHARED,
+				SCARD_PROTOCOL_T0,
+				& pc->hScard,& pc->proto));
+	}
 }
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
@@ -293,6 +344,7 @@ void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
 		DWORD atrLen = sizeof(atr);
 		result = (*pSCardStatus)((( PCSCConnection *)c)->hScard,reader,&rdrLen,&state,&proto,atr,&atrLen);
 		if (result == SCARD_W_RESET_CARD) {
+			// FIXME: This will allow re-connecting with T1 even when T0 is forced
 			result = (*pSCardReconnect)((( PCSCConnection *)c)->hScard,SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, 
 				SCARD_LEAVE_CARD,&active);
 			(*pSCardStatus)((( PCSCConnection *)c)->hScard,reader,&rdrLen,&state,&proto,atr,&atrLen);
@@ -319,75 +371,101 @@ void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 	recvLen = (uint)(ret);
 }
 
-void PCSCManager::execPinCommand(ConnectionBase *c, DWORD ioctl, std::vector<byte> &cmd) {
+#define SET_ESTEID_PINFORMAT(a) \
+	a->bTimerOut = 30; \
+	a->bTimerOut2 = 30; \
+	a->bmFormatString = 0x02; /* Ascii */ \
+	a->bmPINBlockString = 0x00; \
+	a->bmPINLengthFormat = 0x00; \
+	a->bEntryValidationCondition = 0x02; /* Keypress only */ \
+	/* FIXME: Min/Max pin length should be passed to us from CardBase */ \
+	a->wPINMaxExtraDigit = (4 << 8 ) + 12; /* little endian! */ \
+	/* Ignore language and T=1 parameters. */ \
+	a->wLangId = 0x0000; \
+	a->bTeoPrologue[0] = 0x00; \
+	a->bTeoPrologue[1] = 0x00; \
+	a->bTeoPrologue[2] = 0x00;
+
+
+void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byte> &cmd) {
+	if(!pSCardControl)
+		throw std::runtime_error("PC/SC API is too old");
+
 	PCSCConnection *pc = (PCSCConnection *)c;
+
+	/* Force T=0 for PinPad commands. T=1 is terminally broken.
+         * Actually the same check is done in makeConnection
+         * so this is redundant.
+         */
+	if(pc->proto != SCARD_PROTOCOL_T0) {
+		pc->mForceT0 = true;
+		reconnect(pc, true);
+	}
+	
 	int offset = 0, count = 0;
 	BYTE sbuf[256], rbuf[256];
-	DWORD ioctl2, slen, rlen=sizeof(rbuf);
-	
-	PIN_VERIFY_STRUCTURE *pin_verify  = (PIN_VERIFY_STRUCTURE *)sbuf;
-	PIN_MODIFY_STRUCTURE *pin_modify  = (PIN_MODIFY_STRUCTURE *)sbuf;
+	DWORD ioctl = 0, ioctl2 = 0, rlen=sizeof(rbuf);
 	
 	// build PC/SC block. FIXME: hardcoded for EstEID!!!
-	if (ioctl == pc->verify_ioctl_start || ioctl == pc->verify_ioctl) {	
-		/* PIN verification control message */
-		pin_verify->bTimerOut = 30;
-		pin_verify->bTimerOut2 = 30;
-		pin_verify->bmFormatString |= 0x02;
-		pin_verify->bmPINBlockString = 0x00;
-		pin_verify->bmPINLengthFormat = 0x00;
-		pin_verify->wPINMaxExtraDigit = (4 << 8 ) + 12; // little endian!
-		pin_verify->bEntryValidationCondition = 0x02; /* Keypress only */
-		pin_verify->bNumberMessage = pc->display ? 0xFF: 0x00; /* Default message */
+	if (verify) {
+		PIN_VERIFY_STRUCTURE *pin_verify  = (PIN_VERIFY_STRUCTURE *)sbuf;
+		SET_ESTEID_PINFORMAT(pin_verify);
 
-		/* Ignore language and T=1 parameters. */
-		pin_verify->wLangId = 0x0000;
+		if(pc->verify_ioctl_start) {
+			ioctl = pc->verify_ioctl_start;
+			ioctl2 = pc->verify_ioctl_finish;
+		} else {
+			ioctl = pc->verify_ioctl;
+		}
+
+		/* Show default message on display */
+		pin_verify->bNumberMessage = pc->display ? 0xFF: 0x00;
 		pin_verify->bMsgIndex = 0x00;
-		pin_verify->bTeoPrologue[0] = 0x00;
-		pin_verify->bTeoPrologue[1] = 0x00;
-		pin_verify->bTeoPrologue[2] = 0x00;
 
-		/* APDU itself */
-		pin_verify->abData[offset++] = 0x00;
-		pin_verify->abData[offset++] = 0x20;
-		pin_verify->abData[offset++] = 0x00;
-		pin_verify->abData[offset++] = 0x01;
-		pin_verify->ulDataLength = 0x0004;
-		count = sizeof(PIN_VERIFY_STRUCTURE) + offset -1;
+		/* Set proper command sizes */
+		pin_verify->ulDataLength = cmd.size();
+		count = sizeof(PIN_VERIFY_STRUCTURE) +
+			pin_verify->ulDataLength - 1;
+		offset = (byte *)(pin_verify->abData) - (byte *)pin_verify;
+
 	} else {
-		pin_modify->bTimerOut = 30;
-		pin_modify->bTimerOut2 = 30;
-		pin_modify->bmFormatString |= 0x02;
-		pin_modify->bmPINBlockString = 0x00;
-		pin_modify->bmPINLengthFormat = 0x00;
+		PIN_MODIFY_STRUCTURE *pin_modify  = (PIN_MODIFY_STRUCTURE *)sbuf;
+		SET_ESTEID_PINFORMAT(pin_modify);
+
+		if(pc->modify_ioctl_start) {
+			ioctl = pc->modify_ioctl_start;
+			ioctl2 = pc->modify_ioctl_finish;
+		} else {
+			ioctl = pc->modify_ioctl;
+		}
+
 		pin_modify->bInsertionOffsetOld = 0x00;
 		pin_modify->bInsertionOffsetNew = 0x00;
-		pin_modify->wPINMaxExtraDigit = (5 << 8 ) + 12;
 		pin_modify->bConfirmPIN = 0x03;
-		pin_modify->bEntryValidationCondition = 0x02;
+
+		/* Default messages */
 		pin_modify->bNumberMessage = pc->display ? 0x03 : 0x00;
-		pin_modify->wLangId =0x0000;
 		pin_modify->bMsgIndex1 = 0x00;
 		pin_modify->bMsgIndex2 = 0x01;
 		pin_modify->bMsgIndex3 = 0x02;
-		pin_modify->bTeoPrologue[0] = 0x00;
-		pin_modify->bTeoPrologue[1] = 0x00;
-		pin_modify->bTeoPrologue[2] = 0x00;
 
-		/* APDU itself */
-		pin_modify->abData[offset++] = 0x00;
-		pin_modify->abData[offset++] = 0x24;
-		pin_modify->abData[offset++] = 0x00;
-		pin_modify->abData[offset++] = 0x02;
-		pin_modify->ulDataLength = 0x0004; /* APDU size */
-		count = sizeof(PIN_MODIFY_STRUCTURE) + offset -1;
+		/* Set proper command sizes */
+		pin_modify->ulDataLength = cmd.size();
+		count = sizeof(PIN_MODIFY_STRUCTURE) +
+			pin_modify->ulDataLength - 1;
+		offset = (byte *)pin_modify->abData - (byte *)pin_modify;
 	}
-	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, sizeof(sbuf), rbuf, sizeof(rbuf), &rlen));
+
+	/* Copy APDU itself */
+	for (uint i = 0; i < cmd.size(); i++)
+		sbuf[offset + i] = cmd[i];
+
+	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, count,
+					rbuf, sizeof(rbuf), &rlen));
 
 	// finish a two phase operation
-	if ((ioctl == pc->verify_ioctl_start) || (ioctl == pc->modify_ioctl_start)) {
+	if (ioctl2) {
 		rlen = sizeof(rbuf);
-		ioctl2 = (ioctl == pc->verify_ioctl_start) ? pc->verify_ioctl_finish : pc->modify_ioctl_finish;
 		SCError::check((*pSCardControl)(pc->hScard, ioctl2, NULL, 0, rbuf, sizeof(rbuf), &rlen));
 	}
 	byte SW1 = rbuf[rlen - 2];
@@ -401,13 +479,11 @@ void PCSCManager::execPinCommand(ConnectionBase *c, DWORD ioctl, std::vector<byt
 }
 
 void PCSCManager::execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
-	PCSCConnection *pc = (PCSCConnection *)c;
-	execPinCommand(c, pc->verify_ioctl_start ? pc->verify_ioctl_start : pc->verify_ioctl, cmd);
+	execPinCommand(c, true, cmd);
 }
 
 void PCSCManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd, size_t oldPinLen, size_t newPinLen) {
-	PCSCConnection *pc = (PCSCConnection *)c;
-	execPinCommand(c, pc->modify_ioctl_start ? pc->modify_ioctl_start : pc->modify_ioctl, cmd);
+	execPinCommand(c, false, cmd);
 }
          
 
