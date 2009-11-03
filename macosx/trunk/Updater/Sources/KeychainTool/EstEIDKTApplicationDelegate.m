@@ -194,6 +194,16 @@ static NSString *EstEIDKTApplicationLanguageKey = @"language";
 	if([[tableColumn identifier] isEqualToString:EstEIDKTApplicationDelegateWebsiteColumn]) {
 		NSString *value = [anObject trimmedString];
 		
+		// Lets make it more user-proof
+		if([value length] > 3 && [value rangeOfString:@"://"].location == NSNotFound) {
+			value = [@"https://" stringByAppendingString:value];
+		}
+		
+		// Don't forget the slash
+		if([value length] > 10 && ![value hasSuffix:@"/"]) {
+			value = [value stringByAppendingString:@"/"];
+		}
+		
 		if(rowIndex < [self->m_websites count]) {
 			if([value length] == 0) {
 				[self->m_websites removeObjectAtIndex:rowIndex];
