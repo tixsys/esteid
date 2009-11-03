@@ -43,7 +43,8 @@ public:
 	enum ErrorType {
 		PinCanceledError = 1,
 		PinInvalidError = 2,
-		UnkownError = -1,
+		PinLocked = 3,
+		UnknownError = -1,
 	};
 
 	SSLConnect( QObject *parent = 0 );

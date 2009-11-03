@@ -97,7 +97,7 @@ SSLObj::SSLObj()
 ,	pkcs11( PKCS11_MODULE )
 ,	reader( -1 )
 ,	nslots( 0 )
-,	error( SSLConnect::UnkownError )
+,	error( SSLConnect::UnknownError )
 {}
 
 SSLObj::~SSLObj()
@@ -116,8 +116,6 @@ SSLObj::~SSLObj()
 		PKCS11_CTX_free( p11 );
 	}
 
-	CRYPTO_cleanup_all_ex_data();
-	ERR_free_strings();
 	ERR_remove_state(0);
 }
 
@@ -362,13 +360,18 @@ void SSLConnect::waitForFinished( RequestType type, const QString &value )
 			obj->error = SSLConnect::PinInvalidError;
 			obj->errorString = tr("Invalid PIN");
 		}
+		else if( qstrcmp( e.what(), "PINLocked" ) == 0 )
+		{
+			obj->error = SSLConnect::PinLocked;
+			obj->errorString = tr("Pin locked");
+		}
 		else
 		{
-			obj->error = SSLConnect::UnkownError;
+			obj->error = SSLConnect::UnknownError;
 			obj->errorString = e.what();
 		}
 		return;
 	}
-	obj->error = SSLConnect::UnkownError;
+	obj->error = SSLConnect::UnknownError;
 	obj->errorString.clear();
 }
