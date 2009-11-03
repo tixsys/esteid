@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 2.6)
-
 include_directories (../ ./ ../.. ../../src)
 
 if(UNIX)
@@ -19,7 +17,7 @@ set(LIBSMARTCARD_SOURCES
   CardBase.cpp 		CTAPIManager.cpp 
   DynamicLibrary.cpp 	PCSCManager.cpp 
   SCError.cpp 		SmartCardManager.cpp 
-  locked_allocator.cpp 	types.cpp internal-pcsc22.h)
+  locked_allocator.cpp 	types.cpp)
 
 set(LIBESTEID_HEADERS esteid/EstEidCard.h esteid/EstEidCardMaintainer.h)
 set(LIBESTEID_SOURCES esteid/EstEidCard.cpp esteid/EstEidCardMaintainer.cpp)
@@ -41,8 +39,5 @@ target_link_libraries (smartcard++ esteid sim)
 if(UNIX)
   target_link_libraries (smartcard++ dl)
 endif(UNIX)
-
-add_executable(card-test test.cpp)
-target_link_libraries(card-test smartcard++)
 
 install(TARGETS smartcard++ sim esteid DESTINATION esteidutil/lib)

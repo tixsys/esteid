@@ -26,7 +26,6 @@ void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	cmd.push_back((byte)pinType);
 	if (pin.length() < 4) {
 		if (pin.length()!= 0 ||!mConnection->isSecure() ) {
-// FIXME: why is this commented out?
 //			throw std::runtime_error("bad pin length");
 			AuthError err(0,0);
 			err.m_badinput = true;
@@ -36,7 +35,6 @@ void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	} else {
 		cmd.push_back(LOBYTE(pin.length()));
 		for(unsigned i=0;i<pin.length();i++) cmd.push_back(pin[i]);
-		forceUnsecure = true; // Use normal command for sending PIN
 	}
 	try {
 		if (forceUnsecure || !mConnection->isSecure())
@@ -182,38 +180,36 @@ bool EstEidCard::validatePin_internal(PinType pinType,PinString pin, byte &retri
 bool EstEidCard::changePin_internal(
 	PinType pinType,PinString newPin,PinString oldPin,bool useUnblockCmd ) {
 	byte cmdChangeCmd[] = {0x00,0x24,0x00};
-	bool doSecure = false;
 
 	if (useUnblockCmd) cmdChangeCmd[1]= 0x2C;
 	ByteVec cmd(MAKEVECTOR(cmdChangeCmd));
-	cmd.push_back((byte)pinType);
 
 	size_t oldPinLen,newPinLen;
-	if (newPin.length() < 4 || oldPin.length() < 4 ) {
-		if (!mConnection->isSecure() )
-			throw std::runtime_error("bad pin length");
+	if (!mConnection->isSecure()) {
+		if (newPin.length() < 4 || oldPin.length() < 4 ) {
+			if (!mConnection->isSecure() )
+				throw std::runtime_error("bad pin length");
+			oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
+			newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
+			oldPin = PinString(oldPinLen,'0');
+			newPin = PinString(newPinLen,'0');
+		} else {
+			oldPinLen = oldPin.length();
+			newPinLen = newPin.length();
+		}
 
-		// FIXME: This is probably broken on PC/SC readers and
-		//	  it is not known to work on CT-API either
-		oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
-		newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
-		oldPin = PinString(oldPinLen,'0');
-		newPin = PinString(newPinLen,'0');
-		doSecure = true;
-	} else {
-		oldPinLen = oldPin.length();
-		newPinLen = newPin.length();
+		ByteVec catPins;
+		catPins.resize(oldPinLen + newPinLen);
+		copy(oldPin.begin(), oldPin.end(), catPins.begin());
+		copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
+
+		
+		cmd.push_back((byte)pinType);
+		cmd.push_back(LOBYTE(catPins.size()));
+		cmd.insert(cmd.end(),catPins.begin(),catPins.end());
 	}
-
-	ByteVec catPins;
-	catPins.resize(oldPinLen + newPinLen);
-	copy(oldPin.begin(), oldPin.end(), catPins.begin());
-	copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
-	cmd.push_back(LOBYTE(catPins.size()));
-	cmd.insert(cmd.end(),catPins.begin(),catPins.end());
-
 	try {
-		if (doSecure)
+		if (mConnection->isSecure())
 			executePinChange(cmd,oldPinLen,newPinLen);
 		else
 			execute(cmd,true);
