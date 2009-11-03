@@ -146,35 +146,40 @@ static NSString *EstEIDKTCertificateGetCommonName(SecCertificateRef certificate)
 		SecKeychainItemRef item;
 		
 		while(SecKeychainSearchCopyNext(search, &item) == noErr) {
-			UInt32 tag[2] = { kSecServiceItemAttr, kSecGenericItemAttr };
+			UInt32 tag[2] = { kSecServiceItemAttr, kSecAccountItemAttr };
 			UInt32 format[2] = { CSSM_DB_ATTRIBUTE_FORMAT_STRING, CSSM_DB_ATTRIBUTE_FORMAT_BLOB };
 			SecKeychainAttributeInfo attrInfo;
 			SecKeychainAttributeList *attributes;
+			NSString *cn = [self CN];
 			
 			attrInfo.count = 2;
 			attrInfo.tag = &(tag[0]);
 			attrInfo.format = &(format[0]);
 			
 			if(SecKeychainItemCopyAttributesAndData(item, &attrInfo, NULL, &attributes, 0, NULL) == noErr) {
+				NSString *key = nil;
+				BOOL me = NO;
+				
 				for(int i = 0; i < attributes->count; i++) {
 					SecKeychainAttribute attr = attributes->attr[i];
-					NSString *key = nil;
 					
 					switch(attr.tag) {
 						case kSecServiceItemAttr:
 							key = [[[NSString alloc] initWithData:[NSData dataWithBytes:attr.data length:attr.length] encoding:NSUTF8StringEncoding] autorelease];
 							break;
-						case kSecGenericItemAttr:
-							// TODO: Epic! How the fsk do I make it work with 10.4 too?!!?!?
+						case kSecAccountItemAttr:
+							if([cn isEqualToString:[[[NSString alloc] initWithData:[NSData dataWithBytes:attr.data length:attr.length] encoding:NSUTF8StringEncoding] autorelease]]) {
+								me = YES;
+							}
 							break;
 					}
+				}
+				
+				if(key && me) {
+					EstEIDKTIdentityPreference *identityPreference = [[EstEIDKTIdentityPreference alloc] initWithItem:item];
 					
-					if(key) {
-						EstEIDKTIdentityPreference *identityPreference = [[EstEIDKTIdentityPreference alloc] initWithItem:item];
-						
-						[identityPreferences setValue:identityPreference forKey:key];
-						[identityPreference release];
-					}
+					[identityPreferences setValue:identityPreference forKey:key];
+					[identityPreference release];
 				}
 				
 				SecKeychainItemFreeAttributesAndData(attributes, NULL);
