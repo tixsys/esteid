@@ -141,8 +141,7 @@ install(FILES qdigidoc-client.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packa
 if(UNIX AND NOT APPLE)
     # Install icons
     foreach(RES 16 22 32 48 128)
-        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
-
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/mimetypes/)
         foreach(TGT application-x-bdoc.png application-x-ddoc.png application-x-p12d.png)
             set(SRC images/qdigidoc_client_document_${RES}x${RES}.png)
             install(
@@ -152,6 +151,7 @@ if(UNIX AND NOT APPLE)
             )
         endforeach(TGT)
 
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
         set(SRC images/digidoc_icon_${RES}x${RES}.png)
         set(TGT qdigidoc-client.png)
         install(

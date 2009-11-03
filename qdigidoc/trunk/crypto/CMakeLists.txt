@@ -124,8 +124,7 @@ install(FILES qdigidoc-crypto.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packa
 if(UNIX AND NOT APPLE)
     # Install icons
     foreach(RES 16 22 32 48 128)
-        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
-
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/mimetypes/)
         set(SRC images/qdigidoc_crypto_document_${RES}x${RES}.png)
         set(TGT application-x-cdoc.png)
         install(
@@ -134,6 +133,7 @@ if(UNIX AND NOT APPLE)
             RENAME ${TGT}
         )
 
+        set(ICONDIR ${SHARE_INSTALL_PREFIX}/icons/hicolor/${RES}x${RES}/apps/)
         set(SRC images/crypto_${RES}x${RES}.png)
         set(TGT qdigidoc-crypto.png)
         install(
