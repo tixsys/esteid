@@ -6,10 +6,10 @@
         <name lang="en-US">DigiDoc extension for Estonian digital signatures</name>
     </display-name>
     <dependencies>
-        <OpenOffice.org-minimal-version value="2.0" d:name="OpenOffice.org 2.0"/>
+        <OpenOffice.org-minimal-version value="3.0" d:name="OpenOffice.org 3.0"/>
     </dependencies>
     <publisher>
-        <name xlink:href="http://id.smartlink.ee" lang="en">Estonian ID Card Project</name>
+        <name xlink:href="http://id.eesti.ee" lang="en">Estonian ID Card Project</name>
     </publisher>
 
     <icon>
