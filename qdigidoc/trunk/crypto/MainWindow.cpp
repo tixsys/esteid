@@ -460,6 +460,16 @@ void MainWindow::removeKey( int id )
 void MainWindow::setCurrentPage( Pages page )
 {
 	stack->setCurrentIndex( page );
+
+	if( !doc->fileName().isEmpty() )
+	{
+		setWindowTitle( QString( "%1 - %2" )
+			.arg( QFileInfo( doc->fileName() ).fileName() )
+			.arg( tr("DigiDoc3 Crypto") ) );
+	}
+	else
+		setWindowTitle( tr("DigiDoc3 Crypto") );
+
 	switch( page )
 	{
 	case View:
