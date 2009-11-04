@@ -92,7 +92,7 @@
 				NSString *key = [infoPlist objectForKey:@"CFBundleIdentifier"];
 				
 				if(!prefix || [key hasPrefix:prefix]) {
-					NSString *value = [infoPlist objectForKey:@"CFBundleShortVersionString"];
+					NSString *value = [[infoPlist objectForKey:@"CFBundleShortVersionString"] trimmedString];
 					
 					// TODO: checkDates
 					
