@@ -1,339 +1,247 @@
-##################################################
-##################################################
 cmake_minimum_required(VERSION 2.6)
-SET (SDKVERSION "3.0")
-SET (BUILDID "300m15(Build:9379)")
-SET (COMP_NAME "OOoDigiDocPlugin")
+project(OOoDigiDocPlugin)
 
-
-
-IF (WIN32)
-	SET (OS "WIN")
-#ENDIF (WIN32)
-
-ELSEIF(APPLE)
-	SET (OS "MACOSX")
-#ENDIF (APPLE)
-
-ELSEIF(UNIX)
-	SET (OS "LINUX")
-ENDIF(WIN32)
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 
 #set(CMAKE_BUILD_TYPE Debug)
-project (${COMP_NAME})
 
-set(MKDIR ${CMAKE_COMMAND} -E make_directory)
-set(RM ${CMAKE_COMMAND} -E remove)
-set(RMDIR ${CMAKE_COMMAND} -E remove_directory)
+# Staging directory which eventually gets compressed into an .oxt file
+SET(OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/oxt")
+# Directory for cppumaker-generated include files
+set(OUT_INC "${CMAKE_CURRENT_BINARY_DIR}/inc")
+
 set(CP ${CMAKE_COMMAND} -E copy)
-set(CPDIR ${CMAKE_COMMAND} -E copy_directory)
+set(RM ${CMAKE_COMMAND} -E remove)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+find_package(OOoSDK REQUIRED)
+find_package(LibDigiDocpp REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(OpenSSLCrypto REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(XercesC REQUIRED)
+find_package(XSD REQUIRED)
 
-#-------------------------------------------------
-#----------------Init OS specific-----------------
-#-------------fix later for all OS----------------
-#..Common..
-SET (OUT "${CMAKE_CURRENT_BINARY_DIR}/${OS}.out")
-SET (OUT_BIN "${OUT}/bin")
-SET (OUT_INC "${OUT}/inc")
-SET (OUT_SLO "${OUT}/slo")
-SET (OUT_LIB "${OUT}/lib")
-SET (OUT_SLB "${OUT}/slb")
-SET (OUT_MISC "${OUT}/misc")
-SET (OUT_OBJ "${OUT}/obj")
-SET (OUT_CLASS "${OUT}/class")
-SET (BUILD_HOME "${CMAKE_CURRENT_BINARY_DIR}")
-
-#Set path
-SET (OO_SDK_HOME "$ENV{OO_SDK_HOME}")
-SET (OO_SDK_HOME_LIB_DIR "$ENV{OO_SDK_HOME}/lib")
-SET (OO_SDK_URE_HOME "$ENV{OO_SDK_URE_HOME}")
-SET (OFFICE_BASE_PROGRAM_PATH "$ENV{OFFICE_BASE_PROGRAM_PATH}")
-SET (OO_SDK_URE_LIB_DIR "$ENV{OO_SDK_URE_LIB_DIR}")
-
-SET (OOSDK_INCLUDE_DIR "$ENV{OO_SDK_INC_SUSE}")
-MESSAGE ("SETTING SUSE inc")
-
-IF (NOT OOSDK_INCLUDE_DIR)
-	SET (OOSDK_INCLUDE_DIR "${OO_SDK_HOME}/include")
-	MESSAGE("SETTING other LINUX inc")
-ENDIF (NOT OOSDK_INCLUDE_DIR)
-
-SET (SETTINGS "${OO_SDK_HOME}/settings")
-SET (COMP_UNOPKG_MANIFEST "${OUT_MISC}/${COMP_NAME}/META-INF/manifest.xml")	
-SET (OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
-SET (SDK_GXX_INCLUDE_PATH "$ENV{SDK_GXX_INCLUDE_PATH}")
-
-MESSAGE("IN ENV $ENV{OO_SDK_HOME}")
-MESSAGE("IN VAR ${OO_SDK_HOME}")
-
-IF (WIN32)
-	SET (UNOPKG_PLATFORM "Windows")
-	SET (SHAREDLIB_EXT "dll")
-
-	SET (URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
-ELSEIF (UNIX)
-	if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-		set(PROCTYPE "x86_64")
-	else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-		set(PROCTYPE "x86")
-	endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-
-	SET (UNOPKG_PLATFORM "Linux_${PROCTYPE}")
-	SET (SHAREDLIB_EXT "so")
-	
-	SET (SDKTYPEFLAG "${OUT_MISC}/oosdk_cpp_types.flag")
-	SET (URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
-	
-	IF(APPLE)		
-		SET (UNOPKG_PLATFORM "MacOSX_${PROCTYPE}")
-		SET (SHAREDLIB_EXT "dylib")
-	ENDIF(APPLE)
-ENDIF (WIN32)
-
-
-#-------------------------------------------------
-#----------------Load modules Include-------------
-
-find_package( OOoSDK REQUIRED )
-find_package( LibDigiDocpp REQUIRED )
-find_package( OpenSSL REQUIRED )
-find_package( OpenSSLCrypto REQUIRED )
-find_package( ZLIB REQUIRED )
-find_package( XercesC REQUIRED )
-find_package( XSD REQUIRED )
-
-
-
-ADD_CUSTOM_COMMAND(
-	OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp		
-	COMMAND ${CPPUMAKER} -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
-	)
-
-
-INCLUDE_DIRECTORIES(
-	${CMAKE_SOURCE_DIR}
-	${CMAKE_BINARY_DIR}
-)
-
-IF (WIN32)
-	set(UNO_INCLUDES 
-		\"${OOSDK_INCLUDE_DIR}\"
-		\"${OOSDK_INCLUDE_DIR}/stl\"
-		\"${OUT_INC}\"
-	)
-ELSE (WIN32)
-	set(UNO_INCLUDES 
-		${OOSDK_INCLUDE_DIR}
-		${OOSDK_INCLUDE_DIR}/stl
-		${OUT_INC}
-	)
-ENDIF (WIN32)
-
-set(BDOC_INCLUDES
-	${OPENSSL_INCLUDE_DIR}
-	${ZLIB_INCLUDE_DIR}
-	${XERCESC_INCLUDE_DIR}
-	${XSD_INCLUDE_DIR}
-	${LIBDIGIDOCPP_INCLUDE_DIR}
-)
-
-# SVN number for build
-find_package(Subversion)
-if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-	Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
-	message(STATUS "Current SVN revision is ${PROJECT_WC_REVISION}")
-	set(BUILD_VER "1.0.${PROJECT_WC_REVISION}")
-else (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-	set(BUILD_VER 0)
-endif (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
-
-
-# FIXME: Find a sane way to construct these!!
-FOREACH(iDir ${UNO_INCLUDES})
-	set(UNO_INCLUDE_FLAGS "${UNO_INCLUDE_FLAGS} -I${iDir}")
-ENDFOREACH(iDir)
-FOREACH(iDir ${BDOC_INCLUDES})
-	set(BDOC_INCLUDE_FLAGS "${BDOC_INCLUDE_FLAGS} -I${iDir}")
-ENDFOREACH(iDir)
-
-#-------------------------------------------------
-#----------------Set Output-----------------------
-SET(UNOFILES
-	${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp    
-	MyProtocolHandler.cxx
-	MyJob.cxx
-	MyListener.cxx
-	WriterListener.cxx
-#	CalcListener.cxx
-	PresentationListener.cxx
-	ListenerHelper.cxx
-	exports.cxx
-	)
-
-SET(BDOCFILES
-        MyBdocBridge.cpp
-)
-   
 if(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
-        add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
+    add_definitions( -DBDOCLIB_CONF_PATH="${LIBDIGIDOCPP_CONF}" )
 endif(NOT "${LIBDIGIDOCPP_CONF}" STREQUAL "LIBDIGIDOCPP_CONF-NOTFOUND")
 
+# Get SVN revision number
+find_package(Subversion)
+if(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+    Subversion_WC_INFO(${PROJECT_SOURCE_DIR} PROJECT)
+    message(STATUS "Current SVN revision is ${PROJECT_WC_LAST_CHANGED_REV}")
+    set(BUILD_VER ${PROJECT_WC_LAST_CHANGED_REV})
+else(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
+    set(BUILD_VER 0)
+endif(Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 
-#TODO:add all definitions from settinks mk
-IF (WIN32)
-	SET (CC_DEFINES "-DWIN32 -DWNT -DCPPU_ENV=msci")
-	SET (CC_FLAGS "-wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS")
-	add_definitions(${CC_DEFINES} ${CC_FLAGS})
-ENDIF (WIN32)
+set(PROJECT_VERSION "1.0.${BUILD_VER}")
 
-IF (UNIX)	
-	set(UNO_PLATFORM "LINUX")
-	IF (APPLE)
-		set(UNO_PLATFORM "MACOSX")
-	ENDIF (APPLE) 
-	set(UNO_DEFINITIONS "-DUNX -DGCC -D${UNO_PLATFORM} -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
-ENDIF (UNIX)
+if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set(PROCTYPE "x86_64")
+else(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set(PROCTYPE "x86")
+endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+
+if(WIN32)
+    set(UNOPKG_PLATFORM "Windows")
+elseif(APPLE)
+    set(UNOPKG_PLATFORM "MacOSX_${PROCTYPE}")
+elseif(UNIX)
+    set(UNOPKG_PLATFORM "Linux_${PROCTYPE}")
+endif (WIN32)
+
+if(WIN32)
+    set(URE_TYPES "${OO_SDK_URE_HOME}/misc/types.rdb")
+else(WIN32)
+    set(URE_TYPES "${OO_SDK_URE_HOME}/share/misc/types.rdb")
+endif(WIN32)
+
+set(OFFICE_TYPES "${OFFICE_BASE_PROGRAM_PATH}/offapi.rdb")
+
+add_custom_command(
+    OUTPUT ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
+    COMMAND ${CPPUMAKER} -Gc -BUCR -O${OUT_INC} ${URE_TYPES} ${OFFICE_TYPES}
+)
+
+include_directories(
+    ${PROJECT_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+)
+
+link_directories(
+    ${OO_SDK_URE_LIB_DIR}
+    ${OO_SDK_HOME_LIB_DIR}
+)
+
+if(WIN32)
+    set(UNO_INCLUDES
+        \"${OOSDK_INCLUDE_DIR}\"
+        \"${OOSDK_INCLUDE_DIR}/stl\"
+        \"${OUT_INC}\")
+else(WIN32)
+    set(UNO_INCLUDES
+        ${OOSDK_INCLUDE_DIR}
+        ${OOSDK_INCLUDE_DIR}/stl
+        ${OUT_INC})
+endif(WIN32)
+
+set(BDOC_INCLUDES
+    ${OPENSSL_INCLUDE_DIR}
+    ${ZLIB_INCLUDE_DIR}
+    ${XERCESC_INCLUDE_DIR}
+    ${XSD_INCLUDE_DIR}
+    ${LIBDIGIDOCPP_INCLUDE_DIR}
+)
+
+# Set different include directories for files which include UNO headers
+# and for files which include libdigidocpp headers.
+foreach(iDir ${UNO_INCLUDES})
+    set(UNO_INCLUDE_FLAGS "${UNO_INCLUDE_FLAGS} -I${iDir}")
+endforeach(iDir)
+foreach(iDir ${BDOC_INCLUDES})
+    set(BDOC_INCLUDE_FLAGS "${BDOC_INCLUDE_FLAGS} -I${iDir}")
+endforeach(iDir)
+
+set(UNOFILES
+    ${OUT_INC}/com/sun/star/lang/XMultiServiceFactory.hpp
+    MyProtocolHandler.cxx
+    MyJob.cxx
+    MyListener.cxx
+    WriterListener.cxx
+    PresentationListener.cxx
+    ListenerHelper.cxx
+    exports.cxx
+)
+
+set(BDOCFILES
+    MyBdocBridge.cpp
+)
+
+if(WIN32)
+    set(UNO_DEFINITIONS "-DWIN32 -DWNT -DCPPU_ENV=msci")
+elseif(UNIX)
+    set(UNO_DEFINITIONS "-DUNX -DGCC -DCPPU_ENV=gcc3 -DGXX_INCLUDE_PATH=${SDK_GXX_INCLUDE_PATH}")
+
+    if(APPLE)
+        set(UNO_DEFINITIONS "${UNO_DEFINITIONS} -DMACOSX")
+    else(APPLE)
+        set(UNO_DEFINITIONS "${UNO_DEFINITIONS} -DLINUX")
+    endif(APPLE)
+endif(WIN32)
+
+set_source_files_properties(${UNOFILES} PROPERTIES COMPILE_FLAGS "${UNO_DEFINITIONS} ${UNO_INCLUDE_FLAGS}")
+set_source_files_properties(${BDOCFILES} PROPERTIES COMPILE_FLAGS "${BDOC_DEFINITIONS} ${BDOC_INCLUDE_FLAGS}")
+
+if(WIN32)
+    # Silence Visual Studio warnings
+    add_definitions(
+        -wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS
+    )
+endif(WIN32)
+
+if(UNIX)
+    set(OO_SDK_MAP "$ENV{OO_SDK_MAP_SUSE}")
+    if(NOT OO_SDK_MAP)
+        set(OO_SDK_MAP "${OO_SDK_HOME}/settings/component.uno.map")
+    endif(NOT OO_SDK_MAP)
+endif(UNIX)
+
+if(WIN32)
+    set(UNO_LINK_FLAGS "/DEF:\"${OO_SDK_HOME}/settings/component.uno.def\"")
+elseif(APPLE)
+    set(UNO_LINK_FLAGS "-Wl,-exported_symbols_list,${OO_SDK_HOME}/settings/component.uno.map")
+elseif(UNIX)
+    set(UNO_LINK_FLAGS "-Wl,-z,defs -Wl,--version-script,${OO_SDK_MAP}")
+endif(WIN32)
+
+add_library(ooo_digidoc SHARED ${UNOFILES} ${BDOCFILES})
+set_target_properties(ooo_digidoc PROPERTIES
+                                 PREFIX ""
+                                 LINK_FLAGS "${UNO_LINK_FLAGS}"
+                                 SKIP_BUILD_RPATH true
+)
+
+target_link_libraries(ooo_digidoc
+    ${LIBDIGIDOCPP_LIBRARY}
+    ${CPPU_LIBRARY}
+    ${CPPUHELPER_LIBRARY}
+    ${SAL_LIBRARY}
+    ${SALHELPER_LIBRARY}
+)
+
+# Link with stlport if it was found
+if(STLPORT_FOUND AND NOT APPLE)
+    target_link_libraries(ooo_digidoc ${STLPORT_LIBRARY})
+
+    # With stlport 5.2 we also need to link with pthread library.
+    if(UNIX)
+        target_link_libraries(ooo_digidoc pthread)
+    endif(UNIX)
+endif(STLPORT_FOUND AND NOT APPLE)
 
 
-set(UNO_CPP_FLAGS "${UNO_DEFINITIONS} ${UNO_INCLUDE_FLAGS}")
-set(BDOC_CPP_FLAGS "${BDOC_DEFINITIONS} ${BDOC_INCLUDE_FLAGS}")
+# copy_files: a macro for coping files from SRCDIR to DESTDIR
+macro(copy_files GLOBPAT DESTINATION)
+  file(GLOB COPY_FILES
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    ${GLOBPAT})
 
-set_source_files_properties(${UNOFILES}
-  PROPERTIES
-  COMPILE_FLAGS "${UNO_CPP_FLAGS}")
+  foreach(FILENAME ${COPY_FILES})
+    set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}")
+    set(DST "${DESTINATION}/${FILENAME}")
 
-set_source_files_properties(${BDOCFILES}
-  PROPERTIES
-  COMPILE_FLAGS "${BDOC_CPP_FLAGS}")
+    add_custom_command(
+      TARGET copy-files
+      COMMAND ${CP} ${SRC} ${DST}
+      )
+  endforeach(FILENAME)
+endmacro(copy_files)
 
-#add_library(${COMP_NAME}.uno MODULE ${UNOFILES} ${BDOCFILES})
-add_library(${COMP_NAME}.uno SHARED ${UNOFILES} ${BDOCFILES})
+# Full path of the library, including file name
+get_target_property(OUT_LIB_FILEPATH ooo_digidoc LOCATION)
+# File name (including extension) of the library
+get_filename_component(OUT_LIB_FILENAME ${OUT_LIB_FILEPATH} NAME)
 
-#-------------------------------------------------
-#---------------Link to the Libraries-------------
-target_link_libraries(${COMP_NAME}.uno 
-	${LIBDIGIDOCPP_LIBRARY}
-	
-	${CPPU_LIBRARY} 
-	${CPPUHELPER_LIBRARY} 
-	${SAL_LIBRARY} 
-	${SALHELPER_LIBRARY} 
-	)
+# copy_files macro defines commands which get associated with this target
+add_custom_target(copy-files
+    COMMENT "Copying files"
+    COMMAND ${CP} ${OUT_LIB_FILEPATH} ${OUT_DIR}/${UNOPKG_PLATFORM}/${OUT_LIB_FILENAME}
+)
 
-if(STLPORT_FOUND)
-	target_link_libraries(${COMP_NAME}.uno ${STLPORT_LIBRARY})
+configure_file(manifest.xml.in ${OUT_DIR}/META-INF/manifest.xml)
+configure_file(description.xml.in ${OUT_DIR}/description.xml)
 
-	# With stlport 5.2 we also need to link with pthread library.
-	if(UNIX)
-		target_link_libraries(${COMP_NAME}.uno pthread)
-	endif(UNIX)
-endif(STLPORT_FOUND)
+copy_files(*.png ${OUT_DIR})
+copy_files(*.xcu ${OUT_DIR})
+copy_files(HW/*.x* ${OUT_DIR})
 
-IF (UNIX)
-	SET(OO_SDK_MAP "$ENV{OO_SDK_MAP_SUSE}")
-	IF (NOT OO_SDK_MAP)
-		SET(OO_SDK_MAP "${SETTINGS}/component.uno.map")
-	ENDIF (NOT OO_SDK_MAP)
-	SET(LINK_FLAG_SCRIPT "-Wl,-z,defs -Wl,--version-script,${OO_SDK_MAP} -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
-	IF (APPLE)
-		#SET(LINK_FLAG_SCRIPT "-Wl,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")
-		SET(LINK_FLAG_SCRIPT "-Wl,-exported_symbols_list,${SETTINGS}/component.uno.map -L${OUT_LIB} -L${OO_SDK_URE_LIB_DIR}")		
-	ENDIF (APPLE)
-	set_target_properties(${COMP_NAME}.uno PROPERTIES
-				PREFIX ""
-				LINK_FLAGS "${LINK_FLAG_SCRIPT}"
-				SKIP_BUILD_RPATH true
-				LIBRARY_OUTPUT_DIRECTORY "${OUT_LIB}")
-ENDIF (UNIX)
+add_custom_target(zip-oxt ALL
+    DEPENDS ooo_digidoc
+    DEPENDS ${OUT_DIR}/META-INF/manifest.xml
+    DEPENDS ${OUT_DIR}/description.xml
+    COMMENT "Compressing oxt file"
 
-IF (WIN32)
-	set_target_properties(${COMP_NAME}.uno PROPERTIES
-				PREFIX ""
-				LINK_FLAGS "/DEF:\"${OO_SDK_HOME}/settings/component.uno.def\""
-				SKIP_BUILD_RPATH true
-				LIBRARY_OUTPUT_DIRECTORY "${OUT_LIB}")
-ENDIF (WIN32)
+    WORKING_DIRECTORY ${OUT_DIR}
+    COMMAND ${RM}  ${CMAKE_CURRENT_BINARY_DIR}/ooo-digidoc-${PROJECT_VERSION}.oxt
+    COMMAND zip -r ${CMAKE_CURRENT_BINARY_DIR}/ooo-digidoc-${PROJECT_VERSION}.oxt .
+    VERBATIM
+)
+add_dependencies(zip-oxt copy-files)
 
 
-##setup and zip oxt package
-CONFIGURE_FILE (manifest.xml.in ${COMP_UNOPKG_MANIFEST})
-CONFIGURE_FILE(Addons.xcu ${OUT_MISC}/${COMP_NAME}/Addons.xcu COPYONLY)
-CONFIGURE_FILE(ProtocolHandler.xcu ${OUT_MISC}/${COMP_NAME}/ProtocolHandler.xcu COPYONLY)
-CONFIGURE_FILE(WriterWindowState.xcu ${OUT_MISC}/${COMP_NAME}/WriterWindowState.xcu COPYONLY)
-#CONFIGURE_FILE(CalcWindowState.xcu ${OUT_MISC}/${COMP_NAME}/CalcWindowState.xcu COPYONLY)
-CONFIGURE_FILE(PresentationWindowState.xcu ${OUT_MISC}/${COMP_NAME}/PresentationWindowState.xcu COPYONLY)
-CONFIGURE_FILE(logo_small.png ${OUT_MISC}/${COMP_NAME}/logo_small.png COPYONLY)
-CONFIGURE_FILE(logo_big.png ${OUT_MISC}/${COMP_NAME}/logo_big.png COPYONLY)
-CONFIGURE_FILE(description.xml.in ${OUT_MISC}/${COMP_NAME}/description.xml)
-#CONFIGURE_FILE(TypeDetection.xcu ${OUT_MISC}/${COMP_NAME}/TypeDetection.xcu COPYONLY) #FIX Filter extension first
-#CONFIGURE_FILE(bdoc2oo.jar ${OUT_MISC}/${COMP_NAME}/bdoc2oo.jar COPYONLY)
-
-execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/UI	${OUT_MISC}/${COMP_NAME})				
-#execute_process(COMMAND ${CPDIR} ${CMAKE_SOURCE_DIR}/Filter ${OUT_MISC}/${COMP_NAME})# Copy Filter 	 #FIX Filter extension first
-		
-		
-#Fix Find Path later, so we do not need to know the final directory 
-#FIND_PATH(TARGET_FILTER_DIR bdocimport.xsl ${OUT_MISC}/${COMP_NAME}/BDocFilter)	 #FIX Filter extension first
-FIND_PATH(TARGET_GUI_DIR dialog.xlb ${OUT_MISC}/${COMP_NAME}/HW)
-
-execute_process(COMMAND ${RMDIR} ${TARGET_GUI_DIR}/.svn			#remove svn folders	
-				COMMAND ${RMDIR} ${OUT_MISC}/${COMP_NAME}/.svn)		
-				#COMMAND ${RMDIR} ${TARGET_FILTER_DIR}/.svn	) #FIX Filter extension first
-
-
-#--------------------------------------		
+#--------------------------------------        
 # Hack for Mac linked path problem #
-IF (APPLE)
-	add_custom_target( hackmac
-		
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
+if(APPLE)
+    add_custom_target(hackmac
+        COMMENT "Running hackmac"
+        COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB_FILEPATH}
+        COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB_FILEPATH}
+        COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB_FILEPATH}
+        COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB_FILEPATH}
+        COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB_FILEPATH}
+    )
 
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-
-		COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-
-		COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB}/Release/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-		)
-ENDIF (APPLE)
-
-#--------------------------------------
-#Win problem hack
-IF (WIN32)
-	add_custom_target( hackwin
-	COMMAND ${CP} ${CMAKE_CURRENT_BINARY_DIR}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-		${OUT_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-		)
-ENDIF (WIN32)
-
-#--------------------------------------
-# Some compilers put a Release folder into a target folder
-IF (IS_DIRECTORY ${OUT_LIB}/Release)
-	set( COMP_LIB "${OUT_LIB}/Release")
-ELSE (IS_DIRECTORY ${OUT_LIB}/Release)
-	set( COMP_LIB "${OUT_LIB}")
-ENDIF (IS_DIRECTORY ${OUT_LIB}/Release)
-IF (APPLE)
-	set( COMP_LIB "${OUT_LIB}/Release")
-ENDIF (APPLE)
-
-#--------------------------------------
-add_custom_target( zip-oxt ALL
-
-	COMMAND ${CP} ${COMP_LIB}/${COMP_NAME}.uno.${SHAREDLIB_EXT} 
-		${OUT_MISC}/${COMP_NAME}/${UNOPKG_PLATFORM}/${COMP_NAME}.uno.${SHAREDLIB_EXT}
-		
-	WORKING_DIRECTORY ${OUT_MISC}/${COMP_NAME}
-	COMMAND ${MKDIR} ${OUT_BIN}
-	COMMAND zip -r ${OUT_BIN}/${COMP_NAME}${BUILD_VER}.oxt . 	
-	)
-
-IF (APPLE)
-	add_dependencies( zip-oxt hackmac)
-ENDIF (APPLE)
-IF (WIN32)
-	add_dependencies( zip-oxt hackwin)
-ENDIF(WIN32)
+    add_dependencies(copy-files hackmac)
+endif(APPLE)

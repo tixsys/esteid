@@ -25,6 +25,6 @@
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
                        manifest:full-path="ProtocolHandler.xcu"/>
   <manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=native;platform=@UNOPKG_PLATFORM@"
-                       manifest:full-path="@UNOPKG_PLATFORM@/@COMP_NAME@.uno.@SHAREDLIB_EXT@"/>
+                       manifest:full-path="@UNOPKG_PLATFORM@/@OUT_LIB_FILENAME@"/>
 
 </manifest:manifest>
