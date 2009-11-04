@@ -222,9 +222,14 @@ target_link_libraries(${COMP_NAME}.uno
 	${SALHELPER_LIBRARY} 
 	)
 
-IF(STLPORT_FOUND)
+if(STLPORT_FOUND)
 	target_link_libraries(${COMP_NAME}.uno ${STLPORT_LIBRARY})
-ENDIF(STLPORT_FOUND)
+
+	# With stlport 5.2 we also need to link with pthread library.
+	if(UNIX)
+		target_link_libraries(${COMP_NAME}.uno pthread)
+	endif(UNIX)
+endif(STLPORT_FOUND)
 
 IF (UNIX)
 	SET(OO_SDK_MAP "$ENV{OO_SDK_MAP_SUSE}")
