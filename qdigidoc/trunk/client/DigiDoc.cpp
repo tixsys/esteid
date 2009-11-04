@@ -374,7 +374,7 @@ QString DigiDoc::getAccessCert()
 
 	delete s;
 
-	signer->start();
+	signer->loadDriver();
 	return buffer;
 }
 
