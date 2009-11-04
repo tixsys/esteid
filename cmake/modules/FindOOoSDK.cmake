@@ -42,7 +42,7 @@ FIND_LIBRARY(SAL_LIBRARY NAMES ${SAL_NAMES} PATHS ${OO_SDK_URE_LIB_DIR} ${OO_SDK
 SET(SALHELPER_NAMES isalhelper uno_salhelpergcc3 salhelper libuno_salhelpergcc3)
 FIND_LIBRARY(SALHELPER_LIBRARY NAMES ${SALHELPER_NAMES} PATHS ${OO_SDK_URE_LIB_DIR} ${OO_SDK_HOME_LIB_DIR} ENV ${ENV_LIB_VAR})
 
-SET(STLPORT_NAMES istlport_vc71 stlport_gcc stlport_vc71 libstlport_gcc)
+SET(STLPORT_NAMES istlport_vc71 stlport_gcc stlport_vc71 stlport libstlport_gcc)
 FIND_LIBRARY(STLPORT_LIBRARY NAMES ${STLPORT_NAMES} PATHS ${OO_SDK_URE_LIB_DIR} ${OO_SDK_HOME_LIB_DIR} ENV ${ENV_LIB_VAR})
 
 # Handle the QUIETLY and REQUIRED arguments and set STLPORT_FOUND to
