@@ -60,7 +60,7 @@ QSslCertificate DigiDocSignature::cert() const
 	try
 	{
 		X509 *x509 = s->getSigningCertificate().getX509();
-		c = SslCertificate::fromX509( (Qt::HANDLE)x509 );
+		c = SslCertificate::fromX509( Qt::HANDLE(x509) );
 		X509_free( x509 );
 	}
 	catch( const Exception & ) {}
@@ -74,16 +74,16 @@ QDateTime DigiDocSignature::dateTime() const
 	if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
 	{
 		SignatureTM *tm = static_cast<SignatureTM*>(sc);
-		dateTime = QString::fromStdString( tm->getProducedAt() );
+		dateTime = QString::fromUtf8( tm->getProducedAt().c_str() );
 	}
 	else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
 		s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
 	{
 		SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
-		dateTime = QString::fromStdString( ddoc->getProducedAt() );
+		dateTime = QString::fromUtf8( ddoc->getProducedAt().c_str() );
 	}
 	else
-		dateTime = QString::fromStdString( s->getSigningTime() );
+		dateTime = QString::fromUtf8( s->getSigningTime().c_str() );
 
 	return SslCertificate::toLocalTime( QDateTime::fromString(
 		dateTime, "yyyy-MM-dd'T'hh:mm:ss'Z'" ) );
@@ -106,7 +106,7 @@ QString DigiDocSignature::digestMethod() const
 			break;
 		default: return QString();
 		}
-		return QString::fromStdString( method );
+		return QString::fromUtf8( method.c_str() );
 	}
 	catch( const Exception & ) {}
 	return QString();

@@ -242,7 +242,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			do
 			{
 				qApp->thread()->wait( 1 );
-				QCoreApplication::processEvents();
+				qApp->processEvents();
 			} while( d->login );
 			p->deleteLater();
 			err = d->loginResult;
@@ -263,7 +263,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		case CKR_PIN_LOCKED:
 			throwException( tr("PIN Locked"), Exception::PINLocked, __LINE__ );
 		default:
-			throwException( tr("Failed to login token"), Exception::PINFailed, __LINE__ );
+			throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 		}
 	}
 
@@ -291,7 +291,7 @@ void QSigner::throwException( const QString &msg, Exception::ExceptionCode code,
 	QString t = msg;
 	t += "\n";
 	t += QString::fromUtf8( ERR_reason_error_string(ERR_get_error()) );
-	SignException e( __FILE__, line, t.toStdString() );
+	SignException e( __FILE__, line, t.toUtf8().constData() );
 	e.setCode( code );
 	throw e;
 }
