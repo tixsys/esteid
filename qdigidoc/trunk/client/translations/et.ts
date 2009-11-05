@@ -484,6 +484,12 @@ Palun kontrollige internetiühendust.</translation>
         <source>Failed to parse XML document</source>
         <translation>XML dokumendi parsimine ebaõnnestus</translation>
     </message>
+    <message>
+        <source>Not allowed to use OCSP service!
+Please check your server access sertificate.</source>
+        <translation>Puudub ligipääs OCSP teenusele!
+Palun kontrollige ligipääsutõendi olemasolu.</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

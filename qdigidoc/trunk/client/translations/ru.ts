@@ -487,6 +487,11 @@ Please check your internet connection.</source>
         <source>Failed to parse XML document</source>
         <translation>Ошибка при разборе XML документа</translation>
     </message>
+    <message>
+        <source>Not allowed to use OCSP service!
+Please check your server access sertificate.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
