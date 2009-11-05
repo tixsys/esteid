@@ -228,6 +228,10 @@
         <source>Failed to connect to host. Are you connected to the internet?</source>
         <translation>Отсутствует подключение к интернету!</translation>
     </message>
+    <message>
+        <source>Pin locked</source>
+        <translation>PIN заблокирован</translation>
+    </message>
 </context>
 <context>
     <name>SslCertificate</name>

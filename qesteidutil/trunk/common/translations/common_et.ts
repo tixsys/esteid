@@ -228,6 +228,10 @@
         <source>Failed to connect to host. Are you connected to the internet?</source>
         <translation>Puudub internetiühendus!</translation>
     </message>
+    <message>
+        <source>Pin locked</source>
+        <translation>PIN on lukus</translation>
+    </message>
 </context>
 <context>
     <name>SslCertificate</name>

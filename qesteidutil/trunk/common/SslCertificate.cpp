@@ -22,6 +22,7 @@
 
 #include "SslCertificate.h"
 
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QLocale>
 #include <QSslKey>
@@ -61,7 +62,7 @@ QStringList SslCertificate::enhancedKeyUsage() const
 {
 	EXTENDED_KEY_USAGE *usage = (EXTENDED_KEY_USAGE*)getExtension( NID_ext_key_usage );
 	if( !usage )
-		return QStringList() << QT_TR_NOOP("All application policies");
+		return QStringList() << QCoreApplication::translate("SslCertificate", "All application policies");
 
 	QStringList list;
 	for( int i = 0; i < sk_ASN1_OBJECT_num( usage ); ++i )
@@ -70,11 +71,11 @@ QStringList SslCertificate::enhancedKeyUsage() const
 		switch( OBJ_obj2nid( obj ) )
 		{
 		case NID_client_auth:
-			list << QT_TR_NOOP("Proves your identity to a remote computer"); break;
+			list << QCoreApplication::translate("SslCertificate", "Proves your identity to a remote computer"); break;
 		case NID_email_protect:
-			list << QT_TR_NOOP("Protects e-mail messages"); break;
+			list << QCoreApplication::translate("SslCertificate", "Protects e-mail messages"); break;
 		case NID_OCSP_sign:
-			list << QT_TR_NOOP("OCSP signing"); break;
+			list << QCoreApplication::translate("SslCertificate", "OCSP signing"); break;
 		default: break;
 		}
 	}
@@ -195,15 +196,15 @@ QHash<int,QString> SslCertificate::keyUsage() const
 		{
 			switch( n )
 			{
-			case DigitalSignature: list[n] = QT_TR_NOOP("Digital signature"); break;
-			case NonRepudiation: list[n] = QT_TR_NOOP("Non repudiation"); break;
-			case KeyEncipherment: list[n] = QT_TR_NOOP("Key encipherment"); break;
-			case DataEncipherment: list[n] = QT_TR_NOOP("Data encipherment"); break;
-			case KeyAgreement: list[n] = QT_TR_NOOP("Key agreement"); break;
-			case KeyCertificateSign: list[n] = QT_TR_NOOP("Key certificate sign"); break;
-			case CRLSign: list[n] = QT_TR_NOOP("CRL sign"); break;
-			case EncipherOnly: list[n] = QT_TR_NOOP("Encipher only"); break;
-			case DecipherOnly: list[n] = QT_TR_NOOP("Decipher only"); break;
+			case DigitalSignature: list[n] = QCoreApplication::translate("SslCertificate", "Digital signature"); break;
+			case NonRepudiation: list[n] = QCoreApplication::translate("SslCertificate", "Non repudiation"); break;
+			case KeyEncipherment: list[n] = QCoreApplication::translate("SslCertificate", "Key encipherment"); break;
+			case DataEncipherment: list[n] = QCoreApplication::translate("SslCertificate", "Data encipherment"); break;
+			case KeyAgreement: list[n] = QCoreApplication::translate("SslCertificate", "Key agreement"); break;
+			case KeyCertificateSign: list[n] = QCoreApplication::translate("SslCertificate", "Key certificate sign"); break;
+			case CRLSign: list[n] = QCoreApplication::translate("SslCertificate", "CRL sign"); break;
+			case EncipherOnly: list[n] = QCoreApplication::translate("SslCertificate", "Encipher only"); break;
+			case DecipherOnly: list[n] = QCoreApplication::translate("SslCertificate", "Decipher only"); break;
 			default: break;
 			}
 		}
