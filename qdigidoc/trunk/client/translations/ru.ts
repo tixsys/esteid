@@ -573,7 +573,7 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>HASH VALUE OF VALIDITY CONFIRMATION (OCSP RESPONSE)</source>
-        <translation>СОКРАШЕНИЕ СООБЩЕНИЯ ПОДТВЕРЖДЕНИЯ ДЕИСТВИТЕЛЬНОСТИ</translation>
+        <translation>СОКРАЩЕНИЕ СООБЩЕНИЯ ПОДТВЕРЖДЕНИЯ ДЕЙСТВИТЕЛЬНОСТИ</translation>
     </message>
     <message>
         <source>The print out of files listed in the section &lt;b&gt;&quot;Signed Files&quot;&lt;/b&gt; are inseparable part of this Validity Confirmation Sheet.</source>

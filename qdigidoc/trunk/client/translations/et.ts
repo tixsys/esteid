@@ -654,7 +654,7 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation>OCSP PKCS#12 serveri ligipääsu sertifikaadid on võimalik saada&lt;br /&gt;
+        <translation>Kehtivuskinnituse serveri juurdepääsutõendi saab SK leheküljelt&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=est&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
