@@ -425,9 +425,15 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			muff = OUStringToOString(ousLocBdocContUrl, RTL_TEXTENCODING_ASCII_US);
 			string strBdocUrl;
 			strBdocUrl = muff.pData->buffer;
+			bool bPathIs = memcmp(ostrPath.pData->buffer, "", 1);
+			//----------------------If We are dealing with BDoc container----------------------
+			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs && i_try)
+			{	
+				getSignatures(true);
+			}
 
 			//---------------------if file has not been saved----------------------------------
-			bool bPathIs = memcmp(ostrPath.pData->buffer, "", 1);
+			
 			if (!bPathIs)
 			{
 				i_try = 0;
@@ -463,12 +469,11 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					}
 				}
 			}
-
+			
 			//----------------------If We are dealing with BDoc container----------------------
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs && i_try)
 			{	
 				m_BdocBridge->Terminate();
-				getSignatures(true);
 			}
 			//---------------New File will be signed -> View a Warning------------------
 			else if (bPathIs && i_try)
