@@ -587,14 +587,13 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		l.postalCode.c_str(), l.countryName.c_str(), X509_dup( signer->getCert() ), NULL );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
-	std::vector<unsigned char> buf(128);
-	Signer::Signature signatureSha1Rsa = { &buf[0], buf.size() };
-	Signer::Digest digest;
-	digest.type = NID_sha1;
-	digest.length = info->pSigInfoRealDigest->mbufDigestValue.nLen;
-	digest.digest = (const unsigned char*)malloc( sizeof(const unsigned char*) );
-	memcpy( (void*)digest.digest, info->pSigInfoRealDigest->mbufDigestValue.pMem,
-		info->pSigInfoRealDigest->mbufDigestValue.nLen );
+	std::vector<unsigned char> buf1(128);
+	Signer::Signature signatureSha1Rsa = { &buf1[0], buf1.size() };
+
+	std::vector<unsigned char> buf2(
+		(unsigned char*)info->pSigInfoRealDigest->mbufDigestValue.pMem,
+		(unsigned char*)info->pSigInfoRealDigest->mbufDigestValue.pMem + info->pSigInfoRealDigest->mbufDigestValue.nLen );
+	Signer::Digest digest = { NID_sha1, &buf2[0], buf2.size() };
 
 	try
 	{
@@ -605,7 +604,6 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		d->f_SignatureInfo_delete( d->doc, info->szId );
 		throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
 	}
-	free( (void*)digest.digest );
 	err = d->f_ddocSigInfo_SetSignatureValue( info, (const char*)signatureSha1Rsa.signature, signatureSha1Rsa.length );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
