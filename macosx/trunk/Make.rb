@@ -874,7 +874,7 @@ class Application
 				:froot => File.join(@options.binaries, '10.5'),
 				:identifier => 'org.esteid.installer.tokend.10.5',
 				:location => '/System/Library/Security/tokend',
-				:script => "return system.version.ProductVersion >= '10.5';",
+				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
 				:system => '10.5>='
 			}, {
 				:name => 'esteid-tokend-tiger',
