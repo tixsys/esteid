@@ -1,11 +1,13 @@
-#include <openssl/bio.h>
-#include <openssl/pem.h>
-#include <openssl/err.h>
+#include "X509CertStore.h"
+
 #include "../../log.h"
 #include "../../crypto/OpenSSLHelpers.h"
 #include "../../util/String.h"
-#include "X509Cert.h"
-#include "X509CertStore.h"
+
+#include <sstream>
+#include <openssl/bio.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
 
 digidoc::X509Cert::X509Cert(): cert(NULL) {}
 
@@ -442,10 +444,22 @@ int digidoc::X509Cert::verify(X509_STORE* aStore) const throw(IOException)
 
     if(!ok)
     {
-       int err  = X509_STORE_CTX_get_error(csc);
-
-       X509Cert cause(X509_STORE_CTX_get_current_cert (csc));
-       ERR("Unable to verify %s. Cause: %s", cause.getSubject().c_str(), X509_verify_cert_error_string(err));
+        int err = X509_STORE_CTX_get_error(csc);
+        X509Cert cause(X509_STORE_CTX_get_current_cert (csc));
+        std::ostringstream s;
+        s << "Unable to verify " << cause.getSubject();
+        s << ". Cause: " << X509_verify_cert_error_string(err);
+        switch(err)
+        {
+        case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY:
+        {
+            IOException e(__FILE__, __LINE__, s.str());
+            e.setCode( Exception::CertificateIssuerMissing );
+            throw e;
+            break;
+        }
+        default: THROW_IOEXCEPTION(s.str().c_str()); break;
+        }
     }
 
     return ok;
