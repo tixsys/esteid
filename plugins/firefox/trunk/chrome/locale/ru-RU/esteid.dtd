@@ -13,3 +13,5 @@
 <!ENTITY esteid.Whitelist "Список разрешенных веб-страниц">
 <!ENTITY esteid.Log "Лог">
 <!ENTITY esteid.WhiteListCaption "Веб-страницы, которые ID-карта может использовать">
+<!ENTITY esteid.UsePinPad "Please enter PIN from PinPad in">
+<!ENTITY esteid.seconds "seconds">

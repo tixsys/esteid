@@ -46,6 +46,8 @@ private:
   nsresult _GetCert(nsIEstEIDCertificate **, CertId);
   void _FireListeners(ListenerType, PRUint16);
   bool _isWhitelisted();
+  nsresult doSign(char **, const char *, const char * = NULL);
+  static void runSign(void *);
 
   // Dynamic data
   vector <std::string> _PersonalData;

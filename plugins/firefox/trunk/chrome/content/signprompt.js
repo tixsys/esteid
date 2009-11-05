@@ -14,8 +14,39 @@ function acceptButtonDisabled(stat) {
   acceptButt.disabled = stat;
 }
 
+function doTimer() {
+  if(params.forceClose) {
+    params.timeout = 0;
+    document.documentElement.cancelDialog();
+    return;
+  }
+
+  if(params.timeout < 0) {
+    params.timeout = 0;
+  }
+
+  var elt = document.getElementById("timer");
+  elt.value = params.timeout;
+  params.timeout--;
+  window.setTimeout('doTimer()', 1000);
+}
+
+function setPinPadControls() {
+  var pinbox     = document.getElementById("pinbox");
+  var pinpadbox  = document.getElementById("pinpadbox");
+  var acceptButt = document.documentElement.getButton("accept");
+  var cancelButt = document.documentElement.getButton("cancel");
+  pinbox.hidden = true;
+  pinpadbox.hidden = false;
+  acceptButt.hidden = true;
+  cancelButt.hidden = true;
+  canCancel = false;
+}
+
 function onLoad() {
   acceptButtonDisabled(true);
+  doTimer();
+  if(params.timeout > 0) setPinPadControls();
 
   /* Certificates on ID-card have their subjectCN fields in format:
    *    lastName,firstName,personalID
@@ -45,11 +76,16 @@ function onLoad() {
   }
 }
 
-
-function doOK(){
+function doOK() {
   var pinbox = document.getElementById("pinbox");
   params.out = pinbox.value;
   return true;
+}
+
+function doCancel() {
+  // Allow user to close the dialog only when pinpad is not in use
+  if(params.timeout > 0) return false;
+  else return true;
 }
 
 function doDisclosure() {

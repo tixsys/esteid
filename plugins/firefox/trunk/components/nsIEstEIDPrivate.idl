@@ -17,9 +17,9 @@ interface nsIEstEIDPrivate : nsISupports
   boolean isWhiteListed(in AString pageUrl);
   string promptForSignPIN(in nsIDOMWindow aParent, in AString subject,
                           in string docUrl, in string docHash,
-                          in AString pageUrl, in boolean retry,
-                          in short tries);
-
+                          in AString pageUrl, in short pinPadTimeout,
+                          in boolean retry, in short tries);
+  void closePinPrompt(in nsIDOMWindow aParent);
   void showNotification(in nsIDOMWindow aWindow, in AString pageUrl);
   void showSettings(in nsIDOMWindow aWindow, in AString pageUrl);
   void   logMessage(in AString msg);

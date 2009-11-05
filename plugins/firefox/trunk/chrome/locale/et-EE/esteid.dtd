@@ -13,3 +13,5 @@
 <!ENTITY esteid.Whitelist "Lubatud lehtede nimekiri">
 <!ENTITY esteid.Log "Logi">
 <!ENTITY esteid.WhiteListCaption "Veebilehed, mida võib ID-kaart kasutada">
+<!ENTITY esteid.UsePinPad "Please enter PIN from PinPad in">
+<!ENTITY esteid.seconds "seconds">

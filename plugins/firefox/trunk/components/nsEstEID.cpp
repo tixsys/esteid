@@ -1,5 +1,6 @@
 #include "nsEstEID.h"
 #include "nsEstEIDCertificate.h"
+#include "converters.h" // FIXME: Remove with other "interesting" code
 
 /* Mozilla includes */
 #include <nsStringAPI.h>
@@ -18,6 +19,16 @@
 
 #include <stdio.h>
 #include <iostream>
+
+/* Private structures */
+
+struct runArgs {
+	nsresult *rv;
+	const char *aHash;
+	char **retval;
+	nsEstEID *me;
+	volatile bool closeDialog;
+};
 
 NS_IMPL_ISUPPORTS3_CI(nsEstEID, nsIEstEID,
 					  nsIObserver, nsISupportsWeakReference)
@@ -160,10 +171,6 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 
 	char *pin = nsnull;
 	// PRUnichar *pin = nsnull;
-	if(pin) {
-		ESTEID_DEBUG("PIN: %s\n", pin);
-	}
-
 	PRBool retrying = false;
 	PRInt16 tries = 3;
 	while(true) {
@@ -171,6 +178,15 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		// PRUnichar *pass = nsnull;
 		char *pass = nsnull;
 		nsString subject;
+		bool pinpad = false;
+
+		try {
+                	pinpad = service->hasSecurePinEntry();
+		}
+		catch(std::runtime_error &e) {
+			ESTEID_ERROR("Error finding card: %s\n", e.what());
+			return NS_ERROR_FAILURE;
+		}
 
 		/* Extract subject line from Certificate */
 		nsCOMPtr <nsIEstEIDCertificate> ss;
@@ -179,45 +195,60 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		rv = ss->GetCN(subject);
 		if(NS_FAILED(rv)) return NS_ERROR_FAILURE;
 
-                if(service->hasSecurePinEntry()) {
-                    eidgui->DebugMessage(NS_LITERAL_STRING("PinPAD detected, using regular prompt because we are too stupid to use it (yet)"));
-                } else {
-                    eidgui->DebugMessage(NS_LITERAL_STRING("No PinPAD available, using regular prompt"));
-                }
+                if(pinpad) {
+			PRThread *thr;
+			struct runArgs ra;
 
-		eidgui->PromptForSignPIN(parentWin, subject,
-			           url, aHash, pageURL, retrying, tries, &pass);
+			ESTEID_DEBUG("PinPAD detected");
+			eidgui->DebugMessage(NS_LITERAL_STRING("PinPAD detected"));
+
+			// Run signing operation in separate thread
+
+			ra.rv = &rv;
+			ra.aHash = aHash;
+			ra.retval = _retval;
+			ra.me = this;
+			ra.closeDialog = true;
+			thr = PR_CreateThread ( PR_USER_THREAD, runSign, &ra,
+						PR_PRIORITY_NORMAL,
+						PR_GLOBAL_THREAD,
+						PR_JOINABLE_THREAD, 0);
+
+			if(!thr) {
+				ESTEID_ERROR("Unable to create signing thread\n");
+				return NS_ERROR_OUT_OF_MEMORY;
+			}
+
+			ESTEID_DEBUG("Signing thread created\n");
+
+			// Show prompt. It will be closed by runner
+			eidgui->PromptForSignPIN(parentWin, subject,
+						 url, aHash, pageURL, 30,
+						 retrying, tries, &pass);
+			ra.closeDialog = false;
+
+			// Make sure our signing thread is finished
+			PR_JoinThread(thr);
+                } else {
+			eidgui->DebugMessage(NS_LITERAL_STRING("No PinPAD available"));
+			eidgui->PromptForSignPIN(parentWin, subject,
+						 url, aHash, pageURL, 0,
+						 retrying, tries, &pass);
+			if(!pass)	return NS_ERROR_ABORT;
+			rv = doSign(_retval, aHash, pass);
+                }
 
 		retrying = true;
 
-		if(!pass)	return NS_ERROR_ABORT;
-
-		try {
-			try {
-				std::string hash(aHash);
-				//std::string pin(NS_LossyConvertUTF16toASCII(pass).get());
-				std::string pin(pass);
-				*_retval = PL_strdup(
-				    service->signSHA1(hash,EstEidCard::SIGN,pin).c_str());
-				return NS_OK;
-			}
-			catch(AuthError &e) {
-				byte puk, pin1, pin2;
-
-				ESTEID_ERROR("Sign failure: %s\n", e.what());
-
-				if(e.m_blocked) { // Card locked. Finito!
-					ESTEID_ERROR("Card Locked");
-					return NS_ERROR_FAILURE;
-				}
-
-				service->getRetryCounts(puk, pin1, pin2);
-				tries = pin2;
-			}
-		} catch(std::runtime_error &e) {
-			ESTEID_ERROR("Card Error %s\n", e.what());
-			return NS_ERROR_FAILURE;
+		if(NS_SUCCEEDED(rv)) return NS_OK;
+		if(rv == NS_ERROR_INVALID_ARG) {
+			byte puk, pin1, pin2;
+			service->getRetryCounts(puk, pin1, pin2);
+			tries = pin2;
+		} else {
+			return rv;
 		}
+
 	}
 
     /*
@@ -345,6 +376,65 @@ bool nsEstEID::_isWhitelisted() {
 		}
 		return false;
 	}
+}
+
+nsresult nsEstEID::doSign(char **_retval, const char *aHash, const char *pass) {
+	nsresult rv;
+	try {
+		std::string rsa;
+		std::string hash(aHash);
+		//std::string pin(NS_LossyConvertUTF16toASCII(pass).get());
+		if(pass) {
+			std::string pin(pass);
+			rsa = service->signSHA1(hash, EstEidCard::SIGN,pin);
+		} else {
+			// Stupid PC/SC will block the entire thread that
+			// manager connection was created from so
+			// we need to create a new connection here.
+			//
+			// FIXME: This code should live somewhere else
+			//        Maybe entire card access should be done
+			//        from a dedicated thread.
+			SmartCardManager mgr;
+			EstEidCard card(mgr, service->findFirstEstEID());
+			ByteVec bhash = fromHex(hash);
+			rsa = toHex(card.calcSignSHA1(bhash, EstEidCard::SIGN,
+						      PinString("")));
+		}
+		*_retval = PL_strdup(rsa.c_str());
+		rv = NS_OK;
+	}
+	catch(AuthError &e) {
+		ESTEID_ERROR("Sign failure: %s\n", e.what());
+
+		if(e.m_blocked) { // Card locked. Finito!
+			ESTEID_ERROR("Card Locked\n");
+			rv = NS_ERROR_FAILURE;
+		}
+		else if(e.m_aborted) { // User canceled the operation
+			ESTEID_DEBUG("User aborted the operation\n");
+			rv = NS_ERROR_ABORT;
+		} else {
+			rv = NS_ERROR_INVALID_ARG;
+		}
+	} catch(std::runtime_error &e) {
+		ESTEID_ERROR("Card Error %s\n", e.what());
+		rv = NS_ERROR_FAILURE;
+	}
+
+	return rv;
+}
+
+void nsEstEID::runSign(void *arg) {
+	struct runArgs *a = (runArgs *)arg;
+	const char *aHash = a->aHash;
+	*(a->rv) = a->me->doSign(a->retval, aHash);
+	if(a->closeDialog) {
+		ESTEID_DEBUG("Closing Pin Prompt\n");
+		a->me->eidgui->ClosePinPrompt(a->me->parentWin);
+	}
+	ESTEID_DEBUG("Terminating Signing Thread\n");
+	return;
 }
 
 /* Extract the page URL from DOMWindow passed to us by plugin code */

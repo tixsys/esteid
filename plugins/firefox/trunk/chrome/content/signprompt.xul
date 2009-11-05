@@ -18,6 +18,7 @@
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         buttons="accept,cancel,disclosure"
         ondialogaccept="return doOK();"
+        ondialogcancel="return doCancel();"
         ondialogdisclosure="return doDisclosure();"
         defaultbutton="accept"
         buttonpack="center"
@@ -65,6 +66,11 @@
       </row>
       <row>
         <label id="pinlabel" control="pinbox" value="" />
+        <hbox id="pinpadbox" hidden="true">
+          <description>&esteid.UsePinPad;</description>
+          <label id="timer" />
+          <description>&esteid.seconds;</description>
+        </hbox>
         <textbox type="password" id="pinbox" oninput="onType();" />
       </row>
       <row>

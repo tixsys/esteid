@@ -13,3 +13,5 @@
 <!ENTITY esteid.Whitelist "Whitelist">
 <!ENTITY esteid.Log "Log">
 <!ENTITY esteid.WhiteListCaption "Sites that can use your ID-card">
+<!ENTITY esteid.UsePinPad "Please enter PIN from PinPad in">
+<!ENTITY esteid.seconds "seconds">

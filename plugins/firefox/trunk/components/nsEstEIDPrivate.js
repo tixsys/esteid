@@ -236,17 +236,29 @@ nsEstEIDPrivate.prototype = {
   },
 
   promptForSignPIN: function(aParent, subject, docUrl, docHash, pageUrl,
-                             retry, tries) {
-    var params = {subject:subject,docUrl:docUrl,
-                  docHash:docHash,pageUrl:pageUrl,
+                             pinPadTimeout, retry, tries) {
+    var params = {subject:subject, docUrl:docUrl,
+                  docHash:docHash, pageUrl:pageUrl,
                   retry:retry, tries:tries, aParent:aParent,
-                  out:null};
+                  timeout:pinPadTimeout, out:null};
 
     var dlg = aParent.openDialog("chrome://esteid/content/signprompt.xul",
-                        "_blank", "modal,centerscreen,chrome,titlebar",
+                        "esteidpin2", "modal,centerscreen,chrome,titlebar",
                         params);
 
     return params.out;
+  },
+
+  closePinPrompt: function(aParent) {
+    try {
+      var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
+                         .getService(Components.interfaces.nsIWindowWatcher);
+      //var win = ww.getWindowByName("esteidpin2", aParent);
+      var win = ww.getWindowByName("esteidpin2", null);
+      win.arguments[0].forceClose = true;
+    } catch(e) {
+      this.errorMessage("Can't close PIN prompt: " + e);
+    }
   },
 
   showSettings: function(aParent, pageUrl) {
