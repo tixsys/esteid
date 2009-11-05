@@ -71,19 +71,24 @@ QDateTime DigiDocSignature::dateTime() const
 {
 	QString dateTime;
 	Signature *sc = const_cast<Signature*>(s);
-	if( s->getMediaType().compare( "signature/bdoc-1.0/TM" ) == 0 )
+	switch( type() )
+	{
+	case TMType:
 	{
 		SignatureTM *tm = static_cast<SignatureTM*>(sc);
 		dateTime = QString::fromUtf8( tm->getProducedAt().c_str() );
+		break;
 	}
-	else if( s->getMediaType().compare( 0, 11, "DIGIDOC-XML" ) == 0 ||
-		s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
+	case DDocType:
 	{
 		SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
 		dateTime = QString::fromUtf8( ddoc->getProducedAt().c_str() );
+		break;
 	}
-	else
+	default:
 		dateTime = QString::fromUtf8( s->getSigningTime().c_str() );
+		break;
+	}
 
 	return SslCertificate::toLocalTime( QDateTime::fromString(
 		dateTime, "yyyy-MM-dd'T'hh:mm:ss'Z'" ) );
