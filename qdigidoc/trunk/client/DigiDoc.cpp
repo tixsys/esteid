@@ -136,36 +136,6 @@ QByteArray DigiDocSignature::digestValue() const
 	return QByteArray();
 }
 
-DigiDocSignature::SignatureStatus DigiDocSignature::validate()
-{
-	try
-	{
-		s->validateOffline();
-		if( type() == BESType )
-		{
-			switch( s->validateOnline() )
-			{
-			case OCSP::GOOD: return Valid;
-			case OCSP::REVOKED: return Invalid;
-			case OCSP::UNKNOWN: return Unknown;
-			}
-		}
-		else
-			return Valid;
-	}
-	catch( const Exception &e )
-	{
-		setLastError( e );
-		switch( e.code() )
-		{
-		case Exception::OCSPResponderMissing:
-		case Exception::OCSPCertMissing: return Unknown;
-		default: break;
-		}
-	}
-	return Invalid;
-}
-
 QString DigiDocSignature::lastError() const { return m_lastError; }
 
 QString DigiDocSignature::location() const
@@ -215,6 +185,24 @@ QSslCertificate DigiDocSignature::ocspCert() const
 
 DigiDoc* DigiDocSignature::parent() const { return m_parent; }
 
+int DigiDocSignature::parseException( const digidoc::Exception &e )
+{
+	Q_FOREACH( const Exception &c, e.getCauses() )
+	{
+		int code = parseException( c );
+		if( code != Exception::NoException )
+			return code;
+	}
+	return e.code();
+}
+
+void DigiDocSignature::parseExceptionStrings( const digidoc::Exception &e, QStringList &causes )
+{
+	causes << QString::fromUtf8( e.getMsg().data() );
+	Q_FOREACH( const Exception &c, e.getCauses() )
+		parseExceptionStrings( c, causes );
+}
+
 QString DigiDocSignature::role() const
 {
 	QStringList r = roles();
@@ -235,10 +223,8 @@ QStringList DigiDocSignature::roles() const
 void DigiDocSignature::setLastError( const Exception &e )
 {
 	QStringList causes;
-	causes << QString::fromUtf8( e.getMsg().data() );
-	Q_FOREACH( const Exception &c, e.getCauses() )
-		causes << QString::fromUtf8( c.getMsg().data() );
-	m_lastError = causes.join( "\n" );
+	parseExceptionStrings( e, causes );
+	m_lastError = causes.join( "<br />" );
 }
 
 DigiDocSignature::SignatureType DigiDocSignature::type() const
@@ -253,6 +239,37 @@ DigiDocSignature::SignatureType DigiDocSignature::type() const
 		s->getMediaType().compare( 0, 6, "SK-XML" ) == 0 )
 		return DDocType;
 	return UnknownType;
+}
+
+DigiDocSignature::SignatureStatus DigiDocSignature::validate()
+{
+	try
+	{
+		s->validateOffline();
+		if( type() == BESType )
+		{
+			switch( s->validateOnline() )
+			{
+			case OCSP::GOOD: return Valid;
+			case OCSP::REVOKED: return Invalid;
+			case OCSP::UNKNOWN: return Unknown;
+			}
+		}
+		else
+			return Valid;
+	}
+	catch( const Exception &e )
+	{
+		setLastError( e );
+		switch( parseException( e ) )
+		{
+		case Exception::CertificateIssuerMissing:
+		case Exception::OCSPResponderMissing:
+		case Exception::OCSPCertMissing: return Unknown;
+		default: break;
+		}
+	}
+	return Invalid;
 }
 
 
