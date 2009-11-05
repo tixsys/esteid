@@ -67,23 +67,18 @@ QSigner::~QSigner() { unloadDriver(); delete d; }
 
 X509* QSigner::getCert() throw(digidoc::SignException) { return (X509*)d->sign.handle(); }
 
-std::string QSigner::getPin( PKCS11Cert certificate ) throw(digidoc::SignException)
-{
-	PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
-	if( !p.exec() )
-		throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
-	return p.text().toUtf8().constData();
-}
-
 void QSigner::loadDriver() throw(SignException)
 {
-	try { loadDriver( Conf::getInstance()->getPKCS11DriverPath() ); }
+	std::string name;
+	try
+	{
+		name = Conf::getInstance()->getPKCS11DriverPath();
+	}
 	catch( const Exception &e )
-	{ throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__, e ); }
-}
+	{
+		throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__, e );
+	}
 
-void QSigner::loadDriver( const std::string &name ) throw(SignException)
-{
 	if( !d->handle &&
 		(!(d->handle = PKCS11_CTX_new()) || PKCS11_CTX_load( d->handle, name.c_str() )) )
 	{
@@ -209,9 +204,9 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
 		d->slotCount = 0;
 	}
-	if( slotNumber() < 0 ||
+	if( d->cards.value( d->selectedCard, -1 ) < 0 ||
 		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
-		(unsigned int)slotNumber() >= d->slotCount )
+		(unsigned int)d->cards.value( d->selectedCard, -1 ) >= d->slotCount )
 		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	d->slot = 0;
@@ -220,7 +215,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	{
 		if( !(&d->slots[i])->token )
 			continue;
-		if( j == slotNumber() )
+		if( j == d->cards.value( d->selectedCard, -1 ) )
 		{
 			d->slot = &d->slots[i];
 			break;
@@ -249,7 +244,10 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		}
 		else
 		{
-			if( PKCS11_login( d->slot, 0, getPin( PKCS11Cert() ).c_str() ) < 0 )
+			PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
+			if( !p.exec() )
+				throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+			if( PKCS11_login( d->slot, 0, p.text().toUtf8() ) < 0 )
 				err = ERR_GET_REASON(ERR_get_error());
 		}
 		switch( err )
@@ -284,8 +282,6 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	d->m.unlock();
 }
 
-int QSigner::slotNumber() const { return d->cards.value( d->selectedCard, -1 ); }
-
 void QSigner::throwException( const QString &msg, Exception::ExceptionCode code, int line ) throw(SignException)
 {
 	d->m.unlock();
@@ -296,8 +292,6 @@ void QSigner::throwException( const QString &msg, Exception::ExceptionCode code,
 	e.setCode( code );
 	throw e;
 }
-
-int QSigner::type() const { return PKCS11SignerAbstract::Type; }
 
 void QSigner::unloadDriver()
 {

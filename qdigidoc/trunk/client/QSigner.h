@@ -23,13 +23,13 @@
 #pragma once
 
 #include <QThread>
-#include <digidocpp/crypto/signer/PKCS11Signer.h>
+#include <digidocpp/crypto/signer/Signer.h>
 
 class QSslCertificate;
 class PinDialog;
 class QSignerPrivate;
 
-class QSigner: public QThread, public digidoc::PKCS11SignerAbstract
+class QSigner: public QThread, public digidoc::Signer
 {
 	Q_OBJECT
 
@@ -38,12 +38,8 @@ public:
 	~QSigner();
 
 	void loadDriver() throw(digidoc::SignException);
-	void loadDriver( const std::string &name ) throw(digidoc::SignException);
 	X509 *getCert() throw(digidoc::SignException);
-	std::string getPin( PKCS11Cert certificate ) throw(digidoc::SignException);
 	void sign( const Digest& digest, Signature& signature ) throw(digidoc::SignException);
-	int slotNumber() const;
-	int type() const;
 	void unloadDriver();
 
 Q_SIGNALS:
