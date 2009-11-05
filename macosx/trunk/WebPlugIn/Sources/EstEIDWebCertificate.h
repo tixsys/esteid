@@ -17,8 +17,6 @@
 
 - (id)initWithData:(NSData *)data;
 
-- (BOOL)isValid;
-
 /**
  * @name JavaScript Properties
  */

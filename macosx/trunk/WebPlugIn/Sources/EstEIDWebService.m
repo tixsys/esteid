@@ -69,24 +69,6 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 	return NO;
 }
 
-- (BOOL)isValid
-{
-	NSTimeInterval timeInterval = [NSDate timeIntervalSinceReferenceDate];
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	NSString *expiryDate = [self expiryDate];
-	BOOL result = NO;
-	
-	[formatter setDateFormat:@"dd.MM.yyyy"];
-	
-	if(expiryDate && timeInterval < [[formatter dateFromString:expiryDate] timeIntervalSinceReferenceDate]) {
-		result = YES;
-	}
-	
-	[formatter release];
-	
-	return result;
-}
-
 - (void)handleEvent:(int)reader listeners:(NSArray *)listeners
 {
 	NSEnumerator *enumerator = [[[listeners copy] autorelease] objectEnumerator];
@@ -253,12 +235,6 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 				EstEIDWebCertificate *certificate = [self signCertificate];
 				
 				if(certificate) {
-					if(![self isValid]) {
-						@throw EstEIDWebServiceExceptionInvalidCard;
-					}
-				}
-				
-				if([certificate isValid]) {
 					id <EstEIDReader> reader = [self->m_readerManager selectedReader];
 					EstEIDPINPanel *panel = [[EstEIDPINPanel alloc] init];
 					NSString *result;
@@ -274,8 +250,6 @@ NSString *EstEIDWebServiceExceptionSecurity = @"Security";
 					[panel release];
 					
 					return result;
-				} else if(certificate) {
-					@throw EstEIDWebServiceExceptionInvalidCertificate;
 				} else {
 					return nil;
 				}
