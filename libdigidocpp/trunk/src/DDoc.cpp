@@ -2,7 +2,7 @@
 #include "DDoc.h"
 
 #include "crypto/cert/X509Cert.h"
-#include "crypto/signer/PKCS11Signer.h"
+#include "crypto/signer/Signer.h"
 #include "io/ISerialize.h"
 #include "util/File.h"
 #include "Conf.h"
@@ -51,29 +51,25 @@ void* DDocLibrary::resolve( const char *symbol )
 DDocPrivate::DDocPrivate()
 :	doc(0)
 ,	ready(false)
-,	f_addAllDocInfos(0)
-,	f_addSignerRole(0)
 ,	f_calculateDataFileSizeAndDigest(0)
-,	f_calculateSignatureWithEstID(0)
 ,	f_cleanupConfigStore(0)
-,	f_ConfigItem_lookup_int(0)
 ,	f_convertStringToTimestamp(0)
 ,	f_createOrReplacePrivateConfigItem(0)
 ,	f_createSignedDoc(0)
 ,	f_DataFile_delete(0)
 ,	f_DataFile_new(0)
+,	f_ddocPrepareSignature(0)
 ,	f_ddocSaxReadSignedDocFromFile(0)
 ,	f_ddocSigInfo_GetOCSPRespondersCert(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
+,	f_ddocSigInfo_SetSignatureValue(0)
 ,	f_finalizeDigiDocLib(0)
 ,	f_getErrorString(0)
 ,	f_initDigiDocLib(0)
 ,	f_initConfigStore(0)
 ,	f_notarizeSignature(0)
 ,	f_ddocSaxExtractDataFile(0)
-,	f_setSignatureProductionPlace(0)
 ,	f_SignatureInfo_delete(0)
-,	f_SignatureInfo_new(0)
 ,	f_SignedDoc_free(0)
 ,	f_SignedDoc_new(0)
 ,	f_verifySignatureAndNotary(0)
@@ -125,29 +121,25 @@ void DDocPrivate::loadSignatures()
 bool DDocPrivate::loadSymbols()
 {
 	return
-	(f_addAllDocInfos = (sym_addAllDocInfos)lib.resolve("addAllDocInfos")) &&
-	(f_addSignerRole = (sym_addSignerRole)lib.resolve("addSignerRole")) &&
 	(f_calculateDataFileSizeAndDigest = (sym_calculateDataFileSizeAndDigest)lib.resolve("calculateDataFileSizeAndDigest")) &&
-	(f_calculateSignatureWithEstID = (sym_calculateSignatureWithEstID)lib.resolve("calculateSignatureWithEstID")) &&
 	(f_cleanupConfigStore = (sym_cleanupConfigStore)lib.resolve("cleanupConfigStore")) &&
-	(f_ConfigItem_lookup_int = (sym_ConfigItem_lookup_int)lib.resolve("ConfigItem_lookup_int")) &&
 	(f_convertStringToTimestamp = (sym_convertStringToTimestamp)lib.resolve("convertStringToTimestamp")) &&
 	(f_createOrReplacePrivateConfigItem = (sym_createOrReplacePrivateConfigItem)lib.resolve("createOrReplacePrivateConfigItem")) &&
 	(f_createSignedDoc = (sym_createSignedDoc)lib.resolve("createSignedDoc")) &&
 	(f_DataFile_delete = (sym_DataFile_delete)lib.resolve("DataFile_delete")) &&
 	(f_DataFile_new = (sym_DataFile_new)lib.resolve("DataFile_new")) &&
+	(f_ddocPrepareSignature = (sym_ddocPrepareSignature)lib.resolve("ddocPrepareSignature")) &&
 	(f_ddocSaxReadSignedDocFromFile = (sym_ddocSaxReadSignedDocFromFile)lib.resolve("ddocSaxReadSignedDocFromFile")) &&
 	(f_ddocSigInfo_GetOCSPRespondersCert = (sym_ddocSigInfo_GetOCSPRespondersCert)lib.resolve("ddocSigInfo_GetOCSPRespondersCert")) &&
 	(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) &&
+	(f_ddocSigInfo_SetSignatureValue = (sym_ddocSigInfo_SetSignatureValue)lib.resolve("ddocSigInfo_SetSignatureValue")) &&
 	(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) &&
 	(f_getErrorString = (sym_getErrorString)lib.resolve("getErrorString")) &&
 	(f_initDigiDocLib = (sym_initDigiDocLib)lib.resolve("initDigiDocLib")) &&
 	(f_initConfigStore = (sym_initConfigStore)lib.resolve("initConfigStore")) &&
 	(f_notarizeSignature = (sym_notarizeSignature)lib.resolve("notarizeSignature")) &&
 	(f_ddocSaxExtractDataFile = (sym_ddocSaxExtractDataFile)lib.resolve("ddocSaxExtractDataFile")) &&
-	(f_setSignatureProductionPlace = (sym_setSignatureProductionPlace)lib.resolve("setSignatureProductionPlace")) &&
 	(f_SignatureInfo_delete = (sym_SignatureInfo_delete)lib.resolve("SignatureInfo_delete")) &&
-	(f_SignatureInfo_new = (sym_SignatureInfo_new)lib.resolve("SignatureInfo_new")) &&
 	(f_SignedDoc_free = (sym_SignedDoc_free)lib.resolve("SignedDoc_free")) &&
 	(f_SignedDoc_new = (sym_SignedDoc_new)lib.resolve("SignedDoc_new")) &&
 	(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary"));
@@ -579,58 +571,42 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		d->loadSignatures();
 		return;
 	}
-	PKCS11SignerAbstract *pkcs11 = 0;
-	if( signer->type() != PKCS11SignerAbstract::Type ||
-		!(pkcs11 = static_cast<PKCS11SignerAbstract*>(signer)) )
-		d->throwError( "Failed to sign document", __LINE__ );
 
-	SignatureInfo *info;
-	int err = d->f_SignatureInfo_new( &info, d->doc, NULL );
-	d->throwError( err, "Failed to sign document", __LINE__ );
-	err = d->f_addAllDocInfos( d->doc, info );
-	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
-
-	SignatureProductionPlace l = pkcs11->getSignatureProductionPlace();
-	err = d->f_setSignatureProductionPlace( info, l.city.c_str(), l.stateOrProvince.c_str(),
-		l.postalCode.c_str(), l.countryName.c_str() );
-	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
-
+	SignatureInfo *info = NULL;
 	std::ostringstream role;
-	SignerRole::TRoles r = pkcs11->getSignerRole().claimedRoles;
+	SignerRole::TRoles r = signer->getSignerRole().claimedRoles;
 	for( SignerRole::TRoles::const_iterator i = r.begin(); i != r.end(); ++i )
 	{
 		role << *i;
 		if( i + 1 != r.end() )
 			role << " / ";
 	}
-	err = d->f_addSignerRole( info, 0, role.str().c_str(), -1, 0 );
+	SignatureProductionPlace l = signer->getSignatureProductionPlace();
+
+	int err = d->f_ddocPrepareSignature( d->doc, &info, role.str().c_str(), l.city.c_str(), l.stateOrProvince.c_str(),
+		l.postalCode.c_str(), l.countryName.c_str(), X509_dup( signer->getCert() ), NULL );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
-	std::string pin;
-	int slot = d->f_ConfigItem_lookup_int( "DIGIDOC_SIGNATURE_SLOT", 0 );
+	std::vector<unsigned char> buf(128);
+	Signer::Signature signatureSha1Rsa = { &buf[0], buf.size() };
+	Signer::Digest digest;
+	digest.type = NID_sha1;
+	digest.length = info->pSigInfoRealDigest->mbufDigestValue.nLen;
+	digest.digest = (const unsigned char*)malloc( sizeof(const unsigned char*) );
+	memcpy( (void*)digest.digest, info->pSigInfoRealDigest->mbufDigestValue.pMem,
+		info->pSigInfoRealDigest->mbufDigestValue.nLen );
+
 	try
 	{
-		PKCS11SignerAbstract::PKCS11Cert c;
-		c.cert = pkcs11->getCert();
-		slot = pkcs11->slotNumber();
-		pin = pkcs11->getPin( c );
-		pkcs11->unloadDriver();
+		signer->sign( digest, signatureSha1Rsa );
 	}
-	catch( const Exception &e )
+	catch( const SignException &e )
 	{
 		d->f_SignatureInfo_delete( d->doc, info->szId );
 		throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
 	}
-	err = d->f_calculateSignatureWithEstID( d->doc, info, slot, pin.c_str() );
-	fill(pin.begin(),pin.end(),0);
-
-	try { pkcs11->loadDriver(); }
-	catch( const Exception & ) {}
-
-	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
-
-	if( err != ERR_OK )
-		d->f_SignatureInfo_delete( d->doc, info->szId );
+	free( (void*)digest.digest );
+	err = d->f_ddocSigInfo_SetSignatureValue( info, (const char*)signatureSha1Rsa.signature, signatureSha1Rsa.length );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::string host = Conf::getInstance()->getProxyHost();
