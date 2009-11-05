@@ -471,8 +471,13 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 	byte SW1 = rbuf[rlen - 2];
 	byte SW2 = rbuf[rlen - 1];
 	if (SW1 != 0x90) {
+                // 0x00 - Timeout (SCM)
+                // 0x01 - Cancel pressed (OK, SCM)
+                // 0x03 - Omnikey sends this when Pin was too short
 		if (SW1==0x64 && ( SW2 == 0x00 || SW2 == 0x01 || SW2 == 0x02) ) {
-			throw AuthError(SW1,SW2);
+			AuthError err(SW1,SW2);
+			err.m_aborted = true;
+			throw err;
 		}
 		throw CardError(SW1, SW2);
 	}
