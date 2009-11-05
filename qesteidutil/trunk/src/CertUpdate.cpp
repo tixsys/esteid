@@ -52,7 +52,7 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 
 CertUpdate::~CertUpdate()
 {
-	if ( sock && sock->state() != QTcpSocket::ConnectedState )
+	if ( sock && sock->state() == QTcpSocket::ConnectedState )
 		sock->disconnectFromHost();
 	if ( card )
 		delete card;
