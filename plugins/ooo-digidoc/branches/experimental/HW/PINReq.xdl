@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="PINReq" dlg:left="155" dlg:top="77" dlg:width="111" dlg:height="73" dlg:closeable="true" dlg:moveable="true" dlg:title="PIN2">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-height="10"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="PinLabel" dlg:tab-index="0" dlg:left="21" dlg:top="7" dlg:width="72" dlg:height="9" dlg:value="Palun sisestage PIN2 kood"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="PINField" dlg:tab-index="1" dlg:left="18" dlg:top="17" dlg:width="75" dlg:height="15" dlg:align="center" dlg:maxlength="12" dlg:echochar="☺"/>
+  <dlg:button dlg:id="CancelPinButton" dlg:tab-index="2" dlg:left="62" dlg:top="47" dlg:width="40" dlg:height="15" dlg:tabstop="true" dlg:value="Katkesta" dlg:button-type="cancel"/>
+  <dlg:button dlg:id="PinOKButton" dlg:tab-index="3" dlg:left="8" dlg:top="47" dlg:width="40" dlg:height="15" dlg:tabstop="true" dlg:default="true" dlg:value="Kinnita" dlg:button-type="ok"/>
+ </dlg:bulletinboard>
+</dlg:window>

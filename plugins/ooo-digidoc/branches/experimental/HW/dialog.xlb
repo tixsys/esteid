@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
+<library:library xmlns:library="http://openoffice.org/2000/library" library:name="HW" library:readonly="false" library:passwordprotected="false">
+ <library:element library:name="SignMain"/>
+ <library:element library:name="PINReq"/>
+ <library:element library:name="Cert"/>
+ <library:element library:name="SaveFile"/>
+ <library:element library:name="Success"/>
+ <library:element library:name="Failure"/>
+ <library:element library:name="NoCard"/>
+ <library:element library:name="ContError"/>
+</library:library>

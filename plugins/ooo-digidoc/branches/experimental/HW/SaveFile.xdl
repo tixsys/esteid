@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="SaveFile" dlg:left="114" dlg:top="62" dlg:width="117" dlg:height="92" dlg:closeable="true" dlg:moveable="true" dlg:title="Hoiatus">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-height="12"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:style-id="0" dlg:id="Label1" dlg:tab-index="0" dlg:left="5" dlg:top="7" dlg:width="31" dlg:height="14" dlg:value="Hoiatus!"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="2" dlg:left="5" dlg:top="21" dlg:width="107" dlg:height="14" dlg:value="Fail allkirjastatakse salvestatud kujul!"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="3" dlg:left="5" dlg:top="35" dlg:width="107" dlg:height="14" dlg:value="Kui te soovite salvestada võimalikud"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="4" dlg:left="5" dlg:top="49" dlg:width="107" dlg:height="14" dlg:value="muudatused, siis palun katkestage!"/>
+  <dlg:button dlg:id="OKButton" dlg:tab-index="1" dlg:left="8" dlg:top="69" dlg:width="46" dlg:height="15" dlg:value="Jätka" dlg:button-type="ok"/>
+  <dlg:button dlg:id="CancelButton" dlg:tab-index="5" dlg:left="63" dlg:top="69" dlg:width="46" dlg:height="15" dlg:value="Katkesta" dlg:button-type="cancel"/>
+ </dlg:bulletinboard>
+</dlg:window>
