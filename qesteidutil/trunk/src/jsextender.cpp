@@ -456,7 +456,7 @@ bool JsExtender::updateCertAllowed()
 		CertUpdate *c = new CertUpdate( m_mainWindow->cardManager()->activeReaderNum(), this );
 		result = c->checkUpdateAllowed();
 	} catch ( std::runtime_error &e ) {
-		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed:<br />%1").arg( e.what() ), QMessageBox::Ok );
+		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed:<br />%1").arg( QString::fromUtf8( e.what() ) ), QMessageBox::Ok );
 	}
 	return result;
 }
@@ -475,7 +475,7 @@ bool JsExtender::updateCert()
 			result = true;
 		}
 	} catch ( std::runtime_error &e ) {
-		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed: %1").arg( e.what() ), QMessageBox::Ok );
+		QMessageBox::warning( m_mainWindow, tr( "Certificate update" ), tr("Certificate update failed: %1").arg( QString::fromUtf8( e.what() ) ), QMessageBox::Ok );
 	}
 	return result;
 }

@@ -44,8 +44,6 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 	if ( !card->isInReader( reader ) )
 		throw std::runtime_error( "no card in specified reader" );
 	card->connect( reader );
-	//ByteVec c = card->cardChallenge();
-	//challenge = (char *)&c[0];
 	QByteArray c( QByteArray::number( QDateTime::currentDateTime().toTime_t() ) );
 	memcpy( (void*)challenge, c, 8 );
 
@@ -77,11 +75,11 @@ bool CertUpdate::checkUpdateAllowed()
 {
 	QByteArray result = QByteArray::fromHex( runStep( step ) );
 	if ( result.isEmpty() || result.size() != 22 || result.size() < 22 )
-		throwError( tr("Check internet connection") );
+		throwError( tr("Check internet connection").toUtf8() );
 	if ( result.at(4) == 0x06 )
 		generateKeys = true;
 	if ( !(result.size() > 20 && result.at( 21 ) == 0x00) )
-		throwError( tr("update not allowed!") );
+		throwError( tr("update not allowed!").toUtf8() );
 	return true;
 }
 
@@ -531,7 +529,7 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 QByteArray CertUpdate::queryServer( int s, QByteArray result )
 {
 	if ( !checkConnection() )
-		throwError( tr("Check internet connection") );
+		throwError( tr("Check internet connection").toUtf8() );
 
 	const char serviceCode[] = { 0x31, 0x00 };
 	QByteArray packet;
