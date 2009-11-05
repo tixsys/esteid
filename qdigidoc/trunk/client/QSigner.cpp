@@ -274,14 +274,11 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 	if( !certCount || !&certs[0] )
 		throwException( tr("Failed to sign document") + "\nNo sertificates", Exception::NoException, __LINE__ );
 
-	PKCS11_KEY *keys;
-	unsigned int keyCount;
-	if( PKCS11_enumerate_keys( d->slot->token, &keys, &keyCount ) )
-		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
-	if( !keyCount || !&keys[0] )
+	PKCS11_KEY *key = PKCS11_find_key( &certs[0] );
+	if( !key )
 		throwException( tr("Failed to sign document") + "\nNo keys", Exception::NoException, __LINE__ );
 
-	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), &keys[0]) != 1 )
+	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), key) != 1 )
 		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
 
 	d->m.unlock();
