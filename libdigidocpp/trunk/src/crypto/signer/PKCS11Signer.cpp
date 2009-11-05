@@ -37,7 +37,7 @@ public:
 		sign.slot = NULL;
 	};
 
-    digidoc::PKCS11SignerAbstract::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
+    digidoc::PKCS11Signer::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
     bool checkCert( X509 *cert ) const;
 
     std::string driver;
@@ -177,7 +177,7 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     }
 
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
-    std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates;
+    std::vector<PKCS11Signer::PKCS11Cert> certificates;
     std::vector<SignSlot> certSlotMapping;
     for(unsigned int i = 0; i < d->numberOfSlots; i++)
     {
@@ -355,9 +355,9 @@ bool digidoc::PKCS11SignerPrivate::checkCert( X509 *cert ) const
  * @param cert cert to be used to init PKCS11Cert.
  * @return returns created PKCS11Cert struct.
  */
-digidoc::PKCS11SignerAbstract::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
+digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
 {
-    digidoc::PKCS11SignerAbstract::PKCS11Cert certificate;
+    digidoc::PKCS11Signer::PKCS11Cert certificate;
     certificate.token.label = slot->token->label;
     certificate.token.manufacturer = slot->token->manufacturer;
     certificate.token.model = slot->token->model;

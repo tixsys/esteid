@@ -5,12 +5,6 @@
 
 namespace digidoc
 {
-    class EXP_DIGIDOC PKCS11SignerAbstract: public Signer
-    {
-      public:
-        struct PKCS11Token { std::string label, manufacturer, model, serialNr; };
-        struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
-    };
 
     /**
      * Implements <code>Signer</code> interface for ID-Cards, which support PKCS #11 protocol.
@@ -29,10 +23,13 @@ namespace digidoc
      * @author Janari Põld
      */
 	class PKCS11SignerPrivate;
-    class EXP_DIGIDOC PKCS11Signer : public PKCS11SignerAbstract
+    class EXP_DIGIDOC PKCS11Signer : public Signer
     {
 
       public:
+          struct PKCS11Token { std::string label, manufacturer, model, serialNr; };
+          struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
+
           PKCS11Signer() throw(SignException);
           PKCS11Signer(const std::string& driver) throw(SignException);
           virtual ~PKCS11Signer();
@@ -54,7 +51,7 @@ namespace digidoc
            * @throws SignException should throw an exception if the login operation
            *         should be canceled.
            */
-          virtual std::string getPin(PKCS11SignerAbstract::PKCS11Cert certificate) throw(SignException) = 0;
+          virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       protected:
 
@@ -68,7 +65,7 @@ namespace digidoc
            * @throws SignException should throw an exception if no suitable certificate
            *         is in the list or the operation should be canceled.
            */
-          virtual PKCS11SignerAbstract::PKCS11Cert selectSigningCertificate(std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates) throw(SignException) = 0;
+          virtual PKCS11Cert selectSigningCertificate(std::vector<PKCS11Cert> certificates) throw(SignException) = 0;
 
           virtual void showPinpad() {};
           virtual void hidePinpad() {};
