@@ -168,7 +168,6 @@ target_link_libraries(ooo_digidoc
     ${CPPU_LIBRARY}
     ${CPPUHELPER_LIBRARY}
     ${SAL_LIBRARY}
-    ${SALHELPER_LIBRARY}
 )
 
 # Link with stlport if it was found
@@ -237,7 +236,6 @@ if(APPLE)
     add_custom_target(hackmac
         COMMENT "Running hackmac"
         COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_sal.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_sal.dylib.3 ${OUT_LIB_FILEPATH}
-        COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_salhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_salhelpergcc3.dylib.3 ${OUT_LIB_FILEPATH}
         COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppu.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppu.dylib.3 ${OUT_LIB_FILEPATH}
         COMMAND install_name_tool -change @__________________________________________________URELIB/libuno_cppuhelpergcc3.dylib.3 /Applications/OpenOffice.org.app/Contents/basis-link/ure-link/lib/libuno_cppuhelpergcc3.dylib.3 ${OUT_LIB_FILEPATH}
         COMMAND install_name_tool -change libdigidocpp.dylib /usr/local/lib/libdigidocpp.dylib ${OUT_LIB_FILEPATH}
