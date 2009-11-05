@@ -8,17 +8,8 @@ namespace digidoc
     class EXP_DIGIDOC PKCS11SignerAbstract: public Signer
     {
       public:
-        enum { Type = 1 };
         struct PKCS11Token { std::string label, manufacturer, model, serialNr; };
         struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
-
-        virtual X509* getCert() throw(SignException) = 0;
-        virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
-        virtual void loadDriver() throw(SignException) = 0;
-        virtual void loadDriver(const std::string& driver) throw(SignException) = 0;
-        virtual void unloadDriver() = 0;
-        virtual int  slotNumber() const = 0;
-        virtual int  type() { return Type; }
     };
 
     /**
@@ -51,7 +42,6 @@ namespace digidoc
           void loadDriver() throw(SignException);
           void loadDriver(const std::string& driver) throw(SignException);
           void unloadDriver();
-          int  slotNumber() const;
 
           /**
            * Abstract method that returns PIN code for the selected signing certificate.

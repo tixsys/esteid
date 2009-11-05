@@ -22,7 +22,6 @@ struct SignSlot
 {
 	PKCS11_CERT* certificate;
 	PKCS11_SLOT* slot;
-	int			number;
 };
 
 class PKCS11SignerPrivate
@@ -36,7 +35,6 @@ public:
 	{
 		sign.certificate = NULL;
 		sign.slot = NULL;
-		sign.number = -1;
 	};
 
     digidoc::PKCS11SignerAbstract::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
@@ -90,8 +88,6 @@ digidoc::PKCS11Signer::~PKCS11Signer()
     unloadDriver();
 	delete d;
 }
-
-int digidoc::PKCS11Signer::slotNumber() const { return d->sign.number; }
 
 void digidoc::PKCS11Signer::unloadDriver()
 {
@@ -168,7 +164,6 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     // Set selected state to 'no certificate selected'.
     d->sign.certificate = NULL;
     d->sign.slot = NULL;
-    d->sign.number = -1;
     if(d->slots != NULL)
     {
         // Release all slots.
@@ -184,7 +179,6 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
     std::vector<PKCS11SignerAbstract::PKCS11Cert> certificates;
     std::vector<SignSlot> certSlotMapping;
-    int tokenId = 0;
     for(unsigned int i = 0; i < d->numberOfSlots; i++)
     {
         PKCS11_SLOT* slot = d->slots + i;
@@ -212,11 +206,10 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
                 PKCS11_CERT* cert = certs + j;
                 if(!d->checkCert(cert->x509))
                     break;
-                SignSlot signSlot = { cert, slot, tokenId };
+                SignSlot signSlot = { cert, slot };
                 certSlotMapping.push_back( signSlot );
                 certificates.push_back(d->createPKCS11Cert(slot, cert));
             }
-            ++tokenId;
         }
     }
 

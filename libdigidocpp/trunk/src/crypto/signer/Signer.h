@@ -17,8 +17,6 @@ namespace digidoc
     {
 
       public:
-          enum { Type = 0 };
-
           struct EXP_DIGIDOC Digest
           {
               /** Digest type (e.g NID_sha1), available values in openssl/obj_mac.h */
@@ -36,7 +34,6 @@ namespace digidoc
       public:
           virtual X509* getCert() throw(SignException) = 0;
           virtual void sign(const Digest& digest, Signature& signature) throw(SignException) = 0;
-          virtual int type() const { return Type; }
           void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);
           SignatureProductionPlace getSignatureProductionPlace() const;
           void setSignerRole(const SignerRole& signerRole);
