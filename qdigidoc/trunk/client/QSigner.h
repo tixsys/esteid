@@ -37,7 +37,7 @@ public:
 	QSigner( QObject *parent = 0 );
 	~QSigner();
 
-	void loadDriver() throw(digidoc::SignException);
+	bool loadDriver();
 	X509 *getCert() throw(digidoc::SignException);
 	void sign( const Digest& digest, Signature& signature ) throw(digidoc::SignException);
 	void unloadDriver();

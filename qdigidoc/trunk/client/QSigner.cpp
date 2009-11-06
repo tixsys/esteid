@@ -67,7 +67,7 @@ QSigner::~QSigner() { unloadDriver(); delete d; }
 
 X509* QSigner::getCert() throw(digidoc::SignException) { return (X509*)d->sign.handle(); }
 
-void QSigner::loadDriver() throw(SignException)
+bool QSigner::loadDriver()
 {
 	std::string name;
 	try
@@ -76,7 +76,8 @@ void QSigner::loadDriver() throw(SignException)
 	}
 	catch( const Exception &e )
 	{
-		throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__, e );
+		Q_EMIT error( tr("Failed to load PKCS#11 module") );
+		return false;
 	}
 
 	if( !d->handle &&
@@ -84,10 +85,11 @@ void QSigner::loadDriver() throw(SignException)
 	{
 		PKCS11_CTX_free( d->handle );
 		d->handle = 0;
-		throw SignException( "Failed to load PKCS#11 module", __LINE__, __FILE__ );
+		return false;
 	}
 	if( !isRunning() )
 		start();
+	return true;
 }
 
 void QSigner::read()
@@ -152,9 +154,11 @@ void QSigner::run()
 {
 	d->terminate = false;
 
-	try { loadDriver(); }
-	catch( const Exception & )
-	{ Q_EMIT error( tr("Failed to load PKCS#11 module") ); return; }
+	if( !loadDriver() )
+	{
+		Q_EMIT error( tr("Failed to load PKCS#11 module") );
+		return;
+	}
 
 	read();
 	while( !d->terminate )
