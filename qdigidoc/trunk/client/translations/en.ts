@@ -648,7 +648,7 @@ Please check your internet connection.</translation>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
+        <translation>Confirmation of validity of the server reference access can be obtained from the SK web page&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>

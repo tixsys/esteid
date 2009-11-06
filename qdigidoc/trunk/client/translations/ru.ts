@@ -657,7 +657,7 @@ Please check your server access sertificate.</source>
     <message>
         <source>OCSP PKCS#12 server access certificate is available at&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</source>
-        <translation>OCSP PKCS#12 сертификат доступа к серверу доступен на&lt;br /&gt;
+        <translation>Подтверждение действительности сервера справки доступа можно получить с веб-страницы SK&lt;br /&gt;
 &lt;a href=&quot;http://www.sk.ee/getaccess/?lang=eng&quot;&gt;http://www.sk.ee/toend/&lt;/a&gt;</translation>
     </message>
 </context>
