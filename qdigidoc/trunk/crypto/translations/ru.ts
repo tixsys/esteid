@@ -456,6 +456,10 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
         <source>Show encrypting intro</source>
         <translation>Показывать подсказку для шифрования</translation>
     </message>
+    <message>
+        <source>It is not possible to change the file location. Changes will be valid to new containers only.</source>
+        <translation>Невозможно изменить расположение уже открытого конверта. Настройки будут действительны только для новых конвертов.</translation>
+    </message>
 </context>
 <context>
     <name>TreeWidget</name>

@@ -456,6 +456,10 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
         <source>Ask container name</source>
         <translation>Küsi turvaümbriku nime</translation>
     </message>
+    <message>
+        <source>It is not possible to change the file location. Changes will be valid to new containers only.</source>
+        <translation>Juba avatud ümbriku asukohta pole võimalik muuta. See seade kehtib ainult uutele ümbrikutele.</translation>
+    </message>
 </context>
 <context>
     <name>TreeWidget</name>
