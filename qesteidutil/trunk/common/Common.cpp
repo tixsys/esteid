@@ -155,8 +155,9 @@ void Common::mailTo( const QUrl &url )
 					"-e" << "set composeMessage to make new outgoing message at beginning with properties {visible:true}" <<
 					"-e" << "tell composeMessage" <<
 					"-e" << "set subject to vsubject" <<
+					"-e" << "set content to \" \"" <<
 					"-e" << "tell content" <<
-					"-e" << "make new attachment with properties {file name: vattachment} at after the last paragraph" <<
+					"-e" << "make new attachment with properties {file name: vattachment} at after the last word of the last paragraph" <<
 					"-e" << "end tell" <<
 					"-e" << "end tell" <<
 					"-e" << "activate" <<
