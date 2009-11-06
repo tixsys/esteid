@@ -11,3 +11,7 @@
   Look at esteidutil.sf.net/EstEIDSigningPluginBHO/SmartCardSigner.cpp
 * Make sure VERSION and MIME info is correct in plugin.rc Create separate
   plugininfo.h or something.
+* No card remove event generated when reader is removed
+  especially cache is not cleaned on reader remove
+* Implement reader events
+* Improve PIN2 dialog look when using PinPad and when retrying

@@ -3,7 +3,6 @@
 <?xml-stylesheet href="chrome://esteid/skin/" type="text/css"?>
 
 <overlay id="esteid" 
-         xmlns:html="http://www.w3.org/1999/xhtml"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
     <statusbar id="status-bar">
         <!-- NB! this ID is used to detect if we run in mail or browser -->

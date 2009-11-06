@@ -55,7 +55,15 @@ function LoadEstEID() {
             var elt = document.getElementById('esteidbrowserpanel');
 	    elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
         } catch (anError) {
-            esteid_error(anError);
+            esteid_error("Can't find signing plugin: " + anError);
+            // FIXME: Remove as soon as plugin is moved to NPRuntime
+            try {
+                var com = Components.classes["@id.eesti.ee/esteid;1"]
+                                    .createInstance(Components.interfaces.nsIEstEID);
+                esteid_log("XPCOM component version: " + com.getVersion() + "\n");
+            } catch (e) {
+                esteid_error(e);
+            }
         }
     }
 
