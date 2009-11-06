@@ -479,16 +479,20 @@ void MainWindow::enableSign()
 	s.setValue( "MobileNumber", infoMobileCell->text() );
 	s.endGroup();
 
-	bool mobile = infoSignMobile->isChecked();
+	if( doc->isNull() || doc->documents().isEmpty() )
+	{
+		signButton->setEnabled( false );
+		return;
+	}
 
+	bool mobile = infoSignMobile->isChecked();
 	if( mobile )
 	{
 		signSigner->setText( QString( "%1 (%2)" )
 			.arg( infoMobileCell->text() ).arg( infoMobileCode->text() ) );
 	}
 
-	if( doc->isNull() ||
-		(mobile && !IKValidator::isValid( infoMobileCode->text() )) ||
+	if( (mobile && !IKValidator::isValid( infoMobileCode->text() )) ||
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );
