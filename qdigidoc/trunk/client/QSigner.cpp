@@ -182,7 +182,7 @@ void QSigner::run()
 		if( d->login )
 		{
 			if( PKCS11_login( d->slot, 0, NULL ) < 0 )
-				d->loginResult = ERR_GET_REASON(ERR_get_error());
+				d->loginResult = ERR_get_error();
 			d->login = false;
 		}
 	}
@@ -199,7 +199,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 {
 	d->m.lock();
 	if( d->sign.isNull() )
-		throwException( tr("Signing certificate is not selected."), Exception::NoException, __LINE__ );
+		throwException( tr("Signing certificate is not selected."), 0, Exception::NoException, __LINE__ );
 
 	if( d->slotCount )
 	{
@@ -211,7 +211,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		d->cards[d->selectedCard] >= d->slotCount ||
 		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
 		!d->slot->token )
-		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
+		throwException( tr("Failed to login token"), ERR_get_error(), Exception::NoException, __LINE__ );
 
 	if( d->slot->token->loginRequired )
 	{
@@ -233,48 +233,51 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		{
 			PinDialog p( PinDialog::Pin2Type, d->sign, qApp->activeWindow() );
 			if( !p.exec() )
-				throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+				throwException( tr("PIN acquisition canceled."), 0, Exception::PINCanceled, __LINE__ );
 			if( PKCS11_login( d->slot, 0, p.text().toUtf8() ) < 0 )
-				err = ERR_GET_REASON(ERR_get_error());
+				err = ERR_get_error();
 		}
-		switch( err )
+		switch( ERR_GET_REASON(err) )
 		{
 		case CKR_OK: break;
 		case CKR_CANCEL:
 		case CKR_FUNCTION_CANCELED:
-			throwException( tr("PIN acquisition canceled."), Exception::PINCanceled, __LINE__ );
+			throwException( tr("PIN acquisition canceled."), 0, Exception::PINCanceled, __LINE__ );
 		case CKR_PIN_INCORRECT:
-			throwException( tr("PIN Incorrect"), Exception::PINIncorrect, __LINE__ );
+			throwException( tr("PIN Incorrect"), 0, Exception::PINIncorrect, __LINE__ );
 		case CKR_PIN_LOCKED:
-			throwException( tr("PIN Locked"), Exception::PINLocked, __LINE__ );
+			throwException( tr("PIN Locked"), 0, Exception::PINLocked, __LINE__ );
 		default:
-			throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
+			throwException( tr("Failed to login token"), err, Exception::NoException, __LINE__ );
 		}
 	}
 
 	PKCS11_CERT *certs;
 	unsigned int certCount;
 	if( PKCS11_enumerate_certs( d->slot->token, &certs, &certCount ) )
-		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document"), ERR_get_error(), Exception::NoException, __LINE__ );
 	if( !certCount || !&certs[0] )
-		throwException( tr("Failed to sign document") + "\nNo sertificates", Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document") + "\nNo sertificates", 0, Exception::NoException, __LINE__ );
 
 	PKCS11_KEY *key = PKCS11_find_key( &certs[0] );
 	if( !key )
-		throwException( tr("Failed to sign document") + "\nNo keys", Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document") + "\nNo keys", 0, Exception::NoException, __LINE__ );
 
 	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), key) != 1 )
-		throwException( tr("Failed to sign document"), Exception::NoException, __LINE__ );
+		throwException( tr("Failed to sign document"), ERR_get_error(), Exception::NoException, __LINE__ );
 
 	d->m.unlock();
 }
 
-void QSigner::throwException( const QString &msg, Exception::ExceptionCode code, int line ) throw(SignException)
+void QSigner::throwException( const QString &msg, unsigned long err, Exception::ExceptionCode code, int line ) throw(SignException)
 {
 	d->m.unlock();
 	QString t = msg;
-	t += "\n";
-	t += QString::fromUtf8( ERR_reason_error_string(ERR_get_error()) );
+	if( err )
+	{
+		t += "\n";
+		t += QString::fromUtf8( ERR_error_string( err, NULL ) );
+	}
 	SignException e( __FILE__, line, t.toUtf8().constData() );
 	e.setCode( code );
 	throw e;

@@ -51,7 +51,7 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
-	void throwException( const QString &msg, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
+	void throwException( const QString &msg, unsigned long err, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
 	void read();
 	void readCert();
 	void run();
