@@ -209,12 +209,17 @@ class Application
 				run_command 'xcodebuild -project xpi.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
 				run_command "ditto -xk *.xpi #{@options.mozappid}"
 				
-				# Clean-up extension?
+				# Clean-up extension? TODO: This should be removed
 				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
 				run_command "cp -R  #{@options.mozappid}/components/Release/* #{@options.mozappid}/components/"
 				run_command "rm -rf #{@options.mozappid}/components/Release"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/Resources"
 				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
-				run_command "cp -R  #{@options.mozappid}/plugins/Release/* #{@options.mozappid}/plugins/"
+				run_command "cp -R  #{@options.mozappid}/plugins/Release/* #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
+				run_command "cp ../plugins/mac/Info.plist #{@options.mozappid}/plugins/npesteid.plugin/Contents/"
 				run_command "rm -rf #{@options.mozappid}/plugins/Release"
 				
 				puts "Copying Mozilla extension..." if @options.verbose
@@ -274,6 +279,7 @@ class Application
 		#FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
 		run_command "tar -xzf tokend/OpenSC.tokend_tiger.tgz -C #{File.join(binaries, '10.4')}"
 		run_command "tar -xzf tokend/OpenSC.tokend_leopard.tgz -C #{File.join(binaries, '10.5')}"
+		#run_command "tar -xzf tokend/OpenSC.tokend_snowleopard.tgz -C #{File.join(binaries, '10.6')}"
 		
 		puts "\n" if @options.verbose
 	end
