@@ -443,7 +443,7 @@ class Application
 				file = Pathname.new(files.first).join('install.rdf').to_s
 				
 				if File.exists? file
-					version = `grep -s "<em:version>" #{file} | tr -s " " | cut -c 14-21`.gsub(/ /, '')
+					version = `grep -s "<em:version>" #{file} | tr -s " " | cut -c 14-21`.strip
 				end
 				
 				if identifier.nil?
