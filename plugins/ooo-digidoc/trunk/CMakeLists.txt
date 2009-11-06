@@ -205,6 +205,7 @@ get_filename_component(OUT_LIB_FILENAME ${OUT_LIB_FILEPATH} NAME)
 
 # copy_files macro defines commands which get associated with this target
 add_custom_target(copy-files
+    DEPENDS ooo_digidoc
     COMMENT "Copying files"
     COMMAND ${CP} ${OUT_LIB_FILEPATH} ${OUT_DIR}/${UNOPKG_PLATFORM}/${OUT_LIB_FILENAME}
 )
@@ -217,7 +218,6 @@ copy_files(*.xcu ${OUT_DIR})
 copy_files(HW/*.x* ${OUT_DIR})
 
 add_custom_target(zip-oxt ALL
-    DEPENDS ooo_digidoc
     DEPENDS ${OUT_DIR}/META-INF/manifest.xml
     DEPENDS ${OUT_DIR}/description.xml
     COMMENT "Compressing oxt file"
