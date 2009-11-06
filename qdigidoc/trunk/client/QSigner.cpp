@@ -45,7 +45,7 @@ public:
 	QSignerPrivate(): login(false), terminate(false), handle(0), slotCount(0), loginResult(CKR_OK) {}
 	volatile bool	login, terminate;
 	QMutex			m;
-	QHash<QString,int>	cards;
+	QHash<QString,unsigned int>	cards;
 	QString			selectedCard, select;
 	QSslCertificate	sign;
 	PKCS11_CTX		*handle;
@@ -98,7 +98,7 @@ void QSigner::read()
 		return;
 
 	d->cards.clear();
-	for( unsigned int i = 0, j = 0; i < d->slotCount; ++i )
+	for( unsigned int i = 0; i < d->slotCount; ++i )
 	{
 		PKCS11_SLOT* slot = &d->slots[i];
 		if( !slot->token )
@@ -106,8 +106,7 @@ void QSigner::read()
 
 		QString serialNumber = QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed();
 		if( !d->cards.contains( serialNumber ) )
-			d->cards[serialNumber] = j + 1;
-		++j;
+			d->cards[serialNumber] = i + 1;
 	}
 
 	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
@@ -130,7 +129,7 @@ void QSigner::readCert()
 	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
-	for( unsigned int i = 0, j = 0; i < d->slotCount; ++i )
+	for( unsigned int i = 0; i < d->slotCount; ++i )
 	{
 		PKCS11_SLOT* slot = &d->slots[i];
 		if( !slot->token ||
@@ -143,10 +142,9 @@ void QSigner::readCert()
 		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
 		{
 			d->sign = cert;
-			d->cards[d->selectedCard] = j;
+			d->cards[d->selectedCard] = i;
 			break;
 		}
-		++j;
 	}
 }
 
@@ -204,26 +202,11 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
 		d->slotCount = 0;
 	}
-	if( d->cards.value( d->selectedCard, -1 ) < 0 ||
+	if( !d->cards.contains( d->selectedCard ) ||
 		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
-		(unsigned int)d->cards.value( d->selectedCard, -1 ) >= d->slotCount )
-		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
-
-	d->slot = 0;
-	int j = 0;
-	for( unsigned int i = 0; i < d->slotCount; ++i )
-	{
-		if( !(&d->slots[i])->token )
-			continue;
-		if( j == d->cards.value( d->selectedCard, -1 ) )
-		{
-			d->slot = &d->slots[i];
-			break;
-		}
-		++j;
-	}
-
-	if( !d->slot || !d->slot->token )
+		d->cards[d->selectedCard] >= d->slotCount ||
+		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
+		!d->slot->token )
 		throwException( tr("Failed to login token"), Exception::NoException, __LINE__ );
 
 	if( d->slot->token->loginRequired )
