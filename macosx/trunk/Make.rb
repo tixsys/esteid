@@ -792,14 +792,14 @@ class Application
 				:froot => @options.opensc,
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc',
-				:version => '1.0'
+				:version => '1.0.1'
 			}, {
 				:name => 'esteid-digidoc',
 				:files => [ File.join(@options.digidoc, '*/**') ],
 				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.installer.digidoc',
-				:version => '1.0'
+				:version => '1.0.1'
 			}, {
 				:name => 'esteid-qt',
 				:files => [
