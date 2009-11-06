@@ -641,7 +641,7 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
-        <translation>Ligipääsutõend paigaldamine</translation>
+        <translation>Ligipääsutõendi paigaldamine</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>

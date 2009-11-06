@@ -490,7 +490,8 @@ Please check your internet connection.</source>
     <message>
         <source>Not allowed to use OCSP service!
 Please check your server access sertificate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не разрешено использовать OCSP услугу!
+Пожалуйста проверьте действительность справки допуска.</translation>
     </message>
 </context>
 <context>
