@@ -7,10 +7,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(xpi)
 
-# set( CMAKE_VERBOSE_MAKEFILE TRUE)
-
-# Define directories
-# set( CMAKE_BINARY_DIR ${CMAKE_BINARY_DIR}/build)
 set(PLUGINGATE plugins/plugingate)
 set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
 include_directories(
@@ -41,52 +37,6 @@ add_definitions( -DESTEID_MOZPLUG_VERSION="${PROJECT_VERSION}")
 set(MKDIR ${CMAKE_COMMAND} -E make_directory)
 set(RM ${CMAKE_COMMAND} -E remove)
 set(CP ${CMAKE_COMMAND} -E copy)
-
-CONFIGURE_FILE(install.rdf.in install.rdf)
-
-# Build the XPI
-add_custom_target( xpi-stage
-	COMMAND ${MKDIR} chrome
-	COMMAND ${MKDIR} components
-	COMMAND ${MKDIR} plugins
-)
-
-set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
-add_custom_target( xpi-jar
-	COMMAND ${RM} ${CHROME_JAR}
-	COMMAND zip -pr ${CHROME_JAR} content/* locale/* skin/* -x '*/.svn/*'
-	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/chrome
-)
-
-add_dependencies( xpi-jar xpi-stage)
-
-add_custom_target( xpi ALL
-	DEPENDS esteid
-	DEPENDS npesteid
-	DEPENDS ${PROJECT_BINARY_DIR}/components/nsEstEIDPrivate.js
-	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
-	DEPENDS chrome.manifest
-	COMMAND ${RM} chrome.manifest
-	COMMAND ${CP} ${PROJECT_SOURCE_DIR}/chrome.manifest .
-	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
-	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
-                chrome/ components/ plugins/ install.rdf chrome.manifest
-	VERBATIM
-)
-add_dependencies( xpi xpi-jar)
-add_dependencies( xpi jsesteid)
-
-add_custom_target(runff
-	DEPENDS run-in-ff.sh
-	COMMAND ${PROJECT_SOURCE_DIR}/run-in-ff.sh esteid-${PROJECT_VERSION}.xpi
-)
-add_dependencies(runff xpi)
-
-add_custom_target(runtb
-	DEPENDS run-in-tb.sh
-	COMMAND ${PROJECT_SOURCE_DIR}/run-in-tb.sh esteid-${PROJECT_VERSION}.xpi
-)
-add_dependencies(runtb xpi)
 
 # FIND Gecko SDK
 INCLUDE(FindPkgConfig OPTIONAL)
@@ -160,6 +110,8 @@ include_directories(${GECKO_SDK_INCLUDE_DIRS})
 # Xulrunner 1.9.1 has npfunctions.h instead of npupp.h
 find_file(HAVE_NPFUNCTIONS_H npfunctions.h ${GECKO_SDK_INCLUDE_DIRS})
 configure_file(esteid-config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/esteid-config.h)
+
+configure_file(install.rdf.in install.rdf)
 
 if(WIN32)
     add_definitions(-DXP_WIN -D_USRDLL)
@@ -268,16 +220,6 @@ set(esteid_plugin_WIN
     plugins/npesteid.def
 )
 
-# TODO: A more generic way to list XPCOM components written in JS
-set(COMP_DEST "${CMAKE_CURRENT_BINARY_DIR}/components")
-add_custom_command(
-    OUTPUT ${COMP_DEST}/nsEstEIDPrivate.js
-    COMMAND ${CP} nsEstEIDPrivate.js ${COMP_DEST}
-    DEPENDS ${COMP_DEST}/nsIEstEIDPrivate.xpt
-    DEPENDS components/nsEstEIDPrivate.js
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/components
-)
-
 # TODO: Find a better way to pass special CFLAGS to targets
 # add_definitions(${XPCOM_CPP_FLAGS})
 
@@ -298,12 +240,70 @@ target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(esteid PROPERTIES
 				PREFIX ""
 				LINK_FLAGS "${XPCOM_LINK_FLAGS}"
-				SKIP_BUILD_RPATH true
-				LIBRARY_OUTPUT_DIRECTORY "components")
+				SKIP_BUILD_RPATH true)
 set_target_properties(npesteid PROPERTIES
 				PREFIX ""
 				LINK_FLAGS "${NPAPI_LINK_FLAGS}"
-				SKIP_BUILD_RPATH true
-				LIBRARY_OUTPUT_DIRECTORY "plugins")
+				SKIP_BUILD_RPATH true)
 
-# install(TARGETS pkcs11 DESTINATION lib)
+
+# TODO: A more generic way to list XPCOM components written in JS
+set(COMP_DEST "${CMAKE_CURRENT_BINARY_DIR}/components")
+add_custom_command(
+    OUTPUT ${COMP_DEST}/nsEstEIDPrivate.js
+    COMMAND ${CP} nsEstEIDPrivate.js ${COMP_DEST}
+    DEPENDS ${COMP_DEST}/nsIEstEIDPrivate.xpt
+    DEPENDS components/nsEstEIDPrivate.js
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/components
+)
+
+# Create directories
+add_custom_target( xpi-stage
+	COMMAND ${MKDIR} chrome
+	COMMAND ${MKDIR} components
+	COMMAND ${MKDIR} plugins
+)
+
+set(CHROME_JAR "${PROJECT_BINARY_DIR}/chrome/esteid.jar")
+add_custom_target( xpi-jar
+	COMMAND ${RM} ${CHROME_JAR}
+	COMMAND zip -pr ${CHROME_JAR} content/* locale/* skin/* -x '*/.svn/*'
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/chrome
+)
+
+add_dependencies( xpi-jar xpi-stage)
+
+# Full path of the library, including file name
+get_target_property(ESTEID_LIB esteid LOCATION)
+get_target_property(NPESTEID_LIB npesteid LOCATION)
+
+# Build the XPI
+add_custom_target( xpi ALL
+	DEPENDS esteid
+	DEPENDS npesteid
+	DEPENDS ${PROJECT_BINARY_DIR}/components/nsEstEIDPrivate.js
+	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
+	DEPENDS chrome.manifest
+	COMMAND ${RM} chrome.manifest
+	COMMAND ${CP} ${PROJECT_SOURCE_DIR}/chrome.manifest .
+	COMMAND ${CP} ${ESTEID_LIB} components/
+	COMMAND ${CP} ${NPESTEID_LIB} plugins/
+	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
+	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
+                chrome/ components/ plugins/ install.rdf chrome.manifest
+	VERBATIM
+)
+add_dependencies( xpi xpi-jar)
+add_dependencies( xpi jsesteid)
+
+add_custom_target(runff
+	DEPENDS run-in-ff.sh
+	COMMAND ${PROJECT_SOURCE_DIR}/run-in-ff.sh esteid-${PROJECT_VERSION}.xpi
+)
+add_dependencies(runff xpi)
+
+add_custom_target(runtb
+	DEPENDS run-in-tb.sh
+	COMMAND ${PROJECT_SOURCE_DIR}/run-in-tb.sh esteid-${PROJECT_VERSION}.xpi
+)
+add_dependencies(runtb xpi)
