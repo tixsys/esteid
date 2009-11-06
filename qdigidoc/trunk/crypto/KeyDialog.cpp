@@ -111,10 +111,12 @@ KeyAddDialog::KeyAddDialog( CryptoDoc *_doc, QWidget *parent )
 	setAttribute( Qt::WA_DeleteOnClose );
 	setWindowFlags( Qt::Dialog );
 
-	connect( buttonBox->addButton( tr("Add cert from card"), QDialogButtonBox::ActionRole ),
-		SIGNAL(clicked()), SLOT(addCardCert()) );
+	cardButton = buttonBox->addButton( tr("Add cert from card"), QDialogButtonBox::ActionRole );
+	connect( cardButton, SIGNAL(clicked()), SLOT(addCardCert()) );
 	connect( buttonBox->addButton( tr("Add cert from file"), QDialogButtonBox::ActionRole ),
 		SIGNAL(clicked()), SLOT(addFile()) );
+	connect( doc, SIGNAL(dataChanged()), SLOT(enableCardCert()) );
+	enableCardCert();
 
 	skView->header()->setStretchLastSection( false );
 	skView->header()->setResizeMode( 0, QHeaderView::Stretch );
@@ -195,6 +197,8 @@ void KeyAddDialog::addKeys( const QList<CKey> &keys )
 	Q_EMIT updateView();
 	keyAddStatus->setText( status ? tr("Keys added successfully") : tr("Failed to add keys") );
 }
+
+void KeyAddDialog::enableCardCert() { cardButton->setDisabled( doc->authCert().isNull() ); }
 
 void KeyAddDialog::disableSearch( bool disable )
 {

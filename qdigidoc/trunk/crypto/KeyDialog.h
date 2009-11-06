@@ -80,6 +80,7 @@ private Q_SLOTS:
 	void addCardCert();
 	void addFile();
 	void addKeys( const QList<CKey> &keys );
+	void enableCardCert();
 	void on_add_clicked();
 	void on_remove_clicked();
 	void on_search_clicked();
@@ -93,6 +94,7 @@ private:
 	void loadHistory();
 	void saveHistory();
 
+	QPushButton *cardButton;
 	CryptoDoc	*doc;
 	IKValidator *validator;
 	LdapSearch	*ldap;
