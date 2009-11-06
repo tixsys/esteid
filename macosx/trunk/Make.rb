@@ -211,16 +211,13 @@ class Application
 				
 				# Clean-up extension? TODO: This should be removed
 				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
-				run_command "cp -R  #{@options.mozappid}/components/Release/* #{@options.mozappid}/components/"
-				run_command "rm -rf #{@options.mozappid}/components/Release"
 				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin"
 				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents"
 				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS"
 				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/Resources"
 				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
-				run_command "cp -R  #{@options.mozappid}/plugins/Release/* #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
+				run_command "mv -f  #{@options.mozappid}/plugins/*.dylib #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
 				run_command "cp ../plugins/mac/Info.plist #{@options.mozappid}/plugins/npesteid.plugin/Contents/"
-				run_command "rm -rf #{@options.mozappid}/plugins/Release"
 				
 				puts "Copying Mozilla extension..." if @options.verbose
 				FileUtils.cp_r(@options.mozappid, binaries)
