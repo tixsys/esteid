@@ -113,7 +113,7 @@ static NPError fillNetscapeFunctionTable(NPNetscapeFuncs* aNPNFuncs)
 //
 
 #ifdef XP_WIN
-NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs)
+NPError OSCALL NP_Initialize(NPNetscapeFuncs *aNPNFuncs)
 {
   NPError rv = fillNetscapeFunctionTable(aNPNFuncs);
   if (rv != NPERR_NO_ERROR)
@@ -122,11 +122,38 @@ NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs)
   return NS_PluginInitialize();
 }
 
-NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* aNPPFuncs)
+NPError OSCALL NP_GetEntryPoints(NPPluginFuncs *aNPPFuncs)
 {
   return fillPluginFunctionTable(aNPPFuncs);
 }
 #endif // XP_WIN
+
+#ifdef XP_MACOSX
+extern "C" NPError NP_GetEntryPoints(NPPluginFuncs *aNPPFuncs)
+{
+  return fillPluginFunctionTable(aNPPFuncs);
+}
+
+extern "C" NPError NP_Initialize(NPNetscapeFuncs *aNPNFuncs)
+{
+  NPError rv = fillNetscapeFunctionTable(aNPNFuncs);
+  
+  if (rv != NPERR_NO_ERROR)
+    return rv;
+
+  return NS_PluginInitialize();
+}
+
+extern "C" char *NP_GetMIMEDescription(void)
+{
+  return NPP_GetMIMEDescription();
+}
+
+extern "C" NPError NP_GetValue(void *future, NPPVariable aVariable, void *aValue)
+{
+  return NS_PluginGetValue(aVariable, aValue);
+}
+#else
 
 #ifdef XP_UNIX
 NPError NP_Initialize(NPNetscapeFuncs* aNPNFuncs, NPPluginFuncs* aNPPFuncs)
@@ -153,41 +180,5 @@ NPError NP_GetValue(void *future, NPPVariable aVariable, void *aValue)
 }
 #endif // XP_UNIX
 
-#ifdef XP_MAC
-short gResFile; // Refnum of the plugin's resource file
+#endif // XP_MACOSX
 
-NPError Private_Initialize(void)
-{
-  NPError rv = NS_PluginInitialize();
-  return rv;
-}
-
-void Private_Shutdown(void)
-{
-  NS_PluginShutdown();
-  __destroy_global_chain();
-}
-
-NPError main(NPNetscapeFuncs* aNPNFuncs, NPPluginFuncs* aNPPFuncs, NPP_ShutdownUPP* aUnloadUpp)
-{
-  NPError rv = NPERR_NO_ERROR;
-
-  if (!aUnloadUpp)
-    rv = NPERR_INVALID_FUNCTABLE_ERROR;
-
-  if (rv == NPERR_NO_ERROR)
-    rv = fillNetscapeFunctionTable(aNPNFuncs);
-
-  if (rv == NPERR_NO_ERROR) {
-    // defer static constructors until the global functions are initialized.
-    __InitCode__();
-    rv = fillPluginFunctionTable(aNPPFuncs);
-  }
-
-  *aUnloadUpp = NewNPP_ShutdownProc(Private_Shutdown);
-  gResFile = CurResFile();
-  rv = Private_Initialize();
-
-  return rv;
-}
-#endif // XP_MAC
