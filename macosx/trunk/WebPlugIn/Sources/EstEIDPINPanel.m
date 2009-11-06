@@ -218,7 +218,14 @@ static NSString *EstEIDPINPanelShowsDetailsKey = @"EstEIDPINPanelShowsDetails";
 
 - (IBAction)showOptions:(id)sender
 {
-	// TODO: Download the document? Display a contextual menu?
+	// Just download the file at the moment
+	NSURL *url = [NSURL URLWithString:[self URL]];
+	
+	if(url) {
+		[[NSWorkspace sharedWorkspace] openURL:url];
+	} else {
+		NSBeep();
+	}
 }
 
 - (IBAction)toggleDetails:(id)sender

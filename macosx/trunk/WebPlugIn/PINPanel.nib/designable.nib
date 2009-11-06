@@ -389,7 +389,7 @@
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="402861088"/>
 												<reference key="NSControlView" ref="385832746"/>
-												<int key="NSButtonFlags">918831359</int>
+												<int key="NSButtonFlags">113524991</int>
 												<int key="NSButtonFlags2">38</int>
 												<object class="NSImage" key="NSNormalImage">
 													<int key="NSImageFlags">549650432</int>
