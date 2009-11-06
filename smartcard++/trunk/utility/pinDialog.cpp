@@ -85,7 +85,7 @@ LRESULT pinDialogPriv::on_command(WPARAM wParam, LPARAM lParam) {
 	switch (LOWORD(wParam)) {
 		case IDC_PININPUT: {
 			if (HIWORD(wParam) == EN_CHANGE) {
-				GetDlgItemTextA(m_hwnd,IDC_PININPUT,&m_buffer[0],m_buffer.size());
+				GetDlgItemTextA(m_hwnd,IDC_PININPUT,&m_buffer[0],(int)m_buffer.size());
 				if (lstrlenA(&m_buffer[0]) >= (LONG ) m_dlg.m_minLen) {
 					EnableWindow(GetDlgItem(m_hwnd,IDOK),TRUE);
 					SendMessage(m_hwnd,DM_SETDEFID,IDOK,0);
@@ -99,7 +99,7 @@ LRESULT pinDialogPriv::on_command(WPARAM wParam, LPARAM lParam) {
 			}
 		case IDOK:
 		case IDCANCEL:
-			GetDlgItemTextA(m_hwnd,IDC_PININPUT,&m_buffer[0],m_buffer.size());
+			GetDlgItemTextA(m_hwnd,IDC_PININPUT,&m_buffer[0],(int)m_buffer.size());
 			EndDialog (m_hwnd,wParam );
 			return TRUE;
 		}
