@@ -80,7 +80,7 @@ void PCSCManager::construct()
 	try {
 		pSCardGetAttrib = (LONG(SCAPI *)(SCARDHANDLE,DWORD,LPBYTE,LPDWORD))
 			mLibrary.getProc("SCardGetAttrib");
-	} catch(std::runtime_error &e) {
+	} catch(std::runtime_error) {
 		pSCardGetAttrib = NULL; // proc not found, Old PC/SC API
 	}
 	pSCardConnect = (LONG(SCAPI *)(SCARDCONTEXT ,CSTRTYPE ,DWORD ,DWORD ,SCARDHANDLE *,LPDWORD ))
@@ -402,9 +402,9 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 		reconnect(pc, true);
 	}
 	
-	int offset = 0, count = 0;
 	BYTE sbuf[256], rbuf[256];
-	DWORD ioctl = 0, ioctl2 = 0, rlen=sizeof(rbuf);
+	DWORD ioctl = 0, ioctl2 = 0, rlen=sizeof(rbuf), count = 0;
+	size_t offset = 0;
 	
 	// build PC/SC block. FIXME: hardcoded for EstEID!!!
 	if (verify) {
@@ -423,7 +423,7 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 		pin_verify->bMsgIndex = 0x00;
 
 		/* Set proper command sizes */
-		pin_verify->ulDataLength = cmd.size();
+		pin_verify->ulDataLength = (uint32_t)cmd.size();
 		count = sizeof(PIN_VERIFY_STRUCTURE) +
 			pin_verify->ulDataLength - 1;
 		offset = (byte *)(pin_verify->abData) - (byte *)pin_verify;
@@ -450,14 +450,14 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 		pin_modify->bMsgIndex3 = 0x02;
 
 		/* Set proper command sizes */
-		pin_modify->ulDataLength = cmd.size();
+		pin_modify->ulDataLength = (uint32_t)cmd.size();
 		count = sizeof(PIN_MODIFY_STRUCTURE) +
 			pin_modify->ulDataLength - 1;
 		offset = (byte *)pin_modify->abData - (byte *)pin_modify;
 	}
 
 	/* Copy APDU itself */
-	for (uint i = 0; i < cmd.size(); i++)
+	for (size_t i = 0; i < cmd.size(); i++)
 		sbuf[offset + i] = cmd[i];
 
 	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, count,
