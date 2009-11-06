@@ -205,7 +205,7 @@ class Application
 			run_command 'mkdir build'
 			
 			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386" ..'
+				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
 				run_command 'xcodebuild -project xpi.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
 				run_command "ditto -xk *.xpi #{@options.mozappid}"
 				
