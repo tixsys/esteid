@@ -231,13 +231,13 @@ if(WIN32)
     set(WIN_LIBRARIES ws2_32)
 endif(WIN32)
 
-add_library(esteid SHARED ${esteid_module_SRCS})
+add_library(xpesteid SHARED ${esteid_module_SRCS})
 add_library(npesteid SHARED ${esteid_plugin_SRCS} ${esteid_plugin_WIN})
-add_dependencies(esteid xpi-stage)
+add_dependencies(xpesteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
-target_link_libraries(esteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES})
+target_link_libraries(xpesteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES})
 target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
-set_target_properties(esteid PROPERTIES
+set_target_properties(xpesteid PROPERTIES
 				PREFIX ""
 				LINK_FLAGS "${XPCOM_LINK_FLAGS}"
 				SKIP_BUILD_RPATH true)
@@ -274,19 +274,19 @@ add_custom_target( xpi-jar
 add_dependencies( xpi-jar xpi-stage)
 
 # Full path of the library, including file name
-get_target_property(ESTEID_LIB esteid LOCATION)
+get_target_property(XPESTEID_LIB xpesteid LOCATION)
 get_target_property(NPESTEID_LIB npesteid LOCATION)
 
 # Build the XPI
 add_custom_target( xpi ALL
-	DEPENDS esteid
+	DEPENDS xpesteid
 	DEPENDS npesteid
 	DEPENDS ${PROJECT_BINARY_DIR}/components/nsEstEIDPrivate.js
 	DEPENDS ${PROJECT_BINARY_DIR}/install.rdf
 	DEPENDS chrome.manifest
 	COMMAND ${RM} chrome.manifest
 	COMMAND ${CP} ${PROJECT_SOURCE_DIR}/chrome.manifest .
-	COMMAND ${CP} ${ESTEID_LIB} components/
+	COMMAND ${CP} ${XPESTEID_LIB} components/
 	COMMAND ${CP} ${NPESTEID_LIB} plugins/
 	COMMAND ${RM} esteid-${PROJECT_VERSION}.xpi
 	COMMAND zip -pr esteid-${PROJECT_VERSION}.xpi
