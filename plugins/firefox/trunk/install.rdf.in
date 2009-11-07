@@ -11,9 +11,9 @@
         <em:version>@PROJECT_VERSION@</em:version>
         <em:description>Estonian ID Card support</em:description>
         <em:iconURL>chrome://esteid/skin/id-32.png</em:iconURL>
+        <em:optionsURL>chrome://esteid/content/prefs.xul</em:optionsURL>
         <!--
         <em:updateURL>https://id.eesti.ee/firefox/update.rdf</em:updateURL>
-        <em:optionsURL>chrome://esteid/content/prefs.xul</em:optionsURL>
         -->
 
         <!-- Firefox -->
