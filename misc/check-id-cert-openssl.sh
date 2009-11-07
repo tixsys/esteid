@@ -52,6 +52,6 @@ echo "Using certs: $ca $resp"
 echo "Sending OCSP request to $url"
 
 openssl ocsp	-issuer "$CRTPATH/$ca" \
-		-cert $tmpf \
-		-url $url \
+		-cert "$tmpf" \
+		-url "$url" \
 		-VAfile "$CRTPATH/$resp"
