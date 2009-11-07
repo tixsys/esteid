@@ -51,7 +51,9 @@ function LoadEstEID() {
         try {
             var com = document.getElementById('eidplugin');
 
-            esteid_log("Plugin Version: " + com.getVersion() + "\n");
+            if(!eidui.isConfigured)
+                esteid_log("Plugin Version: " + com.getVersion() + "\n");
+
             var elt = document.getElementById('esteidbrowserpanel');
 	    elt.setAttribute("tooltiptext", "EstEID plugin " + com.getVersion());
         } catch (anError) {
@@ -68,7 +70,8 @@ function LoadEstEID() {
     }
 
     try {
-        ConfigureEstEID();
+        if(!eidui.isConfigured)
+            ConfigureEstEID();
     } catch (anError) {
         esteid_error(anError);
     }
@@ -77,6 +80,7 @@ function LoadEstEID() {
     else        showNormalIcon();
 
     errflag = false;
+    eidui.isConfigured = true;
 }
 
 var eidui = Components.classes["@id.eesti.ee/esteid-private;1"]

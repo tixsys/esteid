@@ -129,23 +129,16 @@ function makeQI(interfaceNames) {
 
 var nsEstEIDPrivateInterface_list =
     [Components.interfaces.nsIEstEIDPrivate,
-//     Components.interfaces.nsISecurityCheckedComponent,
      Components.interfaces.nsIClassInfo];
 
 function nsEstEIDPrivate() {
-/*  try {
-    this._private = Components.classes["@id.eesti.ee/esteidprivate;1"]
-                  .createInstance(Components.interfaces.nsIEstEIDPrivate);
-
-    var JSONtext = this._private.getPersonalDataAttributeNames();
-    if(JSONtext != null)
-      this._personalDataAttributeNames = eval('(' + JSONtext + ')');
-
-  } catch (anError) {
-    dump("ERROR: " + anError);
-  }
-*/
-  dump("EsteidPrivate created\n");
+    dump("nsEstEIDPrivate: EsteidPrivate created\n");
+    this._prefs = Components.classes["@mozilla.org/preferences-service;1"]
+                            .getService(Components.interfaces.nsIPrefService)
+                            .getBranch("esteid.");
+    this._prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    this._prefs.addObserver("", this, false);
+    this._loadWhitelistFromPrefs();
 }
 
 nsEstEIDPrivate.prototype = {
@@ -166,29 +159,14 @@ nsEstEIDPrivate.prototype = {
   },
   getHelperForLanguage: function(count) { return null; },
 
-/*
-  // nsISecurityCheckedComponent
-  canCreateWrapper: function(aIID) {
-    return "AllAccess";
-  },
-  canCallMethod: function(aIID, methodName) {
-    dump("canCallMethod: " + methodName + "\n");
-    return "AllAccess";
-  },
-  canGetProperty: function(aIID, propertyName) {
-    dump("canGetProperty: " + propertyName + "\n");
-    return "AllAccess";
-  },
-  canSetProperty: function(aIID, propertyName) {
-    return "NoAccess";
-  },
-*/
-
   /* Phew! Now we can start to do USEFUL things. About time! */
-  _log: "",
-  _wl: ["www.swedbank.ee"],
+  wl: "id.swedbank.ee,id.seb.ee",
+  log: "",
+  isConfigured: false,
+
   _sdlg: null,
   _nbIcon: "chrome://esteid/skin/id-16.png",
+  _prefs: null,
 
   _getNotificationBox: function(aWindow) {
     /* https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
@@ -205,7 +183,6 @@ nsEstEIDPrivate.prototype = {
     return nb;
   },
 
-
   _urlToHost: function(url) {
     // We only support https URLs so we can parse the URL like this
     var re = new RegExp("^https://(.*?)/");
@@ -216,23 +193,45 @@ nsEstEIDPrivate.prototype = {
       return null;
   },
 
+  _loadWhitelistFromPrefs: function() {
+      if(!this._prefs) return;
+      try {
+          this.wl = this._prefs.getCharPref("whitelist");
+      } catch(e) { }
+  },
+
   _addToWhitelist: function(url) {
     var host = this._urlToHost(url);
-    if(host) this._wl.push(host);
+    var _wl = this.wl.split(",");
+    if(host) {
+        _wl.push(host);
+        this.setWhitelist(_wl.join(","));
+    }
   },
 
   isWhiteListed: function(url) {
-    var wl = this._wl;
     var host = this._urlToHost(url);
 
     if(!host)
       return false;
 
-    for(var i = 0; i < wl.length; i++)
-      if(wl[i] == host)
+    var _wl = this.wl.split(",");
+
+    for(var i = 0; i < _wl.length; i++)
+      if(_wl[i] == host)
         return true;
 
     return false;
+  },
+
+  setWhitelist: function(wl) {
+      try {
+          this.wl = wl;
+          this._prefs.setCharPref("whitelist", wl);
+      }
+      catch(e) {
+          this.errorMessage("Can't save whitelist: " + e);
+      }
   },
 
   promptForSignPIN: function(aParent, subject, docUrl, docHash, pageUrl,
@@ -268,14 +267,13 @@ nsEstEIDPrivate.prototype = {
       return;
     }
 
-    var params = {wl: this._wl, log: this._log,
-                  host: this._urlToHost(pageUrl), out:null};
+    var params = { host: this._urlToHost(pageUrl), out:null};
     this._sdlg = aParent.openDialog("chrome://esteid/content/prefs.xul",
                        "_blank", "chrome,centerscreen", params);
   },
 
   logMessage: function(msg) {
-    this._log += msg + "\n";
+    this.log += msg + "\n";
   },
 
   debugMessage: function(msg) {
@@ -325,6 +323,16 @@ nsEstEIDPrivate.prototype = {
     }];
     nb.appendNotification(messageString, "esteid-blocked", this._nbIcon,
                           nb.PRIORITY_WARNING_MEDIUM , buttons);
+  },
+  observe: function(subject, topic, data) {
+    if (topic != "nsPref:changed") {
+        return;
+    }
+    switch(data) {
+        case "whitelist":
+            this._loadWhitelistFromPrefs();
+            break;
+     }
   },
   createPluginInstance: function() {
     return Components.classes["@id.eesti.ee/esteid;1"].

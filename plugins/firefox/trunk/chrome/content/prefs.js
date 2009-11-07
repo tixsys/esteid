@@ -1,17 +1,31 @@
 var params = window.arguments[0];
+var eidui = null;
+var sb = null;
+
+function updateUI() {
+  var _wl = eidui.wl.split(",");
+  var elt = document.getElementById('whitelist');
+
+  for(var i = 0; i < _wl.length; i++)
+    elt.appendItem(_wl[i]);
+
+  var elt = document.getElementById('log');
+  elt.value = eidui.log;
+}
 
 function onLoad() {
-  var elt = document.getElementById('whitelist');
-  for(var i = 0; i < params.wl.length; i++)
-    elt.appendItem(params.wl[i]);
+  var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"]
+                      .getService(Components.interfaces.nsIStringBundleService);
+  eidui = Components.classes["@id.eesti.ee/esteid-private;1"]
+                    .getService(Components.interfaces.nsIEstEIDPrivate);
+  sb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
+
+  updateUI();
 
   if(params.host) {
     var elt = document.getElementById('addhost');
     elt.value = params.host;
   }
-
-  var elt = document.getElementById('log');
-  elt.value = params.log;
 }
 
 function removeSelected() {
@@ -32,15 +46,35 @@ function enableDelBtn() {
 function addHost() {
   var elt = document.getElementById('addhost');
   var wl = document.getElementById('whitelist');
-  if(elt.value) wl.appendItem(elt.value);
-  elt.value = '';
+
+  if(elt.value) {
+    var re1 = new RegExp("^https://(.*?)(/|$)");
+    var m = re1.exec(elt.value);
+    if(m) {
+        wl.appendItem(m[1]);
+        elt.value = '';
+    }
+    else {
+      var re2 = new RegExp("^[^/;:,!#$%^&*()_=?]+$");
+      var m = re2.exec(elt.value);
+      if(m) {
+          wl.appendItem(elt.value);
+          elt.value = '';
+      }
+      else {
+          alert(sb.GetStringFromName("invalidhost"));
+      }
+    }
+  }
 }
 
 function doOK() {
   var wl = document.getElementById('whitelist');
-  params.wl.length = 0;
+  var _wl = [];
   
   for(var i = 0; i < wl.itemCount; i++) {
-    params.wl.push(wl.getItemAtIndex(i).label);
+    _wl.push(wl.getItemAtIndex(i).label);
   }
+
+  eidui.setWhitelist(_wl.join(","));
 }
