@@ -145,6 +145,7 @@ void QSigner::readCert()
 		{
 			d->sign = cert;
 			d->cards[d->selectedCard] = i;
+			d->slot = slot;
 			break;
 		}
 	}
@@ -198,20 +199,8 @@ void QSigner::selectCard( const QString &card )
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
 {
 	d->m.lock();
-	if( d->sign.isNull() )
+	if( d->sign.isNull() || !d->slot || !d->slot->token )
 		throwException( tr("Signing certificate is not selected."), 0, Exception::NoException, __LINE__ );
-
-	if( d->slotCount )
-	{
-		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
-		d->slotCount = 0;
-	}
-	if( !d->cards.contains( d->selectedCard ) ||
-		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
-		d->cards[d->selectedCard] >= d->slotCount ||
-		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
-		!d->slot->token )
-		throwException( tr("Failed to login token"), ERR_get_error(), Exception::NoException, __LINE__ );
 
 	if( d->slot->token->loginRequired )
 	{
