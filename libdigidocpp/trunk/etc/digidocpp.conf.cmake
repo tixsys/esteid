@@ -20,7 +20,6 @@
     <!--<param name="pkcs12.pass"></param>-->
 
     <!-- OCSP responder url. Used for validating signing certificates and generating BDoc-TM signatures-->
-    <!-- open ip 91.198.206.66 -->
     <ocsp issuer="ESTEID-SK">
         <url>http://ocsp.sk.ee</url>
         <cert>certs/ESTEID-SK OCSP 2005.crt</cert>
