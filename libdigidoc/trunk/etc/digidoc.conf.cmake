@@ -4,7 +4,7 @@
 #--------------------------------------------------
 
 [ca]
-CA_CERT_PATH=@DIGIDOC_CERTS_PATH@
+CA_CERT_PATH=@DIGIDOC_DATA_DIR@/certs
 CA_CERTS=7
 CA_CERT_1=JUUR-SK.crt
 CA_CERT_1_CN=Juur-SK

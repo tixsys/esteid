@@ -14,7 +14,7 @@ else( WIN32 )
     set( PKCS11_MODULE "opensc-pkcs11.so" )
 endif( WIN32 )
 
-set( DIGIDOC_CERTS_PATH "${SHARE_INSTALL_PREFIX}/libdigidoc/certs" )
+set( DIGIDOC_DATA_DIR "${SHARE_INSTALL_PREFIX}/libdigidoc")
 set( DIGIDOC_INCLUDE_DIR "${INCLUDE_INSTALL_DIR}/libdigidoc" )
 set( DIGIDOC_VERSION "2.6.0" )
 
