@@ -12,7 +12,7 @@ do
 	fi
 done
 
-/usr/bin/security add-trusted-cert -d -k /System/Library/Keychains/SystemRootCertificates.keychain /usr/local/share/libdigidoc/certs/sk-root.pem
+/usr/bin/security add-trusted-cert -d -k /System/Library/Keychains/SystemRootCertificates.keychain /usr/local/share/libdigidoc/certs/JUUR-SK.crt
 
 # Clear tokend cache
 rm -rf /var/db/TokenCache/tokens/*
