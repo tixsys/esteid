@@ -45,6 +45,9 @@ if [ -z "$ca" ]; then
 	exit 2
 fi
 
+echo "$text" | grep '^ *Subject:\|^ *Issuer:'
+echo
+
 echo "Using certs: $ca $resp"
 echo "Sending OCSP request to $url"
 
