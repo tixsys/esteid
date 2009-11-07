@@ -4,10 +4,12 @@
 /Applications/Utilities/EstEIDSU.app/Contents/Resources/agent --launchd enable /Library/LaunchAgents/org.esteid.updater.plist
 
 # Install certificates
-for f in /usr/local/share/libdigidoc/certs/*.pem
+for f in /usr/local/share/libdigidoc/certs/*.{crt,pem}
 do
-/usr/bin/security import "$f" -k /System/Library/Keychains/SystemCACertificates.keychain
-/usr/bin/security import "$f" -k /System/Library/Keychains/SystemRootCertificates.keychain
+	if test -f "$f"; then
+		/usr/bin/security import "$f" -k /System/Library/Keychains/SystemCACertificates.keychain
+		/usr/bin/security import "$f" -k /System/Library/Keychains/SystemRootCertificates.keychain
+	fi
 done
 
 /usr/bin/security add-trusted-cert -d -k /System/Library/Keychains/SystemRootCertificates.keychain /usr/local/share/libdigidoc/certs/sk-root.pem
