@@ -408,7 +408,7 @@ void MainWindow::parseLink( const QString &url )
 		QUrl url;
 		url.setScheme( "mailto" );
 		url.addQueryItem( "subject", QFileInfo( doc->fileName() ).fileName() );
-		url.addQueryItem( "attachment", doc->fileName() );
+		url.addQueryItem( "attachment", QFileInfo( doc->fileName() ).absoluteFilePath() );
 		QDesktopServices::openUrl( url );
 	}
 	else if( url == "saveAll" )
