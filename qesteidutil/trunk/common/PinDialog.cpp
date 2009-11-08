@@ -44,6 +44,7 @@ PinDialog::PinDialog( PinType type, const QString &title, QWidget *parent )
 
 void PinDialog::init( PinType type, const QString &title )
 {
+	setWindowModality( Qt::ApplicationModal );
 	setWindowTitle( title );
 
 	QLabel *label = new QLabel( this );
