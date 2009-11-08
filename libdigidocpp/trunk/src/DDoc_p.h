@@ -1,7 +1,5 @@
 #pragma once
 
-#include "DDoc.h"
-
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocGen.h>
 
@@ -63,6 +61,8 @@ struct DocumentDDoc
 {
 	std::string filename, mime;
 };
+
+class SignatureDDOC;
 
 class DDocPrivate
 {

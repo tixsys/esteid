@@ -1,4 +1,5 @@
 #include "DDoc_p.h"
+#include "DDoc.h"
 
 #include "crypto/cert/X509Cert.h"
 #include "crypto/signer/Signer.h"
