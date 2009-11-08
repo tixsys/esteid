@@ -67,10 +67,13 @@ std::string digidoc::SignatureTM::getProducedAt() const
     const xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional &u = unsignedSignatureProperties();
     if( !u )
         return "";
-    const xades::CompleteRevocationRefsType::OCSPRefsOptional &refs = u->completeRevocationRefs()[0].oCSPRefs();
-    if( !refs )
+    const xades::UnsignedSignaturePropertiesType::CompleteRevocationRefsSequence &refs = u->completeRevocationRefs();
+    if( refs.empty() )
         return "";
-    return util::date::xsd2string(refs->oCSPRef()[0].oCSPIdentifier().producedAt());
+    const xades::CompleteRevocationRefsType::OCSPRefsOptional &ref = refs[0].oCSPRefs();
+    if( !ref )
+        return "";
+    return util::date::xsd2string(ref->oCSPRef()[0].oCSPIdentifier().producedAt());
 }
 
 std::string digidoc::SignatureTM::getResponderID() const
