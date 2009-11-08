@@ -1,7 +1,11 @@
 #pragma once
-extern "C" {
-#include <cryptoki.h>
-}
+
+#include "pkcs11.h"
+
+#ifndef CK_DECLARE_FUNCTION
+#define CK_DECLARE_FUNCTION CK_DEFINE_FUNCTION
+#endif
+
 #include <vector>
 
 #define NOCOPY(ptype) private: ptype(const ptype &o); const ptype &operator=(const ptype &o)

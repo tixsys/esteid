@@ -27,7 +27,6 @@ if(UNIX AND NOT APPLE)
 endif(UNIX AND NOT APPLE)
 
 include_directories(
-    pkcs11
     ${CMAKE_SOURCE_DIR}
 )
 
