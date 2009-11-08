@@ -21,6 +21,8 @@ SCError::SCError(long err) : runtime_error("smart card API error"),error(err)
 			buf << "Another application is using the card"; break;
 		case 0x8010000f : //SCARD_E_PROTO_MISMATCH
 			buf << "The requested protocols are incompatible with the protocol currently in use with the smart card"; break;
+		case 0x80100066 : // SCARD_W_UNRESPONSIVE_CARD
+			buf << "The card is not responding to reset"; break;
 		default:
 			buf << "exception:'" << runtime_error::what() << 
 				"' code:'0x" <<std::hex << std::setfill('0') <<
