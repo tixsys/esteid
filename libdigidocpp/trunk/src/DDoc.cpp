@@ -1,5 +1,4 @@
 #include "DDoc_p.h"
-#include "DDoc.h"
 
 #include "crypto/cert/X509Cert.h"
 #include "crypto/signer/Signer.h"
@@ -393,7 +392,8 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
         loadFile();
 }
 
-void DDoc::loadFile() {
+void DDoc::loadFile()
+{
 	try
 	{
 		util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
@@ -416,14 +416,11 @@ void DDoc::loadFile() {
 	for( int i = 0; i < d->doc->nDataFiles; ++i)
 	{
 		DataFile *data = d->doc->pDataFiles[i];
-		std::ostringstream file;
-		file << d->tmpFolder.data() << data->szFileName;
-		free( data->szFileName );
-		data->szFileName = strdup( file.str().data() );
+		DocumentDDoc doc = { d->tmpFolder + data->szFileName, data->szMimeType };
 		if ( !strcmp( data->szContentType, CONTENT_HASHCODE ) )
 			continue;
 		int err = d->f_ddocSaxExtractDataFile( d->doc, d->filename.c_str(),
-			file.str().data(), data->szId, CHARSET_UTF_8 );
+			doc.filename.c_str(), data->szId, CHARSET_UTF_8 );
 		if( err != ERR_OK )
 		{
 			if( d->doc )
@@ -431,6 +428,7 @@ void DDoc::loadFile() {
 			d->doc = NULL;
 			d->throwError( err, "Failed to exctract files", __LINE__ );
 		}
+		d->documents.push_back( doc );
 	}
 
 	d->loadSignatures();
@@ -449,6 +447,8 @@ void DDoc::addDocument( const Document &document ) throw(BDocException)
 	err = d->f_calculateDataFileSizeAndDigest(
 		d->doc, data->szId, document.getPath().c_str(), DIGEST_SHA1 );
 	d->throwError( err, "Failed calculate file digest and size", __LINE__ );
+	DocumentDDoc doc = { document.getPath(), document.getMediaType() };
+	d->documents.push_back( doc );
 }
 
 unsigned int DDoc::documentCount() const
@@ -466,7 +466,7 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		d->throwError( s.str(), __LINE__ );
 	}
 
-	return Document( d->doc->pDataFiles[id]->szFileName, d->doc->pDataFiles[id]->szMimeType );
+	return Document( d->documents[id].filename, d->documents[id].mime );
 }
 
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
@@ -504,6 +504,7 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
 	d->throwError( err, "Failed to delete file", __LINE__ );
+	d->documents.erase( d->documents.begin() + id );
 }
 
 void DDoc::removeSignature( unsigned int id ) throw(BDocException)

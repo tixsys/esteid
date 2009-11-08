@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DDoc.h"
+
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocGen.h>
 
@@ -57,7 +59,10 @@ private:
 #endif
 };
 
-class SignatureDDOC;
+struct DocumentDDoc
+{
+	std::string filename, mime;
+};
 
 class DDocPrivate
 {
@@ -75,6 +80,7 @@ public:
 
 	void loadSignatures();
 	std::vector<SignatureDDOC*> signatures;
+	std::vector<DocumentDDoc> documents;
 
 	void throwDocOpenError( int line ) const throw(BDocException);
 	void throwError( const std::string &msg, int line ) const throw(BDocException);
