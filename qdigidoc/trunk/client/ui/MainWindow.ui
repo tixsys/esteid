@@ -1001,6 +1001,9 @@ p, li { white-space: pre-wrap; }
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
+              <property name="spacing">
+               <number>2</number>
+              </property>
               <item>
                <spacer name="viewSignaturesSpacer">
                 <property name="orientation">

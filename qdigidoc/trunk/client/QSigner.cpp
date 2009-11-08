@@ -114,6 +114,7 @@ void QSigner::read()
 	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
 	{
 		d->sign = QSslCertificate();
+		d->slot = 0;
 		d->selectedCard.clear();
 	}
 
