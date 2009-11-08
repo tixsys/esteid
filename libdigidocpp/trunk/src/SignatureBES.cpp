@@ -41,6 +41,8 @@ digidoc::SignatureBES::SignatureBES(const std::string& path, BDoc& bdoc) throw(S
     checkIfWellFormed();
 }
 
+digidoc::SignatureBES::~SignatureBES() {}
+
 /**
  * @return returns signature mimetype.
  */

@@ -39,8 +39,12 @@ std::string digidoc::SignatureTM::getMediaType() const
 
 digidoc::X509Cert digidoc::SignatureTM::getOCSPCertificate() const
 {
+    const xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional &u = unsignedSignatureProperties();
+    if( !u )
+        return X509Cert();
+
     const xades::UnsignedSignaturePropertiesType::CertificateValuesType::EncapsulatedX509CertificateSequence &certs =
-        unsignedSignatureProperties()->certificateValues()[0].encapsulatedX509Certificate();
+        u->certificateValues()[0].encapsulatedX509Certificate();
     xades::UnsignedSignaturePropertiesType::CertificateValuesType::EncapsulatedX509CertificateSequence::const_iterator i = certs.begin();
 
     try
@@ -60,10 +64,13 @@ digidoc::X509Cert digidoc::SignatureTM::getOCSPCertificate() const
 
 std::string digidoc::SignatureTM::getProducedAt() const
 {
-    const xades::OCSPIdentifierType::ProducedAtType &producedAt =
-        unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()
-        ->oCSPRef()[0].oCSPIdentifier().producedAt();
-    return util::date::xsd2string(producedAt);
+    const xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional &u = unsignedSignatureProperties();
+    if( !u )
+        return "";
+    const xades::CompleteRevocationRefsType::OCSPRefsOptional &refs = u->completeRevocationRefs()[0].oCSPRefs();
+    if( !refs )
+        return "";
+    return util::date::xsd2string(refs->oCSPRef()[0].oCSPIdentifier().producedAt());
 }
 
 std::string digidoc::SignatureTM::getResponderID() const
@@ -447,8 +454,10 @@ void digidoc::SignatureTM::getOCSPResponseValue(std::vector<unsigned char>& data
 void digidoc::SignatureTM::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri)
     const throw(SignatureException)
 {
-    xades::UnsignedSignaturePropertiesType::CompleteRevocationRefsSequence crrSeq =
-        unsignedSignatureProperties()->completeRevocationRefs();
+    const xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional &u = unsignedSignatureProperties();
+    if( !u )
+        return;
+    xades::UnsignedSignaturePropertiesType::CompleteRevocationRefsSequence crrSeq = u->completeRevocationRefs();
 
     if(!crrSeq.empty())
     {
@@ -481,4 +490,10 @@ void digidoc::SignatureTM::getRevocationOCSPRef(std::vector<unsigned char>& data
 
 digidoc::xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional&
 digidoc::SignatureTM::unsignedSignatureProperties() const
-{ return signature->object()[0].qualifyingProperties()[0].unsignedProperties()->unsignedSignatureProperties(); }
+{
+    xades::QualifyingPropertiesType::UnsignedPropertiesOptional u = signature->object()[0].qualifyingProperties()[0].unsignedProperties();
+    if( u )
+        return u->unsignedSignatureProperties();
+    xades::UnsignedPropertiesType::UnsignedSignaturePropertiesOptional n;
+    return n;
+}

@@ -11,6 +11,7 @@ namespace digidoc
       public:
           SignatureBES(BDoc& bdoc);
           SignatureBES(const std::string& path, BDoc& bdoc) throw(SignatureException);
+          virtual ~SignatureBES();
           virtual std::string getMediaType() const;
           virtual void validateOffline() const throw(SignatureException);
           virtual OCSP::CertStatus validateOnline() const throw(SignatureException);

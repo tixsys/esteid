@@ -31,7 +31,6 @@ namespace digidoc
               unsigned int length;
           };
 
-      public:
           virtual X509* getCert() throw(SignException) = 0;
           virtual void sign(const Digest& digest, Signature& signature) throw(SignException) = 0;
           void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);
