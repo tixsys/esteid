@@ -42,7 +42,7 @@
 class QSignerPrivate
 {
 public:
-	QSignerPrivate(): login(false), terminate(false), handle(0), slotCount(0), loginResult(CKR_OK) {}
+	QSignerPrivate(): login(false), terminate(false), handle(0), slot(0), slotCount(0), loginResult(CKR_OK) {}
 	volatile bool	login, terminate;
 	QMutex			m;
 	QHash<QString,unsigned int>	cards;
@@ -119,16 +119,14 @@ void QSigner::read()
 	}
 
 	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
-	{
-		d->selectedCard = d->cards.keys().first();
-		readCert();
-	}
+		readCert( d->cards.keys().first() );
 
 	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 }
 
-void QSigner::readCert()
+void QSigner::readCert( const QString &card )
 {
+	d->selectedCard = card;
 	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
@@ -171,8 +169,7 @@ void QSigner::run()
 		{
 			if( !d->select.isEmpty() && d->cards.contains( d->select ) )
 			{
-				d->selectedCard = d->select;
-				readCert();
+				readCert( d->select );
 				Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 			}
 			d->select.clear();
