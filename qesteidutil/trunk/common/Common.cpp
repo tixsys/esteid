@@ -165,7 +165,7 @@ void Common::mailTo( const QUrl &url )
 					"-e" << "end run" <<
 					// Commandline arguments
 					url.queryItemValue("attachment") <<
-					url.queryItemValue("attachment"));
+					url.queryItemValue("subject"));
 			}
 			else if(CFStringFind(appPath, CFSTR("Entourage"), 0).location != kCFNotFound)
 			{
