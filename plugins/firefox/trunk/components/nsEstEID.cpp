@@ -172,13 +172,30 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 	char *pin = nsnull;
 	// PRUnichar *pin = nsnull;
 	PRBool retrying = false;
-	PRInt16 tries = 3;
+	PRInt16 tries;
+
+	try {
+		byte puk, pin1, pin2;
+		service->getRetryCounts(puk, pin1, pin2);
+		tries = pin2;
+	} catch(std::runtime_error &e) {
+		ESTEID_ERROR("Error reading PIN counters: %s\n", e.what());
+		tries = 3;
+	}
+
 	while(true) {
 		nsresult rv;
 		// PRUnichar *pass = nsnull;
 		char *pass = nsnull;
 		nsString subject;
 		bool pinpad = false;
+
+		if(tries <= 0) {
+			// This card is locked!
+			ESTEID_ERROR("PIN2 locked\n");
+			eidgui->ShowPinBlockedMessage(parentWin, 2);
+			return NS_ERROR_FAILURE;
+		}
 
 		try {
                 	pinpad = service->hasSecurePinEntry();
@@ -248,7 +265,6 @@ NS_IMETHODIMP nsEstEID::Sign(const char *aHash, const char *url, char **_retval)
 		} else {
 			return rv;
 		}
-
 	}
 
     /*

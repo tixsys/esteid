@@ -25,6 +25,7 @@ interface nsIEstEIDPrivate : nsISupports
                           in boolean retry, in short tries);
   void closePinPrompt(in nsIDOMWindow aParent);
   void showNotification(in nsIDOMWindow aWindow, in AString pageUrl);
+  void showPinBlockedMessage(in nsIDOMWindow aWindow, in short pin);
   void showSettings(in nsIDOMWindow aWindow, in AString pageUrl);
   void   logMessage(in AString msg);
   void debugMessage(in AString msg);

@@ -139,6 +139,9 @@ function nsEstEIDPrivate() {
     this._prefs.QueryInterface(Components.interfaces.nsIPrefBranch2);
     this._prefs.addObserver("", this, false);
     this._loadWhitelistFromPrefs();
+    var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
+                getService(Components.interfaces.nsIStringBundleService);
+    this._esb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
 }
 
 nsEstEIDPrivate.prototype = {
@@ -167,6 +170,7 @@ nsEstEIDPrivate.prototype = {
   _sdlg: null,
   _nbIcon: "chrome://esteid/skin/id-16.png",
   _prefs: null,
+  _esb: null,
 
   _getNotificationBox: function(aWindow) {
     /* https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
@@ -272,6 +276,14 @@ nsEstEIDPrivate.prototype = {
                        "_blank", "chrome,centerscreen", params);
   },
 
+  showPinBlockedMessage: function(aParent, pin) {
+    var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
+                       .getService(Components.interfaces.nsIWindowWatcher);
+    var pr = ww.getNewPrompter(aParent);
+    pr.alert("p1zd3t5", "PIN" + pin + " " +
+             this._esb.GetStringFromName("pinblocked"));
+  },
+
   logMessage: function(msg) {
     this.log += msg + "\n";
   },
@@ -287,9 +299,7 @@ nsEstEIDPrivate.prototype = {
   showNotification: function(aWindow, pageUrl) {
     var jsSucks = this;
     var nb = this._getNotificationBox(aWindow);
-    var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
-                getService(Components.interfaces.nsIStringBundleService);
-    var sb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
+    var sb = this._esb;
 
     /* Remove a previous notification if any (happens with page reloads) */
     var tmp = nb.getNotificationWithValue("esteid-blocked");
