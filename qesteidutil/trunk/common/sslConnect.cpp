@@ -242,9 +242,17 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	SSL_set_bio( ssl, sock, sock );
 	sslError::check( SSL_connect( ssl ) );
 
-#if (OPENSSL_VERSION_NUMBER >= 0x009080cfL)
-	ssl->s3->flags |= SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION;
+	/* FIXME: re-enable SSL renego for newer versions of OpenSSL
+	 *        This is a security vulnerability and must be disabled
+	 *        when .eesti.ee and openxades.org servers upgrade their
+	 *        configuration.
+	 */
+#ifndef SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
+#define SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION	0x0010
 #endif
+	if(SSLeay() >= 0x009080cfL) {
+		ssl->s3->flags |= SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION;
+	}
 
 	return true;
 }
