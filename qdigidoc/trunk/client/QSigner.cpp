@@ -45,7 +45,7 @@ public:
 	QSignerPrivate(): login(false), terminate(false), handle(0), slot(0), slotCount(0), loginResult(CKR_OK) {}
 	volatile bool	login, terminate;
 	QMutex			m;
-	QStringList		cards;
+	QHash<QString,unsigned int> cards;
 	QString			selectedCard, select;
 	QSslCertificate	sign;
 	PKCS11_CTX		*handle;
@@ -108,19 +108,18 @@ void QSigner::read()
 
 		QString serialNumber = QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed();
 		if( !d->cards.contains( serialNumber ) )
-			d->cards << serialNumber;
+			d->cards[serialNumber] = i + 1;
 	}
 
 	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
 	{
 		d->sign = QSslCertificate();
-		d->slot = 0;
 		d->selectedCard.clear();
 	}
-	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 
 	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
-		selectCert( d->cards.first() );
+		selectCert( d->cards.keys().first() );
 }
 
 void QSigner::run()
@@ -167,8 +166,7 @@ void QSigner::selectCert( const QString &card )
 {
 	d->selectedCard = card;
 	d->sign = QSslCertificate();
-	d->slot = 0;
-	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
 	for( unsigned int i = 0; i < d->slotCount; ++i )
@@ -184,18 +182,30 @@ void QSigner::selectCert( const QString &card )
 		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
 		{
 			d->sign = cert;
-			d->slot = slot;
+			d->cards[d->selectedCard] = i;
 			break;
 		}
 	}
-	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 }
 
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
 {
 	d->m.lock();
-	if( d->sign.isNull() || !d->slot || !d->slot->token )
+	if( d->sign.isNull() )
 		throwException( tr("Signing certificate is not selected."), 0, Exception::NoException, __LINE__ );
+
+	if( d->slotCount )
+	{
+		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+		d->slotCount = 0;
+	}
+	if( !d->cards.contains( d->selectedCard ) ||
+		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
+		d->cards[d->selectedCard] >= d->slotCount ||
+		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
+		!d->slot->token )
+		throwException( tr("Failed to login token"), ERR_get_error(), Exception::NoException, __LINE__ );
 
 	if( d->slot->token->loginRequired )
 	{
