@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QUrl>
 
 #include "jscardmanager.h"
 #include "smartcard++/esteid/EstEidCard.h"
@@ -56,4 +57,6 @@ private:
 	bool checkConnection() const;
 	QByteArray runStep( int step, QByteArray result = "" );
 	QByteArray queryServer( int step, QByteArray result );
+	JsCertData *m_authCert;
+	QUrl updateUrl;
 };

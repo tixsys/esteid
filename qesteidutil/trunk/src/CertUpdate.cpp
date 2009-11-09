@@ -37,6 +37,7 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 ,	step( 0 )
 ,	serverStep( 0 )
 ,	generateKeys( false )
+,	m_authCert( 0 )
 {
 	cardMgr = new SmartCardManager();
 
@@ -44,6 +45,9 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 	if ( !card->isInReader( reader ) )
 		throw std::runtime_error( "no card in specified reader" );
 	card->connect( reader );
+	m_authCert = new JsCertData( this );
+	m_authCert->loadCert( card, JsCertData::AuthCert );
+	updateUrl = QUrl( ( !m_authCert || m_authCert->isTest() ) ? "http://demo.digidoc.ee:80/iduuendusproxy/" : "http://www.sk.ee:80/id-kontroll2/usk/" );
 	QByteArray c( QByteArray::number( QDateTime::currentDateTime().toTime_t() ) );
 	memcpy( (void*)challenge, c, 8 );
 
@@ -54,6 +58,8 @@ CertUpdate::~CertUpdate()
 {
 	if ( sock && sock->state() == QTcpSocket::ConnectedState )
 		sock->disconnectFromHost();
+	if ( m_authCert )
+		delete m_authCert;
 	if ( card )
 		delete card;
 	if ( cardMgr )
@@ -64,7 +70,7 @@ bool CertUpdate::checkConnection() const
 {
 	if ( sock && sock->state() != QTcpSocket::ConnectedState )
 	{
-		sock->connectToHost( "demo.digidoc.ee", 80 );
+		sock->connectToHost( updateUrl.host(), updateUrl.port() );
 		if ( !sock->waitForConnected( 5000 ) )
 			return false;
 	}
@@ -674,7 +680,11 @@ QByteArray CertUpdate::queryServer( int s, QByteArray result )
 		return QByteArray();
 	}
 	qDebug() << "step " << s << " serverStep: " << serverStep << " send: " << packet.toUpper();
-	QByteArray data = "POST http://demo.digidoc.ee/iduuendusproxy/ HTTP/1.1\r\nHost: demo.digidoc.ee\r\nContent-Type: text/plain\r\nContent-Length: " + QByteArray::number(packet.size()) + "\r\nConnection: close\r\n\r\n" + packet.toUpper() + "\r\n";
+	QByteArray data = "POST ";
+	data += updateUrl.path();
+	data += " HTTP/1.1\r\nHost: ";
+	data += updateUrl.host();
+	data += "\r\nContent-Type: text/plain\r\nContent-Length: " + QByteArray::number(packet.size()) + "\r\nConnection: close\r\n\r\n" + packet.toUpper() + "\r\n";
 	sock->write( data );
 	if ( !sock->waitForReadyRead( 60000 ) )
 	{

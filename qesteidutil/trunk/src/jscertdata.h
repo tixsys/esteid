@@ -64,6 +64,7 @@ public slots:
 	QString getSerialNum();
 
 	bool	isTempel();
+	bool	isTest();
 	bool	isValid();
 	int		validDays();
 };

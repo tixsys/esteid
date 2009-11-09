@@ -190,6 +190,14 @@ bool JsCertData::isTempel()
 	return SslCertificate( *m_qcert ).isTempel();
 }
 
+bool JsCertData::isTest()
+{
+	if (!m_qcert)
+		return false;
+
+	return SslCertificate( *m_qcert ).isTest();
+}
+
 bool JsCertData::isValid()
 {
     if (!m_qcert)
