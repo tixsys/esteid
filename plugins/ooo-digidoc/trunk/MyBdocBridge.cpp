@@ -754,35 +754,37 @@ void My1EstEIDSigner::setLocalConfHack()
 
 	//--------------------
 	//get P12 cert path and pw
-	#ifdef _WIN32	
-		HKEY hKey;
-		DWORD dwSize;
-		TCHAR PKCS12Path[1024];
-		TCHAR PKCS12Pass[24];
+#ifdef _WIN32	
+	HKEY hKey;
+	DWORD dwSize;
+	TCHAR PKCS12Path[1024];
+	TCHAR PKCS12Pass[24];
 
-		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
-		{
-			dwSize = 1024 * sizeof(TCHAR);
-			RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
-			RegCloseKey(hKey);
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
+		RegCloseKey(hKey);
 
-			P12Path = PKCS12Path;
-		}
-		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_PASSWD"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
-		{
-			dwSize = 1024 * sizeof(TCHAR);
-			RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
-			RegCloseKey(hKey);
+		P12Path = PKCS12Path;
+	}
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_PASSWD"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
+		RegCloseKey(hKey);
 
-			P12Pass = PKCS12Pass;
-		}
-	#else if __APPLE__
+		P12Pass = PKCS12Pass;
+	}
+
+#else
+	#ifdef __APPLE__
 		//fix this
 	#else
 		string localConf;
 		localConf = getenv("HOME");
 		localConf += "/.config/Estonian ID Card.conf";
-		
+	
 		string line;
 		ifstream ifs(localConf.c_str());
 		while (!ifs.eof())
@@ -798,6 +800,7 @@ void My1EstEIDSigner::setLocalConfHack()
 			}
 		}
 	#endif
+#endif
 	//------------------
 	//set P12 cert path and pw
 	digidoc::Conf *i = NULL;
