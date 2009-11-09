@@ -1,16 +1,46 @@
 #include <iostream>
+#include <string>
 #include <smartcard++/smartcard++.h>
 
-void imetest() {
+void validateOnPinpad() {
 	SmartCardManager mgr;
-	EstEidCard eid(mgr, (unsigned int)0);
+	uint rdr, i, nr;
+	EstEidCard eid(mgr);
 
+	// Find first card
+	nr = mgr.getReaderCount();
+	for(i = 0; i < nr; i++) {
+		if(eid.isInReader(i)) {
+			rdr = i;
+			break;
+		}
+	}
+	if(i >= nr) {
+		std::cout << "No EstEid in reader" << std::endl;
+		return;
+	}
+
+	eid.connect((uint)rdr);
+
+	// Make sure it's in pinpad enabled reader
+	if(!eid.hasSecurePinEntry()) {
+		std::cout << "Reader #" << rdr << " has no pinpad" << std::endl;
+		return;
+	}
+
+	std::cout << "Doing pin validation test on reader #" << rdr << std::endl;
+	
 	//Transaction _m(m, c);
 	//eid.enterPin(EstEidCard::PIN_AUTH, PinString(""));
 
-	//byte tries;
-	//eid.validateAuthPin(PinString(""), tries);
-
+	byte tries;
+	try {
+		eid.validateAuthPin(PinString(""), tries);
+		std::cout << "PIN OK" << std::endl;
+	} catch(std::runtime_error &e) {
+		std::cout << "Error: " << e.what() << std::endl;
+		std::cout << "Tries left: " << (int)(tries-1) << std::endl;
+	}
 }
 
 void readEstEidCard(ManagerInterface &m, ConnectionBase *c) {
@@ -56,6 +86,7 @@ int testCardReading(ManagerInterface &mgr) {
 
 PinString ReadPinFromStdin() {
 	// FIXME: implement
+	throw std::runtime_error("Pin entry from keyboard not implemented yet!");
 	return PinString("0090");
 }
 
@@ -109,11 +140,23 @@ void testSign(ManagerInterface &m, unsigned int reader) {
 
 int main(int argc, char *argvp[]) {
 	int idx = 0;
+	bool testkeys = false;
+
+	if(argc >= 2) {
+		std::string arg1(argvp[1]);
+		if(arg1 == "--pinpad") {
+			validateOnPinpad();
+			return 0;
+		}
+		if(arg1 == "--keys") {
+			testkeys = true;
+		}
+	}
 	SmartCardManager mgr;
 
 	idx = testCardReading(mgr);
 
-	if(idx >= 0) {
+	if(testkeys && idx >= 0) {
 		std::cout << std::endl << "Testing crypto operations with card in reader #" << idx << std::endl;
 		testAuth(mgr, idx);
 		testSign(mgr, idx);
