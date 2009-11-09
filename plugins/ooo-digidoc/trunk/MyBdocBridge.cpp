@@ -776,9 +776,27 @@ void My1EstEIDSigner::setLocalConfHack()
 
 			P12Pass = PKCS12Pass;
 		}
+	#else if __APPLE__
+		//fix this
 	#else
+		string localConf;
 		localConf = getenv("HOME");
-		localConf += "/.DigiDoc/digidocpp.conf";
+		localConf += "/.config/Estonian ID Card.conf";
+		
+		string line;
+		ifstream ifs(localConf.c_str());
+		while (!ifs.eof())
+		{
+			getline(ifs,line);
+			if (!memcmp(line.c_str(), "pkcs12Cert=", 11))
+			{
+				memcpy(P12Path, &line[11], (line.size()-11));
+			}
+			else if (!memcmp(line.c_str(), "pkcs12Pass=", 11))
+			{
+				memcpy(P12Pass, &line[11], (line.size()-11));
+			}
+		}
 	#endif
 	//------------------
 	//set P12 cert path and pw
