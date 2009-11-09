@@ -207,7 +207,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 			p->show();
 			do
 			{
-				qApp->thread()->wait( 1 );
+				wait( 1 );
 				qApp->processEvents();
 			} while( d->login );
 			p->deleteLater();

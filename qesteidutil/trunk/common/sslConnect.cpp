@@ -191,7 +191,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 			do
 			{
 				QCoreApplication::processEvents();
-				qApp->thread()->wait( 1 );
+				t->wait( 1 );
 			}
 			while( t->isRunning() );
 			p->deleteLater();
