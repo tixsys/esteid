@@ -45,7 +45,7 @@ public:
 	QSignerPrivate(): login(false), terminate(false), handle(0), slot(0), slotCount(0), loginResult(CKR_OK) {}
 	volatile bool	login, terminate;
 	QMutex			m;
-	QHash<QString,unsigned int>	cards;
+	QStringList		cards;
 	QString			selectedCard, select;
 	QSslCertificate	sign;
 	PKCS11_CTX		*handle;
@@ -108,7 +108,7 @@ void QSigner::read()
 
 		QString serialNumber = QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed();
 		if( !d->cards.contains( serialNumber ) )
-			d->cards[serialNumber] = i + 1;
+			d->cards << serialNumber;
 	}
 
 	if( !d->selectedCard.isEmpty() && !d->cards.contains( d->selectedCard ) )
@@ -117,10 +117,10 @@ void QSigner::read()
 		d->slot = 0;
 		d->selectedCard.clear();
 	}
-	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
 
 	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
-		selectCert( d->cards.keys().first() );
+		selectCert( d->cards.first() );
 }
 
 void QSigner::run()
@@ -168,7 +168,7 @@ void QSigner::selectCert( const QString &card )
 	d->selectedCard = card;
 	d->sign = QSslCertificate();
 	d->slot = 0;
-	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
 	PKCS11_CERT* certs;
 	unsigned int numberOfCerts;
 	for( unsigned int i = 0; i < d->slotCount; ++i )
@@ -184,12 +184,11 @@ void QSigner::selectCert( const QString &card )
 		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
 		{
 			d->sign = cert;
-			d->cards[d->selectedCard] = i;
 			d->slot = slot;
 			break;
 		}
 	}
-	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+	Q_EMIT dataChanged( d->cards, d->selectedCard, d->sign );
 }
 
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
