@@ -250,9 +250,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 #ifndef SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
 #define SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION	0x0010
 #endif
-	if(SSLeay() >= 0x009080cfL) {
-		ssl->s3->flags |= SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION;
-	}
+	ssl->s3->flags |= SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION;
 
 	return true;
 }
