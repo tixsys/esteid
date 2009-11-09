@@ -117,11 +117,10 @@ void QSigner::read()
 		d->slot = 0;
 		d->selectedCard.clear();
 	}
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 
 	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
 		selectCert( d->cards.keys().first() );
-
-	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 }
 
 void QSigner::run()
@@ -134,21 +133,14 @@ void QSigner::run()
 		return;
 	}
 
-	read();
 	while( !d->terminate )
 	{
-		sleep( 1 );
-
 		if( d->m.tryLock() )
 		{
-			if( !d->select.isEmpty() && d->cards.contains( d->select ) )
-			{
-				selectCert( d->select );
-				Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
-			}
-			d->select.clear();
-
 			read();
+			if( !d->select.isEmpty() && d->cards.contains( d->select ) )
+				selectCert( d->select );
+			d->select.clear();
 			d->m.unlock();
 		}
 
@@ -159,6 +151,8 @@ void QSigner::run()
 				d->loginResult = ERR_get_error();
 			d->login = false;
 		}
+
+		sleep( 1 );
 	}
 }
 
@@ -195,6 +189,7 @@ void QSigner::selectCert( const QString &card )
 			break;
 		}
 	}
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 }
 
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
