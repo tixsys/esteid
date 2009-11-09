@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 
 #include <digidocpp/BDoc.h>
 #include <digidocpp/BDoc.h>
@@ -20,6 +21,7 @@
 #include <digidocpp/crypto/signer/PKCS11Signer.h>
 #include <digidocpp/crypto/signer/EstEIDSigner.h>
 #include <digidocpp/SignatureAttributes.h>
+#include <digidocpp/XmlConf.h>
 
 #ifndef BDOCLIB_CONF_PATH
 #define BDOCLIB_CONF_PATH "digidocpp.conf"
@@ -203,8 +205,6 @@ int My1EstEIDSigner::initData()
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		
-
 	#ifdef _WIN32
 		string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		HKEY hkey;
@@ -222,10 +222,12 @@ int My1EstEIDSigner::initData()
 	#else
 		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		putenv(conf);	
-	#endif		
+	#endif	
+//		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
-
+	
 	try
 	{
 		digidoc::initialize();
@@ -308,8 +310,20 @@ int My1EstEIDSigner::signFile ()
 		
 		//m_signer.pcPin = str_pin.c_str();
 		m_signer.pcPin = cpPin;
-		// Init certificate store.
 		
+		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+		// Init certificate store.
+/*
+digidoc::Conf *i = NULL;
+try { i = digidoc::Conf::getInstance(); }
+catch( const Exception & e) 
+{
+	getExceptions(e);
+	return 90;
+}
+i->setPKCS12Cert("C:/Documents and Settings/Mark/Local Settings/Application Data/Estonian ID Card/DigiDoc klient/37510036028.p12");
+i->setPKCS12Pass("zf0Wz8OG");
+*/
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
 		
 		if (locBdoc)
@@ -632,6 +646,11 @@ bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
 MyRealEstEIDSigner::MyRealEstEIDSigner() throw(SignException)
 :	EstEIDSigner( Conf::getInstance()->getPKCS11DriverPath() )
 {
+	//.................
+	//Fix for pkcs12 cert
+	Conf::getInstance()->setPKCS12Cert( "PKCS12_CERT=C:/Documents and Settings/Mark/Local Settings/Application Data/Estonian ID Card/DigiDoc klient/37510036028.p12" );
+	Conf::getInstance()->setPKCS12Pass( "zf0Wz8OG" );
+	//.................
 	cardSignCert = NULL;
 	i_ret=0;
 	try	
@@ -728,3 +747,47 @@ void MyRealEstEIDSigner::hidePinpad()
 
 //===========================================================
 //***********************************************************
+void My1EstEIDSigner::setLocalConfHack()
+{
+	char *P12Path;
+	char *P12Pass;
+
+	//--------------------
+	//get P12 cert path and pw
+	#ifdef _WIN32	
+		HKEY hKey;
+		DWORD dwSize;
+		TCHAR PKCS12Path[1024];
+		TCHAR PKCS12Pass[24];
+
+		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+		{
+			dwSize = 1024 * sizeof(TCHAR);
+			RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
+			RegCloseKey(hKey);
+
+			P12Path = PKCS12Path;
+		}
+		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_PASSWD"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+		{
+			dwSize = 1024 * sizeof(TCHAR);
+			RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
+			RegCloseKey(hKey);
+
+			P12Pass = PKCS12Pass;
+		}
+	#else
+		localConf = getenv("HOME");
+		localConf += "/.DigiDoc/digidocpp.conf";
+	#endif
+	//------------------
+	//set P12 cert path and pw
+	digidoc::Conf *i = NULL;
+	try { i = digidoc::Conf::getInstance(); }
+	catch( const Exception & e) 
+	{
+		getExceptions(e);
+	}
+	i->setPKCS12Cert(P12Path);
+	i->setPKCS12Pass(P12Pass);
+}
