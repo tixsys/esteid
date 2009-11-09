@@ -753,7 +753,7 @@ void My1EstEIDSigner::setLocalConfHack()
 	const char *P12Pass;
 
 	//--------------------
-	//get P12 cert path and pw
+	//get P12 cert path and pwtempLine
 #ifdef _WIN32	
 	HKEY hKey;
 	DWORD dwSize;
@@ -785,18 +785,20 @@ void My1EstEIDSigner::setLocalConfHack()
 		localConf = getenv("HOME");
 		localConf += "/.config/Estonian ID Card.conf";
 	
-		string line;
+		string line, tempLine;
 		string p12PathLine = "pkcs12Cert=";
 		string p12PassLine = "pkcs12Pass=";
 		ifstream ifs(localConf.c_str());
 		while (!ifs.eof())
 		{
 			getline(ifs,line);
-			if (!memcmp(line.c_str(), &p12PathLine, p12PathLine.size()))
+			tempLine = line.substr( 0, p12PathLine.size() );
+			if (!strcmp(tempLine.c_str(), p12PathLine.c_str()))
 			{
 				P12Path = line.substr( p12PathLine.size(), line.size()-p12PathLine.size() ).c_str();
 			}
-			else if (!memcmp(line.c_str(), &p12PassLine, p12PassLine.size()))
+			tempLine = line.substr( 0, p12PassLine.size() );
+			if (!strcmp(tempLine.c_str(), p12PassLine.c_str()))
 			{
 				P12Pass = line.substr( p12PassLine.size(), line.size()-p12PassLine.size() ).c_str();
 			}
