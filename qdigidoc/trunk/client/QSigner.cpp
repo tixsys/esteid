@@ -119,35 +119,9 @@ void QSigner::read()
 	}
 
 	if( d->selectedCard.isEmpty() && !d->cards.isEmpty() )
-		readCert( d->cards.keys().first() );
+		selectCert( d->cards.keys().first() );
 
 	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
-}
-
-void QSigner::readCert( const QString &card )
-{
-	d->selectedCard = card;
-	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
-	PKCS11_CERT* certs;
-	unsigned int numberOfCerts;
-	for( unsigned int i = 0; i < d->slotCount; ++i )
-	{
-		PKCS11_SLOT* slot = &d->slots[i];
-		if( !slot->token ||
-			d->selectedCard != QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed() ||
-			PKCS11_enumerate_certs( slot->token, &certs, &numberOfCerts ) ||
-			numberOfCerts <= 0 )
-			continue;
-
-		SslCertificate cert = SslCertificate::fromX509( (Qt::HANDLE)(&certs[0])->x509 );
-		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
-		{
-			d->sign = cert;
-			d->cards[d->selectedCard] = i;
-			d->slot = slot;
-			break;
-		}
-	}
 }
 
 void QSigner::run()
@@ -169,7 +143,7 @@ void QSigner::run()
 		{
 			if( !d->select.isEmpty() && d->cards.contains( d->select ) )
 			{
-				readCert( d->select );
+				selectCert( d->select );
 				Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 			}
 			d->select.clear();
@@ -180,6 +154,7 @@ void QSigner::run()
 
 		if( d->login )
 		{
+			d->loginResult = CKR_OK;
 			if( PKCS11_login( d->slot, 0, NULL ) < 0 )
 				d->loginResult = ERR_get_error();
 			d->login = false;
@@ -192,6 +167,34 @@ void QSigner::selectCard( const QString &card )
 	d->m.lock();
 	d->select = card;
 	d->m.unlock();
+}
+
+void QSigner::selectCert( const QString &card )
+{
+	d->selectedCard = card;
+	d->sign = QSslCertificate();
+	d->slot = 0;
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+	PKCS11_CERT* certs;
+	unsigned int numberOfCerts;
+	for( unsigned int i = 0; i < d->slotCount; ++i )
+	{
+		PKCS11_SLOT* slot = &d->slots[i];
+		if( !slot->token ||
+			d->selectedCard != QByteArray( (const char*)slot->token->serialnr, 16 ).trimmed() ||
+			PKCS11_enumerate_certs( slot->token, &certs, &numberOfCerts ) ||
+			numberOfCerts <= 0 )
+			continue;
+
+		SslCertificate cert = SslCertificate::fromX509( Qt::HANDLE((&certs[0])->x509) );
+		if( cert.keyUsage().keys().contains( SslCertificate::NonRepudiation ) )
+		{
+			d->sign = cert;
+			d->cards[d->selectedCard] = i;
+			d->slot = slot;
+			break;
+		}
+	}
 }
 
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)

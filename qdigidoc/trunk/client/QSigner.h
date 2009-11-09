@@ -53,8 +53,8 @@ private Q_SLOTS:
 private:
 	void throwException( const QString &msg, unsigned long err, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
 	void read();
-	void readCert( const QString &card );
 	void run();
+	void selectCert( const QString &card );
 
 	QSignerPrivate *d;
 };
