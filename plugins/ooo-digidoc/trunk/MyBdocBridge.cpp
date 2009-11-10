@@ -222,9 +222,7 @@ int My1EstEIDSigner::initData()
 	#else
 		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		putenv(conf);	
-	#endif	
-//		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
-
+	#endif
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
 	
@@ -312,18 +310,8 @@ int My1EstEIDSigner::signFile ()
 		m_signer.pcPin = cpPin;
 		
 		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+		
 		// Init certificate store.
-/*
-digidoc::Conf *i = NULL;
-try { i = digidoc::Conf::getInstance(); }
-catch( const Exception & e) 
-{
-	getExceptions(e);
-	return 90;
-}
-i->setPKCS12Cert("C:/Documents and Settings/Mark/Local Settings/Application Data/Estonian ID Card/DigiDoc klient/37510036028.p12");
-i->setPKCS12Pass("zf0Wz8OG");
-*/
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
 		
 		if (locBdoc)
@@ -779,7 +767,30 @@ void My1EstEIDSigner::setLocalConfHack()
 
 #else
 	#ifdef __APPLE__
-		//fix this
+		FILE *listFile;
+		int iSize;
+		char * buffer;
+		
+		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Cert","r");
+		fseek (listFile, 0, SEEK_END);
+		iSize = ftell(listFile);
+		rewind(listFile);
+		buffer = (char*) malloc (sizeof(char)* iSize);
+		fread (buffer, 1, iSize, listFile);
+		P12Path = buffer;
+		fclose(listFile);
+		free(buffer);
+	
+		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Pass","r");
+		fseek (listFile, 0, SEEK_END);
+		iSize = ftell(listFile);
+		rewind(listFile);
+		buffer = (char*) malloc (sizeof(char)* iSize);
+		fread (buffer, 1, iSize, listFile);
+		P12Pass = buffer;
+		fclose(listFile);
+		free(buffer);
+		
 	#else
 		string localConf;
 		localConf = getenv("HOME");
