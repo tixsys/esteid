@@ -764,13 +764,15 @@ void My1EstEIDSigner::setLocalConfHack()
 	#ifdef __APPLE__
 		FILE *listFile;
 		string line;
-		
+		remove("/Users/Shared/P12Path.txt");
+		remove("/Users/Shared/P12Pass.txt");
+				
 		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Cert > /Users/Shared/P12Path.txt","w");
 		fclose(listFile);
 		ifstream ifs1("/Users/Shared/P12Path.txt");
 		getline(ifs1,line);
 		P12Path = line.c_str();
-		ifs1.close();
+		ifs1.close();		
 		
 		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Pass > /Users/Shared/P12Pass.txt","w");
 		fclose(listFile);
@@ -778,6 +780,7 @@ void My1EstEIDSigner::setLocalConfHack()
 		getline(ifs2,line);
 		P12Pass = line.c_str();
 		ifs2.close();
+		
 	#else
 		string localConf;
 		localConf = getenv("HOME");
