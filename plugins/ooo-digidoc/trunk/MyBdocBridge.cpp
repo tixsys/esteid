@@ -30,6 +30,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <Winreg.h>
+#else
+#include <errno.h>
 #endif
 
 #define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
@@ -764,23 +766,30 @@ void My1EstEIDSigner::setLocalConfHack()
 	#ifdef __APPLE__
 		FILE *listFile;
 		string line;
-		remove("/Users/Shared/P12Path.txt");
-		remove("/Users/Shared/P12Pass.txt");
 				
-		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Cert > /Users/Shared/P12Path.txt","w");
-		fclose(listFile);
-		ifstream ifs1("/Users/Shared/P12Path.txt");
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Cert > /tmp/P12Path.txt","w");
+		
+		ifstream ifs1("/tmp/P12Path.txt");
 		getline(ifs1,line);
 		P12Path = line.c_str();
 		ifs1.close();		
+		pclose(listFile);
 		
-		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Pass > /Users/Shared/P12Pass.txt","w");
-		fclose(listFile);
-		ifstream ifs2("/Users/Shared/P12Pass.txt");
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Pass > /tmp/P12Pass.txt","w");
+		
+//		if(pclose(listFile))
+//			PRINT_DEBUG("error in pclose: %s\n", strerror(errno));
+		ifstream ifs2("/tmp/P12Pass.txt");
 		getline(ifs2,line);
 		P12Pass = line.c_str();
 		ifs2.close();
-		
+		pclose(listFile);
+//		if(ifs2.close())
+//			PRINT_DEBUG("error ifstream.close: %s\n", strerror(errno));
+		if(unlink("/tmp/P12Path.txt"))
+			PRINT_DEBUG("error removing Path file: %s\n", strerror(errno));
+		if(unlink("/tmp/P12Pass.txt"))
+			PRINT_DEBUG("error removing Pass file: %s\n", strerror(errno));
 	#else
 		string localConf;
 		localConf = getenv("HOME");
