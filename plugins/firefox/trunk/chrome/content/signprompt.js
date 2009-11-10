@@ -23,6 +23,8 @@ function doTimer() {
 
   if(params.timeout < 0) {
     params.timeout = 0;
+    var cancelButt = document.documentElement.getButton("cancel");
+    cancelButt.hidden = false;
   }
 
   var elt = document.getElementById("timer");
