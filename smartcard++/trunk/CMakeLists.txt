@@ -32,11 +32,12 @@ add_library (esteid STATIC ${LIBESTEID_SOURCES} ${LIBESTEID_HEADERS})
 
 if(WIN32)
   add_library (smartcard++ STATIC ${LIBSMARTCARD_SOURCES} ${LIBSMARTCARD_HEADERS}) 
+  set(WIN_LIBRARIES ws2_32)
 elseif(UNIX)
   add_library (smartcard++ SHARED ${LIBSMARTCARD_SOURCES} ${LIBSMARTCARD_HEADERS}) 
 endif(WIN32)
 
-target_link_libraries (smartcard++ esteid sim)
+target_link_libraries (smartcard++ esteid sim ${WIN_LIBRARIES})
 
 if(UNIX)
   target_link_libraries (smartcard++ dl)
