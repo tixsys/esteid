@@ -763,30 +763,21 @@ void My1EstEIDSigner::setLocalConfHack()
 #else
 	#ifdef __APPLE__
 		FILE *listFile;
-		int iSize;
-		char * buffer;
+		string line;
 		
-		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Cert","w");
-		fseek (listFile, 0, SEEK_END);
-		iSize = ftell(listFile);
-		rewind(listFile);
-		buffer = (char*) malloc (sizeof(char)* iSize);
-		fread (buffer, 1, iSize, listFile);
-		P12Path = buffer;
-	printf("%s \n", buffer);
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Cert > /Users/Shared/P12Path.txt","w");
 		fclose(listFile);
-		free(buffer);
-	
-		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Pass","w");
-		fseek (listFile, 0, SEEK_END);
-		iSize = ftell(listFile);
-		rewind(listFile);
-		buffer = (char*) malloc (sizeof(char)* iSize);
-		fread (buffer, 1, iSize, listFile);
-		P12Pass = buffer;
-		fclose(listFile);
-		free(buffer);
+		ifstream ifs1("/Users/Shared/P12Path.txt");
+		getline(ifs1,line);
+		P12Path = line.c_str();
+		ifs1.close();
 		
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Pass > /Users/Shared/P12Pass.txt","w");
+		fclose(listFile);
+		ifstream ifs2("/Users/Shared/P12Pass.txt");
+		getline(ifs2,line);
+		P12Pass = line.c_str();
+		ifs2.close();
 	#else
 		string localConf;
 		localConf = getenv("HOME");
@@ -810,6 +801,7 @@ void My1EstEIDSigner::setLocalConfHack()
 				P12Pass = line.substr( p12PassLine.size(), line.size()-p12PassLine.size() ).c_str();
 			}
 		}
+		ifs.close();
 	#endif
 #endif
 	//------------------

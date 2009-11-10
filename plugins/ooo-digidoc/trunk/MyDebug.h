@@ -11,7 +11,11 @@
 #else
 #define UNO_URL_HEAD "file://"
 #define SLASH ""
-#define DEBUG_FILE "/tmp/OOoDebug.txt"
+	#ifdef __APPLE__
+	#define DEBUG_FILE "/Users/Shared/OOoDebug.txt"
+	#else
+	#define DEBUG_FILE "/tmp/OOoDebug.txt"
+	#endif
 #endif
 
 #if DEBUG
