@@ -634,11 +634,6 @@ bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
 MyRealEstEIDSigner::MyRealEstEIDSigner() throw(SignException)
 :	EstEIDSigner( Conf::getInstance()->getPKCS11DriverPath() )
 {
-	//.................
-	//Fix for pkcs12 cert
-	Conf::getInstance()->setPKCS12Cert( "PKCS12_CERT=C:/Documents and Settings/Mark/Local Settings/Application Data/Estonian ID Card/DigiDoc klient/37510036028.p12" );
-	Conf::getInstance()->setPKCS12Pass( "zf0Wz8OG" );
-	//.................
 	cardSignCert = NULL;
 	i_ret=0;
 	try	
@@ -771,17 +766,18 @@ void My1EstEIDSigner::setLocalConfHack()
 		int iSize;
 		char * buffer;
 		
-		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Cert","r");
+		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Cert","w");
 		fseek (listFile, 0, SEEK_END);
 		iSize = ftell(listFile);
 		rewind(listFile);
 		buffer = (char*) malloc (sizeof(char)* iSize);
 		fread (buffer, 1, iSize, listFile);
 		P12Path = buffer;
+	printf("%s \n", buffer);
 		fclose(listFile);
 		free(buffer);
 	
-		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Pass","r");
+		listFile = popen("defaults read com.estonian-id-card Client.pkcs12Pass","w");
 		fseek (listFile, 0, SEEK_END);
 		iSize = ftell(listFile);
 		rewind(listFile);
