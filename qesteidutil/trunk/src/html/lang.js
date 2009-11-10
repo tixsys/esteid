@@ -36,6 +36,7 @@ var htmlStrings = {
 	"labelIsInValid": new tr( "kehtetu", "expired", "недействителен" ),
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni", "Card is valid till", "Карта действительна до" ),
+	"labelCardGetNew": new tr( "Juhised uue ID kaardi taotlemiseks leiad <a href='#' onClick='extender.openUrl(\"http://www.pass.ee/index.php/pass/est/kuidas_uut_dokumenti_saada/korduv_dokument\");'>siit</a>", "Instructions how to get a new ID card you can find <a href='#' onClick='extender.openUrl(\"http://id.ee/?id=11026\");'>here</a>", "" ),
 	
 	"labelAuthCert": new tr( "Isikutuvastamise sertifikaat", "Authentication certificate", "Идент. сертификат" ),
 	"labelSignCert": new tr( "Allkirjastamise sertifikaat", "Signature certificate", "Сертификат подписи" ),

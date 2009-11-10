@@ -211,10 +211,10 @@ function readCardData()
 		var esteidIsValid = esteidData.isValid();
 		
 		document.getElementById('documentId').innerHTML = activeCardId;
-		document.getElementById('expiry').innerHTML = esteidData.getExpiry( language );
 		document.getElementById('email').innerHTML = esteidData.authCert.getEmail();
 		document.getElementById('labelCardValidity').innerHTML = _( esteidIsValid ? 'labelIsValid' : 'labelIsInValid' );
 		document.getElementById('labelCardValidity').style.color = esteidIsValid ? '#509b00' : '#e80303';
+		document.getElementById('labelCardValidTo').innerHTML = !esteidIsValid ? _('labelCardGetNew') : _('labelCardValidTill') + '<span id="expiry" style="color: #355670;">' + esteidData.getExpiry( language ) + '</span>';
 
 		if ( esteidData.authCert.isTempel() )
 		{
@@ -556,7 +556,6 @@ function disableFields( translate )
 		return;
 
 	document.getElementById('documentId').innerHTML = "";
-	document.getElementById('expiry').innerHTML = "";
 	document.getElementById('firstName').innerHTML = "";
 	document.getElementById('middleName').innerHTML = "";
 	document.getElementById('surName').innerHTML = "";
