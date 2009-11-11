@@ -996,13 +996,16 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>88</width>
-               <height>18</height>
+               <width>288</width>
+               <height>209</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="viewSignaturesLayout">
               <property name="spacing">
-               <number>2</number>
+               <number>0</number>
+              </property>
+              <property name="margin">
+               <number>0</number>
               </property>
               <item>
                <spacer name="viewSignaturesSpacer">
