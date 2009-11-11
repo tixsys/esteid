@@ -149,7 +149,7 @@ private Q_SLOTS:
 
 private:
 	bool checkDoc( bool status = false, const QString &msg = QString() );
-	bool parseException( const digidoc::Exception &e, QStringList &causes );
+	bool parseException( const digidoc::Exception &e, QStringList &causes, digidoc::Exception::ExceptionCode &code );
 	void setLastError( const digidoc::Exception &e );
 
 	digidoc::WDoc	*b;

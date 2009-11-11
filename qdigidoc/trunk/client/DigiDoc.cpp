@@ -445,36 +445,31 @@ bool DigiDoc::open( const QString &file )
 	catch( const Exception &e )
 	{
 		QStringList causes;
-		parseException( e, causes );
+		Exception::ExceptionCode code;
+		parseException( e, causes, code );
 		setLastError( tr("An error occurred while opening the document.<br />%1").arg( causes.join("\n") ) );
 	}
 	return false;
 }
 
-bool DigiDoc::parseException( const Exception &e, QStringList &causes )
+bool DigiDoc::parseException( const Exception &e, QStringList &causes, Exception::ExceptionCode &code )
 {
 	switch( e.code() )
 	{
 	case Exception::CertificateRevoked:
-		setLastError( tr("Certificate status revoked") ); return false;
 	case Exception::CertificateUnknown:
-		setLastError( tr("Certificate status unknown") ); return false;
 	case Exception::OCSPTimeSlot:
-		setLastError( tr("Check your computer time") ); return false;
 	case Exception::PINCanceled:
-		return false;
 	case Exception::PINFailed:
-		setLastError( tr("PIN Login failed") ); return false;
 	case Exception::PINIncorrect:
-		setLastError( tr("PIN Incorrect") ); return false;
 	case Exception::PINLocked:
-		setLastError( tr("PIN Locked") ); return false;
+		code = e.code(); return false;
 	default:
 		causes << QString::fromUtf8( e.getMsg().data() );
 		break;
 	}
 	Q_FOREACH( const Exception &c, e.getCauses() )
-		if( !parseException( c, causes ) )
+		if( !parseException( c, causes, code ) )
 			return false;
 	return true;
 }
@@ -570,8 +565,27 @@ void DigiDoc::setConfValue( ConfParameter parameter, const QVariant &value )
 void DigiDoc::setLastError( const Exception &e )
 {
 	QStringList causes;
-	if( parseException( e, causes ) )
-		setLastError( causes.join( "\n" ) );
+	Exception::ExceptionCode code;
+	parseException( e, causes, code );
+	switch( code )
+	{
+	case Exception::CertificateRevoked:
+		setLastError( tr("Certificate status revoked") ); break;
+	case Exception::CertificateUnknown:
+		setLastError( tr("Certificate status unknown") ); break;
+	case Exception::OCSPTimeSlot:
+		setLastError( tr("Check your computer time") ); break;
+	case Exception::PINCanceled:
+		break;
+	case Exception::PINFailed:
+		setLastError( tr("PIN Login failed") ); break;
+	case Exception::PINIncorrect:
+		setLastError( tr("PIN Incorrect") ); break;
+	case Exception::PINLocked:
+		setLastError( tr("PIN Locked") ); break;
+	default:
+		setLastError( causes.join( "\n" ) ); break;
+	}
 }
 
 void DigiDoc::setLastError( const QString &err ) { Q_EMIT error( m_lastError = err ); }
@@ -597,7 +611,19 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		b->sign( signer, Signature::TM );
 		result = true;
 	}
-	catch( const Exception &e ) { setLastError( e ); }
+	catch( const Exception &e )
+	{
+		QStringList causes;
+		Exception::ExceptionCode code;
+		parseException( e, causes, code );
+		if( code == Exception::PINIncorrect )
+		{
+			setLastError( tr("PIN Incorrect") );
+			return sign( city, state, zip, country, role, role2 );
+		}
+		else
+			setLastError( e );
+	}
 	return result;
 }
 
