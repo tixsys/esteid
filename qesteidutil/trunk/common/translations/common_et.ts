@@ -261,7 +261,7 @@
     </message>
     <message>
         <source>Key encipherment</source>
-        <translation>Võti krüptimine</translation>
+        <translation>Võtme krüptimine</translation>
     </message>
     <message>
         <source>Data encipherment</source>
