@@ -31,76 +31,90 @@
 #include <digidocpp/crypto/Digest.h>
 #include <digidocpp/WDoc.h>
 
-#include <QDebug>
 #include <QDir>
+#include <QDomElement>
+#include <QNetworkAccessManager>
+#include <QNetworkProxy>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QSslKey>
-#include <QSslSocket>
+#include <QSslConfiguration>
 #include <QTemporaryFile>
+#include <QTimer>
 
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :	QDialog( parent )
 ,	m_doc( doc )
-,	m_http( new QHttp( this ) )
 ,	m_timer( new QTimer( this ) )
 ,	statusTimer( new QTimer( this ) )
+,	manager( new QNetworkAccessManager( this ) )
 ,	sessionCode( 0 )
 {
+	lang["et"] = "EST";
+	lang["en"] = "ENG";
+	lang["ru"] = "RUS";
+
+	mobileResults["START"] = tr("Signing in process");
+	mobileResults["REQUEST_OK"] = tr("Request accepted");
+	mobileResults["EXPIRED_TRANSACTION"] = tr("Request timeout");
+	mobileResults["USER_CANCEL"] = tr("User denied or cancelled");
+	mobileResults["SIGNATURE"] = tr("Got signature");
+	mobileResults["OUTSTANDING_TRANSACTION"] = tr("Request pending");
+	mobileResults["MID_NOT_READY"] = tr("Mobile-ID not ready, try again later");
+	mobileResults["PHONE_ABSENT"] = tr("Phone absent");
+	mobileResults["SENDING_ERROR"] = tr("Request sending error");
+	mobileResults["SIM_ERROR"] = tr("SIM error");
+	mobileResults["INTERNAL_ERROR"] = tr("Service internal error");
+	mobileResults["OCSP_UNAUTHORIZED"] = tr("Not allowed to use OCSP service!\nPlease check your server access sertificate.");
+	mobileResults["HOSTNOTFOUND"] = tr("Connecting to SK server failed!\nPlease check your internet connection.");
+	mobileResults["User is not a Mobile-ID client"] = tr("User is not a Mobile-ID client");
+	mobileResults["ID and phone number do not match"] = tr("ID and phone number do not match");
+
 	setupUi( this );
 
-	connect( m_http, SIGNAL(requestFinished(int, bool)), SLOT(httpRequestFinished(int, bool)) );
-	connect( m_http, SIGNAL(sslErrors(const QList<QSslError> &)), SLOT(sslErrors(const QList<QSslError> &)) );
+	connect( manager, SIGNAL(finished(QNetworkReply*)), SLOT(finished(QNetworkReply*)) );
+	connect( manager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
+		SLOT(sslErrors(QNetworkReply*,QList<QSslError>)) );
 	connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
 	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 
 	Settings s;
 	s.beginGroup( "Client" );
 
-	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-	QString certPass = m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-	if ( certFile.size() && QFile::exists( certFile ) )
+	if( !s.value( "proxyHost" ).toString().isEmpty() )
 	{
-		QFile f( certFile );
-		if( f.open( QIODevice::ReadOnly ) )
-		{
-			QSslSocket *ssl = new QSslSocket( this );
-			PKCS12Certificate pkcs12Cert( &f, certPass.toLatin1() );
-			ssl->setPrivateKey( pkcs12Cert.key() );
-			ssl->setLocalCertificate( pkcs12Cert.certificate() );
-			m_http->setSocket( ssl );
-		}
+		manager->setProxy( QNetworkProxy(
+			QNetworkProxy::HttpProxy,
+			s.value( "proxyHost" ).toString(),
+			s.value( "proxyPort" ).toInt(),
+			s.value( "proxyUser" ).toString(),
+			s.value( "proxyPass" ).toString() ) );
 	}
 
-	m_http->setProxy(
-		s.value( "proxyHost" ).toString(),
-		s.value( "proxyPort" ).toInt(),
-		s.value( "proxyUser" ).toString(),
-		s.value( "proxyPass" ).toString() );
-
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		//m_http->setHost( "www.openxades.org", QHttp::ConnectionModeHttps, 8443 );
-		m_http->setHost( "www.sk.ee", QHttp::ConnectionModeHttps, 8097 );
+		//request.setUrl( "https://www.openxades.org:8443" );
+		request.setUrl( QUrl("https://www.sk.ee:8097") );
 	else
-		m_http->setHost( "digidocservice.sk.ee", QHttp::ConnectionModeHttps );
+		request.setUrl( QUrl("https://digidocservice.sk.ee") );
 
-	lang["et"] = "EST";
-	lang["en"] = "ENG";
-	lang["ru"] = "RUS";
+	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	if( certFile.isEmpty() || !QFile::exists( certFile ) )
+		return;
 
-	mobileResults[ "START" ] = tr( "Signing in process" );
-	mobileResults[ "REQUEST_OK" ] = tr( "Request accepted" );
-	mobileResults[ "EXPIRED_TRANSACTION" ] = tr( "Request timeout" );
-	mobileResults[ "USER_CANCEL" ] = tr( "User denied or cancelled" );
-	mobileResults[ "SIGNATURE" ] = tr( "Got signature" );
-	mobileResults[ "OUTSTANDING_TRANSACTION" ] = tr( "Request pending" );
-	mobileResults[ "MID_NOT_READY" ] = tr( "Mobile-ID not ready, try again later" );
-	mobileResults[ "PHONE_ABSENT" ] = tr( "Phone absent" );
-	mobileResults[ "SENDING_ERROR" ] = tr( "Request sending error" );
-	mobileResults[ "SIM_ERROR" ] = tr( "SIM error" );
-	mobileResults[ "INTERNAL_ERROR" ] = tr( "Service internal error" );
-	mobileResults[ "OCSP_UNAUTHORIZED" ] = tr( "Not allowed to use OCSP service!\nPlease check your server access sertificate." );
-	mobileResults[ "HOSTNOTFOUND" ] = tr( "Connecting to SK server failed!\nPlease check your internet connection." );
-	mobileResults[ "User is not a Mobile-ID client" ] = tr( "User is not a Mobile-ID client" );
-	mobileResults[ "ID and phone number do not match" ] = tr( "ID and phone number do not match" );
+	QFile f( certFile );
+	if( !f.open( QIODevice::ReadOnly ) )
+		return;
+
+	PKCS12Certificate pkcs12Cert( &f,
+		m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
+	f.close();
+	if( pkcs12Cert.isNull() )
+		return;
+
+	QSslConfiguration ssl;
+	ssl.setPrivateKey( pkcs12Cert.key() );
+	ssl.setLocalCertificate( pkcs12Cert.certificate() );
+	request.setSslConfiguration( ssl );
 }
 
 QString MobileDialog::elementText( const QDomElement &element, const QString &tag ) const
@@ -122,27 +136,22 @@ QString MobileDialog::escapeChars( const QString &in ) const
 	return out;
 }
 
-void MobileDialog::httpRequestFinished( int id, bool error )
+void MobileDialog::finished( QNetworkReply *reply )
 {
-	if( !m_callBackList.contains( id ) )
-		return;
-	QByteArray func = m_callBackList[id];
-	m_callBackList.remove( id );
-
-	if( error )
+	if( reply->error() != QNetworkReply::NoError )
 	{
-		switch( m_http->error() )
+		switch( reply->error() )
 		{
-		case QHttp::HostNotFound:
+		case QNetworkReply::HostNotFoundError:
 			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) ); break;
 		default:
-			labelError->setText( m_http->errorString() ); break;
+			labelError->setText( reply->errorString() ); break;
 		}
 		statusTimer->stop();
 		return;
 	}
 
-	QByteArray result = m_http->readAll();
+	QByteArray result = reply->readAll();
 	if( result.isEmpty() )
 	{
 		labelError->setText( tr("Empty HTTP result") );
@@ -166,9 +175,48 @@ void MobileDialog::httpRequestFinished( int id, bool error )
 			error = mobileResults.value( error.toLatin1() );
 		labelError->setText( error );
 		statusTimer->stop();
+		return;
 	}
-	else
-		QMetaObject::invokeMethod( this, func, Q_ARG( QDomElement, e ) );
+
+	if( !m_timer->isActive() )
+	{
+		sessionCode = elementText( e, "Sesscode" ).toInt();
+		if ( sessionCode )
+		{
+			code->setText( tr("Control code: %1").arg( elementText( e, "ChallengeID" ) ) );
+			m_timer->start( 5000 );
+		}
+		else
+			labelError->setText( mobileResults.value( elementText( e, "message" ).toLatin1() ) );
+		return;
+	}
+
+	QString status = elementText( e, "Status" );
+	labelError->setText( mobileResults.value( status.toLatin1() ) );
+
+	if( status == "REQUEST_OK" || status == "OUTSTANDING_TRANSACTION" )
+		return;
+
+	m_timer->stop();
+	statusTimer->stop();
+
+	if( status != "SIGNATURE" )
+		return;
+
+	QTemporaryFile file( QString( "%1/XXXXXX.xml" ).arg( QDir::tempPath() ) );
+	file.setAutoRemove( false );
+	if( !file.open() )
+		return;
+
+	fName = file.fileName();
+	file.write( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n" );
+	if ( m_doc->documentType() == digidoc::WDoc::DDocType )
+		file.write( "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">\n" );
+	file.write( elementText( e, "Signature" ).toUtf8() );
+	if ( m_doc->documentType() == digidoc::WDoc::DDocType )
+		file.write( "</SignedDoc>" );
+	file.close();
+	close();
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
@@ -194,9 +242,6 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 	if ( !getFiles() )
 		return;
 
-	startTime.start();
-	statusTimer->start( 1000 );
-
 	labelError->setText( mobileResults.value( "START" ) );
 
 	QString message = QString(
@@ -221,12 +266,14 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "BDOC" : "DIGIDOC-XML" )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "1.0" : "1.3" )
 		.arg( m_doc->signatures().size() );
-	int id = m_http->post( "/", insertBody( MobileCreateSignature, message ).toUtf8() );
-	m_callBackList.insert( id, "startSessionResult" );
+	manager->post( request, insertBody( MobileCreateSignature, message ).toUtf8() );
+
+	startTime.start();
+	statusTimer->start( 1000 );
 }
 
-void MobileDialog::sslErrors( const QList<QSslError> & )
-{ m_http->ignoreSslErrors(); }
+void MobileDialog::sslErrors( QNetworkReply *reply, const QList<QSslError> &errors )
+{ reply->ignoreSslErrors(); }
 
 bool MobileDialog::getFiles()
 {
@@ -267,58 +314,13 @@ bool MobileDialog::getFiles()
 	return true;
 }
 
-void MobileDialog::startSessionResult( const QDomElement &element )
-{
-	sessionCode = elementText( element, "Sesscode" ).toInt();
-	if ( sessionCode )
-	{
-		code->setText( tr("Control code: %1").arg( elementText( element, "ChallengeID" ) ) );
-		m_timer->start( 5000 );
-	}
-	else
-		labelError->setText( mobileResults.value( elementText( element, "message" ).toLatin1() ) );
-}
-
 void MobileDialog::getSignStatus()
 {
 	QString message = QString(
 		"<Sesscode xsi:type=\"xsd:int\">%1</Sesscode>"
 		"<WaitSignature xsi:type=\"xsd:boolean\">false</WaitSignature>" )
 		.arg( sessionCode );
-	int id = m_http->post( "/", insertBody( GetMobileCreateSignatureStatus, message ).toUtf8() );
-	m_callBackList.insert( id, "getSignStatusResult" );
-}
-
-void MobileDialog::getSignStatusResult( const QDomElement &element )
-{
-	QString status = elementText( element, "Status" );
-	labelError->setText( mobileResults.value( status.toLatin1() ) );
-
-	//qDebug() << status << elementText( elements, "Signature" );
-
-	if ( status != "REQUEST_OK" && status != "OUTSTANDING_TRANSACTION" )
-	{
-		m_timer->stop();
-		statusTimer->stop();
-
-		if ( status != "SIGNATURE" )
-			return;
-
-		QTemporaryFile file( QString( "%1/XXXXXX.xml" ).arg( QDir::tempPath() ) );
-		file.setAutoRemove( false );
-		if ( file.open() )
-		{
-			fName = file.fileName();
-			file.write( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n" );
-			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
-				file.write( "<SignedDoc format=\"DIGIDOC-XML\" version=\"1.3\" xmlns=\"http://www.sk.ee/DigiDoc/v1.3.0#\">\n" );
-			file.write( elementText( element, "Signature" ).toUtf8() );
-			if ( m_doc->documentType() == digidoc::WDoc::DDocType )
-				file.write( "</SignedDoc>" );
-			file.close();
-			close();
-		}
-	}
+	manager->post( request, insertBody( GetMobileCreateSignatureStatus, message ).toUtf8() );
 }
 
 QString MobileDialog::insertBody( MobileAction maction, const QString &body ) const

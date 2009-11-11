@@ -192,7 +192,7 @@ void QSigner::selectCert( const QString &card )
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
 {
 	d->m.lock();
-	if( d->sign.isNull() )
+	if( !d->cards.contains( d->selectedCard ) || d->sign.isNull() )
 		throwException( tr("Signing certificate is not selected."), 0, Exception::NoException, __LINE__ );
 
 	if( d->slotCount )
@@ -200,8 +200,7 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
 		d->slotCount = 0;
 	}
-	if( !d->cards.contains( d->selectedCard ) ||
-		PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
+	if( PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) ||
 		d->cards[d->selectedCard] >= d->slotCount ||
 		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
 		!d->slot->token )

@@ -38,6 +38,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QDomDocument>
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>

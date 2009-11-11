@@ -22,17 +22,17 @@
 
 #pragma once
 
-#include <QDialog>
-#include <QDomElement>
-#include <QHash>
-#include <QHttp>
-#include <QSslError>
-#include <QTime>
-#include <QTimer>
-
 #include "ui_MobileDialog.h"
 
+#include <QHash>
+#include <QNetworkRequest>
+#include <QSslError>
+#include <QTime>
+
 class DigiDoc;
+class QDomElement;
+class QNetworkAccessManager;
+class QNetworkReply;
 
 class MobileDialog : public QDialog, private Ui::MobileDialog
 {
@@ -46,12 +46,9 @@ public:
 	QString fName;
 
 private Q_SLOTS:
-	void sslErrors(const QList<QSslError> &);
-	void httpRequestFinished( int id, bool error );
-
-	void startSessionResult( const QDomElement &element );
-	void getSignStatusResult( const QDomElement &element );
 	void getSignStatus();
+	void finished( QNetworkReply *reply );
+	void sslErrors( QNetworkReply *reply, const QList<QSslError> &errors );
 	void updateStatus();
 
 private:
@@ -67,12 +64,12 @@ private:
 	void startSession();
 
 	DigiDoc *m_doc;
-	QHttp *m_http;
 	QTimer *m_timer, *statusTimer;
+	QNetworkAccessManager *manager;
+	QNetworkRequest request;
 	QTime startTime;
 	QString signature, files;
 
 	int sessionCode;
-	QHash< int, QByteArray > m_callBackList;
 	QHash< QByteArray, QString > lang, mobileResults;
 };
