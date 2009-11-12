@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Keys added successfully</source>
-        <translation>Адрессат успешно добавлен</translation>
+        <translation>Адресат успешно добавлен</translation>
     </message>
     <message>
         <source>Failed to add keys</source>
