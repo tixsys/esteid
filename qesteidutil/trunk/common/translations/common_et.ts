@@ -257,7 +257,7 @@
     </message>
     <message>
         <source>Non repudiation</source>
-        <translation>Tagasilükkamata</translation>
+        <translation>Salgamise vääramine</translation>
     </message>
     <message>
         <source>Key encipherment</source>
