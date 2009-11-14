@@ -38,3 +38,4 @@ END
 /* End of Version info */
 
 IDI_ICON1   ICON  DISCARDABLE  "images/crypto_48x48.ico"
+IDI_ICON2   ICON  DISCARDABLE  "images/qdigidoc_crypto_document_48x48.ico"
