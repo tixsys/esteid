@@ -7,10 +7,10 @@ set( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" )
 include( InstallSettings )
 
 if( WIN32 )
-    set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.ini" )
+    set( DIGIDOC_CONF_NAME "digidoc.ini" )
     set( PKCS11_MODULE "opensc-pkcs11.dll" )
 else( WIN32 )
-    set( DIGIDOC_CONF_FILE "${SYSCONF_INSTALL_DIR}/digidoc.conf" )
+    set( DIGIDOC_CONF_NAME "digidoc.conf" )
     set( PKCS11_MODULE "opensc-pkcs11.so" )
 endif( WIN32 )
 

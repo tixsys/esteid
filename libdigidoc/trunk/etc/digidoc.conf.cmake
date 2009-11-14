@@ -1,5 +1,5 @@
 #--------------------------------------------------
-# digidoc.conf
+# @DIGIDOC_CONF_NAME@
 # DigiDoc library global configuration file
 #--------------------------------------------------
 
