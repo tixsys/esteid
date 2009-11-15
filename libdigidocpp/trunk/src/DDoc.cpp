@@ -63,7 +63,6 @@ DDocPrivate::DDocPrivate()
 ,	f_ddocSigInfo_GetOCSPRespondersCert(0)
 ,	f_ddocSigInfo_GetSignersCert(0)
 ,	f_ddocSigInfo_SetSignatureValue(0)
-,	f_finalizeDigiDocLib(0)
 ,	f_getErrorString(0)
 ,	f_initDigiDocLib(0)
 ,	f_initConfigStore(0)
@@ -101,11 +100,10 @@ DDocPrivate::~DDocPrivate()
 	for( std::vector<SignatureDDOC*>::const_iterator i = signatures.begin();
 		i != signatures.end(); ++i )
 		delete *i;
-	if( !f_SignedDoc_free || !f_cleanupConfigStore || !f_finalizeDigiDocLib )
+	if( !f_SignedDoc_free || !f_cleanupConfigStore )
 		return;
 	f_SignedDoc_free( doc );
 	f_cleanupConfigStore( NULL );
-	f_finalizeDigiDocLib();
 }
 
 void DDocPrivate::loadSignatures()
@@ -133,7 +131,6 @@ bool DDocPrivate::loadSymbols()
 	(f_ddocSigInfo_GetOCSPRespondersCert = (sym_ddocSigInfo_GetOCSPRespondersCert)lib.resolve("ddocSigInfo_GetOCSPRespondersCert")) &&
 	(f_ddocSigInfo_GetSignersCert = (sym_ddocSigInfo_GetSignersCert)lib.resolve("ddocSigInfo_GetSignersCert")) &&
 	(f_ddocSigInfo_SetSignatureValue = (sym_ddocSigInfo_SetSignatureValue)lib.resolve("ddocSigInfo_SetSignatureValue")) &&
-	(f_finalizeDigiDocLib = (sym_finalizeDigiDocLib)lib.resolve("finalizeDigiDocLib")) &&
 	(f_getErrorString = (sym_getErrorString)lib.resolve("getErrorString")) &&
 	(f_initDigiDocLib = (sym_initDigiDocLib)lib.resolve("initDigiDocLib")) &&
 	(f_initConfigStore = (sym_initConfigStore)lib.resolve("initConfigStore")) &&

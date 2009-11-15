@@ -26,7 +26,6 @@ typedef int (*sym_ddocSaxReadSignedDocFromFile)( SignedDoc**, const char*, int, 
 typedef X509* (*sym_ddocSigInfo_GetOCSPRespondersCert)( const SignatureInfo * );
 typedef X509* (*sym_ddocSigInfo_GetSignersCert)( const SignatureInfo* );
 typedef int (*sym_ddocSigInfo_SetSignatureValue)( SignatureInfo*, const char*, long );
-typedef void (*sym_finalizeDigiDocLib)();
 typedef char* (*sym_getErrorString)( int );
 typedef void (*sym_initDigiDocLib)();
 typedef int (*sym_initConfigStore)( const char* );
@@ -99,7 +98,6 @@ public:
 	sym_ddocSigInfo_GetOCSPRespondersCert f_ddocSigInfo_GetOCSPRespondersCert;
 	sym_ddocSigInfo_GetSignersCert f_ddocSigInfo_GetSignersCert;
 	sym_ddocSigInfo_SetSignatureValue f_ddocSigInfo_SetSignatureValue;
-	sym_finalizeDigiDocLib		f_finalizeDigiDocLib;
 	sym_getErrorString			f_getErrorString;
 	sym_initDigiDocLib			f_initDigiDocLib;
 	sym_initConfigStore			f_initConfigStore;
