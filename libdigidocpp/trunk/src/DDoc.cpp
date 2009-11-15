@@ -272,7 +272,13 @@ X509Cert SignatureDDOC::getOCSPCertificate() const
 std::string SignatureDDOC::getProducedAt() const
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
-	return n && n->timeProduced ? std::string( n->timeProduced ) : std::string();
+	std::string ret;
+	if( n && n->timeProduced )
+		ret = n->timeProduced;
+	size_t pos = 0;
+	while( (pos = ret.find( '.', pos )) != std::string::npos )
+		ret.replace( pos, 1, "-" );
+	return ret;
 }
 
 std::string SignatureDDOC::getResponderID() const
@@ -378,6 +384,9 @@ DDoc::~DDoc() { delete d; }
 digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
  :	d( new DDocPrivate )
 {
+	if( !d->ready )
+		d->throwError( "DDoc library not loaded", __LINE__ );
+
 	d->filename = path;
 	loadFile();
 }
@@ -390,7 +399,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 		d->throwError( "DDoc library not loaded", __LINE__ );
 
 	d->filename = serializer->getPath();
-        loadFile();
+	loadFile();
 }
 
 void DDoc::loadFile()
