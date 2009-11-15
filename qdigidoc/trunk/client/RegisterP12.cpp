@@ -56,6 +56,7 @@ void RegisterP12::on_buttonBox_accepted()
 		return;
 	}
 
+	QDir().mkpath( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) );
 	QString dest = QString( "%1/%2" )
 		.arg( QDesktopServices::storageLocation( QDesktopServices::DataLocation ) )
 		.arg( file.fileName() );
