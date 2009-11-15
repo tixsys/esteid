@@ -272,7 +272,7 @@ X509Cert SignatureDDOC::getOCSPCertificate() const
 std::string SignatureDDOC::getProducedAt() const
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
-	return n ? std::string( n->timeProduced ) : std::string();
+	return n && n->timeProduced ? std::string( n->timeProduced ) : std::string();
 }
 
 std::string SignatureDDOC::getResponderID() const
@@ -406,7 +406,8 @@ void DDoc::loadFile()
 	switch( err )
 	{
 	case ERR_OK:
-	case ERR_OCSP_CERT_REVOKED: break;
+	case ERR_OCSP_CERT_REVOKED:
+	case ERR_OCSP_CERT_UNKNOWN: break;
 	default:
 		d->f_SignedDoc_free( d->doc );
 		d->doc = NULL;
