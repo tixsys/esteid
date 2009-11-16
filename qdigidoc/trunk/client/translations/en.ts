@@ -337,10 +337,6 @@ Start downloading?</translation>
         <translation>Error reading server access certificate - empty content!</translation>
     </message>
     <message>
-        <source>Remove signature %1</source>
-        <translation>Remove signature %1</translation>
-    </message>
-    <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
         <translation>You dont have suficient privilegs to write this fail into folder %1</translation>
     </message>
@@ -483,6 +479,12 @@ Please check your internet connection.</translation>
     <message>
         <source>Failed to parse XML document</source>
         <translation>Failed to parse XML document</translation>
+    </message>
+    <message>
+        <source>Not allowed to use OCSP service!
+Please check your server access sertificate.</source>
+        <translation>Not allowed to use OCSP service!
+Please check your server access sertificate.</translation>
     </message>
 </context>
 <context>
@@ -911,6 +913,10 @@ Please check your internet connection.</translation>
     <message>
         <source>unknown</source>
         <translation>unknown</translation>
+    </message>
+    <message>
+        <source>Remove signature %1</source>
+        <translation>Remove signature %1</translation>
     </message>
 </context>
 <context>

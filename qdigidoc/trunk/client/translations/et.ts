@@ -337,10 +337,6 @@ Alustame laadimist?</translation>
         <translation>Viga ligipääsutõendi lugemisel - sisu on tühi!</translation>
     </message>
     <message>
-        <source>Remove signature %1</source>
-        <translation>Eemalda allkiri %1</translation>
-    </message>
-    <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
         <translation>Sul ei ole piisavalt õigusi, et kirjutada fail kataloogi %1</translation>
     </message>
@@ -917,6 +913,10 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     <message>
         <source>unknown</source>
         <translation>teadmata</translation>
+    </message>
+    <message>
+        <source>Remove signature %1</source>
+        <translation>Eemalda allkiri %1</translation>
     </message>
 </context>
 <context>

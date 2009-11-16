@@ -30,6 +30,7 @@
 
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QMessageBox>
 #include <QSslKey>
 #include <QTextStream>
 #include <QUrl>
@@ -54,16 +55,18 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 
 	st << "<b>" << cert.toString( cert.isTempel() ? "CN" : "GN SN" ) << "</b>";
 
+	QDateTime date = s.dateTime();
 	if( extended )
 	{
 		if( !s.location().isEmpty() )
 			st << "<br />" << s.location();
 		if( !s.role().isEmpty() )
 			st << "<br />" << s.role();
-		st << "<br />" << tr("Signed on") << " "
-			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
-			<< tr("time") << " "
-			<< s.dateTime().toString( "hh:mm" );
+		if( !date.isNull() )
+			st << "<br />" << tr("Signed on") << " "
+				<< SslCertificate::formatDate( date, "dd. MMMM yyyy" ) << " "
+				<< tr("time") << " "
+				<< date.toString( "hh:mm" );
 	}
 	else
 	{
@@ -73,10 +76,11 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 			t << s.location() << "<br />";
 		if( !s.role().isEmpty() )
 			t << s.role() << "<br />";
-		t << tr("Signed on") << " "
-			<< SslCertificate::formatDate( s.dateTime(), "dd. MMMM yyyy" ) << " "
-			<< tr("time") << " "
-			<< s.dateTime().toString( "hh:mm" );
+		if( !date.isNull() )
+			t << tr("Signed on") << " "
+				<< SslCertificate::formatDate( date, "dd. MMMM yyyy" ) << " "
+				<< tr("time") << " "
+				<< date.toString( "hh:mm" );
 		setToolTip( tooltip );
 	}
 
@@ -111,7 +115,15 @@ void SignatureWidget::link( const QString &url )
 	if( url == "details" )
 		SignatureDialog( s, qobject_cast<QWidget*>(parent()) ).exec();
 	else if( url == "remove" )
-		Q_EMIT removeSignature( num );
+	{
+		SslCertificate c = s.cert();
+		QString msg = tr("Remove signature %1")
+			.arg( c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" ) );
+		QMessageBox::StandardButton b = QMessageBox::warning( this, msg, msg,
+			QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel );
+		if( b == QMessageBox::Ok )
+			Q_EMIT removeSignature( num );
+	}
 }
 
 

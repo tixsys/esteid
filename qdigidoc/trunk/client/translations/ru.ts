@@ -337,10 +337,6 @@ Start downloading?</source>
         <translation></translation>
     </message>
     <message>
-        <source>Remove signature %1</source>
-        <translation>Удалить подпись %1</translation>
-    </message>
-    <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
         <translation>У Вас недостаточно прав для записи файла в каталог %1</translation>
     </message>
@@ -920,6 +916,10 @@ Please check your server access sertificate.</source>
     <message>
         <source>unknown</source>
         <translation>Неизвестно</translation>
+    </message>
+    <message>
+        <source>Remove signature %1</source>
+        <translation>Удалить подпись %1</translation>
     </message>
 </context>
 <context>

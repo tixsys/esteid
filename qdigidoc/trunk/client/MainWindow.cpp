@@ -175,6 +175,8 @@ MainWindow::MainWindow( QWidget *parent )
 		params = args;
 		buttonClicked( HomeSign );
 	}
+
+	infoCard->setText( tr("Loading data") );
 }
 
 bool MainWindow::addFile( const QString &file )
@@ -753,14 +755,6 @@ void MainWindow::showWarning( const QString &msg )
 
 void MainWindow::viewSignaturesRemove( unsigned int num )
 {
-	SslCertificate c = doc->signatures().at( num ).cert();
-	QString msg = tr("Remove signature %1")
-		.arg( c.toString( c.isTempel() ? "CN serialNumber" : "GN SN serialNumber" ) );
-	QMessageBox::StandardButton b = QMessageBox::warning( this,
-		windowTitle(), msg,
-		QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Cancel );
-	if( b == QMessageBox::Cancel )
-		return;
 	doc->removeSignature( num );
 	doc->save();
 	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
