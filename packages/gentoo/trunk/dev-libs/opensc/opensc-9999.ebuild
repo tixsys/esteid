@@ -7,7 +7,7 @@ EAPI="2"
 if [[ ${PV} = 9999* ]]; then
 	SVN_ECLASS="subversion"
 	AUTOTOOLS_ECLASS="autotools"
-	ESVN_REPO_URI="https://id.eesti.ee/svn/opensc-mp/trunk"
+	ESVN_REPO_URI="http://www.opensc-project.org/svn/opensc/trunk"
 	EXPERIMENTAL="true"
 else
 	SRC_URI="http://www.opensc-project.org/files/${PN}/${P}.tar.gz"
