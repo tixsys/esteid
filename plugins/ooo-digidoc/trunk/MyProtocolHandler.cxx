@@ -480,12 +480,12 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			{
 				//check if container allready exists!
 				string strTmp = ostrPath.pData->buffer;
-				strTmp =+ ".bdoc";
+				strTmp += ".bdoc";
 				FILE* fp = fopen(strTmp.c_str(), "r");
-				if (fp) 
-				    fclose(fp);
-				else
-				{
+				if (fp != NULL) 
+				{   
+					fclose(fp);
+				
 					//message about existing container
 					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.ContErrorFunc?language=Basic&location=application") ), UNO_QUERY);
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
