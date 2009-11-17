@@ -95,9 +95,18 @@ bool QSigner::loadDriver()
 void QSigner::read()
 {
 	if( d->slotCount )
+	{
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
+		d->slotCount = 0;
+	}
+
 	if( PKCS11_enumerate_slots( d->handle, &d->slots, &d->slotCount ) )
+	{
+		d->sign = QSslCertificate();
+		d->selectedCard.clear();
+		Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
 		return;
+	}
 
 	d->cards.clear();
 	for( unsigned int i = 0; i < d->slotCount; ++i )
