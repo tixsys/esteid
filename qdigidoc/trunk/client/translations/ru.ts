@@ -357,10 +357,6 @@ Start downloading?</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
         <translation>Справка допуска не действительна!

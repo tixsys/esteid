@@ -357,10 +357,6 @@ Alustame laadimist?</translation>
         <translation>Sulge</translation>
     </message>
     <message>
-        <source>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</source>
-        <translation>Mobile-ID BDOC allkirjastamine toimub hetkel SK arenduskeskkonnas!</translation>
-    </message>
-    <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
         <translation>Ligipääsutõend ei ole kehtiv!
