@@ -257,7 +257,7 @@
     </message>
     <message>
         <source>Non repudiation</source>
-        <translation>Не отрицательно</translation>
+        <translation>Невозможность отказа</translation>
     </message>
     <message>
         <source>Key encipherment</source>
