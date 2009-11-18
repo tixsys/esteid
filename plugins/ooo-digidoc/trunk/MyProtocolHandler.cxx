@@ -450,11 +450,30 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					i_try = 0;
 				}
 				else
-				{
+				{	//Show card info
 					m_BdocBridge->DigiCheckCert();
 					if (!m_BdocBridge->ret)
 					{
-						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->pSerialNr )));
+						string strSignerData = "";
+						//Fix character problem
+						for (int k=0; k<strlen(m_BdocBridge->pSerialNr); k++)
+						{
+							if (m_BdocBridge->pSerialNr[k] == '\\')
+							{	//convert to unicode char
+								int iCD1, iCD2;
+								iCD1 = convHexAsciiToInt(m_BdocBridge->pSerialNr[k+1],m_BdocBridge->pSerialNr[k+2]);
+								k += 3; 
+								iCD2 = convHexAsciiToInt(m_BdocBridge->pSerialNr[k+1],m_BdocBridge->pSerialNr[k+2]);
+								k += 2; 
+								strSignerData += (char)iCD1;
+								strSignerData += (char)iCD2;
+							}
+							else
+								strSignerData += m_BdocBridge->pSerialNr[k];
+						}
+						
+						//Show message
+						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!      " )), convertPathToURI(::rtl::OUString::createFromAscii( strSignerData.c_str() )));
 					}
 					else if (m_BdocBridge->ret == 1)
 					{ //NO card or cardreader

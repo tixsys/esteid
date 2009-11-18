@@ -673,7 +673,7 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 //***********************************************************
 int My1EstEIDSigner::checkCert ()
 {	
-	string strRetCert;
+//	string strRetCert = "";
 	MyRealEstEIDSigner m_signer;
 
 	if (!m_signer.i_ret)
@@ -685,7 +685,7 @@ int My1EstEIDSigner::checkCert ()
 		else 
 		{
 			string tempname = activeCert.getSubject();
-			for (size_t u=0; u<tempname.size(); u++)
+			/*for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], "serialNumber=", 13))
 				{
@@ -698,11 +698,30 @@ int My1EstEIDSigner::checkCert ()
 					}
 				}
 				
+			}*/
+			for (size_t u=0; u<tempname.size(); u++)
+			{
+				if (!memcmp(&tempname[u], "CN=", 3))
+				{
+					str_signCert = "";
+					u += 3;
+					while (u<tempname.size())
+					{
+						while ( (u<tempname.size()) && (tempname[u] != '\\'))
+						{							
+							str_signCert += tempname[u];
+							u++;
+							if (tempname[u] == ',')
+								u = tempname.size();													
+						}
+						str_signCert += " ";
+						u += 2;
+					}
+				}
+				
 			}
-			
 		}
 	}
-
 	return m_signer.i_ret;
 }
 //===========================================================
