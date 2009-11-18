@@ -308,7 +308,7 @@ Start downloading?</source>
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation>Проверьте подключение к интернету</translation>
+        <translation>Проверьте подключение к Интернету</translation>
     </message>
     <message>
         <source>Personal code is not valid</source>

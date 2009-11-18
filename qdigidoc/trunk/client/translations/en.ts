@@ -308,7 +308,7 @@ Start downloading?</translation>
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation>Check internet connection</translation>
+        <translation>Check Internet connection</translation>
     </message>
     <message>
         <source>Personal code is not valid</source>

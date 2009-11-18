@@ -308,7 +308,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>Check internet connection</source>
-        <translation>Kontrolli interneti ühendust</translation>
+        <translation>Kontrolli Interneti ühendust</translation>
     </message>
     <message>
         <source>Personal code is not valid</source>
