@@ -347,8 +347,20 @@ void SignatureDDOC::throwError( std::string msg, int err, int line ) const throw
 	}
 	case ERR_OCSP_CERT_NOTFOUND:
 	{
-		SignatureException e( __FILE__, line, "OCSP certificate loading failed");
+		SignatureException e( __FILE__, line, "OCSP certificate loading failed" );
 		e.setCode( Exception::OCSPCertMissing );
+		throw e;
+		break;
+	}
+	case ERR_UNKNOWN_CA:
+	{
+		std::ostringstream s;
+		s << msg;
+		s << "; error: " << err;
+		if( m_doc->f_getErrorString )
+			s << "; message: " << m_doc->f_getErrorString( err );
+		SignatureException e( __FILE__, line, s.str() );
+		e.setCode( Exception::CertificateUnknown );
 		throw e;
 		break;
 	}
