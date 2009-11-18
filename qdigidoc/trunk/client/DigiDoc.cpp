@@ -271,6 +271,7 @@ DigiDocSignature::SignatureStatus DigiDocSignature::validate()
 		switch( parseException( e ) )
 		{
 		case Exception::CertificateIssuerMissing:
+		case Exception::CertificateUnknown:
 		case Exception::OCSPResponderMissing:
 		case Exception::OCSPCertMissing: return Unknown;
 		default: break;
