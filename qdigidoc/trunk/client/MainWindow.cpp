@@ -175,8 +175,6 @@ MainWindow::MainWindow( QWidget *parent )
 		params = args;
 		buttonClicked( HomeSign );
 	}
-
-	infoCard->setText( tr("Loading data") );
 }
 
 bool MainWindow::addFile( const QString &file )

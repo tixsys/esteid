@@ -135,6 +135,11 @@ void QSigner::run()
 {
 	d->terminate = false;
 
+	d->cards["loading"] = 0;
+	d->selectedCard = "loading";
+	d->sign = QSslCertificate();
+	Q_EMIT dataChanged( d->cards.keys(), d->selectedCard, d->sign );
+
 	if( !loadDriver() )
 	{
 		Q_EMIT error( tr("Failed to load PKCS#11 module") );
