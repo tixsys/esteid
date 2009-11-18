@@ -707,7 +707,7 @@ int My1EstEIDSigner::checkCert ()
 					u += 3;
 					while (u<tempname.size())
 					{
-						while ( (u<tempname.size()) && (tempname[u] != '\\'))
+						while ( (u<tempname.size()) && ((tempname[u] != '\\') || (tempname[u+1] != ',')))
 						{							
 							str_signCert += tempname[u];
 							u++;
