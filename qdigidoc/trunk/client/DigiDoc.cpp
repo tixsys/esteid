@@ -406,7 +406,6 @@ QString DigiDoc::fileName() const { return m_fileName; }
 
 bool DigiDoc::init()
 {
-	qputenv( "LANG", "UTF-8" );
 	if( qgetenv( "BDOCLIB_CONF_XML" ).isEmpty() )
 	{
 		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,

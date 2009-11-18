@@ -37,6 +37,7 @@ QString cryptoFileDecoder( const QByteArray &filename ) { return QString::fromUt
 
 int main( int argc, char *argv[] )
 {
+	qputenv( "LANG", "en_US.UTF-8" );
 #ifdef Q_OS_LINUX
 	QFile::setEncodingFunction( cryptoFileEncoder );
 	QFile::setDecodingFunction( cryptoFileDecoder );
