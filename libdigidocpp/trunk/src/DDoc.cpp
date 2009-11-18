@@ -224,7 +224,7 @@ SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 	SignatureInfo *sig = doc->doc->pSignatures[id];
 	X509 *cert = doc->f_ddocSigInfo_GetSignersCert( sig );
 	try { setSigningCertificate( cert ); }
-	catch( const Exception &e ) {}
+	catch( const Exception & ) {}
 
 	Signer::Signature s;
 	s.signature = (unsigned char*)sig->pSigValue->mbufSignatureValue.pMem;
@@ -388,7 +388,6 @@ digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
 	loadFile();
 }
 
-
 DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 :	d( new DDocPrivate )
 {
@@ -408,7 +407,7 @@ void DDoc::loadFile()
 	catch( const Exception & )
 	{ d->throwError( "Failed to create temporary directory", __LINE__ ); }
 
-	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 300 );
+	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 0 );
 	switch( err )
 	{
 	case ERR_OK:
@@ -446,7 +445,7 @@ void DDoc::addDocument( const Document &document ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
 
-	DataFile *data;
+	DataFile *data = 0;
 	int err = d->f_DataFile_new( &data, d->doc, NULL, document.getPath().c_str(),
 		CONTENT_EMBEDDED_BASE64, document.getMediaType().c_str(), 0, NULL, 0,
 		NULL, CHARSET_UTF_8 );
