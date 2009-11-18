@@ -458,18 +458,17 @@ void DDoc::addDocument( const Document &document ) throw(BDocException)
 	d->documents.push_back( doc );
 }
 
-unsigned int DDoc::documentCount() const
-{ return !d->doc || d->doc->nDataFiles < 0 ? 0 : d->doc->nDataFiles; }
+unsigned int DDoc::documentCount() const { return d->documents.size(); }
 
 Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
 
-	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	if( id >= d->documents.size() )
 	{
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
-		s << d->doc->nDataFiles << " documents in container.";
+		s << d->documents.size() << " documents in container.";
 		d->throwError( s.str(), __LINE__ );
 	}
 
@@ -480,11 +479,11 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 {
 	d->throwDocOpenError( __LINE__ );
 
-	if( id >= (unsigned int)d->doc->nSignatures || !d->doc->pSignatures[id] )
+	if( id >= d->signatures.size() )
 	{
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
-		s << d->doc->nDataFiles << " signatures in container.";
+		s << d->signatures.size() << " signatures in container.";
 		d->throwError( s.str(), __LINE__ );
 	}
 
@@ -495,14 +494,14 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
 
-	if( id >= (unsigned int)d->doc->nDataFiles || !d->doc->pDataFiles[id] )
+	if( id >= d->documents.size() )
 	{
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
-		s << d->doc->nDataFiles << " documents in container.";
+		s << d->documents.size() << " documents in container.";
 		d->throwError( s.str(), __LINE__ );
 	}
-	if( d->doc->nSignatures )
+	if( !d->signatures.empty() )
 	{
 		d->throwError(
 			"Can not remove document from container which has signatures, "
@@ -518,11 +517,11 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
 
-	if( id >= (unsigned int)d->doc->nSignatures || !d->doc->pSignatures[id] )
+	if( id >= d->signatures.size() )
 	{
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
-		s << d->doc->nDataFiles << " signatures in container.";
+		s << d->signatures.size() << " signatures in container.";
 		d->throwError( s.str(), __LINE__ );
 	}
 
@@ -642,8 +641,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	d->loadSignatures();
 }
 
-unsigned int DDoc::signatureCount() const
-{ return !d->doc || d->doc->nSignatures < 0 ? 0 : d->doc->nSignatures; }
+unsigned int DDoc::signatureCount() const { return d->signatures.size(); }
 
 void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
 {
