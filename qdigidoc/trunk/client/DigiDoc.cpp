@@ -461,6 +461,7 @@ bool DigiDoc::parseException( const Exception &e, QStringList &causes, Exception
 	case Exception::CertificateRevoked:
 	case Exception::CertificateUnknown:
 	case Exception::OCSPTimeSlot:
+	case Exception::OCSPRequestUnauthorized:
 	case Exception::PINCanceled:
 	case Exception::PINFailed:
 	case Exception::PINIncorrect:
@@ -577,6 +578,8 @@ void DigiDoc::setLastError( const Exception &e )
 		setLastError( tr("Certificate status unknown") ); break;
 	case Exception::OCSPTimeSlot:
 		setLastError( tr("Check your computer time") ); break;
+	case Exception::OCSPRequestUnauthorized:
+		setLastError( tr("Server access certificate is required")); break;
 	case Exception::PINCanceled:
 		break;
 	case Exception::PINFailed:

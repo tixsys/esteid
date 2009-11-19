@@ -51,6 +51,10 @@
         <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
         <translation>Ümbriku avamisel tekkis viga.&lt;br /&gt;%1</translation>
     </message>
+    <message>
+        <source>Server access certificate is required</source>
+        <translation type="unfinished">Ligipääsutõend on vajalik</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

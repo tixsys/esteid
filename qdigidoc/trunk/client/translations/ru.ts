@@ -51,6 +51,10 @@
         <source>An error occurred while opening the document.&lt;br /&gt;%1</source>
         <translation>При открытии документа произошла ошибка&lt;br /&gt;%1</translation>
     </message>
+    <message>
+        <source>Server access certificate is required</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
