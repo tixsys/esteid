@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Server access certificate is required</source>
-        <translation type="unfinished">Ligipääsutõend on vajalik</translation>
+        <translation>Ligipääsutõend on vajalik</translation>
     </message>
 </context>
 <context>

@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Server access certificate is required</source>
-        <translation type="unfinished">Server access certificate is required</translation>
+        <translation>Server access certificate is required</translation>
     </message>
 </context>
 <context>

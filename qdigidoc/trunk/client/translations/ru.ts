@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Server access certificate is required</source>
-        <translation type="unfinished"></translation>
+        <translation>Необходима справка допуска</translation>
     </message>
 </context>
 <context>
