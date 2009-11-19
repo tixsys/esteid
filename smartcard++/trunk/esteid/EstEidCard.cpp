@@ -248,7 +248,9 @@ void EstEidCard::checkProtocol() {
 		if (ce.SW1 != 0x6A || ce.SW2 != 0x87 ) throw;
 		reconnectWithT0();
 	} catch(SCError &sce) {
-		if (sce.error != 0x1) throw;//incorrect function, some drivers do that
+		if (sce.error != 0x1      //incorrect function, some drivers do that
+			&& sce.error != 0x6f7 //microsoft generic PCSC with OK3621
+			) throw;
 		reconnectWithT0();
 		}
 }
