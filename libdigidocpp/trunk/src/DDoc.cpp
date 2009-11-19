@@ -47,52 +47,33 @@ void* DDocLibrary::resolve( const char *symbol )
 #endif
 
 #define throwError( x, msg, line ) throw x( __FILE__, line, msg );
+#define throwError2( x, msg, code, line ) \
+{ x e( __FILE__, line, msg ); e.setCode( code ); throw e; }
 
 #define throwCodeError( x, d, err, msg, line ) \
 	switch( err ) \
 	{ \
 	case ERR_OK: break; \
 	case ERR_PKCS_LOGIN: \
-	{ \
-		x e( __FILE__, line, "PIN Incorrect" ); \
-		e.setCode( Exception::PINIncorrect ); \
-		throw e; \
-		break; \
-	} \
+		throwError2( x, "PIN Incorrect", Exception::PINIncorrect, line ); \
 	case ERR_OCSP_CERT_REVOKED: \
-	{ \
-		x e( __FILE__, line, "Certificate status: revoked" ); \
-		e.setCode( Exception::CertificateRevoked ); \
-		throw e; \
-		break; \
-	} \
+		throwError2( x, "Certificate status: revoked", Exception::CertificateRevoked, line ); \
 	case ERR_OCSP_CERT_UNKNOWN: \
-	{ \
-		x e( __FILE__, line, "Certificate status: unknown" ); \
-		e.setCode( Exception::CertificateUnknown ); \
-		throw e; \
-		break; \
-	} \
+		throwError2( x, "Certificate status: unknown", Exception::CertificateUnknown, line ); \
 	case ERR_OCSP_RESP_NOT_TRUSTED: \
-	{ \
-		x e( __FILE__, line, "Failed to find ocsp responder." ); \
-		e.setCode( Exception::OCSPResponderMissing ); \
-		throw e; \
-		break; \
-	} \
+		throwError2( x, "Failed to find ocsp responder.", Exception::OCSPResponderMissing, line ); \
 	case ERR_OCSP_CERT_NOTFOUND: \
-	{ \
-		x e( __FILE__, line, "OCSP certificate loading failed"); \
-		e.setCode( Exception::OCSPCertMissing ); \
-		throw e; \
-		break; \
-	} \
+		throwError2( x, "OCSP certificate loading failed", Exception::OCSPCertMissing, line ); \
 	case ERR_OCSP_UNAUTHORIZED: \
+		throwError2( x, "Unauthorized OCSP request", Exception::OCSPRequestUnauthorized, line ); \
+	case ERR_UNKNOWN_CA: \
 	{ \
-		x e( __FILE__, line, "Unauthorized OCSP request"); \
-		e.setCode( Exception::OCSPRequestUnauthorized ); \
-		throw e; \
-		break; \
+		std::ostringstream s; \
+		s << msg << "\n (error: " << err; \
+		if( d->f_getErrorString ) \
+			s << "; message: " << d->f_getErrorString( err ); \
+		s << ")"; \
+		throwError2( x, s.str(), Exception::CertificateUnknown, line ); \
 	} \
 	default: \
 	{ \
@@ -102,7 +83,6 @@ void* DDocLibrary::resolve( const char *symbol )
 			s << "; message: " << d->f_getErrorString( err ); \
 		s << ")"; \
 		throwError( x, s.str(), line ); \
-		break; \
 	} \
 	}
 
