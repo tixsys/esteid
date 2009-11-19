@@ -36,6 +36,7 @@ add_custom_command(
                                        --namespace-map urn:oasis:names:tc:opendocument:xmlns:manifest:1.0=digidoc::manifest
                                        OpenDocument_manifest.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/OpenDocument_manifest.xsd
 )
 
 # generate XML DSig xml parser files
@@ -48,6 +49,7 @@ add_custom_command(
                                        --namespace-map http://uri.etsi.org/01903/v1.3.2\#=digidoc::xades
                                        xmldsig-core-schema.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/xmldsig-core-schema.xsd
 )
 
 # generate XAdES xml parser files
@@ -60,6 +62,7 @@ add_custom_command(
                                        --namespace-map http://uri.etsi.org/01903/v1.3.2\#=digidoc::xades
                                        XAdES.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/XAdES.xsd
 )
 
 add_custom_command(
@@ -68,6 +71,7 @@ add_custom_command(
     COMMAND ${XSD_EXECUTABLE} cxx-tree ${COMMON_XSD_OPTS}
                                        conf.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/conf.xsd
 )
 
 
