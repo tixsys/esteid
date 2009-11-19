@@ -436,8 +436,16 @@ digidoc::OCSP::CertStatus digidoc::OCSP::validateResponse(OCSP_REQUEST* req, OCS
 {
     // Check OCSP response status code.
     int respStatus = OCSP_response_status(resp);
-    if(respStatus != OCSP_RESPONSE_STATUS_SUCCESSFUL)
+    switch(respStatus)
     {
+    case OCSP_RESPONSE_STATUS_SUCCESSFUL: break;
+    case OCSP_RESPONSE_STATUS_UNAUTHORIZED:
+    {
+        OCSPException e( __FILE__, __LINE__, "OCSP request failed", respStatus );
+        e.setCode(Exception::OCSPRequestUnauthorized);
+        throw e;
+    }
+    default:
         THROW_OCSPEXCEPTION(respStatus, "OCSP request failed, response status: %s 0x%02X"
                 , OCSPException::toResponseStatusMessage(respStatus).c_str(), respStatus);
     }

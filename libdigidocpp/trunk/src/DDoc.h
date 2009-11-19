@@ -24,8 +24,6 @@ protected:
 	virtual void sign(Signer* signer) throw(SignatureException, SignException);
 
 private:
-	void throwError( std::string msg, int err, int line ) const throw(SignatureException);
-
 	int m_id;
 	DDocPrivate *m_doc;
 };

@@ -27,6 +27,7 @@ namespace digidoc
               OCSPResponderMissing     = 8,
               OCSPCertMissing          = 9,
               OCSPTimeSlot             = 7,
+              OCSPRequestUnauthorized  = 11,
               PINCanceled              = 2,
               PINFailed                = 4,
               PINIncorrect             = 1,

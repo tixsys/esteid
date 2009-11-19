@@ -82,8 +82,6 @@ public:
 	std::vector<DocumentDDoc> documents;
 
 	void throwDocOpenError( int line ) const throw(BDocException);
-	void throwError( const std::string &msg, int line ) const throw(BDocException);
-	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
 	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
 
 	sym_calculateDataFileSizeAndDigest f_calculateDataFileSizeAndDigest;
