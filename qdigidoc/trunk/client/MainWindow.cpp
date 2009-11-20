@@ -294,11 +294,11 @@ void MainWindow::buttonClicked( int button )
 				const QFileInfo f( param );
 				if( !f.isFile() )
 					continue;
-				const QString suffix = f.suffix().toLower();
-				if( doc->isNull() && (suffix == "bdoc" || suffix == "ddoc") )
+				QStringList suffix = QStringList() << "bdoc" << "ddoc";
+				if( doc->isNull() && suffix.contains( f.suffix(), Qt::CaseInsensitive ) )
 				{
 					if( doc->open( f.absoluteFilePath() ) )
-						setCurrentPage( View );
+						setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
 					params.clear();
 					return;
 				}
