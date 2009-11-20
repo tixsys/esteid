@@ -619,6 +619,10 @@ Please check your server access sertificate.</source>
         <source>Failed to sign document</source>
         <translation>Не удалось подписать документ</translation>
     </message>
+    <message>
+        <source>Sign certificate is not selected</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RegisterP12</name>

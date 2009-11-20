@@ -616,6 +616,10 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
         <source>Failed to sign document</source>
         <translation>Dokumendi allkirjastamine ebaõnnestus</translation>
     </message>
+    <message>
+        <source>Sign certificate is not selected</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RegisterP12</name>

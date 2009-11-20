@@ -65,7 +65,12 @@ QSigner::QSigner( QObject *parent )
 
 QSigner::~QSigner() { unloadDriver(); delete d; }
 
-X509* QSigner::getCert() throw(digidoc::SignException) { return (X509*)d->sign.handle(); }
+X509* QSigner::getCert() throw(digidoc::SignException)
+{
+	if( d->sign.isNull() )
+		throw SignException( __FILE__, __LINE__, tr("Sign certificate is not selected").toUtf8().constData() );
+	return (X509*)d->sign.handle();
+}
 
 bool QSigner::loadDriver()
 {
