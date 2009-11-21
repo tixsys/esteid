@@ -8,8 +8,8 @@ Dim fileURL As String
 Dim strCerts As String
 Dim strPin As String	
 Dim strParam As String
-Dim strSignCertData As String
 Dim oBar    &apos; Generated status bar
+Global strSignatureData As String
 
 &apos;****************************************************************
 Sub Main	
@@ -141,17 +141,19 @@ rem			oSignDialog.endExecute()
 End Function
 
 &apos;****************************************************************
-  Function GetCert (strInData As String)
+Function GetCert (strInData As String)
+	strSignatureData = strInData
+End Function 
+
+&apos;****************************************************************
+  Function ShowSignature
   Dim Ctl As Object
   Dim CtlButtonY As Object
   Dim CtlButtonN As Object
-  Dim oSvc As Object
   Dim i, j, k, c, x As Integer
   Dim char As String
   Dim strData as String
 
-
-  strSignCertData = strInData
   Proc = 0
   i = 0
   j = 1
@@ -164,63 +166,52 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 	CtlButtonY = oCertDial.getControl(&quot;SignButton&quot;)
 	CtlButtonN = oCertDial.getControl(&quot;ExitButton&quot;)
 	
-	If Instr(1, strInData, &quot;*&quot;) Then
+	If Instr(1, strSignatureData, &quot;*&quot;) Then
 		CtlButtonY.setEnable(FALSE)
-		CtlButtonN.setEnable(FALSE)
+&apos;		CtlButtonN.setEnable(FALSE)
 		CtlButtonY.setVisible(FALSE)
-		CtlButtonN.setVisible(FALSE)
+&apos;		CtlButtonN.setVisible(FALSE)
 &apos;		oCertDial.setHeight(220)
-  Else
-    CtlButtonN.setEnable(FALSE)
-    CtlButtonN.setVisible(FALSE)
+&apos;  Else
+&apos;    CtlButtonN.setEnable(FALSE)
+&apos;    CtlButtonN.setVisible(FALSE)
   End If
 
-  For c=1 To Len(strInData)
-
-  k = Instr(k+1, strInData, &quot;;&quot;)
-		If k then
-			strTemp = Mid(strInData, j+1, (k-j-1))
-				For x=1 To Len(strTemp)
-					char = Mid(strTemp, x, 1)					
-					if Asc(char) > 127 then 
-						utf1 = Asc(char)-65280 rem - hexFF00
-						x = x+1
-						char = Mid(strTemp, x, 1)
-						utf2 = Asc(char)-65280
-						rem Convert from UTF-16 to UTF-8
-						char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
-					end if	
-					strData = strData + char					 
-				Next x        
-      Ctl.AddItem(strData,i)
-      strData = ""
-		  i=i+1
-			j = k			
-		End If
-		c = k
-	Next c
+  For c=1 To Len(strSignatureData)
+	k = Instr(k+1, strSignatureData, &quot;;&quot;)
+	If k then
+		strTemp = Mid(strSignatureData, j+1, (k-j-1))
+		For x=1 To Len(strTemp)
+			char = Mid(strTemp, x, 1)					
+			if Asc(char) > 127 then 
+				utf1 = Asc(char)-65280 rem - hexFF00
+				x = x+1
+				char = Mid(strTemp, x, 1)
+				utf2 = Asc(char)-65280
+				rem Convert from UTF-16 to UTF-8
+				char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+			end if	
+			strData = strData + char					 
+		Next x        
+		Ctl.AddItem(strData,i)
+		strData = ""
+		i=i+1
+		j = k			
+	End If
+	c = k
+  Next c
 
 	If oCertDial.Execute() Then
-		GetCert =&quot;#&quot;
+		ShowSignature =&quot;#&quot;
 	Else
-		GetCert = &quot;*&quot;
+		ShowSignature = &quot;*&quot;
 	End If
 
 	oCertDial.dispose()
 	
-&apos;	oSvc = createUnoService(&quot;com.sun.star.system.SystemShellExecute&quot;)
-	rem program for reading bdoc container and sending cert info	
-&apos;	oSvc.execute(&quot;C:/Documents and Settings/Mark/Desktop/test-bin&quot;,&quot;&quot;,0)
-		
 End Function
 
 &apos;****************************************************************
-Function ShowSignCert
-
-	MsgBox strSignCertData
-
-	
-End Function
 
 &apos;****************************************************************
 
