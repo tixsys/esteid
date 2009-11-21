@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 
 #include <digidocpp/BDoc.h>
 #include <digidocpp/BDoc.h>
@@ -20,6 +21,7 @@
 #include <digidocpp/crypto/signer/PKCS11Signer.h>
 #include <digidocpp/crypto/signer/EstEIDSigner.h>
 #include <digidocpp/SignatureAttributes.h>
+#include <digidocpp/XmlConf.h>
 
 #ifndef BDOCLIB_CONF_PATH
 #define BDOCLIB_CONF_PATH "digidocpp.conf"
@@ -28,6 +30,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <Winreg.h>
+#else
+#include <errno.h>
 #endif
 
 #define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
@@ -203,8 +207,6 @@ int My1EstEIDSigner::initData()
 	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
-		
-
 	#ifdef _WIN32
 		string conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		HKEY hkey;
@@ -222,10 +224,10 @@ int My1EstEIDSigner::initData()
 	#else
 		char* conf = "BDOCLIB_CONF_XML=" BDOCLIB_CONF_PATH;
 		putenv(conf);	
-	#endif		
+	#endif
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
-
+	
 	try
 	{
 		digidoc::initialize();
@@ -308,8 +310,10 @@ int My1EstEIDSigner::signFile ()
 		
 		//m_signer.pcPin = str_pin.c_str();
 		m_signer.pcPin = cpPin;
-		// Init certificate store.
 		
+		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+		
+		// Init certificate store.
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
 		
 		if (locBdoc)
@@ -669,7 +673,7 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 //***********************************************************
 int My1EstEIDSigner::checkCert ()
 {	
-	string strRetCert;
+//	string strRetCert = "";
 	MyRealEstEIDSigner m_signer;
 
 	if (!m_signer.i_ret)
@@ -681,7 +685,7 @@ int My1EstEIDSigner::checkCert ()
 		else 
 		{
 			string tempname = activeCert.getSubject();
-			for (size_t u=0; u<tempname.size(); u++)
+			/*for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], "serialNumber=", 13))
 				{
@@ -694,11 +698,30 @@ int My1EstEIDSigner::checkCert ()
 					}
 				}
 				
+			}*/
+			for (size_t u=0; u<tempname.size(); u++)
+			{
+				if (!memcmp(&tempname[u], "CN=", 3))
+				{
+					str_signCert = "";
+					u += 3;
+					while (u<tempname.size())
+					{
+						while ( (u<tempname.size()) && ((tempname[u] != '\\') || (tempname[u+1] != ',')))
+						{							
+							str_signCert += tempname[u];
+							u++;
+							if (tempname[u] == ',')
+								u = tempname.size();													
+						}
+						str_signCert += " ";
+						u += 2;
+					}
+				}
+				
 			}
-			
 		}
 	}
-
 	return m_signer.i_ret;
 }
 //===========================================================
@@ -728,3 +751,98 @@ void MyRealEstEIDSigner::hidePinpad()
 
 //===========================================================
 //***********************************************************
+void My1EstEIDSigner::setLocalConfHack()
+{
+	const char *P12Path;
+	const char *P12Pass;
+
+	//--------------------
+	//get P12 cert path and pwtempLine
+#ifdef _WIN32	
+	HKEY hKey;
+	DWORD dwSize;
+	TCHAR PKCS12Path[1024];
+	TCHAR PKCS12Pass[24];
+
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
+		RegCloseKey(hKey);
+
+		P12Path = PKCS12Path;
+	}
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_PASSWD"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
+		RegCloseKey(hKey);
+
+		P12Pass = PKCS12Pass;
+	}
+
+#else
+	#ifdef __APPLE__
+		FILE *listFile;
+		string line;
+				
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Cert > /tmp/P12Path.txt","w");
+		
+		ifstream ifs1("/tmp/P12Path.txt");
+		getline(ifs1,line);
+		P12Path = line.c_str();
+		ifs1.close();		
+		pclose(listFile);
+		
+		listFile = popen("/usr/bin/defaults read com.estonian-id-card Client.pkcs12Pass > /tmp/P12Pass.txt","w");
+		
+//		if(pclose(listFile))
+//			PRINT_DEBUG("error in pclose: %s\n", strerror(errno));
+		ifstream ifs2("/tmp/P12Pass.txt");
+		getline(ifs2,line);
+		P12Pass = line.c_str();
+		ifs2.close();
+		pclose(listFile);
+//		if(ifs2.close())
+//			PRINT_DEBUG("error ifstream.close: %s\n", strerror(errno));
+		if(unlink("/tmp/P12Path.txt"))
+			PRINT_DEBUG("error removing Path file: %s\n", strerror(errno));
+		if(unlink("/tmp/P12Pass.txt"))
+			PRINT_DEBUG("error removing Pass file: %s\n", strerror(errno));
+	#else
+		string localConf;
+		localConf = getenv("HOME");
+		localConf += "/.config/Estonian ID Card.conf";
+	
+		string line, tempLine;
+		string p12PathLine = "pkcs12Cert=";
+		string p12PassLine = "pkcs12Pass=";
+		ifstream ifs(localConf.c_str());
+		while (!ifs.eof())
+		{
+			getline(ifs,line);
+			tempLine = line.substr( 0, p12PathLine.size() );
+			if (!strcmp(tempLine.c_str(), p12PathLine.c_str()))
+			{
+				P12Path = line.substr( p12PathLine.size(), line.size()-p12PathLine.size() ).c_str();
+			}
+			tempLine = line.substr( 0, p12PassLine.size() );
+			if (!strcmp(tempLine.c_str(), p12PassLine.c_str()))
+			{
+				P12Pass = line.substr( p12PassLine.size(), line.size()-p12PassLine.size() ).c_str();
+			}
+		}
+		ifs.close();
+	#endif
+#endif
+	//------------------
+	//set P12 cert path and pw
+	digidoc::Conf *i = NULL;
+	try { i = digidoc::Conf::getInstance(); }
+	catch( const Exception & e) 
+	{
+		getExceptions(e);
+	}
+	i->setPKCS12Cert(P12Path);
+	i->setPKCS12Pass(P12Pass);
+}

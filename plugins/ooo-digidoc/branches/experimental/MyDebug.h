@@ -12,6 +12,7 @@
 #define UNO_URL_HEAD "file://"
 #define SLASH ""
 #define DEBUG_FILE "/tmp/OOoDebug.txt"
+
 #endif
 
 #if DEBUG

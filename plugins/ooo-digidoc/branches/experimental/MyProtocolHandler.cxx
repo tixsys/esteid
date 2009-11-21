@@ -283,7 +283,9 @@ PRINT_DEBUG ("file opening URL : %s",muffik.pData->buffer);
 		Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 		rGlobalDispatchHelper = rDispatchHelper;
 
+		//show signatures
 		getSignatures(false);
+
 	}	
 }
 
@@ -405,6 +407,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			m_BdocBridge = MyBdocBridge::getInstance();
 
 			Reference < XDesktop > rDesktop (mxMSF->createInstance(::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.Desktop" ))),UNO_QUERY);
+			rGlobalDesktop = rDesktop;
 
 			Reference <XComponent> xComp = rDesktop->getCurrentComponent();
 
@@ -428,8 +431,9 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			bool bPathIs = memcmp(ostrPath.pData->buffer, "", 1);
 			//----------------------If We are dealing with BDoc container----------------------
 			if (!memcmp(&strBdocUrl[strBdocUrl.size() - 5], ".bdoc", 5) && iLocPrevContFlag && bPathIs && i_try)
-			{	
-				getSignatures(true);
+			{			
+				if (getSignatures(true))
+					i_try = 0;
 			}
 
 			//---------------------if file has not been saved----------------------------------
@@ -441,7 +445,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			}
 			
 			//---------------------check if card is in reader----------------------------------
-			else 
+			else if (i_try)
 			{				
 				m_BdocBridge->DigiInit();
 				if (m_BdocBridge->ret)
@@ -450,11 +454,32 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					i_try = 0;
 				}
 				else
-				{
+				{	//Show card info
 					m_BdocBridge->DigiCheckCert();
 					if (!m_BdocBridge->ret)
 					{
-						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->pSerialNr )));
+						string strSignerData = "";
+						//Fix character problem
+						for (int k=0; k<strlen(m_BdocBridge->pSerialNr); k++)
+						{
+							if (m_BdocBridge->pSerialNr[k] == '\\')
+							{	//convert special characters
+								int iCD1, iCD2;
+								wchar_t utfChar;
+								iCD1 = convHexAsciiToInt(m_BdocBridge->pSerialNr[k+1],m_BdocBridge->pSerialNr[k+2]);
+								k += 3; 
+								iCD2 = convHexAsciiToInt(m_BdocBridge->pSerialNr[k+1],m_BdocBridge->pSerialNr[k+2]);
+								k += 2;
+
+								utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
+								strSignerData += (char)utfChar;
+							}
+							else
+								strSignerData += m_BdocBridge->pSerialNr[k];
+						}
+						
+						//Show message
+						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!      " )), convertPathToURI(::rtl::OUString::createFromAscii( strSignerData.c_str() )));
 					}
 					else if (m_BdocBridge->ret == 1)
 					{ //NO card or cardreader
@@ -480,12 +505,12 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			{
 				//check if container allready exists!
 				string strTmp = ostrPath.pData->buffer;
-				strTmp =+ ".bdoc";
+				strTmp += ".bdoc";
 				FILE* fp = fopen(strTmp.c_str(), "r");
-				if (fp) 
-				    fclose(fp);
-				else
-				{
+				if (fp != NULL) 
+				{   
+					fclose(fp);
+				
 					//message about existing container
 					Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.ContErrorFunc?language=Basic&location=application") ), UNO_QUERY);
 					xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
@@ -1025,22 +1050,46 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 		if (!bButton)
 		{
 			strSignData = "macro:///HW.HW.GetCert(*" + strSignData + ")";
-			//-------------------Open Macro in new thread---------------------
-			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
-			oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
-			// create and start the hThreadShowSign with pcSignData as a parameter value		
-			oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
+			//-------------Open SignatureCertData Macro------------------------
+			Reference< XDispatchProvider > rDispatchProvider(rGlobalDesktop,UNO_QUERY);
+			rGlobalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+				OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+
+			strSignData = "macro:///HW.HW.ShowSignature";
 			//----------------------------------------------------------------
+			//-------------------Open SignatureCertData Macro in new thread---
+			//oslWorkerFunction type : void (SAL_CALL *oslWorkerFunction)(void*); in osl/thread.h
+				oslWorkerFunction pFunc1 = (void (SAL_CALL *)(void*)) threadCallMacro;
+			// create and start the hThreadShowSign with pcSignData as a parameter value		
+				oslThread hThreadShowSign = osl_createThread(pFunc1,(void *) strSignData.c_str());
+			//----------------------------------------------------------------
+			return 0;
 		}
 		else
 		{
 			strSignData = "macro:///HW.HW.GetCert(#" + strSignData + ")";
-			
-			//-------------Open Signature Viewer Macro------------------------
+			//-------------Open SignatureCertData Macro------------------------
 			Reference< XDispatchProvider > rDispatchProvider(rGlobalDesktop,UNO_QUERY);
 			rGlobalDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
 				OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
-			//----------------------------------------------------------------
+
+			Sequence <Any> outparam;
+			Sequence <sal_Int16> indexes;
+			OUString pParam;
+			OString muff;
+
+			Reference< XComponent > xLocComp = rGlobalDesktop->getCurrentComponent();
+			Reference < XScriptProviderSupplier > xScriptPS(xLocComp, UNO_QUERY);
+			Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
+			Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.ShowSignature?language=Basic&location=application") ), UNO_QUERY);
+			xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+			muff = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
+
+			//--If Cancel button--
+			if (memcmp(muff.pData->buffer, "#", 1))
+				return 1;
+			else
+				return 0;	
 		}
 		
 		
@@ -1066,7 +1115,6 @@ PRINT_DEBUG("name string: %s", m_BdocBridge1->pSignName);
 	//oslWorkerFunction pFunc2 = (void (SAL_CALL *)(void*)) threadCallMacro;
 	//oslThread hThreadChangeStatusBar = osl_createThread(pFunc2,(void *) pcMessage);
 ****************************************/
-		return 0;
 	}
 	else
 		return 1;
