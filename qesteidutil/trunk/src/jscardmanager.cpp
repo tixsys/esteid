@@ -296,3 +296,6 @@ void JsCardManager::showDiagnostics()
 
 void JsCardManager::allowRead()
 { readAllowed = true; }
+
+void JsCardManager::disableRead()
+{ readAllowed = false; }

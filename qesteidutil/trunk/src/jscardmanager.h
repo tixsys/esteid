@@ -69,6 +69,7 @@ public slots:
 	bool anyCardsInReader();
 	int activeReaderNum();
     void allowRead();
+	void disableRead();
 
 private slots:
     void pollCard();

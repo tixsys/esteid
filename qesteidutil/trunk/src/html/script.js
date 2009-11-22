@@ -653,7 +653,9 @@ function updateCert()
 		extender.closeLoading();
 		_alert( 'info', _( 'updateCertOk' ) );
 		activeCardId = "";
+		cardManager.disableRead();
 		cardInserted( cardManager.activeReaderNum() );
+		cardManager.allowRead();
 	}
 	extender.closeLoading();
 }
