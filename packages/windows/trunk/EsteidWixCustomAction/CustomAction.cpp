@@ -45,6 +45,10 @@ LExit:
 	return WcaFinalize(er);
 }
 
+UINT __stdcall RemoveExistingProductsAgain(MSIHANDLE hInstall)
+{
+	return MsiDoActionW(hInstall, L"RemoveExistingProducts");
+}
 
 // DllMain - Initialize and cleanup WiX custom action utils.
 extern "C" BOOL WINAPI DllMain(
