@@ -651,6 +651,7 @@ function updateCert()
 	if ( ok )
 	{
 		extender.closeLoading();
+		_alert( 'info', _( 'updateCertOk' ) );
 		activeCardId = "";
 		cardInserted( cardManager.activeReaderNum() );
 	}
