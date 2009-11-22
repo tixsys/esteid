@@ -405,10 +405,6 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 			if ( result.isEmpty() || result.size() != 147 || result.size() < 134 )
 				throw std::runtime_error( "step25a" );
 
-			QByteArray tmpResult = QByteArray::fromHex( queryServer( s, result ).remove( 0, 16 ) );
-			if ( tmpResult.isEmpty() || tmpResult.size() != 114 )
-				throw std::runtime_error( "step25b" );
-
 			if ( (unsigned char)result.at( 133 ) >= 0x80 )
 			{
 				runStep( 3 );
@@ -421,7 +417,9 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 				runStep( 17 );
 				step = 21;
 			} else { //start generating certs
-				result = tmpResult;
+				result = QByteArray::fromHex( queryServer( s, result ).remove( 0, 16 ) );
+				if ( result.isEmpty() || result.size() != 114 )
+					throw std::runtime_error( "step25b" );
 			}
 
 			break;
