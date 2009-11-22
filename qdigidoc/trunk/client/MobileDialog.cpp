@@ -92,10 +92,9 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	}
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		//request.setUrl( "https://www.openxades.org:8443" );
-		request.setUrl( QUrl("https://www.sk.ee:8097") );
+		request.setUrl( QUrl(s.value("bdocurl", "https://www.sk.ee:8097").toString()) );
 	else
-		request.setUrl( QUrl("https://digidocservice.sk.ee") );
+		request.setUrl( QUrl(s.value("ddocurl", "https://digidocservice.sk.ee").toString()) );
 
 	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
 	if( certFile.isEmpty() || !QFile::exists( certFile ) )
