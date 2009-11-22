@@ -696,5 +696,21 @@ QByteArray CertUpdate::queryServer( int s, QByteArray result )
 		result = result.remove( 0, result.indexOf( "\r\n\r\n" ) + 4 );
 	qDebug() << "step " << s << " serverStep: " << serverStep << " receive: " << result;
 	sock->disconnectFromHost();
+
+	//veakoodide kontroll
+	QByteArray hex = QByteArray::fromHex( result );
+	if ( hex.size() > 4 )
+	{
+		switch( hex.at(4) )
+		{
+			case 0x01: throw std::runtime_error( tr( "Server sai vale arvu baite, samm: %1" ).arg( s ).toStdString() );
+			case 0x02:
+			case 0x03:
+			case 0x07:
+			case 0x08: throw std::runtime_error( tr( "Serveri töös tekkisid vead, samm: %1" ).arg( s ).toStdString() );
+			case 0x04: throw std::runtime_error( tr( "Kaardi vastuse parsimisel tekkis viga, samm: %1" ).arg( s ).toStdString() );
+			case 0x05: throw std::runtime_error( tr( "Sertifitseerimiskeskus ei vasta, samm: %1" ).arg( s ).toStdString() );
+		}
+	}
 	return result;
 }
