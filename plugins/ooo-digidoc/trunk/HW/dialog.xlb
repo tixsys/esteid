@@ -9,4 +9,5 @@
  <library:element library:name="Failure"/>
  <library:element library:name="NoCard"/>
  <library:element library:name="ContError"/>
+ <library:element library:name="GlobMess"/>
 </library:library>

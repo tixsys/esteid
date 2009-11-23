@@ -10,6 +10,7 @@ Dim strPin As String
 Dim strParam As String
 Dim oBar    &apos; Generated status bar
 Global strSignatureData As String
+Global strGlobMess As String
 
 &apos;****************************************************************
 Sub Main	
@@ -311,4 +312,44 @@ sub test
 	StatusBarCtrl
 	EndStatusBar
 end sub
+
+&apos;****************************************************************
+Function SetGlobMess (strInData As String)
+  strGlobMess = strInData
+End Function
+
+&apos;****************************************************************
+Function GlobalMess
+  Dim oGMDial As Object
+  Dim Ctrl As Object
+  Dim x As Integer
+  Dim char As String
+  Dim strData as String
+  
+  DialogLibraries.LoadLibrary(&quot;HW&quot;)
+  oGMDial = CreateUnoDialog(DialogLibraries.HW.GlobMess)
+  Ctrl = oGMDial.getControl(&quot;MessageLabel&quot;)
+  
+  For x=1 To Len(strGlobMess)
+		char = Mid(strGlobMess, x, 1)					
+		if Asc(char) > 127 then 
+			utf1 = Asc(char)-65280 rem - hexFF00
+			x = x+1
+			char = Mid(strGlobMess, x, 1)
+			utf2 = Asc(char)-65280
+			rem Convert from UTF-16 to UTF-8
+			char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+		end if	
+		strData = strData + char					 
+	Next x
+  
+  Ctrl.setText(strData)
+  
+  If oGMDial.Execute() Then
+    GlobalMess =&quot;#&quot;
+  Else
+    GlobalMess = &quot;*&quot;
+  End If
+    oGMDial.dispose()
+  End Function
 </script:module>

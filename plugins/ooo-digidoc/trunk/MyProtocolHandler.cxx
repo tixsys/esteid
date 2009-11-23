@@ -419,6 +419,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						
 			Reference < XScriptProviderSupplier > xScriptPS(xComp, UNO_QUERY);
 			Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
+			Reference< XDispatchProvider > rDispatchProvider(rDesktop,UNO_QUERY);
+			Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
 			
 			Reference < XModel> xMyModel (xComp, UNO_QUERY);
 			
@@ -458,7 +460,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					m_BdocBridge->DigiCheckCert();
 					if (!m_BdocBridge->ret)
 					{
-						string strSignerData = "";
+						string strSignerData = "Kasutatav Sertifikaat:\n";
 						//Fix character problem
 						for (int k=0; k<strlen(m_BdocBridge->pSerialNr); k++)
 						{
@@ -472,14 +474,25 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 								k += 2;
 
 								strSignerData += (char)iCD1;
-								strSignerData += (char)iCD2;
-							}
+								strSignerData += (char)iCD2;							}
 							else
 								strSignerData += m_BdocBridge->pSerialNr[k];
 						}
 						
 						//Show message
-						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!      " )), convertPathToURI(::rtl::OUString::createFromAscii( strSignerData.c_str() )));
+						//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kasutatav Sertifikaat!      " )), convertPathToURI(::rtl::OUString::createFromAscii( strSignerData.c_str() )));
+						//Set message string Macro
+						strSignData = "macro:///HW.HW.SetGlobMess(" + strSignerData + ")";
+						rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+							OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+						//Show message Macro
+						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
+						muff = OUStringToOString(pParam, RTL_TEXTENCODING_UTF8);
+
+						//--If Cancel button--
+						if (memcmp(muff.pData->buffer, "#", 1))
+							i_try = 0;					
 					}
 					else if (m_BdocBridge->ret == 1)
 					{ //NO card or cardreader

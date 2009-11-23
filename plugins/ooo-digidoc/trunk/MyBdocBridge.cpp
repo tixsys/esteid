@@ -714,7 +714,7 @@ int My1EstEIDSigner::checkCert ()
 							if (tempname[u] == ',')
 								u = tempname.size();													
 						}
-						str_signCert += " ";
+						str_signCert += " \n";
 						u += 2;
 					}
 				}
