@@ -471,8 +471,8 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 								iCD2 = convHexAsciiToInt(m_BdocBridge->pSerialNr[k+1],m_BdocBridge->pSerialNr[k+2]);
 								k += 2;
 
-								utfChar = ((iCD1 - 192) * 64) + (iCD2 - 128);
-								strSignerData += (char)utfChar;
+								strSignerData += (char)iCD1;
+								strSignerData += (char)iCD2;
 							}
 							else
 								strSignerData += m_BdocBridge->pSerialNr[k];
