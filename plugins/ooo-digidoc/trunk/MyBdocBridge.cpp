@@ -642,9 +642,17 @@ MyRealEstEIDSigner::MyRealEstEIDSigner() throw(SignException)
 	{
 		cardSignCert = getCert();	
 	}
-	catch( const Exception & ) {
-		i_ret=1;
-	}	
+
+	catch(const digidoc::SignException& e)
+	{
+		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
+		i_ret = 1;
+	}
+	catch(...)
+	{
+		PRINT_DEBUG("Caught unknown exception");
+		i_ret = 1;
+	}
 }
 
 //===========================================================
