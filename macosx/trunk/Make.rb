@@ -33,6 +33,7 @@ class Application
 		@options.name = 'Installer'
 		@options.volname = nil
 		@options.build = 'build'
+		@options.target = 'Release'
 		@options.binaries = 'build/Release'
 		@options.repository = 'build/Repository'
 		@options.digidoc = 'build/Digidoc'
@@ -112,15 +113,15 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/trunk').to_s) do	
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'rm -R -f libdigidoc/Release' if File.exists? 'libdigidoc/Release'
+			run_command "rm -R -f libdigidoc/#{@options.target}" if File.exists? "libdigidoc/#{@options.target}"
 			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command 'xcodebuild -project libdigidoc.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
-			run_command 'install_name_tool -id /usr/local/libdigidoc.dylib libdigidoc/Release/libdigidoc.dylib'
+			run_command "xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+			run_command "install_name_tool -id /usr/local/libdigidoc.dylib libdigidoc/#{@options.target}/libdigidoc.dylib"
 			puts "Copying file libdigidoc.dylib" if @options.verbose
-			FileUtils.cp_r('libdigidoc/Release/libdigidoc.dylib', digidoc2)
+			FileUtils.cp_r("libdigidoc/#{@options.target}/libdigidoc.dylib", digidoc2)
 			
 			if @options.force
-				run_command 'sudo xcodebuild -project libdigidoc.xcodeproj -configuration Release -target install -sdk macosx10.4'
+				run_command "sudo xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
 			end
 			
 			# This should be here only temporary until overall structure is fixed in libdigidoc2 (ie no 2 certificate storages)
@@ -140,15 +141,15 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidocpp/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'rm -R -f src/Release' if File.exists? 'src/Release'
+			run_command "rm -R -f src/#{@options.target}" if File.exists? "src/#{@options.target}"
 			run_command 'cmake -G "Xcode" -DXSD_EXECUTABLE=/usr/local/bin/xsd -DCMAKE_INSTALL_PREFIX=/usr/local -DPKCS11H_LIBRARY=/usr/local/lib/libpkcs11-helper.a -DPKCS11H_INCLUDE_DIR=/usr/local/include/pkcs11-helper-1.0 -DLIBP11_LIBRARY=/usr/local/lib/libp11.dylib -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command 'xcodebuild -project libdigidocpp.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
-			run_command 'install_name_tool -id /usr/local/libdigidocpp.dylib src/Release/libdigidocpp.dylib'
+			run_command "xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+			run_command "install_name_tool -id /usr/local/libdigidocpp.dylib src/#{@options.target}/libdigidocpp.dylib"
 			puts "Copying file libdigidocpp.dylib" if @options.verbose
-			FileUtils.cp_r('src/Release/libdigidocpp.dylib', digidoc)
+			FileUtils.cp_r("src/#{@options.target}/libdigidocpp.dylib", digidoc)
 			
 			puts "Copying file digidocpp.conf" if @options.verbose
-			FileUtils.cp_r('digidocpp.conf', conf)
+			FileUtils.cp_r('etc/digidocpp.conf', conf)
 			
 			Dir.glob(File.join('etc/certs', '**/*')).each do |path|
 				rpath = File.join(conf_certs, path['etc/certs'.length, path.length - 1])
@@ -173,7 +174,7 @@ class Application
 			end
 			
 			if @options.force
-				run_command 'sudo xcodebuild -project libdigidocpp.xcodeproj -configuration Release -target install -sdk macosx10.4'
+				run_command "sudo xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
 			end
 		end
 		
@@ -206,7 +207,7 @@ class Application
 			
 			FileUtils.cd('build') do
 				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
-				run_command 'xcodebuild -project xpi.xcodeproj -configuration Release -target ALL_BUILD -sdk macosx10.4'
+				run_command "xcodebuild -project xpi.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
 				run_command "ditto -xk *.xpi #{@options.mozappid}"
 				
 				# Clean-up extension? TODO: This should be removed
@@ -230,12 +231,12 @@ class Application
 		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'rm -R -f Release' if File.exists? 'Release'
+			run_command "rm -R -f #{@options.target}" if File.exists? "#{@options.target}"
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command 'xcodebuild -project qesteidutil.xcodeproj -configuration Release -target qesteidutil -sdk macosx10.4'
+			run_command "xcodebuild -project qesteidutil.xcodeproj -configuration #{@options.target} -target qesteidutil -sdk macosx10.4"
 			
 			puts "Copying qesteidutil.app..." if @options.verbose
-			FileUtils.cp_r('Release/qesteidutil.app', binaries)
+			FileUtils.cp_r("#{@options.target}/qesteidutil.app", binaries)
 		end
 		
 		puts "Creating qdigidoc..." if @options.verbose
@@ -245,29 +246,29 @@ class Application
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command 'rm client/CMakeCache.txt' if File.exists? 'client/CMakeCache.txt'
 			run_command 'rm -R client/CMakeFiles' if File.exists? 'client/CMakeFiles'
-			run_command 'rm -R -f client/Release' if File.exists? 'client/Release'
+			run_command "rm -R -f client/#{@options.target}" if File.exists? "client/#{@options.target}"
 			run_command 'rm crypto/CMakeCache.txt' if File.exists? 'crypto/CMakeCache.txt'
 			run_command 'rm -R crypto/CMakeFiles' if File.exists? 'crypto/CMakeFiles'
-			run_command 'rm -R -f crypto/Release' if File.exists? 'crypto/Release'
+			run_command "rm -R -f crypto/#{@options.target}" if File.exists? "crypto/#{@options.target}"
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
 			
 			puts "Creating qdigidocclient..." if @options.verbose
-			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidocclient -sdk macosx10.4'
+			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidocclient -sdk macosx10.4"
 			
 			puts "Copying qdigidocclient.app..." if @options.verbose
-			FileUtils.cp_r('client/Release/qdigidocclient.app', binaries)
+			FileUtils.cp_r("client/#{@options.target}/qdigidocclient.app", binaries)
 			
 			puts "Creating qdigidoccrypto..." if @options.verbose
-			run_command 'xcodebuild -project qdigidoc.xcodeproj -configuration Release -target qdigidoccrypto -sdk macosx10.4'
+			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidoccrypto -sdk macosx10.4"
 			
 			puts "Copying qdigidoccrypto.app..." if @options.verbose
-			FileUtils.cp_r('crypto/Release/qdigidoccrypto.app', binaries)
+			FileUtils.cp_r("crypto/#{@options.target}/qdigidoccrypto.app", binaries)
 		end
 		
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
-		run_command 'xcodebuild -project Project.xcodeproj -configuration Release -target Main'
+		run_command "xcodebuild -project Project.xcodeproj -configuration Release -target Main"
 		
 		puts "Building tokend..." if @options.verbose
 		
@@ -733,6 +734,7 @@ class Application
 		opts.on('-b', '--binaries [DIR]', 'Use directory for the binaries') { |dir| @options.binaries = dir }
 		opts.on('-c', '--repository [DIR]', 'Use directory for the repository') { |dir| @options.repository = dir }
 		opts.on('-d', '--digidoc [DIR]', 'Look for libdigidoc stuff at this path') { |dir| @options.digidoc = dir }
+		opts.on('-D', '--debug', 'Build in debug mode') { |dir| @options.target = 'Debug' }
 		opts.on('-q', '--qt [DIR]', 'Look for Qt frameworks at this path') { |dir| @options.qt = dir }
 		opts.on('-o', '--opensc [DIR]', 'Look for OpenSC files at this path') { |dir| @options.opensc = dir }
 		opts.on('-p', '--packages [DIR]', 'Use directory for the packages') { |dir| @options.packages = dir }
