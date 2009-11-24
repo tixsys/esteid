@@ -801,7 +801,7 @@ class Application
 				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.installer.digidoc',
-				:version => '1.0.1'
+				:version => '1.0.2'
 			}, {
 				:name => 'esteid-qt',
 				:files => [
