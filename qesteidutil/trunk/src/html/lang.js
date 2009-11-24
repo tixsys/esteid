@@ -130,7 +130,7 @@ var htmlStrings = {
 	"loadPicFailed3": new tr( "Pildi laadimine ebaõnnestus - viga salvestamisel!", "Loading picture failed - error saving file!", "Загрузка картинки неуспешна- ошибка при сохранении!" ),
 	"loadCardData": new tr( "Loen andmeid", "Reading data", "Данные считываются" ),
 	"updateCert": new tr( "Sertifikaatide uuendamine...", "Updating certificates", "Обновление сертификатов" ),
-	"updateCertOk": new tr( "Sertifikaatide uuendamine õnnestus", "Updating certificates successfull", "" )
+	"updateCertOk": new tr( "Sertifikaatide uuendamine õnnestus", "Updating certificates successfull", "Успешное обновление сертификатов" )
 };
 
 //codes from eesti.ee
