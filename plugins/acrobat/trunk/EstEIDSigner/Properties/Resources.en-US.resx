@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CARD_TOKEN_INFO" xml:space="preserve">
+    <value>GetTokenInfo {0} failed</value>
+  </data>
+  <data name="CERT_DONT_MATCH" xml:space="preserve">
+    <value>Certificates don't match</value>
+  </data>
+  <data name="INVALID_CERT" xml:space="preserve">
+    <value>Invalid certificate</value>
+  </data>
+  <data name="CARD_HASH_UPDATE" xml:space="preserve">
+    <value>Card hash update error</value>
+  </data>
+  <data name="CERT_MISSING" xml:space="preserve">
+    <value>Certificate missing</value>
+  </data>
+  <data name="CARD_HASH_FINALIZE" xml:space="preserve">
+    <value>Card has finalize error</value>
+  </data>
+  <data name="CERTS_MISSING" xml:space="preserve">
+    <value>No valid certificates found on smartcard</value>
+  </data>
+  <data name="OUT_OF_MEMORY" xml:space="preserve">
+    <value>Out of memory</value>
+  </data>
+  <data name="CARD_MISSING" xml:space="preserve">
+    <value>No ID-card found</value>
+  </data>
+  <data name="MEMORY_ERROR" xml:space="preserve">
+    <value>Not enough memory</value>
+  </data>
+  <data name="PKCS11_OPEN" xml:space="preserve">
+    <value>PKCS#11 open failed</value>
+  </data>
+  <data name="ACTION_CANCELED" xml:space="preserve">
+    <value>Signing cancelled</value>
+  </data>
+  <data name="CERT_READ_FAILURE" xml:space="preserve">
+    <value>Reading certificate failed</value>
+  </data>
+  <data name="CARD_HASH_INIT" xml:space="preserve">
+    <value>Card hash initialize error</value>
+  </data>
+  <data name="TSA_ERROR" xml:space="preserve">
+    <value>Timestamp error: </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARD_INTERNAL_ERROR" xml:space="preserve">
+    <value>Internal card error</value>
+  </data>
+  <data name="NO_PIN_SUPPLIED" xml:space="preserve">
+    <value>PIN empty</value>
+  </data>
+  <data name="DEFAULT_CONFIG" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+ &lt;appSettings&gt;
+  &lt;add key="pkcs11_library" value="opensc-pkcs11.dll" /&gt;
+  &lt;add key="debug" value="false" /&gt;
+  &lt;add key="ocsp_url" value="http://ocsp.sk.ee" /&gt;
+  &lt;add key="cert_path" value=".\certs" /&gt;
+  &lt;add key="enable_tsa" value="False" /&gt;
+  &lt;add key="visible_signature" value="False" /&gt;
+  &lt;add key="tsa_url" value="http://www.edelweb.fr/cgi-bin/service-tsp" /&gt;
+  &lt;add key="tsa_user" value="" /&gt;
+  &lt;add key="tsa_password" value="" /&gt;
+  &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
+  &lt;add key="language" value="" /&gt;
+ &lt;/appSettings&gt;
+&lt;/configuration&gt;</value>
+  </data>
+  <data name="ADD_SIGNATURE" xml:space="preserve">
+    <value>Signing document ...</value>
+  </data>
+  <data name="CERT_ISSUER_MISSING" xml:space="preserve">
+    <value>Invalid certificate: issuer missing</value>
+  </data>
+  <data name="CONNECTING_SMARTCARD" xml:space="preserve">
+    <value>Connecting smartcard ...</value>
+  </data>
+  <data name="DIR_CERT_ERROR" xml:space="preserve">
+    <value>Reading certifcates failed from directory: </value>
+  </data>
+  <data name="DOCUMENT_ALREADY_SIGNED" xml:space="preserve">
+    <value>Document already signed!</value>
+  </data>
+  <data name="DOCUMENT_ALREADY_SIGNED_BY" xml:space="preserve">
+    <value>Document already signed! Signer: </value>
+  </data>
+  <data name="DOCUMENT_SIGNED" xml:space="preserve">
+    <value>Document signed!</value>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="GENERAL_EXCEPTION" xml:space="preserve">
+    <value>Failure ...</value>
+  </data>
+  <data name="UI_INPUT_FILEDIALOG_FILTER" xml:space="preserve">
+    <value>PDF files (*.pdf)|*.pdf</value>
+  </data>
+  <data name="UI_INPUT_FILEDIALOG_TITLE" xml:space="preserve">
+    <value>Choose file</value>
+  </data>
+  <data name="MISSING_INPUT" xml:space="preserve">
+    <value>Choose input PDF file!</value>
+  </data>
+  <data name="MISSING_OUTPUT" xml:space="preserve">
+    <value>Choose output PDF file!</value>
+  </data>
+  <data name="OCSP_CERT_ERROR" xml:space="preserve">
+    <value>OCSP certificate error!</value>
+  </data>
+  <data name="UI_OUTPUT_FILEDIALOG_FILTER" xml:space="preserve">
+    <value>PDF files (*.pdf)|*.pdf</value>
+  </data>
+  <data name="UI_OUTPUT_FILEDIALOG_TITLE" xml:space="preserve">
+    <value>Save PDF File</value>
+  </data>
+  <data name="PKCS12_LOAD_ERROR" xml:space="preserve">
+    <value>PKCS#12 variables read failure: </value>
+  </data>
+  <data name="READ_CERTS" xml:space="preserve">
+    <value>Reading certificates ...</value>
+  </data>
+  <data name="READ_SETTINGS" xml:space="preserve">
+    <value>Reading settings ...</value>
+  </data>
+  <data name="SIGNING_CANCELED" xml:space="preserve">
+    <value>Signing cancelled ...</value>
+  </data>
+  <data name="TSA_REQUEST" xml:space="preserve">
+    <value>Making timestamp request ...</value>
+  </data>
+  <data name="VERIFYING_DOCUMENT" xml:space="preserve">
+    <value>Checking document ...</value>
+  </data>
+  <data name="VERIFYING_OCSP" xml:space="preserve">
+    <value>Makig OCSP request ...</value>
+  </data>
+  <data name="RESPONDER_CET_MISSING" xml:space="preserve">
+    <value>Responder certificate missing: </value>
+  </data>
+  <data name="ISSUER_CERT_MISSING" xml:space="preserve">
+    <value>Issuer certificate missing: </value>
+  </data>
+  <data name="UI_CERT_ISSUED_BY" xml:space="preserve">
+    <value>Issuer</value>
+  </data>
+  <data name="UI_CERT_ISSUED_TO" xml:space="preserve">
+    <value>Issued to</value>
+  </data>
+  <data name="UI_CERT_VALID_UNTIL" xml:space="preserve">
+    <value>Valid until</value>
+  </data>
+  <data name="INVALID_OCSP_RESPONSE" xml:space="preserve">
+    <value>Invalid OCSP response</value>
+  </data>
+  <data name="INVALID_OCSP_RESPONSE_COUNT" xml:space="preserve">
+    <value>OCSP response failure, too many items: </value>
+  </data>
+  <data name="INVALID_OCSP_STATUS" xml:space="preserve">
+    <value>OCSP status error: </value>
+  </data>
+  <data name="INVALID_OCSP_TIMESLOT" xml:space="preserve">
+    <value>OCSP response not in valid timeslot</value>
+  </data>
+  <data name="INVALID_PKCS12_CERT_PRI_KEY_MISSING" xml:space="preserve">
+    <value>Invalid PKCS#12 envelope: private key missing</value>
+  </data>
+  <data name="INVALID_PKCS12_CERT_PUB_KEY_MISSING" xml:space="preserve">
+    <value>Invalid PKCS#12 envelope: public key missing</value>
+  </data>
+  <data name="MISSING_CONFIG_FILE" xml:space="preserve">
+    <value>Configuration file missing: </value>
+  </data>
+  <data name="OCSP_ERROR" xml:space="preserve">
+    <value>Certificate: {0}, OCSP response: {1}</value>
+  </data>
+  <data name="OCSP_URL_MISSING" xml:space="preserve">
+    <value>OCSP URL missing</value>
+  </data>
+  <data name="OCSP_VERIFY_FAILED" xml:space="preserve">
+    <value>OCSP check failed</value>
+  </data>
+  <data name="PKCS12_FILENAME_MISSING" xml:space="preserve">
+    <value>PKCS#12 file name empty!</value>
+  </data>
+  <data name="PKCS12_FILE_MISSING" xml:space="preserve">
+    <value>PKCS#12 file missing: </value>
+  </data>
+  <data name="REGISTRY_SETTING_MISSING" xml:space="preserve">
+    <value>Estonian ID-card registry settings missing</value>
+  </data>
+  <data name="TSA_READ_ERROR" xml:space="preserve">
+    <value>{0} reading response failed</value>
+  </data>
+  <data name="TSA_URL_ERROR" xml:space="preserve">
+    <value>{0} returned error: {1}</value>
+  </data>
+  <data name="UI_CERTIFICATES" xml:space="preserve">
+    <value>Certificates</value>
+  </data>
+  <data name="UI_PICK_CERTIFICATE" xml:space="preserve">
+    <value>Choose certificate</value>
+  </data>
+  <data name="UI_INPUT" xml:space="preserve">
+    <value>Input:</value>
+  </data>
+  <data name="UI_PDF_DOC" xml:space="preserve">
+    <value>PDF Document</value>
+  </data>
+  <data name="UI_AUTHOR" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="UI_CHOOSE_INPUT" xml:space="preserve">
+    <value>Choose input</value>
+  </data>
+  <data name="UI_CHOOSE_OUTPUT" xml:space="preserve">
+    <value>Choose output</value>
+  </data>
+  <data name="UI_CREATOR" xml:space="preserve">
+    <value>Creator:</value>
+  </data>
+  <data name="UI_HELP_LINK" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="UI_KEYWORDS" xml:space="preserve">
+    <value>Keywords:</value>
+  </data>
+  <data name="UI_OUTPUT" xml:space="preserve">
+    <value>Output:</value>
+  </data>
+  <data name="UI_PDF_METADATA" xml:space="preserve">
+    <value>PDF Metadata</value>
+  </data>
+  <data name="UI_SETTINGS_LINK" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="UI_SIGNATURE" xml:space="preserve">
+    <value>Signature</value>
+  </data>
+  <data name="UI_SIGNATURE_DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="UI_SIGNATURE_LOCATION" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="UI_SIGNATURE_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="UI_SIGNATURE_VISIBLE" xml:space="preserve">
+    <value>Need visible signature</value>
+  </data>
+  <data name="UI_SIGN_BUTTON" xml:space="preserve">
+    <value>Sign using ID-card</value>
+  </data>
+  <data name="UI_SOFTWARE" xml:space="preserve">
+    <value>Software:</value>
+  </data>
+  <data name="UI_STATUS" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="UI_SUBJECT" xml:space="preserve">
+    <value>Subject:</value>
+  </data>
+  <data name="UI_TITLE" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+</root>
