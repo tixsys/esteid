@@ -618,7 +618,7 @@ Please check your server access sertificate.</translation>
     </message>
     <message>
         <source>Sign certificate is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sign certificate is not selected</translation>
     </message>
 </context>
 <context>

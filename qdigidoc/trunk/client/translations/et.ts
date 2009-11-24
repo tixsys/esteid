@@ -618,7 +618,7 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>Sign certificate is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Allkirjastamise sertifikaat ei ole valitud</translation>
     </message>
 </context>
 <context>

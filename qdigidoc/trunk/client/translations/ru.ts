@@ -621,7 +621,7 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>Sign certificate is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат подписи не выбран</translation>
     </message>
 </context>
 <context>
