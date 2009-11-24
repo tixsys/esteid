@@ -117,55 +117,275 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ACTION_CANCELED" xml:space="preserve">
-    <value>Allkirjastamine katkestati</value>
-  </data>
-  <data name="CARD_HASH_FINALIZE" xml:space="preserve">
-    <value>Viga krüptoräsi sulgemisel</value>
-  </data>
-  <data name="CARD_HASH_INIT" xml:space="preserve">
-    <value>Viga krüptoräsi initsialiseerimisel</value>
-  </data>
-  <data name="CARD_HASH_UPDATE" xml:space="preserve">
-    <value>Viga krüptoräsi uuendamisel</value>
-  </data>
-  <data name="CARD_INTERNAL_ERROR" xml:space="preserve">
-    <value>Viga ID-kaardiga suhtlemisel </value>
-  </data>
-  <data name="CARD_MISSING" xml:space="preserve">
-    <value>ID-kaarti ei leitud</value>
-  </data>
   <data name="CARD_TOKEN_INFO" xml:space="preserve">
     <value>GetTokenInfo {0} ebaõnnestus</value>
-  </data>
-  <data name="CERTS_MISSING" xml:space="preserve">
-    <value>Id-kaardilt ei leitud vastavaid sertifikaate</value>
   </data>
   <data name="CERT_DONT_MATCH" xml:space="preserve">
     <value>Valitud sertifikaat ja Id-kaardil paiknev sertifikaat ei ole identsed</value>
   </data>
-  <data name="CERT_MISSING" xml:space="preserve">
-    <value>Puudub sertifikaat</value>
-  </data>
-  <data name="CERT_READ_FAILURE" xml:space="preserve">
-    <value>Sertifikaadi lugemine ebaõnnestus</value>
-  </data>
   <data name="INVALID_CERT" xml:space="preserve">
     <value>Valitud sertifikaati ei saa kasutada allkirjastamiseks</value>
   </data>
-  <data name="MEMORY_ERROR" xml:space="preserve">
-    <value>Mälupuhver on täis</value>
+  <data name="CARD_HASH_UPDATE" xml:space="preserve">
+    <value>Viga krüptoräsi uuendamisel</value>
   </data>
-  <data name="NO_PIN_SUPPLIED" xml:space="preserve">
-    <value>PIN-kood on tühi</value>
+  <data name="CERT_MISSING" xml:space="preserve">
+    <value>Puudub sertifikaat</value>
+  </data>
+  <data name="CARD_HASH_FINALIZE" xml:space="preserve">
+    <value>Viga krüptoräsi sulgemisel</value>
+  </data>
+  <data name="CERTS_MISSING" xml:space="preserve">
+    <value>Id-kaardilt ei leitud vajalikke sertifikaate</value>
   </data>
   <data name="OUT_OF_MEMORY" xml:space="preserve">
     <value>Mälu on otsas</value>
   </data>
+  <data name="CARD_MISSING" xml:space="preserve">
+    <value>ID-kaarti ei leitud</value>
+  </data>
+  <data name="MEMORY_ERROR" xml:space="preserve">
+    <value>Mälupuhver on täis</value>
+  </data>
   <data name="PKCS11_OPEN" xml:space="preserve">
-    <value>opensc-pkcs11 avamine ebaõnnestus</value>
+    <value>PKCS#11 avamine ebaõnnestus</value>
+  </data>
+  <data name="ACTION_CANCELED" xml:space="preserve">
+    <value>Allkirjastamine katkestati</value>
+  </data>
+  <data name="CERT_READ_FAILURE" xml:space="preserve">
+    <value>Sertifikaadi lugemine ebaõnnestus</value>
+  </data>
+  <data name="CARD_HASH_INIT" xml:space="preserve">
+    <value>Viga krüptoräsi initsialiseerimisel</value>
   </data>
   <data name="TSA_ERROR" xml:space="preserve">
     <value>Ajatempli viga: </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CARD_INTERNAL_ERROR" xml:space="preserve">
+    <value>Viga ID-kaardiga suhtlemisel </value>
+  </data>
+  <data name="NO_PIN_SUPPLIED" xml:space="preserve">
+    <value>PIN-kood on tühi</value>
+  </data>
+  <data name="DEFAULT_CONFIG" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+ &lt;appSettings&gt;
+  &lt;add key="pkcs11_library" value="opensc-pkcs11.dll" /&gt;
+  &lt;add key="debug" value="false" /&gt;
+  &lt;add key="ocsp_url" value="http://ocsp.sk.ee" /&gt;
+  &lt;add key="cert_path" value=".\certs" /&gt;
+  &lt;add key="enable_tsa" value="False" /&gt;
+  &lt;add key="visible_signature" value="False" /&gt;
+  &lt;add key="tsa_url" value="http://www.edelweb.fr/cgi-bin/service-tsp" /&gt;
+  &lt;add key="tsa_user" value="" /&gt;
+  &lt;add key="tsa_password" value="" /&gt;
+  &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
+  &lt;add key="language" value="" /&gt;  
+ &lt;/appSettings&gt;
+&lt;/configuration&gt;</value>
+  </data>
+  <data name="ADD_SIGNATURE" xml:space="preserve">
+    <value>Allkirjastan dokumenti ...</value>
+  </data>
+  <data name="CERT_ISSUER_MISSING" xml:space="preserve">
+    <value>Allkirjaandja sertifikaat puudulik: väljaandja väli puudub</value>
+  </data>
+  <data name="CONNECTING_SMARTCARD" xml:space="preserve">
+    <value>Ühendan kaardilugejaga ...</value>
+  </data>
+  <data name="DIR_CERT_ERROR" xml:space="preserve">
+    <value>Sertifikaatide lugemine ebaõnnestus kataloogist: </value>
+  </data>
+  <data name="DOCUMENT_ALREADY_SIGNED" xml:space="preserve">
+    <value>Dokument on juba allkirjastatud!</value>
+  </data>
+  <data name="DOCUMENT_ALREADY_SIGNED_BY" xml:space="preserve">
+    <value>Dokument on juba allkirjastatud! Allkirja andja: </value>
+  </data>
+  <data name="DOCUMENT_SIGNED" xml:space="preserve">
+    <value>Dokument allkirjastatud!</value>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>Viga</value>
+  </data>
+  <data name="GENERAL_EXCEPTION" xml:space="preserve">
+    <value>Tekkis viga ...</value>
+  </data>
+  <data name="UI_INPUT_FILEDIALOG_FILTER" xml:space="preserve">
+    <value>PDF failid (*.pdf)|*.pdf</value>
+  </data>
+  <data name="UI_INPUT_FILEDIALOG_TITLE" xml:space="preserve">
+    <value>Vali fail</value>
+  </data>
+  <data name="MISSING_INPUT" xml:space="preserve">
+    <value>Allkirjastamiseks on vaja valida olemasolev PDF dokument!</value>
+  </data>
+  <data name="MISSING_OUTPUT" xml:space="preserve">
+    <value>Allkirjastamiseks on vaja valida väljund PDF dokument!</value>
+  </data>
+  <data name="OCSP_CERT_ERROR" xml:space="preserve">
+    <value>Kehtivussertifikaadi viga!</value>
+  </data>
+  <data name="UI_OUTPUT_FILEDIALOG_FILTER" xml:space="preserve">
+    <value>PDF failid (*.pdf)|*.pdf</value>
+  </data>
+  <data name="UI_OUTPUT_FILEDIALOG_TITLE" xml:space="preserve">
+    <value>Salvesta PDF File</value>
+  </data>
+  <data name="PKCS12_LOAD_ERROR" xml:space="preserve">
+    <value>PKCS#12 muutujate lugemine ebaõnnestus: </value>
+  </data>
+  <data name="READ_CERTS" xml:space="preserve">
+    <value>Loen sertifikaate ...</value>
+  </data>
+  <data name="READ_SETTINGS" xml:space="preserve">
+    <value>Loen seadeid ...</value>
+  </data>
+  <data name="SIGNING_CANCELED" xml:space="preserve">
+    <value>Allkirjastamine katkestati ...</value>
+  </data>
+  <data name="TSA_REQUEST" xml:space="preserve">
+    <value>Teostan ajatempli päringut ...</value>
+  </data>
+  <data name="VERIFYING_DOCUMENT" xml:space="preserve">
+    <value>Dokumendi kontroll ...</value>
+  </data>
+  <data name="VERIFYING_OCSP" xml:space="preserve">
+    <value>Teostan OCSP kehtivuspäringut ...</value>
+  </data>
+  <data name="RESPONDER_CET_MISSING" xml:space="preserve">
+    <value>Responder certificate missing: </value>
+  </data>
+  <data name="ISSUER_CERT_MISSING" xml:space="preserve">
+    <value>Issuer certificate missing: </value>
+  </data>
+  <data name="UI_CERT_ISSUED_BY" xml:space="preserve">
+    <value>Väljastaja</value>
+  </data>
+  <data name="UI_CERT_ISSUED_TO" xml:space="preserve">
+    <value>Väljastatud</value>
+  </data>
+  <data name="UI_CERT_VALID_UNTIL" xml:space="preserve">
+    <value>Kehtivusaeg</value>
+  </data>
+  <data name="INVALID_OCSP_RESPONSE" xml:space="preserve">
+    <value>Vigane kehtivuspäringu vastus</value>
+  </data>
+  <data name="INVALID_OCSP_RESPONSE_COUNT" xml:space="preserve">
+    <value>Kehtivuspäringu vastus sisaldas rohkem kui 1 tulemit: </value>
+  </data>
+  <data name="INVALID_OCSP_STATUS" xml:space="preserve">
+    <value>Kehtivuspäringu staatus vigane: </value>
+  </data>
+  <data name="INVALID_OCSP_TIMESLOT" xml:space="preserve">
+    <value>Kehtivuspäringu ajakontroll ebaõnnestus</value>
+  </data>
+  <data name="INVALID_PKCS12_CERT_PRI_KEY_MISSING" xml:space="preserve">
+    <value>Vigane PKCS#12 ümbrik: privaatvõti puudub</value>
+  </data>
+  <data name="INVALID_PKCS12_CERT_PUB_KEY_MISSING" xml:space="preserve">
+    <value>Vigane PKCS#12 ümbrik: avalik võti puudub</value>
+  </data>
+  <data name="MISSING_CONFIG_FILE" xml:space="preserve">
+    <value>Konfiguratsiooni faili ei leitud: </value>
+  </data>
+  <data name="OCSP_ERROR" xml:space="preserve">
+    <value>Sertifikaat: {0}, kehtivuspäringu vastus: {1}</value>
+  </data>
+  <data name="OCSP_URL_MISSING" xml:space="preserve">
+    <value>Kehtivuspäringu URL määramata</value>
+  </data>
+  <data name="OCSP_VERIFY_FAILED" xml:space="preserve">
+    <value>Kehtivuspäringu kontroll ebaõnnestus</value>
+  </data>
+  <data name="PKCS12_FILENAME_MISSING" xml:space="preserve">
+    <value>PKCS#12 faili nimi määramata!</value>
+  </data>
+  <data name="PKCS12_FILE_MISSING" xml:space="preserve">
+    <value>PKCS#12 faili ei leitud: </value>
+  </data>
+  <data name="REGISTRY_SETTING_MISSING" xml:space="preserve">
+    <value>Eesti ID-kaardi registri seaded määramata</value>
+  </data>
+  <data name="TSA_READ_ERROR" xml:space="preserve">
+    <value>{0} vastuse lugemine ebaõnnestus</value>
+  </data>
+  <data name="TSA_URL_ERROR" xml:space="preserve">
+    <value>{0} tagastas veakoodi: {1}</value>
+  </data>
+  <data name="UI_CERTIFICATES" xml:space="preserve">
+    <value>Sertifikaadid</value>
+  </data>
+  <data name="UI_PICK_CERTIFICATE" xml:space="preserve">
+    <value>Vali sertifikaat digitaalallkirja lisamiseks</value>
+  </data>
+  <data name="UI_INPUT" xml:space="preserve">
+    <value>Sisend:</value>
+  </data>
+  <data name="UI_PDF_DOC" xml:space="preserve">
+    <value>PDF Dokument</value>
+  </data>
+  <data name="UI_AUTHOR" xml:space="preserve">
+    <value>Autor:</value>
+  </data>
+  <data name="UI_CHOOSE_INPUT" xml:space="preserve">
+    <value>Vali sisend</value>
+  </data>
+  <data name="UI_CHOOSE_OUTPUT" xml:space="preserve">
+    <value>Vali väljund</value>
+  </data>
+  <data name="UI_CREATOR" xml:space="preserve">
+    <value>Looja:</value>
+  </data>
+  <data name="UI_HELP_LINK" xml:space="preserve">
+    <value>Abi</value>
+  </data>
+  <data name="UI_KEYWORDS" xml:space="preserve">
+    <value>Märksõnad:</value>
+  </data>
+  <data name="UI_OUTPUT" xml:space="preserve">
+    <value>Väljund:</value>
+  </data>
+  <data name="UI_PDF_METADATA" xml:space="preserve">
+    <value>PDF Metaandmed</value>
+  </data>
+  <data name="UI_SETTINGS_LINK" xml:space="preserve">
+    <value>Seaded</value>
+  </data>
+  <data name="UI_SIGNATURE" xml:space="preserve">
+    <value>Allkiri</value>
+  </data>
+  <data name="UI_SIGNATURE_DESCRIPTION" xml:space="preserve">
+    <value>Kirjeldus</value>
+  </data>
+  <data name="UI_SIGNATURE_LOCATION" xml:space="preserve">
+    <value>Asukoht</value>
+  </data>
+  <data name="UI_SIGNATURE_NAME" xml:space="preserve">
+    <value>Nimi</value>
+  </data>
+  <data name="UI_SIGNATURE_VISIBLE" xml:space="preserve">
+    <value>Soovid nähtavat allkirja</value>
+  </data>
+  <data name="UI_SIGN_BUTTON" xml:space="preserve">
+    <value>Allkirjasta ID-kaardiga</value>
+  </data>
+  <data name="UI_SOFTWARE" xml:space="preserve">
+    <value>Tarkvara:</value>
+  </data>
+  <data name="UI_STATUS" xml:space="preserve">
+    <value>Staatus:</value>
+  </data>
+  <data name="UI_SUBJECT" xml:space="preserve">
+    <value>Teema:</value>
+  </data>
+  <data name="UI_TITLE" xml:space="preserve">
+    <value>Pealkiri:</value>
   </data>
 </root>
