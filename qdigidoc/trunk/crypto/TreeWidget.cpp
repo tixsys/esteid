@@ -67,23 +67,26 @@ void TreeWidget::clicked( const QModelIndex &index )
 
 void TreeWidget::keyPressEvent( QKeyEvent *e )
 {
-	switch( e->key() )
+	if( hasFocus() )
 	{
-	case Qt::Key_Delete:
-		if( !isColumnHidden( 3 ) )
+		switch( e->key() )
 		{
-			Q_EMIT remove( currentIndex().row() );
-			e->accept();
+		case Qt::Key_Delete:
+			if( !isColumnHidden( 3 ) )
+			{
+				Q_EMIT remove( currentIndex().row() );
+				e->accept();
+			}
+			break;
+		case Qt::Key_Return:
+			if( !isColumnHidden( 2 ) )
+			{
+				openFile( currentIndex() );
+				e->accept();
+			}
+			break;
+		default: break;
 		}
-		break;
-	case Qt::Key_Return:
-		if( !isColumnHidden( 2 ) )
-		{
-			openFile( currentIndex() );
-			e->accept();
-		}
-		break;
-	default: break;
 	}
 	QTreeWidget::keyPressEvent( e );
 }
