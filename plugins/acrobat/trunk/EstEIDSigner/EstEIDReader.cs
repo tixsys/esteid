@@ -25,6 +25,8 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
+using EstEIDSigner.Properties;
+
 namespace EstEIDNative
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -484,10 +486,7 @@ namespace EstEIDNative
 
         public static implicit operator string(PKCS11Error e)
         {
-            ResourceManager resManager = new ResourceManager("EstEIDSigner.Properties.Resources",
-                Assembly.GetExecutingAssembly());
-            
-            return string.Format("{0}: {1}", resManager.GetString("CARD_INTERNAL_ERROR"), e.error);
+            return string.Format("{0}: {1}", Resources.CARD_INTERNAL_ERROR, e.error);
         }
     }
 

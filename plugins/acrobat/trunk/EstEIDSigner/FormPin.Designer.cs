@@ -38,71 +38,51 @@
             // 
             // textBoxPin
             // 
-            this.textBoxPin.Location = new System.Drawing.Point(15, 35);
-            this.textBoxPin.MaxLength = 4;
+            resources.ApplyResources(this.textBoxPin, "textBoxPin");
             this.textBoxPin.Name = "textBoxPin";
-            this.textBoxPin.Size = new System.Drawing.Size(234, 20);
-            this.textBoxPin.TabIndex = 0;
             this.textBoxPin.UseSystemPasswordChar = true;
             // 
             // buttonOk
             // 
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(93, 61);
+            resources.ApplyResources(this.buttonOk, "buttonOk");
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(75, 23);
-            this.buttonOk.TabIndex = 1;
-            this.buttonOk.Text = "Ok";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(174, 61);
+            resources.ApplyResources(this.buttonCancel, "buttonCancel");
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Katkesta";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // labelTitle
             // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Location = new System.Drawing.Point(12, 16);
+            resources.ApplyResources(this.labelTitle, "labelTitle");
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(95, 13);
-            this.labelTitle.TabIndex = 3;
-            this.labelTitle.Text = "Sisesta PIN kood :";
             // 
             // labelExtra
             // 
-            this.labelExtra.AutoSize = true;
-            this.labelExtra.Location = new System.Drawing.Point(107, 16);
+            resources.ApplyResources(this.labelExtra, "labelExtra");
             this.labelExtra.Name = "labelExtra";
-            this.labelExtra.Size = new System.Drawing.Size(16, 13);
-            this.labelExtra.TabIndex = 4;
-            this.labelExtra.Text = "...";
             // 
             // FormPin
             // 
             this.AcceptButton = this.buttonOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(261, 95);
             this.Controls.Add(this.labelExtra);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxPin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormPin";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "ID - kaart";
             this.ResumeLayout(false);
             this.PerformLayout();
 

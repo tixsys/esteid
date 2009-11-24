@@ -26,6 +26,8 @@ using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.X509;
 
+using EstEIDSigner.Properties;
+
 namespace EstEIDSigner
 {
     class DirectoryPKCS12CertStore 
@@ -61,13 +63,13 @@ namespace EstEIDSigner
         {
             if ((filename == null) || (filename.Length == 0))
             {
-                this.lastError = "PKCS#12 File name variable is empty!";
+                this.lastError = Resources.PKCS12_FILENAME_MISSING;
                 return false;
             }
 
             if (!File.Exists(filename))
             {
-                this.lastError = "PKCS#12 File doesn't exist: " + filename;
+                this.lastError = Resources.PKCS12_FILE_MISSING + filename;
                 return false;
             }
 
@@ -95,9 +97,9 @@ namespace EstEIDSigner
             }  
 
             if (key == null)
-                this.lastError = "Invalid PKCS#12 container: private key is missing";
+                this.lastError = Resources.INVALID_PKCS12_CERT_PRI_KEY_MISSING;;
             if (chain == null || chain.Length == 0)
-                this.lastError = "Invalid PKCS#12 container: public key is missing";
+                this.lastError = Resources.INVALID_PKCS12_CERT_PUB_KEY_MISSING;
 
             return (key != null && chain != null && chain.Length > 0);
         }

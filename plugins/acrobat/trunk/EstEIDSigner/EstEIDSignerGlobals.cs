@@ -18,42 +18,39 @@
  */
 
 using System;
-using Microsoft.Win32;
 
 namespace EstEIDSigner
 {
     class EstEIDSignerGlobals
     {
-        public static string ConfigDirectory
+        public static string OrganizationDir = "Estonian ID Card";
+        public static string ProgramDir = "EstEIDSigner";
+
+        public static string AppName
+        {
+            get
+            {
+                string fullPath = Environment.GetCommandLineArgs()[0];
+                
+                return (System.IO.Path.GetFileName(fullPath));
+            }
+        }
+
+        public static string LocalAppPath
         {
             get 
             {
 #if WIN32
-#warning WIN32 is defined: using Registry to load configuration file location
-            RegistryKey regkey ;
-
-            regkey = Registry.CurrentUser.OpenSubKey(@"Software\Estonian ID Card");
-            if (regkey == null)
-                return Environment.CurrentDirectory + "\\";
-
-            string path = (string)regkey.GetValue("Installed");
-
-            if (path == null || path.Length == 0)
-                return Environment.CurrentDirectory + "\\";
-
-            return path;
+#warning WIN32 is defined: using Windows slashes
+                string format = @"{0}\{1}\{2}\";
 #else
-#warning WIN32 is not defined: using Environment to load configuration file location
-                
-                string path = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
-                if (path == null || path.Length == 0)
-                    path = Environment.GetEnvironmentVariable("HOME");
-
-                if (path == null || path.Length == 0)
-                    return "./";
-
-                return path;
+#warning WIN32 is not defined: using Unix slashes
+                string format = @"{0}/{1}/{2}/";
 #endif
+                string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string fullPath = string.Format(format, appPath, OrganizationDir, ProgramDir);
+
+                return (fullPath);
             }
         }
     }

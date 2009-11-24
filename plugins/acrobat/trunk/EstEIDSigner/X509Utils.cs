@@ -28,6 +28,8 @@ using Org.BouncyCastle.Asn1.X509;
 using Org.BouncyCastle.Asn1.Cmp;
 using iTextSharp.text.pdf;
 
+using EstEIDSigner.Properties;
+
 namespace EstEIDSigner
 {
     class X509Utils
@@ -61,7 +63,7 @@ namespace EstEIDSigner
 
             if (value != 0)
             {
-                error = "TSA '" + tsaURL + "' veakood " + value;                
+                error = string.Format(Resources.TSA_URL_ERROR, tsaURL, value);                
                 return (null);
             }
 
@@ -69,7 +71,7 @@ namespace EstEIDSigner
 
             if (tsToken == null)
             {
-                error = "TSA '" + tsaURL + "' vastuse lugemine ebaõnnestus";                
+                error = string.Format(Resources.TSA_READ_ERROR, tsaURL);
                 return (null);
             }
           

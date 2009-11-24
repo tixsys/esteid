@@ -21,6 +21,8 @@ using System;
 using System.IO;
 using Microsoft.Win32;
 
+using EstEIDSigner.Properties;
+
 namespace EstEIDSigner
 {
     /// <summary>PKCS12 settings container.</summary>
@@ -50,8 +52,8 @@ namespace EstEIDSigner
             regkey = Registry.CurrentUser.OpenSubKey(@"Software\Estonian ID Card\OrganizationDefaults\Client");
             if (regkey == null)
             {
-                this.lastError = "Estonian ID Card registry settings are missing";
-                return false;
+                this.lastError = Resources.REGISTRY_SETTING_MISSING;
+                return (false);
             }
 
             filename = (string)regkey.GetValue("pkcs12Cert");
@@ -66,8 +68,8 @@ namespace EstEIDSigner
 
             if (!File.Exists(path))
             {
-                this.lastError = "Missing config file: " + path;
-                return false;
+                this.lastError = Resources.MISSING_CONFIG_FILE + path;
+                return (false);
             }
 
             IniFile ini = new IniFile(path);
@@ -77,7 +79,7 @@ namespace EstEIDSigner
 
             if ((filename == null) || (filename.Length == 0))
             {
-                this.lastError = "PKCS12 certificate path is missing";
+                this.lastError = Resources.PKCS12_FILENAME_MISSING;
                 return false;
             }
 

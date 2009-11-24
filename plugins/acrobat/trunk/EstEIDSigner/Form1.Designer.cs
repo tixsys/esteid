@@ -29,223 +29,283 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.inputBox = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.outputBox = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.authorBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.subjectBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.kwBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.titleBox = new System.Windows.Forms.TextBox();
-            this.creatorBox = new System.Windows.Forms.TextBox();
-            this.prodBox = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.statusBox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.DebugBox = new System.Windows.Forms.TextBox();
-            this.sign = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.SigVisible = new System.Windows.Forms.CheckBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.Locationtext = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.Contacttext = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.Reasontext = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.EnableTSA = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.urlTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.linkSettings = new System.Windows.Forms.LinkLabel();
+            this.linkHelp = new System.Windows.Forms.LinkLabel();
+            this.signButton = new System.Windows.Forms.Button();
+            this.labelSeparator1 = new System.Windows.Forms.Label();
+            this.linkOutput = new System.Windows.Forms.LinkLabel();
+            this.linkInput = new System.Windows.Forms.LinkLabel();
+            this.statusBox = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tablePanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
+            this.label11 = new System.Windows.Forms.Label();
+            this.authorBox = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.subjectBox = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.kwBox = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.titleBox = new System.Windows.Forms.Label();
+            this.creatorBox = new System.Windows.Forms.Label();
+            this.prodBox = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.Locationtext = new System.Windows.Forms.TextBox();
+            this.Contacttext = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.Reasontext = new System.Windows.Forms.TextBox();
+            this.tablePanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tablePanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.SigVisible = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.comboLanguage = new System.Windows.Forms.ComboBox();
+            this.tablePanel1.SuspendLayout();
+            this.tablePanel2.SuspendLayout();
+            this.tablePanel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // inputBox
+            // DebugBox
             // 
-            resources.ApplyResources(this.inputBox, "inputBox");
-            this.inputBox.Name = "inputBox";
+            resources.ApplyResources(this.DebugBox, "DebugBox");
+            this.DebugBox.MaximumSize = new System.Drawing.Size(620, 138);
+            this.DebugBox.MinimumSize = new System.Drawing.Size(620, 138);
+            this.DebugBox.Name = "DebugBox";
             // 
-            // button4
+            // linkSettings
             // 
-            resources.ApplyResources(this.button4, "button4");
-            this.button4.Name = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            resources.ApplyResources(this.linkSettings, "linkSettings");
+            this.linkSettings.BackColor = System.Drawing.Color.Transparent;
+            this.linkSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
+            this.linkSettings.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkSettings.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
+            this.linkSettings.Name = "linkSettings";
+            this.linkSettings.TabStop = true;
+            this.linkSettings.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSettings_LinkClicked);
             // 
-            // outputBox
+            // linkHelp
             // 
-            resources.ApplyResources(this.outputBox, "outputBox");
-            this.outputBox.Name = "outputBox";
+            resources.ApplyResources(this.linkHelp, "linkHelp");
+            this.linkHelp.BackColor = System.Drawing.Color.Transparent;
+            this.linkHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
+            this.linkHelp.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.linkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
+            this.linkHelp.Name = "linkHelp";
+            this.linkHelp.TabStop = true;
+            this.linkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkHelp_LinkClicked);
             // 
-            // button5
+            // signButton
             // 
-            resources.ApplyResources(this.button5, "button5");
-            this.button5.Name = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.signButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            this.signButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            resources.ApplyResources(this.signButton, "signButton");
+            this.signButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.signButton.Name = "signButton";
+            this.signButton.UseVisualStyleBackColor = false;
+            this.signButton.Click += new System.EventHandler(this.sign_Click);
             // 
-            // label2
+            // labelSeparator1
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.labelSeparator1, "labelSeparator1");
+            this.labelSeparator1.BackColor = System.Drawing.Color.Transparent;
+            this.labelSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
+            this.labelSeparator1.Name = "labelSeparator1";
             // 
-            // label3
+            // linkOutput
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.linkOutput, "linkOutput");
+            this.linkOutput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.linkOutput.Name = "linkOutput";
+            this.linkOutput.TabStop = true;
+            this.linkOutput.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkOutput_LinkClicked);
             // 
-            // groupBox1
+            // linkInput
             // 
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.authorBox);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.subjectBox);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.kwBox);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.titleBox);
-            this.groupBox1.Controls.Add(this.creatorBox);
-            this.groupBox1.Controls.Add(this.prodBox);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
+            resources.ApplyResources(this.linkInput, "linkInput");
+            this.linkInput.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
+            this.linkInput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.linkInput.Name = "linkInput";
+            this.linkInput.TabStop = true;
+            this.linkInput.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkInput_LinkClicked);
             // 
-            // label9
+            // statusBox
             // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            // 
-            // authorBox
-            // 
-            resources.ApplyResources(this.authorBox, "authorBox");
-            this.authorBox.Name = "authorBox";
-            this.authorBox.ReadOnly = true;
-            // 
-            // label5
-            // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
-            // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.Name = "label8";
+            resources.ApplyResources(this.statusBox, "statusBox");
+            this.statusBox.Name = "statusBox";
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // subjectBox
+            // label3
             // 
-            resources.ApplyResources(this.subjectBox, "subjectBox");
-            this.subjectBox.Name = "subjectBox";
-            this.subjectBox.ReadOnly = true;
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
-            // label7
+            // label2
             // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
-            // kwBox
+            // tablePanel1
             // 
-            resources.ApplyResources(this.kwBox, "kwBox");
-            this.kwBox.Name = "kwBox";
-            this.kwBox.ReadOnly = true;
+            this.tablePanel1.BackColor = System.Drawing.SystemColors.Window;
+            resources.ApplyResources(this.tablePanel1, "tablePanel1");
+            this.tablePanel1.Controls.Add(this.statusBox, 1, 2);
+            this.tablePanel1.Controls.Add(this.label4, 0, 2);
+            this.tablePanel1.Controls.Add(this.linkOutput, 1, 1);
+            this.tablePanel1.Controls.Add(this.linkInput, 1, 0);
+            this.tablePanel1.Controls.Add(this.label2, 0, 0);
+            this.tablePanel1.Controls.Add(this.label3, 0, 1);
+            this.tablePanel1.Name = "tablePanel1";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            this.label1.Name = "label1";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // authorBox
+            // 
+            resources.ApplyResources(this.authorBox, "authorBox");
+            this.authorBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.authorBox.Name = "authorBox";
             // 
             // label6
             // 
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // subjectBox
+            // 
+            resources.ApplyResources(this.subjectBox, "subjectBox");
+            this.subjectBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.subjectBox.Name = "subjectBox";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // kwBox
+            // 
+            resources.ApplyResources(this.kwBox, "kwBox");
+            this.kwBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.kwBox.Name = "kwBox";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
             // titleBox
             // 
             resources.ApplyResources(this.titleBox, "titleBox");
+            this.titleBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.titleBox.Name = "titleBox";
-            this.titleBox.ReadOnly = true;
             // 
             // creatorBox
             // 
             resources.ApplyResources(this.creatorBox, "creatorBox");
+            this.creatorBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.creatorBox.Name = "creatorBox";
-            this.creatorBox.ReadOnly = true;
             // 
             // prodBox
             // 
             resources.ApplyResources(this.prodBox, "prodBox");
+            this.prodBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.prodBox.Name = "prodBox";
-            this.prodBox.ReadOnly = true;
-            this.prodBox.ShortcutsEnabled = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.statusBox);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.inputBox);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.outputBox);
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // statusBox
-            // 
-            resources.ApplyResources(this.statusBox, "statusBox");
-            this.statusBox.Name = "statusBox";
-            this.statusBox.ReadOnly = true;
             // 
             // label15
             // 
             resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
             // 
-            // DebugBox
+            // Locationtext
             // 
-            resources.ApplyResources(this.DebugBox, "DebugBox");
-            this.DebugBox.MaximumSize = new System.Drawing.Size(758, 138);
-            this.DebugBox.MinimumSize = new System.Drawing.Size(758, 138);
-            this.DebugBox.Name = "DebugBox";
+            resources.ApplyResources(this.Locationtext, "Locationtext");
+            this.Locationtext.Name = "Locationtext";
             // 
-            // sign
+            // Contacttext
             // 
-            resources.ApplyResources(this.sign, "sign");
-            this.sign.Name = "sign";
-            this.sign.UseVisualStyleBackColor = true;
-            this.sign.Click += new System.EventHandler(this.sign_Click);
+            resources.ApplyResources(this.Contacttext, "Contacttext");
+            this.Contacttext.Name = "Contacttext";
             // 
-            // groupBox4
+            // label13
             // 
-            this.groupBox4.Controls.Add(this.SigVisible);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.Locationtext);
-            this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.Contacttext);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.Reasontext);
-            this.groupBox4.Controls.Add(this.sign);
-            resources.ApplyResources(this.groupBox4, "groupBox4");
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.TabStop = false;
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            // 
+            // Reasontext
+            // 
+            resources.ApplyResources(this.Reasontext, "Reasontext");
+            this.Reasontext.Name = "Reasontext";
+            // 
+            // tablePanel2
+            // 
+            this.tablePanel2.BackColor = System.Drawing.SystemColors.Window;
+            resources.ApplyResources(this.tablePanel2, "tablePanel2");
+            this.tablePanel2.Controls.Add(this.prodBox, 1, 5);
+            this.tablePanel2.Controls.Add(this.label11, 0, 5);
+            this.tablePanel2.Controls.Add(this.label6, 0, 0);
+            this.tablePanel2.Controls.Add(this.creatorBox, 1, 4);
+            this.tablePanel2.Controls.Add(this.label10, 0, 4);
+            this.tablePanel2.Controls.Add(this.authorBox, 1, 0);
+            this.tablePanel2.Controls.Add(this.kwBox, 1, 3);
+            this.tablePanel2.Controls.Add(this.label9, 0, 3);
+            this.tablePanel2.Controls.Add(this.subjectBox, 1, 2);
+            this.tablePanel2.Controls.Add(this.label7, 0, 1);
+            this.tablePanel2.Controls.Add(this.titleBox, 1, 1);
+            this.tablePanel2.Controls.Add(this.label8, 0, 2);
+            this.tablePanel2.Name = "tablePanel2";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            this.label5.Name = "label5";
+            // 
+            // tablePanel3
+            // 
+            this.tablePanel3.BackColor = System.Drawing.SystemColors.Window;
+            resources.ApplyResources(this.tablePanel3, "tablePanel3");
+            this.tablePanel3.Controls.Add(this.Locationtext, 1, 2);
+            this.tablePanel3.Controls.Add(this.Reasontext, 1, 0);
+            this.tablePanel3.Controls.Add(this.Contacttext, 1, 1);
+            this.tablePanel3.Controls.Add(this.label15, 0, 2);
+            this.tablePanel3.Controls.Add(this.label13, 0, 0);
+            this.tablePanel3.Controls.Add(this.label14, 0, 1);
+            this.tablePanel3.Controls.Add(this.SigVisible, 1, 3);
+            this.tablePanel3.Name = "tablePanel3";
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
             // 
             // SigVisible
             // 
@@ -254,107 +314,51 @@
             this.SigVisible.UseVisualStyleBackColor = true;
             this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
             // 
-            // label13
-            // 
-            resources.ApplyResources(this.label13, "label13");
-            this.label13.Name = "label13";
-            // 
-            // Locationtext
-            // 
-            resources.ApplyResources(this.Locationtext, "Locationtext");
-            this.Locationtext.Name = "Locationtext";
-            // 
             // label12
             // 
             resources.ApplyResources(this.label12, "label12");
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
             this.label12.Name = "label12";
             // 
-            // Contacttext
+            // comboLanguage
             // 
-            resources.ApplyResources(this.Contacttext, "Contacttext");
-            this.Contacttext.Name = "Contacttext";
-            // 
-            // label11
-            // 
-            resources.ApplyResources(this.label11, "label11");
-            this.label11.Name = "label11";
-            // 
-            // Reasontext
-            // 
-            resources.ApplyResources(this.Reasontext, "Reasontext");
-            this.Reasontext.Name = "Reasontext";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.EnableTSA);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.nameTextBox);
-            this.groupBox3.Controls.Add(this.urlTextBox);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.passwordBox);
-            this.groupBox3.Controls.Add(this.label1);
-            resources.ApplyResources(this.groupBox3, "groupBox3");
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.TabStop = false;
-            // 
-            // EnableTSA
-            // 
-            resources.ApplyResources(this.EnableTSA, "EnableTSA");
-            this.EnableTSA.Name = "EnableTSA";
-            this.EnableTSA.UseVisualStyleBackColor = true;
-            this.EnableTSA.CheckedChanged += new System.EventHandler(this.EnableTSA_CheckedChanged);
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.Name = "label14";
-            // 
-            // nameTextBox
-            // 
-            resources.ApplyResources(this.nameTextBox, "nameTextBox");
-            this.nameTextBox.Name = "nameTextBox";
-            // 
-            // urlTextBox
-            // 
-            resources.ApplyResources(this.urlTextBox, "urlTextBox");
-            this.urlTextBox.Name = "urlTextBox";
-            // 
-            // label10
-            // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.Name = "label10";
-            // 
-            // passwordBox
-            // 
-            resources.ApplyResources(this.passwordBox, "passwordBox");
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.UseSystemPasswordChar = true;
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            this.comboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboLanguage.FormattingEnabled = true;
+            this.comboLanguage.Items.AddRange(new object[] {
+            resources.GetString("comboLanguage.Items"),
+            resources.GetString("comboLanguage.Items1")});
+            resources.ApplyResources(this.comboLanguage, "comboLanguage");
+            this.comboLanguage.Name = "comboLanguage";
+            this.comboLanguage.SelectedIndexChanged += new System.EventHandler(this.comboLanguage_SelectedIndexChanged);
             // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
+            this.BackgroundImage = global::EstEIDSigner.Properties.Resources.background;
+            this.Controls.Add(this.comboLanguage);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.tablePanel3);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tablePanel2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tablePanel1);
+            this.Controls.Add(this.labelSeparator1);
+            this.Controls.Add(this.linkHelp);
+            this.Controls.Add(this.linkSettings);
+            this.Controls.Add(this.signButton);
             this.Controls.Add(this.DebugBox);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.tablePanel1.ResumeLayout(false);
+            this.tablePanel1.PerformLayout();
+            this.tablePanel2.ResumeLayout(false);
+            this.tablePanel2.PerformLayout();
+            this.tablePanel3.ResumeLayout(false);
+            this.tablePanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,46 +366,43 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox inputBox;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.TextBox outputBox;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox prodBox;
-        private System.Windows.Forms.TextBox creatorBox;
-        private System.Windows.Forms.TextBox kwBox;
-        private System.Windows.Forms.TextBox subjectBox;
-        private System.Windows.Forms.TextBox titleBox;
-        private System.Windows.Forms.TextBox authorBox;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label prodBox;
+        private System.Windows.Forms.Label creatorBox;
+        private System.Windows.Forms.Label kwBox;
+        private System.Windows.Forms.Label subjectBox;        
+        private System.Windows.Forms.Label titleBox;        
+        private System.Windows.Forms.Label authorBox;        
         private System.Windows.Forms.TextBox DebugBox;
-        private System.Windows.Forms.Button sign;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox Reasontext;
+        private System.Windows.Forms.Button signButton;        
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox Locationtext;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox Contacttext;
-        private System.Windows.Forms.CheckBox SigVisible;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox urlTextBox;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox passwordBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox nameTextBox;
-        private System.Windows.Forms.CheckBox EnableTSA;
-        private System.Windows.Forms.TextBox statusBox;
+        private System.Windows.Forms.TextBox Reasontext;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox Locationtext;
+        private System.Windows.Forms.TextBox Contacttext;
+        private System.Windows.Forms.Label statusBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.LinkLabel linkOutput;
+        private System.Windows.Forms.LinkLabel linkInput;
+        private System.Windows.Forms.LinkLabel linkSettings;
+        private System.Windows.Forms.LinkLabel linkHelp;
+        private System.Windows.Forms.Label labelSeparator1;
+        private System.Windows.Forms.TableLayoutPanel tablePanel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TableLayoutPanel tablePanel2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TableLayoutPanel tablePanel3;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox comboLanguage;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox SigVisible;
     }
 }
 

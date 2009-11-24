@@ -35,6 +35,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Utilities;
 using Org.BouncyCastle.Utilities.Date;
 
+using EstEIDSigner.Properties;
 
 namespace EstEIDSigner
 {
@@ -155,7 +156,7 @@ namespace EstEIDSigner
         {
             if (ocspResponse.Status != 0)
             {
-                this.lastError = "Invalid OCSP status: " + ocspResponse.Status;
+                this.lastError = Resources.INVALID_OCSP_STATUS + ocspResponse.Status;
                 return (int)CertStatus.ERROR;
             }
 
@@ -169,7 +170,7 @@ namespace EstEIDSigner
 
                     if (verifyResult != true)
                     {
-                        this.lastError = "OCSP response verify failed";
+                        this.lastError = Resources.OCSP_VERIFY_FAILED;
                         return (int)CertStatus.ERROR;
                     }
                 }
@@ -181,12 +182,10 @@ namespace EstEIDSigner
 
                 if (reqNonce == null || Arrays.AreEqual(reqNonce, respNonce))
                 {
-                    String message = "";
-
                     // will handle single response only
                     if (responses.Length != 1)
                     {
-                        this.lastError = "Invalid OCSP responses count: " + responses.Length;
+                        this.lastError = Resources.INVALID_OCSP_RESPONSE_COUNT + responses.Length;
                         return (int)CertStatus.ERROR;
                     }
 
@@ -201,35 +200,35 @@ namespace EstEIDSigner
                     bool valid = CheckTimeValidity(thisUpdate, nextUpdate, 5000, 100000);
                     if (valid == false)
                     {
-                        this.lastError = "OCSP response not in valid time slot";
+                        this.lastError = Resources.INVALID_OCSP_TIMESLOT;
                         return (int)CertStatus.ERROR;
                     }
 
                     Object status = resp.GetCertStatus();
-                    message = "Certificate number: " + resp.GetCertID().SerialNumber;
-
+                    
                     if (status == CertificateStatus.Good)
                     {
                         // Ok
                         return (int)CertStatus.GOOD;
-                    }
-                    //else if (status is RevokedStatus)
+                    }                    
                     else if (status is RevokedStatus)
-                    {
-                        message += ", OCSP status: revoked";
-                        this.lastError = message;
+                    {                        
+                        this.lastError = string.Format(Resources.OCSP_ERROR, 
+                            resp.GetCertID().SerialNumber,
+                            "revoked");
                         return (int)CertStatus.REVOKED;
                     }
                     else
                     {
-                        message += ", OCSP status: unknown";
-                        this.lastError = message;
+                        this.lastError = string.Format(Resources.OCSP_ERROR,
+                            resp.GetCertID().SerialNumber,
+                            "unknown");
                         return (int)CertStatus.UNKNOWN;
                     }
                 }                
             }
             else
-                this.lastError = "OCSP response was empty";
+                this.lastError = Resources.INVALID_OCSP_RESPONSE;
 
             // failed
             return (int)CertStatus.ERROR;

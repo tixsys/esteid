@@ -26,44 +26,36 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Configuration;
 using System.Threading;
+using System.Resources;
+using System.Reflection;
+using System.Diagnostics;
+using System.Globalization;
 
 using iTextSharp.text.pdf;
+
+using EstEIDSigner.Properties;
 
 namespace EstEIDSigner
 {
     public partial class Form1 : Form
     {
         private DirectoryX509CertStore store = null;
-        private Configuration config = null;
+        private EstEIDSettings config = null;
         private PKCS12Settings credentials = null;
         private PdfReader reader = null;
+        private string inputFile = string.Empty;
+        private string outputFile = string.Empty;
 
         public Form1()
         {
-            this.Font = new Font("Verdana", (float)8.25);
+            this.Font = new Font("Verdana", (float)8.25);            
 
             InitializeComponent();
+            
+            config = new EstEIDSettings();
 
-            string fullPath = Environment.GetCommandLineArgs()[0];
-            string configName = System.IO.Path.GetFileName(fullPath);
-            string fullConfigPath = EstEIDSignerGlobals.ConfigDirectory + configName;
-
-            try
-            {
-                config = ConfigurationManager.OpenExeConfiguration(fullConfigPath);                
-
-                // it may happen that conf file doesn't exist even if OpenExeConfiguration succeeds...
-                if (!config.HasFile)
-                    MessageBox.Show("Konfiguratsiooni faili ei leitud: " + config.FilePath, "Viga");
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show(ex.Message, "Viga");
-            }
-
-            LoadConfig();            
+            LoadConfig();
         }
 
         private void debug(string txt)
@@ -72,15 +64,24 @@ namespace EstEIDSigner
             Application.DoEvents();
         }
 
-        private void status(string txt)
-        {            
+        private void status(string txt, bool error)
+        {
+            if (error)            
+                statusBox.ForeColor = System.Drawing.Color.Red;                
+            else            
+                statusBox.ForeColor = SystemColors.ControlText;
+
             statusBox.Text = txt;
             debug(txt);
         }
 
         private void InitReader()
         {
-            reader = new PdfReader(inputBox.Text);
+            string inputFile = this.inputFile;
+            if (!File.Exists(inputFile))
+                return;
+
+            reader = new PdfReader(inputFile);
 
             MetaData md = new MetaData();
             md.Info = reader.Info;
@@ -93,42 +94,47 @@ namespace EstEIDSigner
             prodBox.Text = md.Producer; 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void linkInput_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog openFile;
+            OpenFileDialog openFile;
+
             openFile = new System.Windows.Forms.OpenFileDialog();
-            openFile.Filter = "PDF failid *.pdf|*.pdf";
-            openFile.Title = "Vali fail";
+            openFile.Filter = Resources.UI_INPUT_FILEDIALOG_FILTER;
+            openFile.Title = Resources.UI_INPUT_FILEDIALOG_TITLE;
             if (openFile.ShowDialog() != DialogResult.OK)
                 return;
 
-            inputBox.Text = openFile.FileName;
-
+            status("", false);            
+            linkInput.Text = System.IO.Path.GetFileName(openFile.FileName);
+            this.inputFile = openFile.FileName;
+            
             InitReader();
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void linkOutput_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Windows.Forms.SaveFileDialog saveFile;
+            SaveFileDialog saveFile;
+
             saveFile = new System.Windows.Forms.SaveFileDialog();
-            saveFile.Filter = "PDF failid (*.pdf)|*.pdf";
-            saveFile.Title = "Salvesta PDF File";
+            saveFile.Filter = Resources.UI_OUTPUT_FILEDIALOG_FILTER;
+            saveFile.Title = Resources.UI_OUTPUT_FILEDIALOG_TITLE;
             if (saveFile.ShowDialog() != DialogResult.OK)
                 return;
-
-            outputBox.Text = saveFile.FileName;
+                        
+            linkOutput.Text = System.IO.Path.GetFileName(saveFile.FileName);
+            this.outputFile = saveFile.FileName;
         }
 
         private void OpenCertStore()
         {
             if (store == null)
-            {
-                string path = System.Configuration.ConfigurationSettings.AppSettings["cert_path"];
+            {                
+                string path = config.Value["cert_path"].Value;
                 if (path == null || path.Length == 0)
                     path = Directory.GetCurrentDirectory();
                 store = new DirectoryX509CertStore(path);
                 if (store.Open() == false)
-                    throw new Exception("Sertifikaatide lugemine ebaõnnestus kataloogist: " + path);             
+                    throw new Exception(Resources.DIR_CERT_ERROR + path);
             }
         }
 
@@ -139,34 +145,33 @@ namespace EstEIDSigner
                 credentials = new PKCS12Settings();
 
                 if (credentials.Load() == false)             
-                    throw new Exception("PKCS#12 muutujate lugemine ebaõnnestus: " + credentials.lastError);
+                    throw new Exception(Resources.PKCS12_LOAD_ERROR + credentials.lastError);
             }
         }
 
         private void sign_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(inputBox.Text))
+            string inputFile = this.inputFile;
+
+            if (!File.Exists(inputFile))
             {
-                MessageBox.Show("Allkirjastamiseks on vaja valida olemasolev PDF dokument!", "Viga");
+                MessageBox.Show(Resources.MISSING_INPUT, Resources.ERROR);
                 return;
             }
+         
+            string outputFile = this.outputFile;
 
-            if (outputBox.Text.Length == 0)
+            if ((outputFile == null) || (outputFile.Length == 0))
             {
-                MessageBox.Show("Allkirjastamiseks on vaja valida väljund PDF dokumendi nimi!", "Viga");
+                MessageBox.Show(Resources.MISSING_OUTPUT, Resources.ERROR);
                 return;
-            }
-
-            if (File.Exists(outputBox.Text))
-            {
-                if (MessageBox.Show("Kas soovid olemasoleva väljund PDF dokumendi üle kirjutada?", "Hoiatus", 
-                    MessageBoxButtons.YesNo) == DialogResult.No)
-                    return;
-            }
+            }            
 
             Timestamp stamp = null;
-            if (EnableTSA.Checked)
-                stamp = new Timestamp(urlTextBox.Text, nameTextBox.Text, passwordBox.Text);
+            if (config.ToBoolean("enable_tsa") == true)
+                stamp = new Timestamp(config.ToString("tsa_url"), 
+                    config.ToString("tsa_user"), 
+                    config.ToString("tsa_password"));
 
             //Adding Meta Datas
             MetaData metaData = new MetaData();
@@ -187,44 +192,45 @@ namespace EstEIDSigner
 
             try
             {
-                status("Loen sertifikaate ... ");
+                status(Resources.READ_CERTS, false);
                 OpenCertStore();
 
-                status("Loen seadeid ... ");
+                status(Resources.READ_SETTINGS, false);
                 LoadPKCS12Config();
 
                 // if user copy-pasted filename into PDF input field then force init...
                 if (reader == null)
                     InitReader();
 
-                status("Allkirjastan dokumenti ...");
+                status(Resources.ADD_SIGNATURE, false);
 
-                pdfSigner = new PDFSigner(reader, inputBox.Text, outputBox.Text, stamp, metaData, app, store);
+                pdfSigner = new PDFSigner(reader, inputFile, outputFile, stamp, metaData, app, store);
                 pdfSigner.StatusHandler = this.status;
+                pdfSigner.Settings = this.config;
                 pdfSigner.Sign(credentials);
 
-                status("Dokument allkirjastatud!");
+                status(Resources.DOCUMENT_SIGNED, false);
             }
             catch (CancelException)
             {
                 // user action was canceled
-                status("Allkirjastamine katkestati ...");
+                status(Resources.SIGNING_CANCELED, true);
             }
             catch (RevocationException ex)
             {
-                status("Kehtivussertifikaadi viga!");
-                MessageBox.Show(ex.Message, "Viga");
+                status(Resources.OCSP_CERT_ERROR, true);
+                MessageBox.Show(ex.Message, Resources.ERROR);
             }
             catch (AlreadySignedException ex)
             {
-                status("Dokument on juba allkirjastatud!!");
-                MessageBox.Show(ex.Message, "Viga");
+                status(Resources.DOCUMENT_ALREADY_SIGNED, true);
+                MessageBox.Show(ex.Message, Resources.ERROR);
             }
             catch (Exception ex)
             {
-                status("Tekkis viga ...");
+                status(Resources.GENERAL_EXCEPTION, true);
                 debug(ex.ToString());
-                MessageBox.Show(ex.Message, "Viga");
+                MessageBox.Show(ex.Message, Resources.ERROR);
             }
 
             // force Garbage Collector to close pkcs11 bridge
@@ -233,57 +239,159 @@ namespace EstEIDSigner
 
         private void LoadConfig()
         {
-            string s = "False";
-            bool b = false;
+            bool b;
+
+            string fullConfigPath = EstEIDSignerGlobals.LocalAppPath;
+            if (!Directory.Exists(fullConfigPath))
+                Directory.CreateDirectory(fullConfigPath);
+
+            string fullConfigName = fullConfigPath + EstEIDSignerGlobals.AppName + ".config";
+
+            // create default config file if needed
+            if (!File.Exists(fullConfigName))
+            {
+                if (!config.Create(fullConfigName, Resources.DEFAULT_CONFIG))
+                    MessageBox.Show(config.lastError, Resources.ERROR);
+            }
+
+            if (!config.Open(fullConfigName))
+                MessageBox.Show(config.lastError, Resources.ERROR);
 
             try
             {
-                if (config.AppSettings.Settings["debug"] != null)
-                    s = config.AppSettings.Settings["debug"].Value;
-                
-                b = System.Convert.ToBoolean(s);
+                b = config.ToBoolean("debug");
                 if (!b)
                 {
                     DebugBox.Hide();
-                    ClientSize = new Size(this.Width - 10, groupBox3.Bottom + 15);
-                    MaximumSize = new Size(this.Width, groupBox3.Bottom + 50);
-                }
+                    MaximumSize = new Size(this.Width, tablePanel3.Bottom + 50);
+                }                
 
-                if (config.AppSettings.Settings["enable_tsa"] != null)
-                    s = config.AppSettings.Settings["enable_tsa"].Value;
-                
-                b = System.Convert.ToBoolean(s);                
-                this.EnableTSA.Checked = b;
-
-                if (config.AppSettings.Settings["visible_signature"] != null)
-                    s = config.AppSettings.Settings["visible_signature"].Value;
-
-                b = System.Convert.ToBoolean(s);
+                b = config.ToBoolean("visible_signature");
                 this.SigVisible.Checked = b;
             }
-            catch (Exception) { }
+            catch (Exception) { }           
+
+            // UI
+            string lang = config.ToString("language");            
+            comboLanguage.SelectedIndex = GetCulture(lang);
         }
 
-        private void EnableTSA_CheckedChanged(object sender, EventArgs e)
+        private int GetCulture(string name)
         {
-            if (config.AppSettings.Settings["enable_tsa"] == null)
-                config.AppSettings.Settings.Add("enable_tsa", "");
+            string[] cultureCodes = {string.Empty, "en-US", "ru-RU"};
+            int index = 0;
 
-            config.AppSettings.Settings["enable_tsa"].Value = this.EnableTSA.Checked.ToString();
+            foreach (string cultureCode in cultureCodes)
+            {
+                try
+                {
+                    if (cultureCode.CompareTo(name) == 0)
+                    {
+                        CultureInfo ci = new CultureInfo(cultureCode);
+
+                        return (index);                        
+                    }
+                }
+                catch {}
+
+                index++;
+            }
+
+            return (-1);
+        }
+
+        private void SetCulture(int comboIndex)
+        {
+            CultureInfo culture;
+
+            switch (comboIndex)
+            {
+                case 1:
+                    culture = new CultureInfo("en-US");
+                    linkSettings.Location = new Point(422, 16);
+                    break;
+                case 2:
+                    culture = new CultureInfo("ru-RU");
+                    linkSettings.Location = new Point(430, 16);
+                    break;
+                default:
+                    culture = new CultureInfo(string.Empty);
+                    linkSettings.Location = new Point(430, 16);
+                    break;
+            }
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Resources.Culture = culture;
+
+            config.AddOrReplace("language", culture.Name);
+
+            // PDF Document box
+            label1.Text = Resources.UI_PDF_DOC;
+            label2.Text = Resources.UI_INPUT;
+            label3.Text = Resources.UI_OUTPUT;
+            label4.Text = Resources.UI_STATUS;
+
+            linkInput.Text = (this.inputFile.Length > 0) ? System.IO.Path.GetFileName(this.inputFile) : 
+                Resources.UI_CHOOSE_INPUT;
+            linkOutput.Text = (this.outputFile.Length > 0) ? System.IO.Path.GetFileName(this.outputFile) :
+                Resources.UI_CHOOSE_OUTPUT;
+
+            // PDF Metadata box
+            label5.Text = Resources.UI_PDF_METADATA;
+            label6.Text = Resources.UI_AUTHOR;
+            label7.Text = Resources.UI_TITLE;
+            label8.Text = Resources.UI_SUBJECT;
+            label9.Text = Resources.UI_KEYWORDS;
+            label10.Text = Resources.UI_CREATOR;
+            label11.Text = Resources.UI_SOFTWARE;
+
+            // Signature box
+            label12.Text = Resources.UI_SIGNATURE;
+            label13.Text = Resources.UI_SIGNATURE_DESCRIPTION;
+            label14.Text = Resources.UI_SIGNATURE_NAME;
+            label15.Text = Resources.UI_SIGNATURE_LOCATION;
+            SigVisible.Text = Resources.UI_SIGNATURE_VISIBLE;
+
+            // Other fields
+            signButton.Text = Resources.UI_SIGN_BUTTON;
+            linkSettings.Text = Resources.UI_SETTINGS_LINK;            
+            linkHelp.Text = Resources.UI_HELP_LINK;
         }
 
         private void SigVisible_CheckedChanged(object sender, EventArgs e)
         {
-            if (config.AppSettings.Settings["visible_signature"] == null)
-                config.AppSettings.Settings.Add("visible_signature", "");
-
-            config.AppSettings.Settings["visible_signature"].Value = this.SigVisible.Checked.ToString();
+            config.AddOrReplace("visible_signature", this.SigVisible.Checked.ToString());
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (config != null)
                 config.Save();
-        }        
+        }
+
+        private void linkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FormSettings settings = new FormSettings(config);
+            
+            settings.ShowDialog();
+        }
+
+        private void linkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string helpUrl = config.ToString("help_url");
+
+            if (helpUrl != string.Empty)
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = helpUrl;
+                process.Start();
+            }            
+        }
+
+        private void comboLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetCulture(comboLanguage.SelectedIndex);
+        }  
     }
 }

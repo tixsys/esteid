@@ -49,6 +49,7 @@ using System.Reflection;
 using System.Configuration;
 
 using EstEIDNative;
+using EstEIDSigner.Properties;
 
 ///
 /// <summary>
@@ -201,21 +202,6 @@ namespace EstEIDSigner
     }
 
     /// <summary>
-    /// base class for resource string    
-    /// </summary>
-    class ResourceBase
-        : ErrorContainer
-    {
-        protected ResourceManager resManager = null;
-
-        public ResourceBase()
-        {
-            resManager = new ResourceManager("EstEIDSigner.Properties.Resources",
-                Assembly.GetExecutingAssembly());
-        }
-    }
-
-    /// <summary>
     /// base class for exception where user action is canceled
     /// </summary>
     public class CancelException
@@ -255,8 +241,8 @@ namespace EstEIDSigner
     /// this is the most important class
     /// it uses iTextSharp library to sign PDF document
     /// </summary>
-    class PDFSigner 
-        : ResourceBase
+    class PDFSigner
+        : ErrorContainer
     {
         public const uint SIGNATURE_LENGTH = 128;
         private string inputPDF = string.Empty;
@@ -266,8 +252,9 @@ namespace EstEIDSigner
         private Appearance appearance = null;
         private DirectoryX509CertStore store = null;
         private PdfReader reader = null;
-        public delegate void OnStatus(string s);
+        public delegate void OnStatus(string s, bool error);
         private OnStatus statusHandler;
+        private EstEIDSettings config = null;
 
         public PDFSigner(string input, string output)
         {
@@ -306,6 +293,10 @@ namespace EstEIDSigner
         {
             set { statusHandler = value; }
         }
+        public EstEIDSettings Settings
+        {
+            set { config = value; }
+        }
 
         public void Verify()
         {
@@ -334,7 +325,7 @@ namespace EstEIDSigner
             HGlobalSafeHandle raw = new HGlobalSafeHandle((int)rsa_length);
             IntPtr rsaBytes = raw;
             if (rsaBytes == IntPtr.Zero)
-                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
+                throw new OutOfMemoryException(Resources.OUT_OF_MEMORY);
 
             info = signer.Info;
             slot = signer.Slot;
@@ -342,14 +333,14 @@ namespace EstEIDSigner
             if (info.LoginRequired && info.PinIsSet)
             {
                 string label = info.Label;
-                pin = ReadPin(label, (int)info.MinPin);
+                pin = ReadPin(label, (int)info.MaxPin);
                 
                 // user requested Cancel ?
                 if (pin == null)
-                    throw new CancelException(resManager.GetString("ACTION_CANCELED"));
+                    throw new CancelException(Resources.ACTION_CANCELED);
                 // no pin supplied ?
                 else if (pin == string.Empty)
-                    throw new Exception(resManager.GetString("NO_PIN_SUPPLIED"));
+                    throw new Exception(Resources.NO_PIN_SUPPLIED);
             }
 
             rc = estEidReader.Sign(slot, pin, digest, (uint)digest.Length, ref rsaBytes, ref digest_length);
@@ -369,7 +360,7 @@ namespace EstEIDSigner
 
             rc = hash.InitDigest(Digest.HashAlgorithm.SHA1);
             if (rc != EstEIDReader.ESTEID_OK)
-                throw new Exception(resManager.GetString("CARD_HASH_INIT"));
+                throw new Exception(Resources.CARD_HASH_INIT);
 
             Stream s = sap.RangeStream;
             MemoryStream ss = new MemoryStream();
@@ -380,17 +371,17 @@ namespace EstEIDSigner
                 ss.Write(buff, 0, read);
                 rc = hash.UpdateDigest(buff, (uint)read);
                 if (rc != EstEIDReader.ESTEID_OK)
-                    throw new Exception(resManager.GetString("CARD_HASH_UPDATE"));
+                    throw new Exception(Resources.CARD_HASH_UPDATE);
             }
 
             HGlobalSafeHandle raw = new HGlobalSafeHandle((int)hash_length);
             IntPtr hashBytes = raw;
             if (hashBytes == IntPtr.Zero)
-                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
+                throw new OutOfMemoryException(Resources.OUT_OF_MEMORY);
 
             rc = hash.FinalizeDigest(ref hashBytes, ref digest_length);
             if (rc != EstEIDReader.ESTEID_OK)
-                throw new Exception(resManager.GetString("CARD_HASH_FINALIZE"));
+                throw new Exception(Resources.CARD_HASH_FINALIZE);
 
             return raw.ToByteArray();
         }
@@ -404,20 +395,20 @@ namespace EstEIDSigner
 
             rc = hash.InitDigest(Digest.HashAlgorithm.SHA1);
             if (rc != EstEIDReader.ESTEID_OK)
-                throw new Exception(resManager.GetString("CARD_HASH_INIT"));
+                throw new Exception(Resources.CARD_HASH_INIT);
 
             rc = hash.UpdateDigest(data, (uint)data.Length);
             if (rc != EstEIDReader.ESTEID_OK)
-                throw new Exception(resManager.GetString("CARD_HASH_UPDATE"));
+                throw new Exception(Resources.CARD_HASH_UPDATE);
 
             HGlobalSafeHandle raw = new HGlobalSafeHandle((int)hash_length);
             IntPtr hashBytes = raw;
             if (hashBytes == IntPtr.Zero)
-                throw new OutOfMemoryException(resManager.GetString("OUT_OF_MEMORY"));
+                throw new OutOfMemoryException(Resources.OUT_OF_MEMORY);
 
             rc = hash.FinalizeDigest(ref hashBytes, ref digest_length);
             if (rc != EstEIDReader.ESTEID_OK)
-                throw new Exception(resManager.GetString("CARD_HASH_FINALIZE"));
+                throw new Exception(Resources.CARD_HASH_FINALIZE);
 
             return raw.ToByteArray();
         }
@@ -449,7 +440,7 @@ namespace EstEIDSigner
                     ref error);
 
                 if (timeStampToken == null)
-                    throw new Exception(resManager.GetString("TSA_ERROR") + error);
+                    throw new Exception(Resources.TSA_ERROR + error);
 
                 Hashtable ht = new Hashtable();
                 Asn1Object derObj = new Asn1InputStream(timeStampToken).ReadObject();
@@ -485,7 +476,7 @@ namespace EstEIDSigner
 
             slots = estEidReader.GetSlotCount(1);
             if (slots == 0)
-                throw new Exception(resManager.GetString("CARD_MISSING"));
+                throw new Exception(Resources.CARD_MISSING);
 
             col = new X509Certificate2Collection();
             mech = new Mechanism(Mechanism.CKF_SIGN | Mechanism.CKF_HW);
@@ -534,14 +525,14 @@ namespace EstEIDSigner
 
             // no valid certs found ?
             if (col.Count == 0)
-                throw new Exception(resManager.GetString("CERTS_MISSING"));
+                throw new Exception(Resources.CERTS_MISSING);
 
             X509Certificate2Collection sel = X509CertificateUI.SelectFromCollection(col,
-                "Sertifikaadid", "Vali sertifikaat digitaalallkirja lisamiseks");
+                Resources.UI_CERTIFICATES, Resources.UI_PICK_CERTIFICATE);
 
             // user requested Cancel or there are no certs ?
             if (sel == null || sel.Count == 0)
-                throw new CancelException(resManager.GetString("ACTION_CANCELED"));
+                throw new CancelException(Resources.ACTION_CANCELED);
 
             X509Certificate2Enumerator en = sel.GetEnumerator();
             en.MoveNext();
@@ -561,7 +552,7 @@ namespace EstEIDSigner
 
             // didn't find any match ?
             // data is being altered in memory ?
-            throw new Exception(resManager.GetString("CERT_DONT_MATCH"));
+            throw new Exception(Resources.CERT_DONT_MATCH);
         }
 
         private OCSPClientEstEID OCSPClient(PKCS12Settings credentials, Org.BouncyCastle.X509.X509Certificate signer)
@@ -585,7 +576,7 @@ namespace EstEIDSigner
             string signerKey = X509Utils.GetIssuerFields(signer, "CN");
             if (signerKey.Length == 0)
             {
-                this.lastError = "Invalid signer certificate: Issuer missing";
+                this.lastError = Resources.CERT_ISSUER_MISSING;
                 return null;
             }
 
@@ -593,7 +584,7 @@ namespace EstEIDSigner
             storeEntry = this.store[signerKey, true];
             if (storeEntry == null)
             {
-                this.lastError = "Issuer certificate missing: " + signerKey;
+                this.lastError = Resources.ISSUER_CERT_MISSING + signerKey;
                 return null;
             }
             issuerCert = storeEntry.Certificate;
@@ -602,15 +593,15 @@ namespace EstEIDSigner
             storeEntry = this.store[signerKey, false];
             if (storeEntry == null)
             {
-                this.lastError = "Responder certificate missing: " + signerKey;
+                this.lastError = Resources.RESPONDER_CET_MISSING + signerKey;
                 return null;
             }
             responderCert = storeEntry.Certificate;
 
-            string ocspUrl = ConfigurationSettings.AppSettings["ocsp_url"];
+            string ocspUrl = config.ToString("ocsp_url");
             if (ocspUrl == null || ocspUrl.Length == 0)
             {
-                this.lastError = "Invalid or missing ocsp_url configuration value";
+                this.lastError = Resources.OCSP_URL_MISSING;
                 return null;
             }
 
@@ -619,7 +610,7 @@ namespace EstEIDSigner
 
         private void SignUsingEstEIDCard2(PKCS12Settings credentials, string filename, string outfile)
         {
-            statusHandler("Dokumendi kontroll ...");
+            statusHandler(Resources.VERIFYING_DOCUMENT, false);
             
             AcroFields af = this.reader.AcroFields;
             ArrayList names = af.GetSignatureNames();
@@ -631,23 +622,23 @@ namespace EstEIDSigner
                 string name = (string)names[0];
                 PdfPKCS7 pkc7 = af.VerifySignature(name);
                 string who = PdfPKCS7.GetSubjectFields(pkc7.SigningCertificate).GetField("CN");
-                throw new AlreadySignedException("Dokument on juba allkirjastatud! Allkirja andja: " + who);
+                throw new AlreadySignedException(Resources.DOCUMENT_ALREADY_SIGNED_BY + who);
             }
 
-            statusHandler("Ühendan kaardilugejaga ...");
+            statusHandler(Resources.CONNECTING_SMARTCARD, false);
 
             // open EstEID
             EstEIDReader estEidReader = new EstEIDReader();
-            string pkcs11_lib = ConfigurationSettings.AppSettings["pkcs11_library"];
+            string pkcs11_lib = config.ToString("pkcs11_library");
             bool b = estEidReader.Open(pkcs11_lib);
             if (b == false)
-                throw new Exception(resManager.GetString("PKCS11_OPEN"));
+                throw new Exception(Resources.PKCS11_OPEN);
 
-            statusHandler("Loen sertifikaate ...");
+            statusHandler(Resources.READ_CERTS, false);
             PKCS11Signer signer = LocateSigner(estEidReader);
             Org.BouncyCastle.X509.X509Certificate[] chain = X509Utils.LoadCertificate(signer.Cert.RawData);
 
-            statusHandler("Teostan OCSP kehtivuspäringut ...");
+            statusHandler(Resources.VERIFYING_OCSP, false);
             OCSPClientEstEID ocspClient = OCSPClient(credentials, chain[0]);
             if (ocspClient == null)
                 throw new Exception(this.lastError);
@@ -660,7 +651,7 @@ namespace EstEIDSigner
             Oid oid = card.SignatureAlgorithm;
 
             if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
-                throw new Exception(resManager.GetString("INVALID_CERT"));
+                throw new Exception(Resources.INVALID_CERT);
 
             PdfReader reader = new PdfReader(filename);
             PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0');
@@ -697,12 +688,12 @@ namespace EstEIDSigner
             // compute hash based on PDF bytes
             byte[] digest = ComputeHash(estEidReader, sap);
 
-            statusHandler("Allkirjastan dokumenti ...");
+            statusHandler(Resources.ADD_SIGNATURE, false);
             // sign hash
             byte[] rsadata = EstEIDCardSign(estEidReader, signer, digest);
             // if null, user requested Cancel
             if (rsadata == null)
-                throw new Exception(resManager.GetString("CARD_INTERNAL_ERROR"));
+                throw new Exception(Resources.CARD_INTERNAL_ERROR);
 
             // create PKCS#7 envelope
             PdfPKCS7 pk7 = new PdfPKCS7(null, chain, null, "SHA1", true);
@@ -713,13 +704,13 @@ namespace EstEIDSigner
             // user wants to add TSA response ?
             if (stamp != null && pk != null)
             {
-                statusHandler("Teostan ajatempli päringut ...");
+                statusHandler(Resources.TSA_REQUEST, false);
                 pk = TimestampAuthorityResponse(estEidReader, pk);
             }
 
             // PKCS#7 bytes too large ?
             if (pk.Length >= csize)
-                throw new Exception(resManager.GetString("MEMORY_ERROR"));
+                throw new Exception(Resources.MEMORY_ERROR);
 
             byte[] outc = new byte[csize];
 

@@ -25,6 +25,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using EstEIDSigner.Properties;
+
 namespace EstEIDSigner
 {
     public partial class FormSelectCertificate : Form
@@ -43,15 +45,15 @@ namespace EstEIDSigner
             ColumnHeader[] head = new ColumnHeader[3];
 
             head[0] = new ColumnHeader();
-            head[0].Text = "Väljastatud";
+            head[0].Text = Resources.UI_CERT_ISSUED_TO;
             head[0].Width = (int)(this.listCertificates.Width * 0.49);
             
             head[1] = new ColumnHeader();
-            head[1].Text = "Väljastaja";
+            head[1].Text = Resources.UI_CERT_ISSUED_BY;
             head[1].Width = (int)(this.listCertificates.Width * 0.25);
 
             head[2] = new ColumnHeader();
-            head[2].Text = "Kehtivusaeg";
+            head[2].Text = Resources.UI_CERT_VALID_UNTIL;
             head[2].Width = (int)(this.listCertificates.Width * 0.25);
             
             listCertificates.Columns.AddRange(head);            

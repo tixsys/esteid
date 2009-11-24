@@ -27,6 +27,11 @@ namespace EstEIDSigner
     {
         private string error;
 
+        public ErrorContainer()
+        {
+            error = string.Empty;
+        }
+
         public string lastError
         {
             set { error = value; }
