@@ -227,7 +227,7 @@ int My1EstEIDSigner::initData()
 	#endif
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
-	
+	PRINT_DEBUG ("Conf location: %s",val);
 	try
 	{
 		digidoc::initialize();
