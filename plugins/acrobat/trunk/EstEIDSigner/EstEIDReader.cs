@@ -428,11 +428,11 @@ namespace EstEIDNative
             errors[0x82] = "OBJECT_HANDLE_INVALID";
             errors[0x90] = "OPERATION_ACTIVE";
             errors[0x91] = "OPERATION_NOT_INITIALIZED";
-            errors[0xa0] = "PIN_INCORRECT";
-            errors[0xa1] = "PIN_INVALID";
+            errors[0xa0] = Resources.UI_WRONG_PIN;         //"PIN_INCORRECT";
+            errors[0xa1] = Resources.UI_INVALID_PIN;       // "PIN_INVALID";
             errors[0xa2] = "PIN_LEN_RANGE";
-            errors[0xa3] = "PIN_EXPIRED";
-            errors[0xa4] = "PIN_LOCKED";
+            errors[0xa3] = Resources.UI_EXPIRED_PIN;       // "PIN_EXPIRED";
+            errors[0xa4] = Resources.UI_LOCKED_PIN;        // "PIN_LOCKED";
             errors[0xb0] = "SESSION_CLOSED";
             errors[0xb1] = "SESSION_COUNT";
             errors[0xb3] = "SESSION_HANDLE_INVALID";
