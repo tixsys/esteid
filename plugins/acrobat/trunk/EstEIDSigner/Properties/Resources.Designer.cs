@@ -200,13 +200,13 @@ namespace EstEIDSigner.Properties {
         ///  &lt;add key=&quot;pkcs11_library&quot; value=&quot;opensc-pkcs11.dll&quot; /&gt;
         ///  &lt;add key=&quot;debug&quot; value=&quot;false&quot; /&gt;
         ///  &lt;add key=&quot;ocsp_url&quot; value=&quot;http://ocsp.sk.ee&quot; /&gt;
-        ///  &lt;add key=&quot;cert_path&quot; value=&quot;.\certs&quot; /&gt;
+        ///  &lt;add key=&quot;cert_path&quot; value=&quot;\certs&quot; /&gt;
         ///  &lt;add key=&quot;enable_tsa&quot; value=&quot;False&quot; /&gt;
         ///  &lt;add key=&quot;visible_signature&quot; value=&quot;False&quot; /&gt;
         ///  &lt;add key=&quot;tsa_url&quot; value=&quot;http://www.edelweb.fr/cgi-bin/service-tsp&quot; /&gt;
         ///  &lt;add key=&quot;tsa_user&quot; value=&quot;&quot; /&gt;
         ///  &lt;add key=&quot;tsa_password&quot; value=&quot;&quot; /&gt;
-        ///  &lt;add ke [rest of string was truncated]&quot;;.
+        ///  &lt;add key [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DEFAULT_CONFIG {
             get {
@@ -620,6 +620,15 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PIN on kehtetu.
+        /// </summary>
+        internal static string UI_EXPIRED_PIN {
+            get {
+                return ResourceManager.GetString("UI_EXPIRED_PIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abi.
         /// </summary>
         internal static string UI_HELP_LINK {
@@ -656,11 +665,29 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vigane PIN.
+        /// </summary>
+        internal static string UI_INVALID_PIN {
+            get {
+                return ResourceManager.GetString("UI_INVALID_PIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Märksõnad:.
         /// </summary>
         internal static string UI_KEYWORDS {
             get {
                 return ResourceManager.GetString("UI_KEYWORDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PIN on lukus.
+        /// </summary>
+        internal static string UI_LOCKED_PIN {
+            get {
+                return ResourceManager.GetString("UI_LOCKED_PIN", resourceCulture);
             }
         }
         
@@ -814,6 +841,15 @@ namespace EstEIDSigner.Properties {
         internal static string UI_TITLE {
             get {
                 return ResourceManager.GetString("UI_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vale PIN.
+        /// </summary>
+        internal static string UI_WRONG_PIN {
+            get {
+                return ResourceManager.GetString("UI_WRONG_PIN", resourceCulture);
             }
         }
         

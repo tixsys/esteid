@@ -179,7 +179,7 @@
   &lt;add key="pkcs11_library" value="opensc-pkcs11.dll" /&gt;
   &lt;add key="debug" value="false" /&gt;
   &lt;add key="ocsp_url" value="http://ocsp.sk.ee" /&gt;
-  &lt;add key="cert_path" value=".\certs" /&gt;
+  &lt;add key="cert_path" value="\certs" /&gt;
   &lt;add key="enable_tsa" value="False" /&gt;
   &lt;add key="visible_signature" value="False" /&gt;
   &lt;add key="tsa_url" value="http://www.edelweb.fr/cgi-bin/service-tsp" /&gt;
@@ -387,5 +387,17 @@
   </data>
   <data name="UI_TITLE" xml:space="preserve">
     <value>Pealkiri:</value>
+  </data>
+  <data name="UI_EXPIRED_PIN" xml:space="preserve">
+    <value>PIN on kehtetu</value>
+  </data>
+  <data name="UI_INVALID_PIN" xml:space="preserve">
+    <value>Vigane PIN</value>
+  </data>
+  <data name="UI_LOCKED_PIN" xml:space="preserve">
+    <value>PIN on lukus</value>
+  </data>
+  <data name="UI_WRONG_PIN" xml:space="preserve">
+    <value>Vale PIN</value>
   </data>
 </root>
