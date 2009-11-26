@@ -18,12 +18,12 @@
  */
 
 using System;
+using Microsoft.Win32;
 
 namespace EstEIDSigner
 {
     class EstEIDSignerGlobals
     {
-<<<<<<< .mine
         private const string organizationDir = "Estonian ID Card";
         private const string programDir = "EstEIDSigner";
         private const string certDir = "certs";
@@ -34,12 +34,6 @@ namespace EstEIDSigner
 #endif
 
         public static string AppName
-=======
-        public static string OrganizationDir = "Estonian ID Card";
-        public static string ProgramDir = "EstEIDSigner";
-
-        public static string AppName
->>>>>>> .r2198
         {
             get
             {
@@ -66,7 +60,6 @@ namespace EstEIDSigner
             get
             {
 #if WIN32
-<<<<<<< .mine
 #warning WIN32 is defined: using Registry to load configuration file location
                 RegistryKey regkey;
 
@@ -80,25 +73,12 @@ namespace EstEIDSigner
                     return Environment.CurrentDirectory + "\\";
 
                 return (path);
-=======
-#warning WIN32 is defined: using Windows slashes
-                string format = @"{0}\{1}\{2}\";
->>>>>>> .r2198
 #else
-<<<<<<< .mine
 #warning WIN32 is not defined: using predefined configuration file location
                 string path = configDir;
 
                 return (path);
-=======
-#warning WIN32 is not defined: using Unix slashes
-                string format = @"{0}/{1}/{2}/";
->>>>>>> .r2198
 #endif
-                string appPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string fullPath = string.Format(format, appPath, OrganizationDir, ProgramDir);
-
-                return (fullPath);
             }
         }
 
