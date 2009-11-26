@@ -56,7 +56,9 @@ namespace EstEIDSigner
             head[2].Text = Resources.UI_CERT_VALID_UNTIL;
             head[2].Width = (int)(this.listCertificates.Width * 0.25);
             
-            listCertificates.Columns.AddRange(head);            
+            listCertificates.Columns.AddRange(head);
+
+            this.Ok.Enabled = false;
         }
 
         public int Add(string issuedTo, string issudeBy, string validUntil)
@@ -85,6 +87,11 @@ namespace EstEIDSigner
         public int Selected
         {
             get { return selected; }
+        }
+
+        private void listCertificates_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Ok.Enabled = (listCertificates.SelectedItems.Count > 0);
         }
     }
 }

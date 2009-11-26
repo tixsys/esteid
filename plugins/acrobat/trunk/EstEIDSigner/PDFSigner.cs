@@ -302,9 +302,9 @@ namespace EstEIDSigner
         {
         }
 
-        private string ReadPin(string label, int maxpin)
+        private string ReadPin(string label, int minpin, int maxpin)
         {
-            FormPin form = new FormPin(label, maxpin);
+            FormPin form = new FormPin(label, minpin, maxpin);
             DialogResult dr = form.ShowDialog();
             if (dr == DialogResult.OK)
                 return form.Pin;
@@ -333,7 +333,7 @@ namespace EstEIDSigner
             if (info.LoginRequired && info.PinIsSet)
             {
                 string label = info.Label;
-                pin = ReadPin(label, (int)info.MaxPin);
+                pin = ReadPin(label, (int)info.MinPin, (int)info.MaxPin);
                 
                 // user requested Cancel ?
                 if (pin == null)

@@ -62,6 +62,7 @@
             this.listCertificates.Name = "listCertificates";
             this.listCertificates.UseCompatibleStateImageBehavior = false;
             this.listCertificates.View = System.Windows.Forms.View.Details;
+            this.listCertificates.SelectedIndexChanged += new System.EventHandler(this.listCertificates_SelectedIndexChanged);
             // 
             // FormSelectCertificate
             // 

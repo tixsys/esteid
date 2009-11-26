@@ -29,13 +29,17 @@ namespace EstEIDSigner
 {
     public partial class FormPin : Form
     {
-        public FormPin(string s, int maxpin)
+        private int minLength = 0;
+
+        public FormPin(string s, int minpin, int maxpin)
         {
             this.Font = new Font("Verdana", (float)8.25);
 
             InitializeComponent();
             labelExtra.Text = s;
             textBoxPin.MaxLength = maxpin;
+            minLength = minpin;
+            buttonOk.Enabled = false;
         }
 
         public string Pin
@@ -43,9 +47,9 @@ namespace EstEIDSigner
             get { return (this.textBoxPin.Text); }
         }
 
-        private void buttonOk_Click(object sender, EventArgs e)
+        private void textBoxPin_TextChanged(object sender, EventArgs e)
         {
-
+            buttonOk.Enabled = (textBoxPin.Text.Length >= minLength);
         }
     }
 }

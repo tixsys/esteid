@@ -41,6 +41,7 @@
             resources.ApplyResources(this.textBoxPin, "textBoxPin");
             this.textBoxPin.Name = "textBoxPin";
             this.textBoxPin.UseSystemPasswordChar = true;
+            this.textBoxPin.TextChanged += new System.EventHandler(this.textBoxPin_TextChanged);
             // 
             // buttonOk
             // 
@@ -48,7 +49,6 @@
             resources.ApplyResources(this.buttonOk, "buttonOk");
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.UseVisualStyleBackColor = true;
-            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // buttonCancel
             // 
