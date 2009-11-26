@@ -1,16 +1,13 @@
 #if !defined(__OCSP_H_INCLUDED__)
 #define __OCSP_H_INCLUDED__
 
-#include <openssl/ocsp.h>
-#include <openssl/x509.h>
-#include <openssl/ssl.h>
-
-#include <string>
-#include <time.h>
-
 #include "../../io/IOException.h"
 #include "../OpenSSLHelpers.h"
 #include "OCSPException.h"
+
+#include <openssl/ocsp.h>
+#include <openssl/x509.h>
+#include <openssl/ssl.h>
 
 namespace digidoc
 {
@@ -33,7 +30,7 @@ namespace digidoc
       public:
           enum CertStatus { GOOD, REVOKED, UNKNOWN };
 
-          OCSP( const std::string &url, const std::string &phost,const std::string &pport ) throw(IOException);
+          OCSP( const std::string &url ) throw(IOException);
           ~OCSP();
           void setUrl( const std::string& url ) throw(IOException);
           void setOCSPCerts(STACK_OF(X509)* ocspCerts);
@@ -64,15 +61,13 @@ namespace digidoc
           char* host;
           char* port;
           char* path;
-          char* proxyHost;
-          char* proxyPort;
           bool ssl;
 
           long skew;
           long maxAge;
 
-	  BIO *connection, *sconnection;
-	  SSL_CTX *ctx;
+          BIO *connection, *sconnection;
+          SSL_CTX *ctx;
           X509* ocspCert;
           STACK_OF(X509)* ocspCerts;
           X509_STORE* certStore;

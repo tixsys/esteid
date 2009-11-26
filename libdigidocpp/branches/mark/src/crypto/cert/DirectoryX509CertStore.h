@@ -1,9 +1,6 @@
 #if !defined(__DIRECTORYX509CERTSTORE_H_INCLUDED__)
 #define __DIRECTORYX509CERTSTORE_H_INCLUDED__
 
-#include <string>
-#include <vector>
-
 #include "X509CertStore.h"
 
 namespace digidoc

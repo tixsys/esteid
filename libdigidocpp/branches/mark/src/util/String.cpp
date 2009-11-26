@@ -1,11 +1,16 @@
-#include <memory.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <iostream>
-#include <iconv.h>
-#include <errno.h>
-#include "../log.h"
 #include "String.h"
+
+#include "../log.h"
+
+#include <memory.h>
+#include <stdlib.h>
+#include <errno.h>
+
+#if defined(_WIN32)
+#include <windows.h>
+#elif !defined(__APPLE__)
+#include <iconv.h>
+#endif
 
 #ifdef ICONV_SECOND_ARGUMENT_IS_CONST
      #define ICONV_CONST const
@@ -64,6 +69,29 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
     return s;
 }
 
+#ifdef _WIN32
+std::string digidoc::util::String::toMultiByte(int format, const std::wstring &in)
+{
+    int len = WideCharToMultiByte(format, 0, in.data(), in.size(), 0, 0, 0, 0);
+    char *conv = (char*)malloc(sizeof(char)*len);
+    memset(conv, 0, len);
+    len = WideCharToMultiByte(format, 0, in.data(), in.size(), conv, len, 0, 0);
+    std::string out(conv, len);
+    free(conv);
+    return out;
+}
+
+std::wstring digidoc::util::String::toWideChar(int format, const std::string &in)
+{
+    int len = MultiByteToWideChar(format, 0, in.data(), in.size(), 0, 0);
+    wchar_t *conv = (wchar_t*)malloc(sizeof(wchar_t)*len);
+    memset(conv, 0, len);
+    len = MultiByteToWideChar(format, 0, in.data(), in.size(), conv, len);
+    std::wstring out(conv, len);
+    free(conv);
+    return out;
+}
+#endif
 
 /**
  * Helper method for converting from non-UTF-8 encoded strings to UTF-8.
@@ -75,48 +103,44 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
  * @param str_in The string to be converted.
  * @return Returns the input string in UTF-8.
  */
+#ifdef _WIN32
+std::string digidoc::util::String::convertUTF8(const std::string &in, bool to_UTF)
+{
+    int inFormat = to_UTF ? CP_ACP : CP_UTF8;
+    int outFormat = to_UTF ? CP_UTF8 : CP_ACP;
+    return toMultiByte(outFormat, toWideChar(inFormat, in));
+}
+#else
 std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool to_UTF)
 {
-    std::string charset("");
-    iconv_t ic_descr;
+#if defined(__APPLE__)
+    return str_in;
+#else
+    std::string charset("ISO8859-1");
+    const char *env_lang = getenv("LANG");
+    if(env_lang && strcmp(env_lang, "C") != 0)
+    {
+        charset = env_lang;
+        size_t locale_start = charset.rfind(".");
+        if(locale_start != std::string::npos)
+            charset = charset.substr(locale_start+1);
+    }
 
+    // no conversion needed for UTF-8
+    if((charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0))
+        return str_in;
+
+    iconv_t ic_descr = iconv_t(-1);
     try
     {
-        charset.append(getSystemEncoding());  
-    
-        if( (charset.compare("UTF-8") == 0) || (charset.compare("utf-8") == 0) )
-        {
-	    	// no conversion needed for UTF-8 
-		    return str_in;
-	    }
-          
-        if(charset.compare("C") == 0)
-        {
-            INFO("System locale is C, continuing without conversion.");
-            charset = "LATIN1";
-        }
-
-        if(to_UTF)
-        {
-            //direction of conversion: from platform specific encoding to UTF-8
-            ic_descr = iconv_open("UTF-8", charset.c_str()); // to_encoding, from_encoding
-        }
-        else
-        {
-            //direction of conversion: from UTF-8 to platform specific encoding
-            ic_descr = iconv_open(charset.c_str(), "UTF-8");
-        }
+        ic_descr = to_UTF ? iconv_open("UTF-8", charset.c_str()) : iconv_open(charset.c_str(), "UTF-8");
     }
-
-    catch(std::exception& e)
-    {
-        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
-        return str_in;
-    }
+    catch(std::exception &) {}
 
     if( ic_descr == iconv_t(-1))
     {
-        INFO("Could not get the iconv descriptor for converting to/from charset %s, continuing without conversion.", charset.c_str());
+        INFO("Could not get the iconv descriptor for converting to/from charset %s, "
+             "continuing without conversion.", charset.c_str());
         return str_in; 
     }
 
@@ -144,7 +168,7 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
             case EINVAL:
             default:
                 iconv_close(ic_descr);
-                THROW_BDOCEXCEPTION("Failed to convert to/from UTF-8.");
+                return str_in;
                 break;
             }
         }
@@ -154,44 +178,9 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
     iconv_close(ic_descr);
 
     return out;
+#endif
 }
-
-
-/**
- * Helper method for getting the platform encoding.
- *
- * @return Returns the platform encoding read from the LANG environment variable. 
- */
-std::string digidoc::util::String::getSystemEncoding()
-{
-    std::string encoding("");
-    const char *env_lang = getenv("LANG");
-
-    if(env_lang)
-    {
-        encoding.append(env_lang);
-    }
-
-    if(encoding.empty())
-    {   
-        encoding.append("C");
-        INFO("Empty LANG environment variable, continuing without conversion to/from UTF-8.");
-        return encoding;
-    }
-
-    // Is LANG in a format such as en_US.ISO-8859-1 ?
-    size_t locale_start = encoding.rfind(".");
-
-    if(locale_start != std::string::npos)
-    {
-        size_t newline = encoding.find("\n");
-        encoding = encoding.substr(locale_start+1, newline);
-    }
-
-    // else just return what was read from LANG
-    return encoding;
-}
-
+#endif
 
 /**
  * Helper method for converting strings with non-ascii characters to the URI format (%HH for each non-ascii character).
@@ -209,7 +198,6 @@ std::string digidoc::util::String::toUriFormat(const std::string& str_in)
     char dst[1024] = {0}; 
 
     std::string legal_chars = "-_.!~*'();/?:@&=+$,";
-
     for(size_t i=0, j=0; i<str_in.length(); i++)
     {
         if( (!(isalnum((str_in.c_str())[i])) ) && ( legal_chars.find((str_in.c_str())[i]) == std::string::npos) )

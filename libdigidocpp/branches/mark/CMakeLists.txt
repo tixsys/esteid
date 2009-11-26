@@ -28,10 +28,12 @@ configure_file(
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libdigidocpp.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 
+if(UNIX AND !APPLE)
 find_package(Iconv REQUIRED)
+endif(UNIX AND !APPLE)
 find_package(LibDigiDoc REQUIRED)
 find_package(LibP11 REQUIRED)
-find_package(PKCS11H REQUIRED)
+#find_package(PKCS11H REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(XercesC REQUIRED)
@@ -40,7 +42,7 @@ find_package(XSD REQUIRED)
 find_package(ZLIB REQUIRED)
 
 if(UNIX)
-	find_package(LibDL REQUIRED)
+	find_package(LibDL)
 endif(UNIX)
 
 set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)

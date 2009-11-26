@@ -1,12 +1,10 @@
 #if !defined(__SIGNER_H_INCLUDED__)
 #define __SIGNER_H_INCLUDED__
 
-#include <openssl/x509.h>
-
-#include <string>
-#include <vector>
-
 #include "SignException.h"
+#include "../../SignatureAttributes.h"
+
+#include <openssl/x509.h>
 
 namespace digidoc
 {
@@ -19,28 +17,6 @@ namespace digidoc
     {
 
       public:
-          struct EXP_DIGIDOC SignatureProductionPlace
-          {
-              SignatureProductionPlace();
-              SignatureProductionPlace(std::string city, std::string stateOrProvince, std::string postalCode, std::string countryName);
-              bool isEmpty();
-
-              std::string city;
-              std::string stateOrProvince;
-              std::string postalCode;
-              std::string countryName;
-          };
-
-          struct EXP_DIGIDOC SignerRole
-          {
-              SignerRole();
-              SignerRole(const std::string& claimedRole);
-              bool isEmpty();
-
-              typedef std::vector<std::string> TRoles;
-              TRoles claimedRoles;
-          };
-
           struct EXP_DIGIDOC Digest
           {
               /** Digest type (e.g NID_sha1), available values in openssl/obj_mac.h */
@@ -55,7 +31,6 @@ namespace digidoc
               unsigned int length;
           };
 
-      public:
           virtual X509* getCert() throw(SignException) = 0;
           virtual void sign(const Digest& digest, Signature& signature) throw(SignException) = 0;
           void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);

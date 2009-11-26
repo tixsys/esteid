@@ -33,8 +33,7 @@ digidoc::EstEIDSigner::~EstEIDSigner()
 }
 
 /**
- * Implements signing certificate selector for EstEID ID-Cards. Select signing
- * certificate, which has label 'Allkirjastamine'.
+ * Implements signing certificate selector for EstEID ID-Cards.
  *
  * @param certificates list of certificates to choose from. List of all certificates
  *        found ID-card.
@@ -44,17 +43,10 @@ digidoc::EstEIDSigner::~EstEIDSigner()
 digidoc::PKCS11Signer::PKCS11Cert digidoc::EstEIDSigner::selectSigningCertificate(
         std::vector<PKCS11Signer::PKCS11Cert> certificates) throw(SignException)
 {
-    // Find EstEID signing certificate (PKCS11 cert label is string 'Allkirjastamine').
-    for(std::vector<PKCS11Signer::PKCS11Cert>::const_iterator iter = certificates.begin(); iter != certificates.end(); iter++)
-    {
-        if(iter->label == std::string("Allkirjastamine"))
-        {
-            return *iter;
-        }
-    }
-
-    THROW_SIGNEXCEPTION("Could not find certificate with label 'Allkirjastamine'.");
-	return certificates[0];
+    // Find EstEID signing certificate
+    if(certificates.empty())
+        THROW_SIGNEXCEPTION("Could not find certificate with label 'Allkirjastamine'.");
+    return certificates[0];
 }
 
 /**
@@ -108,7 +100,7 @@ void digidoc::EstEIDConsolePinSigner::setPrompt(const std::string& prompt)
  * @return returns PIN code.
  * @throws SignException throws an exception if the login process is canceled.
  */
-std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) throw(SignException)
+std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Signer::PKCS11Cert certificate) throw(SignException)
 {
     char pin[16];
     size_t pinMax = 16;
@@ -134,9 +126,13 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 				fputc( '*', stdout );
 				break;
 			case EOF:
+			{
 				fputs( "[EOF]\n", stdout );
-				THROW_SIGNEXCEPTION( "PIN acquisition canceled with [EOF]." );
-				break; 
+				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with [EOF].");
+				e.setCode( Exception::PINCanceled );
+				throw e;
+				break;
+			}
 			case 0: 
 			case 0xE0:  // FN Keys (0 or E0) start of two-character FN code
 				c = ( c << 4 ) | _getch();
@@ -159,13 +155,21 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
 				fputs( "\b \b", stdout );
 				break;
 			case  3: // CTRL+C 
+			{
 				fputs( "^C\n", stdout );
-				THROW_SIGNEXCEPTION( "PIN acquisition canceled with ^C." );
+				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with ^C.");
+				e.setCode( Exception::PINCanceled );
+				throw e;
 				break;
+			}
 			case  26: // CTRL+Z
+			{
 				fputs( "^Z\n", stdout );
-				THROW_SIGNEXCEPTION( "PIN acquisition canceled with ^Z." );
+				SignException e( __FILE__, __LINE__, "PIN acquisition canceled with ^Z.");
+				e.setCode( Exception::PINCanceled );
+				throw e;
 				break;
+			}
 			case  27: // ESC 
 				fputc('\n', stdout );
 				printf( prompt.c_str(), certificate.token.label.c_str() );
@@ -186,7 +190,9 @@ std::string digidoc::EstEIDConsolePinSigner::getPin(PKCS11Cert certificate) thro
     std::string result(pin);
     if(result.empty())
     {
-        THROW_SIGNEXCEPTION("PIN acquisition canceled.");
+		SignException e( __FILE__, __LINE__, "PIN acquisition canceled.");
+		e.setCode( Exception::PINCanceled );
+		throw e;
     }
 
     return result;

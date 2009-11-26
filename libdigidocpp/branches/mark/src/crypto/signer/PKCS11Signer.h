@@ -1,12 +1,11 @@
 #if !defined(__PKCS11SIGNER_H_INCLUDED__)
 #define __PKCS11SIGNER_H_INCLUDED__
 
-#include <string>
-
 #include "Signer.h"
 
 namespace digidoc
 {
+
     /**
      * Implements <code>Signer</code> interface for ID-Cards, which support PKCS #11 protocol.
      *
@@ -28,8 +27,9 @@ namespace digidoc
     {
 
       public:
-          struct PKCS11Token { std::string label; std::string manufacturer; std::string model; std::string serialNr; };
+          struct PKCS11Token { std::string label, manufacturer, model, serialNr; };
           struct PKCS11Cert { PKCS11Token token; std::string label; X509* cert; };
+
           PKCS11Signer() throw(SignException);
           PKCS11Signer(const std::string& driver) throw(SignException);
           virtual ~PKCS11Signer();
@@ -39,8 +39,19 @@ namespace digidoc
           void loadDriver() throw(SignException);
           void loadDriver(const std::string& driver) throw(SignException);
           void unloadDriver();
-          void* handle() const;
-          int  slotNumber() const;
+
+          /**
+           * Abstract method that returns PIN code for the selected signing certificate.
+           * If PIN code is not needed this method is never called. To cancel the login
+           * this method should throw an exception.
+           *
+           * @param certificate certificate that is used for signing and needs a PIN
+           *        for login.
+           * @return returns the PIN code to login.
+           * @throws SignException should throw an exception if the login operation
+           *         should be canceled.
+           */
+          virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       protected:
 
@@ -58,19 +69,6 @@ namespace digidoc
 
           virtual void showPinpad() {};
           virtual void hidePinpad() {};
-      public:
-          /**
-           * Abstract method that returns PIN code for the selected signing certificate.
-           * If PIN code is not needed this method is never called. To cancel the login
-           * this method should throw an exception.
-           *
-           * @param certificate certificate that is used for signing and needs a PIN
-           *        for login.
-           * @return returns the PIN code to login.
-           * @throws SignException should throw an exception if the login operation
-           *         should be canceled.
-           */
-          virtual std::string getPin(PKCS11Cert certificate) throw(SignException) = 0;
 
       private:
           PKCS11SignerPrivate *d;

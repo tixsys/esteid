@@ -1,11 +1,15 @@
-#include <openssl/bio.h>
-#include <openssl/pem.h>
-#include <openssl/err.h>
+#include "X509CertStore.h"
+
 #include "../../log.h"
 #include "../../crypto/OpenSSLHelpers.h"
 #include "../../util/String.h"
-#include "X509Cert.h"
-#include "X509CertStore.h"
+
+#include <sstream>
+#include <openssl/bio.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+
+digidoc::X509Cert::X509Cert(): cert(NULL) {}
 
 /**
  * Creates copy of the X509 certificate.
@@ -304,8 +308,7 @@ std::string digidoc::X509Cert::toString(X509_NAME* name) throw(IOException)
     }
 
     // Convert the X509_NAME struct to string.
-    X509_NAME_print_ex(mem, name, 0, XN_FLAG_RFC2253);
-    if(ERR_peek_error() != 0)
+    if(X509_NAME_print_ex(mem, name, 0, XN_FLAG_RFC2253) < 0)
     {
         THROW_IOEXCEPTION("Failed to convert X509_NAME struct to string: %s", ERR_reason_error_string(ERR_get_error()));
     }
@@ -331,6 +334,7 @@ EVP_PKEY* digidoc::X509Cert::getPublicKey() const throw(IOException)
     EVP_PKEY* pubKey = X509_get_pubkey(cert);
     if((pubKey == NULL) || (pubKey->type != EVP_PKEY_RSA))
     {
+        EVP_PKEY_free(pubKey);
         THROW_IOEXCEPTION("Unable to load RSA public Key: %s", ERR_reason_error_string(ERR_get_error()));
     }
     return pubKey;
@@ -349,6 +353,7 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaModulus() const throw(IOExce
 
     if(bufSize <= 0)
     {
+        EVP_PKEY_free(pubKey);
         THROW_IOEXCEPTION("Failed to extract RSA modulus.");
     }
 
@@ -358,10 +363,12 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaModulus() const throw(IOExce
     // Extract RSA modulus.
     if(BN_bn2bin(pubKey->pkey.rsa->n, &rsaModulus[0]) <= 0)
     {
+        EVP_PKEY_free(pubKey);
         THROW_IOEXCEPTION("Failed to extract RSA modulus.");
     }
 
-	return rsaModulus;
+    EVP_PKEY_free(pubKey);
+    return rsaModulus;
 }
 
 /**
@@ -377,6 +384,7 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaExponent() const throw(IOExc
 
     if(bufSize <= 0)
     {
+        EVP_PKEY_free(pubKey);
         THROW_IOEXCEPTION("Failed to extract RSA exponent.");
     }
 
@@ -386,10 +394,12 @@ std::vector<unsigned char> digidoc::X509Cert::getRsaExponent() const throw(IOExc
     // Extract RSA exponent.
     if(BN_bn2bin(pubKey->pkey.rsa->e, &rsaExponent[0]) <= 0)
     {
+        EVP_PKEY_free(pubKey);
         THROW_IOEXCEPTION("Failed to extract RSA exponent.");
     }
 
-	return rsaExponent;
+    EVP_PKEY_free(pubKey);
+    return rsaExponent;
 }
 
 bool digidoc::X509Cert::isValid() const throw(IOException)
@@ -434,11 +444,31 @@ int digidoc::X509Cert::verify(X509_STORE* aStore) const throw(IOException)
 
     if(!ok)
     {
-       int err  = X509_STORE_CTX_get_error(csc);
-
-       X509Cert cause(X509_STORE_CTX_get_current_cert (csc));
-       ERR("Unable to verify %s. Cause: %s", cause.getSubject().c_str(), X509_verify_cert_error_string(err));
+        int err = X509_STORE_CTX_get_error(csc);
+        X509Cert cause(X509_STORE_CTX_get_current_cert (csc));
+        std::ostringstream s;
+        s << "Unable to verify " << cause.getSubject();
+        s << ". Cause: " << X509_verify_cert_error_string(err);
+        switch(err)
+        {
+        case X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY:
+        {
+            IOException e(__FILE__, __LINE__, s.str());
+            e.setCode( Exception::CertificateIssuerMissing );
+            throw e;
+            break;
+        }
+        default: THROW_IOEXCEPTION(s.str().c_str()); break;
+        }
     }
 
     return ok;
+}
+int digidoc::X509Cert::compareIssuerToString(std::string in) const throw(IOException) {
+    //FIXME: Actually implement this check
+
+    //retval = X509_NAME_cmp(this->getIssuerNameAsn1(), xn);
+    //X509_NAME_free(xn);
+
+    return 0;
 }

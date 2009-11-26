@@ -1,14 +1,11 @@
 #if !defined(__DOCUMENT_H_INCLUDED__)
 #define __DOCUMENT_H_INCLUDED__
 
-#include <string>
-#include <vector>
-
-#include "crypto/Digest.h"
 #include "io/IOException.h"
 
 namespace digidoc
 {
+    class Digest;
     /**
      * Document wrapper for signed file in BDOC container.
      *

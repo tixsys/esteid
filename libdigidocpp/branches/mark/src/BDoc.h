@@ -1,26 +1,12 @@
 #if !defined(__BDOC_H_INCLUDED__)
 #define __BDOC_H_INCLUDED__
 
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "ADoc.h"
-#include "BDocException.h"
 #include "Document.h"
-#include "Signature.h"
-#include "io/IOException.h"
 #include "io/ISerialize.h"
-#include "crypto/signer/Signer.h"
-
-
 
 namespace digidoc
 {
-
-    EXP_DIGIDOC void initialize();
-    EXP_DIGIDOC void terminate();
-
 
     /**
      * Implements the BDOC specification of the signed digital document container.
@@ -40,6 +26,7 @@ namespace digidoc
 
       public:
           BDoc();
+          BDoc(std::string path) throw(IOException, BDocException);
           BDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
           virtual ~BDoc();
           void save() throw(IOException, BDocException);
@@ -51,7 +38,7 @@ namespace digidoc
           const Signature* getSignature(unsigned int id) const throw(BDocException);
           void removeSignature(unsigned int id) throw(BDocException);
           unsigned int signatureCount() const;
-          void sign(Signer* signer, Signature::Type profile = Signature::BES) throw(BDocException);
+          void sign(Signer* signer, Signature::Type profile = Signature::TM) throw(BDocException);
           void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException) {}
 
       protected:

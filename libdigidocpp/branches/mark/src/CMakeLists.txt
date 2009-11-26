@@ -13,7 +13,6 @@ include_directories(
     ${ZLIB_INCLUDE_DIR}
 )
 
-
 set(SCHEMA_DIR ${CMAKE_SOURCE_DIR}/etc/schema)
 set(XML_DIR ${CMAKE_CURRENT_BINARY_DIR}/xml)
 
@@ -37,6 +36,7 @@ add_custom_command(
                                        --namespace-map urn:oasis:names:tc:opendocument:xmlns:manifest:1.0=digidoc::manifest
                                        OpenDocument_manifest.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/OpenDocument_manifest.xsd
 )
 
 # generate XML DSig xml parser files
@@ -49,6 +49,7 @@ add_custom_command(
                                        --namespace-map http://uri.etsi.org/01903/v1.3.2\#=digidoc::xades
                                        xmldsig-core-schema.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/xmldsig-core-schema.xsd
 )
 
 # generate XAdES xml parser files
@@ -61,6 +62,7 @@ add_custom_command(
                                        --namespace-map http://uri.etsi.org/01903/v1.3.2\#=digidoc::xades
                                        XAdES.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/XAdES.xsd
 )
 
 add_custom_command(
@@ -69,6 +71,7 @@ add_custom_command(
     COMMAND ${XSD_EXECUTABLE} cxx-tree ${COMMON_XSD_OPTS}
                                        conf.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
+    DEPENDS ${SCHEMA_DIR}/conf.xsd
 )
 
 
@@ -86,6 +89,7 @@ if(WIN32)
 endif(WIN32)
 
 set(digidocpp_SRCS
+    ADoc.cpp
     BDoc.cpp
     BDocException.cpp
     DDoc.cpp
@@ -99,6 +103,7 @@ set(digidocpp_SRCS
     SignatureTM.cpp
     SignatureMobile.cpp
     SignatureException.cpp
+    SignatureAttributes.cpp
     WDoc.cpp
     crypto/Digest.cpp
     crypto/cert/X509Cert.cpp
@@ -165,10 +170,16 @@ target_link_libraries(digidocpp
     ${ZLIB_LIBRARIES}
     ${EXTRA_LIBS}
 )
-set_target_properties(digidocpp PROPERTIES
-                                VERSION ${DIGIDOCPP_VERSION}
-                                SOVERSION 0
-                      )
+if(UNIX)
+    set(VISIBILITY_FLAG "-fvisibility=hidden")
+endif(UNIX)
+
+set_target_properties(digidocpp
+    PROPERTIES
+    VERSION ${DIGIDOCPP_VERSION}
+    SOVERSION 0
+    COMPILE_FLAGS "${VISIBILITY_FLAG}"
+    )
 install(TARGETS digidocpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(digidoc-demo main_demo.cpp)
@@ -182,14 +193,16 @@ install( FILES
     BDocException.h
     BDoc.h
     Conf.h
+    DDoc.h
     Document.h
     Exception.h
     Exports.h
+    Signature.h
+    SignatureAttributes.h
     SignatureBES.h
     SignatureException.h
-    Signature.h
-    SignatureTM.h
     SignatureMobile.h
+    SignatureTM.h
     WDoc.h
     XmlConf.h
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}

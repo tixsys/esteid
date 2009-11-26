@@ -7,10 +7,32 @@ namespace digidoc
 
 class DDocPrivate;
 
-class DDoc: public ADoc
+class EXP_DIGIDOC SignatureDDOC: public Signature
+{
+public:
+	SignatureDDOC( int id, DDocPrivate *doc );
+
+	virtual std::string getMediaType() const;
+	X509Cert getOCSPCertificate() const;
+	std::string getProducedAt() const;
+	std::string getResponderID() const;
+	void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException);
+	virtual void validateOffline() const throw(SignatureException);
+	virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
+
+protected:
+	virtual void sign(Signer* signer) throw(SignatureException, SignException);
+
+private:
+	int m_id;
+	DDocPrivate *m_doc;
+};
+
+class EXP_DIGIDOC DDoc: public ADoc
 {
 public:
 	DDoc();
+	DDoc(std::string path) throw(IOException, BDocException);
 	DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
 	virtual ~DDoc();
 
@@ -27,11 +49,8 @@ public:
 	void getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException);
 
 private:
-	void throwError( const std::string &msg, int line ) const throw(BDocException);
-	void throwError( int err, const std::string &msg, int line ) const throw(BDocException);
-	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
-
 	DDocPrivate *d;
+	void loadFile();
 };
 
 }

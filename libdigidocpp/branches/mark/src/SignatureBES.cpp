@@ -6,6 +6,7 @@
 
 #include "log.h"
 #include "Conf.h"
+#include "Document.h"
 #include "SignatureBES.h"
 #include "crypto/OpenSSLHelpers.h"
 #include "crypto/Digest.h"
@@ -39,6 +40,8 @@ digidoc::SignatureBES::SignatureBES(const std::string& path, BDoc& bdoc) throw(S
 {
     checkIfWellFormed();
 }
+
+digidoc::SignatureBES::~SignatureBES() {}
 
 /**
  * @return returns signature mimetype.
@@ -133,18 +136,18 @@ void digidoc::SignatureBES::validateOffline() const throw(SignatureException)
  */
 digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(SignatureException)
 {
-	// FIXME: Add exception handling.
+    // FIXME: Add exception handling.
 
-	// Get signing signature.
-	X509Cert cert = getSigningCertificate();
+    // Get signing signature.
+    X509Cert cert = getSigningCertificate();
 
-	// Get issuer certificate.
-	X509* issuerCert = X509CertStore::getInstance()->getCert(*(cert.getIssuerNameAsn1()));
-	X509_scope issuerCertScope(&issuerCert);
-	if(issuerCert == NULL)
-	{
-		THROW_SIGNATUREEXCEPTION("Failed to load issuer certificate.");
-	}
+    // Get issuer certificate.
+    X509* issuerCert = X509CertStore::getInstance()->getCert(*(cert.getIssuerNameAsn1()));
+    X509_scope issuerCertScope(&issuerCert);
+    if(issuerCert == NULL)
+    {
+        THROW_SIGNATUREEXCEPTION("Failed to load issuer certificate.");
+    }
 
     Conf* conf = Conf::getInstance();
 
@@ -153,29 +156,32 @@ digidoc::OCSP::CertStatus digidoc::SignatureBES::validateOnline() const throw(Si
     Conf::OCSPConf ocspConf = conf->getOCSP(cert.getIssuerName());
     if(ocspConf.issuer.empty())
     {
-        THROW_SIGNATUREEXCEPTION("Failed to load ocsp issuer certificate.");
+        SignatureException e(__FILE__, __LINE__, "Failed to find ocsp responder.");
+        e.setCode( Exception::OCSPResponderMissing );
+        throw e;
     }
     STACK_OF(X509)* ocspCerts = X509Cert::loadX509Stack(ocspConf.cert);
     X509Stack_scope ocspCertsScope(&ocspCerts);
 
     // Check the certificate validity from OCSP server.
-	OCSP ocsp(ocspConf.url, conf->getProxyHost(), conf->getProxyPort());
-	ocsp.setSkew(120);//XXX: load from conf
-	ocsp.setOCSPCerts(ocspCerts);
-	std::auto_ptr<Digest> calc = Digest::create();
-	calc->update(getSignatureValue());
+    OCSP ocsp(ocspConf.url);
+    ocsp.setSkew(120);//XXX: load from conf
+    ocsp.setOCSPCerts(ocspCerts);
+    std::auto_ptr<Digest> calc = Digest::create();
+    calc->update(getSignatureValue());
     try
     {
-	    return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
+        return ocsp.checkCert(cert.getX509(), issuerCert, calc->getDigest());
     }
     catch(const IOException& e)
     {
-       THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
+        THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
     }
     catch(const OCSPException& e)
     {
         THROW_SIGNATUREEXCEPTION("Failed to check the certificate validity from OCSP server.");
     }
+    return digidoc::OCSP::GOOD;
 }
 
 /**
@@ -209,7 +215,7 @@ void digidoc::SignatureBES::sign(Signer* signer) throw(SignatureException, SignE
     // Calculate SHA1 digest of the Signature->SignedInfo node.
     calc = Digest::create(NID_sha1);
     std::vector<unsigned char> sha1 = calcDigestOnNode(calc.get(), DSIG_NAMESPACE, "SignedInfo");
-    Signer::Digest sigDigestSha1 = { NID_sha1, &sha1[0], SHA1Digest::DIGEST_SIZE };
+    Signer::Digest sigDigestSha1 = { NID_sha1, &sha1[0], calc->getSize() };
 
     // Sign the calculated SAH1 digest and add the signature value (SHA1-RSA) to the signature.
     std::vector<unsigned char> buf(128);
@@ -253,23 +259,8 @@ void digidoc::SignatureBES::checkSignature() const throw(SignatureException)
 /// @throws SignatureException on a problem in signature
 void digidoc::SignatureBES::checkSignedInfo() const throw(SignatureException)
 {
-    checkCanonicalizationMethod();
     checkSignatureMethod();
     checkReferences();
-}
-
-/// validate CanonicalizationMethod offline
-///
-/// @throws SignatureException on a problem in signature
-void digidoc::SignatureBES::checkCanonicalizationMethod() const throw(SignatureException)
-{
-    dsig::SignedInfoType& signedInfo = signature->signedInfo();
-    dsig::CanonicalizationMethodType& canonMethod = signedInfo.canonicalizationMethod();
-    dsig::CanonicalizationMethodType::AlgorithmType& algorithmType = canonMethod.algorithm();
-    if ( algorithmType != "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" )
-    {
-        THROW_SIGNATUREEXCEPTION("SignedInfo canonicalization method algorithm is wrong");
-    }
 }
 
 /// validate SignatureMethod offline
@@ -280,7 +271,7 @@ void digidoc::SignatureBES::checkSignatureMethod() const throw(SignatureExceptio
     dsig::SignedInfoType& signedInfo = signature->signedInfo();
     dsig::SignatureMethodType& sigMethod = signedInfo.signatureMethod();
     dsig::SignatureMethodType::AlgorithmType& algorithmType = sigMethod.algorithm();
-    if ( algorithmType != "http://www.w3.org/2000/09/xmldsig#rsa-sha1" )//FIXME: const or dynamic
+    if ( algorithmType != URI_ID_RSA_SHA1 )//FIXME: const or dynamic
     {
         THROW_SIGNATUREEXCEPTION("Unsupported SignedInfo signature method \"%s\"", algorithmType.c_str());
     }
@@ -387,10 +378,9 @@ void digidoc::SignatureBES::checkKeyInfo() const throw(SignatureException)
 	dsig::X509IssuerSerialType::X509IssuerNameType certIssuerName = certs[0].issuerSerial().x509IssuerName();
 	dsig::X509IssuerSerialType::X509SerialNumberType certSerialNumber = certs[0].issuerSerial().x509SerialNumber();
 
-	//XXX: issuer name can be in different formats, compare using OpenSSL xxx_cmp() or write own
 	try
 	{
-		if ( certIssuerName != x509.getIssuerName() || x509.getSerial() != certSerialNumber )
+		if ( x509.compareIssuerToString(certIssuerName) || x509.getSerial() != certSerialNumber )
 		{
 			DEBUG("certIssuerName: \"%s\"", certIssuerName.c_str());
 			DEBUG("x509.getCertIssuerName() \"%s\"", x509.getIssuerName().c_str());
@@ -536,6 +526,8 @@ const throw(SignatureException)
         THROW_SIGNATUREEXCEPTION("SignedInfo reference to SignedProperties does not have attribute 'URI'");
     }
 
+/*  This check is pointless. It might make sense to check the syntax of the
+ *  URL, but this is better left for the resolvers to handle.
     std::string foundUri = uriOpt.get();
     std::string expectedUri =
         std::string("#") + id() + "-SignedProperties";
@@ -544,6 +536,7 @@ const throw(SignatureException)
     {
         THROW_SIGNATUREEXCEPTION("SignedInfo reference to SignedProperties attribute 'URI' is invalid");
     }
+*/
 
     // check DigestMethod
     const dsig::DigestMethodType& digestMethod = refType.digestMethod();

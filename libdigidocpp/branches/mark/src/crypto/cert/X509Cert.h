@@ -1,12 +1,9 @@
 #if !defined(__X509CERT_H_INCLUDED__)
 #define __X509CERT_H_INCLUDED__
 
-#include <openssl/x509.h>
-
-#include <string>
-#include <vector>
-
 #include "../../io/IOException.h"
+
+#include <openssl/x509.h>
 
 namespace digidoc
 {
@@ -17,6 +14,7 @@ namespace digidoc
     {
 
       public:
+          X509Cert();
           X509Cert(X509* cert) throw(IOException);
           X509Cert(std::vector<unsigned char> bytes) throw(IOException);
           X509Cert(const X509Cert& copy) throw(IOException);
@@ -36,9 +34,11 @@ namespace digidoc
           std::vector<unsigned char> getRsaModulus() const throw(IOException);
           std::vector<unsigned char> getRsaExponent() const throw(IOException);
 
-		  bool isValid() const throw(IOException);
+          bool isValid() const throw(IOException);
 
           int verify(X509_STORE* store = NULL) const throw(IOException);
+
+          int compareIssuerToString(std::string) const throw(IOException);
 
       protected:
           X509* cert;

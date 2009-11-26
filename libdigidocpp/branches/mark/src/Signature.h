@@ -1,24 +1,24 @@
 #if !defined(__SIGNATURE_H_INCLUDED__)
 #define __SIGNATURE_H_INCLUDED__
 
-#include <string>
-
 #include "SignatureException.h"
-#include "crypto/Digest.h"
-#include "crypto/cert/X509Cert.h"
+#include "SignatureAttributes.h"
 #include "crypto/ocsp/OCSP.h"
-#include "crypto/signer/Signer.h"
 #include "io/IOException.h"
+#include "crypto/signer/Signer.h"
 #include "xml/xmldsig-core-schema.hxx"
 
 namespace digidoc
 {
+    class Digest;
+    class X509Cert;
+
     class EXP_DIGIDOC Signature
     {
       friend class BDoc;
 
       public:
-		  enum Type { BES, TM, MOBILE };
+          enum Type { BES, TM, MOBILE };
 
           virtual ~Signature();
           virtual std::string getMediaType() const = 0;
@@ -26,13 +26,10 @@ namespace digidoc
           virtual OCSP::CertStatus validateOnline() const throw(SignatureException) = 0;
           std::string saveToXml() throw(IOException);
 
-          Signer::SignatureProductionPlace getProductionPlace() const;
-          Signer::SignerRole getSignerRole() const;
+          SignatureProductionPlace getProductionPlace() const;
+          SignerRole getSignerRole() const;
           std::string getSigningTime() const;
           X509Cert getSigningCertificate() const throw(SignatureException);
-		  std::vector<unsigned char> getSignatureValue() const;
-
-		  virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) = 0;
 
       protected:
           Signature();
@@ -42,9 +39,10 @@ namespace digidoc
           void addReference(const std::string& uri, const std::string& digestUri, std::vector<unsigned char> digestValue,
                   const std::string& type = "") throw(SignatureException);
           void setSigningCertificate(const X509Cert& cert);
-          void setSignatureProductionPlace(const Signer::SignatureProductionPlace& signatureProductionPlace);
-          void setSignerRole(const Signer::SignerRole& signerRole);
+          void setSignatureProductionPlace(const SignatureProductionPlace& signatureProductionPlace);
+          void setSignerRole(const SignerRole& signerRole);
           void setSigningTime(const xml_schema::DateTime& signingTime);
+          std::vector<unsigned char> getSignatureValue() const;
           void setSignatureValue(Signer::Signature signatureValue);
 
           xades::SignedSignaturePropertiesType& getSignedSignatureProperties() const throw(SignatureException);
@@ -70,5 +68,4 @@ namespace digidoc
 
     };
 }
-
 #endif // !defined(__SIGNATURE_H_INCLUDED__)

@@ -1,22 +1,17 @@
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <sstream>
-
-#include <openssl/ssl.h>
-#include <xercesc/dom/DOM.hpp>
-#include <xsec/utils/XSECPlatformUtils.hpp>
-
 #include "log.h"
 #include "BDoc.h"
 #include "Conf.h"
-#include "XmlConf.h"
-#include "SignatureBES.h"
-#include "SignatureTM.h"
+#include "Document.h"
 #include "SignatureMobile.h"
+#include "crypto/Digest.h"
 #include "util/File.h"
-#include "util/String.h"
+#include "io/ISerialize.h"
+#include "io/ZipSerialize.h"
 #include "xml/OpenDocument_manifest.hxx"
+
+#include <fstream>
+#include <iostream>
+#include <set>
 
 /**
  * Mimetype prefix.
@@ -29,46 +24,22 @@ const std::string digidoc::BDoc::MIMETYPE_PREFIX = "application/vnd.bdoc-";
 const std::string digidoc::BDoc::MANIFEST_NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0";
 
 /**
- * Initializes libraries used in digidoc implementation.
- */
-void digidoc::initialize()
-{
-    // Initialize OpenSSL library.
-    SSL_load_error_strings();
-    SSL_library_init();
-    OPENSSL_config(NULL);
-
-    // Initialize Apache Xerces library.
-    xercesc::XMLPlatformUtils::Initialize();
-
-    // Initialize Apache XML Security library.
-    XSECPlatformUtils::Initialise();
-
-    //Use Xml based configuration
-    XmlConf::initialize();
-}
-
-/**
- * Terminates libraries used in digidoc implementation.
- */
-void digidoc::terminate()
-{
-    // Terminate Apache XML Security library.
-    XSECPlatformUtils::Terminate();
-
-    // Terminate Apache Xerces library.
-    xercesc::XMLPlatformUtils::Terminate();
-
-    // Try to delete temporary files created with the util::File::tempFileName, tempDirectory and createTempDirectory functions.
-    util::File::deleteTempFiles();
-}
-
-/**
  * Initialize BDOC container.
  */
 digidoc::BDoc::BDoc()
  : version("1.0")
 {
+}
+
+/**
+ * Opens BDOC container from a file
+ */
+
+digidoc::BDoc::BDoc(std::string path) throw(IOException, BDocException)
+ : version("1.0")
+{
+    std::auto_ptr<ISerialize> serializer(new ZipSerialize(path));
+    readFrom(serializer);
 }
 
 /**
@@ -372,8 +343,8 @@ std::string digidoc::BDoc::createMimetype() throw(IOException)
     DEBUG("BDoc::createMimetype()");
 
     // Create mimetype file.
-    std::string fileName = util::File::encodeName(util::File::tempFileName());
-    std::ofstream ofs(fileName.c_str());
+    std::string fileName = util::File::tempFileName();
+    std::ofstream ofs(util::File::fstreamName(fileName).c_str());
     ofs << getMimeType();
     ofs.close();
 
@@ -399,7 +370,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
 {
     DEBUG("digidoc::BDoc::createManifest()");
 
-    std::string fileName = digidoc::util::File::encodeName(util::File::tempFileName());
+    std::string fileName = util::File::tempFileName();
 
     try
     {
@@ -428,7 +399,7 @@ std::string digidoc::BDoc::createManifest() throw(IOException)
         map["manifest"].name = MANIFEST_NAMESPACE;
         DEBUG("Serializing manifest XML to '%s'", fileName.c_str());
         // all XML data must be in UTF-8
-        std::ofstream ofs(fileName.c_str());
+        std::ofstream ofs(digidoc::util::File::fstreamName(fileName).c_str());
         manifest::manifest(ofs, manifest, map, "", xml_schema::Flags::dont_initialize);
         ofs.close();
 
@@ -459,7 +430,7 @@ void digidoc::BDoc::readMimetype(std::string path) throw(IOException, BDocExcept
     DEBUG("BDoc::readMimetype(path = '%s')", path.c_str());
     // Read mimetype from file.
     std::string fileName = util::File::path(path, "mimetype");
-    std::ifstream ifs(fileName.c_str());
+    std::ifstream ifs(util::File::fstreamName(fileName).c_str());
     std::string mimetype;
     ifs >> mimetype;
     ifs.close();
@@ -677,6 +648,7 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
         }
         catch(const Exception& e)
         {
+            delete signature;
             THROW_BDOCEXCEPTION_CAUSE(e, "Failed to calculate digests for document '%s'.", iter->getPath().c_str());
         }
     }
@@ -688,10 +660,12 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
     }
     catch(const SignatureException& e)
     {
+        delete signature;
         THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
     }
     catch(const SignException& e)
     {
+        delete signature;
         THROW_BDOCEXCEPTION_CAUSE(e, "Failed to sign BDOC container.");
     }
 

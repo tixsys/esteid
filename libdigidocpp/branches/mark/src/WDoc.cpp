@@ -2,10 +2,12 @@
 
 #include "BDoc.h"
 #include "DDoc.h"
+#include "Document.h"
+#include "io/ISerialize.h"
 
 using namespace digidoc;
 
-WDoc::WDoc(): m_doc(NULL) { setType( BDocType ); }
+WDoc::WDoc(): m_doc(NULL) { setType( DDocType ); }
 WDoc::WDoc( DocumentType type ): m_doc(NULL) { setType( type ); }
 WDoc::WDoc( ADoc *doc ) { m_doc = doc; }
 
@@ -15,18 +17,49 @@ WDoc::~WDoc()
 		delete m_doc;
 }
 
-WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
+WDoc::WDoc(std::string path) throw(IOException, BDocException)
 {
-	int len = serializer->getPath().size();
-	std::string ext = serializer->getPath().substr( len - 4, len );
+	std::string ext = path.substr( path.size() - 4 );
 	transform( ext.begin(), ext.end(), ext.begin(), tolower );
 
 	if( ext == "bdoc" )
-		m_doc = new BDoc( serializer );
+	{
+		m_doc = new BDoc( path );
+		m_type = BDocType;
+	}
 	else if( ext == "ddoc" )
-		m_doc = new DDoc( serializer );
+	{
+		m_doc = new DDoc( path );
+		m_type = DDocType;
+	}
 	else
-		throw IOException( __FILE__, __LINE__, "Unknow document format" );
+	{
+		m_type = BDocType;
+		throw IOException( __FILE__, __LINE__, "Unknown document format" );
+	}
+}
+
+WDoc::WDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
+{
+	int len = serializer->getPath().size();
+	std::string ext = serializer->getPath().substr( len - 4 );
+	transform( ext.begin(), ext.end(), ext.begin(), tolower );
+
+	if( ext == "bdoc" )
+	{
+		m_doc = new BDoc( serializer );
+		m_type = BDocType;
+	}
+	else if( ext == "ddoc" )
+	{
+		m_doc = new DDoc( serializer );
+		m_type = DDocType;
+	}
+	else
+	{
+		m_type = BDocType;
+		throw IOException( __FILE__, __LINE__, "Unknown document format" );
+	}
 }
 
 void WDoc::addDocument(const Document& document) throw(BDocException)

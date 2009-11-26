@@ -1,8 +1,6 @@
 #if !defined(__SIGNATUREEXCEPTION_H_INCLUDED__)
 #define __SIGNATUREEXCEPTION_H_INCLUDED__
 
-#include <string>
-
 #include "Exception.h"
 #include "util/String.h"
 

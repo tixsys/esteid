@@ -1,10 +1,7 @@
 #if !defined(__X509CERTSTORE_H_INCLUDED__)
 #define __X509CERTSTORE_H_INCLUDED__
 
-#include <openssl/x509.h>
-
 #include "X509Cert.h"
-#include "../../io/IOException.h"
 
 namespace digidoc
 {
@@ -15,6 +12,7 @@ namespace digidoc
     {
 
       public:
+          virtual ~X509CertStore() {}
           static void init(X509CertStore* impl);
           static void destroy();
           static X509CertStore* getInstance() throw(IOException);

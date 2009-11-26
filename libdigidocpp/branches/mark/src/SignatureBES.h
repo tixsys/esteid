@@ -1,24 +1,20 @@
 #if !defined(__SIGNATUREBES_H_INCLUDED__)
 #define __SIGNATUREBES_H_INCLUDED__
 
-#include <string>
-
-#include "Signature.h"
 #include "BDoc.h"
 
 namespace digidoc
 {
-    class SignatureBES : public Signature
+    class EXP_DIGIDOC SignatureBES : public Signature
     {
 
       public:
           SignatureBES(BDoc& bdoc);
           SignatureBES(const std::string& path, BDoc& bdoc) throw(SignatureException);
+          virtual ~SignatureBES();
           virtual std::string getMediaType() const;
           virtual void validateOffline() const throw(SignatureException);
           virtual OCSP::CertStatus validateOnline() const throw(SignatureException);
-
-          virtual void getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException) {}
 
           static const std::string MEDIA_TYPE;
 
@@ -38,7 +34,6 @@ namespace digidoc
           // offline checks
           void checkSignature() const throw(SignatureException);
           void checkSignedInfo() const throw(SignatureException);
-          void checkCanonicalizationMethod() const throw(SignatureException);
           void checkSignatureMethod() const throw(SignatureException);
           void checkReferences() const throw(SignatureException);
           void checkSignatureValue() const throw(SignatureException);

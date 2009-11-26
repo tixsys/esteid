@@ -6,10 +6,6 @@
 #include "../util/String.h"
 #include "Digest.h"
 
-//const std::string digidoc::Digest::URI_SHA1 = "http://www.w3.org/2000/09/xmldsig#sha1";
-//const std::string digidoc::Digest::URI_SHA256 = "http://www.w3.org/2001/04/xmlenc#sha256";
-
-
 /**
  * Add data for digest calculation.
  *
@@ -46,13 +42,13 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(int method) throw(IOExcep
     {
     default:
         THROW_IOEXCEPTION("Digest method '%s' is not supported.", OBJ_nid2sn(method));
-    case NID_sha1:   
-		return std::auto_ptr<Digest>(new SHA1Digest);
-    case NID_sha256: 
-		return std::auto_ptr<Digest>(new SHA256Digest);
+    case NID_sha1: return std::auto_ptr<Digest>(new SHA1Digest);
+    case NID_sha224: return std::auto_ptr<Digest>(new SHA224Digest);
+    case NID_sha256: return std::auto_ptr<Digest>(new SHA256Digest);
+    case NID_sha384: return std::auto_ptr<Digest>(new SHA384Digest);
+    case NID_sha512: return std::auto_ptr<Digest>(new SHA512Digest);
     }
 }
-
 /**
  * Digest factory, creates instance of digest implementation based on digest method URI.
  * For available method URIs see:
@@ -71,6 +67,55 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(const std::string& method
 }
 
 /**
+ * @return returns digest method OpenSSL NID. See openssl/obj_mac.h for available methods.
+ */
+int digidoc::Digest::getMethod() const
+{
+    return method;
+}
+
+/**
+ * @return returns digest method name.
+ */
+std::string digidoc::Digest::getName() const
+{
+    return OBJ_nid2sn(method);
+}
+
+/**
+ * @return returns size of the digest.
+ */
+unsigned int digidoc::Digest::getSize() const
+{
+    switch(method)
+    {
+    case NID_sha1: return SHA_DIGEST_LENGTH;
+    case NID_sha224: return SHA224_DIGEST_LENGTH;
+    case NID_sha256: return SHA256_DIGEST_LENGTH;
+    case NID_sha384: return SHA384_DIGEST_LENGTH;
+    case NID_sha512: return SHA512_DIGEST_LENGTH;
+    default: return 0;
+    }
+}
+
+/**
+ * return returns digest method URI.
+ * @see Digest::toMethod(const std::string& methodUri)
+ */
+std::string digidoc::Digest::getUri() const
+{
+    switch(method)
+    {
+    case NID_sha1: return URI_SHA1;
+    case NID_sha224: return URI_SHA224;
+    case NID_sha256: return URI_SHA256;
+    case NID_sha384: return URI_SHA384;
+    case NID_sha512: return URI_SHA512;
+    default: return "";
+    }
+}
+
+/**
  * Converts digest method URI to OpenSSL method id (e.g. 'http://www.w3.org/2000/09/xmldsig#sha1' to NID_sha1,
  * see openssl/obj_mac.h)
  * For available method URIs see:
@@ -85,14 +130,13 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(const std::string& method
  */
 int digidoc::Digest::toMethod(const std::string& methodUri) throw(IOException)
 {
-    if ( methodUri == URI_SHA1 )
-		return NID_sha1;
-    else if ( methodUri == URI_SHA256 ) 
-		return NID_sha256;
-	else
-        THROW_IOEXCEPTION( "Digest method URI '%s' is not supported.", methodUri.c_str() );
-
-	return 0;
+    if ( methodUri == URI_SHA1 ) return NID_sha1;
+    if ( methodUri == URI_SHA224 ) return NID_sha224;
+    if ( methodUri == URI_SHA256 ) return NID_sha256;
+    if ( methodUri == URI_SHA384 ) return NID_sha384;
+    if ( methodUri == URI_SHA512 ) return NID_sha512;
+    THROW_IOEXCEPTION( "Digest method URI '%s' is not supported.", methodUri.c_str() );
+    return 0;
 }
 
 /**
@@ -119,17 +163,13 @@ bool digidoc::Digest::isSupported(const std::string& methodUri)
 }
 
 /**
- * SHA1 digest size.
- */
-const unsigned int digidoc::SHA1Digest::DIGEST_SIZE = 20;
-
-/**
  * Initializes OpenSSL SHA1 digest calculator.
  *
  * @throws IOException throws exception if the SHA1 digest calculator initialization failed.
  */
 digidoc::SHA1Digest::SHA1Digest() throw(IOException)
 {
+    method = NID_sha1;
     if(SHA1_Init(&ctx) != 1)
     {
         THROW_IOEXCEPTION("Failed to initialize SHA1 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
@@ -141,7 +181,7 @@ digidoc::SHA1Digest::SHA1Digest() throw(IOException)
  */
 digidoc::SHA1Digest::~SHA1Digest()
 {
-    unsigned char digest[DIGEST_SIZE];
+    unsigned char digest[SHA_DIGEST_LENGTH];
     if(SHA1_Final(digest, &ctx) != 1)
     {
         ERR("Failed to uninitialize SHA1 calculator: %s", ERR_reason_error_string(ERR_get_error()));
@@ -190,13 +230,13 @@ std::vector<unsigned char> digidoc::SHA1Digest::getDigest() throw(IOException)
         return digest;
     }
 
-    unsigned char buf[DIGEST_SIZE];
+    unsigned char buf[SHA_DIGEST_LENGTH];
     if(SHA1_Final(buf, &ctx) != 1)
     {
         THROW_IOEXCEPTION("Failed to create SHA1 digest: %s", ERR_reason_error_string(ERR_get_error()));
     }
 
-    for(unsigned int i = 0; i < DIGEST_SIZE; i++)
+    for(unsigned int i = 0; i < SHA_DIGEST_LENGTH; i++)
     {
         digest.push_back(buf[i]);
     }
@@ -205,42 +245,86 @@ std::vector<unsigned char> digidoc::SHA1Digest::getDigest() throw(IOException)
 }
 
 /**
- * @return returns size of the digest.
+ * Initializes OpenSSL SHA224 digest calculator.
+ *
+ * @throws IOException throws exception if the SHA224 digest calculator initialization failed.
  */
-int digidoc::SHA1Digest::getSize() const
+digidoc::SHA224Digest::SHA224Digest() throw(IOException)
 {
-    return DIGEST_SIZE;
+    method = NID_sha224;
+    if(SHA224_Init(&ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to initialize SHA224 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * @return returns digest method OpenSSL NID. See openssl/obj_mac.h for available methods.
+ * Destroys OpenSSL SHA224 digest calculator.
  */
-int digidoc::SHA1Digest::getMethod() const
+digidoc::SHA224Digest::~SHA224Digest()
 {
-    return NID_sha1;
+    unsigned char digest[SHA224_DIGEST_LENGTH];
+    if(SHA224_Final(digest, &ctx) != 1)
+    {
+        ERR("Failed to uninitialize SHA224 calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * @return returns digest method name.
+ * Add data for digest calculation. After calling <code>getDigest()</code> SHA224 context
+ * is uninitialized and this method should not be called.
+ *
+ * @param data data to add for digest calculation.
+ * @param length length of the data.
+ * @throws IOException throws exception if SHA224 update failed.
+ * @see getDigest()
  */
-std::string digidoc::SHA1Digest::getName() const
+void digidoc::SHA224Digest::update(const unsigned char* data, unsigned long length) throw(IOException)
 {
-    return OBJ_nid2sn(NID_sha1);
+    if(data == NULL)
+    {
+        THROW_IOEXCEPTION("Can not update digest value from NULL pointer.");
+    }
+
+    if(!digest.empty())
+    {
+        THROW_IOEXCEPTION("Digest is already finalized, can not update it.");
+    }
+
+    if(SHA224_Update(&ctx, static_cast<const void*>(data), length) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to update SHA224 digest value: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * return returns digest method URI.
- * @see Digest::toMethod(const std::string& methodUri)
+ * Calculate message digest. SHA context will be invalid after this call.
+ * For calculating an other digest you must create new SHA224Digest class.
+ *
+ * @return returns the calculated SHA224 digest.
+ * @throws IOException throws exception if SHA224 update failed.
  */
-std::string digidoc::SHA1Digest::getUri() const
+std::vector<unsigned char> digidoc::SHA224Digest::getDigest() throw(IOException)
 {
-    return URI_SHA1;
-}
+    // If digest is already calculated return it.
+    if(!digest.empty())
+    {
+        return digest;
+    }
 
-/**
- * SHA256 digest size.
- */
-const unsigned int digidoc::SHA256Digest::DIGEST_SIZE = 32;
+    unsigned char buf[SHA224_DIGEST_LENGTH];
+    if(SHA224_Final(buf, &ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to create SHA224 digest: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+
+    for(unsigned int i = 0; i < SHA224_DIGEST_LENGTH; i++)
+    {
+        digest.push_back(buf[i]);
+    }
+
+    return digest;
+}
 
 /**
  * Initializes OpenSSL SHA256 digest calculator.
@@ -249,6 +333,7 @@ const unsigned int digidoc::SHA256Digest::DIGEST_SIZE = 32;
  */
 digidoc::SHA256Digest::SHA256Digest() throw(IOException)
 {
+    method = NID_sha256;
     if(SHA256_Init(&ctx) != 1)
     {
         THROW_IOEXCEPTION("Failed to initialize SHA256 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
@@ -260,7 +345,7 @@ digidoc::SHA256Digest::SHA256Digest() throw(IOException)
  */
 digidoc::SHA256Digest::~SHA256Digest()
 {
-    unsigned char digest[DIGEST_SIZE];
+    unsigned char digest[SHA256_DIGEST_LENGTH];
     if(SHA256_Final(digest, &ctx) != 1)
     {
         ERR("Failed to uninitialize SHA256 calculator: %s", ERR_reason_error_string(ERR_get_error()));
@@ -309,13 +394,13 @@ std::vector<unsigned char> digidoc::SHA256Digest::getDigest() throw(IOException)
         return digest;
     }
 
-    unsigned char buf[DIGEST_SIZE];
+    unsigned char buf[SHA256_DIGEST_LENGTH];
     if(SHA256_Final(buf, &ctx) != 1)
     {
         THROW_IOEXCEPTION("Failed to create SHA256 digest: %s", ERR_reason_error_string(ERR_get_error()));
     }
 
-    for(unsigned int i = 0; i < DIGEST_SIZE; i++)
+    for(unsigned int i = 0; i < SHA256_DIGEST_LENGTH; i++)
     {
         digest.push_back(buf[i]);
     }
@@ -324,34 +409,165 @@ std::vector<unsigned char> digidoc::SHA256Digest::getDigest() throw(IOException)
 }
 
 /**
- * @return returns size of the digest.
+ * Initializes OpenSSL SHA384 digest calculator.
+ *
+ * @throws IOException throws exception if the SHA384 digest calculator initialization failed.
  */
-int digidoc::SHA256Digest::getSize() const
+digidoc::SHA384Digest::SHA384Digest() throw(IOException)
 {
-    return DIGEST_SIZE;
+    method = NID_sha384;
+    if(SHA384_Init(&ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to initialize SHA384 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * @return returns digest method OpenSSL NID. See openssl/obj_mac.h for available methods.
+ * Destroys OpenSSL SHA384 digest calculator.
  */
-int digidoc::SHA256Digest::getMethod() const
+digidoc::SHA384Digest::~SHA384Digest()
 {
-    return NID_sha256;
+    unsigned char digest[SHA384_DIGEST_LENGTH];
+    if(SHA384_Final(digest, &ctx) != 1)
+    {
+        ERR("Failed to uninitialize SHA384 calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * @return returns digest method name.
+ * Add data for digest calculation. After calling <code>getDigest()</code> SHA384 context
+ * is uninitialized and this method should not be called.
+ *
+ * @param data data to add for digest calculation.
+ * @param length length of the data.
+ * @throws IOException throws exception if SHA384 update failed.
+ * @see getDigest()
  */
-std::string digidoc::SHA256Digest::getName() const
+void digidoc::SHA384Digest::update(const unsigned char* data, unsigned long length) throw(IOException)
 {
-    return OBJ_nid2sn(NID_sha256);
+    if(data == NULL)
+    {
+        THROW_IOEXCEPTION("Can not update digest value from NULL pointer.");
+    }
+
+    if(!digest.empty())
+    {
+        THROW_IOEXCEPTION("Digest is already finalized, can not update it.");
+    }
+
+    if(SHA384_Update(&ctx, static_cast<const void*>(data), length) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to update SHA384 digest value: %s", ERR_reason_error_string(ERR_get_error()));
+    }
 }
 
 /**
- * return returns digest method URI.
- * @see Digest::toMethod(const std::string& methodUri)
+ * Calculate message digest. SHA context will be invalid after this call.
+ * For calculating an other digest you must create new SHA384Digest class.
+ *
+ * @return returns the calculated SHA384 digest.
+ * @throws IOException throws exception if SHA384 update failed.
  */
-std::string digidoc::SHA256Digest::getUri() const
+std::vector<unsigned char> digidoc::SHA384Digest::getDigest() throw(IOException)
 {
-    return URI_SHA256;
+    // If digest is already calculated return it.
+    if(!digest.empty())
+    {
+        return digest;
+    }
+
+    unsigned char buf[SHA384_DIGEST_LENGTH];
+    if(SHA384_Final(buf, &ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to create SHA384 digest: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+
+    for(unsigned int i = 0; i < SHA384_DIGEST_LENGTH; i++)
+    {
+        digest.push_back(buf[i]);
+    }
+
+    return digest;
+}
+
+/**
+ * Initializes OpenSSL SHA512 digest calculator.
+ *
+ * @throws IOException throws exception if the SHA512 digest calculator initialization failed.
+ */
+digidoc::SHA512Digest::SHA512Digest() throw(IOException)
+{
+    method = NID_sha512;
+    if(SHA512_Init(&ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to initialize SHA512 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+}
+
+/**
+ * Destroys OpenSSL SHA512 digest calculator.
+ */
+digidoc::SHA512Digest::~SHA512Digest()
+{
+    unsigned char digest[SHA512_DIGEST_LENGTH];
+    if(SHA512_Final(digest, &ctx) != 1)
+    {
+        ERR("Failed to uninitialize SHA512 calculator: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+}
+
+/**
+ * Add data for digest calculation. After calling <code>getDigest()</code> SHA512 context
+ * is uninitialized and this method should not be called.
+ *
+ * @param data data to add for digest calculation.
+ * @param length length of the data.
+ * @throws IOException throws exception if SHA512 update failed.
+ * @see getDigest()
+ */
+void digidoc::SHA512Digest::update(const unsigned char* data, unsigned long length) throw(IOException)
+{
+    if(data == NULL)
+    {
+        THROW_IOEXCEPTION("Can not update digest value from NULL pointer.");
+    }
+
+    if(!digest.empty())
+    {
+        THROW_IOEXCEPTION("Digest is already finalized, can not update it.");
+    }
+
+    if(SHA512_Update(&ctx, static_cast<const void*>(data), length) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to update SHA512 digest value: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+}
+
+/**
+ * Calculate message digest. SHA context will be invalid after this call.
+ * For calculating an other digest you must create new SHA512Digest class.
+ *
+ * @return returns the calculated SHA512 digest.
+ * @throws IOException throws exception if SHA512 update failed.
+ */
+std::vector<unsigned char> digidoc::SHA512Digest::getDigest() throw(IOException)
+{
+    // If digest is already calculated return it.
+    if(!digest.empty())
+    {
+        return digest;
+    }
+
+    unsigned char buf[SHA512_DIGEST_LENGTH];
+    if(SHA512_Final(buf, &ctx) != 1)
+    {
+        THROW_IOEXCEPTION("Failed to create SHA512 digest: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+
+    for(unsigned int i = 0; i < SHA512_DIGEST_LENGTH; i++)
+    {
+        digest.push_back(buf[i]);
+    }
+
+    return digest;
 }

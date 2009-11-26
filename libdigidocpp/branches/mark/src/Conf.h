@@ -1,10 +1,6 @@
 #if !defined(__CONF_H_INCLUDED__)
 #define __CONF_H_INCLUDED__
 
-#include <memory>
-#include <string>
-
-#include "Exports.h"
 #include "io/IOException.h"
 
 namespace digidoc
@@ -17,9 +13,12 @@ namespace digidoc
 
       public:
           struct OCSPConf { std::string issuer, url, cert; };
+          virtual ~Conf() {}
           static void init(Conf* conf);
           static bool isInitialized();
           static Conf* getInstance() throw(IOException);
+          static void destroy();
+
           virtual std::string getDigestUri() const = 0;
           virtual std::string getManifestXsdPath() const = 0;
           virtual std::string getXadesXsdPath() const = 0;
@@ -29,11 +28,15 @@ namespace digidoc
           virtual std::string getCertStorePath() const = 0;
           virtual std::string getProxyHost() const = 0;
           virtual std::string getProxyPort() const = 0;
+          virtual std::string getProxyUser() const = 0;
+          virtual std::string getProxyPass() const = 0;
           virtual std::string getPKCS12Cert() const = 0;
           virtual std::string getPKCS12Pass() const = 0;
 
           virtual void setProxyHost( const std::string &host ) = 0;
           virtual void setProxyPort( const std::string &port ) = 0;
+          virtual void setProxyUser( const std::string &user ) = 0;
+          virtual void setProxyPass( const std::string &pass ) = 0;
           virtual void setPKCS12Cert( const std::string &cert ) = 0;
           virtual void setPKCS12Pass( const std::string &pass ) = 0;
 

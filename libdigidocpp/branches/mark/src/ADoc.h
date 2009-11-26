@@ -1,13 +1,17 @@
 #pragma once
 
 #include "BDocException.h"
-#include "Document.h"
 #include "Signature.h"
 #include "io/IOException.h"
-#include "io/ISerialize.h"
 
 namespace digidoc
 {
+
+EXP_DIGIDOC void initialize();
+EXP_DIGIDOC void terminate();
+
+class Document;
+class ISerialize;
 
 class EXP_DIGIDOC ADoc
 {

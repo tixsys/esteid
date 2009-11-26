@@ -9,7 +9,6 @@
 #define XMLCONF_H_
 
 #include "Conf.h"
-#include "io/IOException.h"
 
 namespace digidoc
 {
@@ -32,6 +31,8 @@ public:
     virtual std::string getCertStorePath() const;
     virtual std::string getProxyHost() const;
     virtual std::string getProxyPort() const;
+    virtual std::string getProxyUser() const;
+    virtual std::string getProxyPass() const;
     virtual std::string getPKCS12Cert() const;
     virtual std::string getPKCS12Pass() const;
 
@@ -39,6 +40,8 @@ public:
 
     virtual void setProxyHost( const std::string &host );
     virtual void setProxyPort( const std::string &port );
+    virtual void setProxyUser( const std::string &user );
+    virtual void setProxyPass( const std::string &pass );
     virtual void setPKCS12Cert( const std::string &cert );
     virtual void setPKCS12Pass( const std::string &pass );
 
@@ -47,6 +50,7 @@ public:
 	static std::string USER_CONF_LOC;
 
 private:
+    std::string fullpath() const;
     void init(const std::string& path) throw(IOException);
 
     std::string digestUri;
@@ -57,6 +61,8 @@ private:
     std::string dsigXsdPath;
     std::string proxyHost;
     std::string proxyPort;
+    std::string proxyUser;
+    std::string proxyPass;
     std::string pkcs12Cert;
     std::string pkcs12Pass;
     std::vector<OCSPConf> ocsp;
@@ -69,6 +75,8 @@ private:
     static const std::string DSIG_XSD_PATH;
     static const std::string PROXY_HOST;
     static const std::string PROXY_PORT;
+    static const std::string PROXY_USER;
+    static const std::string PROXY_PASS;
     static const std::string PKCS12_CERT;
     static const std::string PKCS12_PASS;
 };

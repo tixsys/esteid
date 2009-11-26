@@ -1,10 +1,10 @@
 #if !defined(__EXCEPTION_H_INCLUDED__)
 #define __EXCEPTION_H_INCLUDED__
 
+#include "Exports.h"
+
 #include <string>
 #include <vector>
-
-#include "Exports.h"
 
 namespace digidoc
 {
@@ -19,23 +19,37 @@ namespace digidoc
     {
 
       public:
+          enum ExceptionCode {
+              CertificateIssuerMissing = 10,
+              CertificateRevoked       = 5,
+              CertificateUnknown       = 6,
+              NoException              = 0,
+              OCSPResponderMissing     = 8,
+              OCSPCertMissing          = 9,
+              OCSPTimeSlot             = 7,
+              OCSPRequestUnauthorized  = 11,
+              PINCanceled              = 2,
+              PINFailed                = 4,
+              PINIncorrect             = 1,
+              PINLocked                = 3,
+          };
           typedef std::vector<Exception> Causes;
 
           Exception(const std::string& file, int line, const std::string& msg);
           Exception(const std::string& file, int line, const std::string& msg, const Exception& cause);
+          ExceptionCode code() const;
           std::string getMsg() const;
           bool hasCause() const;
           Causes getCauses() const;
-          void addCause(const Exception& cause)
-          {
-              this->causes.push_back(cause);
-          }
+          void addCause(const Exception& cause);
+          void setCode( ExceptionCode Code );
 
       protected:
           std::string file;
           int line;
           std::string msg;
           Causes causes;
+          ExceptionCode m_code;
 
     };
 }

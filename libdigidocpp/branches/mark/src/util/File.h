@@ -1,10 +1,9 @@
 #if !defined(__FILE_H_INCLUDED__)
 #define __FILE_H_INCLUDED__
 
-#include <string>
-#include <stack>
-
 #include "../io/IOException.h"
+
+#include <stack>
 
 namespace digidoc
 {
@@ -23,6 +22,11 @@ namespace digidoc
               static bool directoryExists(const std::string& path);
               static std::string encodeName(const std::string& fileName);
               static std::string decodeName(const std::string& localFileName);
+#ifdef _WIN32
+              static std::wstring fstreamName(const std::string& fileName);
+#else
+              static std::string fstreamName(const std::string& fileName);
+#endif
               static std::string fileName(const std::string& path);
               static std::string directory(const std::string& path);
               static std::string path(const std::string& directory, const std::string& relativePath, bool unixStyle = false);
@@ -39,8 +43,8 @@ namespace digidoc
               static void removeFile(const std::string& fname);
               static void removeDirectory(const std::string& fname);
               static void deleteTempFiles() throw(IOException);
-	      static void removeDirectoryRecursively(const std::string& dname) throw(IOException);
-	      static std::stack<std::string> tempFiles;
+              static void removeDirectoryRecursively(const std::string& dname) throw(IOException);
+              static std::stack<std::string> tempFiles;
 
         private:
               static std::vector<std::string> getDirSubElements(const std::string& directory, bool relative,

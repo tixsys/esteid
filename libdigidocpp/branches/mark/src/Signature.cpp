@@ -1,25 +1,27 @@
-#include <fstream>
-#include <iostream>
-#include <set>
-#include <sstream>
-
-#include <openssl/objects.h>
-#include <openssl/err.h>
-
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-
-#include <xsec/canon/XSECC14n20010315.hpp>
-
 #include "log.h"
 #include "Conf.h"
 #include "Signature.h"
+#include "crypto/cert/X509Cert.h"
+#include "crypto/Digest.h"
 #include "util/File.h"
 #include "util/String.h"
 #include "util/DateTime.h"
 #include "xml/OpenDocument_manifest.hxx"
 #include "xml/xmldsig-core-schema.hxx"
 #include "xml/XAdES.hxx"
+
+#include <fstream>
+#include <iostream>
+#include <set>
+#include <sstream>
+
+#include <openssl/err.h>
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+
+#include <xsec/canon/XSECC14n20010315.hpp>
+#include <xsec/dsig/DSIGConstants.hpp>
 
 const std::string digidoc::Signature::XADES_NAMESPACE = "http://uri.etsi.org/01903/v1.3.2#";
 const std::string digidoc::Signature::DSIG_NAMESPACE = "http://www.w3.org/2000/09/xmldsig#";
@@ -72,8 +74,17 @@ digidoc::dsig::SignatureType* digidoc::Signature::createEmptySignature()
 {
     DEBUG("digidoc::Signature::createEmptySignature");
     // Signature->SignedInfo
-    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri("http://www.w3.org/TR/2001/REC-xml-c14n-20010315"));
-    dsig::SignatureMethodType signatureMethod(xml_schema::Uri("http://www.w3.org/2000/09/xmldsig#rsa-sha1"));//XXX: static const or dynamic
+
+    // Default canonicalization method
+    // Should be either URI_ID_EXC_C14N_NOC or URI_ID_C14N11_NOC
+    // because URI_ID_C14N_NOC is not recommended when xml:id
+    // attributes are in use ....
+    // http://www.w3.org/TR/DSig-usage chapter 2.1
+    // But the people that created the BDOC-1.0 standard do not 
+    // seem to give a damn about W3C recommendations ...
+    // http://www.signature.lt/-TOOLS/BDoc-1.0.pdf chapter 5.2
+    dsig::CanonicalizationMethodType canonicalizationMethod(xml_schema::Uri(URI_ID_C14N_NOC));
+    dsig::SignatureMethodType signatureMethod(xml_schema::Uri(URI_ID_RSA_SHA1));//XXX: static const or dynamic
     dsig::SignedInfoType signedInfo(canonicalizationMethod, signatureMethod);
 
     // Signature->SignatureValue
@@ -227,7 +238,7 @@ void digidoc::Signature::setSigningCertificate(const X509Cert& x509)
  *
  * @param spp signature production place.
  */
-void digidoc::Signature::setSignatureProductionPlace(const Signer::SignatureProductionPlace& spp)
+void digidoc::Signature::setSignatureProductionPlace(const SignatureProductionPlace& spp)
 {
     DEBUG("setSignatureProductionPlace(spp={city='%s',stateOrProvince='%s',postalCode='%s',countryName='%s'})", spp.city.c_str(), spp.countryName.c_str(), spp.postalCode.c_str(), spp.stateOrProvince.c_str());
 
@@ -247,7 +258,7 @@ void digidoc::Signature::setSignatureProductionPlace(const Signer::SignatureProd
  *
  * @param roles signer roles.
  */
-void digidoc::Signature::setSignerRole(const Signer::SignerRole& roles)
+void digidoc::Signature::setSignerRole(const SignerRole& roles)
 {
     //DEBUG("setSignerRole(signerRole={claimedRoles={'%s'}})", roles.claimedRoles[0].c_str())
 
@@ -310,7 +321,7 @@ std::vector<unsigned char> digidoc::Signature::getSignatureValue() const
 }
 
 /**
- * Canonicalize XML node using Canonical XML 1.0 specification (http://www.w3.org/TR/2001/REC-xml-c14n-20010315).
+ * Canonicalize XML node using one of the supported methods in XML-DSIG
  * Using Xerces for parsing XML to preserve the white spaces "as is" and get
  * the same digest value on XML node each time.
  *
@@ -351,23 +362,48 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
             		nodeList->getLength(), tagName.c_str(), ns.c_str());
         }
 
-
-        // Canocalize XML using "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" implementation.
+        // Canocalize XML using one of the three methods supported by XML-DSIG
 	    XSECC14n20010315 canonicalizer(dom.get(), nodeList->item(0));
 	    canonicalizer.setCommentsProcessing(false);
 	    canonicalizer.setUseNamespaceStack(true);
-	    canonicalizer.setExclusive();
 
+        // Find the method identifier
+        dsig::SignedInfoType& signedInfo = signature->signedInfo();
+        dsig::CanonicalizationMethodType& canonMethod = signedInfo.canonicalizationMethod();
+        dsig::CanonicalizationMethodType::AlgorithmType& algorithmType = canonMethod.algorithm();
 
-	    //std::vector<unsigned char> c14n;
+        DEBUG("C14N algorithmType = '%s'", algorithmType.c_str());
+
+        // Set processing flags according to algorithm type.
+               if(algorithmType == URI_ID_C14N_NOC) {
+            // Default behaviour, nothing needs to be changed
+        } else if(algorithmType == URI_ID_C14N_COM) {
+            canonicalizer.setCommentsProcessing(true);
+        } else if(algorithmType == URI_ID_EXC_C14N_NOC) {
+	    // Exclusive mode needs to include xml-dsig in root element 
+	    // in order to maintain compatibility with existing implementations
+	    canonicalizer.setExclusive((char*)"ds");
+#ifdef URI_ID_C14N11_NOC
+        } else if(algorithmType == URI_ID_C14N11_NOC) {
+	    canonicalizer.setInclusive11();
+        } else if(algorithmType == URI_ID_C14N11_COM) {
+	    canonicalizer.setInclusive11();
+            canonicalizer.setCommentsProcessing(true);
+#endif
+        } else {
+            // Unknown algorithm.
+            THROW_SIGNATUREEXCEPTION("Unsupported SignedInfo canonicalization method '%s'", algorithmType.c_str());
+        }
+
+	    std::vector<unsigned char> c14n;
 	    unsigned char buffer[1024];
 	    int bytes = 0;
 	    while((bytes = canonicalizer.outputBuffer(buffer, 1024)) > 0)
 	    {
 		    calc->update(buffer, bytes);
-	        //for(int i = 0; i < bytes; i++) { c14n.push_back(buffer[i]); }
+	        for(int i = 0; i < bytes; i++) { c14n.push_back(buffer[i]); }
 	    }
-	    //DEBUG("c14n = '%s'", std::string(reinterpret_cast<char*>(&c14n[0]), 0, c14n.size()).c_str());
+	    DEBUG("c14n = '%s'", std::string(reinterpret_cast<char*>(&c14n[0]), 0, c14n.size()).c_str());
 
 	    return calc->getDigest();
 	}
@@ -375,6 +411,7 @@ std::vector<unsigned char> digidoc::Signature::calcDigestOnNode(Digest* calc, co
 	{
         THROW_SIGNATUREEXCEPTION_CAUSE(e, "Failed to create Xerces DOM from signature XML.");
 	}
+	return std::vector<unsigned char>();
 }
 
 /**
@@ -460,7 +497,7 @@ void digidoc::Signature::saveToXml(const std::string path) const throw(IOExcepti
     // Serialize XML to file.
     DEBUG("Serializing XML to '%s'", path.c_str());
 
-    std::ofstream ofs(path.c_str());
+    std::ofstream ofs(digidoc::util::File::fstreamName(path).c_str());
 	try 
 	{
 		dsig::signature(ofs, *signature, createNamespaceMap());
@@ -477,9 +514,9 @@ void digidoc::Signature::saveToXml(const std::string path) const throw(IOExcepti
     }
 
     // TODO: remove printing to std out.
-    INFO("------------------------------------------------------------------------------------------------------------");
-    dsig::signature(std::cout, *signature, createNamespaceMap());
-    INFO("------------------------------------------------------------------------------------------------------------");
+    //INFO("------------------------------------------------------------------------------------------------------------");
+    //dsig::signature(std::cout, *signature, createNamespaceMap());
+    //INFO("------------------------------------------------------------------------------------------------------------");
 }
 
 /**
@@ -498,9 +535,9 @@ xml_schema::NamespaceInfomap digidoc::Signature::createNamespaceMap()
  *
  * @return returns structure containing the address of signing place.
  */
-digidoc::Signer::SignatureProductionPlace digidoc::Signature::getProductionPlace() const
+digidoc::SignatureProductionPlace digidoc::Signature::getProductionPlace() const
 {
-    Signer::SignatureProductionPlace productionPlace;
+    SignatureProductionPlace productionPlace;
 
     const xades::SignedSignaturePropertiesType& signedSigProps = getSignedSignatureProperties();
 
@@ -531,9 +568,9 @@ digidoc::Signer::SignatureProductionPlace digidoc::Signature::getProductionPlace
  *
  * @return returns the claimed role of the signer.
  */
-digidoc::Signer::SignerRole digidoc::Signature::getSignerRole() const
+digidoc::SignerRole digidoc::Signature::getSignerRole() const
 {
-    Signer::SignerRole roles;
+    SignerRole roles;
 
     // SignedSignatureProperties
     const xades::SignedSignaturePropertiesType& signedSigProps =
@@ -612,13 +649,13 @@ digidoc::X509Cert digidoc::Signature::getSigningCertificate() const throw(Signat
     std::copy(data, data+certBlock.size(), &x509Bytes[0]);
     try
     {
-        X509Cert cert(x509Bytes);
-        return cert;
+        return X509Cert(x509Bytes);
     }
     catch( const IOException &e )
     {
         THROW_SIGNATUREEXCEPTION_CAUSE( e, "Failed to read X509 certificate" );
     }
+    return X509Cert();
 }
 
 /**

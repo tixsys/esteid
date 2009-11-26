@@ -18,6 +18,7 @@ inline bool	OemToChar( char const*, char* )
 #include "log.h"
 #include "BDoc.h"
 #include "Conf.h"
+#include "Document.h"
 #include "crypto/crypt/RSACrypt.h"
 #include "crypto/signer/Signer.h"
 #include "crypto/signer/RSASigner.h"
@@ -502,8 +503,8 @@ public:
 
 		//Signer* signer;
 		Signature::Type profile;
-		Signer::SignatureProductionPlace spp( argv[3], argv[4], argv[5], argv[6] );
-		Signer::SignerRole role( argv[7] );
+		SignatureProductionPlace spp( argv[3], argv[4], argv[5], argv[6] );
+		SignerRole role( argv[7] );
 
 
 		if ( std::string( "TM" ) == argv[2] )
@@ -591,7 +592,7 @@ public:
 		// type
 		std::cout << "Signature " << i << " (" << sig->getMediaType().c_str() << ")" << std::endl;
 		// production place
-		Signer::SignatureProductionPlace spp = sig->getProductionPlace();
+		SignatureProductionPlace spp = sig->getProductionPlace();
 		if ( !spp.isEmpty() )
 		{
 			std::cout << "  Signature production place:" << std::endl;
@@ -602,11 +603,11 @@ public:
 		}
 
 		// signer role
-		Signer::SignerRole roles = sig->getSignerRole();
+		SignerRole roles = sig->getSignerRole();
 		if ( !roles.isEmpty() )
 		{
 			std::cout << "  Signer role(s):" << std::endl;
-			for ( Signer::SignerRole::TRoles::const_iterator iter = roles.claimedRoles.begin(); iter != roles.claimedRoles.end(); iter++ )
+			for ( SignerRole::TRoles::const_iterator iter = roles.claimedRoles.begin(); iter != roles.claimedRoles.end(); iter++ )
 			{
 				std::cout << "    " << iter->c_str() << std::endl;
 			}

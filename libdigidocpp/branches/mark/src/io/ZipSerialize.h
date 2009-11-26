@@ -1,9 +1,6 @@
 #if !defined(__ZIPSERIALIZE_H_INCLUDED__)
 #define __ZIPSERIALIZE_H_INCLUDED__
 
-#include <string>
-#include <vector>
-
 #include "ISerialize.h"
 
 namespace digidoc

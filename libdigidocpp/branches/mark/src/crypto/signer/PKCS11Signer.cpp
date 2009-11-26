@@ -1,11 +1,19 @@
 #include <memory.h>
 #include <map>
 #include <libp11.h>
+#include <sstream>
 
 #include "../../log.h"
 #include "../../Conf.h"
 #include "../../util/String.h"
 #include "PKCS11Signer.h"
+
+// PKCS#11
+#define CKR_OK					(0)
+#define CKR_CANCEL				(1)
+#define CKR_FUNCTION_CANCELED	(0x50)
+#define CKR_PIN_INCORRECT		(0xa0)
+#define CKR_PIN_LOCKED			(0xa4)
 
 namespace digidoc
 {
@@ -14,7 +22,6 @@ struct SignSlot
 {
 	PKCS11_CERT* certificate;
 	PKCS11_SLOT* slot;
-	int			number;
 };
 
 class PKCS11SignerPrivate
@@ -28,10 +35,10 @@ public:
 	{
 		sign.certificate = NULL;
 		sign.slot = NULL;
-		sign.number = -1;
 	};
 
     digidoc::PKCS11Signer::PKCS11Cert createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert);
+    bool checkCert( X509 *cert ) const;
 
     std::string driver;
 
@@ -81,9 +88,6 @@ digidoc::PKCS11Signer::~PKCS11Signer()
     unloadDriver();
 	delete d;
 }
-
-void* digidoc::PKCS11Signer::handle() const { return d->ctx; }
-int digidoc::PKCS11Signer::slotNumber() const { return d->sign.number; }
 
 void digidoc::PKCS11Signer::unloadDriver()
 {
@@ -160,7 +164,6 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     // Set selected state to 'no certificate selected'.
     d->sign.certificate = NULL;
     d->sign.slot = NULL;
-    d->sign.number = -1;
     if(d->slots != NULL)
     {
         // Release all slots.
@@ -174,9 +177,8 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
     }
 
     // Iterate over all found slots, if the slot has a token, check if the token has any certificates.
-    std::vector<PKCS11Cert> certificates;
+    std::vector<PKCS11Signer::PKCS11Cert> certificates;
     std::vector<SignSlot> certSlotMapping;
-    int tokenId = 0;
     for(unsigned int i = 0; i < d->numberOfSlots; i++)
     {
         PKCS11_SLOT* slot = d->slots + i;
@@ -202,11 +204,12 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
             for(unsigned int j = 0; j < numberOfCerts; j++)
             {
                 PKCS11_CERT* cert = certs + j;
-                SignSlot signSlot = { cert, slot, tokenId };
+                if(!d->checkCert(cert->x509))
+                    break;
+                SignSlot signSlot = { cert, slot };
                 certSlotMapping.push_back( signSlot );
                 certificates.push_back(d->createPKCS11Cert(slot, cert));
             }
-            ++tokenId;
         }
     }
 
@@ -274,10 +277,39 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
         }
         else
             rv = PKCS11_login(d->sign.slot, 0, getPin(d->createPKCS11Cert(d->sign.slot, d->sign.certificate)).c_str());
-        if(rv != 0)
+        switch(ERR_GET_REASON(ERR_get_error()))
         {
-            THROW_SIGNEXCEPTION("Failed to login to token '%s': %s", d->sign.slot->token->label,
-                    ERR_reason_error_string(ERR_get_error()));
+        case CKR_OK: break;
+        case CKR_CANCEL:
+        case CKR_FUNCTION_CANCELED:
+        {
+            SignException e( __FILE__, __LINE__, "PIN acquisition canceled.");
+            e.setCode( Exception::PINCanceled );
+            throw e;
+            break;
+        }
+        case CKR_PIN_INCORRECT:
+        {
+            SignException e( __FILE__, __LINE__, "PIN Incorrect" );
+            e.setCode( Exception::PINIncorrect );
+            throw e;
+            break;
+        }
+        case CKR_PIN_LOCKED:
+        {
+            SignException e( __FILE__, __LINE__, "PIN Locked" );
+            e.setCode( Exception::PINLocked );
+            throw e;
+            break;
+        }
+        default:
+            std::ostringstream s;
+            s << "Failed to login to token '" << d->sign.slot->token->label
+                << "': " << ERR_reason_error_string(ERR_get_error());
+            SignException e( __FILE__, __LINE__, s.str() );
+            e.setCode( Exception::PINFailed );
+            throw e;
+            break;
         }
     }
 
@@ -295,6 +327,27 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
     }
 }
 
+bool digidoc::PKCS11SignerPrivate::checkCert( X509 *cert ) const
+{
+    if(!cert)
+        return false;
+    ASN1_BIT_STRING *keyusage = (ASN1_BIT_STRING*)X509_get_ext_d2i(cert, NID_key_usage, NULL, NULL);
+    if(!keyusage)
+        return false;
+
+    bool ret = false;
+    for(int n = 0; n < 9; ++n)
+    {
+        if(ASN1_BIT_STRING_get_bit(keyusage, n) && n == 1)
+        {
+            ret = true;
+            break;
+        }
+    }
+    ASN1_BIT_STRING_free( keyusage );
+    return ret;
+}
+
 /**
  * Helper method, creates PKCS11Cert struct. NB! token should not be NULL.
  *
@@ -304,7 +357,7 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
  */
 digidoc::PKCS11Signer::PKCS11Cert digidoc::PKCS11SignerPrivate::createPKCS11Cert(PKCS11_SLOT* slot, PKCS11_CERT* cert)
 {
-	digidoc::PKCS11Signer::PKCS11Cert certificate;
+    digidoc::PKCS11Signer::PKCS11Cert certificate;
     certificate.token.label = slot->token->label;
     certificate.token.manufacturer = slot->token->manufacturer;
     certificate.token.model = slot->token->model;

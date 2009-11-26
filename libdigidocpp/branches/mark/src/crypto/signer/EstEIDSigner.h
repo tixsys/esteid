@@ -20,7 +20,7 @@ namespace digidoc
           virtual ~EstEIDSigner();
 
       protected:
-          virtual PKCS11Signer::PKCS11Cert selectSigningCertificate(std::vector<PKCS11Signer::PKCS11Cert> certificates) throw(SignException);
+          virtual PKCS11Cert selectSigningCertificate(std::vector<PKCS11Cert> certificates) throw(SignException);
 
     };
 

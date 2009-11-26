@@ -3,7 +3,6 @@
  */
 
 #include "XmlConf.h"
-#include <stdlib.h>//getenv
 //#include <iostream>
 //#include <stdio.h>
 //#include <stdarg.h>
@@ -14,9 +13,14 @@
 #endif
 
 #include "log.h"
-#include "util/String.h"
 #include "util/File.h"
+#include "util/String.h"
 #include "xml/conf.hxx"
+
+#include <stdlib.h>//getenv
+#ifdef _WIN32
+#include <direct.h>
+#endif
 
 /**
  * Environment variable name, that is used for loading configuration
@@ -40,6 +44,8 @@ const std::string digidoc::XmlConf::XADES_XSD_PATH     = "xades.xsd.path";
 const std::string digidoc::XmlConf::DSIG_XSD_PATH      = "dsig.xsd.path";
 const std::string digidoc::XmlConf::PROXY_HOST         = "proxy.host";
 const std::string digidoc::XmlConf::PROXY_PORT         = "proxy.port";
+const std::string digidoc::XmlConf::PROXY_USER         = "proxy.user";
+const std::string digidoc::XmlConf::PROXY_PASS         = "proxy.pass";
 const std::string digidoc::XmlConf::PKCS12_CERT        = "pkcs12.cert";
 const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
 
@@ -135,6 +141,20 @@ digidoc::XmlConf::~XmlConf()
 {
 }
 
+std::string digidoc::XmlConf::fullpath() const
+{
+    // the file path in conf is relative to the conf file's location
+    const char *env = getenv( CONF_ENV.c_str() );
+    if( env )
+        return digidoc::util::File::directory( env );
+    char *path = getcwd( NULL, 0 );
+    std::string ret;
+    if( path )
+        ret = path;
+    free( path );
+    return ret;
+}
+
 /**
  * Load and parse xml from path. Initialize XmlConf member variables from xml.
  * @param path to use for initializing conf
@@ -181,6 +201,14 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             {
                 proxyPort = *it;
             }
+            else if(PROXY_USER.compare(it->name()) == 0)
+            {
+                proxyUser = *it;
+            }
+            else if(PROXY_PASS.compare(it->name()) == 0)
+            {
+                proxyPass = *it;
+            }
             else if(PKCS12_CERT.compare(it->name()) == 0)
             {
                 pkcs12Cert = *it;
@@ -195,8 +223,7 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
             }
         }
 
-        // the file path in conf is relative to the conf file's location
-        std::string conf_fullpath = digidoc::util::File::directory(getenv(CONF_ENV.c_str()));
+        std::string conf_fullpath = fullpath();
         if( !conf_fullpath.empty() ) conf_fullpath += "/";
         Configuration::OcspSequence ocspSeq = conf->ocsp();
         for( Configuration::OcspSequence::const_iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
@@ -257,23 +284,17 @@ void digidoc::XmlConf::getUserConfPath() const
 
 std::string digidoc::XmlConf::getManifestXsdPath() const
 {
-    // the file path in conf is relative to the conf file's location
-    std::string confpath(getenv(CONF_ENV.c_str()));
-    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), manifestXsdPath);
+    return digidoc::util::File::fullPathUrl(fullpath(), manifestXsdPath);
 }
 
 std::string digidoc::XmlConf::getXadesXsdPath() const
 {
-    // the file path in conf is relative to the conf file's location 
-    std::string confpath(getenv(CONF_ENV.c_str()));
-    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), xadesXsdPath);
+    return digidoc::util::File::fullPathUrl(fullpath(), xadesXsdPath);
 }
 
 std::string digidoc::XmlConf::getDsigXsdPath() const
 {
-    // the file path in conf is relative to the conf file's location
-    std::string confpath(getenv(CONF_ENV.c_str()));
-    return digidoc::util::File::fullPathUrl(digidoc::util::File::directory(confpath), dsigXsdPath);
+    return digidoc::util::File::fullPathUrl(fullpath(), dsigXsdPath);
 }
 
 std::string digidoc::XmlConf::getPKCS11DriverPath() const
@@ -296,11 +317,7 @@ digidoc::Conf::OCSPConf digidoc::XmlConf::getOCSP(const std::string &issuer) con
 
 std::string digidoc::XmlConf::getCertStorePath() const
 {
-    // the file path in conf is relative to the conf file's location
-    std::string conf_fullpath(getenv(CONF_ENV.c_str()));
-    std::string certStoreFullPath(digidoc::util::File::directory(conf_fullpath));
-    certStoreFullPath.append("/" + certStorePath);
-    return certStoreFullPath;
+    return fullpath() + "/" + certStorePath;
 }
 
 std::string digidoc::XmlConf::getProxyHost() const
@@ -311,6 +328,16 @@ std::string digidoc::XmlConf::getProxyHost() const
 std::string digidoc::XmlConf::getProxyPort() const
 {
     return proxyPort;
+}
+
+std::string digidoc::XmlConf::getProxyUser() const
+{
+    return proxyUser;
+}
+
+std::string digidoc::XmlConf::getProxyPass() const
+{
+    return proxyPass;
 }
 
 std::string digidoc::XmlConf::getPKCS12Cert() const
@@ -331,6 +358,16 @@ void digidoc::XmlConf::setProxyHost( const std::string &host )
 void digidoc::XmlConf::setProxyPort( const std::string &port )
 {
     proxyPort = port;
+}
+
+void digidoc::XmlConf::setProxyUser( const std::string &user )
+{
+    proxyUser = user;
+}
+
+void digidoc::XmlConf::setProxyPass( const std::string &pass )
+{
+    proxyPass = pass;
 }
 
 void digidoc::XmlConf::setPKCS12Cert( const std::string &cert )
