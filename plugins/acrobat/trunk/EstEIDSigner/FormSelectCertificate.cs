@@ -40,7 +40,8 @@ namespace EstEIDSigner
             InitializeComponent();
 
             this.Text = title;
-            this.Message.Text = message;            
+            this.Message.Text = message;
+            listCertificates.DoubleClick += new System.EventHandler(this.listCertificates_DoubleClick);
 
             ColumnHeader[] head = new ColumnHeader[3];
 
@@ -92,6 +93,13 @@ namespace EstEIDSigner
         private void listCertificates_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Ok.Enabled = (listCertificates.SelectedItems.Count > 0);
+        }
+
+        private void listCertificates_DoubleClick(object sender, EventArgs e)
+        {
+            this.Ok_Click(sender, e);
+
+            this.DialogResult = DialogResult.OK;
         }
     }
 }
