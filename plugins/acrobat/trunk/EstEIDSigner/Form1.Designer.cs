@@ -20,6 +20,38 @@
             base.Dispose(disposing);
         }
 
+        public partial class DisabledSignButton : System.Windows.Forms.Button
+        {
+            public DisabledSignButton()
+            {                
+            }
+
+            protected override void OnPaint(System.Windows.Forms.PaintEventArgs pe)
+            {
+                if (base.Enabled)
+                {
+                    base.OnPaint(pe);
+                }
+                else
+                {
+                    // Calling the base class OnPaint
+                    base.OnPaint(pe);
+                    // Fill
+                    pe.Graphics.FillRectangle(new System.Drawing.SolidBrush(
+                        System.Drawing.Color.FromArgb(base.BackColor.R, base.BackColor.G, base.BackColor.B)),
+                        pe.ClipRectangle);
+                    // Draw the line around the button
+                    pe.Graphics.DrawRectangle(new System.Drawing.Pen(System.Drawing.Color.Black, 1), 0, 0, base.Width - 1, base.Height - 1);
+                    // Draw the text in the button in red
+                    pe.Graphics.DrawString(base.Text, base.Font,
+                        new System.Drawing.SolidBrush(System.Drawing.Color.Silver),
+                            (base.Width - pe.Graphics.MeasureString(base.Text, base.Font).Width) / 2, (base.Height / 2) -
+                            (pe.Graphics.MeasureString(base.Text, base.Font).Height / 2));
+                }
+            }
+        }
+
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -32,7 +64,7 @@
             this.DebugBox = new System.Windows.Forms.TextBox();
             this.linkSettings = new System.Windows.Forms.LinkLabel();
             this.linkHelp = new System.Windows.Forms.LinkLabel();
-            this.signButton = new System.Windows.Forms.Button();
+            this.signButton = new EstEIDSigner.Form1.DisabledSignButton();
             this.labelSeparator1 = new System.Windows.Forms.Label();
             this.linkOutput = new System.Windows.Forms.LinkLabel();
             this.linkInput = new System.Windows.Forms.LinkLabel();
@@ -380,8 +412,8 @@
         private System.Windows.Forms.Label subjectBox;        
         private System.Windows.Forms.Label titleBox;        
         private System.Windows.Forms.Label authorBox;        
-        private System.Windows.Forms.TextBox DebugBox;
-        private System.Windows.Forms.Button signButton;        
+        private System.Windows.Forms.TextBox DebugBox;      
+        private DisabledSignButton signButton;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox Reasontext;
         private System.Windows.Forms.Label label15;

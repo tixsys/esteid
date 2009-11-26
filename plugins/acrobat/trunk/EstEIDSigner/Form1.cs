@@ -196,6 +196,8 @@ namespace EstEIDSigner
 
             try
             {
+                this.signButton.Enabled = false;
+
                 status(Resources.READ_CERTS, false);
                 OpenCertStore();
 
@@ -237,6 +239,7 @@ namespace EstEIDSigner
                 MessageBox.Show(ex.Message, Resources.ERROR);
             }
 
+            this.signButton.Enabled = true;
             // force Garbage Collector to close pkcs11 bridge
             GC.Collect();
         }
