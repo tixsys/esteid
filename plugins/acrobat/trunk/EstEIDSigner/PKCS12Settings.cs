@@ -30,6 +30,11 @@ namespace EstEIDSigner
     class PKCS12Settings
         : ErrorContainer
     {
+#if WIN32
+        private const string registryKey = @"Software\Estonian ID Card\OrganizationDefaults\Client";
+#else
+        private const string configFilename = "Estonian ID Card.conf";
+#endif
         private string filename;
         private string password;
 
@@ -49,7 +54,7 @@ namespace EstEIDSigner
 #warning WIN32 is defined: using Registry to load PKCS12 variables
             RegistryKey regkey ;
 
-            regkey = Registry.CurrentUser.OpenSubKey(@"Software\Estonian ID Card\OrganizationDefaults\Client");
+            regkey = Registry.CurrentUser.OpenSubKey(registryKey);
             if (regkey == null)
             {
                 this.lastError = Resources.REGISTRY_SETTING_MISSING;
@@ -61,10 +66,9 @@ namespace EstEIDSigner
 #else
 #warning WIN32 is not defined: using Environment/INI to load PKCS12 variables
 
-            string path = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
-            if (path == null || path.Length == 0)
-                path = Environment.GetEnvironmentVariable("HOME");
-            path = path + "/.config/Estonian ID Card.conf";
+            string path = Environment.GetEnvironmentVariable("HOME");            
+            path = System.IO.Path.Combine(path, ".config");
+            path = System.IO.Path.Combine(path, configFilename);
 
             if (!File.Exists(path))
             {
@@ -80,10 +84,10 @@ namespace EstEIDSigner
             if ((filename == null) || (filename.Length == 0))
             {
                 this.lastError = Resources.PKCS12_FILENAME_MISSING;
-                return false;
+                return (false);
             }
 
-            return true;
+            return (true);
         }
     }
 }

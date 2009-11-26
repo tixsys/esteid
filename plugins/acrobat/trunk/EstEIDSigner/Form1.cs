@@ -129,9 +129,13 @@ namespace EstEIDSigner
         {
             if (store == null)
             {                
-                string path = config.Value["cert_path"].Value;
+                string path = config.ToString("cert_path");
                 if (path == null || path.Length == 0)
-                    path = Directory.GetCurrentDirectory();
+                    path = EstEIDSignerGlobals.CertDirectory;
+
+                if (!Directory.Exists(path))
+                    throw new Exception(Resources.DIR_CERT_ERROR + path);
+
                 store = new DirectoryX509CertStore(path);
                 if (store.Open() == false)
                     throw new Exception(Resources.DIR_CERT_ERROR + path);
@@ -239,19 +243,21 @@ namespace EstEIDSigner
 
         private void LoadConfig()
         {
-            bool b;
+            bool b, configExisted = true;
 
             string fullConfigPath = EstEIDSignerGlobals.LocalAppPath;
             if (!Directory.Exists(fullConfigPath))
                 Directory.CreateDirectory(fullConfigPath);
 
-            string fullConfigName = fullConfigPath + EstEIDSignerGlobals.AppName + ".config";
+            string fullConfigName = System.IO.Path.Combine(fullConfigPath, EstEIDSignerGlobals.AppName + ".config");
 
             // create default config file if needed
             if (!File.Exists(fullConfigName))
             {
                 if (!config.Create(fullConfigName, Resources.DEFAULT_CONFIG))
                     MessageBox.Show(config.lastError, Resources.ERROR);
+
+                configExisted = false;
             }
 
             if (!config.Open(fullConfigName))
@@ -259,6 +265,13 @@ namespace EstEIDSigner
 
             try
             {
+                // set Estonian ID card cert dir if new installation or
+                // invalid cert path
+                if ((!configExisted)
+                    || (!Path.IsPathRooted(config.ToString("cert_path")))
+                    || (!Directory.Exists(config.ToString("cert_path"))))
+                    config.AddOrReplace("cert_path", EstEIDSignerGlobals.CertDirectory);
+
                 b = config.ToBoolean("debug");
                 if (!b)
                 {
