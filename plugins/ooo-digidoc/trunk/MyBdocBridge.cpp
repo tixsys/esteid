@@ -832,12 +832,12 @@ void My1EstEIDSigner::setLocalConfHack()
 			tempLine = line.substr( 0, p12PathLine.size() );
 			if (!strcmp(tempLine.c_str(), p12PathLine.c_str()))
 			{
-				P12Path = line.substr( p12PathLine.size(), line.size()-p12PathLine.size() ).c_str();
+				P12Path = strdup(line.substr( p12PathLine.size(), line.size()-p12PathLine.size() ).c_str());
 			}
 			tempLine = line.substr( 0, p12PassLine.size() );
 			if (!strcmp(tempLine.c_str(), p12PassLine.c_str()))
 			{
-				P12Pass = line.substr( p12PassLine.size(), line.size()-p12PassLine.size() ).c_str();
+				P12Pass = strdup(line.substr( p12PassLine.size(), line.size()-p12PassLine.size() ).c_str());
 			}
 		}
 		ifs.close();
