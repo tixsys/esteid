@@ -851,6 +851,8 @@ void My1EstEIDSigner::setLocalConfHack()
 	{
 		getExceptions(e);
 	}
+PRINT_DEBUG("PKCS12 Path: %s", P12Path);
+PRINT_DEBUG("PKCS12 Pass: %s", P12Pass);
 	i->setPKCS12Cert(P12Path);
 	i->setPKCS12Pass(P12Pass);
 }
