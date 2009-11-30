@@ -227,9 +227,9 @@ namespace EstEIDSigner
                 status(Resources.OCSP_CERT_ERROR, true);
                 MessageBox.Show(ex.Message, Resources.ERROR);
             }
-            catch (AlreadySignedException ex)
+            catch (DocVerifyException ex)
             {
-                status(Resources.DOCUMENT_ALREADY_SIGNED, true);
+                status(Resources.DOC_VERIFY_FAILURE, true);
                 MessageBox.Show(ex.Message, Resources.ERROR);
             }
             catch (Exception ex)

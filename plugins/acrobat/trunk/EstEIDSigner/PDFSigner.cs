@@ -228,10 +228,10 @@ namespace EstEIDSigner
     /// <summary>
     /// base class for exception where cert status is not good
     /// </summary>
-    public class AlreadySignedException
+    public class DocVerifyException
         : Exception
     {
-        public AlreadySignedException(string message)
+        public DocVerifyException(string message)
             : base(message)
         {
         }
@@ -614,15 +614,20 @@ namespace EstEIDSigner
             
             AcroFields af = this.reader.AcroFields;
             ArrayList names = af.GetSignatureNames();
+            bool nextRevision = ((names != null) && (names.Count > 0));
 
             // already signed ?
-            if (names.Count > 0)
+            if (nextRevision)
             {
-                // pick first signature
+                // pick always first signature 
                 string name = (string)names[0];
                 PdfPKCS7 pkc7 = af.VerifySignature(name);
-                string who = PdfPKCS7.GetSubjectFields(pkc7.SigningCertificate).GetField("CN");
-                throw new AlreadySignedException(Resources.DOCUMENT_ALREADY_SIGNED_BY + who);
+                bool verify = pkc7.Verify();
+                if (!verify)
+                {
+                    string who = PdfPKCS7.GetSubjectFields(pkc7.SigningCertificate).GetField("CN");
+                    throw new DocVerifyException(Resources.DOC_VERIFY_FAILED + who);
+                }
             }
 
             statusHandler(Resources.CONNECTING_SMARTCARD, false);
@@ -654,12 +659,12 @@ namespace EstEIDSigner
                 throw new Exception(Resources.INVALID_CERT);
 
             PdfReader reader = new PdfReader(filename);
-            PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0');
+            PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0', null, nextRevision);
             if (metadata != null)
                 stp.XmpMetadata = metadata.getStreamedMetaData();
             PdfSignatureAppearance sap = stp.SignatureAppearance;
             if (appearance.Visible)
-                sap.SetVisibleSignature(new Rectangle(100, 100, 300, 200), 1, null);
+                sap.SetVisibleSignature(new Rectangle(100, 100, 400, 200), 1, null);
             sap.SignDate = DateTime.Now;
             sap.SetCrypto(null, chain, null, null);
             sap.Reason = appearance.Reason;
