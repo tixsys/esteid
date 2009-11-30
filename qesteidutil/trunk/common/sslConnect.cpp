@@ -194,7 +194,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 				t->wait( 1 );
 			}
 			while( t->isRunning() );
-			p->deleteLater();
+			delete p;
 			err = t->loginResult;
 			delete t;
 		}
@@ -223,7 +223,7 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	sslError::check( SSL_CTX_use_certificate(sctx, authcert->x509 ) );
 	sslError::check( SSL_CTX_use_PrivateKey(sctx,pkey) );
 	sslError::check( SSL_CTX_check_private_key(sctx) );
-	sslError::check( SSL_CTX_ctrl( sctx, SSL_CTRL_MODE, SSL_MODE_AUTO_RETRY, NULL ) );
+	sslError::check( SSL_CTX_set_mode( sctx, SSL_MODE_AUTO_RETRY ) );
 
 	ssl = SSL_new( sctx );
 
@@ -261,7 +261,7 @@ QByteArray SSLObj::getUrl( const QString &url ) const
 QByteArray SSLObj::getRequest( const QString &request ) const
 {
 	QByteArray data = request.toUtf8();
-	sslError::check( SSL_write( ssl, data.data(), data.length() ) );
+	sslError::check( SSL_write( ssl, data.constData(), data.length() ) );
 
 	int bytesRead = 0;
 	char readBuffer[4096];

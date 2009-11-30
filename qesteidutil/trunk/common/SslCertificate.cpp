@@ -384,7 +384,7 @@ void PKCS12CertificatePrivate::init( const QByteArray &data, const QByteArray &p
 
 	X509 *c = NULL;
 	EVP_PKEY *k = NULL;
-	int ret = PKCS12_parse( p12, pin.data(), &k, &c, NULL );
+	int ret = PKCS12_parse( p12, pin.constData(), &k, &c, NULL );
 	PKCS12_free( p12 );
 	if( !ret )
 		return setLastError();
