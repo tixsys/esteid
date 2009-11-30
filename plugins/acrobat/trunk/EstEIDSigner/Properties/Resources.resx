@@ -202,12 +202,6 @@
   <data name="DIR_CERT_ERROR" xml:space="preserve">
     <value>Sertifikaatide lugemine ebaõnnestus kataloogist: </value>
   </data>
-  <data name="DOCUMENT_ALREADY_SIGNED" xml:space="preserve">
-    <value>Dokument on juba allkirjastatud!</value>
-  </data>
-  <data name="DOCUMENT_ALREADY_SIGNED_BY" xml:space="preserve">
-    <value>Dokument on juba allkirjastatud! Allkirja andja: </value>
-  </data>
   <data name="DOCUMENT_SIGNED" xml:space="preserve">
     <value>Dokument allkirjastatud!</value>
   </data>
@@ -399,5 +393,11 @@
   </data>
   <data name="UI_WRONG_PIN" xml:space="preserve">
     <value>Vale PIN</value>
+  </data>
+  <data name="DOC_VERIFY_FAILED" xml:space="preserve">
+    <value>Dokumendi allkirja kontroll ebaõnnestus, allkirja andja: </value>
+  </data>
+  <data name="DOC_VERIFY_FAILURE" xml:space="preserve">
+    <value>Allkirja kontroll ebaõnnestus</value>
   </data>
 </root>

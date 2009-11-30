@@ -224,20 +224,20 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dokument on juba allkirjastatud!.
+        ///   Looks up a localized string similar to Dokumendi allkirja kontroll ebaõnnestus, allkirja andja: .
         /// </summary>
-        internal static string DOCUMENT_ALREADY_SIGNED {
+        internal static string DOC_VERIFY_FAILED {
             get {
-                return ResourceManager.GetString("DOCUMENT_ALREADY_SIGNED", resourceCulture);
+                return ResourceManager.GetString("DOC_VERIFY_FAILED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dokument on juba allkirjastatud! Allkirja andja: .
+        ///   Looks up a localized string similar to Allkirja kontroll ebaõnnestus.
         /// </summary>
-        internal static string DOCUMENT_ALREADY_SIGNED_BY {
+        internal static string DOC_VERIFY_FAILURE {
             get {
-                return ResourceManager.GetString("DOCUMENT_ALREADY_SIGNED_BY", resourceCulture);
+                return ResourceManager.GetString("DOC_VERIFY_FAILURE", resourceCulture);
             }
         }
         

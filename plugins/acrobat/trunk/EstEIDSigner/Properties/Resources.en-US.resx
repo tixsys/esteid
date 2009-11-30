@@ -202,12 +202,6 @@
   <data name="DIR_CERT_ERROR" xml:space="preserve">
     <value>Reading certifcates failed from directory: </value>
   </data>
-  <data name="DOCUMENT_ALREADY_SIGNED" xml:space="preserve">
-    <value>Document already signed!</value>
-  </data>
-  <data name="DOCUMENT_ALREADY_SIGNED_BY" xml:space="preserve">
-    <value>Document already signed! Signer: </value>
-  </data>
   <data name="DOCUMENT_SIGNED" xml:space="preserve">
     <value>Document signed!</value>
   </data>
@@ -399,5 +393,11 @@
   </data>
   <data name="UI_WRONG_PIN" xml:space="preserve">
     <value>PIN incorrect</value>
+  </data>
+  <data name="DOC_VERIFY_FAILED" xml:space="preserve">
+    <value>Signature verification failed, signer: </value>
+  </data>
+  <data name="DOC_VERIFY_FAILURE" xml:space="preserve">
+    <value>Signature verification failed</value>
   </data>
 </root>
