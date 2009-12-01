@@ -34,6 +34,10 @@ set(bho_SRCS
     SmartCardCertificate.rgs
     SmartCardSigner.cpp
     SmartCardSigner.rgs
+    utility/converters.cpp
+    utility/monitorThread.cpp
+    utility/pinDialog.cpp
+    utility/threadObj.cpp
     ${CARDLIB}/CardBase.cpp
     ${CARDLIB}/CTAPIManager.cpp
     ${CARDLIB}/DynamicLibrary.cpp
@@ -42,10 +46,6 @@ set(bho_SRCS
     ${CARDLIB}/PCSCManager.cpp
     ${CARDLIB}/SCError.cpp
     ${CARDLIB}/SmartCardManager.cpp
-    ${CARDLIB}/utility/converters.cpp
-    ${CARDLIB}/utility/monitorThread.cpp
-    ${CARDLIB}/utility/pinDialog.cpp
-    ${CARDLIB}/utility/threadObj.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
