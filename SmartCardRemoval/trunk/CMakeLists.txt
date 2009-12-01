@@ -23,6 +23,8 @@ set(SOURCES
     SmartCardRemoval.cpp
     SmartCardRemoval.rc
     SmartCardRemoval.rgs
+    utility/monitorThread.cpp
+    utility/threadObj.cpp
     ${CARDLIB}/CardBase.cpp
     ${CARDLIB}/CTAPIManager.cpp
     ${CARDLIB}/DynamicLibrary.cpp
@@ -31,8 +33,6 @@ set(SOURCES
     ${CARDLIB}/PCSCManager.cpp
     ${CARDLIB}/SCError.cpp
     ${CARDLIB}/SmartCardManager.cpp
-    ${CARDLIB}/utility/monitorThread.cpp
-    ${CARDLIB}/utility/threadObj.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
