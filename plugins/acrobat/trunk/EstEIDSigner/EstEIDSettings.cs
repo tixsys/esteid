@@ -31,6 +31,12 @@ namespace EstEIDSigner
         : ErrorContainer
     {
         private Configuration config = null;
+        public static readonly string SignaturePage = "1";
+        public static readonly string SignatureX = "100";
+        public static readonly string SignatureY = "100";
+        public static readonly string SignatureW = "400";
+        public static readonly string SignatureH = "200";
+        public static readonly string SignatureDescription = "0";
 
         public bool Create(string filename, string data)
         {
@@ -95,6 +101,37 @@ namespace EstEIDSigner
                 return Value[key].Value;
 
             return (string.Empty);
+        }
+
+        public string ToString(string key, string defValue)
+        {
+            if (Value[key] != null)
+                return Value[key].Value;
+
+            return (defValue);
+        }
+
+        public uint ToUInt(string key, string defValue)
+        {
+            uint v = 0;
+            string s = defValue;
+
+            if ((Value[key] != null) && (Value[key].Value.Length > 0))
+                s = Value[key].Value;
+
+            try
+            {
+                v = Convert.ToUInt32(s);
+            }
+            catch (FormatException) { }
+            catch (OverflowException) { }
+            finally
+            {
+                if ((v >= UInt32.MaxValue) || (v <= UInt32.MinValue))
+                    v = 0;
+            }
+
+            return (v);
         }
 
         public void AddOrReplace(string key, string value)

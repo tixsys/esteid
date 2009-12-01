@@ -30,7 +30,7 @@ namespace EstEIDSigner
 {
     public partial class FormSettings : Form
     {
-        private EstEIDSettings config;
+        private EstEIDSettings config;        
 
         public FormSettings(EstEIDSettings config)
         {
@@ -38,19 +38,31 @@ namespace EstEIDSigner
 
             this.config = config;
 
+            // signature settings            
+            this.pageTextBox.Text = config.ToString("signature_page", EstEIDSettings.SignaturePage);
+            this.xTextBox.Text = config.ToString("signature_x", EstEIDSettings.SignatureX);
+            this.yTextBox.Text = config.ToString("signature_y", EstEIDSettings.SignatureY);
+            this.wTextBox.Text = config.ToString("signature_w", EstEIDSettings.SignatureW);
+            this.hTextBox.Text = config.ToString("signature_h", EstEIDSettings.SignatureH);
+            this.SignatureRender.Checked = config.ToString("signature_render").Equals("1");
+            // timestamp authority
             this.EnableTSA.Checked = config.ToBoolean("enable_tsa");
             this.urlTextBox.Text = config.ToString("tsa_url");
             this.nameTextBox.Text = config.ToString("tsa_user");
             this.passwordBox.Text = config.ToString("tsa_password");
         }
 
-        private void EnableTSA_CheckedChanged(object sender, EventArgs e)
-        {            
-            config.AddOrReplace("enable_tsa", this.EnableTSA.Checked.ToString());
-        }
-
         private void buttonClose_Click(object sender, EventArgs e)
         {
+            // signature location
+            config.AddOrReplace("signature_page", this.pageTextBox.Text);
+            config.AddOrReplace("signature_x", this.xTextBox.Text);
+            config.AddOrReplace("signature_y", this.yTextBox.Text);
+            config.AddOrReplace("signature_w", this.wTextBox.Text);
+            config.AddOrReplace("signature_h", this.hTextBox.Text);
+            config.AddOrReplace("signature_render", this.SignatureRender.Checked ? "1" : "0");
+            // timestamp authority
+            config.AddOrReplace("enable_tsa", this.EnableTSA.Checked.ToString());
             config.AddOrReplace("tsa_url", this.urlTextBox.Text);
             config.AddOrReplace("tsa_user", this.nameTextBox.Text);
             config.AddOrReplace("tsa_password", this.passwordBox.Text);

@@ -118,9 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="tabPage1.Text" xml:space="preserve">
+    <value>Signature</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
     <value>Timestamp</value>
   </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Signature settings (in pixels)</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="SignatureRender.Size" type="System.Drawing.Size, System.Drawing">
+    <value>156, 17</value>
+  </data>
+  <data name="SignatureRender.Text" xml:space="preserve">
+    <value>Add name to signature</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 17</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 17</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 17</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Height</value>
+  </data>
   <data name="EnableTSA.Size" type="System.Drawing.Size, System.Drawing">
     <value>249, 17</value>
   </data>

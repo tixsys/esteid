@@ -100,6 +100,25 @@ namespace EstEIDSigner
         }
     }
 
+    class SignatureLocation
+    {
+        private Rectangle rectangle;
+
+        public SignatureLocation(EstEIDSettings config)
+        {
+            rectangle = new Rectangle(
+                config.ToUInt("signature_x", EstEIDSettings.SignatureX),
+                config.ToUInt("signature_y", EstEIDSettings.SignatureY),
+                config.ToUInt("signature_w", EstEIDSettings.SignatureW),
+                config.ToUInt("signature_h", EstEIDSettings.SignatureH));
+        }
+
+        public static implicit operator Rectangle(SignatureLocation location)
+        {
+            return (location.rectangle);
+        }
+    }
+
 
     /// <summary>
     /// This is a holder class for PDF signature appearance
@@ -110,6 +129,9 @@ namespace EstEIDSigner
         private string location;
         private string contact;
         private bool visible;
+        private Rectangle rectangle;
+        private uint page;
+        private PdfSignatureAppearance.SignatureRender render;
 
         public Appearance()
         {
@@ -140,6 +162,21 @@ namespace EstEIDSigner
         {
             set { visible = value; }
             get { return visible; }
+        }
+        public Rectangle Rectangle
+        {
+            set { rectangle = value; }
+            get { return rectangle; }
+        }
+        public uint Page
+        {
+            set { page = value; }
+            get { return page; }
+        }
+        public PdfSignatureAppearance.SignatureRender SignatureRender
+        {
+            set { render = value; }
+            get { return render; }
         }
     }
 
@@ -613,14 +650,14 @@ namespace EstEIDSigner
             statusHandler(Resources.VERIFYING_DOCUMENT, false);
             
             AcroFields af = this.reader.AcroFields;
-            ArrayList names = af.GetSignatureNames();
+            ArrayList names = af.GetSignatureNames();            
             bool nextRevision = ((names != null) && (names.Count > 0));
 
             // already signed ?
             if (nextRevision)
             {
                 // pick always first signature 
-                string name = (string)names[0];
+                string name = (string)names[0];                
                 PdfPKCS7 pkc7 = af.VerifySignature(name);
                 bool verify = pkc7.Verify();
                 if (!verify)
@@ -658,20 +695,20 @@ namespace EstEIDSigner
             if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
                 throw new Exception(Resources.INVALID_CERT);
 
-            PdfReader reader = new PdfReader(filename);
+            PdfReader reader = new PdfReader(filename);            
             PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0', null, nextRevision);
             if (metadata != null)
                 stp.XmpMetadata = metadata.getStreamedMetaData();
             PdfSignatureAppearance sap = stp.SignatureAppearance;
             if (appearance.Visible)
-                sap.SetVisibleSignature(new Rectangle(100, 100, 400, 200), 1, null);
+                sap.SetVisibleSignature(appearance.Rectangle, (int)appearance.Page, null);
             sap.SignDate = DateTime.Now;
             sap.SetCrypto(null, chain, null, null);
             sap.Reason = appearance.Reason;
             sap.Location = appearance.Location;
             sap.Contact = appearance.Contact;
             sap.Acro6Layers = true;
-            sap.Render = PdfSignatureAppearance.SignatureRender.NameAndDescription;
+            sap.Render = appearance.SignatureRender;
             PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_SHA1);
             dic.Date = new PdfDate(sap.SignDate);
             dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
