@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 240 $
 
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #include <algorithm>
 
 typedef	std::vector<unsigned char> ByteVec;

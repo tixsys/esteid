@@ -10,7 +10,6 @@ project(xpi)
 set(PLUGINGATE plugins/plugingate)
 set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
 include_directories(
-    ${CARDLIB}
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
