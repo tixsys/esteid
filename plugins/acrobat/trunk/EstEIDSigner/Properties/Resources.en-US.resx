@@ -181,12 +181,18 @@
   &lt;add key="ocsp_url" value="http://ocsp.sk.ee" /&gt;
   &lt;add key="cert_path" value="\certs" /&gt;
   &lt;add key="enable_tsa" value="False" /&gt;
-  &lt;add key="visible_signature" value="False" /&gt;
+  &lt;add key="visible_signature" value="True" /&gt;
   &lt;add key="tsa_url" value="http://www.edelweb.fr/cgi-bin/service-tsp" /&gt;
   &lt;add key="tsa_user" value="" /&gt;
   &lt;add key="tsa_password" value="" /&gt;
   &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
   &lt;add key="language" value="" /&gt;
+  &lt;add key="signature_page" value="1" /&gt;
+  &lt;add key="signature_x" value="100" /&gt;
+  &lt;add key="signature_y" value="100" /&gt;
+  &lt;add key="signature_w" value="400" /&gt;
+  &lt;add key="signature_h" value="200" /&gt;
+  &lt;add key="signature_render" value="0" /&gt;
  &lt;/appSettings&gt;
 &lt;/configuration&gt;</value>
   </data>

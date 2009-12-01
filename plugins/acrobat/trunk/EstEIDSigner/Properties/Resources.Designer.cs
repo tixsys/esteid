@@ -202,11 +202,11 @@ namespace EstEIDSigner.Properties {
         ///  &lt;add key=&quot;ocsp_url&quot; value=&quot;http://ocsp.sk.ee&quot; /&gt;
         ///  &lt;add key=&quot;cert_path&quot; value=&quot;\certs&quot; /&gt;
         ///  &lt;add key=&quot;enable_tsa&quot; value=&quot;False&quot; /&gt;
-        ///  &lt;add key=&quot;visible_signature&quot; value=&quot;False&quot; /&gt;
+        ///  &lt;add key=&quot;visible_signature&quot; value=&quot;True&quot; /&gt;
         ///  &lt;add key=&quot;tsa_url&quot; value=&quot;http://www.edelweb.fr/cgi-bin/service-tsp&quot; /&gt;
         ///  &lt;add key=&quot;tsa_user&quot; value=&quot;&quot; /&gt;
         ///  &lt;add key=&quot;tsa_password&quot; value=&quot;&quot; /&gt;
-        ///  &lt;add key [rest of string was truncated]&quot;;.
+        ///  &lt;add key= [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DEFAULT_CONFIG {
             get {
