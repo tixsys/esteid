@@ -169,5 +169,6 @@ void SAL_CALL threadSign();
 
 int getSignatures(bool bButton);
 
+void forceSign();
 
 #endif

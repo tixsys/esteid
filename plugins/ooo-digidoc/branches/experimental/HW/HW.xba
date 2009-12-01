@@ -166,16 +166,16 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 	CtlButtonY = oCertDial.getControl(&quot;SignButton&quot;)
 	CtlButtonN = oCertDial.getControl(&quot;ExitButton&quot;)
 	
-	If Instr(1, strSignatureData, &quot;*&quot;) Then
-		CtlButtonY.setEnable(FALSE)
+&apos;	If Instr(1, strSignatureData, &quot;*&quot;) Then
+&apos;		CtlButtonY.setEnable(FALSE)
 &apos;		CtlButtonN.setEnable(FALSE)
-		CtlButtonY.setVisible(FALSE)
+&apos;		CtlButtonY.setVisible(FALSE)
 &apos;		CtlButtonN.setVisible(FALSE)
 &apos;		oCertDial.setHeight(220)
 &apos;  Else
 &apos;    CtlButtonN.setEnable(FALSE)
 &apos;    CtlButtonN.setVisible(FALSE)
-  End If
+&apos;  End If
 
   For c=1 To Len(strSignatureData)
 	k = Instr(k+1, strSignatureData, &quot;;&quot;)
