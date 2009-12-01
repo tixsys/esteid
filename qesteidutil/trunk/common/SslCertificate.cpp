@@ -355,7 +355,7 @@ QByteArray SslCertificate::serialNumber() const
 	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->serialNumber )) );
 }
 
-QByteArray SslCertificate::versionNumber() const
+QByteArray SslCertificate::version() const
 {
 	if( !handle() )
 		return QByteArray();
