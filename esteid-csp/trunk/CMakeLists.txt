@@ -37,6 +37,10 @@ set(esteidcsp_SRCS
     esteidcsp.rc
     precompiled.cpp
     RegKey.cpp
+    utility/logger.cpp
+    utility/monitorThread.cpp
+    utility/pinDialog.cpp
+    utility/threadObj.cpp
     ${CARDLIB}/CardBase.cpp
     ${CARDLIB}/CTAPIManager.cpp
     ${CARDLIB}/DynamicLibrary.cpp
@@ -46,10 +50,6 @@ set(esteidcsp_SRCS
     ${CARDLIB}/PCSCManager.cpp
     ${CARDLIB}/SCError.cpp
     ${CARDLIB}/SmartCardManager.cpp
-    ${CARDLIB}/utility/logger.cpp
-    ${CARDLIB}/utility/monitorThread.cpp
-    ${CARDLIB}/utility/pinDialog.cpp
-    ${CARDLIB}/utility/threadObj.cpp
 )
 
 add_library(esteidcsp SHARED ${esteidcsp_SRCS})
