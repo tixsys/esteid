@@ -6,7 +6,7 @@
 	\date		$Date: 2009-07-15 21:16:04 +0300 (Wed, 15 Jul 2009) $
 */
 // Revision $Revision: 361 $
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #include <smartcard++/SmartCardManager.h>
 #include <smartcard++/PCSCManager.h>
 #include <smartcard++/CTAPIManager.h>

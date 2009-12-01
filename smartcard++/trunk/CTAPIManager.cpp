@@ -6,7 +6,7 @@
 	\date		$Date: 2009-11-17 01:16:15 +0200 (T, 17 nov 2009) $
 */
 // Revision $Revision: 493 $
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #include <smartcard++/CTAPIManager.h>
 #include <smartcard++/helperMacro.h>
 #include <smartcard++/SCError.h> //for exceptions

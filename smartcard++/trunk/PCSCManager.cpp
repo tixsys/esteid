@@ -14,7 +14,7 @@
 #include <arpa/inet.h>
 #endif
 
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #include <smartcard++/PCSCManager.h>
 #include <smartcard++/SCError.h>
 #include <smartcard++/CardBase.h> //for exceptions

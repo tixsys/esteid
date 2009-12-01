@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 246 $
 
-#include "precompiled.h"
+#include <smartcard++/common.h>
 
 std::ostream& operator<<(std::ostream &out,const ByteVec &vec) {
   out << "[ ";

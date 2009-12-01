@@ -1,49 +1,98 @@
 cmake_minimum_required(VERSION 2.6)
-
-include_directories (../ ./ ../.. ../../src)
+project(smartcard++)
 
 if(UNIX)
-  include_directories (/usr/include/PCSC/)
+    include_directories(/usr/include/PCSC/)
 endif(UNIX)
 
-set(LIBSMARTCARD_HEADERS 
-  smartcard++.h 	CardBase.h 
-  common.h 		CTAPIManager.h 
-  DynamicLibrary.h 	helperMacro.h 
-  ManagerInterface.h 	PCSCManager.h 
-  precompiled.h 	SCError.h 
-  SmartCardManager.h 	locked_allocator.h 
-  types.h)
-            
-set(LIBSMARTCARD_SOURCES 
-  CardBase.cpp 		CTAPIManager.cpp 
-  DynamicLibrary.cpp 	PCSCManager.cpp 
-  SCError.cpp 		SmartCardManager.cpp 
-  locked_allocator.cpp 	types.cpp internal-pcsc22.h)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(LIBESTEID_HEADERS esteid/EstEidCard.h esteid/EstEidCardMaintainer.h)
-set(LIBESTEID_SOURCES esteid/EstEidCard.cpp esteid/EstEidCardMaintainer.cpp)
+set(smartcard_SRCS
+    CardBase.cpp
+    CTAPIManager.cpp
+    DynamicLibrary.cpp
+    locked_allocator.cpp
+    PCSCManager.cpp
+    SCError.cpp
+    SmartCardManager.cpp
+    types.cpp
+)
 
-set(LIBSIM_HEADERS sim/SIMCard.h)
-set(LIBSIM_SOURCES sim/SIMCard.cpp)
+set(esteid_SRCS
+    esteid/EstEidCard.cpp
+    esteid/EstEidCardMaintainer.cpp
+)
 
-add_library (sim STATIC ${LIBSIM_SOURCES} ${LIBSIM_HEADERS}) 
-add_library (esteid STATIC ${LIBESTEID_SOURCES} ${LIBESTEID_HEADERS})
+set(sim_SRCS sim/SIMCard.cpp)
+
+# Public headers which get installed into smartcard++/ directory
+set(smartcard_HDRS
+    CardBase.h
+    common.h
+    CTAPIManager.h
+    DynamicLibrary.h
+    helperMacro.h
+    internal-pcsc22.h
+    locked_allocator.h
+    ManagerInterface.h
+    PCSCManager.h
+    PinString.h
+    SCError.h
+    smartcard++.h
+    SmartCardManager.h
+    types.h
+)
+
+# Public headers which get installed into smartcard++/esteid/ directory
+set(esteid_HDRS
+    esteid/EstEidCard.h
+    esteid/EstEidCardMaintainer.h
+)
+
+# Public headers which get installed into smartcard++/sim/ directory
+set(sim_HDRS sim/SIMCard.h)
+
+set(GENERATED_HEADERS "")
+macro(stage_smartcard_headers HEADERS)
+    foreach(H ${HEADERS})
+        set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${H}")
+        set(DST "${CMAKE_CURRENT_BINARY_DIR}/smartcard++/${H}")
+
+        add_custom_command(
+            OUTPUT ${DST}
+            COMMAND ${CMAKE_COMMAND} -E copy ${SRC} ${DST}
+            DEPENDS ${SRC}
+        )
+
+        set(GENERATED_HEADERS ${GENERATED_HEADERS} ${DST})
+    endforeach(H)
+endmacro(stage_smartcard_headers)
+
+stage_smartcard_headers("${smartcard_HDRS}")
+stage_smartcard_headers("${esteid_HDRS}")
+stage_smartcard_headers("${sim_HDRS}")
 
 if(WIN32)
-  add_library (smartcard++ STATIC ${LIBSMARTCARD_SOURCES} ${LIBSMARTCARD_HEADERS}) 
-  set(WIN_LIBRARIES ws2_32)
-elseif(UNIX)
-  add_library (smartcard++ SHARED ${LIBSMARTCARD_SOURCES} ${LIBSMARTCARD_HEADERS}) 
+    set(LIB_TYPE STATIC)
+else(WIN32)
+    set(LIB_TYPE SHARED)
 endif(WIN32)
 
-target_link_libraries (smartcard++ esteid sim ${WIN_LIBRARIES})
+add_library(smartcard++ ${LIB_TYPE}
+    ${GENERATED_HEADERS}
+    ${smartcard_SRCS}
+    ${sim_SRCS}
+    ${esteid_SRCS}
+)
 
-if(UNIX)
-  target_link_libraries (smartcard++ dl)
-endif(UNIX)
+if(WIN32)
+    target_link_libraries(smartcard++ ws2_32)
+else(WIN32)
+    target_link_libraries(smartcard++ dl)
+endif(WIN32)
+
+install(TARGETS smartcard++ DESTINATION lib)
 
 add_executable(card-test test.cpp)
 target_link_libraries(card-test smartcard++)
-
-install(TARGETS smartcard++ sim esteid DESTINATION esteidutil/lib)
+install(TARGETS card-test DESTINATION bin)

@@ -3,7 +3,6 @@
 
 //This is a main header - it inludes everything else.
 
-#include "precompiled.h"
 #include <smartcard++/common.h>
 #include <smartcard++/CardBase.h>
 #include <smartcard++/DynamicLibrary.h>

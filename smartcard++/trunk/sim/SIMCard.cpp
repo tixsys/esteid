@@ -1,4 +1,4 @@
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #include <smartcard++/sim/SIMCard.h>
 
 SIMCard::SIMCard(ManagerInterface &ref) : CardBase(ref) {}

@@ -1,4 +1,4 @@
-#include "precompiled.h"
+#include <smartcard++/common.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
