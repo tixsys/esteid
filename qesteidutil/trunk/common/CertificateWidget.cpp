@@ -124,7 +124,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	s << "</p>";
 	d->info->setHtml( i );
 
-	addItem( tr("Version"), "V" + c.versionNumber() );
+	addItem( tr("Version"), "V" + c.version() );
 	addItem( tr("Serial number"), QString( "%1 (0x%2)" )
 		.arg( c.serialNumber().constData() )
 		.arg( QString::number( c.serialNumber().toInt(), 16 ) ) );

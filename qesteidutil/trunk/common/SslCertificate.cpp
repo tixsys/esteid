@@ -248,18 +248,17 @@ QString SslCertificate::policyInfo( const QString &index ) const
 	return QString();
 }
 
-QByteArray SslCertificate::serialNumber() const
-{
-	if( !handle() )
-		return QByteArray();
-	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->serialNumber )) );
-}
-
 QString SslCertificate::subjectInfoUtf8( SubjectInfo subject ) const
 { return decode( subjectInfo( subject ) ); }
 
 QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
-{ return decode( subjectInfo( tag ) ); }
+{
+#if QT_VERSION == 0x040600
+// Workaround qt bug 4.6
+	subjectInfo( CommonName );
+#endif
+	return decode( subjectInfo( tag ) );
+}
 
 QByteArray SslCertificate::subjectKeyIdentifier() const
 {
@@ -347,12 +346,23 @@ QString SslCertificate::toUtf8( const QString &in ) const
 	return res;
 }
 
+#if QT_VERSION < 0x040600
+// Workaround qt bugs < 4.6
+QByteArray SslCertificate::serialNumber() const
+{
+	if( !handle() )
+		return QByteArray();
+	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->serialNumber )) );
+}
+
 QByteArray SslCertificate::versionNumber() const
 {
 	if( !handle() )
 		return QByteArray();
 	return QByteArray::number( qlonglong(ASN1_INTEGER_get( ((X509*)handle())->cert_info->version )) + 1 );
 }
+
+#endif
 
 
 

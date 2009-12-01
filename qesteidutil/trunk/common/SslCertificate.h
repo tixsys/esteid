@@ -57,12 +57,15 @@ public:
 	QString		policyInfo( const QString &oid ) const;
 	QString		subjectInfoUtf8( SubjectInfo subject ) const;
 	QString		subjectInfoUtf8( const QByteArray &tag ) const;
-	QByteArray	serialNumber() const;
 	QByteArray	subjectKeyIdentifier() const;
 	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
 	static QDateTime	toLocalTime( const QDateTime &datetime );
 	QString		toString( const QString &format ) const;
-	QByteArray	versionNumber() const;
+
+#if QT_VERSION < 0x040600
+	QByteArray	serialNumber() const;
+	QByteArray	version() const;
+#endif
 
 private:
 	void*	getExtension( int nid ) const;
