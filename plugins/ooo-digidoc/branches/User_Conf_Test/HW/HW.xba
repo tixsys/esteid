@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="HW" script:language="StarBasic">REM  *****  BASIC  *****
+Dim Proc As Integer
+Dim oSignDialog As Object
+Dim oCertDial As Object
+Dim fileURL As String
+Dim strCerts As String
+Dim strPin As String	
+Dim strParam As String
+Dim oBar    &apos; Generated status bar
+Global strSignatureData As String
+Global strGlobMess As String
+
+&apos;****************************************************************
+Sub Main	
+&apos;	OpenFile
+	GetCert	(&quot;KALA&quot;)
+	Signing	
+
+End Sub
+
+&apos;****************************************************************
+
+Function Init
+	Dim oWarnDialog as Object
+	
+	strParam = &quot;&quot;
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oWarnDialog = CreateUnoDialog(DialogLibraries.HW.SaveFile)
+	If oWarnDialog.Execute() Then
+		Init =&quot;#&quot;
+	Else
+		Init = &quot;*&quot;
+	End If
+	oWarnDialog.dispose()
+End Function
+
+&apos;****************************************************************
+
+Function Signing
+	Dim Ctl As Object
+&apos;	Dim oSignButton As Object
+
+  Dim oCityField As Object
+  Dim oRegionField As Object
+  Dim oPostalField As Object
+  Dim oCountryField As Object
+  Dim oRoleField As Object
+  Dim oAddRoleField As Object
+  Dim strParam As String
+  
+  Dim CtlCombo As Object
+  Dim CtlComboHeader As Object
+  
+  &apos;	Dim i, j, k, c As Integer
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oSignDialog = CreateUnoDialog(DialogLibraries.HW.SignMain)
+		
+	oCityField = oSignDialog.getControl(&quot;CityField&quot;)
+	oRegionField = oSignDialog.getControl(&quot;RegionField&quot;)
+	oPostalField = oSignDialog.getControl(&quot;PostalField&quot;)
+	oCountryField = oSignDialog.getControl(&quot;CountryField&quot;)
+	oRoleField = oSignDialog.getControl(&quot;RoleField&quot;)
+	oAddRoleField = oSignDialog.getControl(&quot;AddRoleField&quot;)
+
+  CtlCombo = oSignDialog.getControl(&quot;CertComboBox&quot;)
+  CtlComboHeader = oSignDialog.getControl(&quot;CertLabel&quot;)
+  CtlComboHeader.Text = &quot;Allkirjastamise info väljad pole kohustuslikud!&quot;
+  CtlCombo.setEnable(FALSE)
+  CtlCombo.setVisible(FALSE)
+
+  oCityField.Text = &quot;&quot; 
+	oRegionField.Text = &quot;&quot;
+	oPostalField.Text = &quot;&quot;
+	oCountryField.Text = &quot;&quot;
+	oRoleField.Text = &quot;&quot;
+	oAddRoleField.Text = &quot;&quot; 
+	
+rem	Ctl.Model.SelectItem(strTemp, True) 	
+rem	Ctl.makeVisible(1)
+	
+	If oSignDialog.Execute() Then
+		strParam = oCityField.Text + &quot;#&quot; + oRegionField.Text + &quot;#&quot; + oPostalField.Text + &quot;#&quot; + oCountryField.Text + &quot;#&quot; + oRoleField.Text + &quot;#&quot; + oAddRoleField.Text + &quot;#&quot;
+	Else
+		strParam = &quot;*&quot;
+	End If
+	Signing = strParam
+&apos;	oSignDialog.dispose()	
+End Function
+
+&apos;****************************************************************
+
+
+
+&apos;****************************************************************
+
+Function CloseSigner
+	oSignDialog.endExecute()
+End Function
+
+&apos;****************************************************************
+
+Function OpenFile
+	Dim oDoc
+	Dim fileArgs(1) As New com.sun.star.beans.PropertyValue 
+	fileArgs(0).Name = &quot;OpenFlags&quot; 
+	fileArgs(0).Value = &quot;R&quot; 
+	fileArgs(1).Name = &quot;Hidden&quot; 
+	fileArgs(1).Value = False    
+rem	StarDesktop.loadComponentFromURL(fileURL, &quot;_self&quot;, 0, noArgs()) &apos;********* something SUCKS!!!
+End Function
+
+&apos;****************************************************************
+Function PIN
+
+	Dim oPINDialog As Object
+	Dim oPinField As Object
+		
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oPINDialog = CreateUnodialog(DialogLibraries.HW.PINReq)
+	oPinField = oPinDialog.GetControl(&quot;PINField&quot;) 
+	oPinField.Text = &quot;&quot;
+		
+	If oPINDialog.Execute() Then
+		&apos;Dim oSvc As Object
+		&apos;Dim Ctl As Object
+		&apos;Ctl = oSignDialog.getControl(&quot;CancelButton&quot;)
+		&apos;Ctl.Label = &quot;Exit&quot;
+rem		oSvc = createUnoService(&quot;com.sun.star.system.SystemShellExecute&quot;)	
+rem		oSvc.execute(&quot;C:/Documents and Settings/Mark/Desktop/test-bin/simplebdocapp.exe&quot;,&quot;&quot;,0)
+		rem check if pin was correct and give a message
+		
+		PIN = oPinField.Text
+rem			MsgBox &quot;Sign Success!&quot;
+rem			oSignDialog.endExecute()
+	Else 
+		PIN = &quot;*&quot;
+	End If
+	oPINDialog.dispose()	
+End Function
+
+&apos;****************************************************************
+Function GetCert (strInData As String)
+	strSignatureData = strInData
+End Function 
+
+&apos;****************************************************************
+  Function ShowSignature
+  Dim Ctl As Object
+  Dim CtlButtonY As Object
+  Dim CtlButtonN As Object
+  Dim i, j, k, c, x As Integer
+  Dim char As String
+  Dim strData as String
+
+  Proc = 0
+  i = 0
+  j = 1
+  k = 0
+
+  DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oCertDial = CreateUnoDialog(DialogLibraries.HW.Cert)
+rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
+	Ctl = oCertDial.getControl(&quot;SignerCertListBox&quot;)
+	CtlButtonY = oCertDial.getControl(&quot;SignButton&quot;)
+	CtlButtonN = oCertDial.getControl(&quot;ExitButton&quot;)
+	
+	If Instr(1, strSignatureData, &quot;*&quot;) Then
+		CtlButtonY.setEnable(FALSE)
+&apos;		CtlButtonN.setEnable(FALSE)
+		CtlButtonY.setVisible(FALSE)
+&apos;		CtlButtonN.setVisible(FALSE)
+&apos;		oCertDial.setHeight(220)
+&apos;  Else
+&apos;    CtlButtonN.setEnable(FALSE)
+&apos;    CtlButtonN.setVisible(FALSE)
+  End If
+
+  For c=1 To Len(strSignatureData)
+	k = Instr(k+1, strSignatureData, &quot;;&quot;)
+	If k then
+		strTemp = Mid(strSignatureData, j+1, (k-j-1))
+		For x=1 To Len(strTemp)
+			char = Mid(strTemp, x, 1)					
+			if Asc(char) > 127 then 
+				utf1 = Asc(char)-65280 rem - hexFF00
+				x = x+1
+				char = Mid(strTemp, x, 1)
+				utf2 = Asc(char)-65280
+				rem Convert from UTF-16 to UTF-8
+				char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+			end if	
+			strData = strData + char					 
+		Next x        
+		Ctl.AddItem(strData,i)
+		strData = ""
+		i=i+1
+		j = k			
+	End If
+	c = k
+  Next c
+
+	If oCertDial.Execute() Then
+		ShowSignature =&quot;#&quot;
+	Else
+		ShowSignature = &quot;*&quot;
+	End If
+
+	oCertDial.dispose()
+	
+End Function
+
+&apos;****************************************************************
+
+&apos;****************************************************************
+
+Function Success
+	Dim oSuccessDialog as Object
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oSuccessDialog = CreateUnoDialog(DialogLibraries.HW.Success)
+	If oSuccessDialog.Execute() Then
+		Success =&quot;#&quot;
+	Else
+		Success = &quot;*&quot;
+	End If
+	oSuccessDialog.dispose()
+End Function
+
+&apos;****************************************************************
+
+Function NoCard
+	Dim oCardDialog as Object
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oCardDialog = CreateUnoDialog(DialogLibraries.HW.NoCard)
+	If oCardDialog.Execute() Then
+		NoCard =&quot;#&quot;
+	Else
+		NoCard = &quot;*&quot;
+	End If
+	oCardDialog.dispose()
+End Function
+
+&apos;****************************************************************
+
+Function Failure
+	Dim oFailDialog as Object
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oFailDialog = CreateUnoDialog(DialogLibraries.HW.Failure)
+	If oFailDialog.Execute() Then
+		Failure =&quot;#&quot;
+	Else
+		Failure = &quot;*&quot;
+	End If
+	oFailDialog.dispose()
+End Function
+
+&apos;****************************************************************
+Function StatusBarCtrl (strMessage As String)
+  Dim oBar    &apos; Generated status bar
+  Dim oFrame  &apos; Current frame
+	
+&apos;	oBar = ThisComponent.CurrentController.StatusIndicator
+&apos;	oBar.setText(&quot;ALLKIRJASTATUD Fail!  -- faili muutmine blokeeritud!&quot;, 100)
+	
+	REM Obtain the current frame from the current controller
+	oFrame = ThisComponent.getCurrentController().getFrame() 
+	
+	REM Create a NEW status indicator 
+	oBar = oFrame.createStatusIndicator()
+	
+	REM Start using the new status bar in the lower left corner.
+	REM The original status bar will no longer be visible.
+	REM The value of 100 is an arbitrary value for use as a
+	REM progress bar if I choose to do so.
+	oBar.start(strMessage, 100)
+	
+	REM Pause the macro so that I can see the text in the lower
+	REM left corner.
+&apos;	Print &quot;Waiting&quot;
+	
+	REM Terminate this status bar, causing the original status
+	REM bar to be used instead.
+&apos;	oBar.end() 
+End Function
+
+&apos;****************************************************************
+Function EndStatusBar
+	oBar.end()
+End Function
+
+&apos;****************************************************************
+Function ContErrorFunc
+	Dim oCEDialog as Object
+
+	DialogLibraries.LoadLibrary(&quot;HW&quot;)
+	oCEDialog = CreateUnoDialog(DialogLibraries.HW.ContError)
+	If oCEDialog.Execute() Then
+		ContErrorFunc =&quot;#&quot;
+	Else
+		ContErrorFunc = &quot;*&quot;
+	End If
+	oCEDialog.dispose()
+End Function
+
+	&apos;****************************************************************
+sub test
+	StatusBarCtrl
+	EndStatusBar
+end sub
+
+&apos;****************************************************************
+Function SetGlobMess (strInData As String)
+  strGlobMess = strInData
+End Function
+
+&apos;****************************************************************
+Function GlobalMess
+  Dim oGMDial As Object
+  Dim Ctrl As Object
+  Dim x As Integer
+  Dim char As String
+  Dim strData as String
+  
+  DialogLibraries.LoadLibrary(&quot;HW&quot;)
+  oGMDial = CreateUnoDialog(DialogLibraries.HW.GlobMess)
+  Ctrl = oGMDial.getControl(&quot;MessageLabel&quot;)
+  
+  For x=1 To Len(strGlobMess)
+		char = Mid(strGlobMess, x, 1)					
+		if Asc(char) > 127 then 
+			utf1 = Asc(char)-65280 rem - hexFF00
+			x = x+1
+			char = Mid(strGlobMess, x, 1)
+			utf2 = Asc(char)-65280
+			rem Convert from UTF-16 to UTF-8
+			char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+		end if	
+		strData = strData + char					 
+	Next x
+  
+  Ctrl.setText(strData)
+  
+  If oGMDial.Execute() Then
+    GlobalMess =&quot;#&quot;
+  Else
+    GlobalMess = &quot;*&quot;
+  End If
+    oGMDial.dispose()
+  End Function
+</script:module>
