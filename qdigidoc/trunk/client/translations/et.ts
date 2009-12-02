@@ -401,7 +401,7 @@ Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
     </message>
     <message>
         <source>You can not add files to signed document. Remove all signatures before adding files.</source>
-        <translation>Allkirjastatud ümbrikule ei saa lisada faile. Eemalda kõigepealt kõigepealt ümbrikult allkirjad.</translation>
+        <translation>Allkirjastatud ümbrikule ei saa lisada faile. Eemalda kõigepealt ümbrikult allkirjad.</translation>
     </message>
 </context>
 <context>

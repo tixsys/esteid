@@ -404,7 +404,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>You can not add files to signed document. Remove all signatures before adding files.</source>
-        <translation type="unfinished"></translation>
+        <translation>К подписанному контейнеру нельзя добавить файлы. Удалите прежде с контейнера все подписи.</translation>
     </message>
 </context>
 <context>
