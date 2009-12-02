@@ -606,7 +606,7 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Tokeni login ebaõnnestus</translation>
+        <translation>Vale PIN</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>

@@ -606,7 +606,7 @@ Please check your server access sertificate.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Failed to login token</translation>
+        <translation>Wrong PIN</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>

@@ -609,7 +609,7 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation>Неудачный вход в токен</translation>
+        <translation>Неверный PIN</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
