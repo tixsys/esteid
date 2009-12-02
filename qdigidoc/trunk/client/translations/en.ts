@@ -399,6 +399,10 @@ Should I keep unsigned documents or remove these?</numerusform>
 Should I keep unsigned documents or remove these?</numerusform>
         </translation>
     </message>
+    <message>
+        <source>You can not add files to signed document. Remove all signatures before adding files.</source>
+        <translation>You can not add files to signed document. Remove all signatures before adding files.</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

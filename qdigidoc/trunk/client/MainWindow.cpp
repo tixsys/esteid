@@ -228,6 +228,14 @@ bool MainWindow::addFile( const QString &file )
 		doc->create( docname );
 	}
 
+	if( !doc->signatures().isEmpty() )
+	{
+		QMessageBox::warning( this, windowTitle(),
+			tr( "You can not add files to signed document. "
+				"Remove all signatures before adding files.") );
+		return false;
+	}
+
 	// Check if file exist and ask confirmation to overwrite
 	QList<digidoc::Document> docs = doc->documents();
 	for( int i = 0; i < docs.size(); ++i )

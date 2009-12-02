@@ -402,6 +402,10 @@ Should I keep unsigned documents or remove these?</source>
 Оставить неподписанный контейнер или стереть?</numerusform>
         </translation>
     </message>
+    <message>
+        <source>You can not add files to signed document. Remove all signatures before adding files.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
