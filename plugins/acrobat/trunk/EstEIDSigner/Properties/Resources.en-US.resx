@@ -257,7 +257,7 @@
     <value>Checking document ...</value>
   </data>
   <data name="VERIFYING_OCSP" xml:space="preserve">
-    <value>Makig OCSP request ...</value>
+    <value>Making OCSP request ...</value>
   </data>
   <data name="RESPONDER_CET_MISSING" xml:space="preserve">
     <value>Responder certificate missing: </value>
