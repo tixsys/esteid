@@ -121,7 +121,7 @@
     <value>Allkiri</value>
   </data>
   <data name="tabPage2.Text" xml:space="preserve">
-    <value>Timestamp</value>
+    <value>Ajatempel</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>Allkirja seaded (pikslites)</value>
@@ -155,7 +155,7 @@
     <value>249, 17</value>
   </data>
   <data name="EnableTSA.Text" xml:space="preserve">
-    <value>Kontrolli kas allkiri vajab timestamping</value>
+    <value>Kontrolli kas allkiri vajab ajatemplit</value>
   </data>
   <data name="label3Tab1.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 13</value>

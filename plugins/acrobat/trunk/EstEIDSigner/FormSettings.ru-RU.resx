@@ -121,10 +121,10 @@
     <value>Подпись</value>
   </data>
   <data name="tabPage2.Text" xml:space="preserve">
-    <value>Timestamp</value>
+    <value>Временной штамп</value>
   </data>
   <data name="groupBox1.Text" xml:space="preserve">
-    <value>Signature settings (in pixels)</value>
+    <value>Настройки подписи (в пикселях)</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SignatureRender.Size" type="System.Drawing.Size, System.Drawing">
@@ -155,7 +155,7 @@
     <value>249, 17</value>
   </data>
   <data name="EnableTSA.Text" xml:space="preserve">
-    <value>Проверь нужнается ли подпись в timestamping</value>
+    <value>Проверьте, нуждается ли подписть во временном штампе</value>
   </data>
   <data name="label3Tab1.Size" type="System.Drawing.Size, System.Drawing">
     <value>61, 13</value>

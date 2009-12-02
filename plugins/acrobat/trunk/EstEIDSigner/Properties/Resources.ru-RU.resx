@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CARD_TOKEN_INFO" xml:space="preserve">
-    <value>GetTokenInfo {0} failed</value>
+    <value>Ошибка {0} токена</value>
   </data>
   <data name="CERT_DONT_MATCH" xml:space="preserve">
     <value>Сертификаты не совпадают</value>
@@ -127,13 +127,13 @@
     <value>Неверный сертификат</value>
   </data>
   <data name="CARD_HASH_UPDATE" xml:space="preserve">
-    <value>Card hash update error</value>
+    <value>Ошибка обновления хэша карты</value>
   </data>
   <data name="CERT_MISSING" xml:space="preserve">
     <value>Сертификат отсутствует</value>
   </data>
   <data name="CARD_HASH_FINALIZE" xml:space="preserve">
-    <value>Card has finalize error</value>
+    <value>Ошибка завершиения хэша карты</value>
   </data>
   <data name="CERTS_MISSING" xml:space="preserve">
     <value>На смарткарте не найдено действительных сертификатов</value>
@@ -157,17 +157,17 @@
     <value>Неуспешное чтение сертификата</value>
   </data>
   <data name="CARD_HASH_INIT" xml:space="preserve">
-    <value>Card hash initialize error</value>
+    <value>Ошибка хэша карты</value>
   </data>
   <data name="TSA_ERROR" xml:space="preserve">
-    <value>Timestamp error: </value>
+    <value>Ошибка временной печати:</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CARD_INTERNAL_ERROR" xml:space="preserve">
-    <value>Smartcard error</value>
+    <value>Ошибка карты</value>
   </data>
   <data name="NO_PIN_SUPPLIED" xml:space="preserve">
     <value>Пустой PIN</value>
@@ -251,7 +251,7 @@
     <value>Подписывание прервано:</value>
   </data>
   <data name="TSA_REQUEST" xml:space="preserve">
-    <value>Making timestamp request ...</value>
+    <value>Делаю запрос на временную печать ...</value>
   </data>
   <data name="VERIFYING_DOCUMENT" xml:space="preserve">
     <value>Проверяю документ ...</value>
@@ -263,13 +263,13 @@
     <value>Сертификат ответчика отсутствует:</value>
   </data>
   <data name="ISSUER_CERT_MISSING" xml:space="preserve">
-    <value>Issuer certificate missing: </value>
+    <value>Отсутствует сертификат издателя:</value>
   </data>
   <data name="UI_CERT_ISSUED_BY" xml:space="preserve">
     <value>Издатель</value>
   </data>
   <data name="UI_CERT_ISSUED_TO" xml:space="preserve">
-    <value>Issued to</value>
+    <value>Изданно</value>
   </data>
   <data name="UI_CERT_VALID_UNTIL" xml:space="preserve">
     <value>Действителен до</value>
@@ -353,7 +353,7 @@
     <value>Выход:</value>
   </data>
   <data name="UI_PDF_METADATA" xml:space="preserve">
-    <value>PDF Metadata</value>
+    <value>PDF Мета-данные</value>
   </data>
   <data name="UI_SETTINGS_LINK" xml:space="preserve">
     <value>Настройки</value>
