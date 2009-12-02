@@ -56,7 +56,6 @@ int main( int argc, char *argv[] )
 	p.setBrush( QPalette::LinkVisited, QBrush( "#509B00" ) );
 	a.setPalette( p );
 
-	int ret = 0;
 	QStringList args = a.arguments();
 	QWidget *w;
 	QStringList exts = QStringList() << "p12" << "p12d";
@@ -73,7 +72,7 @@ int main( int argc, char *argv[] )
 	}
 
 	w->show();
-	ret = a.exec();
+	int ret = a.exec();
 	delete w;
 	return ret;
 }

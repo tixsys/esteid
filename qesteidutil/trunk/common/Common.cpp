@@ -110,14 +110,14 @@ void Common::mailTo( const QUrl &url )
 	doc[0].ulReserved = 0;
 	doc[0].flFlags = 0;
 	doc[0].nPosition = -1;
-	doc[0].lpszPathName = filePath.constData();
-	doc[0].lpszFileName = fileName.constData();
+	doc[0].lpszPathName = (char*)filePath.constData();
+	doc[0].lpszFileName = (char*)fileName.constData();
 	doc[0].lpFileType = NULL;
 
 	// Create message
 	MapiMessage message;
 	message.ulReserved = 0;
-	message.lpszSubject = subject.constData();
+	message.lpszSubject = (char*)subject.constData();
 	message.lpszNoteText = "";
 	message.lpszMessageType = NULL;
 	message.lpszDateReceived = NULL;
