@@ -117,30 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="tabPage1.Text" xml:space="preserve">
-    <value>Подпись</value>
-  </data>
-  <data name="tabPage2.Text" xml:space="preserve">
-    <value>Временной штамп</value>
-  </data>
-  <data name="groupBox1.Text" xml:space="preserve">
-    <value>Настройки подписи (в пикселях)</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SignatureRender.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 17</value>
+    <value>170, 17</value>
   </data>
   <data name="SignatureRender.Text" xml:space="preserve">
     <value>Добавить имя к подписи</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 17</value>
+    <value>64, 17</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Страница</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 17</value>
+    <value>53, 17</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Ширина</value>
@@ -151,23 +142,32 @@
   <data name="label5.Text" xml:space="preserve">
     <value>Длина</value>
   </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>Настройки подписи (в пикселях)</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Подпись</value>
+  </data>
   <data name="EnableTSA.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 17</value>
+    <value>297, 17</value>
   </data>
   <data name="EnableTSA.Text" xml:space="preserve">
-    <value>Проверьте, нуждается ли подписть во временном штампе</value>
+    <value>Нуждается ли подписть во временном штампе</value>
   </data>
   <data name="label3Tab1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 13</value>
+    <value>50, 13</value>
   </data>
   <data name="label3Tab1.Text" xml:space="preserve">
     <value>Пароль</value>
   </data>
   <data name="label2Tab1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 13</value>
+    <value>29, 13</value>
   </data>
   <data name="label2Tab1.Text" xml:space="preserve">
     <value>Имя</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Временной штамп</value>
   </data>
   <data name="buttonClose.Text" xml:space="preserve">
     <value>Закрыть</value>

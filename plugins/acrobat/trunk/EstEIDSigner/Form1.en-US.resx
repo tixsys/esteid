@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="linkSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>423, 16</value>
+    <value>419, 16</value>
   </data>
   <data name="linkSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>55, 18</value>
   </data>
   <data name="linkSettings.Text" xml:space="preserve">
     <value>Settings</value>
@@ -134,8 +134,11 @@
   <data name="linkHelp.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>0, 4</value>
   </data>
+  <data name="linkHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>496, 16</value>
+  </data>
   <data name="linkHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>32, 18</value>
   </data>
   <data name="linkHelp.Text" xml:space="preserve">
     <value>Help</value>
@@ -151,9 +154,6 @@
   </data>
   <data name="linkInput.Text" xml:space="preserve">
     <value>Choose input</value>
-  </data>
-  <data name="statusBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 30</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>48, 13</value>
@@ -185,6 +185,9 @@
   <data name="label11.Text" xml:space="preserve">
     <value>Software:</value>
   </data>
+  <data name="authorBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 10</value>
+  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
   </data>
@@ -203,11 +206,17 @@
   <data name="label7.Text" xml:space="preserve">
     <value>Title:</value>
   </data>
+  <data name="subjectBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 50</value>
+  </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 13</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Keywords:</value>
+  </data>
+  <data name="kwBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 70</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 13</value>
@@ -215,17 +224,44 @@
   <data name="label8.Text" xml:space="preserve">
     <value>Subject:</value>
   </data>
+  <data name="titleBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 30</value>
+  </data>
+  <data name="creatorBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 90</value>
+  </data>
+  <data name="prodBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 110</value>
+  </data>
   <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 18</value>
   </data>
   <data name="label15.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Locationtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 63</value>
+  </data>
+  <data name="Locationtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
+  <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 38</value>
+  </data>
+  <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>Description</value>
+  </data>
+  <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 13</value>
+  </data>
+  <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 13</value>
@@ -238,6 +274,9 @@
   </data>
   <data name="label14.Text" xml:space="preserve">
     <value>Location</value>
+  </data>
+  <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 88</value>
   </data>
   <data name="SigVisible.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -416,8 +455,5 @@
         AAAABwAAAAAAAAAHAAAAAAAAAA8AAIAAAAAAHwAAgAAAAAAfAADwAAAAAD8AAP///////wAA////////
         AAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
   </data>
 </root>

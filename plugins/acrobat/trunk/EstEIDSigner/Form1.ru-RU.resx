@@ -123,10 +123,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="linkSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>423, 16</value>
+    <value>406, 16</value>
   </data>
   <data name="linkSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>71, 18</value>
   </data>
   <data name="linkSettings.Text" xml:space="preserve">
     <value>Настройки</value>
@@ -134,35 +134,35 @@
   <data name="linkHelp.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>0, 4</value>
   </data>
+  <data name="linkHelp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>493, 16</value>
+  </data>
   <data name="linkHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>56, 18</value>
   </data>
   <data name="linkHelp.Text" xml:space="preserve">
     <value>Помощь</value>
   </data>
   <data name="linkOutput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 13</value>
+    <value>106, 13</value>
   </data>
   <data name="linkOutput.Text" xml:space="preserve">
     <value>Выберите выход</value>
   </data>
   <data name="linkInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 13</value>
+    <value>97, 13</value>
   </data>
   <data name="linkInput.Text" xml:space="preserve">
     <value>Выберите вход</value>
   </data>
-  <data name="statusBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 30</value>
-  </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
+    <value>51, 13</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>Статус:</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 13</value>
+    <value>51, 13</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>Выход:</value>
@@ -180,73 +180,130 @@
     <value>PDF Документ</value>
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 13</value>
+    <value>168, 13</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
     <value>Программное обеспечение:</value>
   </data>
+  <data name="authorBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 10</value>
+  </data>
+  <data name="authorBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 13</value>
+    <value>46, 13</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>Автор:</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 13</value>
+    <value>75, 13</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>Создатель:</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
+    <value>73, 13</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>Заголовок:</value>
   </data>
+  <data name="subjectBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 50</value>
+  </data>
+  <data name="subjectBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
+    <value>112, 13</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
     <value>Ключевые слова:</value>
   </data>
+  <data name="kwBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 70</value>
+  </data>
+  <data name="kwBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+    <value>62, 13</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>Субъект:</value>
   </data>
+  <data name="titleBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 30</value>
+  </data>
+  <data name="titleBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
+  <data name="creatorBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 90</value>
+  </data>
+  <data name="creatorBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
+  <data name="prodBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>187, 110</value>
+  </data>
+  <data name="prodBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 18</value>
+  </data>
   <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 18</value>
+    <value>29, 18</value>
   </data>
   <data name="label15.Text" xml:space="preserve">
     <value>Имя</value>
   </data>
+  <data name="Locationtext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 63</value>
+  </data>
+  <data name="Locationtext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
+  <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 38</value>
+  </data>
+  <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 18</value>
+    <value>70, 18</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>Пояснение</value>
   </data>
+  <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 13</value>
+  </data>
+  <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>96, 13</value>
+    <value>126, 13</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>PDF Мета-данные</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 18</value>
+    <value>69, 25</value>
   </data>
   <data name="label14.Text" xml:space="preserve">
     <value>Местонахождение</value>
   </data>
+  <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 88</value>
+  </data>
   <data name="SigVisible.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>193, 22</value>
   </data>
   <data name="SigVisible.Text" xml:space="preserve">
     <value>Требуется видимая подпись</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 13</value>
+    <value>63, 13</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
     <value>Подпись</value>
@@ -416,8 +473,5 @@
         AAAABwAAAAAAAAAHAAAAAAAAAA8AAIAAAAAAHwAAgAAAAAAfAADwAAAAAD8AAP///////wAA////////
         AAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
   </data>
 </root>

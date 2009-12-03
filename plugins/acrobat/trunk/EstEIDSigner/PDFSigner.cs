@@ -372,6 +372,9 @@ namespace EstEIDSigner
                 string label = info.Label;
                 pin = ReadPin(label, (int)info.MinPin, (int)info.MaxPin);
                 
+                // redraw window: single-threaded UI
+                Application.DoEvents();
+
                 // user requested Cancel ?
                 if (pin == null)
                     throw new CancelException(Resources.ACTION_CANCELED);
@@ -704,9 +707,9 @@ namespace EstEIDSigner
                 sap.SetVisibleSignature(appearance.Rectangle, (int)appearance.Page, null);
             sap.SignDate = DateTime.Now;
             sap.SetCrypto(null, chain, null, null);
-            sap.Reason = appearance.Reason;
-            sap.Location = appearance.Location;
-            sap.Contact = appearance.Contact;
+            sap.Reason = (appearance.Reason.Length > 0) ? appearance.Reason : null;
+            sap.Location = (appearance.Location.Length > 0) ? appearance.Location : null;
+            sap.Contact = (appearance.Contact.Length > 0) ? appearance.Contact : null;
             sap.Acro6Layers = true;
             sap.Render = appearance.SignatureRender;
             PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_SHA1);

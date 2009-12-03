@@ -323,19 +323,26 @@ namespace EstEIDSigner
         {
             CultureInfo culture;
 
+            // the following culture based update is needed
+            // because MONO 2.4 has issues using some C# classes
+            // while changing culture on-the-fly
+
             switch (comboIndex)
             {
                 case 1:
                     culture = new CultureInfo("en-US");
-                    linkSettings.Location = new Point(422, 16);
+                    linkSettings.Location = new Point(419, 16);
+                    linkHelp.Location = new Point(496, 16);
                     break;
                 case 2:
                     culture = new CultureInfo("ru-RU");
-                    linkSettings.Location = new Point(430, 16);
+                    linkSettings.Location = new Point(406, 16);
+                    linkHelp.Location = new Point(493, 16);
                     break;
                 default:
                     culture = new CultureInfo(string.Empty);
-                    linkSettings.Location = new Point(430, 16);
+                    linkSettings.Location = new Point(424, 16);
+                    linkHelp.Location = new Point(495, 16);
                     break;
             }
 
@@ -344,6 +351,7 @@ namespace EstEIDSigner
             Resources.Culture = culture;
 
             config.AddOrReplace("language", culture.Name);
+            statusBox.Text = "";
 
             // PDF Document box
             label1.Text = Resources.UI_PDF_DOC;
@@ -374,8 +382,10 @@ namespace EstEIDSigner
 
             // Other fields
             signButton.Text = Resources.UI_SIGN_BUTTON;
-            linkSettings.Text = Resources.UI_SETTINGS_LINK;            
+            linkSettings.Text = Resources.UI_SETTINGS_LINK;
+            linkSettings.LinkArea = new LinkArea(0, linkSettings.Text.Length);
             linkHelp.Text = Resources.UI_HELP_LINK;
+            linkHelp.LinkArea = new LinkArea(0, linkHelp.Text.Length);
         }
 
         private void SigVisible_CheckedChanged(object sender, EventArgs e)

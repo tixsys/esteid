@@ -118,53 +118,53 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Ok.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="buttonSelect.Location" type="System.Drawing.Point, System.Drawing">
     <value>366, 178</value>
   </data>
-  <data name="Ok.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="buttonSelect.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Ok.TabIndex" type="System.Int32, mscorlib">
+  <data name="buttonSelect.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="Ok.Text" xml:space="preserve">
+  <data name="buttonSelect.Text" xml:space="preserve">
     <value>Vali</value>
   </data>
-  <data name="&gt;&gt;Ok.Name" xml:space="preserve">
-    <value>Ok</value>
+  <data name="&gt;&gt;buttonSelect.Name" xml:space="preserve">
+    <value>buttonSelect</value>
   </data>
-  <data name="&gt;&gt;Ok.Type" xml:space="preserve">
+  <data name="&gt;&gt;buttonSelect.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Ok.Parent" xml:space="preserve">
+  <data name="&gt;&gt;buttonSelect.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Ok.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;buttonSelect.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="Cancel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
     <value>447, 178</value>
   </data>
-  <data name="Cancel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
-  <data name="Cancel.TabIndex" type="System.Int32, mscorlib">
+  <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="Cancel.Text" xml:space="preserve">
+  <data name="buttonCancel.Text" xml:space="preserve">
     <value>Katkesta</value>
   </data>
-  <data name="&gt;&gt;Cancel.Name" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
+    <value>buttonCancel</value>
   </data>
-  <data name="&gt;&gt;Cancel.Type" xml:space="preserve">
+  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Cancel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;buttonCancel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;Cancel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="Message.AutoSize" type="System.Boolean, mscorlib">
@@ -389,12 +389,6 @@
         AAAABwAAAAAAAAAHAAAAAAAAAA8AAIAAAAAAHwAAgAAAAAAfAADwAAAAAD8AAP///////wAA////////
         AAA=
 </value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>540, 239</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>540, 239</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>FormSelectCertificate</value>

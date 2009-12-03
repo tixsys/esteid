@@ -119,6 +119,7 @@
             this.linkSettings.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
             this.linkSettings.Name = "linkSettings";
             this.linkSettings.TabStop = true;
+            this.linkSettings.UseCompatibleTextRendering = true;
             this.linkSettings.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSettings_LinkClicked);
             // 
             // linkHelp
@@ -130,13 +131,14 @@
             this.linkHelp.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
             this.linkHelp.Name = "linkHelp";
             this.linkHelp.TabStop = true;
+            this.linkHelp.UseCompatibleTextRendering = true;
             this.linkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkHelp_LinkClicked);
             // 
             // signButton
             // 
+            resources.ApplyResources(this.signButton, "signButton");
             this.signButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
             this.signButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
-            resources.ApplyResources(this.signButton, "signButton");
             this.signButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.signButton.Name = "signButton";
             this.signButton.UseVisualStyleBackColor = false;
@@ -359,7 +361,8 @@
             this.comboLanguage.FormattingEnabled = true;
             this.comboLanguage.Items.AddRange(new object[] {
             resources.GetString("comboLanguage.Items"),
-            resources.GetString("comboLanguage.Items1")});
+            resources.GetString("comboLanguage.Items1"),
+            resources.GetString("comboLanguage.Items2")});
             resources.ApplyResources(this.comboLanguage, "comboLanguage");
             this.comboLanguage.Name = "comboLanguage";
             this.comboLanguage.SelectedIndexChanged += new System.EventHandler(this.comboLanguage_SelectedIndexChanged);

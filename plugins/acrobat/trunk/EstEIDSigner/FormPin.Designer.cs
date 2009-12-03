@@ -75,10 +75,10 @@
             this.CancelButton = this.buttonCancel;
             this.Controls.Add(this.labelExtra);
             this.Controls.Add(this.labelTitle);
-            this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxPin);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Controls.Add(this.buttonOk);
+            this.Controls.Add(this.buttonCancel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormPin";

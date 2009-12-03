@@ -163,10 +163,10 @@
     <value>0, 6</value>
   </data>
   <data name="linkSettings.Location" type="System.Drawing.Point, System.Drawing">
-    <value>428, 16</value>
+    <value>426, 16</value>
   </data>
   <data name="linkSettings.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+    <value>49, 18</value>
   </data>
   <data name="linkSettings.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
@@ -199,10 +199,10 @@
     <value>0, 3</value>
   </data>
   <data name="linkHelp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>507, 16</value>
+    <value>495, 16</value>
   </data>
   <data name="linkHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>28, 13</value>
+    <value>24, 18</value>
   </data>
   <data name="linkHelp.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
@@ -222,6 +222,9 @@
   <data name="&gt;&gt;linkHelp.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
+  <data name="signButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="signButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Popup</value>
   </data>
@@ -232,7 +235,7 @@
     <value>329, 244</value>
   </data>
   <data name="signButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 23</value>
+    <value>165, 23</value>
   </data>
   <data name="signButton.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
@@ -244,7 +247,7 @@
     <value>signButton</value>
   </data>
   <data name="&gt;&gt;signButton.Type" xml:space="preserve">
-    <value>EstEIDSigner.Form1+DisabledSignButton, EstEIDSigner, Version=1.0.0.6, Culture=neutral, PublicKeyToken=null</value>
+    <value>EstEIDSigner.Form1+DisabledSignButton, EstEIDSigner, Version=1.0.0.8, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;signButton.Parent" xml:space="preserve">
     <value>$this</value>
@@ -262,7 +265,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelSeparator1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>489, 13</value>
+    <value>480, 13</value>
   </data>
   <data name="labelSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 17</value>
@@ -580,7 +583,7 @@
     <value>NoControl</value>
   </data>
   <data name="authorBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 10</value>
+    <value>93, 10</value>
   </data>
   <data name="authorBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 18</value>
@@ -706,7 +709,7 @@
     <value>NoControl</value>
   </data>
   <data name="subjectBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 50</value>
+    <value>93, 50</value>
   </data>
   <data name="subjectBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 18</value>
@@ -766,7 +769,7 @@
     <value>NoControl</value>
   </data>
   <data name="kwBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 70</value>
+    <value>93, 70</value>
   </data>
   <data name="kwBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>186, 18</value>
@@ -826,7 +829,7 @@
     <value>NoControl</value>
   </data>
   <data name="titleBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 30</value>
+    <value>93, 30</value>
   </data>
   <data name="titleBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 18</value>
@@ -853,7 +856,7 @@
     <value>NoControl</value>
   </data>
   <data name="creatorBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 90</value>
+    <value>93, 90</value>
   </data>
   <data name="creatorBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 18</value>
@@ -880,7 +883,7 @@
     <value>NoControl</value>
   </data>
   <data name="prodBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 110</value>
+    <value>93, 110</value>
   </data>
   <data name="prodBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 18</value>
@@ -937,13 +940,13 @@
     <value>3</value>
   </data>
   <data name="Locationtext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 63</value>
+    <value>93, 63</value>
   </data>
   <data name="Locationtext.MaxLength" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
   <data name="Locationtext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 21</value>
+    <value>194, 21</value>
   </data>
   <data name="Locationtext.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -961,13 +964,13 @@
     <value>0</value>
   </data>
   <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 38</value>
+    <value>93, 38</value>
   </data>
   <data name="Contacttext.MaxLength" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
   <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 21</value>
+    <value>194, 21</value>
   </data>
   <data name="Contacttext.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1021,13 +1024,13 @@
     <value>4</value>
   </data>
   <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 13</value>
+    <value>93, 13</value>
   </data>
   <data name="Reasontext.MaxLength" type="System.Int32, mscorlib">
     <value>64</value>
   </data>
   <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 21</value>
+    <value>194, 21</value>
   </data>
   <data name="Reasontext.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1060,7 +1063,7 @@
     <value>6</value>
   </data>
   <data name="tablePanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>300, 141</value>
+    <value>302, 142</value>
   </data>
   <data name="tablePanel2.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
@@ -1078,7 +1081,7 @@
     <value>4</value>
   </data>
   <data name="tablePanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="prodBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="creatorBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="authorBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="kwBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="subjectBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="titleBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,29,4964,Percent,70,50359" /&gt;&lt;Rows Styles="Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="prodBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label6" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="creatorBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="authorBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="kwBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="subjectBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="titleBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,Percent,100" /&gt;&lt;Rows Styles="Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1162,7 +1165,7 @@
     <value>NoControl</value>
   </data>
   <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
-    <value>89, 88</value>
+    <value>93, 88</value>
   </data>
   <data name="SigVisible.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 5, 0, 0</value>
@@ -1216,7 +1219,7 @@
     <value>2</value>
   </data>
   <data name="tablePanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="Locationtext" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="Reasontext" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="Contacttext" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label15" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label13" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label14" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SigVisible" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,27,33564,Percent,72,66436" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,25" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="Locationtext" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="Reasontext" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="Contacttext" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label15" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label13" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label14" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SigVisible" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,28,57143,Percent,71,42857" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,25" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1256,6 +1259,9 @@
   </data>
   <data name="comboLanguage.Items1" xml:space="preserve">
     <value>English</value>
+  </data>
+  <data name="comboLanguage.Items2" xml:space="preserve">
+    <value>Russian</value>
   </data>
   <data name="comboLanguage.Location" type="System.Drawing.Point, System.Drawing">
     <value>556, 12</value>

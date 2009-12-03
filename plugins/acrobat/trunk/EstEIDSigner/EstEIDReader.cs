@@ -257,6 +257,11 @@ namespace EstEIDNative
             get { return ((tokenInfo.flags & CKF_USER_PIN_INITIALIZED) != 0); }
         }
 
+        public bool PinPadPresent
+        {
+            get { return ((tokenInfo.flags & CKF_PROTECTED_AUTHENTICATION_PATH) != 0); }
+        }
+
         public uint Flags
         {
             get { return (tokenInfo.flags); }

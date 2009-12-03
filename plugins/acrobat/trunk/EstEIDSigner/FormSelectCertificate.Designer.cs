@@ -29,26 +29,26 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectCertificate));
-            this.Ok = new System.Windows.Forms.Button();
-            this.Cancel = new System.Windows.Forms.Button();
+            this.buttonSelect = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.Message = new System.Windows.Forms.Label();
             this.listCertificates = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
-            // Ok
+            // buttonSelect
             // 
-            this.Ok.DialogResult = System.Windows.Forms.DialogResult.OK;
-            resources.ApplyResources(this.Ok, "Ok");
-            this.Ok.Name = "Ok";
-            this.Ok.UseVisualStyleBackColor = true;
-            this.Ok.Click += new System.EventHandler(this.Ok_Click);
+            this.buttonSelect.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.buttonSelect, "buttonSelect");
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.Click += new System.EventHandler(this.Ok_Click);
             // 
-            // Cancel
+            // buttonCancel
             // 
-            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            resources.ApplyResources(this.Cancel, "Cancel");
-            this.Cancel.Name = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.buttonCancel, "buttonCancel");
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // Message
             // 
@@ -66,15 +66,15 @@
             // 
             // FormSelectCertificate
             // 
-            this.AcceptButton = this.Ok;
+            this.AcceptButton = this.buttonSelect;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.Cancel;
+            this.CancelButton = this.buttonCancel;
             this.Controls.Add(this.listCertificates);
             this.Controls.Add(this.Message);
-            this.Controls.Add(this.Cancel);
-            this.Controls.Add(this.Ok);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonSelect);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSelectCertificate";
@@ -85,8 +85,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Ok;
-        private System.Windows.Forms.Button Cancel;
+        private System.Windows.Forms.Button buttonSelect;
+        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label Message;
         private System.Windows.Forms.ListView listCertificates;
     }

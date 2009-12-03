@@ -59,7 +59,7 @@ namespace EstEIDSigner
             
             listCertificates.Columns.AddRange(head);
 
-            this.Ok.Enabled = false;
+            this.buttonSelect.Enabled = false;
         }
 
         public int Add(string issuedTo, string issudeBy, string validUntil)
@@ -92,7 +92,7 @@ namespace EstEIDSigner
 
         private void listCertificates_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Ok.Enabled = (listCertificates.SelectedItems.Count > 0);
+            this.buttonSelect.Enabled = (listCertificates.SelectedItems.Count > 0);
         }
 
         private void listCertificates_DoubleClick(object sender, EventArgs e)
