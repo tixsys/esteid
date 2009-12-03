@@ -188,10 +188,10 @@
   &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
   &lt;add key="language" value="" /&gt;
   &lt;add key="signature_page" value="1" /&gt;
-  &lt;add key="signature_x" value="100" /&gt;
+  &lt;add key="signature_x" value="200" /&gt;
   &lt;add key="signature_y" value="100" /&gt;
   &lt;add key="signature_w" value="400" /&gt;
-  &lt;add key="signature_h" value="200" /&gt;
+  &lt;add key="signature_h" value="150" /&gt;
   &lt;add key="signature_render" value="0" /&gt;
  &lt;/appSettings&gt;
 &lt;/configuration&gt;</value>

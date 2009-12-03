@@ -188,10 +188,10 @@
   &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
   &lt;add key="language" value="" /&gt;
   &lt;add key="signature_page" value="1" /&gt;
-  &lt;add key="signature_x" value="100" /&gt;
+  &lt;add key="signature_x" value="200" /&gt;
   &lt;add key="signature_y" value="100" /&gt;
   &lt;add key="signature_w" value="400" /&gt;
-  &lt;add key="signature_h" value="200" /&gt;
+  &lt;add key="signature_h" value="150" /&gt;
   &lt;add key="signature_render" value="0" /&gt;
  &lt;/appSettings&gt;
 &lt;/configuration&gt;</value>
@@ -215,7 +215,7 @@
     <value>Ошибка</value>
   </data>
   <data name="GENERAL_EXCEPTION" xml:space="preserve">
-    <value>Failure ...</value>
+    <value>Ошибка ...</value>
   </data>
   <data name="UI_INPUT_FILEDIALOG_FILTER" xml:space="preserve">
     <value>PDF файлы (*.pdf)|*.pdf</value>
@@ -242,13 +242,13 @@
     <value>PKCS#12 variables read failure: </value>
   </data>
   <data name="READ_CERTS" xml:space="preserve">
-    <value>Считываю сертификаты...</value>
+    <value>Считываю сертификаты ...</value>
   </data>
   <data name="READ_SETTINGS" xml:space="preserve">
-    <value>Считываю настройки...</value>
+    <value>Считываю настройки ...</value>
   </data>
   <data name="SIGNING_CANCELED" xml:space="preserve">
-    <value>Подписывание прервано:</value>
+    <value>Подписывание прервано ...</value>
   </data>
   <data name="TSA_REQUEST" xml:space="preserve">
     <value>Делаю запрос на временную печать ...</value>
