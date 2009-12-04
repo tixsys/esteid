@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Server access certificate is required</source>
-        <translation>Ligipääsutõend on vajalik</translation>
+        <translation>Juurdepääsutõend on vajalik</translation>
     </message>
 </context>
 <context>
@@ -292,22 +292,22 @@ Digitaalallkirja andmiseks on vajalik internetiühendus.&lt;/p&gt;
     </message>
     <message>
         <source>Server access certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>Juurdepääsutõend</translation>
     </message>
     <message>
         <source>Did not find any server access certificate!
 Start downloading?</source>
-        <translation>Puudub ligipääsutõend!
+        <translation>Puudub juurdepääsutõend!
 Alustame laadimist?</translation>
     </message>
     <message>
         <source>Error parsing server access certificate result!</source>
-        <translation>Viga ligipääsutõendi lugemisel!</translation>
+        <translation>Viga juurdepääsutõendi lugemisel!</translation>
     </message>
     <message>
         <source>Error downloading server access certificate!
 %1</source>
-        <translation>Viga ligipääsutõendi laadimisel!
+        <translation>Viga juurdepääsutõendi laadimisel!
 %1</translation>
     </message>
     <message>
@@ -321,7 +321,7 @@ Alustame laadimist?</translation>
     <message>
         <source>Failed to save server access certificate file to %1!
 %2</source>
-        <translation>Viga ligipääsutõendi salvestamisel %1!
+        <translation>Viga juurdepääsutõendi salvestamisel %1!
 %2</translation>
     </message>
     <message>
@@ -338,7 +338,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>Error reading server access certificate - empty content!</source>
-        <translation>Viga ligipääsutõendi lugemisel - sisu on tühi!</translation>
+        <translation>Viga juurdepääsutõendi lugemisel - sisu on tühi!</translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
@@ -363,24 +363,24 @@ Alustame laadimist?</translation>
     <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
-        <translation>Ligipääsutõend ei ole kehtiv!
+        <translation>igipääsutõend ei ole kehtiv!
 Alustame laadimist?</translation>
     </message>
     <message>
         <source>Server access certificate is about to expire!
 Start downloading?</source>
-        <translation>Ligipääsutõend aegub varsti!
+        <translation>pääsutõend aegub varsti!
 Alustame laadimist?</translation>
     </message>
     <message>
         <source>Failed to read server access certificate!
 Start downloading?</source>
-        <translation>Ei õnnestunud liigipääsutõendit laadida!
+        <translation>Ei õnnestunud juurdepääsutõendit laadida!
 Alustame laadimist?</translation>
     </message>
     <message>
         <source>Server access certificate password is not valid!</source>
-        <translation>Ligipääsutõendi parool on vale!</translation>
+        <translation>Juurdepääsutõendi parool on vale!</translation>
     </message>
     <message numerus="yes">
         <source>Signature(s)</source>
@@ -487,8 +487,8 @@ Palun kontrollige internetiühendust.</translation>
     <message>
         <source>Not allowed to use OCSP service!
 Please check your server access sertificate.</source>
-        <translation>Puudub ligipääs OCSP teenusele!
-Palun kontrollige ligipääsutõendi olemasolu.</translation>
+        <translation>Puudub juurdepääs OCSP teenusele!
+Palun kontrollige juurdepääsutõendi olemasolu.</translation>
     </message>
 </context>
 <context>
@@ -645,11 +645,11 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate installer</source>
-        <translation>Ligipääsutõendi paigaldamine</translation>
+        <translation>Juurdepääsutõendi paigaldamine</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>Juurdepääsutõend</translation>
     </message>
     <message>
         <source>Password</source>
@@ -750,7 +750,7 @@ Palun kontrollige ligipääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>OCSP PKCS#12 certificate</source>
-        <translation>Ligipääsutõend</translation>
+        <translation>Juurdepääsutõend</translation>
     </message>
     <message>
         <source>Certificate</source>

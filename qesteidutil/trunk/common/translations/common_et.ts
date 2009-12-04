@@ -109,7 +109,7 @@
     </message>
     <message>
         <source>Authority key identifier</source>
-        <translation>Ligipääsutõendi identifikaator</translation>
+        <translation>Juurdepääsutõendi identifikaator</translation>
     </message>
     <message>
         <source>Subject key identifier</source>
