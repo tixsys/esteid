@@ -363,7 +363,7 @@ Alustame laadimist?</translation>
     <message>
         <source>Server access certificate is not valid!
 Start downloading?</source>
-        <translation>igipääsutõend ei ole kehtiv!
+        <translation>Juurdepääsutõend ei ole kehtiv!
 Alustame laadimist?</translation>
     </message>
     <message>
