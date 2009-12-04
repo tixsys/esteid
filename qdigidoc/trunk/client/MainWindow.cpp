@@ -81,7 +81,9 @@ MainWindow::MainWindow( QWidget *parent )
 
 	Settings s;
 	// Mobile
+#ifndef Q_OS_WIN32
 #warning revert before release
+#endif
 	//disabled for testing
 	//infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
 	infoMobileCode->setText( s.value( "Client/MobileCode" ).toString() );
