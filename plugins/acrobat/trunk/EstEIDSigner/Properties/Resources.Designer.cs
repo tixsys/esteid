@@ -620,6 +620,15 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sisesta {0} PINPAD&apos;ilt.
+        /// </summary>
+        internal static string UI_ENTER_PIN_ONTHE_PINPAD {
+            get {
+                return ResourceManager.GetString("UI_ENTER_PIN_ONTHE_PINPAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PIN on kehtetu.
         /// </summary>
         internal static string UI_EXPIRED_PIN {

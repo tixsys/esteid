@@ -406,4 +406,7 @@
   <data name="DOC_VERIFY_FAILURE" xml:space="preserve">
     <value>Неудачная идентификация подписи</value>
   </data>
+  <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
+    <value>Enter {0} from PINPAD</value>
+  </data>
 </root>

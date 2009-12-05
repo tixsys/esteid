@@ -406,4 +406,7 @@
   <data name="DOC_VERIFY_FAILURE" xml:space="preserve">
     <value>Allkirja kontroll ebaõnnestus</value>
   </data>
+  <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
+    <value>Sisesta {0} PINPAD'ilt</value>
+  </data>
 </root>
