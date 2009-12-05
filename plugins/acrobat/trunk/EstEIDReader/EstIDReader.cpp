@@ -161,6 +161,15 @@ CK_RV EstEIDReader::GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info)
     return( rv );
 }
 
+CK_RV EstEIDReader::GetSlotInfo(ulong slot, CK_SLOT_INFO_PTR info)
+{
+    CK_RV rv;
+
+    rv = m_p11->C_GetSlotInfo( m_slots[slot], info );
+
+    return( rv );
+}
+
 CK_RV EstEIDReader::FindObject(CK_SESSION_HANDLE sess, 
                              CK_OBJECT_CLASS cls, 
                              CK_OBJECT_HANDLE_PTR ret,
@@ -242,14 +251,13 @@ CK_RV EstEIDReader::Sign(ulong slot, const char *pin,
     CK_SESSION_HANDLE session = CK_INVALID_HANDLE;
     CK_OBJECT_HANDLE key = CK_INVALID_HANDLE, cert = CK_INVALID_HANDLE;    
     
-    int flags = CKF_SERIAL_SESSION;
-    flags |= CKF_RW_SESSION;
-    
+    int flags = CKF_SERIAL_SESSION | (pin ? CKF_RW_SESSION : 0);
+        
     rv = m_p11->C_OpenSession( m_slots[slot], flags, NULL, NULL, &session );
     if( rv != CKR_OK )
         return( rv );
 
-    rv = m_p11->C_Login( session, CKU_USER, (CK_UTF8CHAR *) pin, pin == NULL ? 0 : strlen(pin) );
+    rv = m_p11->C_Login( session, CKU_USER, (CK_UTF8CHAR *) pin, pin == NULL ? 0 : strlen(pin) );    
     if( rv != CKR_OK )
     {
         m_p11->C_CloseSession( session );        
