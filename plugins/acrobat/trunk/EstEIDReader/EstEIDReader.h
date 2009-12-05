@@ -17,7 +17,8 @@ public:
     int Disconnect();
     CK_RV GetSlotCount(int token_present);
     CK_RV IsMechanismSupported(ulong slot, ulong flag);
-    CK_RV GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info);    
+    CK_RV GetTokenInfo(ulong slot, CK_TOKEN_INFO_PTR info);
+    CK_RV GetSlotInfo(ulong slot, CK_SLOT_INFO_PTR info);
     CK_RV Sign(ulong slot, const char *pin, 
         uchar *digest_buffer, ulong digest_length,
         uchar **sdata, ulong *slength);
