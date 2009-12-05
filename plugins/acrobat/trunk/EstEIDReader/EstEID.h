@@ -15,6 +15,7 @@ ESTEID_EXPORT_SPEC void CloseReader(HANDLE h);
 ESTEID_EXPORT_SPEC ulong GetSlotCount(HANDLE h, int token_present);
 ESTEID_EXPORT_SPEC ulong IsMechanismSupported(HANDLE h, ulong slot, ulong flag);
 ESTEID_EXPORT_SPEC ulong GetTokenInfo(HANDLE h, ulong slot, CK_TOKEN_INFO_PTR info);
+ESTEID_EXPORT_SPEC ulong GetSlotInfo(HANDLE h, ulong slot, CK_SLOT_INFO_PTR info);
 ESTEID_EXPORT_SPEC ulong Sign(HANDLE h, ulong slot, const char *pin, 
                               void *digest_buffer, ulong digest_length,
                               void **signature_buffer, ulong *signature_length);

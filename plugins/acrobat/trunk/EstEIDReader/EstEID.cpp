@@ -84,6 +84,17 @@ ESTEID_EXPORT_SPEC ulong GetTokenInfo(HANDLE h, ulong slot, CK_TOKEN_INFO_PTR in
     return( ESTEID_ERR );
 }
 
+ESTEID_EXPORT_SPEC ulong GetSlotInfo(HANDLE h, ulong slot, CK_SLOT_INFO_PTR info)
+{
+    if( h )
+    {
+        EstEIDReader *obj = ((EstEIDReader*)h);
+        return( obj->GetSlotInfo(slot, info) );
+    }
+
+    return( ESTEID_ERR );
+}
+
 ESTEID_EXPORT_SPEC ulong Sign(HANDLE h, ulong slot, const char *pin, 
                         void *digest_buffer, ulong digest_length,
                         void **signature_buffer, ulong *signature_length)
