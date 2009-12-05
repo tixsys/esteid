@@ -292,6 +292,7 @@ namespace EstEIDSigner
         public delegate void OnStatus(string s, bool error);
         private OnStatus statusHandler;
         private EstEIDSettings config = null;
+        private PKCS12Settings credentials = null;
 
         public PDFSigner(string input, string output)
         {
@@ -334,18 +335,22 @@ namespace EstEIDSigner
         {
             set { config = value; }
         }
+        public PKCS12Settings Credentials
+        {
+            set { credentials = value; }
+        }
 
         public void Verify()
         {
         }
 
-        private string ReadPin(string label, int minpin, int maxpin)
+        private string ReadPin(TokenInfo token)
         {
-            FormPin form = new FormPin(label, minpin, maxpin);
+            FormPin form = new FormPin(token.Label, (int)token.MinPin, (int)token.MaxPin);
             DialogResult dr = form.ShowDialog();
             if (dr == DialogResult.OK)
                 return form.Pin;
-            else if(dr == DialogResult.Cancel)
+            else if (dr == DialogResult.Cancel)
                 return null;
 
             return (string.Empty);
@@ -357,36 +362,50 @@ namespace EstEIDSigner
             const uint rsa_length = SIGNATURE_LENGTH;
             uint digest_length = rsa_length;
             string pin = string.Empty;
-            TokenInfo info = null;
+            TokenInfo token = null;
 
             HGlobalSafeHandle raw = new HGlobalSafeHandle((int)rsa_length);
             IntPtr rsaBytes = raw;
             if (rsaBytes == IntPtr.Zero)
                 throw new OutOfMemoryException(Resources.OUT_OF_MEMORY);
 
-            info = signer.Info;
+            token = signer.Token;
             slot = signer.Slot;
 
-            if (info.LoginRequired && info.PinIsSet)
+            if (token.LoginRequired && token.PinIsSet)
             {
-                string label = info.Label;
-                pin = ReadPin(label, (int)info.MinPin, (int)info.MaxPin);
-                
-                // redraw window: single-threaded UI
-                Application.DoEvents();
+                if (!token.PinPadPresent)
+                {
+                    pin = ReadPin(token);
 
-                // user requested Cancel ?
-                if (pin == null)
-                    throw new CancelException(Resources.ACTION_CANCELED);
-                // no pin supplied ?
-                else if (pin == string.Empty)
-                    throw new Exception(Resources.NO_PIN_SUPPLIED);
+                    // redraw window: single-threaded UI
+                    Application.DoEvents();
+
+                    // user requested Cancel ?
+                    if (pin == null)
+                        throw new CancelException(Resources.ACTION_CANCELED);
+                    // no pin supplied ?
+                    else if (pin == string.Empty)
+                        throw new Exception(Resources.NO_PIN_SUPPLIED);
+                }
+                else
+                {
+                    // we have a PINPAD present
+                    pin = null;
+                    statusHandler(string.Format(Resources.UI_ENTER_PIN_ONTHE_PINPAD, token.Label), false);
+                }
             }
 
             rc = estEidReader.Sign(slot, pin, digest, (uint)digest.Length, ref rsaBytes, ref digest_length);
             // failure ?
             if (rc != EstEIDReader.ESTEID_OK)
+            {
+                // signing cancelled or timed out
+                if (rc == PKCS11Error.CKR_FUNCTION_CANCELED)
+                    throw new CancelException(Resources.ACTION_CANCELED);
+
                 throw new PKCS11Exception(rc);
+            }
 
             return raw.ToByteArray();
         }
@@ -534,8 +553,8 @@ namespace EstEIDSigner
                     throw new PKCS11Exception(rc);
                 }
 
-                TokenInfo info = new TokenInfo(estEidReader);
-                rc = info.ReadInfo(i);
+                TokenInfo token = new TokenInfo(estEidReader);
+                rc = token.ReadInfo(i);
                 if (rc != EstEIDReader.ESTEID_OK)
                     throw new PKCS11Exception(rc);
 
@@ -559,7 +578,7 @@ namespace EstEIDSigner
                 cert = new X509Certificate2(raw);
                 col.Add(cert);
 
-                signer = new PKCS11Signer(i, cert, info);
+                signer = new PKCS11Signer(i, cert, token);
                 signers.Add(signer);
             }
 
@@ -646,21 +665,21 @@ namespace EstEIDSigner
             }
 
             return new OCSPClientEstEID(signer, checkerCert, issuerCert, ocspUrl, privKey, responderCert);
-        }        
+        }
 
         private void SignUsingEstEIDCard2(PKCS12Settings credentials, string filename, string outfile)
         {
             statusHandler(Resources.VERIFYING_DOCUMENT, false);
-            
+
             AcroFields af = this.reader.AcroFields;
-            ArrayList names = af.GetSignatureNames();            
+            ArrayList names = af.GetSignatureNames();
             bool nextRevision = ((names != null) && (names.Count > 0));
 
             // already signed ?
             if (nextRevision)
             {
                 // pick always first signature 
-                string name = (string)names[0];                
+                string name = (string)names[0];
                 PdfPKCS7 pkc7 = af.VerifySignature(name);
                 bool verify = pkc7.Verify();
                 if (!verify)
@@ -698,7 +717,7 @@ namespace EstEIDSigner
             if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
                 throw new Exception(Resources.INVALID_CERT);
 
-            PdfReader reader = new PdfReader(filename);            
+            PdfReader reader = new PdfReader(filename);
             PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0', null, nextRevision);
             if (metadata != null)
                 stp.XmpMetadata = metadata.getStreamedMetaData();
@@ -765,11 +784,11 @@ namespace EstEIDSigner
 
             dic2.Put(PdfName.CONTENTS, new PdfString(outc).SetHexWriting(true));
             sap.Close(dic2);
-        }        
+        }
 
-        public void Sign(PKCS12Settings credentials)
+        public void Sign()
         {
-            SignUsingEstEIDCard2(credentials, this.inputPDF, this.outputPDF);         
+            SignUsingEstEIDCard2(this.credentials, this.inputPDF, this.outputPDF);
         }
     }
 }

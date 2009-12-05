@@ -216,7 +216,8 @@ namespace EstEIDSigner
                 pdfSigner = new PDFSigner(reader, inputFile, outputFile, stamp, metaData, app, store);
                 pdfSigner.StatusHandler = this.status;
                 pdfSigner.Settings = this.config;
-                pdfSigner.Sign(credentials);
+                pdfSigner.Credentials = this.credentials;
+                pdfSigner.Sign();                
 
                 status(Resources.DOCUMENT_SIGNED, false);
             }

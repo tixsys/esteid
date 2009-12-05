@@ -25,6 +25,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 
+using EstEIDSigner;
 using EstEIDSigner.Properties;
 
 namespace EstEIDNative
@@ -65,6 +66,18 @@ namespace EstEIDNative
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct CK_SLOT_INFO
+    {
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] description;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+        public byte[] manufacturer_id;
+        public uint flags;
+        public CK_VERSION hardware_version;
+        public CK_VERSION firmware_version;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct PKCS11_CERT
     {
         public IntPtr certBuffer;
@@ -95,6 +108,8 @@ namespace EstEIDNative
             ref IntPtr signature_buffer, ref uint signature_length);
         [DllImport("EstEIDReader.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint GetTokenInfo(IntPtr h, uint slot, ref CK_TOKEN_INFO info);
+        [DllImport("EstEIDReader.dll", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint GetSlotInfo(IntPtr h, uint slot, ref CK_SLOT_INFO info);
         [DllImport("EstEIDReader.dll", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint LocateCertificate(IntPtr h, uint slot, ref PKCS11_CERT cert);
     }
@@ -188,23 +203,24 @@ namespace EstEIDNative
         private IntPtr esteidHandler;
         private CK_TOKEN_INFO tokenInfo;
 
-        public uint CKF_WRITE_PROTECTED = (1 << 1);
-        public uint CKF_LOGIN_REQUIRED = (1 << 2);
-        public uint CKF_USER_PIN_INITIALIZED = (1 << 3);
-        public uint CKF_RESTORE_KEY_NOT_NEEDED = (1 << 5);
-        public uint CKF_CLOCK_ON_TOKEN = (1 << 6);
-        public uint CKF_PROTECTED_AUTHENTICATION_PATH = (1 << 8);
-        public uint CKF_DUAL_CRYPTO_OPERATIONS = (1 << 9);
-        public uint CKF_TOKEN_INITIALIZED = (1 << 10);
-        public uint CKF_SECONDARY_AUTHENTICATION = (1 << 11);
-        public uint CKF_USER_PIN_COUNT_LOW = (1 << 16);
-        public uint CKF_USER_PIN_FINAL_TRY = (1 << 17);
-        public uint CKF_USER_PIN_LOCKED = (1 << 18);
-        public uint CKF_USER_PIN_TO_BE_CHANGED = (1 << 19);
-        public uint CKF_SO_PIN_COUNT_LOW = (1 << 20);
-        public uint CKF_SO_PIN_FINAL_TRY = (1 << 21);
-        public uint CKF_SO_PIN_LOCKED = (1 << 22);
-        public uint CKF_SO_PIN_TO_BE_CHANGED = (1 << 23);
+        public static uint CKF_TOKEN_PRESENT = (1 << 0);
+        public static uint CKF_WRITE_PROTECTED = (1 << 1);
+        public static uint CKF_LOGIN_REQUIRED = (1 << 2);
+        public static uint CKF_USER_PIN_INITIALIZED = (1 << 3);
+        public static uint CKF_RESTORE_KEY_NOT_NEEDED = (1 << 5);
+        public static uint CKF_CLOCK_ON_TOKEN = (1 << 6);
+        public static uint CKF_PROTECTED_AUTHENTICATION_PATH = (1 << 8);
+        public static uint CKF_DUAL_CRYPTO_OPERATIONS = (1 << 9);
+        public static uint CKF_TOKEN_INITIALIZED = (1 << 10);
+        public static uint CKF_SECONDARY_AUTHENTICATION = (1 << 11);
+        public static uint CKF_USER_PIN_COUNT_LOW = (1 << 16);
+        public static uint CKF_USER_PIN_FINAL_TRY = (1 << 17);
+        public static uint CKF_USER_PIN_LOCKED = (1 << 18);
+        public static uint CKF_USER_PIN_TO_BE_CHANGED = (1 << 19);
+        public static uint CKF_SO_PIN_COUNT_LOW = (1 << 20);
+        public static uint CKF_SO_PIN_FINAL_TRY = (1 << 21);
+        public static uint CKF_SO_PIN_LOCKED = (1 << 22);
+        public static uint CKF_SO_PIN_TO_BE_CHANGED = (1 << 23);
 
         public TokenInfo(EstEIDReader handler)
         {
@@ -262,9 +278,53 @@ namespace EstEIDNative
             get { return ((tokenInfo.flags & CKF_PROTECTED_AUTHENTICATION_PATH) != 0); }
         }
 
+        public bool TokenPresent
+        {
+            get { return ((tokenInfo.flags & CKF_TOKEN_PRESENT) != 0); }
+        }
+
         public uint Flags
         {
             get { return (tokenInfo.flags); }
+        }
+    }
+
+    /* --------------------------------------------------- */
+
+    class SlotInfo
+    {
+        private IntPtr esteidHandler;
+        private CK_SLOT_INFO slotInfo;
+
+        public SlotInfo(EstEIDReader handler)
+        {
+            esteidHandler = handler.Handler();
+            slotInfo = new CK_SLOT_INFO();
+        }
+
+        public uint ReadInfo(uint slot)
+        {
+            return (NativeMethods.GetSlotInfo(esteidHandler, slot, ref slotInfo));
+        }
+
+        public string Description
+        {
+            get { return new Pkcs11Utf8Conversion(slotInfo.description); }
+        }
+
+        public string Manufacturer
+        {
+            get { return new Pkcs11Utf8Conversion(slotInfo.manufacturer_id); }
+        }
+
+        public bool TokenPresent
+        {
+            get { return ((slotInfo.flags & TokenInfo.CKF_TOKEN_PRESENT) != 0); }
+        }
+
+        public uint Flags
+        {
+            get { return (slotInfo.flags); }
         }
     }
 
@@ -306,13 +366,13 @@ namespace EstEIDNative
     {
         private uint slot;
         private X509Certificate2 cert;
-        private TokenInfo info;
+        private TokenInfo token;
 
-        public PKCS11Signer(uint slot, X509Certificate2 cert, TokenInfo info)
+        public PKCS11Signer(uint slot, X509Certificate2 cert, TokenInfo token)
         {
             this.slot = slot;
             this.cert = cert;
-            this.info = info;
+            this.token = token;
         }
 
         public uint Slot
@@ -325,9 +385,9 @@ namespace EstEIDNative
             get { return cert; }
         }
 
-        public TokenInfo Info
+        public TokenInfo Token
         {
-            get { return info; }
+            get { return token; }
         }
     }
 
@@ -384,116 +444,7 @@ namespace EstEIDNative
 
             return b;
         }
-    }
-
-    /* --------------------------------------------------- */
-
-    public class PKCS11Error
-    {
-        private string error;
-        private static readonly Dictionary<uint, string> errors = new Dictionary<uint, string>();
-
-        static PKCS11Error()
-        {
-            errors[1] = "CANCEL";
-            errors[2] = "HOST_MEMORY";
-            errors[3] = "SLOT_ID_INVALID";
-            errors[5] = "GENERAL_ERROR";
-            errors[6] = "FUNCTION_FAILED";            
-            errors[7] = "ARGUMENTS_BAD";
-            errors[8] = "NO_EVENT";
-            errors[9] = "NEED_TO_CREATE_THREADS";
-            errors[0xa] = "CANT_LOCK";
-            errors[0x10] = "ATTRIBUTE_READ_ONLY";
-            errors[0x11] = "ATTRIBUTE_SENSITIVE";
-            errors[0x12] = "ATTRIBUTE_TYPE_INVALID";
-            errors[0x13] = "ATTRIBUTE_VALUE_INVALID";
-            errors[0x20] = "DATA_INVALID";
-            errors[0x21] = "DATA_LEN_RANGE";
-            errors[0x30] = "DEVICE_ERROR";
-            errors[0x31] = "DEVICE_MEMORY";
-            errors[0x32] = "DEVICE_REMOVED";
-            errors[0x40] = "ENCRYPTED_DATA_INVALID";
-            errors[0x41] = "ENCRYPTED_DATA_LEN_RANGE";
-            errors[0x50] = "FUNCTION_CANCELED";
-            errors[0x51] = "FUNCTION_NOT_PARALLEL";
-            errors[0x54] = "FUNCTION_NOT_SUPPORTED";
-            errors[0x60] = "KEY_HANDLE_INVALID";
-            errors[0x62] = "KEY_SIZE_RANGE";
-            errors[0x63] = "KEY_TYPE_INCONSISTENT";
-            errors[0x64] = "KEY_NOT_NEEDED";
-            errors[0x65] = "KEY_CHANGED";
-            errors[0x66] = "KEY_NEEDED";
-            errors[0x67] = "KEY_INDIGESTIBLE";
-            errors[0x68] = "KEY_FUNCTION_NOT_PERMITTED";
-            errors[0x68] = "KEY_FUNCTION_NOT_PERMITTED";
-            errors[0x6a] = "KEY_UNEXTRACTABLE";
-            errors[0x70] = "MECHANISM_INVALID";
-            errors[0x71] = "MECHANISM_PARAM_INVALID";
-            errors[0x82] = "OBJECT_HANDLE_INVALID";
-            errors[0x90] = "OPERATION_ACTIVE";
-            errors[0x91] = "OPERATION_NOT_INITIALIZED";
-            errors[0xa0] = Resources.UI_WRONG_PIN;         //"PIN_INCORRECT";
-            errors[0xa1] = Resources.UI_INVALID_PIN;       // "PIN_INVALID";
-            errors[0xa2] = "PIN_LEN_RANGE";
-            errors[0xa3] = Resources.UI_EXPIRED_PIN;       // "PIN_EXPIRED";
-            errors[0xa4] = Resources.UI_LOCKED_PIN;        // "PIN_LOCKED";
-            errors[0xb0] = "SESSION_CLOSED";
-            errors[0xb1] = "SESSION_COUNT";
-            errors[0xb3] = "SESSION_HANDLE_INVALID";
-            errors[0xb4] = "SESSION_PARALLEL_NOT_SUPPORTED";
-            errors[0xb5] = "SESSION_READ_ONLY";
-            errors[0xb6] = "SESSION_EXISTS";
-            errors[0xb7] = "SESSION_READ_ONLY_EXISTS";
-            errors[0xb8] = "SESSION_READ_WRITE_SO_EXISTS";
-            errors[0xc0] = "SIGNATURE_INVALID";
-            errors[0xc1] = "SIGNATURE_LEN_RANGE";
-            errors[0xd0] = "TEMPLATE_INCOMPLETE";
-            errors[0xd1] = "TEMPLATE_INCONSISTENT";
-            errors[0xe0] = "TOKEN_NOT_PRESENT";
-            errors[0xe1] = "TOKEN_NOT_RECOGNIZED";
-            errors[0xe2] = "TOKEN_WRITE_PROTECTED";
-            errors[0xf0] = "UNWRAPPING_KEY_HANDLE_INVALID";
-            errors[0xf1] = "UNWRAPPING_KEY_SIZE_RANGE";
-            errors[0xf2] = "UNWRAPPING_KEY_TYPE_INCONSISTENT";
-            errors[0x100] = "USER_ALREADY_LOGGED_IN";
-            errors[0x101] = "USER_NOT_LOGGED_IN";
-            errors[0x102] = "USER_PIN_NOT_INITIALIZED";
-            errors[0x103] = "USER_TYPE_INVALID";
-            errors[0x104] = "USER_ANOTHER_ALREADY_LOGGED_IN";
-            errors[0x105] = "USER_TOO_MANY_TYPES";
-            errors[0x110] = "WRAPPED_KEY_INVALID";
-            errors[0x112] = "WRAPPED_KEY_LEN_RANGE";
-            errors[0x113] = "WRAPPING_KEY_HANDLE_INVALID";
-            errors[0x114] = "WRAPPING_KEY_SIZE_RANGE";
-            errors[0x115] = "WRAPPING_KEY_TYPE_INCONSISTENT";
-            errors[0x120] = "RANDOM_SEED_NOT_SUPPORTED";
-            errors[0x121] = "RANDOM_NO_RNG";
-            errors[0x130] = "DOMAIN_PARAMS_INVALID";
-            errors[0x150] = "BUFFER_TOO_SMALL";
-            errors[0x160] = "SAVED_STATE_INVALID";
-            errors[0x170] = "INFORMATION_SENSITIVE";
-            errors[0x180] = "STATE_UNSAVEABLE";
-            errors[0x190] = "CRYPTOKI_NOT_INITIALIZED";
-            errors[0x191] = "CRYPTOKI_ALREADY_INITIALIZED";
-            errors[0x1a0] = "MUTEX_BAD";
-            errors[0x1a1] = "MUTEX_NOT_LOCKED";
-            errors[0x200] = "FUNCTION_REJECTED";            
-        }
-
-        public PKCS11Error(uint code)
-        {
-            if (errors.ContainsKey(code))
-                error = (string)errors[code];
-            else
-                error = string.Format("UNKNOWN_ERROR ({0})", code);
-        }
-
-        public static implicit operator string(PKCS11Error e)
-        {
-            return string.Format("{0}: {1}", Resources.CARD_INTERNAL_ERROR, e.error);
-        }
-    }
+    }    
 
     /* --------------------------------------------------- */
 
