@@ -1,48 +1,34 @@
 cmake_minimum_required(VERSION 2.6)
-project(esteidpkcs11)
+project(esteid-pkcs11)
 
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+include(InstallSettings)
 
-set(CARDLIB smartcardpp)
-
-set(smartcard_SRCS
-    ${CARDLIB}/CardBase.cpp
-    ${CARDLIB}/CTAPIManager.cpp
-    ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/esteid/EstEidCard.cpp
-    ${CARDLIB}/locked_allocator.cpp
-    ${CARDLIB}/PCSCManager.cpp
-    ${CARDLIB}/SCError.cpp
-    ${CARDLIB}/SmartCardManager.cpp
-    ${CARDLIB}/types.cpp
-    ${CARDLIB}/utility/logger.cpp
-    ${CARDLIB}/utility/asnCertificate.cpp
-    ${CARDLIB}/utility/asnObject.cpp
-)
-
-if(UNIX AND NOT APPLE)
-    find_package(PCSCLite REQUIRED)
-    include_directories(${PCSCLITE_INCLUDE_DIR})
-endif(UNIX AND NOT APPLE)
+if(UNIX)
+    find_package(PCSCLite)
+endif(UNIX)
+find_package(SmartCardpp REQUIRED)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${PCSCLITE_INCLUDE_DIR}
+    ${SMARTCARDPP_INCLUDE_DIR}
 )
-
 
 set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic -Wl,-z,defs")
 
-set(LIBPKCS_HEADERS PKCS11Context.h precompiled.h)
-set(LIBPKCS_SOURCES esteidpkcs11.cpp PKCS11Context.cpp precompiled.cpp)
+set(SOURCES
+    esteidpkcs11.cpp
+    esteidpkcs11.rc
+    PKCS11Context.cpp
+    precompiled.cpp
+    utility/logger.cpp
+    utility/asnCertificate.cpp
+    utility/asnObject.cpp
+)
 
-link_directories (${ESTEIDUTIL_BINARY_DIR}/smartcardpp/ ${ESTEIDUTIL_BINARY_DIR}/src/utility) 
-# link_libraries (smartcardpp utility)
-
-if(UNIX)
-  link_libraries (dl)
-endif(UNIX)
-
-add_library (esteidpkcs11 SHARED ${LIBPKCS_SOURCES} ${LIBPKCS_HEADERS} ${smartcard_SRCS}) 
-
-install(TARGETS esteidpkcs11 DESTINATION esteidutil/lib)
+add_library(esteid-pkcs11 SHARED ${SOURCES})
+set_target_properties(esteid-pkcs11 PROPERTIES PREFIX "")
+target_link_libraries(esteid-pkcs11 ${SMARTCARDPP_LIBRARIES})
+install(TARGETS esteid-pkcs11 DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})

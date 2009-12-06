@@ -3,8 +3,8 @@
 #include <smartcardpp/PCSCManager.h>
 #include <smartcardpp/helperMacro.h>
 #include <smartcardpp/esteid/EstEidCard.h>
-#include <smartcardpp/utility/asnCertificate.h>
-#include <smartcardpp/utility/logger.h>
+#include <utility/asnCertificate.h>
+#include <utility/logger.h>
 
 #include <string.h>
 
