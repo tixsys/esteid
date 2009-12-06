@@ -14,9 +14,7 @@ find_package(Qt4 4.4.0 COMPONENTS QtCore QtGui QtNetwork QtWebkit QtXml REQUIRED
 find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
-if(UNIX AND NOT APPLE)
-    find_package(PCSCLite REQUIRED)
-endif(UNIX AND NOT APPLE)
+find_package(SmartCardpp REQUIRED)
 
 set(QT_USE_QTNETWORK true)
 set(QT_USE_QTWEBKIT true)
@@ -42,18 +40,6 @@ set(qesteidutil_HDRS
     ${qesteidutil_MOC_HDRS}
     common/SslCertificate.h
     src/version.h
-)
-
-set(smartcard_SRCS
-    smartcardpp/CardBase.cpp
-    smartcardpp/CTAPIManager.cpp
-    smartcardpp/DynamicLibrary.cpp
-    smartcardpp/esteid/EstEidCard.cpp
-    smartcardpp/locked_allocator.cpp
-    smartcardpp/PCSCManager.cpp
-    smartcardpp/SCError.cpp
-    smartcardpp/SmartCardManager.cpp
-    smartcardpp/types.cpp
 )
 
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})
@@ -116,9 +102,9 @@ endif (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
 include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${PCSCLITE_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
     ${LIBP11_INCLUDE_DIR}
+    ${SMARTCARDPP_INCLUDE_DIR}
     qtsingleapplication/src
 )
 
@@ -148,7 +134,6 @@ IF(WIN32)
 ENDIF(WIN32)
     
 add_executable(qesteidutil WIN32 MACOSX_BUNDLE
-    ${smartcard_SRCS}
     ${qesteidutil_SRCS}
     ${QM_FILES}
     ${qesteidutil_RCC_SRCS}
@@ -173,7 +158,8 @@ target_link_libraries(qesteidutil
     ${QT_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
-    ${LIBP11_LIBRARY}
+    ${LIBP11_LIBRARIES}
+    ${SMARTCARDPP_LIBRARIES}
     qtsingleapplication
 )
 
