@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 2.6)
 project(smartcard++)
 
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+
+include(InstallSettings)
+
+set(SMARTCARDPP_VERSION "0.1.0")
+
 if(UNIX)
     include_directories(/usr/include/PCSC/)
 endif(UNIX)
@@ -72,6 +79,8 @@ stage_smartcard_headers("${smartcard_HDRS}")
 stage_smartcard_headers("${esteid_HDRS}")
 stage_smartcard_headers("${sim_HDRS}")
 
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcard++ DESTINATION ${INCLUDE_INSTALL_DIR})
+
 if(WIN32)
     set(LIB_TYPE STATIC)
 else(WIN32)
@@ -91,8 +100,9 @@ else(WIN32)
     target_link_libraries(smartcard++ dl)
 endif(WIN32)
 
-install(TARGETS smartcard++ DESTINATION lib)
+set_target_properties(smartcard++ PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
+install(TARGETS smartcard++ DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(card-test test.cpp)
 target_link_libraries(card-test smartcard++)
-install(TARGETS card-test DESTINATION bin)
+install(TARGETS card-test DESTINATION ${BIN_INSTALL_DIR})
