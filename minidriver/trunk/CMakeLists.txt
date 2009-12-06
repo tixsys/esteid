@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(esteidcm)
 
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+include(InstallSettings)
+find_package(SmartCardpp REQUIRED)
+
 add_definitions(
     -D_UNICODE
     -DUNICODE
@@ -16,12 +21,7 @@ foreach(flag_var
     endif(${flag_var} MATCHES "/MD")
 endforeach(flag_var)
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
-
-include_directories(
-    ${CARDLIB}
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
+include_directories(${SMARTCARDPP_INCLUDE_DIR})
 
 set(esteidcm_SRCS
     esteidcm.cpp
@@ -29,13 +29,8 @@ set(esteidcm_SRCS
     esteidcm.rc
     notimplemented.cpp
     precompiled.cpp
-    ${CARDLIB}/CardBase.cpp
-    ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/esteid/EstEidCard.cpp
-    ${CARDLIB}/locked_allocator.cpp
-    ${CARDLIB}/PCSCManager.cpp
-    ${CARDLIB}/SCError.cpp
 )
 
 add_library(esteidcm SHARED ${esteidcm_SRCS}) 
-install(TARGETS esteidcm DESTINATION lib)
+target_link_libraries(esteidcm ${SMARTCARDPP_LIBRARIES})
+install(TARGETS esteidcm DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
