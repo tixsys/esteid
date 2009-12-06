@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(SmartCardRemoval)
 
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+include(InstallSettings)
+find_package(SmartCardpp REQUIRED)
+
 add_definitions( 
     -D_UNICODE
     -DUNICODE
@@ -8,12 +13,10 @@ add_definitions(
     -D_WIN_SERVICE_STARTUP_HACK
 )
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
-
 include_directories(
-    ${CARDLIB}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${SMARTCARDPP_INCLUDE_DIR}
 )
 
 set(SOURCES 
@@ -25,14 +28,6 @@ set(SOURCES
     SmartCardRemoval.rgs
     utility/monitorThread.cpp
     utility/threadObj.cpp
-    ${CARDLIB}/CardBase.cpp
-    ${CARDLIB}/CTAPIManager.cpp
-    ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/esteid/EstEidCard.cpp
-    ${CARDLIB}/locked_allocator.cpp
-    ${CARDLIB}/PCSCManager.cpp
-    ${CARDLIB}/SCError.cpp
-    ${CARDLIB}/SmartCardManager.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
@@ -60,6 +55,6 @@ add_custom_command(
 )
 
 add_executable(SmartCardRemoval WIN32 ${SOURCES})
-target_link_libraries(SmartCardRemoval ws2_32)
+target_link_libraries(SmartCardRemoval ${SMARTCARDPP_LIBRARIES} ws2_32)
 
-install(TARGETS SmartCardRemoval DESTINATION bin)
+install(TARGETS SmartCardRemoval DESTINATION ${BIN_INSTALL_DIR})
