@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 2.6)
 project(EstEIDSigningPluginBHO)
 
+# Custom cmake modules
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+include(InstallSettings)
+find_package(SmartCardpp REQUIRED)
+
 add_definitions(
     -D_UNICODE
     -DUNICODE
@@ -11,12 +16,10 @@ add_definitions(
     -D_SECURE_SCL=0
 )
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
-
 include_directories(
-    ${CARDLIB}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${SMARTCARDPP_INCLUDE_DIR}
 )
 
 set(bho_SRCS 
@@ -38,14 +41,6 @@ set(bho_SRCS
     utility/monitorThread.cpp
     utility/pinDialog.cpp
     utility/threadObj.cpp
-    ${CARDLIB}/CardBase.cpp
-    ${CARDLIB}/CTAPIManager.cpp
-    ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/esteid/EstEidCard.cpp
-    ${CARDLIB}/locked_allocator.cpp
-    ${CARDLIB}/PCSCManager.cpp
-    ${CARDLIB}/SCError.cpp
-    ${CARDLIB}/SmartCardManager.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
@@ -74,6 +69,6 @@ add_custom_command(
 )
 
 add_library(EstEIDSigningPluginBHO SHARED ${bho_SRCS})
-target_link_libraries(EstEIDSigningPluginBHO ws2_32)
+target_link_libraries(EstEIDSigningPluginBHO ${SMARTCARDPP_LIBRARIES} ws2_32)
 
-install(TARGETS EstEIDSigningPluginBHO DESTINATION lib)
+install(TARGETS EstEIDSigningPluginBHO DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
