@@ -8,10 +8,6 @@ cmake_minimum_required(VERSION 2.6)
 project(xpi)
 
 set(PLUGINGATE plugins/plugingate)
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
 
 # Set project version
 set( MAJOR 0)
@@ -152,14 +148,8 @@ endif(MSVC)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-if(UNIX AND NOT APPLE)
-    find_package(LibDL)
-    find_package(PCSCLite REQUIRED)
-    include_directories(
-        ${LIBDL_INCLUDE_DIR}
-        ${PCSCLITE_INCLUDE_DIR}
-    )
-endif(UNIX AND NOT APPLE)
+find_package(SmartCardpp REQUIRED)
+include_directories(${SMARTCARDPP_INCLUDE_DIR})
 
 # Generate build targets for IDL files in our project
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -187,6 +177,7 @@ ENDFOREACH(iFile)
 
 # Sources:
 set(esteid_module_SRCS
+    components/converters.cpp
     components/EstEIDModule.cpp
     components/nsEstEID.cpp
     components/EstEIDServiceBase.cpp
@@ -194,18 +185,6 @@ set(esteid_module_SRCS
     components/nsEstEIDCertificate.cpp
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEID.h
     ${CMAKE_CURRENT_BINARY_DIR}/nsIEstEIDPrivate.h
-
-    components/converters.cpp
-    ${CARDLIB}/CardBase.cpp
-    ${CARDLIB}/CTAPIManager.cpp
-    ${CARDLIB}/DynamicLibrary.cpp
-    ${CARDLIB}/esteid/EstEidCard.cpp
-    ${CARDLIB}/esteid/EstEidCardMaintainer.cpp
-    ${CARDLIB}/PCSCManager.cpp
-    ${CARDLIB}/SCError.cpp
-#    ${CARDLIB}/SIMCard.cpp
-    ${CARDLIB}/SmartCardManager.cpp
-    ${CARDLIB}/locked_allocator.cpp
 )
 
 set(esteid_plugin_SRCS
@@ -230,15 +209,11 @@ set_source_files_properties(${esteid_module_SRCS} ${esteid_plugin_SRCS}
   PROPERTIES
   COMPILE_FLAGS "${XPCOM_CPP_FLAGS}")
 
-if(WIN32)
-    set(WIN_LIBRARIES ws2_32)
-endif(WIN32)
-
 add_library(xpesteid SHARED ${esteid_module_SRCS})
 add_library(npesteid SHARED ${esteid_plugin_SRCS} ${esteid_plugin_WIN})
 add_dependencies(xpesteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
-target_link_libraries(xpesteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES} ${LIBDL_LIBRARIES})
+target_link_libraries(xpesteid ${GECKO_SDK_LIBRARIES} ${SMARTCARDPP_LIBRARIES})
 target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(xpesteid PROPERTIES
 				PREFIX ""
