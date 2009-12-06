@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="sys-apps/pcsc-lite
+RDEPEND="dev-libs/smartcardpp
 	x11-libs/qt-core:4[ssl]
 	x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4"

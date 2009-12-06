@@ -19,7 +19,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-RDEPEND="app-arch/zip
+RDEPEND="dev-libs/smartcardpp
+	app-arch/zip
 	|| (
 		>=www-client/mozilla-firefox-3.0
 		>=www-client/mozilla-firefox-bin-3.0
