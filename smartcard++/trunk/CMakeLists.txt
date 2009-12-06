@@ -9,11 +9,13 @@ include(InstallSettings)
 set(SMARTCARDPP_VERSION "0.1.0")
 
 if(UNIX)
+    find_package(LibDL)
     find_package(PCSCLite REQUIRED)
 endif(UNIX)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
+    ${LIBDL_INCLUDE_DIR}
     ${PCSCLITE_INCLUDE_DIR}
 )
 
@@ -98,10 +100,10 @@ add_library(smartcard++ ${LIB_TYPE}
 )
 
 if(WIN32)
-    target_link_libraries(smartcard++ ws2_32)
-else(WIN32)
-    target_link_libraries(smartcard++ dl)
+    set(WIN_LIBRARIES ws2_32)
 endif(WIN32)
+
+target_link_libraries(smartcard++ ${LIBDL_LIBRARIES} ${WIN_LIBRARIES})
 
 set_target_properties(smartcard++ PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
 install(TARGETS smartcard++ DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
