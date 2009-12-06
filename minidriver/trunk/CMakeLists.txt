@@ -32,5 +32,5 @@ set(esteidcm_SRCS
 )
 
 add_library(esteidcm SHARED ${esteidcm_SRCS}) 
-target_link_libraries(esteidcm ${SMARTCARDPP_LIBRARIES})
+target_link_libraries(esteidcm ${SMARTCARDPP_LIBRARIES} ws2_32)
 install(TARGETS esteidcm DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
