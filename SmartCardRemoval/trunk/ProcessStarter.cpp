@@ -9,7 +9,7 @@
 #include "wtsapi32.h"
 #include "winnt.h"
 #include <Tlhelp32.h>
-#include <smartcard++/DynamicLibrary.h>
+#include <smartcardpp/DynamicLibrary.h>
 
 #include <iomanip>
 

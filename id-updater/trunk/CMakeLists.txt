@@ -22,7 +22,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
 
 set(updater_SRCS
     idupdater.cpp

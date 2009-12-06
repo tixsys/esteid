@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 346 $
 
-#include <smartcard++/DynamicLibrary.h>
+#include <smartcardpp/DynamicLibrary.h>
 
 class pkcs11module : protected DynamicLibrary {
 protected:

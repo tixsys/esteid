@@ -8,7 +8,7 @@ add_definitions(
     -D_WIN_SERVICE_STARTUP_HACK
 )
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
 
 include_directories(
     ${CARDLIB}

@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 2.6)
 project(xpi)
 
 set(PLUGINGATE plugins/plugingate)
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )

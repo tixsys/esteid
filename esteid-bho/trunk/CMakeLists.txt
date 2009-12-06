@@ -11,7 +11,7 @@ add_definitions(
     -D_SECURE_SCL=0
 )
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
 
 include_directories(
     ${CARDLIB}

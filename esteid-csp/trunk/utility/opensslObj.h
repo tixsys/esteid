@@ -8,7 +8,7 @@
 // Revision $Revision: 346 $
 
 #pragma once
-#include <smartcard++/DynamicLibrary.h>
+#include <smartcardpp/DynamicLibrary.h>
 #include "config.h"
 
 #if HAVE_OPENSSL

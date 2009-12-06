@@ -4,9 +4,9 @@
 #include "precompiled.h"
 #include "esteidcm.h"
 
-#include "smartcard++/esteid/EstEidCard.h"
-#include "smartcard++/PCSCManager.h"
-#include "smartcard++/SCError.h"
+#include "smartcardpp/esteid/EstEidCard.h"
+#include "smartcardpp/PCSCManager.h"
+#include "smartcardpp/SCError.h"
 #include <algorithm>
 #include <stdlib.h>
 #include <crtdbg.h>

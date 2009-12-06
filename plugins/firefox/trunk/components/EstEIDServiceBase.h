@@ -1,7 +1,7 @@
 #ifndef EstEIDServiceBase_h
 #define EstEIDServiceBase_h
 
-#include <smartcard++/smartcard++.h>
+#include <smartcardpp/smartcardpp.h>
 
 #define PDATA_MIN EstEidCard::SURNAME
 #define PDATA_MAX EstEidCard::COMMENT4

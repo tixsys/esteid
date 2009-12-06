@@ -9,7 +9,7 @@
 
 ///forward-declared opsys-specific components
 struct pinDialogPriv;
-#include <smartcard++/esteid/EstEidCard.h>
+#include <smartcardpp/esteid/EstEidCard.h>
 #include "pinDialog_res.h"
 
 class mutexObj;

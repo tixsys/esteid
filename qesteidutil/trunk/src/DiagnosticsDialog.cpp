@@ -22,10 +22,10 @@
 
 #include "DiagnosticsDialog.h"
 
-#include "smartcard++/common.h"
-#include "smartcard++/DynamicLibrary.h"
-#include "smartcard++/SmartCardManager.h"
-#include "smartcard++/esteid/EstEidCard.h"
+#include "smartcardpp/common.h"
+#include "smartcardpp/DynamicLibrary.h"
+#include "smartcardpp/SmartCardManager.h"
+#include "smartcardpp/esteid/EstEidCard.h"
 
 #include <QDesktopServices>
 #include <QFile>

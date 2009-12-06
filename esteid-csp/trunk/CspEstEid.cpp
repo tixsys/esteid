@@ -10,8 +10,8 @@
 #include "precompiled.h"
 #include "CspEstEid.h"
 
-#include <smartcard++/esteid/EstEidCard.h>
-#include <smartcard++/SmartCardManager.h>
+#include <smartcardpp/esteid/EstEidCard.h>
+#include <smartcardpp/SmartCardManager.h>
 #include <utility/pinDialog.h>
 #include <utility/threadObj.h>
 #include "utility.h"

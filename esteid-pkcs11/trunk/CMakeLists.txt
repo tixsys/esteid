@@ -4,7 +4,7 @@ project(esteidpkcs11)
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-set(CARDLIB smartcard++)
+set(CARDLIB smartcardpp)
 
 set(smartcard_SRCS
     ${CARDLIB}/CardBase.cpp
@@ -36,8 +36,8 @@ set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic -Wl,-z,defs")
 set(LIBPKCS_HEADERS PKCS11Context.h precompiled.h)
 set(LIBPKCS_SOURCES esteidpkcs11.cpp PKCS11Context.cpp precompiled.cpp)
 
-link_directories (${ESTEIDUTIL_BINARY_DIR}/smartcard++/ ${ESTEIDUTIL_BINARY_DIR}/src/utility) 
-# link_libraries (smartcard++ utility)
+link_directories (${ESTEIDUTIL_BINARY_DIR}/smartcardpp/ ${ESTEIDUTIL_BINARY_DIR}/src/utility) 
+# link_libraries (smartcardpp utility)
 
 if(UNIX)
   link_libraries (dl)

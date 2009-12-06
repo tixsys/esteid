@@ -1,10 +1,10 @@
 #include "precompiled.h"
 #include "PKCS11Context.h"
-#include <smartcard++/PCSCManager.h>
-#include <smartcard++/helperMacro.h>
-#include <smartcard++/esteid/EstEidCard.h>
-#include <smartcard++/utility/asnCertificate.h>
-#include <smartcard++/utility/logger.h>
+#include <smartcardpp/PCSCManager.h>
+#include <smartcardpp/helperMacro.h>
+#include <smartcardpp/esteid/EstEidCard.h>
+#include <smartcardpp/utility/asnCertificate.h>
+#include <smartcardpp/utility/logger.h>
 
 #include <string.h>
 

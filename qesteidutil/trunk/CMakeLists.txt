@@ -45,15 +45,15 @@ set(qesteidutil_HDRS
 )
 
 set(smartcard_SRCS
-    smartcard++/CardBase.cpp
-    smartcard++/CTAPIManager.cpp
-    smartcard++/DynamicLibrary.cpp
-    smartcard++/esteid/EstEidCard.cpp
-    smartcard++/locked_allocator.cpp
-    smartcard++/PCSCManager.cpp
-    smartcard++/SCError.cpp
-    smartcard++/SmartCardManager.cpp
-    smartcard++/types.cpp
+    smartcardpp/CardBase.cpp
+    smartcardpp/CTAPIManager.cpp
+    smartcardpp/DynamicLibrary.cpp
+    smartcardpp/esteid/EstEidCard.cpp
+    smartcardpp/locked_allocator.cpp
+    smartcardpp/PCSCManager.cpp
+    smartcardpp/SCError.cpp
+    smartcardpp/SmartCardManager.cpp
+    smartcardpp/types.cpp
 )
 
 QT4_WRAP_CPP(qesteidutil_MOC_SRCS ${qesteidutil_MOC_HDRS})

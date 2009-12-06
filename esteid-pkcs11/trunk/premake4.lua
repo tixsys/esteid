@@ -16,5 +16,5 @@ project "esteidpkcs11"
     includedirs "mac_pkcs11_headers"
   end
     
-  links { "smartcard++" ,"utility"}
+  links { "smartcardpp" ,"utility"}
   createConfigs()

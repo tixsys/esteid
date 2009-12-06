@@ -18,7 +18,7 @@ foreach(flag_var
     endif(${flag_var} MATCHES "/MD")
 endforeach(flag_var)
 
-set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcard++)
+set(CARDLIB ${CMAKE_SOURCE_DIR}/smartcardpp)
 
 include_directories(
     ${CARDLIB}

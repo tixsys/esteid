@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 240 $
 
-#include <smartcard++/common.h>
+#include <smartcardpp/common.h>
 #include <algorithm>
 
 typedef	std::vector<unsigned char> ByteVec;

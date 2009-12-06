@@ -23,9 +23,9 @@
 #include <atlwin.h> //CWindowImpl
 #include <objsafe.h> //IObjectSafetyImpl
 #include <atlutil.h> //IWorkerThreadClient,CInterfaceList
-#include <smartcard++/common.h>
-#include <smartcard++/esteid/EstEidCard.h>
-#include <smartcard++/SmartCardManager.h>
+#include <smartcardpp/common.h>
+#include <smartcardpp/esteid/EstEidCard.h>
+#include <smartcardpp/SmartCardManager.h>
 #include <utility/monitorThread.h>
 #include "EstEIDSigningPluginBHO_i.h"
 

@@ -26,8 +26,8 @@
 #include <QHash>
 #include <QTimer>
 
-#include "smartcard++/common.h"
-#include "smartcard++/SmartCardManager.h"
+#include "smartcardpp/common.h"
+#include "smartcardpp/SmartCardManager.h"
 #include "jsesteidcard.h"
 
 class JsCardManager : public QObject

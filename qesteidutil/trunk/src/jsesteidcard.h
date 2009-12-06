@@ -25,9 +25,9 @@
 #include <QString>
 #include <QObject>
 
-#include "smartcard++/common.h"
-#include "smartcard++/SmartCardManager.h"
-#include "smartcard++/esteid/EstEidCard.h"
+#include "smartcardpp/common.h"
+#include "smartcardpp/SmartCardManager.h"
+#include "smartcardpp/esteid/EstEidCard.h"
 #include "jscertdata.h"
 
 class JsEsteidCard : public QObject
