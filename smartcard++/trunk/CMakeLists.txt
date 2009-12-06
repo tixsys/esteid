@@ -9,10 +9,13 @@ include(InstallSettings)
 set(SMARTCARDPP_VERSION "0.1.0")
 
 if(UNIX)
-    include_directories(/usr/include/PCSC/)
+    find_package(PCSCLite REQUIRED)
 endif(UNIX)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${PCSCLITE_INCLUDE_DIR}
+)
 
 set(smartcard_SRCS
     CardBase.cpp
