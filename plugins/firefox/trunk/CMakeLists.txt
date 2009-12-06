@@ -153,8 +153,12 @@ endif(MSVC)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 if(UNIX AND NOT APPLE)
+    find_package(LibDL)
     find_package(PCSCLite REQUIRED)
-    include_directories(${PCSCLITE_INCLUDE_DIR})
+    include_directories(
+        ${LIBDL_INCLUDE_DIR}
+        ${PCSCLITE_INCLUDE_DIR}
+    )
 endif(UNIX AND NOT APPLE)
 
 # Generate build targets for IDL files in our project
@@ -234,7 +238,7 @@ add_library(xpesteid SHARED ${esteid_module_SRCS})
 add_library(npesteid SHARED ${esteid_plugin_SRCS} ${esteid_plugin_WIN})
 add_dependencies(xpesteid xpi-stage)
 add_dependencies(npesteid xpi-stage)
-target_link_libraries(xpesteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES})
+target_link_libraries(xpesteid ${GECKO_SDK_LIBRARIES} ${WIN_LIBRARIES} ${LIBDL_LIBRARIES})
 target_link_libraries(npesteid ${GECKO_SDK_LIBRARIES})
 set_target_properties(xpesteid PROPERTIES
 				PREFIX ""
