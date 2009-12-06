@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
-project(smartcard++)
+project(smartcardpp)
 
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -37,7 +37,7 @@ set(esteid_SRCS
 
 set(sim_SRCS sim/SIMCard.cpp)
 
-# Public headers which get installed into smartcard++/ directory
+# Public headers which get installed into smartcardpp/ directory
 set(smartcard_HDRS
     CardBase.h
     common.h
@@ -50,25 +50,25 @@ set(smartcard_HDRS
     PCSCManager.h
     PinString.h
     SCError.h
-    smartcard++.h
+    smartcardpp.h
     SmartCardManager.h
     types.h
 )
 
-# Public headers which get installed into smartcard++/esteid/ directory
+# Public headers which get installed into smartcardpp/esteid/ directory
 set(esteid_HDRS
     esteid/EstEidCard.h
     esteid/EstEidCardMaintainer.h
 )
 
-# Public headers which get installed into smartcard++/sim/ directory
+# Public headers which get installed into smartcardpp/sim/ directory
 set(sim_HDRS sim/SIMCard.h)
 
 set(GENERATED_HEADERS "")
 macro(stage_smartcard_headers HEADERS)
     foreach(H ${HEADERS})
         set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${H}")
-        set(DST "${CMAKE_CURRENT_BINARY_DIR}/smartcard++/${H}")
+        set(DST "${CMAKE_CURRENT_BINARY_DIR}/smartcardpp/${H}")
 
         add_custom_command(
             OUTPUT ${DST}
@@ -84,7 +84,7 @@ stage_smartcard_headers("${smartcard_HDRS}")
 stage_smartcard_headers("${esteid_HDRS}")
 stage_smartcard_headers("${sim_HDRS}")
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcard++ DESTINATION ${INCLUDE_INSTALL_DIR})
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp DESTINATION ${INCLUDE_INSTALL_DIR})
 
 if(WIN32)
     set(LIB_TYPE STATIC)
@@ -92,7 +92,7 @@ else(WIN32)
     set(LIB_TYPE SHARED)
 endif(WIN32)
 
-add_library(smartcard++ ${LIB_TYPE}
+add_library(smartcardpp ${LIB_TYPE}
     ${GENERATED_HEADERS}
     ${smartcard_SRCS}
     ${sim_SRCS}
@@ -103,11 +103,11 @@ if(WIN32)
     set(WIN_LIBRARIES ws2_32)
 endif(WIN32)
 
-target_link_libraries(smartcard++ ${LIBDL_LIBRARIES} ${WIN_LIBRARIES})
+target_link_libraries(smartcardpp ${LIBDL_LIBRARIES} ${WIN_LIBRARIES})
 
-set_target_properties(smartcard++ PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
-install(TARGETS smartcard++ DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+set_target_properties(smartcardpp PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
+install(TARGETS smartcardpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(card-test test.cpp)
-target_link_libraries(card-test smartcard++)
+target_link_libraries(card-test smartcardpp)
 install(TARGETS card-test DESTINATION ${BIN_INSTALL_DIR})

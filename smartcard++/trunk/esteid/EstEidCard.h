@@ -7,8 +7,8 @@
 */
 // Revision $Revision: 357 $
 #pragma once
-#include <smartcard++/CardBase.h>
-#include <smartcard++/PinString.h>
+#include <smartcardpp/CardBase.h>
+#include <smartcardpp/PinString.h>
 
 /// Estonian ID card class. Supplies most of the card functions
 class EstEidCard:

@@ -6,10 +6,10 @@
 	\date		$Date: 2009-08-13 16:52:22 +0300 (Thu, 13 Aug 2009) $
 */
 // Revision $Revision: 422 $
-#include <smartcard++/common.h>
-#include <smartcard++/esteid/EstEidCard.h>
-#include <smartcard++/helperMacro.h>
-#include <smartcard++/SCError.h>
+#include <smartcardpp/common.h>
+#include <smartcardpp/esteid/EstEidCard.h>
+#include <smartcardpp/helperMacro.h>
+#include <smartcardpp/SCError.h>
 #include <algorithm>
 
 using std::string;

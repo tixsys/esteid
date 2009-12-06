@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 346 $
 #pragma once
-#include <smartcard++/esteid/EstEidCard.h>
+#include <smartcardpp/esteid/EstEidCard.h>
 
 /// Estonian ID card maintaier class, for generating keys and replacing certificates
 class EstEidCardMaintainer {

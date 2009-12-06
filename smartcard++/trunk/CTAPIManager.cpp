@@ -6,11 +6,11 @@
 	\date		$Date: 2009-11-17 01:16:15 +0200 (T, 17 nov 2009) $
 */
 // Revision $Revision: 493 $
-#include <smartcard++/common.h>
-#include <smartcard++/CTAPIManager.h>
-#include <smartcard++/helperMacro.h>
-#include <smartcard++/SCError.h> //for exceptions
-#include <smartcard++/CardBase.h> //for exceptions
+#include <smartcardpp/common.h>
+#include <smartcardpp/CTAPIManager.h>
+#include <smartcardpp/helperMacro.h>
+#include <smartcardpp/SCError.h> //for exceptions
+#include <smartcardpp/CardBase.h> //for exceptions
 using std::string;
 using std::runtime_error;
 

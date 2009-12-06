@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <iomanip>
-#include <smartcard++/types.h>
+#include <smartcardpp/types.h>
 
 #ifdef _WIN32
 #include <tchar.h>
@@ -15,10 +15,10 @@
 typedef void *LPVOID;
 #define __COREFOUNDATION_CFPLUGINCOM__
 #endif
-/*! \mainpage Smartcard++ documentation
+/*! \mainpage Smartcardpp documentation
 *
 * \section intro_sec Introduction
 *
-* Smartcard++ reference documentation. Smartcard++ is a set of c++ classes to manage
+* Smartcardpp reference documentation. Smartcardpp is a set of c++ classes to manage
 * smartcard communications and implement basic command primitives.
 */

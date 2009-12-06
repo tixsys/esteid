@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 422 $
 #pragma once
-#include <smartcard++/ManagerInterface.h>
+#include <smartcardpp/ManagerInterface.h>
 
 using std::vector;
 

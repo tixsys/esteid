@@ -14,10 +14,10 @@
 #include <arpa/inet.h>
 #endif
 
-#include <smartcard++/common.h>
-#include <smartcard++/PCSCManager.h>
-#include <smartcard++/SCError.h>
-#include <smartcard++/CardBase.h> //for exceptions
+#include <smartcardpp/common.h>
+#include <smartcardpp/PCSCManager.h>
+#include <smartcardpp/SCError.h>
+#include <smartcardpp/CardBase.h> //for exceptions
 
 #ifndef CM_IOCTL_GET_FEATURE_REQUEST
 

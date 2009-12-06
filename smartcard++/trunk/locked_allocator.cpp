@@ -1,4 +1,4 @@
-#include <smartcard++/common.h>
+#include <smartcardpp/common.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
