@@ -239,7 +239,7 @@
     <value>Salvesta PDF File</value>
   </data>
   <data name="PKCS12_LOAD_ERROR" xml:space="preserve">
-    <value>PKCS#12 muutujate lugemine ebaõnnestus: </value>
+    <value>Ligipääsutõendi muutujate lugemine ebaõnnestus: </value>
   </data>
   <data name="READ_CERTS" xml:space="preserve">
     <value>Loen sertifikaate ...</value>
@@ -305,10 +305,10 @@
     <value>Kehtivuspäringu kontroll ebaõnnestus</value>
   </data>
   <data name="PKCS12_FILENAME_MISSING" xml:space="preserve">
-    <value>PKCS#12 faili nimi määramata!</value>
+    <value>Ligipääsutõendi faili nimi määramata!</value>
   </data>
   <data name="PKCS12_FILE_MISSING" xml:space="preserve">
-    <value>PKCS#12 faili ei leitud: </value>
+    <value>Ligipääsutõendi faili (PKCS#12) ei leitud: </value>
   </data>
   <data name="REGISTRY_SETTING_MISSING" xml:space="preserve">
     <value>Eesti ID-kaardi registri seaded määramata</value>

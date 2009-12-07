@@ -440,7 +440,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PKCS#12 faili ei leitud: .
+        ///   Looks up a localized string similar to Ligipääsutõendi faili (PKCS#12) ei leitud: .
         /// </summary>
         internal static string PKCS12_FILE_MISSING {
             get {
@@ -449,7 +449,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PKCS#12 faili nimi määramata!.
+        ///   Looks up a localized string similar to Ligipääsutõendi faili nimi määramata!.
         /// </summary>
         internal static string PKCS12_FILENAME_MISSING {
             get {
@@ -458,7 +458,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PKCS#12 muutujate lugemine ebaõnnestus: .
+        ///   Looks up a localized string similar to Ligipääsutõendi muutujate lugemine ebaõnnestus: .
         /// </summary>
         internal static string PKCS12_LOAD_ERROR {
             get {
