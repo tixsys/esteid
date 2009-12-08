@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Cannot add files to signed container</source>
-        <translation>Ei saa lisada faile allakirjutatud ümbrikule</translation>
+        <translation>Ei saa lisada faile allkirjastatud ümbrikule</translation>
     </message>
     <message>
         <source>Missing document</source>
@@ -100,7 +100,7 @@
     </message>
     <message>
         <source>Sign</source>
-        <translation>Kirjutan alla</translation>
+        <translation>Allkirjastan</translation>
     </message>
     <message>
         <source>Add signature</source>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <source>This container is signed by you</source>
-        <translation>See ümbrik on sinu poolt allakirjutatud</translation>
+        <translation>See ümbrik on sinu poolt allkirjastatud</translation>
     </message>
     <message>
         <source>You have not signed this container</source>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>Container is unsigned</source>
-        <translation>Ümbrik ei ole allakirjutatud</translation>
+        <translation>Ümbrik ei ole allkirjastatud</translation>
     </message>
     <message>
         <source>Select documents</source>
@@ -389,10 +389,10 @@ Alustame laadimist?</translation>
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
         <translation>
-            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allakirjutanud.
-Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
-            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allakirjutanud.
-Kas jätan allakirjutamata ümbriku alles või kustutan selle?</numerusform>
+            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
+Kas jätan allkirjastamata ümbriku alles või kustutan selle?</numerusform>
+            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
+Kas jätan allkirjastamata ümbriku alles või kustutan selle?</numerusform>
         </translation>
     </message>
     <message>
