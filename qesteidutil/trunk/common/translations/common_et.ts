@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>Selected action requires sign certificate.</source>
-        <translation>Valitud tegevuse jaoks on vaja kasutada allkirja sertifikaati.</translation>
+        <translation>Valitud tegevuse jaoks on vaja kasutada allkirjastamise sertifikaati.</translation>
     </message>
     <message>
         <source>For using sign certificate enter PIN2</source>

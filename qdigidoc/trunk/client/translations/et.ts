@@ -389,10 +389,10 @@ Alustame laadimist?</translation>
         <source>You added %n file(s) to container, but these are not signed yet.
 Should I keep unsigned documents or remove these?</source>
         <translation>
-            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
-Kas jätan allkirjastamata ümbriku alles või kustutan selle?</numerusform>
-            <numerusform>Olete lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
-Kas jätan allkirjastamata ümbriku alles või kustutan selle?</numerusform>
+            <numerusform>Oled lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
+Kas jätan allkirjastamata ümbriku alles või eemaldan selle?</numerusform>
+            <numerusform>Oled lisanud ümbrikusse %n faili, kuid pole neid allkirjastanud.
+Kas jätan allkirjastamata ümbriku alles või eemaldan selle?</numerusform>
         </translation>
     </message>
     <message>
