@@ -40,7 +40,15 @@ JsExtender::JsExtender( MainWindow *main )
 ,	m_mainWindow( main )
 ,	m_loading( 0 )
 {
-	m_locale = Settings().value( "Main/language" ).toString();
+	QString deflang;
+	switch( QLocale().language() )
+	{
+	case QLocale::English: deflang = "en"; break;
+	case QLocale::Russian: deflang = "ru"; break;
+	case QLocale::Estonian:
+	default: deflang = "et"; break;
+	}
+	m_locale = Settings().value( "Main/Language", deflang ).toString();
 	if ( m_locale.isEmpty() )
 		m_locale = QLocale::system().name().left( 2 );
 	setLanguage( m_locale );
@@ -62,7 +70,7 @@ void JsExtender::setLanguage( const QString &lang )
 	m_locale = lang;
 	if ( m_locale == "C" )
 		m_locale = "en";
-	Settings().setValue( "Main/language", m_locale );
+	Settings().setValue( "Main/Language", m_locale );
 	m_mainWindow->retranslate( m_locale );
 }
 

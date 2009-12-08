@@ -30,6 +30,7 @@
 #include <sstream>
 #include <QApplication>
 #include <QDateTime>
+#include <QLocale>
 
 #ifndef PKCS11_MODULE
 #  if defined(_WIN32)
@@ -311,6 +312,15 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 	{
 	case AccessCert:
 	{
+		QString lang;
+		switch( QLocale().language() )
+		{
+		case QLocale::English: lang = "en"; break;
+		case QLocale::Russian: lang = "ru"; break;
+		case QLocale::Estonian:
+		default: lang = "et"; break;
+		}
+
 		QString request = QString(
 			"<SOAP-ENV:Envelope"
 			"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
@@ -328,7 +338,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"</m:GetAccessToken>"
 			"</SOAP-ENV:Body>"
 			"</SOAP-ENV:Envelope>" )
-			.arg( Settings().value( "Main/Language", "et" ).toString().toUpper() );
+			.arg( lang.toUpper() );
 		return obj->getRequest( QString(
 			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
 			"Host: %1\r\n"
