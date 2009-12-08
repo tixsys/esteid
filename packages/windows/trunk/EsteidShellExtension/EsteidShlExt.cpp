@@ -168,25 +168,12 @@ STDMETHODIMP CEsteidShlExt::ExecuteDigidocclient(LPCMINVOKECOMMANDINFO pCmdInfo)
 	}
 
 	SHELLEXECUTEINFO  seInfo;
-
 	memset(&seInfo, 0, sizeof(SHELLEXECUTEINFO));
 	seInfo.cbSize       = sizeof(SHELLEXECUTEINFO);
 	seInfo.lpFile       = command.c_str();
 	seInfo.lpParameters = parameters.c_str();
 	seInfo.nShow        = SW_SHOW;
-
-	if (!ShellExecuteEx(&seInfo)) {
-		tstring title = _T("Error running process");
-		tstring mess = _T("Failed to execute command:\n");
-		mess += command;
-		mess += _T(" ");
-		mess += parameters;
-
-		MessageBox(pCmdInfo->hwnd, mess.c_str(), title.c_str(),
-		           MB_ICONERROR);
-
-		return E_INVALIDARG;
-	}
+	ShellExecuteEx(&seInfo);
 
 	return S_OK;
 }
