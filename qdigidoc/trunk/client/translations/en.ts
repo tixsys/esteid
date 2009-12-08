@@ -329,10 +329,6 @@ Start downloading?</translation>
         <translation>NB! Test signature</translation>
     </message>
     <message>
-        <source>You dont have permissions to write file %1</source>
-        <translation>You dont have permissions to write file %1</translation>
-    </message>
-    <message>
         <source>NB! Invalid signature</source>
         <translation>NB! Invalid signature</translation>
     </message>

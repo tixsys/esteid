@@ -329,10 +329,6 @@ Start downloading?</source>
         <translation>NB! Пробная подпись</translation>
     </message>
     <message>
-        <source>You dont have permissions to write file %1</source>
-        <translation>У Вас недостаточно прав для записи файла %1</translation>
-    </message>
-    <message>
         <source>NB! Invalid signature</source>
         <translation>NB: Ошибочная подпись</translation>
     </message>

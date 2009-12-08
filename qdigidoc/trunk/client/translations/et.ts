@@ -329,10 +329,6 @@ Alustame laadimist?</translation>
         <translation>NB! Test allkiri</translation>
     </message>
     <message>
-        <source>You dont have permissions to write file %1</source>
-        <translation>Teil ei ole piisavalt õigusi et kirjutada faili %1</translation>
-    </message>
-    <message>
         <source>NB! Invalid signature</source>
         <translation>NB: Vigane allkiri</translation>
     </message>

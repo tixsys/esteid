@@ -215,13 +215,13 @@ bool MainWindow::addFile( const QString &file )
 				this, tr("Save file"), docname, tr("Documents (*.bdoc *.ddoc)") );
 			if( docname.isEmpty() )
 				return false;
-			QString ext = QFileInfo( docname ).suffix().toLower();
-			if( ext != "bdoc" || ext != "ddoc" )
+			QStringList exts = QStringList() << "bdoc" << "ddoc";
+			if( !exts.contains( QFileInfo( docname ).suffix(), Qt::CaseInsensitive ) )
 				docname.append( "." + s.value( "type" ,"ddoc" ).toString() );
 			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, windowTitle(),
-					tr( "You dont have permissions to write file %1" ).arg( docname ) );
+					tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
 			}
 			else
 				select = false;
@@ -306,8 +306,8 @@ void MainWindow::buttonClicked( int button )
 				const QFileInfo f( param );
 				if( !f.isFile() )
 					continue;
-				QStringList suffix = QStringList() << "bdoc" << "ddoc";
-				if( doc->isNull() && suffix.contains( f.suffix(), Qt::CaseInsensitive ) )
+				QStringList exts = QStringList() << "bdoc" << "ddoc";
+				if( doc->isNull() && exts.contains( f.suffix(), Qt::CaseInsensitive ) )
 				{
 					if( doc->open( f.absoluteFilePath() ) )
 						setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
