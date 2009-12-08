@@ -402,6 +402,10 @@ Should I keep unsigned documents or remove these?</source>
         <source>You can not add files to signed document. Remove all signatures before adding files.</source>
         <translation>К подписанному контейнеру нельзя добавить файлы. Удалите прежде с контейнера все подписи.</translation>
     </message>
+    <message>
+        <source>Sign certificate is not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

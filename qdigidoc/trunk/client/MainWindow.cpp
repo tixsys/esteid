@@ -507,7 +507,12 @@ void MainWindow::enableSign()
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );
-		signButton->setToolTip( mobile ? tr("Personal code is not valid") : tr("No card in reader") );
+		if( mobile )
+			signButton->setToolTip( tr("Personal code is not valid") );
+		else if( !doc->signCert().isValid() )
+			signButton->setToolTip( tr("Sign certificate is not valid") );
+		else if( doc->signCert().isNull() );
+			signButton->setToolTip( tr("No card in reader") );
 		return;
 	}
 

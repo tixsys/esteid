@@ -399,6 +399,10 @@ Should I keep unsigned documents or remove these?</numerusform>
         <source>You can not add files to signed document. Remove all signatures before adding files.</source>
         <translation>You can not add files to signed document. Remove all signatures before adding files.</translation>
     </message>
+    <message>
+        <source>Sign certificate is not valid</source>
+        <translation>Sign certificate is not valid</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
