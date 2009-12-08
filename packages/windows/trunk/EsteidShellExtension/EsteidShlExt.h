@@ -8,6 +8,10 @@
 #include <shlobj.h>
 #include <comdef.h>
 #include <winreg.h>
+#include <tchar.h>
+
+#include <string>
+#include <vector>
 
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -17,6 +21,7 @@
 #define IDCARD_REGKEY L"SOFTWARE\\Estonian ID Card"
 #define IDCARD_REGVALUE L"Installed"
 
+typedef std::basic_string<TCHAR> tstring;
 
 
 // CEsteidShlExt
@@ -52,7 +57,7 @@ public:
 
 protected:
 	HBITMAP  m_DigidocBmp;
-	TCHAR    m_szFile[MAX_PATH];
+	std::vector<tstring> m_Files;
 
 	STDMETHODIMP CEsteidShlExt::ExecuteDigidocclient(LPCMINVOKECOMMANDINFO pCmdInfo);
 

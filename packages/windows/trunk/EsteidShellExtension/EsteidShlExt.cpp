@@ -23,6 +23,9 @@ STDMETHODIMP CEsteidShlExt::Initialize (
 	FORMATETC fmt = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
 	STGMEDIUM stg = { TYMED_HGLOBAL };
 	HDROP     hDrop;
+	TCHAR szFile[MAX_PATH];
+	HRESULT hr = S_OK;
+	m_Files.clear();
 
 	// Look for CF_HDROP data in the data object.
 	if (FAILED(pDataObj->GetData(&fmt, &stg))) {
@@ -34,22 +37,40 @@ STDMETHODIMP CEsteidShlExt::Initialize (
 	hDrop = (HDROP) GlobalLock(stg.hGlobal);
 
 	// Make sure it worked.
-	if (hDrop == NULL)
+	if (hDrop == NULL) {
+		ReleaseStgMedium(&stg);
 		return E_INVALIDARG;
+	}
 
 	// Sanity check - make sure there is at least one filename.
-	UINT uNumFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
-	HRESULT hr = S_OK;
-
-	if (uNumFiles == 0) {
+	UINT nFiles = DragQueryFile(hDrop, 0xFFFFFFFF, NULL, 0);
+	if (nFiles == 0) {
 		GlobalUnlock(stg.hGlobal);
 		ReleaseStgMedium(&stg);
 		return E_INVALIDARG;
 	}
 
-	// Get the name of the first file and store it in our member variable m_szFile.
-	if (DragQueryFile(hDrop, 0, m_szFile, MAX_PATH) == 0 )
+	for (UINT i = 0; i < nFiles; i++) {
+		// Get path length in chars
+		UINT len = DragQueryFile(hDrop, i, NULL, 0);
+		if (len == 0 || len >= MAX_PATH)
+			continue;
+
+		// Get the name of the file
+		if (DragQueryFile(hDrop, i, szFile, len+1) == 0)
+			continue;
+
+		tstring str = tstring(szFile);
+		if (str.empty())
+			continue;
+
+		m_Files.push_back(str);
+	}
+
+	if (!m_Files.empty()) {
+		// Don't show menu if no items were found
 		hr = E_INVALIDARG;
+	}
 
 	GlobalUnlock(stg.hGlobal);
 	ReleaseStgMedium(&stg);
@@ -84,7 +105,7 @@ USES_CONVERSION;
 	// If Explorer is asking for a help string, copy our string into the
 	// supplied buffer.
 	if (uFlags & GCS_HELPTEXT) {
-		LPCTSTR szText = _T("This is the simple shell extension's help");
+		LPCTSTR szText = _T("Allkirjasta valitud failid ID-kaardiga");
 
 		if (uFlags & GCS_UNICODE) {
 			// We need to cast pszName to a Unicode string, and then use the
@@ -103,43 +124,69 @@ USES_CONVERSION;
 
 STDMETHODIMP CEsteidShlExt::ExecuteDigidocclient(LPCMINVOKECOMMANDINFO pCmdInfo)
 {
-	TCHAR szCommand[MAX_PATH + 32];
-	TCHAR szArgument[MAX_PATH + 32];
+	tstring command;
+	tstring parameters;
 
 	// Registry reading
 	HKEY hkey;
-	DWORD dwSize = 1024 * sizeof(TCHAR);
 	DWORD dwRet;
-	TCHAR szInstalldir[1024];
+	DWORD dwSize = MAX_PATH * sizeof(TCHAR);
+	TCHAR szInstalldir[MAX_PATH];
 
 	dwRet = RegOpenKeyEx(HKEY_LOCAL_MACHINE, IDCARD_REGKEY, 0, KEY_QUERY_VALUE, &hkey);
 
 	if (dwRet == ERROR_SUCCESS) {
 		dwRet = RegQueryValueEx(hkey, IDCARD_REGVALUE, NULL, NULL, (LPBYTE)szInstalldir, &dwSize);
 		RegCloseKey(hkey);
-	}
+	} else {
+		tstring title = _T("Error reading registry");
+		tstring mess = _T("Failed to read registry value:\n");
+		mess += _T("HKLM");
+		mess += _T("\\");
+		mess += IDCARD_REGKEY;
+		mess += _T("\\");
+		mess += IDCARD_REGVALUE;
 
-	if (dwRet != ERROR_SUCCESS ) {
-		wsprintf(szCommand, _T("Failed to read registry value:\n%s\\%s\\%s"), L"HKLM", IDCARD_REGKEY, IDCARD_REGVALUE);
-		MessageBox(pCmdInfo->hwnd, szCommand, _T("Error reading registry"),
+		MessageBox(pCmdInfo->hwnd, mess.c_str(), title.c_str(),
 		           MB_ICONERROR);
 
 		return E_INVALIDARG;
 	}
 
-	wsprintf(szCommand, _T("%sqdigidocclient.exe"), szInstalldir);
-	wsprintf(szArgument, _T("\"%s\""), m_szFile);
+
+	command = tstring(szInstalldir);
+	command += _T("qdigidocclient.exe");
+
+	if (m_Files.empty())
+		return E_INVALIDARG;
+
+	// Construct command line arguments to pass to qdigidocclient.exe
+	for (std::vector<tstring>::iterator it = m_Files.begin(); it != m_Files.end(); it++) {
+		parameters += _T("\"");
+		parameters += *(it);
+		parameters += _T("\" ");
+	}
 
 	SHELLEXECUTEINFO  seInfo;
 
 	memset(&seInfo, 0, sizeof(SHELLEXECUTEINFO));
 	seInfo.cbSize       = sizeof(SHELLEXECUTEINFO);
-	seInfo.lpFile       = szCommand;
-	seInfo.lpParameters = szArgument;
+	seInfo.lpFile       = command.c_str();
+	seInfo.lpParameters = parameters.c_str();
 	seInfo.nShow        = SW_SHOW;
 
-	ShellExecuteEx(&seInfo);
+	if (!ShellExecuteEx(&seInfo)) {
+		tstring title = _T("Error running process");
+		tstring mess = _T("Failed to execute command:\n");
+		mess += command;
+		mess += _T(" ");
+		mess += parameters;
 
+		MessageBox(pCmdInfo->hwnd, mess.c_str(), title.c_str(),
+		           MB_ICONERROR);
+
+		return E_INVALIDARG;
+	}
 
 	return S_OK;
 }
