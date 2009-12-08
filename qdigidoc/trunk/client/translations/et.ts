@@ -369,7 +369,7 @@ Alustame laadimist?</translation>
     <message>
         <source>Server access certificate is about to expire!
 Start downloading?</source>
-        <translation>pääsutõend aegub varsti!
+        <translation>Juurdepääsutõend aegub varsti!
 Alustame laadimist?</translation>
     </message>
     <message>
