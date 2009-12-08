@@ -67,7 +67,7 @@ STDMETHODIMP CEsteidShlExt::Initialize (
 		m_Files.push_back(str);
 	}
 
-	if (!m_Files.empty()) {
+	if (m_Files.empty()) {
 		// Don't show menu if no items were found
 		hr = E_INVALIDARG;
 	}
