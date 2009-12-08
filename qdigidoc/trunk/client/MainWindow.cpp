@@ -133,8 +133,16 @@ MainWindow::MainWindow( QWidget *parent )
 	QApplication::instance()->installTranslator( commonTranslator );
 	QApplication::instance()->installTranslator( qtTranslator );
 	lang << "et" << "en" << "ru";
+	QString deflang;
+	switch( QLocale().language() )
+	{
+	case QLocale::English: deflang = "en"; break;
+	case QLocale::Russian: deflang = "ru"; break;
+	case QLocale::Estonian:
+	default: deflang = "et"; break;
+	}
 	on_languages_activated( lang.indexOf(
-		s.value( "Main/Language", "et" ).toString() ) );
+		s.value( "Main/Language", deflang ).toString() ) );
 
 	// Views
 	signContentView->setColumnHidden( 2, true );

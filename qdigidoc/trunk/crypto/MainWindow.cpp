@@ -103,8 +103,16 @@ MainWindow::MainWindow( QWidget *parent )
 	cards->hack();
 	languages->hack();
 	lang << "et" << "en" << "ru";
+	QString deflang;
+	switch( QLocale().language() )
+	{
+	case QLocale::English: deflang = "en"; break;
+	case QLocale::Russian: deflang = "ru"; break;
+	case QLocale::Estonian:
+	default: deflang = "et"; break;
+	}
 	on_languages_activated( lang.indexOf(
-		Settings().value( "Main/Language", "et" ).toString() ) );
+		Settings().value( "Main/Language", deflang ).toString() ) );
 
 	close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
