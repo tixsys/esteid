@@ -404,7 +404,7 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Sign certificate is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат подписи недействителен</translation>
     </message>
 </context>
 <context>
