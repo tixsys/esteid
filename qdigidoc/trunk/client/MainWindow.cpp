@@ -808,16 +808,21 @@ bool MainWindow::checkAccessCert()
 			return false;
 		}
 
-		if( !p12Cert.certificate().isValid() &&
-			QMessageBox::warning( this, tr( "Server access certificate" ),
-				tr( "Server access certificate is not valid!\nStart downloading?" ),
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
-			return true;
-
-		if( p12Cert.certificate().expiryDate() > QDateTime::currentDateTime().addDays( 8 ) ||
-			QMessageBox::question( this, tr( "Server access certificate" ),
-				tr( "Server access certificate is about to expire!\nStart downloading?" ),
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+		if( !p12Cert.certificate().isValid() )
+		{
+			if( QMessageBox::warning( this, tr( "Server access certificate" ),
+					tr( "Server access certificate is not valid!\nStart downloading?" ),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
+				return true;
+		}
+		else if( p12Cert.certificate().expiryDate() < QDateTime::currentDateTime().addDays( 8 ) )
+		{
+			if( QMessageBox::question( this, tr( "Server access certificate" ),
+					tr( "Server access certificate is about to expire!\nStart downloading?" ),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
+				return true;
+		}
+		else
 			return true;
 	}
 	else
