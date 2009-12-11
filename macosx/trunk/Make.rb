@@ -199,6 +199,22 @@ class Application
 		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
 		FileUtils.mkdir_p(File.join(binaries, '10.6')) unless File.exists? File.join(binaries, '10.6')
 		
+		puts "Creating smartcardpp..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../smartcardpp/trunk').to_s) do
+			run_command 'rm -fR build' if File.exists? 'build'
+			run_command 'mkdir build'
+			
+			FileUtils.cd('build') do
+				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
+				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+				
+				if @options.force
+					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
+				end
+			end
+		end
+		
 		puts "Creating Mozilla extension..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
@@ -206,7 +222,7 @@ class Application
 			run_command 'mkdir build'
 			
 			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
+				run_command 'cmake -G "Xcode" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
 				run_command "xcodebuild -project xpi.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
 				run_command "ditto -xk *.xpi #{@options.mozappid}"
 				
@@ -232,7 +248,7 @@ class Application
 			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command "rm -R -f #{@options.target}" if File.exists? "#{@options.target}"
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
 			run_command "xcodebuild -project qesteidutil.xcodeproj -configuration #{@options.target} -target qesteidutil -sdk macosx10.4"
 			
 			puts "Copying qesteidutil.app..." if @options.verbose

@@ -1,9 +1,9 @@
 /* Copyright (c) 2009 Janek Priimann */
 
-#import "common.h"
-#import "PCSCManager.h"
-#import "SmartCardManager.h"
-#import "EstEidCard.h"
+#import <smartcardpp/common.h>
+#import <smartcardpp/PCSCManager.h>
+#import <smartcardpp/SmartCardManager.h>
+#import <smartcardpp/esteid/EstEidCard.h>
 #import "EstEIDReaderManager.h"
 
 static inline NSData *CPlusDataToNSData(ByteVec bytes)

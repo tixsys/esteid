@@ -3,10 +3,10 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <Security/Security.h>
 #import <dlfcn.h>
-#import "common.h"
-#import "PCSCManager.h"
-#import "SmartCardManager.h"
-#import "EstEidCard.h"
+#import <smartcardpp/common.h>
+#import <smartcardpp/PCSCManager.h>
+#import <smartcardpp/SmartCardManager.h>
+#import <smartcardpp/esteid/EstEidCard.h>
 #import "EstEIDKTCertificate.h"
 #import "EstEIDKTIdentityPreference.h"
 
