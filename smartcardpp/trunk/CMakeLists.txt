@@ -97,7 +97,7 @@ stage_smartcard_headers("${sim_HDRS}")
 
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp DESTINATION ${INCLUDE_INSTALL_DIR})
 
-if(WIN32)
+if(WIN32 OR APPLE)
     set(LIB_TYPE STATIC)
 else(WIN32)
     set(LIB_TYPE SHARED)
