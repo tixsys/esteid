@@ -99,9 +99,9 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp DESTINATION ${INCLUDE_
 
 if(WIN32 OR APPLE)
     set(LIB_TYPE STATIC)
-else(WIN32)
+else(WIN32 OR APPLE)
     set(LIB_TYPE SHARED)
-endif(WIN32)
+endif(WIN32 OR APPLE)
 
 add_library(smartcardpp ${LIB_TYPE}
     ${GENERATED_HEADERS}
