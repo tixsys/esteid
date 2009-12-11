@@ -204,6 +204,10 @@ set(esteid_plugin_WIN
     plugins/npesteid.def
 )
 
+if( APPLE )
+    include_directories( /usr/local/include/../include )
+endif( APPLE )
+
 # TODO: Find a better way to pass special CFLAGS to targets
 # add_definitions(${XPCOM_CPP_FLAGS})
 
