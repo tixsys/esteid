@@ -251,35 +251,11 @@
   <data name="prodBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
   </data>
-  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 18</value>
-  </data>
-  <data name="label15.Text" xml:space="preserve">
-    <value>Имя</value>
-  </data>
-  <data name="Locationtext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 63</value>
-  </data>
-  <data name="Locationtext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
-  </data>
-  <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 38</value>
-  </data>
-  <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
-  </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 18</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>Пояснение</value>
-  </data>
-  <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 13</value>
-  </data>
-  <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 13</value>
@@ -292,9 +268,6 @@
   </data>
   <data name="label14.Text" xml:space="preserve">
     <value>Местонахождение</value>
-  </data>
-  <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 88</value>
   </data>
   <data name="SigVisible.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 22</value>

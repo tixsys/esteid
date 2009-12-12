@@ -233,35 +233,14 @@
   <data name="prodBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 110</value>
   </data>
-  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 18</value>
-  </data>
   <data name="label15.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Locationtext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 63</value>
-  </data>
-  <data name="Locationtext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
-  </data>
-  <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 38</value>
-  </data>
-  <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
+    <value>City</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>Description</value>
-  </data>
-  <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 13</value>
-  </data>
-  <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 13</value>
@@ -275,8 +254,11 @@
   <data name="label14.Text" xml:space="preserve">
     <value>Location</value>
   </data>
-  <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 88</value>
+  <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 18</value>
+  </data>
+  <data name="label16.Text" xml:space="preserve">
+    <value>County</value>
   </data>
   <data name="SigVisible.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 22</value>
@@ -284,11 +266,29 @@
   <data name="SigVisible.Text" xml:space="preserve">
     <value>Need visible signature</value>
   </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 18</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 18</value>
+  </data>
+  <data name="label18.Text" xml:space="preserve">
+    <value>Index</value>
+  </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 13</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
     <value>Signature</value>
+  </data>
+  <data name="labelName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 26</value>
+  </data>
+  <data name="labelName.Text" xml:space="preserve">
+    <value>PDF signer</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -455,5 +455,8 @@
         AAAABwAAAAAAAAAHAAAAAAAAAA8AAIAAAAAAHwAAgAAAAAAfAADwAAAAAD8AAP///////wAA////////
         AAA=
 </value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>PDF signer</value>
   </data>
 </root>

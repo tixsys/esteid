@@ -104,9 +104,8 @@ namespace EstEIDSigner
             if (openFile.ShowDialog() != DialogResult.OK)
                 return;
 
-            status("", false);            
-            linkInput.Text = System.IO.Path.GetFileName(openFile.FileName);
-            this.inputFile = openFile.FileName;
+            status("", false);
+            InputFile = openFile.FileName;
             
             InitReader();
         }
@@ -122,7 +121,52 @@ namespace EstEIDSigner
                 return;
                         
             linkOutput.Text = System.IO.Path.GetFileName(saveFile.FileName);
-            this.outputFile = saveFile.FileName;
+            this.outputFile = saveFile.FileName;            
+        }
+
+        private string InputFile
+        {
+            set
+            {
+                this.linkInput.Text = System.IO.Path.GetFileName(value);
+                this.inputFile = value;
+            }
+            get
+            {
+                return this.inputFile;
+            }
+        }
+
+        private string LocationText
+        {
+            set
+            {
+            }
+            get
+            {
+                StringBuilder buf = new StringBuilder();
+                if (Citytext.Text.Length > 0)
+                    buf.Append(Citytext.Text);
+                if (Countytext.Text.Length > 0)
+                {
+                    if (buf.Length > 0)
+                        buf.Append(", ");
+                    buf.Append(Countytext.Text);
+                }
+                if (Countrytext.Text.Length > 0)
+                {
+                    if (buf.Length > 0)
+                        buf.Append(", ");
+                    buf.Append(Countrytext.Text);
+                }
+                if (Indextext.Text.Length > 0)
+                {
+                    if (buf.Length > 0)
+                        buf.Append(", ");
+                    buf.Append(Indextext.Text);
+                }
+                return buf.ToString();
+            }
         }
 
         private void OpenCertStore()
@@ -189,7 +233,7 @@ namespace EstEIDSigner
             Appearance app = new Appearance();
             app.Contact = Contacttext.Text;
             app.Reason = Reasontext.Text;
-            app.Location = Locationtext.Text;
+            app.Location = LocationText;
             app.Visible = SigVisible.Checked;
             app.Rectangle = new SignatureLocation(config);
             app.Page = config.ToUInt("signature_page", EstEIDSettings.SignaturePage);
@@ -294,6 +338,12 @@ namespace EstEIDSigner
             // UI
             string lang = config.ToString("language");            
             comboLanguage.SelectedIndex = GetCulture(lang);
+
+            // Signature box content
+            Citytext.Text = config.ToString("city");
+            Countytext.Text = config.ToString("county");
+            Countrytext.Text = config.ToString("country");
+            Indextext.Text = config.ToString("index");
         }
 
         private int GetCulture(string name)
@@ -354,6 +404,10 @@ namespace EstEIDSigner
             config.AddOrReplace("language", culture.Name);
             statusBox.Text = "";
 
+            // Form title
+            labelFormName.Text = Resources.UI_FORM_NAME;
+            this.Text = Resources.UI_FORM_TITLE;
+
             // PDF Document box
             label1.Text = Resources.UI_PDF_DOC;
             label2.Text = Resources.UI_INPUT;
@@ -376,9 +430,12 @@ namespace EstEIDSigner
 
             // Signature box
             label12.Text = Resources.UI_SIGNATURE;
-            label13.Text = Resources.UI_SIGNATURE_DESCRIPTION;
-            label14.Text = Resources.UI_SIGNATURE_NAME;
-            label15.Text = Resources.UI_SIGNATURE_LOCATION;
+            label14.Text = Resources.UI_SIGNATURE_RESOLUTION;
+            label13.Text = Resources.UI_SIGNATURE_ROLE;
+            label15.Text = Resources.UI_SIGNATURE_CITY;
+            label16.Text = Resources.UI_SIGNATURE_COUNTY;
+            label17.Text = Resources.UI_SIGNATURE_COUNTRY;
+            label18.Text = Resources.UI_SIGNATURE_INDEX;
             SigVisible.Text = Resources.UI_SIGNATURE_VISIBLE;
 
             // Other fields
@@ -397,7 +454,13 @@ namespace EstEIDSigner
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (config != null)
+            {
+                config.AddOrReplace("city", Citytext.Text);
+                config.AddOrReplace("county", Countytext.Text);
+                config.AddOrReplace("country", Countrytext.Text);
+                config.AddOrReplace("index", Indextext.Text);
                 config.Save();
+            }
         }
 
         private void linkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -422,6 +485,34 @@ namespace EstEIDSigner
         private void comboLanguage_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetCulture(comboLanguage.SelectedIndex);
-        }  
+        }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            if (fileList != null)
+            {
+                if (fileList.Length > 1)
+                {
+                    MessageBox.Show(Resources.UI_TOO_MANY_FILES, Resources.ERROR);
+                    return;
+                }
+                
+                if (System.IO.Path.GetExtension(fileList[0]).Equals(".pdf"))
+                {
+                    InputFile = fileList[0];
+                    InitReader();
+                }
+            }            
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.All;
+            else
+                e.Effect = DragDropEffects.None;
+        }
     }
 }

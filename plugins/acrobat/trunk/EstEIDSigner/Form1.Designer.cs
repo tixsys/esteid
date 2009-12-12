@@ -87,17 +87,24 @@
             this.creatorBox = new System.Windows.Forms.Label();
             this.prodBox = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.Locationtext = new System.Windows.Forms.TextBox();
+            this.Citytext = new System.Windows.Forms.TextBox();
             this.Contacttext = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.Reasontext = new System.Windows.Forms.TextBox();
             this.tablePanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.tablePanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.SigVisible = new System.Windows.Forms.CheckBox();
+            this.Countytext = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.Countrytext = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.Indextext = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.comboLanguage = new System.Windows.Forms.ComboBox();
+            this.labelFormName = new System.Windows.Forms.Label();
+            this.SigVisible = new System.Windows.Forms.CheckBox();
             this.tablePanel1.SuspendLayout();
             this.tablePanel2.SuspendLayout();
             this.tablePanel3.SuspendLayout();
@@ -106,7 +113,7 @@
             // DebugBox
             // 
             resources.ApplyResources(this.DebugBox, "DebugBox");
-            this.DebugBox.MaximumSize = new System.Drawing.Size(620, 138);
+            this.DebugBox.MaximumSize = new System.Drawing.Size(620, 130);
             this.DebugBox.MinimumSize = new System.Drawing.Size(620, 138);
             this.DebugBox.Name = "DebugBox";
             // 
@@ -278,20 +285,20 @@
             resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
             // 
-            // Locationtext
+            // Citytext
             // 
-            resources.ApplyResources(this.Locationtext, "Locationtext");
-            this.Locationtext.Name = "Locationtext";
+            resources.ApplyResources(this.Citytext, "Citytext");
+            this.Citytext.Name = "Citytext";
             // 
             // Contacttext
             // 
             resources.ApplyResources(this.Contacttext, "Contacttext");
             this.Contacttext.Name = "Contacttext";
             // 
-            // label13
+            // label14
             // 
-            resources.ApplyResources(this.label13, "label13");
-            this.label13.Name = "label13";
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
             // 
             // Reasontext
             // 
@@ -327,26 +334,55 @@
             // 
             this.tablePanel3.BackColor = System.Drawing.SystemColors.Window;
             resources.ApplyResources(this.tablePanel3, "tablePanel3");
-            this.tablePanel3.Controls.Add(this.Locationtext, 1, 2);
-            this.tablePanel3.Controls.Add(this.Reasontext, 1, 0);
-            this.tablePanel3.Controls.Add(this.Contacttext, 1, 1);
-            this.tablePanel3.Controls.Add(this.label15, 0, 2);
+            this.tablePanel3.Controls.Add(this.Citytext, 1, 3);
+            this.tablePanel3.Controls.Add(this.label15, 0, 3);
+            this.tablePanel3.Controls.Add(this.Countytext, 1, 4);
+            this.tablePanel3.Controls.Add(this.label16, 0, 4);
+            this.tablePanel3.Controls.Add(this.label17, 0, 5);
+            this.tablePanel3.Controls.Add(this.Countrytext, 1, 5);
+            this.tablePanel3.Controls.Add(this.label18, 0, 6);
+            this.tablePanel3.Controls.Add(this.Indextext, 1, 6);
             this.tablePanel3.Controls.Add(this.label13, 0, 0);
             this.tablePanel3.Controls.Add(this.label14, 0, 1);
-            this.tablePanel3.Controls.Add(this.SigVisible, 1, 3);
+            this.tablePanel3.Controls.Add(this.Contacttext, 1, 0);
+            this.tablePanel3.Controls.Add(this.Reasontext, 1, 1);
+            this.tablePanel3.Controls.Add(this.SigVisible, 1, 7);
             this.tablePanel3.Name = "tablePanel3";
             // 
-            // label14
+            // Countytext
             // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.Name = "label14";
+            resources.ApplyResources(this.Countytext, "Countytext");
+            this.Countytext.Name = "Countytext";
             // 
-            // SigVisible
+            // label16
             // 
-            resources.ApplyResources(this.SigVisible, "SigVisible");
-            this.SigVisible.Name = "SigVisible";
-            this.SigVisible.UseVisualStyleBackColor = true;
-            this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.Name = "label16";
+            // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
+            // Countrytext
+            // 
+            resources.ApplyResources(this.Countrytext, "Countrytext");
+            this.Countrytext.Name = "Countrytext";
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
+            // Indextext
+            // 
+            resources.ApplyResources(this.Indextext, "Indextext");
+            this.Indextext.Name = "Indextext";
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
             // 
             // label12
             // 
@@ -367,11 +403,27 @@
             this.comboLanguage.Name = "comboLanguage";
             this.comboLanguage.SelectedIndexChanged += new System.EventHandler(this.comboLanguage_SelectedIndexChanged);
             // 
+            // labelFormName
+            // 
+            resources.ApplyResources(this.labelFormName, "labelFormName");
+            this.labelFormName.BackColor = System.Drawing.Color.Transparent;
+            this.labelFormName.ForeColor = System.Drawing.SystemColors.Info;
+            this.labelFormName.Name = "labelFormName";
+            // 
+            // SigVisible
+            // 
+            resources.ApplyResources(this.SigVisible, "SigVisible");
+            this.SigVisible.Name = "SigVisible";
+            this.SigVisible.UseVisualStyleBackColor = true;
+            this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
+            // 
             // Form1
             // 
+            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::EstEIDSigner.Properties.Resources.background;
+            this.Controls.Add(this.labelFormName);
             this.Controls.Add(this.comboLanguage);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.tablePanel3);
@@ -387,6 +439,8 @@
             this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tablePanel1.ResumeLayout(false);
             this.tablePanel1.PerformLayout();
@@ -417,10 +471,10 @@
         private System.Windows.Forms.Label authorBox;        
         private System.Windows.Forms.TextBox DebugBox;      
         private DisabledSignButton signButton;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox Reasontext;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox Locationtext;
+        private System.Windows.Forms.TextBox Citytext;
         private System.Windows.Forms.TextBox Contacttext;
         private System.Windows.Forms.Label statusBox;
         private System.Windows.Forms.Label label4;
@@ -436,7 +490,14 @@
         private System.Windows.Forms.TableLayoutPanel tablePanel3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox comboLanguage;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label labelFormName;
+        private System.Windows.Forms.TextBox Countytext;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox Countrytext;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox Indextext;
         private System.Windows.Forms.CheckBox SigVisible;
     }
 }
