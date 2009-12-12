@@ -593,7 +593,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vali sisend.
+        ///   Looks up a localized string similar to Vali allkirjastatav PDF dokument.
         /// </summary>
         internal static string UI_CHOOSE_INPUT {
             get {
@@ -602,7 +602,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vali väljund.
+        ///   Looks up a localized string similar to Salvesta nimega.
         /// </summary>
         internal static string UI_CHOOSE_OUTPUT {
             get {
@@ -634,6 +634,24 @@ namespace EstEIDSigner.Properties {
         internal static string UI_EXPIRED_PIN {
             get {
                 return ResourceManager.GetString("UI_EXPIRED_PIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PDF allkirjastaja.
+        /// </summary>
+        internal static string UI_FORM_NAME {
+            get {
+                return ResourceManager.GetString("UI_FORM_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PDF allkirjastaja.
+        /// </summary>
+        internal static string UI_FORM_TITLE {
+            get {
+                return ResourceManager.GetString("UI_FORM_TITLE", resourceCulture);
             }
         }
         
@@ -782,29 +800,56 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kirjeldus.
+        ///   Looks up a localized string similar to Linn.
         /// </summary>
-        internal static string UI_SIGNATURE_DESCRIPTION {
+        internal static string UI_SIGNATURE_CITY {
             get {
-                return ResourceManager.GetString("UI_SIGNATURE_DESCRIPTION", resourceCulture);
+                return ResourceManager.GetString("UI_SIGNATURE_CITY", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asukoht.
+        ///   Looks up a localized string similar to Riik.
         /// </summary>
-        internal static string UI_SIGNATURE_LOCATION {
+        internal static string UI_SIGNATURE_COUNTRY {
             get {
-                return ResourceManager.GetString("UI_SIGNATURE_LOCATION", resourceCulture);
+                return ResourceManager.GetString("UI_SIGNATURE_COUNTRY", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nimi.
+        ///   Looks up a localized string similar to Maakond.
         /// </summary>
-        internal static string UI_SIGNATURE_NAME {
+        internal static string UI_SIGNATURE_COUNTY {
             get {
-                return ResourceManager.GetString("UI_SIGNATURE_NAME", resourceCulture);
+                return ResourceManager.GetString("UI_SIGNATURE_COUNTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indeks.
+        /// </summary>
+        internal static string UI_SIGNATURE_INDEX {
+            get {
+                return ResourceManager.GetString("UI_SIGNATURE_INDEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolutsioon.
+        /// </summary>
+        internal static string UI_SIGNATURE_RESOLUTION {
+            get {
+                return ResourceManager.GetString("UI_SIGNATURE_RESOLUTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roll.
+        /// </summary>
+        internal static string UI_SIGNATURE_ROLE {
+            get {
+                return ResourceManager.GetString("UI_SIGNATURE_ROLE", resourceCulture);
             }
         }
         
@@ -850,6 +895,15 @@ namespace EstEIDSigner.Properties {
         internal static string UI_TITLE {
             get {
                 return ResourceManager.GetString("UI_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Korraga saab allkirjastada ainult 1 faili.
+        /// </summary>
+        internal static string UI_TOO_MANY_FILES {
+            get {
+                return ResourceManager.GetString("UI_TOO_MANY_FILES", resourceCulture);
             }
         }
         

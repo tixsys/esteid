@@ -335,10 +335,10 @@
     <value>Autor:</value>
   </data>
   <data name="UI_CHOOSE_INPUT" xml:space="preserve">
-    <value>Vali sisend</value>
+    <value>Vali allkirjastatav PDF dokument</value>
   </data>
   <data name="UI_CHOOSE_OUTPUT" xml:space="preserve">
-    <value>Vali väljund</value>
+    <value>Salvesta nimega</value>
   </data>
   <data name="UI_CREATOR" xml:space="preserve">
     <value>Looja:</value>
@@ -361,14 +361,14 @@
   <data name="UI_SIGNATURE" xml:space="preserve">
     <value>Allkiri</value>
   </data>
-  <data name="UI_SIGNATURE_DESCRIPTION" xml:space="preserve">
-    <value>Kirjeldus</value>
+  <data name="UI_SIGNATURE_RESOLUTION" xml:space="preserve">
+    <value>Resolutsioon</value>
   </data>
-  <data name="UI_SIGNATURE_LOCATION" xml:space="preserve">
-    <value>Asukoht</value>
+  <data name="UI_SIGNATURE_CITY" xml:space="preserve">
+    <value>Linn</value>
   </data>
-  <data name="UI_SIGNATURE_NAME" xml:space="preserve">
-    <value>Nimi</value>
+  <data name="UI_SIGNATURE_ROLE" xml:space="preserve">
+    <value>Roll</value>
   </data>
   <data name="UI_SIGNATURE_VISIBLE" xml:space="preserve">
     <value>Soovid nähtavat allkirja</value>
@@ -408,5 +408,23 @@
   </data>
   <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
     <value>Sisesta {0} PINPAD'ilt</value>
+  </data>
+  <data name="UI_TOO_MANY_FILES" xml:space="preserve">
+    <value>Korraga saab allkirjastada ainult 1 faili</value>
+  </data>
+  <data name="UI_FORM_NAME" xml:space="preserve">
+    <value>PDF allkirjastaja</value>
+  </data>
+  <data name="UI_FORM_TITLE" xml:space="preserve">
+    <value>PDF allkirjastaja</value>
+  </data>
+  <data name="UI_SIGNATURE_COUNTRY" xml:space="preserve">
+    <value>Riik</value>
+  </data>
+  <data name="UI_SIGNATURE_COUNTY" xml:space="preserve">
+    <value>Maakond</value>
+  </data>
+  <data name="UI_SIGNATURE_INDEX" xml:space="preserve">
+    <value>Indeks</value>
   </data>
 </root>

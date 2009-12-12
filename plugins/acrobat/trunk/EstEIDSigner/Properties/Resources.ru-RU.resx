@@ -361,14 +361,14 @@
   <data name="UI_SIGNATURE" xml:space="preserve">
     <value>Подпись</value>
   </data>
-  <data name="UI_SIGNATURE_DESCRIPTION" xml:space="preserve">
-    <value>Пояснение</value>
+  <data name="UI_SIGNATURE_RESOLUTION" xml:space="preserve">
+    <value>Resolutsioon</value>
   </data>
-  <data name="UI_SIGNATURE_LOCATION" xml:space="preserve">
-    <value>Местонахождение</value>
+  <data name="UI_SIGNATURE_CITY" xml:space="preserve">
+    <value>Linn</value>
   </data>
-  <data name="UI_SIGNATURE_NAME" xml:space="preserve">
-    <value>Имя</value>
+  <data name="UI_SIGNATURE_ROLE" xml:space="preserve">
+    <value>Roll</value>
   </data>
   <data name="UI_SIGNATURE_VISIBLE" xml:space="preserve">
     <value>Требуется видимая подпись</value>
@@ -408,5 +408,23 @@
   </data>
   <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
     <value>Enter {0} from PINPAD</value>
+  </data>
+  <data name="UI_TOO_MANY_FILES" xml:space="preserve">
+    <value>Signature can be added to 1 file only</value>
+  </data>
+  <data name="UI_FORM_NAME" xml:space="preserve">
+    <value>PDF allkirjastaja</value>
+  </data>
+  <data name="UI_FORM_TITLE" xml:space="preserve">
+    <value>PDF allkirjastaja</value>
+  </data>
+  <data name="UI_SIGNATURE_COUNTRY" xml:space="preserve">
+    <value>Riik</value>
+  </data>
+  <data name="UI_SIGNATURE_COUNTY" xml:space="preserve">
+    <value>Maakond</value>
+  </data>
+  <data name="UI_SIGNATURE_INDEX" xml:space="preserve">
+    <value>Indeks</value>
   </data>
 </root>
