@@ -26,7 +26,7 @@
 #include <QFileDialog>
 #include <QLocale>
 #include <QMessageBox>
-#include <QtWebKit>
+#include <QTemporaryFile>
 
 #include "CertUpdate.h"
 #include "mainwindow.h"

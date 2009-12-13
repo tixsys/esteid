@@ -28,6 +28,7 @@
 #include <QApplication>
 #include <QMenuBar>
 #include <QWebFrame>
+#include <QTranslator>
 
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )

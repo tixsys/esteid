@@ -26,7 +26,9 @@
 
 #include <QLabel>
 #include <QObject>
-#include <QtWebKit>
+#include <QWebFrame>
+#include <QDateTime>
+#include <QHttp>
 #include <QXmlStreamReader>
 
 class MainWindow;
