@@ -235,7 +235,7 @@ namespace EstEIDSigner
             app.Reason = Reasontext.Text;
             app.Location = LocationText;
             app.Visible = SigVisible.Checked;
-            app.Rectangle = new SignatureLocation(config);
+            app.SigLocation = new SignatureLocation(config);
             app.Page = config.ToUInt("signature_page", EstEIDSettings.SignaturePage);
             app.SignatureRender = (PdfSignatureAppearance.SignatureRender)config.ToUInt("signature_render", EstEIDSettings.SignatureDescription);
 

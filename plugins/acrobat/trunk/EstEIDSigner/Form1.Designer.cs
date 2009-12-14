@@ -101,10 +101,10 @@
             this.label18 = new System.Windows.Forms.Label();
             this.Indextext = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.SigVisible = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.comboLanguage = new System.Windows.Forms.ComboBox();
             this.labelFormName = new System.Windows.Forms.Label();
-            this.SigVisible = new System.Windows.Forms.CheckBox();
             this.tablePanel1.SuspendLayout();
             this.tablePanel2.SuspendLayout();
             this.tablePanel3.SuspendLayout();
@@ -384,6 +384,13 @@
             resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
             // 
+            // SigVisible
+            // 
+            resources.ApplyResources(this.SigVisible, "SigVisible");
+            this.SigVisible.Name = "SigVisible";
+            this.SigVisible.UseVisualStyleBackColor = true;
+            this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
+            // 
             // label12
             // 
             resources.ApplyResources(this.label12, "label12");
@@ -409,13 +416,6 @@
             this.labelFormName.BackColor = System.Drawing.Color.Transparent;
             this.labelFormName.ForeColor = System.Drawing.SystemColors.Info;
             this.labelFormName.Name = "labelFormName";
-            // 
-            // SigVisible
-            // 
-            resources.ApplyResources(this.SigVisible, "SigVisible");
-            this.SigVisible.Name = "SigVisible";
-            this.SigVisible.UseVisualStyleBackColor = true;
-            this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
             // 
             // Form1
             // 

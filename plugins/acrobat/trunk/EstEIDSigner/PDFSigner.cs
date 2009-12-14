@@ -100,12 +100,69 @@ namespace EstEIDSigner
         }
     }
 
+    /// <summary>
+    /// Helper class to load signature location from config and
+    /// to do some location calculations
+    /// </summary>
     class SignatureLocation
     {
-        private Rectangle rectangle;
+        private Rectangle rectangle = null;
+        private Rectangle bounds = null;
+        private bool useSector;
+        private UInt32 sectorIndex;
+
+        public const uint SIGNATURE_WIDTH = 150;
+        public const uint SIGNATURE_HEIGHT = 100;
+        public const uint SIGNATURE_MARGIN = 10;
+
+        public bool UseSector
+        {
+            set
+            {
+                useSector = value;
+            }
+            get
+            {
+                return useSector;
+            }
+        }
+
+        public UInt32 SectorIndex
+        {
+            set
+            {
+                sectorIndex = value;
+            }
+            get
+            {
+                return sectorIndex;
+            }
+        }
+
+        public Rectangle Bounds
+        {
+            set
+            {
+                bounds = value;
+            }
+            get
+            {
+                return bounds;
+            }
+        }
 
         public SignatureLocation(EstEIDSettings config)
         {
+            UseSector = config.ToBoolean("signature_use_sector");
+            if (!UseSector)
+            {
+                // probably both are undefined ?
+                // then default to using sector based signature location
+                if (!config.ToBoolean("signature_use_coords"))
+                    UseSector = true;
+            }
+
+            SectorIndex = config.ToUInt("signature_sector", "9");
             rectangle = new Rectangle(
                 config.ToUInt("signature_x", EstEIDSettings.SignatureX),
                 config.ToUInt("signature_y", EstEIDSettings.SignatureY),
@@ -115,6 +172,81 @@ namespace EstEIDSigner
 
         public static implicit operator Rectangle(SignatureLocation location)
         {
+            float x, y;
+
+            if (location.Bounds == null)
+                throw new Exception("PDF page bounds are not set!");
+
+            if (location.UseSector)
+            {
+                switch (location.SectorIndex)
+                {
+                    case 1: // top left
+                        x = SIGNATURE_MARGIN;
+                        y = location.Bounds.Height - SIGNATURE_HEIGHT - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 2: // top center
+                        x = location.Bounds.Width / 2 - SIGNATURE_WIDTH / 2 - SIGNATURE_MARGIN;
+                        y = location.Bounds.Height - SIGNATURE_HEIGHT - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 3: // top right
+                        x = location.Bounds.Width - SIGNATURE_WIDTH - SIGNATURE_MARGIN;
+                        y = location.Bounds.Height - SIGNATURE_HEIGHT - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 4: // center left
+                        x = SIGNATURE_MARGIN;
+                        y = location.Bounds.Height / 2 - SIGNATURE_HEIGHT / 2 - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 5: // center center
+                        x = location.Bounds.Width / 2 - SIGNATURE_WIDTH / 2 - SIGNATURE_MARGIN;
+                        y = location.Bounds.Height / 2 - SIGNATURE_HEIGHT / 2 - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 6: // center right
+                        x = location.Bounds.Width - SIGNATURE_WIDTH - SIGNATURE_MARGIN;
+                        y = location.Bounds.Height / 2 - SIGNATURE_HEIGHT / 2 - SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 7: // bottom left
+                        x = SIGNATURE_MARGIN;
+                        y = SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 8: // bottom center
+                        x = location.Bounds.Width / 2 - SIGNATURE_WIDTH / 2 - SIGNATURE_MARGIN;
+                        y = SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                    case 9: // bottom right
+                        x = location.Bounds.Width - SIGNATURE_WIDTH - SIGNATURE_MARGIN;                        
+                        y = SIGNATURE_MARGIN;
+                        location.rectangle = new Rectangle(x, y,
+                            x + SIGNATURE_WIDTH,
+                            y + SIGNATURE_HEIGHT);
+                        break;
+                }
+            }
+
             return (location.rectangle);
         }
     }
@@ -129,7 +261,7 @@ namespace EstEIDSigner
         private string location;
         private string contact;
         private bool visible;
-        private Rectangle rectangle;
+        private SignatureLocation sigLocation;
         private uint page;
         private PdfSignatureAppearance.SignatureRender render;
 
@@ -163,10 +295,10 @@ namespace EstEIDSigner
             set { visible = value; }
             get { return visible; }
         }
-        public Rectangle Rectangle
+        public SignatureLocation SigLocation
         {
-            set { rectangle = value; }
-            get { return rectangle; }
+            set { sigLocation = value; }
+            get { return sigLocation; }
         }
         public uint Page
         {
@@ -717,13 +849,18 @@ namespace EstEIDSigner
             if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
                 throw new Exception(Resources.INVALID_CERT);
 
-            PdfReader reader = new PdfReader(filename);
+            PdfReader reader = new PdfReader(filename);            
+            Document document = new Document(reader.GetPageSizeWithRotation(1));
             PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0', null, nextRevision);
             if (metadata != null)
                 stp.XmpMetadata = metadata.getStreamedMetaData();
             PdfSignatureAppearance sap = stp.SignatureAppearance;
             if (appearance.Visible)
-                sap.SetVisibleSignature(appearance.Rectangle, (int)appearance.Page, null);
+            {
+                if (appearance.SigLocation.UseSector)
+                    appearance.SigLocation.Bounds = document.PageSize;
+                sap.SetVisibleSignature(appearance.SigLocation, (int)appearance.Page, null);
+            }
             sap.SignDate = DateTime.Now;
             sap.SetCrypto(null, chain, null, null);
             sap.Reason = (appearance.Reason.Length > 0) ? appearance.Reason : null;
