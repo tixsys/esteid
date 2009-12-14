@@ -105,7 +105,7 @@ var htmlStrings = {
 	"labelNewPUK2": new tr( "Uus PUK kood uuesti", "Repeat new PUK code", "Новый PUK код заново" ),
 	"labelPUK": new tr( "PUK kood", "PUK code", "PUK код" ),
 	
-	"labelEmailAddress": new tr( "E-posti aadress kuhu suunatakse Sinu @eesti.ee kirjad", "Email addres where your @eesti.ee emails will be forwarded", "Адрес эл. почты, куда перенаправляют Вашу почту с @eesti.ee" ),
+	"labelEmailAddress": new tr( "E-posti aadress, kuhu suunatakse sinu @eesti.ee kirjad", "Email addres where your @eesti.ee emails will be forwarded", "Адрес эл. почты, куда перенаправляют Вашу почту с @eesti.ee" ),
 	"labelEmailUrl": new tr( "Täiuslikuma ametliku e-posti suunamise häälestamisvahendi leiad portaalist", "For more detailed official email address forwarding, please visit", "Более подробную информацию по настройке пересылки электронной почты найдёте на портале eesti.ee" ),
 	
 	"labelMobile": new tr( "Mobiil-ID on võimalus kasutada isikutuvastamiseks ja digitaalallkirja andmiseks ID-kaardi asemel mobiiltelefoni.", "Mobile-id is possibility to use mobile phone instead of ID-card for identification and digital signing.", "Mobiil-ID - это возможность идентифицировать личность и ставить цифровую подпись при помощи мобильного телефона, наравне с ID-картой." ),
@@ -146,7 +146,7 @@ var eestiStrings = {
 	"20": new tr( "Ühtegi ametliku e-posti suunamist ei leitud.", "No official email forwarding adresses was found", "Не было найдено ни одной официальной пересылки эл. почты." ),
 	"21": new tr( "Teie e-posti konto on suletud. Avamiseks saatke palun e-kiri aadressil toimetaja@eesti.ee või helistage telefonil 663 0215.", "Your email account has been blocked. To open it, please send an e-mail to toimetaja@eesti.ee or call 663 0215.", "Ваша учётная запись эл. почты закрыта. Для открытия пошлите письмо на toimetaja@eesti.ee или позвоните по телефону 663 0215." ),
 	"22": new tr( "Vigane e-posti aadress.", "Invalid e-mail address", "Неверный адрес эл. почты." ),
-	"23": new tr( "Suunamine on salvestatud, ning Sinule on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "Forwarding is activated and you have been sent an email with activation key. Forwarding will be activated only after confirming the key.", "Переадресация сохранена и Вам послано письмо с ключом активации. Переадресация активна только после введения ключа." )
+	"23": new tr( "Suunamine on salvestatud, ning sinule on saadetud kiri edasisuunamisaadressi aktiveerimisvõtmega. Suunamine on kasutatav ainult pärast aktiveerimisvõtme sisestamist.", "Forwarding is activated and you have been sent an email with activation key. Forwarding will be activated only after confirming the key.", "Переадресация сохранена и Вам послано письмо с ключом активации. Переадресация активна только после введения ключа." )
 };
 
 var eidStrings = {
