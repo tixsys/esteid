@@ -188,6 +188,9 @@
   &lt;add key="help_url" value="http://support.sk.ee/" /&gt;
   &lt;add key="language" value="" /&gt;
   &lt;add key="signature_page" value="1" /&gt;
+  &lt;add key="signature_use_sector" value="True" /&gt;
+  &lt;add key="signature_sector" value="9" /&gt;
+  &lt;add key="signature_use_coords" value="False" /&gt;
   &lt;add key="signature_x" value="200" /&gt;
   &lt;add key="signature_y" value="100" /&gt;
   &lt;add key="signature_w" value="400" /&gt;
