@@ -76,18 +76,21 @@ add_custom_command(
 )
 
 
-set(minizip_SRCS
-    minizip/zip.c
-    minizip/unzip.c
-    minizip/ioapi.c
-)
-
-if(WIN32)
+if(NOT MINIZIP_FOUND)
+    # Use bundled copy of minizip if not found in system
     set(minizip_SRCS
-        ${minizip_SRCS}
-        minizip/iowin32.c
+        minizip/zip.c
+        minizip/unzip.c
+        minizip/ioapi.c
     )
-endif(WIN32)
+
+    if(WIN32)
+        set(minizip_SRCS
+            ${minizip_SRCS}
+            minizip/iowin32.c
+        )
+    endif(WIN32)
+endif(NOT MINIZIP_FOUND)
 
 set(digidocpp_SRCS
     ADoc.cpp
@@ -164,6 +167,7 @@ target_link_libraries(digidocpp
     ${LIBP11_LIBRARIES}
     ${PKCS11H_LIBRARIES}
     ${LIBDL_LIBRARIES}
+    ${MINIZIP_LIBRARIES}
     ${OPENSSLCRYPTO_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${XERCESC_LIBRARIES}
