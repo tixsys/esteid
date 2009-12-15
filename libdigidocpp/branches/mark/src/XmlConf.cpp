@@ -3,13 +3,15 @@
  */
 
 #include "XmlConf.h"
-//#include <iostream>
-//#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
 //#include <stdarg.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #include <Winreg.h>
+#include <direct.h>
 #endif
 
 #include "log.h"
@@ -18,14 +20,16 @@
 #include "xml/conf.hxx"
 
 #include <stdlib.h>//getenv
+
 #ifdef _WIN32
-#include <direct.h>
+#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
+#define ENVIRONMENT_PATH "Volatile Environment"
 #endif
 
 /**
  * Environment variable name, that is used for loading configuration
  */
-const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML";
+//const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML"; //<-- no need anymore
 
 /**
  * Path to default configuration file
@@ -33,8 +37,7 @@ const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML";
 std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
 std::string digidoc::XmlConf::USER_CONF_LOC = "digidocpp.conf";
 
-#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
-#define ENVIRONMENT_PATH "Volatile Environment"
+const std::string digidoc::XmlConf::CONF_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
 
 const std::string digidoc::XmlConf::DIGEST_URI         = "digest.uri";
 const std::string digidoc::XmlConf::PKCS11_DRIVER_PATH = "pkcs11.driver.path";
@@ -58,16 +61,34 @@ void digidoc::XmlConf::initialize()
 #ifdef _WIN32
 	HKEY hkey;
 	DWORD dwSize;
-	TCHAR tcConfPath[1024];
+	TCHAR tcConfPath1[1024];
+	TCHAR tcConfPath2[1024];
 	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
 	{
 		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
+		RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize);
 		RegCloseKey(hkey);
-		DEFAULT_CONF_LOC = tcConfPath;
+		DEFAULT_CONF_LOC = tcConfPath1;	
 	}	
+
+	if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+	{
+		dwSize = 1024 * sizeof(TCHAR);
+		RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize);
+		RegCloseKey(hkey);
+
+		USER_CONF_LOC = tcConfPath2;
+		USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
+
+	//	DEFAULT_CONF_LOC = tcConfPath2;
+	//	DEFAULT_CONF_LOC += "\\digidocpp\\digidocpp.conf";
+	//	USER_CONF_LOC = "C:\\Program Files\\Estonian ID Card\\user_digidocpp.conf";
+	}
 #else
 	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
+	
+	USER_CONF_LOC = getenv("HOME");
+	USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
 #endif
 
     if(!Conf::isInitialized())
@@ -92,8 +113,8 @@ void digidoc::XmlConf::initialize()
 digidoc::XmlConf::XmlConf() throw(IOException)
 {
     std::string defaultConfLoc("digidocpp.conf");
-	getUserConfPath();
-    char * envLoc = getenv (CONF_ENV.c_str());
+//	getUserConfPath();
+/*    char * envLoc = getenv (CONF_ENV.c_str());
     if(envLoc != NULL)
     {
         std::string envConfLoc(envLoc);
@@ -106,9 +127,8 @@ digidoc::XmlConf::XmlConf() throw(IOException)
 			return;
         }
     }
-
-
-    else if(util::File::fileExists(DEFAULT_CONF_LOC))
+*/
+	if(util::File::fileExists(DEFAULT_CONF_LOC))
     {
         init(DEFAULT_CONF_LOC);
 		if(util::File::fileExists(USER_CONF_LOC))
@@ -116,7 +136,8 @@ digidoc::XmlConf::XmlConf() throw(IOException)
     }
     else
     {
-        THROW_IOEXCEPTION("Error loading xml configuration from '%s' env variable or file '%s'",CONF_ENV.c_str(), DEFAULT_CONF_LOC.c_str());
+  //      THROW_IOEXCEPTION("Error loading xml configuration from '%s' env variable or file '%s'",CONF_ENV.c_str(), DEFAULT_CONF_LOC.c_str());
+	      THROW_IOEXCEPTION("Error loading xml configuration from '%s' file or '%s' file",DEFAULT_CONF_LOC.c_str(), USER_CONF_LOC.c_str());
     }
 }
 
@@ -144,7 +165,8 @@ digidoc::XmlConf::~XmlConf()
 std::string digidoc::XmlConf::fullpath() const
 {
     // the file path in conf is relative to the conf file's location
-    const char *env = getenv( CONF_ENV.c_str() );
+    //const char *env = getenv( CONF_ENV.c_str() );
+	const char *env = DEFAULT_CONF_LOC.c_str();
     if( env )
         return digidoc::util::File::directory( env );
     char *path = getcwd( NULL, 0 );
@@ -353,29 +375,173 @@ std::string digidoc::XmlConf::getPKCS12Pass() const
 void digidoc::XmlConf::setProxyHost( const std::string &host )
 {
     proxyHost = host;
+	setUserConf(PROXY_HOST, host);
 }
 
 void digidoc::XmlConf::setProxyPort( const std::string &port )
 {
     proxyPort = port;
+	setUserConf(PROXY_PORT, port);
 }
 
 void digidoc::XmlConf::setProxyUser( const std::string &user )
 {
     proxyUser = user;
+	setUserConf(PROXY_USER, user);
 }
 
 void digidoc::XmlConf::setProxyPass( const std::string &pass )
 {
     proxyPass = pass;
+	setUserConf(PROXY_PASS, pass);
 }
 
 void digidoc::XmlConf::setPKCS12Cert( const std::string &cert )
 {
     pkcs12Cert = cert;
+	setUserConf(PKCS12_CERT, cert);
 }
 
 void digidoc::XmlConf::setPKCS12Pass( const std::string &pass )
 {
     pkcs12Pass = pass;
+	setUserConf(PKCS12_PASS, pass);
+}
+
+void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value)
+{
+	std::ofstream ofs;
+	bool done = false;
+	Param newParam(value, paramName);
+	std::string confXsd = fullpath();
+#ifdef _WIN32
+	 for (int c=0; c<sizeof(confXsd); c++)
+	 {
+		 if (confXsd[c] == '\\')
+			 confXsd[c] = '/';
+	 }
+#endif
+	confXsd += "/schema/conf.xsd";
+
+	if(util::File::fileExists(USER_CONF_LOC))
+    {
+		//open user conf file
+		std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+		Configuration::ParamSequence paramSeq = conf->param();
+
+		for( Configuration::ParamSequence::const_iterator it = paramSeq.begin(); it != paramSeq.end(); it++)
+		{
+			if (paramName.compare(it->name()) == 0)
+			{
+			//	paramSeq.erase(it);
+				break;
+			}
+		}
+		paramSeq.push_back(newParam);
+		conf->param(paramSeq); //replace all param data with new modified param sequence
+
+		ofs.open(USER_CONF_LOC.c_str());
+		xml_schema::NamespaceInfomap map;
+		map[""].name = "";
+		map[""].schema = confXsd.c_str();
+		configuration(ofs, *conf, map);		
+	}	
+	else
+	{
+		//create a new file
+		//copy global conf and erase data
+		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
+		Configuration::OcspSequence ocspSeq;
+		Configuration::ParamSequence paramSeq;
+		paramSeq.push_back(newParam);
+		conf->param(paramSeq); //replace all param data with new modified param sequence
+		conf->ocsp(ocspSeq); //replace all ocsp data with empty ocsp sequence
+
+		ofs.open(USER_CONF_LOC.c_str());
+		//ofs.open("C:\\PERSE.XML");
+		xml_schema::NamespaceInfomap map;
+		map[""].name = "";
+		map[""].schema = confXsd.c_str();
+		configuration(ofs, *conf, map);
+
+		/*
+		ofs.open(USER_CONF_LOC.c_str());
+		Configuration::ParamSequence paramSeq;
+		paramSeq.push_back(newParam);
+	
+		Configuration conf;
+		conf.param(paramSeq); //replace all param data with new modified param sequence
+
+		ofs.open("C:\\PERSE.XML");
+		xml_schema::NamespaceInfomap map;
+		map[""].name = "";
+		map[""].schema = confXsd.c_str();
+		configuration(ofs, *conf, map);
+		*/		
+	}
+	ofs.close();
+/*	if (ofs.fail())
+	{
+		throw exeption
+	}*/
+}
+
+void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData)
+{
+	std::ofstream ofs;
+	bool done = false;
+	Ocsp newOcsp(ocspData.url, ocspData.cert, ocspData.issuer);
+	std::string confXsd = fullpath();
+#ifdef _WIN32
+	 for (int c=0; c<sizeof(confXsd); c++)
+	 {
+		 if (confXsd[c] == '\\')
+			 confXsd[c] = '/';
+	 }
+#endif
+	confXsd += "/schema/conf.xsd";
+
+	if(util::File::fileExists(USER_CONF_LOC))
+	{
+		std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+		Configuration::OcspSequence ocspSeq = conf->ocsp();
+		for( Configuration::OcspSequence::const_iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
+		{
+			if (ocspData.issuer.compare(it->issuer()) == 0)
+			{
+			//	ocspSeq.erase(it);
+				break;
+			}
+			ocspSeq.push_back(newOcsp);
+			conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+
+			ofs.open(USER_CONF_LOC.c_str());
+			xml_schema::NamespaceInfomap map;
+			map[""].name = "";
+			map[""].schema = confXsd.c_str();
+			configuration(ofs, *conf, map);		
+		}
+	}
+	else
+	{
+		//create a new file
+		//copy global conf and erase data
+		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
+		Configuration::OcspSequence ocspSeq;
+		Configuration::ParamSequence paramSeq;
+		ocspSeq.push_back(newOcsp);
+		conf->param(paramSeq); //replace all param data with empty param sequence
+		conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+
+		ofs.open(USER_CONF_LOC.c_str());
+		xml_schema::NamespaceInfomap map;
+		map[""].name = "";
+		map[""].schema = confXsd.c_str();
+		configuration(ofs, *conf, map);
+	}
+	ofs.close();
+	/*	if (ofs.fail())
+	{
+		throw exeption
+	}*/
 }

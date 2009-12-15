@@ -45,6 +45,8 @@ public:
     virtual void setPKCS12Cert( const std::string &cert );
     virtual void setPKCS12Pass( const std::string &pass );
 
+	virtual void setUserOCSP(const Conf::OCSPConf &ocspData);
+	
     static const std::string CONF_ENV;
     static std::string DEFAULT_CONF_LOC;
 	static std::string USER_CONF_LOC;
@@ -52,6 +54,8 @@ public:
 private:
     std::string fullpath() const;
     void init(const std::string& path) throw(IOException);
+
+	void setUserConf(const std::string &paramName, const std::string &value);
 
     std::string digestUri;
     std::string pkcs11DriverPath;
@@ -66,6 +70,8 @@ private:
     std::string pkcs12Cert;
     std::string pkcs12Pass;
     std::vector<OCSPConf> ocsp;
+
+	static const std::string CONF_NAMESPACE;
 
     static const std::string DIGEST_URI;
     static const std::string PKCS11_DRIVER_PATH;

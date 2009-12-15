@@ -120,7 +120,8 @@ DDocPrivate::DDocPrivate()
 
 #ifdef WIN32
 	std::string conf;
-	const char *bdoc = getenv( XmlConf::CONF_ENV.c_str() );
+	//const char *bdoc = getenv( XmlConf::CONF_ENV.c_str() );
+	const char *bdoc = XmlConf::DEFAULT_CONF_LOC.c_str();
 	if( bdoc )
 	{
 		conf.append( util::File::directory( bdoc ) );
