@@ -204,7 +204,7 @@ int My1EstEIDSigner::initData()
 	int iRet = 0;	
 	iCounter = 0;
 	//set installed BDoc library path
-	char *val = getenv( "BDOCLIB_CONF_XML" );
+/*	char *val = getenv( "BDOCLIB_CONF_XML" );
 	if( val == 0 )
 	{
 	#ifdef _WIN32
@@ -228,7 +228,7 @@ int My1EstEIDSigner::initData()
 		val = getenv( "BDOCLIB_CONF_XML" );
 	}
 	PRINT_DEBUG ("Conf location: %s",val);
-	try
+*/	try
 	{
 		digidoc::initialize();
 	}
@@ -311,7 +311,7 @@ int My1EstEIDSigner::signFile ()
 		//m_signer.pcPin = str_pin.c_str();
 		m_signer.pcPin = cpPin;
 		
-		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+		//setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
 		
 		// Init certificate store.
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
@@ -666,7 +666,7 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 {
 	* pi_pinReq = 100;
 
-	for (int e=0; e<1; e++)// <--while loop did'nt work out
+	for (int e=1; e<2; e++)// <--while loop did'nt work out
 	{//wait until openoffice is ready.
 		if (* pi_pinReq > 1)
 			e--;

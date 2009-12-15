@@ -611,7 +611,7 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					}
 					//Wait until signing procedure ends
 					//while (!m_BdocBridge->iPinReq); <-- while loop in this condition doesnt work
-					for (int e=0; e<1; e++)
+					for (int e=1; e<2; e++)
 					{
 						if (m_BdocBridge->iPinReq <= 1)
 							e--;

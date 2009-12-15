@@ -2,8 +2,8 @@
 
 set target_dir=target
 
-set libdigidoc_include=C:\build\Win32\libdigidocpp\build\target\include
-set libdigidoc_library=C:\build\Win32\libdigidocpp\build\target\lib
+set libdigidoc_include=C:\CPP Projects\libdigidocpp_mark\build\target\include
+set libdigidoc_library=C:\CPP Projects\libdigidocpp_mark\build\target\lib
 set openssl_include=C:\build\Win32\openssl-shared\include
 set openssl_library=C:\build\Win32\openssl-shared\out32dll
 set zlib_include=C:\build\Win32\zlib123
