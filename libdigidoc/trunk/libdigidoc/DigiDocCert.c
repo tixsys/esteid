@@ -383,13 +383,10 @@ EXP_OPTION int verifyCertificateByOCSPWithIp(X509* pCert, const X509** caCerts,
 {
   OCSP_REQUEST *req = 0;
   OCSP_RESPONSE *resp = 0;
-  int err = ERR_OK, l1, i, j, nType, nCAs1, err2;
+  int err = ERR_OK, l1, i;
   byte nonce1[DIGEST_LEN+2];
   time_t tNow;
   X509* pCA = NULL;
-  X509* caCerts1[10];
-  X509* pNotCert1;
-  char szCN[200], szCA[30];
   
   RETURN_IF_NULL(pCert);
   //RETURN_IF_NULL(notaryCert);

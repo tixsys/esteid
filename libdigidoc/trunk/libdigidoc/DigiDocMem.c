@@ -170,7 +170,7 @@ EXP_OPTION int ddocMemReplaceSubstr(DigiDocMemBuf* pBuf1, DigiDocMemBuf* pBuf2,
 //--------------------------------------------------
 EXP_OPTION int ddocMemCompareMemBufs(DigiDocMemBuf* pBuf1, DigiDocMemBuf* pBuf2)
 {
-  int err = ERR_OK, i;
+  int i;
 
   RETURN_IF_NULL_PARAM(pBuf1);
   RETURN_IF_NULL_PARAM(pBuf1->pMem);

@@ -1053,7 +1053,7 @@ int asn1time2time_t(ASN1_TIME* tm, time_t* pT)
 {
   int err = ERR_OK;
   struct tm tm1;
-  int dmz=0;
+  //int dmz=0;
 	
   RETURN_IF_NULL_PARAM(tm);
   RETURN_IF_NULL_PARAM(pT);	

@@ -30,6 +30,7 @@
 #include <libdigidoc/DigiDocCert.h>
 #include <libdigidoc/DigiDocConfig.h>
 #include <libdigidoc/DigiDocOCSP.h>
+#include <libdigidoc/DigiDocDfExtract.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -690,15 +691,15 @@ void handleStartDigestMethod(SigDocParse* pctx, const xmlChar *name, const xmlCh
 //--------------------------------------------------
 int selectCertIdAndValueTypes(SignatureInfo* pSigInfo)
 {
-  int err = ERR_OK, i, j, l1, k;
+  int err = ERR_OK, i, j, l1;
   CertID* cid;
   CertValue *cval1, *cval2;
   X509* pCert;
   char buf1[300];
-  NotaryInfo* pNotary = NULL;
   DigiDocMemBuf mbuf1, mbuf2;
   const DigiDocMemBuf *pMBuf = 0;
 #ifdef WITH_TS
+  int k;
   TimestampInfo* pTS = NULL;
   TS_RESP* pResp = NULL;
 #endif
@@ -829,12 +830,14 @@ int selectCertIdAndValueTypes(SignatureInfo* pSigInfo)
 // FIXME : error handling
 void handleEndEncapsulatedOCSPValue(SigDocParse* pctx, const xmlChar *name)
 {
-  int len1, n;
   OCSP_RESPONSE* pResp;
   NotaryInfo* pNotInfo = 0;
   SignatureInfo* pSig = 0;
+  /*
+  int len1, n;
   byte buf1[DIGEST_LEN+2];
   const DigiDocMemBuf *pMBuf;
+  */
 
   // convert the X509 cert data to
   // cert and replace the pointer value
@@ -2380,7 +2383,6 @@ void extractNoChangeHandler(SigDocParse* pctx, const char* ch, int len)
  */
 static void extractCharactersHandler(void *ctx, const xmlChar *ch, int len)
 {
-  static int pos = 0;
   int l;
   char *p = 0, *p2 = 0; 
   SigDocParse* pctx = (SigDocParse*)ctx;
@@ -2651,7 +2653,9 @@ EXP_OPTION int ddocSaxReadSignedDocFromFile(SignedDoc** ppSigDoc, const char* sz
   char chars[16385], *p, convFileName[250], buf1[16385];
   xmlParserCtxtPtr ctxt;
   SigDocParse pctx;
+#ifndef WITH_BASE64_HASHING_HACK
   int l1;
+#endif
   DigiDocMemBuf mbuf1;
   // debug
   /*initConfigStore(NULL);
@@ -2812,10 +2816,10 @@ EXP_OPTION int ddocSaxExtractDataFile(SignedDoc* pSigDoc, const char* szFileName
 				      const char* szCharset)
 {
   FILE *f;
-  int ret, err = ERR_OK, i;
+  int ret, err = ERR_OK;
   long len;
   char chars[1050], convFileName[250], 
-    convDataFileName[250], *p, buf1[100];
+    convDataFileName[250], *p;
   xmlParserCtxtPtr ctxt;
   SigDocParse pctx;
   void* pBuf;

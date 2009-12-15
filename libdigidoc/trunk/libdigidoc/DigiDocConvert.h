@@ -185,6 +185,15 @@ int asn1time2str(const SignedDoc* pSigDoc, ASN1_TIME* tm, char* buf, int len);
 //===================================================================
   EXP_OPTION int time_t2str(time_t t, char* szTimestamp, int len);
 
+//--------------------------------------------------
+// Converts a filename according to platform rules
+// dest - destination buffer
+// destlen - destination buffer length
+// src - source filename
+// returns error code or ERR_OK
+//--------------------------------------------------
+EXP_OPTION int ddocConvertFileName(char* dest, int destlen, const char* src);
+
 //==========< only win32 fucntions >============
 
 #ifdef WIN32
@@ -252,15 +261,6 @@ EXP_OPTION int utf82oem(const char* utf8, char* oem, int len);
 // returns error code or ERR_OK
 //--------------------------------------------------
 EXP_OPTION int getDataFileFileName(SignedDoc* pSigDoc, DataFile* pDf, char* outFileName, int len);
-
-//--------------------------------------------------
-// Converts a filename according to platform rules
-// dest - destination buffer
-// destlen - destination buffer length
-// src - source filename
-// returns error code or ERR_OK
-//--------------------------------------------------
-EXP_OPTION int ddocConvertFileName(char* dest, int destlen, const char* src);
 
 //--------------------------------------------------
 // Releases mem-block allocated by lib. In win32

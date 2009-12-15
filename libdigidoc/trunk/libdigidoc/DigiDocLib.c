@@ -641,9 +641,10 @@ EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, int len)
 EXP_OPTION int getTempFileName(char* szFileName, int len)
 {
 	char tbuf[200];
-        int f = 0;
 #ifdef WIN32
 	char* pFileName = 0;
+#else
+        int f = 0;
 #endif
 	RETURN_IF_NULL_PARAM(szFileName);
 	memset(szFileName, 0, len);

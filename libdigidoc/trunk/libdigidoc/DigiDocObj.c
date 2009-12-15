@@ -28,6 +28,7 @@
 #include <libdigidoc/DigiDocCert.h>
 #include <libdigidoc/DigiDocOCSP.h>
 #include <string.h>
+#include <ctype.h>
 
 
 
@@ -1312,7 +1313,9 @@ int ddocCompleteCertificateRefs_toXML(const SignedDoc* pSigDoc,
 {
   int err = ERR_OK, i, n;
   CertID* pCertID;
+#ifdef WITH_TS
   char buf1[100];
+#endif
  
   RETURN_IF_NULL_PARAM(pBuf)
   RETURN_IF_NULL_PARAM(pSigDoc)
@@ -3572,7 +3575,6 @@ EXP_OPTION int calculateSignedInfoDigest(SignedDoc* pSigDoc, SignatureInfo* pSig
 {
   int err = ERR_OK, l2;
   byte *buf2 = NULL;
-  FILE* hFile = 0;
 
   RETURN_IF_NULL_PARAM(pSigInfo);
   RETURN_IF_NULL_PARAM(digBuf);
@@ -3705,7 +3707,6 @@ EXP_OPTION int getNextNotaryId(const SignedDoc* pSigDoc)
 {
   int id = 0, n, i;
   SignatureInfo* pSigInfo = 0;
-  NotaryInfo* pNotInfo = 0;
 
   RETURN_OBJ_IF_NULL(pSigDoc, -1);
   for(i = 0; i < getCountOfSignatures(pSigDoc); i++) {
@@ -3943,7 +3944,6 @@ int ddocGetOcspRespIdTypeAndValue(OCSP_RESPONSE* pResp,
 {
   int err = ERR_OK;
   OCSP_BASICRESP *br = NULL;
-  OCSP_RESPID *rid = NULL;
 
   RETURN_IF_NULL_PARAM(pResp);
   RETURN_IF_NULL_PARAM(pType);

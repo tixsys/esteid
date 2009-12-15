@@ -1288,8 +1288,10 @@ EXP_OPTION int signDocument(SignedDoc* pSigDoc, SignatureInfo** ppSigInfo,
 {
   int err = ERR_OK;
   SignatureInfo* pSigInfo = NULL;
+#ifdef WITH_TS
   X509* pTsaCert = NULL;
   char buf1[300];
+#endif
 
   RETURN_IF_NULL_PARAM(pSigDoc);
   RETURN_IF_NULL_PARAM(ppSigInfo);
@@ -1368,8 +1370,9 @@ int verifyNotary(SignedDoc* pSigDoc, SignatureInfo* pSigInfo, NotaryInfo* pNotIn
   X509 * caCerts[10];
   X509* pNotCert = 0;
   const DigiDocMemBuf *pMBuf = 0;
-  char buf1[300], buf2[300], szNotSerial[100], szTsaSerial[100];
+  char buf1[300], buf2[300], szNotSerial[100];
 #ifdef WITH_TS
+  char szTsaSerial[100];
   X509* pTsaCert = NULL;
   TimestampInfo *pTS;
   DigiDocMemBuf  mbuf1;

@@ -991,7 +991,7 @@ int addSignatureInfoXML(DigiDocMemBuf *pMBufXML, SignedDoc* pSigDoc, SignatureIn
   int len2, len1;
   EVP_PKEY* pubKey;
   SignatureValue *pSigVal;
-  DigiDocMemBuf mbuf1, *pMBuf2 = 0;
+  DigiDocMemBuf mbuf1;
 
   RETURN_IF_NULL_PARAM(pMBufXML);
   RETURN_IF_NULL_PARAM(pSigDoc);

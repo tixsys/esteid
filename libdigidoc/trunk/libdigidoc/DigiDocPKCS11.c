@@ -384,8 +384,6 @@ CK_RV LocatePrivateKey(CK_SESSION_HANDLE hSession, char idData[20][20], CK_ULONG
     CK_OBJECT_HANDLE Objects[10];
     CK_RV rv;
     CK_ULONG ulObjectCount = sizeof(Objects)/sizeof(CK_OBJECT_HANDLE), i;
-    // CK_BBOOL IsTrue = TRUE;
-    CK_OBJECT_HANDLE hPrivateKey = CK_INVALID_HANDLE;
     // Set up a template to search for all Private Key tokens 
     // Given the session context, that is associated with
     // one slot we will find only one object

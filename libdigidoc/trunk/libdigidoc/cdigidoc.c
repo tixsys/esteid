@@ -718,8 +718,11 @@ void cmdTest(const char* data)
 void cmdTest2(const char* infile)
 {
   X509* pCert = 0;
+  /*
   char buf1[X509_NAME_LEN + 10];
-  int l1, err = ERR_OK, nPols = 0;
+  int l1;
+  */
+  int err = ERR_OK, nPols = 0;
   PolicyIdentifier *pPolicies = 0;
 
   ddocDebug(3, "cmdTest2", "Reading cert: %s", infile);
@@ -1675,7 +1678,9 @@ int main(int argc, char** argv)
   SignedDoc* pSigDoc = 0;
   DEncEncryptedData* pEncData = 0;
   time_t t1, t2;
+#ifdef WIN32
   char buf1[250];
+#endif
 
   if(argc <= 1) {
     printUsage();
