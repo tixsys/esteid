@@ -36,16 +36,16 @@ public:
     virtual std::string getPKCS12Cert() const;
     virtual std::string getPKCS12Pass() const;
 
-    virtual void getUserConfPath() const;
+    virtual void getUserConfDir() const;
 
-    virtual void setProxyHost( const std::string &host );
-    virtual void setProxyPort( const std::string &port );
-    virtual void setProxyUser( const std::string &user );
-    virtual void setProxyPass( const std::string &pass );
-    virtual void setPKCS12Cert( const std::string &cert );
-    virtual void setPKCS12Pass( const std::string &pass );
+    virtual void setProxyHost( const std::string &host ) throw(IOException);
+    virtual void setProxyPort( const std::string &port ) throw(IOException);
+    virtual void setProxyUser( const std::string &user ) throw(IOException);
+    virtual void setProxyPass( const std::string &pass ) throw(IOException);
+    virtual void setPKCS12Cert( const std::string &cert ) throw(IOException);
+    virtual void setPKCS12Pass( const std::string &pass ) throw(IOException);
 
-	virtual void setUserOCSP(const Conf::OCSPConf &ocspData);
+	virtual void setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException);
 	
     static const std::string CONF_ENV;
     static std::string DEFAULT_CONF_LOC;
@@ -55,7 +55,7 @@ private:
     std::string fullpath() const;
     void init(const std::string& path) throw(IOException);
 
-	void setUserConf(const std::string &paramName, const std::string &value);
+	void setUserConf(const std::string &paramName, const std::string &value) throw(IOException);
 
     std::string digestUri;
     std::string pkcs11DriverPath;

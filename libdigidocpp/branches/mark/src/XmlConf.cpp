@@ -282,7 +282,7 @@ std::string digidoc::XmlConf::getDigestUri() const
     return digestUri;
 }
 
-void digidoc::XmlConf::getUserConfPath() const
+void digidoc::XmlConf::getUserConfDir() const
 {
 #ifdef _WIN32	
 
@@ -296,11 +296,11 @@ void digidoc::XmlConf::getUserConfPath() const
 		RegCloseKey(hKey);
 
 		USER_CONF_LOC = ConfPath;
-		USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
+		USER_CONF_LOC += "\\digidocpp";
 	}
 #else
 	USER_CONF_LOC = getenv("HOME");
-	USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
+	USER_CONF_LOC += "/.digidocpp";
 #endif
 }
 
@@ -372,43 +372,89 @@ std::string digidoc::XmlConf::getPKCS12Pass() const
     return pkcs12Pass;
 }
 
-void digidoc::XmlConf::setProxyHost( const std::string &host )
+void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException)
 {
     proxyHost = host;
-	setUserConf(PROXY_HOST, host);
+	try
+	{
+		setUserConf(PROXY_HOST, host);
+	}
+	catch((const IOException& e))
+	{
+		std::ostringstream oss;
+		oss << e;
+		THROW_IOEXCEPTION("Failed to set Proxy host: %s", oss.str().c_str());
+	}
+
 }
 
-void digidoc::XmlConf::setProxyPort( const std::string &port )
+void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException)
 {
     proxyPort = port;
 	setUserConf(PROXY_PORT, port);
 }
 
-void digidoc::XmlConf::setProxyUser( const std::string &user )
+void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException)
 {
     proxyUser = user;
-	setUserConf(PROXY_USER, user);
+	try
+	{
+		setUserConf(PROXY_USER, user);
+	}
+	catch((const IOException& e))
+	{
+		std::ostringstream oss;
+		oss << e;
+		THROW_IOEXCEPTION("Failed to set Proxy user: %s", oss.str().c_str());
+	}
 }
 
-void digidoc::XmlConf::setProxyPass( const std::string &pass )
+void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException)
 {
     proxyPass = pass;
-	setUserConf(PROXY_PASS, pass);
+	try
+	{
+		setUserConf(PROXY_PASS, pass);
+	}
+	catch((const IOException& e))
+	{
+		std::ostringstream oss;
+		oss << e;
+		THROW_IOEXCEPTION("Failed to set Proxy password: %s", oss.str().c_str());
+	}
 }
 
-void digidoc::XmlConf::setPKCS12Cert( const std::string &cert )
+void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOException)
 {
     pkcs12Cert = cert;
-	setUserConf(PKCS12_CERT, cert);
+	try
+	{
+		setUserConf(PKCS12_CERT, cert);
+	}
+	catch((const IOException& e))
+	{
+		std::ostringstream oss;
+		oss << e;
+		THROW_IOEXCEPTION("Failed to set PKCS12 cert: %s", oss.str().c_str());
+	}
 }
 
-void digidoc::XmlConf::setPKCS12Pass( const std::string &pass )
+void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOException)
 {
     pkcs12Pass = pass;
-	setUserConf(PKCS12_PASS, pass);
+	try
+	{
+		setUserConf(PKCS12_PASS, pass);
+	}
+	catch((const IOException& e))
+	{
+		std::ostringstream oss;
+		oss << e;
+		THROW_IOEXCEPTION("Failed to set PKCS12 password: %s", oss.str().c_str());
+	}
 }
 
-void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value)
+void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value) throw(IOException)
 {
 	std::ofstream ofs;
 	bool done = false;
@@ -425,26 +471,36 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 
 	if(util::File::fileExists(USER_CONF_LOC))
     {
-		//open user conf file
-		std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
-		Configuration::ParamSequence paramSeq = conf->param();
-
-		for( Configuration::ParamSequence::const_iterator it = paramSeq.begin(); it != paramSeq.end(); it++)
+		try
 		{
-			if (paramName.compare(it->name()) == 0)
-			{
-			//	paramSeq.erase(it);
-				break;
-			}
-		}
-		paramSeq.push_back(newParam);
-		conf->param(paramSeq); //replace all param data with new modified param sequence
+			//open user conf file
+			std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+			Configuration::ParamSequence paramSeq = conf->param();
 
-		ofs.open(USER_CONF_LOC.c_str());
-		xml_schema::NamespaceInfomap map;
-		map[""].name = "";
-		map[""].schema = confXsd.c_str();
-		configuration(ofs, *conf, map);		
+			for( Configuration::ParamSequence::iterator it = paramSeq.begin(); it != paramSeq.end(); it++)
+			{
+				if (paramName.compare(it->name()) == 0)
+				{
+					paramSeq.erase(it);
+					break;
+				}
+			}
+			if (value.size()) //if we do not want to just erase
+				paramSeq.push_back(newParam);
+			conf->param(paramSeq); //replace all param data with new modified param sequence
+
+			ofs.open(USER_CONF_LOC.c_str());
+			xml_schema::NamespaceInfomap map;
+			map[""].name = "";
+			map[""].schema = confXsd.c_str();
+			configuration(ofs, *conf, map);	
+		}
+        catch(const xml_schema::Exception& e)
+		{
+			std::ostringstream oss;
+			oss << e;
+			THROW_IOEXCEPTION("Failed to parse configuration: %s", oss.str().c_str());
+		}
 	}	
 	else
 	{
@@ -479,14 +535,16 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 		configuration(ofs, *conf, map);
 		*/		
 	}
-	ofs.close();
-/*	if (ofs.fail())
+	
+	if (ofs.fail())
 	{
-		throw exeption
-	}*/
+		ofs.close(); //just in case it was left open
+        THROW_IOEXCEPTION("Failed to open configuration: %s", USER_CONF_LOC.c_str());
+	}
+	ofs.close();
 }
 
-void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData)
+void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException)
 {
 	std::ofstream ofs;
 	bool done = false;
@@ -503,23 +561,33 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData)
 
 	if(util::File::fileExists(USER_CONF_LOC))
 	{
-		std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
-		Configuration::OcspSequence ocspSeq = conf->ocsp();
-		for( Configuration::OcspSequence::const_iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
+		try
 		{
-			if (ocspData.issuer.compare(it->issuer()) == 0)
+			std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+			Configuration::OcspSequence ocspSeq = conf->ocsp();
+			for( Configuration::OcspSequence::iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
 			{
-			//	ocspSeq.erase(it);
-				break;
-			}
-			ocspSeq.push_back(newOcsp);
-			conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+				if (ocspData.issuer.compare(it->issuer()) == 0)
+				{
+					ocspSeq.erase(it);
+					break;
+				}
+				if (ocspData.url.size() || ocspData.cert.size()) //if we do not want to just erase
+					ocspSeq.push_back(newOcsp);
+				conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
 
-			ofs.open(USER_CONF_LOC.c_str());
-			xml_schema::NamespaceInfomap map;
-			map[""].name = "";
-			map[""].schema = confXsd.c_str();
-			configuration(ofs, *conf, map);		
+				ofs.open(USER_CONF_LOC.c_str());
+				xml_schema::NamespaceInfomap map;
+				map[""].name = "";
+				map[""].schema = confXsd.c_str();
+				configuration(ofs, *conf, map);		
+			}
+		}
+		catch(const xml_schema::Exception& e)
+		{
+			std::ostringstream oss;
+			oss << e;
+			THROW_IOEXCEPTION("Failed to parse configuration: %s", oss.str().c_str());
 		}
 	}
 	else
@@ -539,9 +607,10 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData)
 		map[""].schema = confXsd.c_str();
 		configuration(ofs, *conf, map);
 	}
-	ofs.close();
-	/*	if (ofs.fail())
+	if (ofs.fail())
 	{
-		throw exeption
-	}*/
+		ofs.close(); //just in case it was left open
+        THROW_IOEXCEPTION("Failed to open configuration: %s", USER_CONF_LOC.c_str());
+	}
+	ofs.close();
 }
