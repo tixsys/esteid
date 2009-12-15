@@ -666,13 +666,12 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 {
 	* pi_pinReq = 100;
 
-	for (int e=1; e<1; e++)// <--while loop did'nt work out
+	for (int e=1; e<2; e++)// <--while loop did'nt work out
 	{//wait until openoffice is ready.
 		if (* pi_pinReq > 1)
 			e--;
 		else if (* pi_pinReq == 1)
 			throw SignException( __FILE__, __LINE__, "PIN acquisition canceled." );
-		e--;
 	}
 
 	return pcPin;
