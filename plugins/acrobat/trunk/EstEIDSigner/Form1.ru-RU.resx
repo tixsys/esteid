@@ -173,6 +173,9 @@
   <data name="label2.Text" xml:space="preserve">
     <value>Вход:</value>
   </data>
+  <data name="tablePanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>302, 142</value>
+  </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 13</value>
   </data>
@@ -251,11 +254,29 @@
   <data name="prodBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 18</value>
   </data>
-  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 18</value>
+  <data name="Citytext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 73</value>
   </data>
-  <data name="label13.Text" xml:space="preserve">
-    <value>Пояснение</value>
+  <data name="Citytext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
+  </data>
+  <data name="Contacttext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 13</value>
+  </data>
+  <data name="Contacttext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
+  </data>
+  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 18</value>
+  </data>
+  <data name="label14.Text" xml:space="preserve">
+    <value>Местонахождение</value>
+  </data>
+  <data name="Reasontext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 38</value>
+  </data>
+  <data name="Reasontext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 13</value>
@@ -263,14 +284,42 @@
   <data name="label5.Text" xml:space="preserve">
     <value>PDF Мета-данные</value>
   </data>
-  <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 25</value>
+  <data name="Countytext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 98</value>
   </data>
-  <data name="label14.Text" xml:space="preserve">
-    <value>Местонахождение</value>
+  <data name="Countytext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
+  </data>
+  <data name="Countrytext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 123</value>
+  </data>
+  <data name="Countrytext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
+  </data>
+  <data name="Indextext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 148</value>
+  </data>
+  <data name="Indextext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 21</value>
+  </data>
+  <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 18</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Пояснение</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SigVisible.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="SigVisible.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 173</value>
+  </data>
+  <data name="SigVisible.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
   </data>
   <data name="SigVisible.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>144, 29</value>
   </data>
   <data name="SigVisible.Text" xml:space="preserve">
     <value>Требуется видимая подпись</value>

@@ -51,7 +51,6 @@
             }
         }
 
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -112,13 +111,18 @@
             // 
             // DebugBox
             // 
+            this.DebugBox.AccessibleDescription = null;
+            this.DebugBox.AccessibleName = null;
             resources.ApplyResources(this.DebugBox, "DebugBox");
+            this.DebugBox.BackgroundImage = null;
             this.DebugBox.MaximumSize = new System.Drawing.Size(620, 130);
             this.DebugBox.MinimumSize = new System.Drawing.Size(620, 138);
             this.DebugBox.Name = "DebugBox";
             // 
             // linkSettings
             // 
+            this.linkSettings.AccessibleDescription = null;
+            this.linkSettings.AccessibleName = null;
             resources.ApplyResources(this.linkSettings, "linkSettings");
             this.linkSettings.BackColor = System.Drawing.Color.Transparent;
             this.linkSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
@@ -131,6 +135,8 @@
             // 
             // linkHelp
             // 
+            this.linkHelp.AccessibleDescription = null;
+            this.linkHelp.AccessibleName = null;
             resources.ApplyResources(this.linkHelp, "linkHelp");
             this.linkHelp.BackColor = System.Drawing.Color.Transparent;
             this.linkHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
@@ -143,9 +149,13 @@
             // 
             // signButton
             // 
+            this.signButton.AccessibleDescription = null;
+            this.signButton.AccessibleName = null;
             resources.ApplyResources(this.signButton, "signButton");
             this.signButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            this.signButton.BackgroundImage = null;
             this.signButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
+            this.signButton.Font = null;
             this.signButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.signButton.Name = "signButton";
             this.signButton.UseVisualStyleBackColor = false;
@@ -153,6 +163,8 @@
             // 
             // labelSeparator1
             // 
+            this.labelSeparator1.AccessibleDescription = null;
+            this.labelSeparator1.AccessibleName = null;
             resources.ApplyResources(this.labelSeparator1, "labelSeparator1");
             this.labelSeparator1.BackColor = System.Drawing.Color.Transparent;
             this.labelSeparator1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(198)))), ((int)(((byte)(209)))));
@@ -160,7 +172,10 @@
             // 
             // linkOutput
             // 
+            this.linkOutput.AccessibleDescription = null;
+            this.linkOutput.AccessibleName = null;
             resources.ApplyResources(this.linkOutput, "linkOutput");
+            this.linkOutput.Font = null;
             this.linkOutput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.linkOutput.Name = "linkOutput";
             this.linkOutput.TabStop = true;
@@ -168,7 +183,10 @@
             // 
             // linkInput
             // 
+            this.linkInput.AccessibleDescription = null;
+            this.linkInput.AccessibleName = null;
             resources.ApplyResources(this.linkInput, "linkInput");
+            this.linkInput.Font = null;
             this.linkInput.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
             this.linkInput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.linkInput.Name = "linkInput";
@@ -177,38 +195,52 @@
             // 
             // statusBox
             // 
+            this.statusBox.AccessibleDescription = null;
+            this.statusBox.AccessibleName = null;
             resources.ApplyResources(this.statusBox, "statusBox");
             this.statusBox.Name = "statusBox";
             // 
             // label4
             // 
+            this.label4.AccessibleDescription = null;
+            this.label4.AccessibleName = null;
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
             // label3
             // 
+            this.label3.AccessibleDescription = null;
+            this.label3.AccessibleName = null;
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
             // label2
             // 
+            this.label2.AccessibleDescription = null;
+            this.label2.AccessibleName = null;
             resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
             // 
             // tablePanel1
             // 
-            this.tablePanel1.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel1.AccessibleDescription = null;
+            this.tablePanel1.AccessibleName = null;
             resources.ApplyResources(this.tablePanel1, "tablePanel1");
+            this.tablePanel1.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel1.BackgroundImage = null;
             this.tablePanel1.Controls.Add(this.statusBox, 1, 2);
             this.tablePanel1.Controls.Add(this.label4, 0, 2);
             this.tablePanel1.Controls.Add(this.linkOutput, 1, 1);
             this.tablePanel1.Controls.Add(this.linkInput, 1, 0);
             this.tablePanel1.Controls.Add(this.label2, 0, 0);
             this.tablePanel1.Controls.Add(this.label3, 0, 1);
+            this.tablePanel1.Font = null;
             this.tablePanel1.Name = "tablePanel1";
             // 
             // label1
             // 
+            this.label1.AccessibleDescription = null;
+            this.label1.AccessibleName = null;
             resources.ApplyResources(this.label1, "label1");
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
@@ -216,99 +248,142 @@
             // 
             // label11
             // 
+            this.label11.AccessibleDescription = null;
+            this.label11.AccessibleName = null;
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
             // authorBox
             // 
+            this.authorBox.AccessibleDescription = null;
+            this.authorBox.AccessibleName = null;
             resources.ApplyResources(this.authorBox, "authorBox");
             this.authorBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.authorBox.Name = "authorBox";
             // 
             // label6
             // 
+            this.label6.AccessibleDescription = null;
+            this.label6.AccessibleName = null;
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             // 
             // label10
             // 
+            this.label10.AccessibleDescription = null;
+            this.label10.AccessibleName = null;
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
             // 
             // label7
             // 
+            this.label7.AccessibleDescription = null;
+            this.label7.AccessibleName = null;
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
             // subjectBox
             // 
+            this.subjectBox.AccessibleDescription = null;
+            this.subjectBox.AccessibleName = null;
             resources.ApplyResources(this.subjectBox, "subjectBox");
             this.subjectBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.subjectBox.Name = "subjectBox";
             // 
             // label9
             // 
+            this.label9.AccessibleDescription = null;
+            this.label9.AccessibleName = null;
             resources.ApplyResources(this.label9, "label9");
             this.label9.Name = "label9";
             // 
             // kwBox
             // 
+            this.kwBox.AccessibleDescription = null;
+            this.kwBox.AccessibleName = null;
             resources.ApplyResources(this.kwBox, "kwBox");
             this.kwBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.kwBox.Name = "kwBox";
             // 
             // label8
             // 
+            this.label8.AccessibleDescription = null;
+            this.label8.AccessibleName = null;
             resources.ApplyResources(this.label8, "label8");
             this.label8.Name = "label8";
             // 
             // titleBox
             // 
+            this.titleBox.AccessibleDescription = null;
+            this.titleBox.AccessibleName = null;
             resources.ApplyResources(this.titleBox, "titleBox");
             this.titleBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.titleBox.Name = "titleBox";
             // 
             // creatorBox
             // 
+            this.creatorBox.AccessibleDescription = null;
+            this.creatorBox.AccessibleName = null;
             resources.ApplyResources(this.creatorBox, "creatorBox");
             this.creatorBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.creatorBox.Name = "creatorBox";
             // 
             // prodBox
             // 
+            this.prodBox.AccessibleDescription = null;
+            this.prodBox.AccessibleName = null;
             resources.ApplyResources(this.prodBox, "prodBox");
             this.prodBox.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.prodBox.Name = "prodBox";
             // 
             // label15
             // 
+            this.label15.AccessibleDescription = null;
+            this.label15.AccessibleName = null;
             resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
             // 
             // Citytext
             // 
+            this.Citytext.AccessibleDescription = null;
+            this.Citytext.AccessibleName = null;
             resources.ApplyResources(this.Citytext, "Citytext");
+            this.Citytext.BackgroundImage = null;
+            this.Citytext.Font = null;
             this.Citytext.Name = "Citytext";
             // 
             // Contacttext
             // 
+            this.Contacttext.AccessibleDescription = null;
+            this.Contacttext.AccessibleName = null;
             resources.ApplyResources(this.Contacttext, "Contacttext");
+            this.Contacttext.BackgroundImage = null;
+            this.Contacttext.Font = null;
             this.Contacttext.Name = "Contacttext";
             // 
             // label14
             // 
+            this.label14.AccessibleDescription = null;
+            this.label14.AccessibleName = null;
             resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
             // 
             // Reasontext
             // 
+            this.Reasontext.AccessibleDescription = null;
+            this.Reasontext.AccessibleName = null;
             resources.ApplyResources(this.Reasontext, "Reasontext");
+            this.Reasontext.BackgroundImage = null;
+            this.Reasontext.Font = null;
             this.Reasontext.Name = "Reasontext";
             // 
             // tablePanel2
             // 
-            this.tablePanel2.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel2.AccessibleDescription = null;
+            this.tablePanel2.AccessibleName = null;
             resources.ApplyResources(this.tablePanel2, "tablePanel2");
+            this.tablePanel2.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel2.BackgroundImage = null;
             this.tablePanel2.Controls.Add(this.prodBox, 1, 5);
             this.tablePanel2.Controls.Add(this.label11, 0, 5);
             this.tablePanel2.Controls.Add(this.label6, 0, 0);
@@ -321,10 +396,13 @@
             this.tablePanel2.Controls.Add(this.label7, 0, 1);
             this.tablePanel2.Controls.Add(this.titleBox, 1, 1);
             this.tablePanel2.Controls.Add(this.label8, 0, 2);
+            this.tablePanel2.Font = null;
             this.tablePanel2.Name = "tablePanel2";
             // 
             // label5
             // 
+            this.label5.AccessibleDescription = null;
+            this.label5.AccessibleName = null;
             resources.ApplyResources(this.label5, "label5");
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
@@ -332,8 +410,11 @@
             // 
             // tablePanel3
             // 
-            this.tablePanel3.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel3.AccessibleDescription = null;
+            this.tablePanel3.AccessibleName = null;
             resources.ApplyResources(this.tablePanel3, "tablePanel3");
+            this.tablePanel3.BackColor = System.Drawing.SystemColors.Window;
+            this.tablePanel3.BackgroundImage = null;
             this.tablePanel3.Controls.Add(this.Citytext, 1, 3);
             this.tablePanel3.Controls.Add(this.label15, 0, 3);
             this.tablePanel3.Controls.Add(this.Countytext, 1, 4);
@@ -347,52 +428,82 @@
             this.tablePanel3.Controls.Add(this.Contacttext, 1, 0);
             this.tablePanel3.Controls.Add(this.Reasontext, 1, 1);
             this.tablePanel3.Controls.Add(this.SigVisible, 1, 7);
+            this.tablePanel3.Font = null;
             this.tablePanel3.Name = "tablePanel3";
             // 
             // Countytext
             // 
+            this.Countytext.AccessibleDescription = null;
+            this.Countytext.AccessibleName = null;
             resources.ApplyResources(this.Countytext, "Countytext");
+            this.Countytext.BackgroundImage = null;
+            this.Countytext.Font = null;
             this.Countytext.Name = "Countytext";
             // 
             // label16
             // 
+            this.label16.AccessibleDescription = null;
+            this.label16.AccessibleName = null;
             resources.ApplyResources(this.label16, "label16");
+            this.label16.Font = null;
             this.label16.Name = "label16";
             // 
             // label17
             // 
+            this.label17.AccessibleDescription = null;
+            this.label17.AccessibleName = null;
             resources.ApplyResources(this.label17, "label17");
+            this.label17.Font = null;
             this.label17.Name = "label17";
             // 
             // Countrytext
             // 
+            this.Countrytext.AccessibleDescription = null;
+            this.Countrytext.AccessibleName = null;
             resources.ApplyResources(this.Countrytext, "Countrytext");
+            this.Countrytext.BackgroundImage = null;
+            this.Countrytext.Font = null;
             this.Countrytext.Name = "Countrytext";
             // 
             // label18
             // 
+            this.label18.AccessibleDescription = null;
+            this.label18.AccessibleName = null;
             resources.ApplyResources(this.label18, "label18");
+            this.label18.Font = null;
             this.label18.Name = "label18";
             // 
             // Indextext
             // 
+            this.Indextext.AccessibleDescription = null;
+            this.Indextext.AccessibleName = null;
             resources.ApplyResources(this.Indextext, "Indextext");
+            this.Indextext.BackgroundImage = null;
+            this.Indextext.Font = null;
             this.Indextext.Name = "Indextext";
             // 
             // label13
             // 
+            this.label13.AccessibleDescription = null;
+            this.label13.AccessibleName = null;
             resources.ApplyResources(this.label13, "label13");
+            this.label13.Font = null;
             this.label13.Name = "label13";
             // 
             // SigVisible
             // 
+            this.SigVisible.AccessibleDescription = null;
+            this.SigVisible.AccessibleName = null;
             resources.ApplyResources(this.SigVisible, "SigVisible");
+            this.SigVisible.BackgroundImage = null;
             this.SigVisible.Name = "SigVisible";
             this.SigVisible.UseVisualStyleBackColor = true;
             this.SigVisible.CheckedChanged += new System.EventHandler(this.SigVisible_CheckedChanged);
             // 
             // label12
             // 
+            this.label12.AccessibleDescription = null;
+            this.label12.AccessibleName = null;
             resources.ApplyResources(this.label12, "label12");
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(53)))), ((int)(((byte)(95)))));
@@ -400,18 +511,24 @@
             // 
             // comboLanguage
             // 
+            this.comboLanguage.AccessibleDescription = null;
+            this.comboLanguage.AccessibleName = null;
+            resources.ApplyResources(this.comboLanguage, "comboLanguage");
+            this.comboLanguage.BackgroundImage = null;
             this.comboLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboLanguage.Font = null;
             this.comboLanguage.FormattingEnabled = true;
             this.comboLanguage.Items.AddRange(new object[] {
             resources.GetString("comboLanguage.Items"),
             resources.GetString("comboLanguage.Items1"),
             resources.GetString("comboLanguage.Items2")});
-            resources.ApplyResources(this.comboLanguage, "comboLanguage");
             this.comboLanguage.Name = "comboLanguage";
             this.comboLanguage.SelectedIndexChanged += new System.EventHandler(this.comboLanguage_SelectedIndexChanged);
             // 
             // labelFormName
             // 
+            this.labelFormName.AccessibleDescription = null;
+            this.labelFormName.AccessibleName = null;
             resources.ApplyResources(this.labelFormName, "labelFormName");
             this.labelFormName.BackColor = System.Drawing.Color.Transparent;
             this.labelFormName.ForeColor = System.Drawing.SystemColors.Info;
@@ -419,6 +536,8 @@
             // 
             // Form1
             // 
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -487,7 +606,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tablePanel2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TableLayoutPanel tablePanel3;
+        private System.Windows.Forms.TableLayoutPanel tablePanel3;        
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox comboLanguage;
         private System.Windows.Forms.Label label13;
