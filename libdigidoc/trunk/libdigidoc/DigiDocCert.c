@@ -828,7 +828,7 @@ EXP_OPTION int isCertSignedByCERT(const X509* cert, const X509* caCert)
 //--------------------------------------------------------
 int ddocCertCopySubstring(const char* szSrc, const char* szLabel, const char* szTerminator, char** szDest)
 {
-	int l;
+	ptrdiff_t l;
 	char *p1, *p2;
 
 	RETURN_IF_NULL_PARAM(szSrc);
@@ -843,11 +843,11 @@ int ddocCertCopySubstring(const char* szSrc, const char* szLabel, const char* sz
 		if(!p2)
 			p2 = strchr(p1, 0);
 		if(p2 && p2 > p1) {
-			l = (int)p2 - (int)p1 + 1;
+			l = p2 - p1 + 1;
 			*szDest = (char*)malloc(l);
 			if(*szDest) {
 				memset(*szDest, 0, l);
-				strncpy(*szDest, p1, (int)p2 - (int)p1);
+				strncpy(*szDest, p1, p2 - p1);
 			}
 		}
 	}
