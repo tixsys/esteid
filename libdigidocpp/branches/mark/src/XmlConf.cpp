@@ -282,26 +282,13 @@ std::string digidoc::XmlConf::getDigestUri() const
     return digestUri;
 }
 
-void digidoc::XmlConf::getUserConfDir() const
+/**
+ * Gets user specific configuration file directory.
+ * @return returns user configuration file directory.
+ */
+std::string digidoc::XmlConf::getUserConfDir() const
 {
-#ifdef _WIN32	
-
-	HKEY hKey;
-	DWORD dwSize;
-	TCHAR ConfPath[1024];
-	if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
-	{
-		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hKey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)ConfPath, &dwSize);
-		RegCloseKey(hKey);
-
-		USER_CONF_LOC = ConfPath;
-		USER_CONF_LOC += "\\digidocpp";
-	}
-#else
-	USER_CONF_LOC = getenv("HOME");
-	USER_CONF_LOC += "/.digidocpp";
-#endif
+	return util::File::directory(USER_CONF_LOC);
 }
 
 std::string digidoc::XmlConf::getManifestXsdPath() const
@@ -379,11 +366,9 @@ void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException
 	{
 		setUserConf(PROXY_HOST, host);
 	}
-	catch((const IOException& e))
+	catch (const IOException& e)
 	{
-		std::ostringstream oss;
-		oss << e;
-		THROW_IOEXCEPTION("Failed to set Proxy host: %s", oss.str().c_str());
+		throw e;
 	}
 
 }
@@ -391,7 +376,14 @@ void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException
 void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException)
 {
     proxyPort = port;
-	setUserConf(PROXY_PORT, port);
+	try
+	{
+		setUserConf(PROXY_PORT, port);
+	}
+	catch (const IOException& e)
+	{
+		throw e;
+	}
 }
 
 void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException)
@@ -401,11 +393,9 @@ void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException
 	{
 		setUserConf(PROXY_USER, user);
 	}
-	catch((const IOException& e))
+	catch (const IOException& e)
 	{
-		std::ostringstream oss;
-		oss << e;
-		THROW_IOEXCEPTION("Failed to set Proxy user: %s", oss.str().c_str());
+		throw e;
 	}
 }
 
@@ -416,11 +406,9 @@ void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException
 	{
 		setUserConf(PROXY_PASS, pass);
 	}
-	catch((const IOException& e))
+	catch (const IOException& e)
 	{
-		std::ostringstream oss;
-		oss << e;
-		THROW_IOEXCEPTION("Failed to set Proxy password: %s", oss.str().c_str());
+		throw e;
 	}
 }
 
@@ -431,11 +419,9 @@ void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOExceptio
 	{
 		setUserConf(PKCS12_CERT, cert);
 	}
-	catch((const IOException& e))
+	catch (const IOException& e)
 	{
-		std::ostringstream oss;
-		oss << e;
-		THROW_IOEXCEPTION("Failed to set PKCS12 cert: %s", oss.str().c_str());
+		throw e;
 	}
 }
 
@@ -446,14 +432,19 @@ void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOExceptio
 	{
 		setUserConf(PKCS12_PASS, pass);
 	}
-	catch((const IOException& e))
+	catch (const IOException& e)
 	{
-		std::ostringstream oss;
-		oss << e;
-		THROW_IOEXCEPTION("Failed to set PKCS12 password: %s", oss.str().c_str());
+		throw e;
 	}
 }
 
+/**
+ * Sets any parameter in a user configuration file. Also creates a configuration file if it is missing.
+ *
+ * @param paramName name of parameter that needs to be changed or created.
+ * @param value value for changing or adding to a given parameter. If value is an empty string, the walue for a given parameter will be erased.
+ * @throws IOException exception is thrown if reading, writing or creating of a user configuration file fails.
+ */
 void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value) throw(IOException)
 {
 	std::ofstream ofs;
@@ -495,15 +486,27 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 			map[""].schema = confXsd.c_str();
 			configuration(ofs, *conf, map);	
 		}
-        catch(const xml_schema::Exception& e)
+        catch (const xml_schema::Exception& e)
 		{
 			std::ostringstream oss;
 			oss << e;
-			THROW_IOEXCEPTION("Failed to parse configuration: %s", oss.str().c_str());
+			THROW_IOEXCEPTION("(in set %s) Failed to parse configuration: %s", paramName.c_str(), oss.str().c_str());
 		}
 	}	
 	else
 	{
+		//Check if directory exists
+		if (!util::File::directoryExists(getUserConfDir()))
+		{
+			try //create a missing directory
+			{
+				util::File::createDirectory(getUserConfDir());
+			}
+			catch (const IOException& e)
+			{
+				throw e;
+			}
+		}
 		//create a new file
 		//copy global conf and erase data
 		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
@@ -539,11 +542,17 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 	if (ofs.fail())
 	{
 		ofs.close(); //just in case it was left open
-        THROW_IOEXCEPTION("Failed to open configuration: %s", USER_CONF_LOC.c_str());
+		THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
 	}
 	ofs.close();
 }
 
+/**
+ * Sets OCSP configuration parmeters in a user configuration file. Also creates a configuration file if it is missing.
+ *
+ * @param ocspData OCSP configuration structure defined in Conf.h (OCSPConf). Contains: OCSP issuer, OCSP URL and OCSP certificate location. Empty URL or cert location will erase this parameter for given issuer.
+ * @throws IOException exception is thrown if reading, writing or creating of a user configuration file fails.
+ */
 void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException)
 {
 	std::ofstream ofs;
@@ -587,11 +596,23 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
 		{
 			std::ostringstream oss;
 			oss << e;
-			THROW_IOEXCEPTION("Failed to parse configuration: %s", oss.str().c_str());
+			THROW_IOEXCEPTION("(in set OCSP) Failed to parse configuration: %s", oss.str().c_str());
 		}
 	}
 	else
 	{
+		//Check if directory exists
+		if (!util::File::directoryExists(getUserConfDir()))
+		{
+			try //create a missing directory
+			{
+				util::File::createDirectory(getUserConfDir());
+			}
+			catch (const IOException& e)
+			{
+				throw e;
+			}
+		}
 		//create a new file
 		//copy global conf and erase data
 		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
@@ -610,7 +631,7 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
 	if (ofs.fail())
 	{
 		ofs.close(); //just in case it was left open
-        THROW_IOEXCEPTION("Failed to open configuration: %s", USER_CONF_LOC.c_str());
+        THROW_IOEXCEPTION("(in set OCSP) Failed to open configuration: %s", USER_CONF_LOC.c_str());
 	}
 	ofs.close();
 }

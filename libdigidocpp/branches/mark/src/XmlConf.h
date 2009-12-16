@@ -36,7 +36,7 @@ public:
     virtual std::string getPKCS12Cert() const;
     virtual std::string getPKCS12Pass() const;
 
-    virtual void getUserConfDir() const;
+    virtual std::string getUserConfDir() const;
 
     virtual void setProxyHost( const std::string &host ) throw(IOException);
     virtual void setProxyPort( const std::string &port ) throw(IOException);
