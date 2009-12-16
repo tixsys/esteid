@@ -231,8 +231,8 @@ namespace EstEIDSigner
             metaData.Producer = prodBox.Text;
 
             Appearance app = new Appearance();
-            app.Contact = Contacttext.Text;
-            app.Reason = Reasontext.Text;
+            app.Contact = Contacttext.Text; // PDF field "contact" <-> DigiDoc field "role"
+            app.Reason = Reasontext.Text;   // PDF field "reason" <-> DigiDoc field "resolution"
             app.Location = LocationText;
             app.Visible = SigVisible.Checked;
             app.SigLocation = new SignatureLocation(config);
@@ -340,6 +340,8 @@ namespace EstEIDSigner
             comboLanguage.SelectedIndex = GetCulture(lang);
 
             // Signature box content
+            Contacttext.Text = config.ToString("contact");
+            Reasontext.Text = config.ToString("reason");
             Citytext.Text = config.ToString("city");
             Countytext.Text = config.ToString("county");
             Countrytext.Text = config.ToString("country");
@@ -455,6 +457,8 @@ namespace EstEIDSigner
         {
             if (config != null)
             {
+                config.AddOrReplace("contact", Contacttext.Text);
+                config.AddOrReplace("reason", Reasontext.Text);
                 config.AddOrReplace("city", Citytext.Text);
                 config.AddOrReplace("county", Countytext.Text);
                 config.AddOrReplace("country", Countrytext.Text);

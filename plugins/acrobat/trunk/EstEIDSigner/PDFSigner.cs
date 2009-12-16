@@ -238,7 +238,7 @@ namespace EstEIDSigner
                             y + SIGNATURE_HEIGHT);
                         break;
                     case 9: // bottom right
-                        x = location.Bounds.Width - SIGNATURE_WIDTH - SIGNATURE_MARGIN;                        
+                        x = location.Bounds.Width - SIGNATURE_WIDTH - SIGNATURE_MARGIN;
                         y = SIGNATURE_MARGIN;
                         location.rectangle = new Rectangle(x, y,
                             x + SIGNATURE_WIDTH,
@@ -309,6 +309,22 @@ namespace EstEIDSigner
         {
             set { render = value; }
             get { return render; }
+        }
+        public string SignatureText(DateTime date, Org.BouncyCastle.X509.X509Certificate cert)
+        {
+            StringBuilder buf = new StringBuilder();
+            buf.Append("Digitally signed by ").Append(PdfPKCS7.GetSubjectFields(cert).GetField("CN")).Append('\n');
+            buf.Append("Date: ").Append(date.ToString("yyyy.MM.dd HH:mm:ss zzz"));
+            // PDF field "contact" <-> DigiDoc field "role"            
+            if (contact != null)
+                buf.Append('\n').Append("Role: ").Append(contact);
+            // PDF field "reason" <-> DigiDoc field "resolution"
+            if (reason != null)
+                buf.Append('\n').Append("Resolution: ").Append(reason);
+            if (location != null)
+                buf.Append('\n').Append("Location: ").Append(location);
+
+            return buf.ToString();
         }
     }
 
@@ -849,7 +865,7 @@ namespace EstEIDSigner
             if (oid.Value != PkcsObjectIdentifiers.Sha1WithRsaEncryption.Id)
                 throw new Exception(Resources.INVALID_CERT);
 
-            PdfReader reader = new PdfReader(filename);            
+            PdfReader reader = new PdfReader(filename);
             Document document = new Document(reader.GetPageSizeWithRotation(1));
             PdfStamper stp = PdfStamper.CreateSignature(reader, new FileStream(outfile, FileMode.Create), '\0', null, nextRevision);
             if (metadata != null)
@@ -868,6 +884,7 @@ namespace EstEIDSigner
             sap.Contact = (appearance.Contact.Length > 0) ? appearance.Contact : null;
             sap.Acro6Layers = true;
             sap.Render = appearance.SignatureRender;
+            sap.Layer2Text = appearance.SignatureText(sap.SignDate, chain[0]);
             PdfSignature dic = new PdfSignature(PdfName.ADOBE_PPKLITE, PdfName.ADBE_PKCS7_SHA1);
             dic.Date = new PdfDate(sap.SignDate);
             dic.Name = PdfPKCS7.GetSubjectFields(chain[0]).GetField("CN");
