@@ -40,14 +40,11 @@
 #include <QSslKey>
 #include <QSslConfiguration>
 #include <QTemporaryFile>
-#include <QTimer>
+#include <QTimeLine>
 
 MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 :	QDialog( parent )
 ,	m_doc( doc )
-,	m_timer( new QTimer( this ) )
-,	statusTimer( new QTimer( this ) )
-,	manager( new QNetworkAccessManager( this ) )
 ,	sessionCode( 0 )
 {
 	lang["et"] = "EST";
@@ -72,15 +69,19 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 
 	setupUi( this );
 
+	statusTimer = new QTimeLine( signProgressBar->maximum() * 1000, this );
+	statusTimer->setCurveShape( QTimeLine::LinearCurve );
+	statusTimer->setFrameRange( signProgressBar->minimum(), signProgressBar->maximum() );
+	connect( statusTimer, SIGNAL(frameChanged(int)), SLOT(sendStatusRequest(int)) );
+	connect( statusTimer, SIGNAL(finished()), SLOT(endProgress()) );
+
+	manager = new QNetworkAccessManager( this );
 	connect( manager, SIGNAL(finished(QNetworkReply*)), SLOT(finished(QNetworkReply*)) );
 	connect( manager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
 		SLOT(sslErrors(QNetworkReply*,QList<QSslError>)) );
-	connect( m_timer, SIGNAL(timeout()), SLOT(getSignStatus()) );
-	connect( statusTimer, SIGNAL(timeout()), SLOT(updateStatus()) );
 
 	Settings s;
 	s.beginGroup( "Client" );
-
 	if( !s.value( "proxyHost" ).toString().isEmpty() )
 	{
 		manager->setProxy( QNetworkProxy(
@@ -106,7 +107,6 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 
 	PKCS12Certificate pkcs12Cert( &f,
 		m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
-	f.close();
 	if( pkcs12Cert.isNull() )
 		return;
 
@@ -118,6 +118,9 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 
 QString MobileDialog::elementText( const QDomElement &element, const QString &tag ) const
 { return element.elementsByTagName( tag ).item(0).toElement().text(); }
+
+void MobileDialog::endProgress()
+{ labelError->setText( mobileResults.value( "EXPIRED_TRANSACTION" ) ); }
 
 QString MobileDialog::escapeChars( const QString &in ) const
 {
@@ -177,18 +180,21 @@ void MobileDialog::finished( QNetworkReply *reply )
 		return;
 	}
 
-	if( !m_timer->isActive() )
+	if( !sessionCode )
 	{
 		sessionCode = elementText( e, "Sesscode" ).toInt();
-		if ( sessionCode )
+		if ( !sessionCode )
 		{
-			code->setText( tr("Control code: %1").arg( elementText( e, "ChallengeID" ) ) );
-			m_timer->start( 5000 );
+			labelError->setText( mobileResults.value( elementText( e, "message" ).toLatin1() ) );
+			statusTimer->stop();
 		}
 		else
-			labelError->setText( mobileResults.value( elementText( e, "message" ).toLatin1() ) );
+			code->setText( tr("Control code: %1").arg( elementText( e, "ChallengeID" ) ) );
 		return;
 	}
+
+	if( statusTimer->state() == QTimeLine::NotRunning )
+		return;
 
 	QString status = elementText( e, "Status" );
 	labelError->setText( mobileResults.value( status.toLatin1() ) );
@@ -196,7 +202,6 @@ void MobileDialog::finished( QNetworkReply *reply )
 	if( status == "REQUEST_OK" || status == "OUTSTANDING_TRANSACTION" )
 		return;
 
-	m_timer->stop();
 	statusTimer->stop();
 
 	if( status != "SIGNATURE" )
@@ -216,6 +221,18 @@ void MobileDialog::finished( QNetworkReply *reply )
 		file.write( "</SignedDoc>" );
 	file.close();
 	close();
+}
+
+void MobileDialog::sendStatusRequest( int frame )
+{
+	signProgressBar->setValue( frame );
+	if( frame % 5 != 0 )
+		return;
+	QString message = QString(
+		"<Sesscode xsi:type=\"xsd:int\">%1</Sesscode>"
+		"<WaitSignature xsi:type=\"xsd:boolean\">false</WaitSignature>" )
+		.arg( sessionCode );
+	manager->post( request, insertBody( GetMobileCreateSignatureStatus, message ).toUtf8() );
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
@@ -267,8 +284,7 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 		.arg( m_doc->signatures().size() );
 	manager->post( request, insertBody( MobileCreateSignature, message ).toUtf8() );
 
-	startTime.start();
-	statusTimer->start( 1000 );
+	statusTimer->start();
 }
 
 void MobileDialog::sslErrors( QNetworkReply *reply, const QList<QSslError> &errors )
@@ -313,15 +329,6 @@ bool MobileDialog::getFiles()
 	return true;
 }
 
-void MobileDialog::getSignStatus()
-{
-	QString message = QString(
-		"<Sesscode xsi:type=\"xsd:int\">%1</Sesscode>"
-		"<WaitSignature xsi:type=\"xsd:boolean\">false</WaitSignature>" )
-		.arg( sessionCode );
-	manager->post( request, insertBody( GetMobileCreateSignatureStatus, message ).toUtf8() );
-}
-
 QString MobileDialog::insertBody( MobileAction maction, const QString &body ) const
 {
 	QString action;
@@ -343,18 +350,4 @@ QString MobileDialog::insertBody( MobileAction maction, const QString &body ) co
 		"	SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">%2</m:%1>"
 		"</SOAP-ENV:Body>"
 		"</SOAP-ENV:Envelope>" ).arg( action ).arg( body );
-}
-
-void MobileDialog::updateStatus()
-{
-	if ( !statusTimer->isActive() || !startTime.isValid() )
-		return;
-
-	signProgressBar->setValue( startTime.elapsed() / 1000 );
-	if ( signProgressBar->value() >= signProgressBar->maximum() )
-	{
-		m_timer->stop();
-		statusTimer->stop();
-		labelError->setText( mobileResults.value( "EXPIRED_TRANSACTION" ) );
-	}
 }
