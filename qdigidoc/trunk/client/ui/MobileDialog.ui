@@ -38,7 +38,7 @@
    <item>
     <widget class="QProgressBar" name="signProgressBar">
      <property name="maximum">
-      <number>120</number>
+      <number>60</number>
      </property>
      <property name="value">
       <number>0</number>

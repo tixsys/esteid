@@ -27,12 +27,12 @@
 #include <QHash>
 #include <QNetworkRequest>
 #include <QSslError>
-#include <QTime>
 
 class DigiDoc;
 class QDomElement;
 class QNetworkAccessManager;
 class QNetworkReply;
+class QTimeLine;
 
 class MobileDialog : public QDialog, private Ui::MobileDialog
 {
@@ -46,10 +46,10 @@ public:
 	QString fName;
 
 private Q_SLOTS:
-	void getSignStatus();
+	void endProgress();
 	void finished( QNetworkReply *reply );
+	void sendStatusRequest( int frame );
 	void sslErrors( QNetworkReply *reply, const QList<QSslError> &errors );
-	void updateStatus();
 
 private:
 	enum MobileAction {
@@ -64,10 +64,9 @@ private:
 	void startSession();
 
 	DigiDoc *m_doc;
-	QTimer *m_timer, *statusTimer;
+	QTimeLine *statusTimer;
 	QNetworkAccessManager *manager;
 	QNetworkRequest request;
-	QTime startTime;
 	QString signature, files;
 
 	int sessionCode;
