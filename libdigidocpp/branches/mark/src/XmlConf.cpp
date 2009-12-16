@@ -65,7 +65,7 @@ void digidoc::XmlConf::initialize()
         dwSize = 1024 * sizeof(TCHAR);
         RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize);
         RegCloseKey(hkey);
-        DEFAULT_CONF_LOC = tcConfPath1;	
+        DEFAULT_CONF_LOC = tcConfPath1;
     }
 
     if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
@@ -265,7 +265,7 @@ std::string digidoc::XmlConf::getDigestUri() const
  */
 std::string digidoc::XmlConf::getUserConfDir() const
 {
-	return util::File::directory(USER_CONF_LOC);
+    return util::File::directory(USER_CONF_LOC);
 }
 
 std::string digidoc::XmlConf::getManifestXsdPath() const
@@ -497,7 +497,7 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
             xml_schema::NamespaceInfomap map;
             map[""].name = "";
             map[""].schema = confXsd.c_str();
-            configuration(ofs, *conf, map);	
+            configuration(ofs, *conf, map);
         }
         catch (const xml_schema::Exception& e)
         {
@@ -505,7 +505,7 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
             oss << e;
             THROW_IOEXCEPTION("(in set %s) Failed to parse configuration: %s", paramName.c_str(), oss.str().c_str());
         }
-    }	
+    }
     else
     {
         //Check if directory exists
