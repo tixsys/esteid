@@ -7,11 +7,12 @@ namespace digidoc
 
 class DDocPrivate;
 
+/**
+ * DDoc Signature class
+ */
 class EXP_DIGIDOC SignatureDDOC: public Signature
 {
 public:
-	SignatureDDOC( int id, DDocPrivate *doc );
-
 	virtual std::string getMediaType() const;
 	X509Cert getOCSPCertificate() const;
 	std::string getProducedAt() const;
@@ -24,10 +25,22 @@ protected:
 	virtual void sign(Signer* signer) throw(SignatureException, SignException);
 
 private:
+	SignatureDDOC( int id, DDocPrivate *doc );
+
 	int m_id;
 	DDocPrivate *m_doc;
+
+	friend class DDocPrivate;
 };
 
+/**
+ * Implements the DDOC specification of the signed digital document container.
+ * Container can contain several files and all these files can be signed using
+ * signing certificates. Container can only be signed if it contains documents.
+ * Documents can be added and removed from container only if the container is
+ * not signed. To add or remove documents from signed container remove all the
+ * signatures before modifying documents list in container.
+ */
 class EXP_DIGIDOC DDoc: public ADoc
 {
 public:
