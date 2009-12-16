@@ -493,6 +493,10 @@ Please check your server access sertificate.</source>
         <translation>Не разрешено использовать OCSP услугу!
 Пожалуйста проверьте действительность справки допуска.</translation>
     </message>
+    <message>
+        <source>Sign</source>
+        <translation>Подписать</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

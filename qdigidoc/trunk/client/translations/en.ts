@@ -490,6 +490,10 @@ Please check your server access sertificate.</source>
         <translation>Not allowed to use OCSP service!
 Please check your server access sertificate.</translation>
     </message>
+    <message>
+        <source>Sign</source>
+        <translation>Sign</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

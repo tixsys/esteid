@@ -267,18 +267,19 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 		"<PhoneNo xsi:type=\"xsd:String\">%2</PhoneNo>"
 		"<Language xsi:type=\"xsd:String\">%3</Language>"
 		"<ServiceName xsi:type=\"xsd:String\">DigiDoc3</ServiceName>"
-		"<MessageToDisplay xsi:type=\"xsd:String\">Allkirjastamine</MessageToDisplay>"
-		"%4"
-		"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+		"<MessageToDisplay xsi:type=\"xsd:String\">%4</MessageToDisplay>"
 		"%5"
-		"<Format xsi:type=\"xsd:String\">%6</Format>"
-		"<Version xsi:type=\"xsd:String\">%7</Version>"
-		"<SignatureID xsi:type=\"xsd:String\">S%8</SignatureID>"
+		"<SigningProfile xsi:type=\"xsd:String\"></SigningProfile>"
+		"%6"
+		"<Format xsi:type=\"xsd:String\">%7</Format>"
+		"<Version xsi:type=\"xsd:String\">%8</Version>"
+		"<SignatureID xsi:type=\"xsd:String\">S%9</SignatureID>"
 		"<MessagingMode xsi:type=\"xsd:String\">asynchClientServer</MessagingMode>"
 		"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>" )
 		.arg( escapeChars( ssid ) )
 		.arg( escapeChars( cell ) )
 		.arg( lang.value( Settings().value("Main/Language", "et" ).toByteArray(), "EST" ) )
+		.arg( tr("Sign") )
 		.arg( signature )
 		.arg( files )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "BDOC" : "DIGIDOC-XML" )

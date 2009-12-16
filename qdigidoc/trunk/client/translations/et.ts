@@ -490,6 +490,10 @@ Please check your server access sertificate.</source>
         <translation>Puudub juurdepääs OCSP teenusele!
 Palun kontrollige juurdepääsutõendi olemasolu.</translation>
     </message>
+    <message>
+        <source>Sign</source>
+        <translation>Allkirjastan</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
