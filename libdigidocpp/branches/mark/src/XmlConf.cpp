@@ -341,7 +341,7 @@ std::string digidoc::XmlConf::getPKCS12Pass() const
 }
 
 /**
- * Sets a Proxy host adress. Also adds or replaces proxy host data in the user configuration file.
+ * Sets a Proxy host address. Also adds or replaces proxy host data in the user configuration file.
  *
  * @param host proxy host address.
  * @throws IOException exception is thrown if saving a proxy host address into a user configuration file fails.
@@ -419,6 +419,7 @@ void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException
 
 /**
  * Sets a PKCS#12 certficate path. Also adds or replaces PKCS#12 certificate path in the user configuration file.
+ * By default the PKCS#12 certificate file should be located at default path, given by getUserConfDir() function.
  *
  * @param cert PKCS#12 certificate location path.
  * @throws IOException exception is thrown if saving a PKCS#12 certificate path into a user configuration file fails.
@@ -465,7 +466,6 @@ void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOExceptio
 void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value) throw(IOException)
 {
 	std::ofstream ofs;
-	bool done = false;
 	Param newParam(value, paramName);
 	std::string confXsd = fullpath();
 #ifdef _WIN32
@@ -573,7 +573,6 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException)
 {
 	std::ofstream ofs;
-	bool done = false;
 	Ocsp newOcsp(ocspData.url, ocspData.cert, ocspData.issuer);
 	std::string confXsd = fullpath();
 #ifdef _WIN32
@@ -597,17 +596,17 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
 				{
 					ocspSeq.erase(it);
 					break;
-				}
-				if (ocspData.url.size() || ocspData.cert.size()) //if we do not want to just erase
-					ocspSeq.push_back(newOcsp);
-				conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
-
-				ofs.open(USER_CONF_LOC.c_str());
-				xml_schema::NamespaceInfomap map;
-				map[""].name = "";
-				map[""].schema = confXsd.c_str();
-				configuration(ofs, *conf, map);		
+				}		
 			}
+			if (ocspData.url.size() || ocspData.cert.size()) //if we do not want to just erase
+				ocspSeq.push_back(newOcsp);
+			conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+
+			ofs.open(USER_CONF_LOC.c_str());
+			xml_schema::NamespaceInfomap map;
+			map[""].name = "";
+			map[""].schema = confXsd.c_str();
+			configuration(ofs, *conf, map);
 		}
 		catch(const xml_schema::Exception& e)
 		{

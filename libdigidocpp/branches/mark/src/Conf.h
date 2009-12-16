@@ -33,12 +33,17 @@ namespace digidoc
           virtual std::string getPKCS12Cert() const = 0;
           virtual std::string getPKCS12Pass() const = 0;
 
-          virtual void setProxyHost( const std::string &host ) = 0;
-          virtual void setProxyPort( const std::string &port ) = 0;
-          virtual void setProxyUser( const std::string &user ) = 0;
-          virtual void setProxyPass( const std::string &pass ) = 0;
-          virtual void setPKCS12Cert( const std::string &cert ) = 0;
-          virtual void setPKCS12Pass( const std::string &pass ) = 0;
+		  virtual std::string getUserConfDir() const = 0;
+
+          virtual void setProxyHost( const std::string &host ) throw(IOException) = 0;
+          virtual void setProxyPort( const std::string &port ) throw(IOException) = 0;
+          virtual void setProxyUser( const std::string &user ) throw(IOException) = 0;
+          virtual void setProxyPass( const std::string &pass ) throw(IOException) = 0;
+          virtual void setPKCS12Cert( const std::string &cert ) throw(IOException) = 0;
+          virtual void setPKCS12Pass( const std::string &pass ) throw(IOException) = 0;
+
+		  virtual void setUserOCSP(const OCSPConf &ocspData) throw(IOException) = 0;
+	
 
 // Fixme should be protected
           Conf() {}
