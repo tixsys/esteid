@@ -52,15 +52,10 @@ private Q_SLOTS:
 	void sslErrors( QNetworkReply *reply, const QList<QSslError> &errors );
 
 private:
-	enum MobileAction {
-		MobileCreateSignature,
-		GetMobileCreateSignatureStatus
-	};
-
 	bool getFiles();
 	QString escapeChars( const QString &in ) const;
 	QString elementText( const QDomElement &element, const QString &tag ) const;
-	QString insertBody( MobileAction action, const QString &body ) const;
+	QString insertBody( const QString &action, const QString &body ) const;
 	void startSession();
 
 	DigiDoc *m_doc;
@@ -70,5 +65,5 @@ private:
 	QString signature, files;
 
 	int sessionCode;
-	QHash< QByteArray, QString > lang, mobileResults;
+	QHash< QByteArray, QString > mobileResults;
 };

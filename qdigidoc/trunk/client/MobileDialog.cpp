@@ -47,10 +47,6 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 ,	m_doc( doc )
 ,	sessionCode( 0 )
 {
-	lang["et"] = "EST";
-	lang["en"] = "ENG";
-	lang["ru"] = "RUS";
-
 	mobileResults["START"] = tr("Signing in process");
 	mobileResults["REQUEST_OK"] = tr("Request accepted");
 	mobileResults["EXPIRED_TRANSACTION"] = tr("Request timeout");
@@ -234,7 +230,7 @@ void MobileDialog::sendStatusRequest( int frame )
 		"<Sesscode xsi:type=\"xsd:int\">%1</Sesscode>"
 		"<WaitSignature xsi:type=\"xsd:boolean\">false</WaitSignature>" )
 		.arg( sessionCode );
-	manager->post( request, insertBody( GetMobileCreateSignatureStatus, message ).toUtf8() );
+	manager->post( request, insertBody( "GetMobileCreateSignatureStatus", message ).toUtf8() );
 }
 
 void MobileDialog::setSignatureInfo( const QString &city, const QString &state, const QString &zip,
@@ -262,6 +258,11 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 
 	labelError->setText( mobileResults.value( "START" ) );
 
+	QHash<QString,QString> lang;
+	lang["et"] = "EST";
+	lang["en"] = "ENG";
+	lang["ru"] = "RUS";
+
 	QString message = QString(
 		"<IDCode xsi:type=\"xsd:String\">%1</IDCode>"
 		"<PhoneNo xsi:type=\"xsd:String\">%2</PhoneNo>"
@@ -278,15 +279,14 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 		"<AsyncConfiguration xsi:type=\"xsd:int\">0</AsyncConfiguration>" )
 		.arg( escapeChars( ssid ) )
 		.arg( escapeChars( cell ) )
-		.arg( lang.value( Settings().value("Main/Language", "et" ).toByteArray(), "EST" ) )
+		.arg( lang.value( Settings().value("Main/Language", "et" ).toString(), "EST" ) )
 		.arg( tr("Sign") )
 		.arg( signature )
 		.arg( files )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "BDOC" : "DIGIDOC-XML" )
 		.arg( m_doc->documentType() == digidoc::WDoc::BDocType ? "1.0" : "1.3" )
 		.arg( m_doc->signatures().size() );
-	manager->post( request, insertBody( MobileCreateSignature, message ).toUtf8() );
-
+	manager->post( request, insertBody( "MobileCreateSignature", message ).toUtf8() );
 	statusTimer->start();
 }
 
@@ -332,15 +332,8 @@ bool MobileDialog::getFiles()
 	return true;
 }
 
-QString MobileDialog::insertBody( MobileAction maction, const QString &body ) const
+QString MobileDialog::insertBody( const QString &action, const QString &body ) const
 {
-	QString action;
-	switch ( maction )
-	{
-	case MobileCreateSignature: action="MobileCreateSignature"; break;
-	case GetMobileCreateSignatureStatus: action="GetMobileCreateSignatureStatus"; break;
-	}
-
 	return QString(
 		"<SOAP-ENV:Envelope"
 		"	xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\""
