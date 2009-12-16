@@ -79,10 +79,6 @@ void digidoc::XmlConf::initialize()
 
 		USER_CONF_LOC = tcConfPath2;
 		USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
-
-	//	DEFAULT_CONF_LOC = tcConfPath2;
-	//	DEFAULT_CONF_LOC += "\\digidocpp\\digidocpp.conf";
-	//	USER_CONF_LOC = "C:\\Program Files\\Estonian ID Card\\user_digidocpp.conf";
 	}
 #else
 	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
@@ -113,21 +109,7 @@ void digidoc::XmlConf::initialize()
 digidoc::XmlConf::XmlConf() throw(IOException)
 {
     std::string defaultConfLoc("digidocpp.conf");
-//	getUserConfPath();
-/*    char * envLoc = getenv (CONF_ENV.c_str());
-    if(envLoc != NULL)
-    {
-        std::string envConfLoc(envLoc);
 
-        if(util::File::fileExists(envConfLoc))
-        {
-            init(envConfLoc);			
-			if(util::File::fileExists(USER_CONF_LOC))
-				init(USER_CONF_LOC);
-			return;
-        }
-    }
-*/
 	if(util::File::fileExists(DEFAULT_CONF_LOC))
     {
         init(DEFAULT_CONF_LOC);
@@ -136,8 +118,7 @@ digidoc::XmlConf::XmlConf() throw(IOException)
     }
     else
     {
-  //      THROW_IOEXCEPTION("Error loading xml configuration from '%s' env variable or file '%s'",CONF_ENV.c_str(), DEFAULT_CONF_LOC.c_str());
-	      THROW_IOEXCEPTION("Error loading xml configuration from '%s' file or '%s' file",DEFAULT_CONF_LOC.c_str(), USER_CONF_LOC.c_str());
+ 	      THROW_IOEXCEPTION("Error loading xml configuration from '%s' file or '%s' file",DEFAULT_CONF_LOC.c_str(), USER_CONF_LOC.c_str());
     }
 }
 
@@ -359,6 +340,12 @@ std::string digidoc::XmlConf::getPKCS12Pass() const
     return pkcs12Pass;
 }
 
+/**
+ * Sets a Proxy host adress. Also adds or replaces proxy host data in the user configuration file.
+ *
+ * @param host proxy host address.
+ * @throws IOException exception is thrown if saving a proxy host address into a user configuration file fails.
+ */
 void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException)
 {
     proxyHost = host;
@@ -373,6 +360,12 @@ void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException
 
 }
 
+/**
+ * Sets a Proxy port number. Also adds or replaces proxy port data in the user configuration file.
+ *
+ * @param port proxy port number.
+ * @throws IOException exception is thrown if saving a proxy port number into a user configuration file fails.
+ */
 void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException)
 {
     proxyPort = port;
@@ -386,6 +379,12 @@ void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException
 	}
 }
 
+/**
+ * Sets a Proxy user name. Also adds or replaces proxy user name in the user configuration file.
+ *
+ * @param user proxy user name.
+ * @throws IOException exception is thrown if saving a proxy user name into a user configuration file fails.
+ */
 void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException)
 {
     proxyUser = user;
@@ -399,6 +398,12 @@ void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException
 	}
 }
 
+/**
+ * Sets a Proxy password. Also adds or replaces proxy password in the user configuration file.
+ *
+ * @param pass proxy password.
+ * @throws IOException exception is thrown if saving a proxy password into a user configuration file fails.
+ */
 void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException)
 {
     proxyPass = pass;
@@ -412,6 +417,12 @@ void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException
 	}
 }
 
+/**
+ * Sets a PKCS#12 certficate path. Also adds or replaces PKCS#12 certificate path in the user configuration file.
+ *
+ * @param cert PKCS#12 certificate location path.
+ * @throws IOException exception is thrown if saving a PKCS#12 certificate path into a user configuration file fails.
+ */
 void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOException)
 {
     pkcs12Cert = cert;
@@ -425,6 +436,12 @@ void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOExceptio
 	}
 }
 
+/**
+ * Sets a PKCS#12 certificate password. Also adds or replaces PKCS#12 certificate password in the user configuration file.
+ *
+ * @param pass PKCS#12 certificate password.
+ * @throws IOException exception is thrown if saving a PKCS#12 certificate password into a user configuration file fails.
+ */
 void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOException)
 {
     pkcs12Pass = pass;
