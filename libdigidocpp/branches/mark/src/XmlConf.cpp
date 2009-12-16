@@ -6,7 +6,6 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
-//#include <stdarg.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -32,12 +31,10 @@
 //const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML"; //<-- no need anymore
 
 /**
- * Path to default configuration file
+ * Path to default configuration files
  */
 std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
 std::string digidoc::XmlConf::USER_CONF_LOC = "digidocpp.conf";
-
-const std::string digidoc::XmlConf::CONF_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
 
 const std::string digidoc::XmlConf::DIGEST_URI         = "digest.uri";
 const std::string digidoc::XmlConf::PKCS11_DRIVER_PATH = "pkcs11.driver.path";
@@ -57,34 +54,34 @@ const std::string digidoc::XmlConf::PKCS12_PASS        = "pkcs12.pass";
  */
 void digidoc::XmlConf::initialize()
 {
-	//Define Global Conf file location
+    //Define Global and User Conf file locations
 #ifdef _WIN32
-	HKEY hkey;
-	DWORD dwSize;
-	TCHAR tcConfPath1[1024];
-	TCHAR tcConfPath2[1024];
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
-	{
-		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize);
-		RegCloseKey(hkey);
-		DEFAULT_CONF_LOC = tcConfPath1;	
-	}	
+    HKEY hkey;
+    DWORD dwSize;
+    TCHAR tcConfPath1[1024];
+    TCHAR tcConfPath2[1024];
+    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+    {
+        dwSize = 1024 * sizeof(TCHAR);
+        RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize);
+        RegCloseKey(hkey);
+        DEFAULT_CONF_LOC = tcConfPath1;	
+    }
 
-	if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
-	{
-		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize);
-		RegCloseKey(hkey);
+    if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+    {
+        dwSize = 1024 * sizeof(TCHAR);
+        RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize);
+        RegCloseKey(hkey);
 
-		USER_CONF_LOC = tcConfPath2;
-		USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
-	}
+        USER_CONF_LOC = tcConfPath2;
+        USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
+    }
 #else
-	DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
-	
-	USER_CONF_LOC = getenv("HOME");
-	USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
+    DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
+
+    USER_CONF_LOC = getenv("HOME");
+    USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
 #endif
 
     if(!Conf::isInitialized())
@@ -110,15 +107,15 @@ digidoc::XmlConf::XmlConf() throw(IOException)
 {
     std::string defaultConfLoc("digidocpp.conf");
 
-	if(util::File::fileExists(DEFAULT_CONF_LOC))
+    if(util::File::fileExists(DEFAULT_CONF_LOC))
     {
         init(DEFAULT_CONF_LOC);
-		if(util::File::fileExists(USER_CONF_LOC))
-			init(USER_CONF_LOC);
+        if(util::File::fileExists(USER_CONF_LOC))
+            init(USER_CONF_LOC);
     }
     else
     {
- 	      THROW_IOEXCEPTION("Error loading xml configuration from '%s' file or '%s' file",DEFAULT_CONF_LOC.c_str(), USER_CONF_LOC.c_str());
+        THROW_IOEXCEPTION("Error loading xml configuration from '%s' file or '%s' file",DEFAULT_CONF_LOC.c_str(), USER_CONF_LOC.c_str());
     }
 }
 
@@ -146,8 +143,7 @@ digidoc::XmlConf::~XmlConf()
 std::string digidoc::XmlConf::fullpath() const
 {
     // the file path in conf is relative to the conf file's location
-    //const char *env = getenv( CONF_ENV.c_str() );
-	const char *env = DEFAULT_CONF_LOC.c_str();
+    const char *env = DEFAULT_CONF_LOC.c_str();
     if( env )
         return digidoc::util::File::directory( env );
     char *path = getcwd( NULL, 0 );
@@ -349,14 +345,14 @@ std::string digidoc::XmlConf::getPKCS12Pass() const
 void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException)
 {
     proxyHost = host;
-	try
-	{
-		setUserConf(PROXY_HOST, host);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PROXY_HOST, host);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 
 }
 
@@ -369,14 +365,14 @@ void digidoc::XmlConf::setProxyHost( const std::string &host ) throw(IOException
 void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException)
 {
     proxyPort = port;
-	try
-	{
-		setUserConf(PROXY_PORT, port);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PROXY_PORT, port);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 }
 
 /**
@@ -388,14 +384,14 @@ void digidoc::XmlConf::setProxyPort( const std::string &port ) throw(IOException
 void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException)
 {
     proxyUser = user;
-	try
-	{
-		setUserConf(PROXY_USER, user);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PROXY_USER, user);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 }
 
 /**
@@ -407,14 +403,14 @@ void digidoc::XmlConf::setProxyUser( const std::string &user ) throw(IOException
 void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException)
 {
     proxyPass = pass;
-	try
-	{
-		setUserConf(PROXY_PASS, pass);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PROXY_PASS, pass);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 }
 
 /**
@@ -427,14 +423,14 @@ void digidoc::XmlConf::setProxyPass( const std::string &pass ) throw(IOException
 void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOException)
 {
     pkcs12Cert = cert;
-	try
-	{
-		setUserConf(PKCS12_CERT, cert);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PKCS12_CERT, cert);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 }
 
 /**
@@ -446,14 +442,14 @@ void digidoc::XmlConf::setPKCS12Cert( const std::string &cert ) throw(IOExceptio
 void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOException)
 {
     pkcs12Pass = pass;
-	try
-	{
-		setUserConf(PKCS12_PASS, pass);
-	}
-	catch (const IOException& e)
-	{
-		throw e;
-	}
+    try
+    {
+        setUserConf(PKCS12_PASS, pass);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
 }
 
 /**
@@ -465,103 +461,88 @@ void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOExceptio
  */
 void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::string &value) throw(IOException)
 {
-	std::ofstream ofs;
-	Param newParam(value, paramName);
-	std::string confXsd = fullpath();
+    std::ofstream ofs;
+    Param newParam(value, paramName);
+    std::string confXsd = fullpath();
 #ifdef _WIN32
-	 for (int c=0; c<sizeof(confXsd); c++)
-	 {
-		 if (confXsd[c] == '\\')
-			 confXsd[c] = '/';
-	 }
-#endif
-	confXsd += "/schema/conf.xsd";
-
-	if(util::File::fileExists(USER_CONF_LOC))
+    for (int c=0; c<sizeof(confXsd); c++)
     {
-		try
-		{
-			//open user conf file
-			std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
-			Configuration::ParamSequence paramSeq = conf->param();
+        if (confXsd[c] == '\\')
+            confXsd[c] = '/';
+    }
+#endif
+    confXsd += "/schema/conf.xsd";
 
-			for( Configuration::ParamSequence::iterator it = paramSeq.begin(); it != paramSeq.end(); it++)
-			{
-				if (paramName.compare(it->name()) == 0)
-				{
-					paramSeq.erase(it);
-					break;
-				}
-			}
-			if (value.size()) //if we do not want to just erase
-				paramSeq.push_back(newParam);
-			conf->param(paramSeq); //replace all param data with new modified param sequence
+    if(util::File::fileExists(USER_CONF_LOC))
+    {
+        try
+        {
+            //open user conf file
+            std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+            Configuration::ParamSequence paramSeq = conf->param();
 
-			ofs.open(USER_CONF_LOC.c_str());
-			xml_schema::NamespaceInfomap map;
-			map[""].name = "";
-			map[""].schema = confXsd.c_str();
-			configuration(ofs, *conf, map);	
-		}
+            for( Configuration::ParamSequence::iterator it = paramSeq.begin(); it != paramSeq.end(); it++)
+            {
+                if (paramName.compare(it->name()) == 0)
+                {
+                    paramSeq.erase(it);
+                    break;
+                }
+            }
+            if (value.size()) //if we do not want to just erase
+                paramSeq.push_back(newParam);
+            conf->param(paramSeq); //replace all param data with new modified param sequence
+
+            ofs.open(USER_CONF_LOC.c_str());
+            xml_schema::NamespaceInfomap map;
+            map[""].name = "";
+            map[""].schema = confXsd.c_str();
+            configuration(ofs, *conf, map);	
+        }
         catch (const xml_schema::Exception& e)
-		{
-			std::ostringstream oss;
-			oss << e;
-			THROW_IOEXCEPTION("(in set %s) Failed to parse configuration: %s", paramName.c_str(), oss.str().c_str());
-		}
-	}	
-	else
-	{
-		//Check if directory exists
-		if (!util::File::directoryExists(getUserConfDir()))
-		{
-			try //create a missing directory
-			{
-				util::File::createDirectory(getUserConfDir());
-			}
-			catch (const IOException& e)
-			{
-				throw e;
-			}
-		}
-		//create a new file
-		//copy global conf and erase data
-		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
-		Configuration::OcspSequence ocspSeq;
-		Configuration::ParamSequence paramSeq;
-		paramSeq.push_back(newParam);
-		conf->param(paramSeq); //replace all param data with new modified param sequence
-		conf->ocsp(ocspSeq); //replace all ocsp data with empty ocsp sequence
+        {
+            std::ostringstream oss;
+            oss << e;
+            THROW_IOEXCEPTION("(in set %s) Failed to parse configuration: %s", paramName.c_str(), oss.str().c_str());
+        }
+    }	
+    else
+    {
+        //Check if directory exists
+        if (!util::File::directoryExists(getUserConfDir()))
+        {
+            try //create a missing directory
+            {
+                util::File::createDirectory(getUserConfDir());
+            }
+            catch (const IOException& e)
+            {
+                throw e;
+            }
+        }
+        //create a new file
+        //copy global conf and erase data
+        std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
+        Configuration::OcspSequence ocspSeq;
+        Configuration::ParamSequence paramSeq;
+        paramSeq.push_back(newParam);
+        conf->param(paramSeq); //replace all param data with new modified param sequence
+        conf->ocsp(ocspSeq); //replace all ocsp data with empty ocsp sequence
 
-		ofs.open(USER_CONF_LOC.c_str());
-		//ofs.open("C:\\PERSE.XML");
-		xml_schema::NamespaceInfomap map;
-		map[""].name = "";
-		map[""].schema = confXsd.c_str();
-		configuration(ofs, *conf, map);
+        ofs.open(USER_CONF_LOC.c_str());
+        //ofs.open("C:\\PERSE.XML");
+        xml_schema::NamespaceInfomap map;
+        map[""].name = "";
+        map[""].schema = confXsd.c_str();
+        configuration(ofs, *conf, map);
+    }
 
-		/*
-		ofs.open(USER_CONF_LOC.c_str());
-		Configuration::ParamSequence paramSeq;
-		paramSeq.push_back(newParam);
-	
-		Configuration conf;
-		conf.param(paramSeq); //replace all param data with new modified param sequence
-
-		ofs.open("C:\\PERSE.XML");
-		xml_schema::NamespaceInfomap map;
-		map[""].name = "";
-		map[""].schema = confXsd.c_str();
-		configuration(ofs, *conf, map);
-		*/		
-	}
-	
-	if (ofs.fail())
-	{
-		ofs.close(); //just in case it was left open
-		THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
-	}
-	ofs.close();
+    if (ofs.fail())
+    {
+        ofs.close(); //just in case it was left open
+        THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
+    }
+    ofs.close();
 }
 
 /**
@@ -572,82 +553,82 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
  */
 void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException)
 {
-	std::ofstream ofs;
-	Ocsp newOcsp(ocspData.url, ocspData.cert, ocspData.issuer);
-	std::string confXsd = fullpath();
+    std::ofstream ofs;
+    Ocsp newOcsp(ocspData.url, ocspData.cert, ocspData.issuer);
+    std::string confXsd = fullpath();
 #ifdef _WIN32
-	 for (int c=0; c<sizeof(confXsd); c++)
-	 {
-		 if (confXsd[c] == '\\')
-			 confXsd[c] = '/';
-	 }
+    for (int c=0; c<sizeof(confXsd); c++)
+    {
+        if (confXsd[c] == '\\')
+            confXsd[c] = '/';
+    }
 #endif
-	confXsd += "/schema/conf.xsd";
+    confXsd += "/schema/conf.xsd";
 
-	if(util::File::fileExists(USER_CONF_LOC))
-	{
-		try
-		{
-			std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
-			Configuration::OcspSequence ocspSeq = conf->ocsp();
-			for( Configuration::OcspSequence::iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
-			{
-				if (ocspData.issuer.compare(it->issuer()) == 0)
-				{
-					ocspSeq.erase(it);
-					break;
-				}		
-			}
-			if (ocspData.url.size() || ocspData.cert.size()) //if we do not want to just erase
-				ocspSeq.push_back(newOcsp);
-			conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+    if(util::File::fileExists(USER_CONF_LOC))
+    {
+        try
+        {
+            std::auto_ptr< ::Configuration > conf( configuration (USER_CONF_LOC, xml_schema::Flags::dont_initialize));
+            Configuration::OcspSequence ocspSeq = conf->ocsp();
+            for( Configuration::OcspSequence::iterator it = ocspSeq.begin(); it != ocspSeq.end(); ++it)
+            {
+                if (ocspData.issuer.compare(it->issuer()) == 0)
+                {
+                    ocspSeq.erase(it);
+                    break;
+                }
+            }
+            if (ocspData.url.size() || ocspData.cert.size()) //if we do not want to just erase
+                ocspSeq.push_back(newOcsp);
+            conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
 
-			ofs.open(USER_CONF_LOC.c_str());
-			xml_schema::NamespaceInfomap map;
-			map[""].name = "";
-			map[""].schema = confXsd.c_str();
-			configuration(ofs, *conf, map);
-		}
-		catch(const xml_schema::Exception& e)
-		{
-			std::ostringstream oss;
-			oss << e;
-			THROW_IOEXCEPTION("(in set OCSP) Failed to parse configuration: %s", oss.str().c_str());
-		}
-	}
-	else
-	{
-		//Check if directory exists
-		if (!util::File::directoryExists(getUserConfDir()))
-		{
-			try //create a missing directory
-			{
-				util::File::createDirectory(getUserConfDir());
-			}
-			catch (const IOException& e)
-			{
-				throw e;
-			}
-		}
-		//create a new file
-		//copy global conf and erase data
-		std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
-		Configuration::OcspSequence ocspSeq;
-		Configuration::ParamSequence paramSeq;
-		ocspSeq.push_back(newOcsp);
-		conf->param(paramSeq); //replace all param data with empty param sequence
-		conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
+            ofs.open(USER_CONF_LOC.c_str());
+            xml_schema::NamespaceInfomap map;
+            map[""].name = "";
+            map[""].schema = confXsd.c_str();
+            configuration(ofs, *conf, map);
+        }
+        catch(const xml_schema::Exception& e)
+        {
+            std::ostringstream oss;
+            oss << e;
+            THROW_IOEXCEPTION("(in set OCSP) Failed to parse configuration: %s", oss.str().c_str());
+        }
+    }
+    else
+    {
+        //Check if directory exists
+        if (!util::File::directoryExists(getUserConfDir()))
+        {
+            try //create a missing directory
+            {
+                util::File::createDirectory(getUserConfDir());
+            }
+            catch (const IOException& e)
+            {
+                throw e;
+            }
+        }
+        //create a new file
+        //copy global conf and erase data
+        std::auto_ptr< ::Configuration > conf( configuration (DEFAULT_CONF_LOC, xml_schema::Flags::dont_initialize));
+        Configuration::OcspSequence ocspSeq;
+        Configuration::ParamSequence paramSeq;
+        ocspSeq.push_back(newOcsp);
+        conf->param(paramSeq); //replace all param data with empty param sequence
+        conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
 
-		ofs.open(USER_CONF_LOC.c_str());
-		xml_schema::NamespaceInfomap map;
-		map[""].name = "";
-		map[""].schema = confXsd.c_str();
-		configuration(ofs, *conf, map);
-	}
-	if (ofs.fail())
-	{
-		ofs.close(); //just in case it was left open
+        ofs.open(USER_CONF_LOC.c_str());
+        xml_schema::NamespaceInfomap map;
+        map[""].name = "";
+        map[""].schema = confXsd.c_str();
+        configuration(ofs, *conf, map);
+    }
+    if (ofs.fail())
+    {
+        ofs.close(); //just in case it was left open
         THROW_IOEXCEPTION("(in set OCSP) Failed to open configuration: %s", USER_CONF_LOC.c_str());
-	}
-	ofs.close();
+    }
+    ofs.close();
 }
