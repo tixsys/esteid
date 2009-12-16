@@ -140,15 +140,17 @@ QString MobileDialog::escapeChars( const QString &in ) const
 
 void MobileDialog::finished( QNetworkReply *reply )
 {
-	if( reply->error() != QNetworkReply::NoError )
+	switch( reply->error() )
 	{
-		switch( reply->error() )
-		{
-		case QNetworkReply::HostNotFoundError:
-			labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) ); break;
-		default:
-			labelError->setText( reply->errorString() ); break;
-		}
+	case QNetworkReply::NoError:
+	case QNetworkReply::UnknownContentError:
+		break;
+	case QNetworkReply::HostNotFoundError:
+		labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) );
+		statusTimer->stop();
+		return;
+	default:
+		labelError->setText( reply->errorString() );
 		statusTimer->stop();
 		return;
 	}
