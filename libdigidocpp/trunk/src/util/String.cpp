@@ -70,6 +70,12 @@ std::string digidoc::util::String::formatArgList(const char* fmt, va_list args)
 }
 
 #ifdef _WIN32
+/**
+ * convert wide string to standard string
+ * @param format destination format
+ * @param in source string
+ * @return converted string
+ */
 std::string digidoc::util::String::toMultiByte(int format, const std::wstring &in)
 {
     int len = WideCharToMultiByte(format, 0, in.data(), in.size(), 0, 0, 0, 0);
@@ -81,6 +87,12 @@ std::string digidoc::util::String::toMultiByte(int format, const std::wstring &i
     return out;
 }
 
+/**
+ * convert standard string to wide string
+ * @param format source format
+ * @param in source string
+ * @return converted string
+ */
 std::wstring digidoc::util::String::toWideChar(int format, const std::string &in)
 {
     int len = MultiByteToWideChar(format, 0, in.data(), in.size(), 0, 0);

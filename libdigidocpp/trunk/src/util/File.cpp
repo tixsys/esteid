@@ -35,12 +35,27 @@
 
 std::stack<std::string> digidoc::util::File::tempFiles;
 
+/**
+ * Encodes path to compatible std lib
+ * @param fileName path
+ * @return encoded path
+ */
 std::string digidoc::util::File::encodeName(const std::string &fileName)
 { return digidoc::util::String::convertUTF8(fileName,false); }
 
+/**
+ * Decodes path from std lib path
+ * @param localFileName path
+ * @return decoded path
+ */
 std::string digidoc::util::File::decodeName(const std::string &localFileName)
 { return digidoc::util::String::convertUTF8(localFileName,true); }
 
+/**
+ * Encodes path to compatible std fstream
+ * @param fileName path
+ * @return encoded path
+ */
 #if _WIN32
 std::wstring digidoc::util::File::fstreamName(const std::string &fileName)
 { return digidoc::util::String::toWideChar(CP_UTF8, fileName); }
