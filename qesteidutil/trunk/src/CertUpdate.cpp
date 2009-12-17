@@ -413,7 +413,7 @@ QByteArray CertUpdate::runStep( int s, QByteArray result )
 			if ( result.isEmpty() || result.size() != 114 )
 				throw std::runtime_error( "step25b" );
 
-			if ( (unsigned char)tmpResult.at( 133 ) >= 0x80 )
+			if ( (unsigned char)tmpResult.at( 132 ) == 0x34 && (unsigned char)tmpResult.at( 133 ) >= 0x80 )
 			{
 				runStep( 3 );
 				runStep( 4 );
