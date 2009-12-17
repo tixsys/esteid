@@ -1803,7 +1803,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="6"/>
         <source>Proxy requires authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Proksi server vajab audentimist</translation>
     </message>
     <message>
         <source>Host requires authentication</source>

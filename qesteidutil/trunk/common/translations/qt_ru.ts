@@ -2293,7 +2293,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+6"/>
         <source>Proxy requires authentication</source>
-        <translation>Прокси-сервер требует авторизацию</translation>
+        <translation>Прокси сервер требует авторизацию</translation>
     </message>
     <message>
         <location line="+3"/>

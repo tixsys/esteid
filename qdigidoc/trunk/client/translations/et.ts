@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
-        <translation>Protsessi &apos;qdigidoccrypto&apos; käivitamine ebaõnnestus</translation>
+        <translation>Protsessi &apos;Digidoc Krüpto&apos; käivitamine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>

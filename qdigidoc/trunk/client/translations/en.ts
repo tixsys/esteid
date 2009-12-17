@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
-        <translation>Failed to start process &apos;qdigidoccrypto&apos;</translation>
+        <translation>Failed to start process &apos;Digidoc Crypto&apos;</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>

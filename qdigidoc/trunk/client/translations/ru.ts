@@ -88,7 +88,7 @@
     </message>
     <message>
         <source>Failed to start process &apos;qdigidoccrypto&apos;</source>
-        <translation>Запуск процесса &apos;qdigidoccrypto&apos; неудачен</translation>
+        <translation>Запуск процесса &apos;Digidoc Crypto&apos; неудачен</translation>
     </message>
     <message>
         <source>Failed to start process &apos;qesteidutil&apos;</source>
