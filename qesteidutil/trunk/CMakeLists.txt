@@ -131,6 +131,7 @@ endif(APPLE)
 
 IF(WIN32)
     SET(qesteidutil_SRCS ${qesteidutil_SRCS} src/qesteidutil.rc)
+    SET(WIN_LIBRARIES ws2_32)
 ENDIF(WIN32)
     
 add_executable(qesteidutil WIN32 MACOSX_BUNDLE
@@ -160,6 +161,7 @@ target_link_libraries(qesteidutil
     ${OPENSSLCRYPTO_LIBRARIES}
     ${LIBP11_LIBRARIES}
     ${SMARTCARDPP_LIBRARIES}
+	${WIN_LIBRARIES}
     qtsingleapplication
 )
 
