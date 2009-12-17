@@ -204,7 +204,7 @@ bool MainWindow::addFile( const QString &file )
 		bool select = s.value( "AskSaveAs", false ).toBool();
 		if( !select && QFile::exists( docname ) )
 		{
-			QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
+			QMessageBox::StandardButton b = QMessageBox::warning( this, tr("DigiDoc3 client"),
 				tr( "%1 already exists.<br />Do you want replace it?" ).arg( docname ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 			select = b == QMessageBox::No;
@@ -213,7 +213,7 @@ bool MainWindow::addFile( const QString &file )
 		if( !Common::canWrite( docname ) )
 		{
 			select = true;
-			QMessageBox::warning( this, windowTitle(),
+			QMessageBox::warning( this, tr("DigiDoc3 client"),
 				tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
 		}
 
@@ -228,7 +228,7 @@ bool MainWindow::addFile( const QString &file )
 				docname.append( "." + s.value( "type" ,"ddoc" ).toString() );
 			if( !Common::canWrite( docname ) )
 			{
-				QMessageBox::warning( this, windowTitle(),
+				QMessageBox::warning( this, tr("DigiDoc3 client"),
 					tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
 			}
 			else
@@ -242,7 +242,7 @@ bool MainWindow::addFile( const QString &file )
 
 	if( !doc->signatures().isEmpty() )
 	{
-		QMessageBox::warning( this, windowTitle(),
+		QMessageBox::warning( this, tr("DigiDoc3 client"),
 			tr( "You can not add files to signed document. "
 				"Remove all signatures before adding files.") );
 		return false;
@@ -624,7 +624,7 @@ void MainWindow::parseLink( const QString &link )
 				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
 			if( QFile::exists( file ) )
 			{
-				QMessageBox::StandardButton b = QMessageBox::warning( this, windowTitle(),
+				QMessageBox::StandardButton b = QMessageBox::warning( this, tr("DigiDoc3 client"),
 					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 				if( b == QMessageBox::No )
@@ -772,7 +772,7 @@ void MainWindow::showSettings()
 
 void MainWindow::showWarning( const QString &msg )
 {
-	QMessageBox d( QMessageBox::Warning, "QDigDocClient", msg, QMessageBox::Close | QMessageBox::Help, this );
+	QMessageBox d( QMessageBox::Warning, tr("DigiDoc3 client"), msg, QMessageBox::Close | QMessageBox::Help, this );
 	if( d.exec() == QMessageBox::Help )
 		Common::showHelp( msg );
 }

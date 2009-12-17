@@ -290,7 +290,7 @@ void MobileDialog::sign( const QString &ssid, const QString &cell )
 	statusTimer->start();
 }
 
-void MobileDialog::sslErrors( QNetworkReply *reply, const QList<QSslError> &errors )
+void MobileDialog::sslErrors( QNetworkReply *reply, const QList<QSslError> & )
 { reply->ignoreSslErrors(); }
 
 bool MobileDialog::getFiles()
