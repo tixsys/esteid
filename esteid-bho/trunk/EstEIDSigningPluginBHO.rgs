@@ -28,3 +28,20 @@ HKLM {
   }
 }
 
+
+HKLM {
+  NoRemove SOFTWARE {
+    NoRemove Microsoft {   
+      NoRemove Windows {
+        NoRemove CurrentVersion {
+          NoRemove Ext {
+	    NoRemove PreApproved {
+              ForceRemove '{28821112-76D5-4C26-9F64-9E20AA91DDF3}' = s '' {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
