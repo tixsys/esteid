@@ -199,6 +199,9 @@ void DDocPrivate::throwSignError( const char *id, int err, const std::string &ms
 
 
 
+/**
+ * DDoc profile signature media type.
+ */
 SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 :	m_id( id ), m_doc( doc )
 {
@@ -236,6 +239,9 @@ SignatureDDOC::SignatureDDOC( int id, DDocPrivate *doc )
 	setSigningTime( xml_schema::DateTime( ts.year, ts.mon, ts.day, ts.hour, ts.min, ts.sec ) );
 }
 
+/**
+ * @return returns signature mimetype.
+ */
 std::string SignatureDDOC::getMediaType() const
 {
 	std::ostringstream s;
@@ -243,6 +249,9 @@ std::string SignatureDDOC::getMediaType() const
 	return s.str();
 }
 
+/**
+ * @return returns OCSP certificate
+ */
 X509Cert SignatureDDOC::getOCSPCertificate() const
 {
 	try { return X509Cert( m_doc->f_ddocSigInfo_GetOCSPRespondersCert( m_doc->doc->pSignatures[m_id] ) ); }
@@ -250,6 +259,9 @@ X509Cert SignatureDDOC::getOCSPCertificate() const
 	return X509Cert();
 }
 
+/**
+ * @return returns OCSP timestamp
+ */
 std::string SignatureDDOC::getProducedAt() const
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
@@ -262,12 +274,19 @@ std::string SignatureDDOC::getProducedAt() const
 	return ret;
 }
 
+/**
+ * @return returns OCSP responder ID
+ */
 std::string SignatureDDOC::getResponderID() const
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
 	return n ? std::string( (const char*)n->mbufRespId.pMem, n->mbufRespId.nLen ) : std::string();
 }
 
+/**
+ * @param data Revocation digest
+ * @param digestMethodUri Revocation digest method URI
+ */
 void SignatureDDOC::getRevocationOCSPRef(std::vector<unsigned char>& data, std::string& digestMethodUri) const throw(SignatureException)
 {
 	NotaryInfo *n = m_doc->doc->pSignatures[m_id]->pNotary;
@@ -280,6 +299,16 @@ void SignatureDDOC::getRevocationOCSPRef(std::vector<unsigned char>& data, std::
 		digestMethodUri = n->szDigestType;
 }
 
+/**
+ * Do TM offline validations.
+ * <ul>
+ *   <li>Validate BES offline</li>
+ *   <li>Check OCSP response (RevocationValues) was signed by trusted OCSP server</li>
+ *   <li>Check that nonce field in OCSP response is same as CompleteRevocationRefs-&gt;DigestValue</li>
+ *   <li>Recalculate hash of signature and compare with nonce</li>
+ * </ul>
+ * @throws SignatureException if signature is not valid
+ */
 void SignatureDDOC::validateOffline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(
@@ -287,17 +316,29 @@ void SignatureDDOC::validateOffline() const throw(SignatureException)
 	throwCodeError( SignatureException, m_doc, err, "Failed to validate signature", __LINE__ );
 }
 
+/**
+ *
+ * return
+ * @throws SignatureException
+ */
 OCSP::CertStatus SignatureDDOC::validateOnline() const throw(SignatureException)
 {
-	int err = m_doc->f_verifySignatureAndNotary(
-		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
-	throwCodeError( SignatureException, m_doc, err, "Failed to validate signature", __LINE__ );
+	validateOffline();
 	return OCSP::GOOD;
 }
+
+/**
+ *
+ * @param signer
+ * @throws SignatureException
+ */
 void SignatureDDOC::sign(Signer* signer) throw(SignatureException, SignException) {}
 
 
 
+/**
+ * Initialize DDOC container.
+ */
 DDoc::DDoc()
 :	d( new DDocPrivate )
 {
@@ -306,12 +347,15 @@ DDoc::DDoc()
 	/*int err =*/ d->f_SignedDoc_new( &d->doc, "DIGIDOC-XML", "1.3" );
 	//throwError( err, "Failed to create new document", __LINE__ );
 }
+
+/**
+ * Releases resources.
+ */
 DDoc::~DDoc() { delete d; }
 
 /**
  * Opens DDOC container from a file
  */
-
 digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
  :	d( new DDocPrivate )
 {
@@ -322,6 +366,13 @@ digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
 	loadFile();
 }
 
+/**
+ * Opens DDOC container using <code>serializer</code> implementation.
+ *
+ * @param serializer implementation of the serializer.
+ * @throws IOException exception is thrown if reading data from the container failed.
+ * @throws BDocException exception is thrown if the container is not valid.
+ */
 DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 :	d( new DDocPrivate )
 {
@@ -332,6 +383,9 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 	loadFile();
 }
 
+/**
+ * Parses file data
+ */
 void DDoc::loadFile()
 {
 	try
@@ -375,6 +429,15 @@ void DDoc::loadFile()
 	d->loadSignatures();
 }
 
+/**
+ * Adds document to the container. Documents can be removed from container only
+ * after all signatures are removed.
+ *
+ * @param document a document, which is added to the container.
+ * @throws BDocException exception is thrown if the document path is incorrect or document
+ *         with same file name already exists. Also no document can be added if the
+ *         container already has one or more signatures.
+ */
 void DDoc::addDocument( const Document &document ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -392,8 +455,18 @@ void DDoc::addDocument( const Document &document ) throw(BDocException)
 	d->documents.push_back( doc );
 }
 
+/**
+ * @return returns number of documents in container.
+ */
 unsigned int DDoc::documentCount() const { return d->documents.size(); }
 
+/**
+ * Returns document referenced by document id.
+ *
+ * @param id document id.
+ * @return returns document referenced by document id.
+ * @throws BDocException throws exception if the document id is incorrect.
+ */
 Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -409,6 +482,13 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 	return Document( d->documents[id].filename, d->documents[id].mime );
 }
 
+/**
+ * Returns signature referenced by signature id.
+ *
+ * @param id signature id.
+ * @return returns signature referenced by signature id.
+ * @throws BDocException throws exception if the signature id is incorrect.
+ */
 const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -424,6 +504,14 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 	return d->signatures[id];
 }
 
+/**
+ * Removes document from container by document id. Documents can be
+ * removed from container only after all signatures are removed.
+ *
+ * @param id document's id, which will be removed.
+ * @throws BDocException throws exception if the document id is incorrect or there are
+ *         one or more signatures.
+ */
 void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -447,6 +535,12 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 	d->documents.erase( d->documents.begin() + id );
 }
 
+/**
+ * Removes signature from container by signature id.
+ *
+ * @param id signature's id, which will be removed.
+ * @throws BDocException throws exception if the signature id is incorrect.
+ */
 void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -464,6 +558,14 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 	d->loadSignatures();
 }
 
+/**
+ * Saves the container using the <code>serializer</code> implementation provided in
+ * <code>readFrom()</code> method.
+ *
+ * @throws IOException is thrown if there was a failure saving BDOC container. For example added
+ *         document does not exist.
+ * @throws BDocException is thrown if BDoc class is not correctly initialized.
+ */
 void DDoc::save() throw(IOException, BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -471,6 +573,15 @@ void DDoc::save() throw(IOException, BDocException)
 	throwCodeError( BDocException, d, err, "Failed to save document", __LINE__ );
 }
 
+/**
+ * Saves the container using the <code>serializer</code> implementation provided.
+ *
+ * @param serializer serializer implementation, used to save data to BDOC container.
+ * @throws IOException is thrown if there was a failure saving BDOC container. For example added
+ *         document does not exist.
+ * @throws BDocException is thrown if BDOC class is not correctly initialized.
+ * @see save()
+ */
 void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -478,6 +589,13 @@ void DDoc::saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocE
 	save();
 }
 
+/**
+ * Signs all documents in container.
+ *
+ * @param signer signer implementation.
+ * @param profile signature profile (e.g. BES, TM).
+ * @throws BDocException exception is throws if signing the BDCO container failed.
+ */
 void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
@@ -575,8 +693,14 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	d->loadSignatures();
 }
 
+/**
+ * @return returns number of signatures in container.
+ */
 unsigned int DDoc::signatureCount() const { return d->signatures.size(); }
 
+/**
+ * Returns file digest DDoc format
+ */
 void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
