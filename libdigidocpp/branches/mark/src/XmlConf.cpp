@@ -21,19 +21,17 @@
 #include <stdlib.h>//getenv
 
 #ifdef _WIN32
-#define EST_ID_CARD_PATH "SOFTWARE\\Estonian ID Card\\digidocpp"
-#define ENVIRONMENT_PATH "Volatile Environment"
+#define DIGIDOCPP_PATH_REGISTRY_KEY "SOFTWARE\\Estonian ID Card\\digidocpp"
 #endif
-
-/**
- * Environment variable name, that is used for loading configuration
- */
-//const std::string digidoc::XmlConf::CONF_ENV = "BDOCLIB_CONF_XML"; //<-- no need anymore
 
 /**
  * Path to default configuration files
  */
+#ifdef _WIN32
 std::string digidoc::XmlConf::DEFAULT_CONF_LOC = "digidocpp.conf";
+#else
+std::string digidoc::XmlConf::DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
+#endif
 std::string digidoc::XmlConf::USER_CONF_LOC = "digidocpp.conf";
 
 const std::string digidoc::XmlConf::DIGEST_URI         = "digest.uri";
@@ -60,26 +58,45 @@ void digidoc::XmlConf::initialize()
     DWORD dwSize;
     TCHAR tcConfPath1[1024];
     TCHAR tcConfPath2[1024];
-    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(EST_ID_CARD_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+    //Open Registry to get path for default configuration file
+    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(DIGIDOCPP_PATH_REGISTRY_KEY), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
     {
         dwSize = 1024 * sizeof(TCHAR);
-        RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize);
+        if (RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath1, &dwSize)==ERROR_SUCCESS)
+            DEFAULT_CONF_LOC = tcConfPath1;
         RegCloseKey(hkey);
-        DEFAULT_CONF_LOC = tcConfPath1;
     }
-
-    if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT(ENVIRONMENT_PATH), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+    //Open (if not exists, then create) Registry to get path for user configuration file
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT(DIGIDOCPP_PATH_REGISTRY_KEY), NULL, NULL, REG_OPTION_NON_VOLATILE, (KEY_SET_VALUE | KEY_QUERY_VALUE), NULL, &hkey, NULL)==ERROR_SUCCESS)
     {
         dwSize = 1024 * sizeof(TCHAR);
-        RegQueryValueEx(hkey, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize);
-        RegCloseKey(hkey);
+        
+        //Read the key for user configuration file path
+        if (RegQueryValueEx(hkey, TEXT("ConfigFile"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize)==ERROR_SUCCESS)
+            USER_CONF_LOC = tcConfPath2;
+        
+        //If a Key value "ConfigFile" is missing
+        else
+        {
+            HKEY hkey2;
+            //Get Default user configuration file path
+            if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Volatile Environment"), 0, KEY_QUERY_VALUE, &hkey2)==ERROR_SUCCESS)
+            {
+                RegQueryValueEx(hkey2, TEXT("APPDATA"), NULL, NULL, (LPBYTE)tcConfPath2, &dwSize);
+                RegCloseKey(hkey2);
 
-        USER_CONF_LOC = tcConfPath2;
-        USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
+                USER_CONF_LOC = tcConfPath2;
+                USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";                
+            }
+            else
+                USER_CONF_LOC = "\\digidocpp\\digidocpp.conf";
+            dwSize = USER_CONF_LOC.size() + 1;
+            //Create ConfigFile with value
+            RegSetValueEx(hkey, TEXT("ConfigFile"), NULL, REG_SZ, (const BYTE*)USER_CONF_LOC.c_str(), dwSize);
+        }
+        RegCloseKey(hkey);
     }
 #else
-    DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
-
     USER_CONF_LOC = getenv("HOME");
     USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
 #endif
@@ -268,6 +285,15 @@ std::string digidoc::XmlConf::getUserConfDir() const
     return util::File::directory(USER_CONF_LOC);
 }
 
+/**
+ * Gets Conf.xsd file location.
+ * @return returns Conf.xsd file full path.
+ */
+std::string digidoc::XmlConf::getConfXsdPath() const
+{
+    return digidoc::util::File::fullPathUrl(fullpath(), "/schema/conf.xsd");
+}
+
 std::string digidoc::XmlConf::getManifestXsdPath() const
 {
     return digidoc::util::File::fullPathUrl(fullpath(), manifestXsdPath);
@@ -453,6 +479,30 @@ void digidoc::XmlConf::setPKCS12Pass( const std::string &pass ) throw(IOExceptio
 }
 
 /**
+ * Adds or replaces OCSP parameters in the user configuration file.
+ *
+ * @param issuer an ocsp certificate issuer.
+ * @param url an OCSP server url.
+ * @param cert an OCSP certificate location path.
+ * @throws IOException exception is thrown if saving an OCSP parameters into a user configuration file fails.
+ */
+void digidoc::XmlConf::setOCSP(const std::string &issuer, const std::string &url, const std::string &cert) throw(IOException)
+{
+    OCSPConf confData;
+    confData.issuer = issuer;
+    confData.url = url;
+    confData.cert = cert;
+    try
+    {
+        setUserOCSP(confData);
+    }
+    catch (const IOException& e)
+    {
+        throw e;
+    }
+}
+
+/**
  * Sets any parameter in a user configuration file. Also creates a configuration file if it is missing.
  *
  * @param paramName name of parameter that needs to be changed or created.
@@ -463,15 +513,7 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
 {
     std::ofstream ofs;
     Param newParam(value, paramName);
-    std::string confXsd = fullpath();
-#ifdef _WIN32
-    for (int c=0; c<sizeof(confXsd); c++)
-    {
-        if (confXsd[c] == '\\')
-            confXsd[c] = '/';
-    }
-#endif
-    confXsd += "/schema/conf.xsd";
+    std::string confXsd( getConfXsdPath() );
 
     if(util::File::fileExists(USER_CONF_LOC))
     {
@@ -494,6 +536,12 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
             conf->param(paramSeq); //replace all param data with new modified param sequence
 
             ofs.open(USER_CONF_LOC.c_str());
+            if (ofs.fail())
+            {
+                ofs.close(); //just in case it was left open
+                THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
+            }
+
             xml_schema::NamespaceInfomap map;
             map[""].name = "";
             map[""].schema = confXsd.c_str();
@@ -530,18 +578,18 @@ void digidoc::XmlConf::setUserConf(const std::string &paramName, const std::stri
         conf->ocsp(ocspSeq); //replace all ocsp data with empty ocsp sequence
 
         ofs.open(USER_CONF_LOC.c_str());
-        //ofs.open("C:\\PERSE.XML");
+        
+        if (ofs.fail())
+        {
+            ofs.close(); //just in case it was left open
+            THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
+        }
+
         xml_schema::NamespaceInfomap map;
         map[""].name = "";
         map[""].schema = confXsd.c_str();
         configuration(ofs, *conf, map);
-    }
-
-    if (ofs.fail())
-    {
-        ofs.close(); //just in case it was left open
-        THROW_IOEXCEPTION("(in set %s) Failed to open configuration: %s", paramName.c_str(), USER_CONF_LOC.c_str());
-    }
+    }    
     ofs.close();
 }
 
@@ -555,15 +603,7 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
 {
     std::ofstream ofs;
     Ocsp newOcsp(ocspData.url, ocspData.cert, ocspData.issuer);
-    std::string confXsd = fullpath();
-#ifdef _WIN32
-    for (int c=0; c<sizeof(confXsd); c++)
-    {
-        if (confXsd[c] == '\\')
-            confXsd[c] = '/';
-    }
-#endif
-    confXsd += "/schema/conf.xsd";
+    std::string confXsd( getConfXsdPath() );
 
     if(util::File::fileExists(USER_CONF_LOC))
     {
@@ -584,6 +624,12 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
             conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
 
             ofs.open(USER_CONF_LOC.c_str());
+            if (ofs.fail())
+            {
+                ofs.close(); //just in case it was left open
+                THROW_IOEXCEPTION("(in setOCSP) Failed to open configuration: %s", USER_CONF_LOC.c_str());
+            }
+
             xml_schema::NamespaceInfomap map;
             map[""].name = "";
             map[""].schema = confXsd.c_str();
@@ -620,15 +666,16 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
         conf->ocsp(ocspSeq); //replace all ocsp data with new modified ocsp sequence
 
         ofs.open(USER_CONF_LOC.c_str());
+        if (ofs.fail())
+        {
+            ofs.close(); //just in case it was left open
+            THROW_IOEXCEPTION("(in setOCSP) Failed to open configuration: %s", USER_CONF_LOC.c_str());
+        }
         xml_schema::NamespaceInfomap map;
         map[""].name = "";
         map[""].schema = confXsd.c_str();
         configuration(ofs, *conf, map);
     }
-    if (ofs.fail())
-    {
-        ofs.close(); //just in case it was left open
-        THROW_IOEXCEPTION("(in set OCSP) Failed to open configuration: %s", USER_CONF_LOC.c_str());
-    }
+    
     ofs.close();
 }

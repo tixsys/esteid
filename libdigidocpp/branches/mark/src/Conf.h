@@ -42,7 +42,7 @@ namespace digidoc
           virtual void setPKCS12Cert( const std::string &cert ) throw(IOException) = 0;
           virtual void setPKCS12Pass( const std::string &pass ) throw(IOException) = 0;
 
-          virtual void setUserOCSP(const OCSPConf &ocspData) throw(IOException) = 0;
+          virtual void setOCSP(const std::string &issuer, const std::string &url, const std::string &cert) throw(IOException) = 0;
 
 // Fixme should be protected
           Conf() {}
