@@ -81,7 +81,13 @@ public:
 	std::vector<SignatureDDOC*> signatures;
 	std::vector<DocumentDDoc> documents;
 
+	template<typename T>
+	void throwCodeError( int err, const std::string &msg, int line ) const;
 	void throwDocOpenError( int line ) const throw(BDocException);
+	template<typename T>
+	void throwError( const std::string &msg, int line ) const;
+	template<typename T>
+	void throwError2( const std::string &msg, Exception::ExceptionCode code, int line ) const;
 	void throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException);
 
 	sym_calculateDataFileSizeAndDigest f_calculateDataFileSizeAndDigest;
