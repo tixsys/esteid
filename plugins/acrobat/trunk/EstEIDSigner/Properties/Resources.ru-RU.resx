@@ -139,7 +139,7 @@
     <value>На смарткарте не найдено действительных сертификатов</value>
   </data>
   <data name="OUT_OF_MEMORY" xml:space="preserve">
-    <value>Out of memory</value>
+    <value>Недостаточно памяти</value>
   </data>
   <data name="CARD_MISSING" xml:space="preserve">
     <value>ID-карта не найдена</value>
@@ -206,7 +206,7 @@
     <value>Недействительный сертификат: выдавший отсутствует</value>
   </data>
   <data name="CONNECTING_SMARTCARD" xml:space="preserve">
-    <value>Подсоединяюсь к смарткарте ...</value>
+    <value>Соединяю с картой ...</value>
   </data>
   <data name="DIR_CERT_ERROR" xml:space="preserve">
     <value>Неуспешное чтение сертификатов с месторасположения:</value>
@@ -242,7 +242,7 @@
     <value>Сохранить PDF файл</value>
   </data>
   <data name="PKCS12_LOAD_ERROR" xml:space="preserve">
-    <value>PKCS#12 variables read failure: </value>
+    <value>Сбой при чтении PKCS#12 значения</value>
   </data>
   <data name="READ_CERTS" xml:space="preserve">
     <value>Считываю сертификаты ...</value>
@@ -365,13 +365,13 @@
     <value>Подпись</value>
   </data>
   <data name="UI_SIGNATURE_RESOLUTION" xml:space="preserve">
-    <value>Resolutsioon</value>
+    <value>Резолюция</value>
   </data>
   <data name="UI_SIGNATURE_CITY" xml:space="preserve">
-    <value>Linn</value>
+    <value>Город</value>
   </data>
   <data name="UI_SIGNATURE_ROLE" xml:space="preserve">
-    <value>Roll</value>
+    <value>Роль</value>
   </data>
   <data name="UI_SIGNATURE_VISIBLE" xml:space="preserve">
     <value>Требуется видимая подпись</value>
@@ -410,24 +410,24 @@
     <value>Неудачная идентификация подписи</value>
   </data>
   <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
-    <value>Enter {0} from PINPAD</value>
+    <value>Введите {0} с клавиатуры считывателя</value>
   </data>
   <data name="UI_TOO_MANY_FILES" xml:space="preserve">
-    <value>Signature can be added to 1 file only</value>
+    <value>Подпись можно добавить только к одному файлу</value>
   </data>
   <data name="UI_FORM_NAME" xml:space="preserve">
-    <value>PDF allkirjastaja</value>
+    <value>PDF подписыватель</value>
   </data>
   <data name="UI_FORM_TITLE" xml:space="preserve">
-    <value>PDF allkirjastaja</value>
+    <value>PDF подписыватель</value>
   </data>
   <data name="UI_SIGNATURE_COUNTRY" xml:space="preserve">
-    <value>Riik</value>
+    <value>Страна</value>
   </data>
   <data name="UI_SIGNATURE_COUNTY" xml:space="preserve">
-    <value>Maakond</value>
+    <value>Уезд</value>
   </data>
   <data name="UI_SIGNATURE_INDEX" xml:space="preserve">
-    <value>Indeks</value>
+    <value>Индекс</value>
   </data>
 </root>
