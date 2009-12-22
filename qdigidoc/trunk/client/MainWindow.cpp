@@ -328,21 +328,23 @@ void MainWindow::buttonClicked( int button )
 			params.clear();
 			if( !doc->isNull() )
 				setCurrentPage( Sign );
-			break;
 		}
-		QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
-			QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
-		if( !list.isEmpty() )
+		else
 		{
-			Q_FOREACH( const QString &file, list )
+			QStringList list = QFileDialog::getOpenFileNames( this, tr("Select documents"),
+				QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) );
+			if( !list.isEmpty() )
 			{
-				if( !addFile( file ) )
-					return;
+				Q_FOREACH( const QString &file, list )
+				{
+					if( !addFile( file ) )
+						return;
+				}
+				setCurrentPage( Sign );
 			}
-			setCurrentPage( Sign );
+			else if( doc->isNull() )
+				setCurrentPage( Home );
 		}
-		else if( doc->isNull() )
-			setCurrentPage( Home );
 
 		Settings s;
 		s.beginGroup( "Client" );
