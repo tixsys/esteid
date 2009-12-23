@@ -788,7 +788,7 @@ namespace EstEIDSigner
             }
 
             // load issuer cert
-            storeEntry = this.store[signerKey, true];
+            storeEntry = store.GetIssuerCert(signerKey);
             if (storeEntry == null)
             {
                 this.lastError = Resources.ISSUER_CERT_MISSING + signerKey;
@@ -797,7 +797,7 @@ namespace EstEIDSigner
             issuerCert = storeEntry.Certificate;
 
             // load responder cert, will be used for verify
-            storeEntry = this.store[signerKey, false];
+            storeEntry = store.GetResponderCert(signerKey);
             if (storeEntry == null)
             {
                 this.lastError = Resources.RESPONDER_CET_MISSING + signerKey;
@@ -805,7 +805,7 @@ namespace EstEIDSigner
             }
             responderCert = storeEntry.Certificate;
 
-            string ocspUrl = config.ToString("ocsp_url");
+            string ocspUrl = storeEntry.OCSPUrl;
             if (ocspUrl == null || ocspUrl.Length == 0)
             {
                 this.lastError = Resources.OCSP_URL_MISSING;
