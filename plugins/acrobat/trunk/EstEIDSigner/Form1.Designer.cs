@@ -421,6 +421,7 @@
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.BackgroundImage = global::EstEIDSigner.Properties.Resources.background;
             this.Controls.Add(this.labelFormName);
             this.Controls.Add(this.comboLanguage);
@@ -436,6 +437,7 @@
             this.Controls.Add(this.signButton);
             this.Controls.Add(this.DebugBox);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);

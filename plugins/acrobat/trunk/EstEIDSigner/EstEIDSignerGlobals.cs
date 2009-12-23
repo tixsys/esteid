@@ -27,6 +27,7 @@ namespace EstEIDSigner
         private const string organizationDir = "Estonian ID Card";
         private const string programDir = "EstEIDSigner";
         private const string certDir = "certs";
+        private const string bdoclibConfXml = "digidocpp.conf";
 #if WIN32
         private const string registryKey = @"Software\Estonian ID Card";
 #else
@@ -87,6 +88,16 @@ namespace EstEIDSigner
             get
             {
                 string fullDir = System.IO.Path.Combine(ConfigDirectory, certDir);
+
+                return (fullDir);
+            }
+        }
+
+        public static string BDocLibConf
+        {
+            get
+            {
+                string fullDir = System.IO.Path.Combine(ConfigDirectory, bdoclibConfXml);
 
                 return (fullDir);
             }

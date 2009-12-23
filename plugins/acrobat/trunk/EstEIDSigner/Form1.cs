@@ -180,9 +180,9 @@ namespace EstEIDSigner
                 if (!Directory.Exists(path))
                     throw new Exception(Resources.DIR_CERT_ERROR + path);
 
-                store = new DirectoryX509CertStore(path);
+                store = new DirectoryX509CertStore(path, config.ToString("ocsp_url"));
                 if (store.Open() == false)
-                    throw new Exception(Resources.DIR_CERT_ERROR + path);
+                    throw new Exception(Resources.DIR_CERT_ERROR + path);                
             }
         }
 
@@ -326,9 +326,10 @@ namespace EstEIDSigner
                 b = config.ToBoolean("debug");
                 if (!b)
                 {
-                    DebugBox.Hide();
-                    MaximumSize = new Size(this.Width, tablePanel3.Bottom + 50);
-                }                
+                    int w = this.Width;                    
+                    DebugBox.Hide();                    
+                    MaximumSize = new Size(w, tablePanel3.Bottom + 50);
+                }
 
                 b = config.ToBoolean("visible_signature");
                 this.SigVisible.Checked = b;
