@@ -173,12 +173,12 @@ namespace EstEIDSigner
         public static implicit operator Rectangle(SignatureLocation location)
         {
             float x, y;
-
-            if (location.Bounds == null)
-                throw new Exception("PDF page bounds are not set!");
-
+                       
             if (location.UseSector)
             {
+                if (location.Bounds == null)
+                    throw new Exception("PDF page bounds are not set!");
+
                 switch (location.SectorIndex)
                 {
                     case 1: // top left
