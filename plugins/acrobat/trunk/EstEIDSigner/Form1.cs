@@ -139,9 +139,6 @@ namespace EstEIDSigner
 
         private string LocationText
         {
-            set
-            {
-            }
             get
             {
                 StringBuilder buf = new StringBuilder();
@@ -249,14 +246,9 @@ namespace EstEIDSigner
                 OpenCertStore();
 
                 status(Resources.READ_SETTINGS, false);
-                LoadPKCS12Config();
-
-                // if user copy-pasted filename into PDF input field then force init...
-                if (reader == null)
-                    InitReader();
+                LoadPKCS12Config();   
 
                 status(Resources.ADD_SIGNATURE, false);
-
                 pdfSigner = new PDFSigner(reader, inputFile, outputFile, stamp, metaData, app, store);
                 pdfSigner.StatusHandler = this.status;
                 pdfSigner.Settings = this.config;

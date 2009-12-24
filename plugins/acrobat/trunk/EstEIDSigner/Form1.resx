@@ -576,6 +576,9 @@
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="authorBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="authorBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -586,7 +589,7 @@
     <value>93, 10</value>
   </data>
   <data name="authorBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="authorBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -702,6 +705,9 @@
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="subjectBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="subjectBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -712,7 +718,7 @@
     <value>93, 50</value>
   </data>
   <data name="subjectBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="subjectBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -762,6 +768,9 @@
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="kwBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="kwBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -772,7 +781,7 @@
     <value>93, 70</value>
   </data>
   <data name="kwBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="kwBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -822,6 +831,9 @@
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="titleBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="titleBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -832,7 +844,7 @@
     <value>93, 30</value>
   </data>
   <data name="titleBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="titleBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -849,6 +861,9 @@
   <data name="&gt;&gt;titleBox.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="creatorBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="creatorBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -859,7 +874,7 @@
     <value>93, 90</value>
   </data>
   <data name="creatorBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="creatorBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -876,6 +891,9 @@
   <data name="&gt;&gt;creatorBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="prodBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="prodBox.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 8.25pt, style=Bold</value>
   </data>
@@ -886,7 +904,7 @@
     <value>93, 110</value>
   </data>
   <data name="prodBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 18</value>
+    <value>0, 13</value>
   </data>
   <data name="prodBox.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
