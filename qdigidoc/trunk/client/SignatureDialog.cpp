@@ -32,6 +32,7 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QSslKey>
+#include <QTextDocument>
 #include <QTextStream>
 #include <QUrl>
 
@@ -53,15 +54,15 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 	else
 		st << "<img src=\":/images/ico_person_blue_16.png\">";
 
-	st << "<b>" << cert.toString( cert.isTempel() ? "CN" : "GN SN" ) << "</b>";
+	st << "<b>" << Qt::escape( cert.toString( cert.isTempel() ? "CN" : "GN SN" ) ) << "</b>";
 
 	QDateTime date = s.dateTime();
 	if( extended )
 	{
 		if( !s.location().isEmpty() )
-			st << "<br />" << s.location();
+			st << "<br />" << Qt::escape( s.location() );
 		if( !s.role().isEmpty() )
-			st << "<br />" << s.role();
+			st << "<br />" << Qt::escape( s.role() );
 		if( !date.isNull() )
 			st << "<br />" << tr("Signed on") << " "
 				<< SslCertificate::formatDate( date, "dd. MMMM yyyy" ) << " "
@@ -73,9 +74,9 @@ SignatureWidget::SignatureWidget( const DigiDocSignature &signature, unsigned in
 		QString tooltip;
 		QTextStream t( &tooltip );
 		if( !s.location().isEmpty() )
-			t << s.location() << "<br />";
+			t << Qt::escape( s.location() ) << "<br />";
 		if( !s.role().isEmpty() )
-			t << s.role() << "<br />";
+			t << Qt::escape( s.role() ) << "<br />";
 		if( !date.isNull() )
 			t << tr("Signed on") << " "
 				<< SslCertificate::formatDate( date, "dd. MMMM yyyy" ) << " "
