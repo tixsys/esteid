@@ -143,13 +143,13 @@
     <value>39, 17</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>Laius</value>
+    <value>X(lõpp)</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 17</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
-    <value>Kõrgus</value>
+    <value>Y(lõpp)</value>
   </data>
   <data name="EnableTSA.Size" type="System.Drawing.Size, System.Drawing">
     <value>249, 17</value>

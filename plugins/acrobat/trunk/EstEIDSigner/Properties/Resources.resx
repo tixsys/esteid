@@ -136,7 +136,7 @@
     <value>Viga krüptoräsi sulgemisel</value>
   </data>
   <data name="CERTS_MISSING" xml:space="preserve">
-    <value>Id-kaardilt ei leitud vajalikke sertifikaate</value>
+    <value>ID-kaardilt ei leitud vajalikke sertifikaate</value>
   </data>
   <data name="OUT_OF_MEMORY" xml:space="preserve">
     <value>Mälu on otsas</value>
@@ -263,7 +263,7 @@
     <value>Teostan OCSP kehtivuspäringut ...</value>
   </data>
   <data name="RESPONDER_CET_MISSING" xml:space="preserve">
-    <value>Responder certificate missing: </value>
+    <value>Puudub responderi sertifikaat:</value>
   </data>
   <data name="ISSUER_CERT_MISSING" xml:space="preserve">
     <value>Issuer certificate missing: </value>
@@ -410,7 +410,7 @@
     <value>Allkirja kontroll ebaõnnestus</value>
   </data>
   <data name="UI_ENTER_PIN_ONTHE_PINPAD" xml:space="preserve">
-    <value>Sisesta {0} PINPAD'ilt</value>
+    <value>Sisesta {0} sõrmistikult</value>
   </data>
   <data name="UI_TOO_MANY_FILES" xml:space="preserve">
     <value>Korraga saab allkirjastada ainult 1 faili</value>
