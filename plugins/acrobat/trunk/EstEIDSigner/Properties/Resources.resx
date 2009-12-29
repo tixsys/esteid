@@ -242,7 +242,7 @@
     <value>Salvesta PDF File</value>
   </data>
   <data name="PKCS12_LOAD_ERROR" xml:space="preserve">
-    <value>Ligipääsutõendi muutujate lugemine ebaõnnestus: </value>
+    <value>Juurdepääsutõendi muutujate lugemine ebaõnnestus: </value>
   </data>
   <data name="READ_CERTS" xml:space="preserve">
     <value>Loen sertifikaate ...</value>
@@ -290,10 +290,10 @@
     <value>Kehtivuspäringu ajakontroll ebaõnnestus</value>
   </data>
   <data name="INVALID_PKCS12_CERT_PRI_KEY_MISSING" xml:space="preserve">
-    <value>Vigane PKCS#12 ümbrik: privaatvõti puudub</value>
+    <value>Vigane PKCS#12 juudrepääsutõend: privaatvõti puudub</value>
   </data>
   <data name="INVALID_PKCS12_CERT_PUB_KEY_MISSING" xml:space="preserve">
-    <value>Vigane PKCS#12 ümbrik: avalik võti puudub</value>
+    <value>Vigane PKCS#12 juurdepääsutõend: avalik võti puudub</value>
   </data>
   <data name="MISSING_CONFIG_FILE" xml:space="preserve">
     <value>Konfiguratsiooni faili ei leitud: </value>
@@ -308,10 +308,10 @@
     <value>Kehtivuspäringu kontroll ebaõnnestus</value>
   </data>
   <data name="PKCS12_FILENAME_MISSING" xml:space="preserve">
-    <value>Ligipääsutõendi faili nimi määramata!</value>
+    <value>Juurdepääsutõendi faili nimi määramata!</value>
   </data>
   <data name="PKCS12_FILE_MISSING" xml:space="preserve">
-    <value>Ligipääsutõendi faili (PKCS#12) ei leitud: </value>
+    <value>Juurdepääsutõendi faili (PKCS#12) ei leitud: </value>
   </data>
   <data name="REGISTRY_SETTING_MISSING" xml:space="preserve">
     <value>Eesti ID-kaardi registri seaded määramata</value>
