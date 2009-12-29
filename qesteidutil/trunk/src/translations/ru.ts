@@ -11,6 +11,22 @@
         <source>Check internet connection</source>
         <translation>Проверте подключение к интернету</translation>
     </message>
+    <message>
+        <source>Server sai vale arvu baite, samm: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serveri töös tekkisid vead, samm: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kaardi vastuse parsimisel tekkis viga, samm: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sertifitseerimiskeskus ei vasta, samm: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagnosticsDialog</name>
@@ -32,11 +48,11 @@
     </message>
     <message>
         <source>Smart Card service status: </source>
-        <translation>Статус Smart Card сервиса:</translation>
+        <translation>Статус Smart Card сервиса: </translation>
     </message>
     <message>
         <source>PCSC service status: </source>
-        <translation>Статус PCSC сервиса:</translation>
+        <translation>Статус PCSC сервиса: </translation>
     </message>
     <message>
         <source>Running</source>
@@ -99,7 +115,7 @@
     </message>
     <message>
         <source>JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)</source>
-        <translation></translation>
+        <translation>JPEG (*.jpg *.jpeg);;PNG (*.png);;TIFF (*.tif *.tiff);;24-bit Bitmap (*.bmp)</translation>
     </message>
     <message>
         <source>Certificate update</source>
@@ -112,10 +128,6 @@
     <message>
         <source>Certificate update failed:&lt;br /&gt;%1</source>
         <translation>Неудачное обновление сертификата:&lt;br /&gt;%1</translation>
-    </message>
-    <message>
-        <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it is not possible decypt documents!&lt;br /&gt;Do you want to continue?</source>
-        <translation type="obsolete">Для обновления сертификата пожалуйста закройте все приложения, которые используют ID-карту (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;После обновления сертификатов шифровка документов невозможна!&lt;br /&gt;?</translation>
     </message>
     <message>
         <source>For updating certificates please close all programs which are interacting with smartcard (qdigidocclient, qdigidoccrypto, Firefox, Safari, Internet Explorer...)&lt;br /&gt;After updating certificates it will no longer be possible to decrypt documents that were encrypted with the old certificate.&lt;br /&gt;Do you want to continue?</source>

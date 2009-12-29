@@ -82,6 +82,7 @@ QT4_ADD_TRANSLATION( QM_FILES
     common/translations/common_ru.ts
     common/translations/qt_et.ts
     common/translations/qt_ru.ts
+    src/translations/en.ts
     src/translations/et.ts
     src/translations/ru.ts
 )
