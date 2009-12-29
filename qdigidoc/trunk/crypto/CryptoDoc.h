@@ -71,7 +71,7 @@ public:
 	QSslCertificate authCert() const;
 	void create( const QString &file );
 	void clear();
-	bool decrypt( const QString &pin );
+	bool decrypt();
 	QList<CDocument> documents();
 	bool encrypt();
 	QString fileName() const;
@@ -97,11 +97,11 @@ Q_SIGNALS:
 private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth );
+	void setLastError( const QString &err, int code = -1 );
 	void selectCard( const QString &card );
 
 private:
 	bool isEncryptedWarning();
-	void setLastError( const QString &err, int code = -1 );
 	void cleanProperties();
 	void deleteDDoc();
 

@@ -25,7 +25,6 @@
 #include "KeyDialog.h"
 #include "SettingsDialog.h"
 #include "common/Common.h"
-#include "common/PinDialog.h"
 #include "common/Settings.h"
 
 #include <QApplication>
@@ -285,10 +284,6 @@ void MainWindow::buttonClicked( int button )
 	case ViewCrypt:
 		if( doc->isEncrypted() )
 		{
-			PinDialog p( PinDialog::Pin1Type, doc->authCert(), this );
-			if( !p.exec() )
-				break;
-
 			QLabel *progress = new QLabel( tr("Decrypting"), view );
 			progress->setAlignment( Qt::AlignCenter );
 			progress->setFixedSize( 300, 20 );
@@ -297,7 +292,7 @@ void MainWindow::buttonClicked( int button )
 			progress->show();
 			QApplication::processEvents();
 
-			doc->decrypt( p.text() );
+			doc->decrypt();
 
 			progress->deleteLater();
 

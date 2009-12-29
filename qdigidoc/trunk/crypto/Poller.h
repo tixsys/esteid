@@ -24,10 +24,9 @@
 
 #include <QThread>
 
-#include <QHash>
-#include <QMutex>
-#include <QSslCertificate>
+class QSslCertificate;
 
+class PollerPrivate;
 class Poller: public QThread
 {
 	Q_OBJECT
@@ -36,26 +35,23 @@ public:
 	Poller( QObject *parent = 0 );
 	~Poller();
 
-	quint64 slot( const QString &card ) const;
-	quint64 token( const QString &card ) const;
-	void stop();
+	bool decrypt( const QByteArray &in, QByteArray &out );
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth );
+	void error( const QString &msg );
 
 private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
+	void emitError( const QString &msg, unsigned long err );
+	bool loadDriver();
 	void read();
-	void readCert();
 	void run();
+	void selectCert( const QString &card );
+	void unloadDriver();
 
-	Qt::HANDLE lib;
-	volatile bool terminate;
-	QMutex m;
-	QHash<QString,quint64> cards, tokens;
-	QString selectedCard, select;
-	QSslCertificate auth;
+	PollerPrivate *d;
 };

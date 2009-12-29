@@ -28,6 +28,7 @@
 
 #include <libdigidoc/DigiDocCert.h>
 #include <libdigidoc/DigiDocConfig.h>
+#include <libdigidoc/DigiDocConvert.h>
 #include <libdigidoc/DigiDocGen.h>
 #include <libdigidoc/DigiDocEncGen.h>
 #include <libdigidoc/DigiDocEncSAXParser.h>
@@ -64,6 +65,7 @@ CryptoDoc::CryptoDoc( QObject *parent )
 	poller = new Poller();
 	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
+	connect( poller, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
 	poller->start();
 }
 
@@ -190,7 +192,7 @@ void CryptoDoc::dataChanged( const QStringList &cards, const QString &card,
 		Q_EMIT dataChanged();
 }
 
-bool CryptoDoc::decrypt( const QString &pin )
+bool CryptoDoc::decrypt()
 {
 	if( isNull() )
 	{
@@ -216,15 +218,25 @@ bool CryptoDoc::decrypt( const QString &pin )
 		return false;
 	}
 
-	createOrReplacePrivateConfigItem( NULL, "DIGIDOC_AUTH_KEY_SLOT",
-		QByteArray::number( poller->token( m_card ) ) );
-	poller->stop();
-	int err = dencEncryptedData_decrypt( m_enc, key, pin.toUtf8() );
-	poller->start();
+	QByteArray in( (const char*)key->mbufTransportKey.pMem, key->mbufTransportKey.nLen ), out;
+	if( !poller->decrypt( in, out ) )
+		return false;
+
+	ddocMemAssignData( &m_enc->mbufTransportKey, out.constData(), out.size() );
+	m_enc->nKeyStatus = DENC_KEY_STATUS_INITIALIZED;
+	int err = dencEncryptedData_decryptData( m_enc );
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed decrypt data"), err );
 		return false;
+	}
+
+	DEncEncryptionProperty *prop = dencEncryptedData_FindEncryptionPropertyByName( m_enc, ENCPROP_ORIG_SIZE );
+	if( prop && prop->szContent )
+	{
+		long size = QByteArray( prop->szContent ).toLong();
+		if( size > 0 && size < m_enc->mbufEncryptedData.nLen )
+			m_enc->mbufEncryptedData.nLen = size;
 	}
 
 	QString docName = QFileInfo( m_fileName ).fileName();
@@ -242,14 +254,14 @@ bool CryptoDoc::decrypt( const QString &pin )
 	QFile f( m_ddoc );
 	if( !f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
 	{
-		setLastError( tr("Failed to create temporary files<br />%1").arg( f.errorString() ), -1 );
+		setLastError( tr("Failed to create temporary files<br />%1").arg( f.errorString() ) );
 		return false;
 	}
 	f.write( (const char*)m_enc->mbufEncryptedData.pMem, m_enc->mbufEncryptedData.nLen );
 	f.close();
 	ddocMemBuf_free( &m_enc->mbufEncryptedData );
 
-	err = ddocSaxReadSignedDocFromFile( &m_doc, f.fileName().toUtf8(), 0, 300 );
+	err = ddocSaxReadSignedDocFromFile( &m_doc, f.fileName().toUtf8(), 0, 0 );
 	if( err != ERR_OK )
 	{
 		setLastError( tr("Failed to read decrypted data"), err );
@@ -266,8 +278,7 @@ bool CryptoDoc::decrypt( const QString &pin )
 			file.toUtf8(), m_doc->pDataFiles[i]->szId, CHARSET_UTF_8 );
 		if( err == ERR_OK )
 		{
-			free( m_doc->pDataFiles[i]->szFileName );
-			m_doc->pDataFiles[i]->szFileName = qstrdup( file.toUtf8() );
+			ddocMemAssignString( &m_doc->pDataFiles[i]->szFileName, file.toUtf8() );
 			QFile::setPermissions( file, QFile::ReadOwner );
 		}
 		else
