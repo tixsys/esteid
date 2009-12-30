@@ -675,7 +675,6 @@ void MainWindow::setCurrentPage( Pages page )
 		signContentView->setColumnHidden( 3, !doc->signatures().isEmpty() );
 		signAddFile->setVisible( doc->signatures().isEmpty() );
 		enableSign();
-		signButton->setFocus();
 		break;
 	}
 	case View:
