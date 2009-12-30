@@ -68,7 +68,10 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 {
 	QMutexLocker locker(&d->m);
 	if( !d->cards.contains( d->selectedCard ) || d->sign.isNull() )
+	{
 		emitError( tr("Authentication certificate is not selected."), 0 );
+		return false;
+	}
 
 	if( d->slotCount )
 	{
@@ -79,7 +82,10 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 		d->cards[d->selectedCard] >= d->slotCount ||
 		!(d->slot = &d->slots[d->cards[d->selectedCard]]) ||
 		!d->slot->token )
+	{
 		emitError( tr("Failed to login token"), ERR_get_error() );
+		return false;
+	}
 
 	if( d->slot->token->loginRequired )
 	{
@@ -101,7 +107,10 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 		{
 			PinDialog p( PinDialog::Pin1Type, d->sign, qApp->activeWindow() );
 			if( !p.exec() )
+			{
 				emitError( tr("PIN acquisition canceled."), 0 );
+				return false;
+			}
 			if( PKCS11_login( d->slot, 0, p.text().toUtf8() ) < 0 )
 				err = ERR_get_error();
 		}
@@ -111,25 +120,38 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 		case CKR_CANCEL:
 		case CKR_FUNCTION_CANCELED:
 			emitError( tr("PIN acquisition canceled."), 0 );
+			return false;
 		case CKR_PIN_INCORRECT:
 			emitError( tr("PIN Incorrect"), 0 );
+			return false;
 		case CKR_PIN_LOCKED:
 			emitError( tr("PIN Locked"), 0 );
+			return false;
 		default:
 			emitError( tr("Failed to login token"), err );
+			return false;
 		}
 	}
 
 	PKCS11_CERT *certs;
 	unsigned int certCount;
 	if( PKCS11_enumerate_certs( d->slot->token, &certs, &certCount ) )
+	{
 		emitError( tr("Failed to decrypt document"), ERR_get_error() );
+		return false;
+	}
 	if( !certCount || !&certs[0] )
+	{
 		emitError( tr("Failed to decrypt document") + "\nNo sertificates", 0 );
+		return false;
+	}
 
 	PKCS11_KEY *key = PKCS11_find_key( &certs[0] );
 	if( !key )
+	{
 		emitError( tr("Failed to decrypt document") + "\nNo keys", ERR_get_error() );
+		return false;
+	}
 
 	out.resize( in.size() );
 	int size = PKCS11_private_decrypt(
