@@ -78,9 +78,6 @@ EXP_OPTION int decryptWithEstID(int slot, const char* pin,
 //============================================================
 EXP_OPTION int findUsersCertificate(int slot, X509** ppCert);
 
-EXP_OPTION int GetSlotCertificate(CK_SLOT_ID slotId, X509** ppCert);
-EXP_OPTION int WaitSlotEvent(CK_SLOT_ID_PTR pSlot);
-
 #ifdef  __cplusplus
 }
 #endif

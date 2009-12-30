@@ -582,12 +582,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     hSession = OpenSession(slId, passwd);
     ddocDebug(3, "calculateSignatureWithEstID", 
 	      "Open sess for slot: %d sess = %uld\n", slId, hSession);
-    if (hSession == CK_INVALID_HANDLE) {
-      closePKCS11Library(pLibrary, hSession);
-      err = ERR_PKCS_LOGIN;
-      SET_LAST_ERROR(err);
-      return err;
-    }
+    if (hSession == CK_INVALID_HANDLE) { err = ERR_PKCS_LOGIN; SET_LAST_ERROR(err); return err; }
     ddocDebug(3, "calculateSignatureWithEstID", "OpenSession ok, hSession = %d\n", (int)hSession);
 
     // get private key
@@ -607,13 +602,7 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     ddocDebug(3, "calculateSignatureWithEstID", "selected priv-key: %ld pos %d id: %s", hPrivateKey, nKey, keyId[nKey]);
     ddocDebug(3, "calculateSignatureWithEstID", "Cert-len: %ld", certLen);
     //printf("Cert: %s", certData);
-    if (hCert == (CK_OBJECT_HANDLE)-1)
-    {
-      closePKCS11Library(pLibrary, hSession);
-      err = ERR_PKCS_CERT_LOC;
-      SET_LAST_ERROR(err);
-      return err;
-    }
+    if (hCert == (CK_OBJECT_HANDLE)-1) { err = ERR_PKCS_CERT_LOC; SET_LAST_ERROR(err); return err; }
 
     // set cert data
     err = ddocDecodeX509Data(&x509, certData, certLen);
@@ -628,7 +617,6 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     buf1 = createXMLSignedProperties(pSigDoc, pSigInfo, 0);
     //dumpInFile("sigprop-sign1.txt", buf1);
     if (!buf1) { 
-      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER; 
       SET_LAST_ERROR(err);
       return err;
@@ -641,7 +629,6 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     free(buf1);
     ddocMemBuf_free(&mbuf1);
     if (err != ERR_OK) {
-      closePKCS11Library(pLibrary, hSession);
       SET_LAST_ERROR(err);			
       return err;
     }
@@ -650,7 +637,6 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     // create signed info
     buf1 = createXMLSignedInfo(pSigDoc, pSigInfo);     
     if (!buf1) {
-      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER;
       SET_LAST_ERROR(err);
       return err ;
@@ -661,7 +647,6 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
 			  DIGEST_SHA1, sigDig, &l2);
     free(buf1);
     if (err != ERR_OK) {
-      closePKCS11Library(pLibrary, hSession);
       err = ERR_NULL_POINTER;
       SET_LAST_ERROR(err);
       return err;
@@ -682,7 +667,6 @@ EXP_OPTION int calculateSignatureWithEstID(SignedDoc* pSigDoc, SignatureInfo* pS
     rv = SignData(hSession, hPrivateKey, 
 		  signature, &sigLen, padDig, padDigLen);    
     if (rv != CKR_OK) { 
-      closePKCS11Library(pLibrary, hSession);
       err = ERR_PKCS_SIGN_DATA;
       SET_LAST_ERROR(err);
       return err;
@@ -752,11 +736,7 @@ EXP_OPTION int decryptWithEstID(int slot, const char* pin,
   }
   // open session
   hSession = OpenSession(slId, pin);
-  if (hSession == CK_INVALID_HANDLE) {
-	  closePKCS11Library(pLibrary, hSession);
-	  SET_LAST_ERROR(ERR_PKCS_LOGIN);
-	  return ERR_PKCS_LOGIN;
-  }
+  if (hSession == CK_INVALID_HANDLE) { SET_LAST_ERROR(ERR_PKCS_LOGIN); return ERR_PKCS_LOGIN; }
   ddocDebug(3, "decryptWithEstID", "OpenSession ok, hSession = %d", (int)hSession);
   
   // get private key
@@ -771,10 +751,7 @@ EXP_OPTION int decryptWithEstID(int slot, const char* pin,
   // init decrypt
   rv = (*ckFunc->C_DecryptInit)(hSession, &Mechanism, hPrivateKey);
   ddocDebug(3, "decryptWithEstID", "DecryptInit: %d", (int)rv);
-  if(rv != CKR_OK) {
-	  closePKCS11Library(pLibrary, hSession);
-	  SET_LAST_ERROR_RETURN(ERR_DENC_DECRYPT, ERR_DENC_DECRYPT);
-  }
+  if(rv != CKR_OK) SET_LAST_ERROR_RETURN(ERR_DENC_DECRYPT, ERR_DENC_DECRYPT)
   // decrypt data
   outlen = *decLen;
   rv = (*ckFunc->C_Decrypt)(hSession, (CK_BYTE_PTR)encData, (CK_ULONG)encLen, (CK_BYTE_PTR)decData, (CK_ULONG_PTR)&outlen);
@@ -848,41 +825,4 @@ EXP_OPTION int findUsersCertificate(int slot, X509** ppCert)
   return err;
 }
 
-EXP_OPTION int GetSlotCertificate(CK_SLOT_ID slotId, X509 **ppCertificate)
-{
-  int err = ERR_OK;
-  CK_SESSION_HANDLE hSession = 0;
-  CK_OBJECT_HANDLE hCert;
-  CK_BYTE certData[2048];
-  CK_ULONG certLen = sizeof(certData);
 
-  // open session
-  hSession = OpenSession(slotId, NULL);
-  if (hSession == CK_INVALID_HANDLE) { SET_LAST_ERROR(ERR_PKCS_LOGIN); return ERR_PKCS_LOGIN; }
-  ddocDebug(3, "GetSlotCertificate", "OpenSession ok, hSession = %d", (int)hSession);
-
-  // get cert
-  memset(certData, 0, sizeof(certLen));
-  hCert = LocateCertificate(hSession, certData, &certLen, 0, 0, 0);
-  ddocDebug(3, "GetSlotCertificate", "hCert = %d, len: %d", (int)hCert, certLen);
-  if (hCert == (CK_OBJECT_HANDLE)-1)
-  {
-	(*ckFunc->C_CloseSession)(hSession);
-	SET_LAST_ERROR(ERR_PKCS_CERT_LOC);
-	return ERR_PKCS_CERT_LOC;
-  }
-
-  // set cert data
-  if(certLen)
-	err = ddocDecodeX509Data(ppCertificate, certData, certLen);
-
-  (*ckFunc->C_CloseSession)(hSession);
-  return err;
-}
-
-EXP_OPTION int WaitSlotEvent(CK_SLOT_ID_PTR pSlot)
-{
-  CK_RV rv;
-  rv = (*ckFunc->C_WaitForSlotEvent)(CKF_DONT_BLOCK, pSlot, NULL_PTR);
-  return rv;
-}
