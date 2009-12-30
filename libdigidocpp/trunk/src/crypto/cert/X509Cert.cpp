@@ -9,6 +9,9 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
+/**
+ * Creates NULL X509 certificate.
+ */
 digidoc::X509Cert::X509Cert(): cert(NULL) {}
 
 /**

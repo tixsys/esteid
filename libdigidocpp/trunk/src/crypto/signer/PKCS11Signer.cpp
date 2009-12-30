@@ -327,6 +327,10 @@ void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) thr
     }
 }
 
+/**
+ * @param cert X509 certificate
+ * @return returns if certificate is valid for signing
+ */
 bool digidoc::PKCS11SignerPrivate::checkCert( X509 *cert ) const
 {
     if(!cert)
