@@ -65,7 +65,7 @@ CryptoDoc::CryptoDoc( QObject *parent )
 	poller = new Poller();
 	connect( poller, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
-	connect( poller, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
+	connect( poller, SIGNAL(error(QString,quint8)), SLOT(setLastPollerError(QString,quint8)) );
 	poller->start();
 }
 
@@ -146,7 +146,6 @@ void CryptoDoc::clear()
 	m_enc = 0;
 	deleteDDoc();
 	m_fileName.clear();
-	m_lastError.clear();
 }
 
 void CryptoDoc::create( const QString &file )
@@ -478,8 +477,6 @@ QList<CKey> CryptoDoc::keys()
 	return list;
 }
 
-QString CryptoDoc::lastError() const { return m_lastError; }
-
 bool CryptoDoc::open( const QString &file )
 {
 	clear();
@@ -569,5 +566,17 @@ void CryptoDoc::setLastError( const QString &err, int code )
 {
 	QString errMsg;
 	if( code > 0 ) errMsg = getErrorString( code );
-	Q_EMIT error( m_lastError = err, code, errMsg );
+	Q_EMIT error( err, code, errMsg );
+}
+
+void CryptoDoc::setLastPollerError( const QString &err, quint8 code )
+{
+	switch( code )
+	{
+	case Poller::PinCanceled: break;
+	case Poller::PinIncorrect:
+	case Poller::PinLocked:
+	default:
+		Q_EMIT error( err, -1, QString() );
+	}
 }

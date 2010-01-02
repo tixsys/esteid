@@ -108,7 +108,7 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 			PinDialog p( PinDialog::Pin1Type, d->sign, qApp->activeWindow() );
 			if( !p.exec() )
 			{
-				emitError( tr("PIN acquisition canceled."), 0 );
+				emitError( tr("PIN acquisition canceled."), 0, PinCanceled );
 				return false;
 			}
 			if( PKCS11_login( d->slot, 0, p.text().toUtf8() ) < 0 )
@@ -119,13 +119,13 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 		case CKR_OK: break;
 		case CKR_CANCEL:
 		case CKR_FUNCTION_CANCELED:
-			emitError( tr("PIN acquisition canceled."), 0 );
+			emitError( tr("PIN acquisition canceled."), 0, PinCanceled );
 			return false;
 		case CKR_PIN_INCORRECT:
-			emitError( tr("PIN Incorrect"), 0 );
+			emitError( tr("PIN Incorrect"), 0, PinIncorrect );
 			return false;
 		case CKR_PIN_LOCKED:
-			emitError( tr("PIN Locked"), 0 );
+			emitError( tr("PIN Locked"), 0, PinLocked );
 			return false;
 		default:
 			emitError( tr("Failed to login token"), err );
@@ -163,15 +163,12 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 	return size;
 }
 
-void Poller::emitError( const QString &msg, unsigned long err )
+void Poller::emitError( const QString &msg, unsigned long err, ErrorCode code )
 {
-	QString t = msg;
 	if( err )
-	{
-		t += "\n";
-		t += QString::fromUtf8( ERR_error_string( err, NULL ) );
-	}
-	Q_EMIT error( t );
+		Q_EMIT error( msg + "\n" + QString::fromUtf8( ERR_error_string( err, NULL ) ), quint8(code) );
+	else
+		Q_EMIT error( msg, quint8(code) );
 }
 
 bool Poller::loadDriver()
@@ -242,7 +239,7 @@ void Poller::run()
 
 	if( !loadDriver() )
 	{
-		Q_EMIT error( tr("Failed to load PKCS#11 module") );
+		emitError( tr("Failed to load PKCS#11 module"), 0 );
 		return;
 	}
 

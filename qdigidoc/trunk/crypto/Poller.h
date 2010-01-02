@@ -32,6 +32,14 @@ class Poller: public QThread
 	Q_OBJECT
 
 public:
+	enum ErrorCode
+	{
+		NullCode = 0,
+		PinCanceled,
+		PinIncorrect,
+		PinLocked,
+	};
+
 	Poller( QObject *parent = 0 );
 	~Poller();
 
@@ -40,13 +48,13 @@ public:
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth );
-	void error( const QString &msg );
+	void error( const QString &msg, quint8 error );
 
 private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
-	void emitError( const QString &msg, unsigned long err );
+	void emitError( const QString &msg, unsigned long err, ErrorCode code = NullCode );
 	bool loadDriver();
 	void read();
 	void run();

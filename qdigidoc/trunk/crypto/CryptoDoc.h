@@ -79,7 +79,6 @@ public:
 	bool isNull() const;
 	bool isSigned() const;
 	QList<CKey> keys();
-	QString lastError() const;
 	bool open( const QString &file );
 	QStringList presentCards() const;
 	void removeDocument( int id );
@@ -98,6 +97,7 @@ private Q_SLOTS:
 	void dataChanged( const QStringList &cards, const QString &card,
 		const QSslCertificate &auth );
 	void setLastError( const QString &err, int code = -1 );
+	void setLastPollerError( const QString &err, quint8 code );
 	void selectCard( const QString &card );
 
 private:
@@ -110,7 +110,6 @@ private:
 	QString			m_card;
 	QString			m_ddoc, m_ddocTemp;
 	QString			m_fileName;
-	QString			m_lastError;
 	DEncEncryptedData *m_enc;
 	SignedDoc		*m_doc;
 	Poller			*poller;
