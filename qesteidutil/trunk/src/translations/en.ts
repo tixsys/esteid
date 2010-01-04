@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Kaardi vastuse parsimisel tekkis viga, samm: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Failed to parse responce from card, step: %1</translation>
     </message>
     <message>
         <source>Sertifitseerimiskeskus ei vasta, samm: %1</source>

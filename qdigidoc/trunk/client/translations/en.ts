@@ -626,7 +626,7 @@ Please check your server access sertificate.</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN Locked</translation>
+        <translation>PIN Locked. Please use ID-card utility for PIN opening!</translation>
     </message>
     <message>
         <source>Failed to sign document</source>

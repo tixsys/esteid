@@ -408,11 +408,11 @@ Should I keep unsigned documents or remove these?</source>
     </message>
     <message>
         <source>Check proxy settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверте настройки прокси</translation>
     </message>
     <message>
         <source>Check proxy username and password</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверьте имя пользователя и пароль прокси </translation>
     </message>
 </context>
 <context>
@@ -629,7 +629,7 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN заблокирован</translation>
+        <translation>PIN заблокирован. Для разблокирования PIN пожалуйста используйте обслуживание ID-карты!</translation>
     </message>
     <message>
         <source>Failed to sign document</source>

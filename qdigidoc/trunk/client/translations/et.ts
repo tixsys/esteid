@@ -626,7 +626,7 @@ Palun kontrollige juurdepääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN on lukus</translation>
+        <translation>PIN on lukus. PINi avamiseks palun kasutada ID-kaardi utiliiti!</translation>
     </message>
     <message>
         <source>Failed to sign document</source>
