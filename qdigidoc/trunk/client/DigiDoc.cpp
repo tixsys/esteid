@@ -517,21 +517,6 @@ void DigiDoc::save()
 	catch( const Exception &e ) { setLastError( e ); }
 }
 
-void DigiDoc::saveDocument( unsigned int num, const QString &filepath )
-{
-	if( !checkDoc( num >= b->documentCount(), tr("Missing document") ) )
-		return;
-	try
-	{
-		digidoc::Document doc = b->getDocument( num );
-		if( doc.getPath().data() == filepath.toUtf8() )
-			return;
-		QFile::remove( filepath );
-		doc.saveAs( filepath.toUtf8().constData() );
-	}
-	catch( const Exception &e ) { setLastError( e ); }
-}
-
 void DigiDoc::selectCard( const QString &card )
 { QMetaObject::invokeMethod( signer, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 

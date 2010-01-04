@@ -134,9 +134,6 @@ public:
 	digidoc::WDoc::DocumentType documentType();
 	QByteArray getFileDigest( unsigned int i );
 
-public Q_SLOTS:
-	void saveDocument( unsigned int num, const QString &filepath );
-
 Q_SIGNALS:
 	void dataChanged();
 	void error( const QString &err );

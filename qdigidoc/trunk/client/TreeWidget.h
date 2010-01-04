@@ -38,7 +38,6 @@ public:
 
 Q_SIGNALS:
 	void remove( unsigned int id );
-	void save( unsigned int id, const QString &filepath );
 
 private Q_SLOTS:
 	void clicked( const QModelIndex &index );

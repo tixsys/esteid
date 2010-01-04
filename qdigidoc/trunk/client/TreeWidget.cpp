@@ -53,12 +53,13 @@ void TreeWidget::clicked( const QModelIndex &index )
 	{
 	case 2:
 	{
-		QString filepath = QFileDialog::getSaveFileName( this,
+		QString source = model()->index( index.row(), 0 ).data( Qt::UserRole ).toString();
+		QString dest = QFileDialog::getSaveFileName( this,
 			tr("Save file"), QString( "%1/%2" )
 				.arg( QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation ) )
 				.arg( model()->index( index.row(), 0 ).data().toString() ) );
-		if( !filepath.isEmpty() )
-			Q_EMIT save( index.row(), filepath );
+		if( !dest.isEmpty() && source != dest )
+			QFile::copy( source, dest );
 		break;
 	}
 	case 3: Q_EMIT remove( index.row() ); break;

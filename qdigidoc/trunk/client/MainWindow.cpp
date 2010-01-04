@@ -154,10 +154,6 @@ MainWindow::MainWindow( QWidget *parent )
 		SLOT(removeDocument(unsigned int)) );
 	connect( viewContentView, SIGNAL(remove(unsigned int)),
 		SLOT(removeDocument(unsigned int)) );
-	connect( signContentView, SIGNAL(save(unsigned int,QString)),
-		doc, SLOT(saveDocument(unsigned int,QString)) );
-	connect( viewContentView, SIGNAL(save(unsigned int,QString)),
-		doc, SLOT(saveDocument(unsigned int,QString)) );
 
 	s.beginGroup( "Client" );
 	// Settings
@@ -659,23 +655,26 @@ void MainWindow::parseLink( const QString &link )
 		QAbstractItemModel *m = viewContentView->model();
 		for( int i = 0; i < m->rowCount(); ++i )
 		{
-			QString file = QString( "%1/%2" )
+			QString source = m->index( i, 0 ).data( Qt::UserRole ).toString();
+			QString dest = QString( "%1/%2" )
 				.arg( dir ).arg( m->index( i, 0 ).data().toString() );
-			if( QFile::exists( file ) )
+			if( source == dest )
+				continue;
+			if( QFile::exists( dest ) )
 			{
 				QMessageBox::StandardButton b = QMessageBox::warning( this, tr("DigiDoc3 client"),
-					tr( "%1 already exists.<br />Do you want replace it?" ).arg( file ),
+					tr( "%1 already exists.<br />Do you want replace it?" ).arg( dest ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
 				if( b == QMessageBox::No )
 				{
-					file = QFileDialog::getSaveFileName( this, tr("Save file"), file );
-					if( file.isEmpty() )
+					dest = QFileDialog::getSaveFileName( this, tr("Save file"), dest );
+					if( dest.isEmpty() )
 						continue;
 				}
 				else
-					QFile::remove( file );
+					QFile::remove( dest );
 			}
-			doc->saveDocument( i, file );
+			QFile::copy( source, dest );
 		}
 	}
 	else if( link == "openUtility" )
