@@ -903,11 +903,11 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>valid</source>
-        <translation>действителен</translation>
+        <translation>действительна</translation>
     </message>
     <message>
         <source>not valid</source>
-        <translation>недействителен</translation>
+        <translation>недействительна</translation>
     </message>
     <message>
         <source>Show details</source>
