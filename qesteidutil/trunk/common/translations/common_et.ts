@@ -201,10 +201,6 @@
         <translation>Vale PIN</translation>
     </message>
     <message>
-        <source>failed to load pkcs11 module</source>
-        <translation>viga pkcs11 mooduli laadimisel</translation>
-    </message>
-    <message>
         <source>failed to list slots</source>
         <translation>viga pkcs11 slottide lugemisel</translation>
     </message>
@@ -231,6 +227,10 @@
     <message>
         <source>Pin locked</source>
         <translation>PIN on lukus</translation>
+    </message>
+    <message>
+        <source>failed to load pkcs11 module &apos;%1&apos;</source>
+        <translation>viga pkcs11 mooduli laadimisel &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

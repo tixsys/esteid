@@ -385,17 +385,27 @@ QString DigiDoc::getAccessCert()
 	SSLConnect *s = new SSLConnect( this );
 	s->setPKCS11( getConfValue( PKCS11Module ) );
 	s->setCard( m_card );
-	s->waitForFinished( SSLConnect::AccessCert );
 
-	QString buffer = QString::fromUtf8( s->result() );
-	switch( s->error() )
+	bool retry = false;
+	do
 	{
-	case SSLConnect::PinCanceledError: break;
-	default:
-		if( !s->errorString().isEmpty() )
+		retry = false;
+		s->waitForFinished( SSLConnect::AccessCert );
+		switch( s->error() )
+		{
+		case SSLConnect::PinCanceledError: break;
+		case SSLConnect::PinInvalidError:
 			setLastError( s->errorString() );
-		break;
+			retry = true;
+			break;
+		default:
+			if( !s->errorString().isEmpty() )
+				setLastError( s->errorString() );
+			break;
+		}
 	}
+	while( retry );
+	QString buffer = QString::fromUtf8( s->result() );
 
 	delete s;
 

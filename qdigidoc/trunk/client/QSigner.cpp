@@ -210,7 +210,7 @@ void QSigner::selectCert( const QString &card )
 
 void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::SignException)
 {
-	d->m.lock();
+	QMutexLocker locker( &d->m );
 	if( !d->cards.contains( d->selectedCard ) || d->sign.isNull() )
 		throwException( tr("Signing certificate is not selected."), 0, Exception::NoException, __LINE__ );
 
@@ -277,13 +277,10 @@ void QSigner::sign( const Digest &digest, Signature &signature ) throw(digidoc::
 
 	if( PKCS11_sign(digest.type, digest.digest, digest.length, signature.signature, &(signature.length), key) != 1 )
 		throwException( tr("Failed to sign document"), ERR_get_error(), Exception::NoException, __LINE__ );
-
-	d->m.unlock();
 }
 
 void QSigner::throwException( const QString &msg, unsigned long err, Exception::ExceptionCode code, int line ) throw(SignException)
 {
-	d->m.unlock();
 	QString t = msg;
 	if( err )
 	{

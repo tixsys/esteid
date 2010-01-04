@@ -92,10 +92,10 @@ void SSLThread::run()
 
 
 SSLObj::SSLObj()
-:	p11( NULL )
+:	p11( PKCS11_CTX_new() )
+,	p11loaded( false )
 ,	sctx( NULL )
 ,	ssl( NULL )
-,	pkcs11( PKCS11_MODULE )
 ,	reader( -1 )
 ,	nslots( 0 )
 ,	error( SSLConnect::UnknownError )
@@ -109,25 +109,18 @@ SSLObj::~SSLObj()
 		SSL_free( ssl );
 	}
 	SSL_CTX_free( sctx );
-	if( p11 )
-	{
-		if( nslots )
-			PKCS11_release_all_slots( p11, pslots, nslots );
-		PKCS11_CTX_unload( p11 );
-		PKCS11_CTX_free( p11 );
-	}
+	if( nslots )
+		PKCS11_release_all_slots( p11, pslots, nslots );
+	PKCS11_CTX_unload( p11 );
+	PKCS11_CTX_free( p11 );
 
 	ERR_remove_state(0);
 }
 
 bool SSLObj::connectToHost( SSLConnect::RequestType type )
 {
-	if( !(p11 = PKCS11_CTX_new()) || PKCS11_CTX_load( p11, pkcs11.toUtf8() ) )
-	{
-		PKCS11_CTX_free( p11 );
-		p11 = 0;
-		throw std::runtime_error( SSLConnect::tr( "failed to load pkcs11 module" ).toStdString() );
-	}
+	if( !p11loaded )
+		throw std::runtime_error( errorString.toStdString() );
 
 	if( PKCS11_enumerate_slots( p11, &pslots, &nslots ) || !nslots )
 		throw std::runtime_error( SSLConnect::tr( "failed to list slots" ).toStdString() );
@@ -299,7 +292,9 @@ QByteArray SSLObj::getRequest( const QString &request ) const
 SSLConnect::SSLConnect( QObject *parent )
 :	QObject( parent )
 ,	obj( new SSLObj() )
-{}
+{
+	setPKCS11( PKCS11_MODULE );
+}
 
 SSLConnect::~SSLConnect() { delete obj; }
 
@@ -363,7 +358,17 @@ QString SSLConnect::pin() const { return obj->pin; }
 QByteArray SSLConnect::result() const { return obj->result; }
 void SSLConnect::setCard( const QString &card ) { obj->card = card; }
 void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
-void SSLConnect::setPKCS11( const QString &pkcs11 ) { obj->pkcs11 = pkcs11; }
+void SSLConnect::setPKCS11( const QString &pkcs11 )
+{
+	if( obj->p11loaded )
+		PKCS11_CTX_unload( obj->p11 );
+	obj->p11loaded = PKCS11_CTX_load( obj->p11, pkcs11.toUtf8() ) == 0;
+	if( !obj->p11loaded )
+	{
+		obj->error = UnknownError;
+		obj->errorString = tr("failed to load pkcs11 module '%1'").arg( pkcs11 );
+	}
+}
 void SSLConnect::setReader( int reader ) { obj->reader = reader; }
 
 void SSLConnect::waitForFinished( RequestType type, const QString &value )

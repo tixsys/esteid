@@ -41,12 +41,12 @@ public:
 	QByteArray getRequest( const QString &request ) const;
 
 	PKCS11_CTX *p11;
+	bool	p11loaded;
 	SSL_CTX *sctx;
 	SSL		*ssl;
 
 	QString card;
 	QString pin;
-	QString pkcs11;
 	int		reader;
 
 	unsigned int nslots;

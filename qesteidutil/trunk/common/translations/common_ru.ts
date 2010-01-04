@@ -201,10 +201,6 @@
         <translation>Неверный PIN</translation>
     </message>
     <message>
-        <source>failed to load pkcs11 module</source>
-        <translation>ошибка при загрузке модуля pkcs11</translation>
-    </message>
-    <message>
         <source>failed to list slots</source>
         <translation>ошибка при чтении слотов pkcs11</translation>
     </message>
@@ -231,6 +227,10 @@
     <message>
         <source>Pin locked</source>
         <translation>PIN заблокирован</translation>
+    </message>
+    <message>
+        <source>failed to load pkcs11 module &apos;%1&apos;</source>
+        <translation>ошибка при загрузке модуля pkcs11 &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
