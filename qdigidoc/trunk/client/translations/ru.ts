@@ -406,6 +406,14 @@ Should I keep unsigned documents or remove these?</source>
         <source>Sign certificate is not valid</source>
         <translation>Сертификат подписи недействителен</translation>
     </message>
+    <message>
+        <source>Check proxy settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check proxy username and password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

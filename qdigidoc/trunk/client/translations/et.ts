@@ -403,6 +403,14 @@ Kas jätan allkirjastamata ümbriku alles või eemaldan selle?</numerusform>
         <source>Sign certificate is not valid</source>
         <translation>Allkirjastamise sertifikaat ei ole kehtiv</translation>
     </message>
+    <message>
+        <source>Check proxy settings</source>
+        <translation>Kontrolli proxy seadeid</translation>
+    </message>
+    <message>
+        <source>Check proxy username and password</source>
+        <translation>Kontrolli proxy kasutajanime ja parooli</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>

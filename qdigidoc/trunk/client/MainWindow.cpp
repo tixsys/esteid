@@ -42,9 +42,12 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QNetworkProxy>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QPrintPreviewDialog>
-#include <QTcpSocket>
 #include <QTextStream>
+#include <QThread>
 #include <QTranslator>
 #include <QUrl>
 
@@ -436,12 +439,46 @@ void MainWindow::buttonClicked( int button )
 
 bool MainWindow::checkConnection()
 {
-	QTcpSocket s;
-	s.connectToHost( "62.65.42.42", 80 );
-	bool status = s.waitForConnected( 5000 );
-	if( !status )
+	QNetworkAccessManager *manager = new QNetworkAccessManager( this );
+	Settings s;
+	s.beginGroup( "Client" );
+	if( !s.value( "proxyHost" ).toString().isEmpty() )
+	{
+		manager->setProxy( QNetworkProxy(
+			QNetworkProxy::HttpProxy,
+			s.value( "proxyHost" ).toString(),
+			s.value( "proxyPort" ).toInt(),
+			s.value( "proxyUser" ).toString(),
+			s.value( "proxyPass" ).toString() ) );
+	}
+	QNetworkReply *reply = manager->get( QNetworkRequest( QUrl("http://ocsp.sk.ee") ) );
+	while( reply->isRunning() )
+	{
+		qApp->processEvents();
+		qApp->thread()->wait( 1000 );
+	}
+
+	switch( reply->error() )
+	{
+	case QNetworkReply::NoError:
+		manager->deleteLater();
+		return true;
+	case QNetworkReply::ProxyConnectionRefusedError:
+	case QNetworkReply::ProxyConnectionClosedError:
+	case QNetworkReply::ProxyNotFoundError:
+	case QNetworkReply::ProxyTimeoutError:
+		showWarning( tr("Check proxy settings") );
+		manager->deleteLater();
+		return false;
+	case QNetworkReply::ProxyAuthenticationRequiredError:
+		showWarning( tr("Check proxy username and password") );
+		manager->deleteLater();
+		return false;
+	default:
 		showWarning( tr("Check internet connection") );
-	return status;
+		manager->deleteLater();
+		return false;
+	}
 }
 
 void MainWindow::closeDoc()

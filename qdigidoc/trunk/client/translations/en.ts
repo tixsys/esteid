@@ -403,6 +403,14 @@ Should I keep unsigned documents or remove these?</numerusform>
         <source>Sign certificate is not valid</source>
         <translation>Sign certificate is not valid</translation>
     </message>
+    <message>
+        <source>Check proxy settings</source>
+        <translation>Check proxy settings</translation>
+    </message>
+    <message>
+        <source>Check proxy username and password</source>
+        <translation>Check proxy username and password</translation>
+    </message>
 </context>
 <context>
     <name>MobileDialog</name>
