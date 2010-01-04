@@ -524,7 +524,7 @@ void MainWindow::enableSign()
 			signButton->setToolTip( tr("Personal code is not valid") );
 		else if( !doc->signCert().isValid() )
 			signButton->setToolTip( tr("Sign certificate is not valid") );
-		else if( doc->signCert().isNull() );
+		else if( doc->signCert().isNull() )
 			signButton->setToolTip( tr("No card in reader") );
 		return;
 	}
