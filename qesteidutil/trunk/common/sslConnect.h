@@ -27,7 +27,7 @@
 #define EESTI "sisene.www.eesti.ee"
 #define SK "www.openxades.org"
 
-class SSLObj;
+class SSLConnectPrivate;
 class SSLConnect: public QObject
 {
 	Q_OBJECT
@@ -62,5 +62,5 @@ public:
 	void waitForFinished( RequestType type, const QString &value = "" );
 
 private:
-	SSLObj	*obj;
+	SSLConnectPrivate	*d;
 };

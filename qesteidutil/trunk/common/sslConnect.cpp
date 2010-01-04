@@ -91,7 +91,7 @@ void SSLThread::run()
 
 
 
-SSLObj::SSLObj()
+SSLConnectPrivate::SSLConnectPrivate()
 :	p11( PKCS11_CTX_new() )
 ,	p11loaded( false )
 ,	sctx( NULL )
@@ -101,7 +101,7 @@ SSLObj::SSLObj()
 ,	error( SSLConnect::UnknownError )
 {}
 
-SSLObj::~SSLObj()
+SSLConnectPrivate::~SSLConnectPrivate()
 {
 	if( ssl )
 	{
@@ -117,7 +117,7 @@ SSLObj::~SSLObj()
 	ERR_remove_state(0);
 }
 
-bool SSLObj::connectToHost( SSLConnect::RequestType type )
+bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 {
 	if( !p11loaded )
 		throw std::runtime_error( errorString.toStdString() );
@@ -249,10 +249,10 @@ bool SSLObj::connectToHost( SSLConnect::RequestType type )
 	return true;
 }
 
-QByteArray SSLObj::getUrl( const QString &url ) const
+QByteArray SSLConnectPrivate::getUrl( const QString &url ) const
 { return getRequest( QString( "GET %1 HTTP/1.0\r\n\r\n" ).arg( url ) ); }
 
-QByteArray SSLObj::getRequest( const QString &request ) const
+QByteArray SSLConnectPrivate::getRequest( const QString &request ) const
 {
 	QByteArray data = request.toUtf8();
 	sslError::check( SSL_write( ssl, data.constData(), data.length() ) );
@@ -291,16 +291,16 @@ QByteArray SSLObj::getRequest( const QString &request ) const
 
 SSLConnect::SSLConnect( QObject *parent )
 :	QObject( parent )
-,	obj( new SSLObj() )
+,	d( new SSLConnectPrivate() )
 {
 	setPKCS11( PKCS11_MODULE );
 }
 
-SSLConnect::~SSLConnect() { delete obj; }
+SSLConnect::~SSLConnect() { delete d; }
 
 QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 {
-	if( !obj->connectToHost( type ) )
+	if( !d->connectToHost( type ) )
 		return QByteArray();
 
 	switch( type )
@@ -334,7 +334,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"</SOAP-ENV:Body>"
 			"</SOAP-ENV:Envelope>" )
 			.arg( lang.toUpper() );
-		return obj->getRequest( QString(
+		return d->getRequest( QString(
 			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
 			"Host: %1\r\n"
 			"Content-Type: text/xml\r\n"
@@ -344,60 +344,60 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"%3" )
 			.arg( SK ).arg( request.size() ).arg( request ) );
 	}
-	case EmailInfo: return obj->getUrl( "/idportaal/postisysteem.naita_suunamised" );
-	case ActivateEmails: return obj->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
-	case MobileInfo: return obj->getRequest( value.toLatin1() );
-	case PictureInfo: return obj->getUrl( "/idportaal/portaal.idpilt" );
+	case EmailInfo: return d->getUrl( "/idportaal/postisysteem.naita_suunamised" );
+	case ActivateEmails: return d->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
+	case MobileInfo: return d->getRequest( value.toLatin1() );
+	case PictureInfo: return d->getUrl( "/idportaal/portaal.idpilt" );
 	default: return QByteArray();
 	}
 }
 
-SSLConnect::ErrorType SSLConnect::error() const { return obj->error; }
-QString SSLConnect::errorString() const { return obj->errorString; }
-QString SSLConnect::pin() const { return obj->pin; }
-QByteArray SSLConnect::result() const { return obj->result; }
-void SSLConnect::setCard( const QString &card ) { obj->card = card; }
-void SSLConnect::setPin( const QString &pin ) { obj->pin = pin; }
+SSLConnect::ErrorType SSLConnect::error() const { return d->error; }
+QString SSLConnect::errorString() const { return d->errorString; }
+QString SSLConnect::pin() const { return d->pin; }
+QByteArray SSLConnect::result() const { return d->result; }
+void SSLConnect::setCard( const QString &card ) { d->card = card; }
+void SSLConnect::setPin( const QString &pin ) { d->pin = pin; }
 void SSLConnect::setPKCS11( const QString &pkcs11 )
 {
-	if( obj->p11loaded )
-		PKCS11_CTX_unload( obj->p11 );
-	obj->p11loaded = PKCS11_CTX_load( obj->p11, pkcs11.toUtf8() ) == 0;
-	if( !obj->p11loaded )
+	if( d->p11loaded )
+		PKCS11_CTX_unload( d->p11 );
+	d->p11loaded = PKCS11_CTX_load( d->p11, pkcs11.toUtf8() ) == 0;
+	if( !d->p11loaded )
 	{
-		obj->error = UnknownError;
-		obj->errorString = tr("failed to load pkcs11 module '%1'").arg( pkcs11 );
+		d->error = UnknownError;
+		d->errorString = tr("failed to load pkcs11 module '%1'").arg( pkcs11 );
 	}
 }
-void SSLConnect::setReader( int reader ) { obj->reader = reader; }
+void SSLConnect::setReader( int reader ) { d->reader = reader; }
 
 void SSLConnect::waitForFinished( RequestType type, const QString &value )
 {
-	try { obj->result = getUrl( type, value ); }
+	try { d->result = getUrl( type, value ); }
 	catch( const std::runtime_error &e )
 	{
 		if( qstrcmp( e.what(), "" ) == 0 )
 		{
-			obj->error = SSLConnect::PinCanceledError;
-			obj->errorString = tr("PIN canceled");
+			d->error = SSLConnect::PinCanceledError;
+			d->errorString = tr("PIN canceled");
 		}
 		else if( qstrcmp( e.what(), "PIN1Invalid" ) == 0 )
 		{
-			obj->error = SSLConnect::PinInvalidError;
-			obj->errorString = tr("Invalid PIN");
+			d->error = SSLConnect::PinInvalidError;
+			d->errorString = tr("Invalid PIN");
 		}
 		else if( qstrcmp( e.what(), "PINLocked" ) == 0 )
 		{
-			obj->error = SSLConnect::PinLocked;
-			obj->errorString = tr("Pin locked");
+			d->error = SSLConnect::PinLocked;
+			d->errorString = tr("Pin locked");
 		}
 		else
 		{
-			obj->error = SSLConnect::UnknownError;
-			obj->errorString = e.what();
+			d->error = SSLConnect::UnknownError;
+			d->errorString = e.what();
 		}
 		return;
 	}
-	obj->error = SSLConnect::UnknownError;
-	obj->errorString.clear();
+	d->error = SSLConnect::UnknownError;
+	d->errorString.clear();
 }

@@ -30,11 +30,11 @@
 
 #include <openssl/ssl.h>
 
-class SSLObj
+class SSLConnectPrivate
 {
 public:
-	SSLObj();
-	~SSLObj();
+	SSLConnectPrivate();
+	~SSLConnectPrivate();
 
 	bool connectToHost( SSLConnect::RequestType type );
 	QByteArray getUrl( const QString &url ) const;
