@@ -614,7 +614,7 @@ Palun kontrollige juurdepääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation>PIN on lukus. PINi avamiseks palun kasutada ID-kaardi utiliiti!</translation>
+        <translation>PIN on lukus. PIN koodi saab avada ID-kaardi haldusvahendis.</translation>
     </message>
     <message>
         <source>Failed to sign document</source>
