@@ -73,7 +73,6 @@ private:
 	};
 	bool addFile( const QString &file );
 	bool checkAccessCert();
-	bool checkConnection();
 	void dragEnterEvent( QDragEnterEvent *e );
 	void dropEvent( QDropEvent *e );
 	bool eventFilter( QObject *o, QEvent *e );

@@ -1,4 +1,5 @@
 set( MOC_HEADERS
+	CheckConnection.h
 	CertificateWidget.h
 	ComboBox.h
 	Common.h
@@ -20,6 +21,7 @@ QT4_WRAP_CPP( MOC_SOURCES ${MOC_HEADERS} )
 set( SOURCES
 	${HEADERS}
 	${MOC_SOURCES}
+	CheckConnection.cpp
 	CertificateWidget.cpp
 	ComboBox.cpp
 	Common.cpp

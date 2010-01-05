@@ -22,6 +22,7 @@
 
 #include "MainWindow.h"
 
+#include "common/CheckConnection.h"
 #include "common/Common.h"
 #include "common/IKValidator.h"
 #include "common/Settings.h"
@@ -42,12 +43,8 @@
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QNetworkProxy>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QPrintPreviewDialog>
 #include <QTextStream>
-#include <QThread>
 #include <QTranslator>
 #include <QUrl>
 
@@ -389,7 +386,13 @@ void MainWindow::buttonClicked( int button )
 		break;
 	case SignSign:
 	{
-		if( !checkConnection() || !checkAccessCert() )
+		CheckConnection connection;
+		if( !connection.check( "http://ocsp.sk.ee" ) )
+		{
+			showWarning( connection.error() );
+			break;
+		}
+		if( !checkAccessCert() )
 			break;
 
 		if( infoSignCard->isChecked() )
@@ -430,50 +433,6 @@ void MainWindow::buttonClicked( int button )
 		setCurrentPage( Sign );
 		break;
 	default: break;
-	}
-}
-
-bool MainWindow::checkConnection()
-{
-	QNetworkAccessManager *manager = new QNetworkAccessManager( this );
-	Settings s;
-	s.beginGroup( "Client" );
-	if( !s.value( "proxyHost" ).toString().isEmpty() )
-	{
-		manager->setProxy( QNetworkProxy(
-			QNetworkProxy::HttpProxy,
-			s.value( "proxyHost" ).toString(),
-			s.value( "proxyPort" ).toInt(),
-			s.value( "proxyUser" ).toString(),
-			s.value( "proxyPass" ).toString() ) );
-	}
-	QNetworkReply *reply = manager->get( QNetworkRequest( QUrl("http://ocsp.sk.ee") ) );
-	while( reply->isRunning() )
-	{
-		qApp->processEvents();
-		qApp->thread()->wait( 1000 );
-	}
-
-	switch( reply->error() )
-	{
-	case QNetworkReply::NoError:
-		manager->deleteLater();
-		return true;
-	case QNetworkReply::ProxyConnectionRefusedError:
-	case QNetworkReply::ProxyConnectionClosedError:
-	case QNetworkReply::ProxyNotFoundError:
-	case QNetworkReply::ProxyTimeoutError:
-		showWarning( tr("Check proxy settings") );
-		manager->deleteLater();
-		return false;
-	case QNetworkReply::ProxyAuthenticationRequiredError:
-		showWarning( tr("Check proxy username and password") );
-		manager->deleteLater();
-		return false;
-	default:
-		showWarning( tr("Check internet connection") );
-		manager->deleteLater();
-		return false;
 	}
 }
 
