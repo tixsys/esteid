@@ -117,6 +117,21 @@
     </message>
 </context>
 <context>
+    <name>CheckConnection</name>
+    <message>
+        <source>Check proxy settings</source>
+        <translation>Проверте настройки прокси</translation>
+    </message>
+    <message>
+        <source>Check proxy username and password</source>
+        <translation>Проверьте имя пользователя и пароль прокси</translation>
+    </message>
+    <message>
+        <source>Check internet connection</source>
+        <translation>Проверьте подключение к Интернету</translation>
+    </message>
+</context>
+<context>
     <name>Common</name>
     <message>
         <source>Company</source>

@@ -117,6 +117,21 @@
     </message>
 </context>
 <context>
+    <name>CheckConnection</name>
+    <message>
+        <source>Check proxy settings</source>
+        <translation>Kontrolli proxy seadeid</translation>
+    </message>
+    <message>
+        <source>Check proxy username and password</source>
+        <translation>Kontrolli proxy kasutajanime ja parooli</translation>
+    </message>
+    <message>
+        <source>Check internet connection</source>
+        <translation>Kontrolli Interneti ühendust</translation>
+    </message>
+</context>
+<context>
     <name>Common</name>
     <message>
         <source>Company</source>

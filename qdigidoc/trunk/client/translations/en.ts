@@ -311,10 +311,6 @@ Start downloading?</translation>
 %1</translation>
     </message>
     <message>
-        <source>Check internet connection</source>
-        <translation>Check Internet connection</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Personal code is not valid</translation>
     </message>
@@ -402,14 +398,6 @@ Should I keep unsigned documents or remove these?</numerusform>
     <message>
         <source>Sign certificate is not valid</source>
         <translation>Sign certificate is not valid</translation>
-    </message>
-    <message>
-        <source>Check proxy settings</source>
-        <translation>Check proxy settings</translation>
-    </message>
-    <message>
-        <source>Check proxy username and password</source>
-        <translation>Check proxy username and password</translation>
     </message>
 </context>
 <context>

@@ -311,10 +311,6 @@ Alustame laadimist?</translation>
 %1</translation>
     </message>
     <message>
-        <source>Check internet connection</source>
-        <translation>Kontrolli Interneti ühendust</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Isikukood on vigane</translation>
     </message>
@@ -402,14 +398,6 @@ Kas jätan allkirjastamata ümbriku alles või eemaldan selle?</numerusform>
     <message>
         <source>Sign certificate is not valid</source>
         <translation>Allkirjastamise sertifikaat ei ole kehtiv</translation>
-    </message>
-    <message>
-        <source>Check proxy settings</source>
-        <translation>Kontrolli proxy seadeid</translation>
-    </message>
-    <message>
-        <source>Check proxy username and password</source>
-        <translation>Kontrolli proxy kasutajanime ja parooli</translation>
     </message>
 </context>
 <context>

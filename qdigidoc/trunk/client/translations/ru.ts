@@ -311,10 +311,6 @@ Start downloading?</source>
 %1</translation>
     </message>
     <message>
-        <source>Check internet connection</source>
-        <translation>Проверьте подключение к Интернету</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Неверный личный код</translation>
     </message>
@@ -405,14 +401,6 @@ Should I keep unsigned documents or remove these?</source>
     <message>
         <source>Sign certificate is not valid</source>
         <translation>Сертификат подписи недействителен</translation>
-    </message>
-    <message>
-        <source>Check proxy settings</source>
-        <translation>Проверте настройки прокси</translation>
-    </message>
-    <message>
-        <source>Check proxy username and password</source>
-        <translation>Проверьте имя пользователя и пароль прокси </translation>
     </message>
 </context>
 <context>
