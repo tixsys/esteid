@@ -19,6 +19,9 @@ namespace digidoc
     {
 
       public:
+          /**
+           * Exception code
+           */
           enum ExceptionCode {
               CertificateIssuerMissing = 10,
               CertificateRevoked       = 5,

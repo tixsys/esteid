@@ -31,6 +31,9 @@ Exception::Exception(const std::string& file, int line, const std::string& msg, 
  , m_code(NoException)
 { addCause(cause); }
 
+/**
+ * @return return exception code
+ */
 Exception::ExceptionCode Exception::code() const { return m_code; }
 
 /**
@@ -54,4 +57,7 @@ bool Exception::hasCause() const { return !causes.empty(); }
  */
 Exception::Causes Exception::getCauses() const { return causes; }
 
+/**
+ * @param code set exception code
+ */
 void Exception::setCode( ExceptionCode code ) { m_code = code; }

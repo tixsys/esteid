@@ -37,6 +37,9 @@ std::string digidoc::SignatureTM::getMediaType() const
     return MEDIA_TYPE;
 }
 
+/**
+ * @return returns OCSP certificate
+ */
 digidoc::X509Cert digidoc::SignatureTM::getOCSPCertificate() const
 {
     const xades::UnsignedSignaturePropertiesType::CertificateValuesType::EncapsulatedX509CertificateSequence &certs =
@@ -58,6 +61,9 @@ digidoc::X509Cert digidoc::SignatureTM::getOCSPCertificate() const
     return X509Cert();
 }
 
+/**
+ * @return returns OCSP timestamp
+ */
 std::string digidoc::SignatureTM::getProducedAt() const
 {
     const xades::OCSPIdentifierType::ProducedAtType &producedAt =
@@ -66,6 +72,9 @@ std::string digidoc::SignatureTM::getProducedAt() const
     return util::date::xsd2string(producedAt);
 }
 
+/**
+ * @return returns OCSP responder ID
+ */
 std::string digidoc::SignatureTM::getResponderID() const
 {
     return unsignedSignatureProperties()->completeRevocationRefs()[0].oCSPRefs()

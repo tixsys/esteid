@@ -46,46 +46,6 @@ void* DDocLibrary::resolve( const char *symbol )
 
 #endif
 
-#define throwError( x, msg, line ) throw x( __FILE__, line, msg );
-#define throwError2( x, msg, code, line ) \
-{ x e( __FILE__, line, msg ); e.setCode( code ); throw e; }
-
-#define throwCodeError( x, d, err, msg, line ) \
-	switch( err ) \
-	{ \
-	case ERR_OK: break; \
-	case ERR_PKCS_LOGIN: \
-		throwError2( x, "PIN Incorrect", Exception::PINIncorrect, line ); \
-	case ERR_OCSP_CERT_REVOKED: \
-		throwError2( x, "Certificate status: revoked", Exception::CertificateRevoked, line ); \
-	case ERR_OCSP_CERT_UNKNOWN: \
-		throwError2( x, "Certificate status: unknown", Exception::CertificateUnknown, line ); \
-	case ERR_OCSP_RESP_NOT_TRUSTED: \
-		throwError2( x, "Failed to find ocsp responder.", Exception::OCSPResponderMissing, line ); \
-	case ERR_OCSP_CERT_NOTFOUND: \
-		throwError2( x, "OCSP certificate loading failed", Exception::OCSPCertMissing, line ); \
-	case ERR_OCSP_UNAUTHORIZED: \
-		throwError2( x, "Unauthorized OCSP request", Exception::OCSPRequestUnauthorized, line ); \
-	case ERR_UNKNOWN_CA: \
-	{ \
-		std::ostringstream s; \
-		s << msg << "\n (error: " << err; \
-		if( d->f_getErrorString ) \
-			s << "; message: " << d->f_getErrorString( err ); \
-		s << ")"; \
-		throwError2( x, s.str(), Exception::CertificateUnknown, line ); \
-	} \
-	default: \
-	{ \
-		std::ostringstream s; \
-		s << msg << "\n (error: " << err; \
-		if( d->f_getErrorString ) \
-			s << "; message: " << d->f_getErrorString( err ); \
-		s << ")"; \
-		throwError( x, s.str(), line ); \
-	} \
-	}
-
 
 
 DDocPrivate::DDocPrivate()
@@ -119,15 +79,7 @@ DDocPrivate::DDocPrivate()
 	f_initDigiDocLib();
 
 #ifdef WIN32
-	std::string conf;
-	const char *bdoc = XmlConf::DEFAULT_CONF_LOC.c_str();
-	if( bdoc )
-	{
-		conf.append( util::File::directory( bdoc ) );
-		conf.append( "/" );
-	}
-	conf.append( "digidoc.ini" );
-	f_initConfigStore( conf.c_str() );
+    f_initConfigStore( util::File::path(XmlConf::getDefaultConfDir(), "/digidoc.ini").c_str() );
 #else
 	f_initConfigStore( NULL );
 #endif
@@ -182,19 +134,66 @@ bool DDocPrivate::loadSymbols()
 	(f_verifySignatureAndNotary = (sym_verifySignatureAndNotary)lib.resolve("verifySignatureAndNotary"));
 }
 
+template<typename T>
+void DDocPrivate::throwCodeError( int err, const std::string &msg, int line ) const
+{
+	switch( err )
+	{
+	case ERR_OK: break;
+	case ERR_PKCS_LOGIN:
+		throwError2<T>( "PIN Incorrect", Exception::PINIncorrect, line );
+	case ERR_OCSP_CERT_REVOKED:
+		throwError2<T>( "Certificate status: revoked", Exception::CertificateRevoked, line );
+	case ERR_OCSP_CERT_UNKNOWN:
+		throwError2<T>( "Certificate status: unknown", Exception::CertificateUnknown, line );
+	case ERR_OCSP_RESP_NOT_TRUSTED:
+		throwError2<T>( "Failed to find ocsp responder.", Exception::OCSPResponderMissing, line );
+	case ERR_OCSP_CERT_NOTFOUND:
+		throwError2<T>( "OCSP certificate loading failed", Exception::OCSPCertMissing, line );
+	case ERR_OCSP_UNAUTHORIZED:
+		throwError2<T>( "Unauthorized OCSP request", Exception::OCSPRequestUnauthorized, line );
+	case ERR_UNKNOWN_CA:
+	{ \
+		std::ostringstream s;
+		s << msg << "\n (error: " << err;
+		if( f_getErrorString )
+			s << "; message: " << f_getErrorString( err );
+		s << ")";
+		throwError2<T>( s.str(), Exception::CertificateUnknown, line );
+	}
+	default:
+	{
+		std::ostringstream s;
+		s << msg << "\n (error: " << err;
+		if( f_getErrorString )
+			s << "; message: " << f_getErrorString( err );
+		s << ")";
+		throwError<T>( s.str(), line );
+	}
+	}
+}
+
 void DDocPrivate::throwDocOpenError( int line ) const throw(BDocException)
 {
 	if( !ready )
-		throwError( BDocException, "DDoc library not loaded", line );
+		throwError<BDocException>( "DDoc library not loaded", line );
 	if( !doc )
-		throwError( BDocException, "Document not open", line );
+		throwError<BDocException>( "Document not open", line );
 }
+
+template<typename T>
+void DDocPrivate::throwError( const std::string &msg, int line ) const
+{ throw T( __FILE__, line, msg ); }
+
+template<typename T>
+void DDocPrivate::throwError2( const std::string &msg, Exception::ExceptionCode code, int line ) const
+{ T e( __FILE__, line, msg ); e.setCode( code ); throw e; }
 
 void DDocPrivate::throwSignError( const char *id, int err, const std::string &msg, int line ) const throw(BDocException)
 {
 	if( err != ERR_OK )
 		f_SignatureInfo_delete( doc, id );
-	throwCodeError( BDocException, this, err, msg, line );
+	throwCodeError<BDocException>( err, msg, line );
 }
 
 
@@ -313,7 +312,7 @@ void SignatureDDOC::validateOffline() const throw(SignatureException)
 {
 	int err = m_doc->f_verifySignatureAndNotary(
 		m_doc->doc, m_doc->doc->pSignatures[m_id], m_doc->filename.c_str() );
-	throwCodeError( SignatureException, m_doc, err, "Failed to validate signature", __LINE__ );
+	m_doc->throwCodeError<SignatureException>( err, "Failed to validate signature", __LINE__ );
 }
 
 /**
@@ -360,7 +359,7 @@ digidoc::DDoc::DDoc(std::string path) throw(IOException, BDocException)
  :	d( new DDocPrivate )
 {
 	if( !d->ready )
-		throwError( BDocException, "DDoc library not loaded", __LINE__ );
+		d->throwError<BDocException>( "DDoc library not loaded", __LINE__ );
 
 	d->filename = path;
 	loadFile();
@@ -377,7 +376,7 @@ DDoc::DDoc(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocExceptio
 :	d( new DDocPrivate )
 {
 	if( !d->ready )
-		throwError( BDocException, "DDoc library not loaded", __LINE__ );
+		d->throwError<BDocException>( "DDoc library not loaded", __LINE__ );
 
 	d->filename = serializer->getPath();
 	loadFile();
@@ -393,7 +392,7 @@ void DDoc::loadFile()
 		util::File::createDirectory( d->tmpFolder = util::File::tempDirectory() );
 	}
 	catch( const Exception & )
-	{ throwError( BDocException, "Failed to create temporary directory", __LINE__ ); }
+	{ d->throwError<BDocException>( "Failed to create temporary directory", __LINE__ ); }
 
 	int err = d->f_ddocSaxReadSignedDocFromFile( &d->doc, d->filename.c_str(), 0, 0 );
 	switch( err )
@@ -404,7 +403,7 @@ void DDoc::loadFile()
 	default:
 		d->f_SignedDoc_free( d->doc );
 		d->doc = NULL;
-		throwCodeError( BDocException, d, err, "Failed to open ddoc file", __LINE__ );
+		d->throwCodeError<BDocException>( err, "Failed to open ddoc file", __LINE__ );
 		return;
 	}
 
@@ -421,7 +420,7 @@ void DDoc::loadFile()
 			if( d->doc )
 				d->f_SignedDoc_free( d->doc );
 			d->doc = NULL;
-			throwCodeError( BDocException, d, err, "Failed to exctract files", __LINE__ );
+			d->throwCodeError<BDocException>( err, "Failed to exctract files", __LINE__ );
 		}
 		d->documents.push_back( doc );
 	}
@@ -446,11 +445,11 @@ void DDoc::addDocument( const Document &document ) throw(BDocException)
 	int err = d->f_DataFile_new( &data, d->doc, NULL, document.getPath().c_str(),
 		CONTENT_EMBEDDED_BASE64, document.getMediaType().c_str(), 0, NULL, 0,
 		NULL, CHARSET_UTF_8 );
-	throwCodeError( BDocException, d, err, "Failed to add file '" + document.getPath() + "'" , __LINE__ );
+	d->throwCodeError<BDocException>( err, "Failed to add file '" + document.getPath() + "'" , __LINE__ );
 
 	err = d->f_calculateDataFileSizeAndDigest(
 		d->doc, data->szId, document.getPath().c_str(), DIGEST_SHA1 );
-	throwCodeError( BDocException, d, err, "Failed calculate file digest and size", __LINE__ );
+	d->throwCodeError<BDocException>( err, "Failed calculate file digest and size", __LINE__ );
 	DocumentDDoc doc = { document.getPath(), document.getMediaType() };
 	d->documents.push_back( doc );
 }
@@ -476,7 +475,7 @@ Document DDoc::getDocument( unsigned int id ) const throw(BDocException)
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
 		s << d->documents.size() << " documents in container.";
-		throwError( BDocException, s.str(), __LINE__ );
+		d->throwError<BDocException>( s.str(), __LINE__ );
 	}
 
 	return Document( d->documents[id].filename, d->documents[id].mime );
@@ -498,7 +497,7 @@ const Signature* DDoc::getSignature( unsigned int id ) const throw(BDocException
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
 		s << d->signatures.size() << " signatures in container.";
-		throwError( BDocException, s.str(), __LINE__ );
+		d->throwError<BDocException>( s.str(), __LINE__ );
 	}
 
 	return d->signatures[id];
@@ -521,17 +520,17 @@ void DDoc::removeDocument( unsigned int id ) throw(BDocException)
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
 		s << d->documents.size() << " documents in container.";
-		throwError( BDocException, s.str(), __LINE__ );
+		d->throwError<BDocException>( s.str(), __LINE__ );
 	}
 	if( !d->signatures.empty() )
 	{
-		throwError( BDocException,
+		d->throwError<BDocException>(
 			"Can not remove document from container which has signatures, "
 			"remove all signatures before removing document.", __LINE__ );
 	}
 
 	int err = d->f_DataFile_delete( d->doc, d->doc->pDataFiles[id]->szId );
-	throwCodeError( BDocException, d, err, "Failed to delete file", __LINE__ );
+	d->throwCodeError<BDocException>( err, "Failed to delete file", __LINE__ );
 	d->documents.erase( d->documents.begin() + id );
 }
 
@@ -550,11 +549,11 @@ void DDoc::removeSignature( unsigned int id ) throw(BDocException)
 		std::ostringstream s;
 		s << "Incorrect signature id " << id << ", there are only ";
 		s << d->signatures.size() << " signatures in container.";
-		throwError( BDocException, s.str(), __LINE__ );
+		d->throwError<BDocException>( s.str(), __LINE__ );
 	}
 
 	int err = d->f_SignatureInfo_delete( d->doc, d->doc->pSignatures[id]->szId );
-	throwCodeError( BDocException, d, err, "Failed to remove signature", __LINE__ );
+	d->throwCodeError<BDocException>( err, "Failed to remove signature", __LINE__ );
 	d->loadSignatures();
 }
 
@@ -570,7 +569,7 @@ void DDoc::save() throw(IOException, BDocException)
 {
 	d->throwDocOpenError( __LINE__ );
 	int err = d->f_createSignedDoc( d->doc, d->filename.c_str(), d->filename.c_str() );
-	throwCodeError( BDocException, d, err, "Failed to save document", __LINE__ );
+	d->throwCodeError<BDocException>( err, "Failed to save document", __LINE__ );
 }
 
 /**
@@ -605,14 +604,14 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 		std::string file = signer->signaturePath();
 		SignedDoc *sigDoc = 0;
 		int err = d->f_ddocSaxReadSignedDocFromFile( &sigDoc, file.c_str(), 0, 0 );
-		throwCodeError( BDocException, d, err, "Failed to sign document", __LINE__ );
+		d->throwCodeError<BDocException>( err, "Failed to sign document", __LINE__ );
 
 		SignatureInfo **signatures = (SignatureInfo**)realloc( d->doc->pSignatures,
 			(d->doc->nSignatures + sigDoc->nSignatures) * sizeof(void *));
 		if( !signatures )
 		{
 			d->f_SignedDoc_free( sigDoc );
-			throwError( BDocException, "Failed to sign document", __LINE__ );
+			d->throwError<BDocException>( "Failed to sign document", __LINE__ );
 		}
 
 		d->doc->pSignatures = signatures;
@@ -699,7 +698,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 unsigned int DDoc::signatureCount() const { return d->signatures.size(); }
 
 /**
- * Returns file digest DDoc format
+ * Returns file digest format
  */
 void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocException)
 {
@@ -710,7 +709,7 @@ void DDoc::getFileDigest( unsigned int id, unsigned char *digest ) throw(BDocExc
 		std::ostringstream s;
 		s << "Incorrect document id " << id << ", there are only ";
 		s << d->doc->nDataFiles << " documents in container.";
-		throwError( BDocException, s.str(), __LINE__ );
+		d->throwError<BDocException>( s.str(), __LINE__ );
 	}
 
 	memcpy( digest, d->doc->pDataFiles[id]->mbufDigest.pMem, d->doc->pDataFiles[id]->mbufDigest.nLen );

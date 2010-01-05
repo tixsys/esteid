@@ -9,6 +9,7 @@
 #define XMLCONF_H_
 
 #include "Conf.h"
+#include "xml/conf.hxx"
 
 namespace digidoc
 {
@@ -37,6 +38,7 @@ public:
     virtual std::string getPKCS12Pass() const;
 
     virtual std::string getUserConfDir() const;
+    static std::string getDefaultConfDir();
 
     virtual void setProxyHost( const std::string &host ) throw(IOException);
     virtual void setProxyPort( const std::string &port ) throw(IOException);
@@ -51,13 +53,14 @@ public:
     static std::string USER_CONF_LOC;
 
 private:
-    std::string fullpath() const;
     void init(const std::string& path) throw(IOException);
 
     void setUserConf(const std::string &paramName, const std::string &value) throw(IOException);
     void setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException);
-
-    std::string getConfXsdPath() const;
+    void serializeUserConf(const ::Configuration pConf) throw(IOException);
+    static std::string getConfSchemaLocation() throw(IOException);
+    static void setDefaultConfPath();
+    static void setUserConfPath();
 
     std::string digestUri;
     std::string pkcs11DriverPath;
