@@ -167,7 +167,7 @@
     </message>
     <message>
         <source>Your certificates will be expire</source>
-        <translation>Сертификаты будут недействительны</translation>
+        <translation>Сертификаты скоро будут недействительны</translation>
     </message>
     <message>
         <source>expired</source>
