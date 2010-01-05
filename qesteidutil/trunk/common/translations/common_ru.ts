@@ -166,16 +166,16 @@
         <translation>действительны</translation>
     </message>
     <message>
-        <source>Your certificates will be expire</source>
-        <translation>Сертификаты скоро будут недействительны</translation>
-    </message>
-    <message>
         <source>expired</source>
         <translation>устарели</translation>
     </message>
     <message>
         <source>Open utility</source>
         <translation>Открыть средство управления</translation>
+    </message>
+    <message>
+        <source>Your certificates will expire soon</source>
+        <translation>Сертификаты скоро будут недействительны</translation>
     </message>
 </context>
 <context>

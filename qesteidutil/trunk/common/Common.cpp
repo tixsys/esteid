@@ -298,7 +298,7 @@ QString Common::tokenInfo( CertType type, const QString &card, const QSslCertifi
 	{
 		s << "<font color=\"green\">" << tr("valid") << "</font>";
 		if( willExpire )
-			s << "<br /><font color=\"red\">" << tr("Your certificates will be expire") << "</font>";
+			s << "<br /><font color=\"red\">" << tr("Your certificates will expire soon") << "</font>";
 	}
 	else
 		s << "<font color=\"red\">" << tr("expired") << "</font>";

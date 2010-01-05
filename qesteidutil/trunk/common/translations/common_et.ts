@@ -166,16 +166,16 @@
         <translation>kehtiv</translation>
     </message>
     <message>
-        <source>Your certificates will be expire</source>
-        <translation>Sertifikaadid hakkavad aeguma</translation>
-    </message>
-    <message>
         <source>expired</source>
         <translation>aegunud</translation>
     </message>
     <message>
         <source>Open utility</source>
         <translation>Ava haldusvahend</translation>
+    </message>
+    <message>
+        <source>Your certificates will expire soon</source>
+        <translation>Sertifikaadid hakkavad aeguma</translation>
     </message>
 </context>
 <context>
