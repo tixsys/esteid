@@ -26,7 +26,7 @@
     </ocsp>
     <ocsp issuer="ESTEID-SK 2007">
         <url>http://ocsp.sk.ee</url>
-        <cert>certs/ESTEID-SK 2007 OCSP.crt</cert>
+        <cert>certs/ESTEID-SK 2007 OCSP 2010.crt</cert>
     </ocsp>
     <ocsp issuer="EID-SK">
         <url>http://ocsp.sk.ee</url>
@@ -34,7 +34,7 @@
     </ocsp>
     <ocsp issuer="EID-SK 2007">
         <url>http://ocsp.sk.ee</url>
-        <cert>certs/EID-SK 2007 OCSP.crt</cert>
+        <cert>certs/EID-SK 2007 OCSP 2010.crt</cert>
     </ocsp>
     <ocsp issuer="KLASS3-SK">
         <url>http://ocsp.sk.ee</url>
