@@ -26,7 +26,6 @@
 #include "common/Common.h"
 #include "common/IKValidator.h"
 #include "common/Settings.h"
-#include "common/PinDialog.h"
 #include "common/SslCertificate.h"
 
 #include "MobileDialog.h"

@@ -493,6 +493,10 @@ Please check your server access sertificate.</source>
         <source>Sign</source>
         <translation>Подписать</translation>
     </message>
+    <message>
+        <source>Certificate status unknown</source>
+        <translation type="unfinished">Статус сертификата неизвестен</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

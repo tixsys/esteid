@@ -490,6 +490,10 @@ Please check your server access sertificate.</translation>
         <source>Sign</source>
         <translation>Sign</translation>
     </message>
+    <message>
+        <source>Certificate status unknown</source>
+        <translation type="unfinished">Certificate status unknown</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>

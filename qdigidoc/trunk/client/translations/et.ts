@@ -490,6 +490,10 @@ Palun kontrollige juurdepääsutõendi olemasolu.</translation>
         <source>Sign</source>
         <translation>Allkirjastan</translation>
     </message>
+    <message>
+        <source>Certificate status unknown</source>
+        <translation type="unfinished">Sertifikaadi staatus on teadmata</translation>
+    </message>
 </context>
 <context>
     <name>PrintSheet</name>
