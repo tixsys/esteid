@@ -37,7 +37,6 @@ public:
 	~SSLConnectPrivate();
 
 	bool connectToHost( SSLConnect::RequestType type );
-	QByteArray getUrl( const QString &url ) const;
 	QByteArray getRequest( const QString &request ) const;
 
 	PKCS11_CTX *p11;

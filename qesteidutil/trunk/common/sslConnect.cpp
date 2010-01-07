@@ -165,16 +165,27 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 		unsigned long err = CKR_OK;
 		if( !slot->token->secureLogin )
 		{
+			QString validatePin;
 			if( pin.isNull() )
 			{
 				if( !p->exec() )
+				{
+					p->deleteLater();
 					throw std::runtime_error( "" );
-				pin = p->text();
+				}
+				validatePin = p->text();
 				p->deleteLater();
 				QCoreApplication::processEvents();
 			}
-			if( PKCS11_login(slot, 0, pin.toUtf8()) < 0 )
+			else
+				validatePin = pin;
+			if( PKCS11_login(slot, 0, validatePin.toUtf8()) < 0 )
+			{
+				pin = QString();
 				err = ERR_GET_REASON( ERR_get_error() );
+			}
+			else
+				pin = validatePin;
 		}
 		else
 		{
@@ -225,8 +236,8 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 	switch( type )
 	{
 	case SSLConnect::AccessCert:
-	case SSLConnect::MobileInfo: sock = BIO_new_connect( (char*)SK ); break;
-	default: sock = BIO_new_connect( (char*)EESTI ); break;
+	case SSLConnect::MobileInfo: sock = BIO_new_connect( const_cast<char*>(SK) ); break;
+	default: sock = BIO_new_connect( const_cast<char*>(EESTI) ); break;
 	}
 
 	BIO_set_conn_port( sock, "https" );
@@ -248,9 +259,6 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 
 	return true;
 }
-
-QByteArray SSLConnectPrivate::getUrl( const QString &url ) const
-{ return getRequest( QString( "GET %1 HTTP/1.0\r\n\r\n" ).arg( url ) ); }
 
 QByteArray SSLConnectPrivate::getRequest( const QString &request ) const
 {
@@ -303,6 +311,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 	if( !d->connectToHost( type ) )
 		return QByteArray();
 
+	QString header;
 	switch( type )
 	{
 	case AccessCert:
@@ -334,7 +343,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"</SOAP-ENV:Body>"
 			"</SOAP-ENV:Envelope>" )
 			.arg( lang.toUpper() );
-		return d->getRequest( QString(
+		header = QString(
 			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
 			"Host: %1\r\n"
 			"Content-Type: text/xml\r\n"
@@ -342,14 +351,24 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"SOAPAction: \"\"\r\n"
 			"Connection: close\r\n\r\n"
 			"%3" )
-			.arg( SK ).arg( request.size() ).arg( request ) );
+			.arg( SK ).arg( request.size() ).arg( request );
+		break;
 	}
-	case EmailInfo: return d->getUrl( "/idportaal/postisysteem.naita_suunamised" );
-	case ActivateEmails: return d->getUrl( "/idportaal/postisysteem.lisa_suunamine?" + value );
-	case MobileInfo: return d->getRequest( value.toLatin1() );
-	case PictureInfo: return d->getUrl( "/idportaal/portaal.idpilt" );
+	case EmailInfo:
+		header = "GET /idportaal/postisysteem.naita_suunamised HTTP/1.0\r\n\r\n";
+		break;
+	case ActivateEmails:
+		header = QString( "GET /idportaal/postisysteem.lisa_suunamine?%1 HTTP/1.0\r\n\r\n" ).arg( value );
+		break;
+	case MobileInfo:
+		header = value;
+		break;
+	case PictureInfo:
+		header = "GET /idportaal/portaal.idpilt HTTP/1.0\r\n\r\n";
+		break;
 	default: return QByteArray();
 	}
+	return d->getRequest( header );
 }
 
 SSLConnect::ErrorType SSLConnect::error() const { return d->error; }
