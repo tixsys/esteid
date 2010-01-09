@@ -492,7 +492,7 @@ Please check your server access sertificate.</translation>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation type="unfinished">Certificate status unknown</translation>
+        <translation>Certificate status unknown</translation>
     </message>
 </context>
 <context>

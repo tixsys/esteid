@@ -492,7 +492,7 @@ Palun kontrollige juurdepääsutõendi olemasolu.</translation>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation type="unfinished">Sertifikaadi staatus on teadmata</translation>
+        <translation>Sertifikaadi staatus on teadmata</translation>
     </message>
 </context>
 <context>

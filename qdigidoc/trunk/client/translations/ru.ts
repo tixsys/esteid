@@ -495,7 +495,7 @@ Please check your server access sertificate.</source>
     </message>
     <message>
         <source>Certificate status unknown</source>
-        <translation type="unfinished">Статус сертификата неизвестен</translation>
+        <translation>Статус сертификата неизвестен</translation>
     </message>
 </context>
 <context>
