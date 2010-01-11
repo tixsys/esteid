@@ -29,7 +29,7 @@ FILE=build/Packages/${NAME}
 
 env
 ./make.rb -V -f --sign build/Manifest.key --arch ${ARCH} installer
-cp build/Packages/Installer.dmg ${FILE}
+cp build/Packages/ID-Installer.dmg ${FILE}
 
 if test -n "$2"; then
 	scp ${FILE} $2
