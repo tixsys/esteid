@@ -200,7 +200,7 @@ static NSString *EstEIDKTApplicationLanguageKey = @"language";
 		}
 		
 		// Don't forget the slash
-		if([value length] > 10 && ![value hasSuffix:@"/"]) {
+		if([value length] > 10 && [[value componentsSeparatedByString:@"/"] count] <= 2 && ![value hasSuffix:@"/"]) {
 			value = [value stringByAppendingString:@"/"];
 		}
 		

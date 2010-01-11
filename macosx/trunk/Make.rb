@@ -30,7 +30,7 @@ class Application
 		@options.force = false
 		@options.verbose = false
 		@options.quiet = false
-		@options.name = 'Installer'
+		@options.name = 'ID-Installer'
 		@options.volname = nil
 		@options.build = 'build'
 		@options.target = 'Release'

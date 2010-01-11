@@ -2,8 +2,11 @@
 "PreferencePane.Action.Cancel" = "Отмена";
 "PreferencePane.Action.KeychainTool" = "Инструмент Keychain";
 "PreferencePane.Action.Retry" = "Попробовать заново";
+"PreferencePane.Action.OK" = "OK";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Пожалуйста убедитесь, что id-карта вставлена в считыватель и попробуйте заново.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "Неудачный вход с -картой.";
+"PreferencePane.Alert.IdLogin.Notice.Message" = "Sisselogimisel hakatakse kasutama ID-kaarti, mis on sisselogimise aktiveerimise ajal kaardilugejas!";
+"PreferencePane.Alert.IdLogin.Notice.Title" = "ID-kaardiga login seadistamine õnnestus!";
 "PreferencePane.Label.CheckForUpdates" = "Автоматическое обновление";
 "PreferencePane.Label.InstalledSoftware" = "Установленная программа:";
 "PreferencePane.Label.NoInstalledSoftware" = "Программа не установлена!";

@@ -126,6 +126,17 @@ typedef enum _EstEIDAgentUpdateFrequency {
 	while((hash = [enumerator nextObject]) != nil) {
 		[[self launchWithArguments:@"--idlogin", (idLogin) ? @"enable" : @"disable", [NSString stringWithFormat:@"/Users/%@", [self username]], hash, nil] waitUntilExit];
 	}
+	
+	if(idLogin) {
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+		NSAlert *alert = [NSAlert alertWithMessageText:[bundle localizedStringForKey:@"PreferencePane.Alert.IdLogin.Notice.Title" value:nil table:@"PreferencePane"]
+										 defaultButton:[bundle localizedStringForKey:@"PreferencePane.Action.OK" value:nil table:@"PreferencePane"]
+									   alternateButton:nil
+										   otherButton:nil
+							 informativeTextWithFormat:[bundle localizedStringForKey:@"PreferencePane.Alert.IdLogin.Notice.Message" value:nil table:@"PreferencePane"], nil];
+		
+		[alert runModal];
+	}
 }
 
 @end

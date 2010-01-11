@@ -2,10 +2,13 @@
 "PreferencePane.Action.Cancel" = "Cancel";
 "PreferencePane.Action.KeychainTool" = "Keychain Tool";
 "PreferencePane.Action.Retry" = "Try Again";
+"PreferencePane.Action.OK" = "OK";
 "PreferencePane.Action.UpdateFrequencyNever" = "Don't check for updates automatically";
 "PreferencePane.Action.UpdateFrequencyDaily" = "Check for updates every day";
 "PreferencePane.Action.UpdateFrequencyWeekly" = "Check for updates every week";
 "PreferencePane.Action.UpdateFrequencyMonthly" = "Check for updates every month";
+"PreferencePane.Alert.IdLogin.Notice.Message" = "Sisselogimisel hakatakse kasutama ID-kaarti, mis on sisselogimise aktiveerimise ajal kaardilugejas!";
+"PreferencePane.Alert.IdLogin.Notice.Title" = "Enabled id-card login successfully";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Please make sure that your ID-card is inserted to the card reader and then try again.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "Failed to enable id-card login.";
 "PreferencePane.Label.InstalledSoftware" = "Installed software:";

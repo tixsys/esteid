@@ -2,10 +2,13 @@
 "PreferencePane.Action.Cancel" = "Katkesta";
 "PreferencePane.Action.KeychainTool" = "Keychain abivahend";
 "PreferencePane.Action.Retry" = "Proovi uuesti";
+"PreferencePane.Action.OK" = "OK";
 "PreferencePane.Action.UpdateFrequencyNever" = "Ära kontrolli automaatselt uuendusi";
 "PreferencePane.Action.UpdateFrequencyDaily" = "Kontrolli uuendusi iga päev";
 "PreferencePane.Action.UpdateFrequencyWeekly" = "Kontrolli uuendusi iga nädal";
 "PreferencePane.Action.UpdateFrequencyMonthly" = "Kontrolli uuendusi iga kuu";
+"PreferencePane.Alert.IdLogin.Notice.Message" = "Sisselogimisel hakatakse kasutama ID-kaarti, mis on sisselogimise aktiveerimise ajal kaardilugejas!";
+"PreferencePane.Alert.IdLogin.Notice.Title" = "ID-kaardiga login seadistamine õnnestus!";
 "PreferencePane.Alert.IdLogin.CardNotFound.Message" = "Palun kontrolli kas ID-kaart on kaardilugejasse sisestatud ja seejärel proovi uuesti.";
 "PreferencePane.Alert.IdLogin.CardNotFound.Title" = "ID-kaardiga login seadistamine ebaõnnestus!";
 "PreferencePane.Label.InstalledSoftware" = "Paigaldatud tarkvara:";
