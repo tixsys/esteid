@@ -21,7 +21,9 @@
 #include <stdlib.h>//getenv
 
 #ifdef _WIN32
+#ifndef DIGIDOCPP_PATH_REGISTRY_KEY
 #define DIGIDOCPP_PATH_REGISTRY_KEY "SOFTWARE\\Estonian ID Card\\digidocpp"
+#endif
 #endif
 
 /**
@@ -72,24 +74,16 @@ void digidoc::XmlConf::initialize()
  */
 digidoc::XmlConf::XmlConf() throw(IOException)
 {
-    char * overrideConf = getenv( "DIGIDOCPP_OVERRIDE_CONF" );
-    if (overrideConf != NULL) //if there is environment variable defined, use this conf instead of others
-    {
-        if(util::File::fileExists(overrideConf))
-            init(overrideConf);
-        else
-            THROW_IOEXCEPTION("Error loading override xml configuration from '%s' file",overrideConf);
-    }
+
+    if (!DEFAULT_CONF_LOC.size())
+        THROW_IOEXCEPTION("XmlConf not initialized!");
+    if(util::File::fileExists(DEFAULT_CONF_LOC))
+        init(DEFAULT_CONF_LOC);
     else
-    {
-        if(util::File::fileExists(DEFAULT_CONF_LOC))
-            init(DEFAULT_CONF_LOC);
-        else
-            THROW_IOEXCEPTION("Error loading xml configuration from '%s' file",DEFAULT_CONF_LOC.c_str());
-        
-        if(util::File::fileExists(USER_CONF_LOC))
-            init(USER_CONF_LOC);
-    }
+        THROW_IOEXCEPTION("Error loading xml configuration from '%s' file",DEFAULT_CONF_LOC.c_str());
+    
+    if( !getenv("DIGIDOCPP_OVERRIDE_CONF") && util::File::fileExists(USER_CONF_LOC))
+        init(USER_CONF_LOC);
 }
 
 /**
@@ -223,26 +217,39 @@ void digidoc::XmlConf::init(const std::string& path) throw(IOException)
 /**
  * Sets Default (global) configuration file path in DEFAULT_CONF_LOC variable.
  */
-void digidoc::XmlConf::setDefaultConfPath()
+void digidoc::XmlConf::setDefaultConfPath() throw(IOException)
 {
-#ifdef _WIN32
-    HKEY hkey;
-    DWORD dwSize;
-    //TCHAR tcConfPath[PATH_MAX];
-    TCHAR tcConfPath[MAX_PATH];
-    //Open Registry to get path for default configuration file
-    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(DIGIDOCPP_PATH_REGISTRY_KEY), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+    char * overrideConf = getenv( "DIGIDOCPP_OVERRIDE_CONF" );
+    if (overrideConf != NULL) //if there is environment variable defined, use this conf instead of others
     {
-        dwSize = MAX_PATH * sizeof(TCHAR);
-        if (RegQueryValueEx(hkey, "ConfigFile", NULL, NULL, (LPBYTE)tcConfPath, &dwSize)==ERROR_SUCCESS)
-            DEFAULT_CONF_LOC = tcConfPath;
-        else //if couldn't open regkey value, then set file name for using current directory 
-            DEFAULT_CONF_LOC = "digidocpp.conf";
-        RegCloseKey(hkey);
+        if(util::File::fileExists(overrideConf))
+            DEFAULT_CONF_LOC = overrideConf;
+        else
+            THROW_IOEXCEPTION("Error loading override xml configuration from '%s' file",overrideConf);
     }
-#else
-    DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "digidocpp.conf";
-#endif
+    
+    else
+    {
+    #ifdef _WIN32
+        HKEY hkey;
+        DWORD dwSize;
+        TCHAR tcConfPath[MAX_PATH];
+        //Open Registry to get path for default configuration file
+        if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(DIGIDOCPP_PATH_REGISTRY_KEY), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
+        {
+            dwSize = MAX_PATH * sizeof(TCHAR);
+            if (RegQueryValueEx(hkey, "ConfigFile", NULL, NULL, (LPBYTE)tcConfPath, &dwSize)==ERROR_SUCCESS)
+                DEFAULT_CONF_LOC = tcConfPath;
+            else //if couldn't open regkey value, then set file name for using current directory 
+                DEFAULT_CONF_LOC = "digidocpp.conf";
+            RegCloseKey(hkey);
+        }
+        else //if key doesn't exist, use file name for current directory use.
+            THROW_IOEXCEPTION("Failed to read registry key \"%s\"", DIGIDOCPP_PATH_REGISTRY_KEY);
+    #else
+        DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "/digidocpp.conf";
+    #endif
+    }
 }
 
 /**
@@ -253,15 +260,11 @@ void digidoc::XmlConf::setUserConfPath()
 #ifdef _WIN32
     USER_CONF_LOC = getenv ("APPDATA");
     if (USER_CONF_LOC.size())
-        USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";
-    else //if reading APPDATA environment fails, then set filename for using current directory
-        USER_CONF_LOC = "digidocpp.conf";   
+        USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";   
 #else
     USER_CONF_LOC = getenv("HOME");
     if (USER_CONF_LOC.size())
-        USER_CONF_LOC += "/.digidocpp/digidocpp.conf";
-    else //if reading APPDATA environment fails, then set filename for using current directory
-        USER_CONF_LOC = "digidocpp.conf"; 
+        USER_CONF_LOC += "/.digidocpp/digidocpp.conf"; 
 #endif
 }
 
@@ -620,7 +623,7 @@ void  digidoc::XmlConf::setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOExce
  * @param pConf configuration data in xsd object using conf.xsd schema.
  * @throws IOException exception is thrown if opening of user configuration file fails.
  */
-void digidoc::XmlConf::serializeUserConf(const ::Configuration pConf) throw(IOException)
+void digidoc::XmlConf::serializeUserConf(const ::Configuration &pConf) throw(IOException)
 {
     std::ofstream ofs;
     ofs.open(USER_CONF_LOC.c_str());
@@ -631,7 +634,6 @@ void digidoc::XmlConf::serializeUserConf(const ::Configuration pConf) throw(IOEx
     }
     xml_schema::NamespaceInfomap map;
     map[""].name = "";
-    //map[""].schema = getConfXsdPath().c_str();
     map[""].schema = getConfSchemaLocation().c_str();
     configuration(ofs, pConf, map);
     ofs.close();

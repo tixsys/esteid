@@ -81,6 +81,8 @@ DDocPrivate::DDocPrivate()
 #ifdef WIN32
     f_initConfigStore( util::File::path(XmlConf::getDefaultConfDir(), "/digidoc.ini").c_str() );
 #else
+    // NULL argument reads global configuration defined
+    // in libdigidoc library: SYSCONFDIR "/digidoc.conf"
 	f_initConfigStore( NULL );
 #endif
 
@@ -641,8 +643,18 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	}
 	SignatureProductionPlace l = signer->getSignatureProductionPlace();
 
+	X509 *x509 = NULL;
+	try
+	{
+		x509 = X509_dup( signer->getCert() );
+	}
+	catch( const Exception &e )
+	{
+		throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );
+	}
+
 	int err = d->f_ddocPrepareSignature( d->doc, &info, role.str().c_str(), l.city.c_str(), l.stateOrProvince.c_str(),
-		l.postalCode.c_str(), l.countryName.c_str(), X509_dup( signer->getCert() ), NULL );
+		l.postalCode.c_str(), l.countryName.c_str(), x509, NULL );
 	d->throwSignError( info->szId, err, "Failed to sign document", __LINE__ );
 
 	std::vector<unsigned char> buf1(128);
@@ -657,7 +669,7 @@ void DDoc::sign( Signer *signer, Signature::Type type ) throw(BDocException)
 	{
 		signer->sign( digest, signatureSha1Rsa );
 	}
-	catch( const SignException &e )
+	catch( const Exception &e )
 	{
 		d->f_SignatureInfo_delete( d->doc, info->szId );
 		throw BDocException( __FILE__, __LINE__, "Failed to sign document", e );

@@ -49,18 +49,20 @@ public:
 
     virtual void setOCSP(const std::string &issuer, const std::string &url, const std::string &cert) throw(IOException);
 
-    static std::string DEFAULT_CONF_LOC;
-    static std::string USER_CONF_LOC;
+
 
 private:
     void init(const std::string& path) throw(IOException);
 
     void setUserConf(const std::string &paramName, const std::string &value) throw(IOException);
     void setUserOCSP(const Conf::OCSPConf &ocspData) throw(IOException);
-    void serializeUserConf(const ::Configuration pConf) throw(IOException);
+    void serializeUserConf(const ::Configuration &pConf) throw(IOException);
     static std::string getConfSchemaLocation() throw(IOException);
-    static void setDefaultConfPath();
+    static void setDefaultConfPath() throw(IOException);
     static void setUserConfPath();
+
+    static std::string DEFAULT_CONF_LOC;
+    static std::string USER_CONF_LOC;
 
     std::string digestUri;
     std::string pkcs11DriverPath;
