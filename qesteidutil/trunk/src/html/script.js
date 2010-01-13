@@ -462,7 +462,7 @@ function setEmailActivate( msg )
 	//emails activated, lets load again
 	if ( msg == "0" )
 	{
-		document.getElementById('emailsContentActivate').style.display = "none"
+		document.getElementById('emailsContentActivate').style.display = "none";
 		extender.loadEmails();
 		return;
 	}
@@ -552,6 +552,8 @@ function disableFields( translate )
 		divs[i].style.display = 'none';
 	}
 
+	emailsLoaded = false;
+	
 	if ( translate != null )
 		return;
 
@@ -570,7 +572,8 @@ function disableFields( translate )
 	document.getElementById('emailsContent').innerHTML = "";
 	document.getElementById('photo').innerHTML = '<div id="photoContent" style="padding-top:50px;"><a href="#" onClick="loadPicture();"><trtag trcode="loadPicture">' + _('loadPicture') + '</trtag></a></div>';
 	document.getElementById('savePhoto').style.display = 'none';
-
+	document.getElementById('emailsContentActivate').style.display = "none";
+	document.getElementById('emailsContentCheckID').style.display = "none";
 
 	try {
 		if ( !cardManager.anyCardsInReader() )
