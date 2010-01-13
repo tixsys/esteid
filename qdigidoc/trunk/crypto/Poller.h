@@ -44,6 +44,7 @@ public:
 	~Poller();
 
 	bool decrypt( const QByteArray &in, QByteArray &out );
+	ErrorCode errorCode() const;
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
