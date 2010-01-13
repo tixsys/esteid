@@ -58,7 +58,6 @@ private:
 		bool forceUnsecure = false);
 	bool changePin_internal(
 		PinType pinType,PinString newPin,PinString oldPin,bool useUnblockCommand=false);
-	void reconnectWithT0();
 	void checkProtocol();
 	bool getRetryCounts_internal(byte &puk,byte &pinAuth,byte &pinSign);
 	ByteVec readEFAndTruncate(unsigned int fileLen);
@@ -71,6 +70,7 @@ public:
 	  CardBase(ref,conn) {}
 	~EstEidCard() {}
 	bool isInReader(unsigned int idx);
+	void reconnectWithT0();
 
 	void enterPin(PinType pinType,PinString pin,bool forceUnsecure = false);
 
