@@ -860,14 +860,18 @@ function changePuk()
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		if ( ret == 0 )
+		if ( ret == 0 || ret > 3 )
 		{
 			document.getElementById('pukOldPin').value = "";
 			document.getElementById('pukNewPin').value = "";
 			document.getElementById('pukNewPin2').value = "";
-			_alert( 'error', _("PUKBlocked") );
-			readCardData();
-			setActive('cert','');
+			if ( ret == 0 )
+			{
+				_alert( 'error', _("PUKBlocked") );
+				readCardData();
+				setActive('cert','');
+			} else
+				_alert( 'error', _("PUKValidateFailed") );
 			return;
 		}
 		_alert( 'warning', _('PUKInvalidRetry').replace( /%d/, ret ) );
@@ -938,14 +942,18 @@ function unblockPin( type )
 	if ( !esteidData.validatePuk(oldVal) )
 	{
 		ret = esteidData.getPukRetryCount();
-		if ( ret == 0 )
+		if ( ret == 0 || ret > 3 )
 		{
 			document.getElementById('bpin' + type + 'OldPin').value = "";
 			document.getElementById('bpin' + type + 'NewPin').value = "";
 			document.getElementById('bpin' + type + 'NewPin2').value = "";
-			_alert( 'error', _("PUKBlocked") );
-			readCardData();
-			setActive('cert','');
+			if ( ret == 0 )
+			{
+				_alert( 'error', _("PUKBlocked") );
+				readCardData();
+				setActive('cert','');
+			} else
+				_alert( 'error', _("PUKValidateFailed") );
 			return;
 		}
 		_alert( 'warning', _("PUKInvalidRetry").replace( /%d/, ret ) );

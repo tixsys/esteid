@@ -125,14 +125,20 @@ bool JsEsteidCard::validatePin1(QString oldVal)
 
     byte retriesLeft = 0;
 
-    try {
-		return m_card->validateAuthPin( PinString( oldVal.toLatin1() ), retriesLeft);
-    } catch(AuthError &) {
-        return false;
-    } catch (std::runtime_error &err) {
-        handleError(err.what());
-        return false;
-    }
+	int retry = 3;
+	while( retry > 0 )
+	{
+		try {
+			return m_card->validateAuthPin( PinString( oldVal.toLatin1() ), retriesLeft);
+		} catch(AuthError &) {
+		    return false;
+		} catch (std::runtime_error &err) {
+		    handleError(err.what());
+			m_card->reconnectWithT0();
+		}
+		retry--;
+	}
+	return false;
 }
 
 bool JsEsteidCard::changePin1(QString newVal, QString oldVal)
@@ -165,15 +171,21 @@ bool JsEsteidCard::validatePin2(QString oldVal)
 
     byte retriesLeft = 0;
 
-    try {
-		return m_card->validateSignPin( PinString( oldVal.toLatin1() ),
+	int retry = 3;
+	while( retry > 0 )
+	{
+	    try {
+			return m_card->validateSignPin( PinString( oldVal.toLatin1() ),
 										retriesLeft);
-    } catch(AuthError &) {
-        return false;
-    } catch (std::runtime_error &err) {
-        handleError(err.what());
-        return false;
-    }
+	    } catch(AuthError &) {
+	        return false;
+	    } catch (std::runtime_error &err) {
+	        handleError(err.what());
+			m_card->reconnectWithT0();
+	    }
+		retry--;
+	}
+	return false;
 }
 
 bool JsEsteidCard::changePin2(QString newVal, QString oldVal)
@@ -206,15 +218,21 @@ bool JsEsteidCard::validatePuk(QString oldVal)
 
     byte retriesLeft = 0;
 
-    try {
-		return m_card->validatePuk( PinString( oldVal.toLatin1() ),
+	int retry = 3;
+	while( retry > 0 )
+	{
+	    try {
+			return m_card->validatePuk( PinString( oldVal.toLatin1() ),
                                      retriesLeft);
-    } catch(AuthError &) {
-        return false;
-    } catch (std::runtime_error &err) {
-        handleError(err.what());
-        return false;
-    }
+	    } catch(AuthError &) {
+	        return false;
+	    } catch (std::runtime_error &err) {
+	        handleError(err.what());
+			m_card->reconnectWithT0();
+	    }
+		retry--;
+	}
+	return false;
 }
 
 bool JsEsteidCard::changePuk(QString newVal, QString oldVal)
