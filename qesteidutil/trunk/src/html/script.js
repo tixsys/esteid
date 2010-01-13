@@ -143,6 +143,7 @@ function cardRemoved(i)
 
 function selectReader()
 {
+	setActive('cert',document.getElementById('buttonCert'));
 	extender.showLoading( _('loadCardData') );
 	disableFields();
 	var select = document.getElementById('readerSelect'); 
