@@ -154,6 +154,8 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 	if( PKCS11_enumerate_certs(slot->token, &certs, &ncerts) || !ncerts )
 		throw std::runtime_error( SSLConnect::tr("no certificate available").toStdString() );
 	PKCS11_CERT *authcert = &certs[0];
+	if( !SslCertificate::fromX509( Qt::HANDLE(authcert->x509) ).isValid() )
+		throw std::runtime_error( SSLConnect::tr("Certificate is not valid").toStdString() );
 
 	// Login token
 	if( slot->token->loginRequired )

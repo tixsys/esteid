@@ -247,6 +247,10 @@
         <source>failed to load pkcs11 module &apos;%1&apos;</source>
         <translation>ошибка при загрузке модуля pkcs11 &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Certificate is not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SslCertificate</name>
