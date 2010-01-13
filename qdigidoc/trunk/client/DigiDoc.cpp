@@ -156,15 +156,15 @@ QStringList DigiDocSignature::locations() const
 {
 	QStringList l;
 	const SignatureProductionPlace p = s->getProductionPlace();
-	l << QString::fromUtf8( p.city.data() ).trimmed();
-	l << QString::fromUtf8( p.stateOrProvince.data() ).trimmed();
-	l << QString::fromUtf8( p.postalCode.data() ).trimmed();
-	l << QString::fromUtf8( p.countryName.data() ).trimmed();
+	l << QString::fromUtf8( p.city.c_str() ).trimmed();
+	l << QString::fromUtf8( p.stateOrProvince.c_str() ).trimmed();
+	l << QString::fromUtf8( p.postalCode.c_str() ).trimmed();
+	l << QString::fromUtf8( p.countryName.c_str() ).trimmed();
 	return l;
 }
 
 QString DigiDocSignature::mediaType() const
-{ return QString::fromUtf8( s->getMediaType().data() ); }
+{ return QString::fromUtf8( s->getMediaType().c_str() ); }
 
 QSslCertificate DigiDocSignature::ocspCert() const
 {
@@ -205,7 +205,7 @@ int DigiDocSignature::parseException( const digidoc::Exception &e )
 
 void DigiDocSignature::parseExceptionStrings( const digidoc::Exception &e, QStringList &causes )
 {
-	causes << QString::fromUtf8( e.getMsg().data() );
+	causes << QString::fromUtf8( e.getMsg().c_str() );
 	Q_FOREACH( const Exception &c, e.getCauses() )
 		parseExceptionStrings( c, causes );
 }
@@ -380,11 +380,12 @@ QList<Document> DigiDoc::documents()
 
 QString DigiDoc::getAccessCert()
 {
+	QString card = m_card;
 	signer->unloadDriver();
 
 	SSLConnect *s = new SSLConnect( this );
 	s->setPKCS11( getConfValue( PKCS11Module ) );
-	s->setCard( m_card );
+	s->setCard( card );
 
 	bool retry = false;
 	do
@@ -410,6 +411,7 @@ QString DigiDoc::getAccessCert()
 	delete s;
 
 	signer->loadDriver();
+	selectCard( card );
 	return buffer;
 }
 
@@ -478,7 +480,7 @@ bool DigiDoc::parseException( const Exception &e, QStringList &causes, Exception
 	case Exception::PINLocked:
 		code = e.code(); return false;
 	default:
-		causes << QString::fromUtf8( e.getMsg().data() );
+		causes << QString::fromUtf8( e.getMsg().c_str() );
 		break;
 	}
 	Q_FOREACH( const Exception &c, e.getCauses() )
