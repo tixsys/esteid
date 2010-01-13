@@ -157,8 +157,6 @@ MainWindow::MainWindow( QWidget *parent )
 	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyPort" ) );
 	doc->setConfValue( DigiDoc::ProxyUser, s.value( "proxyUser" ) );
 	doc->setConfValue( DigiDoc::ProxyPass, s.value( "proxyPass" ) );
-	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 
 	// Actions
 	closeAction = new QAction( tr("Close"), this );
@@ -784,14 +782,18 @@ bool MainWindow::checkAccessCert()
 	Settings s;
 	s.beginGroup( "Client" );
 
-	QFile f( doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) ) );
+	QFile f( s.value( "pkcs12Cert" ).toString() );
 
 	if( !f.exists() )
 	{
 		if( QMessageBox::warning( this, tr( "Server access certificate" ),
 				tr( "Did not find any server access certificate!\nStart downloading?" ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+		{
+			doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
+			doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
 			return true;
+		}
 	}
 	else if( f.open( QIODevice::ReadOnly ) )
 	{
@@ -811,24 +813,40 @@ bool MainWindow::checkAccessCert()
 			if( QMessageBox::warning( this, tr( "Server access certificate" ),
 					tr( "Server access certificate is not valid!\nStart downloading?" ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
+			{
+				doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
+				doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
 				return true;
+			}
 		}
 		else if( p12Cert.certificate().expiryDate() < QDateTime::currentDateTime().addDays( 8 ) )
 		{
 			if( QMessageBox::question( this, tr( "Server access certificate" ),
 					tr( "Server access certificate is about to expire!\nStart downloading?" ),
 					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
+			{
+				doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+				doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 				return true;
+			}
 		}
 		else
+		{
+			doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+			doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
 			return true;
+		}
 	}
 	else
 	{
 		if( QMessageBox::warning( this, tr( "Server access certificate" ),
 				tr( "Failed to read server access certificate!\nStart downloading?" ),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
+		{
+			doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
+			doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
 			return true;
+		}
 	}
 
 	if( infoSignMobile->isChecked() || doc->activeCard().isEmpty() )
