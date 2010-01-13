@@ -43,7 +43,17 @@
 class PollerPrivate
 {
 public:
-	PollerPrivate(): login(false), terminate(false), handle(0), slot(0), slotCount(0), loginResult(CKR_OK) {}
+	PollerPrivate()
+	: code( Poller::NullCode )
+	, login(false)
+	, terminate(false)
+	, handle(0)
+	, slot(0)
+	, slotCount(0)
+	, loginResult(CKR_OK)
+	{}
+
+	Poller::ErrorCode code;
 	volatile bool	login, terminate;
 	QMutex			m;
 	QHash<QString,unsigned int> cards;
@@ -165,11 +175,14 @@ bool Poller::decrypt( const QByteArray &in, QByteArray &out )
 
 void Poller::emitError( const QString &msg, unsigned long err, ErrorCode code )
 {
+	d->code = code;
 	if( err )
 		Q_EMIT error( msg + "\n" + QString::fromUtf8( ERR_error_string( err, NULL ) ), quint8(code) );
 	else
 		Q_EMIT error( msg, quint8(code) );
 }
+
+Poller::ErrorCode Poller::errorCode() const { return d->code; }
 
 bool Poller::loadDriver()
 {

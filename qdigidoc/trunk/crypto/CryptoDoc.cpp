@@ -218,8 +218,11 @@ bool CryptoDoc::decrypt()
 	}
 
 	QByteArray in( (const char*)key->mbufTransportKey.pMem, key->mbufTransportKey.nLen ), out;
-	if( !poller->decrypt( in, out ) )
-		return false;
+	while( !poller->decrypt( in, out ) )
+	{
+		if( poller->errorCode() != Poller::PinIncorrect )
+			return false;
+	}
 
 	ddocMemAssignData( &m_enc->mbufTransportKey, out.constData(), out.size() );
 	m_enc->nKeyStatus = DENC_KEY_STATUS_INITIALIZED;
