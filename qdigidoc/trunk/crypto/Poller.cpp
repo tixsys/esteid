@@ -204,6 +204,7 @@ bool Poller::loadDriver()
 
 void Poller::read()
 {
+	d->cards.clear();
 	if( d->slotCount )
 	{
 		PKCS11_release_all_slots( d->handle, d->slots, d->slotCount );
@@ -218,7 +219,6 @@ void Poller::read()
 		return;
 	}
 
-	d->cards.clear();
 	for( unsigned int i = 0; i < d->slotCount; ++i )
 	{
 		PKCS11_SLOT* slot = &d->slots[i];
