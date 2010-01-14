@@ -311,7 +311,7 @@ int My1EstEIDSigner::signFile ()
 		//m_signer.pcPin = str_pin.c_str();
 		m_signer.pcPin = cpPin;
 		
-		//setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
+		setLocalConfHack(); // <-- Remove this, when local conf fixed in digidocpp library
 		
 		// Init certificate store.
 		digidoc::X509CertStore::init( new DirectoryX509CertStore() );
@@ -671,7 +671,7 @@ std::string MyRealEstEIDSigner::getPin( PKCS11Cert certificate ) throw(SignExcep
 		if (* pi_pinReq > 1)
 			e--;
 		else if (* pi_pinReq == 1)
-			throw SignException( __FILE__, __LINE__, "PIN acquisition canceled." );
+			throw SignException( __FILE__, __LINE__, "PIN koodi sisestamine katkestatud!" );
 	}
 
 	return pcPin;
@@ -772,21 +772,16 @@ void My1EstEIDSigner::setLocalConfHack()
 	TCHAR PKCS12Path[1024];
 	TCHAR PKCS12Pass[24];
 
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+	//if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_FILE"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
+    if(RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Estonian ID Card\\OrganizationDefaults\\Client"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
 	{
 		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
+		RegQueryValueEx(hKey, TEXT("pkcs12Cert"), NULL, NULL, (LPBYTE)PKCS12Path, &dwSize);
+        RegQueryValueEx(hKey, TEXT("pkcs12Pass"), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
 		RegCloseKey(hKey);
 
 		P12Path = PKCS12Path;
-	}
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\DigiDocLib\\DIGIDOC_PKCS_PASSWD"), 0, KEY_QUERY_VALUE, &hKey)==ERROR_SUCCESS)
-	{
-		dwSize = 1024 * sizeof(TCHAR);
-		RegQueryValueEx(hKey, TEXT(""), NULL, NULL, (LPBYTE)PKCS12Pass, &dwSize);
-		RegCloseKey(hKey);
-
-		P12Pass = PKCS12Pass;
+        P12Pass = PKCS12Pass;
 	}
 
 #else
@@ -846,13 +841,29 @@ void My1EstEIDSigner::setLocalConfHack()
 	//------------------
 	//set P12 cert path and pw
 	digidoc::Conf *i = NULL;
-	try { i = digidoc::Conf::getInstance(); }
-	catch( const Exception & e) 
+	digidoc::Conf::OCSPConf locOCSPConf1, locOCSPConf2;
+	try
 	{
-		getExceptions(e);
+		i = digidoc::Conf::getInstance(); 
+	
+	PRINT_DEBUG("PKCS12 Path: %s", P12Path);
+	PRINT_DEBUG("PKCS12 Pass: %s", P12Pass);
+	PRINT_DEBUG("User Conf Path: %s", i->getUserConfDir().c_str());
+
+        i->setPKCS12Cert(P12Path);
+		i->setPKCS12Pass(P12Pass);
+        
+//		i->setOCSP("EID-SK1", "", "");
+//		i->setOCSP("EID-SK2", "", "");
 	}
-PRINT_DEBUG("PKCS12 Path: %s", P12Path);
-PRINT_DEBUG("PKCS12 Pass: %s", P12Pass);
-	i->setPKCS12Cert(P12Path);
-	i->setPKCS12Pass(P12Pass);
+	catch(const digidoc::IOException& e)
+	{
+		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
+		if (e.hasCause())
+			for (size_t u=0; u<e.getCauses().size(); u++)
+			{
+				pcErrMsg = e.getCauses()[u].getMsg().c_str();
+				PRINT_DEBUG("ErrMess%s",pcErrMsg);
+			}
+	}
 }
