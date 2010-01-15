@@ -39,6 +39,7 @@ public:
 	bool connectToHost( SSLConnect::RequestType type );
 	QByteArray getRequest( const QString &request ) const;
 
+	bool	unload;
 	PKCS11_CTX *p11;
 	bool	p11loaded;
 	SSL_CTX *sctx;

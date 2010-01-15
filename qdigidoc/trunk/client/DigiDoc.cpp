@@ -380,18 +380,17 @@ QList<Document> DigiDoc::documents()
 
 QString DigiDoc::getAccessCert()
 {
-	QString card = m_card;
-	signer->unloadDriver();
-
 	SSLConnect *s = new SSLConnect( this );
-	s->setPKCS11( getConfValue( PKCS11Module ) );
-	s->setCard( card );
+	s->setPKCS11( getConfValue( PKCS11Module ), false );
+	s->setCard( m_card );
 
 	bool retry = false;
 	do
 	{
 		retry = false;
+		signer->lock();
 		s->waitForFinished( SSLConnect::AccessCert );
+		signer->unlock();
 		switch( s->error() )
 		{
 		case SSLConnect::PinCanceledError: break;
@@ -410,8 +409,6 @@ QString DigiDoc::getAccessCert()
 
 	delete s;
 
-	signer->loadDriver();
-	selectCard( card );
 	return buffer;
 }
 

@@ -40,15 +40,6 @@
 #  endif
 #endif
 
-#ifdef OPENSSL_SYS_WIN32 
-#undef X509_NAME 
-#undef X509_EXTENSIONS 
-#undef X509_CERT_PAIR 
-#undef PKCS7_ISSUER_AND_SERIAL 
-#undef OCSP_REQUEST 
-#undef OCSP_RESPONSE 
-#endif
-
 // PKCS#11
 #define CKR_OK					(0)
 #define CKR_CANCEL				(1)
@@ -92,7 +83,8 @@ void SSLThread::run()
 
 
 SSLConnectPrivate::SSLConnectPrivate()
-:	p11( PKCS11_CTX_new() )
+:	unload( true )
+,	p11( PKCS11_CTX_new() )
 ,	p11loaded( false )
 ,	sctx( NULL )
 ,	ssl( NULL )
@@ -111,7 +103,8 @@ SSLConnectPrivate::~SSLConnectPrivate()
 	SSL_CTX_free( sctx );
 	if( nslots )
 		PKCS11_release_all_slots( p11, pslots, nslots );
-	PKCS11_CTX_unload( p11 );
+	if( unload )
+		PKCS11_CTX_unload( p11 );
 	PKCS11_CTX_free( p11 );
 
 	ERR_remove_state(0);
@@ -379,10 +372,11 @@ QString SSLConnect::pin() const { return d->pin; }
 QByteArray SSLConnect::result() const { return d->result; }
 void SSLConnect::setCard( const QString &card ) { d->card = card; }
 void SSLConnect::setPin( const QString &pin ) { d->pin = pin; }
-void SSLConnect::setPKCS11( const QString &pkcs11 )
+void SSLConnect::setPKCS11( const QString &pkcs11, bool unload )
 {
-	if( d->p11loaded )
+	if( d->p11loaded && d->unload )
 		PKCS11_CTX_unload( d->p11 );
+	d->unload = unload;
 	d->p11loaded = PKCS11_CTX_load( d->p11, pkcs11.toUtf8() ) == 0;
 	if( !d->p11loaded )
 	{

@@ -37,10 +37,10 @@ public:
 	QSigner( QObject *parent = 0 );
 	~QSigner();
 
-	bool loadDriver();
+	void lock();
 	X509 *getCert() throw(digidoc::SignException);
 	void sign( const Digest& digest, Signature& signature ) throw(digidoc::SignException);
-	void unloadDriver();
+	void unlock();
 
 Q_SIGNALS:
 	void dataChanged( const QStringList &cards, const QString &card,
@@ -51,10 +51,12 @@ private Q_SLOTS:
 	void selectCard( const QString &card );
 
 private:
-	void throwException( const QString &msg, unsigned long err, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
+	bool loadDriver();
 	void read();
 	void run();
 	void selectCert( const QString &card );
+	void throwException( const QString &msg, unsigned long err, digidoc::Exception::ExceptionCode code, int line ) throw(digidoc::SignException);
+	void unloadDriver();
 
 	QSignerPrivate *d;
 };

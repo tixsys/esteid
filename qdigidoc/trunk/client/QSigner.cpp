@@ -97,6 +97,8 @@ bool QSigner::loadDriver()
 	return true;
 }
 
+void QSigner::lock() { d->m.lock(); }
+
 void QSigner::read()
 {
 	d->cards.clear();
@@ -306,3 +308,5 @@ void QSigner::unloadDriver()
 		d->handle = 0;
 	}
 }
+
+void QSigner::unlock() { d->m.unlock(); }
