@@ -2,7 +2,7 @@
 #include "ui_idupdater.h"
 
 #include <QtNetwork/QNetworkAccessManager>
-#include <QDomElement>
+#include <QtXml/QDomElement>
 #include <QSystemTrayIcon>
 
 class idupdater : public QMainWindow, private Ui::MainWindow {
@@ -23,6 +23,7 @@ private slots:
 	void downloadProgress(qint64 recvd,qint64 total);
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void cancel();
+	void messageReceived(const QString &str);
 
 private:
 	bool m_autocheck,m_autoupdate;

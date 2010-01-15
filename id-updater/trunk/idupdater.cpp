@@ -1,8 +1,8 @@
 #include "idupdater.h"
 #include <QUrl>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QDomDocument>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QtXml/QDomDocument>
 #include <QDir>
 #include <QTime>
 #include <QMenu>
@@ -181,4 +181,11 @@ void idupdater::downloadProgress(qint64 recvd,qint64 total) {
 void idupdater::startUninstall() {
 	netDownloadFinished(NULL); //debugging
 	enableInstall(false,false);
+	}
+
+void idupdater::messageReceived(const QString &str) {
+	if (str == "runupdate") {
+		showNormal();
+		checkUpdates();
+		}
 	}
