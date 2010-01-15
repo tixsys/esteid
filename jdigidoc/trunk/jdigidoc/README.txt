@@ -1,6 +1,5 @@
 DigiDoc Java library
 --------------------
-
 JDigiDoc is a Java library for manipulating Estonian DDOC and BDOC
 digital signature container files.
 
@@ -16,7 +15,10 @@ Related standards and schemas https://id.eesti.ee/trac/wiki/XMLDSIG
 
 Building
 --------
-
 1. Get Maven2 from http://maven.apache.org
-2. Run: mvn install
+2. Run
+     mvn install
 
+Generating API documentation
+----------------------------
+Run mvn javadoc:jar
