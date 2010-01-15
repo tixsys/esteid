@@ -240,11 +240,11 @@ void digidoc::XmlConf::setDefaultConfPath() throw(IOException)
             dwSize = MAX_PATH * sizeof(TCHAR);
             if (RegQueryValueEx(hkey, "ConfigFile", NULL, NULL, (LPBYTE)tcConfPath, &dwSize)==ERROR_SUCCESS)
                 DEFAULT_CONF_LOC = tcConfPath;
-            else //if couldn't open regkey value, then set file name for using current directory 
-                DEFAULT_CONF_LOC = "digidocpp.conf";
+            else //if couldn't open regkey value 
+                THROW_IOEXCEPTION("Failed to open registry key \"%s\" ConfigFile value ", DIGIDOCPP_PATH_REGISTRY_KEY);
             RegCloseKey(hkey);
         }
-        else //if key doesn't exist, use file name for current directory use.
+        else //if key doesn't exist
             THROW_IOEXCEPTION("Failed to read registry key \"%s\"", DIGIDOCPP_PATH_REGISTRY_KEY);
     #else
         DEFAULT_CONF_LOC = DIGIDOCPP_CONFIG_DIR "/digidocpp.conf";
