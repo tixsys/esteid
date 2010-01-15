@@ -110,7 +110,7 @@ QString SslCertificate::formatName( const QString &name )
 	return ret;
 }
 
-QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
+QSslCertificate SslCertificate::fromX509( Qt::HANDLE x509 )
 {
 	unsigned char *cert = NULL;
 	int len = i2d_X509( (X509*)x509, &cert );
@@ -121,7 +121,7 @@ QSslCertificate SslCertificate::fromX509( const Qt::HANDLE x509 )
 	return QSslCertificate( der, QSsl::Der );
 }
 
-QSslKey SslCertificate::keyFromEVP( const Qt::HANDLE evp )
+QSslKey SslCertificate::keyFromEVP( Qt::HANDLE evp )
 {
 	EVP_PKEY *key = (EVP_PKEY*)evp;
 	unsigned char *data = NULL;
@@ -381,11 +381,9 @@ public:
 
 void PKCS12CertificatePrivate::init( const QByteArray &data, const QByteArray &pin )
 {
-	BIO *bio = BIO_new( BIO_s_mem() );
+	BIO *bio = BIO_new_mem_buf( const_cast<char*>(data.constData()), data.size() );
 	if( !bio )
 		return setLastError();
-
-	BIO_write( bio, data.data(), data.size() );
 
 	PKCS12 *p12 = d2i_PKCS12_bio( bio, NULL );
 	BIO_free( bio );

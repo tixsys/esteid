@@ -48,8 +48,8 @@ public:
 	QStringList enhancedKeyUsage() const;
 	static QString formatDate( const QDateTime &date, const QString &format );
 	static QString formatName( const QString &name );
-	static QSslCertificate fromX509( const Qt::HANDLE x509 );
-	static QSslKey keyFromEVP( const Qt::HANDLE evp );
+	static QSslCertificate fromX509( Qt::HANDLE x509 );
+	static QSslKey keyFromEVP( Qt::HANDLE evp );
 	bool		isTempel() const;
 	bool		isTest() const;
 	QHash<int,QString> keyUsage() const;
