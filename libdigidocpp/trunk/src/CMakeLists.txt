@@ -69,6 +69,7 @@ add_custom_command(
     OUTPUT ${XML_DIR}/conf.cxx
     COMMAND ${CMAKE_COMMAND} -E make_directory ${XML_DIR}
     COMMAND ${XSD_EXECUTABLE} cxx-tree ${COMMON_XSD_OPTS}
+                                       --generate-serialization
                                        conf.xsd
     WORKING_DIRECTORY ${SCHEMA_DIR}
     DEPENDS ${SCHEMA_DIR}/conf.xsd
@@ -260,5 +261,6 @@ install( FILES
 install( FILES
     ${XML_DIR}/XAdES.hxx
     ${XML_DIR}/xmldsig-core-schema.hxx
+    ${XML_DIR}/conf.hxx
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/xml
 )

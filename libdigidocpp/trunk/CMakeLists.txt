@@ -18,7 +18,8 @@ endif(LIBDIGIDOC_MODULE)
 
 set(DIGIDOCPP_INCLUDE_DIR "${INCLUDE_INSTALL_DIR}/digidocpp")
 set(DIGIDOCPP_CONFIG_DIR  "${SYSCONF_INSTALL_DIR}/digidocpp")
-set(DIGIDOCPP_VERSION     "0.1.0")
+add_definitions(-DDIGIDOCPP_CONFIG_DIR="${DIGIDOCPP_CONFIG_DIR}")
+set(DIGIDOCPP_VERSION     "0.2.0")
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/libdigidocpp.pc.cmake

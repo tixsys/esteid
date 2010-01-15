@@ -79,16 +79,10 @@ DDocPrivate::DDocPrivate()
 	f_initDigiDocLib();
 
 #ifdef WIN32
-	std::string conf;
-	const char *bdoc = getenv( XmlConf::CONF_ENV.c_str() );
-	if( bdoc )
-	{
-		conf.append( util::File::directory( bdoc ) );
-		conf.append( "/" );
-	}
-	conf.append( "digidoc.ini" );
-	f_initConfigStore( conf.c_str() );
+	f_initConfigStore( util::File::path(XmlConf::getDefaultConfDir(), "/digidoc.ini").c_str() );
 #else
+	// NULL argument reads global configuration defined
+	// in libdigidoc library: SYSCONFDIR "/digidoc.conf"
 	f_initConfigStore( NULL );
 #endif
 
