@@ -79,10 +79,10 @@ DDocPrivate::DDocPrivate()
 	f_initDigiDocLib();
 
 #ifdef WIN32
-    f_initConfigStore( util::File::path(XmlConf::getDefaultConfDir(), "/digidoc.ini").c_str() );
+	f_initConfigStore( util::File::path(XmlConf::getDefaultConfDir(), "/digidoc.ini").c_str() );
 #else
-    // NULL argument reads global configuration defined
-    // in libdigidoc library: SYSCONFDIR "/digidoc.conf"
+	// NULL argument reads global configuration defined
+	// in libdigidoc library: SYSCONFDIR "/digidoc.conf"
 	f_initConfigStore( NULL );
 #endif
 

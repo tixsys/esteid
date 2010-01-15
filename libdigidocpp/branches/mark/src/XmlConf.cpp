@@ -232,17 +232,18 @@ void digidoc::XmlConf::setDefaultConfPath() throw(IOException)
     {
     #ifdef _WIN32
         HKEY hkey;
-        DWORD dwSize;
+        DWORD dwSize, dwRet;
         TCHAR tcConfPath[MAX_PATH];
         //Open Registry to get path for default configuration file
         if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT(DIGIDOCPP_PATH_REGISTRY_KEY), 0, KEY_QUERY_VALUE, &hkey)==ERROR_SUCCESS)
         {
             dwSize = MAX_PATH * sizeof(TCHAR);
-            if (RegQueryValueEx(hkey, "ConfigFile", NULL, NULL, (LPBYTE)tcConfPath, &dwSize)==ERROR_SUCCESS)
+            dwRet = RegQueryValueEx(hkey, "ConfigFile", NULL, NULL, (LPBYTE)tcConfPath, &dwSize);
+            RegCloseKey(hkey);
+            if (dwRet == ERROR_SUCCESS)
                 DEFAULT_CONF_LOC = tcConfPath;
             else //if couldn't open regkey value 
                 THROW_IOEXCEPTION("Failed to open registry key \"%s\" ConfigFile value ", DIGIDOCPP_PATH_REGISTRY_KEY);
-            RegCloseKey(hkey);
         }
         else //if key doesn't exist
             THROW_IOEXCEPTION("Failed to read registry key \"%s\"", DIGIDOCPP_PATH_REGISTRY_KEY);
