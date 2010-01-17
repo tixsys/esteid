@@ -50,13 +50,15 @@ public:
 	static QString formatName( const QString &name );
 	static QSslCertificate fromX509( Qt::HANDLE x509 );
 	static QSslKey keyFromEVP( Qt::HANDLE evp );
+	QString		issuerInfo( SubjectInfo info ) const;
+	QString		issuerInfo( const QByteArray &tag ) const;
 	bool		isTempel() const;
 	bool		isTest() const;
 	QHash<int,QString> keyUsage() const;
 	QStringList policies() const;
 	QString		policyInfo( const QString &oid ) const;
-	QString		subjectInfoUtf8( SubjectInfo subject ) const;
-	QString		subjectInfoUtf8( const QByteArray &tag ) const;
+	QString		subjectInfo( SubjectInfo subject ) const;
+	QString		subjectInfo( const QByteArray &tag ) const;
 	QByteArray	subjectKeyIdentifier() const;
 	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
 	static QDateTime	toLocalTime( const QDateTime &datetime );
@@ -69,9 +71,8 @@ public:
 
 private:
 	void*	getExtension( int nid ) const;
-	QString decode( const QString &data ) const;
-	QString	toUtf16( const QString &data ) const;
-	QString	toUtf8( const QString &data ) const;
+	QByteArray subjectInfoToString( SubjectInfo info ) const;
+	QMap<QString,QString> mapFromOnlineName( const QString &name ) const;
 };
 
 class PKCS12CertificatePrivate;

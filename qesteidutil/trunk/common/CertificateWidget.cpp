@@ -115,7 +115,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	//s << tr("* Refer to the certification authority's statement for details.") << "<br />";
 	s << "<hr>";
 	s << "<p style='margin-left: 30px;'>";
-	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfoUtf8( QSslCertificate::CommonName );
+	s << "<b>" << tr("Issued to:") << "</b> " << c.subjectInfo( QSslCertificate::CommonName );
 	s << "<br /><br /><br />";
 	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName );
 	s << "<br /><br /><br />";
@@ -151,7 +151,7 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	subjects << "serialNumber" << "GN" << "SN" << "CN" << "OU" << "O" << "C";
 	Q_FOREACH( const QByteArray &subject, subjects )
 	{
-		const QString &data = c.subjectInfoUtf8( subject );
+		const QString &data = c.subjectInfo( subject );
 		if( data.isEmpty() )
 			continue;
 		text << data;

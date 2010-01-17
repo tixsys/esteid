@@ -25,6 +25,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QLocale>
+#include <QMap>
 #include <QSslKey>
 #include <QStringList>
 
@@ -48,14 +49,6 @@ QByteArray SslCertificate::authorityKeyIdentifier() const
 		out = ASN_STRING_to_QByteArray( id->keyid );
 	AUTHORITY_KEYID_free( id );
 	return out;
-}
-
-QString SslCertificate::decode( const QString &in ) const
-{
-	if( in.contains( "\\x" ) )
-		return in.contains( "\\x00" ) ? toUtf16( in ) : toUtf8( in );
-	else
-		return in;
 }
 
 QStringList SslCertificate::enhancedKeyUsage() const
@@ -167,6 +160,30 @@ void* SslCertificate::getExtension( int nid ) const
 	return X509_get_ext_d2i( (X509*)handle(), nid, NULL, NULL );
 }
 
+
+QString SslCertificate::issuerInfo( SubjectInfo subject ) const
+{ return subjectInfo( subjectInfoToString( subject ) ); }
+
+QString SslCertificate::issuerInfo( const QByteArray &tag ) const
+{
+	if( !handle() )
+		return QString();
+
+	BIO *bio = BIO_new( BIO_s_mem() );
+	X509_NAME_print_ex( bio, X509_get_issuer_name((X509*)handle()), 0,
+		ASN1_STRFLGS_UTF8_CONVERT |
+		ASN1_STRFLGS_DUMP_UNKNOWN |
+		ASN1_STRFLGS_DUMP_DER |
+		XN_FLAG_SEP_MULTILINE |
+		XN_FLAG_DUMP_UNKNOWN_FIELDS |
+		XN_FLAG_FN_SN );
+
+	char *data = NULL;
+	long len = BIO_get_mem_data( bio, &data );
+	QString string = QString::fromUtf8( data, len );
+	BIO_free( bio );
+	return mapFromOnlineName( string ).value( tag );
+}
 bool SslCertificate::isTempel() const
 {
 	Q_FOREACH( const QString &p, policies() )
@@ -213,6 +230,17 @@ QHash<int,QString> SslCertificate::keyUsage() const
 	return list;
 }
 
+QMap<QString,QString> SslCertificate::mapFromOnlineName( const QString &name ) const
+{
+	QMap<QString,QString> info;
+	Q_FOREACH( const QString item, name.split( "\n" ) )
+	{
+		QStringList split = item.split( "=" );
+		info[split.value(0)] = split.value(1);
+	}
+	return info;
+}
+
 QStringList SslCertificate::policies() const
 {
 	CERTIFICATEPOLICIES *cp = (CERTIFICATEPOLICIES*)getExtension( NID_certificate_policies );
@@ -248,16 +276,42 @@ QString SslCertificate::policyInfo( const QString &index ) const
 	return QString();
 }
 
-QString SslCertificate::subjectInfoUtf8( SubjectInfo subject ) const
-{ return decode( subjectInfo( subject ) ); }
+QString SslCertificate::subjectInfo( SubjectInfo subject ) const
+{ return subjectInfo( subjectInfoToString( subject ) ); }
 
-QString SslCertificate::subjectInfoUtf8( const QByteArray &tag ) const
+QString SslCertificate::subjectInfo( const QByteArray &tag ) const
 {
-#if QT_VERSION == 0x040600
-// Workaround qt bug 4.6
-	subjectInfo( CommonName );
-#endif
-	return decode( subjectInfo( tag ) );
+	if( !handle() )
+		return QString();
+
+	BIO *bio = BIO_new( BIO_s_mem() );
+	X509_NAME_print_ex( bio, X509_get_subject_name((X509*)handle()), 0,
+		ASN1_STRFLGS_UTF8_CONVERT |
+		ASN1_STRFLGS_DUMP_UNKNOWN |
+		ASN1_STRFLGS_DUMP_DER |
+		XN_FLAG_SEP_MULTILINE |
+		XN_FLAG_DUMP_UNKNOWN_FIELDS |
+		XN_FLAG_FN_SN );
+
+	char *data = NULL;
+	long len = BIO_get_mem_data( bio, &data );
+	QString string = QString::fromUtf8( data, len );
+	BIO_free( bio );
+	return mapFromOnlineName( string ).value( tag );
+}
+
+QByteArray SslCertificate::subjectInfoToString( SubjectInfo info ) const
+{
+	switch( info )
+	{
+	case QSslCertificate::Organization: return "O";
+	case QSslCertificate::CommonName: return "CN";
+	case QSslCertificate::LocalityName: return "L";
+	case QSslCertificate::OrganizationalUnitName: return "OU";
+	case QSslCertificate::CountryName: return "C";
+	case QSslCertificate::StateOrProvinceName: return "ST";
+	default: return "";
+	}
 }
 
 QByteArray SslCertificate::subjectKeyIdentifier() const
@@ -288,62 +342,10 @@ QString SslCertificate::toString( const QString &format ) const
 	int pos = 0;
 	while( (pos = r.indexIn( format, pos )) != -1 )
 	{
-		ret.replace( r.cap(0), subjectInfoUtf8( r.cap(0).toLatin1() ) );
+		ret.replace( r.cap(0), subjectInfo( r.cap(0).toLatin1() ) );
 		pos += r.matchedLength();
 	}
 	return formatName( ret );
-}
-
-QString SslCertificate::toUtf16( const QString &in ) const
-{
-	QString res;
-	bool firstByte = true;
-	ushort data;
-	int i = 0;
-	while( i < in.size() )
-	{
-		if( in.mid( i, 2 ) == "\\x" )
-		{
-			if( firstByte )
-				data = in.mid( i+2, 2 ).toUShort( 0, 16 );
-			else
-				res += QChar( (data<<8) + in.mid( i+2, 2 ).toUShort( 0, 16 ) );
-			i += 4;
-		}
-		else
-		{
-			if( firstByte )
-				data = in[i].unicode();
-			else
-				res += QChar( (data<<8) + in[i].unicode() );
-			++i;
-		}
-		firstByte = !firstByte;
-	}
-	return res;
-}
-
-QString SslCertificate::toUtf8( const QString &in ) const
-{
-	QString res;
-	int i = 0;
-	while( i < in.size() )
-	{
-		if( in.mid( i, 2 ) == "\\x" )
-		{
-			const char data[2] = {
-				in.mid( i+2, 2 ).toUInt( 0, 16 ),
-				in.mid( i+6, 2 ).toUInt( 0, 16 ) };
-			res +=  QString::fromUtf8( data, 2 );
-			i += 8;
-		}
-		else
-		{
-			res += in[i];
-			++i;
-		}
-	}
-	return res;
 }
 
 #if QT_VERSION < 0x040600

@@ -45,7 +45,7 @@
 void CKey::setCert( const QSslCertificate &c )
 {
 	cert = c;
-	recipient = SslCertificate(c).subjectInfoUtf8( QSslCertificate::CommonName );
+	recipient = SslCertificate(c).subjectInfo( QSslCertificate::CommonName );
 }
 
 
@@ -205,7 +205,7 @@ bool CryptoDoc::decrypt()
 	for( int i = 0; i < m_enc->nEncryptedKeys; ++i )
 	{
 		DEncEncryptedKey *tmp = m_enc->arrEncryptedKeys[i];
-		if( m_authCert == SslCertificate::fromX509( (Qt::HANDLE)tmp->pCert ) )
+		if( m_authCert == SslCertificate::fromX509( Qt::HANDLE(tmp->pCert) ) )
 		{
 			key = tmp;
 			break;
@@ -468,7 +468,7 @@ QList<CKey> CryptoDoc::keys()
 	for( int i = 0; i < m_enc->nEncryptedKeys; ++i )
 	{
 		CKey ckey;
-		ckey.cert = SslCertificate::fromX509( (Qt::HANDLE)m_enc->arrEncryptedKeys[i]->pCert );
+		ckey.cert = SslCertificate::fromX509( Qt::HANDLE(m_enc->arrEncryptedKeys[i]->pCert) );
 		ckey.id = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szId );
 		ckey.name = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szKeyName );
 		ckey.recipient = QString::fromUtf8( m_enc->arrEncryptedKeys[i]->szRecipient );
