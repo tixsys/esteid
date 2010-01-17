@@ -89,8 +89,6 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 
 		digidoc::Signature::Type profile;
 		digidoc::BDoc *locBdoc;		
-		bool validateOnline;	
-		
-		void setLocalConfHack();
+		bool validateOnline;
 };
 
