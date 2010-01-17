@@ -115,7 +115,7 @@ QString JsCertData::getSubjCN()
     if (!m_qcert)
         return "";
 
-	return SslCertificate( *m_qcert ).subjectInfoUtf8(QSslCertificate::CommonName);
+	return SslCertificate( *m_qcert ).subjectInfo(QSslCertificate::CommonName);
 }
 
 QString JsCertData::getSubjSN()
