@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Certificate is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат не действителен</translation>
     </message>
 </context>
 <context>

@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Certificate is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sertifikaat ei ole kehtiv</translation>
     </message>
 </context>
 <context>
