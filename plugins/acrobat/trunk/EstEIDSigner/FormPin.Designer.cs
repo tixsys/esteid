@@ -38,40 +38,56 @@
             // 
             // textBoxPin
             // 
+            this.textBoxPin.AccessibleDescription = null;
+            this.textBoxPin.AccessibleName = null;
             resources.ApplyResources(this.textBoxPin, "textBoxPin");
+            this.textBoxPin.BackgroundImage = null;
             this.textBoxPin.Name = "textBoxPin";
             this.textBoxPin.UseSystemPasswordChar = true;
             this.textBoxPin.TextChanged += new System.EventHandler(this.textBoxPin_TextChanged);
             // 
             // buttonOk
             // 
-            this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOk.AccessibleDescription = null;
+            this.buttonOk.AccessibleName = null;
             resources.ApplyResources(this.buttonOk, "buttonOk");
+            this.buttonOk.BackgroundImage = null;
+            this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.UseVisualStyleBackColor = true;
             // 
             // buttonCancel
             // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.AccessibleDescription = null;
+            this.buttonCancel.AccessibleName = null;
             resources.ApplyResources(this.buttonCancel, "buttonCancel");
+            this.buttonCancel.BackgroundImage = null;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // labelTitle
             // 
+            this.labelTitle.AccessibleDescription = null;
+            this.labelTitle.AccessibleName = null;
             resources.ApplyResources(this.labelTitle, "labelTitle");
             this.labelTitle.Name = "labelTitle";
             // 
             // labelExtra
             // 
+            this.labelExtra.AccessibleDescription = null;
+            this.labelExtra.AccessibleName = null;
             resources.ApplyResources(this.labelExtra, "labelExtra");
             this.labelExtra.Name = "labelExtra";
             // 
             // FormPin
             // 
             this.AcceptButton = this.buttonOk;
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = null;
             this.CancelButton = this.buttonCancel;
             this.Controls.Add(this.labelExtra);
             this.Controls.Add(this.labelTitle);

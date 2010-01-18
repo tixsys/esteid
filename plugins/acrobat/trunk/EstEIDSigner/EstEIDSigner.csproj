@@ -15,7 +15,7 @@
     <StartupObject>
     </StartupObject>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>Resources\digidoc_icon_48x48.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\pdf_icon_32x32.ico</ApplicationIcon>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -202,7 +202,7 @@
     <None Include="Resources\background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\digidoc_icon_48x48.ico" />
+    <Content Include="Resources\pdf_icon_32x32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
