@@ -431,6 +431,37 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     </message>
 </context>
 <context>
+    <name>Poller</name>
+    <message>
+        <source>Authentication certificate is not selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to login token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN acquisition canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN Incorrect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PIN Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to load PKCS#11 module</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <source>Settings</source>
