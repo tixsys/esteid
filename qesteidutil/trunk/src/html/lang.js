@@ -36,7 +36,7 @@ var htmlStrings = {
 	"labelIsInValid": new tr( "kehtetu", "expired", "недействителен" ),
 	"labelDocument": new tr( "dokument", "document", "документ" ),
 	"labelCardValidTill": new tr( "Kaart on kehtiv kuni ", "Card is valid till ", "Карта действительна до " ),
-	"labelCardGetNew": new tr( "Juhised uue ID-kaardi taotlemiseks leiad <a href='#' onClick='extender.openUrl(\"http://www.pass.ee/index.php/pass/est/kuidas_uut_dokumenti_saada/korduv_dokument\");'>siit</a>", "Instructions how to get a new ID card you can find <a href='#' onClick='extender.openUrl(\"http://www.pass.ee/index.php/pass/eng/how_to_apply\");'>here</a>", "Инструкции по ходатайству новой ID карты находятся <a href='#' onClick='extender.openUrl(\"http://www.pass.ee/index.php/pass/rus/kak_poluchit\");'>здесь</a>" ),
+	"labelCardGetNew": new tr( "Juhised uue ID-kaardi taotlemiseks leiad <a href='#' onClick='extender.openUrl(\"http://www.politsei.ee/et/teenused/isikut-toendavad-dokumendid-/id-kaart/taiskasvanule/");'>siit</a>", "Instructions how to get a new ID card you can find <a href='#' onClick='extender.openUrl(\"http://www.politsei.ee/et/teenused/isikut-toendavad-dokumendid-/id-kaart/taiskasvanule/");'>here</a>", "Инструкции по ходатайству новой ID карты находятся <a href='#' onClick='extender.openUrl(\"http://www.politsei.ee/et/teenused/isikut-toendavad-dokumendid-/id-kaart/taiskasvanule/");'>здесь</a>" ),
 	
 	"labelAuthCert": new tr( "Isikutuvastamise sertifikaat", "Authentication certificate", "Идент. сертификат" ),
 	"labelSignCert": new tr( "Allkirjastamise sertifikaat", "Signature certificate", "Сертификат подписи" ),
