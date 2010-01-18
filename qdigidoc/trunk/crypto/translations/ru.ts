@@ -434,31 +434,31 @@ For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search f
     <name>Poller</name>
     <message>
         <source>Authentication certificate is not selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сертификат идентификации не выбран.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный PIN</translation>
     </message>
     <message>
         <source>PIN acquisition canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод PIN кода был отменен.</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный PIN</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN заблокирован</translation>
     </message>
     <message>
         <source>Failed to decrypt document</source>
-        <translation type="unfinished"></translation>
+        <translation>Неудачная зашифровка документа</translation>
     </message>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translation type="unfinished"></translation>
+        <translation>Неудалось загрузить PKCS#11 модуль</translation>
     </message>
 </context>
 <context>

@@ -434,31 +434,31 @@ Failide krüptimisel kasutatakse AS Sertifitseerimiskeskuse LDAP teenust saaja(t
     <name>Poller</name>
     <message>
         <source>Authentication certificate is not selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Audentimise sertifikaat ei ole valitud.</translation>
     </message>
     <message>
         <source>Failed to login token</source>
-        <translation type="unfinished"></translation>
+        <translation>Vale PIN</translation>
     </message>
     <message>
         <source>PIN acquisition canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN koodi päring katkestati.</translation>
     </message>
     <message>
         <source>PIN Incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Vale PIN</translation>
     </message>
     <message>
         <source>PIN Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>PIN on lukus</translation>
     </message>
     <message>
         <source>Failed to decrypt document</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenti dekrüpteerimine ebaõnnestus</translation>
     </message>
     <message>
         <source>Failed to load PKCS#11 module</source>
-        <translation type="unfinished"></translation>
+        <translation>PKCS#11 mooduli laadimine ebaõnnestus</translation>
     </message>
 </context>
 <context>
