@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-10-21 08:43:53 +0300 (K, 21 okt 2009) $
+	\date		$Date: 2010-01-18 06:25:17 +0200 (E, 18 jaan 2010) $
 */
-// Revision $Revision: 477 $
+// Revision $Revision: 499 $
 
 // SmartCardSigner.cpp : Implementation of CSmartCardSigner
 
@@ -13,7 +13,7 @@
 #include "SmartCardSigner.h"
 #include "utility/pinDialog.h"
 #include "utility/converters.h"
-#include <smartcardpp/SCError.h>
+#include <smartcard++/SCError.h>
 #include <algorithm>
 #include "Setup.h"
 #include <shlguid.h>
@@ -245,8 +245,13 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 	try {
 		EstEidCard card(m_mgr,m_selectedReader);
 		sign_op operation(hash,result,card,criticalSection);
-		PinString dummyCache;
-		dlg.doDialogInloop(operation,dummyCache);
+		if (!card.hasSecurePinEntry()) {
+			PinString dummyCache;
+			dlg.doDialogInloop(operation,dummyCache);
+			}
+		else {
+			operation.call(card,"",dlg.keyType());
+			}
 	} catch(std::exception &e) {
 		return errMsg(e.what());
 		}
@@ -363,7 +368,8 @@ LRESULT CSmartCardSigner::OnCardInserted(UINT uMsg, WPARAM wParam,
 	if (m_selectedReader == wParam) 
 		clearCaches();
 	callAllFunctions(notifyCardInsert, wParam);
-	Fire_CardWasInserted((int)wParam);
+	if (runningInSecureZone)
+		Fire_CardWasInserted((int)wParam);
 	return 0;
 	}
 LRESULT CSmartCardSigner::OnCardRemoved(UINT uMsg, WPARAM wParam,
@@ -372,7 +378,8 @@ LRESULT CSmartCardSigner::OnCardRemoved(UINT uMsg, WPARAM wParam,
 	if (m_selectedReader == wParam) 
 		clearCaches();
 	callAllFunctions(notifyCardRemove, wParam);
-	Fire_CardWasRemoved((int)wParam);
+	if (runningInSecureZone)
+		Fire_CardWasRemoved((int)wParam);
 	return 0;
 }
 LRESULT CSmartCardSigner::OnReadersChanged(UINT uMsg, WPARAM wParam,
@@ -380,7 +387,8 @@ LRESULT CSmartCardSigner::OnReadersChanged(UINT uMsg, WPARAM wParam,
 {
 	clearCaches();
 	callAllFunctions(notifyReadersChanged, wParam);
-	Fire_ReadersChanged((int)wParam);
+	if (runningInSecureZone)
+		Fire_ReadersChanged((int)wParam);
 	return 0;
 }
 
