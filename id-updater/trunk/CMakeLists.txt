@@ -22,9 +22,12 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:wchar_t-")
 endif(MSVC)
 
+add_subdirectory(qtsingleapplication)
+
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${SMARTCARDPP_INCLUDE_DIR}
+    qtsingleapplication/src
 )
 
 set(updater_SRCS
@@ -53,6 +56,7 @@ target_link_libraries(id-updater
     ${QT_QTMAIN_LIBRARY}
     ${QT_LIBRARIES}
     ${SMARTCARDPP_LIBRARIES}
+    qtsingleapplication
 )
 
 install(TARGETS id-updater DESTINATION ${BIN_INSTALL_DIR})
