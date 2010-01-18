@@ -85,7 +85,7 @@ KeyDialog::KeyDialog( const CKey &key, QWidget *parent )
 	addItem( tr("Key"), k.recipient );
 	addItem( tr("Crypt method"), k.type );
 	//addItem( tr("ID"), k.id );
-	addItem( tr("Expires"), SslCertificate::toLocalTime( key.cert.expiryDate() ).toString("dd.MM.yyyy hh:mm:ss") );
+	addItem( tr("Expires"), key.cert.expiryDate().toLocalTime().toString("dd.MM.yyyy hh:mm:ss") );
 	addItem( tr("Issuer"), key.cert.issuerInfo( QSslCertificate::CommonName ) );
 	view->resizeColumnToContents( 0 );
 }
@@ -249,7 +249,7 @@ void KeyAddDialog::on_add_clicked()
 			QTreeWidgetItem *i = new QTreeWidgetItem( usedView );
 			i->setText( 0, k.recipient );
 			i->setText( 1, k.cert.issuerInfo( "CN" ) );
-			i->setText( 2, SslCertificate::toLocalTime( k.cert.expiryDate() ).toString( "dd.MM.yyyy" ) );
+			i->setText( 2, k.cert.expiryDate().toLocalTime().toString( "dd.MM.yyyy" ) );
 			i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
 			usedView->addTopLevelItem( i );
 		}
@@ -346,7 +346,7 @@ void KeyAddDialog::showResult( const QList<CKey> &result )
 		QTreeWidgetItem *i = new QTreeWidgetItem( skView );
 		i->setText( 0, k.recipient );
 		i->setText( 1, k.cert.issuerInfo( QSslCertificate::CommonName ) );
-		i->setText( 2, SslCertificate::toLocalTime( k.cert.expiryDate() ).toString( "dd.MM.yyyy" ) );
+		i->setText( 2, k.cert.expiryDate().toLocalTime().toString( "dd.MM.yyyy" ) );
 		i->setData( 0, Qt::UserRole, SslCertificate( k.cert ).isTempel() );
 		skView->addTopLevelItem( i );
 	}

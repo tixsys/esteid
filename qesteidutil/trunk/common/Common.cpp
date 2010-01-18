@@ -110,14 +110,14 @@ void Common::mailTo( const QUrl &url )
 	doc[0].ulReserved = 0;
 	doc[0].flFlags = 0;
 	doc[0].nPosition = -1;
-	doc[0].lpszPathName = (char*)filePath.constData();
-	doc[0].lpszFileName = (char*)fileName.constData();
+	doc[0].lpszPathName = const_cast<char*>(filePath.constData());
+	doc[0].lpszFileName = const_cast<char*>(fileName.constData());
 	doc[0].lpFileType = NULL;
 
 	// Create message
 	MapiMessage message;
 	message.ulReserved = 0;
-	message.lpszSubject = (char*)subject.constData();
+	message.lpszSubject = const_cast<char*>(subject.constData());
 	message.lpszNoteText = "";
 	message.lpszMessageType = NULL;
 	message.lpszDateReceived = NULL;
@@ -292,7 +292,7 @@ QString Common::tokenInfo( CertType type, const QString &card, const QSslCertifi
 	}
 	s << tr("Card in reader") << ": <font color=\"black\">" << card << "</font><br />";
 
-	bool willExpire = SslCertificate::toLocalTime( c.expiryDate() ) <= QDateTime::currentDateTime().addDays( 105 );
+	bool willExpire = c.expiryDate().toLocalTime() <= QDateTime::currentDateTime().addDays( 105 );
 	s << (type == AuthCert ? tr("Auth certificate is") : tr("Sign certificate is") ) << " ";
 	if( c.isValid() )
 	{

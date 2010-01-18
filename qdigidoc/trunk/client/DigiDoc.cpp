@@ -91,9 +91,12 @@ QDateTime DigiDocSignature::dateTime() const
 	if( dateTime.isEmpty() )
 		dateTime = QString::fromUtf8( s->getSigningTime().c_str() );
 
-	return dateTime.isEmpty() ? QDateTime() :
-		SslCertificate::toLocalTime( QDateTime::fromString(
-			dateTime, "yyyy-MM-dd'T'hh:mm:ss'Z'" ) );
+	if( dateTime.isEmpty() )
+		return QDateTime();
+
+	QDateTime date = QDateTime::fromString( dateTime, "yyyy-MM-dd'T'hh:mm:ss'Z'" );
+	date.setTimeSpec( Qt::UTC );
+	return date.toLocalTime();
 }
 
 QString DigiDocSignature::digestMethod() const

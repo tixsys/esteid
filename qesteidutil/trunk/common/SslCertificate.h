@@ -61,7 +61,6 @@ public:
 	QString		subjectInfo( const QByteArray &tag ) const;
 	QByteArray	subjectKeyIdentifier() const;
 	static QByteArray	toHex( const QByteArray &in, QChar separator = ' ' );
-	static QDateTime	toLocalTime( const QDateTime &datetime );
 	QString		toString( const QString &format ) const;
 
 #if QT_VERSION < 0x040600

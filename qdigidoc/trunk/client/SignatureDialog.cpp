@@ -180,8 +180,8 @@ SignatureDialog::SignatureDialog( const DigiDocSignature &signature, QWidget *pa
 	addItem( t, tr("Signature format"), s.mediaType() );
 	addItem( t, tr("Signed file count"), QString::number( s.parent()->documents().size() ) );
 	addItem( t, tr("Certificate serialnumber"), c.serialNumber() );
-	addItem( t, tr("Certificate valid at"), SslCertificate::toLocalTime( c.effectiveDate() ).toString( "dd.MM.yyyy" ) );
-	addItem( t, tr("Certificate valid until"), SslCertificate::toLocalTime( c.expiryDate() ).toString( "dd.MM.yyyy" ) );
+	addItem( t, tr("Certificate valid at"), c.effectiveDate().toLocalTime().toString( "dd.MM.yyyy" ) );
+	addItem( t, tr("Certificate valid until"), c.expiryDate().toLocalTime().toString( "dd.MM.yyyy" ) );
 	addItem( t, tr("Certificate issuer"), c.issuerInfo( QSslCertificate::CommonName ) );
 	t->resizeColumnToContents( 0 );
 

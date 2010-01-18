@@ -119,8 +119,8 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 	s << "<br /><br /><br />";
 	s << "<b>" << tr("Issued by:") << "</b> " << c.issuerInfo( QSslCertificate::CommonName );
 	s << "<br /><br /><br />";
-	s << "<b>" << tr("Valid from") << "</b> " << SslCertificate::toLocalTime( c.effectiveDate() ).toString( "dd.MM.yyyy" ) << " ";
-	s << "<b>" << tr("to") << "</b> "<< SslCertificate::toLocalTime( c.expiryDate() ).toString( "dd.MM.yyyy" );
+	s << "<b>" << tr("Valid from") << "</b> " << c.effectiveDate().toLocalTime().toString( "dd.MM.yyyy" ) << " ";
+	s << "<b>" << tr("to") << "</b> "<< c.expiryDate().toLocalTime().toString( "dd.MM.yyyy" );
 	s << "</p>";
 	d->info->setHtml( i );
 
@@ -142,8 +142,8 @@ void CertificateDialog::setCertificate( const QSslCertificate &cert )
 		textExt << QString( "%1 = %2" ).arg( subject.constData() ).arg( data );
 	}
 	addItem( tr("Issuer"), text.join( ", " ), textExt.join( "\n" ) );
-	addItem( tr("Valid from"), SslCertificate::toLocalTime( c.effectiveDate() ).toString( "dd.MM.yyyy hh:mm:ss" ) );
-	addItem( tr("Vaild to"), SslCertificate::toLocalTime( c.expiryDate() ).toString( "dd.MM.yyyy hh:mm:ss" ) );
+	addItem( tr("Valid from"), c.effectiveDate().toLocalTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
+	addItem( tr("Vaild to"), c.expiryDate().toLocalTime().toString( "dd.MM.yyyy hh:mm:ss" ) );
 
 	subjects.clear();
 	text.clear();
