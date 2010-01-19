@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-
+echo 'Removing OpenOffice'
+if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
+ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
+ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
+fi
+exit
 echo 'Removing Mozilla extension'
 rm -fR /Library/Application\ Support/Mozilla/Extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/{aa84ce40-4253-11da-8cd6-0800200c9a66}
 rm -fR /Library/Application\ Support/Mozilla/Extensions/{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}/{aa84ce40-4253-11da-8cd6-0800200c9a66}
@@ -39,5 +44,11 @@ mv -f /usr/local/share/libdigidoc ~/.Trash
 mv -f /usr/local/lib/libdigidoc.dylib ~/.Trash
 mv -f /usr/local/lib/libdigidocpp.dylib ~/.Trash
 mv -f /usr/local/lib/libp11.dylib ~/.Trash
+
+echo 'Removing OpenOffice extension'
+if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
+ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
+ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
+fi
 
 echo 'Uninstall done!'
