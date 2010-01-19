@@ -24,10 +24,10 @@ private slots:
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
 	void cancel();
 	void messageReceived(const QString &str);
-
+	void activate();
 private:
 	bool m_autocheck,m_autoupdate;
-	void enableInstall(bool enable,bool enableCheck = true);
+	void enableInstall(bool enable);
 	QString m_baseUrl;
 	QDomElement product;
 	void status(QString msg);

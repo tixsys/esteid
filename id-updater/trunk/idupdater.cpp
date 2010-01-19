@@ -27,6 +27,9 @@ idupdater::idupdater(QString baseUrl,bool autocheck,bool autoupdate) : QMainWind
 		this, SLOT(netDownloadFinished(QNetworkReply*)));
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+	connect(trayIcon, SIGNAL(messageClicked()),
+		this, SLOT(activate()));
+	
 	groupBoxProduct->setVisible(false);
 
 	enableInstall(false);
@@ -34,7 +37,7 @@ idupdater::idupdater(QString baseUrl,bool autocheck,bool autoupdate) : QMainWind
 	trayIcon->show();
 
 	if (m_autocheck) 
-		m_checkUpdatesButton->click();
+		checkUpdates();
 
 	if (m_autoupdate)
 		QApplication::postEvent(this,new QCloseEvent());
@@ -46,10 +49,10 @@ idupdater::~idupdater() {
 	}
 
 void idupdater::createActions() {
-	restoreAction = new QAction("&Restore", this);
+	restoreAction = new QAction(tr("&Restore"), this);
 	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
-	quitAction = new QAction("&Quit", this);
+	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 	}
 
@@ -84,29 +87,32 @@ void idupdater::cancel() {
 	QApplication::quit();
 	}
 
-void idupdater::enableInstall(bool enable,bool enableCheck) {
+void idupdater::enableInstall(bool enable) {
 	m_installButton->setEnabled(enable);
-	m_checkUpdatesButton->setEnabled(enableCheck);
-	if (enable && m_autoupdate)
+	if (enable && QSystemTrayIcon::supportsMessages()) {
+		trayIcon->showMessage(tr("New update available"), m_productName->text(), QSystemTrayIcon::Information, 100000);
+		}
+	if (enable && m_autoupdate) {
 		m_installButton->click();
+		}
 	}
 
 void idupdater::status(QString msg) {
 	m_updateStatus->setText(msg);
 	}
 void idupdater::fail(QString msg) {
-	m_updateStatus->setText("Failed: " + msg);
+	m_updateStatus->setText(tr("Failed: ") + msg);
 	enableInstall(false);
 	}
 
 void idupdater::netReplyFinished(QNetworkReply* reply) {
 	groupBoxProduct->setVisible(true);
-	status("Check completed");
+	status(tr("Check completed"));
 	QDomDocument doc;
 	doc.setContent(reply);
-	if (!doc.hasChildNodes()) return fail("could not load a valid update file");
+	if (!doc.hasChildNodes()) return fail(tr("could not load a valid update file"));
 	QDomNodeList nodes = doc.elementsByTagName("product");
-	if (nodes.length() != 1 ) return fail("expected one product");
+	if (nodes.length() != 1 ) return fail(tr("expected one product"));
 	product = nodes.item(0).toElement();
 	QString code = product.attribute("UpgradeCode");
 	std::wstring version,availableVersion;
@@ -124,37 +130,37 @@ void idupdater::netReplyFinished(QNetworkReply* reply) {
 	}
 
 void idupdater::netDownloadFinished(QNetworkReply* reply) {
-	status("Download finished, starting installation...");
+	status(tr("Download finished, starting installation..."));
 	QFile tmp(QDir::tempPath() + "/" + product.attribute("filename")) ;
 	if (tmp.open(QFile::ReadWrite)) {
 		if (reply) tmp.write(reply->readAll());
 		tmp.close();
 		QString tgt = QDir::toNativeSeparators(tmp.fileName());
 		if (!InstallChecker::verifyPackage(tgt.toStdWString()))
-			return fail("Downloaded package integrity check failed");
+			return fail(tr("Downloaded package integrity check failed"));
 		if (InstallChecker::installPackage(tgt.toStdWString(),m_autoupdate)) {
-			status("Package installed");
+			status(tr("Package installed"));
 			cancel();
 			}
 		else 
-			return fail("Package installation failed");
+			return fail(tr("Package installation failed"));
 		}
 	enableInstall(true);
 	}
 
 void idupdater::checkUpdates() {
 	enableInstall(false);
-	status("Checking for update..");	
+	status(tr("Checking for update.."));	
 	QUrl url(m_baseUrl + "products.xml");
 	if (url.scheme() != "http" &&
 		url.scheme() != "ftp" &&
 		url.scheme() != "https" 
-		) return fail("Unsupported protocol in url");
+		) return fail(tr("Unsupported protocol in url"));
 	manager->get(QNetworkRequest(url));
 	}
 
 void idupdater::startInstall() {
-	enableInstall(false,false);
+	enableInstall(false);
 	QUrl url(m_baseUrl + product.attribute("filename"));
 	QNetworkReply * reply = downloadManager->get(QNetworkRequest(url));
 	connect(reply, SIGNAL(downloadProgress(qint64,qint64)),
@@ -175,17 +181,22 @@ void idupdater::downloadProgress(qint64 recvd,qint64 total) {
 		}
 	float perc = recvd * 1.0f/total;
 	m_downloadProgress->setValue( perc * 100.0f);
-	status("Downloading...");
+	status(tr("Downloading..."));
 	}
 
 void idupdater::startUninstall() {
 	netDownloadFinished(NULL); //debugging
-	enableInstall(false,false);
+	enableInstall(false);
 	}
 
 void idupdater::messageReceived(const QString &str) {
 	if (str == "runupdate") {
-		showNormal();
+		activate();
 		checkUpdates();
 		}
 	}
+
+void idupdater::activate(){
+	activateWindow();
+	showNormal();
+	}	

@@ -1,7 +1,11 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,42 +13,42 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Id-updater</string>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QVBoxLayout" name="verticalLayout" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QGroupBox" name="groupBoxStatus" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+     <widget class="QGroupBox" name="groupBoxStatus">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>1</verstretch>
        </sizepolicy>
       </property>
-      <property name="alignment" >
+      <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3" >
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLabel" name="m_updateStatus" >
-         <property name="text" >
+        <widget class="QLabel" name="m_updateStatus">
+         <property name="text">
           <string>Ready</string>
          </property>
-         <property name="alignment" >
+         <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
-         <property name="wordWrap" >
+         <property name="wordWrap">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer" >
-         <property name="orientation" >
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>535</width>
            <height>20</height>
@@ -56,107 +60,107 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBoxProduct" >
-      <property name="sizePolicy" >
-       <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+     <widget class="QGroupBox" name="groupBoxProduct">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>10</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" >
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="m_productName" >
-         <property name="text" >
-          <string>productName</string>
+        <widget class="QLabel" name="m_productName">
+         <property name="text">
+          <string notr="true">productName</string>
          </property>
-         <property name="alignment" >
+         <property name="alignment">
           <set>Qt::AlignTop</set>
          </property>
-         <property name="wordWrap" >
+         <property name="wordWrap">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_5" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2" >
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
-           <widget class="QLabel" name="m_productDescription" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <widget class="QLabel" name="m_productDescription">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>1</verstretch>
              </sizepolicy>
             </property>
-            <property name="text" >
-             <string>productDescription</string>
+            <property name="text">
+             <string notr="true">productDescription</string>
             </property>
-            <property name="alignment" >
+            <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_6" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_5" >
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
-              <widget class="QLabel" name="label" >
-               <property name="text" >
+              <widget class="QLabel" name="label">
+               <property name="text">
                 <string>Installed:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="m_installedVer" >
-               <property name="text" >
-                <string>installedVer</string>
+              <widget class="QLabel" name="m_installedVer">
+               <property name="text">
+                <string notr="true">installedVer</string>
                </property>
-               <property name="wordWrap" >
+               <property name="wordWrap">
                 <bool>false</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_2" >
-               <property name="text" >
+              <widget class="QLabel" name="label_2">
+               <property name="text">
                 <string>Available:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="m_availableVer" >
-               <property name="text" >
-                <string>availableVer</string>
+              <widget class="QLabel" name="m_availableVer">
+               <property name="text">
+                <string notr="true">availableVer</string>
                </property>
-               <property name="wordWrap" >
+               <property name="wordWrap">
                 <bool>false</bool>
                </property>
               </widget>
              </item>
              <item>
-              <spacer name="spacer2" >
-               <property name="orientation" >
+              <spacer name="spacer2">
+               <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeType" >
+               <property name="sizeType">
                 <enum>QSizePolicy::Expanding</enum>
                </property>
-               <property name="sizeHint" stdset="0" >
+               <property name="sizeHint" stdset="0">
                 <size>
                  <width>243</width>
                  <height>20</height>
@@ -165,8 +169,8 @@
               </spacer>
              </item>
              <item>
-              <widget class="QLabel" name="m_downloadStatus" >
-               <property name="wordWrap" >
+              <widget class="QLabel" name="m_downloadStatus">
+               <property name="wordWrap">
                 <bool>false</bool>
                </property>
               </widget>
@@ -175,7 +179,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QProgressBar" name="m_downloadProgress" />
+           <widget class="QProgressBar" name="m_downloadProgress"/>
           </item>
          </layout>
         </widget>
@@ -184,41 +188,33 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBoxButtons" >
-      <layout class="QHBoxLayout" name="horizontalLayout" >
+     <widget class="QGroupBox" name="groupBoxButtons">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>582</width>
+        <height>0</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="leftMargin">
+        <number>400</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
        <item>
-        <widget class="QPushButton" name="m_checkUpdatesButton" >
-         <property name="sizePolicy" >
-          <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text" >
-          <string>&amp;check for updates</string>
-         </property>
-         <property name="shortcut" >
-          <string>Alt+C</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="m_installButton" >
-         <property name="text" >
+        <widget class="QPushButton" name="m_installButton">
+         <property name="text">
           <string>Install/&amp;Update</string>
          </property>
-         <property name="shortcut" >
+         <property name="shortcut">
           <string>Alt+U</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="m_cancelButton" >
-         <property name="text" >
-          <string>&amp;Quit</string>
-         </property>
-         <property name="shortcut" >
-          <string>Alt+Q</string>
          </property>
         </widget>
        </item>
@@ -231,50 +227,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>m_checkUpdatesButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkUpdates()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>98</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>328</x>
-     <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>m_installButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>startInstall()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>301</x>
      <y>286</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>338</x>
      <y>334</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_cancelButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>cancel()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>586</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>499</x>
-     <y>328</y>
     </hint>
    </hints>
   </connection>

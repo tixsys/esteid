@@ -1,4 +1,5 @@
 #include <QtSingleApplication>
+#include <QTranslator>
 
 #include "idupdater.h"
 #include "ProcessStarter.h"
@@ -64,6 +65,9 @@ int main(int argc, char *argv[])
 		app.exit(0);
 		return 0;
 	}
+	QTranslator appTranslator;
+	appTranslator.load(":/idupdater_translation");
+	app.installTranslator(&appTranslator);
 	QStringList args = app.arguments();
 	if (args.contains("-help") || args.contains("-?") || args.contains("/?"))
 		return printhelp();

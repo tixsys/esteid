@@ -2,4 +2,7 @@
  <qresource>
    <file>appicon.bmp</file>
  </qresource>
- </RCC>
+ <qresource lang="et">
+     <file alias="idupdater_translation.qm">idupdater_et.qm</file>
+ </qresource> 
+</RCC>
