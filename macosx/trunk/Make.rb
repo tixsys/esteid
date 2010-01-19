@@ -116,13 +116,13 @@ class Application
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command "rm -R -f libdigidoc/#{@options.target}" if File.exists? "libdigidoc/#{@options.target}"
 			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command "xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+			run_command "xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
 			run_command "install_name_tool -id /usr/local/libdigidoc.dylib libdigidoc/#{@options.target}/libdigidoc.dylib"
 			puts "Copying file libdigidoc.dylib" if @options.verbose
 			FileUtils.cp_r("libdigidoc/#{@options.target}/libdigidoc.dylib", digidoc2)
 			
 			if @options.force
-				run_command "sudo xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
+				run_command "sudo xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
 			end
 			
 			# This should be here only temporary until overall structure is fixed in libdigidoc2 (ie no 2 certificate storages)
@@ -144,7 +144,7 @@ class Application
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command "rm -R -f src/#{@options.target}" if File.exists? "src/#{@options.target}"
 			run_command 'cmake -G "Xcode" -DXSD_EXECUTABLE=/usr/local/bin/xsd -DCMAKE_INSTALL_PREFIX=/usr/local -DPKCS11H_LIBRARY=/usr/local/lib/libpkcs11-helper.a -DPKCS11H_INCLUDE_DIR=/usr/local/include/pkcs11-helper-1.0 -DLIBP11_LIBRARY=/usr/local/lib/libp11.dylib -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command "xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+			run_command "xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
 			run_command "install_name_tool -id /usr/local/libdigidocpp.dylib src/#{@options.target}/libdigidocpp.dylib"
 			puts "Copying file libdigidocpp.dylib" if @options.verbose
 			FileUtils.cp_r("src/#{@options.target}/libdigidocpp.dylib", digidoc)
@@ -175,7 +175,7 @@ class Application
 			end
 			
 			if @options.force
-				run_command "sudo xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
+				run_command "sudo xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
 			end
 		end
 		
@@ -208,10 +208,10 @@ class Application
 			
 			FileUtils.cd('build') do
 				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
-				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
+				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
 				
 				if @options.force
-					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4"
+					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
 				end
 			end
 		end
@@ -227,32 +227,6 @@ class Application
 		#	
 		#end
 		
-		puts "Creating Mozilla extension..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
-			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
-				run_command "xcodebuild -project xpi.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4"
-				run_command "ditto -xk *.xpi #{@options.mozappid}"
-				
-				# Clean-up extension? TODO: This should be removed
-				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/Resources"
-				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
-				run_command "mv -f  #{@options.mozappid}/plugins/*.dylib #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
-				run_command "cp ../plugins/mac/Info.plist #{@options.mozappid}/plugins/npesteid.plugin/Contents/"
-				
-				puts "Copying Mozilla extension..." if @options.verbose
-				FileUtils.cp_r(@options.mozappid, binaries)
-			end
-		end
-		
 		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
 		
@@ -261,7 +235,7 @@ class Application
 			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
 			run_command "rm -R -f #{@options.target}" if File.exists? "#{@options.target}"
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command "xcodebuild -project qesteidutil.xcodeproj -configuration #{@options.target} -target qesteidutil -sdk macosx10.4"
+			run_command "xcodebuild -project qesteidutil.xcodeproj -configuration #{@options.target} -target qesteidutil -sdk macosx10.4 GCC_VERSION=4.0"
 			
 			puts "Copying qesteidutil.app..." if @options.verbose
 			FileUtils.cp_r("#{@options.target}/qesteidutil.app", binaries)
@@ -281,22 +255,48 @@ class Application
 			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
 			
 			puts "Creating qdigidocclient..." if @options.verbose
-			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidocclient -sdk macosx10.4"
+			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidocclient -sdk macosx10.4 GCC_VERSION=4.0"
 			
 			puts "Copying qdigidocclient.app..." if @options.verbose
 			FileUtils.cp_r("client/#{@options.target}/qdigidocclient.app", binaries)
 			
 			puts "Creating qdigidoccrypto..." if @options.verbose
-			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidoccrypto -sdk macosx10.4"
+			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidoccrypto -sdk macosx10.4 GCC_VERSION=4.0"
 			
 			puts "Copying qdigidoccrypto.app..." if @options.verbose
 			FileUtils.cp_r("crypto/#{@options.target}/qdigidoccrypto.app", binaries)
 		end
 		
+		puts "Creating Mozilla extension..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
+			run_command 'rm -fR build' if File.exists? 'build'
+			run_command 'mkdir build'
+			
+			FileUtils.cd('build') do
+				run_command 'cmake -G "Xcode" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
+				run_command "xcodebuild -project xpi.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
+				run_command "ditto -xk *.xpi #{@options.mozappid}"
+				
+				# Clean-up extension? TODO: This should be removed
+				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS"
+				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/Resources"
+				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
+				run_command "mv -f  #{@options.mozappid}/plugins/*.dylib #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
+				run_command "cp ../plugins/mac/Info.plist #{@options.mozappid}/plugins/npesteid.plugin/Contents/"
+				
+				puts "Copying Mozilla extension..." if @options.verbose
+				FileUtils.cp_r(@options.mozappid, binaries)
+			end
+		end
+		
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
-		run_command "xcodebuild -project Project.xcodeproj -configuration Release -target Main"
+		run_command "xcodebuild -project Project.xcodeproj -configuration Release -target Main GCC_VERSION=4.0"
 		
 		puts "Building tokend..." if @options.verbose
 		
