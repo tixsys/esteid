@@ -24,7 +24,7 @@ if test "${CSUM_OLD}" = "${CSUM_NEW}"; then
 	exit 0
 fi
 
-NAME=`date "+installer_${ARCH}_%Y%m%d_r${REVISION}.dmg"`
+NAME=`date "+ID-card_software_installer_%Y%m%d_r${REVISION}.dmg"`
 FILE=build/Packages/${NAME}
 
 env
