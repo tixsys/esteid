@@ -150,13 +150,6 @@ MainWindow::MainWindow( QWidget *parent )
 	connect( viewContentView, SIGNAL(remove(unsigned int)),
 		SLOT(removeDocument(unsigned int)) );
 
-	s.beginGroup( "Client" );
-	// Settings
-	doc->setConfValue( DigiDoc::ProxyHost, s.value( "proxyHost" ) );
-	doc->setConfValue( DigiDoc::ProxyPort, s.value( "proxyPort" ) );
-	doc->setConfValue( DigiDoc::ProxyUser, s.value( "proxyUser" ) );
-	doc->setConfValue( DigiDoc::ProxyPass, s.value( "proxyPass" ) );
-
 	// Actions
 	closeAction = new QAction( tr("Close"), this );
 	closeAction->setShortcut( Qt::CTRL + Qt::Key_W );

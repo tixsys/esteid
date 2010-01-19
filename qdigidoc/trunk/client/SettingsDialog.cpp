@@ -58,10 +58,10 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 
 	signOverwrite->setChecked( s.value( "Overwrite", false ).toBool() );
 
-	proxyHost->setText( s.value( "proxyHost" ).toString() );
-	proxyPort->setText( s.value( "proxyPort" ).toString() );
-	proxyUser->setText( s.value( "proxyUser" ).toString() );
-	proxyPass->setText( s.value( "proxyPass" ).toString() );
+	proxyHost->setText( DigiDoc::getConfValue( DigiDoc::ProxyHost ) );
+	proxyPort->setText( DigiDoc::getConfValue( DigiDoc::ProxyPort ) );
+	proxyUser->setText( DigiDoc::getConfValue( DigiDoc::ProxyUser ) );
+	proxyPass->setText( DigiDoc::getConfValue( DigiDoc::ProxyPass ) );
 	p12Cert->setText( DigiDoc::getConfValue( DigiDoc::PKCS12Cert ) );
 	p12Pass->setText( DigiDoc::getConfValue( DigiDoc::PKCS12Pass ) );
 
@@ -125,10 +125,6 @@ void SettingsDialog::save()
 		defaultDir->clear();
 		s.remove( "DefaultDir" );
 	}
-	s.setValue( "proxyHost", proxyHost->text() );
-	s.setValue( "proxyPort", proxyPort->text() );
-	s.setValue( "proxyUser", proxyUser->text() );
-	s.setValue( "proxyPass", proxyPass->text() );
 
 	DigiDoc::setConfValue( DigiDoc::ProxyHost, proxyHost->text() );
 	DigiDoc::setConfValue( DigiDoc::ProxyPort, proxyPort->text() );

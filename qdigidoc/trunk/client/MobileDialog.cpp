@@ -77,22 +77,20 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	connect( manager, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)),
 		SLOT(sslErrors(QNetworkReply*,QList<QSslError>)) );
 
-	Settings s;
-	s.beginGroup( "Client" );
-	if( !s.value( "proxyHost" ).toString().isEmpty() )
+	if( !DigiDoc::getConfValue( DigiDoc::ProxyHost ).isEmpty() )
 	{
 		manager->setProxy( QNetworkProxy(
 			QNetworkProxy::HttpProxy,
-			s.value( "proxyHost" ).toString(),
-			s.value( "proxyPort" ).toInt(),
-			s.value( "proxyUser" ).toString(),
-			s.value( "proxyPass" ).toString() ) );
+			DigiDoc::getConfValue( DigiDoc::ProxyHost ),
+			DigiDoc::getConfValue( DigiDoc::ProxyPort ).toUInt(),
+			DigiDoc::getConfValue( DigiDoc::ProxyUser ),
+			DigiDoc::getConfValue( DigiDoc::ProxyPass ) ) );
 	}
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		request.setUrl( QUrl(s.value("bdocurl", "https://www.sk.ee:8097").toString()) );
+		request.setUrl( Settings().value("Client/bdocurl", "https://www.sk.ee:8097").toUrl() );
 	else
-		request.setUrl( QUrl(s.value("ddocurl", "https://digidocservice.sk.ee").toString()) );
+		request.setUrl( Settings().value("Client/ddocurl", "https://digidocservice.sk.ee").toUrl() );
 
 	QString certFile = DigiDoc::getConfValue( DigiDoc::PKCS12Cert );
 	if( certFile.isEmpty() || !QFile::exists( certFile ) )
