@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
+    /Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
+    /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
 fi
 
 exit 0

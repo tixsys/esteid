@@ -43,6 +43,7 @@ class Application
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
+		@options.setsdkenv = '~/OpenOffice.org3.1_SDK/' + `hostname` + '/setsdkenv_unix.sh'
 		@options.sign = nil
 	end
 	
@@ -217,14 +218,14 @@ class Application
 		
 		puts "Creating Openoffice extension..." if @options.verbose
 		
-		FileUtils.cd(Pathname.new(@path).join('../../plugins/ooo-digidoc/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			
-			
-		end
+		#FileUtils.cd(Pathname.new(@path).join('../../plugins/ooo-digidoc/trunk').to_s) do
+		#	run_command 'rm -fR build' if File.exists? 'build'
+		#	run_command 'mkdir build'
+		#	
+		#	run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
+		#	
+		#	
+		#end
 		
 		puts "Creating Mozilla extension..." if @options.verbose
 		
@@ -782,7 +783,7 @@ class Application
 							   'org.esteid.installer.qt',
 							   'org.esteid.installer.su',
 							   'org.esteid.installer.pp',
-							   'org.esteid.installer.openoffice',
+							   #'org.esteid.installer.openoffice',
 							   'org.esteid.installer.tokend.10.5',
 							   'org.esteid.installer.tokend.10.4',
 							   'org.esteid.installer.drivers.10.5' ]
@@ -844,11 +845,11 @@ class Application
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
 				:version => '4.5.3'
-			}, {
-				:name => 'esteid-openoffice',
-				:files => File.join(@options.binaries, 'qesteidutil.app'),
-				:froot => @options.binaries,
-				:location => '/usr/local/share'
+			#}, {
+			#	:name => 'esteid-openoffice',
+			#	:files => File.join(@options.binaries, 'qesteidutil.app'),
+			#	:froot => @options.binaries,
+			#	:location => '/usr/local/share'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),

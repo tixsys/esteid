@@ -47,8 +47,8 @@ mv -f /usr/local/lib/libp11.dylib ~/.Trash
 
 echo 'Removing OpenOffice extension'
 if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
+    /Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
+    /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
 fi
 
 echo 'Uninstall done!'
