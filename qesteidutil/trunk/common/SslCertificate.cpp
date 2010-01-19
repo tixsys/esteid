@@ -161,7 +161,7 @@ void* SslCertificate::getExtension( int nid ) const
 }
 
 QString SslCertificate::issuerInfo( SubjectInfo subject ) const
-{ return subjectInfo( subjectInfoToString( subject ) ); }
+{ return issuerInfo( subjectInfoToString( subject ) ); }
 
 QString SslCertificate::issuerInfo( const QByteArray &tag ) const
 {
