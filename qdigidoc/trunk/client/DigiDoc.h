@@ -109,7 +109,6 @@ public:
 	void create( const QString &file );
 	void clear();
 	QList<digidoc::Document> documents();
-	QString getAccessCert();
 	QString fileName() const;
 	bool init();
 	bool isNull() const;
@@ -119,7 +118,7 @@ public:
 	void removeDocument( unsigned int num );
 	void removeSignature( unsigned int num );
 	void save();
-	QString getConfValue( ConfParameter parameter, const QVariant &value = QVariant() ) const;
+	static QString getConfValue( ConfParameter parameter, const QVariant &value = QVariant() );
 	static void setConfValue( ConfParameter parameter, const QVariant &value );
 	bool sign(
 		const QString &city,
@@ -129,6 +128,7 @@ public:
 		const QString &role,
 		const QString &role2 );
 	QSslCertificate signCert();
+	QSigner *signer() const;
 	bool signMobile( const QString &fName );
 	QList<DigiDocSignature> signatures();
 	digidoc::WDoc::DocumentType documentType();
@@ -150,7 +150,7 @@ private:
 	void setLastError( const digidoc::Exception &e );
 
 	digidoc::WDoc	*b;
-	QSigner			*signer;
+	QSigner			*m_signer;
 	QSslCertificate	m_signCert;
 	QStringList		m_cards;
 	QString			m_card;

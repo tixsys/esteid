@@ -94,7 +94,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	else
 		request.setUrl( QUrl(s.value("ddocurl", "https://digidocservice.sk.ee").toString()) );
 
-	QString certFile = m_doc->getConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
+	QString certFile = DigiDoc::getConfValue( DigiDoc::PKCS12Cert );
 	if( certFile.isEmpty() || !QFile::exists( certFile ) )
 		return;
 
@@ -102,8 +102,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	if( !f.open( QIODevice::ReadOnly ) )
 		return;
 
-	PKCS12Certificate pkcs12Cert( &f,
-		m_doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
+	PKCS12Certificate pkcs12Cert( &f, DigiDoc::getConfValue( DigiDoc::PKCS12Pass ).toLatin1() );
 	if( pkcs12Cert.isNull() )
 		return;
 

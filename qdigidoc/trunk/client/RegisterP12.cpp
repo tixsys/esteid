@@ -23,6 +23,7 @@
 #include "RegisterP12.h"
 
 #include <common/Settings.h>
+#include "DigiDoc.h"
 
 #include <QDesktopServices>
 #include <QFile>
@@ -69,9 +70,8 @@ void RegisterP12::on_buttonBox_accepted()
 		return;
 	}
 
-	Settings s;
-	s.setValue( "Client/pkcs12Cert", dest );
-	s.setValue( "Client/pkcs12Pass", p12Pass->text() );
+	DigiDoc::setConfValue( DigiDoc::PKCS12Cert, dest );
+	DigiDoc::setConfValue( DigiDoc::PKCS12Pass, p12Pass->text() );
 	close();
 }
 

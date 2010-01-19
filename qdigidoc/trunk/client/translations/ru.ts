@@ -2,6 +2,67 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
+    <name>AccessCert</name>
+    <message>
+        <source>Error downloading server access certificate!
+%1</source>
+        <translation>Ошибка при загрузке справки допуска!
+%1</translation>
+    </message>
+    <message>
+        <source>Empty result!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error parsing server access certificate result!</source>
+        <translation>Ошибка при чтении справки допуска!</translation>
+    </message>
+    <message>
+        <source>Error reading server access certificate - empty content!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to save server access certificate file to %1!
+%2</source>
+        <translation>Ошибка при сохранении справки допуска! %1!
+%2</translation>
+    </message>
+    <message>
+        <source>Server access certificate</source>
+        <translation>Справка допуска</translation>
+    </message>
+    <message>
+        <source>Did not find any server access certificate!
+Start downloading?</source>
+        <translation>Отсутствует справка допуска!
+Начнём загрузку?</translation>
+    </message>
+    <message>
+        <source>Failed to read server access certificate!
+Start downloading?</source>
+        <translation>Не удалось загрузить справку допуска!
+Начнём загрузку?</translation>
+    </message>
+    <message>
+        <source>Server access certificate password is not valid!
+Start downloading?</source>
+        <translation>Пароль справки допуска неверен!
+Начнём загрузку?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is not valid!
+Start downloading?</source>
+        <translation>Справка допуска не действительна!
+Начнём загрузку?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is about to expire!
+Start downloading?</source>
+        <translation>Срок действия справки допуска скоро истечёт!
+Начнём загрузку?</translation>
+    </message>
+</context>
+<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -291,34 +352,8 @@ p, li { white-space: pre-wrap; }
         <translation>%1 уже существует.&lt;br /&gt;Заменить?</translation>
     </message>
     <message>
-        <source>Server access certificate</source>
-        <translation>Справка допуска</translation>
-    </message>
-    <message>
-        <source>Did not find any server access certificate!
-Start downloading?</source>
-        <translation>Отсутствует справка допуска!
-Начнём загрузку?</translation>
-    </message>
-    <message>
-        <source>Error parsing server access certificate result!</source>
-        <translation>Ошибка при чтении справки допуска!</translation>
-    </message>
-    <message>
-        <source>Error downloading server access certificate!
-%1</source>
-        <translation>Ошибка при загрузке справки допуска!
-%1</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Неверный личный код</translation>
-    </message>
-    <message>
-        <source>Failed to save server access certificate file to %1!
-%2</source>
-        <translation>Ошибка при сохранении справки допуска! %1!
-%2</translation>
     </message>
     <message>
         <source>NB! Test signature</source>
@@ -327,10 +362,6 @@ Start downloading?</source>
     <message>
         <source>NB! Invalid signature</source>
         <translation>NB: Ошибочная подпись</translation>
-    </message>
-    <message>
-        <source>Error reading server access certificate - empty content!</source>
-        <translation></translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
@@ -351,28 +382,6 @@ Start downloading?</source>
     <message>
         <source>Close</source>
         <translation>Закрыть</translation>
-    </message>
-    <message>
-        <source>Server access certificate is not valid!
-Start downloading?</source>
-        <translation>Справка допуска не действительна!
-Начнём загрузку?</translation>
-    </message>
-    <message>
-        <source>Server access certificate is about to expire!
-Start downloading?</source>
-        <translation>Срок действия справки допуска скоро истечёт!
-Начнём загрузку?</translation>
-    </message>
-    <message>
-        <source>Failed to read server access certificate!
-Start downloading?</source>
-        <translation>Не удалось загрузить справку допуска!
-Начнём загрузку?</translation>
-    </message>
-    <message>
-        <source>Server access certificate password is not valid!</source>
-        <translation>Пароль справки допуска неверен!</translation>
     </message>
     <message numerus="yes">
         <source>Signature(s)</source>

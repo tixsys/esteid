@@ -23,7 +23,6 @@
 #include "DigiDoc.h"
 
 #include "common/SslCertificate.h"
-#include "common/sslConnect.h"
 
 #include "QMobileSigner.h"
 #include "QSigner.h"
@@ -70,21 +69,16 @@ QSslCertificate DigiDocSignature::cert() const
 QDateTime DigiDocSignature::dateTime() const
 {
 	QString dateTime;
-	Signature *sc = const_cast<Signature*>(s);
 	switch( type() )
 	{
 	case TMType:
-	{
-		SignatureTM *tm = static_cast<SignatureTM*>(sc);
-		dateTime = QString::fromUtf8( tm->getProducedAt().c_str() );
+		dateTime = QString::fromUtf8(
+			static_cast<const SignatureTM*>(s)->getProducedAt().c_str() );
 		break;
-	}
 	case DDocType:
-	{
-		SignatureDDOC *ddoc = static_cast<SignatureDDOC*>(sc);
-		dateTime = QString::fromUtf8( ddoc->getProducedAt().c_str() );
+		dateTime = QString::fromUtf8(
+			static_cast<const SignatureDDOC*>(s)->getProducedAt().c_str() );
 		break;
-	}
 	default: break;
 	}
 
@@ -105,14 +99,13 @@ QString DigiDocSignature::digestMethod() const
 	{
 		std::vector<unsigned char> data;
 		std::string method;
-		Signature *sc = const_cast<Signature*>(s);
 		switch( type() )
 		{
 		case TMType:
-			static_cast<SignatureTM*>(sc)->getRevocationOCSPRef( data, method );
+			static_cast<const SignatureTM*>(s)->getRevocationOCSPRef( data, method );
 			break;
 		case DDocType:
-			static_cast<SignatureDDOC*>(sc)->getRevocationOCSPRef( data, method );
+			static_cast<const SignatureDDOC*>(s)->getRevocationOCSPRef( data, method );
 			break;
 		default: return QString();
 		}
@@ -128,14 +121,13 @@ QByteArray DigiDocSignature::digestValue() const
 	{
 		std::vector<unsigned char> data;
 		std::string method;
-		Signature *sc = const_cast<Signature*>(s);
 		switch( type() )
 		{
 		case TMType:
-			static_cast<SignatureTM*>(sc)->getRevocationOCSPRef( data, method );
+			static_cast<const SignatureTM*>(s)->getRevocationOCSPRef( data, method );
 			break;
 		case DDocType:
-			static_cast<SignatureDDOC*>(sc)->getRevocationOCSPRef( data, method );
+			static_cast<const SignatureDDOC*>(s)->getRevocationOCSPRef( data, method );
 			break;
 		default: return QByteArray();
 		}
@@ -171,21 +163,16 @@ QString DigiDocSignature::mediaType() const
 
 QSslCertificate DigiDocSignature::ocspCert() const
 {
-	Signature *sc = const_cast<Signature*>(s);
 	try
 	{
 		switch( type() )
 		{
 		case TMType:
-		{
-			X509Cert cert = static_cast<SignatureTM*>(sc)->getOCSPCertificate();
-			return SslCertificate::fromX509( Qt::HANDLE(cert.getX509()) );
-		}
+			return SslCertificate::fromX509( Qt::HANDLE(
+				static_cast<const SignatureTM*>(s)->getOCSPCertificate().getX509()) );
 		case DDocType:
-		{
-			X509Cert cert = static_cast<SignatureDDOC*>(sc)->getOCSPCertificate();
-			return SslCertificate::fromX509( Qt::HANDLE(cert.getX509()) );
-		}
+			return SslCertificate::fromX509( Qt::HANDLE(
+				static_cast<const SignatureDDOC*>(s)->getOCSPCertificate().getX509()) );
 		default: return QSslCertificate();
 		}
 	}
@@ -288,12 +275,12 @@ DigiDocSignature::SignatureStatus DigiDocSignature::validate()
 DigiDoc::DigiDoc( QObject *parent )
 :	QObject( parent )
 ,	b(0)
-,	signer(0)
+,	m_signer(0)
 {}
 
 DigiDoc::~DigiDoc()
 {
-	delete signer;
+	delete m_signer;
 	clear();
 	X509CertStore::destroy();
 	digidoc::terminate();
@@ -381,40 +368,6 @@ QList<Document> DigiDoc::documents()
 	return list;
 }
 
-QString DigiDoc::getAccessCert()
-{
-	SSLConnect *s = new SSLConnect( this );
-	s->setPKCS11( getConfValue( PKCS11Module ), false );
-	s->setCard( m_card );
-
-	bool retry = false;
-	do
-	{
-		retry = false;
-		signer->lock();
-		s->waitForFinished( SSLConnect::AccessCert );
-		signer->unlock();
-		switch( s->error() )
-		{
-		case SSLConnect::PinCanceledError: break;
-		case SSLConnect::PinInvalidError:
-			setLastError( s->errorString() );
-			retry = true;
-			break;
-		default:
-			if( !s->errorString().isEmpty() )
-				setLastError( s->errorString() );
-			break;
-		}
-	}
-	while( retry );
-	QString buffer = QString::fromUtf8( s->result() );
-
-	delete s;
-
-	return buffer;
-}
-
 QString DigiDoc::fileName() const { return m_fileName; }
 
 bool DigiDoc::init()
@@ -436,11 +389,11 @@ bool DigiDoc::init()
 	}
 	catch( const Exception &e ) { setLastError( e ); return false; }
 
-	signer = new QSigner();
-	connect( signer, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
+	m_signer = new QSigner();
+	connect( m_signer, SIGNAL(dataChanged(QStringList,QString,QSslCertificate)),
 		SLOT(dataChanged(QStringList,QString,QSslCertificate)) );
-	connect( signer, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
-	signer->start();
+	connect( m_signer, SIGNAL(error(QString)), SLOT(setLastError(QString)) );
+	m_signer->start();
 	return true;
 }
 
@@ -520,9 +473,9 @@ void DigiDoc::save()
 }
 
 void DigiDoc::selectCard( const QString &card )
-{ QMetaObject::invokeMethod( signer, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
+{ QMetaObject::invokeMethod( m_signer, "selectCard", Qt::QueuedConnection, Q_ARG(QString,card) ); }
 
-QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value ) const
+QString DigiDoc::getConfValue( ConfParameter parameter, const QVariant &value )
 {
 	digidoc::Conf *i = NULL;
 	try { i = digidoc::Conf::getInstance(); }
@@ -601,7 +554,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 	bool result = false;
 	try
 	{
-		signer->setSignatureProductionPlace( SignatureProductionPlace(
+		m_signer->setSignatureProductionPlace( SignatureProductionPlace(
 			city.toUtf8().constData(),
 			state.toUtf8().constData(),
 			zip.toUtf8().constData(),
@@ -609,8 +562,8 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 		SignerRole sRole( role.toUtf8().constData() );
 		if ( !role2.isEmpty() )
 			sRole.claimedRoles.push_back( role2.toUtf8().constData() );
-		signer->setSignerRole( sRole );
-		b->sign( signer, Signature::TM );
+		m_signer->setSignerRole( sRole );
+		b->sign( m_signer, Signature::TM );
 		result = true;
 	}
 	catch( const Exception &e )
@@ -630,6 +583,7 @@ bool DigiDoc::sign( const QString &city, const QString &state, const QString &zi
 }
 
 QSslCertificate DigiDoc::signCert() { return m_signCert; }
+QSigner *DigiDoc::signer() const { return m_signer; }
 
 bool DigiDoc::signMobile( const QString &fName )
 {

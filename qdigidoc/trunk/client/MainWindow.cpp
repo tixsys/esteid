@@ -28,6 +28,7 @@
 #include "common/Settings.h"
 #include "common/SslCertificate.h"
 
+#include "AccessCert.h"
 #include "MobileDialog.h"
 #include "PrintSheet.h"
 #include "SettingsDialog.h"
@@ -36,9 +37,7 @@
 #include <digidocpp/Document.h>
 
 #include <QApplication>
-#include <QDateTime>
 #include <QDesktopServices>
-#include <QDomDocument>
 #include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -389,8 +388,18 @@ void MainWindow::buttonClicked( int button )
 			showWarning( connection.error() );
 			break;
 		}
-		if( !checkAccessCert() )
-			break;
+		AccessCert access( this );
+		if( !access.validate() )
+		{
+			if( infoSignMobile->isChecked() || doc->activeCard().isEmpty() )
+			{
+				QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
+				break;
+			}
+			if( !access.download( doc->signer(), doc->activeCard(),
+					SslCertificate( doc->signCert() ).subjectInfo( "serialNumber" ) ) )
+				break;
+		}
 
 		if( infoSignCard->isChecked() )
 		{
@@ -775,150 +784,4 @@ void MainWindow::viewSignaturesRemove( unsigned int num )
 	doc->removeSignature( num );
 	doc->save();
 	setCurrentPage( doc->signatures().isEmpty() ? Sign : View );
-}
-
-bool MainWindow::checkAccessCert()
-{
-	Settings s;
-	s.beginGroup( "Client" );
-
-	QFile f( s.value( "pkcs12Cert" ).toString() );
-
-	if( !f.exists() )
-	{
-		if( QMessageBox::warning( this, tr( "Server access certificate" ),
-				tr( "Did not find any server access certificate!\nStart downloading?" ),
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
-		{
-			doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
-			doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
-			return true;
-		}
-	}
-	else if( f.open( QIODevice::ReadOnly ) )
-	{
-		PKCS12Certificate p12Cert( &f,
-			doc->getConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) ).toLatin1() );
-		f.close();
-
-		if( p12Cert.error() == PKCS12Certificate::InvalidPassword )
-		{
-			QMessageBox::warning( this, tr( "Server access certificate" ),
-				tr( "Server access certificate password is not valid!" ) );
-			return false;
-		}
-
-		if( !p12Cert.certificate().isValid() )
-		{
-			if( QMessageBox::warning( this, tr( "Server access certificate" ),
-					tr( "Server access certificate is not valid!\nStart downloading?" ),
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
-			{
-				doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
-				doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
-				return true;
-			}
-		}
-		else if( p12Cert.certificate().expiryDate() < QDateTime::currentDateTime().addDays( 8 ) )
-		{
-			if( QMessageBox::question( this, tr( "Server access certificate" ),
-					tr( "Server access certificate is about to expire!\nStart downloading?" ),
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) == QMessageBox::No )
-			{
-				doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-				doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-				return true;
-			}
-		}
-		else
-		{
-			doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-			doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-			return true;
-		}
-	}
-	else
-	{
-		if( QMessageBox::warning( this, tr( "Server access certificate" ),
-				tr( "Failed to read server access certificate!\nStart downloading?" ),
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes ) != QMessageBox::Yes )
-		{
-			doc->setConfValue( DigiDoc::PKCS12Cert, QVariant() );
-			doc->setConfValue( DigiDoc::PKCS12Pass, QVariant() );
-			return true;
-		}
-	}
-
-	if( infoSignMobile->isChecked() || doc->activeCard().isEmpty() )
-	{
-		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
-		return false;
-	}
-
-	QString result = doc->getAccessCert();
-	if ( result.isEmpty() )
-		return false;
-
-	QDomDocument domDoc;
-	if ( !domDoc.setContent( result ) )
-	{
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Error parsing server access certificate result!" ), QMessageBox::Ok );
-		return false;
-	}
-
-	QDomElement e = domDoc.documentElement();
-	QDomNodeList status = e.elementsByTagName( "StatusCode" );
-	if( status.isEmpty() )
-	{
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Error parsing server access certificate result!" ), QMessageBox::Ok );
-		return false;
-	}
-
-	switch( status.item(0).toElement().text().toInt() )
-	{
-	case 1: //need to order cert manually from SK web
-		QDesktopServices::openUrl( QUrl( "http://www.sk.ee/toend/" ) );
-		return false;
-	case 2: //got error, show message from MessageToDisplay element
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Error downloading server access certificate!\n%1" )
-				.arg( e.elementsByTagName( "MessageToDisplay" ).item(0).toElement().text() ),
-			QMessageBox::Ok );
-		return false;
-	default: break; //ok
-	}
-
-	QString cert = e.elementsByTagName( "TokenData" ).item(0).toElement().text();
-	if ( cert.isEmpty() )
-	{
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr( "Error reading server access certificate - empty content!" ), QMessageBox::Ok );
-		return false;
-	}
-
-	QString path = QDesktopServices::storageLocation( QDesktopServices::DataLocation );
-	if ( !QDir( path ).exists() )
-		QDir().mkpath( path );
-
-	f.setFileName( QString( "%1/%2.p12" )
-		.arg( path ).arg( doc->signCert().subjectInfo( "serialNumber" ) ) );
-	if ( !f.open( QIODevice::WriteOnly|QIODevice::Truncate ) )
-	{
-		QMessageBox::warning( this, tr( "Server access certificate" ),
-			tr("Failed to save server access certificate file to %1!\n%2")
-				.arg( f.fileName() )
-				.arg( f.errorString() ) );
-		return false;
-	}
-	f.write( QByteArray::fromBase64( cert.toLatin1() ) );
-	f.close();
-
-	s.setValue( "pkcs12Cert", f.fileName() );
-	s.setValue( "pkcs12Pass", e.elementsByTagName( "TokenPassword" ).item(0).toElement().text() );
-
-	doc->setConfValue( DigiDoc::PKCS12Cert, s.value( "pkcs12Cert" ) );
-	doc->setConfValue( DigiDoc::PKCS12Pass, s.value( "pkcs12Pass" ) );
-	return true;
 }

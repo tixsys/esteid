@@ -62,15 +62,15 @@ SettingsDialog::SettingsDialog( QWidget *parent )
 	proxyPort->setText( s.value( "proxyPort" ).toString() );
 	proxyUser->setText( s.value( "proxyUser" ).toString() );
 	proxyPass->setText( s.value( "proxyPass" ).toString() );
-	p12Cert->setText( s.value( "pkcs12Cert" ).toString() );
-	p12Pass->setText( s.value( "pkcs12Pass" ).toString() );
+	p12Cert->setText( DigiDoc::getConfValue( DigiDoc::PKCS12Cert ) );
+	p12Pass->setText( DigiDoc::getConfValue( DigiDoc::PKCS12Pass ) );
 
 	s.endGroup();
 }
 
 void SettingsDialog::on_p12Button_clicked()
 {
-	QString cert = Settings().value( "Client/pkcs12Cert" ).toString();
+	QString cert = DigiDoc::getConfValue( DigiDoc::PKCS12Cert );
 	if( cert.isEmpty() )
 		cert = QDesktopServices::storageLocation( QDesktopServices::DocumentsLocation );
 	else
@@ -129,8 +129,6 @@ void SettingsDialog::save()
 	s.setValue( "proxyPort", proxyPort->text() );
 	s.setValue( "proxyUser", proxyUser->text() );
 	s.setValue( "proxyPass", proxyPass->text() );
-	s.setValue( "pkcs12Cert", p12Cert->text() );
-	s.setValue( "pkcs12Pass", p12Pass->text() );
 
 	DigiDoc::setConfValue( DigiDoc::ProxyHost, proxyHost->text() );
 	DigiDoc::setConfValue( DigiDoc::ProxyPort, proxyPort->text() );
@@ -176,7 +174,7 @@ void SettingsDialog::saveSignatureInfo(
 
 void SettingsDialog::setP12Cert( const QString &cert )
 {
-	Settings().setValue( "Client/pkcs12Cert", cert );
+	DigiDoc::setConfValue( DigiDoc::PKCS12Cert, cert );
 	p12Cert->setText( cert );
 	tabWidget->setCurrentIndex( 1 );
 }

@@ -2,6 +2,67 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="et">
 <context>
+    <name>AccessCert</name>
+    <message>
+        <source>Error downloading server access certificate!
+%1</source>
+        <translation>Viga juurdepääsutõendi laadimisel!
+%1</translation>
+    </message>
+    <message>
+        <source>Empty result!</source>
+        <translation>Tühi vastus!</translation>
+    </message>
+    <message>
+        <source>Error parsing server access certificate result!</source>
+        <translation>Viga juurdepääsutõendi lugemisel!</translation>
+    </message>
+    <message>
+        <source>Error reading server access certificate - empty content!</source>
+        <translation>Viga juurdepääsutõendi lugemisel - sisu on tühi!</translation>
+    </message>
+    <message>
+        <source>Failed to save server access certificate file to %1!
+%2</source>
+        <translation>Viga juurdepääsutõendi salvestamisel %1!
+%2</translation>
+    </message>
+    <message>
+        <source>Server access certificate</source>
+        <translation>Juurdepääsutõend</translation>
+    </message>
+    <message>
+        <source>Did not find any server access certificate!
+Start downloading?</source>
+        <translation>Puudub juurdepääsutõend!
+Alustame laadimist?</translation>
+    </message>
+    <message>
+        <source>Failed to read server access certificate!
+Start downloading?</source>
+        <translation>Ei õnnestunud juurdepääsutõendit laadida!
+Alustame laadimist?</translation>
+    </message>
+    <message>
+        <source>Server access certificate password is not valid!
+Start downloading?</source>
+        <translation>Juurdepääsutõendi parool on vale!
+Alustame laadimist?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is not valid!
+Start downloading?</source>
+        <translation>Juurdepääsutõend ei ole kehtiv!
+Alustame laadimist?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is about to expire!
+Start downloading?</source>
+        <translation>Juurdepääsutõend aegub varsti!
+Alustame laadimist?</translation>
+    </message>
+</context>
+<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -291,34 +352,8 @@ Digitaalallkirja andmiseks on vajalik internetiühendus.&lt;/p&gt;
         <translation>%1 on juba olemas.&lt;br /&gt;Soovid asendada?</translation>
     </message>
     <message>
-        <source>Server access certificate</source>
-        <translation>Juurdepääsutõend</translation>
-    </message>
-    <message>
-        <source>Did not find any server access certificate!
-Start downloading?</source>
-        <translation>Puudub juurdepääsutõend!
-Alustame laadimist?</translation>
-    </message>
-    <message>
-        <source>Error parsing server access certificate result!</source>
-        <translation>Viga juurdepääsutõendi lugemisel!</translation>
-    </message>
-    <message>
-        <source>Error downloading server access certificate!
-%1</source>
-        <translation>Viga juurdepääsutõendi laadimisel!
-%1</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Isikukood on vigane</translation>
-    </message>
-    <message>
-        <source>Failed to save server access certificate file to %1!
-%2</source>
-        <translation>Viga juurdepääsutõendi salvestamisel %1!
-%2</translation>
     </message>
     <message>
         <source>NB! Test signature</source>
@@ -327,10 +362,6 @@ Alustame laadimist?</translation>
     <message>
         <source>NB! Invalid signature</source>
         <translation>NB: Vigane allkiri</translation>
-    </message>
-    <message>
-        <source>Error reading server access certificate - empty content!</source>
-        <translation>Viga juurdepääsutõendi lugemisel - sisu on tühi!</translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
@@ -351,28 +382,6 @@ Alustame laadimist?</translation>
     <message>
         <source>Close</source>
         <translation>Sulge</translation>
-    </message>
-    <message>
-        <source>Server access certificate is not valid!
-Start downloading?</source>
-        <translation>Juurdepääsutõend ei ole kehtiv!
-Alustame laadimist?</translation>
-    </message>
-    <message>
-        <source>Server access certificate is about to expire!
-Start downloading?</source>
-        <translation>Juurdepääsutõend aegub varsti!
-Alustame laadimist?</translation>
-    </message>
-    <message>
-        <source>Failed to read server access certificate!
-Start downloading?</source>
-        <translation>Ei õnnestunud juurdepääsutõendit laadida!
-Alustame laadimist?</translation>
-    </message>
-    <message>
-        <source>Server access certificate password is not valid!</source>
-        <translation>Juurdepääsutõendi parool on vale!</translation>
     </message>
     <message numerus="yes">
         <source>Signature(s)</source>

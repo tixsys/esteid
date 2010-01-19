@@ -2,6 +2,67 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
 <context>
+    <name>AccessCert</name>
+    <message>
+        <source>Error downloading server access certificate!
+%1</source>
+        <translation>Error downloading server access certificate!
+%1</translation>
+    </message>
+    <message>
+        <source>Empty result!</source>
+        <translation>Empty result!</translation>
+    </message>
+    <message>
+        <source>Error parsing server access certificate result!</source>
+        <translation>Error parsing server access certificate result!</translation>
+    </message>
+    <message>
+        <source>Error reading server access certificate - empty content!</source>
+        <translation>Error reading server access certificate - empty content!</translation>
+    </message>
+    <message>
+        <source>Failed to save server access certificate file to %1!
+%2</source>
+        <translation>Failed to save server access certificate file to %1!
+%2</translation>
+    </message>
+    <message>
+        <source>Server access certificate</source>
+        <translation>Server access certificate</translation>
+    </message>
+    <message>
+        <source>Did not find any server access certificate!
+Start downloading?</source>
+        <translation>Did not find any server access certificate!
+Start downloading?</translation>
+    </message>
+    <message>
+        <source>Failed to read server access certificate!
+Start downloading?</source>
+        <translation>Failed to read server access certificate!
+Start downloading?</translation>
+    </message>
+    <message>
+        <source>Server access certificate password is not valid!
+Start downloading?</source>
+        <translation>Server access certificate password is not valid!
+Start downloading?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is not valid!
+Start downloading?</source>
+        <translation>Server access certificate is not valid!
+Start downloading?</translation>
+    </message>
+    <message>
+        <source>Server access certificate is about to expire!
+Start downloading?</source>
+        <translation>Server access certificate is about to expire!
+Start downloading?</translation>
+    </message>
+</context>
+<context>
     <name>DigiDoc</name>
     <message>
         <source>Container is not open</source>
@@ -291,34 +352,8 @@ Also an active internet connection is needed.&lt;/p&gt;
         <translation>%1 already exists.&lt;br /&gt;Do you want replace it?</translation>
     </message>
     <message>
-        <source>Server access certificate</source>
-        <translation>Server access certificate</translation>
-    </message>
-    <message>
-        <source>Did not find any server access certificate!
-Start downloading?</source>
-        <translation>Did not find any server access certificate!
-Start downloading?</translation>
-    </message>
-    <message>
-        <source>Error parsing server access certificate result!</source>
-        <translation>Error parsing server access certificate result!</translation>
-    </message>
-    <message>
-        <source>Error downloading server access certificate!
-%1</source>
-        <translation>Error downloading server access certificate!
-%1</translation>
-    </message>
-    <message>
         <source>Personal code is not valid</source>
         <translation>Personal code is not valid</translation>
-    </message>
-    <message>
-        <source>Failed to save server access certificate file to %1!
-%2</source>
-        <translation>Failed to save server access certificate file to %1!
-%2</translation>
     </message>
     <message>
         <source>NB! Test signature</source>
@@ -327,10 +362,6 @@ Start downloading?</translation>
     <message>
         <source>NB! Invalid signature</source>
         <translation>NB! Invalid signature</translation>
-    </message>
-    <message>
-        <source>Error reading server access certificate - empty content!</source>
-        <translation>Error reading server access certificate - empty content!</translation>
     </message>
     <message>
         <source>You dont have suficient privilegs to write this fail into folder %1</source>
@@ -351,28 +382,6 @@ Start downloading?</translation>
     <message>
         <source>Close</source>
         <translation>Close</translation>
-    </message>
-    <message>
-        <source>Server access certificate is not valid!
-Start downloading?</source>
-        <translation>Server access certificate is not valid!
-Start downloading?</translation>
-    </message>
-    <message>
-        <source>Server access certificate is about to expire!
-Start downloading?</source>
-        <translation>Server access certificate is about to expire!
-Start downloading?</translation>
-    </message>
-    <message>
-        <source>Failed to read server access certificate!
-Start downloading?</source>
-        <translation>Failed to read server access certificate!
-Start downloading?</translation>
-    </message>
-    <message>
-        <source>Server access certificate password is not valid!</source>
-        <translation>Server access certificate password is not valid!</translation>
     </message>
     <message numerus="yes">
         <source>Signature(s)</source>

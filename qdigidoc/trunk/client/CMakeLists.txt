@@ -1,4 +1,5 @@
 SET( MOC_HEADERS
+	AccessCert.h
 	DigiDoc.h
 	MainWindow.h
 	MobileDialog.h
@@ -27,6 +28,7 @@ SET( SOURCES
 	${HEADERS}
 	${MOC_SOURCES}
 	main.cpp
+	AccessCert.cpp
 	DigiDoc.cpp
 	MainWindow.cpp
 	MobileDialog.cpp
