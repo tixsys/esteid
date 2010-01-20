@@ -33,8 +33,6 @@ namespace digidoc
           virtual std::string getPKCS12Cert() const = 0;
           virtual std::string getPKCS12Pass() const = 0;
 
-          virtual std::string getUserConfDir() const = 0;
-
           virtual void setProxyHost( const std::string &host ) throw(IOException) = 0;
           virtual void setProxyPort( const std::string &port ) throw(IOException) = 0;
           virtual void setProxyUser( const std::string &user ) throw(IOException) = 0;
