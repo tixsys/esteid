@@ -193,7 +193,7 @@ Alustame laadimist?</translation>
     </message>
     <message>
         <source>You have not signed this container</source>
-        <translation>Sa pole seda ümbrikut allkirjastanud</translation>
+        <translation type="unfinished">Sina pole seda ümbrikut allkirjastanud</translation>
     </message>
     <message>
         <source>Container is unsigned</source>

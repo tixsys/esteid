@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Empty result!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустой ответ!</translation>
     </message>
     <message>
         <source>Error parsing server access certificate result!</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Error reading server access certificate - empty content!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при чтении справки допуска! - содержание пустое!</translation>
     </message>
     <message>
         <source>Failed to save server access certificate file to %1!

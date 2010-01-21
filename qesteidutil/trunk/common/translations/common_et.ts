@@ -260,11 +260,11 @@
     </message>
     <message>
         <source>Proves your identity to a remote computer</source>
-        <translation>Tuvastab Teie isiksust arvuti kaugopereerimisel</translation>
+        <translation>Tuvastab sinu isiksust arvuti kaugopereerimisel</translation>
     </message>
     <message>
         <source>Protects e-mail messages</source>
-        <translation>Kaitseb e-mail sõnumeid</translation>
+        <translation>Kaitseb e-posti sõnumeid</translation>
     </message>
     <message>
         <source>OCSP signing</source>

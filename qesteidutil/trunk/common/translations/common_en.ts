@@ -151,7 +151,7 @@
     </message>
     <message>
         <source>Card in reader</source>
-        <translation>Card in reader</translation>
+        <translation>Card number</translation>
     </message>
     <message>
         <source>Auth certificate is</source>
