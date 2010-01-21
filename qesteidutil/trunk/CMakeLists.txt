@@ -78,6 +78,7 @@ QT4_ADD_RESOURCES( qesteidutil_RCC_SRCS
 )
 
 QT4_ADD_TRANSLATION( QM_FILES
+    common/translations/common_en.ts
     common/translations/common_et.ts
     common/translations/common_ru.ts
     common/translations/qt_et.ts
