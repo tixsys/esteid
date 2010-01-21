@@ -688,9 +688,10 @@ int My1EstEIDSigner::checkCert ()
         printf("X509cert \n");
 		X509Cert activeCert(m_signer.cardSignCert);
 		if(!activeCert.isValid())
+		{
 			m_signer.i_ret = 2;
         printf("Validity checked \n");
-
+		}
 		else 
 		{
 			string tempname = activeCert.getSubject();
