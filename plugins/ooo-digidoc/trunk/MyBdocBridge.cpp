@@ -633,11 +633,13 @@ bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
 MyRealEstEIDSigner::MyRealEstEIDSigner() throw(SignException)
 :	EstEIDSigner( Conf::getInstance()->getPKCS11DriverPath() )
 {
+    printf ("MyRealEstEIDSigner constructor \n");
 	cardSignCert = NULL;
 	i_ret=0;
 	try	
 	{
-		cardSignCert = getCert();	
+		cardSignCert = getCert();
+        printf ("got cert \n");
 	}
 
 	catch(const digidoc::SignException& e)
@@ -683,27 +685,15 @@ int My1EstEIDSigner::checkCert ()
 
 	if (!m_signer.i_ret)
 	{
+        printf("X509cert \n");
 		X509Cert activeCert(m_signer.cardSignCert);
 		if(!activeCert.isValid())
 			m_signer.i_ret = 2;
+        printf("Validity checked \n");
 
 		else 
 		{
 			string tempname = activeCert.getSubject();
-			/*for (size_t u=0; u<tempname.size(); u++)
-			{
-				if (!memcmp(&tempname[u], "serialNumber=", 13))
-				{
-					str_signCert = "";
-					u += 13;
-					while ( (u<tempname.size()) && (tempname[u] != ',') )
-					{
-						str_signCert += tempname[u];
-						u++;
-					}
-				}
-				
-			}*/
 			for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], "CN=", 3))
@@ -727,6 +717,7 @@ int My1EstEIDSigner::checkCert ()
 			}
 		}
 	}
+    printf("return: %d \n", m_signer.i_ret);
 	return m_signer.i_ret;
 }
 //===========================================================
