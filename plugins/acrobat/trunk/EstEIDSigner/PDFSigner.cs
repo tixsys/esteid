@@ -153,21 +153,21 @@ namespace EstEIDSigner
 
         public SignatureLocation(EstEIDSettings config)
         {
-            UseSector = config.ToBoolean("signature_use_sector");
+            UseSector = config.SignatureUseSector;
             if (!UseSector)
             {
                 // probably both are undefined ?
                 // then default to using sector based signature location
-                if (!config.ToBoolean("signature_use_coords"))
+                if (!config.SignatureUseCoordinates)
                     UseSector = true;
             }
 
-            SectorIndex = config.ToUInt("signature_sector", "9");
+            SectorIndex = uint.Parse(config.SignatureSector);
             rectangle = new Rectangle(
-                config.ToUInt("signature_x", EstEIDSettings.SignatureX),
-                config.ToUInt("signature_y", EstEIDSettings.SignatureY),
-                config.ToUInt("signature_w", EstEIDSettings.SignatureW),
-                config.ToUInt("signature_h", EstEIDSettings.SignatureH));
+                config.SignatureX,
+                config.SignatureY,
+                config.SignatureW,
+                config.SignatureH);
         }
 
         public static implicit operator Rectangle(SignatureLocation location)
@@ -430,49 +430,22 @@ namespace EstEIDSigner
         : ErrorContainer
     {
         public const uint SIGNATURE_LENGTH = 128;
+        public delegate void OnStatus(string s, bool error);
         private string inputPDF = string.Empty;
         private string outputPDF = string.Empty;
         private Timestamp stamp = null;
         private MetaData metadata = null;
-        private Appearance appearance = null;
-        private DirectoryX509CertStore store = null;
-        private PdfReader reader = null;
-        public delegate void OnStatus(string s, bool error);
+        private Appearance appearance = null;        
+        private PdfReader reader = null;        
         private OnStatus statusHandler;
-        private EstEIDSettings config = null;
-        private PKCS12Settings credentials = null;
+        private EstEIDSettings settings = null;
+        private XmlConf conf = null;
+        private DirectoryX509CertStore store = null;
 
-        public PDFSigner(string input, string output)
+        public PDFSigner(PdfReader reader, string input, string output)
         {
             this.inputPDF = input;
             this.outputPDF = output;
-        }
-        public PDFSigner(string input, string output, Timestamp tmstamp)
-        {
-            this.inputPDF = input;
-            this.outputPDF = output;
-            this.stamp = tmstamp;
-        }
-        public PDFSigner(string input, string output, MetaData md)
-        {
-            this.inputPDF = input;
-            this.outputPDF = output;
-            this.metadata = md;
-        }
-        public PDFSigner(string input, string output, Appearance app)
-        {
-            this.inputPDF = input;
-            this.outputPDF = output;
-            this.appearance = app;
-        }
-        public PDFSigner(PdfReader reader, string input, string output, Timestamp tmstamp, MetaData md, Appearance app, DirectoryX509CertStore store)
-        {
-            this.inputPDF = input;
-            this.outputPDF = output;
-            this.stamp = tmstamp;
-            this.metadata = md;
-            this.appearance = app;
-            this.store = store;
             this.reader = reader;
         }
         public OnStatus StatusHandler
@@ -481,15 +454,27 @@ namespace EstEIDSigner
         }
         public EstEIDSettings Settings
         {
-            set { config = value; }
+            set { settings = value; }
         }
-        public PKCS12Settings Credentials
+        public Timestamp Timestamp
         {
-            set { credentials = value; }
+            set { stamp = value; }
         }
-
-        public void Verify()
+        public MetaData MetaData
         {
+            set { metadata = value; }
+        }
+        public Appearance Appearance
+        {
+            set { appearance = value; }
+        }
+        public DirectoryX509CertStore DirectoryX509CertStore
+        {
+            set { store = value; }
+        }
+        public XmlConf XmlConf
+        {
+            set { conf = value; }
         }
 
         private string ReadPin(TokenInfo token)
@@ -762,13 +747,16 @@ namespace EstEIDSigner
             throw new Exception(Resources.CERT_DONT_MATCH);
         }
 
-        private OCSPClientEstEID OCSPClient(PKCS12Settings credentials, Org.BouncyCastle.X509.X509Certificate signer)
+        private OCSPClientEstEID OCSPClient(Org.BouncyCastle.X509.X509Certificate signer)
         {
-            string certPath = credentials.Filename;
-            string certPassword = credentials.Password;
-
+            OCSPConf ocsp;
             X509CertStoreEntry storeEntry = null;
             Org.BouncyCastle.X509.X509Certificate checkerCert, issuerCert, responderCert;
+            string certPath, certPassword;
+            string ocspUrl;
+
+            certPath = conf.Pkcs12Cert;
+            certPassword = conf.Pkcs12Pass;            
 
             // open PKCS12 store
             DirectoryPKCS12CertStore pkcs12 = new DirectoryPKCS12CertStore(certPath, certPassword);
@@ -793,19 +781,20 @@ namespace EstEIDSigner
             {
                 this.lastError = Resources.ISSUER_CERT_MISSING + signerKey;
                 return null;
-            }
-            issuerCert = storeEntry.Certificate;
+            }            
 
             // load responder cert, will be used for verify
-            storeEntry = store.GetResponderCert(signerKey);
-            if (storeEntry == null)
+            ocsp = conf.GetOCSPConf(signerKey);
+            if (ocsp == null)
             {
                 this.lastError = Resources.RESPONDER_CET_MISSING + signerKey;
                 return null;
             }
-            responderCert = storeEntry.Certificate;
+            
+            issuerCert = storeEntry.Certificate;
+            responderCert = X509Utils.LoadCertificate(ocsp.Cert)[0];
+            ocspUrl = ocsp.Url;
 
-            string ocspUrl = storeEntry.OCSPUrl;
             if (ocspUrl == null || ocspUrl.Length == 0)
             {
                 this.lastError = Resources.OCSP_URL_MISSING;
@@ -815,7 +804,7 @@ namespace EstEIDSigner
             return new OCSPClientEstEID(signer, checkerCert, issuerCert, ocspUrl, privKey, responderCert);
         }
 
-        private void SignUsingEstEIDCard2(PKCS12Settings credentials, string filename, string outfile)
+        private void SignUsingEstEIDCard2(string filename, string outfile)
         {
             statusHandler(Resources.VERIFYING_DOCUMENT, false);
 
@@ -841,7 +830,7 @@ namespace EstEIDSigner
 
             // open EstEID
             EstEIDReader estEidReader = new EstEIDReader();
-            string pkcs11_lib = config.ToString("pkcs11_library");
+            string pkcs11_lib = conf.PKCS11DriverPath;
             bool b = estEidReader.Open(pkcs11_lib);
             if (b == false)
                 throw new Exception(Resources.PKCS11_OPEN);
@@ -851,7 +840,7 @@ namespace EstEIDSigner
             Org.BouncyCastle.X509.X509Certificate[] chain = X509Utils.LoadCertificate(signer.Cert.RawData);
 
             statusHandler(Resources.VERIFYING_OCSP, false);
-            OCSPClientEstEID ocspClient = OCSPClient(credentials, chain[0]);
+            OCSPClientEstEID ocspClient = OCSPClient(chain[0]);
             if (ocspClient == null)
                 throw new Exception(this.lastError);
 
@@ -942,7 +931,7 @@ namespace EstEIDSigner
 
         public void Sign()
         {
-            SignUsingEstEIDCard2(this.credentials, this.inputPDF, this.outputPDF);
+            SignUsingEstEIDCard2(this.inputPDF, this.outputPDF);
         }
     }
 }
