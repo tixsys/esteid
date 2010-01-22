@@ -39,21 +39,22 @@ using EstEIDSigner.Properties;
 namespace EstEIDSigner
 {
     public partial class Form1 : Form
-    {
-        private DirectoryX509CertStore store = null;
-        private EstEIDSettings config = null;
-        private PKCS12Settings credentials = null;
-        private PdfReader reader = null;
-        private string inputFile = string.Empty;
-        private string outputFile = string.Empty;
+    {   
+        private DirectoryX509CertStore store    = null;
+        private EstEIDSettings settings         = null;        
+        private PdfReader reader                = null;
+        private XmlConf conf                    = null;
+        private string inputFile                = string.Empty;
+        private string outputFile               = string.Empty;
 
         public Form1()
         {
-            this.Font = new Font("Verdana", (float)8.25);            
+            this.Font = new Font("Verdana", (float)8.25);
 
             InitializeComponent();
-            
-            config = new EstEIDSettings();
+
+            settings = new EstEIDSettings();
+            conf = new XmlConf();
 
             LoadConfig();
         }
@@ -166,33 +167,18 @@ namespace EstEIDSigner
             }
         }
 
-        private void OpenCertStore()
+        private void OpenCertStore(string path)
         {
             if (store == null)
-            {                
-                string path = config.ToString("cert_path");
-                if (path == null || path.Length == 0)
-                    path = EstEIDSignerGlobals.CertDirectory;
-
+            {
                 if (!Directory.Exists(path))
                     throw new Exception(Resources.DIR_CERT_ERROR + path);
 
-                store = new DirectoryX509CertStore(path, config.ToString("ocsp_url"));
+                store = new DirectoryX509CertStore(path);
                 if (store.Open() == false)
                     throw new Exception(Resources.DIR_CERT_ERROR + path);                
             }
-        }
-
-        private void LoadPKCS12Config()
-        {
-            if (credentials == null)
-            {
-                credentials = new PKCS12Settings();
-
-                if (credentials.Load() == false)             
-                    throw new Exception(Resources.PKCS12_LOAD_ERROR + credentials.lastError);
-            }
-        }
+        }        
 
         private void sign_Click(object sender, EventArgs e)
         {
@@ -210,13 +196,11 @@ namespace EstEIDSigner
             {
                 MessageBox.Show(Resources.MISSING_OUTPUT, Resources.ERROR);
                 return;
-            }            
+            }
 
             Timestamp stamp = null;
-            if (config.ToBoolean("enable_tsa") == true)
-                stamp = new Timestamp(config.ToString("tsa_url"), 
-                    config.ToString("tsa_user"), 
-                    config.ToString("tsa_password"));
+            if (settings.TsaEnabled)
+                stamp = new Timestamp(settings.TsaUrl, settings.TsaUser, settings.TsaPassword);
 
             //Adding Meta Datas
             MetaData metaData = new MetaData();
@@ -232,27 +216,25 @@ namespace EstEIDSigner
             app.Reason = Reasontext.Text;   // PDF field "reason" <-> DigiDoc field "resolution"
             app.Location = LocationText;
             app.Visible = SigVisible.Checked;
-            app.SigLocation = new SignatureLocation(config);
-            app.Page = config.ToUInt("signature_page", EstEIDSettings.SignaturePage);
-            app.SignatureRender = (PdfSignatureAppearance.SignatureRender)config.ToUInt("signature_render", EstEIDSettings.SignatureDescription);
+            app.SigLocation = new SignatureLocation(settings);
+            app.Page = uint.Parse(settings.SignaturePage);
+            app.SignatureRender = (PdfSignatureAppearance.SignatureRender)uint.Parse(settings.SignatureRender);
 
             PDFSigner pdfSigner = null;
 
             try
             {
                 this.signButton.Enabled = false;
-
-                status(Resources.READ_CERTS, false);
-                OpenCertStore();
-
-                status(Resources.READ_SETTINGS, false);
-                LoadPKCS12Config();   
-
                 status(Resources.ADD_SIGNATURE, false);
-                pdfSigner = new PDFSigner(reader, inputFile, outputFile, stamp, metaData, app, store);
+                pdfSigner = new PDFSigner(reader, inputFile, outputFile);
                 pdfSigner.StatusHandler = this.status;
-                pdfSigner.Settings = this.config;
-                pdfSigner.Credentials = this.credentials;
+                pdfSigner.Settings = this.settings;
+                pdfSigner.DirectoryX509CertStore = this.store;
+                pdfSigner.XmlConf = this.conf;
+                pdfSigner.Timestamp = stamp;
+                pdfSigner.MetaData = metaData;
+                pdfSigner.Appearance = app;
+
                 pdfSigner.Sign();                
 
                 status(Resources.DOCUMENT_SIGNED, false);
@@ -286,59 +268,50 @@ namespace EstEIDSigner
 
         private void LoadConfig()
         {
-            bool b, configExisted = true;
+            if (!settings.Initialize())
+                MessageBox.Show(settings.lastError, Resources.ERROR);
 
-            string fullConfigPath = EstEIDSignerGlobals.LocalAppPath;
-            if (!Directory.Exists(fullConfigPath))
-                Directory.CreateDirectory(fullConfigPath);
-
-            string fullConfigName = System.IO.Path.Combine(fullConfigPath, EstEIDSignerGlobals.AppName + ".config");
-
-            // create default config file if needed
-            if (!File.Exists(fullConfigName))
-            {
-                if (!config.Create(fullConfigName, Resources.DEFAULT_CONFIG))
-                    MessageBox.Show(config.lastError, Resources.ERROR);
-
-                configExisted = false;
-            }
-
-            if (!config.Open(fullConfigName))
-                MessageBox.Show(config.lastError, Resources.ERROR);
+            if (!settings.Open())
+                MessageBox.Show(settings.lastError, Resources.ERROR);
 
             try
             {
-                // set Estonian ID card cert dir if new installation or
-                // invalid cert path
-                if ((!configExisted)
-                    || (!Path.IsPathRooted(config.ToString("cert_path")))
-                    || (!Directory.Exists(config.ToString("cert_path"))))
-                    config.AddOrReplace("cert_path", EstEIDSignerGlobals.CertDirectory);
-
-                b = config.ToBoolean("debug");
-                if (!b)
+                if (!settings.DebugEnabled)
                 {
                     int w = this.Width;                    
                     DebugBox.Hide();                    
                     MaximumSize = new Size(w, tablePanel3.Bottom + 50);
                 }
 
-                b = config.ToBoolean("visible_signature");
-                this.SigVisible.Checked = b;
+                this.SigVisible.Checked = settings.VisibleSignature;
             }
-            catch (Exception) { }           
+            catch (Exception) { }
 
             // UI
-            string lang = config.ToString("language");            
-            comboLanguage.SelectedIndex = GetCulture(lang);
+            comboLanguage.SelectedIndex = GetCulture(settings.Language);
 
             // Signature box content
-            Contacttext.Text = config.ToString("contact");
-            Reasontext.Text = config.ToString("reason");
-            Citytext.Text = config.ToString("city");
-            Countytext.Text = config.ToString("county");
-            Countrytext.Text = config.ToString("country");
-            Indextext.Text = config.ToString("index");
+            Contacttext.Text = settings.Contact;
+            Reasontext.Text = settings.Reason;
+            Citytext.Text = settings.City;
+            Countytext.Text = settings.County;
+            Countrytext.Text = settings.Country;
+            Indextext.Text = settings.Index;
+
+            // digidocpp.conf
+            if (!conf.Initialize())
+            {
+                MessageBox.Show(conf.lastError, Resources.ERROR);
+                return;
+            }
+            if (!conf.Open())
+            {
+                MessageBox.Show(conf.lastError, Resources.ERROR);
+                return;
+            }
+
+            // DirectoryX509Store
+            OpenCertStore(conf.CertStorePath);
         }
 
         private int GetCulture(string name)
@@ -396,7 +369,7 @@ namespace EstEIDSigner
             Thread.CurrentThread.CurrentUICulture = culture;
             Resources.Culture = culture;
 
-            config.AddOrReplace("language", culture.Name);
+            settings.Language = culture.Name;
             statusBox.Text = "";
 
             // Form title
@@ -443,33 +416,33 @@ namespace EstEIDSigner
 
         private void SigVisible_CheckedChanged(object sender, EventArgs e)
         {
-            config.AddOrReplace("visible_signature", this.SigVisible.Checked.ToString());
+            settings.VisibleSignature = this.SigVisible.Checked;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (config != null)
+            if (settings != null)
             {
-                config.AddOrReplace("contact", Contacttext.Text);
-                config.AddOrReplace("reason", Reasontext.Text);
-                config.AddOrReplace("city", Citytext.Text);
-                config.AddOrReplace("county", Countytext.Text);
-                config.AddOrReplace("country", Countrytext.Text);
-                config.AddOrReplace("index", Indextext.Text);
-                config.Save();
+                settings.Contact = Contacttext.Text;
+                settings.Reason = Reasontext.Text;
+                settings.City = Citytext.Text;
+                settings.County = Countytext.Text;
+                settings.Country = Countrytext.Text;
+                settings.Index = Indextext.Text;
+                settings.Save();
             }
         }
 
         private void linkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            FormSettings settings = new FormSettings(config);
-            
-            settings.ShowDialog();
+            FormSettings formSettings = new FormSettings(settings);
+
+            formSettings.ShowDialog();
         }
 
         private void linkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string helpUrl = config.ToString("help_url");
+            string helpUrl = settings.HelpUrl;
 
             if (helpUrl != string.Empty)
             {
