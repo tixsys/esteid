@@ -177,5 +177,12 @@ namespace EstEIDSigner
 
             return chain;
         }
+
+        static public Org.BouncyCastle.X509.X509Certificate[] LoadCertificate(string path)
+        {
+            byte[] raw = EstEIDUtils.ReadFile(path);
+            
+            return LoadCertificate(raw);
+        }
     }
 }
