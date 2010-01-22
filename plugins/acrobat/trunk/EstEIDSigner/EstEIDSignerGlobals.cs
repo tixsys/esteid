@@ -25,14 +25,7 @@ namespace EstEIDSigner
     class EstEIDSignerGlobals
     {
         private const string organizationDir = "Estonian ID Card";
-        private const string programDir = "EstEIDSigner";
-        private const string certDir = "certs";
-        private const string bdoclibConfXml = "digidocpp.conf";
-#if WIN32
-        private const string registryKey = @"Software\Estonian ID Card";
-#else
-        private const string configDir = "/etc/digidocpp";
-#endif
+        private const string programDir = "EstEIDSigner";        
 
         public static string AppName
         {
@@ -54,53 +47,6 @@ namespace EstEIDSigner
 
                 return (fullPath);
             }
-        }
-
-        public static string ConfigDirectory
-        {
-            get
-            {
-#if WIN32
-#warning WIN32 is defined: using Registry to load configuration file location
-                RegistryKey regkey;
-
-                regkey = Registry.CurrentUser.OpenSubKey(registryKey);
-                if (regkey == null)
-                    return Environment.CurrentDirectory + "\\";
-
-                string path = (string)regkey.GetValue("Installed");
-
-                if (path == null || path.Length == 0)
-                    return Environment.CurrentDirectory + "\\";
-
-                return (path);
-#else
-#warning WIN32 is not defined: using predefined configuration file location
-                string path = configDir;
-
-                return (path);
-#endif
-            }
-        }
-
-        public static string CertDirectory
-        {            
-            get
-            {
-                string fullDir = System.IO.Path.Combine(ConfigDirectory, certDir);
-
-                return (fullDir);
-            }
-        }
-
-        public static string BDocLibConf
-        {
-            get
-            {
-                string fullDir = System.IO.Path.Combine(ConfigDirectory, bdoclibConfXml);
-
-                return (fullDir);
-            }
-        }
+        }    
     }
 }
