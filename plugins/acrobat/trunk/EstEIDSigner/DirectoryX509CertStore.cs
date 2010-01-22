@@ -32,15 +32,11 @@ namespace EstEIDSigner
     {
         private string filename = string.Empty;
         private X509Certificate certificate = null;
-        private string ocspUrl = string.Empty;
-        private bool usedInOCSP;
 
-        public X509CertStoreEntry(string filename, X509Certificate certificate, string url, bool usedInOCSP)
+        public X509CertStoreEntry(string filename, X509Certificate certificate)
         {
             this.filename = filename;
             this.certificate = certificate;
-            this.ocspUrl = url;
-            this.usedInOCSP = usedInOCSP;
         }
 
         public X509Certificate Certificate
@@ -54,46 +50,24 @@ namespace EstEIDSigner
             set { this.filename = value; }
             get { return filename; }
         }
-
-        public string OCSPUrl
-        {
-            set { this.ocspUrl = value; }
-            get { return ocspUrl; }
-        }
-
-        public bool IsOCSPCert
-        {
-            get { return usedInOCSP; }
-        }
     }
 
     class DirectoryX509CertStore
     {
         private string certPath;
         private Hashtable certs;
-        private string ocspUrl;
 
         /// <summary>Class that scans certain directory to find X509 certs (*.crt).</summary>
         /// <param name="path">Directory to scan.</param>
-        /// <param name="url">OCSP URL, will be used in creating X509CertStoreEntry object.</param>
-        public DirectoryX509CertStore(string path, string url)
+        public DirectoryX509CertStore(string path)
         {
             this.certPath = path;
             this.certs = new Hashtable();
-            this.ocspUrl = url;
         }
 
         public bool Open()
         {
-            string fullPath = EstEIDSignerGlobals.BDocLibConf;
-            bool res = false;
-
-            // if we have BDOC conf file then use it
-            // these certs will be used in 1st order in OCSP request
-            if (File.Exists(fullPath))
-                res = LoadBDocStore(fullPath);
-
-            return (res && LoadDirectoryStore());
+            return LoadDirectoryStore();
         }
 
         public IEnumerator GetCerts()
@@ -102,67 +76,12 @@ namespace EstEIDSigner
                 return certs.Values.GetEnumerator();
 
             return null;
-        }
-
-        public X509CertStoreEntry GetResponderCert(string key)
-        {
-            string name;
-            X509CertStoreEntry entry, match = null;
-            IDictionaryEnumerator e = certs.GetEnumerator();
-
-            while (e.MoveNext())
-            {
-                entry = (X509CertStoreEntry)e.Value;
-                name = X509Utils.GetIssuerFields(entry.Certificate, "CN");
-                if (String.Compare(name, key, true) == 0)
-                {
-                    match = entry;
-                    if (match.IsOCSPCert)
-                        return (match);
-                }
-            }            
-
-            // fall through: return non-best match if exists
-            return (match);
-        }
+        }        
 
         public X509CertStoreEntry GetIssuerCert(string key)
         {
             return ((X509CertStoreEntry)certs[key]);
-        }
-
-        private bool LoadBDocStore(string path)
-        {
-            XmlDocument documentation = new XmlDocument();
-            documentation.Load(path);
-            XmlNodeList memberNodes = documentation.SelectNodes("//ocsp");
-            string url = string.Empty;
-            string fullpath;
-
-            foreach (XmlNode node in memberNodes)
-            {
-                if (node.Attributes["issuer"] != null)
-                {
-                    foreach (XmlNode child in node.ChildNodes)
-                    {
-                        if (child.Name.Equals("url"))
-                        {
-                            url = child.InnerText;
-                        }
-                        else if (child.Name.Equals("cert"))
-                        {
-                            fullpath = Path.GetFullPath(
-                                Path.Combine(EstEIDSignerGlobals.ConfigDirectory, child.InnerText));
-                            if (File.Exists(fullpath))
-                                AddFileToCollection(true, fullpath, url);
-                            url = "";
-                        }
-                    }
-                }
-            }
-
-            return (certs.Keys.Count > 0);
-        }
+        }        
 
         private bool LoadDirectoryStore()
         {
@@ -170,12 +89,12 @@ namespace EstEIDSigner
             FileInfo[] files = di.GetFiles("*.crt");
 
             foreach (FileInfo fi in files)
-                AddFileToCollection(false, fi.FullName, this.ocspUrl);
+                AddFileToCollection(fi.FullName);
 
             return (certs.Keys.Count > 0);
         }
 
-        private void AddFileToCollection(bool usedInOCSP, string path, string url)
+        private void AddFileToCollection(string path)
         {
             int i;
             string key;
@@ -188,7 +107,7 @@ namespace EstEIDSigner
                 key = X509Utils.GetSubjectFields(chain[i], "CN");
                 // better safe than sorry, who knows what the dir content consists of...
                 if (!certs.Contains(key))
-                    certs.Add(key, new X509CertStoreEntry(path, chain[i], url, usedInOCSP));
+                    certs.Add(key, new X509CertStoreEntry(path, chain[i]));
             }
         }
     }
