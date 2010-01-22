@@ -39,48 +39,48 @@ namespace EstEIDSigner
             this.config = config;
 
             // signature settings            
-            this.pageTextBox.Text = config.ToString("signature_page", EstEIDSettings.SignaturePage);
-            this.SignatureRender.Checked = config.ToString("signature_render").Equals("1");
-            this.radioButtonSector.Checked = config.ToBoolean("signature_use_sector");
-            this.radioButtonCoordinates.Checked = config.ToBoolean("signature_use_coords");
-            this.xTextBox.Text = config.ToString("signature_x", EstEIDSettings.SignatureX);
-            this.yTextBox.Text = config.ToString("signature_y", EstEIDSettings.SignatureY);
-            this.wTextBox.Text = config.ToString("signature_w", EstEIDSettings.SignatureW);
-            this.hTextBox.Text = config.ToString("signature_h", EstEIDSettings.SignatureH);
+            this.pageTextBox.Text = config.SignaturePage.ToString();
+            this.SignatureRender.Checked = config.SignatureRender.Equals("1");
+            this.radioButtonSector.Checked = config.SignatureUseSector;
+            this.radioButtonCoordinates.Checked = config.SignatureUseCoordinates;
+            this.xTextBox.Text = config.SignatureX.ToString();
+            this.yTextBox.Text = config.SignatureY.ToString();
+            this.wTextBox.Text = config.SignatureW.ToString();
+            this.hTextBox.Text = config.SignatureH.ToString();
             
             // timestamp authority
-            this.EnableTSA.Checked = config.ToBoolean("enable_tsa");
-            this.urlTextBox.Text = config.ToString("tsa_url");
-            this.nameTextBox.Text = config.ToString("tsa_user");
-            this.passwordBox.Text = config.ToString("tsa_password");
+            this.EnableTSA.Checked = config.TsaEnabled;
+            this.urlTextBox.Text = config.TsaUrl;
+            this.nameTextBox.Text = config.TsaUser;
+            this.passwordBox.Text = config.TsaPassword;
 
             if ((!this.radioButtonSector.Checked) && (!this.radioButtonCoordinates.Checked))
             {
                 this.radioButtonSector.Checked = true;
-                config.AddOrReplace("signature_use_sector", this.radioButtonSector.Checked.ToString());
+                config.SignatureUseSector = this.radioButtonSector.Checked;
             }
 
-            SignatureSector = config.ToString("signature_sector", "9");
+            SignatureSector = config.SignatureSector;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
             // signature location
-            config.AddOrReplace("signature_page", this.pageTextBox.Text);
-            config.AddOrReplace("signature_render", this.SignatureRender.Checked ? "1" : "0");
-            config.AddOrReplace("signature_sector", SignatureSector);
-            config.AddOrReplace("signature_use_sector", this.radioButtonSector.Checked.ToString());
-            config.AddOrReplace("signature_use_coords", this.radioButtonCoordinates.Checked.ToString());
-            config.AddOrReplace("signature_x", this.xTextBox.Text);
-            config.AddOrReplace("signature_y", this.yTextBox.Text);
-            config.AddOrReplace("signature_w", this.wTextBox.Text);
-            config.AddOrReplace("signature_h", this.hTextBox.Text);
+            config.SignaturePage = this.pageTextBox.Text;
+            config.SignatureRender = this.SignatureRender.Checked ? "1" : "0";
+            config.SignatureSector = SignatureSector;
+            config.SignatureUseSector = this.radioButtonSector.Checked;
+            config.SignatureUseCoordinates = this.radioButtonCoordinates.Checked;
+            config.SignatureX = uint.Parse(this.xTextBox.Text);
+            config.SignatureY = uint.Parse(this.yTextBox.Text);
+            config.SignatureW = uint.Parse(this.wTextBox.Text);
+            config.SignatureH = uint.Parse(this.hTextBox.Text);
             
             // timestamp authority
-            config.AddOrReplace("enable_tsa", this.EnableTSA.Checked.ToString());
-            config.AddOrReplace("tsa_url", this.urlTextBox.Text);
-            config.AddOrReplace("tsa_user", this.nameTextBox.Text);
-            config.AddOrReplace("tsa_password", this.passwordBox.Text);
+            config.TsaEnabled = this.EnableTSA.Checked;
+            config.TsaUrl = this.urlTextBox.Text;
+            config.TsaUser = this.nameTextBox.Text;
+            config.TsaPassword = this.passwordBox.Text;
 
             Close();
         }
@@ -89,7 +89,7 @@ namespace EstEIDSigner
         {
             tableLayoutPanelSector.Enabled = true;
             tableLayoutPanelCoordinates.Enabled = false;
-            SignatureSector = config.ToString("signature_sector", "9");
+            SignatureSector = config.SignatureSector;
         }
 
         private void radioButtonCoordinates_CheckedChanged(object sender, EventArgs e)
