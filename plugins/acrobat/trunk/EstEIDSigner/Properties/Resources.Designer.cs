@@ -176,7 +176,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id-kaardilt ei leitud vajalikke sertifikaate.
+        ///   Looks up a localized string similar to ID-kaardilt ei leitud vajalikke sertifikaate.
         /// </summary>
         internal static string CERTS_MISSING {
             get {
@@ -197,16 +197,16 @@ namespace EstEIDSigner.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;configuration&gt;
         /// &lt;appSettings&gt;
-        ///  &lt;add key=&quot;pkcs11_library&quot; value=&quot;opensc-pkcs11.dll&quot; /&gt;
         ///  &lt;add key=&quot;debug&quot; value=&quot;false&quot; /&gt;
-        ///  &lt;add key=&quot;ocsp_url&quot; value=&quot;http://ocsp.sk.ee&quot; /&gt;
-        ///  &lt;add key=&quot;cert_path&quot; value=&quot;\certs&quot; /&gt;
         ///  &lt;add key=&quot;enable_tsa&quot; value=&quot;False&quot; /&gt;
         ///  &lt;add key=&quot;visible_signature&quot; value=&quot;True&quot; /&gt;
         ///  &lt;add key=&quot;tsa_url&quot; value=&quot;http://www.edelweb.fr/cgi-bin/service-tsp&quot; /&gt;
         ///  &lt;add key=&quot;tsa_user&quot; value=&quot;&quot; /&gt;
         ///  &lt;add key=&quot;tsa_password&quot; value=&quot;&quot; /&gt;
-        ///  &lt;add key= [rest of string was truncated]&quot;;.
+        ///  &lt;add key=&quot;help_url&quot; value=&quot;http://support.sk.ee/&quot; /&gt;
+        ///  &lt;add key=&quot;language&quot; value=&quot;&quot; /&gt;
+        ///  &lt;add key=&quot;signature_page&quot; value=&quot;1&quot; /&gt;
+        ///  &lt;add key=&quot;signature_use_sect [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DEFAULT_CONFIG {
             get {
@@ -314,7 +314,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vigane PKCS#12 ümbrik: privaatvõti puudub.
+        ///   Looks up a localized string similar to Vigane PKCS#12 juudrepääsutõend: privaatvõti puudub.
         /// </summary>
         internal static string INVALID_PKCS12_CERT_PRI_KEY_MISSING {
             get {
@@ -323,7 +323,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vigane PKCS#12 ümbrik: avalik võti puudub.
+        ///   Looks up a localized string similar to Vigane PKCS#12 juurdepääsutõend: avalik võti puudub.
         /// </summary>
         internal static string INVALID_PKCS12_CERT_PUB_KEY_MISSING {
             get {
@@ -440,7 +440,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligipääsutõendi faili (PKCS#12) ei leitud: .
+        ///   Looks up a localized string similar to Juurdepääsutõendi faili (PKCS#12) ei leitud: .
         /// </summary>
         internal static string PKCS12_FILE_MISSING {
             get {
@@ -449,7 +449,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligipääsutõendi faili nimi määramata!.
+        ///   Looks up a localized string similar to Juurdepääsutõendi faili nimi määramata!.
         /// </summary>
         internal static string PKCS12_FILENAME_MISSING {
             get {
@@ -458,7 +458,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ligipääsutõendi muutujate lugemine ebaõnnestus: .
+        ///   Looks up a localized string similar to Juurdepääsutõendi muutujate lugemine ebaõnnestus: .
         /// </summary>
         internal static string PKCS12_LOAD_ERROR {
             get {
@@ -494,7 +494,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Responder certificate missing: .
+        ///   Looks up a localized string similar to Puudub responderi sertifikaat:.
         /// </summary>
         internal static string RESPONDER_CET_MISSING {
             get {
@@ -620,7 +620,7 @@ namespace EstEIDSigner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sisesta {0} PINPAD&apos;ilt.
+        ///   Looks up a localized string similar to Sisesta {0} sõrmistikult.
         /// </summary>
         internal static string UI_ENTER_PIN_ONTHE_PINPAD {
             get {
