@@ -97,10 +97,9 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="IniFile.cs" />
     <Compile Include="OCSPClientEstEID.cs" />
+    <Compile Include="OCSPConf.cs" />
     <Compile Include="PDFSigner.cs" />
-    <Compile Include="PKCS12Settings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.en-US.resx">
@@ -167,7 +166,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="EstEIDSigner.exe.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -180,6 +178,7 @@
     <Compile Include="PKCS11Error.cs" />
     <Compile Include="X509CertificateUI.cs" />
     <Compile Include="X509Utils.cs" />
+    <Compile Include="XmlConf.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
