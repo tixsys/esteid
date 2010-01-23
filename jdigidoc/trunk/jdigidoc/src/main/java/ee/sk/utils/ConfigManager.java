@@ -152,7 +152,8 @@ public class ConfigManager {
      * @param hProps config data
      */
     public static void init(Hashtable hProps) {
-    	m_props = new Properties();
+      	if(m_props == null)
+    	    m_props = new Properties();
       	m_props.putAll(hProps);
     }
     
