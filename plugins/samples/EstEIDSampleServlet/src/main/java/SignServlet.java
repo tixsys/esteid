@@ -19,7 +19,7 @@ public class SignServlet extends HttpServlet {
         
         // Load configuration files
         ConfigManager.init("jar://jdigidoc.cfg");
-        ConfigManager.init(myPath + "/jdigidoc.cfg");
+        ConfigManager.init(myPath + "/WEB-INF/jdigidoc.cfg");
     }
     
     @Override
