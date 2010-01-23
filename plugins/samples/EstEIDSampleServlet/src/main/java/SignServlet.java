@@ -17,12 +17,13 @@ public class SignServlet extends HttpServlet {
         myPath = getServletContext().getRealPath("/").toString();
         log("working directory set to: " + myPath);
         
-        // Load configuration file
+        // Load configuration files
+        ConfigManager.init("jar://jdigidoc.cfg");
         ConfigManager.init(myPath + "/jdigidoc.cfg");
     }
     
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse res)
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         String mode = req.getParameter("mode");
         if(mode != null) {
@@ -30,6 +31,12 @@ public class SignServlet extends HttpServlet {
             else if(mode.equals("sign")) doSign(req, res);
             else if(mode.equals("sdoc")) doSDoc(req, res);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        doGet(req, res);
     }
     
     protected void doPrep(HttpServletRequest req, HttpServletResponse res)
@@ -57,7 +64,10 @@ public class SignServlet extends HttpServlet {
     
     protected void doSign(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
+	boolean doOCSP = false;
+
         String sigHex = req.getParameter("sigHex");
+        if(req.getParameter("doOCSP") != null) doOCSP = true;
         HttpSession sess = req.getSession(true);
         if(sigHex != null) {
             Signature sig = (Signature)sess.getAttribute("sig");
@@ -65,7 +75,7 @@ public class SignServlet extends HttpServlet {
                 res.setContentType( "text/plain" );
                 try {
                     sig.setSignatureValue(SignedDoc.hex2bin(sigHex));
-                    //sig.getConfirmation();
+                    if(doOCSP) sig.getConfirmation();
                     SignedDoc sdoc = sig.getSignedDoc();
                     sdoc.writeToFile(new File(myPath + "/out/" + sess.getId() + ".bdoc"));
                     sess.removeAttribute("sig");
@@ -105,7 +115,7 @@ public class SignServlet extends HttpServlet {
     private Signature prepareContract(String pem) throws DigiDocException, CertificateException {
         X509Certificate cert = parseCertificate(pem);
         SignedDoc sdoc = new SignedDoc(SignedDoc.FORMAT_BDOC, SignedDoc.BDOC_VERSION_1_0);
-        sdoc.addDataFile(new File(myPath + "leping.txt"),
+        sdoc.addDataFile(new File(myPath + "/leping.txt"),
                 "text/plain", DataFile.CONTENT_EMBEDDED);
         return sdoc.prepareSignature(cert, null, null);
     }

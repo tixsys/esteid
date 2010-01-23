@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+                  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+                           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+                                    id="WebApp_ID" version="2.5">
+
+  <display-name>EstEID Web Signing Example</display-name>
+
+  <servlet>
+      <servlet-name>signsample</servlet-name>
+      <servlet-class>SignServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>signsample</servlet-name>
+    <url-pattern>/signservlet</url-pattern>
+  </servlet-mapping>
+
+  <!-- Enable directory listings for default servlet -->
+  <servlet>
+    <servlet-name>default</servlet-name>
+    <!-- 
+    <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+    -->
+
+    <!-- Tomcat -->
+    <init-param>
+      <param-name>listings</param-name>
+      <param-value>true</param-value>
+    </init-param>
+
+    <!-- Jetty -->
+    <init-param>
+      <param-name>dirAllowed</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+</web-app>

@@ -1,0 +1,75 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ee.eesti.id</groupId>
+  <artifactId>EstEIDSampleServlet</artifactId>
+  <packaging>war</packaging>
+  <name>EstEID Web Signing Example</name>
+  <version>1.0.0</version>
+  <description>A simple example that uses JS API to create a signed doc</description>
+  <url>http://id.eesti.ee</url>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, Version 2.1</name>
+      <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://id.eesti.ee/idtrac/browser/plugins/samples/EstEIDSampleServlet</url>
+  </scm>
+  <dependencies>
+    <!-- Modern java Web application dependencies (Servlet, JSP, JSTL) -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency> 
+
+    <!-- JDigiDoc Dependency -->
+    <dependency>
+      <groupId>ee.eesti.id</groupId>
+      <artifactId>jdigidoc</artifactId>
+      <version>2.3.98</version>
+    </dependency>
+  </dependencies>
+
+  <!-- Enable jDigiDoc beta repository -->
+  <repositories>
+    <repository>
+      <id>jdigidoc-devel</id>
+      <url>http://ftp.id.eesti.ee/pub/id/mvnrepo</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <!-- Use Java 1.5, we live in modern times -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+
+      <!-- Enable jetty to simplify development and testing -->
+      <plugin>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>maven-jetty-plugin</artifactId> 
+      </plugin>
+    </plugins>
+  </build>
+</project>

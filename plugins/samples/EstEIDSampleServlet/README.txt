@@ -1,5 +1,9 @@
-To run this example, copy this folder into Your Tomcat
-installation webapps directory eg: /var/lib/tomcat6/webapps/
-Then create a directory named out underneath it 
-(eg /var/lib/tomcat6/signsample/out) and make sure it's
-writable by tomcat user (eg chown tomcat ...)
+EstEID Web Signing Example
+--------------------------
+
+* Type mvn jetty:run to execute this example.
+* Type mvn install to get a deployable WAR
+
+When deployed on an appserver, make sure that "out" directory
+is writable for the appserver user.
+eg. chown tomcat /var/lib/tomcat6/webapps/EstEIDSampleServlet/out
