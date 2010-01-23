@@ -1,0 +1,32 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ee.eesti.id</groupId>
+  <artifactId>jdigidoc-pkcs11</artifactId>
+  <packaging>jar</packaging>
+  <name>Java DigiDoc library PKCS#11 Signer</name>
+  <version>2.3.98</version>
+  <description>A PKCS#11 Signer for java DigiDoc libray</description>
+  <url>http://id.eesti.ee</url>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License, Version 2.1</name>
+      <url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://id.eesti.ee/idtrac/browser/jdigidoc</url>
+  </scm>
+  <dependencies>
+     <dependency>
+       <groupId>ee.eesti.id</groupId>
+       <artifactId>jdigidoc</artifactId>
+       <version>2.3.98</version>
+     </dependency>
+     <dependency>
+       <groupId>iaik.pkcs</groupId>
+       <artifactId>iaikPkcs11Wrapper</artifactId>
+       <version>1.2.16</version>
+     </dependency>
+  </dependencies>
+</project>
