@@ -16,6 +16,11 @@ find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
 find_package(SmartCardpp REQUIRED)
 
+if(MSVC)
+    # Needed for smartcardpp
+    add_definitions(-D_SECURE_SCL=0)
+endif(MSVC)
+
 set(QT_USE_QTNETWORK true)
 set(QT_USE_QTWEBKIT true)
 set(QT_USE_QTXML true)
