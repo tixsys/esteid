@@ -88,9 +88,9 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	}
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		request.setUrl( Settings().value("Client/bdocurl", "https://www.sk.ee:8097").toUrl() );
+		request.setUrl( QUrl( Settings().value("Client/bdocurl", "https://www.sk.ee:8097").toString() ) );
 	else
-		request.setUrl( Settings().value("Client/ddocurl", "https://digidocservice.sk.ee").toUrl() );
+		request.setUrl( QUrl( Settings().value("Client/ddocurl", "https://digidocservice.sk.ee").toString() ) );
 
 	QString certFile = DigiDoc::getConfValue( DigiDoc::PKCS12Cert );
 	if( certFile.isEmpty() || !QFile::exists( certFile ) )
@@ -142,14 +142,17 @@ void MobileDialog::finished( QNetworkReply *reply )
 	case QNetworkReply::HostNotFoundError:
 		labelError->setText( mobileResults.value( "HOSTNOTFOUND" ) );
 		statusTimer->stop();
+		reply->deleteLater();
 		return;
 	default:
 		labelError->setText( reply->errorString() );
 		statusTimer->stop();
+		reply->deleteLater();
 		return;
 	}
 
 	QByteArray result = reply->readAll();
+	reply->deleteLater();
 	if( result.isEmpty() )
 	{
 		labelError->setText( tr("Empty HTTP result") );
