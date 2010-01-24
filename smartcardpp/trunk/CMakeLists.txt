@@ -13,6 +13,14 @@ if(UNIX)
     find_package(PCSCLite REQUIRED)
 endif(UNIX)
 
+if(MSVC)
+    add_definitions(
+        # Release builds don't compile without this definition.
+        # http://social.msdn.microsoft.com/Forums/en-US/vcplus2008prerelease/thread/fa969def-911e-4760-867d-5a06a37ed048
+        -D_SECURE_SCL=0
+    )
+endif(MSVC)
+
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${LIBDL_INCLUDE_DIR}
