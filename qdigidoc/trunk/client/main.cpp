@@ -66,7 +66,6 @@ int main( int argc, char *argv[] )
 	else
 	{
 		SSL_load_error_strings();
-		OpenSSL_add_ssl_algorithms();
 		SSL_library_init();
 
 		w = new MainWindow();

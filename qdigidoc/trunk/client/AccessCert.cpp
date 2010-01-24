@@ -53,28 +53,32 @@ AccessCert::~AccessCert()
 
 bool AccessCert::download( QSigner *signer, const QString &card, const QString &filename )
 {
-	SSLConnect ssl;
-	ssl.setPKCS11( DigiDoc::getConfValue( DigiDoc::PKCS11Module ), false );
-	ssl.setCard( card );
+	signer->lock();
+	SSLConnect *ssl = new SSLConnect();
+	ssl->setPKCS11( DigiDoc::getConfValue( DigiDoc::PKCS11Module ), false );
+	ssl->setCard( card );
 
 	bool retry = false;
 	do
 	{
 		retry = false;
-		signer->lock();
-		ssl.waitForFinished( SSLConnect::AccessCert );
-		signer->unlock();
-		switch( ssl.error() )
+		ssl->waitForFinished( SSLConnect::AccessCert );
+		switch( ssl->error() )
 		{
-		case SSLConnect::PinCanceledError: return false;
+		case SSLConnect::PinCanceledError:
+			delete ssl;
+			signer->unlock();
+			return false;
 		case SSLConnect::PinInvalidError:
-			showWarning( ssl.errorString() );
+			showWarning( ssl->errorString() );
 			retry = true;
 			break;
 		default:
-			if( !ssl.errorString().isEmpty() )
+			if( !ssl->errorString().isEmpty() )
 			{
-				showWarning( tr("Error downloading server access certificate!\n%1").arg( ssl.errorString() ) );
+				showWarning( tr("Error downloading server access certificate!\n%1").arg( ssl->errorString() ) );
+				delete ssl;
+				signer->unlock();
 				return false;
 			}
 			break;
@@ -82,14 +86,18 @@ bool AccessCert::download( QSigner *signer, const QString &card, const QString &
 	}
 	while( retry );
 
-	if ( ssl.result().isEmpty() )
+	QByteArray result = ssl->result();
+	delete ssl;
+	signer->unlock();
+
+	if( result.isEmpty() )
 	{
 		showWarning( tr("Empty result!") );
 		return false;
 	}
 
 	QDomDocument domDoc;
-	if ( !domDoc.setContent( QString::fromUtf8( ssl.result() ) ) )
+	if( !domDoc.setContent( QString::fromUtf8( result ) ) )
 	{
 		showWarning( tr("Error parsing server access certificate result!") );
 		return false;
