@@ -153,6 +153,11 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(SmartCardpp REQUIRED)
 include_directories(${SMARTCARDPP_INCLUDE_DIR})
 
+if(MSVC)
+    # Needed for smartcardpp
+    add_definitions(-D_SECURE_SCL=0)
+endif(MSVC)
+
 # Generate build targets for IDL files in our project
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 FILE(GLOB idlFiles RELATIVE ${PROJECT_SOURCE_DIR}/components components/*.idl)
