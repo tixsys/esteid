@@ -12,6 +12,9 @@ include(${QT_USE_FILE})
 add_definitions(
     -D_CRT_SECURE_NO_WARNINGS
     -DUNICODE
+
+    # Needed for smartcardpp
+    -D_SECURE_SCL=0
 )
 
 set(UPDATER_URL "http://ftp.id.eesti.ee/pub/id/updater/" CACHE STRING "URL to download manifest.xml" )
