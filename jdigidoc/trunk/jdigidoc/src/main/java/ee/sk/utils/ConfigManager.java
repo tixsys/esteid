@@ -54,8 +54,6 @@ public class ConfigManager {
     private static TimestampFactory m_tsFac = null;
     /** CRL factory instance */
     private static CRLFactory m_crlFac = null;
-    /** XML-ENC parser factory instance */
-    private static EncryptedDataParser m_dencFac = null;
     /** XML-ENC parses for large encrypted files */
     private static EncryptedStreamParser m_dstrFac = null;
     private static String managerPath;
@@ -328,16 +326,16 @@ public class ConfigManager {
 		throws DigiDocException
 	{
 		try {
-			if(m_dencFac == null)
-				m_dencFac = (EncryptedDataParser)Class.
-					forName(getProperty("ENCRYPTED_DATA_PARSER_IMPL")).newInstance();
+			EncryptedDataParser m_dencFac = (EncryptedDataParser)Class.
+				forName(getProperty("ENCRYPTED_DATA_PARSER_IMPL")).newInstance();
 			m_dencFac.init();            
+			return m_dencFac;
 		} catch(DigiDocException ex) {
 			throw ex;
 		} catch(Exception ex) {
 			DigiDocException.handleException(ex, DigiDocException.ERR_DIG_FAC_INIT);
 		}
-		return m_dencFac;
+		return null;
 	}
 
 	/**
