@@ -1,11 +1,26 @@
-/*!
-	\file		CardMonitorThread.h
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-10-21 08:43:53 +0300 (K, 21 okt 2009) $
+/*
+* EstEIDSigningPluginBHO
+*
+* Copyright (C) 2009 Kaido Kert <kaidokert@gmail.com>
+*
+* This library is free software; you can redistribute it and/or
+* modify it under the terms of the GNU Lesser General Public
+* License as published by the Free Software Foundation; either
+* version 2.1 of the License, or (at your option) any later version.
+*
+* This library is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with this library; if not, write to the Free Software
+* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*
 */
-// Revision $Revision: 477 $
+// $Revision: 502 $
+// $Date: 2010-01-25 03:07:01 +0200 (E, 25 jaan 2010) $
+// $Author: kaidokert $
 
 // SmartCardSigner.h : Declaration of the CSmartCardSigner
 
@@ -23,10 +38,11 @@
 #include <atlwin.h> //CWindowImpl
 #include <objsafe.h> //IObjectSafetyImpl
 #include <atlutil.h> //IWorkerThreadClient,CInterfaceList
-#include <smartcardpp/common.h>
-#include <smartcardpp/esteid/EstEidCard.h>
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcard++/common.h>
+#include <smartcard++/esteid/EstEidCard.h>
+#include <smartcard++/SmartCardManager.h>
 #include <utility/monitorThread.h>
+#include <utility/logger.h>
 #include "EstEIDSigningPluginBHO_i.h"
 
 #define WM_CARD_INSERTED   (WM_USER + 101)
@@ -95,6 +111,7 @@ public:
 	STDMETHOD(SetSite)(IUnknown *pUnkSite);
 
 private:
+	logger m_log;
 	bool runningInSecureZone;
     CComPtr<IWebBrowser2>  m_iWebBrowser2; // WebBrowser host handle
 
