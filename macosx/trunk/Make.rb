@@ -43,7 +43,7 @@ class Application
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
-		@options.setsdkenv = '~/OpenOffice.org3.1_SDK/' + `hostname` + '/setsdkenv_unix.sh'
+		@options.setsdkenv = '~/OpenOffice.org3.1_SDK/' + `hostname`.strip + '/setsdkenv_unix.sh'
 		@options.sign = nil
 	end
 	
@@ -191,6 +191,7 @@ class Application
 		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
+		FileUtils.rm_rf(File.join(binaries, 'ooo-digidoc.oxt')) if File.exists? File.join(binaries, 'ooo-digidoc.oxt')
 		FileUtils.rm_rf(File.join(binaries, @options.mozappid)) if File.exists? File.join(binaries, @options.mozappid)
 		FileUtils.rm_rf(File.join(binaries, '10.4')) if File.exists? File.join(binaries, '10.4')
 		FileUtils.rm_rf(File.join(binaries, '10.5')) if File.exists? File.join(binaries, '10.5')
@@ -215,17 +216,6 @@ class Application
 				end
 			end
 		end
-		
-		puts "Creating Openoffice extension..." if @options.verbose
-		
-		#FileUtils.cd(Pathname.new(@path).join('../../plugins/ooo-digidoc/trunk').to_s) do
-		#	run_command 'rm -fR build' if File.exists? 'build'
-		#	run_command 'mkdir build'
-		#	
-		#	run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-		#	
-		#	
-		#end
 		
 		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
@@ -267,6 +257,23 @@ class Application
 			FileUtils.cp_r("crypto/#{@options.target}/qdigidoccrypto.app", binaries)
 		end
 		
+		puts "Creating Open Office extension..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../plugins/ooo-digidoc/trunk').to_s) do
+			run_command 'rm -fR build' if File.exists? 'build'
+			run_command 'mkdir build'
+			
+			FileUtils.cd('build') do
+				run_command '. ' + @options.setsdkenv + '; cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ ..'
+				run_command 'xcodebuild -project OOoDigiDocPlugin.xcodeproj -configuration Release -sdk macosx10.4 GCC_VERSION=4.0'
+				
+				run_command "cp *.oxt ooo-digidoc.oxt"
+				
+				puts "Copying Open Office extension..." if @options.verbose
+				FileUtils.cp_r('ooo-digidoc.oxt', binaries)
+			end
+		end
+		
 		puts "Creating Mozilla extension..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
@@ -292,7 +299,6 @@ class Application
 				FileUtils.cp_r(@options.mozappid, binaries)
 			end
 		end
-		
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
@@ -426,12 +432,20 @@ class Application
 			name = package[:name]
 			identifier = package[:identifier]
 			version = package[:version]
+			svnroot = package[:svnroot]
 			location = package[:location]
 			patterns = package[:files]
 			restart = package[:restart]
 			root = Pathname.new(@path).join(package[:froot]).to_s unless package[:froot].nil?
 			extension = '.mpkg'
 			files = []
+			
+			if !version.nil? and !svnroot.nil?
+				FileUtils.cd(Pathname.new(@path).join('../..' + svnroot).to_s) do
+					svnversion = `svn info | grep 'Last Changed Rev' | cut -d ' ' -f 4`.strip
+					version = version.gsub("$", svnversion)
+				end
+			end
 			
 			if patterns.instance_of? Array
 				patterns.each { |pattern| files.concat(Dir.glob(Pathname.new(@path).join(pattern).to_s)) }
@@ -830,7 +844,8 @@ class Application
 				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.installer.digidoc',
-				:version => '1.0.2'
+				:version => '1.$',
+				:svnroot => '/libdigidocpp/trunk'
 			}, {
 				:name => 'esteid-qt',
 				:files => [
@@ -845,11 +860,14 @@ class Application
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
 				:version => '4.5.3'
-			#}, {
-			#	:name => 'esteid-openoffice',
-			#	:files => File.join(@options.binaries, 'qesteidutil.app'),
-			#	:froot => @options.binaries,
-			#	:location => '/usr/local/share'
+			}, {
+				:name => 'esteid-openoffice',
+				:files => File.join(@options.binaries, 'ooo-digidoc.oxt'),
+				:froot => @options.binaries,
+				:location => '/usr/local/share',
+				:identifier => 'org.esteid.installer.openoffice',
+				:version => '$',
+				:svnroot => '/plugins/ooo-digidoc/trunk'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),

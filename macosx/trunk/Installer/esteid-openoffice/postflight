@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-/Applications/OpenOffice.org.app/Contents/program/unopkg add --shared /usr/local/share/digidoc.oxt
+/Applications/OpenOffice.org.app/Contents/program/unopkg add --shared /usr/local/share/ooo-digidoc.oxt
 
 exit 0
