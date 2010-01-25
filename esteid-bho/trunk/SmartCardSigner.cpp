@@ -1,26 +1,11 @@
-/*
-* EstEIDSigningPluginBHO
-*
-* Copyright (C) 2009 Kaido Kert <kaidokert@gmail.com>
-*
-* This library is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public
-* License as published by the Free Software Foundation; either
-* version 2.1 of the License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*
+/*!
+	\file		SmartCardSigner.cpp
+	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
+	\licence	BSD
+	\author		$Author: kaidokert $
+	\date		$Date: 2010-01-18 06:25:17 +0200 (E, 18 jaan 2010) $
 */
-// $Revision: 502 $
-// $Date: 2010-01-25 03:07:01 +0200 (E, 25 jaan 2010) $
-// $Author: kaidokert $
+// Revision $Revision: 499 $
 
 // SmartCardSigner.cpp : Implementation of CSmartCardSigner
 
@@ -38,7 +23,7 @@
 // CSmartCardSigner
 CSmartCardSigner::CSmartCardSigner() : 
 		criticalSection("monitorCS"),m_monitorThread(NULL),
-		runningInSecureZone(true), m_log("EsteidBHO")
+		runningInSecureZone(true)
 //			m_spUnkSite(NULL)//,m_hWnd(NULL)
 	{
 		IObjectWithSiteImpl<CSmartCardSigner>::m_spUnkSite = NULL;
@@ -71,7 +56,6 @@ HRESULT CSmartCardSigner::FinalConstruct()
 	m_selectedReader = 0;
 	m_monitorThread = new monitorThread(*this,criticalSection);
 	m_monitorThread->start();
-	m_log << "FinalConstruct done" << std::endl;
 	return S_OK;
 }
 
@@ -82,7 +66,6 @@ void CSmartCardSigner::FinalRelease()
 		m_monitorThread = NULL;
 		}
 	if (m_hWnd != NULL) DestroyWindow();
-	m_log << "FinalRelease done" << std::endl;
 }
 
 STDMETHODIMP CSmartCardSigner::SetSite(IUnknown* pUnkSite) {
@@ -109,12 +92,8 @@ STDMETHODIMP CSmartCardSigner::SetSite(IUnknown* pUnkSite) {
 
 	if ((dwZone != URLZONE_LOCAL_MACHINE) &&
 		(dwZone != URLZONE_INTRANET) &&
-		(dwZone != URLZONE_TRUSTED)) {
+		(dwZone != URLZONE_TRUSTED)) 
 			runningInSecureZone = false;
-			m_log << "Not running in secure zone" << std::endl;
-			}
-
-	m_log << "SetSite done" << std::endl;
 	return S_OK;
 	}
 
@@ -197,12 +176,10 @@ public:
 };
 
 STDMETHODIMP CSmartCardSigner::errMsg(LPCOLESTR err) {
-	m_log << "ErrMsg : " << err << std::endl;
-	return Error(err,__uuidof(ISmartCardSigner));
+	return Error(err,__uuidof(ISmartCardSigner));;
 	}
 
 STDMETHODIMP CSmartCardSigner::errMsg(std::string err) {
-	m_log << "Error : " << err << std::endl;
 	std::wstring errStr(err.length() + 1,L' ');
 	std::transform(err.begin(),err.end(),errStr.begin(),widener());
 	return Error(errStr.c_str(),__uuidof(ISmartCardSigner));
@@ -270,11 +247,9 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 		sign_op operation(hash,result,card,criticalSection);
 		if (!card.hasSecurePinEntry()) {
 			PinString dummyCache;
-			m_log << "Doing regular sign op" << std::endl;
 			dlg.doDialogInloop(operation,dummyCache);
 			}
 		else {
-			m_log << "Doing secure PIN sign op" << std::endl;
 			operation.call(card,"",dlg.keyType());
 			}
 	} catch(std::exception &e) {
@@ -290,7 +265,6 @@ void CSmartCardSigner::clearCaches() {
 	m_authCert.clear();
 	m_signCert.clear();
 	m_cardData.clear();
-	m_log << "Caches cleared" << std::endl;
 	}
 
 void CSmartCardSigner::getEstEIDCerts(CInterfaceList<ISmartCardCertificate> &list) {
@@ -312,7 +286,6 @@ void CSmartCardSigner::getEstEIDCerts(CInterfaceList<ISmartCardCertificate> &lis
 	cert1->_loadArrayFrom(L"CARD:EstEID:1", (ULONG)m_signCert.size(), &m_signCert[0] );
 	list.AddTail(cert0);
 	list.AddTail(cert1);
-	m_log << "Certs retrieved" << std::endl;
 	}
 
 STDMETHODIMP CSmartCardSigner::getCertificateList(BSTR* retVal)
@@ -392,7 +365,6 @@ void callAllFunctions(CInterfaceList<IDispatch> &list,WPARAM wParam) {
 
 LRESULT CSmartCardSigner::OnCardInserted(UINT uMsg, WPARAM wParam,
 	LPARAM lParam, BOOL& bHandled) {
-	m_log << "OnCardInserted" << std::endl;
 	if (m_selectedReader == wParam) 
 		clearCaches();
 	callAllFunctions(notifyCardInsert, wParam);
@@ -403,7 +375,6 @@ LRESULT CSmartCardSigner::OnCardInserted(UINT uMsg, WPARAM wParam,
 LRESULT CSmartCardSigner::OnCardRemoved(UINT uMsg, WPARAM wParam,
 	LPARAM lParam, BOOL& bHandled)
 {
-	m_log << "OnCardRemoved" << std::endl;
 	if (m_selectedReader == wParam) 
 		clearCaches();
 	callAllFunctions(notifyCardRemove, wParam);
@@ -414,7 +385,6 @@ LRESULT CSmartCardSigner::OnCardRemoved(UINT uMsg, WPARAM wParam,
 LRESULT CSmartCardSigner::OnReadersChanged(UINT uMsg, WPARAM wParam,
 	LPARAM lParam, BOOL& bHandled)
 {
-	m_log << "OnReadersChanged" << std::endl;
 	clearCaches();
 	callAllFunctions(notifyReadersChanged, wParam);
 	if (runningInSecureZone)
