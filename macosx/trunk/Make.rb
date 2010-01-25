@@ -844,7 +844,7 @@ class Application
 				:froot => @options.digidoc,
 				:location => '/usr/local',
 				:identifier => 'org.esteid.installer.digidoc',
-				:version => '1.$',
+				:version => '1.0.$',
 				:svnroot => '/libdigidocpp/trunk'
 			}, {
 				:name => 'esteid-qt',
@@ -866,7 +866,7 @@ class Application
 				:froot => @options.binaries,
 				:location => '/usr/local/share',
 				:identifier => 'org.esteid.installer.openoffice',
-				:version => '$',
+				:version => '0.0.$',
 				:svnroot => '/plugins/ooo-digidoc/trunk'
 			}, {
 				:name => 'esteid-qesteidutil',
