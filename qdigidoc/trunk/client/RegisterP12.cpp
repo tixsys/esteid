@@ -44,8 +44,11 @@ RegisterP12::RegisterP12( const QString &cert, QWidget *parent )
 	qtTranslator->load( ":/translations/qt_" + lang );
 
 	setupUi( this );
+	try { digidoc::initialize(); } catch( const digidoc::Exception & ) {}
 	p12Cert->setText( cert );
 }
+
+RegisterP12::~RegisterP12() { digidoc::terminate(); }
 
 void RegisterP12::on_buttonBox_accepted()
 {

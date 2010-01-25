@@ -42,9 +42,6 @@
 
 #include <stdexcept>
 
-#ifndef BDOCLIB_CONF_PATH
-#define BDOCLIB_CONF_PATH "digidocpp.conf"
-#endif
 
 using namespace digidoc;
 
@@ -372,16 +369,6 @@ QString DigiDoc::fileName() const { return m_fileName; }
 
 bool DigiDoc::init()
 {
-	if( qgetenv( "BDOCLIB_CONF_XML" ).isEmpty() )
-	{
-		QByteArray path = QSettings( QSettings::NativeFormat, QSettings::SystemScope,
-			"Estonian ID Card", "digidocpp" ).value( "ConfigFile" ).toByteArray();
-		if( !path.isEmpty() )
-			qputenv( "BDOCLIB_CONF_XML", path );
-		else
-			qputenv( "BDOCLIB_CONF_XML", BDOCLIB_CONF_PATH );
-	}
-
 	try
 	{
 		digidoc::initialize();
