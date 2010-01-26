@@ -41,6 +41,7 @@ set(bho_SRCS
     utility/monitorThread.cpp
     utility/pinDialog.cpp
     utility/threadObj.cpp
+    utility/logger.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
