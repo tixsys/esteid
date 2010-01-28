@@ -909,7 +909,8 @@ EXP_OPTION int ddocPrepareSignature(SignedDoc* pSigDoc, SignatureInfo** ppSigInf
 EXP_OPTION  int ddocGetSignedHash(SignatureInfo* pSigInfo, 
 		   char* pBuf, int* pBufLen, int enc, int bWithAsn1Prefix)
 {
-  int err = ERR_OK, l1 = 0;
+  int err = ERR_OK;
+  size_t l1 = 0;
   char buf1[50];
   DigiDocMemBuf *pMBuf;
 
