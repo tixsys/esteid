@@ -588,7 +588,7 @@ EXP_OPTION const char* getSimpleFileName(const char* szFileName)
 //============================================================
 // Get the absolute filename with path
 //============================================================
-EXP_OPTION int getFullFileName(const char* szFileName, char* szDest, int len)
+EXP_OPTION int getFullFileName(const char* szFileName, char* szDest, size_t len)
 {
   int err = ERR_OK;
   memset(szDest, 0, len);
@@ -614,7 +614,7 @@ EXP_OPTION int getFullFileName(const char* szFileName, char* szDest, int len)
 //============================================================
 // Get the path part of full file name
 //============================================================
-EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, int len)
+EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, size_t len)
 {
   int nFound = 0, i, err = ERR_OK;
 
@@ -638,7 +638,7 @@ EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, int len)
 // Gets a new temporary filename
 // buf - filename buffer
 //============================================================
-EXP_OPTION int getTempFileName(char* szFileName, int len)
+EXP_OPTION int getTempFileName(char* szFileName, size_t len)
 {
 	char tbuf[200];
 #ifdef WIN32

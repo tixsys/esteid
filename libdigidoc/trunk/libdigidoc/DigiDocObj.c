@@ -3612,11 +3612,12 @@ EXP_OPTION int setSignatureValueFromFile(SignatureInfo* pSigInfo, char* szSigFil
     while((i = fread(buf, sizeof(char), FILE_BUFSIZE, hFile)) > 0) {
 		ddocDebug(3, "setSignatureValueFromFile", "read: %d", i);
       for(j = 0; j < i; j++) {
-        if(isxdigit(buf[j]))
+        if(isxdigit(buf[j])) {
           if(isdigit(buf[j]))
 	    sbuf[slen++] = buf[j];
           else
             sbuf[slen++] = toupper(buf[j]);
+        }
       }
 	}
 	ddocDebug(3, "setSignatureValueFromFile", "input: %d - \'%s\'", slen, sbuf);

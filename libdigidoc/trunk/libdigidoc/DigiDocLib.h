@@ -98,7 +98,7 @@ int ddocCheckFormatAndVer(const char* format, const char* version);
 //--------------------------------------------------
 EXP_OPTION int ddocLocalTime(time_t* pTime, struct tm* pTmStruct, int bLocal);
 
-EXP_OPTION int getTempFileName(char* szFileName, int len);
+EXP_OPTION int getTempFileName(char* szFileName, size_t len);
 
 //==========< general crypto fucntions >============
 
@@ -172,9 +172,9 @@ EXP_OPTION int createMimeType(char* buf, const char* mime,
 // Get the filename part of full file name
 EXP_OPTION const char* getSimpleFileName(const char* szFileName);
 // Get the absolute filename with path
-EXP_OPTION int getFullFileName(const char* szFileName, char* szDest, int len);
+EXP_OPTION int getFullFileName(const char* szFileName, char* szDest, size_t len);
 // Get the path part of full file name
-  EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, int len);
+  EXP_OPTION int getFileNamePath(const char* szFileName, char* szPath, size_t len);
 
 
 //------------------------ ??
