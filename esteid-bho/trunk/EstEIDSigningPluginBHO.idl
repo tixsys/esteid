@@ -80,6 +80,16 @@ interface ISmartCardCertificate : IDispatch{
 	[propget, id(13), helpstring("property serial")] HRESULT serial([out, retval] BSTR* pVal);
 };
 [
+	object,
+	uuid(70A0465E-F581-44F8-A277-7C0A54DA5166),
+	dual,
+	nonextensible,
+	helpstring("IBHOIEToolsItem Interface"),
+	pointer_default(unique)
+]
+interface IBHOIEToolsItem : IDispatch{
+};
+[
 	uuid(536E87AF-8E4B-47C0-8046-273961378EF3),
 	version(1.0),
 	helpstring("EstEIDSigningPluginBHO 1.0 Type Library")
@@ -123,5 +133,13 @@ library EstEIDSigningPluginBHOLib
 	coclass SmartCardCertificate
 	{
 		[default] interface ISmartCardCertificate;
+	};
+	[
+		uuid(83F01867-DDC7-45F4-AE43-DEE30141FAFF),
+		helpstring("BHOIEToolsItem Class")
+	]
+	coclass BHOIEToolsItem
+	{
+		[default] interface IBHOIEToolsItem;
 	};
 };

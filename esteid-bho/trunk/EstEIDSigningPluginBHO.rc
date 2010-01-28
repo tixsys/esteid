@@ -96,6 +96,7 @@ LANGUAGE LANG_ESTONIAN, SUBLANG_DEFAULT
 IDR_ESTEIDSIGNINGBHO    REGISTRY                "EstEIDSigningBHO.rgs"
 IDR_SMARTCARDSIGNER     REGISTRY                "SmartCardSigner.rgs"
 IDR_SMARTCARDCERTIFICATE REGISTRY                "SmartCardCertificate.rgs"
+IDR_BHOIETOOLSITEM      REGISTRY                "BHOIEToolsItem.rgs"
 #endif    // Estonian resources
 /////////////////////////////////////////////////////////////////////////////
 

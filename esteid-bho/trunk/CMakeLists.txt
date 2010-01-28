@@ -37,6 +37,8 @@ set(bho_SRCS
     SmartCardCertificate.rgs
     SmartCardSigner.cpp
     SmartCardSigner.rgs
+    BHOIEToolsItem.rgs
+    BHOIEToolsItem.cpp
     utility/converters.cpp
     utility/monitorThread.cpp
     utility/pinDialog.cpp
