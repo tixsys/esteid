@@ -26,6 +26,8 @@ set(bho_SRCS
     ${CMAKE_CURRENT_BINARY_DIR}/EstEIDSigningPluginBHO_i.c
     dlldatax.c
     dllmain.cpp
+    BHOIEToolsItem.cpp
+    BHOIEToolsItem.rgs
     EstEIDSigningBHO.cpp
     EstEIDSigningBHO.rgs
     EstEIDSigningPluginBHO.cpp
@@ -37,13 +39,11 @@ set(bho_SRCS
     SmartCardCertificate.rgs
     SmartCardSigner.cpp
     SmartCardSigner.rgs
-    BHOIEToolsItem.rgs
-    BHOIEToolsItem.cpp
     utility/converters.cpp
+    utility/logger.cpp
     utility/monitorThread.cpp
     utility/pinDialog.cpp
     utility/threadObj.cpp
-    utility/logger.cpp
 )
 
 if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
