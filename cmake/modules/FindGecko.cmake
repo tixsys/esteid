@@ -24,6 +24,10 @@ IF (NOT WIN32)
    _pkgconfig_invoke(libxul "PC_LIBXUL" SDKDIR "" --variable=sdkdir)
 ENDIF (NOT WIN32)
 
+IF (MSVC)
+   SET(GECKO_DEFINITIONS "/Zc:wchar_t-")
+ENDIF (MSVC)
+
 SET(XULRUNNER_SDK_SEARCH_DIRS
    /build/Win32/xulrunner-sdk
    ${PROJECT_SOURCE_DIR}/xulrunner-sdk
