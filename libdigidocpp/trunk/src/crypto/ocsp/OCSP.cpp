@@ -281,10 +281,10 @@ void digidoc::OCSP::connect() throw(IOException)
     digidoc::Conf *c = digidoc::Conf::getInstance();
     if(!c->getProxyHost().empty())
     {
-        host = const_cast<char*>(c->getProxyHost().c_str());
+        host = strdup(c->getProxyHost().c_str());
         if(!c->getProxyPort().empty())
-            port = const_cast<char*>(c->getProxyPort().c_str());
-        path = const_cast<char*>(url.c_str());
+            port = strdup(c->getProxyPort().c_str());
+        path = strdup(url.c_str());
     }
 
     // Establish a connection to the OCSP responder.
