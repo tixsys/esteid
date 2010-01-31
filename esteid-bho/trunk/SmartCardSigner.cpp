@@ -18,8 +18,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *
 */
-// $Revision: 502 $
-// $Date: 2010-01-25 03:07:01 +0200 (E, 25 jaan 2010) $
+// $Revision: 509 $
+// $Date: 2010-01-31 08:58:50 +0200 (P, 31 jaan 2010) $
 // $Author: kaidokert $
 
 // SmartCardSigner.cpp : Implementation of CSmartCardSigner
@@ -28,7 +28,7 @@
 #include "SmartCardSigner.h"
 #include "utility/pinDialog.h"
 #include "utility/converters.h"
-#include <smartcardpp/SCError.h>
+#include <smartcard++/SCError.h>
 #include <algorithm>
 #include "Setup.h"
 #include <shlguid.h>
@@ -155,7 +155,8 @@ STDMETHODIMP CSmartCardSigner::readField(EstEidCard::RecordNames rec ,BSTR* pVal
 				}
 			}
 		}
-	*pVal = _bstr_t(m_cardData[rec].c_str()).Detach();
+	CA2W conv(m_cardData[rec].c_str(),1252);
+	*pVal = _bstr_t(conv).Detach();
 	return S_OK;
 	}
 
@@ -267,6 +268,7 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 	ByteVec result;
 	try {
 		EstEidCard card(m_mgr,m_selectedReader);
+		dlg.SetDisplayName(card.readCardName(true));
 		sign_op operation(hash,result,card,criticalSection);
 		if (!card.hasSecurePinEntry()) {
 			PinString dummyCache;
