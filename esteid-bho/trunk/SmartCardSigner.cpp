@@ -28,7 +28,7 @@
 #include "SmartCardSigner.h"
 #include "utility/pinDialog.h"
 #include "utility/converters.h"
-#include <smartcard++/SCError.h>
+#include <smartcardpp/SCError.h>
 #include <algorithm>
 #include "Setup.h"
 #include <shlguid.h>
