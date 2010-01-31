@@ -57,32 +57,19 @@ namespace digidoc
 
           static tm convert(ASN1_GENERALIZEDTIME* time) throw(IOException);
 
-          std::string url;
-          char* host;
-          char* port;
-          char* path;
+          std::string url, host, port, path;
           bool ssl;
 
           long skew;
           long maxAge;
 
-          BIO *connection, *sconnection;
+          BIO *connection;
           SSL_CTX *ctx;
           X509* ocspCert;
           STACK_OF(X509)* ocspCerts;
           X509_STORE* certStore;
           X509* signCert;
           EVP_PKEY* signKey;
-
-
-          // Declare helper structs to automatically release OpenSSL structs after they are out of scope.
-      private:
-          DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_REQUEST)
-          DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_RESPONSE)
-          DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_BASICRESP)
-          DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_CERTID)
-          DECLARE_OPENSSL_RELEASE_STRUCT(X509_EXTENSION)
-
     };
 }
 

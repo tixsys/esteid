@@ -6,6 +6,13 @@
 #include <openssl/err.h>
 #include <openssl/pkcs12.h>
 
+// Declare helper structs to automatically release OpenSSL structs after they are out of scope.
+DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_REQUEST)
+DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_RESPONSE)
+DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_BASICRESP)
+DECLARE_OPENSSL_RELEASE_STRUCT(OCSP_CERTID)
+DECLARE_OPENSSL_RELEASE_STRUCT(X509_EXTENSION)
+
 /**
  * Initialize OCSP certificate validator.
  *
@@ -14,14 +21,10 @@
  * @see setUrl(const std::string& url)
  */
 digidoc::OCSP::OCSP(const std::string& url) throw(IOException)
- : host(NULL)
- , port(NULL)
- , path(NULL)
- , ssl(false)
+ : ssl(false)
  , skew(5*60)
  , maxAge(1*60)
  , connection(NULL)
- , sconnection(NULL)
  , ctx(NULL)
  , ocspCerts(NULL)
  , certStore(NULL)
@@ -50,14 +53,28 @@ void digidoc::OCSP::setUrl( const std::string& _url ) throw(IOException)
 {
     url = _url;
     // Parse OCSP connection URL.
+    char *_host = NULL, *_port = NULL, *_path = NULL;
     int sslFlag = 0;
-    int result = OCSP_parse_url(const_cast<char*>(url.c_str()), &host, &port, &path, &sslFlag);
-    ssl = sslFlag != 0;
-
-    if(result == 0)
+    if(!OCSP_parse_url(const_cast<char*>(url.c_str()), &_host, &_port, &_path, &sslFlag))
     {
         THROW_IOEXCEPTION("Incorrect OCSP URL provided: '%s'.", url.c_str());
     }
+    ssl = sslFlag != 0;
+    if(_host)
+        host = _host;
+    else
+        host.clear();
+    if(_port)
+        port = _port;
+    else
+        port.clear();
+    if(_path)
+        path = _path;
+    else
+        path = "/";
+    OPENSSL_free(_host);
+    OPENSSL_free(_port);
+    OPENSSL_free(_path);
 }
 
 /**
@@ -274,36 +291,35 @@ void digidoc::OCSP::connect() throw(IOException)
     // Release old connection if it exists.
     BIO_free_all(connection);
     SSL_CTX_free(ctx);
-    connection = sconnection = NULL;
+    connection = NULL;
     ctx = NULL;
 
     // proxy host
     digidoc::Conf *c = digidoc::Conf::getInstance();
     if(!c->getProxyHost().empty())
     {
-        host = strdup(c->getProxyHost().c_str());
-        if(!c->getProxyPort().empty())
-            port = strdup(c->getProxyPort().c_str());
-        path = strdup(url.c_str());
+        host = c->getProxyHost();
+        port = c->getProxyPort();
+        path = url;
     }
 
     // Establish a connection to the OCSP responder.
-    connection = BIO_new_connect(host);
+    connection = BIO_new_connect(const_cast<char*>(host.c_str()));
     if(connection == NULL)
     {
-        THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host);
+        THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host.c_str());
     }
 
-    if( port != NULL && BIO_set_conn_port(connection, port) <= 0 )
+    if(!BIO_set_conn_port(connection, const_cast<char*>(port.c_str())))
     {
-        THROW_IOEXCEPTION("Failed to set port of the connection: %s", port);
+        THROW_IOEXCEPTION("Failed to set port of the connection: %s", port.c_str());
     }
 
     if(ssl)
         connectSSL();
 
-    if ( !BIO_do_connect(connection) )
-        THROW_IOEXCEPTION( "Failed to connect to host: '%s'", host );
+    if(!BIO_do_connect(connection))
+        THROW_IOEXCEPTION("Failed to connect to host: '%s'", host.c_str());
 }
 
 /**
@@ -316,14 +332,20 @@ void digidoc::OCSP::connectNoSSL() throw(IOException)
 }
 
 /**
- * @throws IOException
+ * Creates ssl connection with OCSP server.
+ *
+ * @throws IOException throws exception if the connection creation failed.
  */
 void digidoc::OCSP::connectSSL() throw(IOException)
 {
-	ctx = SSL_CTX_new(SSLv23_client_method());
-	SSL_CTX_set_mode(ctx, SSL_MODE_AUTO_RETRY);
-	sconnection = BIO_new_ssl(ctx, 1);
-	connection = BIO_push(sconnection, connection);
+    ctx = SSL_CTX_new(SSLv23_client_method());
+    if(!ctx)
+        THROW_IOEXCEPTION("Failed to create connection with host: '%s'", host.c_str());
+    SSL_CTX_set_mode(ctx, SSL_MODE_AUTO_RETRY);
+    BIO *sconnection = BIO_new_ssl(ctx, 1);
+    if(!sconnection)
+        THROW_IOEXCEPTION("Failed to create ssl connection with host: '%s'", host.c_str());
+    connection = BIO_push(sconnection, connection);
 }
 
 /**
@@ -395,7 +417,7 @@ OCSP_RESPONSE* digidoc::OCSP::sendRequest(OCSP_REQUEST* req) throw(IOException)
         BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
         BIO *hash = BIO_push(b64, BIO_new(BIO_s_mem()));
         BIO_printf(hash, "%s:%s", c->getProxyUser().c_str(), c->getProxyPass().c_str());
-        BIO_flush(hash);
+        (void)BIO_flush(hash);
         char *base64 = 0;
         BIO_get_mem_data(hash, &base64);
 
@@ -405,14 +427,14 @@ OCSP_RESPONSE* digidoc::OCSP::sendRequest(OCSP_REQUEST* req) throw(IOException)
         // HACK/FIXME to alter openssl OCSP request http header
         static char post_hdr[] = "%s HTTP/1.0\r\n"
             "Proxy-Authorization: Basic %s\r\n";
-        sprintf((char*)&data, post_hdr, path, base64);
+        sprintf((char*)&data, post_hdr, path.c_str(), base64);
 
         if(!(resp = OCSP_sendreq_bio(connection, (char*)&data, req)))
             THROW_IOEXCEPTION("Failed to send OCSP request.");
     }
     else
     {
-        if(!(resp = OCSP_sendreq_bio(connection, path, req)))
+        if(!(resp = OCSP_sendreq_bio(connection, const_cast<char*>(path.c_str()), req)))
             THROW_IOEXCEPTION("Failed to send OCSP request.");
     }
 
