@@ -837,7 +837,7 @@ class Application
 				:froot => @options.opensc,
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc',
-				:version => '1.0.1'
+				:version => '1.0.2'
 			}, {
 				:name => 'esteid-digidoc',
 				:files => [ File.join(@options.digidoc, '*/**') ],
