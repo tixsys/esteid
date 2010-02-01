@@ -13,42 +13,46 @@ rm -fR /Library/Application\ Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e
 echo 'Removing Updater'
 rm -fR /Library/Receipts/org.esteid.*
 rm -f /Library/LaunchAgents/org.esteid.updater.plist
-mv -f /Applications/Utilities/EstEIDSU.app ~/.Trash
+mv -f /Applications/Utilities/EstEIDSU.app ~/.Trash/ID-card\ Software
 
 echo 'Removing Preferences'
-mv -f /Library/PreferencePanes/EstEIDPP.prefPane ~/.Trash
+mv -f /Library/PreferencePanes/EstEIDPP.prefPane ~/.Trash/ID-card\ Software
 
 echo 'Removing Safari plug-in'
-mv -f /Library/Internet\ Plug-Ins/EstEIDWP.plugin ~/.Trash
+mv -f /Library/Internet\ Plug-Ins/EstEIDWP.plugin ~/.Trash/ID-card\ Software
 
 echo 'Removing Finder plug-in'
-mv -f /Library/Contextual\ Menu\ Items/EstEIDCM.plugin ~/.Trash
+mv -f /Library/Contextual\ Menu\ Items/EstEIDCM.plugin ~/.Trash/ID-card\ Software
 
 echo 'Removing OpenSC'
 mv -f /Library/OpenSC ~/.Trash
-mv -f /usr/lib/opensc-pkcs11.so ~/.Trash
+mv -f /usr/lib/opensc-pkcs11.so ~/.Trash/ID-card\ Software
 
 echo 'Removing ID-card Utility'
-mv -f /Applications/qesteidutil.app ~/.Trash
+mv -f /Applications/qesteidutil.app ~/.Trash/ID-card\ Software
 
 echo 'Removing Digidoc Client'
-mv -f /Applications/qdigidocclient.app ~/.Trash
+mv -f /Applications/qdigidocclient.app ~/.Trash/ID-card\ Software
 
 echo 'Removing Digidoc Crypto'
-mv -f /Applications/Utilities/qdigidoccrypto.app ~/.Trash
+mv -f /Applications/Utilities/qdigidoccrypto.app ~/.Trash/ID-card\ Software
 
 echo 'Removing Digidoc libraries'
-mv -f /usr/local/etc/digidoc.conf ~/.Trash
-mv -f /usr/local/etc/digidocpp ~/.Trash
-mv -f /usr/local/share/libdigidoc ~/.Trash
-mv -f /usr/local/lib/libdigidoc.dylib ~/.Trash
-mv -f /usr/local/lib/libdigidocpp.dylib ~/.Trash
-mv -f /usr/local/lib/libp11.dylib ~/.Trash
+mv -f /usr/local/etc/digidoc.conf ~/.Trash/ID-card\ Software
+mv -f /usr/local/etc/digidocpp ~/.Trash/ID-card\ Software
+mv -f /usr/local/share/libdigidoc ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libdigidoc.dylib ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libdigidocpp.dylib ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libp11.dylib ~/.Trash/ID-card\ Software
 
 echo 'Removing OpenOffice extension'
 if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
     /Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
     /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
 fi
+
+echo 'Removing .plist files'
+mv -f ~/Library/Preferences/com.estonian-id-card.plist ~/.Trash/ID-card\ Software
+mv -f ~/Library/Preferences/org.esteid.* ~/.Trash/ID-card\ Software
 
 echo 'Uninstall done!'
