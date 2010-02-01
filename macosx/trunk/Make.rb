@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-# Copyright (c) 2009 Janek Priimann
+# Copyright (c) 2009, 2010 Janek Priimann
 
 require 'rubygems'
 require 'date'
@@ -311,7 +311,7 @@ class Application
 		#FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
 		run_command "tar -xzf tokend/OpenSC.tokend_tiger.tgz -C #{File.join(binaries, '10.4')}"
 		run_command "tar -xzf tokend/OpenSC.tokend_leopard.tgz -C #{File.join(binaries, '10.5')}"
-		#run_command "tar -xzf tokend/OpenSC.tokend_snowleopard.tgz -C #{File.join(binaries, '10.6')}"
+		run_command "tar -xzf tokend/OpenSC.tokend_snowleopard.tgz -C #{File.join(binaries, '10.6')}"
 		
 		puts "\n" if @options.verbose
 	end
@@ -918,14 +918,14 @@ class Application
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.pp',
 				:location => '/Library/PreferencePanes'
-			#}, {
-			#	:name => 'esteid-tokend-snowleopard',
-			#	:files => File.join(@options.binaries, '10.6', 'OpenSC.tokend'),
-			#	:froot => File.join(@options.binaries, '10.6'),
-			#	:identifier => 'org.esteid.installer.tokend.10.6',
-			#	:location => '/System/Library/Security/tokend',
-			#	:script => "return system.version.ProductVersion >= '10.6';",
-			#	:system => '10.6>='
+			}, {
+				:name => 'esteid-tokend-snowleopard',
+				:files => File.join(@options.binaries, '10.6', 'OpenSC.tokend'),
+				:froot => File.join(@options.binaries, '10.6'),
+				:identifier => 'org.esteid.installer.tokend.10.6',
+				:location => '/System/Library/Security/tokend',
+				:script => "return system.version.ProductVersion >= '10.6';",
+				:system => '10.6>='
 			}, {
 				:name => 'esteid-tokend-leopard',
 				:files => File.join(@options.binaries, '10.5', 'OpenSC.tokend'),
@@ -933,7 +933,7 @@ class Application
 				:identifier => 'org.esteid.installer.tokend.10.5',
 				:location => '/System/Library/Security/tokend',
 				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
-				:system => '10.5>='
+				:system => '10.5='
 			}, {
 				:name => 'esteid-tokend-tiger',
 				:files => File.join(@options.binaries, '10.4', 'OpenSC.tokend'),
