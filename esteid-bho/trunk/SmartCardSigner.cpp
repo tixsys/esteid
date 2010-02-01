@@ -268,7 +268,6 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 	ByteVec result;
 	try {
 		EstEidCard card(m_mgr,m_selectedReader);
-		dlg.SetDisplayName(card.readCardName(true));
 		sign_op operation(hash,result,card,criticalSection);
 		if (!card.hasSecurePinEntry()) {
 			PinString dummyCache;
