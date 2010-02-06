@@ -37,6 +37,8 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
+	void changeCard( QAction *a );
+	void changeLang( QAction *a );
 	void closeDoc();
 	void on_introCheck_stateChanged( int state );
 	void on_languages_activated( int index );
@@ -71,6 +73,7 @@ private:
 	void setCurrentPage( Pages page );
 	void showWarning( const QString &msg );
 
+	QActionGroup *cardsGroup;
 	QAction		*close;
 	CryptoDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;

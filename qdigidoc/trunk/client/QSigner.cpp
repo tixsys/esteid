@@ -176,12 +176,7 @@ void QSigner::run()
 	}
 }
 
-void QSigner::selectCard( const QString &card )
-{
-	d->m.lock();
-	d->select = card;
-	d->m.unlock();
-}
+void QSigner::selectCard( const QString &card ) { d->select = card; }
 
 void QSigner::selectCert( const QString &card )
 {

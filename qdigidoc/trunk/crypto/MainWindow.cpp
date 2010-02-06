@@ -45,6 +45,7 @@
 
 MainWindow::MainWindow( QWidget *parent )
 :	QWidget( parent )
+,	cardsGroup( new QActionGroup( this ) )
 {
 	qRegisterMetaType<QSslCertificate>("QSslCertificate");
 
@@ -112,6 +113,21 @@ MainWindow::MainWindow( QWidget *parent )
 	}
 	on_languages_activated( lang.indexOf(
 		Settings().value( "Main/Language", deflang ).toString() ) );
+	QActionGroup *langGroup = new QActionGroup( this );
+	QAction *etAction = langGroup->addAction( new QAction( langGroup ) );
+	QAction *enAction = langGroup->addAction( new QAction( langGroup ) );
+	QAction *ruAction = langGroup->addAction( new QAction( langGroup ) );
+	etAction->setData( 0 );
+	enAction->setData( 1 );
+	ruAction->setData( 2 );
+	etAction->setShortcut( Qt::CTRL + Qt::SHIFT + Qt::Key_1 );
+	enAction->setShortcut( Qt::CTRL + Qt::SHIFT + Qt::Key_2 );
+	ruAction->setShortcut( Qt::CTRL + Qt::SHIFT + Qt::Key_3 );
+	addAction( etAction );
+	addAction( enAction );
+	addAction( ruAction );
+	connect( langGroup, SIGNAL(triggered(QAction*)), SLOT(changeLang(QAction*)) );
+	connect( cardsGroup, SIGNAL(triggered(QAction*)), SLOT(changeCard(QAction*)) );
 
 	close = new QAction( tr("Close"), this );
 	close->setShortcut( Qt::CTRL + Qt::Key_W );
@@ -322,6 +338,10 @@ void MainWindow::buttonClicked( int button )
 	}
 }
 
+void MainWindow::changeCard( QAction *a )
+{ QMetaObject::invokeMethod( doc, "selectCard", Q_ARG(QString,a->data().toString()) ); }
+void MainWindow::changeLang( QAction *a ) { on_languages_activated( a->data().toUInt() ); }
+
 void MainWindow::closeDoc()
 {
 	if( SettingsDialog *d = findChild<SettingsDialog*>() )
@@ -527,6 +547,14 @@ void MainWindow::showCardStatus()
 	cards->addItems( doc->presentCards() );
 	cards->setVisible( doc->presentCards().size() > 1 );
 	cards->setCurrentIndex( cards->findText( doc->activeCard() ) );
+	qDeleteAll( cardsGroup->actions() );
+	for( int i = 0; i < doc->presentCards().size(); ++i )
+	{
+		QAction *a = cardsGroup->addAction( new QAction( cardsGroup ) );
+		a->setData( doc->presentCards().at( i ) );
+		a->setShortcut( Qt::CTRL + (Qt::Key_1 + i) );
+		addAction( a );
+	}
 }
 
 void MainWindow::showSettings()

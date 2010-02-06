@@ -49,10 +49,12 @@ LdapSearch::~LdapSearch() { if( ldap ) ldap_unbind_s( ldap ); }
 
 void LdapSearch::search( const QString &search )
 {
-	char *attrs[3] = { (char*)"cn", (char*)"userCertificate;binary", '\0' };
+	char *attrs[3] = {
+		const_cast<char*>("cn"),
+		const_cast<char*>("userCertificate;binary"), '\0' };
 
 	int err = ldap_search_ext( ldap, "c=EE", LDAP_SCOPE_SUBTREE,
-		(char*)search.toUtf8().constData(), attrs, 0, NULL, NULL, NULL, 0, &msg_id );
+		const_cast<char*>(search.toUtf8().constData()), attrs, 0, NULL, NULL, NULL, 0, &msg_id );
 	if( err )
 		setLastError( tr("Failed to init ldap search"), err );
 	else

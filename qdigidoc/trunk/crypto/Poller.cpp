@@ -279,12 +279,7 @@ void Poller::run()
 	}
 }
 
-void Poller::selectCard( const QString &card )
-{
-	d->m.lock();
-	d->select = card;
-	d->m.unlock();
-}
+void Poller::selectCard( const QString &card ) { d->select = card; }
 
 void Poller::selectCert( const QString &card )
 {

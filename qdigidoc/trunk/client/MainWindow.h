@@ -40,6 +40,8 @@ public:
 
 private Q_SLOTS:
 	void buttonClicked( int button );
+	void changeCard( QAction *a );
+	void changeLang( QAction *a );
 	void closeDoc();
 	void enableSign();
 	void on_introCheck_stateChanged( int state );
@@ -77,6 +79,7 @@ private:
 	bool eventFilter( QObject *o, QEvent *e );
 	void setCurrentPage( Pages page );
 
+	QActionGroup *cardsGroup;
 	QAction *closeAction;
 	DigiDoc	*doc;
 	QTranslator *appTranslator, *commonTranslator, *qtTranslator;
