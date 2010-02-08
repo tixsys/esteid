@@ -18,8 +18,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 *
 */
-// $Revision: 509 $
-// $Date: 2010-01-31 08:58:50 +0200 (P, 31 jaan 2010) $
+// $Revision: 512 $
+// $Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 // $Author: kaidokert $
 
 // SmartCardSigner.cpp : Implementation of CSmartCardSigner
@@ -268,6 +268,7 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 	ByteVec result;
 	try {
 		EstEidCard card(m_mgr,m_selectedReader);
+		dlg.SetDisplayName(card.readCardName(true));
 		sign_op operation(hash,result,card,criticalSection);
 		if (!card.hasSecurePinEntry()) {
 			PinString dummyCache;
@@ -275,6 +276,7 @@ STDMETHODIMP CSmartCardSigner::signWithCert(BSTR hashToBeSigned,IDispatch * pCer
 			dlg.doDialogInloop(operation,dummyCache);
 			}
 		else {
+			dlg.doNonmodalNotifyDlg();
 			m_log << "Doing secure PIN sign op" << std::endl;
 			operation.call(card,"",dlg.keyType());
 			}

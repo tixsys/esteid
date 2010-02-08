@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-15 21:20:50 +0300 (Wed, 15 Jul 2009) $
+	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 */
-// Revision $Revision: 363 $
+// Revision $Revision: 512 $
 
 ///forward-declared opsys-specific components
 struct pinDialogPriv;
@@ -28,6 +28,7 @@ public:
 
 class pinDialog {
 	pinDialogPriv *d;
+	std::string m_displayName;
 protected:
 	EstEidCard::KeyType m_key;
 	std::string m_prompt;
@@ -42,5 +43,7 @@ public:
 	bool showPrompt(std::string,bool allowRetry = false);
 	bool doDialogInloop(pinOpInterface &operation,PinString &authPinCache);
 	PinString getPin();
+	void SetDisplayName(std::string name);
+	bool doNonmodalNotifyDlg(bool messageLoop = false);
 };
 

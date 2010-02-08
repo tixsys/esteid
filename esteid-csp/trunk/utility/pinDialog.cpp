@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-19 21:05:07 +0300 (Sun, 19 Jul 2009) $
+	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 */
-// Revision $Revision: 393 $
+// Revision $Revision: 512 $
 
 #include "precompiled.h"
 #include "pinDialog.h"
@@ -50,13 +50,16 @@ struct pinDialogPriv {
 	~pinDialogPriv() {
 		if (dlgIcon) delete dlgIcon;
 		if (appIcon) delete appIcon;
+		if (m_hwnd) DestroyWindow(m_hwnd);
 		}
 	virtual LRESULT on_message(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 	virtual LRESULT on_command(WPARAM wParam, LPARAM lParam);
 	virtual LRESULT on_init_dlg(WPARAM wParam);
 	static LRESULT CALLBACK dialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK nonmodalDialogProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 	bool doDialog();
 	bool showPrompt(std::string,bool allowRetry=false);
+	bool pinDialogPriv::doNonmodalNotifyDlg(bool messageLoop);
 	PinString getPin();
 private:
 	const pinDialogPriv &operator=(const pinDialogPriv &o);
@@ -65,8 +68,10 @@ private:
 pinDialogPriv::_icontag pinDialogPriv::iconSet[2] = {{"cryptui.dll", 4998},{"cryptui.dll" ,3425}};
 
 LRESULT pinDialogPriv::on_init_dlg(WPARAM wParam) {
-	SetWindowPos(m_hwnd, HWND_TOPMOST, 0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+	SetWindowPos(m_hwnd, HWND_TOPMOST, 10,10,0,0,SWP_NOSIZE);
 	SetDlgItemTextA(m_hwnd,IDC_STATIC, m_dlg.m_prompt.c_str() );
+	if (!m_dlg.m_displayName.empty())
+		SetDlgItemTextA(m_hwnd,IDC_STATIC, m_dlg.m_displayName.c_str() );
 	SendDlgItemMessage( m_hwnd, IDC_PININPUT , EM_SETLIMITTEXT, 12, 0 );
 
 	dlgIcon = new iconHandle(iconSet[m_dlg.m_key].module,iconSet[m_dlg.m_key].id);
@@ -148,6 +153,50 @@ bool pinDialogPriv::showPrompt(std::string prompt,bool allowRetry) {
 
 PinString pinDialogPriv::getPin() {
 	return PinString(&m_buffer[0],&m_buffer[0]+strlen(&m_buffer[0]));
+	}
+
+LRESULT CALLBACK pinDialogPriv::nonmodalDialogProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam ) {
+	switch(msg) {
+		case WM_CREATE: {
+			CREATESTRUCT * ptr = (CREATESTRUCT *) lParam;
+			pinDialogPriv *dlg = (pinDialogPriv *) ptr->lpCreateParams;
+			CreateWindow(TEXT("STATIC"), dlg->m_dlg.m_prompt.c_str(), 
+				 WS_VISIBLE | WS_CHILD, 20, 5, 110,25, hwnd, (HMENU)1, NULL, NULL);
+			CreateWindow(TEXT("button"), TEXT("Ok"),    
+				  WS_VISIBLE | WS_CHILD , 50, 25, 80, 20,        
+				  hwnd, (HMENU) 1, NULL, NULL);  
+			break;
+			}
+		case WM_COMMAND:
+			DestroyWindow(hwnd);
+			break;
+		case WM_CLOSE:
+			DestroyWindow(hwnd);
+			break;       
+		}
+	return (DefWindowProc(hwnd, msg, wParam, lParam));
+}
+
+bool pinDialogPriv::doNonmodalNotifyDlg(bool messageLoop) {
+	MSG  msg ;    
+	HWND hwnd = GetForegroundWindow();
+
+	WNDCLASSEX wc = {0};
+	wc.cbSize           = sizeof(WNDCLASSEX);
+	wc.lpfnWndProc      = (WNDPROC) nonmodalDialogProc;
+	wc.hInstance        = params.m_hInst;
+	wc.hbrBackground    = GetSysColorBrush(COLOR_3DFACE);
+	wc.lpszClassName    = TEXT("DialogClass");
+	RegisterClassEx(&wc);
+
+	m_hwnd = CreateWindowEx(WS_EX_DLGMODALFRAME | WS_EX_TOPMOST,  TEXT("DialogClass"), TEXT("PIN message"), 
+		WS_VISIBLE | WS_SYSMENU | WS_CAPTION , 100, 100, 200, 80, 
+		NULL, NULL, params.m_hInst,  this);
+	if (messageLoop) 
+		while( GetMessage(&msg, NULL, 0, 0)) {
+			DispatchMessage(&msg);
+			}
+	return true;
 	}
 
 #endif
@@ -259,4 +308,12 @@ bool pinDialog::doDialogInloop(pinOpInterface &operation,PinString &authPinCache
 
 PinString pinDialog::getPin() {
 	return d->getPin();
+	}
+
+void pinDialog::SetDisplayName(std::string name) {
+	m_displayName = name;
+	}
+
+bool pinDialog::doNonmodalNotifyDlg(bool messageLoop) {
+	return d->doNonmodalNotifyDlg(messageLoop);
 	}
