@@ -160,11 +160,8 @@ LRESULT CALLBACK pinDialogPriv::nonmodalDialogProc( HWND hwnd, UINT msg, WPARAM 
 		case WM_CREATE: {
 			CREATESTRUCT * ptr = (CREATESTRUCT *) lParam;
 			pinDialogPriv *dlg = (pinDialogPriv *) ptr->lpCreateParams;
-			CreateWindow(TEXT("STATIC"), dlg->m_dlg.m_prompt.c_str(), 
-				 WS_VISIBLE | WS_CHILD, 20, 5, 110,25, hwnd, (HMENU)1, NULL, NULL);
-			CreateWindow(TEXT("button"), TEXT("Ok"),    
-				  WS_VISIBLE | WS_CHILD , 50, 25, 80, 20,        
-				  hwnd, (HMENU) 1, NULL, NULL);  
+			CreateWindowA("STATIC", dlg->m_dlg.m_prompt.c_str(), WS_VISIBLE | WS_CHILD, 20, 5, 110,25, hwnd, (HMENU)1, NULL, NULL);
+			CreateWindowA("button", "Ok", WS_VISIBLE | WS_CHILD , 50, 25, 80, 20, hwnd, (HMENU) 1, NULL, NULL);  
 			break;
 			}
 		case WM_COMMAND:
