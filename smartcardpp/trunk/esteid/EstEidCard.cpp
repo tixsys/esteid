@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-13 16:52:22 +0300 (Thu, 13 Aug 2009) $
+	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 */
-// Revision $Revision: 422 $
+// Revision $Revision: 512 $
 #include <smartcardpp/common.h>
 #include <smartcardpp/esteid/EstEidCard.h>
 #include <smartcardpp/helperMacro.h>
@@ -276,13 +276,17 @@ string EstEidCard::readDocumentID() {
 	return ret;
 	}
 
-string EstEidCard::readCardName() {
+string EstEidCard::readCardName(bool firstNameFirst) {
 	vector<string> temp;
 	Transaction _m(mManager,mConnection);
 	checkProtocol();
 	readPersonalData_internal(temp,SURNAME,FIRSTNAME);
 
-	string ret = temp[SURNAME] + " " + temp[FIRSTNAME] ;
+	string ret;
+	if (firstNameFirst)
+		ret = temp[FIRSTNAME] + " " + temp[SURNAME];
+	else
+		ret = temp[SURNAME] + " " + temp[FIRSTNAME];
 	return ret;
 	}
 

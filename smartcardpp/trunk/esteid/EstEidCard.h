@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-15 18:34:40 +0300 (Wed, 15 Jul 2009) $
+	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 */
-// Revision $Revision: 357 $
+// Revision $Revision: 512 $
 #pragma once
 #include <smartcardpp/CardBase.h>
 #include <smartcardpp/PinString.h>
@@ -78,8 +78,8 @@ public:
 	std::string readCardID();
 	/// Reads the card holder card number from personal data file
 	std::string readDocumentID();
-	/// Reads the card holder name from personal data file
-	std::string readCardName();
+	/// Reads the card holder name from personal data file, bool flag flips display order
+	std::string readCardName(bool firstNameFirst = false);
 	/// Reads entire or parts of personal data file from firstRecord to LastRecord
 	bool readPersonalData(std::vector<std::string>& data,
 		int firstRecord=SURNAME,int lastRecord=EXPIRY);
