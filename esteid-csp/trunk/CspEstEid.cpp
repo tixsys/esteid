@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-11 23:21:07 +0300 (Tue, 11 Aug 2009) $
+	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
 */
-// Revision $Revision: 416 $
+// Revision $Revision: 512 $
 
 #include "precompiled.h"
 #include "CspEstEid.h"
@@ -241,6 +241,7 @@ std::vector<BYTE> EstEidContext::doOperation(ALG_ID m_algId,std::vector<BYTE> &i
 			keyType == EstEidCard::AUTH ? cachedAuthPin : dummyCache );
 		}
 	else { 
+		dlg.doNonmodalNotifyDlg();
 		operation.call(card,"",dlg.keyType());
 		}
 	return ret;
