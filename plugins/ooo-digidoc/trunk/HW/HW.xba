@@ -12,13 +12,6 @@ Dim oBar    &apos; Generated status bar
 Global strSignatureData As String
 Global strGlobMess As String
 
-&apos;****************************************************************
-Sub Main	
-&apos;	OpenFile
-	GetCert	(&quot;KALA&quot;)
-	Signing	
-
-End Sub
 
 &apos;****************************************************************
 
@@ -78,16 +71,12 @@ Function Signing
 	oRoleField.Text = &quot;&quot;
 	oAddRoleField.Text = &quot;&quot; 
 	
-rem	Ctl.Model.SelectItem(strTemp, True) 	
-rem	Ctl.makeVisible(1)
-	
 	If oSignDialog.Execute() Then
 		strParam = oCityField.Text + &quot;#&quot; + oRegionField.Text + &quot;#&quot; + oPostalField.Text + &quot;#&quot; + oCountryField.Text + &quot;#&quot; + oRoleField.Text + &quot;#&quot; + oAddRoleField.Text + &quot;#&quot;
 	Else
 		strParam = &quot;*&quot;
 	End If
-	Signing = strParam
-&apos;	oSignDialog.dispose()	
+	Signing = strParam	
 End Function
 
 &apos;****************************************************************
@@ -124,17 +113,7 @@ Function PIN
 	oPinField.Text = &quot;&quot;
 		
 	If oPINDialog.Execute() Then
-		&apos;Dim oSvc As Object
-		&apos;Dim Ctl As Object
-		&apos;Ctl = oSignDialog.getControl(&quot;CancelButton&quot;)
-		&apos;Ctl.Label = &quot;Exit&quot;
-rem		oSvc = createUnoService(&quot;com.sun.star.system.SystemShellExecute&quot;)	
-rem		oSvc.execute(&quot;C:/Documents and Settings/Mark/Desktop/test-bin/simplebdocapp.exe&quot;,&quot;&quot;,0)
-		rem check if pin was correct and give a message
-		
 		PIN = oPinField.Text
-rem			MsgBox &quot;Sign Success!&quot;
-rem			oSignDialog.endExecute()
 	Else 
 		PIN = &quot;*&quot;
 	End If
@@ -162,20 +141,13 @@ End Function
 
   DialogLibraries.LoadLibrary(&quot;HW&quot;)
 	oCertDial = CreateUnoDialog(DialogLibraries.HW.Cert)
-rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.12.2008;__________;OÜ Marakratt;88808081234;Raamatupidamine;03.01.2009;__________;&quot;	
 	Ctl = oCertDial.getControl(&quot;SignerCertListBox&quot;)
 	CtlButtonY = oCertDial.getControl(&quot;SignButton&quot;)
 	CtlButtonN = oCertDial.getControl(&quot;ExitButton&quot;)
 	
 	If Instr(1, strSignatureData, &quot;*&quot;) Then
 		CtlButtonY.setEnable(FALSE)
-&apos;		CtlButtonN.setEnable(FALSE)
 		CtlButtonY.setVisible(FALSE)
-&apos;		CtlButtonN.setVisible(FALSE)
-&apos;		oCertDial.setHeight(220)
-&apos;  Else
-&apos;    CtlButtonN.setEnable(FALSE)
-&apos;    CtlButtonN.setVisible(FALSE)
   End If
 
   For c=1 To Len(strSignatureData)
@@ -184,7 +156,7 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 		strTemp = Mid(strSignatureData, j+1, (k-j-1))
 		For x=1 To Len(strTemp)
 			char = Mid(strTemp, x, 1)					
-			if Asc(char) > 127 then 
+			if Asc(char) &gt; 127 then 
 				utf1 = Asc(char)-65280 rem - hexFF00
 				x = x+1
 				char = Mid(strTemp, x, 1)
@@ -195,7 +167,7 @@ rem	strCerts = &quot;Kersti Kirst;47709280001;Tisler, Hakkaja matuse büroo;12.1
 			strData = strData + char					 
 		Next x        
 		Ctl.AddItem(strData,i)
-		strData = ""
+		strData = &quot;&quot;
 		i=i+1
 		j = k			
 	End If
@@ -322,17 +294,30 @@ End Function
 Function GlobalMess
   Dim oGMDial As Object
   Dim Ctrl As Object
-  Dim x As Integer
+  Dim x, y As Integer
   Dim char As String
   Dim strData as String
+  Dim CtlButtonY As Object
+  Dim CtlButtonN As Object
   
   DialogLibraries.LoadLibrary(&quot;HW&quot;)
   oGMDial = CreateUnoDialog(DialogLibraries.HW.GlobMess)
   Ctrl = oGMDial.getControl(&quot;MessageLabel&quot;)
   
-  For x=1 To Len(strGlobMess)
+  CtlButtonY = oGMDial.getControl(&quot;OKButton&quot;)
+  CtlButtonN = oGMDial.getControl(&quot;CancelButton&quot;)
+  y = 1
+  if Instr(1, strGlobMess, &quot;*&quot;) Then
+		CtlButtonN.setEnable(FALSE)
+		CtlButtonN.setVisible(FALSE)
+		
+		oGMDial.setTitle(&quot;Viga!&quot;)
+		y = 2
+  end if
+  
+  For x=y To Len(strGlobMess)
 		char = Mid(strGlobMess, x, 1)					
-		if Asc(char) > 127 then 
+		if Asc(char) &gt; 127 then 
 			utf1 = Asc(char)-65280 rem - hexFF00
 			x = x+1
 			char = Mid(strGlobMess, x, 1)

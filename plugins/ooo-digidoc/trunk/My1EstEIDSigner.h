@@ -85,6 +85,7 @@ class My1EstEIDSigner: //public digidoc::EstEIDSigner,
 
 	private:
 		bool compIDnumber(std::string str_idNum);
+        void translateError(int code);
 		digidoc::X509Cert *singnCert;
 
 		digidoc::Signature::Type profile;

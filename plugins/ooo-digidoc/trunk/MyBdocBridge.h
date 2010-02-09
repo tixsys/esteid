@@ -46,4 +46,5 @@ public:
 
 	int iCounter;
 	volatile int iPinReq;
+    const char * locErrMess;
 };

@@ -269,6 +269,23 @@ PRINT_DEBUG ("file opening URL : %s",muffik.pData->buffer);
 		else
 		{ // We got an error in init
 			printf("Error: %s\n",m_BdocBridge1->pcErrMsg);
+
+            Reference < XScriptProviderSupplier > xScriptPS(xCompMain, UNO_QUERY);
+			Reference < XScriptProvider > xScriptProvider(xScriptPS->getScriptProvider(), UNO_QUERY);
+			Reference< XDispatchProvider > rDispatchProvider(pDesktop,UNO_QUERY);
+			Reference< XDispatchHelper > rDispatchHelper = Reference < XDispatchHelper > ( mxMSF->createInstance(OUString( RTL_CONSTASCII_USTRINGPARAM( "com.sun.star.frame.DispatchHelper" ))), UNO_QUERY );
+			Sequence <Any> outparam;
+			Sequence <sal_Int16> indexes;
+
+            //Set message string Macro
+            strSignData = "macro:///HW.HW.SetGlobMess(*";
+            strSignData += m_BdocBridge1->pcErrMsg;
+            strSignData += ")";
+            rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+		        OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+	        //Show message Macro
+	        Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+	        xScript->invoke(Sequence <Any>(), indexes, outparam);
 		}
 		Reference <XCloseable> xCloseable( mxFrame, UNO_QUERY);
 		xCloseable->close(true);
@@ -443,7 +460,14 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 			if (!bPathIs)
 			{
 				i_try = 0;
-				::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Salvesamata Fail!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Palun salvestage fail!" )));
+				//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Salvesamata Fail!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Palun salvestage fail!" )));
+                //Set message string Macro
+                strSignData = "macro:///HW.HW.SetGlobMess(*Palun salvestage fail!)";
+			    rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+				    OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+			    //Show message Macro
+			    Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+			    xScript->invoke(Sequence <Any>(), indexes, outparam);
 			}
 			
 			//---------------------check if card is in reader----------------------------------
@@ -452,8 +476,32 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 				m_BdocBridge->DigiInit();
 				if (m_BdocBridge->ret)
 				{
-					::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Digidoc Error!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( m_BdocBridge->pcErrMsg )));
-					i_try = 0;
+					//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Digidoc Error!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( m_BdocBridge->pcErrMsg )));
+					//Set message string Macro
+                    strSignData = "macro:///HW.HW.SetGlobMess(*";
+                    strSignData += m_BdocBridge->pcErrMsg;
+                    strSignData += ")";
+				    rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+					    OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+				    //Show message Macro
+				    Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+				    xScript->invoke(Sequence <Any>(), indexes, outparam);
+
+                    for (int ik=0; ik<m_BdocBridge->iCounter; ik++)
+					{	// Show all errors								
+						PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ik].pcEMsg);
+
+                        //Set message string Macro
+                        strSignData = "macro:///HW.HW.SetGlobMess(*";
+                        strSignData += m_BdocBridge->eMessages[ik].pcEMsg;
+                        strSignData += ")";
+					    rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+						    OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+					    //Show message Macro
+					    Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+					    xScript->invoke(Sequence <Any>(), indexes, outparam);
+					}
+                    i_try = 0;
 				}
 				else
 				{	//Show card info
@@ -502,8 +550,16 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 					}
 					else if(m_BdocBridge->ret == 2)
 					{ //Invalid certificate						
-						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Sertifikaadi viga!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Teie sertifikaat on aegunud!\nPalun kasutage ID kaardi haldusvahendit,\net uuendata Teie allkirjastamise sertifikaati." )));
-						i_try = 0;
+						//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Sertifikaadi viga!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Teie sertifikaat on aegunud!\nPalun kasutage ID kaardi haldusvahendit,\net uuendata Teie allkirjastamise sertifikaati." )));
+						//Set message string Macro
+                        strSignData = "macro:///HW.HW.SetGlobMess(*Teie sertifikaat on aegunud!\nPalun kasutage ID kaardi haldusvahendit,\net uuendata Teie allkirjastamise sertifikaati!)";
+				        rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+					        OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+				        //Show message Macro
+				        Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+				        xScript->invoke(Sequence <Any>(), indexes, outparam);
+
+                        i_try = 0;
 					}
 				}
 			}
@@ -678,30 +734,36 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
 						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.NoCard?language=Basic&location=application") ), UNO_QUERY);
 						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
 					}
-
-					else if (m_BdocBridge->ret == 10)
-					{ //OCSP Error
-					/*	//Wrong PIN2 <-- use this when error codes from digidoc library are working
-						Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.Failure?language=Basic&location=application") ), UNO_QUERY);
-						xScript->invoke(Sequence <Any>(), indexes, outparam) >>= pParam;
-						muff = OUStringToOString(pParam, RTL_TEXTENCODING_ASCII_US);
-						
-						if (!memcmp(muff.pData->buffer, "*", 1))
-						{ //IF Canceled
-							i_try = 0;
-						}
-					*/								
+                    else if (m_BdocBridge->ret == 100)
+					{	
+						//::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
+						//Set message string Macro
+                        strSignData = "macro:///HW.HW.SetGlobMess(*Kuvatav fail on juba Teie poolt allkirjastatud!)";
+					    rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+						    OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+					    //Show message Macro
+					    Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+					    xScript->invoke(Sequence <Any>(), indexes, outparam);
+                        i_try = 0;
+					}
+					else
+					{ 								
 						for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
 						{	// Show all errors								
-							::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Exception!" )), convertPathToURI(::rtl::OUString::createFromAscii( m_BdocBridge->eMessages[ic].pcEMsg )));
 							PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
+
+                            //Set message string Macro
+                            strSignData = "macro:///HW.HW.SetGlobMess(*";
+                            strSignData += m_BdocBridge->eMessages[ic].pcEMsg;
+                            strSignData += ")";
+						    rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+							    OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+						    //Show message Macro
+						    Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+						    xScript->invoke(Sequence <Any>(), indexes, outparam);
 						}
 					}
-					else if (m_BdocBridge->ret == 100)
-					{	
-						::BaseDispatch::ShowMessageBox(mxFrame, ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Korduv Allkiri!" )), ::rtl::OUString( RTL_CONSTASCII_USTRINGPARAM( "Kuvatav fail on juba Teie poolt allkirjastatud!" )));
-						i_try = 0;
-					}
+					
 
 					if ( (!m_BdocBridge->ret) || (strBdocUrl.size()>1) )
 						m_BdocBridge->Terminate();

@@ -173,21 +173,40 @@ My1EstEIDSigner::~My1EstEIDSigner()
 //******** Parse through all exceptions ***********
 void My1EstEIDSigner::getExceptions(const digidoc::Exception e) 
 {
-#ifdef _WIN32
-	pcErrMsg = _strdup(e.getMsg().c_str());
-#else
-	pcErrMsg = strdup(e.getMsg().c_str());
-#endif
+    if (e.code())
+    {
+        //pcErrMsg = translateError(e.code()).c_str();
+        translateError(e.code());
+        pcErrMsg = locErrMess;
+    }
+    else
+    {
+        #ifdef _WIN32
+	    pcErrMsg = _strdup(e.getMsg().c_str());
+        #else
+	    pcErrMsg = strdup(e.getMsg().c_str());
+        #endif
+    }
 	if (e.hasCause())
 	{
 		for (size_t u=0; u<e.getCauses().size(); u++)
 		{
 			digidoc::Exception e1 = e.getCauses()[u];
-#ifdef _WIN32
-			eMessages[iCounter].pcEMsg = _strdup(e1.getMsg().c_str());
-#else
-			eMessages[iCounter].pcEMsg = strdup(e1.getMsg().c_str());
-#endif
+
+            if (e1.code())
+            {
+                //eMessages[iCounter].pcEMsg = translateError(e1.code()).c_str();
+                translateError(e1.code());
+                eMessages[iCounter].pcEMsg = locErrMess;
+            }
+            else
+            {
+                #ifdef _WIN32
+			    eMessages[iCounter].pcEMsg = _strdup(e1.getMsg().c_str());
+                #else
+			    eMessages[iCounter].pcEMsg = strdup(e1.getMsg().c_str());
+                #endif
+            }
 			PRINT_DEBUG("ErrorMessage: %s",eMessages[iCounter].pcEMsg);
 
 			iCounter ++;
@@ -195,6 +214,51 @@ void My1EstEIDSigner::getExceptions(const digidoc::Exception e)
 			getExceptions(e1);
 		}
 	}
+}
+
+//===========================================================
+//****** Translate error code into Estonian error text ******
+void My1EstEIDSigner::translateError(int code)
+{
+    //errorcodes are defined in Exception.h
+    switch (code)
+    {
+        case 1 :   
+            locErrMess = "Vale PIN2!";
+            break;
+        case 2 :
+            locErrMess = "PIN2 sisestamine katkestatud!";
+            break;
+        case 3 :
+            locErrMess = "PIN2 Lukus! \nPalun kasutage \nID-kaardi haldusvahendit";
+            break;
+        case 4 :
+            locErrMess = "PIN2 sisestamine ebaõnnestus!";
+            break;
+        case 5 :
+            locErrMess = "Sertifikaat tühistatud!";
+            break;
+        case 6 :
+            locErrMess = "Setifikaat tundmatu!";
+            break;
+        case 7 :
+            locErrMess = "Viga OCSP serveri ja arvuti ajavahes! \nPalun kontrollige oma arvuti kella seadistusi!";
+            break;
+        case 8 :
+            locErrMess = "Viga OCSP serveri leidmisel!";
+            break;
+        case 9 :
+            locErrMess = "OCSP sertifikaat puudub!";
+            break;
+        case 10 :
+            locErrMess = "Ei leia sertifikaadi väljastajat!";
+            break;
+        case 11 :
+            locErrMess = "Viga ligipääsusertifikaadi kasutamisel! \nVale parool või sertifikaat!";
+            break;
+        default :
+            locErrMess = "Esines tundmatu viga!";
+    }
 }
 
 //===========================================================
@@ -235,50 +299,30 @@ int My1EstEIDSigner::initData()
 	catch(const digidoc::BDocException& e)
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 			iRet = 1;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 			iRet = 2;
 	}
 	catch(const digidoc::OCSPException& e)
 	{
 		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 			iRet = 3;
 	}
 	catch(const digidoc::SignException& e)
 	{
 		PRINT_DEBUG("Caught SignException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 			iRet = 4;
 	}
 	catch(...)
 	{
-		pcErrMsg = "Caught unknown exception";
+		pcErrMsg = "Tekkis tundmatu viga!";
 		PRINT_DEBUG(pcErrMsg);
 		iRet = 10;
 	}
@@ -355,19 +399,19 @@ PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 			digidoc::X509CertStore::destroy();
 		}		
 	}
-	catch(const digidoc::OCSPException& e)
-	{
-		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
-	
-		getExceptions(e);
-		i_ok |= 50;
-	}
 	catch(const digidoc::BDocException& e)
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
 
 		getExceptions(e);
 		i_ok |= 10;
+	}
+    catch(const digidoc::OCSPException& e)
+	{
+		PRINT_DEBUG("Caught OCSPException: %s", e.getMsg().c_str());
+	
+		getExceptions(e);
+		i_ok |= 50;
 	}
 	catch(const digidoc::IOException& e)
 	{
@@ -383,7 +427,7 @@ PRINT_DEBUG("File path for container: %s", str_filepath.c_str());
 		getExceptions(e);
 		i_ok |= 30;
 	}
-	catch(const digidoc::Exception& e)
+    catch(const digidoc::Exception& e)
 	{
 		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
 		
@@ -464,6 +508,7 @@ int My1EstEIDSigner::openCont ()
 				catch(const SignatureException& e)
 				{
 					printf("    Online validation: FAILED (%s)\n", e.getMsg().c_str());
+                    getExceptions(e);
 					i_ret += 100;
 				}
 			}
@@ -545,39 +590,24 @@ int My1EstEIDSigner::openCont ()
 	catch(const digidoc::BDocException& e)
 	{
 		PRINT_DEBUG("Caught BDocException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 		i_ret += 10000;
 	}
 	catch(const digidoc::IOException& e)
 	{
 		PRINT_DEBUG("Caught IOException: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 		i_ret += 20000;
 	}
 	catch(const digidoc::Exception& e)
 	{
 		PRINT_DEBUG("Caught Exception: %s", e.getMsg().c_str());
-		if (e.hasCause())
-			for (size_t u=0; u<e.getCauses().size(); u++)
-			{
-				pcErrMsg = e.getCauses()[u].getMsg().c_str();
-				PRINT_DEBUG("ErrMess%s",pcErrMsg);
-			}
+		getExceptions(e);
 		i_ret += 30000;
 	}
 	catch(...)
 	{
-		PRINT_DEBUG("Caught unknown exception");
+		PRINT_DEBUG("Tekkis tundmatu viga!");
 		
 		i_ret += 90000;
 	}
