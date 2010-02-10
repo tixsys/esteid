@@ -160,9 +160,14 @@ End Function
 				utf1 = Asc(char)-65280 rem - hexFF00
 				x = x+1
 				char = Mid(strTemp, x, 1)
-				utf2 = Asc(char)-65280
-				rem Convert from UTF-16 to UTF-8
-				char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+				if Asc(char) &gt; 127 then
+					utf2 = Asc(char)-65280
+					rem Convert from UTF-16 to UTF-8
+					char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))
+				else
+					char = Chr$(utf1)
+					x = x-1
+				end if						
 			end if	
 			strData = strData + char					 
 		Next x        
@@ -321,9 +326,14 @@ Function GlobalMess
 			utf1 = Asc(char)-65280 rem - hexFF00
 			x = x+1
 			char = Mid(strGlobMess, x, 1)
-			utf2 = Asc(char)-65280
-			rem Convert from UTF-16 to UTF-8
-			char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))						
+			if  Asc(char) &gt; 127 then
+				utf2 = Asc(char)-65280			
+				rem Convert from UTF-16 to UTF-8
+				char = Chr$(((utf1 - 192) * 64) + (utf2 - 128))
+			else
+				char = Chr$(utf1)
+				x = x-1
+			end if			
 		end if	
 		strData = strData + char					 
 	Next x
