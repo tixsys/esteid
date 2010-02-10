@@ -747,7 +747,19 @@ void SAL_CALL BaseDispatch::dispatch( const URL& aURL, const Sequence < Property
                         i_try = 0;
 					}
 					else
-					{ 								
+					{ 	
+                        if (!m_BdocBridge->iCounter)
+                        {
+                            strSignData = "macro:///HW.HW.SetGlobMess(*";
+                            strSignData += m_BdocBridge->pcErrMsg;
+                            strSignData += ")";
+				            rDispatchHelper->executeDispatch(rDispatchProvider, OUString::createFromAscii(strSignData.data()), 
+					            OUString::createFromAscii(""), 0, Sequence < ::com::sun::star::beans::PropertyValue > ());
+				            //Show message Macro
+				            Reference < XScript > xScript(xScriptProvider->getScript( OUString::createFromAscii("vnd.sun.star.script:HW.HW.GlobalMess?language=Basic&location=application") ), UNO_QUERY);
+				            xScript->invoke(Sequence <Any>(), indexes, outparam);
+                        }
+
 						for (int ic=0; ic<m_BdocBridge->iCounter; ic++)
 						{	// Show all errors								
 							PRINT_DEBUG("Got Exception - %s", m_BdocBridge->eMessages[ic].pcEMsg);
