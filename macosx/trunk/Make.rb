@@ -208,7 +208,7 @@ class Application
 			run_command 'mkdir build'
 			
 			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
+				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc x86_64" ..'
 				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
 				
 				if @options.force
@@ -793,11 +793,13 @@ class Application
 				:version => '1.0',
 				:priority => 2,
 				:packages => [ 'org.esteid.installer.digidoc',
+							   'org.esteid.installer.opensc.10.6',
 							   'org.esteid.installer.opensc',
 							   'org.esteid.installer.qt',
 							   'org.esteid.installer.su',
 							   'org.esteid.installer.pp',
 							   #'org.esteid.installer.openoffice',
+							   'org.esteid.installer.tokend.10.6',
 							   'org.esteid.installer.tokend.10.5',
 							   'org.esteid.installer.tokend.10.4',
 							   'org.esteid.installer.drivers.10.5' ]
@@ -833,11 +835,22 @@ class Application
 		return [
 			{
 				:name => 'esteid-opensc',
+				:files => [ File.join(@options.opensc + '.10.6', '*/**') ],
+				:froot => @options.opensc,
+				:location => '/',
+				:identifier => 'org.esteid.installer.opensc.10.6',
+				:version => '1.0.2',
+				:script => "return system.version.ProductVersion >= '10.6';",
+				:system => '10.6>='
+			}, {
+				:name => 'esteid-opensc',
 				:files => [ File.join(@options.opensc, '*/**') ],
 				:froot => @options.opensc,
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc',
-				:version => '1.0.2'
+				:version => '1.0.3',
+				:script => "return system.version.ProductVersion &lt; '10.6';",
+				:system => '10.6&lt;'
 			}, {
 				:name => 'esteid-digidoc',
 				:files => [ File.join(@options.digidoc, '*/**') ],
@@ -950,7 +963,7 @@ class Application
 				:location => '/usr/libexec/SmartCardServices/drivers',
 				:version => '1.0',
 				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
-				:system => '10.5>='
+				:system => '10.5='
 			}, {
 				:name => 'esteid',
 				:title => 'ID-card',
