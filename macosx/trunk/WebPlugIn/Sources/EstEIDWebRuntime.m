@@ -534,8 +534,8 @@ NPError NPP_SetWindow(NPP plugin, NPWindow *window)
 		if(window && window->type == NPWindowTypeWindow) {
 			NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 			
-			[(id <EstEIDWebService>)obj->obj setWindow:(NSWindow *)((NP_CGContext *)window)->window];
-			//[(id <EstEIDWebService>)obj->obj setWindow:[[[NSWindow alloc] initWithWindowRef:GetWindowFromPort(((NP_Port *)window->window)->port)] autorelease]];
+			//[(id <EstEIDWebService>)obj->obj setWindow:(NSWindow *)((NP_CGContext *)window)->window];
+			[(id <EstEIDWebService>)obj->obj setWindow:[[[NSWindow alloc] initWithWindowRef:GetWindowFromPort(((NP_Port *)window->window)->port)] autorelease]];
 			
 			[pool release];
 		}

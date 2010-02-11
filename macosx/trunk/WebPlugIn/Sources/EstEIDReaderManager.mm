@@ -22,7 +22,7 @@ typedef struct _EstEIDReaderManagerState {
 		id <EstEIDReader> *data;
 		unsigned int count;
 	} readers;
-	NSInteger selection;
+	int selection;
 	NSTimer *timer;
 	id proxy;
 } EstEIDReaderManagerState;
