@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
+	\date		$Date: 2010-02-16 08:28:37 +0200 (T, 16 veebr 2010) $
 */
-// Revision $Revision: 512 $
+// Revision $Revision: 517 $
 
 ///forward-declared opsys-specific components
 struct pinDialogPriv;
@@ -32,6 +32,7 @@ class pinDialog {
 protected:
 	EstEidCard::KeyType m_key;
 	std::string m_prompt;
+	std::string m_PAD_prompt;
 	int m_minLen;
 	friend struct pinDialogPriv;
 public:
