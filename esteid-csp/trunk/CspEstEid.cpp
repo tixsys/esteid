@@ -3,9 +3,9 @@
 	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
 	\licence	BSD
 	\author		$Author: kaidokert $
-	\date		$Date: 2010-02-04 08:10:53 +0200 (N, 04 veebr 2010) $
+	\date		$Date: 2010-02-16 08:32:14 +0200 (T, 16 veebr 2010) $
 */
-// Revision $Revision: 512 $
+// Revision $Revision: 518 $
 
 #include "precompiled.h"
 #include "CspEstEid.h"
@@ -234,6 +234,9 @@ std::vector<BYTE> EstEidContext::doOperation(ALG_ID m_algId,std::vector<BYTE> &i
 
 	EstEidCard card(getMgr());
 	if (!findCard(card)) throw err_noKey();
+
+	dlg.SetDisplayName(card.readCardName(true));
+
 	T operation(input,ret,card,dummy,m_algId);
 	if (!card.hasSecurePinEntry()) {
 		PinString dummyCache;
