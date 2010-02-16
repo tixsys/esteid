@@ -836,7 +836,7 @@ class Application
 			{
 				:name => 'esteid-opensc',
 				:files => [ File.join(@options.opensc + '.10.6', '*/**') ],
-				:froot => @options.opensc,
+				:froot => File.join(@options.opensc + '.10.6'),
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc.10.6',
 				:version => '1.0.2',
