@@ -239,7 +239,7 @@ class Application
 				run_command "lipo -create esteid.x86_64 #{pbinary} -output #{pbinary}"
 				
 				# Copy the resulting plugin
-				FileUtils.cp(proot, File.join(binaries, 'esteid.plugin'))
+				FileUtils.cp_r(proot, File.join(binaries, 'esteid.plugin'))
 			end
 		end
 		
