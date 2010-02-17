@@ -23,4 +23,5 @@ public:
 	SCError(long err);
 	virtual ~SCError() throw() {}
 	virtual const char * what() const throw() {	return desc.c_str();} 
+	static void check(long err);
 };
