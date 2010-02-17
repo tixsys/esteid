@@ -203,6 +203,22 @@ class Application
 		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
 		FileUtils.mkdir_p(File.join(binaries, '10.6')) unless File.exists? File.join(binaries, '10.6')
 		
+		puts "Creating smartcardpp..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join('../../smartcardpp/trunk').to_s) do
+			run_command 'rm -fR build' if File.exists? 'build'
+			run_command 'mkdir build'
+			
+			FileUtils.cd('build') do
+				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc x86_64" ..'
+				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
+				
+				if @options.force
+					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
+				end
+			end
+		end
+		
 		puts "Creating browser plugin..." if @options.verbose
 		
 		FileUtils.cd(Pathname.new(@path).join(@options.firebreath).to_s) do
@@ -224,22 +240,6 @@ class Application
 				
 				# Copy the resulting plugin
 				FileUtils.cp(proot, File.join(binaries, 'esteid.plugin'))
-			end
-		end
-		
-		puts "Creating smartcardpp..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../smartcardpp/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
-			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc x86_64" ..'
-				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
-				
-				if @options.force
-					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
-				end
 			end
 		end
 		
