@@ -34,6 +34,7 @@ class Application
 		@options.volname = nil
 		@options.build = 'build'
 		@options.target = 'Release'
+		@options.firebreath = 'build/firebreath'
 		@options.binaries = 'build/Release'
 		@options.repository = 'build/Repository'
 		@options.digidoc = 'build/Digidoc'
@@ -188,6 +189,7 @@ class Application
 		binaries = Pathname.new(@path).join(@options.binaries).to_s
 		
 		# Cleanup
+		FileUtils.rm_rf(File.join(binaries, 'esteid.plugin')) if File.exists? File.join(binaries, 'esteid.plugin')
 		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
 		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
@@ -200,6 +202,30 @@ class Application
 		FileUtils.mkdir_p(File.join(binaries, '10.4')) unless File.exists? File.join(binaries, '10.4')
 		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
 		FileUtils.mkdir_p(File.join(binaries, '10.6')) unless File.exists? File.join(binaries, '10.6')
+		
+		puts "Creating browser plugin..." if @options.verbose
+		
+		FileUtils.cd(Pathname.new(@path).join(@options.firebreath).to_s) do
+			FileUtils.rm_rf('build') if File.exists? 'build'
+			
+			run_command './prepmac.sh'
+			
+			FileUtils.cd('build') do
+				proot = Pathname.new(@path).join(@options.firebreath, 'build', 'projects', (File.exists? 'projects/trunk') ? 'trunk' : 'esteid', @options.target, 'esteid.plugin').to_s
+				pbinary = proot + '/Contents/MacOS/esteid'
+				
+				# Two pass build - first build 64 bit variant with 10.5 SDK and then 32 bit variants with 10.4 SDK
+				run_command "xcodebuild -project FireBreath.xcodeproj -configuration #{@options.target} -target esteid -sdk macosx10.5 GCC_VERSION=4.0 ARCHS=\"x86_64\""
+				FileUtils.cp(pbinary, 'esteid.x86_64')
+				run_command "xcodebuild -project FireBreath.xcodeproj -configuration #{@options.target} -target esteid -sdk macosx10.4 GCC_VERSION=4.0 ARCHS=\"i386 ppc\""
+				
+				# lipo magic
+				run_command "lipo -create esteid.x86_64 #{pbinary} -output #{pbinary}"
+				
+				# Copy the resulting plugin
+				FileUtils.cp(proot, File.join(binaries, 'esteid.plugin'))
+			end
+		end
 		
 		puts "Creating smartcardpp..." if @options.verbose
 		
@@ -895,7 +921,7 @@ class Application
 				:location => '/Applications/Utilities'
 			}, {
 				:name => 'esteid-webplugin',
-				:files => File.join(@options.binaries, 'EstEIDWP.plugin'),
+				:files => File.join(@options.binaries, 'esteid.plugin'),
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:location => '/Library/Internet Plug-Ins'

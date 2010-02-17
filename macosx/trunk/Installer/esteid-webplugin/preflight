@@ -9,4 +9,8 @@ if [ $RESULT -gt 0 ]; then
 	RESULT=`"$PKMKSENDAE" $RESULT 'quit'`
 fi
 
+# Delete the old Safari plugin
+echo 'Removing Safari plug-in'
+rm -rf /Library/Internet\ Plug-Ins/EstEIDWP.plugin
+
 exit 0

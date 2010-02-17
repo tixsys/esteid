@@ -19,6 +19,7 @@ echo 'Removing Preferences'
 mv -f /Library/PreferencePanes/EstEIDPP.prefPane ~/.Trash/ID-card\ Software
 
 echo 'Removing Safari plug-in'
+mv -f /Library/Internet\ Plug-Ins/esteid.plugin ~/.Trash/ID-card\ Software
 mv -f /Library/Internet\ Plug-Ins/EstEIDWP.plugin ~/.Trash/ID-card\ Software
 
 echo 'Removing Finder plug-in'
