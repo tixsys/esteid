@@ -18,8 +18,9 @@ done
 rm -rf /var/db/TokenCache/tokens/*
 
 # Launch Keychain Utility
-v=`/usr/bin/security -h | /usr/bin/grep -e "set-identity-preference"`
-if test -n "$v"; then
+v=`/usr/bin/sw_vers -productVersion | cut -f 1-2 -d "."`
+
+if test "$v" = "10.5"; then
 	/usr/bin/open -a "/Applications/Utilities/EstEIDSU.app/Contents/Resources/Keychain Tool.app"
 fi
 
