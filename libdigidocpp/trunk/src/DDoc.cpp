@@ -154,8 +154,9 @@ void DDocPrivate::throwCodeError( int err, const std::string &msg, int line ) co
 		throwError2<T>( "OCSP certificate loading failed", Exception::OCSPCertMissing, line );
 	case ERR_OCSP_UNAUTHORIZED:
 		throwError2<T>( "Unauthorized OCSP request", Exception::OCSPRequestUnauthorized, line );
+	case ERR_CERT_READ:
 	case ERR_UNKNOWN_CA:
-	{ \
+	{
 		std::ostringstream s;
 		s << msg << "\n (error: " << err;
 		if( f_getErrorString )
