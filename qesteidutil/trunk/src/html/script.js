@@ -642,10 +642,12 @@ function setMobile( result )
 
 function updateCert()
 {
+	cardManager.disableRead();
 	extender.showLoading( _('updateCert') );
 	if ( !extender.updateCertAllowed() )
 	{
 		extender.closeLoading();
+		cardManager.allowRead();
 		return;
 	}
 	var ok = false;
@@ -657,10 +659,11 @@ function updateCert()
 		extender.closeLoading();
 		_alert( 'info', _( 'updateCertOk' ) );
 		activeCardId = "";
-		cardManager.disableRead();
-		cardInserted( cardManager.activeReaderNum() );
-		cardManager.allowRead();
+		var activeNum = cardManager.activeReaderNum();
+		cardManager.newManager();
+		cardInserted( activeNum );
 	}
+	cardManager.allowRead();
 	extender.closeLoading();
 }
 

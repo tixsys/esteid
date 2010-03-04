@@ -1,7 +1,7 @@
 /*
  * QEstEidUtil
  *
- * Copyright (C) 2009 Jargo Kõster <jargo@innovaatik.ee>
+ * Copyright (C) 2009 Jargo KÃµster <jargo@innovaatik.ee>
  * Copyright (C) 2009 Raul Metsma <raul@innovaatik.ee>
  *
  * This library is free software; you can redistribute it and/or
@@ -299,3 +299,10 @@ void JsCardManager::allowRead()
 
 void JsCardManager::disableRead()
 { readAllowed = false; }
+
+void JsCardManager::newManager()
+{
+	m_jsEsteidCard->setCard( 0 );
+	delete cardMgr;
+	cardMgr = 0;
+}
