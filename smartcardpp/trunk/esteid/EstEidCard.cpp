@@ -20,6 +20,10 @@ bool EstEidCard::isInReader(unsigned int idx) {
 	return string::npos != p ;
 	}
 
+bool EstEidCard::isSecureConnection() {
+	return mConnection && mConnection->isSecure();
+}
+
 void EstEidCard::enterPin(PinType pinType,PinString pin,bool forceUnsecure) {
 	byte cmdEntPin[] = {0x00,0x20,0x00}; // VERIFY
 	ByteVec cmd(MAKEVECTOR(cmdEntPin));

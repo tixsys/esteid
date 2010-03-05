@@ -70,6 +70,7 @@ public:
 	  CardBase(ref,conn) {}
 	~EstEidCard() {}
 	bool isInReader(unsigned int idx);
+	bool isSecureConnection();
 	void reconnectWithT0();
 
 	void enterPin(PinType pinType,PinString pin,bool forceUnsecure = false);
