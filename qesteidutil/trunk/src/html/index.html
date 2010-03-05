@@ -78,7 +78,7 @@
         <trtag trcode="labelAuthUsed"></trtag> <span id="authKeyUsage"></span> <trtag trcode="labelTimes"></trtag>
       </p>
       <div id="authKeyBlocked" class="keyBlocked">
-        <trtag trcode="labelAuthKeyBlocked"></trtag><br /><trtag trcode="labelCertBlocked"></trtag>
+		<span id="spanAuthKeyBlocked"></span>
       </div>
 	  <div id="authUpdateDiv" style="display: none;">
 		<input id="authUpdateButton" type="button" trcode="inputUpdateCert" onClick="updateCert();" onKeyPress="checkEnter( event, this );" class="buttonBottom" />
@@ -104,7 +104,7 @@
         <trtag trcode="labelSignUsed"></trtag> <span id="signKeyUsage"></span> <trtag trcode="labelTimes"></trtag>
       </p>
       <div id="signKeyBlocked" class="keyBlocked">
-        <trtag trcode="labelSignKeyBlocked"></trtag><br /><trtag trcode="labelCertBlocked"></trtag>
+		<span id="spanSignKeyBlocked"></span>
       </div>
       <div id="signBottomButtons" style="padding-left: 30px;">
         <div id="signValidButtons">

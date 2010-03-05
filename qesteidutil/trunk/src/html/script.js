@@ -275,6 +275,9 @@ function readCardData()
 			document.getElementById('authCertStatus').innerHTML=_( esteidData.authCert.isValid() ? 'validBlocked' : 'invalidBlocked' );
 			document.getElementById('authKeyText').style.display='none';
 			document.getElementById('authKeyBlocked').style.display='block';
+			document.getElementById('spanAuthKeyBlocked').innerHTML=_("labelAuthKeyBlocked");
+			if ( language != "ru" )
+				document.getElementById('spanAuthKeyBlocked').innerHTML+="<br />"+_("labelCertBlocked");
 			document.getElementById('authValidButtons').style.display='none';
 			document.getElementById('authBlockedButtons').style.display=(pukRetry == 0 ? 'none' : 'block');
 		}
@@ -293,6 +296,9 @@ function readCardData()
 			document.getElementById('signCertStatus').innerHTML=_( esteidData.signCert.isValid() ? 'validBlocked' : 'invalidBlocked' );
 			document.getElementById('signKeyText').style.display='none';
 			document.getElementById('signKeyBlocked').style.display='block';
+			document.getElementById('spanSignKeyBlocked').innerHTML=_("labelSignKeyBlocked");
+			if ( language != "ru" )
+				document.getElementById('spanSignKeyBlocked').innerHTML+="<br />"+_("labelCertBlocked");
 			document.getElementById('signValidButtons').style.display='none';
 			document.getElementById('signBlockedButtons').style.display=(pukRetry == 0 ? 'none' : 'block');;
 		}
