@@ -40,6 +40,7 @@
 #include <QProcess>
 #elif defined(Q_OS_MAC)
 #include <Carbon/Carbon.h>
+#include <QProcess>
 #endif
 
 DiagnosticsDialog::DiagnosticsDialog( QWidget *parent )
@@ -213,6 +214,14 @@ bool DiagnosticsDialog::isPCSCRunning() const
 {
 	QProcess p;
 	p.start( "pidof", QStringList() << "pcscd" );
+	p.waitForFinished();
+	return !p.readAll().trimmed().isEmpty();
+}
+#elif defined(Q_OS_MAC)
+bool DiagnosticsDialog::isPCSCRunning() const
+{
+	QProcess p;
+	p.start( "sh -c \"ps ax | grep -v grep | grep pcscd\"" );
 	p.waitForFinished();
 	return !p.readAll().trimmed().isEmpty();
 }
