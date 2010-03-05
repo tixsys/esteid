@@ -193,21 +193,23 @@ function checkReaderCount()
 	}
 }
 
-function readCardData()
+function readCardData( translate )
 {
 	try {
-		if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+		if ( translate == null )
 		{
-			disableFields();
-			return;
-		} else
-			enableFields();
+			if ( cardManager.getReaderCount() == 0 || !esteidData.canReadCard() )
+			{
+				disableFields();
+				return;
+			} else
+				enableFields();
 
-		if ( activeCardId == "" )
-			activeCardId = esteidData.getDocumentId();
+			if ( activeCardId == "" )
+				activeCardId = esteidData.getDocumentId();
 
-		checkReaderCount();
-
+			checkReaderCount();
+		}
 		var pukRetry = esteidData.getPukRetryCount();
 		var esteidIsValid = esteidData.isValid();
 		
@@ -549,7 +551,7 @@ function handleNotice(msg)
 	_alert( 'notice', _( msg ) )
 }
 
-function disableFields( translate )
+function disableFields()
 {
 	var divs = document.getElementsByTagName('div');
 	for( i=0;i<divs.length;i++ )
@@ -560,9 +562,6 @@ function disableFields( translate )
 	}
 
 	emailsLoaded = false;
-	
-	if ( translate != null )
-		return;
 
 	document.getElementById('documentId').innerHTML = "";
 	document.getElementById('firstName').innerHTML = "";
