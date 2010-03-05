@@ -62,7 +62,7 @@ function checkEnter( e, obj )
 
 function cardInserted(i)
 {
-	//alert("Kaart sisestati lugejasse " + cardManager.getReaderName(i))
+	//alert("Kaart sisestati lugejasse " + i + " - " + cardManager.getReaderName(i))
 	checkReaderCount();
 	setActive('cert',document.getElementById('buttonCert'));
 
@@ -579,10 +579,15 @@ function disableFields( translate )
 	try {
 		if ( !cardManager.anyCardsInReader() )
 		{
+			cardManager.disableRead();
+			activeCardId = "";
 			document.getElementById('cardInfoNoCard').style.display='block';
 			document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
+			if ( cardManager.getReaderCount() == 0 )
+				cardManager.newManager();
+			cardManager.allowRead();
 		}
-	} catch( err ) {}
+	} catch( err ) { cardManager.allowRead(); }
 }
 
 function enableFields()
