@@ -587,7 +587,7 @@ function disableFields()
 			cardManager.disableRead();
 			activeCardId = "";
 			document.getElementById('cardInfoNoCard').style.display='block';
-			document.getElementById('cardInfoNoCardText').innerHTML=_( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' );
+			document.getElementById('cardInfoNoCardText').innerHTML='<trtag trcode="' + ( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' ) + '">' + _( cardManager.getReaderCount() == 0 ? 'noReaders' : 'noCard' ) + '</trtag>';
 			if ( cardManager.getReaderCount() == 0 )
 				cardManager.newManager();
 			cardManager.allowRead();
