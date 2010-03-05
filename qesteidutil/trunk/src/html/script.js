@@ -243,7 +243,7 @@ function readCardData()
 		
 		document.getElementById('authCertValidTo').innerHTML = esteidData.authCert.getValidTo( language );
 		var days = esteidData.authCert.validDays();
-		if ( days >= 0 && days <= 105 )
+		if ( days >= 0 && days <= 105 && pin1Retry != 0 )
 		{
 			document.getElementById('authCertWillExpire').style.display = 'block';
 			document.getElementById('authCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
@@ -254,7 +254,7 @@ function readCardData()
 
 		document.getElementById('signCertValidTo').innerHTML = esteidData.signCert.getValidTo( language );
 		days = esteidData.signCert.validDays();
-		if ( days >= 0 && days <= 105 )
+		if ( days >= 0 && days <= 105 && pin2Retry != 0 )
 		{
 			document.getElementById('signCertWillExpire').style.display = 'block';
 			document.getElementById('signCertWillExpire').innerHTML = _( 'labelCertWillExpire' ).replace( /%d/, days );
