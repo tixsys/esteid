@@ -31,7 +31,7 @@ SCError::SCError(long err) : runtime_error("smart card API error"),error(err)
 	desc = buf.str();
 }
 
-void SCError::check(long err)
+void SCError::checkError(long err)
 {
 	switch( err )
 	{

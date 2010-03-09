@@ -46,7 +46,7 @@ using std::string;
 PCSCManager::PCSCManager(void): mLibrary(LIBNAME),mOwnContext(true) 
 {
 	construct();
-	SCError::check((*pSCardEstablishContext)(SCARD_SCOPE_USER,
+	SCError::checkError((*pSCardEstablishContext)(SCARD_SCOPE_USER,
 					NULL,
 					NULL,
 					&mSCardContext));
@@ -144,7 +144,7 @@ PCSCManager::~PCSCManager(void)
 void PCSCManager::ensureReaders(uint idx)
 {
 	DWORD ccReaders = 0;
-	SCError::check((*pSCardListReaders)(mSCardContext,NULL,NULL,&ccReaders));
+	SCError::checkError((*pSCardListReaders)(mSCardContext,NULL,NULL,&ccReaders));
 	if (ccReaders == 0) {
 		mReaderStates.clear();
 		return;
@@ -152,7 +152,7 @@ void PCSCManager::ensureReaders(uint idx)
 	if (ccReaders != mReaders.size()) { //check whether we have listed already
 		mReaderStates.clear();
 		mReaders.resize(ccReaders);
-		SCError::check((*pSCardListReaders)(mSCardContext,NULL,&mReaders[0],&ccReaders));
+		SCError::checkError((*pSCardListReaders)(mSCardContext,NULL,&mReaders[0],&ccReaders));
 		char* p = &mReaders[0];
 		while(p < &*(--mReaders.end()) ) {
 			SCARD_READERSTATE s = {p,NULL,SCARD_STATE_UNAWARE,0,0,{'\0'}};
@@ -165,10 +165,10 @@ void PCSCManager::ensureReaders(uint idx)
 	
 #ifdef __APPLE__
 	for(size_t i = 0; i < mReaderStates.size(); i++) {
-		SCError::check((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
+		SCError::checkError((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
 	}
 #else
-	SCError::check((*pSCardGetStatusChange)(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+	SCError::checkError((*pSCardGetStatusChange)(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
 #endif
 	if (idx >= mReaderStates.size())
 		throw std::range_error("ensureReaders: Index out of bounds");
@@ -251,7 +251,7 @@ PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
 PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
 	UNUSED_ARG(forceT0); //??
 	PCSCConnection *pc = (PCSCConnection *)c;
-	SCError::check((*pSCardReconnect)(pc->hScard, 
+	SCError::checkError((*pSCardReconnect)(pc->hScard, 
 		SCARD_SHARE_SHARED, (pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0,
 		SCARD_RESET_CARD,&pc->proto));
 	return pc;
@@ -265,7 +265,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 	BYTE feature_buf[256], rbuf[256];
 	LONG rv;
 	
-	SCError::check((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader,
+	SCError::checkError((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader,
 		SCARD_SHARE_SHARED,
 		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
 		, & pc->hScard,& pc->proto));
@@ -315,7 +315,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 		pc->mForceT0 = true;
 		deleteConnection(c);
 
-		SCError::check((*pSCardConnect)(mSCardContext,
+		SCError::checkError((*pSCardConnect)(mSCardContext,
 				(CSTRTYPE) mReaderStates[idx].szReader,
 				SCARD_SHARE_SHARED,
 				SCARD_PROTOCOL_T0,
@@ -325,12 +325,12 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
 {
-	SCError::check((*pSCardDisconnect)((( PCSCConnection *)c)->hScard,SCARD_RESET_CARD));
+	SCError::checkError((*pSCardDisconnect)((( PCSCConnection *)c)->hScard,SCARD_RESET_CARD));
 }
 
 void PCSCManager::beginTransaction(ConnectionBase *c)
 {
-	SCError::check((*pSCardBeginTransaction)( (( PCSCConnection *)c)->hScard));
+	SCError::checkError((*pSCardBeginTransaction)( (( PCSCConnection *)c)->hScard));
 }
 
 void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
@@ -350,7 +350,7 @@ void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
 			(*pSCardStatus)((( PCSCConnection *)c)->hScard,reader,&rdrLen,&state,&proto,atr,&atrLen);
 			}
 		}
-	/*SCError::check(*/
+	/*SCError::checkError(*/
 	(*pSCardEndTransaction)((( PCSCConnection *)c)->hScard,forceReset ? SCARD_RESET_CARD : SCARD_LEAVE_CARD)
 		/*)*/;
 }
@@ -363,7 +363,7 @@ void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 	const SCARD_IO_REQUEST _MT1 = {2,8};
 
 	DWORD ret = recvLen;
-	SCError::check((*pSCardTransmit)(pc->hScard,
+	SCError::checkError((*pSCardTransmit)(pc->hScard,
 				pc->proto == SCARD_PROTOCOL_T0 ? &_MT0 : &_MT1 ,
 				&cmd[0],(DWORD)cmd.size() ,
 				NULL,
@@ -460,13 +460,13 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 	for (size_t i = 0; i < cmd.size(); i++)
 		sbuf[offset + i] = cmd[i];
 
-	SCError::check((*pSCardControl)(pc->hScard, ioctl, sbuf, count,
+	SCError::checkError((*pSCardControl)(pc->hScard, ioctl, sbuf, count,
 					rbuf, sizeof(rbuf), &rlen));
 
 	// finish a two phase operation
 	if (ioctl2) {
 		rlen = sizeof(rbuf);
-		SCError::check((*pSCardControl)(pc->hScard, ioctl2, NULL, 0, rbuf, sizeof(rbuf), &rlen));
+		SCError::checkError((*pSCardControl)(pc->hScard, ioctl2, NULL, 0, rbuf, sizeof(rbuf), &rlen));
 	}
 	byte SW1 = rbuf[rlen - 2];
 	byte SW2 = rbuf[rlen - 1];
