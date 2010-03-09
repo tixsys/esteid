@@ -120,21 +120,55 @@ namespace EstEIDSigner
             saveFile.Title = Resources.UI_OUTPUT_FILEDIALOG_TITLE;
             if (saveFile.ShowDialog() != DialogResult.OK)
                 return;
-                        
-            linkOutput.Text = System.IO.Path.GetFileName(saveFile.FileName);
-            this.outputFile = saveFile.FileName;            
+
+            OutputFile = saveFile.FileName;
         }
 
         private string InputFile
         {
             set
             {
-                this.linkInput.Text = System.IO.Path.GetFileName(value);
+                UIInputFile = value;
                 this.inputFile = value;
             }
             get
             {
                 return this.inputFile;
+            }
+        }
+
+        private string OutputFile
+        {
+            set
+            {
+                UIOutputFile = value;
+                this.outputFile = value;
+            }
+            get
+            {
+                return this.outputFile;
+            }
+        }
+
+        private string UIInputFile
+        {
+            set
+            {
+                string s = System.IO.Path.GetFileName(value);
+                if (s.Length > 32)
+                    s = s.Substring(0, 29) + "...";
+                this.linkInput.Text = s;
+            }
+        }
+
+        private string UIOutputFile
+        {
+            set
+            {
+                string s = System.IO.Path.GetFileName(value);
+                if (s.Length > 32)
+                    s = s.Substring(0, 29) + "...";
+                this.linkOutput.Text = s;
             }
         }
 
@@ -182,7 +216,7 @@ namespace EstEIDSigner
 
         private void sign_Click(object sender, EventArgs e)
         {
-            string inputFile = this.inputFile;
+            string inputFile = this.InputFile;
 
             if (!File.Exists(inputFile))
             {
@@ -190,7 +224,7 @@ namespace EstEIDSigner
                 return;
             }
          
-            string outputFile = this.outputFile;
+            string outputFile = this.OutputFile;
 
             if ((outputFile == null) || (outputFile.Length == 0))
             {
@@ -382,10 +416,8 @@ namespace EstEIDSigner
             label3.Text = Resources.UI_OUTPUT;
             label4.Text = Resources.UI_STATUS;
 
-            linkInput.Text = (this.inputFile.Length > 0) ? System.IO.Path.GetFileName(this.inputFile) : 
-                Resources.UI_CHOOSE_INPUT;
-            linkOutput.Text = (this.outputFile.Length > 0) ? System.IO.Path.GetFileName(this.outputFile) :
-                Resources.UI_CHOOSE_OUTPUT;
+            UIInputFile = (this.inputFile.Length > 0) ? this.inputFile : Resources.UI_CHOOSE_INPUT;
+            UIOutputFile = (this.outputFile.Length > 0) ? this.outputFile : Resources.UI_CHOOSE_OUTPUT;
 
             // PDF Metadata box
             label5.Text = Resources.UI_PDF_METADATA;

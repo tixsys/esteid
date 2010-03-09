@@ -247,7 +247,7 @@
     <value>signButton</value>
   </data>
   <data name="&gt;&gt;signButton.Type" xml:space="preserve">
-    <value>EstEIDSigner.Form1+DisabledSignButton, EstEIDSigner, Version=1.0.0.15, Culture=neutral, PublicKeyToken=null</value>
+    <value>EstEIDSigner.Form1+DisabledSignButton, EstEIDSigner, Version=1.0.0.16, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;signButton.Parent" xml:space="preserve">
     <value>$this</value>
