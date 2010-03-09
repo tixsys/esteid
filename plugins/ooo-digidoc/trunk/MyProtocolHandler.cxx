@@ -868,9 +868,30 @@ OString SAL_CALL convertURItoPath(OUString ousURI, bool bToOO)
 
 	for(int i=sizeof(UNO_URL_HEAD)-1; i<osPath.getLength(); i++)
 	{
+        //have to add some characters (with integer value under 128) manually
 		if (!memcmp(&osPath.pData->buffer[i], "%20", 3))
 		{
 			strBuffer += " ";
+			i += 2;
+		}
+        else if (!memcmp(&osPath.pData->buffer[i], "%25", 3))
+		{
+			strBuffer += "%";
+			i += 2;
+		}
+        else if (!memcmp(&osPath.pData->buffer[i], "%5E", 3))
+		{
+            strBuffer += "^";
+			i += 2;
+		}
+        else if (!memcmp(&osPath.pData->buffer[i], "%3B", 3))
+		{
+			strBuffer += ";";
+			i += 2;
+		}
+        else if (!memcmp(&osPath.pData->buffer[i], "%23", 3))
+		{
+            strBuffer += "#";
 			i += 2;
 		}
 
@@ -919,6 +940,10 @@ OUString SAL_CALL convertPathToURI(OUString ousPath)
 
 			i ++;
 		}
+        else if (ousPath.pData->buffer[i] == '%')
+            strBuffer += "%25";
+        else if (ousPath.pData->buffer[i] == '#')
+            strBuffer += "%23";
 		else
 			strBuffer += ousPath.pData->buffer[i];
 	}
