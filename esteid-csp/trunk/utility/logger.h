@@ -10,6 +10,10 @@
 #ifndef __LOGGER_H__
 #define __LOGGER_H__
 
+#include <iostream>
+#include <string>
+#include <vector>
+
 enum logTarget {
 	log_to_CONSOLE,
 	log_to_FILE,
