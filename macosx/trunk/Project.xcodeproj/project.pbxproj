@@ -2025,7 +2025,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDPP;
-				SDKROOT = macosx10.4;
+				"SDKROOT[arch=ppc64]" = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.5;
 				WRAPPER_EXTENSION = prefPane;
 			};
 			name = Debug;
@@ -2054,7 +2055,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDPP;
-				SDKROOT = macosx10.4;
+				"SDKROOT[arch=ppc64]" = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.5;
 				WRAPPER_EXTENSION = prefPane;
 				ZERO_LINK = NO;
 			};
