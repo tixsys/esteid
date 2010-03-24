@@ -1148,19 +1148,12 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
             //prv.list(System.out);
             Security.addProvider(prv);
             
-            
-        	if(m_bSignRequests) {
+            if(m_bSignRequests) {
             	// load the cert & private key for OCSP signing
             	String p12file = ConfigManager.instance().
                 	getProperty("DIGIDOC_PKCS12_CONTAINER");
             	String p12paswd = ConfigManager.instance().
                 	getProperty("DIGIDOC_PKCS12_PASSWD");
-            	// PKCS#12 container has 2 certs
-            	// so use this serial to find the necessary one
-            	String p12serial = ConfigManager.instance().
-                	getProperty("DIGIDOC_OCSP_SIGN_CERT_SERIAL");
-            	//System.out.println("Looking for cert: " + p12serial);
-            
             
             	if(p12file != null && p12paswd != null) {
                 	FileInputStream fi = new FileInputStream(p12file);
@@ -1170,25 +1163,20 @@ public class BouncyCastleNotaryFactory implements NotaryFactory
                 	// find the key alias
             		String      pName = null;
             		while(en.hasMoreElements()) {
-                		String  n = (String)en.nextElement();
-                		if (store.isKeyEntry(n)) {
+                	    String  n = (String)en.nextElement();
+                	    if (store.isKeyEntry(n)) {
                     		pName = n;
-                		}
+                	    }
             		}
-					m_signKey = (PrivateKey)store.getKey(pName, null);
-					java.security.cert.Certificate[] certs = store.getCertificateChain(pName);
-					for(int i = 0; (certs != null) && (i < certs.length); i++) {
-						java.security.cert.X509Certificate cert = (java.security.cert.X509Certificate)certs[i];
-						if(m_logger.isInfoEnabled()) {
-                    		m_logger.info("Cert " + i + " subject: " + cert.getSubjectX500Principal().getName("RFC1779"));
-                    		m_logger.info("Cert " + i + " issuer: " + cert.getIssuerX500Principal().getName("RFC1779"));                    
-                    		m_logger.info("Cert " + i + " serial: " + cert.getSerialNumber());
-						}
-                    	if(cert.getSerialNumber().equals(new BigInteger(p12serial)))
-                        	m_signCert = (X509Certificate)certs[i];
-                	}                   
-            	}
-        	}
+                        m_signKey = (PrivateKey)store.getKey(pName, null);
+		        m_signCert = (X509Certificate)store.getCertificate(pName);
+			if(m_logger.isInfoEnabled()) {
+                    		m_logger.info("p12cert subject: " + m_signCert.getSubjectX500Principal().getName("RFC1779"));
+                    		m_logger.info("p12cert issuer: " + m_signCert.getIssuerX500Principal().getName("RFC1779"));                    
+                    		m_logger.info("p12cert serial: " + m_signCert.getSerialNumber());
+			}
+                }
+            }
         	
         	// OCSP certs
             int nCerts = ConfigManager.instance().
