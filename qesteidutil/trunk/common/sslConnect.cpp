@@ -225,6 +225,10 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 	sslError::check( SSL_CTX_check_private_key(sctx) );
 	sslError::check( SSL_CTX_set_mode( sctx, SSL_MODE_AUTO_RETRY ) );
 
+#ifdef SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
+	SSL_CTX_set_options(sctx, SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION);
+#endif
+
 	ssl = SSL_new( sctx );
 
 	BIO *sock;
