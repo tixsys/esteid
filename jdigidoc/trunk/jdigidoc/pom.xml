@@ -15,7 +15,8 @@
     </license>
   </licenses>
   <scm>
-    <url>https://id.eesti.ee/idtrac/browser/jdigidoc</url>
+    <connection>scm:svn:http://esteid.googlecode.com/svn/jdigidoc/trunk/jdigidoc</connection>
+    <url>http://code.google.com/p/esteid/source/browse</url>
   </scm>
   <dependencies>
     <dependency>
