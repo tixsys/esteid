@@ -18,7 +18,7 @@ BEGIN
             VALUE "FileDescription", PACKAGE_NAME
             VALUE "FileVersion", PACKAGE_VERSION ".0"
             VALUE "InternalName", PACKAGE_NAME
-            VALUE "LegalCopyright", "Copyright (C) 2008-2009"
+            VALUE "LegalCopyright", "Copyright (C) 2008-2010 Estonian Informatics Centre"
             VALUE "OriginalFilename", PACKAGE
             VALUE "ProductName", PACKAGE_STRING
             VALUE "ProductVersion", PACKAGE_VERSION ".0"
