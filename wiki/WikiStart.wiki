@@ -1,12 +1,12 @@
 ﻿{{{
 #!div style="float: right; margin: 2em"
 == Logi sisse ==
-[//idtrac/login ID-kaardiga][[BR]]
+[//idtrac/login ID-kaardiga]<br>
 [//trac/login Kasutajanime ja parooliga]
 }}}
 = Tere külaline! =
 
-Oled Eesti ID kaardi tarkvara arenduse leheküljel.[[BR]]
+Oled Eesti ID kaardi tarkvara arenduse leheküljel.<br>
 
 {{{
 #!div style="float: left; text-align: center; margin: 2em"

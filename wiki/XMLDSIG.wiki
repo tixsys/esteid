@@ -31,7 +31,7 @@ Eesti spetsiifilised standardid
  * BDOC 1.0 - http://www.signature.lt/-TOOLS/BDoc-1.0.pdf
 
 Muu mula
- * http://social.msdn.microsoft.com/Forums/en-US/xmlandnetfx/thread/fa722b8c-f653-4483-baa5-aa47d604d98b/ - Mingi tegelane kurdab, et tema XADES .NET kood ei tööta ja kus vastusena väidetakse, et ETSI levitatav schema on vigane [[BR]] Tegelase näitekood: http://test.ditec.sk/xmlvalidation.zip [[BR]] Pakutud lahendus: There is a problem with the XAdES.xsd schema, make the following change on line 91: [[BR]] <xsd:element ref="Include" minOccurs="0" maxOccurs="unbounded"/> [[BR]]Peab mainima, et digidocpp kasutab sama schemat ja ei saa valideerimise erroreid, seega on tõenäoliselt Microsofti parser pipram kui xerces/xalan.
+ * http://social.msdn.microsoft.com/Forums/en-US/xmlandnetfx/thread/fa722b8c-f653-4483-baa5-aa47d604d98b/ - Mingi tegelane kurdab, et tema XADES .NET kood ei tööta ja kus vastusena väidetakse, et ETSI levitatav schema on vigane <br> Tegelase näitekood: http://test.ditec.sk/xmlvalidation.zip <br> Pakutud lahendus: There is a problem with the XAdES.xsd schema, make the following change on line 91: <br> <xsd:element ref="Include" minOccurs="0" maxOccurs="unbounded"/> <br>Peab mainima, et digidocpp kasutab sama schemat ja ei saa valideerimise erroreid, seega on tõenäoliselt Microsofti parser pipram kui xerces/xalan.
  * http://forums.java.net/jive/thread.jspa?messageID=255470 - kurdab härra, et tal ronis Java-s kanoniseerimisel mingi tundmatu namespace prefix !SignInfo tagi külge ja keeras signatuuri pekki.
 
 Tige mula

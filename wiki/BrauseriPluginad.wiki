@@ -1,7 +1,9 @@
 == Isikutuvatus ==
 
  * Konfigureeri oma veebiserver nõudma kliendipoolset sertifikaati: VeebisAutentimine
- * Kasuta rakenduses vastavaid CGI standardi keskkonnamuutujaid.<br>Näiteks: SSL_CLIENT_S_DN, SSL_CLIENT_CERT jne.<br>Muutujate nimekirja leiad siit: http://httpd.apache.org/docs/2.0/mod/mod_ssl.html
+ * Kasuta rakenduses vastavaid CGI standardi keskkonnamuutujaid.<br>
+   Näiteks: SSL_CLIENT_S_DN, SSL_CLIENT_CERT jne.<br>
+   Muutujate nimekirja leiad siit: http://httpd.apache.org/docs/2.0/mod/mod_ssl.html
 
 == Allkirjastamine ==
 Allkirjastamine toimub läbi universaalse brauseripluginate API. Plugina laadimine on kõigis toetatud brauserites
@@ -33,3 +35,4 @@ Laienduse funktsionaalsuse demo leiab aadressilt: https://id.smartlink.ee/plugin
 NB! Igasugune kaastöö on teretulnud ;)
 
 PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [PaigaldusPaketid paigaldatava baastarkvara] koosseisus
+

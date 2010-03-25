@@ -26,8 +26,8 @@ sudo zypper install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid OpenO
 
 või ka graafilise pakihaldajaga:
 
-Arvuti -> Süsteem -> Tarkvara Paigaldamine;[[BR]]
-Rühmad -> hoidlad -> Estonian ID Card development (openSUSE_11.1);[[BR]]
+Arvuti -> Süsteem -> Tarkvara Paigaldamine;<br>
+Rühmad -> hoidlad -> Estonian ID Card development (openSUSE_11.1);<br>
 Vali qesteidutil, qdigidoc, mozilla-esteid, thunderbird-esteid ja OpenOffice_org-digidoc
 
 Esmakordsel paigaldamisel tuleb pcscd deemon sisse lülitada:

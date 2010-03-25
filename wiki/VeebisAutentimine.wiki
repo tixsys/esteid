@@ -4,13 +4,13 @@ ID-kaardiga autentimine käib läbi HTTPS protokolli.
 ID-kaart paistab veebiserverile kui nn. "Client side certificate".
 Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks korralikult peab olema täidetud hulk tingimusi:
 
- 1. ID-kaardiga autentimiseks *peab* olema eraldi IP-aadress. Täiesti eraldi. Näiteks: https://id.minu-imeline-sait.jeje [[BR]]
-    Igasugused "lahendused", mis proovivad sellest nõudest mööda vingerdada toovad endaga kaasa hulgaliselt varjatud probleeme. [[BR]]
+ 1. ID-kaardiga autentimiseks *peab* olema eraldi IP-aadress. Täiesti eraldi. Näiteks: https://id.minu-imeline-sait.jeje <br>
+    Igasugused "lahendused", mis proovivad sellest nõudest mööda vingerdada toovad endaga kaasa hulgaliselt varjatud probleeme. <br>
     [VeebisAutentimine#VigasedAutentimismeetodid Vaata allpool].
 
  2. ID-kaardiga autentiv sait *peab* nõudma kliendipoolse sertifikaadi kasutamist tingimusteta.
-    Apache puhul tähendab see direktiivi {{{SSLVerifyClient require}}} kasutamist. [[BR]]
-    Ajalooliselt on palju kasutatud "valikulist" seritifikaadi nõuet, see aga on samuti äärmiselt probleemne "lahendus". [[BR]]
+    Apache puhul tähendab see direktiivi {{{SSLVerifyClient require}}} kasutamist. <br>
+    Ajalooliselt on palju kasutatud "valikulist" seritifikaadi nõuet, see aga on samuti äärmiselt probleemne "lahendus". <br>
     [VeebisAutentimine#VigasedSSLSeaded Vaata allpool]
 
 {{{
@@ -21,24 +21,24 @@ TODO: Siia tuleb hulk konfi ja koodinäiteid erinevate veebiserverite ja program
 == Vigased Autentimismeetodid ==
 ID-kaardiga autentimiseks peab olema eraldi IP-aadress. Täiesti eraldi. Punkt! Hetkel ei ole olemas korralikult töötavat võimalust sellest nõudest mööda vingerdada. Allpool on toodud neli vildakat "lahendust" koos tekkivate varjatud probleemide kirjeldustega.
 
- 1. Muudad pordi ära, näiteks https://minu-imeline-sait.jeje:88/ [[BR]]
+ 1. Muudad pordi ära, näiteks https://minu-imeline-sait.jeje:88/ <br>
     Tulemus on, et inimesed, kes kasutavad sinu saiti vähegi kõrgema turvalisusega keskkondadest (suurfirmade sisevõrgud), ei saa
     sisse, kuna neil on lubatud pääseda vaid veebi portidele 80 ja 443.
     Näiteks vaikimisi blokeerib [http://www.squid-cache.org SQuid] pääsu kõigile "kahtlastele" portidele allpool 1024 piiri.
     Veel hullem on, kui kasutad mõnda porti, mis on juba muuks otstarbeks kasutusel ja seetõttu brauserites blokeeritud.
     Üks suur Eesti pank istus selles ämbris tükk aega, kuna nende id-kaarti kasutav sait jooksis pordil 563, mis on Mozilla
     brauserites vaikimisi keelatud http://www.mozilla.org/projects/netlib/PortBanning.html
- 2. Paned ID-kaardiga saidi alamkataloogi. Näiteks https://minu-imeline-sait.jeje/id [[BR]]
+ 2. Paned ID-kaardiga saidi alamkataloogi. Näiteks https://minu-imeline-sait.jeje/id <br>
     Tulemuseks on see, et olenevalt Sinu veebiserveri vanusest (jah, see sõltub mod_ssli kompileerimise ajal antud võtmetest
     ja konfiguratsioonifailidest seda muuta ei saa) hakatakse SSLi sessiooni kas iga päringu, iga 10 sekundi või iga mõne minuti
     tagant ümber arvutama. Tulemuseks on iga hiirekliki peale vilkuv kaardilugeja tuli, veniv sait ja iga natukese aja tagant
     lambist välja kargavad sertifikaadi valiku aknad.
  3. Suunad sisselogimisel kasutaja korraks id-kaardiga autentivale alamkataloogile, sätid seal sessioonivõtme ja
-    siis suunad tagasi "tavalisele" lehele. [[BR]]
+    siis suunad tagasi "tavalisele" lehele. <br>
     Tulemuseks on turvalisuskadu: Kasutaja võib ID-kaardi masinast välja võtta ja minema jalutada, järgmine
     inimene saab samas saidis rahulikult toimetamist jätkata. Brauseriakna sulgemine aitab ainult Internet Exploreris,
     kõigis teistes brauserites peab sessiooni lõpetamiseks *kasutaja ise välja logima*.
- 4. Seod kaela pioneeriräti ja otsustad kasutada [http://en.wikipedia.org/wiki/Server_Name_Indication SNI]-d. [[BR]]
+ 4. Seod kaela pioneeriräti ja otsustad kasutada [http://en.wikipedia.org/wiki/Server_Name_Indication SNI]-d. <br>
     Kõik on ilus kuni tuleb vanaema oma "igivana" Windows XP-ga ja kurdab, et see ei töötavat. Kuniks Microsoft uuendab XP all
     krüptoteegid ära või suudab kasutajatele selgeks teha, et XP on liiga vana ja ükski normaalne inimene seda ei kasuta,
     ei saa laiemale avalikkusele suunatud teenustes SNI-d pruukida.

@@ -51,8 +51,8 @@ Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti k
 
 Windowsis MSI pakkide logimiseks on olemas logging.bat: https://id.eesti.ee/trac/export/680/tracaddons/logging.bat . Antud fail tuleb tõmmata enda masinasse, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
 
-[[BR]]
-[[BR]]
+<br>
+<br>
 [WikiStart Tagasi]
 ----
 
@@ -72,8 +72,8 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: https://id.eesti.ee/trac
  * [DigiDoc Digidoc3 kliendis allkirjastamine]
  * [VeebisAllkirjastamine Veebis allkirjastamine]
 
-[[BR]]
-[[BR]]
+<br>
+<br>
 [WikiStart Tagasi]
 ----
 
@@ -82,7 +82,7 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: https://id.eesti.ee/trac
 == Eeldused ==
  * Mac OS X 10.4 või 10.5
  * Intel või PPC protsessor
-[[BR]]
+<br>
 
 == Paigaldamine ==
 Paigaldamiseks vajaliku .dmg faili saad siit: *ftp://ftp.id.eesti.ee/pub/id/macosx/*
@@ -92,7 +92,7 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Prefer
 
 == NB: Mac OS 10.6.2 ehk Snowleopard ei ole veel toetatud ja selle peale ei soovita ID-kaardi tarkvara praegu veel laadida! ==
 
-[[BR]]
+<br>
 
 == Võimalused ==
  * [haldusvahend ID kaardi haldamine]
@@ -103,6 +103,6 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Prefer
  * [veebisallkirjastamine Veebis allkirjastamine]
  * [openoffice Kontoritarkvaras allkirjastamine (OpenOffice) ]
 
-[[BR]]
-[[BR]]
+<br>
+<br>
 [WikiStart Tagasi]
