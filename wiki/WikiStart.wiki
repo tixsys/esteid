@@ -1,42 +1,37 @@
-﻿{{{
-#!div style="float: right; margin: 2em"
-== Logi sisse ==
-[//idtrac/login ID-kaardiga]<br>
-[//trac/login Kasutajanime ja parooliga]
-}}}
-= Tere külaline! =
+﻿= Tere külaline! =
 
-Oled Eesti ID kaardi tarkvara arenduse leheküljel.<br>
+Oled Eesti ID kaardi tarkvara arenduse leheküljel.
 
-{{{
-#!div style="float: left; text-align: center; margin: 2em"
-[[Image(wiki:ImelisedIkoonid:linux-logo.png, link=wiki:PaigaldusPaketid#Linux, title=Linux)]]
-== Linuxi kasutaja ==
-}}}
-{{{
-#!div style="float: left; text-align: center; margin: 2em"
-[[Image(wiki:ImelisedIkoonid:applelogo.png, link=wiki:PaigaldusPaketid#MacOSX, title=Mac)]]
-== Maci kasutaja ==
-}}}
-{{{
-#!div style="float: left; text-align: center; margin: 2em"
-[[Image(wiki:ImelisedIkoonid:microsoft_vista-logo.png, link=wiki:PaigaldusPaketid#Windows, title=Windows)]]
-== Windowsi kasutaja ==
-}}}
-{{{
-#!div style="float: left; text-align: center; margin: 2em"
-[[Image(wiki:ImelisedIkoonid:developer-icon.png, link=wiki:ArendajaSissejuhatus, title=Arendaja)]]
-== Arendaja ==
-}}}
-{{{
-#!div style="clear:both"
-}}}
+<table cellspacing="15">
 
-{{{
-#!html
+<tr>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/linux-logo.png
+<h2>[PaigaldusPaketid#Linux Linuxi kasutaja]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/apple-logo.png
+<h2>[PaigaldusPaketid#MacOSX Maci kasutaja]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/windows-logo.png
+<h2>[PaigaldusPaketid#Windows Windowsi kasutaja]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
+<h2>[ArendajaSissejuhatus Arendaja]</h2>
+</td>
+
+</tr>
+
+</table>
+
 <strong>Probleemide korral palun pöörduge ID-nõustamiskeskuse poole telefonil 1777 või e-maili teel: <a href="mailto:abi@id.ee">abi@id.ee</a></strong>
-}}}
 
 Arendust toetab:
 
-[[Image(wiki:ImelisedIkoonid:EL-Regionaalareng.jpg, link=http://www.struktuurifondid.ee)]]
+[http://www.struktuurifondid.ee http://esteid.googlecode.com/svn/wiki/img/SF-logo.jpg]
