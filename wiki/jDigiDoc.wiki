@@ -1,0 +1,75 @@
+#summary jDigiDoc Quick Start guide in Estonian language
+
+= JDigiDoc =
+
+JDigiDoc on programeerimiskeeles Java loodud teek. Antud teek pakub funktsionaalsust DIGIDOC-XML 1.4, 1.3, 1.2, 1.1 ja BDOC 1.0 formaadis digitaalselt allkirjastatud failide loomiseks, lugemiseks, allkirjastamiseks, kehtivuskinnituse hankimiseks ja allkirjade ning kehtivuskinnituste kontrolliks. Lisaks digiallkirjastamisele pakub JDigiDoc ka krüpteerimist ja dekrüpteerimist vastavalt XML-ENC standardile. Antud standardi käsitleb XML dokumentide või nende osade krüpteerimist aga lubab krüpteerida ka suvalisi binaarfaile kodeerides nad eelenevalt Base64 kodeeringus.
+
+== Kiire algus ==
+ 1. Hangi SVNi klient http://subversion.tigris.org/
+ 1. Hangi Maven http://maven.apache.org
+ 1. Käivita
+{{{
+svn co https://esteid.googlecode.com/svn/jdigidoc/trunk/jdigidoc-helloworld
+cd jdigidoc-helloworld
+mvn install
+mvn jetty:run
+}}}
+ 1. Liigu aadressile http://localhost:8080/jdigidoc-helloworld
+
+== Levitamine ==
+
+JDigiDoci levitatakse [http://maven.apache.org/ Maveni] repositooriumitest. Maven peaks seega teegid ise üles leidma. Vajadusel võib ka kolada mööda repositooriumi aadressil http://mavenrepository.com.
+
+Kui teie süsteem kasutab ANT-i, siis maveni repositooriumitest tarkvara kätte saamiseks on mõistlik lisada
+oma süsteemile IVY tugi http://ant.apache.org/ivy/
+
+Kui teil on mingil X põhjusel ilmtingimata vaja just paljast JAR faili, siis saab selle käsitsi maveni repost sikutada,
+samas on teegil hulgaliselt sõltuvusi ja kõige selle käsitsi majandamine on mõttetu aja raiskamine.
+JDigiDoci programmeerijale suunatud juhendis on sõltuvused küll kirjeldatud, kuid edaspidi neid eraldi
+ei dokumenteerita: sõltuvused on üheselt defineeritud maveni abil ja nende lahendamine
+toimub automaatselt.
+
+*NB! Seisuga 14.01.2009 on taotlus jDigiDoc teegi kaasamiseks "ametlikesse" repositooriumitesse töös ja niipea kui see rahuldatakse, uuendame seda lehekülge, seniks palume kasutada jdigidoc-devel repositooriumi.*
+
+Teegi kasutamiseks tuleb lisada projekti pom.xml faili järgmine sõltuvus:
+{{{
+     <dependency>
+       <groupId>ee.eesti.id</groupId>
+       <artifactId>jdigidoc</artifactId>
+       <version>2.3.99</version>
+     </dependency>
+}}}
+
+Vahepealsed arendusversioonid on kättesaadavad eraldi nö "privaatsest" repost.
+
+Arendusversioonide repositooriumi kasutamiseks tuleb lisada pom.xml faili järgmised read:
+{{{
+<project>
+  ...
+  <repositories>
+    <repository>
+      <id>jdigidoc-devel</id>
+      <url>http://ftp.smartlink.ee/pub/id/mvnrepo</url>
+    </repository>
+  </repositories>
+  ...
+</project>
+
+}}}
+
+== Lähtetekstid ==
+Teegi lähtetekstid on avaldatud LGPL litsentsi all ja on saadaval id.eesti.ee SVN-ist
+{{{
+svn co https://esteid.googlecode.com/svn/jdigidoc/trunk jdigidoc
+}}}
+Või veebibrauseriga projekti [/p/esteid/source lähtetekstide brauserist].
+
+== Dokumentatsioon ==
+
+Leidub lähtetekstide all kataloogis doc
+samuti ehitatakse javadoc käivitades teegi lähtetekstide kataloogis:
+{{{
+mvn javadoc:jar
+}}}
+
+[wiki:DigiDocTeegid Tagasi]
