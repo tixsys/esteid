@@ -1,0 +1,30 @@
+= Tahad programmeerida?! Cool! =
+
+Alustuseks on vaja kätte saada lähtetekstid.
+Neid saab lugeda ja uurida kohe siit veebilehelt, valides ülevalt menüüst "Browse Source".
+
+Lähtetekstide kätte saamiseks on vaja SVNi klienti
+
+Linuxi all on asi lihtne: käsurea SVN aitab.
+
+Windowsi kasutajad võiks sikutada endale [http://tortoisesvn.tigris.org TortoiseSVN] nimelise jupi.
+
+Kui kasutad [http://www.eclipse.org Eclipse] nimelist arenduskeskkonda, siis sellele on ka SVNi moodul olemas (subclipse, saab installida sealt, kust teisigi Eclipse laiendusi).
+
+= Tõmba endale vajalik jupp =
+Kui oled otsustanud, mida torkima hakkad, suuna SVNi klient aadressile: https://id.eesti.ee/svn/mooduli-nimi
+Näiteks:
+{{{
+svn co https://id.eesti.ee/svn/libdigidocpp/trunk libdigidocpp
+}}}
+Edasi kompileerid oma valitud jupi CMake abil kokku.
+Näiteks:
+{{{
+cd libdigidocpp
+mkdir build
+cd build
+cmake ..
+make
+}}}
+
+Teegi koodi juhendi leiad siit: https://id.smartlink.ee/libdigidocpp-doxy/

@@ -1,0 +1,32 @@
+= Fedora =
+Toetatud versioonid *11* ja *12*
+
+=== Kaardilugeja draiverid ===
+Tarkvara esmakordsel paigaldamisel on vaja paigaldada ka CCID lugejate draiverid:
+{{{
+sudo yum install ccid
+}}}
+
+Vaikimisi kasutab fedora lugejadraiverina OpenCT-d, mis on katki. Esmakordsel paigaldamisel tee olukorra parandamiseks:
+{{{
+sudo chkconfig openct off
+sudo chkconfig pcscd on
+sudo /etc/init.d/openct stop
+sudo /etc/init.d/pcscd start
+}}}
+
+
+=== Repositooriumi lisamine ===
+Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti. Need mõlemad tulevad kaasa esteid-release pakiga, mille paigaldamiseks installi http://ftp.id.eesti.ee/pub/id/fedora/11/i386/esteid-release-11-0.3.noarch.rpm
+
+=== Pakettide paigaldamine ===
+Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
+{{{
+sudo yum update
+sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+}}}
+
+Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
+{{{
+sudo yum update
+}}}

@@ -1,0 +1,10 @@
+== Pool-automaatne paigaldusscript ==
+Paigaldab nii mooduli kui juursertifikaadid.
+
+ * Kliki siia: http://id.smartlink.ee/index.php?ffkala=1
+ * Vali avanenud allalaadimise aknast Open with Firefox (Selle valiku puudumisel salvesta fail kettale ja ava File->Open file abil)
+ * Kliki lahti hüpanud hoiatusaknas Allow
+
+Moodulist lahti saab valides Preferences->Advanced->Encryption->Security Devices->Estonian ID Card->Unload
+
+[PaigaldusPaketid Tagasi]

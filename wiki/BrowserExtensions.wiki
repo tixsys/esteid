@@ -1,0 +1,9 @@
+Brauserite laiendused realiseerivad veebirakendustes digitaalallkirja andmise - kasutajal tekib võimalus anda digitaalset allkirja dokumentidele läbi veebilehitseja. Veebiprogrammeerijale paistab dokumenteeritud !JavaScript API, mida kõik brauserilaiendused realiseerivad. Selline lähenemine vähendab ID-kaardiga allkirjastamist kasutavate veebiteenuste arendamise kulusid ja võimalikke ühilduvusprobleeme.
+
+Funktsionaalsus:
+ 1. Dokumendi digitaalne allkirjastamine, kasutades !JavaScriptist nähtavat API-t
+ 1. Firefoxi laiendusmoodul
+ 1. Safari laiendusmoodul
+ 1. Internet Exploreri laiendusmoodul
+
+[SysteemiKirjeldus Tagasi]

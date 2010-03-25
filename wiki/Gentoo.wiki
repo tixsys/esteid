@@ -1,0 +1,33 @@
+= Gentoo =
+Toetatud Gentoo testing (*~x86* ja *~x86_64*)
+
+=== Tarkvara paigaldamine ===
+
+Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara paigaldamiseks vajalikke live ebuilde. Overlay kasutamiseks on vaja "layman" nimelist programmi, mis tuleb eelnevalt paigaldada ning konfigureerida. Lisaks on vaja ka svn ja git kliente.
+Layman paigaldamiseks:
+{{{
+emerge -av layman subversion dev-util/git
+echo "source /usr/local/portage/layman/make.conf" >> /etc/make.conf
+}}}
+
+
+Osad vajalikud XML teegid pole veel Gentoo portage-s sees, ning nende jaoks on lisaks veel vaja "dev-zero" overlayd.
+
+Overlayde paigaldamiseks anna järgmised käsud:
+{{{
+layman -a dev-zero
+layman -f esteid --overlays=http://ftp.id.eesti.ee/pub/id/gentoo/layman-idkaart.txt
+layman -a esteid --overlays=http://ftp.id.eesti.ee/pub/id/gentoo/layman-idkaart.txt
+}}}
+
+Ning seejärel peaks juba töötama tarkvara paigaldus:
+{{{
+emerge -av qdigidoc qesteidutil esteid-mozilla
+}}}
+
+Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlayd, ning seejärel kõik uuesti kompileerida
+{{{
+layman -S
+emerge -av -1 libdigidoc libdigidocpp qdigidoc qesteidutil esteid-mozilla
+etc-update
+}}}

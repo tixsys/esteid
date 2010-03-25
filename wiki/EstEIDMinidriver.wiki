@@ -1,0 +1,11 @@
+Windows Vista minidraiver on vajalik ID-kaardi tõrgeteta tööks uuemates Windows operatsioonisüsteemides.
+
+Funktsionaalsus:
+ 1. Isikutuvastus (E-teenustesse sisenemine) veebibrauseris „Internet Explorer“.
+ 1. E-posti krüpteerimine ja allkirjastamine isikutuvastuse sertifikaadiga programmis “Outlook” 
+ 1. Kaardil olevate sertifikaatide automaatne registreerimine ja de-registreerimine süsteemis
+ 1. Kaardi eemaldamisel sessiooni lõpetamine
+ 1. Operatsioonisüsteemi sisse logimine kiipkaardiga 
+ 1. Draiveri uuendused Windows Update kaudu.
+
+[SysteemiKirjeldus Tagasi]

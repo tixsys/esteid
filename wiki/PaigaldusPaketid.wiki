@@ -1,0 +1,108 @@
+﻿= Mis on mis? =
+
+ * opensc - OpenSC koos ID-kaardi PKCS!#15 emulaatoriga. Firefoxiga kasutamiseks. *NB! Kui turvamoodul miskipärast ei tööta, siis kiika siia: FirefoxModuleInstaller*
+ * esteid-pkcs11 - Eksperimentaalne nö "lightweight" PKCS!#11 draiver. Firefoxiga kasutamiseks
+ * CSP - Windowsi CryptoAPI draiver. Internet Exploreriga kasutamiseks. *NB! Loe kindlasti läbi [CSPTestimine]*
+ * BHO - Internet Exploreri laiendus, mis võimaldab veebis allkirjastamist. *NB! internetipankades ja digidoci portaalis see veel ei tööta, kuna tegemist on uue API-ga*
+ * libdigidoc++ - Uus C++ teek bdoc ja ddoc failiformaatide toega
+ * libdigidoc - Vana C teek ddoc ja cdoc failiformaatide toega
+ * qesteidutil - QT baasil kirjutatud ID-kaardi utiliit.
+ * qdigidoc - uus digitaalallkirja andmise töölauaprogramm.
+
+
+= Kust saab? =
+Beta versioonid, sorteerituna operatsioonisüsteemi kaupa, leiab aadressilt
+
+*http://ftp.id.eesti.ee/pub/id/*
+
+Igaöiselt kompileeritud nn "nightly buildid" saab *ajutiselt* aadressilt
+
+*ftp://ftp.smartlink.ee/pub/id*
+
+Pakettide failinimes on olenevalt operatsioonisüsteemist kas kompileerimise kuupäev või SVN versiooni number. Soovitatav on valida kõige uuem (suurema numbriga).
+
+= Windows = 
+
+Windowsi kasutajatel soovitame kasutada vana tarkvara aadressilt http://installer.id.ee
+
+Juhul kui soovid siiski proovida uut betat, siis arvesta, et
+
+*Kuna veebikeskkondades puudub uue ID kaardi baastarkvara tugi, siis ei ole täna veel võimalik uue tarkvaraga teostada makseid suuremates pankades*
+
+== Paigaldamine ==
+
+Paigaldamiseks vajaliku .msi faili saad siit: *http://ftp.id.eesti.ee/pub/id/windows/msi/latest/*
+
+*Windowsi paigalduspaketi miinimumnõuded *
+
+Paigalduspaketi korrektseks toimimiseks peab olema arvutisse paigaldatud Microsoft .NET Framework 2.0.
+
+Toetatud operatsioonisüsteemid:
+
+ * Windows 2000 SP4 või uuem;
+ * Windows XP SP3 või uuem;
+ * Windows Vista SP1 või uuem.
+
+== Mida teha MSI probleemide korral? ==
+
+Windowsis uue MSI paigaldamiseks pole käsitsi vaja vana maha võtta, vaid piisab uue installimisest. Vana versioon võetakse automaatselt maha ning uus paigaldatakse selle asemele.
+Siiski võib MSI uuendamisel tekkida olukord, kus juba paigaldatud pakett on vigane ning ei õnnestu seda eemaldada. Üks teadaolev sarnane viga esines MSI-s enne ver. 2.7.924.331, kuid uuemates on see loodetavasti korras.
+Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti kasutades Windows Installeri puhastusutiliiti [http://support.microsoft.com/kb/290301]. Kui seejärel peale installida uuem versioon (>= 2.7.924.331), peaks edasi olema uninstall korras.
+
+Windowsis MSI pakkide logimiseks on olemas logging.bat: https://id.eesti.ee/trac/export/680/tracaddons/logging.bat . Antud fail tuleb tõmmata enda masinasse, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
+
+[[BR]]
+[[BR]]
+[WikiStart Tagasi]
+----
+
+= Linux =
+
+== Tarkvara paigaldamine ==
+
+ * [ArchLinux Archlinuxi seadistamine]
+ * [Debian Debiani seadistamine]
+ * [Fedora Fedora seadistamine]
+ * [Gentoo Gentoo seadistamine]
+ * [Ubuntu Ubuntu seadistamine]
+ * [openSUSE openSUSE seadistamine]
+
+== Võimalused ==
+ * [Haldusvahend ID kaardi haldamine]
+ * [DigiDoc Digidoc3 kliendis allkirjastamine]
+ * [VeebisAllkirjastamine Veebis allkirjastamine]
+
+[[BR]]
+[[BR]]
+[WikiStart Tagasi]
+----
+
+= Mac OS X =
+
+== Eeldused ==
+ * Mac OS X 10.4 või 10.5
+ * Intel või PPC protsessor
+[[BR]]
+
+== Paigaldamine ==
+Paigaldamiseks vajaliku .dmg faili saad siit: *ftp://ftp.id.eesti.ee/pub/id/macosx/*
+
+
+Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
+
+== NB: Mac OS 10.6.2 ehk Snowleopard ei ole veel toetatud ja selle peale ei soovita ID-kaardi tarkvara praegu veel laadida! ==
+
+[[BR]]
+
+== Võimalused ==
+ * [haldusvahend ID kaardi haldamine]
+ * [digidoc Digidoc3 klient allkirjastamiseks]
+ * ID kaardiga Maci sisse logimine
+     10.5.6 ja hiljem on võimalik ID-kaardiga sisselogimine seadistada "System Preferences" ID-kaardi vaate alt.
+     Vanemate Mac OS X versioonidega pole soovitav ID-kaardiga sisselogimist seadistada, aga kui keegi tõesti soovib, siis [MacLoginSeadistamine seadistamise kirjeldus on siin] 
+ * [veebisallkirjastamine Veebis allkirjastamine]
+ * [openoffice Kontoritarkvaras allkirjastamine (OpenOffice) ]
+
+[[BR]]
+[[BR]]
+[WikiStart Tagasi]

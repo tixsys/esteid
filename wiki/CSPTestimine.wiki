@@ -1,0 +1,122 @@
+CSP ehk [http://msdn.microsoft.com/en-us/library/aa380245(VS.85).aspx Certificate Service Provider] peab olema Microsofti poolt allkirjastatud.
+Loomulikult ei ole arendamise käigus otstarbekas iga testi jaoks DLL-e Microsofti allkirjastamisele saata.
+Selleks, et allkirja kontroll välja lülitada, peab HEX editori abiga ära käkkima System32 kataloogis paikneva advapi32.dll-i.
+Viimane kuulub "eriti vajalike" süsteemsete failide alla ([http://www.microsoft.com/whdc/archive/wfp.mspx Loe siit]) ja seetõttu üritab Windows selle
+asendamisele igat pidi jalga ette panna. Töötamise ajal sinna faili kirjutada ei saa,
+ümber nimetamine ei aita (peale süsteemi restarti on vana tagasi) ja kõige krooniks on seda
+faili süsteemis mitu koopiat.
+
+*NB! Kui Sa eelnevast jutust mitte midagi aru ei saanud, ära palun ürita oma süsteemi torkida.
+Tõenäoliselt ei saa Sa hakkama, halvemal juhul rikud Windowsi lõplikult ja pead arvuti nullist uuesti installima.*
+
+Me riputaks hea meelega juba valmis tehtud dll-id huvilistele alla laadimiseks, aga see oleks kahjuks tarkvarapiraatlus.
+Seega pead ise vajalikud failid tekitama.
+Alustuseks on Sul vaja HEX editori. Meie oleme kasutanud Windows platvormil [http://mh-nexus.de/en/hxd/ HxD nimelist], Linuxi all faile redigeerides kõlbab ghex või khexeditor, vana kooli häkkeritel on sahtlinurgas [http://www.hiew.ru Hiew].
+
+ * Kopeeri System32 kataloogist advapi32.dll kindlasse kohta (näiteks c:\advapi32 kataloogi)
+ * Tee failist varukoopia (näiteks c:\advapi32\normal.dll)
+ * Vajuta faili peal paremat nuppu ja otsi välja DLLi versiooninumber. Seda läheb vaja oma edasise tegevuse kontrollimiseks.
+ * Ava kopeeritud fail HEX editoriga
+ * Asenda mõned baidid vastavalt oma Windowsi ja DLLi versioonile (vaata allpool)
+ * 64bitise Windowsi puhul tee sama ka SysWOW64 kataloogis paikneva advapi32.dll-iga
+ * Lülita arvuti välja ja aseta kõvaketas teise masina külge, kus on *sama* Windowsi versioon (uuema puhul võidakse NTFS pöördumatult "ära uuendada", vanem ei pruugi uut NTFSi lugeda)
+ * Asenda System32\advapi32.dll redigeeritud versiooniga
+ * 64bitise Windowsi puhul tee sama ka SysWOW64 kataloogis paikneva advapi32.dll-iga
+ * Kustuta süsteemist muud koopiad
+  * System32\dllcache\advapi32.dll
+  * jne.
+ * Lase süsteem käima ja käivita käsurealt:
+{{{
+SFC /SCANNOW
+}}}
+ * Kui teatatakse, et leiti vigaseid faile, aga ei suudetud parandada, siis tõenäoliselt asendamine õnnestus.
+ * Ühenda lugeja arvuti külge ja pista ID-kaart sisse
+ * Proovi kas EstEIDCSP töötab käsuga
+{{{
+testac enumcont
+}}}
+ * Kui pätsimine ebaõnnestus saad sellise teate:
+{{{
+cryptError  exception:'CryptoApiError' code:'0x80090006'
+}}}
+ * Kui nii, siis ava advapi32.dll uuesti HEX editoriga ja vaata, kas Sinu muudatused on ikka seal või pani Windows vana faili tagasi.
+
+NB! Internetis liigub igasuguseid jutte, et Safe mode ja/või Recovery konsool aitavad ka advapi32.dll-i pätsida. *Need ei tööta*! Üks töötav alternatiiv on BartPE LiveCD kuid kindlasti on "päris arvutist" märksa mugavam faile otsida, kopeerida ja asendada.
+
+== Vajalikud asendused advapi32 versiooni järgi ==
+algallikas [http://blog.idrassi.com/ Mouniri blogi].
+
+NB! 64 bitiste Windowside puhul on System32 kataloogis 64 bitine ja *SysWOW64 kataloogis 32 bitine* fail, aga kui Sa juba siin tegutsed, siis Sa ju ometi teadsid seda ka ise :)
+
+ * 5.0.2195.6710 32bit
+  * At offset 0x17061 : change 0F to E9
+  * At offset 0x17062 : change 84 to 2C
+  * At offset 0x17063 : change 22 to 06
+  * At offset 0x17064 : change 06 to 01
+ * 5.0.2195.7038 32bit
+  * At offset 0xEA97 : change 0F to E9
+  * At offset 0xEA98 : change 84 to 93
+  * At offset 0xEA99 : change 89 to 83
+  * At offset 0xEA9A : change 83 to 01
+  * At offset 0xEA9B : change 01 to 00
+  * At offset 0xEA9C : change 00 to 90
+ * 5.1.2600.5512 32bit
+  * At offset 0x175A1 : change 75 to 90
+  * At offset 0x175A2 : change 0C to 90
+  * At offset 0x175A9 : change 0F to 90
+  * At offset 0x175AA : change 84 to E9
+ * 5.1.2600.5755:
+    * At offset 0x175C1 : change 75 to 90
+    * At offset 0x175C2 : change 0C to 90
+    * At offset 0x175C9 : change 0F to 90
+    * At offset 0x175CA : change 84 to E9
+ * 5.2.3790.1830 32bit
+  * At offset 0x68CD : change 0F to EB
+  * At offset 0x68CE : change 84 to 42
+  * At offset 0x68CF : change 62 to 90
+  * At offset 0x68D0 : change 0B to 90
+  * At offset 0x68D1 : change 03 to 90
+  * At offset 0x68D2 : change 00 to 90
+ * 5.2.3790.1830 64bit
+  * At offset 0x11B15 : change 0F to 90
+  * At offset 0x11B16 : change 84 to E9
+  * At offset 0x4D2AD : change 0F to 90
+  * At offset 0x4D2AE : change 85 to 90
+  * At offset 0x4D2AF : change 68 to 90
+  * At offset 0x4D2B0 : change 48 to 90
+  * At offset 0x4D2B1 : change FC to 90
+  * At offset 0x4D2B2 : change FF to 90
+ * 5.2.3790.3959 32bit
+  * At offset 0x11E3F : change 75 to 90
+  * At offset 0x11E40 : change 08 to 90
+  * At offset 0x11E47 : change 74 to EB
+ * 5.2.3790.3959 64bit
+  * At offset 0x11AC5 : change 0F to 90
+  * At offset 0x11AC6 : change 84 to E9
+  * At offset 0x4D0C4 : change 0F to 90
+  * At offset 0x4D0C5 : change 85 to 90
+  * At offset 0x4D0C6 : change 01 to 90
+  * At offset 0x4D0C7 : change 4A to 90
+  * At offset 0x4D0C8 : change FC to 90
+  * At offset 0x4D0C9 : change FF to 90
+ * 6.0.6001.18000 32bit
+  * At offset 0x2420C : change 75 to 90
+  * At offset 0x2420D : change 0C to 90
+  * At offset 0x24214 : change 0F to 90
+  * At offset 0x24215 : change 84 to E9
+ * 6.0.6001.18000, 64-Bit :
+  * At offset 0x27C29 : change 75 to 90
+  * At offset 0x27C2A : change 0B to 90
+  * At offset 0x27C30 : change 0F to 90
+  * At offset 0x27C31 : change 84 to E9
+
+== Teadaolevad Advapi32 versioonid Windowsi versiooni järgi ==
+
+NB! See info ei pruugi klappida, kuna Microsoft võib seda faili ka mõne hotfixiga uuendada.
+
+ * Windows 2000 SP4: 5.0.2195.6710 või 5.0.2195.7038
+ * Windows XP SP3 32 bit: 5.1.2600.5512 või 5.1.2600.5755
+ * Windows XP SP2 64 bit: 5.2.3790.1830 või 5.2.3790.3959
+ * Windows 2003 SP2: 5.2.3790.3959
+ * Windows Vista SP1: 6.0.6001.18000
+ * Windows 7 Build 7000: 6.2.7000.0

@@ -1,0 +1,13 @@
+= Allkirjastamine veebis =
+
+Veebilehel allkirjastades täidad kõigepealt teenusepakkuja poolt ettevalmistatud dokumendi: avalduse, blanketi või näiteks pangas maksekorralduse. Sinu poolt veebilehel täidetud dokumendi saadab server Sinu ID-kaardile allkirjastamiseks. Seejuures pead kinnitama oma allkirja PIN2 koodi sisestamisega. Allkirjale võtab teenusepakkuja server Sertifitseerimiskeskuselt kehtivuskinnituse ning allkirjastatud dokument ongi loodud. 
+Teenusepakkuja säilitab dokumenti oma serveris, kuid pakub Sulle ka võimaluse selle endale salvestada. Siinjuures pole "teenusepakkuja" mõiste kuidagi piiratud - selleks võib olla nii erafirma, mittetulundusühing kui ka riigiasutus.
+
+
+= Teadaolevad probleemid! =
+
+Kuna tarkvara on alles värske, siis ei ole suuremates veebikeskkondades võimalik täna veel uue tarkvaraga digiallkirju anda. Näiteks ei ole võimalik suuremates pankades teostada makseid.
+
+= Kasutaja(te) kommentaarid =
+
+Digiallkirjastamise sain toimima nii SEB-is, Swedbankis kui eesti.ee kodanikuportaalis, järgides [https://ideelabor.ee/opensource/wiki/IdKaardiTarkvara/DigiallkiriVeebisLinuxiga Ideelabori juhiseid] (Ubuntu 9.10 amd64) -- Peeter P. Mõtsküla, 18.10.2009.

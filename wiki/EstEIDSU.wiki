@@ -1,0 +1,30 @@
+EstEIDSU ülesandeks on Mac OS X keskkonnas kontrollida tarkvarauuendusi, need vajadusel alla laadida, failid verifitseerida ja käivitada paigaldusprotsess.
+
+Lõppkasutajad näevad arusaadavate nimetustega komponente, mis koosnevad reaalsetest pakettidest. Paketid on zip-ga kokkupakitud .pkg/.mpkg failid (.pkz)
+
+
+== Lõppkasutajale kuvatavad komponendid ==
+
+ * *Core Component* : org.esteid.component.core
+   * libdigidoc
+   * [EstEIDCM] ''(versiooni ei kuvata seadetes)''
+   * [EstEIDPP] ''(versiooni ei kuvata seadetes)''
+   * [EstEIDSU] ''(versiooni ei kuvata seadetes)''
+   * juursertifikaadid ''(versiooni ei kuvata seadetes)''
+   * launchd seadistus ''(versiooni ei kuvata seadetes)''
+ * *Internet Plug-in* : org.esteid.component.webplugin
+   * [EstEIDWP]
+   * [EstEIDTokend]
+ * *Digidoc* : org.esteid.component.digidoc
+   * [DigiDocClient DigiDoc Client]
+ * *ID-card Utility* : org.esteid.component.utility
+   * [EstEIDUtil]
+
+== Installer.mpkg ==
+
+Veebilehelt allalaetav .pkg sisaldab kõigi eelpoolnimetatud vajalikke komponente.
+
+== launchd seadistus ==
+
+Toimub tavakasutaja vaatenurgast Installeri või [EstEIDPP EstEIDPP] kaudu. launchd käivitab regulaarselt uuendaja --silent argumendiga.
+

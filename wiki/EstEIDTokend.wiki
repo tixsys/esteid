@@ -1,0 +1,9 @@
+Tokend integratsioon võimaldab MacOS X CDSA (Common Data Security Architecture) rakendustel kasutada ID-kaardil asuvaid sertifikaate. Mooduli kaudu toetatakse isikutuvastust Safari veebibrauseris ja ID-kaardi sertifikaatide kasutamist muudes Apple rakendustes (näiteks Outlook).
+
+Funktsionaalsus:
+ 1. Isikutuvastus (E-teenustesse sisenemine) veebibrauseris „Safari“. Autentimiseks tuleb kasutajal sisestada PIN1 kood.
+ 1. E-posti krüpteerimine ja allkirjastamine programmis “Mail.app” 
+ 1. Kaardi eemaldamisel sessiooni lõpetamine
+ 1. Operatsioonisüsteemi sisse logimine kiipkaardiga 
+
+[SysteemiKirjeldus Tagasi]

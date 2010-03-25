@@ -72,4 +72,4 @@ samuti ehitatakse javadoc käivitades teegi lähtetekstide kataloogis:
 mvn javadoc:jar
 }}}
 
-[wiki:DigiDocTeegid Tagasi]
+[DigiDocTeegid Tagasi]

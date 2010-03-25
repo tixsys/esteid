@@ -1,0 +1,49 @@
+Siia lehele kogume XML-DSIG ja muude seotud standardite linke ja jutukesi.
+
+Kood
+ * http://santuario.apache.org/index.html - Apache XML Security libra (Nii Java kui C++)
+ * http://java.sun.com/developer/technicalArticles/xml/dig_signature_api/ - Java DSIG API. (kaasas alates 1.5-st, sisaldab Apache teeki)
+ * http://www.aleksey.com/xmlsec/index.html - Libxml2 põhine XML-DSIG libra (saidis ka mingi imeline online valideerija)
+ * http://www.xom.nu/apidocs/nu/xom/canonical/Canonicalizer.html - veel üks Javas kirjutatud kanoniseerija
+
+Standardid
+ * http://en.wikipedia.org/wiki/XML_Signature - Sissejuhatav "rahvaluule" lehekülg
+ * http://www.w3.org/TR/xmldsig-core - XML Signature Syntax and Processing (Second Edition)
+ * http://www.w3.org/TR/xml-c14n - Canonical XML 1.0 AKA c14n20010315
+ * http://www.w3.org/TR/xml-exc-c14n - Exclusive Canonicalization (tavaline um paha-paha)
+ * http://lists.xml.org/archives/xml-dev/200812/msg00162.html - nö talupojamõistuslik lühike selgitus, mis vahe on eelmisel kahel
+ * http://www.w3.org/TR/DSig-usage - Using XML Digital Signatures in the 2006 XML Environment (jutt kus räägitakse, et 1.0 kanoniseerimine on paha-paha kui on kasutusel id või base atribuudid)
+ * http://www.w3.org/TR/xml-c14n11 - Kanoniseeritud XML 1.1 : Peaks olema uus "nirvana", realisatsioonidega halvasti
+ * http://lists.w3.org/Archives/Public/public-xmlsec-maintwg/2007Jul/0014.html - Listipostitus, kus avaldatakse arvamust, et 1.1 exclusive kanoniseerimine oleks täpselt sama, mis 1.0Excl
+ * http://santuario.apache.org/c/apiDocs/classXSECC14n20010315.html - 1.0 tüüpi kanoniseerija xml-security-c koosseisus
+
+Libdigidocpp teegis kasutusel schemad
+ * http://uri.etsi.org/01903/v1.3.2/ - XAdES Schema (Old version)
+  * kommenteeritud välja !GenericTimeStampType
+  * !SignaturePolicyImplied, !AllSignedDataObjects lisatud tüüp !AnyType
+  * !ClaimedRole muudetud tüüp xml:String
+ * http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd - xml-dsig Schema
+  * Sisse põimitud "xades:QualifyingProperties"
+ * http://www.w3.org/2001/XMLSchema.dtd - XML Schema 1.0
+
+Eesti spetsiifilised standardid
+ * !DigiDoc 1.1 - 1.4 http://www.sk.ee/pages.php/0202070109
+ * BDOC 1.0 - http://www.signature.lt/-TOOLS/BDoc-1.0.pdf
+
+Muu mula
+ * http://social.msdn.microsoft.com/Forums/en-US/xmlandnetfx/thread/fa722b8c-f653-4483-baa5-aa47d604d98b/ - Mingi tegelane kurdab, et tema XADES .NET kood ei tööta ja kus vastusena väidetakse, et ETSI levitatav schema on vigane [[BR]] Tegelase näitekood: http://test.ditec.sk/xmlvalidation.zip [[BR]] Pakutud lahendus: There is a problem with the XAdES.xsd schema, make the following change on line 91: [[BR]] <xsd:element ref="Include" minOccurs="0" maxOccurs="unbounded"/> [[BR]]Peab mainima, et digidocpp kasutab sama schemat ja ei saa valideerimise erroreid, seega on tõenäoliselt Microsofti parser pipram kui xerces/xalan.
+ * http://forums.java.net/jive/thread.jspa?messageID=255470 - kurdab härra, et tal ronis Java-s kanoniseerimisel mingi tundmatu namespace prefix !SignInfo tagi külge ja keeras signatuuri pekki.
+
+Tige mula
+
+Vähemalt seisuga 14.10.2009 kell 22:18Z ei valideeru mitte ükski XML-DSIG standardi näide.
+Klounid viitavad RSA & DSA näidetes aadressile http://www.w3.org/TR/xml-stylesheet kus on loomulikult "elav" dokument,
+mis on ilmselgelt vahepeal muutunud ja räsi enam ei klapi.
+signature-example.xml teatab rõõmsalt, et Unknown canonicalizer.
+Tjah, http://www.w3.org/TR/2000/WD-xml-c14n-20000710 on tõepoolest kanoniseerimisalgoritm, millele on sammal peale kasvanud ja minul ei õnnestunud leida librat, mis oleks seda osanud. Standardi kirjutajad võiks natukenegi oma näitefailide elujõulisusele mõelda.
+
+DDOC failid valideeruvad xml-security mõlema teegiga, aga see on pigem seetõttu, et arendajad selle libraga proovinud on.
+Praegune DDOC formaat ei valideeru Aleksey Sanin-i xmlsec libraga.
+Kõigis vana tarkvara poolt toodetud failides on !DigestAlgorithm ja !DigestValue atribuutidel, mis ei asu !SignInfo tagi sees,
+xmlns atribuut puudu. Seega schemat valideeriv XADESi parser neid allkirju ei loe.
+Vot tebe interop!

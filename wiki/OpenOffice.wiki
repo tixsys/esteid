@@ -1,0 +1,14 @@
+= Openoffice.org =
+
+{{{
+ftp://ftp.smartlink.ee/pub/id/plugins/openoffice/
+}}}
+
+Nõuded:[[BR]]
+Openofice.org 3.1[[BR]]
+uusim Java VM [[BR]]
+ID-kaardi tarkvara (windowsis ftp://ftp.smartlink.ee/pub/id/windows/msi/ või linuxis vastavalt eelpool toodud juhenditele)
+
+
+Paigaldamiseks:
+Ava OOoDigiDocPlugin.oxt Openoffice.org -iga või Tools -> Extension manager -> Add (Tööriistad -> Laienduste Haldur -> Lisa)

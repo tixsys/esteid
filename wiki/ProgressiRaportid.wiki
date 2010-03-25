@@ -1,0 +1,50 @@
+Probleemid, millega me maadleme ja lähtetekstides tehtud muudatused leiab siitsamast keskkonnast: menüü lingid "Timeline" "View Tickets" ja "Browse Source" on Sinu sõbrad.
+
+Automaattestimiseks (unit tests) kasutame [http://www.cmake.org CMake] vahendeid. Hetkel (09.02.2009) ei ole need logid veel avalikud, link tekib siia niipea kui olukord muutub.
+
+Suurt osa tarkvara ei saa automaattestida, seega tuleb seda teha käsitsi.
+Käsitsi testimine käib täna (09.02.2009) paberil. Võiks kirjutada siia pika nutulaulu teemal, kuidas kõik testihalduskeskkonnad imevad, aga selle asemel tegeleme parem ühe vidina kohandamisega ;)
+
+== Testlabor ==
+Soovi korral võib iga huviline ID-kaardiga seotud tarkvara testida meie testlaboris.
+Laboris on olemas testkaardid, hulk erinevaid ID-kaardi lugejaid ja erinevaid operatsioonisüsteeme.
+
+Lugejad:
+ * SCM SCR331   (USB, Elioni stardipakend vol. 1)
+ * SCM SCR3310  (USB, Elioni stardipakend vol. 2)
+ * SCM SCR3311  (USB, Raske alusega laualugeja, aitäh Trenet)
+ * SCM SPR532   (USB, PINpadiga CCID ühilduv laualugeja)
+ * SCM SCR243   (PCMCIA, aitäh Trenet)
+ * SCM SCR3340  (!ExpressCard54, aitäh Trenet)
+ * SCM SCR333   (integreeritav, lugeja mida ML ja Ordi oma PC-de sisse panid, aitäh Trenet)
+ * Omnikey 1010 (Serial, vana tüüpi Utimaco kirjaga lugeja, aitäh Tigma)
+ * Omnikey 1021 (USB, odav lugeja, mida Vaata Maailma lahkelt laiali jagas)
+ * Omnikey 3021 (USB, aitäh Tigma)
+ * Omnikey 3621 (USB, PINpadiga laualugeja, aitäh Tigma)
+ * Omnikey 3821 (USB, PINpadi ja ekraaniga laualugeja, aitäh Tigma)
+ * Omnikey 3121 (USB, püstine laualugeja, aitäh Tigma)
+ * Omnikey 3921 (integreeritav, aitäh Tigma)
+ * Omnikey 4040 (PCMCIA)
+ * Omnikey 4321 (!ExpressCard54, aitäh Tigma)
+ * Alcor Micro EMV (integreeritav, viie piluga "loen igasugust vineeri" tüüpi kaardilugeja, mida Microlink oma PC-de sisse paneb)
+ * HP !SmartCard Keyboard (USB)
+
+Platvormid:
+ * Windows 2000, 32 bit Intel
+ * Windows XP, 32 ja 64 bit Intel
+ * Windows Vista, 32 ja 64 bit Intel
+ * Windows 7, 32 ja 64 bit Intel
+ * Fedora 10, 32 ja 64 bit Intel
+ * Fedora 11, 64 bit Intel
+ * Ubuntu 8.10, 32 ja 64 bit Intel
+ * Ubuntu 9.04, 32 ja 64 bit Intel
+ * Ubuntu 9.10, 32 ja 64 bit Intel
+ * OpenSUSE 11.1, 32 ja 64 bit Intel
+ * Debian stable, 32 ja 64 bit Intel
+ * Gentoo testing, 64 bit Intel
+ * MacOS X Tiger, PowerPC ja 32bit Intel
+ * MacOS X Leopard, PowerPC ja 32bit Intel
+
+Protseduur ja hinnad on veel lahtised, aga kes ees, see mees ja kirjutab oma soovist asse ät smartlink.ee
+
+[WikiStart Tagasi]

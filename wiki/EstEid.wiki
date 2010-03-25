@@ -1,0 +1,7 @@
+= Siia kogume dokumentatsiooni kaardiga suhtlemise kohta =
+
+http://www.id.ee/public/EstEID_kaardi_kasutusjuhend_20070322030330.pdf
+
+http://www.ietf.org/rfc/rfc2437.txt või ftp://ftp.rsasecurity.com/pub/pkcs/ascii/pkcs-1v2.asc - PKCS!#1 v2.0
+
+http://jaja.eenet.ee/andmeturve/prax14/mic21_druck.pdf - MICARDO Public Chip Card Operating System Version 2.1 64/32 R1.0

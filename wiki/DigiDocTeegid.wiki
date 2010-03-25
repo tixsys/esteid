@@ -1,0 +1,8 @@
+DigiDoci formaatide (DDOC ja BDOC) töötlemiseks on eraldi teegid.
+
+Vali kasutatav programmeerimiskeel
+
+ * [libDigiDocPP C++]
+ * [jDigiDoc Java]
+
+[RakendusteKirjutamine Tagasi]

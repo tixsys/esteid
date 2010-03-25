@@ -1,0 +1,38 @@
+== Isikutuvatus ==
+
+ * Konfigureeri oma veebiserver nõudma kliendipoolset sertifikaati: VeebisAutentimine
+ * Kasuta rakenduses vastavaid CGI standardi keskkonnamuutujaid.[[BR]]
+   Näiteks: SSL_CLIENT_S_DN, SSL_CLIENT_CERT jne.[[BR]]
+   Muutujate nimekirja leiad siit: http://httpd.apache.org/docs/2.0/mod/mod_ssl.html
+
+== Allkirjastamine ==
+Allkirjastamine toimub läbi universaalse brauseripluginate API. Plugina laadimine on kõigis toetatud brauserites
+ühesugune ja seda tehakse järgmise HTML tagiga: 
+
+{{{
+<object id="esteid" type="application/esteid"
+        style="width: 1px; height: 1px; visibility: hidden;"></object>
+}}}
+
+Edasi on võimalik lugeda maha allkirjastamise sertifikaat:
+{{{
+var esteid = document.getElementById('esteid');
+var cert_pem = esteid.signCert.cert;
+}}}
+
+Ning pärast vajalike ettevalmistuste tegemist serveri poolel, dokumendi räsi allkirjastada:
+{{{
+var esteid = document.getElementById('esteid');
+esteid.sign(hash, "/mywebapp/downloadhalfbakeddoc");
+}}}
+
+JavaScripti API dokumentatsiooni leiab hetkel siit: source:plugins/firefox/trunk/components/nsIEstEID.idl
+
+Laienduse funktsionaalsuse demo leiab aadressilt: https://id.smartlink.ee/plugin_tests/test.html
+
+Üritame kirjutada ka mõningaid näiteprogramme, esimene pääsuke asub siin kataloogis: source:/plugins/samples/
+
+NB! Igasugune kaastöö on teretulnud ;)
+
+PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [PaigaldusPaketid paigaldatava baastarkvara] koosseisus
+

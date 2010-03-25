@@ -1,0 +1,72 @@
+= CT-API on Obsolete =
+
+Sellel lehel on lihtsalt dokumenteeritud kuidas on olukord 28.10.2009 seisuga
+Windowsi CTAPI rindel ja miks on CT-API toetamine vähemalt Windowsi all mõttetu
+ettevõtmine.
+
+CT-API imeb, kuna:
+ 1. Iga tootja draiveri faili nimi on erinev
+ 2. Loobib ise mingeid kahtlaseid PINi aknaid, mida ei saa ei kujundada ega juhtida
+ 3. Tugi ei tule kaardilugeja "normaalsete" draiveritega kaasa
+ 4. Draiverit ei levitata automaatselt Windows Update kaudu, puuduvad jooksvad uuendused jne
+
+Testimiseks kasutatud lugejaid Omnikey 3621 ja SCM SPR532
+Mõlemad lugejad töötavad perfektselt OpenSC-ga PC/SC draiveri
+kaudu nii pinpadiga kui ilma. PinPAD töötas nii Firefoxiga
+autentimisel kui BDOCi allkirjastamisel.
+
+Testplatvorm Windows XP 32bit SP3
+
+== Omnikey 3621 ==
+Installin vana ID-kaardi tarkvara installer.id.ee-st.
+Sellega koos roomavad mulle masinasse Omnikey CTAPI draiverid.
+
+CT-API draiver ise on failis:
+C:\Windows\System32\ctdeutin.dll - 
+CT-API for Omnikey smart card readers version 4.0.1.5
+
+Valin vana ID-kaardi utiliidi menüüst
+Seaded->Liides->CTAPI Omnikey 3621
+
+*Jah kaardilugeja tüüp tuleb valida käsitsi*
+
+Üritan IE-ga autentida. Küsitakse PIN1-e PinPADilt. PINi sisestamise aken näeb väga rõve välja, taustal jookseb
+vana CSP poolt avatud aknas sinine riba ja loeb sekundeid.
+
+Draiver on aastast jumalteabmis. Tõmban tootja lehelt kõige uuema ja
+uuendan draiveri ära. Eraldiseisev CT-API installer nõuab, et
+lugeja oleks ühendatud ja väidab, et seob end läbi PC/SC konkreetselt
+minu lugejaga ja kui ma midagi muud tahan, siis installigu ma heaga
+uuesti. Wau! Eriti user friendly värk.
+
+C:\Windows\System32\ctdeutin.dll - 
+CT-API for Omnikey smart card readers version 4.0.3.0
+
+Nüüd on vana ID-kaardi utilits katki:
+ID-kaart tagastas mittearusaadava veateate.
+
+Omnikey CT-API draiver on vaid pealisehitus nende PC/SC draiveri otsas ja versioonitundlik veel lisaks.
+
+== SPR532 ==
+
+SK installerist tuleb selle peale masinasse soft V1.30
+
+C:\Windows\System32\CTPCSC32.DLL - 
+CT-API to PC/SC bridge version 2.34.0.2
+
+Sellele versioonile on muidugi sammal peale kasvanud ja loomulikult on
+see uue firmware-ga (v5.10) lugejaga katki, mis katki: toksida saab PINist vaid
+kaks esimest märki ja siis on krääks ja invaliidne PIN!
+
+Ok, tirin SCMi saidist V1.82 CT-API-ga installika.
+Üllatus, üllatus, aga seda vana kõntsa draiveripakkidesse
+vaikimisi kaasa ei panda.
+Lasen peale, SCMi enda installation check tool on üliõnnelik.
+
+C:\Windows\System32\CTPCSC32.DLL -
+CT-API to PC/SC bridge version 2.63.0.4
+
+Proovin IE-ga autentida. Värviline lugeja pilt kargab ette ja loeb usinalt tärnikesi.
+Lõpuks saab IE-ga sisse logida. Lahe!
+
+Ka SCM-i draiver on pealisehitus nende PC/SC draiverile.

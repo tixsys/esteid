@@ -1,0 +1,58 @@
+= Tere külaline! =
+
+Oled sattunud Eesti ID kaardi tarkvara arenduse leheküljele. Kui Sa oled programmeerija või muidu ID-kaardi tarkvara huviline, oled õiges kohas. Kui soovid lihtsalt oma ID-kaardi tööle saada, siis mine parem siia: http://installer.id.ee
+
+NB! Kogu siin lehel leiduv tarkvara on alfa kvaliteediga.
+
+Linuxi ja Maci kasutajad vaadake siia > WikiStart
+
+[[BR]]
+== Leheküljele sisselogimine ==
+
+[https://id.eesti.ee/idtrac/login ID-kaardiga sisselogimiseks vajuta siia ].
+
+[https://id.eesti.ee/trac/login Kasutajanime ja parooliga sisselogimiseks vajuta siia].
+[[BR]][[BR]] 
+
+== Sisukord ==
+
+ * SysteemiKirjeldus - Suur pilt ja selgitused, mis on mis. *Kohustuslik lugemine, muidu ei saa midagi aru*!
+ * RakendusteKirjutamine - Siin on info neile, kes soovivad ID-kaarti kasutavaid rakendusi kirjutada.
+ * KompileerimisJuhised - Siit leiab juhendid kuidas baastarkvara arendamisega kätt proovida.
+ * PaigaldusPaketid - Siit saab valmis installipaketid tarkvara proovimiseks ja testimiseks.
+ * ProgressiRaportid - Igasugu automaatsed ja vähem automaatsed kompileerimise ja testimise logid.
+ * IdKaardiUtiliidiKonkurss - Siin väljas ADM interactive'i võidutöö.
+ * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed.
+ * SvnKasutamiseReeglid - id.eesti.ee SVN harus muudatuste tegemise vormistamise kord.
+ * TicketiteLoomine - Reeglid, kuidas luua uusi ticketeid.
+
+Nimekirja kõigist olemasolevatest lehekülgedest leiad siit: TitleIndex.
+
+
+= Welcome visitor! =
+You have reached an Estonian ID-card development corner. If You are a developer or interested in ID-card software development, You are in the right place. If You just want to get the bloody thing working, better leave for http://installer.id.ee.
+
+*NB This software is of Alpha quality. It may not install. It may not work.
+
+[[BR]]
+== Login ==
+
+[https://id.eesti.ee/idtrac/login Login with ID-card ].
+
+[https://id.eesti.ee/trac/login Login with username and password ].
+
+[[BR]][[BR]]
+
+== Index ==
+
+ * [https://id.eesti.ee/idtrac/wiki/SysteemiKirjeldus System description] - Big picture and explanations, what is what. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/RakendusteKirjutamine Application developing] - Here is information about developing applications of ID-card. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/KompileerimisJuhised Compile instructions]  - Here are instructions, how develope base software. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/PaigaldusPaketid Installing packs] - Here are final installing packs for trying and testing. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/ProgressiRaportid Progress raports] - Any automatical and less automatical compiling and testing logs. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/IdKaardiUtiliidiKonkurss Design competition] - Here is final design, made by ADM Interactive. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/KasutajalidesteTekstid Texts of GUI] - Text strings, which are used in Graphical User Interface. (EST)
+ * [https://id.eesti.ee/idtrac/wiki/SvnKasutamiseReeglid Rules for using SVN] - id.eesti.ee SVN code changing rules. (EST)
+
+
+For a complete list of local pages, see TitleIndex.

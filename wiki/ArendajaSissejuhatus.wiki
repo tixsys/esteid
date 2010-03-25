@@ -1,0 +1,30 @@
+== Sisukord ==
+
+ * SysteemiKirjeldus - Suur pilt ja selgitused, mis on mis. *Kohustuslik lugemine, muidu ei saa midagi aru*!
+ * RakendusteKirjutamine - Siin on info neile, kes soovivad ID-kaarti kasutavaid rakendusi kirjutada.
+ * KompileerimisJuhised - Siit leiab juhendid kuidas baastarkvara arendamisega kätt proovida.
+ * PaigaldusPaketid - Siit saab valmis installipaketid tarkvara proovimiseks ja testimiseks.
+ * ProgressiRaportid - Igasugu automaatsed ja vähem automaatsed kompileerimise ja testimise logid.
+ * IdKaardiUtiliidiKonkurss - Siin väljas ADM interactive'i võidutöö.
+ * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed.
+ * SvnKasutamiseReeglid - id.eesti.ee SVN harus muudatuste tegemise vormistamise kord.
+ * TicketiteLoomine - Reeglid, kuidas luua uusi ticketeid.
+
+Nimekirja kõigist olemasolevatest lehekülgedest leiad siit: TitleIndex.
+
+== Index ==
+
+ * [SysteemiKirjeldus System description] - Big picture and explanations, what is what. (EST)
+ * [RakendusteKirjutamine Application developing] - Here is information about developing applications of ID-card. (EST)
+ * [KompileerimisJuhised Compile instructions]  - Here are instructions, how develope base software. (EST)
+ * [PaigaldusPaketid Installing packs] - Here are final installing packs for trying and testing. (EST)
+ * [ProgressiRaportid Progress raports] - Any automatical and less automatical compiling and testing logs. (EST)
+ * [IdKaardiUtiliidiKonkurss Design competition] - Here is final design, made by ADM Interactive. (EST)
+ * [KasutajalidesteTekstid Texts of GUI] - Text strings, which are used in Graphical User Interface. (EST)
+ * [SvnKasutamiseReeglid Rules for using SVN] - id.eesti.ee SVN code changing rules. (EST)
+
+For a complete list of local pages, see TitleIndex.
+
+== Arendajate List ==
+
+Liitumiseks siirdu aadressile https://lists.ria.ee/listinfo/id

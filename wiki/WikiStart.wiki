@@ -1,0 +1,42 @@
+﻿{{{
+#!div style="float: right; margin: 2em"
+== Logi sisse ==
+[//idtrac/login ID-kaardiga][[BR]]
+[//trac/login Kasutajanime ja parooliga]
+}}}
+= Tere külaline! =
+
+Oled Eesti ID kaardi tarkvara arenduse leheküljel.[[BR]]
+
+{{{
+#!div style="float: left; text-align: center; margin: 2em"
+[[Image(wiki:ImelisedIkoonid:linux-logo.png, link=wiki:PaigaldusPaketid#Linux, title=Linux)]]
+== Linuxi kasutaja ==
+}}}
+{{{
+#!div style="float: left; text-align: center; margin: 2em"
+[[Image(wiki:ImelisedIkoonid:applelogo.png, link=wiki:PaigaldusPaketid#MacOSX, title=Mac)]]
+== Maci kasutaja ==
+}}}
+{{{
+#!div style="float: left; text-align: center; margin: 2em"
+[[Image(wiki:ImelisedIkoonid:microsoft_vista-logo.png, link=wiki:PaigaldusPaketid#Windows, title=Windows)]]
+== Windowsi kasutaja ==
+}}}
+{{{
+#!div style="float: left; text-align: center; margin: 2em"
+[[Image(wiki:ImelisedIkoonid:developer-icon.png, link=wiki:ArendajaSissejuhatus, title=Arendaja)]]
+== Arendaja ==
+}}}
+{{{
+#!div style="clear:both"
+}}}
+
+{{{
+#!html
+<strong>Probleemide korral palun pöörduge ID-nõustamiskeskuse poole telefonil 1777 või e-maili teel: <a href="mailto:abi@id.ee">abi@id.ee</a></strong>
+}}}
+
+Arendust toetab:
+
+[[Image(wiki:ImelisedIkoonid:EL-Regionaalareng.jpg, link=http://www.struktuurifondid.ee)]]

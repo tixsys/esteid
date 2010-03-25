@@ -1,0 +1,40 @@
+Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja teemadest, mis on sattunud minu erilise tähelepanu alla, kuid mitte nii erilise, et ma tahaks nende kohta pidevat spämmi oma postkasti.
+
+ * #20
+ * #282
+ * #289
+ * #356
+ * #401
+ * #485
+ * #669
+ * #751
+ * #752
+ * #790
+ * #792
+ * #793
+ * #794
+ * #795
+ * #796
+ * #812
+ * #870
+ * #886
+ * #901 - sertide uuendamine
+ * #908
+ * #911
+ * #918
+
+ * r2078
+ 
+ * http://www.opensc-project.org/opensc/ticket/137
+ * http://pingviin.org/ftopic6774-0-asc-40.html
+ * http://code.google.com/p/eid-tsl/downloads/list
+ * http://www.id.ee/blog/?p=78
+ * http://rcardon.free.fr/websign/wakka.php?wiki=MainPage
+ * http://svn.project-eid.org - Sri-Lanka mingi tudengiprojekt. Nothing much, lihtsalt põnev ;)
+ * http://www.ecom.jp/LongTermStorage/en/testhistory.html - XADES plugtest history
+ * http://xades-portal.etsi.org/pub/index.shtml - XADES plugtest homepage
+ * http://www.pcscworkgroup.com/specifications/files/pcsc10_v2.01.6.pdf - PC/SC Part 10. IFDs with Secure Pin Entry Capabilities
+ * http://gpkcs11.sourceforge.net/
+ * http://www.openxades.org/upload_cert.php
+ * [XMLDSIG]
+ * [EstEid]

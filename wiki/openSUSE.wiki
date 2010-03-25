@@ -1,0 +1,44 @@
+= openSUSE =
+Toetatud versioonid *11.1* ja *11.2*
+
+=== Repositooriumi lisamine ===
+
+==== openSUSE 11.1 ====
+{{{
+sudo zypper ar http://ftp.id.eesti.ee/pub/id/opensuse/11.1/esteid.repo
+}}}
+
+==== openSUSE 11.2 ====
+
+{{{
+sudo zypper ar http://ftp.id.eesti.ee/pub/id/opensuse/11.2/esteid.repo
+}}}
+
+
+
+=== Pakettide paigaldamine ===
+
+Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
+{{{
+sudo zypper ref
+sudo zypper install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid OpenOffice_org-digidoc
+}}}
+
+või ka graafilise pakihaldajaga:
+
+Arvuti -> Süsteem -> Tarkvara Paigaldamine;[[BR]]
+Rühmad -> hoidlad -> Estonian ID Card development (openSUSE_11.1);[[BR]]
+Vali qesteidutil, qdigidoc, mozilla-esteid, thunderbird-esteid ja OpenOffice_org-digidoc
+
+Esmakordsel paigaldamisel tuleb pcscd deemon sisse lülitada:
+{{{
+sudo chkconfig pcscd on
+sudo /etc/init.d/pcscd start
+}}}
+
+Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
+{{{
+sudo zypper ref
+sudo zypper up
+}}}
+
