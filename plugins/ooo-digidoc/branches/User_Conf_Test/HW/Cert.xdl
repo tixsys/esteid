@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Cert" dlg:left="0" dlg:top="0" dlg:width="95" dlg:height="250" dlg:closeable="true" dlg:moveable="true" dlg:title="Allkirjad">
- <dlg:bulletinboard>
-  <dlg:menulist dlg:id="SignerCertListBox" dlg:tab-index="0" dlg:left="0" dlg:top="0" dlg:width="95" dlg:height="215" dlg:readonly="true" dlg:align="center"/>
-  <dlg:button dlg:id="SignButton" dlg:tab-index="1" dlg:left="8" dlg:top="225" dlg:width="35" dlg:height="15" dlg:value="Allkirjasta" dlg:button-type="ok"/>
-  <dlg:button dlg:id="ExitButton" dlg:tab-index="2" dlg:left="52" dlg:top="225" dlg:width="35" dlg:height="15" dlg:value="Sulge" dlg:button-type="cancel"/>
- </dlg:bulletinboard>
-</dlg:window>
