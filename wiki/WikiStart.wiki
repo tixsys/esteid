@@ -13,7 +13,7 @@ http://esteid.googlecode.com/svn/wiki/img/linux-logo.png
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/apple-logo.png
-<h2>[PaigaldusPaketid#MacOSX Maci kasutaja]</h2>
+<h2>[PaigaldusPaketid#Mac_OS_X Maci kasutaja]</h2>
 </td>
 
 <td align="center">
