@@ -1,4 +1,4 @@
-LIBRARY	"esteidcm"
+LIBRARY	"@esteidcm_NAME@"
 EXPORTS
 	CardAcquireContext
 	

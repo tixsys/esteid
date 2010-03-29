@@ -3,7 +3,6 @@ project(esteidcm)
 
 # Custom cmake modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
-include(InstallSettings)
 find_package(SmartCardpp REQUIRED)
 
 add_definitions(
@@ -23,19 +22,26 @@ endforeach(flag_var)
 
 include_directories(${SMARTCARDPP_INCLUDE_DIR})
 
+# esteidcm64.dll on x64
+# esteidcm.dll on Win32
+if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set(esteidcm_NAME "esteidcm64")
+else()
+    set(esteidcm_NAME "esteidcm")
+endif()
+
+configure_file(esteidcm.def.in ${CMAKE_CURRENT_BINARY_DIR}/esteidcm.def @ONLY)
+
 set(esteidcm_SRCS
     esteidcm.cpp
-    esteidcm.def
+    ${CMAKE_CURRENT_BINARY_DIR}/esteidcm.def
     esteidcm.rc
     notimplemented.cpp
     precompiled.cpp
 )
 
 add_library(esteidcm MODULE ${esteidcm_SRCS}) 
-# Rename to esteidcm64.dll on x64
-if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
-    set_target_properties(esteidcm PROPERTIES OUTPUT_NAME esteidcm64)
-endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+set_target_properties(esteidcm PROPERTIES OUTPUT_NAME ${esteidcm_NAME})
 
 target_link_libraries(esteidcm ${SMARTCARDPP_LIBRARIES} ws2_32)
-install(TARGETS esteidcm DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS esteidcm DESTINATION bin)
