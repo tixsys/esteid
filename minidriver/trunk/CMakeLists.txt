@@ -31,6 +31,11 @@ set(esteidcm_SRCS
     precompiled.cpp
 )
 
-add_library(esteidcm SHARED ${esteidcm_SRCS}) 
+add_library(esteidcm MODULE ${esteidcm_SRCS}) 
+# Rename to esteidcm64.dll on x64
+if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+    set_target_properties(esteidcm PROPERTIES OUTPUT_NAME esteidcm64)
+endif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+
 target_link_libraries(esteidcm ${SMARTCARDPP_LIBRARIES} ws2_32)
 install(TARGETS esteidcm DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
