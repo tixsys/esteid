@@ -92,6 +92,14 @@ namespace EstEIDSigner
             kwBox.Text = md.Keywords;
             creatorBox.Text = md.Creator;
             prodBox.Text = md.Producer; 
+
+            // tooltips
+            toolTip.SetToolTip(authorBox, md.Author);
+            toolTip.SetToolTip(titleBox, md.Title);
+            toolTip.SetToolTip(subjectBox, md.Subject);
+            toolTip.SetToolTip(kwBox, md.Keywords);
+            toolTip.SetToolTip(creatorBox, md.Creator);
+            toolTip.SetToolTip(prodBox, md.Producer);
         }
 
         private void linkInput_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -153,6 +161,7 @@ namespace EstEIDSigner
         {
             set
             {
+                toolTip.SetToolTip(linkInput, value);
                 string s = System.IO.Path.GetFileName(value);
                 if (s.Length > 32)
                     s = s.Substring(0, 29) + "...";
@@ -164,6 +173,7 @@ namespace EstEIDSigner
         {
             set
             {
+                toolTip.SetToolTip(linkOutput, value);
                 string s = System.IO.Path.GetFileName(value);
                 if (s.Length > 32)
                     s = s.Substring(0, 29) + "...";

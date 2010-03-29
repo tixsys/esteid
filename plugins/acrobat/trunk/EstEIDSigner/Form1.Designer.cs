@@ -77,6 +77,7 @@ namespace EstEIDSigner
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.DebugBox = new System.Windows.Forms.TextBox();
             this.linkSettings = new System.Windows.Forms.LinkLabel();
@@ -122,6 +123,7 @@ namespace EstEIDSigner
             this.label12 = new System.Windows.Forms.Label();
             this.comboLanguage = new System.Windows.Forms.ComboBox();
             this.labelFormName = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tablePanel1.SuspendLayout();
             this.tablePanel2.SuspendLayout();
             this.tablePanel3.SuspendLayout();
@@ -518,6 +520,7 @@ namespace EstEIDSigner
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox Indextext;
         private System.Windows.Forms.CheckBox SigVisible;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
