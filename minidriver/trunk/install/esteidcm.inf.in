@@ -4,7 +4,7 @@ Class=SmartCard
 ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
 Provider=%ProviderName%
 CatalogFile=esteidcm.cat
-DriverVer=08/10/2009,1.1.0.11
+DriverVer=@BUILD_DATE@,@PROJECT_VERSION@
 DriverPackageDisplayName="EstEID Card Mini Driver"
 
 [DefaultInstall]
