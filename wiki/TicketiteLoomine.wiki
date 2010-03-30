@@ -1,11 +1,11 @@
 = Mida teha vea leidmisel =
 Kui ID-kaardi tarkvara kasutamisel avastatakse mõni viga ehk bugi, on ilus sellest ticket koostada. Et ka arendajad asjast haisu ninna saaksid.
 
-Enne ticketi tekitamist tuleks põgusalt veenduda, et sama sisuga bugist pole juba raporteeritud. Selleks külasta seda kohta: https://id.eesti.ee/trac/report
+Enne ticketi tekitamist tuleks põgusalt veenduda, et sama sisuga bugist pole juba raporteeritud. Selleks külasta seda kohta: http://code.google.com/p/esteid/issues/list
 
-Uue ticketi loomisel (https://id.eesti.ee/trac/newticket) tuleks pealkirja algusesse, nurksulgudesse panna rakendusele viitav nimi, näiteks [utiliit], [klient]. Siis pealkirjaks lühike probleemikirjeldus ning lõppu OSi nimi ja versioon, näiteks (WinXP SP4), (MacOS10.5.7).
+Uue "issue" loomisel (http://code.google.com/p/esteid/issues/entry) tuleks pealkirja algusesse, nurksulgudesse panna rakendusele viitav nimi, näiteks [ utiliit ], [ klient ]. Siis pealkirjaks lühike probleemikirjeldus ning lõppu OSi nimi ja versioon, näiteks (WinXP SP4), (MacOS10.5.7). Issue all on veel labels rida, sealt peab valima veel täiendavalt Opsüsteemi, kus viga esile tuleb ning komponendi.
 
-Description väljale kirjutatakse pikem probleemikirjeldus. Ja lõppu pannakse täpne tarkvara versioon. Kui on olemas ka screenshot situatsioonist, siis see tuleb ticketile kaasa panna. Edasi nupule create ticket ja ongi olemas.
+Description väljale kirjutatakse pikem probleemikirjeldus. Ja lõppu pannakse täpne tarkvara versioon. Kui on olemas ka screenshot situatsioonist, siis see tuleb ticketile kaasa panna. Edasi nupule "submit issue" ja ongi olemas.
 
 Ticketisse võiks kirjutada ka vea reprodutseerimise võimalikkuse ning täpse seletuse, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist tuleks veenduda, et viga on reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
 
