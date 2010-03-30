@@ -16,6 +16,12 @@ echo deb http://ftp.id.eesti.ee/pub/id/ubuntu/ karmic main | sudo dd of=/etc/apt
 wget http://ftp.id.eesti.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
+==== Lucid Lynx (10.04) ====
+{{{
+echo deb http://ftp.id.eesti.ee/pub/id/ubuntu/ lucid main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
+wget http://ftp.id.eesti.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+}}}
+
 
 
 === Pakettide paigaldamine ===
