@@ -8,14 +8,14 @@ DriverVer=@BUILD_DATE@,@PROJECT_VERSION@
 DriverPackageDisplayName="EstEID Card Mini Driver"
 
 [DefaultInstall]
-AddReg=MiniDriver_AddReg
 CopyFiles=System32_CopyFiles
+AddReg=MiniDriver_AddReg
  
 [Manufacturer]
-%ProviderName%=Smartlink,NTx86.6.1
+%ProviderName%=Smartlink,NTx86,NTx86.6.1
  
-[Smartlink.NTx86.6]
-%ScEstEIDCardDeviceName%=ScEstEIDCard6_Install,SCFILTER\CID_4573744549442076657220312e30
+[Smartlink.NTx86]
+%ScEstEIDCardDeviceName%=ScEstEIDCard_Install,SCFILTER\CID_4573744549442076657220312e30
 
 [Smartlink.NTx86.6.1]
 %ScEstEIDCardDeviceName%=ScEstEIDCard61_Install,SCFILTER\CID_4573744549442076657220312e30
@@ -26,7 +26,7 @@ esteidcm.dll=1
 [SourceDisksNames]
 1 = %MediaDescription%
 
-[ScEstEIDCard6_Install.NT]
+[ScEstEIDCard_Install.NT]
 CopyFiles=System32_CopyFiles
 AddReg=MiniDriver_AddReg
 
@@ -74,7 +74,7 @@ HKLM, %SmartCardName3%,"80000100",0x00000000,%PIN1Prompt%
 HKLM, %SmartCardName3%,"80000101",0x00000000,%PIN2Prompt%
  
 [DestinationDirs]
-System32_CopyFiles=11
+System32_CopyFiles=10,system32
 
 [FriendlyName]
 ScFriendlyName="EstEid National ID Card"
