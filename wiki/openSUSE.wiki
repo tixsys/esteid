@@ -39,6 +39,5 @@ sudo /etc/init.d/pcscd start
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
 sudo zypper ref
-sudo zypper up
+sudo zypper dup
 }}}
-
