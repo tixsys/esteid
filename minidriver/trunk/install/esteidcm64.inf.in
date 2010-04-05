@@ -1,0 +1,135 @@
+[Version]
+Signature="$Windows NT$"
+Class=SmartCard
+ClassGuid={990A2BD7-E738-46c7-B26F-1CF8FB9F1391}
+Provider=%ProviderName%
+CatalogFile=esteidcm.cat
+DriverVer=@BUILD_DATE@,@PROJECT_VERSION@
+DriverPackageDisplayName="EstEID Card Mini Driver"
+
+[DefaultInstall]
+CopyFiles=System32_CopyFiles
+CopyFiles=Syswow64_CopyFiles
+AddReg=MiniDriver_AddReg
+ 
+[Manufacturer]
+%ProviderName%=Smartlink,NTamd64,NTamd64.6.1
+ 
+[Smartlink.NTamd64]
+%ScEstEIDCardDeviceName%=ScEstEIDCard_Install,SCFILTER\CID_4573744549442076657220312e30
+
+[Smartlink.NTamd64.6.1]
+%ScEstEIDCardDeviceName%=ScEstEIDCard61_Install,SCFILTER\CID_4573744549442076657220312e30
+
+[SourceDisksFiles] ; same directory as the INF file
+esteidcm64.dll=1
+esteidcm.dll=1
+
+[SourceDisksNames]
+1 = %MediaDescription%
+
+[ScEstEIDCard_Install.NT]
+CopyFiles=System32_CopyFiles
+CopyFiles=Syswow64_CopyFiles
+AddReg=MiniDriver_AddReg
+
+[ScEstEIDCard61_Install.NT]
+CopyFiles=System32_CopyFiles
+CopyFiles=Syswow64_CopyFiles
+AddReg=MiniDriver_AddReg
+
+[DefaultUninstall]
+DelFiles  = System32_CopyFiles
+DelFiles  = Syswow64_CopyFiles
+DelReg=MiniDriver_AddReg
+
+[Uninstall]
+DelFiles  = System32_CopyFiles
+DelFiles  = Syswow64_CopyFiles
+DelReg=MiniDriver_AddReg
+
+[System32_CopyFiles]
+esteidcm.dll,esteidcm64.dll
+ 
+[Syswow64_CopyFiles]
+esteidcm.dll
+
+[MiniDriver_AddReg]
+HKLM, %SmartCardName1%
+HKLM, %SmartCardName1%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName1%,"ATR",0x00000001,3b,00,00,00,00,00,00,00,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30,00
+HKLM, %SmartCardName1%,"ATRMask",0x00000001,ff,00,00,00,00,00,00,00,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,00
+HKLM, %SmartCardName1%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName1%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName1%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName1%,"80000101",0x00000000,%PIN2Prompt%
+
+HKLM, %SmartCardName2%
+HKLM, %SmartCardName2%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName2%,"ATR",0x00000001,3b,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30
+HKLM, %SmartCardName2%,"ATRMask",0x00000001,ff,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff
+HKLM, %SmartCardName2%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName2%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName2%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName2%,"80000101",0x00000000,%PIN2Prompt%
+
+HKLM, %SmartCardName3%
+HKLM, %SmartCardName3%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName3%,"ATR",0x00000001,3b,00,00,00,00,00,00,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30,00
+HKLM, %SmartCardName3%,"ATRMask",0x00000001,ff,00,00,00,00,00,00,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,00
+HKLM, %SmartCardName3%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName3%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName3%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName3%,"80000101",0x00000000,%PIN2Prompt%
+ 
+HKLM, %SmartCardName1WOW64%
+HKLM, %SmartCardName1WOW64%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName1WOW64%,"ATR",0x00000001,3b,00,00,00,00,00,00,00,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30,00
+HKLM, %SmartCardName1WOW64%,"ATRMask",0x00000001,ff,00,00,00,00,00,00,00,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,00
+HKLM, %SmartCardName1WOW64%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName1WOW64%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName1WOW64%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName1WOW64%,"80000101",0x00000000,%PIN2Prompt%
+
+HKLM, %SmartCardName2WOW64%
+HKLM, %SmartCardName2WOW64%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName2WOW64%,"ATR",0x00000001,3b,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30
+HKLM, %SmartCardName2WOW64%,"ATRMask",0x00000001,ff,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff
+HKLM, %SmartCardName2WOW64%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName2WOW64%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName2WOW64%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName2WOW64%,"80000101",0x00000000,%PIN2Prompt%
+
+HKLM, %SmartCardName3WOW64%
+HKLM, %SmartCardName3WOW64%,"80000001",0x00000000,"esteidcm.dll"
+HKLM, %SmartCardName3WOW64%,"ATR",0x00000001,3b,00,00,00,00,00,00,00,00,00,45,73,74,45,49,44,20,76,65,72,20,31,2e,30,00
+HKLM, %SmartCardName3WOW64%,"ATRMask",0x00000001,ff,00,00,00,00,00,00,00,00,00,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,ff,00
+HKLM, %SmartCardName3WOW64%,"Crypto Provider",0x00000000,"Microsoft Base Smart Card Crypto Provider"
+HKLM, %SmartCardName3WOW64%,"Smart Card Key Storage Provider",0x00000000,"Microsoft Smart Card Key Storage Provider"
+HKLM, %SmartCardName3WOW64%,"80000100",0x00000000,%PIN1Prompt%
+HKLM, %SmartCardName3WOW64%,"80000101",0x00000000,%PIN2Prompt%
+ 
+[DestinationDirs]
+System32_CopyFiles=10,system32
+Syswow64_CopyFiles=10,syswow64
+
+[FriendlyName]
+ScFriendlyName="EstEid National ID Card"
+
+; =================== Generic ==================================
+ 
+[Strings]
+ProviderName="Smartlink"
+MediaDescription="EstEID Card Mini Driver Installation Disk"
+SCEstEIDCardDeviceName="EstEID Card Mini-driver"
+SmartCardName1="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (cold ATR)"
+SmartCardName2="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)"
+SmartCardName3="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)"
+SmartCardName1WOW64="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (cold ATR)"
+SmartCardName2WOW64="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)"
+SmartCardName3WOW64="SOFTWARE\Wow6432Node\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)"
+SmartCardCardModule="esteidcm.dll"
+SmartCardCardModule64="esteidcm64.dll"
+PIN1Prompt="et-EE,Palun sisestage autoriseerimise PIN (PIN1);en-US,Enter PIN for authentication (PIN 1);ru-RU,Введите код PIN для идентификации (PIN 1)"
+PIN2Prompt="et-EE,Palun sisestage digiallkirjastamise PIN (PIN2);en-US,Enter PIN for digital signature (PIN 2);ru-RU,Введите код PIN для подписи (PIN 2)"
+

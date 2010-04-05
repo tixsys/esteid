@@ -62,7 +62,7 @@ endif()
 
 configure_file(esteidcm.def.in ${CMAKE_CURRENT_BINARY_DIR}/esteidcm.def @ONLY)
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
-configure_file(install/esteidcm.inf.in ${CMAKE_CURRENT_BINARY_DIR}/esteidcm.inf @ONLY)
+configure_file(install/${esteidcm_NAME}.inf.in ${CMAKE_CURRENT_BINARY_DIR}/esteidcm.inf @ONLY)
 
 set(esteidcm_SRCS
     esteidcm.cpp
