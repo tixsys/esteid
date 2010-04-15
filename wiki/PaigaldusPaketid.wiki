@@ -49,7 +49,7 @@ Windowsis uue MSI paigaldamiseks pole käsitsi vaja vana maha võtta, vaid piisa
 Siiski võib MSI uuendamisel tekkida olukord, kus juba paigaldatud pakett on vigane ning ei õnnestu seda eemaldada. Üks teadaolev sarnane viga esines MSI-s enne ver. 2.7.924.331, kuid uuemates on see loodetavasti korras.
 Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti kasutades Windows Installeri puhastusutiliiti [http://support.microsoft.com/kb/290301]. Kui seejärel peale installida uuem versioon (>= 2.7.924.331), peaks edasi olema uninstall korras.
 
-Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode.com/svn/misc/logging.bat . Antud fail tuleb tõmmata enda masinasse, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
+Windowsis MSI pakkide logimiseks on olemas logging.bat: https://id.eesti.ee/trac/export/680/tracaddons/logging.bat . Antud fail tuleb tõmmata enda masinasse, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
 
 <br>
 <br>
