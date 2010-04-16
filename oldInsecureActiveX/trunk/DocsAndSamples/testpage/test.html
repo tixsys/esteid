@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="test.css" />
+  <script type="text/javascript" src="test.js"></script>
+</head>
+<body onload="inittest();">
+<div id="container">
+
+<object id="esteid" classid="clsid:FC5B7BD2-584A-4153-92D7-4C5840E4BC28"
+        style="width: 1px; height: 1px; visibility: hidden;">
+ID-Kaardi vana ebaturvaline IE plugin ei tööta :(
+</object>
+
+<div id="left">
+
+<div id="verdiv">
+  <br />
+  Plugin Info:
+  <div id="eidver">Not Available</div>
+  <br />
+</div>
+
+<div id="signcertdiv">
+  <pre id="signCertDump" style="width: 64em;"></pre>
+  <input type="button" value="Loe Allkirjastamise Sertifikaat"
+         onclick="readCertificateData('sign');" />
+  <input type="button" value="Allkirjasta" onclick="testSign('sign');" />
+  <div id="signCertStatus">&nbsp;</div>
+</div>
+
+<div id="hashdiv">
+  <label for="testhash">Hash</label>
+  <input type="text" maxlength="40" id="testhash" style="width: 30em;"
+         value="26fd6dbee37c55c14af480f00daff8817b61967e" />
+</div>
+
+</div> <!-- left -->
+
+<div id="right">
+
+</div> <!-- right -->
+
+</div> <!-- container -->
+</body>
+</html>
