@@ -5,13 +5,13 @@ Toetatud versioonid *11.1* ja *11.2*
 
 ==== openSUSE 11.1 ====
 {{{
-sudo zypper ar http://ftp.id.eesti.ee/pub/id/opensuse/11.1/esteid.repo
+sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.1/esteid.repo
 }}}
 
 ==== openSUSE 11.2 ====
 
 {{{
-sudo zypper ar http://ftp.id.eesti.ee/pub/id/opensuse/11.2/esteid.repo
+sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.2/esteid.repo
 }}}
 
 
