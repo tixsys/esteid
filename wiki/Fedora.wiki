@@ -17,7 +17,7 @@ sudo /etc/init.d/pcscd start
 
 
 === Repositooriumi lisamine ===
-Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti. Need mõlemad tulevad kaasa esteid-release pakiga, mille paigaldamiseks installi http://ftp.id.eesti.ee/pub/id/fedora/11/i386/esteid-release-11-0.3.noarch.rpm
+Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti. Need mõlemad tulevad kaasa esteid-release pakiga, mille paigaldamiseks installi ftp://ftp.smartlink.ee/pub/id/fedora/11/i386/esteid-release-11-0.3.noarch.rpm
 
 === Pakettide paigaldamine ===
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
