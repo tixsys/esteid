@@ -7,19 +7,19 @@ Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail
 ==== Jaunty Jackalope (9.04) ====
 {{{
 echo deb http://id.smartlink.ee/repo/release/ubuntu/ jaunty main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://ftp.smartlink.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
 ==== Karmic Koala (9.10) ====
 {{{
 echo deb http://id.smartlink.ee/repo/release/ubuntu/ karmic main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://ftp.smartlink.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
 ==== Lucid Lynx (10.04) ====
 {{{
 echo deb http://id.smartlink.ee/repo/release/ubuntu/ lucid main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://ftp.smartlink.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
 
