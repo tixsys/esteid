@@ -1,5 +1,5 @@
 = Fedora =
-Toetatud versioonid *11* ja *12*
+Toetatud versioonid *12* ja *13*
 
 === Kaardilugeja draiverid ===
 Tarkvara esmakordsel paigaldamisel on vaja paigaldada ka CCID lugejate draiverid:
