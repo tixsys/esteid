@@ -18,6 +18,7 @@ sudo /etc/init.d/pcscd start
 
 === Repositooriumi lisamine ===
 Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti. Need mõlemad tulevad kaasa esteid-release pakiga, mille paigaldamiseks installi
+
 Fedora 12 puhul:
 ftp://ftp.smartlink.ee/pub/id/fedora/12/i386/esteid-release-11-0.4.noarch.rpm
 
