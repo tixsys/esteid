@@ -30,3 +30,9 @@ Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmisel
 {{{
 sudo yum update
 }}}
+
+
+PS: Kui süsteem ei näe kaardilugejat, tuleks teha kindlaks, et ei ole installeeritud pakk nimega ﻿﻿﻿pcsc-lite-openct. Vastasel juhul kasutade käsku: 
+{{{
+sudo yum remove pcsc-lite-openct
+}}}
