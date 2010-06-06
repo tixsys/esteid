@@ -16,6 +16,10 @@ find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
 find_package(SmartCardpp REQUIRED)
 
+if(WIN32)
+    add_definitions(-DWIN32_LEAN_AND_MEAN)
+endif(WIN32)
+
 if(MSVC)
     # Needed for smartcardpp
     add_definitions(-D_SECURE_SCL=0)
