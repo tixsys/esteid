@@ -48,6 +48,11 @@ set( COMMON_TS
 	)
 
 add_definitions( -DQT_NO_KEYWORDS )
+
+if(WIN32)
+    add_definitions( -DWIN32_LEAN_AND_MEAN )
+endif(WIN32)
+
 add_subdirectory( common )
 add_subdirectory( client )
 add_subdirectory( crypto )
