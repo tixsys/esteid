@@ -138,6 +138,7 @@ if(WIN32)
     # Silence Visual Studio warnings
     add_definitions(
         -wd4251 -wd4275 -wd4290 -wd4675 -wd4786 -wd4800 -D_CRT_SECURE_NO_WARNINGS
+        -DWIN32_LEAN_AND_MEAN
     )
 endif(WIN32)
 
