@@ -141,6 +141,10 @@ if(CMAKE_COMPILER_IS_GNUCC)
     add_definitions( -Wno-format )
 endif(CMAKE_COMPILER_IS_GNUCC)
 
+if(WIN32)
+    add_definitions( -DWIN32_LEAN_AND_MEAN )
+endif(WIN32)
+
 if(MSVC)
     # disable warning C4290: C++ exception specification ignored
     add_definitions( -wd4290 )
