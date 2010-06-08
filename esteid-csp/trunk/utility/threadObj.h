@@ -7,6 +7,8 @@
 */
 // Revision $Revision: 255 $
 
+#pragma once
+
 struct threadPriv;
 struct mutexPriv;
 
