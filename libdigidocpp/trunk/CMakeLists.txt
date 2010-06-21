@@ -52,6 +52,14 @@ else(MINIZIP_FOUND)
     set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
 endif(MINIZIP_FOUND)
 
+## Packages required for Dynamic Language Wrappers
+find_package(SWIG QUIET)
+if(SWIG_FOUND)
+    find_package(PythonLibrary QUIET)
+    find_package(PerlLibs QUIET)
+    find_package(PHPLibs QUIET)
+endif(SWIG_FOUND)
+
 add_subdirectory(etc)
 add_subdirectory(src)
 

@@ -268,3 +268,67 @@ install( FILES
     ${XML_DIR}/conf.hxx
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/xml
 )
+
+## Generate Dynamic Language Wrappers
+macro(DO_SWIG_MODULE language)
+  string(TOUPPER "${language}" lang_ucase)
+  message(STATUS "Building ${language} bindings")
+
+  # Ugly hack to make target names differ so CMake will be happy
+  set (module_name digidoc__${lang_ucase}__)
+  set(MODULE_INCLUDE_DIRS
+      ${${lang_ucase}_INCLUDE_DIRS}
+      ${CMAKE_CURRENT_BINARY_DIR}/${language}
+      ${CMAKE_CURRENT_SOURCE_DIR})
+  # Another ugly hack to add includes only to module
+  # sources not the entire build. We can't just use include_directories :(
+  foreach(it ${MODULE_INCLUDE_DIRS})
+      set(module_include_flags "${module_include_flags} -I${it}")
+  endforeach(it)
+  set_source_files_properties(${SWIG_FILES} PROPERTIES CPLUSPLUS ON)
+  set(mod_outdir "${CMAKE_CURRENT_BINARY_DIR}/${language}")
+  set(CMAKE_SWIG_OUTDIR "${mod_outdir}")
+  SWIG_ADD_MODULE(${module_name} ${language} ${SWIG_FILES})
+  SWIG_LINK_LIBRARIES(${module_name} ${${lang_ucase}_LIBRARIES} digidocpp)
+  string(REPLACE "__${lang_ucase}__" "" mod_outname
+         "${SWIG_MODULE_${module_name}_REAL_NAME}")
+  set_target_properties(${SWIG_MODULE_${module_name}_REAL_NAME} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${mod_outdir}"
+    COMPILE_FLAGS "${module_include_flags}"
+    OUTPUT_NAME "${mod_outname}")
+  install(TARGETS ${SWIG_MODULE_${module_name}_REAL_NAME} 
+    LIBRARY DESTINATION "${${lang_ucase}_EXTENSION_DIR}")
+endmacro(DO_SWIG_MODULE language)
+
+if(SWIG_FOUND)
+  include(${SWIG_USE_FILE})
+  set (SWIG_FILES        digidoc.i)
+
+  # Python
+  if(PYTHONLIBRARY_FOUND)
+    include(PythonMacros)
+    set(PYTHON_EXTENSION_DIR "${PYTHON_SITE_PACKAGES_DIR}")
+    set(PYTHON_INCLUDE_DIRS "${PYTHON_INCLUDE_PATH}")
+    DO_SWIG_MODULE(python)
+    PYTHON_INSTALL(${CMAKE_CURRENT_BINARY_DIR}/python/digidoc.py
+                   ${PYTHON_EXTENSION_DIR})
+  endif(PYTHONLIBRARY_FOUND)
+
+  # Perl
+  if(PERLLIBS_FOUND)
+    set(PERL_EXTENSION_DIR "${PERL_VENDORARCH}/auto")
+    DO_SWIG_MODULE(perl)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/perl/digidoc.pm
+      DESTINATION "${PERL_VENDORLIB}")
+  endif(PERLLIBS_FOUND)
+
+  # PHP
+  if(PHPLIBS_FOUND)
+    DO_SWIG_MODULE(php)
+    if(NOT PHP_WRAPPER_DIR)
+      set(PHP_WRAPPER_DIR "${PHP_INSTALL_PREFIX}/share/php")
+    endif(NOT PHP_WRAPPER_DIR)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/php/digidoc.php
+      DESTINATION "${PHP_WRAPPER_DIR}")
+  endif(PHPLIBS_FOUND)
+endif(SWIG_FOUND)
