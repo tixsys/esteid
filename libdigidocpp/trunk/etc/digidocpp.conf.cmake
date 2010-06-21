@@ -40,6 +40,10 @@
         <url>http://ocsp.sk.ee</url>
         <cert>certs/KLASS3-SK OCSP 2009.crt</cert>
     </ocsp>
+    <ocsp issuer="KLASS3-SK 2010">
+        <url>http://ocsp.sk.ee</url>
+        <cert>certs/KLASS3-SK 2010 OCSP.crt</cert>
+    </ocsp>
     <ocsp issuer="TEST-SK">
         <url>http://www.openxades.org/cgi-bin/ocsp.cgi</url>
         <cert>certs/TEST-SK OCSP 2005.crt</cert>
