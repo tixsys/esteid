@@ -15,6 +15,11 @@
 %{
 #undef seed // Combat braindead #defines that are present in PERL headers
 
+/* combat PHP braindeadness */
+#ifndef zend_error_noreturn
+#define zend_error_noreturn zend_error
+#endif
+
 #include "BDoc.h"
 #include "DDoc.h"
 #include "crypto/cert/DirectoryX509CertStore.h"

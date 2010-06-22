@@ -295,6 +295,7 @@ macro(DO_SWIG_MODULE language)
   set_target_properties(${SWIG_MODULE_${module_name}_REAL_NAME} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${mod_outdir}"
     COMPILE_FLAGS "${module_include_flags}"
+    PREFIX ""
     OUTPUT_NAME "${mod_outname}")
   set(${lang_ucase}_WRAPPER ${CMAKE_CURRENT_BINARY_DIR}/${language}/${SWIG_MODULE_NAME}.${SWIG_${lang_ucase}_EXTRA_FILE_EXTENSION})
   list(APPEND wrappers_DEPS ${SWIG_MODULE_${module_name}_REAL_NAME})
@@ -336,7 +337,10 @@ if(SWIG_FOUND)
       set(PHP_WRAPPER_DIR "${PHP_INSTALL_PREFIX}/share/php")
     endif(NOT PHP_WRAPPER_DIR)
     DO_SWIG_MODULE(php)
+    set(PHP_INIFILE ${CMAKE_CURRENT_BINARY_DIR}/php/${SWIG_MODULE_NAME}.ini)
+    file(WRITE ${PHP_INIFILE} "extension=${SWIG_MODULE_NAME}.so\n")
     install(FILES ${PHP_WRAPPER} DESTINATION "${PHP_WRAPPER_DIR}")
+    install(FILES ${PHP_INIFILE} DESTINATION "${SYSCONF_INSTALL_DIR}/php.d")
   endif(PHPLIBS_FOUND)
 
   add_custom_target(swig-wrappers ALL
