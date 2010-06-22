@@ -275,7 +275,7 @@ macro(DO_SWIG_MODULE language)
   message(STATUS "Building ${language} bindings")
 
   # Ugly hack to make target names differ so CMake will be happy
-  set (module_name digidoc__${lang_ucase}__)
+  set (module_name ${SWIG_MODULE_NAME}__${lang_ucase}__)
   set(MODULE_INCLUDE_DIRS
       ${${lang_ucase}_INCLUDE_DIRS}
       ${CMAKE_CURRENT_BINARY_DIR}/${language}
@@ -296,13 +296,21 @@ macro(DO_SWIG_MODULE language)
     LIBRARY_OUTPUT_DIRECTORY "${mod_outdir}"
     COMPILE_FLAGS "${module_include_flags}"
     OUTPUT_NAME "${mod_outname}")
+  set(${lang_ucase}_WRAPPER ${CMAKE_CURRENT_BINARY_DIR}/${language}/${SWIG_MODULE_NAME}.${SWIG_${lang_ucase}_EXTRA_FILE_EXTENSION})
+  list(APPEND wrappers_DEPS ${SWIG_MODULE_${module_name}_REAL_NAME})
+  list(APPEND wrappers_SRCS ${${lang_ucase}_WRAPPER})
   install(TARGETS ${SWIG_MODULE_${module_name}_REAL_NAME} 
     LIBRARY DESTINATION "${${lang_ucase}_EXTENSION_DIR}")
 endmacro(DO_SWIG_MODULE language)
 
 if(SWIG_FOUND)
   include(${SWIG_USE_FILE})
+  # TODO: Send this fix to upstream
+  SET(SWIG_PERL_EXTRA_FILE_EXTENSION "pm")
+  SET(SWIG_PHP_EXTRA_FILE_EXTENSION "php")
+
   set (SWIG_FILES        digidoc.i)
+  set (SWIG_MODULE_NAME  "digidoc")
 
   # Python
   if(PYTHONLIBRARY_FOUND)
@@ -310,25 +318,29 @@ if(SWIG_FOUND)
     set(PYTHON_EXTENSION_DIR "${PYTHON_SITE_PACKAGES_DIR}")
     set(PYTHON_INCLUDE_DIRS "${PYTHON_INCLUDE_PATH}")
     DO_SWIG_MODULE(python)
-    PYTHON_INSTALL(${CMAKE_CURRENT_BINARY_DIR}/python/digidoc.py
-                   ${PYTHON_EXTENSION_DIR})
+    PYTHON_INSTALL(${PYTHON_WRAPPER} ${PYTHON_EXTENSION_DIR})
+    # This is a braindead hack! PYTHON_INSTALL is just broken
+    add_dependencies(compile_python_files swig-wrappers)
   endif(PYTHONLIBRARY_FOUND)
 
   # Perl
   if(PERLLIBS_FOUND)
     set(PERL_EXTENSION_DIR "${PERL_VENDORARCH}/auto")
     DO_SWIG_MODULE(perl)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/perl/digidoc.pm
-      DESTINATION "${PERL_VENDORLIB}")
+    install(FILES ${PERL_WRAPPER} DESTINATION "${PERL_VENDORLIB}")
   endif(PERLLIBS_FOUND)
 
   # PHP
   if(PHPLIBS_FOUND)
-    DO_SWIG_MODULE(php)
     if(NOT PHP_WRAPPER_DIR)
       set(PHP_WRAPPER_DIR "${PHP_INSTALL_PREFIX}/share/php")
     endif(NOT PHP_WRAPPER_DIR)
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/php/digidoc.php
-      DESTINATION "${PHP_WRAPPER_DIR}")
+    DO_SWIG_MODULE(php)
+    install(FILES ${PHP_WRAPPER} DESTINATION "${PHP_WRAPPER_DIR}")
   endif(PHPLIBS_FOUND)
+
+  add_custom_target(swig-wrappers ALL
+    DEPENDS ${wrappers_DEPS}
+    SOURCES ${wrapper_SRCS})
+
 endif(SWIG_FOUND)
