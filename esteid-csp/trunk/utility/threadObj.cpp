@@ -33,6 +33,7 @@ struct threadPriv {
     static void * thread_entry(void * const thisPtr) {
         threadPriv * const this_ = (threadPriv*) thisPtr;
         this_->m_threadObj.execute();
+        return 0;
          }
     threadPriv(threadObj &ref) : m_threadObj(ref) {
         }
