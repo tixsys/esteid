@@ -24,12 +24,14 @@
 #include "crypto/cert/DirectoryX509CertStore.h"
 #include "io/ISerialize.h"
 #include "crypto/signer/Signer.h"
+#include "util/File.h"
 %}
 
 // Handle standard C++ types
 %include "std_string.i"
 %include "std_vector.i"
 %template(StringVector) std::vector<std::string>;
+%template(ByteVector) std::vector<unsigned char>;
 %apply const std::string& {std::string* foo};
 %include "std_except.i"
 
@@ -64,14 +66,12 @@
 %ignore digidoc::DDoc::DDoc(std::auto_ptr<ISerialize>);
 %ignore *::saveTo(std::auto_ptr<ISerialize>);
 
+// Hide anything that requires arguments we can't create
+%ignore digidoc::Document::calcDigest(digidoc::Digest *);
+
 // Internal hacks are not exposed
 %ignore digidoc::SignatureDDOC;
 %ignore *::getFileDigest;
-
-// Broken in PHP :(
-%ignore digidoc::Document::Document;
-%ignore digidoc::SignerRole::SignerRole;
-%ignore digidoc::SignatureProductionPlace::SignatureProductionPlace;
 
 // TODO: useful, but broken
 %ignore digidoc::Signature::validateOnline;
@@ -79,6 +79,17 @@
 
 %feature("notabstract") digidoc::Signature;  // Breaks PHP if abstract
 %rename(ExceptionBase) Exception;            // Too generic, breaks PHP
+
+// Rewrite initialize function
+%feature("action") digidoc::initialize() {
+    using namespace digidoc;
+
+    // Initialize digidoc library.
+    initialize();
+
+    // Init certificate store.
+    X509CertStore::init(new DirectoryX509CertStore());
+}
 
 // Mark some stuff read-only
 // %immutable List::length;
@@ -97,8 +108,23 @@
  * else can we do?!
  */
 #ifdef SWIGPHP
+namespace digidoc {
+    void initialize();
+    void terminate();
+}
+
 %warnfilter(401) digidoc::DDoc;
 %warnfilter(401) digidoc::BDoc;
+
+/* Buggy PHP proxy class generator will fuck up getter functions
+ * if there is no constructor with zero arguments for returned class.
+ * The following hacks try to work around it.
+ */
+%extend digidoc::Document {
+    Document() {
+        throw std::runtime_error("Hacks are NOT callable");
+    }
+}
 #else
 %include "ADoc.h"
 #endif
@@ -106,33 +132,15 @@
 %include "BDoc.h"
 
 #ifndef SWIGPHP // PHP will use it's own initialization functions
-%init %{
-    using namespace digidoc;
-
-    // Initialize digidoc library.
-    initialize();
-
-    // Init certificate store.
-    X509CertStore::init(new DirectoryX509CertStore());
-%}
+%init %{ %}
 #endif
 
 // Target language specific functions
 #ifdef SWIGPHP
 %minit %{ %}
 %mshutdown %{ %}
-%rinit %{
-    using namespace digidoc;
-
-    // Initialize digidoc library.
-    initialize();
-
-    // Init certificate store.
-    X509CertStore::init(new DirectoryX509CertStore());
-%}
-%rshutdown %{
-    digidoc::terminate();
-%}
+%rinit %{ %}
+%rshutdown %{ %}
 %pragma(php) phpinfo="
   zend_printf(\"DigiDoc libraries support\\n\");
   php_info_print_table_start();
