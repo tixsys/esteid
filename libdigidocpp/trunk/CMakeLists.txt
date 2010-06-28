@@ -55,7 +55,7 @@ endif(MINIZIP_FOUND)
 ## Packages required for Dynamic Language Wrappers
 find_package(SWIG QUIET)
 if(SWIG_FOUND)
-    find_package(PythonLibrary QUIET)
+    find_package(PythonLibs QUIET)
     find_package(PerlLibs QUIET)
     find_package(PHPLibs QUIET)
 endif(SWIG_FOUND)

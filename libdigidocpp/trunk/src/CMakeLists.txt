@@ -314,15 +314,22 @@ if(SWIG_FOUND)
   set (SWIG_MODULE_NAME  "digidoc")
 
   # Python
-  if(PYTHONLIBRARY_FOUND)
+  if(PYTHONLIBS_FOUND)
+    # Pull in KDE crap for PYTHON_SITE_PACKAGES_DIR and PYTHON_INSTALL
+    find_package(PythonLibrary QUIET)
     include(PythonMacros)
     set(PYTHON_EXTENSION_DIR "${PYTHON_SITE_PACKAGES_DIR}")
-    set(PYTHON_INCLUDE_DIRS "${PYTHON_INCLUDE_PATH}")
+
+    # CMake 2.6
+    if(NOT DEFINED PYTHON_INCLUDE_DIRS)
+      set(PYTHON_INCLUDE_DIRS "${PYTHON_INCLUDE_PATH}")
+    endif(NOT DEFINED PYTHON_INCLUDE_DIRS)
+
     DO_SWIG_MODULE(python)
     PYTHON_INSTALL(${PYTHON_WRAPPER} ${PYTHON_EXTENSION_DIR})
     # This is a braindead hack! PYTHON_INSTALL is just broken
     add_dependencies(compile_python_files swig-wrappers)
-  endif(PYTHONLIBRARY_FOUND)
+  endif(PYTHONLIBS_FOUND)
 
   # Perl
   if(PERLLIBS_FOUND)
