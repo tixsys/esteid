@@ -1,8 +1,6 @@
 // digidoc.i - SWIG interface for DigiDoc C++ library
 
-// TODO: Find a way to tap into PHP-s RINIT and RSHUTDOWN
-//       (request init/shutdown), MSHUTDOWN and MINFO would
-//       be nice too. Also investigate phppointers.i
+// TODO: Investigate phppointers.i
 
 // TODO: Add %newobject to stuff that is known to return
 //       pointers to specifically allocated objects
@@ -12,6 +10,7 @@
 //       and %apply to fix functions that use pointer arguments for output
 
 %module digidoc
+//%module(directors="1") digidoc
 %{
 #undef seed // Combat braindead #defines that are present in PERL headers
 
@@ -30,7 +29,9 @@
 // Handle standard C++ types
 %include "std_string.i"
 %include "std_vector.i"
+%template(StringVector) std::vector<std::string>;
 %apply const std::string& {std::string* foo};
+%include "std_except.i"
 
 // Allow variable getters/setters to throw exceptions too
 %allowexception;
@@ -90,7 +91,17 @@
 %include "SignatureAttributes.h"
 %include "Signature.h"
 %include "Document.h"
+/* Buggy PHP proxy class generator will fuck up getDocument and getSignature
+ * if ADoc.h is known and included into source. So we disable it for PHP and
+ * suppress warnings for DDoc and BDoc classes. This is ugly, but what
+ * else can we do?!
+ */
+#ifdef SWIGPHP
+%warnfilter(401) digidoc::DDoc;
+%warnfilter(401) digidoc::BDoc;
+#else
 %include "ADoc.h"
+#endif
 %include "DDoc.h"
 %include "BDoc.h"
 
