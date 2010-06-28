@@ -39,6 +39,7 @@ namespace digidoc
           std::string getPath() const;
           std::string getMediaType() const;
           unsigned long getSize() const throw(IOException);
+          std::vector<unsigned char> calcDigest() throw(IOException);
           std::vector<unsigned char> calcDigest(Digest* calc) throw(IOException);
           void saveAs(const std::string& path) throw(IOException);
 

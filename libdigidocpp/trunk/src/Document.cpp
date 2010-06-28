@@ -65,6 +65,26 @@ unsigned long digidoc::Document::getSize() const throw(IOException)
 
 /**
  * Calculates digest for document. If digest is already calculated returns it,
+ * otherwise calculates the digest using a default Digest implementation.
+ *
+ * return returns calculated digest.
+ * throws IOException throws exception if the file does not exist or digest calculation fails.
+ */
+std::vector<unsigned char> digidoc::Document::calcDigest() throw(IOException)
+{
+    // If digest is already calculated return it.
+    if(!digest.empty())
+    {
+        DEBUG("Digest already calculated");
+        return digest;
+    }
+
+    std::auto_ptr<Digest> calc = Digest::create();
+    return calcDigest(calc.get());
+}
+
+/**
+ * Calculates digest for document. If digest is already calculated returns it,
  * otherwise calculates the digest.
  *
  * @param calc digest calculator implementation.
