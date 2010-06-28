@@ -70,6 +70,7 @@ public:
 	virtual ~DDoc();
 
 	void save() throw(IOException, BDocException);
+	void saveTo(std::string path) throw(IOException, BDocException);
 	void saveTo(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException);
 	void addDocument(const Document& document) throw(BDocException);
 	Document getDocument(unsigned int id) const throw(BDocException);

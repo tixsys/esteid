@@ -214,6 +214,23 @@ void WDoc::save() throw(IOException, BDocException)
 }
 
 /**
+ * Saves the container to file using default <code>serializer</code>
+ *
+ * @param path a file to save data to
+ * @throws IOException is thrown if there was a failure saving BDOC container. For example added
+ *         document does not exist.
+ * @throws BDocException is thrown if BDOC class is not correctly initialized.
+ * @see save()
+ */
+void WDoc::saveTo(std::string path) throw(IOException, BDocException)
+{
+	if( !m_doc )
+		throw BDocException( __FILE__, __LINE__, "Document not open" );
+
+	m_doc->saveTo( path );
+}
+
+/**
  * Saves the container using the <code>serializer</code> implementation provided.
  *
  * @param serializer serializer implementation, used to save data to BDOC container.
