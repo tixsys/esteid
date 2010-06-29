@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-ESVN_REPO_URI="https://id.eesti.ee/svn/qdigidoc/trunk/"
+ESVN_REPO_URI="https://esteid.googlecode.com/svn/qdigidoc/trunk"
 
 inherit cmake-utils subversion
 
