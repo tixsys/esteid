@@ -1,4 +1,7 @@
-# Renamed to esteid-mozilla
+# Replaced by www-plugins/esteid-browser-plugin
+#www-plugins/esteid-mozilla
+
+# Replaced by www-plugins/esteid-browser-plugin
 www-plugins/esteid-firefox
 
 # Don't let people install these accidentally

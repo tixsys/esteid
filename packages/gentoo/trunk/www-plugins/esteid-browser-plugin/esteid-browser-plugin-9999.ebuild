@@ -4,23 +4,26 @@
 
 EAPI="2"
 
-inherit cmake-utils mozextension subversion
+inherit cmake-utils mercurial mozextension multilib nsplugins subversion
 
-ESVN_REPO_URI="https://id.eesti.ee/svn/plugins/firefox/trunk/"
+ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
+EHG_REPO_URI="https://firebreath.googlecode.com/hg/"
 
 MY_PN="esteid"
-MY_PV="0.4.0"
+MY_PV="1.0.0"
 MY_P="${MY_PN}-${MY_PV}"
 
-DESCRIPTION="Estonian ID Card Mozilla signing extension"
+DESCRIPTION="Estonian ID card digital signing browser plugin"
 HOMEPAGE="https://id.eesti.ee/trac/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-RDEPEND="dev-libs/smartcardpp
-	app-arch/zip
+RDEPEND="app-arch/zip
+	dev-cpp/gtkmm
+	dev-libs/openssl
+	dev-libs/smartcardpp
 	|| (
 		>=www-client/mozilla-firefox-3.0
 		>=www-client/mozilla-firefox-bin-3.0
@@ -29,11 +32,21 @@ RDEPEND="dev-libs/smartcardpp
 		>=mail-client/mozilla-thunderbird-2.0
 		>=mail-client/mozilla-thunderbird-bin-2.0
 	)
-	>=net-libs/xulrunner-1.9
-	>=dev-libs/nspr-4.7.1
-	!www-plugins/esteid-firefox"
+	!www-plugins/esteid-firefox
+	!www-plugins/esteid-mozilla"
 
 DEPEND="${RDEPEND}"
+
+S="${WORKDIR}/hg"
+
+src_unpack() {
+	# unpack firebreath
+	mercurial_src_unpack
+	# unpack esteid-browser-plugin to projects/ subdir
+	S="${S}/projects/${PN}" subversion_src_unpack
+
+	cd "${S}"
+}
 
 src_configure() {
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
@@ -42,6 +55,11 @@ src_configure() {
 }
 
 src_install() {
+	exeinto "/usr/$(get_libdir)/${PN}"
+	doexe "${CMAKE_BUILD_DIR}/bin/esteid/npesteid.so"
+	inst_plugin "/usr/$(get_libdir)/${PN}/npesteid.so"
+
+
 	local MOZILLA_FIVE_HOME xpiname
 	mozillas=""
 
