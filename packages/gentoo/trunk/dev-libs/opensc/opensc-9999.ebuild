@@ -40,8 +40,8 @@ DEPEND="${RDEPEND}
 if [[ ${PV} = 9999* ]]; then
 	src_unpack() {
 		subversion_src_unpack
-		eautoreconf || die "eautoreconf failed"
 		cd "${S}"
+		eautoreconf || die "eautoreconf failed"
 	}
 fi
 
