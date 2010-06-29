@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-ESVN_REPO_URI="https://id.eesti.ee/svn/smartcardpp/trunk/"
+ESVN_REPO_URI="https://esteid.googlecode.com/svn/smartcardpp/trunk"
 
 EAPI=2
 inherit cmake-utils subversion
