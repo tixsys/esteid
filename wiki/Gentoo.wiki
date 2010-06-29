@@ -16,8 +16,8 @@ Osad vajalikud XML teegid pole veel Gentoo portage-s sees, ning nende jaoks on l
 Overlayde paigaldamiseks anna järgmised käsud:
 {{{
 layman -a dev-zero
-layman -f esteid --overlays=http://ftp.id.eesti.ee/pub/id/gentoo/layman-idkaart.txt
-layman -a esteid --overlays=http://ftp.id.eesti.ee/pub/id/gentoo/layman-idkaart.txt
+layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
+layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
 
 Ning seejärel peaks juba töötama tarkvara paigaldus:
@@ -30,4 +30,12 @@ Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlayd, ning s
 layman -S
 emerge -av -1 libdigidoc libdigidocpp qdigidoc qesteidutil esteid-mozilla
 etc-update
+}}}
+
+If you have already installed esteid overlay from id.eesti.ee and would now like to switch, run the following commands:
+{{{
+layman -d esteid
+rm -rf /usr/portage/distfiles/svn-src/{esteid-mozilla,libdigidoc,libdigidocpp,qdigidoc,qesteidutil,smartcardpp}
+layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
+layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
