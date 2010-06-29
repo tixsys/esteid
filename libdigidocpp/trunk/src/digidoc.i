@@ -140,7 +140,13 @@ namespace digidoc {
 %minit %{ %}
 %mshutdown %{ %}
 %rinit %{ %}
-%rshutdown %{ %}
+%rshutdown %{
+    /* Kill temporary files when HTTP request completes.
+     * This is to ensure that sensitive data is not left over
+     * even if PHP programs do not properly call digidoc::terminate()
+     */
+    digidoc::util::File::deleteTempFiles();
+%}
 %pragma(php) phpinfo="
   zend_printf(\"DigiDoc libraries support\\n\");
   php_info_print_table_start();
