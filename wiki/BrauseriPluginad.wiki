@@ -11,7 +11,7 @@ Allkirjastamine toimub läbi universaalse brauseripluginate API. Plugina laadimi
 
 {{{
 <object id="esteid" type="application/esteid"
-        style="width: 1px; height: 1px; visibility: hidden;"></object>
+        style="width: 1px; height: 1px;"></object>
 }}}
 
 Edasi on võimalik lugeda maha allkirjastamise sertifikaat:
@@ -35,4 +35,3 @@ Laienduse funktsionaalsuse demo leiab aadressilt: https://id.smartlink.ee/plugin
 NB! Igasugune kaastöö on teretulnud ;)
 
 PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [PaigaldusPaketid paigaldatava baastarkvara] koosseisus
-
