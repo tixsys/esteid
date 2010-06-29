@@ -9,7 +9,7 @@ ESVN_REPO_URI="https://esteid.googlecode.com/svn/qesteidutil/trunk"
 inherit cmake-utils subversion
 
 DESCRIPTION="Estonian ID card utility"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

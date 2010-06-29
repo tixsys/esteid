@@ -8,7 +8,7 @@ EAPI=2
 inherit cmake-utils subversion
 
 DESCRIPTION="A library for accessing smart cards"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

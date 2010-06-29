@@ -9,7 +9,7 @@ ESVN_REPO_URI="https://esteid.googlecode.com/svn/qdigidoc/trunk"
 inherit cmake-utils subversion
 
 DESCRIPTION="Digidoc client"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

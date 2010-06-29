@@ -8,7 +8,7 @@ EAPI=2
 inherit cmake-utils subversion
 
 DESCRIPTION="C++ library for handling BDoc and DDoc digital signature containers"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
