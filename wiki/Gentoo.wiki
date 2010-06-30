@@ -22,13 +22,13 @@ layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.tx
 
 Ning seejärel peaks juba töötama tarkvara paigaldus:
 {{{
-emerge -av qdigidoc qesteidutil esteid-mozilla
+emerge -av qdigidoc qesteidutil esteid-browser-plugin
 }}}
 
 Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlayd, ning seejärel kõik uuesti kompileerida
 {{{
 layman -S
-emerge -av -1 libdigidoc libdigidocpp qdigidoc qesteidutil esteid-mozilla
+emerge -av -1 libdigidoc libdigidocpp qdigidoc qesteidutil esteid-browser-plugin
 etc-update
 }}}
 
