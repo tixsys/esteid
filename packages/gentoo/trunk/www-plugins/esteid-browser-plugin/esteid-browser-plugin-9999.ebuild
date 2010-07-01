@@ -55,9 +55,9 @@ src_configure() {
 }
 
 src_install() {
-	exeinto "/usr/$(get_libdir)/${PN}"
-	doexe "${CMAKE_BUILD_DIR}/bin/esteid/npesteid.so"
-	inst_plugin "/usr/$(get_libdir)/${PN}/npesteid.so"
+	cmake-utils_src_install
+
+	inst_plugin "/usr/$(get_libdir)/mozilla/plugins/npesteid.so"
 
 
 	local MOZILLA_FIVE_HOME xpiname
