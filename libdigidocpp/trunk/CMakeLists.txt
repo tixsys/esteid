@@ -42,15 +42,16 @@ find_package(OpenSSLCrypto REQUIRED)
 find_package(XercesC REQUIRED)
 find_package(XmlSecurityC REQUIRED)
 find_package(XSD REQUIRED)
-find_package(ZLIB REQUIRED)
 
 find_package(MiniZip QUIET)
 if(MINIZIP_FOUND)
     message(STATUS "Found MiniZip: ${MINIZIP_LIBRARIES}")
-else(MINIZIP_FOUND)
+else()
     message(STATUS "MiniZip not found; using bundled copy.")
     set(MINIZIP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/minizip)
-endif(MINIZIP_FOUND)
+    # zlib is only required for building minizip
+    find_package(ZLIB REQUIRED)
+endif()
 
 ## Packages required for Dynamic Language Wrappers
 find_package(SWIG QUIET)
