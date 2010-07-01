@@ -46,13 +46,10 @@ namespace digidoc
 
       private:
           void testDigest(int method, const std::string& name, const std::string uri,
-                  int size, unsigned char* emptyDigest, unsigned char* expectedDigest);
+                  unsigned int size, unsigned char* emptyDigest, unsigned char* expectedDigest);
 
           static const std::string NAME_SHA1;
           static const std::string NAME_SHA256;
-
-          static const std::string URI_SHA1;
-          static const std::string URI_SHA256;
 
           std::vector<int> methods;
           std::vector<std::string> uris;

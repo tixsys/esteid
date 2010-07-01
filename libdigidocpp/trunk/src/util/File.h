@@ -39,7 +39,7 @@ namespace digidoc
         {
           public:
               static bool fileExists(const std::string& path);
-              static bool directoryExists(const std::string& path);
+              EXP_DIGIDOC static bool directoryExists(const std::string& path);
               static std::string encodeName(const std::string& fileName);
               static std::string decodeName(const std::string& localFileName);
 #ifdef _WIN32

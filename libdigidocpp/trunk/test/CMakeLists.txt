@@ -1,5 +1,9 @@
-include_directories( ${MINIZIP_INCLUDE_DIR} )
-include_directories( ${OPENSSL_INCLUDE_DIR} )
+find_package(CppUnit REQUIRED)
+
+include_directories(
+    ${MINIZIP_INCLUDE_DIR}
+    ${OPENSSL_INCLUDE_DIR}
+)
 
 set(unittests_SRCS
     src/crypto/DigestTest.cpp
@@ -22,7 +26,8 @@ if(WIN32)
 endif(WIN32)
 
 include_directories(
-    ../src
+    ${CMAKE_CURRENT_BINARY_DIR}/../src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src
 )
 
 add_executable( unittests WIN32 ${unittests_SRCS} )

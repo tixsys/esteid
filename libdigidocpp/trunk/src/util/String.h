@@ -21,6 +21,8 @@
 #if !defined(__STRING_H_INCLUDED__)
 #define __STRING_H_INCLUDED__
 
+#include "../Exports.h"
+
 #include <string>
 #include <stdarg.h>
 
@@ -37,7 +39,7 @@ namespace digidoc
         class String
         {
           public:
-              static std::string format(const char *fmt, ...);
+              EXP_DIGIDOC static std::string format(const char *fmt, ...);
               static std::string convertUTF8(const std::string& str_in, bool to_UTF);
               static std::string toUriFormat(const std::string& str_in);
 #if _WIN32

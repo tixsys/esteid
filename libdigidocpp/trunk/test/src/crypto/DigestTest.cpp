@@ -33,10 +33,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(digidoc::DigestTest);
 const std::string digidoc::DigestTest::NAME_SHA1 = "SHA1";
 const std::string digidoc::DigestTest::NAME_SHA256 = "SHA256";
 
-// Digest URIs.
-const std::string digidoc::DigestTest::URI_SHA1 = "http://www.w3.org/2000/09/xmldsig#sha1";
-const std::string digidoc::DigestTest::URI_SHA256 = "http://www.w3.org/2001/04/xmlenc#sha256";
-
 
 void digidoc::DigestTest::setUp()
 {
@@ -111,7 +107,7 @@ void digidoc::DigestTest::testSHA256Digest()
 }
 
 void digidoc::DigestTest::testDigest(int method, const std::string& name, const std::string uri,
-        int size, unsigned char* emptyDigest, unsigned char* expectedDigest)
+        unsigned int size, unsigned char* emptyDigest, unsigned char* expectedDigest)
 {
     std::auto_ptr<Digest> calc = Digest::create(method);
 
