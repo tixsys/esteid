@@ -53,8 +53,8 @@ namespace digidoc
           long getSerial() const throw(IOException);
           std::string getIssuerName() const throw(IOException);
           std::string getSubjectName() const throw(IOException);
-          std::string getSubjectInfo(const char *ln) const throw(IOException);
-          std::string getIssuerInfo(const char *ln) const throw(IOException);
+          std::string getSubjectInfo(const std::string& ln) const throw(IOException);
+          std::string getIssuerInfo(const std::string& ln) const throw(IOException);
           std::vector<unsigned char> getRsaModulus() const throw(IOException);
           std::vector<unsigned char> getRsaExponent() const throw(IOException);
           bool isValid() const throw(IOException);

@@ -322,7 +322,7 @@ std::string digidoc::X509Cert::getSubjectName() const throw(IOException)
  * @return subject name entry converted to string.
  * @throws IOException exception is throws if the conversion failed.
  */
-std::string digidoc::X509Cert::getSubjectInfo(const char *ln) const throw(IOException)
+std::string digidoc::X509Cert::getSubjectInfo(const std::string& ln) const throw(IOException)
 {
     char buf[1024];
 
@@ -332,9 +332,9 @@ std::string digidoc::X509Cert::getSubjectInfo(const char *ln) const throw(IOExce
        THROW_IOEXCEPTION("Failed to convert X.509 certificate subject: %s", ERR_reason_error_string(ERR_get_error()));
     }
 
-    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln), buf, 1024) < 0)
+    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln.c_str()), buf, 1024) < 0)
     {
-       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln);
+       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln.c_str());
     }
 
     return std::string(buf);
@@ -348,7 +348,7 @@ std::string digidoc::X509Cert::getSubjectInfo(const char *ln) const throw(IOExce
  * @return issuer name entry converted to string.
  * @throws IOException exception is throws if the conversion failed.
  */
-std::string digidoc::X509Cert::getIssuerInfo(const char *ln) const throw(IOException)
+std::string digidoc::X509Cert::getIssuerInfo(const std::string& ln) const throw(IOException)
 {
     char buf[1024];
 
@@ -358,9 +358,9 @@ std::string digidoc::X509Cert::getIssuerInfo(const char *ln) const throw(IOExcep
        THROW_IOEXCEPTION("Failed to convert X.509 certificate issuer: %s", ERR_reason_error_string(ERR_get_error()));
     }
 
-    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln), buf, 1024) < 0)
+    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln.c_str()), buf, 1024) < 0)
     {
-       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln);
+       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln.c_str());
     }
 
     return std::string(buf);
