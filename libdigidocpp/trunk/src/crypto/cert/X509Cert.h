@@ -58,7 +58,7 @@ namespace digidoc
           std::vector<unsigned char> getRsaModulus() const throw(IOException);
           std::vector<unsigned char> getRsaExponent() const throw(IOException);
           bool isValid() const throw(IOException);
-          int compareIssuerToString(std::string) const throw(IOException);
+          int compareIssuerToString(const std::string&) const throw(IOException);
 
       protected:
           X509* cert;

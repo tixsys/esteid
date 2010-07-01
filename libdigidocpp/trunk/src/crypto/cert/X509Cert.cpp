@@ -539,7 +539,7 @@ int digidoc::X509Cert::verify(X509_STORE* aStore) const throw(IOException)
     return ok;
 }
 
-int digidoc::X509Cert::compareIssuerToString(std::string in) const throw(IOException) {
+int digidoc::X509Cert::compareIssuerToString(const std::string& in) const throw(IOException) {
     //FIXME: Actually implement this check
     //http://wiki.ngs.ac.uk/index.php?title=Comparing_DNs
 
