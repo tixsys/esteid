@@ -304,7 +304,7 @@ std::string digidoc::X509Cert::getIssuerName() const throw(IOException)
  * @return issuer name converted to string.
  * @throws IOException exception is throws if the conversion failed.
  */
-std::string digidoc::X509Cert::getSubject() const throw(IOException)
+std::string digidoc::X509Cert::getSubjectName() const throw(IOException)
 {
     X509_NAME* subject = X509_get_subject_name(cert);
     if(subject == NULL)
@@ -313,6 +313,57 @@ std::string digidoc::X509Cert::getSubject() const throw(IOException)
     }
 
     return toString(subject);
+}
+
+/**
+ * Converts individual X.509 subject entry to string.
+ *
+ * @param ln Long name of the requested entry (see openssl/objects.h)
+ * @return subject name entry converted to string.
+ * @throws IOException exception is throws if the conversion failed.
+ */
+std::string digidoc::X509Cert::getSubjectInfo(const char *ln) const throw(IOException)
+{
+    char buf[1024];
+
+    X509_NAME* name = X509_get_subject_name(cert);
+    if(name == NULL)
+    {
+       THROW_IOEXCEPTION("Failed to convert X.509 certificate subject: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+
+    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln), buf, 1024) < 0)
+    {
+       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln);
+    }
+
+    return std::string(buf);
+}
+
+
+/**
+ * Converts individual X.509 issuer entry to string.
+ *
+ * @param ln long name of the requested entry (see openssl/objects.h)
+ * @return issuer name entry converted to string.
+ * @throws IOException exception is throws if the conversion failed.
+ */
+std::string digidoc::X509Cert::getIssuerInfo(const char *ln) const throw(IOException)
+{
+    char buf[1024];
+
+    X509_NAME* name = X509_get_issuer_name(cert);
+    if(name == NULL)
+    {
+       THROW_IOEXCEPTION("Failed to convert X.509 certificate issuer: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+
+    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln), buf, 1024) < 0)
+    {
+       THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln);
+    }
+
+    return std::string(buf);
 }
 
 /**
@@ -470,7 +521,7 @@ int digidoc::X509Cert::verify(X509_STORE* aStore) const throw(IOException)
         int err = X509_STORE_CTX_get_error(csc);
         X509Cert cause(X509_STORE_CTX_get_current_cert (csc));
         std::ostringstream s;
-        s << "Unable to verify " << cause.getSubject();
+        s << "Unable to verify " << cause.getSubjectName();
         s << ". Cause: " << X509_verify_cert_error_string(err);
         switch(err)
         {
@@ -487,8 +538,10 @@ int digidoc::X509Cert::verify(X509_STORE* aStore) const throw(IOException)
 
     return ok;
 }
+
 int digidoc::X509Cert::compareIssuerToString(std::string in) const throw(IOException) {
     //FIXME: Actually implement this check
+    //http://wiki.ngs.ac.uk/index.php?title=Comparing_DNs
 
     //retval = X509_NAME_cmp(this->getIssuerNameAsn1(), xn);
     //X509_NAME_free(xn);

@@ -34,30 +34,30 @@ namespace digidoc
     {
 
       public:
-          X509Cert();
-          X509Cert(X509* cert) throw(IOException);
-          X509Cert(std::vector<unsigned char> bytes) throw(IOException);
-          X509Cert(const X509Cert& copy) throw(IOException);
           ~X509Cert();
+          X509Cert();
+          X509Cert(std::vector<unsigned char> bytes) throw(IOException);
+#ifndef SWIG
+          X509Cert(X509* cert) throw(IOException);
+          X509Cert(const X509Cert& copy) throw(IOException);
           X509Cert& operator=(const X509Cert& copy) throw(IOException);
           X509* getX509() const throw(IOException);
           static X509* copyX509(X509* cert) throw(IOException);
           static X509* loadX509(const std::string& path) throw(IOException);
           static STACK_OF(X509)* loadX509Stack(const std::string& path) throw(IOException);
-
+          X509_NAME* getIssuerNameAsn1() const;
+          EVP_PKEY* getPublicKey() const throw(IOException);
+          int verify(X509_STORE* store = NULL) const throw(IOException);
+#endif
           std::vector<unsigned char> encodeDER() const throw(IOException);
           long getSerial() const throw(IOException);
-          X509_NAME* getIssuerNameAsn1() const;
           std::string getIssuerName() const throw(IOException);
-          std::string getSubject() const throw(IOException);
-          EVP_PKEY* getPublicKey() const throw(IOException);
+          std::string getSubjectName() const throw(IOException);
+          std::string getSubjectInfo(const char *ln) const throw(IOException);
+          std::string getIssuerInfo(const char *ln) const throw(IOException);
           std::vector<unsigned char> getRsaModulus() const throw(IOException);
           std::vector<unsigned char> getRsaExponent() const throw(IOException);
-
           bool isValid() const throw(IOException);
-
-          int verify(X509_STORE* store = NULL) const throw(IOException);
-
           int compareIssuerToString(std::string) const throw(IOException);
 
       protected:

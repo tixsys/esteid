@@ -502,7 +502,7 @@ void digidoc::SignatureBES::checkSigningCertificate() const throw(SignatureExcep
     }
     if(!valid)
     {
-        THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubject().c_str());
+        THROW_SIGNATUREEXCEPTION("Unable to verify signing certificate %s", signingCert.getSubjectName().c_str());
     }
 }
 

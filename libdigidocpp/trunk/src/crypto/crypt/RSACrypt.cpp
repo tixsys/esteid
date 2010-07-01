@@ -133,7 +133,7 @@ bool digidoc::RSACrypt::verify(int digestMethod, std::vector<unsigned char> dige
     EVP_PKEY* key = x509.getPublicKey();
     if(EVP_PKEY_type(key->type) != EVP_PKEY_RSA)
     {
-        THROW_IOEXCEPTION("Certificate '%s' does not have a RSA public key, can not verify signature.", x509.getSubject().c_str());
+        THROW_IOEXCEPTION("Certificate '%s' does not have a RSA public key, can not verify signature.", x509.getSubjectName().c_str());
     }
     RSA* publicKey = EVP_PKEY_get1_RSA(key);
 

@@ -582,7 +582,7 @@ int My1EstEIDSigner::openCont ()
 			// Get signer certificate.
 			// TODO: method getSigningCertificate() does not work, implement cert printing after it is fixed.
 			X509Cert cert = sig->getSigningCertificate();
-			string tempname = cert.getSubject();//.data());.c_str();
+			string tempname = cert.getSubjectName();//.data());.c_str();
 			for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], ",CN=", 4))
@@ -660,7 +660,7 @@ bool My1EstEIDSigner::compIDnumber(std::string str_idNum)
 		
 		singnCert = new X509Cert(sign->getSigningCertificate());
 		
-		str_cerNum = singnCert->getSubject(); 
+		str_cerNum = singnCert->getSubjectName(); 
 		
 		found=str_cerNum.find("serialNumber=");
 		if (found!=string::npos)
@@ -744,7 +744,7 @@ int My1EstEIDSigner::checkCert ()
 		}
 		else 
 		{
-			string tempname = activeCert.getSubject();
+			string tempname = activeCert.getSubjectName();
 			for (size_t u=0; u<tempname.size(); u++)
 			{
 				if (!memcmp(&tempname[u], "CN=", 3))

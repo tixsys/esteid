@@ -223,11 +223,11 @@ void digidoc::SignatureTM::sign(Signer* signer) throw(SignatureException, SignEx
     if(issuer == NULL)
     {
     	THROW_SIGNATUREEXCEPTION("Could not find certificate '%s' issuer '%s' in certificate store.",
-    			cert_.getSubject().c_str(), cert_.getIssuerName().c_str());
+    			cert_.getSubjectName().c_str(), cert_.getIssuerName().c_str());
     }
 
     DEBUG("Signing with X.509 cert {serial=%ld, subject=%s, issuer=%s})",
-    		cert_.getSerial(), cert_.getSubject().c_str(), cert_.getIssuerName().c_str());
+    		cert_.getSerial(), cert_.getSubjectName().c_str(), cert_.getIssuerName().c_str());
 
     // Initialize OCSP.
     DEBUG("Making OCSP request.");
@@ -418,7 +418,7 @@ void digidoc::SignatureTM::setCACertificate(const X509Cert& x509)
  */
 void digidoc::SignatureTM::addCertificateValue(const std::string& certId, const X509Cert& x509)
 {
-    DEBUG("digidoc::SignatureTM::setCertificateValue(%s, X509Cert{%ld,%s})", certId.c_str(), x509.getSerial(), x509.getSubject().c_str());
+    DEBUG("digidoc::SignatureTM::setCertificateValue(%s, X509Cert{%ld,%s})", certId.c_str(), x509.getSerial(), x509.getSubjectName().c_str());
     //CertificateValues
     std::vector<unsigned char> certBytes = x509.encodeDER();
     xades::CertificateValuesType::EncapsulatedX509CertificateType certData(

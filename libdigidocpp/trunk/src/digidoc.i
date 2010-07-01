@@ -25,6 +25,18 @@
 #include "io/ISerialize.h"
 #include "crypto/signer/Signer.h"
 #include "util/File.h"
+
+#include <sstream>
+#include <iomanip>
+
+inline std::string toHex(const std::vector<unsigned char> &b) {
+    std::ostringstream buf;
+    for(std::vector <unsigned char>::const_iterator it = b.begin();
+        it!=b.end();it++)
+        buf << std::setfill('0') << std::setw(2) << std::hex << (short)*it;
+
+    return buf.str();
+}
 %}
 
 // Handle standard C++ types
@@ -91,6 +103,20 @@
     X509CertStore::init(new DirectoryX509CertStore());
 }
 
+// Typemap ByteVectors to hex strings for a more srcipting friendly interface
+#ifndef SWIGPHP
+/* This is a proper way to do it */
+%typemap(out, fragment=SWIG_From_frag(std::string)) std::vector <unsigned char> {
+    $result = SWIG_From(std::string)(toHex($1));
+}
+#else
+/* Of-course PHP generator is fucked up */
+%typemap(out) std::vector <unsigned char> {
+    std::string s = toHex($1);
+    ZVAL_STRINGL($result, const_cast<char*>(s.data()), s.size(), 1);
+}
+#endif
+
 // Mark some stuff read-only
 // %immutable List::length;
 
@@ -99,6 +125,9 @@
 %include "BDocException.h"
 %include "SignatureException.h"
 %include "io/IOException.h"
+
+%include "crypto/cert/X509Cert.h"
+
 %include "SignatureAttributes.h"
 %include "Signature.h"
 %include "Document.h"
