@@ -31,13 +31,14 @@ function loadEstEidPlugin(id, pluginReady) {
     try {
         /* Many browsers implement it the FF way, but IE shows an empty list */
         if(navigator.mimeTypes && navigator.mimeTypes.length > 0) {
-            if(navigator.mimeTypes['application/x-esteid'])
+            if(navigator.mimeTypes['application/x-esteid']) {
                 e = createEstEidObject(id);
-            else
+            } else {
                 /* Do not attempt to load plugin if it's not there. Othervise
                    Firefox will show a yellow bar */
                 htmlLog("Browser plugin (application/x-esteid) is not installed");
 		throw({message: ''});
+            }
         } else {
                 e = createEstEidObject(id);
         }
