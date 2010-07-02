@@ -16,7 +16,6 @@ function showOutput(data) {
 
 function pluginLoaded() {
    document.getElementById("b1").disabled = false;
-   document.getElementById("b2").disabled = false;
 }
 
 function showCert() {
@@ -24,6 +23,7 @@ function showCert() {
 
     try {
         showOutput(esteid.signCert.cert);
+        document.getElementById("b2").disabled = false;
     } catch(e) {
         showOutput('Cert Error:' + e);
     }

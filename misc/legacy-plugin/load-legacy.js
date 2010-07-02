@@ -8,11 +8,6 @@ var err_notresp   = "Applet not responding";
 var err_nocert    = "Unable to read certificate";
 var err_sign      = "Signing failed";
 
-function appendToBody(e) {
-    var b = document.getElementsByTagName("body")[0];
-    return b.appendChild(e);
-}
-
 function hex2pem(input) {
     var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     var output = "-----BEGIN CERTIFICATE-----\n";
