@@ -236,9 +236,19 @@ function createJava(id, pluginReady) {
 
     var e = document.getElementById(id);
 
+/*
+    e.innerHTML = '<applet id="jSign" code="SignatureApplet.class"' +
+        ' width="1" height="1" archive="' + myuri + '/SignApplet_sig.jar,' +
+        myuri + '/iaikPkcs11Wrapper_sig.jar" name="SignatureApplet">' +
+        '<param name="mayscript" value="true">' +
+        '<param name="debug_level" value="4">' +
+        '<param name="lang" value="ENG">' +
+        '</applet>';
+*/
+
     e.innerHTML = '<object id="jSign" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="1" height="1" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_0-win.cab#Version=1,4,0,0">' +
       '<param name="code" value="SignatureApplet.class">' +
-      '<param name ="archive" value="' + myuri + '/SignApplet_sig.jar,' + myuri + 'iaikPkcs11Wrapper_sig.jar">' +
+      '<param name ="archive" value="' + myuri + '/SignApplet_sig.jar,' + myuri + '/iaikPkcs11Wrapper_sig.jar">' +
       '<param name="type" value="application/x-java-applet;version=1.4">' +
       '<param name="mayscript" value="true">' +
       '<param name="name" value="SignatureApplet">' +
