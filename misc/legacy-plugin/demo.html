@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Plugin Loader Demo</title>
+    <script type="text/javascript" src="esteid.js"></script>
+    <script type="text/javascript" src="load-legacy.js"></script>
+</head>
+<body>
+<pre id="output" style="overflow: scroll; height: 10em; border: solid;"></pre>
+<div id="htmlLog" style="overflow: scroll; height: 10em; border: double;"></div>
+<div style="margin-top: 2em;">
+<script type="text/javascript">
+function showOutput(data) {
+    var o = document.getElementById("output");
+    o.innerHTML = data;
+}
+
+function pluginLoaded() {
+   document.getElementById("b1").disabled = false;
+   document.getElementById("b2").disabled = false;
+}
+
+function showCert() {
+    var esteid = document.getElementById('esteid');
+
+    try {
+        showOutput(esteid.signCert.cert);
+    } catch(e) {
+        showOutput('Cert Error:' + e);
+    }
+}
+
+function showSign() {
+    var esteid = document.getElementById('esteid');
+
+    var hash = 'b60638d3c41937931c4fe9bf02854f0fb330d2cf';
+
+    esteid.signAsync(hash, 'http://www.mysite.com/contract.ddoc', {
+        onSuccess: function(hex) { showOutput(hex); },
+        onError:   function(msg) { showOutput('Sign Error: ' + msg); }
+    });
+}
+</script>
+    <input type="button" value="Load" onclick="this.disabled = true; loadEstEidPlugin('esteid', pluginLoaded);" />
+    <input id="b1" type="button" value="Cert" disabled="true"
+           onclick="showCert();" />
+    <input id="b2" type="button" value="Sign" disabled="true"
+           onclick="showSign();" />
+</div>
+</body>
+</html>
