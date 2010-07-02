@@ -31,6 +31,8 @@ function loadEstEidPlugin(id, pluginReady) {
         }
 
          htmlLog("Using browser plugin: " + e.getVersion()); // Loaded OK?
+         if(typeof(e.signAsync) == "undefined")
+             throw({message: "You are using an experimental software version. Please update!"});
          pluginReady();
     }
     catch(err) {
