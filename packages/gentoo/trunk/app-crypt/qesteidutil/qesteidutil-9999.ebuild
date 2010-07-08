@@ -16,6 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="dev-libs/smartcardpp
+	dev-libs/libp11
 	x11-libs/qt-core:4[ssl]
 	x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4"
