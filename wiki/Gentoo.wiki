@@ -7,7 +7,7 @@ Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara pai
 Layman paigaldamiseks:
 {{{
 emerge -av layman subversion dev-util/git
-echo "source /usr/local/portage/layman/make.conf" >> /etc/make.conf
+echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 }}}
 
 
