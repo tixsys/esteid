@@ -9,6 +9,10 @@
 
 #include "precompiled.h"
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
+#include <string>
+#include <vector>
 
 typedef	std::vector<unsigned char> ByteVec;
 

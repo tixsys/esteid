@@ -1,1 +1,0 @@
-#include <smartcardpp/common.h>
