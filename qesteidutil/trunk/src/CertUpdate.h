@@ -26,7 +26,7 @@
 #include <QUrl>
 
 #include "jscardmanager.h"
-#include "smartcardpp/esteid/EstEidCard.h"
+#include <smartcardpp/esteid/EstEidCard.h>
 
 class CertUpdate: public QObject
 {

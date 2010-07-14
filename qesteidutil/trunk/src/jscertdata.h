@@ -25,8 +25,7 @@
 #include <QObject>
 #include <QSslCertificate>
 
-#include "smartcardpp/common.h"
-#include "smartcardpp/esteid/EstEidCard.h"
+#include <smartcardpp/esteid/EstEidCard.h>
 
 class JsCertData : public QObject
 {

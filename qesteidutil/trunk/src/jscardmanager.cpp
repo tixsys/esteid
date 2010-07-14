@@ -26,7 +26,7 @@
 
 #include "jscardmanager.h"
 #include "DiagnosticsDialog.h"
-#include "smartcardpp/esteid/EstEidCard.h"
+#include <smartcardpp/esteid/EstEidCard.h>
 
 using namespace std;
 

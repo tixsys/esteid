@@ -23,10 +23,12 @@
 
 #include "common/PinDialog.h"
 #include "common/SslCertificate.h"
-#include <smartcardpp/helperMacro.h>
 
 #include <QApplication>
 #include <QDateTime>
+
+#define LENOF(a) (sizeof(a)/sizeof(*(a)))
+#define MAKEVECTOR(a) ByteVec(a,a + LENOF(a) )
 
 #define HEADER 28
 
