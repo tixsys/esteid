@@ -1,10 +1,10 @@
-#include <smartcardpp/common.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
 #include <sys/mman.h>
 #include <string.h>
 #endif
+#include "common.h"
 
 void * doAlloc(size_t n, void* hint) {
 	void * ret = new unsigned char[n];

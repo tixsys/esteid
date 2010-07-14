@@ -6,10 +6,10 @@
 	\date		$Date: 2009-07-15 21:16:04 +0300 (Wed, 15 Jul 2009) $
 */
 // Revision $Revision: 361 $
-#include <smartcardpp/common.h>
 #include <smartcardpp/CardBase.h>
 #include <algorithm>
 #include "helperMacro.h"
+#include "common.h"
 
 CardError::CardError(byte a,byte b):runtime_error("invalid condition on card")
 	,SW1(a),SW2(b) {

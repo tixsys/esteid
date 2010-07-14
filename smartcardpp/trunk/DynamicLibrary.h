@@ -8,6 +8,8 @@
 // Revision $Revision: 473 $
 #pragma once
 
+#include <string>
+
 /// Wraps a dynamically loaded system library
 /** Dynamiclibrary loads a DLL or windows or .so on linux/others, specified by its
  basename, like "winscard" or "pcsclite". Somewhat hackish and does not really

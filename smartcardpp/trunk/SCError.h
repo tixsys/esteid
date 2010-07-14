@@ -8,6 +8,8 @@
 // Revision $Revision: 207 $
 #pragma once
 
+#include <stdexcept>
+
 /// Exception class for smartcard subsystem errors
 /** Smartcard subsystem errors, like reader busy etc. Currently these are only
  thrown for PCSCManager, but CTAPI should derive its own from here and throw them

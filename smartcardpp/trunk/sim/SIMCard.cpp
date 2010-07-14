@@ -1,5 +1,5 @@
-#include <smartcardpp/common.h>
 #include <smartcardpp/sim/SIMCard.h>
+#include "common.h"
 
 SIMCard::SIMCard(ManagerInterface &ref) : CardBase(ref) {}
 

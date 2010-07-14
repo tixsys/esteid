@@ -6,8 +6,8 @@
 	\date		$Date: 2009-07-06 13:21:43 +0300 (Mon, 06 Jul 2009) $
 */
 // Revision $Revision: 345 $
-#include <smartcardpp/common.h>
 #include <smartcardpp/SCError.h>
+#include "common.h"
 
 SCError::SCError(long err) : runtime_error("smart card API error"),error(err)
 {

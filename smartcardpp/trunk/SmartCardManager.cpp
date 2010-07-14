@@ -6,10 +6,10 @@
 	\date		$Date: 2009-07-15 21:16:04 +0300 (Wed, 15 Jul 2009) $
 */
 // Revision $Revision: 361 $
-#include <smartcardpp/common.h>
 #include <smartcardpp/SmartCardManager.h>
 #include <smartcardpp/PCSCManager.h>
 #include <smartcardpp/CTAPIManager.h>
+#include "common.h"
 
 enum mgrType {
 	MANAGER_PCSC,
