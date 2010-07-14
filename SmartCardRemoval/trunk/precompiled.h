@@ -36,6 +36,6 @@
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
-#include <smartcardpp/common.h>
+#include <vector>
 
 using namespace ATL;
