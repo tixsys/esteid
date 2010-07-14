@@ -3,7 +3,6 @@
 
 //This is a main header - it inludes everything else.
 
-#include <smartcardpp/common.h>
 #include <smartcardpp/CardBase.h>
 #include <smartcardpp/DynamicLibrary.h>
 #include <smartcardpp/esteid/EstEidCard.h>

@@ -60,7 +60,6 @@ set(sim_SRCS sim/SIMCard.cpp)
 # Public headers which get installed into smartcardpp/ directory
 set(smartcard_HDRS
     CardBase.h
-    common.h
     CTAPIManager.h
     DynamicLibrary.h
     locked_allocator.h

@@ -1,6 +1,8 @@
 #ifndef _smartcard_pp_types_h
 #define _smartcard_pp_types_h
 
+#include <vector>
+
 #ifndef UNUSED_ARG
 #define UNUSED_ARG(x) (void)x
 #endif
