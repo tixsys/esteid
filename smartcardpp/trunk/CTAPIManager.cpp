@@ -8,9 +8,9 @@
 // Revision $Revision: 493 $
 #include <smartcardpp/common.h>
 #include <smartcardpp/CTAPIManager.h>
-#include <smartcardpp/helperMacro.h>
 #include <smartcardpp/SCError.h> //for exceptions
 #include <smartcardpp/CardBase.h> //for exceptions
+#include "helperMacro.h"
 using std::string;
 using std::runtime_error;
 

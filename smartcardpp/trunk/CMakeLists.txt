@@ -23,6 +23,7 @@ endif(MSVC)
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${LIBDL_INCLUDE_DIR}
     ${PCSCLITE_INCLUDE_DIR}
 )
@@ -62,8 +63,6 @@ set(smartcard_HDRS
     common.h
     CTAPIManager.h
     DynamicLibrary.h
-    helperMacro.h
-    internal-pcsc22.h
     locked_allocator.h
     ManagerInterface.h
     PCSCManager.h

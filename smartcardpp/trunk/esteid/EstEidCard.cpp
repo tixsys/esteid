@@ -8,9 +8,9 @@
 // Revision $Revision: 512 $
 #include <smartcardpp/common.h>
 #include <smartcardpp/esteid/EstEidCard.h>
-#include <smartcardpp/helperMacro.h>
 #include <smartcardpp/SCError.h>
 #include <algorithm>
+#include "helperMacro.h"
 
 using std::string;
 

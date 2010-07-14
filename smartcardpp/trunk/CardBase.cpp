@@ -9,7 +9,7 @@
 #include <smartcardpp/common.h>
 #include <smartcardpp/CardBase.h>
 #include <algorithm>
-#include <smartcardpp/helperMacro.h>
+#include "helperMacro.h"
 
 CardError::CardError(byte a,byte b):runtime_error("invalid condition on card")
 	,SW1(a),SW2(b) {
