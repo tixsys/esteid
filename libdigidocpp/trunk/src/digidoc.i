@@ -25,9 +25,14 @@
 #include "io/ISerialize.h"
 #include "crypto/signer/Signer.h"
 #include "util/File.h"
+#include "XmlConf.h"
 
+#include <xsec/utils/XSECPlatformUtils.hpp>
+#include <openssl/engine.h>
 #include <sstream>
 #include <iomanip>
+
+static volatile bool baseLibsInitialized = false;
 
 inline std::string toHex(const std::vector<unsigned char> &b) {
     std::ostringstream buf;
@@ -92,15 +97,50 @@ inline std::string toHex(const std::vector<unsigned char> &b) {
 %feature("notabstract") digidoc::Signature;  // Breaks PHP if abstract
 %rename(ExceptionBase) Exception;            // Too generic, breaks PHP
 
-// Rewrite initialize function
+// Rewrite initialize and terminate functions
 %feature("action") digidoc::initialize() {
     using namespace digidoc;
 
-    // Initialize digidoc library.
-    initialize();
+    if(!baseLibsInitialized) {
+        baseLibsInitialized = true;
+
+        // Lifted from ADoc.cpp
+        // Initialize OpenSSL library.
+        SSL_load_error_strings();
+        SSL_library_init();
+        OPENSSL_config(NULL);
+
+        // Initialize Apache Xerces library.
+        xercesc::XMLPlatformUtils::Initialize();
+
+        // Initialize Apache XML Security library.
+        XSECPlatformUtils::Initialise();
+    }
+
+    //Use Xml based configuration
+    XmlConf::initialize();
 
     // Init certificate store.
     X509CertStore::init(new DirectoryX509CertStore());
+}
+
+%feature("action") digidoc::terminate() {
+    using namespace digidoc;
+
+    // Destroy certificate store.
+    X509CertStore::destroy();
+
+    // Destroy config
+    XmlConf::destroy();
+
+    // Delete temporary files
+    util::File::deleteTempFiles();
+
+    /* Original digidoc::terminate() also terminates
+     * XMLSEC and Xerces libraries, but we do not know
+     * if they are used by other Dynamic Language modules
+     * so we do not touch them.
+     */
 }
 
 // Typemap ByteVectors to hex strings for a more srcipting friendly interface
@@ -167,7 +207,24 @@ namespace digidoc {
 // Target language specific functions
 #ifdef SWIGPHP
 %minit %{ %}
-%mshutdown %{ %}
+%mshutdown %{
+    // Terminate base libraries. To make valgrind output look nice :)
+    if(baseLibsInitialized) {
+        using namespace digidoc;
+
+        baseLibsInitialized = false;
+
+        // Terminate OpenSSL
+        ENGINE_cleanup();
+        CONF_modules_unload(1);
+
+        // Terminate Apache XML Security library.
+        XSECPlatformUtils::Terminate();
+
+        // Terminate Apache Xerces library.
+        xercesc::XMLPlatformUtils::Terminate();
+    }
+%}
 %rinit %{ %}
 %rshutdown %{
     /* Kill temporary files when HTTP request completes.
