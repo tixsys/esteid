@@ -337,6 +337,10 @@ std::string digidoc::X509Cert::getSubjectInfo(const std::string& ln) const throw
        THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln.c_str());
     }
 
+    // TODO: Investigate if it's needed to 
+    //       Convert string to UTF8 with ASN1_STRING_to_UTF8
+    //       See esteid-browser-plugin/X509Certificate.cpp for details
+
     return std::string(buf);
 }
 

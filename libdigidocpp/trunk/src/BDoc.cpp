@@ -151,7 +151,6 @@ void digidoc::BDoc::save() throw(IOException, BDocException)
     for(std::vector<Document>::const_iterator iter = documents.begin(); iter != documents.end(); iter++)
     {
         serializer->addFile(util::File::fileName(iter->getPath()), iter->getPath());
-        std::cout << "added file " << util::File::fileName(iter->getPath()) << " to documents." << std::endl;
     }
 
     // Add all signatures to container.
