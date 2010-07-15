@@ -28,7 +28,7 @@ emerge -av qdigidoc qesteidutil esteid-browser-plugin
 Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlayd, ning seejärel kõik uuesti kompileerida
 {{{
 layman -S
-emerge -av -1 libdigidoc libdigidocpp qdigidoc qesteidutil esteid-browser-plugin
+emerge -av -1 libdigidoc libdigidocpp qdigidoc smartcardpp qesteidutil esteid-browser-plugin
 etc-update
 }}}
 
