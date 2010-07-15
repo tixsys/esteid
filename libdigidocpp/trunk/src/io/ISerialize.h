@@ -35,6 +35,7 @@ namespace digidoc
 
       public:
           ISerialize(const std::string& path);
+          virtual ~ISerialize();
           std::string getPath();
           virtual std::string extract() throw(IOException) = 0;
           virtual void create() = 0;

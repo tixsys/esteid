@@ -32,6 +32,13 @@ digidoc::ISerialize::ISerialize(const std::string& path)
 }
 
 /**
+ * Destroys serializer
+ */
+digidoc::ISerialize::~ISerialize()
+{
+}
+
+/**
  * @return returns serializer path.
  */
 std::string digidoc::ISerialize::getPath()
