@@ -9,6 +9,8 @@
 <div id="htmlLog" style="overflow: scroll; height: 10em; border: double;"></div>
 <div style="margin-top: 2em;">
 <script type="text/javascript">
+var esteid_config = { };
+
 function showOutput(data) {
     var o = document.getElementById("output");
     o.innerHTML = data;
@@ -45,6 +47,29 @@ function showSign() {
            onclick="showCert();" />
     <input id="b2" type="button" value="Sign" disabled="true"
            onclick="showSign();" />
+
+    <br />
+
+    <input id="c1" type="checkbox"
+           onclick="esteid_config.disable_new = !this.checked;"
+           checked="checked" />
+        <label for="c1">Try universal plugin</label>
+    </input>
+    <input id="c2" type="checkbox"
+           onclick="esteid_config.disable_ax = !this.checked;"
+           checked="checked" />
+        <label for="c2">Try ActiveX control</label>
+    </input>
+    <input id="c3" type="checkbox"
+           onclick="esteid_config.disable_moz = !this.checked;"
+           checked="checked" />
+        <label for="c3">Try Mozilla plugin</label>
+    </input>
+    <input id="c4" type="checkbox"
+           onclick="esteid_config.disable_java = !this.checked;"
+           checked="checked" />
+        <label for="c4">Try Java applet</label>
+    </input>
 </div>
 </body>
 </html>

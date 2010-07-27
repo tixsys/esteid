@@ -88,15 +88,17 @@ function getCertActiveX() {
 }
 
 function createActiveX(id) {
+    if(esteid_config && esteid_config.disable_ax) return false;
+
     htmlLog("Trying to create ActiveX control");
 
     var e = document.getElementById(id);
 
     try { 
         new ActiveXObject("EIDCard.Sign");
-        var s = document.createElement("object");
-        s.id = 'iSign';
-        s.classid = 'clsid:FC5B7BD2-584A-4153-92D7-4C5840E4BC28';
+
+        var s = document.createElement('span');
+        s.innerHTML = '<object id="iSign" classid="clsid:FC5B7BD2-584A-4153-92D7-4C5840E4BC28" style="width: 1px; height: 1px;" />';
         appendToBody(s);
         s = document.getElementById("iSign");
 
@@ -151,6 +153,8 @@ function getCertMoz() {
 }
 
 function createMoz(id) {
+    if(esteid_config && esteid_config.disable_moz) return false;
+
     if(!navigator.mimeTypes['application/x-idcard-plugin']) {
         htmlLog("Mozilla plugin (application/x-idcard-plugin) is not installed");
         return;
@@ -227,6 +231,8 @@ function getCertJava() {
 }
 
 function createJava(id, pluginReady) {
+    if(esteid_config && esteid_config.disable_java) return false;
+
     htmlLog("Trying to create Java Applet");
 
     var e = document.getElementById(id);

@@ -17,18 +17,20 @@ function removeFromBody(e) {
 function createEstEidObject(id) {
     htmlLog("Trying to load esteid browser plugin");
 
-    var e = document.createElement('object');
-    e.id           = id;
-    e.type         = 'application/x-esteid';
-    e.style.width  = '1px';
-    e.style.height = '1px';
+    var e = document.createElement('span');
+    e.innerHTML = '<object style="width: 1px; height: 1px;" id="' + id +
+                        '" type="application/x-esteid" />';
+    e = appendToBody(e);
 
-    return appendToBody(e);
+    return document.getElementById(id);
 }
 
 function loadEstEidPlugin(id, pluginReady) {
     var e = null;
     try {
+        if(esteid_config && esteid_config.disable_new)
+            throw({message: "New plugin support disabled by config"});
+
         /* Many browsers implement it the FF way, but IE shows an empty list */
         if(navigator.mimeTypes && navigator.mimeTypes.length > 0) {
             if(navigator.mimeTypes['application/x-esteid']) {
