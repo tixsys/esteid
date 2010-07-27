@@ -25,12 +25,12 @@ RDEPEND="app-arch/zip
 	dev-libs/openssl
 	dev-libs/smartcardpp
 	|| (
-		>=www-client/mozilla-firefox-3.0
-		>=www-client/mozilla-firefox-bin-3.0
+		>=www-client/firefox-3.0
+		>=www-client/firefox-bin-3.0
 		>=www-client/seamonkey-2.0
 		>=www-client/seamonkey-bin-2.0
-		>=mail-client/mozilla-thunderbird-2.0
-		>=mail-client/mozilla-thunderbird-bin-2.0
+		>=mail-client/thunderbird-2.0
+		>=mail-client/thunderbird-bin-2.0
 	)
 	!www-plugins/esteid-firefox
 	!www-plugins/esteid-mozilla"
@@ -67,15 +67,15 @@ src_install() {
 	xpi_unpack "${CMAKE_BUILD_DIR}/${xpiname}.xpi"
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
-	if has_version '>=www-client/mozilla-firefox-3.0'; then
+	if has_version '>=www-client/firefox-3.0'; then
 		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/mozilla-firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
-		mozillas="$(best_version www-client/mozilla-firefox) ${mozillas}"
+		mozillas="$(best_version www-client/firefox) ${mozillas}"
 	fi
-	if has_version '>=www-client/mozilla-firefox-bin-3.0'; then
+	if has_version '>=www-client/firefox-bin-3.0'; then
 		MOZILLA_FIVE_HOME="/opt/firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
-		mozillas="$(best_version www-client/mozilla-firefox-bin) ${mozillas}"
+		mozillas="$(best_version www-client/firefox-bin) ${mozillas}"
 	fi
 	if has_version '>=www-client/seamonkey-2.0'; then
 		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/seamonkey"
@@ -87,15 +87,15 @@ src_install() {
 		xpi_install "${WORKDIR}/${xpiname}"
 		mozillas="$(best_version www-client/seamonkey-bin) ${mozillas}"
 	fi
-	if has_version '>=mail-client/mozilla-thunderbird-2.0'; then
+	if has_version '>=mail-client/thunderbird-2.0'; then
 		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/mozilla-thunderbird"
 		xpi_install "${WORKDIR}/${xpiname}"
-		mozillas="$(best_version mail-client/mozilla-thunderbird) ${mozillas}"
+		mozillas="$(best_version mail-client/thunderbird) ${mozillas}"
 	fi
-	if has_version '>=mail-client/mozilla-thunderbird-bin-2.0'; then
+	if has_version '>=mail-client/thunderbird-bin-2.0'; then
 		MOZILLA_FIVE_HOME="/opt/thunderbird"
 		xpi_install "${WORKDIR}/${xpiname}"
-		mozillas="$(best_version mail-client/mozilla-thunderbird-bin) ${mozillas}"
+		mozillas="$(best_version mail-client/thunderbird-bin) ${mozillas}"
 	fi
 }
 
