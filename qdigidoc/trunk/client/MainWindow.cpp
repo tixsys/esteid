@@ -519,10 +519,7 @@ void MainWindow::enableSign()
 			.arg( infoMobileCell->text() ).arg( infoMobileCode->text() ) );
 	}
 
-#ifndef Q_OS_WIN32
-#warning revert before release
-#endif
-	if( (mobile && false /*&& !IKValidator::isValid( infoMobileCode->text() )*/) ||
+	if( (mobile && !IKValidator::isValid( infoMobileCode->text() )) ||
 		(!mobile && !doc->signCert().isValid()) )
 	{
 		signButton->setEnabled( false );
