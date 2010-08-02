@@ -88,7 +88,7 @@ src_install() {
 		mozillas="$(best_version www-client/seamonkey-bin) ${mozillas}"
 	fi
 	if has_version '>=mail-client/thunderbird-2.0'; then
-		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/mozilla-thunderbird"
+		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/thunderbird"
 		xpi_install "${WORKDIR}/${xpiname}"
 		mozillas="$(best_version mail-client/thunderbird) ${mozillas}"
 	fi
