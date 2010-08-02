@@ -79,11 +79,7 @@ MainWindow::MainWindow( QWidget *parent )
 
 	Settings s;
 	// Mobile
-#ifndef Q_OS_WIN32
-#warning revert before release
-#endif
-	//disabled for testing
-	//infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
+	infoMobileCode->setValidator( new IKValidator( infoMobileCode ) );
 	infoMobileCode->setText( s.value( "Client/MobileCode" ).toString() );
 	infoMobileCell->setText( s.value( "Client/MobileNumber", "+372" ).toString() );
 	connect( infoMobileCode, SIGNAL(textEdited(QString)), SLOT(enableSign()) );
