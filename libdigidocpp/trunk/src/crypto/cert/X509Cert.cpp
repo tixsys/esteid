@@ -324,24 +324,33 @@ std::string digidoc::X509Cert::getSubjectName() const throw(IOException)
  */
 std::string digidoc::X509Cert::getSubjectInfo(const std::string& ln) const throw(IOException)
 {
-    char buf[1024];
-
     X509_NAME* name = X509_get_subject_name(cert);
     if(name == NULL)
     {
        THROW_IOEXCEPTION("Failed to convert X.509 certificate subject: %s", ERR_reason_error_string(ERR_get_error()));
     }
-
-    if(X509_NAME_get_text_by_NID(name, OBJ_ln2nid(ln.c_str()), buf, 1024) < 0)
+    int idx = X509_NAME_get_index_by_NID(name, OBJ_ln2nid(ln.c_str()), -1);
+    if(idx < 0)
     {
        THROW_IOEXCEPTION("Failed to retrieve X.509 certificate info: field '%s' not found", ln.c_str());
     }
+    X509_NAME_ENTRY *entry = X509_NAME_get_entry(name, idx);
+    if(!entry)
+    {
+       THROW_IOEXCEPTION("Failed to convert X.509 certificate field: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+    ASN1_STRING *asnstr = X509_NAME_ENTRY_get_data(entry);
 
-    // TODO: Investigate if it's needed to 
-    //       Convert string to UTF8 with ASN1_STRING_to_UTF8
-    //       See esteid-browser-plugin/X509Certificate.cpp for details
+    unsigned char *data = NULL;
+    int len = ASN1_STRING_to_UTF8(&data, asnstr);
+    if(len < 0)
+    {
+       THROW_IOEXCEPTION("Failed to convert X.509 certificate field: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+    std::string result(reinterpret_cast<const char *>(data));
+    OPENSSL_free(data);
 
-    return std::string(buf);
+    return result;
 }
 
 
