@@ -29,30 +29,37 @@ class OpenDigidocExtension(nautilus.MenuProvider):
     def __init__(self):
         pass
         
-    def _open_client(self, file):
-        path = urllib.unquote(file.get_uri()[7:])
-        cmd = ("qdigidocclient \"%s\" &" % path)
+    def _open_client(self, paths):
+        args = ""
+        for path in paths:
+            args = args + "\"%s\" " % path
+        cmd = ("qdigidocclient " + args + "&")
         os.system(cmd)
         
-    def menu_activate_cb(self, menu, file):
-        self._open_client(file)
+    def menu_activate_cb(self, menu, paths):
+        self._open_client(paths)
        
     def debug_print(self, msg): 
         fo = open('/tmp/test.txt','a')
         fo.write(msg + "\n")
         fo.close()
 
-    def get_file_items(self, window, files):
-       
-        if len(files) != 1:
-            return
-        file = files[0]
-        self.debug_print(file.get_name())
-        if (file.get_file_type() != gio.FILE_TYPE_REGULAR) or (file.get_uri_scheme() != 'file'):
-            return
-        item = nautilus.MenuItem('EsteidSigner',
-                                 'Sign with ID card' ,
-                                 'Sign the document %s' % file.get_name())
-        item.connect('activate', self.menu_activate_cb, file)
-        return item,
+    def valid_file(self, file):
+        return file.get_file_type() == gio.FILE_TYPE_REGULAR and file.get_uri_scheme() == 'file'
 
+    def get_file_items(self, window, files):
+        paths = []
+        for file in files:
+            if self.valid_file(file):
+                path = urllib.unquote(file.get_uri()[7:])
+                paths.append(path)
+
+        if len(paths) < 1:
+            return
+        
+        item = nautilus.MenuItem('DigidocSigner',
+                                 'Sign with ID card',
+                                 'Sign selected file(s) with Digidoc3 Client')
+
+        item.connect('activate', self.menu_activate_cb, paths)
+        return item,
