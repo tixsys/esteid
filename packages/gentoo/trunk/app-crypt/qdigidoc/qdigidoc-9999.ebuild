@@ -13,11 +13,12 @@ HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="gnome"
 
 RDEPEND="dev-libs/libdigidoc
 	dev-libs/libdigidocpp
 	dev-libs/openssl
+	gnome? ( dev-python/nautilus-python )
 	net-nds/openldap
 	x11-libs/qt-core:4[ssl]
 	x11-libs/qt-gui:4
@@ -25,3 +26,11 @@ RDEPEND="dev-libs/libdigidoc
 DEPEND="${RDEPEND}"
 
 DOCS=""
+
+src_configure() {
+	local mycmakeargs="
+		$(cmake-utils_use_enable gnome NAUTILUS_EXTENSION)
+	"
+
+	cmake-utils_src_configure
+}
