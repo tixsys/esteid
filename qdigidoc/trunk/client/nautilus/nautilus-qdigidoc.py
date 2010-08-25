@@ -19,11 +19,12 @@
 #
 import os
 import urllib
-
-import gtk
 import gio
 import nautilus
-import gconf
+import gettext
+import locale
+
+APP = 'nautilus-qdigidoc'
 
 class OpenDigidocExtension(nautilus.MenuProvider):
     def __init__(self):
@@ -32,17 +33,12 @@ class OpenDigidocExtension(nautilus.MenuProvider):
     def _open_client(self, paths):
         args = ""
         for path in paths:
-            args = args + "\"%s\" " % path
+            args += "\"%s\" " % path
         cmd = ("qdigidocclient " + args + "&")
         os.system(cmd)
         
     def menu_activate_cb(self, menu, paths):
         self._open_client(paths)
-       
-    def debug_print(self, msg): 
-        fo = open('/tmp/test.txt','a')
-        fo.write(msg + "\n")
-        fo.close()
 
     def valid_file(self, file):
         return file.get_file_type() == gio.FILE_TYPE_REGULAR and file.get_uri_scheme() == 'file'
@@ -56,10 +52,20 @@ class OpenDigidocExtension(nautilus.MenuProvider):
 
         if len(paths) < 1:
             return
-        
+
+        locale.setlocale(locale.LC_ALL, '')
+        gettext.bindtextdomain(APP)
+        gettext.textdomain(APP)
+        _ = gettext.gettext
+
+        tooltip_message = gettext.ngettext('Sign selected file with Digidoc3 Client',
+                                           'Sign selected files with Digidoc3 Client',
+                                           len(paths))
+
         item = nautilus.MenuItem('DigidocSigner',
-                                 'Sign with ID card',
-                                 'Sign selected file(s) with Digidoc3 Client')
+                                 _('Sign with ID card'),
+                                 tooltip_message)
+        item.set_property('icon', 'qdigidoc-client')
 
         item.connect('activate', self.menu_activate_cb, paths)
         return item,

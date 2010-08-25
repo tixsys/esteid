@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 14:19+0300\n"
+"POT-Creation-Date: 2010-08-25 15:51+0300\n"
 "PO-Revision-Date: 2010-08-23 16:44+0300\n"
 "Last-Translator: Erkko Kebbinau <erkko@smartlink.ee>\n"
 "Language-Team: Estonian\n"
@@ -17,10 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: nautilus-qdigidoc.py:73
-msgid "Sign selected file(s) with Digidoc3 Client"
-msgstr "Allkirjasta valitud fail(id) Digidoc3 kliendiga"
+#: nautilus-qdigidoc.py:74
+msgid "Sign selected file with Digidoc3 Client"
+msgid_plural "Sign selected files with Digidoc3 Client"
+msgstr[0] "Allkirjasta valitud fail Digidoc3 kliendiga"
+msgstr[1] "Allkirjasta valitud failid Digidoc3 kliendiga"
 
-#: nautilus-qdigidoc.py:72
+#: nautilus-qdigidoc.py:77
 msgid "Sign with ID card"
 msgstr "Allkirjasta ID-kaardiga"

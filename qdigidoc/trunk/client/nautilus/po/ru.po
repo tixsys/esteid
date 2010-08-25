@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-25 14:19+0300\n"
+"POT-Creation-Date: 2010-08-25 15:51+0300\n"
 "PO-Revision-Date: 2010-08-25 13:33+0300\n"
 "Last-Translator: Erkko Kebbinau <erkko@smartlink.ee>\n"
 "Language-Team: Russian\n"
@@ -18,10 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: nautilus-qdigidoc.py:73
-msgid "Sign selected file(s) with Digidoc3 Client"
-msgstr "Подписать выбранный(ые) файл(ы) с Digidoc3 Client"
+#: nautilus-qdigidoc.py:74
+msgid "Sign selected file with Digidoc3 Client"
+msgid_plural "Sign selected files with Digidoc3 Client"
+msgstr[0] "Подписать выбранный файл с Digidoc3 Client"
+msgstr[1] "Подписать выбранныйые файлы с Digidoc3 Client"
+msgstr[2] "Подписать выбранныйые файлы с Digidoc3 Client"
 
-#: nautilus-qdigidoc.py:72
+#: nautilus-qdigidoc.py:77
 msgid "Sign with ID card"
 msgstr "Подписать ID картой"
