@@ -18,7 +18,6 @@ RDEPEND="dev-libs/libp11
 	dev-libs/libdigidoc
 	dev-libs/opensc
 	dev-libs/openssl
-	dev-libs/pkcs11-helper
 	dev-libs/xerces-c
 	dev-libs/xml-security-c
 	dev-util/cppunit
