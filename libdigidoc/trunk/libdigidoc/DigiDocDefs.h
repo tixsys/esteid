@@ -66,16 +66,9 @@
   #define _tzset tzset
   #define _getcwd getcwd
   #if defined(__FreeBSD__) || defined(__APPLE__)
-  #ifdef __cplusplus
-  extern "C" {
-  #endif
     #define _timezone tzone
     extern long int tzone;	/* default for Estonia, but see initDigiDocLib() */
     #define _daylight daylight
-    extern int daylight;		/* default, but see initDigiDocLib() */
-  #ifdef __cplusplus
-  }
-  #endif
   #else
     #define _timezone timezone
     #define _daylight daylight
