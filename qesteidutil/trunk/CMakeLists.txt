@@ -138,6 +138,8 @@ if(APPLE)
     # Qt jpeg plugin
     set(RESOURCE_FILES ${RESOURCE_FILES} ${LIBQJPEG_FILE})
     set_source_files_properties(${LIBQJPEG_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS/imageformats" )
+
+    find_library(CARBON_LIBRARY Carbon)
 endif(APPLE)
 
 IF(WIN32)
@@ -173,6 +175,7 @@ target_link_libraries(qesteidutil
     ${LIBP11_LIBRARIES}
     ${SMARTCARDPP_LIBRARIES}
 	${WIN_LIBRARIES}
+    ${CARBON_LIBRARY}
     qtsingleapplication
 )
 
