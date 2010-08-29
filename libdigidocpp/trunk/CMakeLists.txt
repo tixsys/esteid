@@ -53,13 +53,16 @@ else()
     find_package(ZLIB REQUIRED)
 endif()
 
-## Packages required for Dynamic Language Wrappers
-find_package(SWIG QUIET)
-if(SWIG_FOUND)
-    find_package(PythonLibs QUIET)
-    find_package(PerlLibs QUIET)
-    find_package(PHPLibs QUIET)
-endif(SWIG_FOUND)
+option(ENABLE_BINDINGS "Build bindings." TRUE)
+if(ENABLE_BINDINGS)
+    ## Packages required for Dynamic Language Wrappers
+    find_package(SWIG)
+    if(SWIG_FOUND)
+        find_package(PythonLibs)
+        find_package(PerlLibs)
+        find_package(PHPLibs)
+    endif(SWIG_FOUND)
+endif()
 
 add_subdirectory(etc)
 add_subdirectory(src)
