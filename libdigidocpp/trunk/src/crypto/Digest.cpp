@@ -63,10 +63,14 @@ std::auto_ptr<digidoc::Digest> digidoc::Digest::create(int method) throw(IOExcep
     default:
         THROW_IOEXCEPTION("Digest method '%s' is not supported.", OBJ_nid2sn(method));
     case NID_sha1: return std::auto_ptr<Digest>(new SHA1Digest);
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     case NID_sha224: return std::auto_ptr<Digest>(new SHA224Digest);
     case NID_sha256: return std::auto_ptr<Digest>(new SHA256Digest);
+#endif
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
     case NID_sha384: return std::auto_ptr<Digest>(new SHA384Digest);
     case NID_sha512: return std::auto_ptr<Digest>(new SHA512Digest);
+#endif
     }
 }
 /**
@@ -110,10 +114,14 @@ unsigned int digidoc::Digest::getSize() const
     switch(method)
     {
     case NID_sha1: return SHA_DIGEST_LENGTH;
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     case NID_sha224: return SHA224_DIGEST_LENGTH;
     case NID_sha256: return SHA256_DIGEST_LENGTH;
+#endif
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     case NID_sha384: return SHA384_DIGEST_LENGTH;
     case NID_sha512: return SHA512_DIGEST_LENGTH;
+#endif
     default: return 0;
     }
 }
@@ -127,10 +135,14 @@ std::string digidoc::Digest::getUri() const
     switch(method)
     {
     case NID_sha1: return URI_SHA1;
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     case NID_sha224: return URI_SHA224;
     case NID_sha256: return URI_SHA256;
+#endif
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     case NID_sha384: return URI_SHA384;
     case NID_sha512: return URI_SHA512;
+#endif
     default: return "";
     }
 }
@@ -151,10 +163,14 @@ std::string digidoc::Digest::getUri() const
 int digidoc::Digest::toMethod(const std::string& methodUri) throw(IOException)
 {
     if ( methodUri == URI_SHA1 ) return NID_sha1;
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     if ( methodUri == URI_SHA224 ) return NID_sha224;
     if ( methodUri == URI_SHA256 ) return NID_sha256;
+#endif
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     if ( methodUri == URI_SHA384 ) return NID_sha384;
     if ( methodUri == URI_SHA512 ) return NID_sha512;
+#endif
     THROW_IOEXCEPTION( "Digest method URI '%s' is not supported.", methodUri.c_str() );
     return 0;
 }
@@ -264,6 +280,7 @@ std::vector<unsigned char> digidoc::SHA1Digest::getDigest() throw(IOException)
     return digest;
 }
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Initializes OpenSSL SHA224 digest calculator.
  *
@@ -277,7 +294,9 @@ digidoc::SHA224Digest::SHA224Digest() throw(IOException)
         THROW_IOEXCEPTION("Failed to initialize SHA224 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Destroys OpenSSL SHA224 digest calculator.
  */
@@ -289,7 +308,9 @@ digidoc::SHA224Digest::~SHA224Digest()
         ERR("Failed to uninitialize SHA224 calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Add data for digest calculation. After calling <code>getDigest()</code> SHA224 context
  * is uninitialized and this method should not be called.
@@ -316,7 +337,9 @@ void digidoc::SHA224Digest::update(const unsigned char* data, unsigned long leng
         THROW_IOEXCEPTION("Failed to update SHA224 digest value: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Calculate message digest. SHA context will be invalid after this call.
  * For calculating an other digest you must create new SHA224Digest class.
@@ -345,7 +368,9 @@ std::vector<unsigned char> digidoc::SHA224Digest::getDigest() throw(IOException)
 
     return digest;
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Initializes OpenSSL SHA256 digest calculator.
  *
@@ -359,7 +384,9 @@ digidoc::SHA256Digest::SHA256Digest() throw(IOException)
         THROW_IOEXCEPTION("Failed to initialize SHA256 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Destroys OpenSSL SHA256 digest calculator.
  */
@@ -371,7 +398,9 @@ digidoc::SHA256Digest::~SHA256Digest()
         ERR("Failed to uninitialize SHA256 calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Add data for digest calculation. After calling <code>getDigest()</code> SHA256 context
  * is uninitialized and this method should not be called.
@@ -398,7 +427,9 @@ void digidoc::SHA256Digest::update(const unsigned char* data, unsigned long leng
         THROW_IOEXCEPTION("Failed to update SHA256 digest value: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
 /**
  * Calculate message digest. SHA context will be invalid after this call.
  * For calculating an other digest you must create new SHA256Digest class.
@@ -427,7 +458,9 @@ std::vector<unsigned char> digidoc::SHA256Digest::getDigest() throw(IOException)
 
     return digest;
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Initializes OpenSSL SHA384 digest calculator.
  *
@@ -441,7 +474,9 @@ digidoc::SHA384Digest::SHA384Digest() throw(IOException)
         THROW_IOEXCEPTION("Failed to initialize SHA384 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Destroys OpenSSL SHA384 digest calculator.
  */
@@ -453,7 +488,9 @@ digidoc::SHA384Digest::~SHA384Digest()
         ERR("Failed to uninitialize SHA384 calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Add data for digest calculation. After calling <code>getDigest()</code> SHA384 context
  * is uninitialized and this method should not be called.
@@ -480,7 +517,9 @@ void digidoc::SHA384Digest::update(const unsigned char* data, unsigned long leng
         THROW_IOEXCEPTION("Failed to update SHA384 digest value: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Calculate message digest. SHA context will be invalid after this call.
  * For calculating an other digest you must create new SHA384Digest class.
@@ -509,7 +548,9 @@ std::vector<unsigned char> digidoc::SHA384Digest::getDigest() throw(IOException)
 
     return digest;
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Initializes OpenSSL SHA512 digest calculator.
  *
@@ -523,7 +564,9 @@ digidoc::SHA512Digest::SHA512Digest() throw(IOException)
         THROW_IOEXCEPTION("Failed to initialize SHA512 digest calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Destroys OpenSSL SHA512 digest calculator.
  */
@@ -535,7 +578,9 @@ digidoc::SHA512Digest::~SHA512Digest()
         ERR("Failed to uninitialize SHA512 calculator: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Add data for digest calculation. After calling <code>getDigest()</code> SHA512 context
  * is uninitialized and this method should not be called.
@@ -562,7 +607,9 @@ void digidoc::SHA512Digest::update(const unsigned char* data, unsigned long leng
         THROW_IOEXCEPTION("Failed to update SHA512 digest value: %s", ERR_reason_error_string(ERR_get_error()));
     }
 }
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
 /**
  * Calculate message digest. SHA context will be invalid after this call.
  * For calculating an other digest you must create new SHA512Digest class.
@@ -591,3 +638,4 @@ std::vector<unsigned char> digidoc::SHA512Digest::getDigest() throw(IOException)
 
     return digest;
 }
+#endif

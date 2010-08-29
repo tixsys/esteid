@@ -25,6 +25,8 @@
 #include "../../util/String.h"
 
 #include <sstream>
+#include <openssl/opensslconf.h>
+#include <openssl/opensslv.h>
 #include <openssl/bio.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
@@ -61,7 +63,11 @@ digidoc::X509Cert::X509Cert(std::vector<unsigned char> bytes) throw(IOException)
     }
 
     // Parse certificate from DER formatted buffer.
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL
     const unsigned char* pBytes = reinterpret_cast<const unsigned char*>(&bytes[0]);
+#else
+    unsigned char* pBytes = &bytes[0];
+#endif 
     d2i_X509(&cert, &pBytes, bytes.size());
     if(cert == NULL)
     {

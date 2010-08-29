@@ -24,6 +24,8 @@
 #include "../io/IOException.h"
 
 #include <memory>
+#include <openssl/opensslconf.h>
+#include <openssl/opensslv.h>
 #include <openssl/sha.h>
 
 #define URI_SHA1 "http://www.w3.org/2000/09/xmldsig#sha1"
@@ -75,6 +77,7 @@ namespace digidoc
           SHA_CTX ctx;
     };
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA256)
     /**
       * Calculate SHA224 digest (hash) from data.
       */
@@ -104,7 +107,9 @@ namespace digidoc
       private:
           SHA256_CTX ctx;
     };
+#endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x0090800fL && !defined(OPENSSL_NO_SHA512)
     /**
       * Calculate SHA384 digest (hash) from data.
       */
@@ -134,6 +139,7 @@ namespace digidoc
       private:
           SHA512_CTX ctx;
     };
+#endif
 }
 
 #endif // !defined(__DIGEST_H_INCLUDED__)
