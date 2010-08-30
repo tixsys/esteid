@@ -18,6 +18,9 @@ Tarkvara levitatakse MSI paketina, mille versiooni saab teada Control Panel -> A
 Käsurealt saab järgi pärida erinevate pakettide (nt. qdigidoc, qesteidutil, mozilla-esteid) versioone.
 {{{
 dpkg-query -l qdigidoc
+dpkg-query -l libdigidoc2
+dpkg-query -l libdigidocpp0
+dpkg-query -l *opensc*
 }}}
 
 === Fedora / OpenSUSE ===
