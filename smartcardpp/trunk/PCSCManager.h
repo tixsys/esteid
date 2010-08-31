@@ -10,6 +10,10 @@
 #include <smartcardpp/ManagerInterface.h>
 #include <smartcardpp/DynamicLibrary.h>
 #ifndef _WIN32
+#ifdef __APPLE__
+typedef void *LPVOID;
+#define __COREFOUNDATION_CFPLUGINCOM__
+#endif
 #include <PCSC/wintypes.h>
 #include <PCSC/pcsclite.h>
 #include <PCSC/winscard.h>
