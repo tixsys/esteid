@@ -3,7 +3,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <Security/Security.h>
 #import <dlfcn.h>
-#import <smartcardpp/common.h>
 #import <smartcardpp/PCSCManager.h>
 #import <smartcardpp/SmartCardManager.h>
 #import <smartcardpp/esteid/EstEidCard.h>
