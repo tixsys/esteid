@@ -1138,12 +1138,12 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1152,11 +1152,11 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = 4.0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
@@ -1186,7 +1186,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDCM;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -1215,7 +1215,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDCM;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = plugin;
 				ZERO_LINK = NO;
 			};
@@ -1241,7 +1241,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = agent;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1264,7 +1264,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = agent;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1302,6 +1302,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
 					"$(SRCROOT)/WebPlugIn",
@@ -1314,12 +1315,12 @@
 					Foundation,
 					"-framework",
 					AppKit,
-					/usr/local/lib/libcrypto.a,
+					"-lcrypto",
 					/usr/local/lib/libsmartcardpp.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Keychain Tool";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1345,12 +1346,12 @@
 					Foundation,
 					"-framework",
 					AppKit,
-					/usr/local/lib/libcrypto.a,
+					"-lcrypto",
 					/usr/local/lib/libsmartcardpp.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Keychain Tool";
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1378,7 +1379,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDSU;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1403,7 +1404,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDSU;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1431,7 +1432,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDSU;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1458,7 +1459,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDSU;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -1471,7 +1472,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = Test;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1482,7 +1483,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = Test;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1510,7 +1511,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDCM;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1537,7 +1538,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = EstEIDCM;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -1550,7 +1551,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = All;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -1561,7 +1562,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				PRODUCT_NAME = All;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 				ZERO_LINK = NO;
 			};
 			name = Release;
