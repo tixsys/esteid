@@ -26,7 +26,7 @@
 	<string></string>
 	<key>EstEIDWebService</key>
 	<array>
-		<string>http://ftp.id.eesti.ee/pub/id/macosx/Repository/Manifest.xml</string>
+		<string>http://id.smartlink.ee/repo/nightly/macosx/Repository/Manifest.xml</string>
 	</array>
 	<key>LSBackgroundOnly</key>
 	<false/>
