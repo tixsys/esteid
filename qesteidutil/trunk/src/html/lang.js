@@ -1,9 +1,9 @@
 ﻿var defaultLanguage = "et";
 var language = defaultLanguage;
 
-var helpUrl_et = "http://support.sk.ee/";
-var helpUrl_en = "http://support.sk.ee/eng/";
-var helpUrl_ru = "http://support.sk.ee/ru/";
+var helpUrl_et = "http://www.esteid.ee/";
+var helpUrl_en = "http://www.esteid.ee/eng/";
+var helpUrl_ru = "http://www.esteid.ee/ru/";
 
 //code: (est, eng, rus)
 var htmlStrings = {
