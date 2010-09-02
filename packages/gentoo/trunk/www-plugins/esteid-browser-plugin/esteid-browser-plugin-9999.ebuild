@@ -22,6 +22,7 @@ IUSE="debug"
 
 RDEPEND="app-arch/zip
 	dev-cpp/gtkmm
+	dev-libs/boost
 	dev-libs/openssl
 	dev-libs/smartcardpp
 	|| (
@@ -49,6 +50,9 @@ src_unpack() {
 }
 
 src_configure() {
+	local mycmakeargs="
+		-DWITH_SYSTEM_BOOST:BOOL=YES
+		-DPROJECTS_DIR=projects/"
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
 	cmake-utils_src_configure
