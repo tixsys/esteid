@@ -203,7 +203,7 @@ namespace EstEIDSigner.Properties {
         ///  &lt;add key=&quot;tsa_url&quot; value=&quot;http://www.edelweb.fr/cgi-bin/service-tsp&quot; /&gt;
         ///  &lt;add key=&quot;tsa_user&quot; value=&quot;&quot; /&gt;
         ///  &lt;add key=&quot;tsa_password&quot; value=&quot;&quot; /&gt;
-        ///  &lt;add key=&quot;help_url&quot; value=&quot;http://support.sk.ee/&quot; /&gt;
+        ///  &lt;add key=&quot;help_url&quot; value=&quot;http://www.esteid.ee/&quot; /&gt;
         ///  &lt;add key=&quot;language&quot; value=&quot;&quot; /&gt;
         ///  &lt;add key=&quot;signature_page&quot; value=&quot;1&quot; /&gt;
         ///  &lt;add key=&quot;signature_use_sect [rest of string was truncated]&quot;;.
