@@ -85,8 +85,8 @@ var htmlStrings = {
 	"inputCheckMobile": new tr( "Kontrolli Mobiil-ID staatust", "Check Mobile-ID status", "Проверь статус Mobiil-ID" ),
 	"inputPUK": new tr( "PUK kood", "PUK code", "PUK код" ),
 	
-	"inputChange": new tr( "Muuda", "Change", "Измени" ),
-	"inputCancel": new tr( "Tühista", "Cancel", "Отменить" ),
+	"inputChange": new tr( "Muuda", "Change", "Изменить" ),
+	"inputCancel": new tr( "Tühista", "Cancel", "Отмена" ),
 	"inputChangePIN1": new tr( "Muuda PIN1", "Change PIN1", "Поменять PIN1" ),
 	"inputChangePIN2": new tr( "Muuda PIN2", "Change PIN2", "Поменять PIN2" ),
 	"inputChangePUK": new tr( "Muuda PUK", "Change PUK", "Поменять PUK" ),
