@@ -50,9 +50,7 @@ src_unpack() {
 }
 
 src_configure() {
-	local mycmakeargs="
-		-DWITH_SYSTEM_BOOST:BOOL=YES
-		-DPROJECTS_DIR=projects/"
+	local mycmakeargs="-DWITH_SYSTEM_BOOST:BOOL=YES"
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
 	cmake-utils_src_configure
