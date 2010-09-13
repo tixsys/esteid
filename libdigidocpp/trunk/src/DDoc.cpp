@@ -32,7 +32,7 @@ using namespace digidoc;
 
 #ifndef LIBDIGIDOC_NAME
 #  if defined(__APPLE__)
-#    define LIBDIGIDOC_NAME "libdigidoc.dylib"
+#    define LIBDIGIDOC_NAME "libdigidoc.2.dylib"
 #  elif defined(_WIN32)
 #    define LIBDIGIDOC_NAME "digidoc.dll"
 #  else
