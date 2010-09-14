@@ -6,12 +6,12 @@ Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks 
 
  1. ID-kaardiga autentimiseks *peab* olema eraldi IP-aadress. Täiesti eraldi. Näiteks: https://id.minu-imeline-sait.jeje <br>
     Igasugused "lahendused", mis proovivad sellest nõudest mööda vingerdada toovad endaga kaasa hulgaliselt varjatud probleeme. <br>
-    [VeebisAutentimine#VigasedAutentimismeetodid Vaata allpool].
+    [VeebisAutentimine#Vigased_Autentimismeetodid Vaata allpool].
 
  2. ID-kaardiga autentiv sait *peab* nõudma kliendipoolse sertifikaadi kasutamist tingimusteta.
     Apache puhul tähendab see direktiivi {{{SSLVerifyClient require}}} kasutamist. <br>
     Ajalooliselt on palju kasutatud "valikulist" seritifikaadi nõuet, see aga on samuti äärmiselt probleemne "lahendus". <br>
-    [VeebisAutentimine#VigasedSSLSeaded Vaata allpool]
+    [VeebisAutentimine#Vigased_SSL_seaded Vaata allpool]
 
 {{{
 TODO: Siia tuleb hulk konfi ja koodinäiteid erinevate veebiserverite ja programmeerimiskeskkondade jaoks
