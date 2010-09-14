@@ -1,0 +1,7 @@
+= Millistes portaalides saab kuidas ID-kaardi toiminguid testida =
+
+
+Add your content here.  Format your content with:
+  * www.eesti.ee autentimine - Minna aadressile http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
+  * www.eesti.ee allkirjastamine - 
+  * 
