@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
-echo 'Removing OpenOffice'
-if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
-ÊÊÊÊ/Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
-fi
-exit
+
 echo 'Removing Mozilla extension'
 rm -fR /Library/Application\ Support/Mozilla/Extensions/{3550f703-e582-4d05-9a08-453d09bdfdc6}/{aa84ce40-4253-11da-8cd6-0800200c9a66}
 rm -fR /Library/Application\ Support/Mozilla/Extensions/{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}/{aa84ce40-4253-11da-8cd6-0800200c9a66}
@@ -26,7 +21,7 @@ echo 'Removing Finder plug-in'
 mv -f /Library/Contextual\ Menu\ Items/EstEIDCM.plugin ~/.Trash/ID-card\ Software
 
 echo 'Removing OpenSC'
-mv -f /Library/OpenSC ~/.Trash
+mv -f /Library/OpenSC ~/.Trash/ID-card\ Software
 mv -f /usr/lib/opensc-pkcs11.so ~/.Trash/ID-card\ Software
 
 echo 'Removing ID-card Utility'
@@ -49,14 +44,15 @@ mv -f /usr/local/lib/libdigidocpp.0.dylib ~/.Trash/ID-card\ Software
 mv -f /usr/local/lib/libp11.dylib ~/.Trash/ID-card\ Software
 mv -f /usr/local/lib/libp11.1.dylib ~/.Trash/ID-card\ Software
 
-echo 'Removing OpenOffice extension'
-if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
-    /Applications/OpenOffice.org.app/Contents/program/unopkg remove --shared ee.smartlink.ooo.digidoc
-    /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared > /dev/null 2>&1
-fi
 
 echo 'Removing .plist files'
 mv -f ~/Library/Preferences/com.estonian-id-card.plist ~/.Trash/ID-card\ Software
 mv -f ~/Library/Preferences/org.esteid.* ~/.Trash/ID-card\ Software
+
+echo 'Emptying trash...'
+
+sudo rm -rf ~/.Trash/ID-card\ Software
+
+echo "Files removed."
 
 echo 'Uninstall done!'
