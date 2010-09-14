@@ -1,0 +1,60 @@
+#summary Eesti ID-kaardi tarkvara ja draiverid versioon 1.0.0
+
+= Eesti ID-kaardi tarkvara ja draiverid 1.0.0 =
+XX.09.2010
+
+Lõpptarbija komponendid:
+ * ID-kaardi draiverid (csp, minidraiver, pkcs\#11)
+ * Allkirjastamise tööriist (qdigidoc)
+ * ID-kaardi utiliit (qesteidutil)
+ * Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin)
+
+Arendajatele suunatud komponendid:
+ * C-teek (libdigidoc)
+ * C++ teek (libdigidocpp)
+ * Java teek (jdigidoc)
+ * C++ kaarditaseme draiver (smartcardpp)
+
+Katsetusjärgus tarkvara:
+ * Openoffice laiendus (ooo-digidoc)
+ * PDF allkirjastaja (pdf-signer)
+ * Javas realiseeritud SOAP liidesed (digidocservice)
+
+= Mis on uut? =
+
+== Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin) ==
+ * Uus ühtne koodibaas üle kõigi brauserite
+ * Google Chrome brauseri tugi
+ * Ühilduvusrežiim olemasolevate veebilehtede toetamiseks
+ * Andmeid saavad kätte vaid lubatud nimekirja lisatud saidid (whitelist)
+
+== Allkirjastamise tööriist (qdigidoc) ==
+ * Lisatud 2010 alguses kehtima hakanud OCSP vastaja sertifikaadid
+
+== ID-kaardi utiliit (qesteidutil) ==
+ * Lisatud Qt 4.6 tugi
+ * Parandatud väljanägemist Windows platvormil
+
+== DigiDoc Teegid == 
+ * Lisatud uued OCSP vastajate sertifikaadid
+ * Lisatud eksperimentaalsed PHP, Perli ja Pythoni bindingud
+
+= Teadaolevad probleemid =
+
+ * MacOSX platvormil Safariga autentimine ei tööta
+ * Allkirjastamise tööriist (qdigidoc) blokeerub ligipääsutõendi laadimise ajaks
+
+= Arendajast sõltumatud probleemid =
+
+ * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve brauseri restart või tuleb oodata 15-20min. Vaata: VeebisAutentimine
+ * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
+ * SEB pangas on allkirjastamine võimalik ainult Windows platvormil
+ * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
+
+
+Mudru:
+ esteid-csp
+ digidocservice
+ minidriver
+ linux
+ macosx
