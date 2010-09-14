@@ -80,4 +80,4 @@ Katsetusjärgus tarkvara:
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
  * SEB pangas töötab allkirjastamine stabiilselt ainult Windows platvormil.
  * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
- * Safaris autentimine ei tööta osadel veebilehtedel, kus kasutaja ei ole oma ID-kaarti ja seda konreetset saiti kokku sidunud. Põhjuseid [VeebisAutentimine#Vigased_SSL_seaded loe siit].
+ * Safaris autentimine ei tööta osadel veebilehtedel, kus kasutaja ei ole oma ID-kaarti ja seda konkreetset saiti kokku sidunud. Põhjuseid [VeebisAutentimine#Vigased_SSL_seaded loe siit].
