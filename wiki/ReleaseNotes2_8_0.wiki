@@ -75,7 +75,7 @@ Katsetusjärgus tarkvara:
 
 = Arendajast sõltumatud probleemid =
 
- * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve brauseri restart või tuleb oodata 15-20min. Vaata: VeebisAutentimine
+ * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve brauseri restart või tuleb oodata 15-20min. [VeebisAutentimine#Vigased_SSL_seaded Loe siit].
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
  * SEB pangas on allkirjastamine võimalik ainult Windows platvormil
  * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
