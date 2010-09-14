@@ -1,6 +1,6 @@
-#summary Eesti ID-kaardi tarkvara ja draiverid versioon 1.0.0
+#summary Eesti ID-kaardi tarkvara ja draiverid versioon 2.8.0
 
-= Eesti ID-kaardi tarkvara ja draiverid 1.0.0 =
+= Eesti ID-kaardi tarkvara ja draiverid 2.8.0 =
 XX.09.2010
 
 Toetatud operatsioonisüsteemid:
