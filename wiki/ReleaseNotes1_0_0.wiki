@@ -3,8 +3,29 @@
 = Eesti ID-kaardi tarkvara ja draiverid 1.0.0 =
 XX.09.2010
 
+Toetatud operatsioonisüsteemid:
+ * Windows XP (32bit)
+ * Windows Vista
+ * Windows 7
+ * MacOS X 10.5 Intel
+ * MacOS X 10.6 Intel
+ * Ubuntu Linux 9.10
+ * Ubuntu Linux 10.04
+ * Fedora Linux 13
+ * Fedora Linux 12
+ * SuSE Linux 11.1
+ * SuSE Linux 11.2
+ * SuSE Linux 11.3
+ * Gentoo Linux
+
+Toetatud veebilehitsejad:
+ * Google Chrome (Windows ja MacOS X)
+ * Firefox (3.5 ja uuem)
+ * Internet Explorer (7 ja uuem)
+ * Safari
+
 Lõpptarbija komponendid:
- * ID-kaardi draiverid (csp, minidraiver, pkcs\#11)
+ * ID-kaardi draiverid (csp, minidraiver, opensc)
  * Allkirjastamise tööriist (qdigidoc)
  * ID-kaardi utiliit (qesteidutil)
  * Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin)
@@ -21,6 +42,14 @@ Katsetusjärgus tarkvara:
  * Javas realiseeritud SOAP liidesed (digidocservice)
 
 = Mis on uut? =
+
+== Üldine ==
+ * Allkirjastamine töötab ka olemasolevatel lehtedel, mitte ainult testlehel
+ * Google Chrome tugi
+ * Windows 7 tugi
+ * MacOS X 10.6 tugi
+ * Uute Linuxi versioonide tugi (Ubuntu 10.04, Fedora 13, Suse 11.2 ja 11.3)
+ * Eemaldatud vanade operatsioonisüsteemide tugi (Windows 2000, MacOS X 10.4)
 
 == Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin) ==
  * Uus ühtne koodibaas üle kõigi brauserite
@@ -50,11 +79,3 @@ Katsetusjärgus tarkvara:
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
  * SEB pangas on allkirjastamine võimalik ainult Windows platvormil
  * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
-
-
-Mudru:
- esteid-csp
- digidocservice
- minidriver
- linux
- macosx
