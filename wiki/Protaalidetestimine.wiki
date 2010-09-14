@@ -2,13 +2,19 @@
 
 
 
+== Pank "Swedbank" ==
+=== Autentimine ===
+Kuidas testida: Sisene ID-kaardiga aadressilt https://www.swedbank.ee
 
-  * Pank Swedbank autentimine  - www.swedbank.ee
--Toimib
+Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 14.09.2010
 
-  * Pank Swedbank allkirjastamine - www.swedbank.ee makse sooritamisel
--Toimib
+=== Allkirjastamine ===
+Kuidas testida: Sisene ID-kaardiga, keera seaditustest allkirjatehnoloogia brauseripõhiseks. Proovi sooritada makset.
 
+Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 14.09.2010
+
+
+= Ja nii edasi =
   * Pank SEB autentimine - www.seb.ee
 -Toimib
 
