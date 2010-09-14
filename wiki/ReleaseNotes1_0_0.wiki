@@ -64,7 +64,7 @@ Katsetusjärgus tarkvara:
  * Lisatud Qt 4.6 tugi
  * Parandatud väljanägemist Windows platvormil
 
-== DigiDoc Teegid == 
+== !DigiDoc Teegid == 
  * Lisatud uued OCSP vastajate sertifikaadid
  * Lisatud eksperimentaalsed PHP, Perli ja Pythoni bindingud
 
