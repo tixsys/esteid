@@ -53,4 +53,4 @@ Eestis on ID-kaardi arendus olnud pikka aega liiga Microsofti lahenduste põhine
 
 Kõige krooniks on HTTPS protokollis ka potentsiaalne turvaauk, mis avaldub just sertifikaadi kasutamise valikulist seadistust kasutava serveri puhul. http://www.ietf.org/mail-archive/web/tls/current/msg03928.html http://www.minut.ee/article.pl?sid=09/11/06/123203&mode=thread
 
-Õige on kontrollida enne kasutaja sisse logima suunamist brauseri plugina abil, kas ID-kaart on lugejas.
+Õige on kontrollida enne kasutaja sisse logima suunamist brauseri plugina abil, kas ID-kaart on lugejas või kirjutada abitekstidesse, et arusaamatu SSLi viga peale sisselogimisnupu vajutamist tähendab suure tõenäosusega seda, et teie ID-kaart ei olnud lugejas.
