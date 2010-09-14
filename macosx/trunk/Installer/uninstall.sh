@@ -43,8 +43,11 @@ mv -f /usr/local/etc/digidoc.conf ~/.Trash/ID-card\ Software
 mv -f /usr/local/etc/digidocpp ~/.Trash/ID-card\ Software
 mv -f /usr/local/share/libdigidoc ~/.Trash/ID-card\ Software
 mv -f /usr/local/lib/libdigidoc.dylib ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libdigidoc.2.dylib ~/.Trash/ID-card\ Software
 mv -f /usr/local/lib/libdigidocpp.dylib ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libdigidocpp.0.dylib ~/.Trash/ID-card\ Software
 mv -f /usr/local/lib/libp11.dylib ~/.Trash/ID-card\ Software
+mv -f /usr/local/lib/libp11.1.dylib ~/.Trash/ID-card\ Software
 
 echo 'Removing OpenOffice extension'
 if /Applications/OpenOffice.org.app/Contents/program/unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null; then
