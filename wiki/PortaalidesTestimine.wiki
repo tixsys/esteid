@@ -13,6 +13,11 @@ Kuidas testida: Sisene ID-kaardiga, keera seaditustest allkirjatehnoloogia braus
 
 Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 14.09.2010
 
+== Pank SEB ==
+=== Autentimine ===
+Kuidas testida: Sisene ID-kaardiga aadressilt https://www.seb.ee
+
+Tulemus: Töötab IE, FF
 
 = Ja nii edasi =
   * Pank SEB autentimine - www.seb.ee
@@ -33,3 +38,5 @@ Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 14.09.2010
   * e-kinnisturamaat allkirjastamine - 
   * e-toimik autentimine - http://www.e-toimik.ee/
   * e-toimik allkirjastamine - 
+  * e-tervise infosüsteem autentimine - http://www.digilugu.ee/portal/page/portal/Digilugu/ETerviseProjektid
+  * e-tervise infosüsteem allkirjastamine - 
