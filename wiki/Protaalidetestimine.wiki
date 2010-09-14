@@ -1,7 +1,29 @@
 = Millistes portaalides saab kuidas ID-kaardi toiminguid testida =
 
 
-Add your content here.  Format your content with:
+
+
+  * Pank Swedbank autentimine  - www.swedbank.ee
+-Toimib
+
+  * Pank Swedbank allkirjastamine - www.swedbank.ee makse sooritamisel
+-Toimib
+
+  * Pank SEB autentimine - www.seb.ee
+-Toimib
+
+  *Pank SEB allkirjastamine - www.seb.ee makse sooritamisel
+-Toimib ainult ActiveX ja IE-ga kuna SEBil on vana Java API
+
   * www.eesti.ee autentimine - Minna aadressile http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
-  * www.eesti.ee allkirjastamine - 
-  * 
+- Toimib
+
+  * Kodanikuportaal www.eesti.ee allkirjastamine - 
+- Toimib
+
+  * e-maksuamet www.emta.ee autentimine - http://www.emta.ee/?id=12223
+  * e-maksuamet www.emta.ee allkirjastamine - 
+  * e-kinnisturaamat autentimine - https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
+  * e-kinnisturamaat allkirjastamine - 
+  * e-toimik autentimine - http://www.e-toimik.ee/
+  * e-toimik allkirjastamine - 
