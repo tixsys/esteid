@@ -24,7 +24,7 @@ Tulemus: Töötab IE, FF
 -Toimib
 
   *Pank SEB allkirjastamine - www.seb.ee makse sooritamisel
--Toimib ainult ActiveX ja IE-ga kuna SEBil on vana Java API
+-Toimib korralikult ainult ActiveX ja IE-ga kuna SEBi kasutab vana Java Applet, mida ühilduvusrežiim ei toeta.
 
   * www.eesti.ee autentimine - Minna aadressile http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
 - Toimib
@@ -68,7 +68,7 @@ Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2
 
   * e-tervise infosüsteem allkirjastamine - 
 
-== DigiDoc portaal ==
+== !DigiDoc portaal ==
 === Autentimine ===
 Kuidas testida: Sisene ID-kaardiga aadressilt http://digidoc.sk.ee
 
