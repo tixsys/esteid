@@ -67,3 +67,15 @@ Kuidas testida: Sisene ID-kaardiga aadressilt http://www.digilugu.ee/portal/page
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
 
   * e-tervise infosüsteem allkirjastamine - 
+
+== DigiDoc portaal ==
+=== Autentimine ===
+Kuidas testida: Sisene ID-kaardiga aadressilt http://digidoc.sk.ee
+
+Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 15.09.2010
+
+=== Allkirjastamine ===
+Kuidas testida: Sisene ID-kaardiga, lisa suvaline tekstidokument.
+Proovi lisada allkiri.
+
+Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 15.09.2010
