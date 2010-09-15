@@ -35,8 +35,14 @@ Tulemus: Töötab IE, FF
   * e-maksuamet www.emta.ee autentimine - http://www.emta.ee/?id=12223
   * e-maksuamet www.emta.ee allkirjastamine - 
   * e-kinnisturaamat autentimine - https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
-  * e-kinnisturamaat allkirjastamine - 
-  * e-toimik autentimine - http://www.e-toimik.ee/
+  * e-kinnisturamaat allkirjastamine -
+
+
+== e-toimik ==
+=== Autentimine === 
+Kuidas testida: Sisene ID-kaardiga aadressilt http://www.e-toimik.ee/
+Tulemus: Töötab IE, FF (Win), Chrome (Win) - 15.09.2010
+
   * e-toimik allkirjastamine - 
   * e-tervise infosüsteem autentimine - http://www.digilugu.ee/portal/page/portal/Digilugu/ETerviseProjektid
   * e-tervise infosüsteem allkirjastamine - 
