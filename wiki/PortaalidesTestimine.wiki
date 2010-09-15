@@ -19,7 +19,7 @@ Kuidas testida: Sisene ID-kaardiga aadressilt https://www.seb.ee
 
 Tulemus: Töötab IE, FF
 
-= Ja nii edasi =
+
   * Pank SEB autentimine - www.seb.ee
 -Toimib
 
@@ -37,19 +37,33 @@ Tulemus: Töötab IE, FF
 === Autentimine === 
 Kuidas testida: Sisene ID-kaardiga aadressilt http://www.emta.ee/?id=12223
 
-Tulemus: Töötab IE, FF (Win), Chrome (Win) - 15.09.2010
+Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
 
   * e-maksuamet www.emta.ee allkirjastamine - 
-  * e-kinnisturaamat autentimine - https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
-  * e-kinnisturamaat allkirjastamine -
+
+== e-kinnisturaamat ==
+=== Autentimine === 
+Kuidas testida: Sisene ID-kaardiga aadressilt https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
+
+Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+ 
+ * e-kinnisturamaat allkirjastamine -
 
 
 == e-toimik ==
 === Autentimine === 
 Kuidas testida: Sisene ID-kaardiga aadressilt http://www.e-toimik.ee/
 
-Tulemus: Töötab IE, FF (Win), Chrome (Win) - 15.09.2010
+Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
 
   * e-toimik allkirjastamine - 
-  * e-tervise infosüsteem autentimine - http://www.digilugu.ee/portal/page/portal/Digilugu/ETerviseProjektid
+
+
+== e-tervise infosüsteem ==
+=== Autentimine === 
+Kuidas testida: Sisene ID-kaardiga aadressilt http://www.digilugu.ee/portal/page/portal/Digilugu/ETerviseProjektid
+
+
+Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+
   * e-tervise infosüsteem allkirjastamine - 
