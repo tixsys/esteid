@@ -41,6 +41,7 @@ Tulemus: Töötab IE, FF
 == e-toimik ==
 === Autentimine === 
 Kuidas testida: Sisene ID-kaardiga aadressilt http://www.e-toimik.ee/
+
 Tulemus: Töötab IE, FF (Win), Chrome (Win) - 15.09.2010
 
   * e-toimik allkirjastamine - 
