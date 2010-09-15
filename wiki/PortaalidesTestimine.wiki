@@ -32,7 +32,13 @@ Tulemus: Töötab IE, FF
   * Kodanikuportaal www.eesti.ee allkirjastamine - 
 - Toimib
 
-  * e-maksuamet www.emta.ee autentimine - http://www.emta.ee/?id=12223
+
+== e-maksuamet ==
+=== Autentimine === 
+Kuidas testida: Sisene ID-kaardiga aadressilt http://www.emta.ee/?id=12223
+
+Tulemus: Töötab IE, FF (Win), Chrome (Win) - 15.09.2010
+
   * e-maksuamet www.emta.ee allkirjastamine - 
   * e-kinnisturaamat autentimine - https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
   * e-kinnisturamaat allkirjastamine -
