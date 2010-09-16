@@ -24,7 +24,7 @@ Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 sudo aptitude update
 sudo aptitude dist-upgrade
-sudo aptitude install qdigidoc qesteidutil iceweasel-esteid icedove-esteid openoffice.org-digidoc
+sudo aptitude install qdigidoc qesteidutil mozilla-esteid icedove-esteid openoffice.org-digidoc
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
