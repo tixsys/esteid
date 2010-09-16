@@ -26,12 +26,17 @@ Tulemus: Töötab IE, FF
   *Pank SEB allkirjastamine - www.seb.ee makse sooritamisel
 -Toimib korralikult ainult ActiveX ja IE-ga kuna SEBi kasutab vana Java Applet, mida ühilduvusrežiim ei toeta.
 
-  * www.eesti.ee autentimine - Minna aadressile http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
-- Toimib
 
-  * Kodanikuportaal www.eesti.ee allkirjastamine - 
-- Toimib
+== Eesti.ee ==
+=== Autentimine === 
+Kuidas testida: Sisene ID-kaardiga aadressilt http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
 
+Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+
+=== Allkirjastamine === 
+Kuidas testida: Lisa minu dokumentidesse uus dokument ja proovi allkirjastada
+
+Tulemus: eesti.ee digidoci portaalis meist olenematutel põhjustel allkirjastamine ei tööta
 
 == e-maksuamet ==
 === Autentimine === 
