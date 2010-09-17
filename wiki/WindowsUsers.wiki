@@ -1,18 +1,11 @@
 = Tere külaline! =
 
-Oled sattunud Eesti ID kaardi tarkvara arenduse leheküljele. Kui Sa oled programmeerija või muidu ID-kaardi tarkvara huviline, oled õiges kohas. Kui soovid lihtsalt oma ID-kaardi tööle saada, siis mine parem siia: http://installer.id.ee
+Oled sattunud Eesti ID kaardi tarkvara arenduse leheküljele. Kui Sa oled programmeerija või muidu ID-kaardi tarkvara huviline, oled õiges kohas. Kui soovid lihtsalt oma ID-kaardi tööle saada, siis mine parem siia: ftp://ftp.smartlink.ee/pub/id/release/windows/msi/latest/
 
 NB! Kogu siin lehel leiduv tarkvara on alfa kvaliteediga.
 
 Linuxi ja Maci kasutajad vaadake siia > WikiStart
 
-<br>
-== Leheküljele sisselogimine ==
-
-[https://id.eesti.ee/idtrac/login ID-kaardiga sisselogimiseks vajuta siia ].
-
-[https://id.eesti.ee/trac/login Kasutajanime ja parooliga sisselogimiseks vajuta siia].
-<br><br> 
 
 == Sisukord ==
 
@@ -30,18 +23,11 @@ Nimekirja kõigist olemasolevatest lehekülgedest leiad siit: TitleIndex.
 
 
 = Welcome visitor! =
-You have reached an Estonian ID-card development corner. If You are a developer or interested in ID-card software development, You are in the right place. If You just want to get the bloody thing working, better leave for http://installer.id.ee.
+You have reached an Estonian ID-card development corner. If You are a developer or interested in ID-card software development, You are in the right place. If You just want to get the bloody thing working, better leave for ftp://ftp.smartlink.ee/pub/id/release/windows/msi/latest/ .
 
 *NB This software is of Alpha quality. It may not install. It may not work.
 
-<br>
-== Login ==
 
-[https://id.eesti.ee/idtrac/login Login with ID-card ].
-
-[https://id.eesti.ee/trac/login Login with username and password ].
-
-<br><br>
 
 == Index ==
 
