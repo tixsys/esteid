@@ -6,7 +6,8 @@ Teenusepakkuja säilitab dokumenti oma serveris, kuid pakub Sulle ka võimaluse 
 
 = Teadaolevad probleemid! =
 
-Kuna tarkvara on alles värske, siis ei ole suuremates veebikeskkondades võimalik täna veel uue tarkvaraga digiallkirju anda. Näiteks ei ole võimalik suuremates pankades teostada makseid.
+SEB's ei ole hetkel võimalik allkirjastada Maci ja Linuxi all. Ka windowsi Firefoxis ja Chrome'is pole allkirjastamine võimalik Java appletiga, kuni pole installeeritud ohjurprogrammi IE kaudu.
+id.eesti.ee's pole allkirjastamine võimalik.
 
 = Kasutaja(te) kommentaarid =
 
