@@ -1,0 +1,64 @@
+#labels Phase-Implementation
+==  Mac OS X kirjeldus ==
+
+''(TODO: crossplatvorm kraam)''
+
+Koosneb järgmistest mäkispetsiifilistest komponentidest:
+
+*[EstEIDTokend EstEIDTokend]*
+
+
+''Asukoht:'' /System/Library/Security/tokend
+
+
+''Kirjeldus'': Tokend võimaldab erinevatel Mac OS X rakendustel kasutada ID-kaardil asuvaid sertifikaate. Praktikas läheb vaja eelkõige Safaris isikutuvastamiseks.
+
+*[EstEIDWP]*
+
+
+''Asukoht:'' /Library/Internet Plug-Ins
+
+
+''Kirjeldus'': Safari laiendus. Laiendab veebilehekülje Javascripti konteksti kas <embed> või <object> märksõna abil.
+
+*[EstEIDCM]*
+
+
+''Asukoht:'' /Library/Contextual Menu Items
+
+
+''Kirjeldus:'' Finderi laiendus. Laiendab Finderi paremklikkmenüüd. Täpne funktsionaalsus on jätkuvalt lahtine, aga minimaalselt võiks olla see, mida vana Windowsi soft suudab (allkiri/krüpt).
+
+*[EstEIDPP]*
+
+
+''Asukoht:'' /Library/PreferencePanes
+
+
+''Kirjeldus:'' System Preferences laiendus. Tekitab uue ikooni süsteemsetesse määrangutesse kust on võimalik:
+ * Näha paigaldatud komponentide inimsõbralikke nimetusi ja versiooninumbreid.
+ * Lubada ja keelata automaatseid tarkvarauuendusi (vt *EstEIDSU*)
+ * Käivitada tarkvarauuendaja.
+
+*[EstEIDSU EstEIDSU]*
+
+
+''Asukoht'': /Applications/Utilities
+
+
+''Kirjeldus:'' Tarkvara uuendaja. Kuna Mac OS X toetab lokaliseeritud programminimetusi, siis tüüpiline kasutaja ei tohiks kohata nimetust "EstEIDSU" vaid midagi kasutajasõbralikumat (jätkuvalt lahtine nagu ka ikoon).   Ülesandeks on kontrollida tarkvarauuendusi, need vajadusel alla laadida, failid verifitseerida ja käivitada paigaldusprotsess. Käivitamine toimub:
+ *  EstEIDPP kaudu
+ * launchd kaudu (automaatne tarkvarauuenduse kontroll)
+ * /Applications/Utilities kaudu
+
+"Kapoti all" kasutatakse .pkg-d, mis pole ideaalne, aga kuna selle tugi on kohe süsteemis olemas ja alternatiividel omad probleemid, siis mis ikka teha? Paigaldamisel käivitatakse kõrgendatud olekus "agent", mis kopeerib failid süsteemsele kasutajale, kontrollib need uuesti üle, pakib lahti ja käivitab .pkg paigaldaja.
+
+Automaatne tarkvarauuendamine käib OS X launchd daemoni kaudu (konfiguratsioonifail asub /Library/LaunchAgents kataloogis).
+
+*Installer*
+
+
+''Asukoht:'' Veebileht
+
+
+''Kirjeldus:'' .pkg paigalduspakett, mis peaks paigaldama kõik eespool nimetatud komponendid.
