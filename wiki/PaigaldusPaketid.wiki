@@ -13,25 +13,19 @@
 = Kust saab? =
 Beta versioonid, sorteerituna operatsioonisüsteemi kaupa, leiab aadressilt
 
-*http://ftp.id.eesti.ee/pub/id/*
+*ftp://ftp.smartlink.ee/pub/id/release/ *
 
 Igaöiselt kompileeritud nn "nightly buildid" saab *ajutiselt* aadressilt
 
-*ftp://ftp.smartlink.ee/pub/id*
+*ftp://ftp.smartlink.ee/pub/id/nightly/ *
 
 Pakettide failinimes on olenevalt operatsioonisüsteemist kas kompileerimise kuupäev või SVN versiooni number. Soovitatav on valida kõige uuem (suurema numbriga).
 
 = Windows = 
 
-Windowsi kasutajatel soovitame kasutada vana tarkvara aadressilt http://installer.id.ee
-
-Juhul kui soovid siiski proovida uut betat, siis arvesta, et
-
-*Kuna veebikeskkondades puudub uue ID kaardi baastarkvara tugi, siis ei ole täna veel võimalik uue tarkvaraga teostada makseid suuremates pankades*
-
 == Paigaldamine ==
 
-Paigaldamiseks vajaliku .msi faili saad siit: *http://ftp.id.eesti.ee/pub/id/windows/msi/latest/*
+Paigaldamiseks vajaliku .msi faili saad siit: ftp://ftp.smartlink.ee/pub/id/release/windows/msi/latest/
 
 *Windowsi paigalduspaketi miinimumnõuded *
 
@@ -39,9 +33,9 @@ Paigalduspaketi korrektseks toimimiseks peab olema arvutisse paigaldatud Microso
 
 Toetatud operatsioonisüsteemid:
 
- * Windows 2000 SP4 või uuem;
  * Windows XP SP3 või uuem;
- * Windows Vista SP1 või uuem.
+ * Windows Vista SP1 või uuem;
+ * Windows 7.
 
 == Mida teha MSI probleemide korral? ==
 
