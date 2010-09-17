@@ -62,7 +62,7 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
  * [openSUSE openSUSE seadistamine]
 
 == Võimalused ==
- * [Haldusvahend ID kaardi haldamine]
+ * [HaldusVahend ID-kaardi haldamine]
  * [DigiDoc Digidoc3 kliendis allkirjastamine]
  * [VeebisAllkirjastamine Veebis allkirjastamine]
 
@@ -74,28 +74,23 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
 = Mac OS X =
 
 == Eeldused ==
- * Mac OS X 10.4 või 10.5
- * Intel või PPC protsessor
+ * Mac OS X 10.5 või 10.6
+ * Intel protsessor
 <br>
 
 == Paigaldamine ==
-Paigaldamiseks vajaliku .dmg faili saad siit: *ftp://ftp.id.eesti.ee/pub/id/macosx/*
+Paigaldamiseks vajaliku .dmg faili saad siit: *ftp://ftp.smartlink.ee/pub/id/release/macosx/ *
 
 
 Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
 
-== NB: Mac OS 10.6.2 ehk Snowleopard ei ole veel toetatud ja selle peale ei soovita ID-kaardi tarkvara praegu veel laadida! ==
-
 <br>
 
 == Võimalused ==
- * [haldusvahend ID kaardi haldamine]
- * [digidoc Digidoc3 klient allkirjastamiseks]
- * ID kaardiga Maci sisse logimine
-     10.5.6 ja hiljem on võimalik ID-kaardiga sisselogimine seadistada "System Preferences" ID-kaardi vaate alt.
-     Vanemate Mac OS X versioonidega pole soovitav ID-kaardiga sisselogimist seadistada, aga kui keegi tõesti soovib, siis [MacLoginSeadistamine seadistamise kirjeldus on siin] 
- * [veebisallkirjastamine Veebis allkirjastamine]
- * [openoffice Kontoritarkvaras allkirjastamine (OpenOffice) ]
+ * [HaldusVahend ID kaardi haldamine]
+ * [DigiDoc Digidoc3 klient allkirjastamiseks]
+ * ID-kaardiga Maci sisse logimine
+     Mac OS X 10.5.6 ja hiljem on võimalik ID-kaardiga sisselogimine seadistada "System Preferences" ID-kaardi vaate alt.
 
 <br>
 <br>
