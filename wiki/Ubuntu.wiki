@@ -1,14 +1,9 @@
 = Ubuntu =
-Toetatud versioonid *Jaunty Jackalope (9.04)* ja *Karmic Koala (9.10)*
+Toetatud versioonid *Karmic Koala (9.10)* ja *Lucid Lynx (10.04)*
 
 === Repositooriumi lisamine ===
 Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti.
 
-==== Jaunty Jackalope (9.04) ====
-{{{
-echo deb http://id.smartlink.ee/repo/release/ubuntu/ jaunty main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
-}}}
 
 ==== Karmic Koala (9.10) ====
 {{{
@@ -29,12 +24,12 @@ wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 sudo aptitude update
-sudo aptitude safe-upgrade
+sudo aptitude dist-upgrade
 sudo aptitude install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid openoffice.org-digidoc
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
 sudo aptitude update
-sudo aptitude full-upgrade
+sudo aptitude dist-upgrade
 }}}
