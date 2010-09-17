@@ -13,11 +13,11 @@
 = Kust saab? =
 Beta versioonid, sorteerituna operatsioonisüsteemi kaupa, leiab aadressilt
 
-*ftp://ftp.smartlink.ee/pub/id/release/ *
+*http://id.smartlink.ee/repo/release/ *
 
 Igaöiselt kompileeritud nn "nightly buildid" saab *ajutiselt* aadressilt
 
-*ftp://ftp.smartlink.ee/pub/id/nightly/ *
+*http://id.smartlink.ee/repo/nightly/ *
 
 Pakettide failinimes on olenevalt operatsioonisüsteemist kas kompileerimise kuupäev või SVN versiooni number. Soovitatav on valida kõige uuem (suurema numbriga).
 
@@ -25,7 +25,7 @@ Pakettide failinimes on olenevalt operatsioonisüsteemist kas kompileerimise kuu
 
 == Paigaldamine ==
 
-Paigaldamiseks vajaliku .msi faili saad siit: ftp://ftp.smartlink.ee/pub/id/release/windows/msi/latest/
+Paigaldamiseks vajaliku .msi faili saad siit: http://id.smartlink.ee/repo/release/windows/msi/latest/
 
 *Windowsi paigalduspaketi miinimumnõuded *
 
@@ -79,7 +79,7 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
 <br>
 
 == Paigaldamine ==
-Paigaldamiseks vajaliku .dmg faili saad siit: *ftp://ftp.smartlink.ee/pub/id/release/macosx/ *
+Paigaldamiseks vajaliku .dmg faili saad siit: *http://id.smartlink.ee/repo/release/macosx/ *
 
 
 Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
