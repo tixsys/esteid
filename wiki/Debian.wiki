@@ -6,14 +6,14 @@ Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail
 
 ==== Debian Lenny (5.0) ====
 {{{
-echo deb http://ftp.id.eesti.ee/pub/id/debian/ lenny main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://ftp.id.eesti.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+echo deb ftp://ftp.smartlink.ee/pub/id/release/debian/ lenny main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
+wget ftp://ftp.smartlink.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
 ==== Debian Squeeze (6.0) ====
 {{{
-echo deb http://ftp.id.eesti.ee/pub/id/debian/ squeeze main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://ftp.id.eesti.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+echo deb ftp://ftp.smartlink.ee/pub/id/release/debian/ squeeze main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
+wget ftp://ftp.smartlink.ee/pub/id/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
 }}}
 
 
@@ -30,5 +30,5 @@ sudo aptitude install qdigidoc qesteidutil mozilla-esteid icedove-esteid openoff
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
 sudo aptitude update
-sudo aptitude full-upgrade
+sudo aptitude dist-upgrade
 }}}
