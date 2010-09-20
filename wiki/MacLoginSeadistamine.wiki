@@ -1,70 +1,10 @@
-Kaardilugeja driverid peavad töötama. Üldjuhul tunneb arvuti kaardilugeja ise ära ja hakkab vaikimisi tööle. Kui ei, tuleb netist õige driver otsida ning konsoolist käisitsi paigaldada.
+ID-kaardiga sisselogimise seadistamiseks peab ID-kaart arvutiga ühendatud. Veenduge, et tegemist on ainult Teie ID-kaardiga, sest hiljem saab sisse logida hetkel arvutis oleva ID-kaardiga.
 
+Seadistamine:
+1. Ava "System Preferences" --> Other --> ID-card
+2. Luba administraatori parooliga muudatuste tegemine (vajutades tabaluku märgile)
+3. Vajuta kastile "Login with ID-card".
 
-Edasi tuleb järgmised liigutused teha.
-
-Avada Terminal,sisse toksida:
-sudo cp /etc/authorization /etc/authorization.orig
-sudo /Applications/TextEdit.app/Contents/MacOS/TextEdit /etc/authorization
-
-Enne muutusi tuleks igaksjuhuks fail .bk laiendiga salvestada.
-
-Failist üles otsida rida: 
-{{{
-<key>system.login.console</key>
-}}}
-Kopeerida üle read
-{{{
-<key>mechanisms</key>
-                        <array>
-                                <string>builtin:auto-login,privileged</string>
-                                <string>builtin:smartcard-sniffer,privileged</string>
-                                <string>loginwindow_builtin:login</string>
-                                <string>builtin:reset-password,privileged</string>
-                                <string>builtin:authenticate,privileged</string>
-                                <string>builtin:getuserinfo,privileged</string>
-                                <string>builtin:sso,privileged</string>
-                                <string>HomeDirMechanism:login,privileged</string>
-                                <string>HomeDirMechanism:status</string>
-                                <string>MCXMechanism:login</string>
-                                <string>loginwindow_builtin:success</string>
-                                <string>loginwindow_builtin:done</string>
-                        </array>
-}}}
-
-ning veel üles otsida rida
-{{{
-<key>authenticate</key>
-}}}
-ja kopeerida üle
-{{{
-<key>mechanisms</key>
-                        <array>
-                                <string>builtin:smartcard-sniffer,privileged</string>
-                                <string>builtin:authenticate</string>
-                                <string>builtin:authenticate,privileged</string>
-                        </array>
-}}}
-
-Salvestada muudatused ning sulgeda textedit.
-
-Siis panna kaart lugejasse ning kirjutada Terminali
-{{{
-sc_auth hash
-}}}
-
-Näitab serdi hashi.
-Et ühendada Maci kasutajanimi vastava serdiga, toksida Terminali
-{{{
-sudo sc_auth accept -u your_login_name -h E1D9B68DC101AB296EE1B3CECC3B12993BA4A37E
-}}}
-
-Kasutajakonto lahtisidumiseks serdist, tuleb kirjutada
-{{{
-sudo sc_auth remove -u your_login_name
-}}}
-
-Et näha, milliste võtmete hashid on milliste kasutajatega seotud, tuleb kirjutada:
-{{{
-nidump -r /users/your_login_name
-}}}
+Kui tuleb teade "Enabled id-card login successfully", on ID-kaardiga sisselogimine seadistatud. 
+Kui tuleb teade "Failed to enable id-card login", veenduge, et kaart on lugejas ning Keychain näitab Teie sertifikaate, ja proovige uuesti. 
+Keychaini leiate Applications -> Utilities -> Keychain Access.app
