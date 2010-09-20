@@ -30,20 +30,20 @@ Lugejad:
  * HP !SmartCard Keyboard (USB)
 
 Platvormid:
- * Windows 2000, 32 bit Intel
- * Windows XP, 32 ja 64 bit Intel
+ * Windows XP, 32 bit Intel
  * Windows Vista, 32 ja 64 bit Intel
  * Windows 7, 32 ja 64 bit Intel
- * Fedora 10, 32 ja 64 bit Intel
- * Fedora 11, 64 bit Intel
- * Ubuntu 8.10, 32 ja 64 bit Intel
- * Ubuntu 9.04, 32 ja 64 bit Intel
+ * Fedora 12, 32 ja 64 bit Intel
+ * Fedora 13, 32 ja 64 bit Intel
  * Ubuntu 9.10, 32 ja 64 bit Intel
+ * Ubuntu 10.04, 32 ja 64 bit Intel
  * OpenSUSE 11.1, 32 ja 64 bit Intel
+ * OpenSUSE 11.2, 32 ja 64 bit Intel
+ * OpenSUSE 11.3, 32 ja 64 bit Intel
  * Debian stable, 32 ja 64 bit Intel
- * Gentoo testing, 64 bit Intel
- * MacOS X Tiger, PowerPC ja 32bit Intel
- * MacOS X Leopard, PowerPC ja 32bit Intel
+ * Gentoo testing, 32 ja 64 bit Intel
+ * MacOS X Leopard 32 bit Intel
+ * MacOS X Snow Leopard 32 ja 64 bit Intel
 
 Protseduur ja hinnad on veel lahtised, aga kes ees, see mees ja kirjutab oma soovist asse ät smartlink.ee
 
