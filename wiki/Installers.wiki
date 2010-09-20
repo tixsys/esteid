@@ -1,13 +1,13 @@
-Paigalduspakett on kasutaja poolt arvutisse laetav tarkvara installatsiooni pakett, mis võimaldab paigaldada kogu ID-kaardi baastarkvara (kaasa arvatud kaardilugeja draiverid) kasutaja arvutisse. Linux platvormil „.deb“ ja „.rpm“ pakihaldusega distributsioonidele valmistatakse ID kaardi baastarkava paketid, mida on võimalik lisada uutesse distributsioonidesse ning kasutajal on võimalik ID kaardi tarkvara installeerida süsteemselt. Juhul kui distributsioonides puuduvad vajalikud teegid, paigaldatakse need koos ID kaardi tarkvaraga.
+Paigalduspakett on kasutaja poolt arvutisse laetav tarkvara installatsiooni pakett, mis võimaldab paigaldada kogu ID-kaardi baastarkvara (kaasa arvatud kaardilugeja draiverid) kasutaja arvutisse. Linux platvormil „.deb“ ja „.rpm“ pakihaldusega distributsioonidele valmistatakse ID-kaardi baastarkava paketid, mida on võimalik lisada uutesse distributsioonidesse ning kasutajal on võimalik ID-kaardi tarkvara installeerida süsteemselt. Juhul kui distributsioonides puuduvad vajalikud teegid, paigaldatakse need koos ID kaardi tarkvaraga.
 Windows ja MacOS X platvormidele luuakse süsteemispetsiifilised paigalduspaketid (.msi, .pkg), mida on võimalik paigaldada veebilehelt alla laadides või paigaldusmeedialt.
 
 Funktsionaalsus:
- 1.	Tarkvara paigaldamine läbi graafilise kasutajaliidese – Linuxite puhul süsteemselt, Windowsi ja MacOS X puhul standardsete installatsioonipakettide (.msi, .pkg) abil.
- 2.	Tarkvara paigaldamine vaikimisi seadistustega automaatselt – süsteemiadministraatoritel ja arvutitootjatel tekib võimalus paigaldada ID kaardi baastarkvara süsteemi automaatselt ilma inimese poolse vahelesegamiseta.
- 3.	Veebilehitsejate tuvastamine – Installipakett tuvastab olemasolevad toetatavad veebilehitsejad koos nende versioonidega ning vastavalt sellele võimaldab kasutajal valida, millistele veebilehitsejatele draivereid soovitakse või teavitab kasutajat vajaliku veebilehitseja puudumisest.
- 4.	Juursertifikaatide paigaldamine – paigaldatakse juursertifikaadid veebibrauserite ja operatsioonisüsteemi sertifikaadihoidlatesse.
- 5.	Hilisemate paigalduste tugi – Haagid, mis käivituvad juhul kui peale baastarkvara paigaldamist lisatakse tarkvarakomponente, mis on toetatud baastarkvara poolt ja paigaldatavad lisatud komponentide toetamiseks vajaliku tarkvara automaatselt.
- 6.	Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. !OpenOffice ja Firefox laienduste uuendamist võimaldatakse ka läbi nende rakenduste enda veebiteenuste.
- 7.	Tarkvara paigaldamine veebilehelt – tuvastatakse kasutaja operatsioonisüsteem ja sellele vastavalt kuvatakse kas detailsed paigaldamisjuhised või käivitatakse installatsiooniprotsess.
+ 1. Tarkvara paigaldamine läbi graafilise kasutajaliidese – Linuxite puhul süsteemselt, Windowsi ja MacOS X puhul standardsete installatsioonipakettide (.msi, .pkg) abil.<br>
+ 2. Tarkvara paigaldamine vaikimisi seadistustega automaatselt – süsteemiadministraatoritel ja arvutitootjatel tekib võimalus paigaldada ID kaardi baastarkvara süsteemi automaatselt ilma inimese poolse vahelesegamiseta.<br>
+ 3. Veebilehitsejate tuvastamine – Installipakett tuvastab olemasolevad toetatavad veebilehitsejad koos nende versioonidega ning vastavalt sellele võimaldab kasutajal valida, millistele veebilehitsejatele draivereid soovitakse või teavitab kasutajat vajaliku veebilehitseja puudumisest.<br>
+ 4. Juursertifikaatide paigaldamine – paigaldatakse juursertifikaadid veebibrauserite ja operatsioonisüsteemi sertifikaadihoidlatesse.<br>
+ 5. Hilisemate paigalduste tugi – Haagid, mis käivituvad juhul kui peale baastarkvara paigaldamist lisatakse tarkvarakomponente, mis on toetatud baastarkvara poolt ja paigaldatavad lisatud komponentide toetamiseks vajaliku tarkvara automaatselt.<br>
+ 6. Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. !OpenOffice ja Firefox laienduste uuendamist võimaldatakse ka läbi nende rakenduste enda veebiteenuste.<br>
+ 7. Tarkvara paigaldamine veebilehelt – tuvastatakse kasutaja operatsioonisüsteem ja sellele vastavalt kuvatakse kas detailsed paigaldamisjuhised või käivitatakse installatsiooniprotsess.<br>
 
 [SysteemiKirjeldus Tagasi]
