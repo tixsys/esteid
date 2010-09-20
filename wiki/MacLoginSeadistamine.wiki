@@ -1,9 +1,9 @@
 ID-kaardiga sisselogimise seadistamiseks peab ID-kaart arvutiga ühendatud. Veenduge, et tegemist on ainult Teie ID-kaardiga, sest hiljem saab sisse logida hetkel arvutis oleva ID-kaardiga.
 
-Seadistamine:
-1. Ava "System Preferences" --> Other --> ID-card
-2. Luba administraatori parooliga muudatuste tegemine (vajutades tabaluku märgile)
-3. Vajuta kastile "Login with ID-card".
+Seadistamine:<br>
+1. Ava "System Preferences" --> Other --> ID-card<br>
+2. Luba administraatori parooliga muudatuste tegemine (vajutades tabaluku märgile)<br>
+3. Vajuta kastile "Login with ID-card".<br>
 
 Kui tuleb teade "Enabled id-card login successfully", on ID-kaardiga sisselogimine seadistatud. 
 Kui tuleb teade "Failed to enable id-card login", veenduge, et kaart on lugejas ning Keychain näitab Teie sertifikaate, ja proovige uuesti. 
