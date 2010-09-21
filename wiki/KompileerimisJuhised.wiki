@@ -26,5 +26,3 @@ cd build
 cmake ..
 make
 }}}
-
-Teegi koodi juhendi leiad siit: https://id.smartlink.ee/libdigidocpp-doxy/
