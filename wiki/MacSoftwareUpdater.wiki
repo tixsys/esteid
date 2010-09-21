@@ -6,19 +6,19 @@ Lõppkasutajad näevad arusaadavate nimetustega komponente, mis koosnevad reaals
 == Lõppkasutajale kuvatavad komponendid ==
 
  * *Core Component* : org.esteid.component.core
-   * libdigidoc
+   * [libDigiDoc libDigiDoc]
    * [EstEIDCM] ''(versiooni ei kuvata seadetes)''
    * [EstEIDPP] ''(versiooni ei kuvata seadetes)''
-   * [MacSoftwareUpdater ] ''(versiooni ei kuvata seadetes)''
+   * [MacSoftwareUpdater EstEIDSU] ''(versiooni ei kuvata seadetes)''
    * juursertifikaadid ''(versiooni ei kuvata seadetes)''
    * launchd seadistus ''(versiooni ei kuvata seadetes)''
  * *Internet Plug-in* : org.esteid.component.webplugin
    * [EstEIDWP]
    * [OpenSCTokenD TokenD]
  * *Digidoc* : org.esteid.component.digidoc
-   * [QDigiDocClient DigiDoc Client]
+   * [QDigiDocClient qdigidocclient]
  * *ID-card Utility* : org.esteid.component.utility
-   * [QEsteidUtil QEsteidUtil]
+   * [QEsteidUtil qesteidutil]
 
 == Installer.mpkg ==
 
