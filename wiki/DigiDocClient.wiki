@@ -8,7 +8,7 @@ Digidoc kliendi funktsionaalsus on alljärgnev:
  1. Dokumendi ID kaardiga krüpteerimine – kasutajal on võimalus krüpteerida dokumente. Krüpteerimisel saab otsida adressaadi sertifikaati isikukoodi alusel LDAP kataloogist, valida isikute hulgast, kellele on varem krüpteeritud, lugeda failist või ID-kaardilt.
  1. Dokumendi ID kaardiga dekrüpteerimine – kasutajal on võimalik dekrüpteerida krüpteeritud faili, kasutades ID kaardil asuvat autentimissertifikaadis olevale avalikule võtmele vastavat salajast võtit.
  1. Dokumendi digitaalsete allkirjade kontrollimine – kasutajal on võimalus kontrollida digitaalselt allkirjastatud dokumendi allkirjastamise andmeid. Kasutajal on võimalus vaadata kõiki allkirjastamisega seotud andmeid. 
- 8. Dokumendi digitaalsete allkirjade eemaldamine – kasutajal on võimalus eemaldada dokumendile lisatud digitaalseid allkirju. 
+ 1. Dokumendi digitaalsete allkirjade eemaldamine – kasutajal on võimalus eemaldada dokumendile lisatud digitaalseid allkirju. 
  1. Dokumendi digitaalsete allkirjade printimine ja kinnituslehe koostamine – kasutajal on võimalus trükkida dokumendile lisatud digitaalseid allkirju ühtsele kinnituslehele. Kasutajal ei ole võimalik muuta kinnituslehel olevaid andmeid. Kinnitusleht sisaldab:
   1. Andmeid allkirjastatud failide kohta
   1. Andmeid allkirjastajate kohta
