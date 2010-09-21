@@ -6,4 +6,5 @@ Funktsionaalsus:
  1. Kaardi eemaldamisel sessiooni lõpetamine
  1. Operatsioonisüsteemi sisse logimine kiipkaardiga 
 
+
 [SysteemiKirjeldus Tagasi]
