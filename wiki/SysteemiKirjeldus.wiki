@@ -1,5 +1,3 @@
-[[Image(id-kaart-komponentjoonis.png)]]
-
  * [QEsteidUtil ID-kaardi utiliit] - võimaldab vahetada PIN koode, näha kaardi infot jne
  * [libDigiDoc DigiDoc teegid] - töötleb BDOC ja DDOC faile
  * [QDigiDocClient Allkirjastamise tööriist (digidoc klient)] - kasutajaliides digiallkirjade andmiseks
