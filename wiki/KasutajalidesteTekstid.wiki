@@ -1,4 +1,3 @@
-
 * Erinevates komponentides kasutatavate dialoogakende ja veateadete tekstid peavad olema võimalikult ühesugused.
 
 * Eesnimi ja Perekonnanimi lugeda kaardilt
@@ -19,12 +18,6 @@
   Tekst:: Eesnimi Perekonnanimi (PIN2)
   Hoiatus samas aknas kui sisestati vale PIN2:: Sisestatud vale PIN2, Teil on võimalus sisestada koodi maksimaalselt 3 korda.
   Ikoon:: dokument ja pliiats juures (ikooni pildi tarnib ADM Interactive)
-  Hoiatustekst:: NB! Sellel tegevusel on õiguslikud tagajärjed! Loe siit... 
-Lingile "Loe siit..." klikkimine avab vaikimisi veebisirvija lehel https://id.eesti.ee/bt/<keel>/pin2, kus keel on vastavalt kasutajaliidese keelele:
-en - Inglise
-et - Eesti
-ru - Vene
 
 === Üldmõisted ===
   Mobiil-ID inglise keeles: Mobile-ID 
-
