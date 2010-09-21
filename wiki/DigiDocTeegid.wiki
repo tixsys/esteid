@@ -1,4 +1,4 @@
-DigiDoci formaatide (DDOC ja BDOC) töötlemiseks on eraldi teegid.
+[QDigiDoc DigiDoci] formaatide (DDOC ja BDOC) töötlemiseks on eraldi teegid.
 
 Vali kasutatav programmeerimiskeel
 
