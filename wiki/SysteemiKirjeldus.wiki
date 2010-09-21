@@ -9,6 +9,6 @@
  * [EstEIDPKCS11 PKCS#11 sild] - võimaldab ID-kaardiga autentimist Firefoxist
  * [BrowserExtensions Brauserite laiendused] - kasutatakse veebilehel digitaalallkirja andmiseks
  * [EstEIDOpenSC PKCS#15 emulaator] - Eesti ID-kaardi draiver OpenSC raamistiku koosseisus (kasutatakse mitmete eelnevate funktsioonide realiseerimiseks)
- * [Installers Tarkvara paigalduspaketid] - installerid, mis peavad tagama, et kogu mudru saab paigaldatud ja õigesti seadistatud
+ * [Installers Tarkvara paigalduspaketid] - installerid, mis peavad tagama, et kogu tarkvara saab paigaldatud ja õigesti seadistatud
 
 [WikiStart Tagasi]
