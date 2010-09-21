@@ -1,23 +1,23 @@
-Digidoc klient on rakendus, mis võimaldab kasutajal teha toiminguid .ddoc ja .bdoc formaadis failidega. Digidoc klient kasutab digidoc teeke, seega ei ole siinkohal eraldi välja toodud funktsionaalsusi, mis tulenevad nimetatud teegi kasutamisest. Kasutajal on võimalik allkirjastada mistahes dokumente kasutades digidoc klienti.
+Digidoc client is an application that allows the user to do actions with .ddoc and .bdoc files. Digidoc client uses digidoc libraries. The user can sign whichever documents using the digidoc client.
 
-Digidoc kliendi funktsionaalsus on alljärgnev:
- 1. Uue konteineri (.ddoc või .bdoc) loomine. Vaikimisi luuakse Baltic WPKI Forumi poolt välja töötatud .bdoc formaadis konteiner.
- 1. Dokumendi lisamine konteinerisse
- 1. Dokumendi digitaalne allkirjastamine. Allkirjastamisel saab kasutaja määrata allkirjastaja asukoha (Linn/Maakond/Riik/Indeks) ning allkirjastaja rolli/resolutsiooni. Kogu sisestatud informatsioon lisatakse digitaalsele allkirjale. Allkirjastamisel tuleb kasutajal sisestada PIN2 kood.
- 1. Digitaalselt allkirjastatud dokumentide avamine – kasutajal on võimalus avada digitaalselt allkirjastatud dokumendi konteinereid. Avamisel kuvatakse kasutajale allkirjastatud failide nimekiri ning allkirjastajate andmed. Kasutajal on võimalik avada kõiki konteineris olevaid faile. Failide sisu muutmine ei ole võimalik.
- 1. Dokumendi ID kaardiga krüpteerimine – kasutajal on võimalus krüpteerida dokumente. Krüpteerimisel saab otsida adressaadi sertifikaati isikukoodi alusel LDAP kataloogist, valida isikute hulgast, kellele on varem krüpteeritud, lugeda failist või ID-kaardilt.
- 1. Dokumendi ID kaardiga dekrüpteerimine – kasutajal on võimalik dekrüpteerida krüpteeritud faili, kasutades ID kaardil asuvat autentimissertifikaadis olevale avalikule võtmele vastavat salajast võtit.
- 1. Dokumendi digitaalsete allkirjade kontrollimine – kasutajal on võimalus kontrollida digitaalselt allkirjastatud dokumendi allkirjastamise andmeid. Kasutajal on võimalus vaadata kõiki allkirjastamisega seotud andmeid. 
- 1. Dokumendi digitaalsete allkirjade eemaldamine – kasutajal on võimalus eemaldada dokumendile lisatud digitaalseid allkirju. 
- 1. Dokumendi digitaalsete allkirjade printimine ja kinnituslehe koostamine – kasutajal on võimalus trükkida dokumendile lisatud digitaalseid allkirju ühtsele kinnituslehele. Kasutajal ei ole võimalik muuta kinnituslehel olevaid andmeid. Kinnitusleht sisaldab:
-  1. Andmeid allkirjastatud failide kohta
-  1. Andmeid allkirjastajate kohta
-  1. Teadet, et kinnitusleht kehtib vaid koos allkirjastatud failide väljatrükkidega
- 1. Digitaalallkirjastatud faili saatmine e-postiga.
- 1. Dokumendi konteineri loomine etteantud dokumendist, selle allkirjastamine ja saatmine teise rakendusse (näiteks e-posti programmi). 
- 1. Puhverserverite konfigureerimine – võimaldab konfigureerida puhverserveri seadeid, mida digidoc teek kasutab kehtivuskinnituse ja kataloogiteenuste poole pöördumiseks.
- 1. Failide lisamine dokumenti, kasutades drag & drop sihtmärke – võimaldab kasutajal „lohistada“ allkirjastatava dokumendi digidoc kliendi ikoonile ja lisada dokumente avatud konterinerisse neid digidoc kliendi aknasse „lohistades“.
- 1. Allkirjasta ID-kaardiga funktsioon faili kontekstimenüüs – parem hiireklõps suvalisel failil võimaldab alustada dokumendi allkirjastamise protseduuri, lisades faili uude konteinerisse.
- 1. Kehtivuskinnituse teenuse juurdepääsutõendi pool-automaatne taotlemine ja taotluse automaatne uuendamine – programmi esmakordsel käivitamisel ja kehtivuskinnituse teenuse juurdepääsutõendi puudumisel on kasutajal on võimalik juurdepääsutõend paari hiireklikiga tellida. Juba tellitud juurdepääsutõendi uuendamine toimub automaatselt.
+The digidoc client functionality is the following:
+ 1. Creating a new container (.ddoc or .bdoc). By default a .bdoc container made by Baltic WPKI Forum is created.
+ 1. Adding a document to the container.
+ 1. Digitally signing the document. When signing the user can assign the signers location (city/county/country/index) and the role/resolution of the signer. All the entered information is added to the digital signature. When signing the user has to enter PIN2.
+ 1. Opening digitally signed documents - The user can open digitally signed document containers. When opening the user is shown the list of digitally signed documents and the signers data. The user can separately open all the files in the container. Changing the contents of the files is not possible.
+ 1. Encrypting the document with the ID-card - The user can encrypt documents. When encrypting you can look for the receivers certificate by their ID code from the LDAP catalogue, choose from the persons for who you have encrypted before, read from the file or ID-card.
+ 1. Decrypting an document with the ID-card - The user can decrypt an encrypted file using the secret key that corresponds to public key on the ID-card authentication certificate. 
+ 1. Check the documents digital signatures - the user can check the digitally signed documents signing  data. The user can see all the data connected to the signing. 
+ 1. Remove documents digital signatures - the user can remove digital signatures added to the document. 
+ 1. Printing the documents digital signatures and creating a summary page - The user can print the digital signatures added to the document onto a summary page. The user cannot change the data on the summary page. The summary page consists of:
+	1. Data about the signed files
+	1. Data about the signers
+	1. Notice that the summary page is valid only with the printouts of the signed files. 
+ 1. Sending the digitally signed file by e-mail
+ 1. Creating a document container from a document given, signing it and sending it to a different application (like the e-mail program).
+ 1. Configuring buffer servers - allows to configure the buffer server preferences, that the digidoc library uses to address the validity confirmation and catalogue services.
+ 1. Adding files to a document  using drag & drop targets - allows the user to "drag" the document to be signed onto the digidoc client icon and add documents to the open container by dragging them onto the digidoc client window.
+ 1. Sign with ID-card function in the context menu - right click on a random file allows starting the document signing procedure by adding a new file to a container. 
+ 1. Validity confirmation services access pass side - automatic requesting and updating the request automatically - When starting the program for the first time without  an access pass present the user can request the access pass with a few mouse clicks. The updating of an already requested access pass is done automatically.
 
-[SysteemiKirjeldus Tagasi]
+[SysteemiKirjeldus Back]
