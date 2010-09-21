@@ -1,0 +1,29 @@
+EstEIDSUs task is to control software updates in Mac OS X environment, download them if necessary, verify and start the installation process.
+
+End users see components with comprehensible names that are composed of real packages. The packages are zipped .pkg/.mpkg files (.pkz)
+
+
+== Components the end user sees ==
+
+ * *Core Component* : org.esteid.component.core
+   * [libDigiDoc libDigiDoc]
+   * [EstEIDCM] ''(version is not shown in settings)''
+   * [EstEIDPP] ''(version is not shown in settings)''
+   * [MacSoftwareUpdater EstEIDSU] ''(version is not shown in settings)''
+   * root certificates ''(version is not shown in settings)''
+   * launchd configuration ''(version is not shown in settings)''
+ * *Internet Plug-in* : org.esteid.component.webplugin
+   * [EstEIDWP]
+   * [OpenSCTokenD TokenD]
+ * *Digidoc* : org.esteid.component.digidoc
+   * [QDigiDocClient qdigidocclient]
+ * *ID-card Utility* : org.esteid.component.utility
+   * [QEsteidUtil qesteidutil]
+
+== Installer.mpkg ==
+
+.pkg downloaded from a web page contains all the necessary components mentioned before.
+
+== launchd configuration ==
+
+For a normal user is done through the installer or [EstEIDPP EstEIDPP]. Launchd regularly starts the updater with a silent argument.

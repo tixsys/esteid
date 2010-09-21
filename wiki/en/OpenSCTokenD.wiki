@@ -1,0 +1,9 @@
+Tokend integration allows MacOS X CDSA (Common Data Security Architecture) applications to use the certificates on the ID-card. The module supports user identification in the Safari browser and ID-card certificate use in other Apple applications (like Outlook).
+
+Functionality:
+ 1. User identification (logging into e-services) in the Safari web browser. To authenticate the user has to enter PIN1.
+ 1. E-mail encryption and signing in the program "Mail.app"
+ 1. End the session when the ID-card is removed
+ 1. Logging into the operating system using the card
+
+[SysteemiKirjeldus Back]

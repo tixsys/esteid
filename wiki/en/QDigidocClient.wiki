@@ -1,0 +1,24 @@
+Digidoc client is an application that allows the user to do actions with .ddoc and .bdoc files. Digidoc client uses digidoc libraries. The user can sign whichever documents using the digidoc client.
+
+The digidoc client functionality is the following:
+ 1. Creating a new container (.ddoc or .bdoc). By default a .bdoc container made by Baltic WPKI Forum is created.
+ 1. Adding a document to the container.
+ 1. Digitally signing the document. When signing the user can assign the signers location (city/county/country/index) and the role/resolution of the signer. All the entered information is added to the digital signature. When signing the user has to enter PIN2.
+ 1. Opening digitally signed documents - The user can open digitally signed document containers. When opening the user is shown the list of digitally signed documents and the signers data. The user can separately open all the files in the container. Changing the contents of the files is not possible.
+ 1. Encrypting the document with the ID card - The user can encrypt documents. When encrypting you can look for the receivers certificate by their ID code from the LDAP catalogue, choose from the persons for who you have encrypted before, read from the file or ID card.
+ 1. Decrypting an document with the ID card - The user can decrypt an encrypted file using the secret key that corresponds to public key on the ID card authentication certificate. 
+ 1. Check the documents digital signatures - the user can check the digitally signed documents signing  data. The user can see all the data connected to the signing. 
+ 1. Remove documents digital signatures - the user can remove digital signatures added to the document. 
+ 1. Printing the documents digital signatures and creating a summary page - The user can print the digital signatures added to the document onto a summary page. The user cannot change the data on the summary page. The summary page consists of:
+	1. Data about the signed files
+	1. Data about the signers
+	1. Notice that the summary page is valid only with the printouts of the signed files. 
+ 1. Sending the digitally signed file by e-mail
+ 1. Creating a document container from a document given, signing it and sending it to a different application (like the e-mail program).
+ 1. Configuring buffer servers - allows to configure the buffer server preferences, that the digidoc library uses to address the validity confirmation and catalogue services.
+ 1. Adding files to a document  using drag & drop targets - allows the user to "drag" the document to be signed onto the digidoc client icon and add documents to the open container by dragging them onto the digidoc client window.
+ 1. Sign with ID card function in the context menu - right click on a random file allows starting the document signing procedure by adding a new file to a container. 
+ 1. Validity confirmation services access pass side - automatic requesting and updating the request automatically - When starting the program for the first time without  an access pass present the user can request the access pass with a few mouse clicks. The updating of an already requested access pass is done automatically.
+
+[SysteemiKirjeldus Back]
+

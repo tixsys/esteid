@@ -1,0 +1,9 @@
+CSP bridge is software that allows Windows CryptoAPI applications to use the certificates on the ID-card. Through the CSP bridge user identification in Internet Explorer web browser and ID-card certificate use in other Microsoft applications (like Outlook) is supported.
+
+Functionality:
+ 1. User identification (logging into web services) in the Internet Explorer web browser. To authenticate the user has to enter PIN1.
+ 1. Encrypt and sign e-mail in Outlook
+ 1. Automatic registration an de-registration of the certificates on the card in the system. This function is Windows platform specific (other platforms do not require copying of the certificates into separate repositories but use them directly through OpenSC bridges)
+ 1. End the session when the card is removed
+
+[SysteemiKirjeldus Back]

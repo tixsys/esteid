@@ -1,0 +1,10 @@
+To log in with an ID card the ID card has to be connected to the computer. Make sure it is your ID card because later you can log in with the ID card currently in your machine.
+
+Configuration: <br>
+ 1. Open "System Preferences" --> Other --> ID card<br>
+ 2. Allow changesw with the administrator password (press the padlock sign) <br>
+ 3. Press the box "Login with ID card". <br>
+
+If the message "Enabled id-card login successfully" appears you have configured your ID card login.
+If the message "Failed to enable id-card login" appears make sure the card is in the reader and Keychain shows your certificates and try again.
+You can find Keychain from Applications -> Utilities -> Keychain Access.app

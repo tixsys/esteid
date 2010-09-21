@@ -1,0 +1,13 @@
+
+ * [QEsteidUtil ID card utility] - allows changing of PIN codes, see the card info etc.
+ * [libDigiDoc DigiDoc libraries] - processes BDOC ja DDOC files
+ * [QDigiDocClient signing tool (digidoc client)] - user interface for digital signatures
+ * [EsteidCSP CSP bridge] - enables ID-card authentication in Internet Explorer (Windows before Vista)
+ * [Minidriver Vista minidriver] - enables ID-card authentication in Internet Explorer (Windows Vista and newer)
+ * [OpenSCTokenD Tokend module] - enables ID-card authentication on MacOS X platform (Safari etc.)
+ * [PKCS11 PKCS#11 bridge] - enables ID-card authentication in Firefox
+ * [EsteidBrowserPlugin Browser extensions] - used for digital signing on a web page
+ * [OpenSC PKCS#15 emulator] - Estonian ID-card driver in OpenSC frame (used for realization of many of the functions named before)
+ * [Installers Software installation packages] - installers that make sure that all the software is installed and configured properly
+
+[WikiStart Back]

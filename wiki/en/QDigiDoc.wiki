@@ -1,0 +1,7 @@
+= Client =
+
+[QDigiDocClient DigiDoc3 client] is a program that allows you to digitally sign documents with an ID-card and mobile phone, check the validity of digital signatures and open and save documents located in the envelope of !DigiDoc3 Client.
+Documents in the envelope (.bdoc or .ddoc extension file) can be seen by other people and can be saved to your computer.
+
+= Crypto =
+Digidoc3 Crypto is a program which allows you to make secret documents (encrypt) and make the secret documents readable by all again (decrypt). Files with secret content are with a .cdoc extension.

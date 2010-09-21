@@ -1,0 +1,49 @@
+The problems we are dealing with and the changes to the source texts can be found right here in this environment: menu links "Issues" "Source -> Browse" and "Source -> Changes" are your friends.
+
+Big part of the software can be tested with Squish. It is software meant for automated testing which can successfully complete most of our test plans and make sure the ID card utility, Digidoc3 client and Crypto work. For web application testing we have so far used Selenium.
+
+== Testlab ==
+
+Anyone who wishes can test the ID card software in our testlab.
+In addition there are test cards, many different ID card readers and different operating systems.
+
+Readers:
+ * SCM SCR331   (USB)
+ * SCM SCR3310  (USB)
+ * SCM SCR3311  (USB, table reader with a heavy base)
+ * SCM SPR532   (USB, table reader with PINpad CCID connection)
+ * SCM SCR243   (PCMCIA)
+ * SCM SCR3340  (!ExpressCard54)
+ * SCM SCR333   (integrated)
+ * Omnikey 1010 (Serial, oldschool Utimaco reader, thanks Tigma)
+ * Omnikey 1021 (USB)
+ * Omnikey 3021 (USB)
+ * Omnikey 3621 (USB, table reader with PINpad)
+ * Omnikey 3821 (USB, table reader with PINpad and screen)
+ * Omnikey 3121 (USB, standing table reader)
+ * Omnikey 3921 (integrated)
+ * Omnikey 4040 (PCMCIA)
+ * Omnikey 4321 (!ExpressCard54)
+ * Alcor Micro EMV (integrated)
+ * HP !SmartCard Keyboard (USB)
+
+Platforms:
+ * Windows XP, 32 bit Intel
+ * Windows Vista, 32 ja 64 bit Intel
+ * Windows 7, 32 ja 64 bit Intel
+ * Fedora 12, 32 ja 64 bit Intel
+ * Fedora 13, 32 ja 64 bit Intel
+ * Ubuntu 9.10, 32 ja 64 bit Intel
+ * Ubuntu 10.04, 32 ja 64 bit Intel
+ * OpenSUSE 11.1, 32 ja 64 bit Intel
+ * OpenSUSE 11.2, 32 ja 64 bit Intel
+ * OpenSUSE 11.3, 32 ja 64 bit Intel
+ * Debian stable, 32 ja 64 bit Intel
+ * Gentoo testing, 32 ja 64 bit Intel
+ * MacOS X Leopard 32 bit Intel
+ * MacOS X Snow Leopard 32 ja 64 bit Intel
+
+
+The procedure and prices are still open but first come, first served and write about your wishes to asse[at]smartlink.ee
+
+[WikiStart Back]

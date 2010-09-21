@@ -1,0 +1,19 @@
+ID card utility is software that allows the user to manage his ID card, that means configure all kinds of parameters, change PIN codes and remove blocked PINs. All system specific actions like automatic registration of certificates in repositories etc. is moved out of the ID card utility and integrated into the ID card drivers. That assures the utility is the same on all platforms and the possibility to install ID card drivers without the utility without losing the main functionality.
+
+ID card utility supports the following functions:
+
+ 1. Reading the owners data from the ID card - ID card utility allows to read the owners personal data, document number and the e-mail address from the ID card.
+ 1. Check the ID card certificates - With the ID card utility the user has a possibility to check the signing certificate and authentication certificate information: if it is valid, when it expires etc.
+ 1. Saving ID card certificates  - With the ID card utility you can save the signing certificate and authentication certificate to your hard drive.
+ 1. Changing the PIN and PUK codes of your ID card - With the ID card utility the user has a possibility to change the PIN and PUK codes tied to his ID card. To change the PUK code the user has to know the old PUK code. To change the PIN code the user has to old PIN code or the PUK code.
+ 1. Remove the block from locked ID card PIN codes - If the user has entered the PIN wrong 3 times the PIN will be blocked. The ID card utility allows to remove the PIN code block by identifying the user by using the PUK code.
+ 1. Check the ID card usage statistics - The user can check the amount of digital signatures and authentications made with the ID card.
+ 1. Update the ID card certificates - The user has a possibility to update the ID card signing certificate and authentication certificate if the certificates have expired or are about to expire.
+ 1. Configure official @eesti.ee e-mail - The user has a possibility to configure the @eesti.ee e-mail address connected to his ID card using the ID card utility.
+ 1. Can check the Mobile-ID status and service provider. 
+ 1. Session ending settings configuration.
+ 1. See the passport image - The ID card utility allows the user to see the passport image saved with his data in the citizen portal. You can also save it to your hard drive. 
+ 1. Composing a diagnostic and error report - The ID card utility allows you to compose an error report. To compose an error report data about the operating system, base software versions and card reader drivers is collected.  Then the functions connected to the card are started one by one: card identification, reading the certificate list, reading the personal data file etc. The composed report is presented to the user. The user can either save the report to a file or send directly to the error management environment. 
+ 1. Configuring updates - On the Windows platform. The user gets to choose how often the check for updates is made and if the updates are installed manually or automatically. You also get to choose if the updates are downloaded automatically but confirmation is asked before installing them.
+
+[SysteemiKirjeldus Back]

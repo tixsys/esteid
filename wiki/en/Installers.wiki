@@ -1,0 +1,12 @@
+User downloaded installation package allows the user to install all the ID-card base software (including the card reader drivers) into the users computer. For Linux platform ".deb" and ".rpm" package handling distros ID-card base software packages are made that can be added to new distros and the user can install the ID-card software systematically. If the distros are missing the necessary libraries they will be installed with the ID-card software. For Windows and MAC OS X platforms system specific installation packages are made (.msi, .pkg) that can be installed by downloading from a web page or from an installation media.
+
+Functionality:
+ 1. Installing the software through a graphical user interface - in case of Linux systematically, in case of Windows and MAC OS X through standard installation packages (.msi, .pkg) <br>
+ 1. Installing the software with default settings automatically - system administrators and computer manufacturers have the option to install the ID-card base software into the system automatically without user interference. <br>
+ 1. Web browser identificaton - installation package automatically identifies supported and installed web browsers and their versions and according to that lets the user choose for which browser he wants to install the drivers for or notifies the user that no supported browsers were found. <br>
+ 1. Installing root certificates - root certificates are installed into web browser and operating system certificate repositories. <br>
+ 1. Support for later installations - if software components supported by the base software are added after the base software is installed the necessary software for supporting added components is installed automatically. <br>
+ 1. Software updates - a special service runs under Windows and MAC OS X, for Linux the operating system tools are used. !OpenOffice and Firefox extension updates are also allowed through the web services of those applications. <br>
+ 1. Installing the software from a web page - users operating system is identified and according to that detailed installation instructions are displayed or the installation process will be started. <br>
+
+[SysteemiKirjeldus Back]

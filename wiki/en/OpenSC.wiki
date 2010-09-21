@@ -1,0 +1,11 @@
+It is ID-card drivers realized as an OpenSC PKCS!#15 emulator. OpenSC allows the usage of card readers (both with PINpad and without) through PC/SC, CT-API and OpenCT interfaces. PKCS!#15 emulator allows all OpenSC supporting applications to use the ID-card.
+
+The component allows to use all the ID-card functions through the OpenSC interface:
+ 1. Read the user identification certificate
+ 1. Use the user identification key
+ 1. Read the signing certificate
+ 1. Use the signing certificate
+ 1. Change PINs
+ 1. Unblock PINs
+
+[SysteemiKirjeldus Back]
