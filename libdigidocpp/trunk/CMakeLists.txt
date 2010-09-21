@@ -8,9 +8,11 @@ include(InstallSettings)
 
 if(WIN32)
     set(PKCS11_MODULE "opensc-pkcs11.dll")
-else(WIN32)
+elseif(APPLE)
+    set(PKCS11_MODULE "/Library/OpenSC/lib/opensc-pkcs11.so")
+else()
     set(PKCS11_MODULE "opensc-pkcs11.so")
-endif(WIN32)
+endif()
 
 if(LIBDIGIDOC_MODULE)
     add_definitions(-DLIBDIGIDOC_NAME="${LIBDIGIDOC_MODULE}")
