@@ -62,8 +62,8 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
  * [openSUSE openSUSE seadistamine]
 
 == Võimalused ==
- * [HaldusVahend ID-kaardi haldamine]
- * [DigiDoc Digidoc3 kliendis allkirjastamine]
+ * [QEsteidUtil ID-kaardi haldamine]
+ * [QDigiDocClient Digidoc3 kliendis allkirjastamine]
  * [VeebisAllkirjastamine Veebis allkirjastamine]
 
 <br>
@@ -87,8 +87,8 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Prefer
 <br>
 
 == Võimalused ==
- * [HaldusVahend ID kaardi haldamine]
- * [DigiDoc Digidoc3 klient allkirjastamiseks]
+ * [QEsteidUtil  ID kaardi haldamine]
+ * [QDigiDocClient Digidoc3 klient allkirjastamiseks]
  * ID-kaardiga Maci sisse logimine
      Mac OS X 10.5.6 ja hiljem on võimalik ID-kaardiga sisselogimine seadistada "System Preferences" ID-kaardi vaate alt.
 
