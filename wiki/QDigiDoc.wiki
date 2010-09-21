@@ -1,6 +1,6 @@
 = Klient =
 
-[DigiDocClient DigiDoc3 Klient] on programm, millega saad anda dokumentidele ID-kaardiga ja mobiiltelefoniga digitaalallkirju, kontrollida digitaalallkirjade kehtivust ning avada ja salvestada !DigiDoc3 Kliendi ümbrikus sisalduvaid dokumente. 
+[QDigiDocClient DigiDoc3 Klient] on programm, millega saad anda dokumentidele ID-kaardiga ja mobiiltelefoniga digitaalallkirju, kontrollida digitaalallkirjade kehtivust ning avada ja salvestada !DigiDoc3 Kliendi ümbrikus sisalduvaid dokumente. 
 Ümbrikus (fail laiendiga .bdoc või .ddoc) sisalduvaid dokumente on teistel isikutel võimalik vaadata ja enda arvutisse salvestada. 
 
 = Krüpto =
