@@ -1,4 +1,4 @@
-Tegemist on OpenSC PKCS!#15 emulaatorina realiseeritud ID-kaardi draiveriga. OpenSC võimaldab kasutada kaardilugejaid (nii PIN PAD-iga kui ilma) läbi PC/SC, CT-API ja OpenCT liideste. PKCS!#15 emulaator võimaldab ID-kaarti kasutada kõigil OpenSC-d toetavatel rakendustel.
+Tegemist on OpenSC PKCS!#15 emulaatorina realiseeritud ID-kaardi draiveriga. OpenSC võimaldab kasutada kaardilugejaid (nii PINpad'ga kui ilma) läbi PC/SC, CT-API ja OpenCT liideste. PKCS!#15 emulaator võimaldab ID-kaarti kasutada kõigil OpenSC-d toetavatel rakendustel.
 
 Komponent võimaldab kasutada kõiki ID-kaardi funktsioone läbi OpenSC liidese:
  1.	Isikutuvastuse sertifikaadi lugemine
