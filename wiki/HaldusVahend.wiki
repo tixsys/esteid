@@ -1,5 +1,0 @@
-ID-kaardi haldusvahendiga saab ID-kaardilt lugeda omaniku isikuandmeid, vahetada PIN ja PUK koode, lukustunud PIN1 ja PIN2 koode lahti blokeerida, vaadata kaardil olevate allkirjastamise ja isikutuvastamise sertifikaatide kasutamise statistikat ning registreerida sertifikaate süsteemi sertifikaadihoidlasse või salvestada faili.
-
-Lisaks saad seadistada mitmeid ID-kaardi rakenduse parameetreid, näiteks ID-kaardi tarkvara uuenduste paigaldamist. 
-
-[[Image(haldusvahend.jpg)]]
