@@ -9,16 +9,16 @@ Lõppkasutajad näevad arusaadavate nimetustega komponente, mis koosnevad reaals
    * libdigidoc
    * [EstEIDCM] ''(versiooni ei kuvata seadetes)''
    * [EstEIDPP] ''(versiooni ei kuvata seadetes)''
-   * [EstEIDSU] ''(versiooni ei kuvata seadetes)''
+   * [MacSoftwareUpdater ] ''(versiooni ei kuvata seadetes)''
    * juursertifikaadid ''(versiooni ei kuvata seadetes)''
    * launchd seadistus ''(versiooni ei kuvata seadetes)''
  * *Internet Plug-in* : org.esteid.component.webplugin
    * [EstEIDWP]
-   * [EstEIDTokend]
+   * [OpenSCTokenD TokenD]
  * *Digidoc* : org.esteid.component.digidoc
-   * [DigiDocClient DigiDoc Client]
+   * [QDigiDocClient DigiDoc Client]
  * *ID-card Utility* : org.esteid.component.utility
-   * [EstEIDUtil]
+   * [QEsteidUtil QEsteidUtil]
 
 == Installer.mpkg ==
 
