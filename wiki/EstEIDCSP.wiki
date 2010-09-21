@@ -1,6 +1,6 @@
 CSP sild on tarkvara, mis võimaldab Windowsi CryptoAPI rakendustel kasutada ID-kaardil asuvaid sertifikaate. CSP silla kaudu toetatakse isikutuvastust Internet Explorer veebibrauseris ja ID-kaardi sertifikaatide kasutamist muudes Microsofti rakendustes (näiteks Outlook).
 
-CSP sild pakub järgmist funktsionaalsust:
+Funktsionaalsus:
  1. Isikutuvastus (E-teenustesse sisenemine) veebibrauseris „Internet Explorer“. Autentimiseks tuleb kasutajal sisestada PIN1 kood. 
  1. E-posti krüpteerimine ja allkirjastamine programmis „Outlook“ 
  1. Kaardil olevate sertifikaatide automaatne registreerimine ja de-registreerimine süsteemis. See funktsioon on Windows platvormi spetsiifiline (teised platvormid ei vaja sertifikaatide kopeerimist eraldi hoidlatesse vaid kasutavad neid otse läbi OpenSC vastavate sildade)
