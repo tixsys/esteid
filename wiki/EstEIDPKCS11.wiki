@@ -1,9 +1,0 @@
-PKCS!#11 sild võimaldab PKCS!#11 moodulteegi standardile vastavatel rakendustel kasutada ID-kaardil asuvaid sertifikaate. Silla kaudu toetatakse isikutuvastust Firefox veebibrauseris ja ID-kaardi sertifikaatide kasutamist Thunderbird e-posti programmis kõigil platvormidel.
-
-Funktsionaalsus:
- 1.	Isikutuvastus (E-teenustesse sisenemine) veebibrauseris „Firefox“. Autentimiseks tuleb kasutajal sisestada PIN1 kood.
- 1.	E-kirjade signeerimine ja krüpteerimine programmis “Thunderbird” – kasutajal on võimalus digitaalselt allkirjastada ning samuti krüpteerida ning dekrüpteerida e-kirju ID kaardi sertifikaatidega, kasutades oma e-posti klienti.
- 1.	Kaardi eemaldamisel sessiooni lõpetamine
- 1.	Linux operatsioonisüsteemi sisse logimine kiipkaardiga
-
-[SysteemiKirjeldus Tagasi]
