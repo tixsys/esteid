@@ -10,7 +10,7 @@ Allkirjastamine toimub läbi universaalse brauseripluginate API. Plugina laadimi
 ühesugune ja seda tehakse järgmise HTML tagiga: 
 
 {{{
-<object id="esteid" type="application/esteid"
+<object id="esteid" type="application/x-esteid"
         style="width: 1px; height: 1px;"></object>
 }}}
 
@@ -23,14 +23,17 @@ var cert_pem = esteid.signCert.cert;
 Ning pärast vajalike ettevalmistuste tegemist serveri poolel, dokumendi räsi allkirjastada:
 {{{
 var esteid = document.getElementById('esteid');
-esteid.sign(hash, "/mywebapp/downloadhalfbakeddoc");
-}}}
+esteid.signAsync(hash, "/mywebapp/downloadhalfbakeddoc", {
+    onSuccess: function(signedHash)   { /* Do something with returned signedHash */ },
+    onError:   function(errorMessage) { /* Handle error */ }
+});
 
-JavaScripti API dokumentatsiooni leiab hetkel siit: source:plugins/firefox/trunk/components/nsIEstEID.idl
+}}}
 
 Laienduse funktsionaalsuse demo leiab aadressilt: https://id.smartlink.ee/plugin_tests/test.html
 
-Üritame kirjutada ka mõningaid näiteprogramme, esimene pääsuke asub siin kataloogis: source:/plugins/samples/
+Üritame kirjutada ka mõningaid näiteprogramme, esimene pääsuke asub siin kataloogis: 
+http://code.google.com/p/esteid/source/browse/#svn/jdigidoc/trunk/samples
 
 NB! Igasugune kaastöö on teretulnud ;)
 
