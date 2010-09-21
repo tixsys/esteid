@@ -1,0 +1,19 @@
+ID-kaardi utiliit on tarkvara, mis võimaldab kasutajal „hallata“ oma ID-kaarti see tähendab maakeeli, seadistada kõikvõimalikke parameetreid, vahetada PIN koode ja võtta maha PINide blokeeringuid. Kõik süsteemispetsiifilised tegevused nagu sertifikaatide automaatne registreerimine hoidlates jms liigutatakse ID-kaardi utiliiidist välja ja integreeritakse ID-kaardi draiveritesse. See tagab utiliidi platvormiülesuse ja võimaluse paigaldada ID-kaardi draiverid ilma utiliidita, kaotamata sealjuures põhifunktsionaalsust.
+
+ID-kaardi utiliit toetab järgnevaid funktsioone:
+
+ 1. ID-kaardilt kaardi omaniku andmete lugemine – ID-kaardi utiliit võimaldab lugeda ID kaardilt omaniku isikuandmeid, dokumendi numbri ning isikuga seotud e-posti aadressi.
+ 1. ID-kaardi sertifikaatide kontroll –  ID-kaardi utiliidi abil on kasutajal võimalus vaadata signeerimissertifikaadi ning autentimissertifikaadi inimloetavaid andmeid: kehtivuse staatus, kehtivuse lõppkuupäev jne. 
+ 1. ID-kaardi sertifikaatide salvestamine – ID-kaardi utiliidi abil on võimalik salvestada signeerimissertifikaati ja autentimissertifikaati arvuti kõvakettale.
+ 1. ID-kaardi PIN ja PUK koodide muutmine  - ID-kaardi utiliidi abil on kasutajal võimalus muuta tema ID-kaardiga seotud PIN ja PUK koode. PUK koodi muutmiseks peab kasutaja teadma vana PUK koodi. PIN koodi muutmiseks peab kasutaja teadma vastavat vana PIN koodi või PUK koodi.
+ 1. ID-kaardi lukustunud PIN koodide blokeeringu maha võtmine  - Juhul kui kasutaja on sisestanud PIN koodi 3 (kolm) korda valesti, PIN kood blokeeritakse. ID-kaardi utiliit võimaldab PIN koodide blokeeringu maha võtmist, tuvastades kasutaja PUK koodi abil.
+ 1. ID-kaardi kasutamise statistika vaatamine – kasutajal on võimalik kontrollida tema ID-kaardiga antud digitaalsete allkirjade ning kaardiga sooritatud autentimiste arvu.
+ 1. ID-kaardi sertifikaatide uuendamine – kasutajal on võimalus uuendada ID-kaardi signeerimissertifikaati ning autentimissertifikaati juhul, kui sertifikaadid on aegunud või kohe-kohe aegumas.
+ 1. Ametliku @eesti.ee e-posti aadressi seadistamine – kasutajal on võimalik seadistada tema ID kaardiga seotud @eesti.ee e-posti aadressi kasutades ID-kaardi utiliiti. 
+ 1. Saab kontrollida Mobiil-ID staatust ning teenusepakkujat.
+ 1. Sessiooni lõpetamise seadete konfigureerimine.
+ 1. Passipildi vaatamine – ID-kaardi utiliit võimaldab kasutajal vaadata kodanikuportaalis tema andmete juures salvestatud passipilti. Mugavuse lisamiseks saab pilti ka arvuti kõvakettale salvestada.
+ 1. Diagnostika ja vearaporti koostamine – ID-kaardi utiliit võimaldab koostada vearaportit. Vearaporti koostamiseks kogutakse informatsioon operatsioonisüsteemi, baastarkvara versioonide ja kaardilugeja draiverite kohta. Seejärel käivitatakse järjest kaardiga seotud funktsioonid: kaardi tuvastamine, sertifikaatide nimekirja lugemine, isikuandmete faili lugemine jne. Koostatud raport esitatakse kasutajale. Kasutaja võib kas raporti salvestada faili või saata otse veahalduskeskkonda.
+ 1. Uuenduste seadistamine – Windows platvormil. Kasutaja saab valida kui tihti uuendusi kontrollitakse ja kas uuendused paigaldatakse automaatselt või käsitsi. Samuti saab valida võimaluse, kus uuendused laetakse automaatselt alla kuid paigaldamiseks küsitakse kinnitust.
+
+[SysteemiKirjeldus Tagasi]
