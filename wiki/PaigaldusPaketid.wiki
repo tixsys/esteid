@@ -1,6 +1,6 @@
 ﻿= Mis on mis? =
 
- * opensc - OpenSC koos ID-kaardi PKCS!#15 emulaatoriga. Firefoxiga kasutamiseks. *NB! Kui turvamoodul miskipärast ei tööta, siis kiika siia: FirefoxModuleInstaller*
+ * opensc - OpenSC koos ID-kaardi PKCS!#15 emulaatoriga. Firefoxiga kasutamiseks. 
  * esteid-pkcs11 - Eksperimentaalne nö "lightweight" PKCS!#11 draiver. Firefoxiga kasutamiseks
  * CSP - Windowsi CryptoAPI draiver. Internet Exploreriga kasutamiseks. *NB! Loe kindlasti läbi [CSPTestimine]*
  * BHO - Internet Exploreri laiendus, mis võimaldab veebis allkirjastamist. *NB! internetipankades ja digidoci portaalis see veel ei tööta, kuna tegemist on uue API-ga*
