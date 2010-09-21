@@ -1,4 +1,0 @@
-Siia lehe külge peaks saama pilte riputada
-
-Viitamine käib nii: 
-![[Image(wiki:ImelisedIkoonid:linux-logo.png, link=wiki:PaigaldusPaketid, title=Linux)]]
