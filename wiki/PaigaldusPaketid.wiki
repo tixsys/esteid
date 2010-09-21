@@ -89,7 +89,7 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Prefer
 == Võimalused ==
  * [QEsteidUtil  ID kaardi haldamine]
  * [QDigiDocClient Digidoc3 klient allkirjastamiseks]
- * ID-kaardiga Maci sisse logimine
+ * [MacLoginSeadistamine ID-kaardiga Maci sisse logimine]
      Mac OS X 10.5.6 ja hiljem on võimalik ID-kaardiga sisselogimine seadistada "System Preferences" ID-kaardi vaate alt.
 
 <br>
