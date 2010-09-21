@@ -8,7 +8,6 @@
  * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed.
  * TicketiteLoomine - Reeglid, kuidas luua uusi ticketeid.
 
-Nimekirja kõigist olemasolevatest lehekülgedest leiad siit: TitleIndex.
 
 == Index ==
 
@@ -18,9 +17,8 @@ Nimekirja kõigist olemasolevatest lehekülgedest leiad siit: TitleIndex.
  * [PaigaldusPaketid Installing packs] - Here are final installing packs for trying and testing. (EST)
  * [ProgressiRaportid Progress raports] - Any automatical and less automatical compiling and testing logs. (EST)
  * [KasutajalidesteTekstid Texts of GUI] - Text strings, which are used in Graphical User Interface. (EST)
-
-For a complete list of local pages, see TitleIndex.
+ * [TicketiteLoomine Creating Tickets] - Rules, how to create new tickets.
 
 == Arendajate List ==
 
-Liitumiseks siirdu aadressile https://lists.ria.ee/listinfo/id
+Liitumiseks siirdu aadressile http://groups.google.com/group/esteid-devel/
