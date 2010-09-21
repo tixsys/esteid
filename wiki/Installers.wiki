@@ -3,11 +3,11 @@ Windows ja MacOS X platvormidele luuakse süsteemispetsiifilised paigalduspaketi
 
 Funktsionaalsus:
  1. Tarkvara paigaldamine läbi graafilise kasutajaliidese – Linuxite puhul süsteemselt, Windowsi ja MacOS X puhul standardsete installatsioonipakettide (.msi, .pkg) abil.<br>
- 2. Tarkvara paigaldamine vaikimisi seadistustega automaatselt – süsteemiadministraatoritel ja arvutitootjatel tekib võimalus paigaldada ID kaardi baastarkvara süsteemi automaatselt ilma inimese poolse vahelesegamiseta.<br>
- 3. Veebilehitsejate tuvastamine – Installipakett tuvastab olemasolevad toetatavad veebilehitsejad koos nende versioonidega ning vastavalt sellele võimaldab kasutajal valida, millistele veebilehitsejatele draivereid soovitakse või teavitab kasutajat vajaliku veebilehitseja puudumisest.<br>
- 4. Juursertifikaatide paigaldamine – paigaldatakse juursertifikaadid veebibrauserite ja operatsioonisüsteemi sertifikaadihoidlatesse.<br>
- 5. Hilisemate paigalduste tugi – Haagid, mis käivituvad juhul kui peale baastarkvara paigaldamist lisatakse tarkvarakomponente, mis on toetatud baastarkvara poolt ja paigaldatavad lisatud komponentide toetamiseks vajaliku tarkvara automaatselt.<br>
- 6. Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. !OpenOffice ja Firefox laienduste uuendamist võimaldatakse ka läbi nende rakenduste enda veebiteenuste.<br>
- 7. Tarkvara paigaldamine veebilehelt – tuvastatakse kasutaja operatsioonisüsteem ja sellele vastavalt kuvatakse kas detailsed paigaldamisjuhised või käivitatakse installatsiooniprotsess.<br>
+ 1. Tarkvara paigaldamine vaikimisi seadistustega automaatselt – süsteemiadministraatoritel ja arvutitootjatel tekib võimalus paigaldada ID kaardi baastarkvara süsteemi automaatselt ilma inimese poolse vahelesegamiseta.<br>
+ 1. Veebilehitsejate tuvastamine – Installipakett tuvastab olemasolevad toetatavad veebilehitsejad koos nende versioonidega ning vastavalt sellele võimaldab kasutajal valida, millistele veebilehitsejatele draivereid soovitakse või teavitab kasutajat vajaliku veebilehitseja puudumisest.<br>
+ 1. Juursertifikaatide paigaldamine – paigaldatakse juursertifikaadid veebibrauserite ja operatsioonisüsteemi sertifikaadihoidlatesse.<br>
+ 1. Hilisemate paigalduste tugi – Haagid, mis käivituvad juhul kui peale baastarkvara paigaldamist lisatakse tarkvarakomponente, mis on toetatud baastarkvara poolt ja paigaldatavad lisatud komponentide toetamiseks vajaliku tarkvara automaatselt.<br>
+ 1. Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. !OpenOffice ja Firefox laienduste uuendamist võimaldatakse ka läbi nende rakenduste enda veebiteenuste.<br>
+ 1. Tarkvara paigaldamine veebilehelt – tuvastatakse kasutaja operatsioonisüsteem ja sellele vastavalt kuvatakse kas detailsed paigaldamisjuhised või käivitatakse installatsiooniprotsess.<br>
 
 [SysteemiKirjeldus Tagasi]
