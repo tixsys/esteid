@@ -1,14 +1,14 @@
 [[Image(id-kaart-komponentjoonis.png)]]
 
- * [EstEIDUtil ID-kaardi utiliit] - võimaldab vahetada PIN koode, näha kaardi infot jne
+ * [QEsteidUtil ID-kaardi utiliit] - võimaldab vahetada PIN koode, näha kaardi infot jne
  * [libDigiDoc DigiDoc teegid] - töötleb BDOC ja DDOC faile
- * [DigiDocClient Allkirjastamise tööriist (digidoc klient)] - kasutajaliides digiallkirjade andmiseks
- * [EstEIDCSP CSP sild] - võimaldab ID-kaardiga autentimist Internet Explorerist (Windowsid enne Vistat)
- * [EstEIDMinidriver Vista minidraiver] - võimaldab ID-kaardiga autentimist Internet Explorerist (Windows Vista ja uuemad)
- * [EstEIDTokend Tokend moodul] - võimaldab ID-kaardiga autentimist MacOS X platvormil (Safari jt)
- * [EstEIDPKCS11 PKCS#11 sild] - võimaldab ID-kaardiga autentimist Firefoxist
- * [BrowserExtensions Brauserite laiendused] - kasutatakse veebilehel digitaalallkirja andmiseks
- * [EstEIDOpenSC PKCS#15 emulaator] - Eesti ID-kaardi draiver OpenSC raamistiku koosseisus (kasutatakse mitmete eelnevate funktsioonide realiseerimiseks)
+ * [QDigiDocClient Allkirjastamise tööriist (digidoc klient)] - kasutajaliides digiallkirjade andmiseks
+ * [EsteidCSP CSP sild] - võimaldab ID-kaardiga autentimist Internet Explorerist (Windowsid enne Vistat)
+ * [Minidriver Vista minidraiver] - võimaldab ID-kaardiga autentimist Internet Explorerist (Windows Vista ja uuemad)
+ * [OpenSCTokenD Tokend moodul] - võimaldab ID-kaardiga autentimist MacOS X platvormil (Safari jt)
+ * [PKCS11 PKCS#11 sild] - võimaldab ID-kaardiga autentimist Firefoxist
+ * [EsteidBrowserPlugin Brauserite laiendused] - kasutatakse veebilehel digitaalallkirja andmiseks
+ * [OpenSC PKCS#15 emulaator] - Eesti ID-kaardi draiver OpenSC raamistiku koosseisus (kasutatakse mitmete eelnevate funktsioonide realiseerimiseks)
  * [Installers Tarkvara paigalduspaketid] - installerid, mis peavad tagama, et kogu tarkvara saab paigaldatud ja õigesti seadistatud
 
 [WikiStart Tagasi]
