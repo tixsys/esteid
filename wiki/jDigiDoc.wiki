@@ -58,7 +58,7 @@ Arendusversioonide repositooriumi kasutamiseks tuleb lisada pom.xml faili järgm
 }}}
 
 == Lähtetekstid ==
-Teegi lähtetekstid on avaldatud LGPL litsentsi all ja on saadaval id.eesti.ee SVN-ist
+Teegi lähtetekstid on avaldatud LGPL litsentsi all ja on saadaval esteid.googlecode.com SVN-ist
 {{{
 svn co https://esteid.googlecode.com/svn/jdigidoc/trunk jdigidoc
 }}}
