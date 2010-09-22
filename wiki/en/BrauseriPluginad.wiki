@@ -1,0 +1,39 @@
+== User identification ==
+
+ * Configure your web server to demand client side certificate: [VeebisAutentimine Web authentication]
+ * Use the CGI standard environment variables in your application.<br>
+   For example: SSL_CLIENT_S_DN, SSL_CLIENT_CERT etc.<br>
+   Variable list can be found here: http://httpd.apache.org/docs/2.0/mod/mod_ssl.html
+
+== Signing ==
+Signing is done through a universal browser plugin API. Loading a plugin is the same in all supported browsers and is done with the following HTML tag:
+
+{{{
+<object id="esteid" type="application/x-esteid"
+        style="width: 1px; height: 1px;"></object>
+}}}
+
+From there you can read the signing certificate:
+{{{
+var esteid = document.getElementById('esteid');
+var cert_pem = esteid.signCert.cert;
+}}}
+
+And after the necessary arrangements on the server side sign the document hash:
+{{{
+var esteid = document.getElementById('esteid');
+esteid.signAsync(hash, "/mywebapp/downloadhalfbakeddoc", {
+    onSuccess: function(signedHash)   { /* Do something with returned signedHash */ },
+    onError:   function(errorMessage) { /* Handle error */ }
+});
+
+}}}
+
+Demo for the extensions functionality can be found at: https://id.smartlink.ee/plugin_tests/test.html
+
+We will try to make some example programs, the first of those is in this folder http://code.google.com/p/esteid/source/browse/#svn/jdigidoc/trunk/samples
+
+NB! All help is welcome :)
+
+PS! Browser plugins are not separate components but are circulated with [PaigaldusPaketid installed software] 
+
