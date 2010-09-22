@@ -1,0 +1,8 @@
+[QDigiDoc DigiDoc] formats (DDOC ja BDOC) have special libraries for working with them.
+
+Choose the programming language you are using:
+
+ * [libDigiDocPP C++]
+ * [jDigiDoc Java]
+
+[RakendusteKirjutamine Back]

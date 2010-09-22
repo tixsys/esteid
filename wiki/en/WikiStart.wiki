@@ -1,0 +1,37 @@
+= Hello guest! =
+
+You are on the Estonian ID card development page.
+
+<table cellspacing="15">
+
+<tr>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/linux-logo.png
+<h2>[PaigaldusPaketid#Linux Linux user]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/apple-logo.png
+<h2>[PaigaldusPaketid#Mac_OS_X Mac user]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/windows-logo.png
+<h2>[PaigaldusPaketid#Windows Windows user]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
+<h2>[ArendajaSissejuhatus Developer]</h2>
+</td>
+
+</tr>
+
+</table>
+
+<strong>With problems please contact the ID help center by phone 1777 or e-by e-mail teel: <a href="mailto:abi@id.ee">abi@id.ee</a></strong>
+
+Development is supported by:
+
+[http://www.struktuurifondid.ee http://esteid.googlecode.com/svn/wiki/img/SF-logo.jpg]

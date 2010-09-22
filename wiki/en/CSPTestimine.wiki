@@ -1,0 +1,123 @@
+CSP or [http://msdn.microsoft.com/en-us/library/aa380245(VS.85).aspx Certificate Service Provider] has to be signed by Microsoft.
+Of course during development for every test there is no point sending the DLLs to Microsoft for signing.
+To switch off signature check you have to use HEX editor on advapi32.dll located in System32 folder.
+It is a "very necessary" system file ([http://www.microsoft.com/whdc/archive/wfp.mspx Read here]) so Windows tries to stop you from replacing it in any way. While working you cannot write a file there, renaming does not work (the old one is back after system restart) and to top it all off there are many copies of the file in the system.
+
+*NB! If you did not understand the text before then do not try to mess with your system.
+You will probably fail and worst case scenario is that you will ruin Windows completely and have to install everything from the scratch.*
+
+We would gladly upload already made dll-s for the interested parties to download but that would sadly be software piracy.
+So you have to make the necessary files yourself.
+For starters you need HEX editor. On Windows platform we have used [http://mh-nexus.de/en/hxd/ HxD]. Under Linux for file editing ghex or khexeditor is good enough, old school hackers have [http://www.hiew.ru Hiew] somewhere in their drawers.
+
+ * Copy advapi32.dll from System32 to a safe place (like c:\advapi32 folder)
+ * Make a backup copy of the file (like c:\advapi32\normal.dll)
+ * Right click on the file and find the DLL version number. You need that to check your next moves.
+ * Open the copied file with HEX editor
+ * Replace some bytes according to your Windows DLL version (check below)
+ * For 64bit Windows do the same with advapi32.dll in the SysWOW64 folder
+ * Turn off your computer and hook your hard drive to a different machine with the *same*  Windows version (when using a newer one NTFS might be updated irreplaceably, older one might not be able to read the newer NTFS)
+ * Replace System32\advapi32.dll with the edited version
+ * For 64bit Windows do the same with advapi32.dll in the SysWOW64 folder
+ * Delete other copies from the system
+  * System32\dllcache\advapi32.dll
+  * etc.
+ * Start the system and start from the command line:
+{{{
+SFC /SCANNOW
+}}}
+ * If you are notified that damaged files were found but could not be fixed then in all likelyhood you were successful.
+ * Connect the reader to the computer and insert ID card
+ * Try if EstEIDCSP works with a command
+{{{
+testac enumcont
+}}}
+ * If the patching was unsuccessful you will get a message:
+{{{
+cryptError  exception:'CryptoApiError' code:'0x80090006'
+}}}
+ * If that happened then open advapi32.dll again with the HEX editor and see if your changes are still there or did Windows replace the old file.
+
+NB! The internet has all kinds of stories that Safe mode and/or Recovery console work for patching advapi32.dll. *They do not work*! One working alternative is BartPE LiveCD but looking for, copying and replacing files on the "real computer" is definitely much more comfortable.
+
+= Necessary changes by advapi32 version =
+Original source: [http://blog.idrassi.com/ Mounir blog].
+
+NB! For 64 bit Windows there is a 64 bit file in System32 folder and *32 bit file in SysWOW64 folder* but if you were doing this then you already knew that right? :)
+
+ * 5.0.2195.6710 32bit
+  * At offset 0x17061 : change 0F to E9
+  * At offset 0x17062 : change 84 to 2C
+  * At offset 0x17063 : change 22 to 06
+  * At offset 0x17064 : change 06 to 01
+ * 5.0.2195.7038 32bit
+  * At offset 0xEA97 : change 0F to E9
+  * At offset 0xEA98 : change 84 to 93
+  * At offset 0xEA99 : change 89 to 83
+  * At offset 0xEA9A : change 83 to 01
+  * At offset 0xEA9B : change 01 to 00
+  * At offset 0xEA9C : change 00 to 90
+ * 5.1.2600.5512 32bit
+  * At offset 0x175A1 : change 75 to 90
+  * At offset 0x175A2 : change 0C to 90
+  * At offset 0x175A9 : change 0F to 90
+  * At offset 0x175AA : change 84 to E9
+ * 5.1.2600.5755:
+    * At offset 0x175C1 : change 75 to 90
+    * At offset 0x175C2 : change 0C to 90
+    * At offset 0x175C9 : change 0F to 90
+    * At offset 0x175CA : change 84 to E9
+ * 5.2.3790.1830 32bit
+  * At offset 0x68CD : change 0F to EB
+  * At offset 0x68CE : change 84 to 42
+  * At offset 0x68CF : change 62 to 90
+  * At offset 0x68D0 : change 0B to 90
+  * At offset 0x68D1 : change 03 to 90
+  * At offset 0x68D2 : change 00 to 90
+ * 5.2.3790.1830 64bit
+  * At offset 0x11B15 : change 0F to 90
+  * At offset 0x11B16 : change 84 to E9
+  * At offset 0x4D2AD : change 0F to 90
+  * At offset 0x4D2AE : change 85 to 90
+  * At offset 0x4D2AF : change 68 to 90
+  * At offset 0x4D2B0 : change 48 to 90
+  * At offset 0x4D2B1 : change FC to 90
+  * At offset 0x4D2B2 : change FF to 90
+ * 5.2.3790.3959 32bit
+  * At offset 0x11E3F : change 75 to 90
+  * At offset 0x11E40 : change 08 to 90
+  * At offset 0x11E47 : change 74 to EB
+ * 5.2.3790.3959 64bit
+  * At offset 0x11AC5 : change 0F to 90
+  * At offset 0x11AC6 : change 84 to E9
+  * At offset 0x4D0C4 : change 0F to 90
+  * At offset 0x4D0C5 : change 85 to 90
+  * At offset 0x4D0C6 : change 01 to 90
+  * At offset 0x4D0C7 : change 4A to 90
+  * At offset 0x4D0C8 : change FC to 90
+  * At offset 0x4D0C9 : change FF to 90
+ * 6.0.6001.18000 32bit
+  * At offset 0x2420C : change 75 to 90
+  * At offset 0x2420D : change 0C to 90
+  * At offset 0x24214 : change 0F to 90
+  * At offset 0x24215 : change 84 to E9
+ * 6.0.6001.18000, 64-Bit :
+  * At offset 0x27C29 : change 75 to 90
+  * At offset 0x27C2A : change 0B to 90
+  * At offset 0x27C30 : change 0F to 90
+  * At offset 0x27C31 : change 84 to E9
+
+== Known Advapi32 versions according to the Windows version ==
+
+NB! That information might not match because Microsoft might update the file with a hotfix.
+
+
+ * Windows 2000 SP4: 5.0.2195.6710 või 5.0.2195.7038
+ * Windows XP SP3 32 bit: 5.1.2600.5512 või 5.1.2600.5755
+ * Windows XP SP2 64 bit: 5.2.3790.1830 või 5.2.3790.3959
+ * Windows 2003 SP2: 5.2.3790.3959
+ * Windows Vista SP1: 6.0.6001.18000
+ * Windows 7 Build 7000: 6.2.7000.0
+
+
+

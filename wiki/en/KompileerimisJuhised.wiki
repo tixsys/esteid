@@ -1,0 +1,29 @@
+= Want to be a programmer?! Cool! =
+
+For starters you need the source texts.
+You can read them from this web page by choosing "Browse Source" from the top menu.
+
+You need a SVN client to get the source texts.
+
+Under Linux it is simple: command line SVN to the rescue.
+
+Windows users should download [http://tortoisesvn.tigris.org TortoiseSVN].
+
+If you are using a development environment called [http://www.eclipse.org Eclipse] then that also has a SVN module (subclipse, you can install from  where the other Eclipse extensions can be found).
+
+= Download the necessary piece =
+If you have decided what you are going to poke at direct the SVN client to the address:
+https://id.eesti.ee/svn/ModuleName
+For example:
+{{{
+svn co https://id.eesti.ee/svn/libdigidocpp/trunk libdigidocpp
+}}}
+Then compile the piece you chose with CMake.
+For example:
+{{{
+cd libdigidocpp
+mkdir build
+cd build
+cmake ..
+make
+}}}

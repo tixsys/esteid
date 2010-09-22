@@ -1,0 +1,21 @@
+DigiDoc libraries offer the software developers the necessary base functionality to process .ddoc and .bdoc files.
+
+Offered functionality:
+ 1. Supported file formats:
+  1. DIGIDOC-XML 1.4
+  1. DIGIDOC-XML 1.3
+  1. DIGIDOC-XML 1.2
+  1. DIGIDOC-XML 1.1
+  1. SK-XML 1.0
+  1. BDOC 0.61
+ 1. Reading supported file formats
+ 1. Writing supported file formats
+ 1. Signing supported file formats
+ 1. Checking the signatures found in supported file formats
+ 1. Java API (equivalent with the Java library API developed by AS Sertifitseerimiskeskus)
+ 1. C++ API (equivalent with the C++ library API developed by AS Sertifitseerimiskeskus)
+ 1. Web service framework that is compatible to DigiDoc Service API. API and functionality are equivalent to digidoc service specifications (http://www.sk.ee/files/DigiDocService_spec_est.pdf) and easily allows to build and use web service based signing solutions (like mobile ID).
+ 1. Supporting buffer servers (proxy). When getting a confirmation of validity and looking for the certificates in the catalogue it is possible to use buffer servers. By default the system preferences are used, the application can specify its own preferences.
+ 1. Using alternate certificates - it is possible to use key operations and certificates from other secure carriers than ID card.
+
+[SysteemiKirjeldus Back]
