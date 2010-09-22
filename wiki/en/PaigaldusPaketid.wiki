@@ -85,7 +85,7 @@ Later the software update check will be done automatically or manually through t
 <br>
 
 == Possibilities ==
- * [EsteidUtil ID card management]
+ * [QEsteidUtil ID card management]
  * [QDigiDoc Signing with Digidoc3 client]
  * [MacLoginSeadistamine Logging into Mac] with ID card
 	For Mac OS X 10.5.6 and later it is possible to set logging in with ID card in the "System Preferences" ID card view.

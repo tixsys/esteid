@@ -1,4 +1,4 @@
-Browser extensions realize the digital signing in web applications - the user can digitally sign documents through the web browser. The web programmer sees the documented !JavaScript  API  that all the browser extensions use. This approach lessens the costs of developing web services that enable ID-card signing  and lessens the possible compatibility problems.
+Browser extensions realize the digital signing in web applications - the user can digitally sign documents through the web browser. The web programmer sees the documented !JavaScript  API  that all the browser extensions use. This approach lessens the costs of developing web services that enable ID card signing  and lessens the possible compatibility problems.
 
 Functionality:
  1. Digitally signing the document using API seen in !JavaScript

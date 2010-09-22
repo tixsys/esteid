@@ -1,10 +1,10 @@
 == Index ==
 
- * [SysteemiKirjeldus System description] - Big picture and explanations, what is what. (EST)
- * [RakendusteKirjutamine Application developing] - Here is information about developing applications of ID-card. (EST)
- * [KompileerimisJuhised Compile instructions]  - Here are instructions, how develope base software. (EST)
- * [PaigaldusPaketid Installing packs] - Here are final installing packs for trying and testing. (EST)
- * [ProgressiRaportid Progress raports] - Any automatical and less automatical compiling and testing logs. (EST)
+ * [SysteemiKirjeldus System description] - Big picture and explanations, what is what.
+ * [RakendusteKirjutamine Application developing] - Here is information about developing applications of ID card.
+ * [KompileerimisJuhised Compile instructions]  - Here are instructions, how develope base software. 
+ * [PaigaldusPaketid Installation packages] - Here are final installing packs for trying and testing.
+ * [ProgressiRaportid Progress raports] - Any automatical and less automatical compiling and testing logs.
  * [KasutajalidesteTekstid Texts of GUI] - Text strings, which are used in Graphical User Interface. (EST)
  * [TicketiteLoomine Creating Tickets] - Rules, how to create new tickets.
 
