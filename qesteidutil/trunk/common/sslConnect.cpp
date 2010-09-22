@@ -34,6 +34,8 @@
 #ifndef PKCS11_MODULE
 #  if defined(_WIN32)
 #    define PKCS11_MODULE "opensc-pkcs11.dll"
+#  elif defined(__APPLE__)
+#    define PKCS11_MODULE "/Library/OpenSC/lib/opensc-pkcs11.so"
 #  else
 #    define PKCS11_MODULE "opensc-pkcs11.so"
 #  endif
