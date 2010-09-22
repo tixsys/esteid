@@ -1,6 +1,6 @@
-Digidoc client is an application that allows the user to do actions with .ddoc and .bdoc files. Digidoc client uses digidoc libraries. The user can sign whichever documents using the digidoc client.
+Digidoc Client is an application that allows the user to do actions with .ddoc and .bdoc files. Digidoc client uses digidoc libraries. The user can sign whichever documents using the digidoc client.
 
-The digidoc client functionality is the following:
+The digidoc Client functionality is the following:
  1. Creating a new container (.ddoc or .bdoc). By default a .bdoc container made by Baltic WPKI Forum is created.
  1. Adding a document to the container.
  1. Digitally signing the document. When signing the user can assign the signers location (city/county/country/index) and the role/resolution of the signer. All the entered information is added to the digital signature. When signing the user has to enter PIN2.

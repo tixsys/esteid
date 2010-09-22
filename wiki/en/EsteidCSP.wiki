@@ -1,4 +1,4 @@
-CSP bridge is software that allows Windows CryptoAPI applications to use the certificates on the ID-card. Through the CSP bridge user identification in Internet Explorer web browser and ID-card certificate use in other Microsoft applications (like Outlook) is supported.
+CSP bridge is software that allows Windows CryptoAPI applications to use the certificates on the ID card. Through the CSP bridge user identification in Internet Explorer web browser and ID card certificate use in other Microsoft applications (like Outlook) is supported.
 
 Functionality:
  1. User identification (logging into web services) in the Internet Explorer web browser. To authenticate the user has to enter PIN1.

@@ -1,0 +1,46 @@
+= openSUSE =
+
+Supported versions *11.1*,  *11.2* and *11.3*
+
+=== Adding to the repository ===
+
+==== openSUSE 11.1 ====
+{{{
+sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.1/esteid.repo
+}}}
+
+==== openSUSE 11.2 ====
+{{{
+sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.2/esteid.repo
+}}}
+
+==== openSUSE 11.3 ====
+{{{
+sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.3/esteid.repo
+}}}
+
+=== Installing packages ===
+
+To install all packages you need to enter the following commands into the command line:
+{{{
+sudo zypper ref
+sudo zypper install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid OpenOffice_org-digidoc
+}}}
+
+Or use the graphical package handler:
+
+Computer->Control Center->Install/Remove Software:<br>
+Groups->Repositories->Estonian ID Card support (openSUSE_11.);<br>
+Select qesteidutil, qdigidoc, mozilla-esteid, thunderbird-esteid and OpenOffice_org-digidoc 
+
+When installing for the first time you need to switch on pcscd demon:
+{{{
+sudo chkconfig pcscd on
+sudo /etc/init.d/pcscd start
+}}}
+
+If the packages have already been installed before then to update them:
+{{{
+sudo zypper ref
+sudo zypper dup
+}}}

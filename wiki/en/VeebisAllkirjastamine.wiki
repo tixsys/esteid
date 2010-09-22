@@ -1,0 +1,14 @@
+= Signing on the web =
+
+When signing on a web page you first fill out the document or form prepared by the service provider. The document filled by you will be sent by the server to your ID card to be signed and you need to confirm your signature by entering your PIN2. The service providers server will get a confirmation for your signature from Certification Center and the document signed by you is created. The service provider saves the document in its server but offers you a choice to save a copy. In this case the term "service provider" is not limited in any way - it could be a private company, a non profit organization or a government facility.
+
+
+= Known issues! =
+
+At the moment it is not possible to sign in SEB with Mac or Linux. Also in Windows using Firefox or Chrome it's not possible to sign with Java applet if you haven't installed the driver using IE.
+
+Signing in id.eesti.ee is not possible.
+
+= User(s) Comments =
+
+I got the digital signing to work in SEB, Swedbank and eesti.ee citizen portal following [https://ideelabor.ee/opensource/wiki/IdKaardiTarkvara/DigiallkiriVeebisLinuxiga instructions] (Ubuntu 9.10 amd64) -- Peeter P. Mõtsküla, 18.10.2009.

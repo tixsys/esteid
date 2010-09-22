@@ -1,0 +1,37 @@
+= Ubuntu =
+
+Supported versions *Karmic Koala (9.10)* and *Lucid Lynx (10.04)*
+
+
+=== Adding to the repository ===
+
+When installing the software for the first time you need to add a configuration file to the repository and import the GPG key.
+
+
+=== Karmic Koala (9.10) ===
+{{{
+echo deb http://id.smartlink.ee/repo/release/ubuntu/ karmic main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
+wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+}}}
+
+=== Lucid Lynx (10.04) ===
+{{{
+echo deb http://id.smartlink.ee/repo/release/ubuntu/ lucid main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
+wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+}}}
+
+=== Installing packages ===
+
+To install all packages you need to enter the following commands into the terminal:
+{{{
+sudo aptitude update
+sudo aptitude dist-upgrade
+sudo aptitude install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+}}}
+
+If the packages have already been installed before then to update them enter the following commands into the terminal:
+{{{
+sudo aptitude update
+sudo aptitude dist-upgrade
+}}}
+

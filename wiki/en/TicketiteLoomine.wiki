@@ -1,0 +1,33 @@
+= What to do when you find a bug? =
+When finding a bug using the ID card software it would be nice to make a ticket about it so the developers would know about it.
+
+Before making a ticket you should quickly make sure that the same bug has not been reported yet. For that visit: http://code.google.com/p/esteid/issues/list
+
+When creating a new "issue" (http://code.google.com/p/esteid/issues/entry) the start of the title, in square brackets, should have the application name. For example "[QEsteidUtil [utility]]", "[QDigiDocClient [client]]". Then a short description of the problem as the title and end it with the OS name and version, for example (WinXP SP3), (MacOS10.5.7). Under the issue there is a row called labels. There you have to additionally choose an operating system where the bug exists and the component.
+
+The description field is for a longer description of the bug and end it with an accurate software version. If there is a screenshot of the bug then it should be added to the ticket. Then press "submit issue" and that's that.
+
+The ticket should also have the likelyhood of reproducing the bug and an accurate description how to locate the bug in other machines. Before creating the ticket you should make sure that the bug can be reproduced and isn't just many coincidences happening together.
+
+= Identifying the software version =
+
+=== Windows ===
+Software is distributed as a MSI package and you can find the version number in Control Panel -> Add or Remove Programs.
+
+=== Ubuntu / Debian ===
+From the command line you can ask for the versions of different packages (for example qdigidoc, qesteidutil, mozilla-esteid)
+{{{
+dpkg-query -l qdigidoc
+dpkg-query -l libdigidoc2
+dpkg-query -l libdigidocpp0
+dpkg-query -l *opensc*
+}}}
+
+=== Fedora / OpenSUSE ===
+From the command line you can ask for the versions of different packages (for example qdigidoc, qesteidutil, mozilla-esteid)
+{{{
+rpm -q qdigidoc
+}}}
+
+=== Mac OS X ===
+You can find the software version under System Preferences -> ID card

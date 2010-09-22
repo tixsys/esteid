@@ -1,0 +1,55 @@
+== Mac OS X description ==
+
+''(TODO: crossplatform stuff)''
+
+Is composed of the following mac specific components:
+
+*[EstEIDTokend EstEIDTokend]*
+
+''Location:'' /System/Library/Security/tokend
+
+
+''Description:'' Tokend allows different Mac OS X applications to use the certificates on the ID-card. In practice is used mostly for identification in Safari.
+
+*[EstEIDWP]*
+
+''Location:'' /Library/Internet Plug-Ins
+
+
+''Description:'' Safari extension. Expands the webpage Javascript context with <embed> or <object> keyword.
+
+*[EstEIDCM]*
+
+''Location:'' /Library/Contextual Menu Items
+
+''Description:'' Finder extension. Expands the Finder right click menu. Excact functionality is still open but minimally it could be what the old Windows software can do (signature/crypto).
+
+
+*[EstEIDPP]*
+
+''Location:'' /Library/PreferencePanes
+
+''Description:'' System Preferences extension. Creates a new icon in the System Preferences where it's possible to:
+ * See the human-friendly names and version numbers of the installed components.
+ * Allow or Disallow automatic software updates (see *EstEIDSU*).
+ * Start the software updater.
+
+*[EstEIDSU EstEIDSU]*
+
+''Location:'' /Applications/Utilities
+
+''Description:'' Software updater. Since Mac OS X supports localized program names the typical user should not encounter the name "EstEIDSU" but something more user friendly (still not decided just like the icon). It's task is to check software updates and to download them if necessary, verify the files and start the installation process. Can be started through:
+ * EstEIDPP
+ * launchd (automatic software update check)
+ * /Applications/Utilities
+
+"Under the hood" it uses .pkg which is not ideal but since it's supported by the system and alternatives have their problems what else can you do? When installing a hightened status "agent" is started which copies the files to the system user, checks them again, unpacks and launches the .pkg installer.
+
+Automatic software updates are done through OS X launchd daemon (configuration file can be located in /Library/LaunchAgents folder)
+
+*Installer*
+
+''Location:'' Web page
+
+
+''Description:'' .pkg installation package which should install all the components mentioned before.

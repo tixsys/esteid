@@ -5,6 +5,6 @@ PKCS#11 bridge allows PKCS#11 module library applications to use the certificate
 Functionality:
 
  1. User identification (entering e-services) in  the Firefox browser. To authenticate the user has to enter PIN1.
- 1. Signing and encrypting e-mail sin Thunderbird - the user can digitally sign and encrypt and decrypt e-mail with ID-card certificates using his e-mail client.
+ 1. Signing and encrypting e-mail sin Thunderbird - the user can digitally sign and encrypt and decrypt e-mail with ID card certificates using his e-mail client.
  1. Ending the session when the card is removed
- 1. Logging into the Linux operating system using the card
+ 1. Logging into the Linux operating system using the smartcard

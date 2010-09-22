@@ -1,0 +1,46 @@
+= Fedora =
+
+Supported versions *12* and *13* 
+
+
+=== Card reader drivers ===
+
+When first installing software you need to also install CCID reader drivers
+{{{
+sudo yum install ccid
+}}}
+
+By default fedora uses OpenCT as the reader driver which is broken. To fix this when installing for the first time do the following:
+{{{
+sudo chkconfig openct off
+sudo chkconfig pcscd on
+sudo /etc/init.d/openct stop
+sudo /etc/init.d/pcscd start
+}}}
+
+=== Adding to the repository ===
+
+When first installing software you must add a configuration file to the repository and import the GPG key. Both of those come with the esteid-release package which you can get from: 
+
+When using Fedora12: http://id.smartlink.ee/repo/release/fedora/12/i386/esteid-release-12-0.6.noarch.rpm
+
+When using Fedora13: http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.rpm
+
+
+=== Installing packages ===
+
+To install all packages enter the following commands into the terminal:
+{{{
+sudo yum update
+sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+}}}
+
+If the packages have already been installed before then to update them enter the following command into the terminal:
+{{{
+sudo yum update
+}}}
+
+PS: If the system can not find the card reader, make sure that the package pcsc-lite-openct is not  installed. If it is use the command:
+{{{
+sudo yum remove pcsc-lite-openct
+}}}

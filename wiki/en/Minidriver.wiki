@@ -1,11 +1,11 @@
-Windows vista minidriver is necessary for the ID-card to work without glitches in the newer Windows operating systems.
+Windows Vista minidriver is necessary for the ID card to work without glitches in the newer Windows operating systems.
 
 Functionality:
  1. User identification (logging into e-services) in the Internet Explorer browser
  1. E-mail encryption and signing with user identification certificate in Outlook
- 1. Registration and de- registration of the certificates on the card
+ 1. Automatic registration and de-registration of the certificates in the system
  1. End the session when the card is removed
- 1. Log into the operating system with the card
+ 1. Log into the operating system with the smartcard
  1. Driver updates through Windows Update
 
 [SysteemiKirjeldus Back]

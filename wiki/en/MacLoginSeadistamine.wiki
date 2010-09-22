@@ -1,4 +1,4 @@
-To log in with an ID card the ID card has to be connected to the computer. Make sure it is your ID card because later you can log in with the ID card currently in your machine.
+To log in with an ID card, the ID card has to be connected to the computer. Make sure it is your ID card, because later you can log in with the ID card currently connected to your machine.
 
 Configuration: <br>
  1. Open "System Preferences" --> Other --> ID card<br>

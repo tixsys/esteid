@@ -1,0 +1,95 @@
+= What is what? =
+
+ * opensc - OpenSC with the ID card PKCS!#15 emulator. For using with Firefox. 
+ * esteid-pkcs11 - Experimental "lightweight" PKCS!#11 driver. For using with Firefox.
+ * CSP - Windows CryproAPI driver. For using with Internet Explorer. *NB! Must read [CSPTesting]*
+ * BHO - Internet Explorer extension which allows signing on the web. *NB! Does not work in the internet banks and the digidoc portal because it is a new API.*
+ * libdigidoc++ - New C++ library with bdoc and ddoc file formats support
+ * libdigidoc - Old C library with ddoc and cdoc file formats support
+ * qesteidutil - ID card utility written in QT base
+ * qdigidoc - New desktop program for digital signing
+
+= Where to get? =
+Beta versions, sorted by the operating system can be found at:
+
+*http://id.smartlink.ee/repo/release/ *
+
+Nightly compiled or so called "nightly builds" can be *temporarily* found at:
+
+*http://id.smartlink.ee/repo/nightly/ *
+
+Package filenames have, depending on the operating system, either the compile date or the SVN version number. It is recommended to choose the newest (biggest number).
+
+= Windows =
+
+== Installing ==
+
+Necessary .msi file for installing can be found at: http://id.smartlink.ee/repo/release/windows/msi/latest/
+
+*Minimum requirements for the Windows installation package*
+
+In order for the installation package to work correctly Microsoft .NET Framework 2.0 has to be installed.
+
+Supported operating systems:
+
+ * Windows XP SP3 or newer;
+ * Windows Vista SP1 or newer;
+ * Windows 7.
+
+== What to do in case of MSI problems? ==
+
+To install a new MSI in windows you do not have to uninstall the old one manually, just install the new one. The old version will be automatically uninstalled and replaced with a new one.
+Still there might arise a situation when installing the MSI where the already installed package is damaged and can not be removed. One of these mistakes was present in the MSI before version 2.7.924.331 but it is hopefully fixed in the newer ones.
+To remove this old, non-removable and non-upgradeable package use the Windows Installer cleaning utility [http://support.microsoft.com/kb/290301]. If you then install a newer version (>= 2.7.924.331) the uninstall should be fixed.
+
+To log MSI packages in Windows there is logging.bat: http://esteid.googlecode.com/svn/misc/logging.bat . The file has to be downloaded into your machine and then the MSI installation file dragged onto the .bat file. Installation and automatic logging will both start and a logfile will be generated in the form of InstallPackageName.log .
+
+<br>
+<br>
+[WikiStart Back]
+----
+
+= Linux =
+
+== Installing software ==
+
+ * [ArchLinux Archlinuxi configuration]
+ * [Debian Debiani configuration]
+ * [Fedora Fedora configuration]
+ * [Gentoo Gentoo configuration]
+ * [Ubuntu Ubuntu configuration]
+ * [openSUSE openSUSE configuration]
+
+== Possibilities ==
+ * [EsteidUtil ID card management]
+ * [QDigiDoc Signing with Digidoc3 client]
+ * [VeebisAllkirjastamine Web Signing]
+
+<br>
+<br>
+[WikiStart Back]
+----
+
+= Mac OS X =
+
+== Requirements ==
+ * Mac OS X 10.5 or 10.6
+ * Intel processor
+<br>
+
+== Installation ==
+The necessary .dmg file for installing can be found at *http://id.smartlink.ee/repo/release/macosx/ *
+
+Later the software update check will be done automatically or manually through the "System Preferences" ID card view.
+
+<br>
+
+== Possibilities ==
+ * [EsteidUtil ID card management]
+ * [QDigiDoc Signing with Digidoc3 client]
+ * [MacLoginSeadistamine Logging into Mac] with ID card
+	For Mac OS X 10.5.6 and later it is possible to set logging in with ID card in the "System Preferences" ID card view.
+
+<br>
+<br>
+[WikiStart Back]
