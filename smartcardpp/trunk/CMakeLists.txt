@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 include(InstallSettings)
 
-set(SMARTCARDPP_VERSION "0.1.0")
+set(SMARTCARDPP_VERSION "0.2.0")
 
 if(UNIX)
     find_package(LibDL)
