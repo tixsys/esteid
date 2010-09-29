@@ -160,7 +160,7 @@ if(UNIX AND NOT APPLE)
     endforeach(RES)
 endif(UNIX AND NOT APPLE)
 
-option(ENABLE_NAUTILUS_EXTENSION "Install Nautilus extension (default: FALSE)" FALSE)
+option(ENABLE_NAUTILUS_EXTENSION "Install Nautilus extension (default: TRUE)" TRUE)
 if (ENABLE_NAUTILUS_EXTENSION)
     add_subdirectory(nautilus)
 endif()
