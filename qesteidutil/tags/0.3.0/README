@@ -1,0 +1,30 @@
+QEsteidUtil
+===========
+
+QEsteidUtil is an application for managing Estonian ID Card. In an
+user-friendly interface it is possible to change and unlock PINs, examine
+detailed information about personal data file on the card, extract and view
+certificates, set up mobile ID, and configure @eesti.ee email.
+
+
+Dependencies
+============
+
+cmake >= 2.6.0
+libp11
+openssl
+qt >= 4.4.0
+smartcardpp >= 0.2.0
+pkcs11 library (e.g. opensc)
+
+
+BUILD INSTRUCTIONS
+==================
+
+1. Run build with cmake
+     mkdir build
+     cd build
+     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+     make -j4
+2. Install the application to a system wide directory
+     make install
