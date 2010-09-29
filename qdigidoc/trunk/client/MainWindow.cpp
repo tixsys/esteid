@@ -278,7 +278,7 @@ void MainWindow::buttonClicked( int button )
 		showSettings();
 		break;
 	case HeadHelp:
-		QDesktopServices::openUrl( QUrl( "http://www.esteid.ee/" ) );
+		QDesktopServices::openUrl( QUrl( "http://code.google.com/p/esteid/wiki/QDigiDocHelp" ) );
 		break;
 	case HomeView:
 	{
