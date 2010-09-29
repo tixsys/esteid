@@ -1,0 +1,22 @@
+libdigidoc 2.7.0 (2010-09-29)
+=============================
+
+- Imported libdigidoc 2.6.0.17 library from openxades.org
+- Ported build system from autoconf to CMake
+- Changed default save format to 1.3, 1.4 should not be widely used.
+- Use FILENAME_MAX for maximum file name length
+- Release pkcs11 lib on error and failed pin
+- Fixed Windows and Mac OS X builds
+- Install public headers in include/digidoc
+- Fixed default pkcs11 module path
+- Fixed a number of crashes
+- Fixed a lot of compiler warnings
+- Optionally link against libdl in unix
+- Marked extern functions as extern "C"
+- Fixed openssl-1.0.0 compatibility
+- Removed reference to SK's internal service from digidoc.conf
+- Updated config and certificates to match with the names in libdigidocpp
+- added "ESTEID-SK 2007 OCSP 2010" and "EID-SK 2007 OCSP 2010" certificates
+
+Many thanks to all the contributors:
+Raul Metsma, Antti Andreimann, Janek Priimann, Kalev Lember
