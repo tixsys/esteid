@@ -36,7 +36,7 @@ Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2
 === Allkirjastamine === 
 Kuidas testida: Lisa minu dokumentidesse uus dokument ja proovi allkirjastada
 
-Tulemus: eesti.ee digidoci portaalis meist olenematutel põhjustel allkirjastamine ei tööta
+Tulemus: Töötab FF(Linux) - 29.09.2010
 
 == e-maksuamet ==
 === Autentimine === 
