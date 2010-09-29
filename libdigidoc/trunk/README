@@ -16,8 +16,11 @@ THIS LIBRARY IS OBSOLETE. PLEASE DO NOT USE IT FOR NEW DEVELOPMENTS.
 Dependencies
 ============
 
-libxml >= 2.0
+cmake >= 2.6.0
+libxml2
 openssl >= 0.9.8a
+zlib
+pkcs11 library (e.g. opensc)
 
 
 BUILD INSTRUCTIONS
@@ -26,7 +29,7 @@ BUILD INSTRUCTIONS
 1. Run build with cmake
      mkdir build
      cd build
-     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+     cmake -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc ..
      make -j4
 2. Install the library to a system wide directory
      make install
