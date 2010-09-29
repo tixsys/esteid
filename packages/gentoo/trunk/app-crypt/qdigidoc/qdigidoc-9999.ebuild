@@ -13,7 +13,7 @@ HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gnome"
+IUSE="gnome kde"
 
 RDEPEND="dev-libs/libdigidoc
 	dev-libs/libdigidocpp
