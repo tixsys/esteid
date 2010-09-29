@@ -24,6 +24,18 @@ svn cp https://esteid.googlecode.com/svn/smartcardpp/trunk \
        https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3
 }}}
 
+=== Create tarball ===
+{{{
+svn export https://esteid.googlecode.com/svn/smartcardpp/trunk smartcardpp-1.2.3
+tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
+}}}
+
+=== Upload tarball ===
+{{{
+Go to http://code.google.com/p/esteid/downloads/list
+Click 'New download'
+}}}
+
 === Send out announcement ===
 {{{
 Subject: ANNOUNCEMENT: smartcardpp 1.2.3 released
