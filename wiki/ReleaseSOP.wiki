@@ -1,0 +1,39 @@
+#summary Standard Operating Procedure for creating releases
+
+=== Describe the release in NEWS file and commit it ===
+{{{
+smartcardpp 1.2.3 (2025-09-29)
+==============================
+
+- Translation updates
+- Implemented a new awesome feature
+
+Many thanks to all the contributors: ...
+
+}}}
+
+=== Bump version in CMakeLists.txt ===
+{{{
+- set(SMARTCARDPP_VERSION "1.2.2")
++ set(SMARTCARDPP_VERSION "1.2.3")
+}}}
+
+=== Tag release in SVN ===
+{{{
+svn cp https://esteid.googlecode.com/svn/smartcardpp/trunk \
+       https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3
+}}}
+
+=== Send out announcement ===
+{{{
+Subject: ANNOUNCEMENT: smartcardpp 1.2.3 released
+To: esteid-devel@googlegroups.com
+
+smartcardpp version 1.2.3, 2025-09-29
+
+Few lines with short descript what smartcardpp does.
+
+Changes since last release
+--------------------------
+Copy-paste text from NEWS file.
+}}}
