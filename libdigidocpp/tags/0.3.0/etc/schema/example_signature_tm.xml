@@ -1,0 +1,48 @@
+<!-- same as BES expect Unsigned element contains-->
+
+<UnsignedProperties xmlns="http://uri.etsi.org/01903/v1.3.2#">
+    <UnsignedSignatureProperties>
+        <CompleteCertificateRefs>
+    		<CertRefs Id="S0-CERTREFS">           <!-- Viide signatuurile, mille certi käidi time markimas -->
+    			<Cert>
+    				<CertDigest> <!-- kirjeldab OSCP serveri public certi, mida kasutati OSCP requesti tegemiseks -->
+        				<DigestMethod xmlns="http://www.w3.org/2000/09/xmldsig#" Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+   						<DigestValue xmlns="http://www.w3.org/2000/09/xmldsig#">gkBzQxlGGptYR4pniNVJEGsgDio=</DigestValue>
+    				</CertDigest>
+					<IssuerSerial>
+    					<X509IssuerName xmlns="http://www.w3.org/2000/09/xmldsig#">C=EE,O=AS Sertifitseerimiskeskus,CN=Juur-SK,emailAddress=pki@sk.ee</X509IssuerName>
+						<X509SerialNumber xmlns="http://www.w3.org/2000/09/xmldsig#">1110287047</X509SerialNumber>
+					</IssuerSerial>
+				</Cert>
+			</CertRefs>
+	    </CompleteCertificateRefs>
+        <CompleteRevocationRefs Id="S0-REVOCREFS">
+		    <OCSPRefs>
+				    <OCSPRef>
+					    <OCSPIdentifier URI="#N0">
+						    <ResponderID>
+							    <ByName>C=EE,O=ESTEID,OU=OCSP,CN=ESTEID-SK 2007 OCSP RESPONDER,emailAddress=pki@sk.ee</ByName>
+						    </ResponderID>
+						    <ProducedAt>2007-12-25T14:06:09Z</ProducedAt>
+					    </OCSPIdentifier>
+					    <DigestAlgAndValue>
+						    <DigestMethod xmlns="http://www.w3.org/2000/09/xmldsig#" Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>
+                            <!-- räsi allkirjast, mida time markiti (TM). OSCP serverisse saadetud nonce väärtus-->
+						    <DigestValue xmlns="http://www.w3.org/2000/09/xmldsig#">yjUvWvsB+llg0n+Tl3ccmCo/geQ=</DigestValue>
+					    </DigestAlgAndValue>
+				    </OCSPRef>
+			    </OCSPRefs>
+	    </CompleteRevocationRefs>
+        <CertificateValues>
+          <!--S0 allkirja sertifikaadi CA cert (TM kohustuslik)-->
+          <EncapsulatedX509Certificate Id="S0-CA-CERT">MIIDPDCCAiSgAwIBAgIEQi2iwTANBgkqhkiG9w0BAQUFADB8M</EncapsulatedX509Certificate>       
+          <!--S0 allkirja sertifikaadi OSCP responder cert (TM kohustuslik)-->       
+          <EncapsulatedX509Certificate Id="S0-RESPONDER_CERT">MIIEITCCAwmgAwIBAgIBDDANBgkqhkiG9w0BAQUFADCB</EncapsulatedX509Certificate>
+        </CertificateValues>
+        <RevocationValues>
+    		<OCSPValues><!-- kogu OSCP serveri vastus DER -->
+    			<EncapsulatedOCSPValue Id="N0">MIIBtgoBAKCCAa8wggGrBgkrBgEFBQcwAQEEggGcMIIBmDCCAQGhcTBvMQswCQYDknf8XDhdklVD0w==</EncapsulatedOCSPValue>
+			</OCSPValues>
+		</RevocationValues>
+    </UnsignedSignatureProperties>
+</UnsignedProperties>

@@ -1,0 +1,54 @@
+libdigidocpp is a C++ library for reading, validating, and creating BDoc and
+DDoc containers. These file formats are widespread in Estonia where they are
+used for storing legally binding digital signatures.
+
+In addition to C++ API the library also has wrappers for common scripting
+languages: Perl, PHP, and Python.
+
+The library has native support for XAdES [3] compliant BDoc [1] containers;
+support for older DDoc format however is implemented as lightweight wrapper
+over libdigidoc C library. libdigidocpp currently implements BDoc-1.0 BES and
+TM profiles [2].
+
+Signatures can be given using EstEID Card (id-kaart) and RSA certificates 
+with private keys.
+
+[1] http://www.signature.lt/-TOOLS/BDoc-1.0.pdf
+[2] http://www.id.ee/public/ID_arendajate_seminar_Urmo_Keskel.ppt
+[3] http://www.w3.org/TR/XAdES/
+
+Dependencies
+============
+cmake >= 2.6.0
+libdigidoc >= 2.7.0
+libiconv
+libp11
+openssl
+xerces-c
+xml-security-c
+xsdcxx
+zlib
+
+On Debian you can install the libs by running:
+sudo apt-get install libopensc2 libp11-dev libssl-dev libxerces28-dev libxml-security-c-dev xsdcxx
+
+Optional build dependencies
+===========================
+perl
+php
+python
+swig
+
+Additional runtime dependencies
+===============================
+a pkcs11 library (e.g. opensc)
+
+BUILD INSTRUCTIONS
+==================
+1. Run build with cmake
+     mkdir build
+     cd build
+     cmake -DCMAKE_INSTALL_PREFIX=/usr -DSYSCONF_INSTALL_DIR=/etc ..
+     make -j4
+2. Install the library to a system wide directory
+     make install
