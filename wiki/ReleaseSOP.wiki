@@ -44,7 +44,8 @@ Labels: Type-Source
 Subject: ANNOUNCEMENT: smartcardpp 1.2.3 released
 To: esteid-devel@googlegroups.com
 
-smartcardpp version 1.2.3, 2025-09-29
+smartcardpp 1.2.3 is now available for download at
+http://esteid.googlecode.com/files/smartcardpp-1.2.3.tar.bz2
 
 Few lines with short descript what smartcardpp does.
 
