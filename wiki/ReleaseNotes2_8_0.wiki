@@ -50,17 +50,18 @@ Katsetusjärgus tarkvara:
  * MacOS X 10.6 tugi
  * Uute Linuxi versioonide tugi (Ubuntu 10.04, Fedora 13, Suse 11.2 ja 11.3)
  * Eemaldatud vanade operatsioonisüsteemide tugi (Windows 2000, MacOS X 10.4)
+ * Faililehitsejas hiire parema klahvi alt allkirjastamise tugi KDE ja GNOME töölaudadel
 
-== Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin) ==
+== Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin 1.1.0) ==
  * Uus ühtne koodibaas üle kõigi brauserite
  * Google Chrome brauseri tugi
  * Ühilduvusrežiim olemasolevate veebilehtede toetamiseks
  * Andmeid saavad kätte vaid lubatud nimekirja lisatud saidid (whitelist)
 
-== Allkirjastamise tööriist (qdigidoc) ==
- * Lisatud 2010 alguses kehtima hakanud OCSP vastaja sertifikaadid
+== Allkirjastamise tööriist (qdigidoc 0.4.0) ==
+ * Lisatud 2010. aasta alguses kehtima hakanud OCSP vastaja sertifikaadid
 
-== ID-kaardi utiliit (qesteidutil) ==
+== ID-kaardi utiliit (qesteidutil 0.3.0) ==
  * Lisatud Qt 4.6 tugi
  * Parandatud väljanägemist Windows platvormil
 
@@ -78,6 +79,6 @@ Katsetusjärgus tarkvara:
  * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine vähemalt versioonile 3.6 lahendab probleemi. Vaata issue 74
  * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve veebilehitseja restart (tuleb sulgeda kõik aknad, kaasaarvatud allalaadimiste oma) või tuleb oodata 15-20min. Miks see nii on, [VeebisAutentimine#Vigased_SSL_seaded loe siit].
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
- * SEB pangas töötab allkirjastamine stabiilselt ainult Windows platvormil.
+ * Java abil allkirjastamine töötab stabiilselt ainult Windows platvormil. Teistel platvormidel on soovitatav kasutada Firefoxi laienduse "ühilduvusrežiimi".
  * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
  * Safaris autentimine ei tööta osadel veebilehtedel, kus kasutaja ei ole oma ID-kaarti ja seda konkreetset saiti kokku sidunud. Põhjuseid [VeebisAutentimine#Vigased_SSL_seaded loe siit].
