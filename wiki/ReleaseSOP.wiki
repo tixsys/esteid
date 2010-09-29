@@ -26,7 +26,7 @@ svn cp https://esteid.googlecode.com/svn/smartcardpp/trunk \
 
 === Create tarball ===
 {{{
-svn export https://esteid.googlecode.com/svn/smartcardpp/trunk smartcardpp-1.2.3
+svn export https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3 smartcardpp-1.2.3
 tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
 }}}
 
