@@ -76,7 +76,7 @@ Katsetusjärgus tarkvara:
 
 = Arendajast sõltumatud probleemid =
 
- * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine lahendab probleemi.
+ * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine vähemalt versioonile 3.6 lahendab probleemi. Vaata issue 74
  * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve veebilehitseja restart (tuleb sulgeda kõik aknad, kaasaarvatud allalaadimiste oma) või tuleb oodata 15-20min. Miks see nii on, [VeebisAutentimine#Vigased_SSL_seaded loe siit].
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
  * SEB pangas töötab allkirjastamine stabiilselt ainult Windows platvormil.
