@@ -30,6 +30,7 @@ DOCS=""
 src_configure() {
 	local mycmakeargs="
 		$(cmake-utils_use_enable gnome NAUTILUS_EXTENSION)
+		$(cmake-utils_use_enable kde KDE)
 	"
 
 	cmake-utils_src_configure
