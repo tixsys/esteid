@@ -70,6 +70,7 @@ Katsetusjärgus tarkvara:
 
 = Teadaolevad probleemid =
 
+ * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine lahendab probleemi.
  * Allkirjastamise tööriist (qdigidoc) blokeerub ligipääsutõendi laadimise ajaks
  * Firefox ei leia kaarti, kui kaardilugeja ühendati süsteemiga peale firefoxi käivitamist, aitab lehitseja sulgemine ja uuesti käivitamine
  * MacOSX platvormil Safariga autentimine ei tööta
