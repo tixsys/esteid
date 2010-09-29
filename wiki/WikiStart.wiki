@@ -30,7 +30,7 @@ http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
 
 </table>
 
-<strong>Probleemide korral palun pöörduge ID-nõustamiskeskuse poole telefonil 1777 või e-maili teel: <a href="mailto:abi@id.ee">abi@id.ee</a></strong>
+
 
 Arendust toetab:
 
