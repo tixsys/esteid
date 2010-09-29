@@ -1,0 +1,6 @@
+<!ENTITY esteid.PrefsTitle "ID-kaardi allkirjastaja sätted">
+<!ENTITY esteid.Whitelist "Lubatud saidid">
+<!ENTITY esteid.Log "Logi">
+<!ENTITY esteid.Preferences "Seaded">
+<!ENTITY esteid.PreferencesCaption "Üldised seaded">
+<!ENTITY esteid.OpenWhiteList "Veebilehed, mis võivad ID-kaarti kasutada">

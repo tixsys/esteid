@@ -1,0 +1,53 @@
+Esteid Browser Plugin
+======================
+
+Esteid Browser Plugin is cross-browser plugin that exposes
+Estonian eID card functions via JavaScript.
+
+The plugin is used by web pages to obtain users digital signature.
+To protect privacy, only web pages in "whitelist" can use the
+card. For unlisted pages, a yellow notification bar appears.
+The plugin also implements a compatibility mode to support
+existing web pages that use old signature API-s.
+
+List of officially supported browsers:
+ * Firefox
+ * Google Chrome
+ * Safari
+ * Internet Explorer
+
+
+Dependencies
+============
+
+boost >= 1.36
+firebreath >= 1.2.1
+gtkmm24 >= 2.16
+iconv
+openssl
+smartcardpp >= 0.2.0
+
+
+BUILD INSTRUCTIONS
+==================
+
+1. Obtain a copy of the the FireBreath cross-browser plugin framework
+   from http://firebreath.googlecode.com
+2. Unpack it and change into FireBreath directory
+     tar jxf firebreath-1.2.1-withboost.tar.bz2
+     cd firebreath-1.2.1-withboost
+3. Unpack Esteid Browser Plugin code into projects sub-directory
+     mkdir projects
+     tar jxf esteid-browser-plugin-x.x.x.tar.bz2 -C projects
+4. Run build with cmake
+     mkdir build
+     cd build
+     cmake -DWITH_SYSTEM_BOOST=1 -DCMAKE_INSTALL_PREFIX=/usr ..
+     make -j4
+5. Test your build in a separate Firefox profile
+   (only works when building on Linux)
+     make runff
+6. Install the plugin to a system wide directory
+     make install
+7. Install the optional Mozilla extension
+     Open build/esteid-x.x.x.xpi with firefox or thunderbird and click "Install"

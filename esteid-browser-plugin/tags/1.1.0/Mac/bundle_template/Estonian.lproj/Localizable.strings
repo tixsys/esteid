@@ -1,0 +1,24 @@
+/* PIN Panel */
+"PINPanel.Error.PIN2.Locked" = "PIN2 on blokeeritud!";
+"PINPanel.Error.PIN2.Invalid" = "PIN2 sisestati valesti!";
+"PINPanel.Label.URL" = "Asukoht:";
+"PINPanel.Label.Hash" = "Räsi:";
+"PINPanel.Label.Name" = "Nimi:";
+"PINPanel.Label.PIN2" = "PIN2:";
+"PINPanel.Label.SecureEntry" = "Sõrmistiku kasutamiseks vajuta Allkirjasta";
+"PINPanel.Message.PIN2" = "Palun sisesta digitaalseks allkirjastamiseks oma PIN2.";
+"PINPanel.Label.Details" = "Detailid";
+"PINPanel.Action.Cancel" = "Tühista";
+"PINPanel.Action.OK" = "Allkirjasta";
+"PINPanel.Title" = "Sign with ID-card";
+
+/* Settings Panel */
+"SettingsPanel.Action.Cancel" = "Tühista";
+"SettingsPanel.Action.OK" = "OK";
+"SettingsPanel.Placeholder.Website" = "Sisesta uus veebisait siia (id.eesti.ee)";
+"SettingsPanel.Message.Format" = "Website '%@' wants to access your ID-card. You can manage the allowed websites in this view.";
+"SettingsPanel.Title" = "ID-card whitelist";
+
+/* Alerts */
+"Alert.PINBlocked.Message" = "PIN is blocked!";
+"Alert.Action.OK" = "Close";
