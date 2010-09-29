@@ -30,7 +30,7 @@ http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
 
 </table>
 
-<strong>With problems please contact the ID help center by phone 1777 or e-by e-mail: <a href="mailto:abi@id.ee">abi@id.ee</a></strong>
+
 
 Development is supported by:
 
