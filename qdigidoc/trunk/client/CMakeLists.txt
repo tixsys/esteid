@@ -160,6 +160,11 @@ if(UNIX AND NOT APPLE)
     endforeach(RES)
 endif(UNIX AND NOT APPLE)
 
+option(ENABLE_KDE "Install KDE service menu (default: TRUE)" TRUE)
+if (ENABLE_KDE)
+    add_subdirectory(kde)
+endif()
+
 option(ENABLE_NAUTILUS_EXTENSION "Install Nautilus extension (default: TRUE)" TRUE)
 if (ENABLE_NAUTILUS_EXTENSION)
     add_subdirectory(nautilus)
