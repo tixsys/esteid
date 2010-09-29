@@ -1,13 +1,45 @@
-DigiDoc is a generic library implementing the XAdES digital signature standard.
-It allows to create, sign, verify, and modify digidoc XML containers. Support
-for doing hardware cryptographic signing operations is porivded via PKCS#11 
-on all platforms and CSP on win32.
+libDigiDoc
+==========
 
+libDigiDoc is a library implementing a subset of the XAdES digital
+signature standard on top of Estonian specific .ddoc container format.
+It allows to create, sign, verify, and modify digidoc XML containers.
+
+The library dates back to times when there were no proper XML to
+code binding generators and is thus a complete mess of printf-s.
+It is only used by the libdigidocpp library for handling .ddoc
+files in order to ensure a bug-by-bug compatibility with old software.
+
+THIS LIBRARY IS OBSOLETE. PLEASE DO NOT USE IT FOR NEW DEVELOPMENTS.
+
+
+Dependencies
+============
+
+libxml >= 2.0
+openssl >= 0.9.8a
+
+
+BUILD INSTRUCTIONS
+==================
+
+1. Run build with cmake
+     mkdir build
+     cd build
+     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+     make -j4
+2. Install the library to a system wide directory
+     make install
+
+
+History
+=======
 You can find more information about DigiDoc from www.openxades.org
 
 The project was initiated by AS Sertifitseerimiskeskus (www.sk.ee)
 and implemented by Veiko Sinivee (veiko.sinive@seb.se)
-
--- 
-Martin Paljak
-10.03.2004
+The sources of the library were released from several websites,
+mainly www.sk.ee and openxades.org.
+Openxades.org still maintains a source download to make sure the
+certificates included with the library are current.
+There is no active development.
