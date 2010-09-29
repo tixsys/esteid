@@ -12,31 +12,31 @@ Many thanks to all the contributors: ...
 
 }}}
 
-=== Bump version in CMakeLists.txt ===
+=== Bump the version tag in CMakeLists.txt ===
 {{{
 - set(SMARTCARDPP_VERSION "1.2.2")
 + set(SMARTCARDPP_VERSION "1.2.3")
 }}}
 
-=== Tag release in SVN ===
+=== Tag the release in SVN ===
 {{{
 svn cp https://esteid.googlecode.com/svn/smartcardpp/trunk \
        https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3
 }}}
 
-=== Create tarball ===
+=== Create a tarball ===
 {{{
 svn export https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3 smartcardpp-1.2.3
 tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
 }}}
 
-=== Upload tarball ===
+=== Upload the tarball ===
 {{{
 Go to http://code.google.com/p/esteid/downloads/list
 Click 'New download'
 }}}
 
-=== Send out announcement ===
+=== Send out an announcement ===
 {{{
 Subject: ANNOUNCEMENT: smartcardpp 1.2.3 released
 To: esteid-devel@googlegroups.com
