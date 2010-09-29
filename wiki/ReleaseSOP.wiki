@@ -34,6 +34,9 @@ tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
 {{{
 Go to http://code.google.com/p/esteid/downloads/list
 Click 'New download'
+
+Summary: smartcardpp 1.2.3 release
+Labels: Type-Source
 }}}
 
 === Send out an announcement ===
