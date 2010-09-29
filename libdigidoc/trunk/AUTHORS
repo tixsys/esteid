@@ -2,3 +2,9 @@ Veiko Sinivee  <veiko.sinivee@seb.se>
 	The main project leader and author of DigiDoc library.
 Martin Paljak <martin@paljak.pri.ee>
 	Integrator, fixer, packaging maintainer.
+Raul Metsma <raul@innovaatik.ee>
+        Fixed a lot of bugs and crashes
+Kalev Lember <kalev@colleduc.ee>
+        Ported build system to CMake, fixed bugs
+Antti Andreimann <anttix@users.sourceforge.net>
+        Did something, can't remember exactly what ;)
