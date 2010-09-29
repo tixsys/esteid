@@ -2,8 +2,8 @@
 
 === Describe the release in NEWS file and commit it ===
 {{{
-smartcardpp 1.2.3 (2025-09-29)
-==============================
+awesomeproject 1.2.3 (2025-09-29)
+=================================
 
 - Translation updates
 - Implemented a new awesome feature
@@ -14,20 +14,20 @@ Many thanks to all the contributors: ...
 
 === Bump the version tag in CMakeLists.txt ===
 {{{
-- set(SMARTCARDPP_VERSION "1.2.2")
-+ set(SMARTCARDPP_VERSION "1.2.3")
+- set(AWESOMEPROJECT_VERSION "1.2.2")
++ set(AWESOMEPROJECT_VERSION "1.2.3")
 }}}
 
 === Tag the release in SVN ===
 {{{
-svn cp https://esteid.googlecode.com/svn/smartcardpp/trunk \
-       https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3
+svn cp https://esteid.googlecode.com/svn/awesomeproject/trunk \
+       https://esteid.googlecode.com/svn/awesomeproject/tags/1.2.3
 }}}
 
 === Create a tarball ===
 {{{
-svn export https://esteid.googlecode.com/svn/smartcardpp/tags/1.2.3 smartcardpp-1.2.3
-tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
+svn export https://esteid.googlecode.com/svn/awesomeproject/tags/1.2.3 awesomeproject-1.2.3
+tar cjf awesomeproject-1.2.3.tar.bz2 awesomeproject-1.2.3
 }}}
 
 === Upload the tarball ===
@@ -35,27 +35,27 @@ tar cjf smartcardpp-1.2.3.tar.bz2 smartcardpp-1.2.3
 Go to http://code.google.com/p/esteid/downloads/list
 Click 'New download'
 
-Summary: smartcardpp 1.2.3 release
+Summary: awesomeproject 1.2.3 release
 Labels: Type-Source
 }}}
 
 === Send out an announcement ===
 {{{
-Subject: ANNOUNCEMENT: smartcardpp 1.2.3 released
+Subject: ANNOUNCEMENT: awesomeproject 1.2.3 released
 To: esteid-devel@googlegroups.com
 
-I am pleased to announce version 1.2.3 of smartcardpp.
+I am pleased to announce version 1.2.3 of awesomeproject.
 
-Few lines with short descript what smartcardpp does.
+Few lines with short descript what awesomeproject does.
 
-smartcardpp 1.2.3 (2025-09-29)
+awesomeproject 1.2.3 (2025-09-29)
 ==============================
 <Copy-paste text from NEWS file.>
 
 Downloads
 =========
 Source code:
-http://esteid.googlecode.com/files/smartcardpp-1.2.3.tar.bz2
+http://esteid.googlecode.com/files/awesomeproject-1.2.3.tar.bz2
 
 Contributing
 ============
