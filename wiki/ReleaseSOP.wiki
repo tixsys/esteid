@@ -49,7 +49,7 @@ I am pleased to announce version 1.2.3 of awesomeproject.
 Few lines with short descript what awesomeproject does.
 
 awesomeproject 1.2.3 (2025-09-29)
-==============================
+=================================
 <Copy-paste text from NEWS file.>
 
 Downloads
