@@ -248,7 +248,7 @@ void Common::mailTo( const QUrl &url )
 
 void Common::showHelp( const QString &msg )
 {
-	QUrl u( "http://www.esteid.ee/" );
+	QUrl u( "http://code.google.com/p/esteid/" );
 	u.addQueryItem( "searchquery", msg );
 	u.addQueryItem( "searchtype", "all" );
 	u.addQueryItem( "_m", "core" );

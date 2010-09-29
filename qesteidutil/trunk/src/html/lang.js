@@ -1,9 +1,9 @@
 ﻿var defaultLanguage = "et";
 var language = defaultLanguage;
 
-var helpUrl_et = "http://www.esteid.ee/";
-var helpUrl_en = "http://www.esteid.ee/eng/";
-var helpUrl_ru = "http://www.esteid.ee/ru/";
+var helpUrl_et = "http://code.google.com/p/esteid/wiki/QEsteidUtilHelp";
+var helpUrl_en = "http://code.google.com/p/esteid/wiki/QEsteidUtilHelp?wl=en";
+var helpUrl_ru = "http://code.google.com/p/esteid/wiki/QEsteidUtilHelp?wl=ru";
 
 //code: (est, eng, rus)
 var htmlStrings = {
