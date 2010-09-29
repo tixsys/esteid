@@ -19,7 +19,7 @@ endif()
 
 set( DIGIDOC_DATA_DIR "${SHARE_INSTALL_PREFIX}/libdigidoc")
 set( DIGIDOC_INCLUDE_DIR "${INCLUDE_INSTALL_DIR}/libdigidoc" )
-set( DIGIDOC_VERSION "2.6.0" )
+set( DIGIDOC_VERSION "2.7.0" )
 
 find_package( LibXml2 REQUIRED )
 find_package( OpenSSL REQUIRED )
