@@ -247,7 +247,7 @@ bool SSLConnectPrivate::connectToHost( SSLConnect::RequestType type )
 	SSL_set_bio( ssl, sock, sock );
 	sslError::check( SSL_connect( ssl ) );
 
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC) && OPENSSL_VERSION_NUMBER <= 0x009080cfL
 #ifndef SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION
 #define SSL3_FLAGS_ALLOW_UNSAFE_LEGACY_RENEGOTIATION	0x0010
 #endif
