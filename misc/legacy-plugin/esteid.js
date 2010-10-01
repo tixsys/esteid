@@ -10,8 +10,12 @@ function appendToBody(e) {
 }
 
 function removeFromBody(e) {
-    var b = document.getElementsByTagName("body")[0];
-    b.removeChild(e);
+    try {
+        var b = document.getElementsByTagName("body")[0];
+        b.removeChild(e);
+    } catch(err) {
+        htmlLog("Failed to remove object from body: " + err.message);
+    }
 }
 
 function createEstEidObject(id) {
@@ -49,8 +53,7 @@ function loadEstEidPlugin(id, pluginReady) {
          if(typeof(e.signAsync) == "undefined")
              throw({message: "You are using an experimental software version. Please update!"});
          pluginReady();
-    }
-    catch(err) {
+    } catch(err) {
         htmlLog("Failed to load esteid browser plugin: " + err.message);
         if(e) removeFromBody(e);
 

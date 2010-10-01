@@ -56,19 +56,24 @@ function showSign() {
         <label for="c1">Try universal plugin</label>
     </input>
     <input id="c2" type="checkbox"
-           onclick="esteid_config.disable_ax = !this.checked;"
+           onclick="esteid_config.disable_sk = !this.checked;"
            checked="checked" />
-        <label for="c2">Try ActiveX control</label>
+        <label for="c2">Try x-digidoc</label>
     </input>
     <input id="c3" type="checkbox"
-           onclick="esteid_config.disable_moz = !this.checked;"
+           onclick="esteid_config.disable_ax = !this.checked;"
            checked="checked" />
-        <label for="c3">Try Mozilla plugin</label>
+        <label for="c3">Try ActiveX control</label>
     </input>
     <input id="c4" type="checkbox"
+           onclick="esteid_config.disable_moz = !this.checked;"
+           checked="checked" />
+        <label for="c4">Try Mozilla plugin</label>
+    </input>
+    <input id="c5" type="checkbox"
            onclick="esteid_config.disable_java = !this.checked;"
            checked="checked" />
-        <label for="c4">Try Java applet</label>
+        <label for="c5">Try Java applet</label>
     </input>
 </div>
 </body>

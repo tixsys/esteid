@@ -133,7 +133,7 @@ function getCertMoz() {
     var s = document.getElementById("mSign");
     var r = eval(s.getCertificates());
     if(r.returnCode != 0 || r.certificates.length < 1) {
-        throw(err_nocert + "[" + response.returnCode + "]");
+        throw(err_nocert + "[" + r.returnCode + "]");
     }
 
     /* Find correct certificate */
@@ -334,6 +334,67 @@ function createJava(id, pluginReady) {
     window.setTimeout('window.jCrap.poll();', 500);
 }
 
+function createSKplug(id) {
+    if(esteid_config && esteid_config.disable_sk) return false;
+
+    /* Many browsers implement it the FF way, but IE shows an empty list */
+    if(navigator.mimeTypes && navigator.mimeTypes.length <= 0 ||
+       !(navigator.mimeTypes['application/x-digidoc'])) {
+        /* Do not attempt to load plugin if it's not there.
+         * Othervise Firefox will show a yellow bar */
+        htmlLog("x-digidoc (application/x-digidoc) is not installed");
+        return false;
+    }
+
+    htmlLog("Trying to create x-digidoc (id.eesti.ee)");
+
+    var e = document.getElementById(id);
+
+    try { 
+        var s = document.createElement('span');
+        s.innerHTML = '<object id="sSign" type="application/x-digidoc" style="width: 1px; height: 1px;" />';
+        appendToBody(s);
+        s = document.getElementById("sSign");
+
+        if(s.version == null) throw(err_notresp); // Loaded OK?
+
+        htmlLog("Loaded x-digidoc " + s.version);
+
+        e.signAsync = function(hash, url, callback) {
+            var s = document.getElementById("sSign");
+            htmlLog("Trying to sign with x-digidoc plugin");
+            try { 
+              var cn = s.getCertificate().CN;
+              var sig = s.sign(cn, hash, { language: 'en' });
+              htmlLog("x-digidoc sign successful");
+              callback.onSuccess(sig);
+            } catch(e) {
+                htmlLog("x-digidoc sign failed");
+                callback.onError(err_sign + "[" + e.message + "]");
+            }
+            document.getElementById(id).signCert = null;
+        }
+        defineCertGetter(id, getCertSKplug);
+        return true;
+    } catch(err) {
+        htmlLog("Failed to load x-digidoc plugin " + err.message);
+
+        e.innerHTML = '';
+        return false;
+    }
+}
+
+function getCertSKplug() {
+    htmlLog("Loading cert data via x-digidoc plugin");
+
+    var s = document.getElementById("sSign");
+    var c = s.getCertificate();
+    return { cert: c.certificateAsPEM,
+             CN: c.CN,
+             validFrom: c.validFrom,
+             validTo: c.validUntil };
+}
+
 function loadLegacySigner(id, pluginReady) {
     htmlLog("Trying to find and load some legacy signing plugin");
 
@@ -342,7 +403,7 @@ function loadLegacySigner(id, pluginReady) {
     e.id = 'esteid';
     e = appendToBody(e);
 
-    if(!createActiveX(id) && !createMoz(id))
+    if(!createSKplug(id) && !createActiveX(id) && !createMoz(id))
         createJava(id, pluginReady);
     else
         pluginReady();
