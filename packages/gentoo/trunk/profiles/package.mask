@@ -5,4 +5,10 @@
 www-plugins/esteid-firefox
 
 # Don't let people install these accidentally
+=app-crypt/qdigidoc-9999
+=app-crypt/qesteidutil-9999
+=dev-libs/libdigidoc-9999
+=dev-libs/libdigidocpp-9999
 =dev-libs/opensc-9999
+=dev-libs/smartcardpp-9999
+=www-plugins/esteid-browser-plugin-9999
