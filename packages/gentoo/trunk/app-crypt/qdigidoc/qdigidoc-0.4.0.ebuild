@@ -24,7 +24,7 @@ RDEPEND="dev-libs/libdigidoc
 	x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
 
-DOCS=""
+DOCS="AUTHORS NEWS README"
 
 src_configure() {
 	local mycmakeargs="
