@@ -40,8 +40,6 @@ RDEPEND="app-arch/zip
 
 DEPEND="${RDEPEND}"
 
-DOCS="AUTHORS NEWS README"
-
 S="${WORKDIR}/${FB_P}"
 
 src_unpack() {

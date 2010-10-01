@@ -38,8 +38,6 @@ RDEPEND="app-arch/zip
 
 DEPEND="${RDEPEND}"
 
-DOCS="AUTHORS NEWS README"
-
 S="${WORKDIR}/hg"
 
 src_unpack() {
