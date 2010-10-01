@@ -25,7 +25,7 @@ RDEPEND="dev-libs/libp11
 DEPEND="${RDEPEND}
 	>=dev-cpp/xsd-3.2.0"
 
-DOCS="README.linux"
+DOCS="AUTHORS NEWS README"
 
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
