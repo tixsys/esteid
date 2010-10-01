@@ -20,3 +20,5 @@ RDEPEND="dev-libs/smartcardpp
 	x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
+
+DOCS="AUTHORS NEWS README"
