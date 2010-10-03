@@ -338,7 +338,7 @@ function createSKplug(id) {
     if(esteid_config && esteid_config.disable_sk) return false;
 
     /* Many browsers implement it the FF way, but IE shows an empty list */
-    if(navigator.mimeTypes && navigator.mimeTypes.length <= 0 ||
+    if(navigator.mimeTypes && navigator.mimeTypes.length > 0 &&
        !(navigator.mimeTypes['application/x-digidoc'])) {
         /* Do not attempt to load plugin if it's not there.
          * Othervise Firefox will show a yellow bar */
