@@ -1,0 +1,7 @@
+#summary This page explains Browser Plugin compatibility mode
+
+= Sissejuhatus =
+
+ID-kaardi brauserilaiendusse on sisse ehitatud ühilduvusrežiim
+kunagi levikus olnud allkirjastamistehnoloogiate toetamiseks.
+Uued veebilehed ei tohiks neid tehnoloogiaid enam kasutada.
