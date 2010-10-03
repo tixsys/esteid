@@ -54,7 +54,7 @@ function pollCert(id, f) {
             try {
                 e.signCert = document.ePoller.getter();
             } catch(err) {
-                htmlLog("Polling error: " + err.message);
+                htmlLog("Polling error: " + err);
                 e.signCert = null;
             }
         }
