@@ -121,8 +121,6 @@ function createActiveX(id) {
         return true;
     } catch(err) {
         htmlLog("Failed to load ActiveX control " + err.message);
-
-        e.innerHTML = '';
         return false;
     }
 }
@@ -195,7 +193,6 @@ function createMoz(id) {
         return true;
     } catch(err) {
         htmlLog("Failed to load Mozilla plugin: " + err.message);
-        e.innerHTML = '';
         return false;
     }
 }
@@ -378,8 +375,6 @@ function createSKplug(id) {
         return true;
     } catch(err) {
         htmlLog("Failed to load x-digidoc plugin " + err.message);
-
-        e.innerHTML = '';
         return false;
     }
 }
