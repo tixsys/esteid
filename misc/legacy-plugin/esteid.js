@@ -49,10 +49,10 @@ function loadEstEidPlugin(id, pluginReady) {
                 e = createEstEidObject(id);
         }
 
-         htmlLog("Using browser plugin: " + e.getVersion()); // Loaded OK?
-         if(typeof(e.signAsync) == "undefined")
-             throw({message: "You are using an experimental software version. Please update!"});
-         pluginReady();
+        htmlLog("Using browser plugin: " + e.getVersion()); // Loaded OK?
+        if(typeof(e.signAsync) == "undefined")
+            throw({message: "You are using an experimental software version. Please update!"});
+        pluginReady();
     } catch(err) {
         htmlLog("Failed to load esteid browser plugin: " + err.message);
         if(e) removeFromBody(e);
