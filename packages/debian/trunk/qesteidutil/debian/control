@@ -1,0 +1,21 @@
+Source: qesteidutil
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libsmartcardpp-dev, libqt4-dev, libp11-dev, libssl-dev, libqtwebkit-dev
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: qesteidutil
+Architecture: any
+Depends: ${shlibs:Depends}, ttf-liberation, libopensc3
+Description: Estonian ID card utility
+ Qt based Estonian ID card utility.
+
+Package: qesteidutil-dbg
+Architecture: any
+Section: libdevel
+Priority: extra
+Depends: qesteidutil (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for qesteidutil
+ This package contains debugging symbols for qesteidutil package.

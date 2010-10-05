@@ -1,0 +1,43 @@
+Source: esteid-browser-plugin
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libsmartcardpp-dev, libssl-dev, libgtkmm-2.4-dev, libboost-dev, libboost-filesystem-dev, libboost-thread-dev, pkg-config, zip, unzip
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: esteid-browser-plugin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Estonian ID card browser plugin
+ Estonian ID card digital signing browser plugin.
+
+Package: esteid-browser-plugin-dbg
+Architecture: any
+Section: libdevel
+Priority: extra
+Depends: esteid-browser-plugin (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for esteid-browser-plugin
+ This package contains debugging symbols for esteid-browser-plugin package.
+
+Package: mozilla-esteid
+Architecture: any
+Depends: esteid-browser-plugin, libopensc3, libdigidocpp0, ${shlibs:Depends}, ${misc:Depends}
+Provides: esteid-firefox
+Conflicts: esteid-firefox (<< 0.4-0svnr1759)
+Replaces: esteid-firefox (<< 0.4-0svnr1759)
+Description: Estonian ID card extension for Firefox
+ Estonian ID card digital signing extension for Firefox.
+
+Package: thunderbird-esteid
+Architecture: any
+Depends: mozilla-esteid (= ${binary:Version}), ${misc:Depends}
+Description: Estonian ID card extension for Thunderbird
+ Estonian ID card digital signing extension for Thunderbird.
+
+Package: esteid-firefox
+Architecture: any
+Depends: mozilla-esteid
+Description: transitional dummy upgrade package for mozilla-esteid
+ This is a dummy transitional package to ease the migration to the new
+ mozilla-esteid package. You can remove it safely.

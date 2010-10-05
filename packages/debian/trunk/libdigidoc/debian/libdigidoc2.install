@@ -1,0 +1,4 @@
+debian/tmp/usr/bin/*
+debian/tmp/usr/lib/*.so.*
+debian/tmp/etc/digidoc.conf
+debian/tmp/usr/share/libdigidoc/

@@ -1,0 +1,31 @@
+Source: libdigidoc
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libxml2-dev, libssl-dev
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: libdigidoc-dev
+Section: libdevel
+Architecture: any
+Replaces: libdigidoc2-dev (<< 2.6.1-0)
+Conflicts: libdigidoc2-dev (<< 2.6.1-0)
+Depends: libdigidoc2 (= ${binary:Version}), libxml2-dev, libssl-dev
+Description: Digidoc development files
+ Files necessary for developing applications with libdigidoc library.
+
+Package: libdigidoc2
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: old digidoc library
+ Old digidoc library.
+
+Package: libdigidoc2-dbg
+Section: devel
+Architecture: any
+Depends: libdigidoc2 (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for libdigidoc
+ This package contains debugging symbols for libdigidoc library.
+

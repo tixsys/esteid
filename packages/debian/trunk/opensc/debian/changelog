@@ -1,0 +1,483 @@
+opensc (0.12.0-1~esteid1~svn4765~maverick1) maverick; urgency=low
+
+  * Build from SVN snapshot
+
+ -- Kalev Lember <kalev@smartlink.ee>  Mon,  4 Oct 2010 19:29:00 +0300
+
+opensc (0.11.8-1ubuntu1) karmic; urgency=low
+
+  * Merge from debian unstable, remaining change (LP: #396385):
+    - debian/mozilla-opensc.links: Install links for firefox and
+      xulrunner-addons.
+
+ -- Bhavani Shankar <right2bhavi@gmail.com>  Tue, 07 Jul 2009 11:41:27 +0530
+
+opensc (0.11.8-1) unstable; urgency=low
+
+  * New upstream release. Fixes a security problem with pkcs11-tool
+    generating insecure public keypairs. This problem was only with the
+    0.11.7 release, which was only part of unstable. (Closes: #527640)
+
+ -- Eric Dorland <eric@debian.org>  Sun, 10 May 2009 22:03:06 -0400
+
+opensc (0.11.7-2ubuntu1) karmic; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - debian/mozilla-opensc.links: Install links for firefox and
+      xulrunner-addons
+
+ -- Nathan Handler <nhandler@ubuntu.com>  Tue, 28 Apr 2009 21:57:52 +0000
+
+opensc (0.11.7-2) unstable; urgency=low
+
+  * debian/rules: Explicitly enable openct and pcsc. (Closes: #522077)
+  * debian/control:
+    - Update Standards-Version to 3.8.1.
+    - Add ${misc:Depends} everywhere.
+    - Move libopensc2-dbg to the debug section.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 04 Apr 2009 17:46:05 -0400
+
+opensc (0.11.7-1) unstable; urgency=low
+
+  * New upstream release. Fixes CVE-2009-0368.
+  * debian/rules: 
+    - New location for the ChangeLog.
+    - Add --enable-signer to get the signer back.
+  * debian/opensc.install:
+    - cardos-tool.1 replaces cardos-info.1.
+    - Install cardos-tool and rutoken-tool.
+  * debian/opensc.docs, libopensc2-dev.docs: New html documentation location.
+
+ -- Eric Dorland <eric@debian.org>  Sun, 29 Mar 2009 03:56:10 -0400
+
+opensc (0.11.4-5ubuntu1) intrepid; urgency=low
+
+  * Merge from debian unstable, remaining changes LP: #260257):
+    - debian/mozilla-opensc.links: Install links for firefox and
+      xulrunner-addons
+
+ -- Nathan Handler <nhandler@ubuntu.com>  Wed, 03 Sep 2008 20:06:26 -0500
+
+opensc (0.11.4-5) unstable; urgency=high
+
+  * src/tools/pkcs15-tool.c: Small fix to the previous security
+    vulnerability to remove a strict check for the default card label.
+
+ -- Eric Dorland <eric@debian.org>  Fri, 29 Aug 2008 03:14:53 -0400
+
+opensc (0.11.4-4) unstable; urgency=high
+
+  * src/libopensc/card-cardos.c, src/tools/pkcs15-tool.c: Patch to fix
+    CVE-2008-2235 "OpenSC initializes CardOS cards with improper 
+    access rights".
+  * debian/control: Up Standards-Version to 3.7.3.
+  * debian/opensc.NEWS: Fix typo.
+
+ -- Eric Dorland <eric@debian.org>  Thu, 31 Jul 2008 13:27:31 -0400
+
+opensc (0.11.4-3) unstable; urgency=low
+
+  * etc/opensc.conf.in: Document that lock_login is actually set to false
+    by default. Thanks Mark Proehl. (Closes: #457322)
+  * debian/mozilla-opensc.install: Don't install .a file. (Closes: #459542)
+
+ -- Eric Dorland <eric@debian.org>  Mon, 07 Jan 2008 23:54:18 -0500
+
+opensc (0.11.4-2ubuntu2) hardy; urgency=low
+
+  * debian/mozilla-opensc.install: Don't install .a file (DBTS: #459542).
+  * debian/mozilla-opensc.links: Install link for xulrunner-addons
+    (LP: #202343).
+
+ -- Matti Lindell <mlind@cs.joensuu.fi>  Fri, 28 Mar 2008 07:28:00 +0200
+
+opensc (0.11.4-2ubuntu1) hardy; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Install onepin-opensc-pkcs11.so and onepin-opensc-pkcs11.la
+      Closes LP: #146350
+    - Install the links for firefox.
+    - Update maintainer field in debian/control.
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Wed, 21 Nov 2007 19:05:01 +0000
+
+opensc (0.11.4-2) unstable; urgency=low
+
+  * debian/libopensc2.install: Install onepin-opensc-pkcs11 signer. Thanks
+    Laurent Bigonville. (Closes: #449219)
+  * debian/libopensc2-dev.install: Install all the .a files.
+  * debian/control: Remove XS- prefix from Vcs headers.
+
+ -- Eric Dorland <eric@debian.org>  Sun, 04 Nov 2007 18:04:34 -0500
+
+opensc (0.11.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * src/signer/dialog.c: Remove spurious redefinition of PIN_ENTRY.
+  * debian/control: Add Hompage and XS-Vcs-* headers.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 22 Sep 2007 04:13:54 -0400
+
+opensc (0.11.3-1ubuntu2) gutsy; urgency=low
+
+  * Install onepin-opensc-pkcs11.so and onepin-opensc-pkcs11.la
+    Closes LP: #146350
+
+ -- Jonathan Riddell <jriddell@ubuntu.com>  Thu, 04 Oct 2007 13:40:11 +0100
+
+opensc (0.11.3-1ubuntu1) gutsy; urgency=low
+
+  * Merge from Debian unstable, remaining changes:
+    - Install the links for firefox.
+    - Update maintainer field in debian/control.
+
+ -- Michele Angrisano <micheleangrisano@ubuntu.com>  Sat, 21 Jul 2007 23:03:51 +0200
+
+opensc (0.11.3-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #424013)
+  * debian/control:
+    - Use Standards-Version 3.7.2.2.
+    - Use binary:Version instead of Source-Version.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 21 Jul 2007 01:12:13 -0400
+
+opensc (0.11.2-1ubuntu1) gutsy; urgency=low
+
+  * Merge from Debian unstable, remaining changes:
+    - Install the links for firefox
+    - Maintainer field in debian/control
+
+ -- Luca Falavigna <dktrkranz@ubuntu.com>  Thu, 17 May 2007 10:39:14 +0100
+
+opensc (0.11.2-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #413470, #410195, #419680)
+
+ -- Eric Dorland <eric@debian.org>  Thu, 17 May 2007 00:44:04 -0400
+
+opensc (0.11.1-3ubuntu1) feisty; urgency=low
+
+  * Merge from debian unstable, remaining changes:
+    - Apply patch from http://www.opensc-project.org/opensc/changeset/3010 to
+      fix regression with Estonian eID
+  * debian/mozilla-opensc.links: install the links for firefox and mozilla
+    (undo the Debian change)
+  * Modified Maintainer values to match Debian-Maintainer-Field spec.
+
+ -- Michael Bienia <geser@ubuntu.com>  Mon, 12 Feb 2007 19:44:12 +0100
+
+opensc (0.11.1-3) unstable; urgency=high
+
+  * src/signer/dialog.c, debian/control: Fix path to pinentry and
+    recommend pinentry for mozilla-opensc. Thanks Antti S. Lankila for the
+    suggestion. (Closes: #392241)
+  * opensc.docs: Install new and improved html docs. (Closes: #399838)
+  * mozilla-opensc.links: Install links for iceweasel and iceape rather
+    than firefox and mozilla. Considering who I am I should have picked up
+    on this sooner. (Closes: #409946)
+  * etc/opensc.conf.in: Document that lock_login is actually true by
+    default. Thanks Antti-Juhani Kaijanaho. (Closes: #410024)
+
+ -- Eric Dorland <eric@debian.org>  Sat, 10 Feb 2007 23:27:03 -0500
+
+opensc (0.11.1-2ubuntu1) feisty; urgency=low
+
+  * Apply patch from http://www.opensc-project.org/opensc/changeset/3010 to
+    fix regression with Estonian eID (LP: #83767)
+
+ -- Michael Bienia <geser@ubuntu.com>  Wed,  7 Feb 2007 16:28:02 +0100
+
+opensc (0.11.1-2) unstable; urgency=low
+
+  * debian/libopensc2.links: Link /usr/lib/opensc/opensc-pkcs11.so to
+    /usr/lib/opensc-pkcs11.so to help with upgrades. (Closes: #363443)
+  * etc/opensc.conf.in: Fix small typo, thanks Clemens Orthacker.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 19 Aug 2006 13:25:31 -0400
+
+opensc (0.11.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 10 Jun 2006 01:22:46 -0400
+
+opensc (0.11.0-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #366313)
+  * debian/control: 
+    - Fix stray 2 in the description. Thanks Ludovic Rousseau. 
+      (Closes: #354744)
+    - Standards-Version to 3.7.2.0.
+    - Add libopensc2-dbg package.
+    - Upgrade debhelper dependency to >> 5, for more sane -dbg package 
+      handling.
+  * debian/watch: Add watch file.
+  * man/pkcs15-tool.1: Patch from Daniel Kahn Gillmor to add --unblock-pin
+    documentation to the man page. (Closes: #350634)
+  * debian/rules: Strip into the -dbg package.
+  * debian/compat: Use debhelper level 5.
+  * debian/openct.install: 
+    - There isn't anything in /usr/sbin anymore.
+    - Install new tools and their manpages. 
+    - No more section 7 manpages. 
+  * debian/libopensc2.shlibs: Add dependency on latest version.
+  * debian/libopensc2.install: Don't try to install non-existant .profile
+    files in /etc.
+  * debian/mozilla-opensc.install, debian/mozilla-opensc.links: Fix path
+    to signer.
+
+ -- Eric Dorland <eric@debian.org>  Sun, 28 May 2006 18:28:03 -0400
+
+opensc (0.10.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/opensc.NEWS: Add a note about the package split.
+
+ -- Eric Dorland <eric@debian.org>  Wed, 11 Jan 2006 01:44:11 -0500
+
+opensc (0.10.0-2) unstable; urgency=low
+
+  * debian/libopensc2-dev.install: Only install lib*.so, etc, not
+    *.so. (Closes: #344591)
+
+ -- Eric Dorland <eric@debian.org>  Fri, 23 Dec 2005 18:38:46 -0500
+
+opensc (0.10.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control:
+    - Remove libpam-opensc, libscam1 and libopensc-openssl.
+    - Remove gcc-3.3, libpam and libldap build dependencies.
+    - Bump soname part of library names, and add appropriate Conflicts 
+      and Replaces.
+    - Build depend on libltdl3-dev.
+    - Bump Standards-Version to 3.6.2.1.
+  * debian/libopensc-openssl.install, debian/libpam-opensc.docs,
+    debian/libpam-opensc.install, debian/libscam1.examples,
+    debian/libscam1.install, debian/libscam1.shlibs, debian/scldap.conf:
+    Remove.
+  * debian/libopensc1*: Renamed to libopensc2*.
+  * debian/libopensc2.shlibs: Remove libpkcs11, bump other version info.
+  * debian/libopensc2.install: New location for spy and pkcs11 modules.
+  * debian/libopensc2-dev.install: Use *.so, *.la and *.a instead of
+    individual listing.
+  * debian/rules: 
+    - Try building with default gcc.
+    - Add new upstream changelog location.
+  * debian/copyright: UTF8ify.
+  * debian/opensc.docs: Install new tools doc. 
+  * debian/libopensc2-dev.docs: New file, install api HTML doc.
+  * debian/mozilla-opensc.install: Don't install /usr/lib/mozilla.
+  * debian/mozilla-opensc.links: Install to new firefox location and make
+    a link for mozilla plugin dir.
+
+ -- Eric Dorland <eric@debian.org>  Wed, 21 Dec 2005 01:21:34 -0500
+
+opensc (0.9.6-3) unstable; urgency=medium
+
+  * debian/control, debian/rules: Use gcc-3.3 instead of default gcc-4.0
+    until #322145 can be figured out. 
+
+ -- Eric Dorland <eric@debian.org>  Wed, 31 Aug 2005 01:23:34 -0400
+
+opensc (0.9.6-2) unstable; urgency=low
+
+  * The "RTFM" release.
+  * debian/opensc.install: Add manpages for pkcs11-tool and
+    cardos-info. (Closes: #289751)
+  * docs/pkcs15-init.1: Add documentation for -T switch. (Closes: #317414)
+  * debian/opensc.docs: Install HTML and XML documentation. (Closes:
+    #318312)
+
+ -- Eric Dorland <eric@debian.org>  Fri, 29 Jul 2005 17:39:31 -0400
+
+opensc (0.9.6-1) unstable; urgency=medium
+
+  * New upstream release, needs to go in with new openct.
+  * debian/control: Build-Depend on new libopenct1.
+  * debian/libopensc1.install: Install etc/opensc.conf instead of our old
+    empty version, because profile_dir must be set now.
+  * debian/opensc.conf: Delete, we don't need it anymore.
+  * debian/libopensc1.examples: Install a copy of the config file (without
+    the example suffix) as an example.
+  * debian/libopensc1.shlibs, debian/libscam1.shlibs: Update versions.
+  * debian/libscam1.examples: Remove .example suffix.
+
+ -- Eric Dorland <eric@debian.org>  Tue, 26 Apr 2005 01:16:16 -0400
+
+opensc (0.9.4-9) unstable; urgency=high
+
+  * debian/control: Remove extraneous build dependencies on libsasl,
+    and tighten X dependency. (Closes: #304975)
+  * debian/control: Remove uneccessarily tight dependency on libscam by
+    libpam-opensc.
+
+ -- Eric Dorland <eric@debian.org>  Sun, 17 Apr 2005 00:59:57 -0400
+
+opensc (0.9.4-8) unstable; urgency=high
+
+  * Still yearning for testing.
+  * debian/libopensc1.examples, debian/libscam1.examples: Install example
+    configuration files. (Closes: #286629)
+  * debian/rules: Have config files under /etc/opensc.
+  * debian/opensc.conf, debian/scldap.conf: Added barren config files that
+    tell you to look at the examples.
+  * debian/libopensc1.install, debian/libscam1.install: Install config
+    files.
+  * src/pam/pam_support.c: Fix compile problem under gcc-4.0. Thanks
+    Andreas Jochens. (Closes: #287877)
+
+ -- Eric Dorland <eric@debian.org>  Fri, 31 Dec 2004 21:42:53 -0500
+
+opensc (0.9.4-7) unstable; urgency=high
+
+  * Urgency high because the new openct is in testing and the borked s390
+    buildd is the only thing holding it back. 
+  * src/tools/pkcs11-tool.c: Apply by hand patch from Ph. Marek to fix bad
+    --help documentation. (Closes: #284605)
+  * debian/mozilla-opensc.links: Added, add link for mozilla-firefox
+    plugins.
+
+ -- Eric Dorland <eric@debian.org>  Tue,  7 Dec 2004 22:09:28 -0500
+
+opensc (0.9.4-6) unstable; urgency=medium
+
+  * The "I really need to pay more attention" release.
+  * debian/libopensc-openssl.install: Install only the engine files, not
+    the signer.
+  * debian/control: Have mozilla-opensc replace libopensc-openssl. 
+
+ -- Eric Dorland <eric@debian.org>  Sat, 27 Nov 2004 14:46:40 -0500
+
+opensc (0.9.4-5) unstable; urgency=medium
+
+  * debian/libscam1.install: Allow libopensc1-dev install libscam's .la
+    file.
+  * debian/control: Have libopensc1-dev replace older versions of libscam
+    because of the above.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 27 Nov 2004 14:25:43 -0500
+
+opensc (0.9.4-4) unstable; urgency=medium
+
+  * Target unstable. Urgency medium since I'd like to see this in testing.
+
+ -- Eric Dorland <eric@debian.org>  Thu, 25 Nov 2004 23:50:05 -0500
+
+opensc (0.9.4-3) experimental; urgency=low
+
+  * debian/control: Add mozilla-opensc package. 
+  * debian/mozilla-opensc.install: Added file, install plugin files. 
+  * debian/rules: 
+    - Add AUTHORS file to all docs.
+    - Add DEB_SHLIBDEPS_INCLUDE so we can find our own libs. 
+  * debian/libopensc1.shlibs: Add info for libpkcs11.
+  * debian/opensc.docs: Added file, install QUICKSTART doc.
+  * debian/libpam-opensc.docs: Added file, install PAM_README file. 
+  * debian/libscam1.install: libscam is now a full lib, install just the
+    .so.* portions.
+  * debian/libopensc1-dev.install: Install libscam's .so and .la.
+  * debian/libscam1.shlibs: Add scam shlib.
+
+ -- Eric Dorland <eric@debian.org>  Thu, 18 Nov 2004 00:57:10 -0500
+
+opensc (0.9.4-2) experimental; urgency=low
+
+  * debian/control: 
+    - Add section to source headers.
+    - Add appropriate conflicts and replaces for the library packages.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 13 Nov 2004 12:33:03 -0500
+
+opensc (0.9.4-1) experimental; urgency=low
+
+  * New upstream release. Target experimental to give freeswan guys a
+    chance. (Closes: #279968, #260828)
+  * src/libopensc/reader-pcsc.c: Resolve some conflicts from previous
+    patches, now in synch with upstream.
+  * debian/{libopensc0-dev.install, libopensc0.install, libopensc0.shlibs,
+    libscam0.install, libscam0.shlibs}: Renamed to change 0 to 1 to
+    reflect new soname.
+  * debian/control: 
+    - Change package name to reflect new soname.
+    - Build-depend on pkg-config, for libs that use it. 
+  * debian/*.shlibs: Bump up sonames and versions.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 13 Nov 2004 00:41:51 -0500
+
+opensc (0.8.1-7) unstable; urgency=medium
+
+  * Urgency medium since this reenables pcsclite support. 
+  * {configure,configure.in}: Replace /pcsc with /PCSC for new pcsclite
+    include location.
+  * src/libopensc/reader-pcsc.c: Replace LPCSTR with LPCTSTR for new
+    libpcsclite.
+
+ -- Eric Dorland <eric@debian.org>  Tue, 20 Jul 2004 23:04:27 -0400
+
+opensc (0.8.1-6) unstable; urgency=low
+
+  * configure.in: use _pic.a instead of -pic.a, openssl changed.
+  * configure: Rebuild.
+  * debian/control: 
+      - Build-depend on libssl-dev (>= 0.9.7d-3) for pic.a
+        renaming.
+      - Build-depend on libpcsclite-dev (>= 1.2.9-beta1) for new 
+        libpcsclite1. (Closes: #247697)
+  * src/libopensc/reader-pcsc.c: Patch for new libpcsclite1. Thanks
+    Ludovic Rousseau.
+
+ -- Eric Dorland <eric@debian.org>  Sat, 29 May 2004 21:07:28 -0400
+
+opensc (0.8.1-5) unstable; urgency=low
+
+  * debian/control: 
+    - Make libopensc* and libscam0 optional and everything
+      else extra, to allow things in optional to link to the libs. I 
+      still need to resolve the dependency on libpcsc (it's in extra).
+    - Build depend on libssl-dev (>= 0.9.7d-2) for PIC libs.
+    - Make debhelper build dep >> 4.1.
+  * configure.in: Use libcrypto-pic to work around build problems on
+    architectures that need PIC libs. (Closes: #239422)
+  * configure: Rebuild.
+
+ -- Eric Dorland <eric@debian.org>  Sun, 16 May 2004 20:41:43 -0400
+
+opensc (0.8.1-4) unstable; urgency=low
+
+  * debian/control: Build-Depend on libassuan-dev that provides PIC
+    libs. (Closes: #239422)
+
+ -- Eric Dorland <eric@debian.org>  Sun, 28 Mar 2004 22:22:53 -0500
+
+opensc (0.8.1-3) unstable; urgency=low
+
+  * debian/libpam-opensc.install: Install pam modules into /lib/security
+    rather than /usr/lib/security. (Closes: #235948)
+  * debian/control: 
+    - libpam-opensc needs to depend on libscam0. (Closes: #235949)
+    - Shorten libopensc0 short description.
+  * docs/pkcs15-init.1: Add .SH NAME line.
+  * docs/pkcs15-profile.5.in: Change the .ds line to the actual name, add
+    .SH NAME line (half of #231535)
+  * docs/pkcs15.7: Other half, add .ds line, add .SH NAME line (Closes:
+    #231535)
+
+ -- Eric Dorland <eric@debian.org>  Sat,  6 Mar 2004 19:30:54 -0500
+
+opensc (0.8.1-2) unstable; urgency=low
+
+  * debian/control: Build with libopenct0-dev.
+
+ -- Eric Dorland <eric@debian.org>  Tue, 27 Jan 2004 23:34:43 -0500
+
+opensc (0.8.1-1) unstable; urgency=low
+
+  * Initial release. (Based loosely on the packaging by Joe Phillips
+    <joe.phillips@innovationsw.com>) (Closes: #157979, #187551)
+  * Relibtoolize to fix build problem.
+
+ -- Eric Dorland <eric@debian.org>  Mon, 29 Dec 2003 16:43:01 -0500
+

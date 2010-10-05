@@ -1,0 +1,20 @@
+This package was debianized by Eric Dorland <eric@debian.org> on Mon,
+22 Dec 2003 23:23:29 -0500.
+
+It was downloaded from http://www.opensc.org/
+
+Upstream Authors: 
+OpenSC developers <opensc-devel@opensc.org>
+Juha Yrjölä <juha.yrjola@iki.fi>
+Antti Tapaninen <aet@cc.hut.fi>
+Timo Teräs <timo.teras@iki.fi>
+Olaf Kirch <okir@caldera.de>
+
+
+Copyright (C) 2001, 2002 Juha Yrj, Timo Teras, Antti Tapaninen, Olaf Kirch
+
+You are free to distribute this software under the terms of
+the GNU Lesser General Public License.
+On Debian systems, the complete text of the GNU Lesser General Public
+License can be found in the file `/usr/share/common-licenses/LGPL'.
+

@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+PLUGIN_SRCDIR := $(shell ls -1 esteid-browser-plugin-*.tar.bz2 | sed -e 's,\.tar.*,,g')
+FIREBREATH_SRCDIR := $(shell ls -1 firebreath-*.tar.bz2 | sed -e 's,\.tar.*,,g')
+
+DEB_TAR_SRCDIR := $(FIREBREATH_SRCDIR)
+
+include /usr/share/cdbs/1/rules/tarball.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/cmake.mk
+
+EXT_ID := {aa84ce40-4253-11da-8cd6-0800200c9a66}
+PLUGIN_DIR := $(DEB_DESTDIR)/usr/lib/firefox/extensions/$(EXT_ID)
+
+CFLAGS += "-fno-strict-aliasing"
+CXXFLAGS += "-fno-strict-aliasing"
+DEB_CMAKE_EXTRA_FLAGS += "-DWITH_SYSTEM_BOOST=YES"
+
+pre-build::
+	mkdir -p $(CURDIR)/$(DEB_SRCDIR)/projects
+	ln -sf ../../$(PLUGIN_SRCDIR) $(CURDIR)/$(DEB_SRCDIR)/projects
+
+install/esteid-browser-plugin::
+	mkdir -p $(PLUGIN_DIR)
+	unzip $(DEB_BUILDDIR)/esteid-*.xpi -d $(PLUGIN_DIR)

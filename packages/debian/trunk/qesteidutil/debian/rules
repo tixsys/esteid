@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/cmake.mk
+
+binary-install/qesteidutil::
+	dh_desktop -pqesteidutil
+	dh_icons -pqesteidutil
+
+DEB_DESTDIR := $(CURDIR)/debian/qesteidutil

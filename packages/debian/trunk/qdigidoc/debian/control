@@ -1,0 +1,23 @@
+Source: qdigidoc
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libdigidoc-dev, libdigidocpp-dev, libldap-dev, libqt4-dev, libssl-dev, libqtwebkit-dev
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: qdigidoc
+Architecture: any
+Replaces: qdigidoccrypto
+Conflicts: qdigidoccrypto
+Depends: ${shlibs:Depends}, ttf-liberation
+Description: Qt based Digidoc client
+ Qt based Digidoc client built on libdigidoc BDoc C++ library.
+
+Package: qdigidoc-dbg
+Architecture: any
+Section: libdevel
+Priority: extra
+Depends: qdigidoc (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for qdigidoc
+ This package contains debugging symbols for qdigidoc package.

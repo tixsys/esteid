@@ -1,0 +1,45 @@
+Source: libdigidocpp
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev, libpkcs11-helper-dev
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: libdigidocpp-dev
+Section: libdevel
+Architecture: any
+Conflicts: libdigidoc0-dev (<< 0.1.0-0), libdigidoc++0-dev (<< 0.1.0-0)
+Replaces: libdigidoc0-dev (<< 0.1.0-0), libdigidoc++0-dev (<< 0.1.0-0)
+Depends: libdigidocpp0 (= ${binary:Version}), libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev
+Description: Digidoc development files
+ Files necessary for developing applications with libdigidocpp library.
+
+Package: libdigidocpp0
+Section: libs
+Architecture: any
+Provides: libdigidoc0, libdigidoc++0
+Conflicts: libdigidoc0 (<< 0.1.0-0), libdigidoc++0 (<< 0.1.0-0)
+Replaces: libdigidoc0 (<< 0.1.0-0), libdigidoc++0 (<< 0.1.0-0)
+Depends: ${shlibs:Depends}, libopensc3
+Recommends: pcscd
+Description: BDoc C++ library
+ BDoc C++ lib is library for creating and validating BDOC-1.0 documents.
+ Older Digidoc formats(DIGIDOC-XML) are not supported. Difference between
+ DDoc, EDoc and BDoc are described in. BDoc signatures should be XAdES
+ compliant, but some XAdES signatures may be uncompliant with BDoc. Currently
+ BDoc-1.0 BES and TM profiles are supported.
+ .
+ Signatures can be given using EstEID Card (id-kaart) and RSA certificates
+ with private keys.
+
+Package: libdigidocpp0-dbg
+Architecture: any
+Section: libdevel
+Priority: extra
+Conflicts: libdigidoc0-dbg (<< 0.1.0-0), libdigidoc++0-dbg (<< 0.1.0-0)
+Replaces: libdigidoc0-dbg (<< 0.1.0-0), libdigidoc++0-dbg (<< 0.1.0-0)
+Depends: libdigidocpp0 (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for libdigidocpp0
+ This package contains debugging symbols for libdigidocpp library.
+

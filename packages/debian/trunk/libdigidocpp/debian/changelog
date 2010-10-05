@@ -1,0 +1,17 @@
+libdigidocpp (0.3.0-0esteid2~maverick1) maverick; urgency=low
+
+  * Removed nonexistant README.linux from libdigidocpp-dev.docs
+
+ -- Kalev Lember <kalev@smartlink.ee>  Mon,  4 Oct 2010 17:53:00 +0200
+
+libdigidocpp (0.3.0-0esteid1~maverick2) maverick; urgency=low
+
+  * Rebuilt
+
+ -- Kalev Lember <kalev@smartlink.ee>  Mon,  4 Oct 2010 17:53:00 +0200
+
+libdigidocpp (0.3.0-0esteid1~maverick1) maverick; urgency=low
+
+  * Initial release
+
+ -- Kalev Lember <kalev@smartlink.ee>  Mon,  4 Oct 2010 17:32:00 +0200

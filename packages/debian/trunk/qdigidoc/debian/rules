@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/cmake.mk
+
+binary-install/qdigidoc::
+	dh_desktop -pqdigidoc
+	dh_installmime -pqdigidoc
+	dh_icons -pqdigidoc
+
+DEB_DESTDIR := $(CURDIR)/debian/qdigidoc

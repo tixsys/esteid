@@ -1,0 +1,8 @@
+opensc (0.10.1-1) unstable; urgency=high
+
+    As of version of 0.10.0, the libopensc-openssl and libpam-opensc are
+    not distrubted in opensc upstream anymore, and have been spun out into
+    their own separate sources. Check the new libengine-pkcs11-openssl and
+    libpam-p11 packages.
+
+ -- Eric Dorland <eric@debian.org>  Wed, 11 Jan 2006 01:37:23 -0500

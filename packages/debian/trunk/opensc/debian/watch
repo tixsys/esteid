@@ -1,0 +1,3 @@
+version=3
+
+http://www.opensc-project.org/files/opensc/opensc-([\d\.]+)\.tar\.gz

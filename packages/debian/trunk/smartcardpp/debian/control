@@ -1,0 +1,32 @@
+Source: smartcardpp
+Section: utils
+Priority: extra
+Maintainer: Kalev Lember <kalev@smartlink.ee>
+Build-Depends: cdbs, debhelper (>= 7), cmake, libpcsclite-dev, pkg-config
+Standards-Version: 3.8.0
+Homepage: http://code.google.com/p/esteid/
+
+Package: libsmartcardpp-dev
+Section: libdevel
+Architecture: any
+Depends: libsmartcardpp0 (= ${binary:Version}), libpcsclite-dev
+Description: smartcardpp development files
+ Files necessary for developing applications with smartcardpp library.
+
+Package: libsmartcardpp0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, libpcsclite1
+Recommends: pcscd
+Description: A library for accessing smart cards
+ smartcardpp is a set of c++ classes to manage smartcard
+ communications and implement basic command primitives.
+
+Package: libsmartcardpp0-dbg
+Architecture: any
+Section: libdevel
+Priority: extra
+Depends: libsmartcardpp0 (= ${binary:Version}), ${misc:Depends}
+Description: debugging symbols for libsmartcardpp0
+ This package contains debugging symbols for smartcardpp library.
+
