@@ -1,20 +1,23 @@
 = Ubuntu =
-Toetatud versioonid *Karmic Koala (9.10)* ja *Lucid Lynx (10.04)*
+Toetatud versioonid *Karmic Koala (9.10)*, *Lucid Lynx (10.04)* ja *Maverick Meerkat (10.10)*
 
 === Repositooriumi lisamine ===
-Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti.
+Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi:
 
 
 ==== Karmic Koala (9.10) ====
 {{{
-echo deb http://id.smartlink.ee/repo/release/ubuntu/ karmic main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+sudo add-apt-repository ppa:esteid/ppa
 }}}
 
 ==== Lucid Lynx (10.04) ====
 {{{
-echo deb http://id.smartlink.ee/repo/release/ubuntu/ lucid main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+sudo add-apt-repository ppa:esteid/ppa
+}}}
+
+==== Maverick Meerkat (10.10) ====
+{{{
+sudo add-apt-repository ppa:esteid/ppa
 }}}
 
 
@@ -23,13 +26,13 @@ wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add
 
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
-sudo aptitude update
-sudo aptitude dist-upgrade
-sudo aptitude install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid 
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
-sudo aptitude update
-sudo aptitude dist-upgrade
+sudo apt-get update
+sudo apt-get dist-upgrade
 }}}
