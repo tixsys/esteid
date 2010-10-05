@@ -7,7 +7,7 @@ Funktsionaalsus:
  1. Veebilehitsejate tuvastamine – Installipakett tuvastab olemasolevad toetatavad veebilehitsejad koos nende versioonidega ning vastavalt sellele võimaldab kasutajal valida, millistele veebilehitsejatele draivereid soovitakse või teavitab kasutajat vajaliku veebilehitseja puudumisest.<br>
  1. Juursertifikaatide paigaldamine – paigaldatakse juursertifikaadid veebibrauserite ja operatsioonisüsteemi sertifikaadihoidlatesse.<br>
  1. Hilisemate paigalduste tugi – Haagid, mis käivituvad juhul kui peale baastarkvara paigaldamist lisatakse tarkvarakomponente, mis on toetatud baastarkvara poolt ja paigaldatavad lisatud komponentide toetamiseks vajaliku tarkvara automaatselt.<br>
- 1. Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. !OpenOffice ja Firefox laienduste uuendamist võimaldatakse ka läbi nende rakenduste enda veebiteenuste.<br>
+ 1. Tarkvara uuendamine – Windowsi ja MacOS X all jookseb spetsiaalne teenus, Linuxite puhul kasutatakse operatsioonisüsteemi vahendeid. Firefox laienduste uuendamist võimaldatakse ka läbi tema rakenduste enda veebiteenuste.<br>
  1. Tarkvara paigaldamine veebilehelt – tuvastatakse kasutaja operatsioonisüsteem ja sellele vastavalt kuvatakse kas detailsed paigaldamisjuhised või käivitatakse installatsiooniprotsess.<br>
 
 [SysteemiKirjeldus Tagasi]
