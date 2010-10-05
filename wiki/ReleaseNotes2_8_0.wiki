@@ -11,6 +11,7 @@ Toetatud operatsioonisüsteemid:
  * MacOS X 10.6 Intel
  * Ubuntu Linux 9.10
  * Ubuntu Linux 10.04
+ * Ubuntu Linux 10.10
  * Fedora Linux 13
  * Fedora Linux 12
  * SuSE Linux 11.1
@@ -37,7 +38,6 @@ Arendajatele suunatud komponendid:
  * C++ kaarditaseme draiver (smartcardpp)
 
 Katsetusjärgus tarkvara:
- * Openoffice laiendus (ooo-digidoc)
  * PDF allkirjastaja (pdf-signer)
  * Javas realiseeritud SOAP liidesed (digidocservice)
 
@@ -48,8 +48,8 @@ Katsetusjärgus tarkvara:
  * Google Chrome tugi
  * Windows 7 tugi
  * MacOS X 10.6 tugi
- * Uute Linuxi versioonide tugi (Ubuntu 10.04, Fedora 13, Suse 11.2 ja 11.3)
- * Eemaldatud vanade operatsioonisüsteemide tugi (Windows 2000, MacOS X 10.4)
+ * Uute Linuxi versioonide tugi (Ubuntu 10.04, Ubuntu 10.10, Fedora 13, Suse 11.2 ja 11.3)
+ * Eemaldatud vanade operatsioonisüsteemide tugi (Windows 2000, MacOS X 10.4. MacOS X 10.5 PPC)
  * Faililehitsejas hiire parema klahvi alt allkirjastamise tugi KDE ja GNOME töölaudadel
 
 == Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin 1.1.0) ==
@@ -73,6 +73,8 @@ Katsetusjärgus tarkvara:
 
  * Allkirjastamise tööriist (qdigidoc) blokeerub ligipääsutõendi laadimise ajaks
  * Firefox ei leia kaarti, kui kaardilugeja ühendati süsteemiga peale firefoxi käivitamist, aitab lehitseja sulgemine ja uuesti käivitamine
+ * Maci peal ei lisata allkirjastatud/krüpteeritud faili manusesse, kui vajutada Kliendis või Krüptos linki "Saada ümbrik e-postiga"
+ * SEB's ja eesti.ee's saab Maci ja Linuxi peal allkirjastada ainult Firefoxiga. Samuti Swedbankis Java appleti kaudu töötab allkirjastamine ainult Firefoxiga.
 
 = Arendajast sõltumatud probleemid =
 
