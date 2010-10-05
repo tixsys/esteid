@@ -14,7 +14,7 @@ MY_PV="1.0.0"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

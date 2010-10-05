@@ -13,7 +13,7 @@ FB_PV="1.2.2"
 FB_P="${FB_PN}-${FB_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
-HOMEPAGE="https://id.eesti.ee/trac/"
+HOMEPAGE="http://code.google.com/p/esteid/"
 SRC_URI="http://esteid.googlecode.com/files/${P}.tar.bz2
 	http://firebreath.googlecode.com/files/${FB_P}.tar.bz2"
 
