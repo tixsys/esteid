@@ -29,7 +29,7 @@ http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 sudo yum update
-sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
