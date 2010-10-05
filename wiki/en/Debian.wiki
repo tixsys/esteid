@@ -24,7 +24,7 @@ To install all packages you need to enter the following commands into the termin
 {{{
 sudo aptitude update
 sudo aptitude dist-upgrade
-sudo aptitude install qdigidoc qesteidutil mozilla-esteid icedove-esteid openoffice.org-digidoc
+sudo aptitude install qdigidoc qesteidutil mozilla-esteid icedove-esteid
 }}}
 
 If the packages have already been installed before then to update them enter the following commands into the terminal:

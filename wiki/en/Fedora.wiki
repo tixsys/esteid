@@ -32,7 +32,7 @@ When using Fedora13: http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-r
 To install all packages enter the following commands into the terminal:
 {{{
 sudo yum update
-sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid openoffice.org-digidoc
+sudo yum install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid
 }}}
 
 If the packages have already been installed before then to update them enter the following command into the terminal:
