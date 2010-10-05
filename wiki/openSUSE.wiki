@@ -28,14 +28,14 @@ sudo zypper ar http://id.smartlink.ee/repo/release/opensuse/11.3/esteid.repo
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 sudo zypper ref
-sudo zypper install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid OpenOffice_org-digidoc
+sudo zypper install qesteidutil qdigidoc mozilla-esteid thunderbird-esteid
 }}}
 
 või ka graafilise pakihaldajaga:
 
 Arvuti -> Süsteem -> Tarkvara Paigaldamine;<br>
 Rühmad -> hoidlad -> Estonian ID Card development (openSUSE_11.*);<br>
-Vali qesteidutil, qdigidoc, mozilla-esteid, thunderbird-esteid ja OpenOffice_org-digidoc
+Vali qesteidutil, qdigidoc, mozilla-esteid ja thunderbird-esteid
 
 Esmakordsel paigaldamisel tuleb pcscd deemon sisse lülitada:
 {{{
