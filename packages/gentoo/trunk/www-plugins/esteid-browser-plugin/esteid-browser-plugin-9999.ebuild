@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -26,8 +26,8 @@ RDEPEND="app-arch/zip
 	dev-libs/openssl
 	dev-libs/smartcardpp
 	|| (
-		>=www-client/firefox-3.0
-		>=www-client/firefox-bin-3.0
+		>=www-client/firefox-3.5
+		>=www-client/firefox-bin-3.5
 		>=www-client/seamonkey-2.0
 		>=www-client/seamonkey-bin-2.0
 		>=mail-client/thunderbird-2.0
@@ -69,12 +69,12 @@ src_install() {
 	xpi_unpack "${CMAKE_BUILD_DIR}/${xpiname}.xpi"
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
-	if has_version '>=www-client/firefox-3.0'; then
+	if has_version '>=www-client/firefox-3.5'; then
 		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/mozilla-firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
 		mozillas="$(best_version www-client/firefox) ${mozillas}"
 	fi
-	if has_version '>=www-client/firefox-bin-3.0'; then
+	if has_version '>=www-client/firefox-bin-3.5'; then
 		MOZILLA_FIVE_HOME="/opt/firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
 		mozillas="$(best_version www-client/firefox-bin) ${mozillas}"
