@@ -2,25 +2,10 @@
 Toetatud versioonid *Karmic Koala (9.10)*, *Lucid Lynx (10.04)* ja *Maverick Meerkat (10.10)*
 
 === Repositooriumi lisamine ===
-Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi:
-
-
-==== Karmic Koala (9.10) ====
+Tarkvara esmakordsel paigaldamisel on vaja lisada repositoorium:
 {{{
 sudo add-apt-repository ppa:esteid/ppa
 }}}
-
-==== Lucid Lynx (10.04) ====
-{{{
-sudo add-apt-repository ppa:esteid/ppa
-}}}
-
-==== Maverick Meerkat (10.10) ====
-{{{
-sudo add-apt-repository ppa:esteid/ppa
-}}}
-
-
 
 === Pakettide paigaldamine ===
 
