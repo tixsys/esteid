@@ -70,7 +70,7 @@ src_install() {
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
 	if has_version '>=www-client/firefox-3.5'; then
-		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/mozilla-firefox"
+		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
 		mozillas="$(best_version www-client/firefox) ${mozillas}"
 	fi
