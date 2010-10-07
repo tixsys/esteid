@@ -25,6 +25,12 @@ if(MSVC)
     add_definitions(-D_SECURE_SCL=0)
 endif(MSVC)
 
+set(QT_USE_QTNETWORK true)
+set(QT_USE_QTWEBKIT true)
+set(QT_USE_QTXML true)
+
+include(${QT_USE_FILE})
+
 # try to find system copy of qtsingleapplication
 find_path(QTSINGLEAPPLICATION_INCLUDE_DIRS qtsingleapplication.h PATH_SUFFIXES QtSolutions)
 find_library(QTSINGLEAPPLICATION_LIBRARIES QtSolutions_SingleApplication-2.6)
@@ -36,10 +42,6 @@ else()
     set(QTSINGLEAPPLICATION_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/qtsingleapplication/src)
     set(QTSINGLEAPPLICATION_LIBRARIES qtsingleapplication)
 endif()
-
-set(QT_USE_QTNETWORK true)
-set(QT_USE_QTWEBKIT true)
-set(QT_USE_QTXML true)
 
 set(qesteidutil_MOC_HDRS
     common/CertificateWidget.h
@@ -108,8 +110,6 @@ QT4_ADD_TRANSLATION( QM_FILES
     src/translations/et.ts
     src/translations/ru.ts
 )
-
-include(${QT_USE_FILE})
 
 find_package(Subversion)
 if (Subversion_FOUND AND EXISTS ${PROJECT_SOURCE_DIR}/.svn)
