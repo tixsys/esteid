@@ -1,7 +1,6 @@
 #summary Instructions for checking out source code.
 
 == Lähtekoodi repositooriumi ülevaade ==
-
 Selles projektis on lähtekoodi haldamiseks kasutusel SVN. Lähtekoodi repositoorium on jagatud mooduliteks; iga moodul omakorda kasutab standardset SVN kataloogistruktuuri (trunk, branches, tags).
 
 == Lähtekoodi allatõmbamine käsurea SVN kliendiga ==
@@ -19,3 +18,8 @@ kus `<mooduli_nimi>` on üks järgnevatest:
  * smartcardpp
 
 Arendajatel on soovitatav eelnevale käsule veel lõppu lisada `--username <sinukasutaja>`. Kui parooli küsitakse, siis tuleb sisestada genereeritud [https://code.google.com/hosting/settings googlecode.com parool].
+
+== Lähtekoodi allatõmbamine käsurea git kliendiga ==
+Git on järjest rohkem populaarsust koguv versioonihaldustarkvara. Kuigi esteid projekt kasutab keskses repositooriumis SVN-i, on arendajatel võimalik lähtekoodi kohalikku koopiat hallata ka git abil. Selleks tuleb appi git-svn:
+
+`git svn clone -s https://esteid.googlecode.com/svn/<mooduli_nimi>`
