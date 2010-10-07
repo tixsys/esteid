@@ -1,0 +1,21 @@
+#summary Instructions for checking out source code.
+
+== Lähtekoodi repositooriumi ülevaade ==
+
+Selles projektis on lähtekoodi haldamiseks kasutusel SVN. Lähtekoodi repositoorium on jagatud mooduliteks; iga moodul omakorda kasutab standardset SVN kataloogistruktuuri (trunk, branches, tags).
+
+== Lähtekoodi allatõmbamine käsurea SVN kliendiga ==
+`svn checkout https://esteid.googlecode.com/svn/<mooduli_nimi>/trunk <mooduli_nimi>`
+
+kus `<mooduli_nimi>` on üks järgnevatest:
+ * esteid-browser-plugin
+ * esteid-csp
+ * jdigidoc
+ * libdigidoc
+ * libdigidocpp
+ * minidriver
+ * qdigidoc
+ * qesteidutil
+ * smartcardpp
+
+Arendajatel on soovitatav eelnevale käsule veel lõppu lisada `--username <sinukasutaja>`. Kui parooli küsitakse, siis tuleb sisestada genereeritud [https://code.google.com/hosting/settings googlecode.com parool].
