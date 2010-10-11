@@ -7,7 +7,7 @@ ESVN_REPO_URI="https://esteid.googlecode.com/svn/smartcardpp/trunk"
 EAPI=3
 inherit cmake-utils subversion
 
-DESCRIPTION="A library for accessing smart cards"
+DESCRIPTION="Library for accessing smart cards"
 HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="BSD"
 SLOT="0"

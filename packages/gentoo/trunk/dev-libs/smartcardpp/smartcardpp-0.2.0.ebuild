@@ -5,7 +5,7 @@
 EAPI=3
 inherit cmake-utils
 
-DESCRIPTION="A library for accessing smart cards"
+DESCRIPTION="Library for accessing smart cards"
 HOMEPAGE="http://code.google.com/p/esteid/"
 SRC_URI="http://esteid.googlecode.com/files/${P}.tar.bz2"
 
