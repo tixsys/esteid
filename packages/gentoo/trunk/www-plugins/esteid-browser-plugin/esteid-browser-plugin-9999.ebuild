@@ -24,15 +24,7 @@ RDEPEND="app-arch/zip
 	dev-cpp/gtkmm
 	dev-libs/boost
 	dev-libs/openssl
-	dev-libs/smartcardpp
-	|| (
-		>=www-client/firefox-3.5
-		>=www-client/firefox-bin-3.5
-		>=www-client/seamonkey-2.0
-		>=www-client/seamonkey-bin-2.0
-		>=mail-client/thunderbird-2.0
-		>=mail-client/thunderbird-bin-2.0
-	)"
+	dev-libs/smartcardpp"
 
 DEPEND="${RDEPEND}"
 
@@ -66,6 +58,8 @@ src_install() {
 	xpi_unpack "${CMAKE_BUILD_DIR}/${xpiname}.xpi"
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
+	# Install the extension for each of these Mozilla browsers;
+	# if none is found just silently skip extension install.
 	if has_version '>=www-client/firefox-3.5'; then
 		MOZILLA_FIVE_HOME="/usr/$(get_libdir)/firefox"
 		xpi_install "${WORKDIR}/${xpiname}"
