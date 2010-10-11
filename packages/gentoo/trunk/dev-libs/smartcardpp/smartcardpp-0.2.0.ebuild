@@ -12,15 +12,9 @@ SRC_URI="http://esteid.googlecode.com/files/${P}.tar.bz2"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug"
+IUSE=""
 
 RDEPEND="sys-apps/pcsc-lite"
 DEPEND="${RDEPEND}"
 
 DOCS="NEWS"
-
-src_configure() {
-	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
-
-	cmake-utils_src_configure
-}
