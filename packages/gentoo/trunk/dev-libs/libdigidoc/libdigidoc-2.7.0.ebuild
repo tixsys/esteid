@@ -2,17 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit cmake-utils
 
-DESCRIPTION="C library for handling DDoc and CDoc digital signature containers"
+DESCRIPTION="Library for handling digitally signed documents"
 HOMEPAGE="http://code.google.com/p/esteid/"
 SRC_URI="http://esteid.googlecode.com/files/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug"
+IUSE=""
 
 RDEPEND="dev-libs/libxml2
 	dev-libs/opensc
@@ -20,14 +20,12 @@ RDEPEND="dev-libs/libxml2
 	sys-libs/zlib"
 DEPEND="${RDEPEND}"
 
-DOCS="AUTHORS ChangeLog README"
+DOCS="AUTHORS ChangeLog NEWS README"
 
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
 	local mycmakeargs="${mycmakeargs}
-		-DSYSCONF_INSTALL_DIR=${ROOT}etc"
-
-	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
+		-DSYSCONF_INSTALL_DIR=${EROOT}etc"
 
 	cmake-utils_src_configure
 }
