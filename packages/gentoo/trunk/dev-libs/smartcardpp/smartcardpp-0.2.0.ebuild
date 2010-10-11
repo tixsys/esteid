@@ -17,6 +17,8 @@ IUSE="debug"
 RDEPEND="sys-apps/pcsc-lite"
 DEPEND="${RDEPEND}"
 
+DOCS="NEWS"
+
 src_configure() {
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
