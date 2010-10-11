@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 inherit cmake-utils mozextension multilib nsplugins
 
 MY_PN="esteid"
@@ -34,9 +34,7 @@ RDEPEND="app-arch/zip
 		>=www-client/seamonkey-bin-2.0
 		>=mail-client/thunderbird-2.0
 		>=mail-client/thunderbird-bin-2.0
-	)
-	!www-plugins/esteid-firefox
-	!www-plugins/esteid-mozilla"
+	)"
 
 DEPEND="${RDEPEND}"
 
@@ -57,7 +55,6 @@ src_unpack() {
 
 src_configure() {
 	local mycmakeargs="-DWITH_SYSTEM_BOOST:BOOL=YES"
-	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
 	cmake-utils_src_configure
 }

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 
 inherit cmake-utils mercurial mozextension multilib nsplugins subversion
 
@@ -10,7 +10,7 @@ ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
 EHG_REPO_URI="https://firebreath.googlecode.com/hg/"
 
 MY_PN="esteid"
-MY_PV="1.0.0"
+MY_PV="1.1.0"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
@@ -32,9 +32,7 @@ RDEPEND="app-arch/zip
 		>=www-client/seamonkey-bin-2.0
 		>=mail-client/thunderbird-2.0
 		>=mail-client/thunderbird-bin-2.0
-	)
-	!www-plugins/esteid-firefox
-	!www-plugins/esteid-mozilla"
+	)"
 
 DEPEND="${RDEPEND}"
 
@@ -51,7 +49,6 @@ src_unpack() {
 
 src_configure() {
 	local mycmakeargs="-DWITH_SYSTEM_BOOST:BOOL=YES"
-	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
 	cmake-utils_src_configure
 }
