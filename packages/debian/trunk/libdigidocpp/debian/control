@@ -2,7 +2,7 @@ Source: libdigidocpp
 Section: utils
 Priority: extra
 Maintainer: Kalev Lember <kalev@smartlink.ee>
-Build-Depends: cdbs, debhelper (>= 7), cmake, libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev, libpkcs11-helper-dev
+Build-Depends: cdbs, debhelper (>= 7), cmake, libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev, libpkcs11-helper-dev, swig, php5-dev, python-dev, libperl-dev
 Standards-Version: 3.8.0
 Homepage: http://code.google.com/p/esteid/
 
@@ -14,6 +14,14 @@ Replaces: libdigidoc0-dev (<< 0.1.0-0), libdigidoc++0-dev (<< 0.1.0-0)
 Depends: libdigidocpp0 (= ${binary:Version}), libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev
 Description: Digidoc development files
  Files necessary for developing applications with libdigidocpp library.
+
+Package: python-digidoc
+Section: libs
+Architecture: any
+Provides: python-digidoc
+Depends: libdigidocpp0 (= ${binary:Version}), python
+Description:
+ Python bindings for BDoc C++ library (libdigidocpp0)
 
 Package: libdigidocpp0
 Section: libs
