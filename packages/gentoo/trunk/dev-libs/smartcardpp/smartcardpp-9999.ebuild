@@ -18,10 +18,6 @@ RDEPEND="sys-apps/pcsc-lite"
 DEPEND="${RDEPEND}"
 
 src_configure() {
-	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
-	local mycmakeargs="${mycmakeargs}
-		-DSYSCONF_INSTALL_DIR=${EROOT}etc"
-
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
 	cmake-utils_src_configure
