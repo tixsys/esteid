@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=3
 inherit cmake-utils
 
 DESCRIPTION="A library for accessing smart cards"
@@ -20,7 +20,7 @@ DEPEND="${RDEPEND}"
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
 	local mycmakeargs="${mycmakeargs}
-		-DSYSCONF_INSTALL_DIR=${ROOT}etc"
+		-DSYSCONF_INSTALL_DIR=${EROOT}etc"
 
 	use debug && mycmakeargs+=" -DCMAKE_BUILD_TYPE=Debug"
 
