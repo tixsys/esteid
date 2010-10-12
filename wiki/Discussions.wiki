@@ -1,6 +1,6 @@
 ﻿#summary informatsioon projekti suhtluskanalite kohta
 
-<table>
+<table cellspacing="10">
 
 <tr>
 <td>
