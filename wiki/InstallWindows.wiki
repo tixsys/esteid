@@ -12,9 +12,10 @@ Kui Sul ei ole, siis saab installika tõmmata [http://www.microsoft.com/download
 
 == Paigaldamine ==
 
-Paigaldamiseks tuleb laadida sobiv .msi fail ja see käivitada.
+ # Palun loe läbi [ReleaseNotes_2_8_0 need olulised märkused]
+ # Lae oma Windowsile sobiv .msi fail ja käivita see.
 
-Installika saad siit:
+MSI faili saad siit:
  * 32 bitine Windows: [http://code.google.com/p/esteid/downloads/detail?name=Eesti_ID_kaart_2_8_0.msi Eesti_ID_kaart_2_8_0.msi]
  * 64 bitine Windows: [http://code.google.com/p/esteid/downloads/detail?name=Eesti_ID_kaart_2_8_0_x64.msi Eesti_ID_kaart_2_8_0_x64.msi]
 
