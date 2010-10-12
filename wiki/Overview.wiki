@@ -1,0 +1,18 @@
+﻿#summary A short overview about this project
+
+Eesti ID-Kaart (EstEID) on Kiipkaart, kuhu on salvestatud kaks X509 sertifikaati: üks on autentimiseks ja teine juriidiliselt siduvate digitaalallkirjade andmiseks. 
+
+Tarkvarapakett sisaldab:
+
+  * ID-kaardi draiverid Windows CAPI jaoks
+  * ID-kaardi draiverid PKCS#11 jaoks (kasutades OpenSC projekti)
+  * Ühtne allkirjastamise laiendus kõigile veebibrauseritele
+  * C++ teegid DDOC ja BDOC formaatide lugemiseks.
+  * QT-põhine allkirjastamise tööriist
+  * QT-põhine kaardihaldusvahend
+  * Eksperimentaalne PDF failide allkirjastaja
+
+
+Tarkvara on algselt loodud Riigi Infosüsteemide Arenduskeskuse
+tellimusel Smartlink OÜ poolt projekti raames, mida finantseeris
+Euroopa Liit. Tarkvara võib levitada LGPL litsentsi alusel.
