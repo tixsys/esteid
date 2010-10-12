@@ -38,3 +38,7 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://www.openxades.org/upload_cert.php
  * [XMLDSIG]
  * [EstEid]
+
+== Paigaldus kolme klikiga (tavakasutajale) ==
+
+<a href="apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?section=ppa:esteid?section=universe?section=multiverse">Pakettide graafiliseks paigaldamiseks kliki siia</a>
