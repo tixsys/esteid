@@ -1,15 +1,39 @@
 ﻿#summary informatsioon projekti suhtluskanalite kohta
 
+<table>
+
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/list-icon.png
+</td>
+<td>
 Tehniliste arutelude jaoks on meil Google grupp.
 
 http://groups.google.com/group/esteid-devel/
 
 Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
 
-Operatiivsemaks suhtlemiseks on FreeNodes IRC kanal #esteid
-http://esteid.googlecode.com/svn/wiki/img/irc-logo.png
+</td>
+</tr>
 
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/irc-icon.png
+</td>
+<td>
+Operatiivsemaks suhtlemiseks on FreeNodes IRC kanal #esteid
+</td>
+</tr>
+
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/bug-icon.png
+</td>
+<td>
 Kui oled leidnud vea, siis saab sellest
 teada anda, vajutades ülemisel ribal kaardile "Issues".
 
 Enne vearaporti kirjutamist vaata palun [ReportingIssues vigadest teatamise reegleid].
+</td>
+</tr>
+</table>
