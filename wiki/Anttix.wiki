@@ -38,16 +38,3 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://www.openxades.org/upload_cert.php
  * [XMLDSIG]
  * [EstEid]
-
-== Paigaldus kolme klikiga (tavakasutajale) ==
-
-
-<wiki:comment>
-Kuna Google code wiki on loll, siis peab tinyurl-i kasutama APT URLi kodeerimiseks:
-
-apt:mozilla-esteid?section=universe?section=multiverse,qesteidutil?section=universe?section=multiverse,qdigidoc?section=universe?section=multiverse,thunderbird-esteid?section=universe?section=multiverse
-
-Vaata lisa: https://wiki.ubuntu.com/AptUrl
-</wiki:comment>
-
-<a href="http://tinyurl.com/3448w2k">Pakettide graafiliseks paigaldamiseks kliki siia</a>
