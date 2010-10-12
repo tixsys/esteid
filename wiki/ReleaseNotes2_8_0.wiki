@@ -79,7 +79,7 @@ Katsetusjärgus tarkvara:
 = Arendajast sõltumatud probleemid =
 
  * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine vähemalt versioonile 3.6 lahendab probleemi. Vaata issue 74
- * Windowsi all ei saa ei Safari ega Google Chrome brauseriga allkirjastada Swedbanki internetipangas. Probleem on sama, mis vanemate Firefox veebilehitsejatega. Vaata issue 74
+ * Windowsi all ei saa ei Safari ega Google Chrome brauseriga allkirjastada Swedbanki internetipangas. Kui kasutad neid brausereid regulaarselt, tuleb valida internetipanga seadetes allkirjastamise tehnoloogiaks Java Applet. Swedbanki poolne probleem on sama, mis vanemate Firefox veebilehitsejatega. Vaata issue 74
  * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve veebilehitseja restart (tuleb sulgeda kõik aknad, kaasaarvatud allalaadimiste oma) või tuleb oodata 15-20min. Miks see nii on, [VeebisAutentimine#Vigased_SSL_seaded loe siit].
  * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
  * Java abil allkirjastamine töötab stabiilselt ainult Windows platvormil. Teistel platvormidel on soovitatav kasutada Firefoxi, kuna viimase laiendusse on sisse ehitatud spetsiaalne ühilduvusrežiim (loe: häkk).
