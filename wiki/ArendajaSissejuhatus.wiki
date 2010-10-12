@@ -6,7 +6,7 @@
  * PaigaldusPaketid - Siit saab valmis installipaketid tarkvara proovimiseks ja testimiseks.
  * ProgressiRaportid - Igasugu automaatsed ja vähem automaatsed kompileerimise ja testimise logid.
  * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed.
- * TicketiteLoomine - Reeglid, kuidas luua uusi ticketeid.
+ * ReportingIssues - Reeglid, kuidas luua uusi ticketeid.
 
 
 
