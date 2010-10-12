@@ -1,8 +1,8 @@
 ﻿== Toetatud operatsioonisüsteemid ==
 
- * Windows XP SP3 või uuem;
- * Windows Vista SP1 või uuem;
- * Windows 7.
+ * Windows XP SP3 või uuem
+ * Windows Vista SP1 või uuem
+ * Windows 7
 
 == Eeldused ==
 
