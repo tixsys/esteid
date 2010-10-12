@@ -7,7 +7,7 @@
 http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>
-Tehniliste arutelude jaoks on meil Google grupp.
+Tehniliste arutelude jaoks on meil Google grupp.<br />
 http://groups.google.com/group/esteid-devel/
 
 Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
