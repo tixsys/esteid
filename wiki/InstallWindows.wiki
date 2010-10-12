@@ -12,7 +12,7 @@ Kui Sul ei ole, siis saab installika tõmmata [http://www.microsoft.com/download
 
 == Paigaldamine ==
 
- # Palun loe läbi [ReleaseNotes_2_8_0 need olulised märkused]
+ # Palun loe läbi [ReleaseNotes2_8_0 need olulised märkused]
  # Lae oma Windowsile sobiv .msi fail ja käivita see.
 
 MSI faili saad siit:
