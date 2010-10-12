@@ -3,9 +3,9 @@ To find out what this project is all about, please read our [Overview?wl=en shor
 <table cellspacing="15">
 <tr>
 <td align="center">
-<h2>[WikiStart?wl=en Install]</h2>
+<h2>[WikiStart Install]</h2>
 http://esteid.googlecode.com/svn/wiki/img/install-icon.png
-<h2>[WikiStart?wl=et Paigalda tarkvara]</h2>
+<h2>[WikiStart Paigalda tarkvara]</h2>
 </td>
 <td align="center">
 <h2>[ArendajaSissejuhatus Develop]</h2>
@@ -13,9 +13,9 @@ http://esteid.googlecode.com/svn/wiki/img/develop-icon.png
 <h2>[ArendajaSissejuhatus Arenda ise]</h2>
 </td>
 <td align="center">
-<h2>[ContactDevelopers?wl=en Discuss]</h2>
+<h2>[Discussions Discuss]</h2>
 http://esteid.googlecode.com/svn/wiki/img/talk-icon.png
-<h2>[ContactDevelopers?wl=et Suhtle teistega]</h2>
+<h2>[Discussions Suhtle teistega]</h2>
 </td>
 </tr>
 </table>
