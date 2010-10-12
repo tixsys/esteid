@@ -40,7 +40,14 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * [EstEid]
 
 == Paigaldus kolme klikiga (tavakasutajale) ==
-<!-- apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?s
-ection=ppa:esteid?section=universe?section=multiverse -->
+
+
+<wiki:comment>
+Kuna Google code wiki on loll, siis peab tinyurl-i kasutama APT URLi kodeerimiseks:
+
+apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?section=ppa:esteid?section=universe?section=multiverse
+
+Vaata lisa: https://wiki.ubuntu.com/AptUrl
+</wiki:comment>
 
 <a href="http://tinyurl.com/esteid-ubuntu">Pakettide graafiliseks paigaldamiseks kliki siia</a>
