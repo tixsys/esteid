@@ -1,11 +1,11 @@
 = Eesti ID kaardi haldusvahendi abileht =
 
 == ID-kaardi haldusvahendi käivitamine ==
-  # Windows: 
+  1. Windows: 
 Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil. 
-  # Mac OS X: 
+  1. Mac OS X: 
 Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
-  # Linux: 
+  1. Linux: 
 Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil. 
 
 
@@ -20,7 +20,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
 ID-kaardi haldusvahendiga saad ID-kaardilt lugeda selle omaniku isikuandmeid, salvestada sertifikaate faili, vahetada PIN ja PUK koode, lukustunud PIN1 ja PIN2 koode lahti blokeerida ning vaadata kasutusel olevate allkirjastamise ja isikutuvastamise sertifikaatide kasutamise statistikat. Lisaks saad seadistada ID-kaardi rakenduse parameetreid, näiteks ID-kaardi tarkvara uuenduste paigaldamist. 
 
 
-http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt2.png
 
 Kasutajaliidesel on neli suuremat osa: 
  # *ID-kaardi ja isikuandmete osa* on programmi töötamise ajal kogu aeg nähtaval.
@@ -29,3 +29,10 @@ Kasutajaliidesel on neli suuremat osa:
   1. Seadistada ja vaadata @eesti.ee e-posti suunamist
   1. Aktiveerida Mobiil-ID-d ja vaadata selle kehtivust  
   1. Muuta PUK koodi
+ # *Tegevuse sisu osas* saad valitud tegevusi teha. Siin kuvatakse ka tegevustega seotud infot ja selgitusi. 
+ # *Seadete ja abi osa* aitab leida lahendust võimalikele probleemidele ja seadistada ID-kaardi tarkavara. Siin saad
+  1. Vaadata diagnostikaraportit
+  1. Muuta seadeid 
+  1. Leida abi probleemide lahendamiseks
+  1. Vahetada kasutuskeelt
+  1. Valida mitme arvutis oleva ID-kaardi vahel
