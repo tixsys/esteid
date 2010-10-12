@@ -1,6 +1,4 @@
-= Hello guest! =
-
-You are on the Estonian ID card development page.
+﻿= Choose Your poison =
 
 <table cellspacing="15">
 
@@ -8,22 +6,17 @@ You are on the Estonian ID card development page.
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/linux-logo.png
-<h2>[PaigaldusPaketid#Linux Linux user]</h2>
+<h2>[InstallLinux Linux user]</h2>
 </td>
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/apple-logo.png
-<h2>[PaigaldusPaketid#Mac_OS_X Mac user]</h2>
+<h2>[InstallMac Mac user]</h2>
 </td>
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/windows-logo.png
-<h2>[PaigaldusPaketid#Windows Windows user]</h2>
-</td>
-
-<td align="center">
-http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
-<h2>[ArendajaSissejuhatus Developer]</h2>
+<h2>[InstallWindows Windows user]</h2>
 </td>
 
 </tr>
@@ -31,7 +24,6 @@ http://esteid.googlecode.com/svn/wiki/img/developer-icon.png
 </table>
 
 
-
-Development is supported by:
+Development was initially supported by:
 
 [http://www.struktuurifondid.ee http://esteid.googlecode.com/svn/wiki/img/SF-logo.jpg]
