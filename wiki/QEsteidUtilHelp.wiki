@@ -1,5 +1,12 @@
-#summary Eesti ID kaardi haldusvahendi abileht
+= Eesti ID kaardi haldusvahendi abileht =
 
-= Abi lehekülg puudub =
+*ID-kaardi haldusvahendi käivitamine*
+  1. Windowsis:
+    Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil. 
+  1. Macis:
+    Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
+  1. Linuxis
+     Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil. 
 
-Abi lehekülge hetkel veel ei ole. Kõikide huviliste abi on teretulnud selle koostamisel.
+
+   ID-kaardi haldusvahendi käivitamise link tekib ka DigiDoc3 Kliendis ja  DigiDoc3 Krüptos, kui allkirjastamise või isikutuvastuse sertifikaat hakkab aeguma või on aegunud. 
