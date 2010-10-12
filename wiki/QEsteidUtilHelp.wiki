@@ -12,7 +12,9 @@
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
+
 
 
 
@@ -22,7 +24,9 @@ ID-kaardi haldusvahendiga saad ID-kaardilt lugeda selle omaniku isikuandmeid, sa
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt2.png
+
 
 
 
@@ -42,6 +46,8 @@ Kasutajaliidesel (Pilt 2) on neli suuremat osa:
   1. Valida mitme arvutis oleva ID-kaardi vahel
 
 
+
+
 = ID-kaardi ja isikuandmed =
 
 ID-kaardi ja isikuandmete osas on ID-kaardi omaniku, ID-kaardi ja ID-kaardi kehtivuse andmed. See informatsioon on ID-kaardi haldusvahendi kasutamise ajal kogu aeg nähtaval.
@@ -53,7 +59,9 @@ Kui ID-kaardilt mingil põhjusel andmeid lugeda ei õnnestu, siis on isikuandmet
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt4.png
+
 
 
 
@@ -67,7 +75,10 @@ ID-kaardil olev pilt on pärit KMA (Kodakondsus- ja Migratsiooniameti) andmekogu
 
 
 
+
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt5.png
+
 *Pilt 5*
 
 
@@ -75,8 +86,12 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt5.png
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt6.png
+
 *Pilt 6*
+
+
 
 
 PIN1 koodi sisestamisega kinnitad, et oled pildi laadimisel kasutatava ID-kaardi õigustatud valdaja.
@@ -85,8 +100,13 @@ PIN1 koodi sisestamisega kinnitad, et oled pildi laadimisel kasutatava ID-kaardi
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt7.png
+
+
 *Pilt 7*
+
+
 
 
  * Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta. 
@@ -95,8 +115,12 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt7.png
 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt8.png
+
+
 *Pilt 8*
+
 
 
 
