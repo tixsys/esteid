@@ -58,12 +58,12 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt4.png
 
 
 
-      * ID-kaardil oleva dokumendipildi allalaadimine ja salvestamine *
+      * *ID-kaardil oleva dokumendipildi allalaadimine ja salvestamine*
 
 ID-kaardil olev pilt on pärit KMA (Kodakondsus- ja Migratsiooniameti) andmekogust. Sealt saad pildi ID-kaardi haldusvahendiga alla laadida ja endale salvestada.
 
- * Käivita ID-kaardi haldusvahend. *
- * Klõpsa hiirega ID-kaardi haldusvahendi paneelil sõnadel "Lae pilt" (Pilt 5) *
+ * Käivita ID-kaardi haldusvahend. 
+ * Klõpsa hiirega ID-kaardi haldusvahendi paneelil sõnadel "Lae pilt" (Pilt 5) 
 
 
 
@@ -71,7 +71,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt5.png
 *Pilt 5*
 
 
- * Sisesta avanevas dialoogiaknas (Pilt 6) PIN1 ja vajuta OK. *
+ * Sisesta avanevas dialoogiaknas (Pilt 6) PIN1 ja vajuta OK. 
 
 
 
@@ -81,7 +81,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt6.png
 
 PIN1 koodi sisestamisega kinnitad, et oled pildi laadimisel kasutatava ID-kaardi õigustatud valdaja.
 
- * KMA kataloogist alla laetud pilt kuvatakse ID-kaardi haldusvahendis (Pilt 7). *
+ * KMA kataloogist alla laetud pilt kuvatakse ID-kaardi haldusvahendis (Pilt 7). 
 
 
 
@@ -89,9 +89,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt7.png
 *Pilt 7*
 
 
- * Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta. *
- * Vali avanevas salvestamise dialoogiaknas pildi salvestamise kataloog. *
- * Siin võid anda pildile uue nime ja valida pildi salvestusformaadi (Pilt 8). Vajuta Save ja pilt on salvestatud. *
+ * Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta. 
+ * Vali avanevas salvestamise dialoogiaknas pildi salvestamise kataloog. 
+ * Siin võid anda pildile uue nime ja valida pildi salvestusformaadi (Pilt 8). Vajuta Save ja pilt on salvestatud. 
 
 
 
