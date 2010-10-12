@@ -1,4 +1,4 @@
-To find out what this project is all about, please read our [Overview?wl=en short overview].
+= Uus ID-kaardi tarkvara on saabunud ==
 
 <table cellspacing="15">
 <tr>
@@ -19,3 +19,5 @@ http://esteid.googlecode.com/svn/wiki/img/talk-icon.png
 </td>
 </tr>
 </table>
+
+To find out what this project is all about, please read our [Overview short overview].
