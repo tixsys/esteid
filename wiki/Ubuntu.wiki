@@ -3,11 +3,12 @@ Toetatud versioonid *Karmic Koala (9.10)*, *Lucid Lynx (10.04)* ja *Maverick Mee
 
 == Graafiline paigaldus ==
 
- # Ava Rakendused->Ubuntu tarkvarakeskus->Redigeerimine->Tarkvaraallikad->Muu tarkvara
- # Vajuta nuppu lisa
+ # Ava Rakendused->Ubuntu Tarkvarakeskus->Redigeerimine->Tarkvaraallikad->Muu tarkvara
+ # Vajuta nuppu Lisa
  # Kirjuta avanenud aknasse ppa:esteid/ppa
- # Sulge Tarkvaraallikad
- # Lase tarkvarakeskusel metaandmed ära uuendada (oota roheline ketas enam ei keerle)
+ # Vajuta nuppu Lisa Allikad
+ # Vajuta nuppu Sulge
+ # Lase tarkvarakeskusel metaandmed ära uuendada (oota kuni roheline ketas enam ei keerle)
  # <a href="http://tinyurl.com/3448w2k">Kliki siia pakettide installimiseks</a>
 
 <wiki:comment>
