@@ -1,7 +1,7 @@
 #summary Eesti ID-kaardi tarkvara ja draiverid versioon 2.8.0
 
 = Eesti ID-kaardi tarkvara ja draiverid 2.8.0 =
-XX.09.2010
+12.10.2010
 
 Toetatud operatsioonisüsteemid:
  * Windows XP (32bit)
