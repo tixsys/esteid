@@ -1,6 +1,6 @@
 ﻿#summary Projekti lühiülevaade
 
-Eesti ID-Kaart (EstEID) on Kiipkaart, kuhu on salvestatud kaks X509 sertifikaati: üks on autentimiseks ja teine juriidiliselt siduvate digitaalallkirjade andmiseks. 
+Eesti ID-Kaart (EstEID) on kiipkaart, kuhu on salvestatud kaks X509 sertifikaati: üks on autentimiseks ja teine juriidiliselt siduvate digitaalallkirjade andmiseks. 
 
 Tarkvarapakett sisaldab:
 
