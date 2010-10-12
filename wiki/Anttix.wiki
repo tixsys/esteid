@@ -41,4 +41,4 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
 
 == Paigaldus kolme klikiga (tavakasutajale) ==
 
-<a href="apt:qdigidoc">Pakettide graafiliseks paigaldamiseks kliki siia</a>
+<a href="apt://qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?section=ppa:esteid?section=universe?section=multiverse">Pakettide graafiliseks paigaldamiseks kliki siia</a>
