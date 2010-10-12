@@ -1,0 +1,14 @@
+#summary informatsioon projekti suhtluskanalite kohta
+
+Tehniliste arutelude jaoks on meil Google grupp.
+
+http://groups.google.com/group/esteid-devel/
+
+Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
+
+Operatiivsemaks suhtlemiseks on FreeNodes IRC kanal #esteid
+
+Kui oled leidnud vea, siis saab sellest
+teada anda, vajutades ülemisel ribal kaardile "Issues".
+
+Enne vearaporti kirjutamist vaata palun [ReportingIssues vigadest teatamise reegleid].
