@@ -40,5 +40,7 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * [EstEid]
 
 == Paigaldus kolme klikiga (tavakasutajale) ==
+<!-- apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?s
+ection=ppa:esteid?section=universe?section=multiverse -->
 
 <a href="http://tinyurl.com/esteid-ubuntu">Pakettide graafiliseks paigaldamiseks kliki siia</a>
