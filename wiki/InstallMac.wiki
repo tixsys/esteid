@@ -1,0 +1,10 @@
+﻿== Toetatud Operatsioonisüsteemid ==
+ * Mac OS X 10.5 (Leopard) Intel
+ * Mac OS X 10.6 (Snow Leopard) Intel
+
+== Paigaldamine ==
+Installika saad siit: [http://code.google.com/p/esteid/downloads/detail?name=ID-card_software_installer_20101001_r3191.dmg ID-card_software_installer_20101001_r3191.dmg]
+
+Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
+
+[InstallStart Tagasi]

@@ -1,0 +1,26 @@
+﻿== Toetatud operatsioonisüsteemid ==
+
+ * Windows XP SP3 või uuem;
+ * Windows Vista SP1 või uuem;
+ * Windows 7.
+
+== Eeldused ==
+
+Paigalduspaketi korrektseks toimimiseks peab olema arvutisse paigaldatud Microsoft .NET Framework 2.0.
+
+Kui Sul ei ole, siis saab installika tõmmata [http://www.microsoft.com/downloads/details.aspx?familyid=79BC3B77-E02C-4AD3-AACF-A7633F706BA5 sellelt Microsofti lehelt]
+
+== Paigaldamine ==
+
+Paigaldamiseks tuleb laadida sobiv .msi fail ja see käivitada.
+
+Installika saad siit:
+ * 32 bitine Windows: [http://code.google.com/p/esteid/downloads/detail?name=Eesti_ID_kaart_2_8_0.msi Eesti_ID_kaart_2_8_0.msi]
+ * 64 bitine Windows: [http://code.google.com/p/esteid/downloads/detail?name=Eesti_ID_kaart_2_8_0_x64.msi Eesti_ID_kaart_2_8_0_x64.msi]
+
+Hiljem toimub tarkvara uuenduste kontroll automaatselt või käivitades id-updater.exe käsitsi.
+
+Kui Sa ei tea, kas Sul on 32 või 64 bitine Windows,
+siis tee see kindlaks, kasutades [http://support.microsoft.com/kb/827218 neid juhiseid].
+
+[InstallStart Tagasi]

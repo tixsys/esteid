@@ -1,0 +1,10 @@
+﻿== Tarkvara paigaldamine ==
+
+ * [ArchLinux Archlinuxi seadistamine]
+ * [Debian Debiani seadistamine]
+ * [Fedora Fedora seadistamine]
+ * [Gentoo Gentoo seadistamine]
+ * [Ubuntu Ubuntu seadistamine]
+ * [openSUSE openSUSE seadistamine]
+
+[InstallStart Tagasi]
