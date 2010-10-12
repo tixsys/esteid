@@ -8,11 +8,9 @@ http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>
 Tehniliste arutelude jaoks on meil Google grupp.
-
 http://groups.google.com/group/esteid-devel/
 
 Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
-
 </td>
 </tr>
 
@@ -21,7 +19,7 @@ Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
 http://esteid.googlecode.com/svn/wiki/img/irc-icon.png
 </td>
 <td>
-Operatiivsemaks suhtlemiseks on FreeNodes IRC kanal #esteid
+Operatiivsemaks suhtlemiseks on [http://freenode.net/using_the_network.shtml FreeNodes] IRC kanal #esteid
 </td>
 </tr>
 
