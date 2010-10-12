@@ -3,10 +3,11 @@
 == ID-kaardi haldusvahendi käivitamine ==
   1. Windows: 
 Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil. 
-  2. Mac OS X: 
+  1. Mac OS X: 
 Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
-  3. Linux: 
+  1. Linux: 
 Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil. 
+  
 
 
    ID-kaardi haldusvahendi käivitamise link tekib ka DigiDoc3 Kliendis ja  DigiDoc3 Krüptos, kui allkirjastamise või isikutuvastuse sertifikaat hakkab aeguma või on aegunud. (Pilt 1)
@@ -48,3 +49,38 @@ Kui ID-kaardilt mingil põhjusel andmeid lugeda ei õnnestu, siis on isikuandmet
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt4.png
+
+
+
+
+*ID-kaardil oleva dokumendipildi allalaadimine ja salvestamine *
+
+ID-kaardil olev pilt on pärit KMA (Kodakondsus- ja Migratsiooniameti) andmekogust. Sealt saad pildi ID-kaardi haldusvahendiga alla laadida ja endale salvestada.
+
+ # Käivita ID-kaardi haldusvahend.
+ # Klõpsa hiirega ID-kaardi haldusvahendi paneelil sõnadel "Lae pilt" (Pilt 5)
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt5.png
+
+
+ # Sisesta avanevas dialoogiaknas (Pilt 6) PIN1 ja vajuta OK.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt6.png
+
+PIN1 koodi sisestamisega kinnitad, et oled pildi laadimisel kasutatava ID-kaardi õigustatud valdaja.
+
+ # KMA kataloogist alla laetud pilt kuvatakse ID-kaardi haldusvahendis (Pilt 7). 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt7.png
+
+ # Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta.
+ # Vali avanevas salvestamise dialoogiaknas pildi salvestamise kataloog. 
+ # Siin võid anda pildile uue nime ja valida pildi salvestusformaadi (Pilt 8). Vajuta Save ja pilt on salvestatud. 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt8.png
+
+
+
+= Sertifikaadid ja PIN koodid = 
+
+*järgneb...*
