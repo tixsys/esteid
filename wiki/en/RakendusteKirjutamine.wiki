@@ -1,10 +1,8 @@
-Choose the type of your application:
+﻿Choose the type of your application:
 
   * [EsteidBrowserPlugin Web application using the card (identification, signing)]
  * [DigiDocTeegid Application that processes digitally signed documents]
  * Application that reads personal data from the card
  * Some other application that uses certificates and/or keys
-
-Library code instructions can be found at: https://id.smartlink.ee/libdigidocpp-doxy/
 
 [ArendajaSissejuhatus Back]
