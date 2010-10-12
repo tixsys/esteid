@@ -1,11 +1,7 @@
 = Ubuntu =
 Toetatud versioonid *Karmic Koala (9.10)*, *Lucid Lynx (10.04)* ja *Maverick Meerkat (10.10)*
 
-== Paigaldus kolme klikiga (tavakasutajale) ==
-
-[apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?section=ppa:esteid?section=universe?section=multiverse Pakettide graafiliseks paigaldamiseks kliki siia]
-
-== Paigaldus käsurealt (eksperdile) ==
+== Paigaldus käsurealt ==
 
 Tarkvara esmakordsel paigaldamisel on vaja lisada repositoorium:
 {{{
