@@ -1,19 +1,19 @@
 = Eesti ID kaardi haldusvahendi abileht =
 
 == ID-kaardi haldusvahendi käivitamine ==
-  1. Windows: 
-Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil. 
-  1. Mac OS X: 
-Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
-  1. Linux: 
-Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil. 
-  
+  # *Windows*: Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil.
+  # *Mac OS X*: Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
+  # *Linux*: Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil.
+ 
+
 
 
    ID-kaardi haldusvahendi käivitamise link tekib ka DigiDoc3 Kliendis ja  DigiDoc3 Krüptos, kui allkirjastamise või isikutuvastuse sertifikaat hakkab aeguma või on aegunud. (Pilt 1)
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
+
 
 
 == ID-kaardi haldusvahendi kasutajaliides ==
@@ -21,7 +21,10 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
 ID-kaardi haldusvahendiga saad ID-kaardilt lugeda selle omaniku isikuandmeid, salvestada sertifikaate faili, vahetada PIN ja PUK koode, lukustunud PIN1 ja PIN2 koode lahti blokeerida ning vaadata kasutusel olevate allkirjastamise ja isikutuvastamise sertifikaatide kasutamise statistikat. Lisaks saad seadistada ID-kaardi rakenduse parameetreid, näiteks ID-kaardi tarkvara uuenduste paigaldamist. 
 
 
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt2.png
+
+
 
 Kasutajaliidesel (Pilt 2) on neli suuremat osa: 
  # *ID-kaardi ja isikuandmete osa* on programmi töötamise ajal kogu aeg nähtaval.
@@ -48,36 +51,52 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt3.png
 Kui ID-kaardilt mingil põhjusel andmeid lugeda ei õnnestu, siis on isikuandmete asemel probleemi kirjeldus, näiteks (Pilt 4)
 
 
+
+
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt4.png
 
 
 
 
-*ID-kaardil oleva dokumendipildi allalaadimine ja salvestamine *
+      *ID-kaardil oleva dokumendipildi allalaadimine ja salvestamine *
 
 ID-kaardil olev pilt on pärit KMA (Kodakondsus- ja Migratsiooniameti) andmekogust. Sealt saad pildi ID-kaardi haldusvahendiga alla laadida ja endale salvestada.
 
- # Käivita ID-kaardi haldusvahend.
- # Klõpsa hiirega ID-kaardi haldusvahendi paneelil sõnadel "Lae pilt" (Pilt 5)
+ 1. Käivita ID-kaardi haldusvahend.
+ 1. Klõpsa hiirega ID-kaardi haldusvahendi paneelil sõnadel "Lae pilt" (Pilt 5)
+
+
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt5.png
+*Pilt 5*
 
 
- # Sisesta avanevas dialoogiaknas (Pilt 6) PIN1 ja vajuta OK.
+ 1. Sisesta avanevas dialoogiaknas (Pilt 6) PIN1 ja vajuta OK.
+
+
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt6.png
+*Pilt 6*
+
 
 PIN1 koodi sisestamisega kinnitad, et oled pildi laadimisel kasutatava ID-kaardi õigustatud valdaja.
 
- # KMA kataloogist alla laetud pilt kuvatakse ID-kaardi haldusvahendis (Pilt 7). 
+ 1. KMA kataloogist alla laetud pilt kuvatakse ID-kaardi haldusvahendis (Pilt 7). 
+
+
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt7.png
+*Pilt 7*
 
- # Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta.
- # Vali avanevas salvestamise dialoogiaknas pildi salvestamise kataloog. 
- # Siin võid anda pildile uue nime ja valida pildi salvestusformaadi (Pilt 8). Vajuta Save ja pilt on salvestatud. 
+
+ 1. Pildi salvestamiseks klõpsa hiirega pildi all oleval sõnal Salvesta.
+ 1. Vali avanevas salvestamise dialoogiaknas pildi salvestamise kataloog. 
+ 1. Siin võid anda pildile uue nime ja valida pildi salvestusformaadi (Pilt 8). Vajuta Save ja pilt on salvestatud. 
+
+
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt8.png
+*Pilt 8*
 
 
 
