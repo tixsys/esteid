@@ -45,9 +45,9 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
 <wiki:comment>
 Kuna Google code wiki on loll, siis peab tinyurl-i kasutama APT URLi kodeerimiseks:
 
-apt:qdigidoc,qesteidutil,mozilla-esteid,thunderbird-esteid?section=ppa:esteid?section=universe?section=multiverse
+apt:mozilla-esteid?section=universe?section=multiverse,qesteidutil?section=universe?section=multiverse,qdigidoc?section=universe?section=multiverse,thunderbird-esteid?section=universe?section=multiverse
 
 Vaata lisa: https://wiki.ubuntu.com/AptUrl
 </wiki:comment>
 
-<a href="http://tinyurl.com/esteid-ubuntu">Pakettide graafiliseks paigaldamiseks kliki siia</a>
+<a href="http://tinyurl.com/3448w2k">Pakettide graafiliseks paigaldamiseks kliki siia</a>
