@@ -1,6 +1,25 @@
 = Ubuntu =
 Toetatud versioonid *Karmic Koala (9.10)*, *Lucid Lynx (10.04)* ja *Maverick Meerkat (10.10)*
 
+== Graafiline paigaldus ==
+
+ # Ava Rakendused->Ubuntu tarkvarakeskus->Redigeerimine->Tarkvaraallikad->Muu tarkvara
+ # Vajuta nuppu lisa
+ # Kirjuta avanenud aknasse ppa:esteid/ppa
+ # Sulge Tarkvaraallikad
+ # Lase tarkvarakeskusel metaandmed ära uuendada (oota roheline ketas enam ei keerle)
+ # <a href="http://tinyurl.com/3448w2k">Kliki siia pakettide installimiseks</a>
+
+<wiki:comment>
+Kuna Google code wiki on loll, siis peab tinyurl-i kasutama APT URLi kodeerimiseks:
+
+apt:mozilla-esteid?section=universe?section=multiverse,qesteidutil?section=universe?section=multiverse,qdigidoc?section=universe?section=multiverse,thunderbird-esteid?section=universe?section=multiverse
+
+Vaata lisa: https://wiki.ubuntu.com/AptUrl
+</wiki:comment>
+
+http://esteid.googlecode.com/svn/wiki/img/ubuntu-addppa-et.png
+
 == Paigaldus käsurealt ==
 
 Tarkvara esmakordsel paigaldamisel on vaja lisada repositoorium:
