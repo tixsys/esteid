@@ -1,0 +1,14 @@
+﻿#summary projects communications
+
+Please hold technical discussions in the Google group
+
+http://groups.google.com/group/esteid-devel/
+
+Everyone who can tell bits and bytes apart is welcome do participate.
+
+For real-time chats there is a channel #esteid on FreeNode
+
+If You have discovered a bug, You can report it by clicking
+"Issues" on top of page.
+
+Please read [ReportingIssues the instructions] before reporting an issue.
