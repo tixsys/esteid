@@ -4,7 +4,7 @@ Please hold technical discussions in the Google group
 
 http://groups.google.com/group/esteid-devel/
 
-Everyone who can tell bits and bytes apart is welcome do participate.
+Everyone who can tell bits and bytes apart is welcome to participate.
 
 For real-time chats there is a channel #esteid on FreeNode
 
