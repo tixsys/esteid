@@ -3,13 +3,13 @@
 == ID-kaardi haldusvahendi käivitamine ==
   1. Windows: 
 Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil. 
-  1. Mac OS X: 
+  2. Mac OS X: 
 Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
-  1. Linux: 
+  3. Linux: 
 Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil. 
 
 
-   ID-kaardi haldusvahendi käivitamise link tekib ka DigiDoc3 Kliendis ja  DigiDoc3 Krüptos, kui allkirjastamise või isikutuvastuse sertifikaat hakkab aeguma või on aegunud.
+   ID-kaardi haldusvahendi käivitamise link tekib ka DigiDoc3 Kliendis ja  DigiDoc3 Krüptos, kui allkirjastamise või isikutuvastuse sertifikaat hakkab aeguma või on aegunud. (Pilt 1)
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
@@ -22,7 +22,7 @@ ID-kaardi haldusvahendiga saad ID-kaardilt lugeda selle omaniku isikuandmeid, sa
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt2.png
 
-Kasutajaliidesel on neli suuremat osa: 
+Kasutajaliidesel (Pilt 2) on neli suuremat osa: 
  # *ID-kaardi ja isikuandmete osa* on programmi töötamise ajal kogu aeg nähtaval.
  # *Tegevuste osas* saad
   1. Vaadata ja vajadusel uuendada sertifikaate ning muuta PIN koode
@@ -36,3 +36,15 @@ Kasutajaliidesel on neli suuremat osa:
   1. Leida abi probleemide lahendamiseks
   1. Vahetada kasutuskeelt
   1. Valida mitme arvutis oleva ID-kaardi vahel
+
+
+= ID-kaardi ja isikuandmed =
+
+ID-kaardi ja isikuandmete osas on ID-kaardi omaniku, ID-kaardi ja ID-kaardi kehtivuse andmed. See informatsioon on ID-kaardi haldusvahendi kasutamise ajal kogu aeg nähtaval.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt3.png
+
+Kui ID-kaardilt mingil põhjusel andmeid lugeda ei õnnestu, siis on isikuandmete asemel probleemi kirjeldus, näiteks (Pilt 4)
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt4.png
