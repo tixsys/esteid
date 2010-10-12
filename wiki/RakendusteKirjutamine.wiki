@@ -5,6 +5,4 @@ Vali oma rakenduse tüüp:
  * Kaardilt isikuandmeid lugev rakendus
  * Muu sertifikaate ja/või võtmeid kasutav rakendus
 
-Teegi koodi juhendi leiad siit: https://id.smartlink.ee/libdigidocpp-doxy/
-
 [ArendajaSissejuhatus Tagasi]
