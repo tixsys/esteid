@@ -1,0 +1,16 @@
+#summary A short overview about this project
+
+Estonian ID-Card (EstEID) is a Smart Card with two X509 certificates, one for authentications and the other for legally binding digital signatures.
+
+The software stack contains:
+
+  * Card drivers for Windows CAPI
+  * Card drivers for PKCS#11 (via OpenSC project)
+  * Cross browser signing plugin
+  * C++ libraries for reading and writing DDOC and BDOC formats (Estonian specific digital signature document formats that are loosley based on XADES standards)
+  * QT based digital signature application
+  * QT based card management utility
+  * Experimental PDF signer
+
+
+Originally developed by Smartlink Ltd for "Riigi Infosüsteemide Arenduskeskus" with financial support from the European Union and released under LGPL license.
