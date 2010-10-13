@@ -130,4 +130,64 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt8.png
 
 = Sertifikaadid ja PIN koodid = 
 
+
+ID-kaardi haldusvahendi avamisel ja ka tegevuste osas nupule Sertifikaadid vajutamisel on näha pildil olev informatsioon sertifikaatide kohta (Pilt 9).  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt9.png
+
+*Pilt 9*
+
+
+
+Muu hulgas näed ka seda, mitu korda oled kasutuselolevate sertifikaatidega enda isikut tuvastanud ja digitaalallkirja andnud. 
+
+Kui sertifikaat on kehtetu, sertifikaadi aegumiseni on vähem kui 105 päeva või isikutuvastamise või allkirjastamise sertifikaadi kasutamine on blokeeritud, siis on see probleemse sertifikaadi juures silmatorkavalt ka kirjas (Pilt 10). Siit leiad ka sertifikaatide uuendamise või blokeeringu tühistamise nupu. 
+
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt10.png
+
+*Pilt 10*
+
+
+
+
+= PIN koodide muutmine =
+
+PIN1 ja PIN2 koodi muutmine on põhimõtteliselt ühesugune: tuleb üks kord sisestada kehtiv kood ja kaks korda uus kood. 
+
+Erinevad on koodide lubatud pikkused: PIN1 kood peab olema 4–12- numbriline ja PIN2 kood peab olema 5–12-numbriline.
+
+Uus kood peab erinema kehtivast koodist, koosnema ainult numbritest ning ei tohi sisaldada sinu sünnikuupäeva ja -aastat. Kui sisestatud uus kood ei vasta neile reeglitele, näed veakirjeldust ja saad võimaluse kood uuesti sisestada.
+
+*Tähtis:* kui sisestad PIN1 või PIN2 koodi kolm korda valesti, siis isikutuvastamise või allkirjastamise sertifikaadi kasutamine blokeeritakse ning ID-kaadiga pole võimalik isikut tuvastada või digitaalallkirja anda. *Blokeeringu saad tühistada PUK koodiga.*
+
+ * Käivita ID-kaardi haldusvahend ja vajuta tegevuste osas nupule Sertifikaadid.
+ * Klõpsa nupul Muuda PIN1 (Pilt 11, 1) või Muuda PIN2 (Pilt 11, 2).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt11.png
+
+
+ * Avaneb PIN koodi muutmise aken (Pilt 12).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt12.png
+*Pilt 12*
+
+
+ * Sisesta kehtiv PIN kood.
+ * Sisesta kaks korda uus PIN kood ja klõpsa _Muuda_.
+ * PIN kood vahetatakse. Näed kinnitust koodi muutmise kohta (Pilt 13). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt13.png
+*Pilt 13*
+
+
+ * Edaspidi kasuta uut, äsjasisestatud PIN koodi.
+
+
 *järgneb...*
