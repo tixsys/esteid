@@ -569,18 +569,22 @@ Klõpsa ID-kaardi haldusvahendi seadete ja abi osas nupule _Seaded_ (Pilt 44).
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt44.png
 
+*Pilt 44* 
 
-ID-kaardi haldusvahendi seadete aknas (Pilt 47) saad seadistada PIN1 salvestamise aega ja Windowsi puhul ka ID-kaardi tarkvara uuenduste allalaadimise ja paigaldamise variante.  
+
+ID-kaardi haldusvahendi seadete aknas (Pilt 45) saad seadistada PIN1 salvestamise aega ja Windowsi puhul ka ID-kaardi tarkvara uuenduste allalaadimise ja paigaldamise variante.  
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt45.png
+
+*Pilt 45*
 
 
 *NB!* Viimased 2 rida on seal ainult Windowsi puhul. Macis ja Linuxis käib uuenduste seadistamine teisiti.
 
 
  == PIN1 salvestamise aeg ==
-PIN1 salvestamise aeg määrab, kui pika aja jooksul saad kasutada ID-kaardi haldusvahendit nii, et iga isikutuvastust vajava tegevuse juures ei küsita PIN1 koodi.(Pilt 47, 1). 
+PIN1 salvestamise aeg määrab, kui pika aja jooksul saad kasutada ID-kaardi haldusvahendit nii, et iga isikutuvastust vajava tegevuse juures ei küsita PIN1 koodi.(Pilt 45, 1). 
 
  * Kui salvestamise aeg on 0, küsitakse parooli iga PIN1 koodi sisestamist vajava seotud tegevuse juures. 
 
