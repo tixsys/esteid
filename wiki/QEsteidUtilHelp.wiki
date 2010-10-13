@@ -326,10 +326,213 @@ Kui kataloogis, kuhu soovid sertifikaadi salvestada, on juba olemas samanimeline
 = Sertifikaatide uuendamine =
 
 
+ID-kaardi haldusvahend annab võimaluse sertifikaatide uuendamiseks ainult siis, kui sertifikaadid on aegunud või aegumiseni on jäänud alla 105 päeva. Aegunud ID-kaardil olevaid sertifikaate uuendada ei saa. Esita Kodakondsus- ja Migratsiooniametile (KMA) taotlus uue ID-kaardi saamiseks. 
+
+
+Sertifikaatide uuendamiseks peab sinu arvutis olema toimiv internetiühendus.
+
+
+*Tähtis!* ID-kaardi kaardilugejast väljavõtmine enne sertifikaatide uuendamise protsessi lõppemist võib rikkuda ID-kaardi elektroonilist osa. *Ära uuendusprotsessi katkesta, oota ära teade uuendamise õnnestumise või ebaõnnestumise kohta.*
+
+
+ * Käivita ID-kaardi haldusvahend ja mine ossa _Sertifikaadid_.
+ * Kui sertifikaadid on aegunud või peatselt aegumas (105 päeva enne aegumistähtaega), tekib sertifikaadi üldandmete ossa nupp Uuenda sertifikaat (Pilt 25).
 
 
 
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt25.png
 
+*Pilt 25*
+
+
+ * Avaneb soovitus sulgeda kõik ID-kaarti kasutavad rakendused. Sulge loetletud rakendused ja kinnita oma soovi jätkata sertifikaatide uuendamist, klõpsates Jah (Pilt 26). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt26.png
+
+
+ * Sisesta avanevas dialoogiaknas PIN1 kood (Pilt 27).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt27.png
+
+*Pilt 27*
+
+
+ * Sertifikaatide uuendamise käigus genereeritakse uued võtmed, esitakse sertifikaadipäringud, laetakse sertifikaadid ID-kaardile ja lõpuks aktiveeritakse uued sertifikaadid. Informatsiooni hetkel käimasoleva protsessi kohta näed ekraanil, aega läheb 3–10 minutit. 
+ * Kui uuendamine on lõppenud, saad teate _*Sertifikaatide uuendamine õnnestus*_ ja näed sertifikaatide üldandmete osas uusi kehtivusandmeid.
+
+
+
+ * Sertifikaate saad uuendada ka veebis aadressil http://www.sk.ee/id-kontroll ja klienditeeninduspunktides, mille nimekirja leiad veebis aadressilt http://www.sk.ee/kontorid.
+
+
+= @eesti.ee e-posti seadistamine ja edasisuunamiste vaatamine =
+
+ID-kaardi haldusvahendiga saad oma @eesti.ee e-posti edasi suunata ühele e-posti aadressile ainult siis, kui sul pole ühtegi kehtivat @eesti.ee e-posti edasisuunamist.
+
+Kehtiva @eesti.ee edasisuunamise olemaolul saad ID-kaardi haldusvahendiga vaadata aadresse, kuhu sinu e-post on suunatud. Edasisuunamisi saad muuta ja lisada Riigiportaalis eesti.ee.
+
+
+
+ * Käivita ID-kaardi haldusvahend ja vajuta tegevuste osas nuppu @eesti.ee e-post (Pilt 28, 1).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt28.png
+
+
+ * Vajuta nupule _Kontrolli @eesti.ee e-posti seadistust_ (Pilt 28, 2).
+ * Sisesta avanevas dialoogiaknas PIN1 ja vajuta _OK_ (Pilt 29). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt29.png
+
+*Pilt 29*
+
+
+Avaneb e-posti seadistuste aken.
+
+Kui sinu @eesti.ee e-post on juba edasi suunatud, siis näed e-posti seadistuste akna asemel oma ametlikke e-posti aadresse ja aadresse, kuhu e-post on suunatud (Pilt 30). Suunamisi saad muuta Riigiportaalis eesti.ee. 
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt30.png
+
+*Pilt 30*
+
+
+ * Sisesta e-posti aadress, kuhu soovid @eesti.ee e-posti edasi suunata, ja vajuta nupule Aktiveeri @eesti.ee e-post. (Pilt 31)
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt31.png
+
+*Pilt 31*
+
+
+E-posti aadress peab olema kujul  HYPERLINK nimi@domeen.xx. Kui sisestad e-posti aadressi valel kujul, siis kuvatakse veateade ning saad e-posti aadressi uuesti sisestada.
+
+
+* Sisesta avanevas dialoogiaknas PIN1 ja vajuta OK (Pilt 32). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt32.png
+
+*Pilt 32*
+
+
+
+Kuvatakse teade, et sinu sisestatud e-posti aadressile on saadetud  edasisuunamisaadressi aktiveerimisvõti (Pilt 33). 
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt33.png
+
+*Pilt 33*
+
+
+ * Sinu äsjasisestatud e-posti aadressile saabub e-kiri, milles on link ja kood e-posti aadressi aktiveerimiseks koos õpetusega, kuidas seda teha. E-posti suunamise aktiveerimiseks pead sisenema Riigiportaali eesti.ee ja kinnitama oma e-posti edasisuunamise aadressi.
+
+
+Kui sisestasid e-posti aadressi, mida oled varem eesti.ee süsteemis kasutanud, siis toimub aktiivsete e-posti seadete laadimine automaatselt. Sinu postkasti saabub e-kiri teatega e-posti suunamise õnnestumise kohta ning e-posti edasisuunamise aadressi Riigiportaalis eesti.ee kinnitada ei ole vaja. 
+
+
+= Mobiil-ID aktiveerimine ja Mobiil-ID andmete vaatamine =
+
+ID-kaardi haldusvahendi osas Mobiil-ID saad vaadata oma Mobiil-ID andmeid. Samuti saad aktiveerida Mobiil-ID teenust, kui oled oma mobiilsideoperaatorilt saanud sobiliku uue SIM-kaardi.
+
+ * Käivita ID-kaardi haldusvahend ja vajuta tegevuste osas nuppu _Mobiil-ID_ (Pilt 34, 1).
+ * Avaneb Mobiil-ID seadistuse aken. 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt34.png
+
+*Pilt 34*
+
+
+ * Vajuta nuppu _Kontrolli Mobiil-ID staatust_ (Pilt 34, 2).
+ * Sisesta avanevas dialoogiaknas sisestusväljale PIN1 kood ja vajuta _OK_ (Pilt 35). 
+
+
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt35.png
+
+*Pilt 35*
+
+
+
+ * Kui sinu Mobiil-ID teenus on aktiveeritud, näed enda Mobiil-ID sertifikaatide staatust (Pilt 36). 
+
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt36.png
+
+*Pilt 36*
+
+
+Kui sa ei ole Mobiil-ID teenuse kasutaja, saad pildiloleva teate (Pilt 37).
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt37.png
+
+*Pilt 37*
+
+
+
+ * Kui sinu Mobiil-ID teenus ei ole aktiveeritud, saad aktiveerida Mobiil-ID teenuse nupule Aktiveeri Mobiil-ID teenus  vajutades (Pilt 38). Sind suunatakse Mobiil-ID aktiveerimiseks Sertifitseerimiskeskuse lehele www.sk.ee/midaktiveerimine.
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt38.png
+
+*Pilt 38*
+
+
+= PUK koodi muutmine =
+
+PUK koodi saad koodiümbrikus koos uue ID-kaardiga või ID-kaardil olevate sertifikaatide vahetamisel klienditeeninduspunktist. 
+
+ 
+ID-kaardi haldusvahendi ossa PUK kood sisenemisel näed selgitust, mis on PUK kood (Pilt 39) ja saad PUK koodi muuta. Samuti saad muuta PIN koode PUK koodi abil. 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt39.png
+
+*Pilt 39*
+
+
+
+ * Käivita ID-kaardi haldusvahend ja klõpsa tegevuste osas nupule _PUK kood_.
+ * Avanevas PUK koodi aknas klõpsa _Muuda PUK_.
+ * Avaneb PUK koodi vahetamise aken (Pilt 40). 
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt40.png
+
+*Pilt 40*
+
+
+
+ * Sisesta üks kord kehtiv PUK ja kaks korda uus PUK kood ja klõpsa Muuda.
+
+Uus kood peab erinema vanast koodist, olema 8–12-numbriline ning ei sisaldada sinu sünnikuupäeva ja -aastat. 
+
+ * PUK kood vahetatakse ja näed kinnitust koodi muutmise kohta (Pilt 41).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt41.png
+
+*Pilt 41*
+
+
+Edaspidi kasuta uut, äsjasisestatud PUK koodi.
+
+Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
+
+
+
+ = Seaded ja abi =
+ == Keele valik ==
 
 
 
