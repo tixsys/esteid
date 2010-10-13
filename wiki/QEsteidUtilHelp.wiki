@@ -126,6 +126,8 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt8.png
 *Pilt 8*
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
+
 
 
 = Sertifikaadid ja PIN koodid = 
@@ -152,6 +154,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt10.png
 *Pilt 10*
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
 
 
 = PIN koodide muutmine =
@@ -191,6 +194,8 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt13.png
  * Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
+
 
 
 = PIN koodide muutmine PUK koodi abil = 
@@ -229,6 +234,8 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt16.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt17.png
 
+
+[QEsteidUtilHelp#Sisukord Tagasi üles]
 
  
 = Sertifikaatide kasutamise blokeeringute tühistamine =
@@ -323,6 +330,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt24.png
 Kui kataloogis, kuhu soovid sertifikaadi salvestada, on juba olemas samanimeline sertifikaadifail, siis küsitakse, kas olemasolev sertifikaadifail üle kirjutada või mitte.
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
+
+
 = Sertifikaatide uuendamine =
 
 
@@ -365,6 +375,8 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt27.png
 
 
  * Sertifikaate saad uuendada ka veebis aadressil http://www.sk.ee/id-kontroll ja klienditeeninduspunktides, mille nimekirja leiad veebis aadressilt http://www.sk.ee/kontorid.
+
+[QEsteidUtilHelp#Sisukord Tagasi üles]
 
 
 = @eesti.ee e-posti seadistamine ja edasisuunamiste vaatamine =
@@ -436,6 +448,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt33.png
 Kui sisestasid e-posti aadressi, mida oled varem eesti.ee süsteemis kasutanud, siis toimub aktiivsete e-posti seadete laadimine automaatselt. Sinu postkasti saabub e-kiri teatega e-posti suunamise õnnestumise kohta ning e-posti edasisuunamise aadressi Riigiportaalis eesti.ee kinnitada ei ole vaja. 
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
+
+
 = Mobiil-ID aktiveerimine ja Mobiil-ID andmete vaatamine =
 
 ID-kaardi haldusvahendi osas Mobiil-ID saad vaadata oma Mobiil-ID andmeid. Samuti saad aktiveerida Mobiil-ID teenust, kui oled oma mobiilsideoperaatorilt saanud sobiliku uue SIM-kaardi.
@@ -487,6 +502,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt38.png
 *Pilt 38*
 
 
+[QEsteidUtilHelp#Sisukord Tagasi üles]
+
+
 = PUK koodi muutmine =
 
 PUK koodi saad koodiümbrikus koos uue ID-kaardiga või ID-kaardil olevate sertifikaatide vahetamisel klienditeeninduspunktist. 
@@ -529,6 +547,8 @@ Edaspidi kasuta uut, äsjasisestatud PUK koodi.
 
 Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
 
+
+[QEsteidUtilHelp#Sisukord Tagasi üles]
 
 
 = Seaded =
