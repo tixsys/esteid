@@ -1,8 +1,8 @@
 = Fedora =
-Toetatud versioonid *12* ja *13*
+Toetatud versioonid *12*, *13* ja *14*
 
 === Kaardilugeja draiverid ===
-Tarkvara esmakordsel paigaldamisel on vaja paigaldada ka CCID lugejate draiverid:
+Tarkvara esmakordsel paigaldamisel on vaja Fedora 12's ja 13's paigaldada ka CCID lugejate draiverid:
 {{{
 sudo yum install ccid
 }}}
@@ -24,6 +24,9 @@ http://id.smartlink.ee/repo/release/fedora/12/i386/esteid-release-12-0.6.noarch.
 
 Fedora 13 puhul:
 http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.rpm
+
+Fedora 14 puhul:
+http://id.smartlink.ee/repo/release/fedora/14/i386/esteid-release-14-0.6.noarch.rpm
 
 === Pakettide paigaldamine ===
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
