@@ -1,14 +1,38 @@
 ﻿#summary projects communications
 
-Please hold technical discussions in the Google group
+<table cellspacing="10">
 
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/list-icon.png
+</td>
+<td>
+Please hold technical discussions in the Google group <br />
 http://groups.google.com/group/esteid-devel/
 
 Everyone who can tell bits and bytes apart is welcome to participate.
+</td>
+</tr>
 
-For real-time chats there is a channel #esteid on FreeNode
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/irc-icon.png
+</td>
+<td>
+For real-time chats there is a channel #esteid on [http://freenode.net/using_the_network.shtml FreeNode].
+</td>
+</tr>
 
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/bug-icon.png
+</td>
+<td>
 If You have discovered a bug, You can report it by clicking
 "Issues" on top of page.
 
 Please read [ReportingIssues the instructions] before reporting an issue.
+</td>
+</tr>
+</table>
+
