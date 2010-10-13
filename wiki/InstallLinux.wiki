@@ -1,4 +1,7 @@
-﻿== Tarkvara paigaldamine ==
+﻿== Paigaldamine ==
+
+ # Palun loe läbi [ReleaseNotes2_8_0 need olulised märkused]
+ # Vali nimekirjast õiged paigaldusjuhised
 
  * [ArchLinux Archlinuxi seadistamine]
  * [Debian Debiani seadistamine]
