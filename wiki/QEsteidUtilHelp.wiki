@@ -1,6 +1,10 @@
-= Eesti ID kaardi haldusvahendi abileht =
+#summary Eesti ID kaardi haldusvahendi abileht
 
-== ID-kaardi haldusvahendi käivitamine ==
+== Sisukord ==
+
+<wiki:toc max_depth="1" />
+
+= ID-kaardi haldusvahendi käivitamine =
   # *Windows*: Vali START → Programs/Programmid → ID-kaart→ ID-kaardi haldusvahend või klõpsa hiirega arvuti töölaual oleval ID-kaardi haldusvahendi ikoonil.
   # *Mac OS X*: Vali Applications/Rakendused → ID-Card Utility/ID-kaardi haldusvahend või klõpsa Dock-s ID-kaardi haldusvahendi ikoonile. 
   # *Linux*: Vali Applications/Rakendused → Accessories/Tarvikud → ID-card Utility/ID-kaardi haldusvahend või käivita käsurealt käsuga qesteidutil.
@@ -18,7 +22,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt1.png
 
 
 
-== ID-kaardi haldusvahendi kasutajaliides ==
+= ID-kaardi haldusvahendi kasutajaliides =
 
 ID-kaardi haldusvahendiga saad ID-kaardilt lugeda selle omaniku isikuandmeid, salvestada sertifikaate faili, vahetada PIN ja PUK koode, lukustunud PIN1 ja PIN2 koode lahti blokeerida ning vaadata kasutusel olevate allkirjastamise ja isikutuvastamise sertifikaatide kasutamise statistikat. Lisaks saad seadistada ID-kaardi rakenduse parameetreid, näiteks ID-kaardi tarkvara uuenduste paigaldamist. 
 
