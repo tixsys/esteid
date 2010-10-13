@@ -1,6 +1,6 @@
 #summary Eesti ID kaardi haldusvahendi abileht
 
-== Sisukord ==
+= Sisukord =
 
 <wiki:toc max_depth="1" />
 
@@ -612,4 +612,4 @@ Mitteautomaatse paigalduse korral kontrollib tarkvara perioodiliselt uuenduste o
  
  * Oma valiku kinnitamiseks vajuta nuppu _Salvesta_.
 
-[QEsteidUtilHelp Tagasi üles]
+[QEsteidUtilHelp#Sisukord Tagasi üles]
