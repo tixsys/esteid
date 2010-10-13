@@ -229,7 +229,6 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt16.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt17.png
 
-*Pilt 17*
 
  
 = Sertifikaatide kasutamise blokeeringute tühistamine =
@@ -263,7 +262,83 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt20.png
 
  * Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
 
- * *Kui PUK kood kolm korda valesti sisestada, läheb see samuti lukku. Siis sa ei saa enam kaarti kasutada, vaid pead pöörduma oma kaardiga klienditeeninduspunkti, kust saad oma kaardi jaoks uue koodiümbriku. Klienditeeninduspunktist saad abi ka siis, kui vana koodiümbrik on ära kadunud ja kõik koodid ununenud. Klienditeeninduspunktide nimekirja leiad veebis aadressilt http://www.sk.ee/kontorid.*
+ * *Kui PUK kood kolm korda valesti sisestada, läheb see samuti lukku. Siis sa ei saa enam kaarti kasutada, vaid pead pöörduma oma kaardiga klienditeeninduspunkti, kust saad oma kaardi jaoks uue koodiümbriku. Klienditeeninduspunktist saad abi ka siis, kui vana koodiümbrik on ära kadunud ja kõik koodid ununenud. Klienditeeninduspunktide nimekirja leiad veebis aadressilt http://www.sk.ee/kontorid*
+
+
+= Sertifikaatide üksikasjade vaatamine ja sertifikaatide salvestamine = 
+
+
+Kõigi sertifikaatidel olevate andmete vaatamiseks ja sertifikaate salvestamiseks:
+
+ * Käivita ID-kaardi haldusvahend ja  vajuta tegevuste osas nupule _Sertifikaadid_.
+ * Näed sertifikaatide põhiandmeid (Pilt 21).
+ * Vajuta isikutuvastamise (Pilt 21, 1) või allkirjastamise sertifikaadi (Pilt 21, 2) juures nupule _Vaata üksikasju_.
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt21.png
+
+*Pilt 21*
+
+
+ * Avaneb sertifikaadi detailandmete aken (Pilt 22 ja Pilt 23). Selle kahel vahelehel saad vaadata sertifikaadi tehnilist infot.
+
+
+Sertifikaatide esitlusviis sõltub operatsioonisüsteemist, kuid sisu on sama. 
+
+
+ * Isikutuvastamise sertifikaadi detailandmed (Pilt 22).
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt22.png
+
+*Pilt 22*
+
+
+
+Allkirjastamise sertifikaadi detailandmed (Pilt 23). 
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt23.png
+
+*Pilt 23*
+
+
+
+ * Sertifikaadi salvestamiseks mine vahekaardile _Detailid_.
+ * Vajuta nupule _Salvesta_.
+ * Vali avanevas salvestusdialoogis sertifikaadi salvestamise kataloog. Siin saad ühtlasi anda failile uue nime ja määrata sertifikaadi salvestusformaadi (Pilt 24). 
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt24.png
+
+*Pilt 24*
+
+
+ * Vajuta nuppu _*Save*_.
+
+Kui kataloogis, kuhu soovid sertifikaadi salvestada, on juba olemas samanimeline sertifikaadifail, siis küsitakse, kas olemasolev sertifikaadifail üle kirjutada või mitte.
+
+
+= Sertifikaatide uuendamine =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 *järgneb...*
