@@ -1,7 +1,9 @@
 #summary Eesti ID-kaardi tarkvara ja draiverid versioon 2.8.0
 
-= Eesti ID-kaardi tarkvara ja draiverid 2.8.0 =
+<h1> Eesti ID-kaardi tarkvara ja draiverid 2.8.0 </h1>
 12.10.2010
+
+<wiki:toc max_depth="1" />
 
 Toetatud operatsioonisüsteemid:
  * Windows XP (32bit)
