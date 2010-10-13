@@ -531,17 +531,81 @@ Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti si
 
 
 
- = Seaded ja abi =
+= Seaded =
  == Keele valik ==
 
+Kasutuskeele muutmiseks:
+ * Mine hiirega keelevaliku menüüsse (Pilt 42).
+
+ 	
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt42.png
+
+ 
+ * Klõpsa avanevas rippmenüüs hiirega endale sobiva keele nimetusele. 
+ * Valitud keel ilmub keelevaliku aknasse ja rakenduse kasutajaliidese keel muutub.
+
+
+ == ID-kaardi valimine mitme arvutis oleva kaardi hulgast ==
+ID-kaardi valiku menüünupp ilmub menüüribale ainult siis, kui arvutiga on ühendatud mitu ID-kaardiga kaardilugejat.  
+
+ * Klõpsa hiirega menüüribal ID-kaardi valiku menüünupule (Pilt 43).
+ * Avaneb arvutis olevate ID-kaartide numbrite rippmenüü.
+
+	
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt43.png
+
+
+
+ * Klõpsa hiirega enda ID-kaardi numbrile. 
+ * Rakenduse paneelile ilmuvad valitud ID-kaardi- ja isikuandmed.
 
 
 
 
+ == Seaded ==
+
+Klõpsa ID-kaardi haldusvahendi seadete ja abi osas nupule _Seaded_ (Pilt 44).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt44.png
+
+
+ID-kaardi haldusvahendi seadete aknas (Pilt 47) saad seadistada PIN1 salvestamise aega ja Windowsi puhul ka ID-kaardi tarkvara uuenduste allalaadimise ja paigaldamise variante.  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt45.png
+
+
+*NB!* Viimased 2 rida on seal ainult Windowsi puhul. Macis ja Linuxis käib uuenduste seadistamine teisiti.
+
+
+ == PIN1 salvestamise aeg ==
+PIN1 salvestamise aeg määrab, kui pika aja jooksul saad kasutada ID-kaardi haldusvahendit nii, et iga isikutuvastust vajava tegevuse juures ei küsita PIN1 koodi.(Pilt 47, 1). 
+
+ * Kui salvestamise aeg on 0, küsitakse parooli iga PIN1 koodi sisestamist vajava seotud tegevuse juures. 
+
+ * PIN1 koodi saad salvestada maksimaalselt 99 minutiks. 
+
+ * Oma valiku kinnitamiseks klõpsa _Salvesta_.
 
 
 
+ == ID-kaardi tarkvara uuenduste seadistamine Windowsis == 
 
+ID-kaardi haldusvahendis saad määrata, kas ja kui sageli kontrollitakse ID-kaardi tarkvara uuenduste olemasolu ja kas uuendused paigaldatakse automaatselt või käsitsi.  
 
+ * Vali seadistuste aknas uuenduste olemasolu kontrollimise sagedus (Pilt 45, 2 ja Pilt 46).
 
-*järgneb...*
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt46.png
+
+*Pilt 46*
+
+ * Kui soovid, et uuendused ka automaatselt paigaldataks, märgista seadistuste osas _Uuenda automaatselt_ (Pilt 45, 3).
+
+Automaatse paigalduse korral laetakse uuendused alla automaatselt ning paigaldatakse ilma sinult küsimata.
+ 
+Mitteautomaatse paigalduse korral kontrollib tarkvara perioodiliselt uuenduste olemaolu ning laeb uue versiooni alla. Sulle kuvatakse uuenduste sisu – versioon ja muudatused – ning küsitakse luba uuenduse paigaldamiseks.
+ 
+ * Oma valiku kinnitamiseks vajuta nuppu _Salvesta_.
+
+[QEsteidUtilHelp Tagasi üles]
