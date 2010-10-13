@@ -1,10 +1,10 @@
 QEsteidUtil
 ===========
 
-QEsteidUtil is an application for managing Estonian ID Card. In an
-user-friendly interface it is possible to change and unlock PINs, examine
-detailed information about personal data file on the card, extract and view
-certificates, set up mobile ID, and configure @eesti.ee email.
+QEsteidUtil is a user-friendly application for managing Estonian ID Cards.
+It can be used to to change and unlock PIN codes, examine the personal 
+information stored on the card, extract and view the certificates, set 
+up mobile ID and configure a personal @eesti.ee e-mail address.
 
 
 Dependencies
