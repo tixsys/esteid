@@ -221,15 +221,49 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt15.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt16.png
 
+*Pilt 16*
+
 
  * PIN koodide vahetamist PUK koodi abil saad alustada ka kasutajaliidese osas PUK kood (Pilt 17).
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt17.png
 
+*Pilt 17*
+
  
 = Sertifikaatide kasutamise blokeeringute tühistamine =
 
+Kasutamiseks blokeeritud sertifikaadi juures näed sellekohast teadet (Pilt 18).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt18.png
+
+*Pilt 18*
+
+ * Käivita ID-kaardi haldusvahend ja vajuta tegevuste osas nupule _Sertifikaadid_.
+ * Kasutajaliidese akna sertifikaatide osas näed kasutamiseks blokeeritud sertifikaadi andmeid (Pilt 18), klõpsa _Tühista blokeering_.
+ * Avaneb PIN koodi blokeeringu tühistamise aken (Pilt 19). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt19.png
+
+*Pilt 19*
+
+
+ * Sisesta PUK kood.
+ * Sisesta kaks korda uus PIN kood ja klõpsa _Muuda_.
+ * Sertifikaadi kasutamise blokeering tühistatakse, PIN kood vahetatakse ning kuvatakse vastav teade (Pilt 20).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt20.png
+
+*Pilt 20*
+
+
+ * Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
+
+ * *Kui PUK kood kolm korda valesti sisestada, läheb see samuti lukku. Siis sa ei saa enam kaarti kasutada, vaid pead pöörduma oma kaardiga klienditeeninduspunkti, kust saad oma kaardi jaoks uue koodiümbriku. Klienditeeninduspunktist saad abi ka siis, kui vana koodiümbrik on ära kadunud ja kõik koodid ununenud. Klienditeeninduspunktide nimekirja leiad veebis aadressilt http://www.sk.ee/kontorid.*
 
 
 *järgneb...*
