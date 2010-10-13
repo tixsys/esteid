@@ -10,7 +10,7 @@ http://esteid.googlecode.com/svn/wiki/img/linux-logo.png
 </td>
 
 <td align="center">
-http://esteid.googlecode.com/svn/wiki/img/apple-logo.png
+[Install Mac http://esteid.googlecode.com/svn/wiki/img/apple-logo.png]
 <h2>[InstallMac Maci kasutaja]</h2>
 </td>
 
