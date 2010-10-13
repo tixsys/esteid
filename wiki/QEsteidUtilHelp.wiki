@@ -188,6 +188,48 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt13.png
 
 
  * Edaspidi kasuta uut, äsjasisestatud PIN koodi.
+ * Kui eksid koodi sisestamisel, siis näed vea kirjeldust ja saad koodid uuesti sisestada. 
+
+
+
+
+= PIN koodide muutmine PUK koodi abil = 
+
+PIN koode saad muuta ka siis, kui oled vanad PIN koodid unustanud. Sel juhul vajad PIN koodide muutmiseks PUK koodi. 
+
+
+ * Käivita ID-kaardi haldusvahend ja vajuta tegevuste osas nupule _Sertifikaadid_.
+ * Vajuta nuppu Muuda PIN1 (Pilt 11, 1) või Muuda PIN2 (11, 2).
+ * Avanevas PIN koodi muutmise aknas vali Muuda PIN kood PUK koodi abil (Pilt 14). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt14.png
+
+*Pilt 14*
+
+
+ * Avaneb uus PIN koodi muutmise aken (Pilt 15).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt15.png
+
+
+ * Sisesta PUK kood.
+ * Sisesta kaks korda uus PIN kood ja klõpsa Muuda.
+ * PIN kood vahetatakse ja näed kinnitust koodi muutmise kohta (Pilt 16). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt16.png
+
+
+ * PIN koodide vahetamist PUK koodi abil saad alustada ka kasutajaliidese osas PUK kood (Pilt 17).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/utility_pilt17.png
+
+ 
+= Sertifikaatide kasutamise blokeeringute tühistamine =
+
 
 
 *järgneb...*
