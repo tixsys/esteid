@@ -77,6 +77,7 @@ Katsetusjärgus tarkvara:
  * Firefox ei leia kaarti, kui kaardilugeja ühendati süsteemiga peale firefoxi käivitamist, aitab lehitseja sulgemine ja uuesti käivitamine
  * Maci peal ei lisata allkirjastatud/krüpteeritud faili manusesse, kui vajutada Kliendis või Krüptos linki "Saada ümbrik e-postiga"
  * SEB's ja eesti.ee's saab Maci ja Linuxi peal allkirjastada ainult Firefoxiga. Samuti Swedbankis Java appleti kaudu töötab allkirjastamine ainult Firefoxiga.
+ * Brauseri plugin (PIN2 aken veebis) on ainult Inglise keelne (issue 110)
 
 = Arendajast sõltumatud probleemid =
 
