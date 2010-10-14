@@ -1,11 +1,11 @@
 #summary Instructions for checking out source code.
 
-<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="st">
+<table cellspacing="0" cellpadding="0" border="0">
   <tr>
     <td>
-      <span class="inst1"><a href="/p/esteid/source/checkout">Checkout</a></span> |
-      <span class="inst2"><a href="/p/esteid/source/browse/">Browse</a></span> |
-      <span class="inst3"><a href="/p/esteid/source/list">Changes</a></span> |
+      <a href="http://code.google.com/p/esteid/source/checkout">Checkout</a> |
+      <a href="http://code.google.com/p/esteid/source/browse/">Browse</a> |
+      <a href="http://code.google.com/p/esteid/source/list">Changes</a>
     </td>
   </tr>
 </table>
