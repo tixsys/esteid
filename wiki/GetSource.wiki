@@ -1,5 +1,15 @@
 #summary Instructions for checking out source code.
 
+<table cellspacing="0" cellpadding="0" width="100%" align="center" border="0" class="st">
+  <tr>
+    <td>
+      <span class="inst1"><a href="/p/esteid/source/checkout">Checkout</a></span> |
+      <span class="inst2"><a href="/p/esteid/source/browse/">Browse</a></span> |
+      <span class="inst3"><a href="/p/esteid/source/list">Changes</a></span> |
+    </td>
+  </tr>
+</table>
+
 == Lähtekoodi repositooriumi ülevaade ==
 Selles projektis on lähtekoodi haldamiseks kasutusel SVN. Lähtekoodi repositoorium on jagatud mooduliteks; iga moodul omakorda kasutab standardset SVN kataloogistruktuuri (trunk, branches, tags).
 
