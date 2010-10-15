@@ -898,6 +898,142 @@ Oluline on meeles pidada, et salastatud info läheb kaotsi, kui krüpteerimise a
 
 
 
+ * Ava turvaümbrik, valides Digidoc3 Krüpto kasutajaliidesel *_Ma tahan Vaadata turvaümbriku sisu_* või tehes hiirega topeltklõpsu .cdoc formaadis failil.
+ * Avanenud turvaümbrikus näed selles olevate failide ja turvaümbriku adressaatide nimekirju (Pilt 62, 1 ja 2).
+ * Klõpsa hiirega nupul Dekrüpteeri (Pilt 62, 3).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt62.png
+
+*Pilt 62*
+
+ 
+Dekrüpteerimise nupp ei ole aktiivne, kui turvaümbriku ID-kaart ei ole kaardilugejas.
+
+ * Sisesta avanevas aknas PIN1.
+
+Kui sisestatud PIN1 kood on vale või isikutuvastamise sertifikaadi kasutamine blokeeritud, siis kuvatakse sellekohane info (Pilt 63).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt63.png
+
+*Pilt 63*
+
+
+Dekrüpteeritud turvaümbrik on samaväärne loodud, kuid krüpteerimata turvaümbrikuga. Selles olevaid faile võid avada, salvestada, lisada ja eemaldada. Samuti võid lisada ja eemaldada turvaümbriku adressaate ja turvaümbrikku uuesti krüpteerida.
+
+
+== Turvaümbrik ==
+
+
+Krüpteeritavad failid kogutakse turvaümbrikku, lisatakse krüpteeringu adressaatide sertifikaadid ning seejärel turvaümbrik krüpteeritakse. Turvaümbrik sisaldab üht või mitut faili ja üht või mitut adressaati (Pilt 64). 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt64.png
+
+*Pilt 64*
+
+
+
+ * *Turvaümbriku asukoha osas* näed, kuhu turvaümbrik on salvestatud.
+ 
+ * *Turvaümbriku adressaatide osas* saad vaadata adressaatide üksikasju. Krüpteerimata turvaümbrikusse saad adressaate lisada ja turvaümbrikust eemaldada. Loe lisaks osast Turvaümbriku adressaadid.
+ 
+ * *Failide osas* näed turvaümbrikus olevate failide nimekirja. Krüpteerimata turvaümbrikus olevaid faile saad vaadata, salvestada, avada, eemaldada ja lisada. Loe lisaks osast Turvaümbrikus olevad failid.
+ 
+ * *Tegevuste osas* saad teha turvaümbrikuga mitmesuguseid toiminguid, lähemalt loe osast Tegevused turvaümbrikuga.
+
+
+
+
+ === Turvaümbriku loomine ===
+Salastamist vajavad failid kogutakse turvaümbrikusse ja krüpteeritakse ning seejärel turvaümbrik salvestatakse. Turvaümbrikus võib olla üks või mitu faili.  
+
+Turvaümbrik tekib automaatselt, kui valid Digidoc3 Krüpto kasutajaliidesel Ma tahan Krüpteerida faile või lohistad krüpteeritavad failid hiirega Digidoc3 Krüpto aknasse.
+
+
+ === Turvaümbriku salvestamine === 
+Turvaümbrik salvestub pärast krüpteerimist automaatselt seadetes määratud kataloogi.  
+Uue turvaümbriku loomisel avaneb alati salvestusdialoog, kui seadetes on märgitud Küsi turvaümbriku nime.
+
+
+ === Turvaümbriku avamine === 
+Klõpsa hiirega Digidoc3 Krüpto paneelil Ma tahan Vaadata turvaümbriku sisu või tee hiirega topeltklõps .cdoc formaadis failil.
+Avanevas turvaümbrikus näed ümbrikus olevate failide ja turvaümbriku adressaatide nimekirju (Pilt 65).
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt65.png
+
+*Pilt 65*
+
+ === Tegevused turvaümbrikuga === 
+Turvaümbrikuga saad teha mitmesuguseid tegevusi:  
+
+ * Vaadata turvaümbriku asukohta kettal.
+ * Saata turvaümbrikut e-postiga teistele isikutele.
+ * Vaata lisaks osi Turvaümbrikus olevad failid ja Turvaümbriku adressaadid.
+
+   ==== Turvaümbriku asukoha vaatamine ====
+
+ * Klõpsa hiirega Digidoc3 Krüpto turvaümbrikus tegevuste osas lingil Näita turvaümbriku asukohta kettal (Pilt 66).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt66.png
+
+*Pilt 66*
+
+
+ * Avaneb uus failihalduri aken selles kataloogis, milles hetkel Digidoc3 Krüptos avatud turvaümbrik asub.
+
+
+ === Turvaümbrikus olevad failid === 
+
+Enne turvaümbriku krüpteerimist või pärast dekrüpteerimist saad turvaümbrikus olevaid faile avada, turvaümbrikusse faile lisada, salvestada turvaümbrikus olevaid faile kettale, turvaümbrikust faile eemaldada.
+
+Krüpteeritud turvaümbrikus olevate failidega ei saa enne dekrüpteerimist teha mitte ühtegi toimingut.
+
+
+  ==== Turvaümbrikus oleva faili avamine ====
+Enne turvaümbriku krüpteerimist või pärast dekrüpteerimist saad turvaümbrikus olevaid faile avada  
+
+ # Mine turvaümbrikus hiirega failile, mida soovid avada.
+ # Tee hiirega topeltklõps.
+ # Fail avaneb.
+
+
+  ==== Turvaümbrikus olevate failide salvestamine ====
+
+Faile saad salvestada enne turvaümbriku krüpteerimist või pärast dekrüpteerimist.  
+*Hiirega lohistades*
+
+Mine turvaümbrikus hiirega salvestatavale failile.
+Lohista valitud fail hiirega turvaümbrikust välja failihalduri kataloogi, kuhu soovid faili salvestada.
+ 
+*Salvestusnupuga*
+ * Klõpsa turvaümbrikus faili kõrval olevale salvestusnupule  (Pilt 67, 1).
+ 
+      
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt67.png
+
+*Pilt 67*
+
+
+ * Avaneb failisalvestusdialoog.
+ * Vali kataloog, kuhu tahad faili salvestada.
+ 
+*Kõigi ümbrikus olevate failide korraga salvestamine*
+
+ # Klõpsa turvaümbrikus hiirega lingil Salvesta failid kettale (Pilt 67, 2).
+ # Avanevas salvestusaknas vali kataloog, kuhu soovid failid salvestada.
+ # Kõik turvaümbrikus olevad failid salvestatakse korraga valitud kataloogi.
+ 
+Faili võid turvaümbrikust hiirega lohistada ka mõnda teise rakendusse, näiteks e-posti programmi.
+
+
+
+  ==== Faili lisamine turvaümbrikku ====
+
+
 
 
 
