@@ -178,7 +178,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt13.png
 
  * Ümbrikus olevate dokumentidega ja ümbrikuga saad teha mitmeid tegevusi. 
  
- *NB!* Ümbrikus olevate dokumentide sisu muuta ei saa, küll aga saad lisada ja eemaldada allkirju.
+*NB! Ümbrikus olevate dokumentide sisu muuta ei saa, küll aga saad lisada ja eemaldada allkirju.*
 
 
  === Allkirjastamine Mobiil-ID-ga ===
@@ -194,7 +194,8 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt14.png
  Mobiilinumber peab olema koos maakoodiga. Õige on +37259998877 või 0037259998877, vale ~~59998877~~.
 
  * Kinnita oma otsust anda allkiri Mobiil-ID-ga, klõpsates hiirega nupul *_Allkirjastan_*.
-Avaneb aken kontrollkoodiga (Pilt 15).
+ * Avaneb aken kontrollkoodiga (Pilt 15).
+
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt15.png
 
@@ -222,13 +223,96 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt17.png
 
 *Pilt 17* 
 
- * DigiDoc3 Klient kontrollib iga paari sekundi tagant, kas oled PIN2 koodi sisestanud. Allkirjastamise õnnestumise korral näed ümbrikus olevaid dokumente ning informatsiooni antud allkirjade kohta.
+ * Digidoc3 Klient kontrollib iga paari sekundi tagant, kas oled PIN2 koodi sisestanud. Allkirjastamise õnnestumise korral näed ümbrikus olevaid dokumente ning informatsiooni antud allkirjade kohta.
 Mobiil-ID-ga allkirjastatud ümbrik ei erine mitte millegi poolest ID-kaardiga allkirjastatud ümbrikust (Pilt 18).
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt18.png
 
 *Pilt 18* 
+
+
+ === Digitaalselt allkirjastatud dokumendile allkirjade lisamine ===
+
+Juba allkirjastatud ümbrikule võivad oma allkirju lisada ka teised inimesed ja/või asutused.
+
+Eelnevalt allkirjastatud ümbrikule allkirja lisamiseks:
+
+ # Käivita Digidoc3 Klient.
+ # Ava ümbrik.
+ # Näed ümbrikus varem antud allkirju.
+ # Klõpsa hiirega nupul _*Lisa allkiri*_.
+ # Lisa soovi korral enda andmed.
+ # Klõpsa hiirega nupul _*Allkirjasta*_.
+ # Sisesta küsitud PIN2 kood ja vajuta _*OK*_.
+ # Sinu allkiri ilmub ümbrikule lisatud allkirjade loetellu (Pilt 19).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt19.png
+
+*Pilt 19* 
+
+== Allkirjastatud dokumentide vaatamine ==
+
+Allkirjastatud dokumentide vaatamine on sisuliselt ümbriku – .bdoc või .ddoc formaadis faili – avamine. Ümbriku ja seal sees olevate dokumentide ning allkirjadega saad teha mitmesuguseid tegevusi, mille kohta loe lähemalt osa Ümbrik vastavatest alajaotustest.
+
+ *Ümbrikus oleva dokumendi avamine*
+
+ # Tee hiirega topeltklõps ümbrikusoleval dokumendil.
+ # Dokument avaneb.
+
+== Ümbrik ==
+
+ === Ümbriku loomine ===
+
+ Ümbrik tekib automaatselt pärast dokumendi allkirjastamise alustamist, kui:  
+
+ * Valid Digidoc3 Kliendi kasutajaliidesel tegevuse Ma tahan Allkirjastada dokumenti.
+ * Lohistad allkirjastatavad dokumendid Digidoc3 Kliendi aknasse või ikoonile.
+ * Valid failihalduris dokumendil parema hiireklahvi rippmenüüst ID-kaardiga allkirjastamise.
+
+ === Ümbriku salvestamine ===
+
+ Ümbrik salvestub automaatselt pärast allkirja lisamist. 
+ 
+ Salvestada saad ka allkirjastamata ümbrikut, klõpsates ümbrikus nupule _*Loobu*_. Saad valida, kas jätad ümbriku alles või eemaldad selle (Pilt 20).
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt20.png
+
+*Pilt 20* 
+
+
+ * Ümbrik salvestub seadetes määratud kataloogi.
+ 
+ * Salvestusdialoog avaneb igal uue ümbriku loomisel, kui oled märkinud seadetes Küsi dokumendi nime.
+ 
+ * Salvestusdialoogis näed ümbriku salvestusformaati – .bdoc või .ddoc. Vaikimisi salvestusformaat on .ddoc. 
+ * *NB! Loodud ümbriku formaati hiljem muuta ei saa.*
+
+ === Ümbriku avamine ===
+
+ # Käivita Digidoc3 Klient.
+ # Vali Digidoc3 Kliendi kasutajaliidesel Ma tahan Vaadata allkirjastatud dokumendi sisu.
+ # Avanevas failiavamise aknas vali ümbrik (.bdoc või .ddoc laiendiga fail), mida soovid vaadata.
+ # Näed avatud ümbriku sisu.
+
+ 
+ === Tegevused ümbrikuga ===
+
+Ümbrikuga saad teha mitmesuguseid tegevusi (Pilt 24): 
+ * Salvestada kogu ümbriku sisu kettale.
+ * Saata ümbrikut e-posti manusena.
+ * Vaadata ümbriku asukohta kettal.
+ * Printida kinnituslehe ümbriku sisu ja allkirjade andmetega.
+ * Vaata lisaks osi Ümbrikus olevad dokumendid ja Tegevused allkirjadega.
+      
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt21.png
+
+*Pilt 21* 
+
+
+
 
 
 
