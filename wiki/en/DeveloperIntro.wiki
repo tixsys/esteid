@@ -13,7 +13,7 @@ http://esteid.googlecode.com/svn/wiki/img/webdevel-icon.png
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/appdevel-icon.png
-<h2>[AppDeveloper Desktop or server application]</h2>
+<h2>[AppDeveloper Other application]</h2>
 </td>
 
 <td align="center">
