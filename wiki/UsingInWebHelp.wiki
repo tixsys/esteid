@@ -1,0 +1,7 @@
+﻿= Autentimine =
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/choose-cert-ff-et.png
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/pin1-ff-et.png
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/pin1-ff-pinpad-et.png
