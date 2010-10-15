@@ -706,6 +706,7 @@ Kasutuskeele muutmiseks:
 
 Allkirjastamisel võib tekkida mitmesuguseid eriolukordi ja probleeme. Mõned sagedamini esinevad eriolukorrad on kirjas allpool. Tekkiva tõrke korral näed üldjuhul probleemi üheselt mõistetavat kirjeldust ja enamasti ka juhist selle lahendamiseks.
 
+Kui probleemi kirjelduses on veakoodid ja muu arusaamatu tekst, siis edasta see e-posti aadressile esteid-devel@googlegroups.com
 
  * Aegunud allkirjastamise sertifikaadiga ei saa dokumente allkirjastada. Digidoc3 Kliendi isikuandmete osas on sellisel juhul hoiatus (Pilt 45). Samast saad käivitada ID-kaardi haldusvahendi sertifikaadi  uuendamiseks.
 
@@ -766,6 +767,135 @@ Digidoc3 Krüptoga saad ID-kaardi abil faile turvaliseks edastamiseks salastada 
 Salastamine ehk krüpteerimine võimaldab kaitsta tundlikku infot lühiajaliselt teiste inimeste eest. Krüpteerimiseks kasutatakse ID-kaardi isikutuvastamise sertifikaati. 
 
  * *Oluline on meeles pidada, et salastatud info läheb kaotsi, kui krüpteerimise adressaadi ID-kaarti ei saa kasutada dekrüpteerimiseks (näiteks on ID-kaart kadunud, ID-kaardil olev isikutuvastamise sertifikaat uuendatud või tühistatud). Selle probleemi vältimiseks on kaks head varianti: hoida infot ka mujal lahtiselt, krüpteerimata, või krüpteerida info piisavale arvule adressaatidele, kaasa arvatud iseendale.*
+
+
+Krüpteerimiseks kasutatava isikutuvastamise sertifikaadi saad laadida isikukoodi alusel LDAP kataloogist, valida varem kasutatud ja salvestatud sertifikaatide hulgast, laadida sertifikaadifailist või lugeda ID-kaardilt. 
+
+Krüpteerimisel luuakse turvaümbrik, st fail laiendiga .cdoc. Failihalduris tunned turvaümbriku ära pildiloleva ikooni järgi (Pilt 51).  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt51.png
+
+*Pilt 51*
+
+
+== Digidoc3 Krüpto käivitamine ==
+
+Digidoc3 Krüpto käivitub DigoDoc3 kliendist, kui valid DidiDoc3 kliendi kasutajaliidesel Ma tahan Krüpteerida faile turvaliseks edastamiseks (Pilt 52).  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt52.png
+
+*Pilt 52*
+
+
+ * Digidoc3 Krüpto käivitab ka topelt hiireklõps turvaümbrikul (.cdoc formaadis failil). Sellisel juhul avaneb Digidoc3 Krüpto turvaümbriku vaates.
+
+
+== Digidoc3 Krüpto kasutajaliides ==
+
+
+
+Digidoc3 Krüpto kasutajaliidesel (Pilt 53) on kolm osa:  
+
+ * Isikuandmete osa on Digidoc3 Krüptoga töötamise ajal kogu aeg nähtaval.
+ * Tegevuste osas saad dokumente krüpteerida ja vaadata turvaümbriku sisu.
+ * Seadete ja abi osas saad muuta programmi „käitumist“ turvaümbriku loomisel.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt53.png
+
+*Pilt 53*
+
+
+
+ === Isikuandmed ===
+
+Isikuandmeid – nime, isikukoodi, ID-kaardi numbrit ja isikutuvastuse sertifikaadi kehtivust – näed juhul, kui ID-kaart on kaardilugejas (Pilt 54). 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt54.png
+
+*Pilt 54*
+
+
+ * Kui isikutuvastamise sertifikaat hakkab aeguma või on aegunud, tekib isikuandmete ossa vastav hoiatus (Pilt 55). Aegumahakkamise hoiatust hakatakse kuvama 105 päeva enne isikutuvastamise sertifikaadi kehtivuse lõppemist. Kehtivuse taastamiseks või pikendamiseks ava ID-kaardi haldusvahend, klõpsates nupule Ava haldusvahend.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt55.png
+
+*Pilt 55*
+
+
+== Failide krüpteerimine turvaliseks edastamiseks ==
+
+ === Krüpteerimise põhisammud ===
+ 
+ * Käivita Digidoc3 Krüpto.
+ * Klõpsa Digidoc3 Krüpto kasutajaliidese nupul Ma tahan Krüpteerida faile.
+ 
+ # Digidoc3 Krüptos esmakordselt krüpteerides näed sissejuhatust ja hoiatust krüpteerimisega kaasnevate riskide kohta (Pilt 56).Sama hoiatust näed ka siis, kui oled sissejuhatuse näitamise seadetes kohustuslikuks teinud.
+ # Märgista märkeruut kinnitamaks oma arusaamist krüpteerimise tähendusest (Pilt 56, 1).
+ # Klõpsa nupule Edasi.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt56.png
+
+*Pilt 56*
+
+
+ * Lisa krüpteeritavad failid avanevas dialoogiaknas
+ * Järgmisena avaneb failisalvestuse aken. Anna loodavale turvaümbrikule nimi ja määra salvestamise koht.
+ 
+*Failisalvestuse akent teki, kui oled seadetes keelanud turvaümbriku nime küsimise ja salvestuskataloogis ei ole varem samanimelist turvaümbrikut. Selle asemel avaneb kohe turvaümbrik koos valitud failidega.*
+
+ *  Avanevas turvaümbrikus (Pilt 57, 1) näed lisatud faile. Turvaümbrikusse saad faile lisada ja turvaümbrikust eemaldada kuni turvaümbrik on krüpteerimata. 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt57.png
+
+*Pilt 57*
+
+
+ * Lisa turvaümbriku adressaadid, klõpsates turvaümbriku osas lingile Lisa adressaat (Pilt 57, 2).
+
+ * Sisesta esimesel vahekaardil turvaümbriku adressaadi isikukood (Pilt 58, 1) või asutuse nimi.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt58.png
+
+*Pilt 58*
+
+
+ * Klõpsa hiirega nupul Otsi.
+
+ * Kuvatakse leitud isiku sertifikaatide andmed (Pilt 59).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt59.png
+
+*Pilt 59*
+
+Kui leitud isiku sertifikaat on aegunud, peatatud või tühistatud, kuvatakse sellekohane hoiatus (Pilt 60).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt60.png
+
+*Pilt 60*
+
+ * Klõpsa hiirega väljavalitud sertifikaadi omaniku nimel nii, et sertifikaadi omaniku nime taustavärv muutub, ja klõpsa nuppu Lisa sertifikaat (Pilt 59).
+
+Samuti võid teha sertifikaadi omaniku nimel hiirega topeltklõpsu.
+
+ * Valitud isik lisatakse turvaümbriku adressaatide nimekirja ((Pilt 61, 1). 
+ * Pärast kõigi turvaümbriku adressaatide lisamist klõpsa nuppu Krüpteeri (Pilt 61, 2).
+
+
+ * Turvaümbrikus olevad failid krüpteeritakse.
+
+== Dekrüpteerimine ==
+
+Oluline on meeles pidada, et salastatud info läheb kaotsi, kui krüpteerimise adressaadi ID-kaarti ei saa kasutada (näiteks on ID-kaart kadunud või on isikutuvastamise sertifikaati uuendatud). Selle probleemi vältimiseks on kaks head varianti: hoida infot ka mujal lahtiselt (st krüpteerimata) või krüpteerida info piisavale arvule adressaatidele, kaasa arvatud iseendale.
+
 
 
 
