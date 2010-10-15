@@ -1,5 +1,17 @@
 #summary DigiDoc3 abileht
 
-= Abi lehekülg puudub =
+= Sisukord =
 
-Abi lehekülge hetkel veel ei ole. Kõikide huviliste abi on teretulnud selle koostamisel.
+<wiki:toc max_depth="1" />
+
+ = DigiDoc3 Klient =
+
+DigiDoc3 Kliendis saad anda dokumentidele ID-kaardiga ja Mobiil-ID-ga digitaalallkirju, kontrollida digitaalallkirjade kehtivust ning avada ja salvestada DigiDoc3 Kliendi ümbrikus sisalduvaid dokumente.  
+
+Ümbrikus (fail laiendiga .bdoc või .ddoc) sisalduvaid dokumente on teistel isikutel võimalik vaadata ja enda arvutisse salvestada.  
+
+DigiDoc3 Kliendist saad käivitada programmi DigiDoc3 Krüpto, et dokumente salastada (krüpteerida) ja salastatud dokumente uuesti kõigile loetavaks muuta (dekrüpteerida). Salastatud failid on laiendiga .cdoc.  
+
+Samuti saad DigiDoc3 Kliendis käivitada ID-kaardi haldusvahendi, kui allkirjastamise sertifikaat hakkab aeguma või on aegunud. Sel juhul tekib link ID-kaardi haldusvahendi käivitamiseks (Pilt 1) 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
