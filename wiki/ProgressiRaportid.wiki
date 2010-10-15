@@ -1,4 +1,4 @@
-Probleemid, millega me maadleme ja lähtetekstides tehtud muudatused leiab siitsamast keskkonnast: menüü lingid "Issues" "Source -> Browse" ja "Source -> Changes" on Sinu sõbrad.
+﻿Probleemid, millega me maadleme ja lähtetekstides tehtud muudatused leiab siitsamast keskkonnast: menüü lingid "Issues" "Source -> Browse" ja "Source -> Changes" on Sinu sõbrad.
 
 Suurt osa tarkvarast on võimalik testida Squishiga. See on automaattestimiseks mõeldud tarkvara, millega õnnestub meil edukalt läbida enamikku testplaanidest ning veenduda ID-kaardi utiliit, Digidoc3 Klient ja Krüpto töökindluses. 
 Veebirakenduste testimiseks oleme kasutanud Seleniumi.
@@ -45,4 +45,4 @@ Platvormid:
 
 Protseduur ja hinnad on veel lahtised, aga kes ees, see mees ja kirjutab oma soovist asse ät smartlink.ee
 
-[WikiStart Tagasi]
+[BaseDeveloper Tagasi]

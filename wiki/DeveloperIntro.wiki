@@ -1,6 +1,6 @@
 ﻿#summary pealekehülg arendajale
 
-= Missugust ID-kaardi rakendust Sa soovid arendada? =
+= Millist ID-kaardi rakendust Sa kirjutad? =
 
 <table cellspacing="15">
 

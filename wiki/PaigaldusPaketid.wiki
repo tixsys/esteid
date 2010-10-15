@@ -47,7 +47,7 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
 
 <br>
 <br>
-[WikiStart Tagasi]
+[BaseDeveloper Tagasi]
 ----
 
 = Linux =
@@ -68,7 +68,7 @@ Windowsis MSI pakkide logimiseks on olemas logging.bat: http://esteid.googlecode
 
 <br>
 <br>
-[WikiStart Tagasi]
+[BaseDeveloper Tagasi]
 ----
 
 = Mac OS X =
@@ -94,4 +94,4 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Prefer
 
 <br>
 <br>
-[WikiStart Tagasi]
+[BaseDeveloper Tagasi]

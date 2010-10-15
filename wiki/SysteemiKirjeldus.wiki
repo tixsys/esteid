@@ -1,4 +1,4 @@
- * [QEsteidUtil ID-kaardi utiliit] - võimaldab vahetada PIN koode, näha kaardi infot jne
+﻿ * [QEsteidUtil ID-kaardi utiliit] - võimaldab vahetada PIN koode, näha kaardi infot jne
  * [libDigiDoc DigiDoc teegid] - töötleb BDOC ja DDOC faile
  * [QDigiDocClient Allkirjastamise tööriist (digidoc klient)] - kasutajaliides digiallkirjade andmiseks
  * [EsteidCSP CSP sild] - võimaldab ID-kaardiga autentimist Internet Explorerist (Windowsid enne Vistat)
@@ -9,4 +9,4 @@
  * [OpenSC PKCS#15 emulaator] - Eesti ID-kaardi draiver OpenSC raamistiku koosseisus (kasutatakse mitmete eelnevate funktsioonide realiseerimiseks)
  * [Installers Tarkvara paigalduspaketid] - installerid, mis peavad tagama, et kogu tarkvara saab paigaldatud ja õigesti seadistatud
 
-[WikiStart Tagasi]
+[BaseDeveloper Tagasi]
