@@ -2,7 +2,7 @@
 
 = Sisukord =
 
-<wiki:toc max_depth="2" />
+<wiki:toc max_depth="3" />
 
  = Digidoc3 Klient =
 
@@ -759,7 +759,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt50.2.png
 *Pilt 50*
 
 
-= Digidoc3 Krüpto =
+ = Digidoc3 Krüpto =
 
 
 Digidoc3 Krüptoga saad ID-kaardi abil faile turvaliseks edastamiseks salastada (krüpteerida) ja salastatud dokumente vaadata (dekrüpteerida).
