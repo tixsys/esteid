@@ -1,0 +1,11 @@
+﻿Vali oma rakenduse tüüp:
+
+ * [WebDeveloper Kaarti kasutav veebirakendus (isikutuvastus, allkirjastamine)]
+ * [DigiDocLibraries Digiallkirjastatud dokumente töötlev rakendus]
+
+<wiki:comment>
+ * Kaardilt isikuandmeid lugev rakendus
+ * Muu sertifikaate ja/või võtmeid kasutav rakendus
+</wiki:comment>
+
+[DeveloperIntro Tagasi]

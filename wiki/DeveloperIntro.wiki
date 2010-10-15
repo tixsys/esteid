@@ -1,16 +1,42 @@
-== Sisukord ==
+﻿#summary pealekehülg arendajale
 
- * SysteemiKirjeldus - Suur pilt ja selgitused, mis on mis. *Kohustuslik lugemine, muidu ei saa midagi aru*!
- * RakendusteKirjutamine - Siin on info neile, kes soovivad ID-kaarti kasutavaid rakendusi kirjutada.
- * KompileerimisJuhised - Siit leiab juhendid kuidas baastarkvara arendamisega kätt proovida.
- * PaigaldusPaketid - Siit saab valmis installipaketid tarkvara proovimiseks ja testimiseks.
- * ProgressiRaportid - Igasugu automaatsed ja vähem automaatsed kompileerimise ja testimise logid.
- * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed.
- * ReportingIssues - Reeglid, kuidas luua uusi ticketeid.
+= Missugust ID-kaardi rakendust Sa soovid arendada? =
 
+<table cellspacing="15">
 
+<tr>
 
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/webdevel-icon.png
+<h2>[WebDeveloper Veebirakendus]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/appdevel-icon.png
+<h2>[AppDeveloper Töölaua või serverirakendus]</h2>
+</td>
+
+<td align="center">
+http://esteid.googlecode.com/svn/wiki/img/basedevel-icon.png
+<h2>[BaseDeveloper Baastarkvara]</h2>
+</td>
+
+</tr>
+
+</table>
 
 == Arendajate List ==
 
-Liitumiseks siirdu aadressile http://groups.google.com/group/esteid-devel/
+<table cellspacing="10">
+
+<tr>
+<td>
+http://esteid.googlecode.com/svn/wiki/img/list-icon.png
+</td>
+<td>
+Palun ühine ka meie tehniliste arutelude grupiga aadressil <br />
+http://groups.google.com/group/esteid-devel/
+</td>
+</tr>
+
+</table>

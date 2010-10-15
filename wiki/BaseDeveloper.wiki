@@ -1,0 +1,12 @@
+﻿#summary kuidas baastarkvara arendamisega kätt proovida
+
+== Sisukord ==
+
+ * SysteemiKirjeldus - Suur pilt ja selgitused, mis on mis. *Kohustuslik lugemine, muidu ei saa midagi aru*!
+ * GetSource - selgitused kuidas sikutada versioonihaldusest lähtetekstid
+ * KompileerimisJuhised - Siit leiab juhendid kuidas komponente kokku kompileerida 
+ * PaigaldusPaketid - Siit saab valmis installipaketid tarkvara proovimiseks ja testimiseks
+ * KasutajalidesteTekstid - Kogum tekstistringe mida kasutavad komponentide kasutajalidesed
+ * ProgressiRaportid - Igasugu automaatsed ja vähem automaatsed kompileerimise ja testimise logid
+ * ReportingIssues - Reeglid, kuidas luua uusi ticketeid
+ * RakendusteKirjutamine - Siin on info neile, kes soovivad ID-kaarti kasutavaid rakendusi kirjutada.

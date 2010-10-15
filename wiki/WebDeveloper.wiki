@@ -1,4 +1,4 @@
-== Isikutuvatus ==
+﻿== Isikutuvatus ==
 
  * Konfigureeri oma veebiserver nõudma kliendipoolset sertifikaati: VeebisAutentimine
  * Kasuta rakenduses vastavaid CGI standardi keskkonnamuutujaid.<br>
@@ -37,4 +37,4 @@ http://code.google.com/p/esteid/source/browse/#svn/jdigidoc/trunk/samples
 
 NB! Igasugune kaastöö on teretulnud ;)
 
-PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [PaigaldusPaketid paigaldatava baastarkvara] koosseisus
+PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [InstallStart paigaldatava baastarkvara] koosseisus

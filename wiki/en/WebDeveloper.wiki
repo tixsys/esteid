@@ -1,4 +1,4 @@
-== User identification ==
+﻿== User identification ==
 
  * Configure your web server to demand client side certificate: [VeebisAutentimine Web authentication]
  * Use the CGI standard environment variables in your application.<br>
@@ -35,5 +35,5 @@ We will try to make some example programs, the first of those is in this folder 
 
 NB! All help is welcome :)
 
-PS! Browser plugins are not separate components but are circulated with [PaigaldusPaketid installed software] 
+PS! Browser plugins are not separate components but are circulated with [InstallStart installed software] 
 

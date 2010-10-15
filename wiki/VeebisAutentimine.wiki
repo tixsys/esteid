@@ -1,3 +1,11 @@
+<wiki:comment>
+
+Selle lehekülje nimi on Eesti keelne, kuna sellele on viidatud
+enne lehenimede ümbertegemist ReleaseNotes-idest, samuti on seda
+aadressi levitatud kolmandatele osapooltele. Palun mitte ümber nimetada.
+
+</wiki:comment>
+
 = Kuidas panna oma veebirakendus autentima ID-kaardiga =
 
 ID-kaardiga autentimine käib läbi HTTPS protokolli.

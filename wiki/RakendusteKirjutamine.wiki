@@ -1,8 +1,0 @@
-Vali oma rakenduse tüüp:
-
- * [BrauseriPluginad Kaarti kasutav veebirakendus (isikutuvastus, allkirjastamine)]
- * [DigiDocTeegid Digiallkirjastatud dokumente töötlev rakendus]
- * Kaardilt isikuandmeid lugev rakendus
- * Muu sertifikaate ja/või võtmeid kasutav rakendus
-
-[ArendajaSissejuhatus Tagasi]
