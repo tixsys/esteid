@@ -29,13 +29,53 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
   === Digidoc3 Kliendi käivitamine avatud ümbriku vaates ===
 
-Digidoc3 Klient käivitub avatud ümbriku vaates, kui: 
+  Digidoc3 Klient käivitub avatud ümbriku vaates, kui: 
 
  # Lohistad ümbriku (st .bdoc või .ddoc formaadis faili) või allkirjastatava dokumendi Digidoc3 Kliendi ikoonile oma töölaual.
  # Teed hiirega ümbrikul (st .bdoc või .ddoc formaadis failil) topeltklõpsu.
  # Klõpsad failihalduris dokumendil parema hiireklahviga ning valid rippmenüüst funktsiooni Allkirjasta ID-kaardiga.
 
 == Digidoc3 Kliendi kasutajaliides ==
+
+DigiDoc3 Kliendi kasutajaliidesel (Pilt 2) on kolm osa:  
+ * Isikuandmete osa on DigiDoc3 Kliendiga töötamise ajal kogu aeg nähtaval.
+ * Tegevuste osas saad allkirjastada dokumente, vaadata allkirjastatud dokumente ning käivitada dokumentide turvaliseks edastamiseks programmi Krüpto.
+ * Seadete ja abi osas saad teha mitmeid DigiDoc3 Kliendi tööks vajalikke seadistusi ja saada abi tekkivate probleemide korral.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
+
+*Pilt 2*
+
+
+
+  === Isikuandmete osa ===
+
+  Isikuandmete osas saad esmalt valida, kas soovid anda allkirja ID-kaardiga või Mobiil-ID-ga. Märgista raadionupu vastav ringike Kasuta ID-kaarti või Kasuta Mobiil-ID.  
+
+ * Allkirjastaja isikuandmeid (Pilt 3) – nime, isikukoodi, ID-kaardi numbrit ja allkirjastamise sertifikaadi kehtivust – näed juhul, kui allkirjastamise vahendiks on valitud ID-kaart ja ID-kaart on kaardilugejas.
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
+
+*Pilt 3*
+
+  
+
+ * Aegunud või aegumahakkava sertifikaadi puhul tekib isikuandmete ossa hoiatus (Pilt 4). Aegumahakkamise hoiatust hakatakse kuvama 105 päeva enne allkirjastamise sertifikaadi kehtivuse lõppemist. Kehtivuse pikendamiseks ava ID-kaardi haldusvahend, klõpsates lingile Ava haldusvahend.
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
+
+*Pilt 4*
+
+          
+
+ * Mobiil-ID-ga allkirjastamisel on isikuandmete osas väljad telefoninumbri ja isikukoodi sisestamiseks (Pilt 5).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt5.png
+
+*Pilt 5*
+
 
 
 *järgneb...*
