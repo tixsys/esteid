@@ -33,8 +33,10 @@ Platvormid:
  * Windows 7, 32 ja 64 bit Intel
  * Fedora 12, 32 ja 64 bit Intel
  * Fedora 13, 32 ja 64 bit Intel
+ * Fedora 14, 32 ja 64 bit Intel
  * Ubuntu 9.10, 32 ja 64 bit Intel
  * Ubuntu 10.04, 32 ja 64 bit Intel
+ * Ubuntu 10.10, 32 ja 64 bit Intel
  * OpenSUSE 11.1, 32 ja 64 bit Intel
  * OpenSUSE 11.2, 32 ja 64 bit Intel
  * OpenSUSE 11.3, 32 ja 64 bit Intel
