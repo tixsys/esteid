@@ -256,7 +256,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt19.png
 
 Allkirjastatud dokumentide vaatamine on sisuliselt ümbriku – .bdoc või .ddoc formaadis faili – avamine. Ümbriku ja seal sees olevate dokumentide ning allkirjadega saad teha mitmesuguseid tegevusi, mille kohta loe lähemalt osa Ümbrik vastavatest alajaotustest.
 
- *Ümbrikus oleva dokumendi avamine*
+*Ümbrikus oleva dokumendi avamine*
 
  # Tee hiirega topeltklõps ümbrikusoleval dokumendil.
  # Dokument avaneb.
@@ -310,6 +310,237 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt20.png
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt21.png
 
 *Pilt 21* 
+
+
+  ==== 1. Ümbriku sisu salvestamine ====
+
+Ümbriku sisu salvestamiseks enda valitud kataloogi:  
+
+ # Ava ümbrik.
+ # Klõpsa hiirega lingile Salvesta failid kettale (Pilt 21, 1).
+ # Avanevas failisalvestuse aknas vali kataloog, kuhu soovid failid salvestada. Kõik ümbrikus olevad dokumendid salvestatakse korraga valitud kataloogi.
+
+
+
+  ==== 2. Ümbriku asukoha vaatamine  ====
+
+Selle toiminguga saad minna otse ümbriku asukohakataloogi failihalduris.  
+ # Klõpsa hiirega Digidoc3 Kliendi avatud ümbrikus tegevuste osas lingile Näita ümbriku asukohta kettal (Pilt 21, 3).
+ # Avaneb uus failihalduri aken kataloogis, milles hetkel Digidoc3 Kliendis avatud ümbrik asub.
+
+
+ * Ümbriku asukoha failiteed näed ka ümbriku andmete osas.
+
+
+  ==== 3. Dokumendi digitaalsete allkirjade printimine ja kinnituslehe koostamine  ==== 
+
+Digitaalallkirjade kinnitusleht sisaldab infot dokumendi allkirjastajate ja allkirjastatud failide kohta. See ei ole juriidiliselt võrdne allkirjadega, kuid sobib asutusesiseseks kasutuseks ja arhiveerimiseks tingimusel, et ka esialgne dokument jääb alles. 
+
+
+Kinnitusleht on eelkõige vajalik asutustes ja firmades, kus sisemine asjaajamine toimub endiselt paberkandjal, kuid kuhu saabuvad üksikud digitaalsed dokumendid.
+
+ 
+
+ * *Ilma elektroonilise originaaldokumendita ei ole kinnitusleht  õiguslikult siduv.*
+
+
+ * Käivita Digidoc3 Klient.
+ * Allkirjasta dokument või ava salvestatud ümbrik.
+ * Avatud ümbrikus klõpsa hiirega lingil Trüki kinnitusleht (Pilt 21, 4).
+ * Näed ekraanil prinditavate andmete eelvaadet (Pilt 22).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt22.png
+
+*Pilt 22* 
+
+ * Klõpsa hiirega printeri ikoonile (Pilt 22, 1).
+ * Vali avanevas printimisdialoogis printer.
+ * Kinnitusleht jõuab printerisse
+
+ === Ümbrikus olevad dokumendid ===
+
+Allkirjastamata ümbrikusse saad dokumente lisada ja ümbrikust dokumente eemaldada. Nii allkirjastatud kui ka allkirjastamata ümbrikust saad dokumente kettale salvestada.
+
+  ==== 1. Dokumendi eemaldamine ümbrikust ====
+
+Ümbrikust saad dokumente eemaldada, kui ümbrik on allkirjastamata. 
+
+ * Ava ümbrik.
+ * Allkirjastamata ümbriku avamisel klõpsa nupule „Lisa allkiri“.
+ * Klõpsa hiirega dokumendi kõrval olevale eemaldusnupule (Pilt 23) või vajuta failil olles Delete klahvi .
+ 
+  
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt23.png
+
+*Pilt 23* 
+    
+
+Dokument kaob ümbrikus olevate dokumentide nimekirjast.
+ 
+*PS! Dokumentide eemaldamine ümbrikust ei eemalda neid kettalt!*
+
+
+  ==== 2. Dokumendi ümbrikusse lisamine ====
+
+
+Ümbrikusse saad dokumente lisada kuni ümbrik on allkirjastamata või kui ümbrikust on allkirjad eemaldatud. Dokumente võid lisada mitmel viisil.   
+
+
+  
+
+*_Faililisamise linki kasutades_*:
+
+ # Ava või loo ümbrik.
+ # Klõpsa hiirega lingil Lisa fail (Pilt 24, 1).
+ # Vali avanevas faililisamise aknas dokumendid, mida soovid allkirjastada.
+ # Valitud dokumendid ilmuvad ümbrikusolevate dokumentide nimekirja.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt24.png
+
+*Pilt 24* 
+
+*_Hiirega avatud ümbrikusse lohistades_*:
+
+ # Ava või loo ümbrik.
+ # Lohista allkirjastatavad dokumendid hiirega ümbrikusse.
+ # Valitud dokumendid ilmuvad ümbrikusolevate dokumentide nimekirja.
+
+*_Koos ümbriku loomisega_*:
+
+ # Lohista allkirjastatavad dokumendid hiirega Digidoc3 Kliendi ikoonile või avatud Digidoc3 Kliendi aknasse.
+ # Lisatud dokumente näed ümbrikus.
+
+
+ * PS! Kui lisatava nimega dokument on ümbrikus olemas, siis küsitakse luba selle ülekirjutamiseks (Pilt 25).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt25.png
+
+*Pilt 25* 
+
+  ==== 3. Ümbrikus olevate dokumentide salvestamine ====
+
+Ümbrikus olevate dokumentide salvestamiseks on mitu võimalust.  
+
+_*Salvestusnupuga*_:
+
+ * Salvestamata ümbrikus dokumendi salvestamise nuppu ei ole. Dokumendi saad salvestada hiirega lohistades (vaata allolevat kirjeldust).
+ # Ava ümbrik.
+ # Klõpsa hiirega dokumendi kõrval olevale salvestusnupule (Pilt 26, 1).
+ # Avaneb failisalvestuse aken.
+ # Vali kataloog, kuhu tahad dokumenti salvestada.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt26.png
+
+*Pilt 26* 
+ 
+_*Hiirega lohistades*_:
+
+ # Ava ümbrik.
+ # Mine hiirega dokumendile, mida soovid salvestada.
+ # Lohista valitud dokument hiirega ümbrikust välja failihalduri kataloogi, kuhu soovid seda salvestada.
+ 
+ * Dokumendi võid ümbrikust hiirega lohistada ka mõnda teise rakendusse, näiteks e-posti programmi.
+ 
+_*Ümbriku sisu korraga salvestamiseks*_:
+
+ # Ava ümbrik.
+ # Klõpsa hiirega lingile Salvesta failid kettale (Pilt 26, 2).
+ # Avanevas failisalvestuse aknas vali kataloog, kuhu soovid failid salvestada.
+ # Kõik ümbrikus olevad dokumendid salvestatakse korraga valitud kataloogi.
+
+
+ === Tegevused allkirjadega === 
+
+ ==== 1. *Dokumendi digitaalsete allkirjade eemaldamine* ==== 
+
+Ümbrikust saad eemaldada nii enda kui ka teiste isikute allkirju. Allkirjade eemaldamine ei mõjuta ümbrikus olevate dokumentide sisu. Küll aga ei saa eemaldatud allkirjaga dokumente kasutada ametlikus asjaajamises, sest ilma allkirjata dokumendid ei ole õiguslikult siduvad. 
+
+ * Käivita Digidoc3 Klient.
+ * Ava ümbrik.
+ * Mine avatud ümbrikus allkirja juurde, mida soovid eemaldada  (Pilt 27).
+ 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt27.png
+
+*Pilt 27* 
+    
+
+ * Klõpsa hiirega lingil _*Eemalda*_.
+ * Kinnita oma allkirja eemaldamist avanevas dialoogiaknas (Pilt 28).
+ 
+    
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt28.png
+
+*Pilt 28* 
+    
+
+ * Allkiri kaob allkirjade loetelust.
+
+
+ ==== 2. *Allkirjastaja rolli ja asukoha määramine* ==== 
+
+Ümbrikule võid lisada vabas vormis andmed enda seose kohta dokumentide ja allkirjaga (Pilt 29). Selle info lisamine ei ole kohustuslik, küll aga võib seda nõuda sinu tööandja või teenusepakkuja teenusega seotud või tööalaste dokumentide allkirjastamisel. 
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt29.png
+
+*Pilt 29* 
+    
+  
+
+ * Eelnevalt seadetes salvestatud andmed võid asendada uute andmetega.
+
+
+ ==== 3. *Dokumendi digitaalsete allkirjade üksikasjade vaatamine* ==== 
+
+
+ * Käivita Digidoc3 Klient.
+ * Ava ümbrik.
+ * Avatud ümbrikus mine allkirja juurde, mille üksikasju soovid vaadata (Pilt 30).
+
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt30.png
+
+*Pilt 30* 
+
+
+ * Klõpsa hiirega lingil Vaata üksikasju.
+ * Kolmel vahelehel näed valitud allkirja detailset informatsiooni (Pilt 31).
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt31.1.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt31.2.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt31.3.png
+
+*Pilt 31*
+
+ 
+.ddoc formaadis ümbriku allkirjastaja rolli ja resolutsiooni andmed on samal väljal, .bdoc formaadis ümbriku omad erinevatel väljadel.
+ 
+
+
+ * Klõpsates hiirega nupul Näita sertifikaati näed allkirjastamise sertifikaadi detailandmeid (Pilt 32).
+  
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt32.1.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt32.2.png
+
+*Pilt 32*
+ 
+ 
+    
+
+ * Sertifikaadi saad salvestada, klõpsates vahekaardil Detailid nupule Salvesta.
+ * Avanevas dialoogiaknas vali sertifikaadi salvestamise koht ja formaat (.pem, .crt, .cer) (Pilt 33).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt33.png
+
+
+ == Digidoc3 Kliendi seaded ==
+
+
+
 
 
 
