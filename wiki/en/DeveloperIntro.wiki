@@ -25,7 +25,7 @@ http://esteid.googlecode.com/svn/wiki/img/basedevel-icon.png
 
 </table>
 
-== Arendajate List ==
+== Developers mailing list ==
 
 <table cellspacing="10">
 
