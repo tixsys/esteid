@@ -2,7 +2,7 @@
 
 = Sisukord =
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
  = Digidoc3 Klient =
 
@@ -17,6 +17,25 @@ Digidoc3 Kliendist saad käivitada programmi Digidoc3 Krüpto, et dokumente sala
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
 *Pilt 1*
+
+
+ * Digidoc3 Kliendis on allkirjastamiste arv piiratud: vastavalt kehtivuskinnituse teenuse kasutamise tavatingimustele on isiklikuks tarbimiseks lubatud anda maksimaalselt kümme allkirja kalendrikuu jooksul. Allkirjastamise teenuse kasutamiseks suuremas mahus või ärilistel eesmärkidel tuleks pöörduda Sertifitseerimiskeskuse müügiosakonna poole e-postitsi sales@sk.ee või telefonil 1777.
+
+== Digidoc3 Kliendi käivitamine == 
+
+ # *Windows*: Vali START → Programs/Programmid → ID-kaart→Digidoc3 Klient või klõpsa hiirega oma töölaual Digidoc3 Kliendi ikoonil. 
+ # *Mac OS X*: Vali Applications/Rakendused → Digidoc3 client/Digidoc3 Klient või klõpsa Dockis Digidoc3 Kliendi ikoonile. 
+ # *Linux*: Vali rakenduste menüüst Office/Kontor → Digidoc3 client/Digidoc3 Klient või käivita käsurealt käsuga qdigidocclient.
+
+  === Digidoc3 Kliendi käivitamine avatud ümbriku vaates ===
+
+Digidoc3 Klient käivitub avatud ümbriku vaates, kui: 
+
+ # Lohistad ümbriku (st .bdoc või .ddoc formaadis faili) või allkirjastatava dokumendi Digidoc3 Kliendi ikoonile oma töölaual.
+ # Teed hiirega ümbrikul (st .bdoc või .ddoc formaadis failil) topeltklõpsu.
+ # Klõpsad failihalduris dokumendil parema hiireklahviga ning valid rippmenüüst funktsiooni Allkirjasta ID-kaardiga.
+
+== Digidoc3 Kliendi kasutajaliides ==
 
 
 *järgneb...*
