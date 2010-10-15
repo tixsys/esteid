@@ -16,7 +16,7 @@ Digidoc3 Kliendist saad käivitada programmi Digidoc3 Krüpto, et dokumente sala
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
- *Pilt 1*
+*Pilt 1*
 
 
  * Digidoc3 Kliendis on allkirjastamiste arv piiratud: vastavalt kehtivuskinnituse teenuse kasutamise tavatingimustele on isiklikuks tarbimiseks lubatud anda maksimaalselt kümme allkirja kalendrikuu jooksul. Allkirjastamise teenuse kasutamiseks suuremas mahus või ärilistel eesmärkidel tuleks pöörduda Sertifitseerimiskeskuse müügiosakonna poole e-postitsi sales@sk.ee või telefonil 1777.
@@ -45,7 +45,7 @@ Digidoc3 Kliendi kasutajaliidesel (Pilt 2) on kolm osa:
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
 
- *Pilt 2*
+*Pilt 2*
 
 
 
@@ -57,7 +57,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
 
- *Pilt 3*
+*Pilt 3*
 
   
 
@@ -70,7 +70,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
 
- *Pilt 4*
+*Pilt 4*
 
 == Dokumentide allkirjastamine ==
 Digitaalallkirjastamise alustamisel loob programm kõigepealt tühja ümbriku, kuhu saad lisada allkirjastatavad dokumendid. Seejärel klõpsa allkirjastamise nuppu ja sisesta ID-kaardi PIN2 kood (digitaalallkirjastamise PIN kood). Selle tulemusel moodustab programm dokumendile digitaalallkirja ja küsib allkirjale Sertifitseerimiskeskuse serverist kehtivuskinnituse. Allkiri koos kehtivuskinnitusega lisatakse ümbrikusse. ID-kaardilt salvestatakse ümbrikusse ka allkirjastaja sertifikaat, et selle abil saaks hiljem allkirja kontrollida. Tulemusena saadud ümbriku võid saata mõnele teisele isikule, kes saab selle omakorda allkirjastada või avada ja allkirjade õigsust kontrollida.
@@ -80,7 +80,7 @@ Digitaalallkirjastamise alustamisel loob programm kõigepealt tühja ümbriku, k
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt5.png
 
- *Pilt 5*
+*Pilt 5*
 
  * Digidoc3 Kliendiga esimest korda allkirja andes palutakse sul paigaldada kehtivuskinnituse serveri juurdepääsutõend.
 
@@ -90,7 +90,7 @@ Digitaalset allkirjastamist vajavad dokumendid kogutakse ümbrikusse ja allkirja
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt6.png
 
- *Pilt 6*
+*Pilt 6*
 
 
 Kui ümbrik on Digidoc3 Kliendis avatud, siis
@@ -100,7 +100,7 @@ Kui ümbrik on Digidoc3 Kliendis avatud, siis
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt7.png
 
- *Pilt 7*
+*Pilt 7*
 
     
 
@@ -123,7 +123,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt7.png
       
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt8.png
 
- *Pilt 8*
+*Pilt 8*
 
 
  * Avaneb faililisamise aken. Vali selles dokumendid, mida soovid allkirjastada.
@@ -132,7 +132,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt8.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt9.png
 
- *Pilt 9*
+*Pilt 9*
 
  Kui oled seadetes määranud, et ümbriku nime ei küsitaks ja salvestuskataloogis ei ole varem samanimelist ümbrikut, siis failisalvestusakent ei teki. Selle asemel avaneb kohe ümbrik koos valitud dokumentidega.
 
@@ -145,13 +145,90 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt9.png
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt10.png
 
- *Pilt 10*     
+*Pilt 10*     
 
        
 
  Eelnevalt salvestatud andmed võid soovi korral uutega asendada.
+
  Roll ja resolutsioon on sinu seos dokumentide ja allkirjaga: kellena allkirja annad ja mida allkirjaga kinnitad. Rolli, resolutsiooni ja asukoha andmed võid ka sisestamata jätta.
 
+
+ * Kinnita oma otsust anda allkiri ID-kaardiga, klõpsates nuppu Allkirjastan (Pilt 10, 3).
+ 
+Digidoc3 Kliendis esimest korda allkirjastades küsitakse siinkohal luba kehtivuskinnituse serveri juurdepääsutõendi paigaldamiseks (Pilt 11), paigaldamisjuhise leiad osast Seaded: juurdepääsutõend. Ilma kehtivuskinnituse serveri juurdepääsutõendita digitaalallkirja anda ei saa.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt11.png
+
+*Pilt 11*     
+
+ * Sisesta küsitud PIN2 kood ja vajuta OK (Pilt 12).
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt12.png
+
+*Pilt 12*     
+
+
+ * Allkirjastamise õnnestumise korral näed ümbriku allkirjainfo osas informatsiooni antud allkirjade kohta (Pilt 13)
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt13.png
+
+*Pilt 13*    
+   
+
+ * Ümbrikus olevate dokumentidega ja ümbrikuga saad teha mitmeid tegevusi. 
+ 
+ *NB!* Ümbrikus olevate dokumentide sisu muuta ei saa, küll aga saad lisada ja eemaldada allkirju.
+
+
+ === Allkirjastamine Mobiil-ID-ga ===
+
+ * Käivita Digidoc3 Klient ja lisa allkirjastatavad dokumendid ning allkirjastaja andmed osas Allkirjastamise põhisammud punktides 1–6 kirjeldatud viisil.
+ * Kontrolli, et isikuandmete osas oleks valitud mobiil-ID-ga allkirjastamine ja sisesta isikuandmete ossa enda mobiilinumber ja isikukood (Pilt 14).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt14.png
+
+*Pilt 14* 
+
+ Mobiilinumber peab olema koos maakoodiga. Õige on +37259998877 või 0037259998877, vale ~~59998877~~.
+
+ * Kinnita oma otsust anda allkiri Mobiil-ID-ga, klõpsates hiirega nupul *_Allkirjastan_*.
+Avaneb aken kontrollkoodiga (Pilt 15).
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt15.png
+
+*Pilt 15*   
+
+
+ Kui sa ei ole Mobiil-ID teenuse kasutaja, Mobiil-ID teenus ei ole seotud sisestatud telefoninumbri ja isikukoodi kombinatsiooniga või tekib mõni muu probleem, siis näed probleemi kirjeldust.
+
+
+Sinu mobiili ekraanile ilmub Mobiil-ID  kontrollkoodi teade (Pilt 16).
+ 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt16.png
+
+*Pilt 16* 
+              
+        
+
+ * Kontrolli, kas Digidoc3 Kliendis ja mobiilis kuvatavad kontrollkoodid on samad.
+ * Kui kontrollkoodid on samad, vajuta mobiilis *_Jätka_*.
+Nüüd saad mobiilis sisestada Mobiil-ID PIN2 koodi (Pilt 17). Vajuta Valmis.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt17.png
+
+*Pilt 17* 
+
+ * DigiDoc3 Klient kontrollib iga paari sekundi tagant, kas oled PIN2 koodi sisestanud. Allkirjastamise õnnestumise korral näed ümbrikus olevaid dokumente ning informatsiooni antud allkirjade kohta.
+Mobiil-ID-ga allkirjastatud ümbrik ei erine mitte millegi poolest ID-kaardiga allkirjastatud ümbrikust (Pilt 18).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt18.png
+
+*Pilt 18* 
 
 
 
