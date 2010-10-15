@@ -62,20 +62,55 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
   
 
  * Aegunud või aegumahakkava sertifikaadi puhul tekib isikuandmete ossa hoiatus (Pilt 1). Aegumahakkamise hoiatust hakatakse kuvama 105 päeva enne allkirjastamise sertifikaadi kehtivuse lõppemist. Kehtivuse pikendamiseks ava ID-kaardi haldusvahend, klõpsates lingile Ava haldusvahend.
- 
-http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
-
-*Pilt 4*
 
           
 
- * Mobiil-ID-ga allkirjastamisel on isikuandmete osas väljad telefoninumbri ja isikukoodi sisestamiseks (Pilt 5).
+ * Mobiil-ID-ga allkirjastamisel on isikuandmete osas väljad telefoninumbri ja isikukoodi sisestamiseks (Pilt 4).
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
 
 *Pilt 4*
 
+== Dokumentide allkirjastamine ==
+Digitaalallkirjastamise alustamisel loob programm kõigepealt tühja ümbriku, kuhu saad lisada allkirjastatavad dokumendid. Seejärel klõpsa allkirjastamise nuppu ja sisesta ID-kaardi PIN2 kood (digitaalallkirjastamise PIN kood). Selle tulemusel moodustab programm dokumendile digitaalallkirja ja küsib allkirjale Sertifitseerimiskeskuse serverist kehtivuskinnituse. Allkiri koos kehtivuskinnitusega lisatakse ümbrikusse. ID-kaardilt salvestatakse ümbrikusse ka allkirjastaja sertifikaat, et selle abil saaks hiljem allkirja kontrollida. Tulemusena saadud ümbriku võid saata mõnele teisele isikule, kes saab selle omakorda allkirjastada või avada ja allkirjade õigsust kontrollida.
+
+Ümbriku tunned arvutis ära laiendi .bdoc või .ddoc ja pildiloleva (Pilt 5) ikooni järgi.  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt5.png
+
+*Pilt 5*
+
+ * DigiDoc3 Kliendiga esimest korda allkirja andes palutakse sul paigaldada kehtivuskinnituse serveri juurdepääsutõend.
+
+  === Ümbriku osad ===
+
+Digitaalset allkirjastamist vajavad dokumendid kogutakse ümbrikusse ja allkirjastatakse (st varustatakse digitaalallkirja ja kehtivuskinnitusega). Seejärel ümbrik salvestatakse. Ümbrik sisaldab üht või mitut dokumenti ja ühe või mitme isiku digitaalallkirju  koos vastavate kehtivuskinnitustega (Pilt 7). Allkirjad võivad ümbrikust ka puududa.  
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt6.png
+
+*Pilt 6*
+
+
+Kui ümbrik on DigiDoc3 Kliendis avatud, siis
+ * Ümbriku andmete osas näed, kas ümbrik on sinu poolt allkirjastatud ning kuhu ümbrik on salvestatud.
+ 
+  * Ümbrik võib olla salvestatud ka allkirjastamata. Sel juhul näed ümbriku andmete osas teadet, et ümbrik ei ole allkirjastatud (Pilt 7).
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt7.png
+
+*Pilt 7*
+
+    
+
+ * Allkirjainfo osas saad vaadata allkirjade üksikasju, allkirju eemaldada ning lisada. Loe lisaks Tegevused allkirjadega.
+ * Dokumentide osas saad ümbrikusolevaid dokumente salvestada, avada ning, kuni ümbrik on allkirjastamata, ka dokumente eemaldada. Loe lisaks osast Ümbrikus olevad dokumendid.
+ * Tegevuste osas saad teha ümbrikuga mitmesuguseid toiminguid, lähemalt loe osast Tegevused ümbrikuga.
+
+
+
+  === Allkirjastamise põhisammud ===
 
 
 *järgneb...*
