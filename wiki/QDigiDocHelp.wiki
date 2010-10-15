@@ -536,8 +536,238 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt32.2.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt33.png
 
+*Pilt 33*
+
+
 
  == Digidoc3 Kliendi seaded ==
+
+
+
+Vali Digidoc3 Kliendi kasutajaliidesel seadete ja abi osas Seaded (Pilt 34).  
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt34.png
+
+*Pilt 34*
+
+Avaneb Digidoc3 Kliendi seadistamise aken, milles on neli vahelehte: Üldine, Juurdepääsutõend, Allkiri ja Proksi.  
+
+ === Seaded: üldine ===
+
+Digidoc3 Kliendi seadete vahelehel Üldine (Pilt 35) saad muuta, kuidas Digidoc3 Klient ümbriku loomisel „käitub“.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt35.png
+
+*Pilt 35*
+
+ * *Ümbriku loomise vaikekataloogi valik*
+Vaikimisi salvestatakse ümbrik esimese ümbrikusse lisatud dokumendiga samasse kataloogi ning valitud on märkeruut *Samasse kataloogi* (Pilt 35, 1).  
+Vaikimisi salvestuskataloogi saad muuta, valides *Ümbriku loomise vaikekataloogi* juures uue asukoha (Pilt 35, 2).  
+ * *Salvestatava ümbriku nime küsimine*
+Märgista valik *Küsi kataloogi nime*, kui soovid ümbriku loomisel võimalust muuta ümbriku nime, salvestamise formaati ja salvestamise kohta (Pilt 35, 3).
+
+Kui dokumendi nime küsimist ei ole seadistatud, salvestatakse ümbrik esimesena ümbrikku lisatud dokumendi nimega .bdoc või .ddoc failina.  
+ * *Sissejuhatuse näitamine*
+Märgista *Näita allkirjastamisel sissejuhatust*, kui soovid iga kord enne allkirja andmist näha digitaalallkirja andmise lühikest tutvustust (Pilt 35, 4). 
+ * *Faili salvestusformaadi valik*
+Digidoc3 Klient loob ümbriku vaikimisi .ddoc laiendiga failina.  
+Vaikimisi valitava ümbriku ormaadi muutmiseks märgista raadionupp *Vaikimisi faili tüüp* vastava faili tüübi juures (Pilt 35, 5).  
+
+Loodud ümbriku formaati hiljem muuta ei saa!
+
+
+ === Seaded: juurdepääsutõend ===
+
+Digitaalallkirja andmisel kontrollitakse ja kinnitatakse Sertifitseerimiskeskuse serveris, et allkirjastamise sertifikaat allkirjastamise ajal kehtib. Sellise kehtivuskinnituse võtmine on omaette teenus, mille kasutamiseks on vaja tellida endale Sertifitseerimiskeskusest kehtivuskinnituse serveri juurdepääsutõend.  Ilma kehtivuskinnituse serveri juurdepääsutõendita digitaalallkirja anda ei saa.
+
+  ==== Kehtivuskinnituse juurdepääsutõendi automaatne paigaldamine ====
+
+
+Digidoc3 Klient küsib, paigaldab ja uuendab kehtivuskinnituse serveri juurdepääsutõendi automaatselt. Siiski, esmakordselt Digidoc3 Kliendiga allkirja andes palutakse sul kehtivuskinnituse serveri juurdepääsutõend alla laadida: 
+ * Esmakordsel Digidoc3 Kliendis allkirja andes näed infot, et puudub kehtivuskinnituse serveri juurdepääsutõend, ning küsitakse luba selle paigaldamiseks (Pilt 36). Vasta Jah.
+ 
+    
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt36.png
+
+*Pilt 36*
+    
+
+ * Sisesta avanevas aknas PIN1 ja vajuta OK (Pilt 37).
+ 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt37.png
+
+*Pilt 37*
+  
+
+ * Juurdepääsutõendi paigaldamine võib kesta paar minutit. Paigalduse lõppedes jätkub allkirjastamine tavalisel moel PIN2 koodi sisestamisega.
+
+
+
+  ==== Kehtivuskinnituse juurdepääsutõendi käsitsi paigaldamine ====
+
+
+Kehtivuskinnituse serveri juurdepääsutõend on vaja paigaldada käsitsi, kui automaatne paigaldus või uuendus mingil põhjusel ei õnnestu. Ka Mobiil-ID-ga allkirjastades tuleb juurdepääsutõend käsitsi paigaldada. Samuti tuleb käsitsi paigaldada Sertifitseerimiskeskusest Digidoc3 Kliendi tasulise teenuse kasutamiseks tellitud juurdepääsutõendid (üle 10 allkirja kalendrikuus). 
+
+ 
+
+ * Digidoc3 Klient teeb kindlaks, kui kehtivuskinnituse serveri juurdepääsutõend puudub ning ta ei saa seda automaatselt küsida (näiteks tõrke korral).
+ * Sulle kuvatakse sellekohane teade ja link Sertifitseerimiskeskuse juurdepääsutõendi tellimise lehele.
+ * Järgi Sertifitseerimiskeskuse juurdepääsutõendi tellimise lehel antavaid juurdepääsutõendi saamise juhiseid.
+ * Salvesta juurdepääsutõendi fail ja kopeeri Sertifitseerimiskeskuse juurdepääsutõendi tellimise lehelt saadud parool.
+ * Ava Digidoc3 Kliendi seadete vaheleht Juurdepääsutõend (Pilt 38).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt38.png
+
+*Pilt 38*
+
+
+ * Navigeeri failivalimise dialoogiaknas saadud juurdepääsutõendi failile laiendiga .p12 (Pilt 39).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt39.png
+
+*Pilt 39*
+
+ * Sisesta Sertifitseerimiskeskuse juurdepääsutõendi tellimise lehelt saadud parool (Pilt 40) ja sulge seadete aken. 
+ * Juurdepääsutõend on paigaldatud ja valmis kasutamiseks 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt40.png
+
+*Pilt 40*
+
+
+*Juurdepääsutõendi võid paigaldada ka failihalduris.*
+
+ # Tee allalaetud juurdepääsutõendi failil (laiendiga .p12) hiire topeltklõps.
+ # Sisesta avanevas aknas Sertifitseerimiskeskuse juurdepääsutõendi tellimise lehelt saadud parool ja klõpsa nupule OK (Pilt 41).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt41.png
+
+*Pilt 41*
+
+Juurdepääsutõend on paigaldatud ja valmis kasutamiseks.
+
+
+ === Seaded: allkiri ===
+
+Allkirja seadete osas saad salvestada allkirjastaja andmed, et neid poleks vaja igal allkirjastamisel uuesti sisestada (Pilt 42). Allkirjastaja andmed ei ole kohustuslikud, nende puudumine ei takista dokumentide allkirjastamist.  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt42.png
+
+*Pilt 42*
+    
+
+ * Salvestatud andmed võid igal allkirjastamisel üle kirjutada.
+ 
+Märgistades _*Jäta viimati sisestatud roll ja resolutsioon meelde*_ salvestatakse allkirjastamisel sisestatud info vaikeseadetesse edasiseks kasutamiseks.
+
+ === Seaded: proksi ===
+Proksi ehk puhverserver on välisliiklust vahendav tulemüüri komponent, mida mõnikord kasutatakse veebilehtede esitluse kiirendamiseks.  
+
+Kui sinu arvuti välisliiklus toimub läbi proksi, siis täida seadetes väljad proksi andmetega, mille saad enda asutuse arvutispetsialistilt või internetiteenuse pakkujalt (Pilt 43).  
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt43.png
+
+*Pilt 43*
+
+
+== Mitme ID-kaardi vahel valimine ==
+
+ID-kaardi valiku menüünupp ilmub menüüribale ainult siis, kui arvutiga on ühendatud mitu ID-kaardiga kaardilugejat.   
+
+ * Klõpsa hiirega menüüribal ID-kaardi valiku menüünupule (Pilt 44).
+ * Avaneb arvutisolevate ID-kaartide numbrite rippmenüü.
+ 
+      
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt44.png
+
+*Pilt 44*
+
+ * Klõpsa hiirega enda ID-kaardi numbrile.
+ * Rakenduse paneelile ilmuvad valitud ID-kaardi- ja isikuandmed.
+
+
+
+== Digidoc3 Kliendi kasutuskeele valik ==
+
+Kasutuskeele muutmiseks: 
+
+ # Mine hiirega keelevaliku menüüsse 
+ # Klõpsa avanevas rippmenüüs hiirega endale sobiva keele nimele. Valitud keel ilmub keelevaliku aknasse ja rakenduse kasutajaliidese keel muutub.
+
+
+== Eriolukorrad allkirjastamisel == 
+
+Allkirjastamisel võib tekkida mitmesuguseid eriolukordi ja probleeme. Mõned sagedamini esinevad eriolukorrad on kirjas allpool. Tekkiva tõrke korral näed üldjuhul probleemi üheselt mõistetavat kirjeldust ja enamasti ka juhist selle lahendamiseks.
+
+
+ * Aegunud allkirjastamise sertifikaadiga ei saa dokumente allkirjastada. Digidoc3 Kliendi isikuandmete osas on sellisel juhul hoiatus (Pilt 45). Samast saad käivitada ID-kaardi haldusvahendi sertifikaadi  uuendamiseks.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt45.png
+
+*Pilt 45*
+
+
+ * Blokeeritud PIN2 koodiga ei saa dokumente allkirjastada. Sel juhul saad  PIN2 koodi sisestamisel teate, et PIN2 on lukus (Pilt 52). Pärast PIN2 koodi ID-kaardi haldusvahendiga lahtilukustamist saad allkirjastamise protsessi jätkata.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt46.png
+
+*Pilt 46*
+
+
+ * Kui nupp Lisa allkiri ei ole aktiivne, võib olla põhjuseks, et oled enda allkirja juba ümbrikusse lisanud.
+
+ * Kui PIN2 sisestamisel näed teadet, et puudub juurdepääsutõend (Pilt 47), saad probleemi lahendada, klõpsates hiirega nupule Jah. Juhised leiad osast [QDigiDocHelp#Digidoc3_Kliendi_seaded Digidoc3 Kliendi seaded].
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt47.png
+
+*Pilt 47*
+
+
+ * Ümbriku salvestamisel tekib viga, kui oled seadetes määranud vaikimisi salvestamise kataloogiks kirjutuskaitstud kataloogi (Pilt 48). Muuda vaikimisi salvestamise kataloogi andmeid ja allkirjasta uuesti.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt48.png
+
+*Pilt 48*
+
+
+ * Mobiil-ID-ga allkirjastades võid saada teate Päringu kannatus katkes (Pilt 55). Ilmselt läks sul PIN2 koodi sisestamisega liiga kaua aega. Klõpsa uuesti nupul Allkirjasta.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt49.png
+
+*Pilt 49*
+
+
+ * Mobiil-ID-ga ei saa allkirjastada, kui telefon, mille numbriga tahad allkirja anda, on välja lülitatud või katkestab ühenduse. Mõlemal korral saad vastava teate (Pilt 50).
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt50.1.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt50.2.png
+
+*Pilt 50*
+
+
+= Digidoc3 Krüpto =
+
+
+Digidoc3 Krüptoga saad ID-kaardi abil faile turvaliseks edastamiseks salastada (krüpteerida) ja salastatud dokumente vaadata (dekrüpteerida).
+
+Salastamine ehk krüpteerimine võimaldab kaitsta tundlikku infot lühiajaliselt teiste inimeste eest. Krüpteerimiseks kasutatakse ID-kaardi isikutuvastamise sertifikaati. 
+
+ * *Oluline on meeles pidada, et salastatud info läheb kaotsi, kui krüpteerimise adressaadi ID-kaarti ei saa kasutada dekrüpteerimiseks (näiteks on ID-kaart kadunud, ID-kaardil olev isikutuvastamise sertifikaat uuendatud või tühistatud). Selle probleemi vältimiseks on kaks head varianti: hoida infot ka mujal lahtiselt, krüpteerimata, või krüpteerida info piisavale arvule adressaatidele, kaasa arvatud iseendale.*
+
+
 
 
 
