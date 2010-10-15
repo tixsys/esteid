@@ -16,7 +16,7 @@ Digidoc3 Kliendist saad käivitada programmi Digidoc3 Krüpto, et dokumente sala
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
-*Pilt 1*
+ *Pilt 1*
 
 
  * Digidoc3 Kliendis on allkirjastamiste arv piiratud: vastavalt kehtivuskinnituse teenuse kasutamise tavatingimustele on isiklikuks tarbimiseks lubatud anda maksimaalselt kümme allkirja kalendrikuu jooksul. Allkirjastamise teenuse kasutamiseks suuremas mahus või ärilistel eesmärkidel tuleks pöörduda Sertifitseerimiskeskuse müügiosakonna poole e-postitsi sales@sk.ee või telefonil 1777.
@@ -45,7 +45,7 @@ Digidoc3 Kliendi kasutajaliidesel (Pilt 2) on kolm osa:
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
 
-*Pilt 2*
+ *Pilt 2*
 
 
 
@@ -57,7 +57,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
 
-*Pilt 3*
+ *Pilt 3*
 
   
 
@@ -70,7 +70,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
 
-*Pilt 4*
+ *Pilt 4*
 
 == Dokumentide allkirjastamine ==
 Digitaalallkirjastamise alustamisel loob programm kõigepealt tühja ümbriku, kuhu saad lisada allkirjastatavad dokumendid. Seejärel klõpsa allkirjastamise nuppu ja sisesta ID-kaardi PIN2 kood (digitaalallkirjastamise PIN kood). Selle tulemusel moodustab programm dokumendile digitaalallkirja ja küsib allkirjale Sertifitseerimiskeskuse serverist kehtivuskinnituse. Allkiri koos kehtivuskinnitusega lisatakse ümbrikusse. ID-kaardilt salvestatakse ümbrikusse ka allkirjastaja sertifikaat, et selle abil saaks hiljem allkirja kontrollida. Tulemusena saadud ümbriku võid saata mõnele teisele isikule, kes saab selle omakorda allkirjastada või avada ja allkirjade õigsust kontrollida.
@@ -80,27 +80,27 @@ Digitaalallkirjastamise alustamisel loob programm kõigepealt tühja ümbriku, k
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt5.png
 
-*Pilt 5*
+ *Pilt 5*
 
- * DigiDoc3 Kliendiga esimest korda allkirja andes palutakse sul paigaldada kehtivuskinnituse serveri juurdepääsutõend.
+ * Digidoc3 Kliendiga esimest korda allkirja andes palutakse sul paigaldada kehtivuskinnituse serveri juurdepääsutõend.
 
   === Ümbriku osad ===
 
-Digitaalset allkirjastamist vajavad dokumendid kogutakse ümbrikusse ja allkirjastatakse (st varustatakse digitaalallkirja ja kehtivuskinnitusega). Seejärel ümbrik salvestatakse. Ümbrik sisaldab üht või mitut dokumenti ja ühe või mitme isiku digitaalallkirju  koos vastavate kehtivuskinnitustega (Pilt 7). Allkirjad võivad ümbrikust ka puududa.  
+Digitaalset allkirjastamist vajavad dokumendid kogutakse ümbrikusse ja allkirjastatakse (st varustatakse digitaalallkirja ja kehtivuskinnitusega). Seejärel ümbrik salvestatakse. Ümbrik sisaldab üht või mitut dokumenti ja ühe või mitme isiku digitaalallkirju  koos vastavate kehtivuskinnitustega (Pilt 6). Allkirjad võivad ümbrikust ka puududa.  
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt6.png
 
-*Pilt 6*
+ *Pilt 6*
 
 
-Kui ümbrik on DigiDoc3 Kliendis avatud, siis
+Kui ümbrik on Digidoc3 Kliendis avatud, siis
  * Ümbriku andmete osas näed, kas ümbrik on sinu poolt allkirjastatud ning kuhu ümbrik on salvestatud.
  
   * Ümbrik võib olla salvestatud ka allkirjastamata. Sel juhul näed ümbriku andmete osas teadet, et ümbrik ei ole allkirjastatud (Pilt 7).
  
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt7.png
 
-*Pilt 7*
+ *Pilt 7*
 
     
 
@@ -111,6 +111,48 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt7.png
 
 
   === Allkirjastamise põhisammud ===
+
+
+
+ * Käivita Digidoc3 Klient.
+ * Vali Digidoc3 Kliendi kasutajaliidesel Ma tahan Allkirjastada dokumenti.
+ 
+
+ Digidoc3 Kliendis allkirjastades näed digitaalallkirja andmise sissejuhatavat lühitutvustust (Pilt 8). Sissejuhatuse näitamise saad seadetes välja lülitada. Loe tutvustus läbi ja klõpsa hiirega nupule Edasi.
+ 
+      
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt8.png
+
+ *Pilt 8*
+
+
+ * Avaneb faililisamise aken. Vali selles dokumendid, mida soovid allkirjastada.
+ * Järgmisena avaneb failisalvestamise aken. Anna loodavale ümbrikule nimi ja vali kataloog, kuhu ümbrik salvestada. Siin näed ka ümbriku salvestamise formaati .bdoc või .ddoc (Pilt 9). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt9.png
+
+ *Pilt 9*
+
+ Kui oled seadetes määranud, et ümbriku nime ei küsitaks ja salvestuskataloogis ei ole varem samanimelist ümbrikut, siis failisalvestusakent ei teki. Selle asemel avaneb kohe ümbrik koos valitud dokumentidega.
+
+
+ * Avanevas ümbrikus on allkirjastatavate dokumentide nimekiri (Pilt 10, 1).
+ 
+ Ümbrikus olevaid dokumente saad salvestada kettale. Enne ümbriku allkirjastamist võid dokumente ümbrikusse lisada või ümbrikust eemaldada.
+ 
+ * Sisesta soovi korral enda andmed: roll, resolutsioon ja asukoht (Pilt 10, 2).
+ 
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt10.png
+
+ *Pilt 10*     
+
+       
+
+ Eelnevalt salvestatud andmed võid soovi korral uutega asendada.
+ Roll ja resolutsioon on sinu seos dokumentide ja allkirjaga: kellena allkirja annad ja mida allkirjaga kinnitad. Rolli, resolutsiooni ja asukoha andmed võid ka sisestamata jätta.
+
+
 
 
 *järgneb...*
