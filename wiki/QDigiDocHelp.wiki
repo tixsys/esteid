@@ -37,10 +37,10 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
 == Digidoc3 Kliendi kasutajaliides ==
 
-DigiDoc3 Kliendi kasutajaliidesel (Pilt 2) on kolm osa:  
- * Isikuandmete osa on DigiDoc3 Kliendiga töötamise ajal kogu aeg nähtaval.
+Digidoc3 Kliendi kasutajaliidesel (Pilt 2) on kolm osa:  
+ * Isikuandmete osa on Digidoc3 Kliendiga töötamise ajal kogu aeg nähtaval.
  * Tegevuste osas saad allkirjastada dokumente, vaadata allkirjastatud dokumente ning käivitada dokumentide turvaliseks edastamiseks programmi Krüpto.
- * Seadete ja abi osas saad teha mitmeid DigiDoc3 Kliendi tööks vajalikke seadistusi ja saada abi tekkivate probleemide korral.
+ * Seadete ja abi osas saad teha mitmeid Digidoc3 Kliendi tööks vajalikke seadistusi ja saada abi tekkivate probleemide korral.
 
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt2.png
@@ -61,9 +61,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt3.png
 
   
 
- * Aegunud või aegumahakkava sertifikaadi puhul tekib isikuandmete ossa hoiatus (Pilt 4). Aegumahakkamise hoiatust hakatakse kuvama 105 päeva enne allkirjastamise sertifikaadi kehtivuse lõppemist. Kehtivuse pikendamiseks ava ID-kaardi haldusvahend, klõpsates lingile Ava haldusvahend.
+ * Aegunud või aegumahakkava sertifikaadi puhul tekib isikuandmete ossa hoiatus (Pilt 1). Aegumahakkamise hoiatust hakatakse kuvama 105 päeva enne allkirjastamise sertifikaadi kehtivuse lõppemist. Kehtivuse pikendamiseks ava ID-kaardi haldusvahend, klõpsates lingile Ava haldusvahend.
  
-http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt1.png
 
 *Pilt 4*
 
@@ -72,9 +72,9 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
  * Mobiil-ID-ga allkirjastamisel on isikuandmete osas väljad telefoninumbri ja isikukoodi sisestamiseks (Pilt 5).
 
 
-http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt5.png
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt4.png
 
-*Pilt 5*
+*Pilt 4*
 
 
 
