@@ -1,0 +1,7 @@
+﻿= Authentication =
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/choose-cert-ff-en.png
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/pin1-ff-en.png
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/pin1-ff-pinpad-en.png
