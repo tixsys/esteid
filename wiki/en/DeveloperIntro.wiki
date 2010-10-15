@@ -1,6 +1,6 @@
-﻿#summary pealekehülg arendajale
+﻿#summary home page for developers
 
-= Millist ID-kaardi tarkvara Sa kirjutad? =
+= What kind of software You write? =
 
 <table cellspacing="15">
 
@@ -8,17 +8,17 @@
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/webdevel-icon.png
-<h2>[WebDeveloper Veebirakendus]</h2>
+<h2>[WebDeveloper Web application]</h2>
 </td>
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/appdevel-icon.png
-<h2>[AppDeveloper Töölaua või serverirakendus]</h2>
+<h2>[AppDeveloper Desktop or server application]</h2>
 </td>
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/basedevel-icon.png
-<h2>[BaseDeveloper ID-kaardi Baastarkvara]</h2>
+<h2>[BaseDeveloper ID-card software]</h2>
 </td>
 
 </tr>
