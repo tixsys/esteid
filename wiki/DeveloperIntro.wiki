@@ -13,12 +13,12 @@ http://esteid.googlecode.com/svn/wiki/img/webdevel-icon.png
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/appdevel-icon.png
-<h2>[AppDeveloper Töölaua või serverirakendus]</h2>
+<h2>[AppDeveloper Muu rakendus]</h2>
 </td>
 
 <td align="center">
 http://esteid.googlecode.com/svn/wiki/img/basedevel-icon.png
-<h2>[BaseDeveloper ID-kaardi Baastarkvara]</h2>
+<h2>[BaseDeveloper Baastarkvara]</h2>
 </td>
 
 </tr>
