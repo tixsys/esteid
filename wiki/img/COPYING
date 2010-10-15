@@ -4,19 +4,22 @@ install-icon.png
 develop-icon.png
 list-icon.png
 bug-icon.png
+docdevel-icon.png
+webdevel-icon.png
+appdevel-icon.png
     Type:    Icon
     Author:  Everaldo Coelho
     License: LGPL
     Source:  http://commons.wikimedia.org/wiki/Crystal_Clear
 
-ubuntu-addppa-et.png
-    Type:    Screenshot
-    Author:  Antti Andreimann
-    License: LGPL
-
 talk-icon.png
     Type:    Icon
     Authors: Everaldo Coelho, Antti Andreimann
+    License: LGPL
+
+ubuntu-addppa-et.png
+    Type:    Screenshot
+    Author:  Antti Andreimann
     License: LGPL
 
 irc-icon.png
