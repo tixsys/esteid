@@ -6,14 +6,14 @@ Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail
 
 ==== Debian Lenny (5.0) ====
 {{{
-echo deb http://id.smartlink.ee/repo/release/debian/ lenny main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+su -c "echo deb http://id.smartlink.ee/repo/release/debian/ lenny main > /etc/apt/sources.list.d/idkaart.list"
+su -c "wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | apt-key add -"
 }}}
 
 ==== Debian Squeeze (6.0) ====
 {{{
-echo deb http://id.smartlink.ee/repo/release/debian/ squeeze main | sudo dd of=/etc/apt/sources.list.d/idkaart.list
-wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | sudo apt-key add -
+su -c "echo deb http://id.smartlink.ee/repo/release/debian/ squeeze main > /etc/apt/sources.list.d/idkaart.list"
+su -c "wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | apt-key add -" 
 }}}
 
 
