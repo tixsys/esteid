@@ -88,3 +88,4 @@ Katsetusjärgus tarkvara:
  * Java abil allkirjastamine töötab stabiilselt ainult Windows platvormil. Teistel platvormidel on soovitatav kasutada Firefoxi, kuna viimase laiendusse on sisse ehitatud spetsiaalne ühilduvusrežiim (loe: häkk).
  * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
  * Safaris autentimine ei tööta osadel veebilehtedel, kus kasutaja ei ole oma ID-kaarti ja seda konkreetset saiti kokku sidunud. Põhjuseid [VeebisAutentimine#Vigased_SSL_seaded loe siit].
+ * Autentimine ei tööta Internet Explorer 9 Beta-ga. Sertfikaadi saab valida, aga PIN1 akent ei teki. Kuna IE kasutab Microsofti Base CSP kihti, siis on viga nende kahe omavahelises suhtluses, mida ID-kaardi baastarkvara ei saa mõjutada. Tuleb oodata Microsofti veaparandust.
