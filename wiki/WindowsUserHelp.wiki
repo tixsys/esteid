@@ -1,0 +1,26 @@
+#summary Spetsiifiline abi ja nõuanded Windowsi kasutajatele
+
+= Introduction =
+
+Add your content here.
+
+
+= Teate "Device driver software was not successfully installed" keelamine Windows 7-s ja Vistas =
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_veateade.png
+
+Selgituseks, et Windows ei leia Microsofti varamust Eesti ID-kaardi draiverit. Seniks kuni seda seal ei ole, saab nendest ebameeldivatest teadetest lahti järgnevalt:
+
+1. Ava Windowsi Start menüüst arvuti haldamine (_Start_ -> paremklõps _Computer_ peal ning sealt _Manage_).
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_start.png
+
+2. Avanenud aknas tee topeltklõps kirjel _Device Manager_ ning seejärel paremal vaates paremklõps kirjel _EstEid National ID Card_. Klõpsa kirjel _Disable_.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_device_manager.png
+
+3. Avanenud kinnitusaknas klõpsa _Yes_.
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_kinnitus.png
+
+4. Sulge arvuti haldamise aken ning rohkem antud teadet enam ei kuvata.
