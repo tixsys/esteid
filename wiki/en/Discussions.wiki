@@ -14,6 +14,16 @@ Spread the word and speak with other users at
 
 <tr>
 <td>
+http://esteid.googlecode.com/svn/wiki/img/orkut-icon.png
+</td>
+<td>
+Spread the word and speak with other users at
+[http://www.orkut.com/Main#Community?cmm=107362372 Orkut]
+</td>
+</tr>
+
+<tr>
+<td>
 http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>

@@ -14,6 +14,16 @@ Levita sõna ja suhtle teiste kasutajatega
 
 <tr>
 <td>
+http://esteid.googlecode.com/svn/wiki/img/orkut-icon.png
+</td>
+<td>
+Levita sõna ja suhtle teiste kasutajatega
+[http://www.orkut.com/Main#Community?cmm=107362372 Orkutis]
+</td>
+</tr>
+
+<tr>
+<td>
 http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>
