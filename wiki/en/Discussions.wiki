@@ -4,6 +4,16 @@
 
 <tr>
 <td>
+http://esteid.googlecode.com/svn/wiki/img/facebook-icon.png
+</td>
+<td>
+Spread the word and speak with other users at
+[http://www.facebook.com/open.esteid Facebook]
+</td>
+</tr>
+
+<tr>
+<td>
 http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>

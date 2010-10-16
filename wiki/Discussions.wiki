@@ -4,6 +4,16 @@
 
 <tr>
 <td>
+http://esteid.googlecode.com/svn/wiki/img/facebook-icon.png
+</td>
+<td>
+Levita sõna ja suhtle teiste kasutajatega
+[http://www.facebook.com/open.esteid Facebookis]
+</td>
+</tr>
+
+<tr>
+<td>
 http://esteid.googlecode.com/svn/wiki/img/list-icon.png
 </td>
 <td>
