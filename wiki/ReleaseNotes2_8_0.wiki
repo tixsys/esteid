@@ -23,8 +23,8 @@ Toetatud operatsioonisüsteemid:
 
 Toetatud veebilehitsejad:
  * Google Chrome (Windows ja MacOS X)
- * Firefox (3.0 ja uuem)
- * Internet Explorer (7 ja uuem)
+ * Firefox (3.6 ja uuem)
+ * Internet Explorer (7 ja 8)
  * Safari
 
 Lõpptarbija komponendid:
