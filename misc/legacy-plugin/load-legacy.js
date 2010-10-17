@@ -316,19 +316,25 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
 
   var e = document.getElementById(id);
 
-  e.innerHTML = '<object id="jSign" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="1" height="1" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_0-win.cab#Version=1,4,0,0">' +
-    '<param name="code" value="SignatureApplet.class">' +
-    '<param name ="archive" value="' + myuri + '/SignApplet_sig.jar,' + myuri + '/iaikPkcs11Wrapper_sig.jar">' +
-    '<param name="type" value="application/x-java-applet;version=1.4">' +
-    '<param name="mayscript" value="true">' +
-    '<param name="name" value="SignatureApplet">' +
-    '<param name="debug_level" value="4">' +
-    '<param name="lang" value="ENG">' +
-    '<embed id="ejSign" type="application/x-java-applet;version=1.4" width="1" height="1"' +
-    'pluginspage="http://java.sun.com/products/plugin/index.html#download" code="SignatureApplet.class"' +
-    'archive="' + myuri + '/SignApplet_sig.jar,' + myuri +'/iaikPkcs11Wrapper_sig.jar" ' +
-    'name="SignatureApplet" mayscript="true" lang="ENG" debug_level="4">' +
-    '</embed></object>'
+  try {
+    e.innerHTML = '<object id="jSign" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="1" height="1" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_0-win.cab#Version=1,4,0,0">' +
+      '<param name="code" value="SignatureApplet.class">' +
+      '<param name ="archive" value="' + myuri + '/SignApplet_sig.jar,' + myuri + '/iaikPkcs11Wrapper_sig.jar">' +
+      '<param name="type" value="application/x-java-applet;version=1.4">' +
+      '<param name="mayscript" value="true">' +
+      '<param name="name" value="SignatureApplet">' +
+      '<param name="debug_level" value="4">' +
+      '<param name="lang" value="ENG">' +
+      '<embed id="ejSign" type="application/x-java-applet;version=1.4" width="1" height="1"' +
+      'pluginspage="http://java.sun.com/products/plugin/index.html#download" code="SignatureApplet.class"' +
+      'archive="' + myuri + '/SignApplet_sig.jar,' + myuri +'/iaikPkcs11Wrapper_sig.jar" ' +
+      'name="SignatureApplet" mayscript="true" lang="ENG" debug_level="4">' +
+      '</embed></object>';
+  } catch(err) {
+    estEidLoader.htmlLog("Failed to create applet: " + err.message);
+    pluginFail();
+    return;
+  }
 
   window.jCrap = {
     waiting: false, pem: '', errmsg: '',
