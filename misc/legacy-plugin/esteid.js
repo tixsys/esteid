@@ -42,19 +42,20 @@ var estEidLoader = {
    *
    * @param {String} id id of the object to poll
    * @param {int} timeout how many seconds to wait
-   * @param {Function} isWorking a function to validate the loaded object
-   * @param {Function} onSuccess a function to be called on success
-   * @param {Function} onFail a function to be called on failure
+   * @param {Object} callbacks an object that has following properties:
+   *   isWorking a function to validate the loaded object
+   *   onSuccess a function to be called on success
+   *   onFail a function to be called on failure
    */
-  waitForObject: function(id, timeout, isWorking, onSuccess, onFail) {
+  waitForObject: function(id, timeout, callbacks) {
     var e = document.getElementById(id);
     var ok = false;
 
     /* Return immediately if everything is OK */
-    try { ok = isWorking(e); } catch(err) { }
+    try { ok = callbacks.isWorking(e); } catch(err) { }
     if(ok) {
       estEidLoader.waitForObjectStart = null;
-      onSuccess(e);
+      callbacks.onSuccess(e);
       return;
     }
 
@@ -62,7 +63,7 @@ var estEidLoader = {
      * because then we are sure that the plugin actually has a chance
      * to become active. Othervise we are just wasting valuable time. */
     if(!navigator.mimeTypes || navigator.mimeTypes.length <= 0) {
-      onFail(e);
+      callbacks.onFail(e);
       return;
     }
 
@@ -76,15 +77,15 @@ var estEidLoader = {
     var millis = now - estEidLoader.waitForObjectStart
     if(millis > timeout * 1000) {
       estEidLoader.waitForObjectStart = null;
-      onFail(e);
+      callbacks.onFail(e);
       return;
     }
 
     /* Schedule another check */
     estEidLoader.htmlLog("Waiting for plugin to load ...");
     window.setTimeout(function() {
-      estEidLoader.waitForObject(id, timeout, isWorking, onSuccess, onFail);
-    }, 500);
+      estEidLoader.waitForObject(id, timeout, callbacks);
+    }, 1000);
   },
 
   /**
@@ -95,11 +96,12 @@ var estEidLoader = {
    *
    * @parem {String} id id for the new object
    * @param {String} mimeType MIME type of the new object
-   * @param {Function} isWorking a function to validate the loaded object
-   * @param {Function} onSuccess a function to be called on success
-   * @param {Function} onFail a function to be called on failure
+   * @param {Object} callbacks an object that has following properties:
+   *   isWorking a function to validate the loaded object
+   *   onSuccess a function to be called on success
+   *   onFail a function to be called on failure
    */
-  createMimeObject: function(id, mimeType, isWorking, onSuccess, onFail) {
+  createMimeObject: function(id, mimeType, callbacks) {
     var e = null;
     var errpfx = "Failed to load plugin for " + mimeType + ": ";
 
@@ -116,7 +118,7 @@ var estEidLoader = {
     if(navigator.mimeTypes && navigator.mimeTypes.length > 0 &&
        !(navigator.mimeTypes[mimeType])) {
       estEidLoader.htmlLog("Plugin for " + mimeType + " is not installed");
-      onFail(e);
+      callbacks.onFail(e);
       return;
     }
 
@@ -127,51 +129,51 @@ var estEidLoader = {
       e = estEidLoader.appendToBody(e);
     } catch(err) {
       estEidLoader.htmlLog(errpfx + err.message);
-      onFail(e);
+      callbacks.onFail(e);
       return;
     }
 
     /* Wait for object to become active */
-    estEidLoader.waitForObject(id, estEidLoader.pluginTimeout, isWorking,
-      onSuccess, function(e) {
+    estEidLoader.waitForObject(id, estEidLoader.pluginTimeout, {
+      isWorking: callbacks.isWorking,
+      onSuccess: callbacks.onSuccess,
+      onFail: function(e) {
         estEidLoader.htmlLog(errpfx + "timed out while waiting");
-        onFail(e);
-      });
+        callbacks.onFail(e);
+      }
+    });
   },
 
   /**
    * Inject an esteid plugin object into DOM using a specified id
    *
    * @param {String} id id of the new object
-   * @param {Function} onSuccess called on successful load
-   * @param {Function} onFail called on failure
+   * @param {Object} callbacks an object wirh following properties
+   *   onSuccess called on successful load
+   *   onFail called on failure
    */
-  createEstEidObject: function(id, onSuccess, onFail) {
+  createEstEidObject: function(id, callbacks) {
     if(estEidLoader.disable_new) {
       estEidLoader.htmlLog("New plugin support disabled by config");
-      onFail(null);
+      callbacks.onFail(null);
       return;
     }
 
     estEidLoader.htmlLog("Trying to load esteid browser plugin");
 
-    estEidLoader.createMimeObject(id, "application/x-esteid",
-      /* isWorking */
-      function(e) {
-        return (e.getVersion()) ? true : false;
-      },
-
-      /* onSuccess */
-      function(e) {
+    estEidLoader.createMimeObject(id, "application/x-esteid", {
+      isWorking: function(e) { return (e.getVersion()) ? true : false; },
+      onSuccess: function(e) {
         if(typeof(e.signAsync) == "undefined") {
           estEidLoader.htmlLog("Failed to utilize plugin, You are using an experimental software version, please update!");
-          onFail(e);
+          callbacks.onFail(e);
         } else {
           estEidLoader.htmlLog("Using browser plugin: " + e.getVersion());
-          onSuccess(e);
+          callbacks.onSuccess(e);
         }
       },
-    onFail);
+      onFail: callbacks.onFail
+    });
   },
 
   /**
@@ -181,19 +183,19 @@ var estEidLoader = {
    * Will call pluginReady when plugin is loaded or pluginFail
    * when no plugin could be activated.
    */
-  loadPlugin: function(id, pluginReady, pluginFail) {
-    estEidLoader.createEstEidObject(id, function(e) {
-        pluginReady();
-      },
-      function(e) {
+  loadPlugin: function(id, callbacks) {
+    estEidLoader.createEstEidObject(id, {
+      onSuccess: function(e) { callbacks.pluginReady(); },
+      onFail: function(e) {
         if(e) estEidLoader.removeFromBody(e);
 
         if(estEidLoader.loadLegacySigner) {
-          estEidLoader.loadLegacySigner(id, pluginReady, pluginFail);
+          estEidLoader.loadLegacySigner(id, callbacks);
         } else {
-          pluginFail();
+          callbacks.pluginFail();
         }
-      });
+      }
+    });
 
     return;
   }
@@ -210,7 +212,10 @@ function loadEstEidPlugin(id, pluginReady) {
     for(i in esteid_config)
       estEidLoader[i] = esteid_config[i];
 
-  estEidLoader.loadPlugin(id, pluginReady, function() {
-    estEidLoader.htmlLog("Signing is impossible");
+  estEidLoader.loadPlugin(id, pluginReady, {
+      pluginReady: pluginReady,
+      pluginFail: function() {
+        estEidLoader.htmlLog("Signing is impossible");
+      }
   });
 }

@@ -10,13 +10,23 @@
 <div style="margin-top: 2em;">
 <script type="text/javascript">
 
+function loadPlugin() {
+    var b = document.getElementById("lb");
+    b.disabled = true;
+
+    estEidLoader.loadPlugin('esteid', {
+        pluginReady: function() { 
+            document.getElementById("b1").disabled = false;
+        },
+        pluginFail: function() {
+          b.disabled = false;
+        }
+    });
+}
+
 function showOutput(data) {
     var o = document.getElementById("output");
     o.innerHTML = data;
-}
-
-function pluginLoaded() {
-   document.getElementById("b1").disabled = false;
 }
 
 function showCert() {
@@ -41,7 +51,8 @@ function showSign() {
     });
 }
 </script>
-    <input type="button" value="Load" onclick="var b = this; b.disabled = true; estEidLoader.loadPlugin('esteid', pluginLoaded, function() { b.disabled = false; } );" />
+    <input type="button" value="Load" id="lb"
+           onclick="loadPlugin();" />
     <input id="b1" type="button" value="Cert" disabled="true"
            onclick="showCert();" />
     <input id="b2" type="button" value="Sign" disabled="true"

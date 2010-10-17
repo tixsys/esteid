@@ -120,11 +120,9 @@ estEidLoader.createSKplug = function(id, pluginReady, pluginFail) {
 
   estEidLoader.htmlLog("Trying to create x-digidoc (id.eesti.ee)");
 
-  estEidLoader.createMimeObject("sSign", "application/x-digidoc",
-    /* isWorking */
-    function(e) { return (e.version) ? true : false; },
-    /* onSuccess */
-    function(e) { 
+  estEidLoader.createMimeObject("sSign", "application/x-digidoc", {
+    isWorking: function(e) { return (e.version) ? true : false; },
+    onSuccess: function(e) { 
       estEidLoader.htmlLog("Loaded x-digidoc " + e.version);
       try {
         estEidLoader.setupSKplug(id);
@@ -134,10 +132,8 @@ estEidLoader.createSKplug = function(id, pluginReady, pluginFail) {
         pluginFail();
       }
     },
-    /* onFail */
-    function(e) {
-      pluginFail();
-    });
+    onFail: function(e) { pluginFail(); }
+  });
 };
 
 /* Support for old ActiveX signing control.
@@ -254,11 +250,9 @@ estEidLoader.createMoz = function(id, pluginReady, pluginFail) {
 
   estEidLoader.htmlLog("Trying to load Mozilla plugin");
 
-  estEidLoader.createMimeObject("mSign", mt,
-    /* isWorking */
-    function(e) { return (e.getVersion()) ? true : false; },
-    /* onSuccess */
-    function(e) { 
+  estEidLoader.createMimeObject("mSign", mt, {
+    isWorking: function(e) { return (e.getVersion()) ? true : false; },
+    onSuccess: function(e) { 
       estEidLoader.htmlLog("Loaded Mozilla plugin " + e.getVersion());
       try {
         estEidLoader.setupMoz(id);
@@ -268,10 +262,8 @@ estEidLoader.createMoz = function(id, pluginReady, pluginFail) {
         pluginFail();
       }
     },
-    /* onFail */
-    function(e) {
-      pluginFail();
-    });
+    onFail: function(e) { pluginFail(); }
+  });
 };
 
 /* Support for old Java signing applet. This was originally developed by
@@ -403,7 +395,7 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
           estEidLoader.waitForJavaStart = null;
           pluginFail();
         } else {
-          window.setTimeout(window.jCrap.poll, 500);
+          window.setTimeout(window.jCrap.poll, 1000);
         }
       }
     }
@@ -429,7 +421,7 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
  * @param {Function} pluginReady a function that will be called on success
  * @param {Function} pluginFail a function that will be called on failure
  */
-estEidLoader.loadLegacySigner = function(id, pluginReady, pluginFail) {
+estEidLoader.loadLegacySigner = function(id, cb) {
   estEidLoader.htmlLog("Trying to find and load some legacy signing plugin");
 
   /* Create a dummy DOM object to attach our wrapper functions to */
@@ -437,15 +429,15 @@ estEidLoader.loadLegacySigner = function(id, pluginReady, pluginFail) {
   e.id = 'esteid';
   e = estEidLoader.appendToBody(e);
 
-  estEidLoader.createSKplug(id, pluginReady, function() {
+  estEidLoader.createSKplug(id, cb.pluginReady, function() {
     if(estEidLoader.createActiveX(id)) {
-      pluginReady();
+      cb.pluginReady();
     } else {
-      estEidLoader.createMoz(id, pluginReady, function() {
-        estEidLoader.createJava(id, pluginReady, function() {
+      estEidLoader.createMoz(id, cb.pluginReady, function() {
+        estEidLoader.createJava(id, cb.pluginReady, function() {
           if(e) estEidLoader.removeFromBody(e);
           estEidLoader.htmlLog("Failed to find any legacy plugin");
-          pluginFail();
+          cb.pluginFail();
         });
       });
     }
