@@ -9,7 +9,6 @@
 <div id="htmlLog" style="overflow: scroll; height: 10em; border: double;"></div>
 <div style="margin-top: 2em;">
 <script type="text/javascript">
-var esteid_config = { };
 
 function showOutput(data) {
     var o = document.getElementById("output");
@@ -42,7 +41,7 @@ function showSign() {
     });
 }
 </script>
-    <input type="button" value="Load" onclick="this.disabled = true; loadEstEidPlugin('esteid', pluginLoaded);" />
+    <input type="button" value="Load" onclick="var b = this; b.disabled = true; estEidLoader.loadPlugin('esteid', pluginLoaded, function() { b.disabled = false; } );" />
     <input id="b1" type="button" value="Cert" disabled="true"
            onclick="showCert();" />
     <input id="b2" type="button" value="Sign" disabled="true"
@@ -51,27 +50,27 @@ function showSign() {
     <br />
 
     <input id="c1" type="checkbox"
-           onclick="esteid_config.disable_new = !this.checked;"
+           onclick="estEidLoader.disable_new = !this.checked;"
            checked="checked" />
         <label for="c1">Try universal plugin</label>
     </input>
     <input id="c2" type="checkbox"
-           onclick="esteid_config.disable_sk = !this.checked;"
+           onclick="estEidLoader.disable_sk = !this.checked;"
            checked="checked" />
         <label for="c2">Try x-digidoc</label>
     </input>
     <input id="c3" type="checkbox"
-           onclick="esteid_config.disable_ax = !this.checked;"
+           onclick="estEidLoader.disable_ax = !this.checked;"
            checked="checked" />
         <label for="c3">Try ActiveX control</label>
     </input>
     <input id="c4" type="checkbox"
-           onclick="esteid_config.disable_moz = !this.checked;"
+           onclick="estEidLoader.disable_moz = !this.checked;"
            checked="checked" />
         <label for="c4">Try Mozilla plugin</label>
     </input>
     <input id="c5" type="checkbox"
-           onclick="esteid_config.disable_java = !this.checked;"
+           onclick="estEidLoader.disable_java = !this.checked;"
            checked="checked" />
         <label for="c5">Try Java applet</label>
     </input>
