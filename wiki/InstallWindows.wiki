@@ -4,6 +4,13 @@
  * Windows Vista SP1 või uuem
  * Windows 7
 
+== Toetatud veebilehitsejad ==
+
+ * Firefox (3.6 ja uuem)
+ * Internet Explorer (7 ja 8)
+ * Google Chrome
+ * Safari
+
 == Eeldused ==
 
 Paigalduspaketi korrektseks toimimiseks peab olema arvutisse paigaldatud Microsoft .NET Framework 2.0.
