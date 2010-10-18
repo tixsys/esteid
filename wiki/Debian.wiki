@@ -19,7 +19,6 @@ su -c "wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | apt-key a
 
 
 === Pakettide paigaldamine ===
-
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 su -c "apt-get update"
