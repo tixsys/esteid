@@ -6,7 +6,7 @@ aadressi levitatud kolmandatele osapooltele. Palun mitte ümber nimetada.
 
 </wiki:comment>
 
-= Kuidas panna oma veebirakendus autentima ID-kaardiga =
+= Kuidas panna oma veebiserver autentima ID-kaardiga =
 
 ID-kaardiga autentimine käib läbi HTTPS protokolli.
 ID-kaart paistab veebiserverile kui nn. "Client side certificate".
