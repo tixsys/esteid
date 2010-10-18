@@ -113,6 +113,10 @@ estEidLoader.setupSKplug = function(id) {
     }
     document.getElementById(id).signCert = null;
   };
+  e.getVersion = function() {
+    var s = document.getElementById("sSign");
+    return s.version + " (legacy x-digidoc)";
+  };
   estEidLoader.defineCertGetter(id, estEidLoader.getCertSKplug);
 };
 estEidLoader.createSKplug = function(id, pluginReady, pluginFail) {
@@ -179,7 +183,11 @@ estEidLoader.createActiveX = function(id) {
         callback.onError(estEidLoader.err_cancel);
       }
       document.getElementById(id).signCert = null;
-    }
+    };
+    e.getVersion = function() {
+      var s = document.getElementById("iSign");
+      return "0.0.0 " + s.getInfo() + " (legacy ActiveX control)";
+    };
     estEidLoader.defineCertGetter(id, estEidLoader.getCertActiveX);
     return true;
   } catch(err) {
@@ -234,6 +242,10 @@ estEidLoader.setupMoz = function(id) {
       }
     }
     document.getElementById(id).signCert = null;
+  };
+  e.getVersion = function() {
+    var s = document.getElementById("mSign");
+    return s.getVersion() + " (legacy Mozilla plugin)";
   };
   estEidLoader.defineCertGetter(id, estEidLoader.getCertMoz);
 };
@@ -408,6 +420,9 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
     window.jCrap.callback = callback;
     s.finalize(window.jCrap.slot, hash, 'window.jCrap.sign',
                'window.jCrap.cancel', 'window.jCrap.error');
+  };
+  e.getVersion = function() {
+    return "0.0.0 (legacy Java Applet)";
   };
   estEidLoader.waitForJavaStart = (new Date()).getTime();
   window.setTimeout('window.jCrap.poll();', 500);

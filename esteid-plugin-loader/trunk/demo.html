@@ -23,9 +23,9 @@ function loadPlugin() {
         pluginReady: function() {
             var e = document.getElementById("esteid");
             if(e.isLegacy) {
-                showOutput("One of the legacy plugins loaded successfully");
+                showOutput("Legacy plugin loaded. Version: " + e.getVersion());
             } else {
-                showOutput("Plugin loaded successfully");
+                showOutput("Plugin loaded. Version: " + e.getVersion());
             }
             document.getElementById("b1").disabled = false;
         },
