@@ -6,8 +6,11 @@ aadressi levitatud kolmandatele osapooltele. Palun mitte ümber nimetada.
 
 </wiki:comment>
 
-= Kuidas panna oma veebiserver autentima ID-kaardiga =
+<h1> Kuidas panna oma veebiserver autentima ID-kaardiga </h1>
 
+<wiki:toc max_depth="1" />
+
+= Eeldused =
 ID-kaardiga autentimine käib läbi HTTPS protokolli.
 ID-kaart paistab veebiserverile kui nn. "Client side certificate".
 Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks korralikult peab olema täidetud hulk tingimusi:
@@ -21,12 +24,12 @@ Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks 
     Ajalooliselt on palju kasutatud "valikulist" seritifikaadi nõuet, see aga on samuti äärmiselt probleemne "lahendus". <br>
     [VeebisAutentimine#Vigased_SSL_seaded Vaata allpool]
 
-== Seadistusjuhendid levinumatele veebiserveritele ==
+= Levinumatele veebiserverite seadistamine =
 
- * [AuthConfApache Apache]
+ * [AuthConfApache Juhend apache jaoks]
     
 
-== Vigased Autentimismeetodid ==
+= Vigased Autentimismeetodid =
 ID-kaardiga autentimiseks peab olema eraldi IP-aadress. Täiesti eraldi. Punkt! Hetkel ei ole olemas korralikult töötavat võimalust sellest nõudest mööda vingerdada. Allpool on toodud neli vildakat "lahendust" koos tekkivate varjatud probleemide kirjeldustega.
 
  1. Muudad pordi ära, näiteks https://minu-imeline-sait.jeje:88/ <br>
