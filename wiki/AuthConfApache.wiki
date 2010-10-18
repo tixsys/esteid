@@ -6,7 +6,9 @@
  * Saidi nimega sobiv SSLi serveri seritifikaat
  * Eraldi IP-aadress või poliitiline otsus kasutada SNI-d
 
-= Pikem protseduur =
+= Konfigureerimine käsitsi =
+
+== Apache konfigureerimine ==
 
 Tekita ID-kaardi juursertifikaatide ja CRLide jaoks kataloogid
 {{{
@@ -63,6 +65,11 @@ Lisa sinna faili järgmised read:
 }}}
 
 Proovi kas töötab.
+
+== CRLide laadimine ==
+
+Kui Sind CRL-id ei huvita, rakendus kasutab ise otse OCSP-d või sind lihtsalt ei koti
+kas tühistatud või peatatud ID-kaardiga saab sisse või mitte, siis võid järgneva vahele jätta.
 
 Lisa faili {{{/etc/pki/esteid/update-crl.sh}}} järgmised read:
 {{{
