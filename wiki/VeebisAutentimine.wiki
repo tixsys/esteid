@@ -6,7 +6,9 @@ aadressi levitatud kolmandatele osapooltele. Palun mitte ümber nimetada.
 
 </wiki:comment>
 
-<h1> Kuidas panna oma veebiserver autentima ID-kaardiga </h1>
+#sidebar DeveloperTOC
+
+<h1>Kuidas panna oma veebiserver autentima ID-kaardiga?</h1>
 
 <wiki:toc max_depth="1" />
 
