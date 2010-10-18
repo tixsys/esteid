@@ -1221,7 +1221,7 @@ Soovi korral võid vaadata saaja isikutuvastuse sertifikaadi andmeid, klõpsates
 
 
 
- === Digidoc3 Krüpto seaded ===
+ == Digidoc3 Krüpto seaded ==
 
 
 Vali Digidoc3 Krüpto kasutajaliidesel seadete ja abi osas Seaded (Pilt 79). 
@@ -1261,7 +1261,7 @@ Märgistades Näita krüpteerimisel sissejuhatust, näidatakse enne krüpteerimi
 
 
 
- === Mitme ID-kaardi vahel valimine ===
+ == Mitme ID-kaardi vahel valimine ==
 
 ID-kaardi valiku menüünupp ilmub menüüribale ainult siis, kui arvutiga on ühendatud mitu ID-kaardiga kaardilugejat.   
 
@@ -1278,7 +1278,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt81.png
  * Rakenduse paneelile ilmuvad valitud ID-kaardi- ja isikuandmed
 
 
- === Digidoc3 Krüpto kasutuskeele valik ===
+ == Digidoc3 Krüpto kasutuskeele valik ==
 
 Kasutuskeele muutmiseks: 
 
