@@ -38,3 +38,6 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://www.openxades.org/upload_cert.php
  * [XMLDSIG]
  * [EstEid]
+ * http://kuutorvaja.eenet.ee/wiki/Sertifikaadid
+ * http://www.slideshare.net/martinpaljak/idkaardist-100
+ * http://www.verisign.com.au/repository/tutorial/digital/intro1.shtml
