@@ -1,3 +1,7 @@
+#summary isikutuvastuse konfigureerimine veebikeskkonnas
+
+#sidebar DeveloperTOC
+
 <wiki:comment>
 
 Selle lehekülje nimi on Eesti keelne, kuna sellele on viidatud
@@ -5,8 +9,6 @@ enne lehenimede ümbertegemist ReleaseNotes-idest, samuti on seda
 aadressi levitatud kolmandatele osapooltele. Palun mitte ümber nimetada.
 
 </wiki:comment>
-
-#sidebar DeveloperTOC
 
 <h1>Kuidas panna oma veebiserver autentima ID-kaardiga?</h1>
 
