@@ -44,3 +44,5 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://gdp.globus.org/gt3-tutorial/multiplehtml/ch10s04.html
  * http://en.wikipedia.org/wiki/X.509
  * http://support.microsoft.com/kb/182569
+ * http://msdn.microsoft.com/en-us/library/bb250462%28VS.85%29.aspx
+ * http://uninformed.org/index.cgi?v=1&a=3&p=5
