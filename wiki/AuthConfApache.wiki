@@ -98,7 +98,8 @@ chmod a+x /etc/pki/esteid/update-crl.sh
 }}}
 
 Pane uuendusscript crontabist käivituma iga 6 tunni tagant.
+
 Tekita faili {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
 {{{
-5 */6 * * * root /etc/pki/esteid/update-crl.sh 2>&1 > /var/log/esteid-update.log
+5 */6 * * * root /etc/pki/esteid/update-crl.sh > /var/log/esteid-update.log 2>&1
 }}}
