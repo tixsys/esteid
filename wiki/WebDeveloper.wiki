@@ -103,7 +103,7 @@ faili.
 Vanad tehnoloogiad ei oska pooltki neid funktsioone, mida toetab uus plugin.
 Ühilduvusrežiimilt saab eeldada ainult kõige elementaarsemat allkirjastamise
 funktsionaalsust. API translaator toetab vähemalt versiooni küsimist, sertifikaadi
-lugemist ja allkirjastamist:
+lugemist PEM formaadis ja allkirjastamist:
 
  * esteid.getVersion
  * esteid.signCert.cert
