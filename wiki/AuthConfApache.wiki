@@ -1,7 +1,7 @@
 ﻿#summary Juhend Apache veebiserveri konfigureerimiseks
 #sidebar DeveloperTOC
 
-= Sisukord =
+<h1> Sisukord </h1>
 
 <wiki:toc max_depth="2" />
 
