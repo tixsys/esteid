@@ -21,11 +21,9 @@ Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks 
     Ajalooliselt on palju kasutatud "valikulist" seritifikaadi nõuet, see aga on samuti äärmiselt probleemne "lahendus". <br>
     [VeebisAutentimine#Vigased_SSL_seaded Vaata allpool]
 
-Täpsemad instruktsioonid on liigendatud veebiserveri kaupa
+== Seadistusjuhendid levinumatele veebiserveritele ==
+
  * [AuthConfApache Apache]
-{{{
-TODO: Siia tuleb kirjutada veel konfi ja koodinäiteid erinevate veebiserverite ja programmeerimiskeskkondade jaoks
-}}}
     
 
 == Vigased Autentimismeetodid ==
