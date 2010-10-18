@@ -68,7 +68,7 @@ Proovi kas töötab.
 
 == CRLide laadimine ==
 
-Kui Sind CRL-id ei huvita, rakendus kasutab ise otse OCSP-d või sind lihtsalt ei koti
+Kui Sind CRL-id ei huvita, sest rakendus kasutab ise otse OCSP-d või sind lihtsalt ei koti
 kas tühistatud või peatatud ID-kaardiga saab sisse või mitte, siis võid järgneva vahele jätta.
 
 Lisa faili {{{/etc/pki/esteid/update-crl.sh}}} järgmised read:
@@ -99,4 +99,6 @@ chmod a+x /etc/pki/esteid/update-crl.sh
 
 Pane uuendusscript crontabist käivituma iga 6 tunni tagant.
 Tekita faili {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
+{{{
 5 */6 * * * root /etc/pki/esteid/update-crl.sh 2>&1 > /var/log/esteid-update.log
+}}}
