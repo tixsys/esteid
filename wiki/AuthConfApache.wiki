@@ -7,8 +7,7 @@
 = Eeldused =
  * Töötav Apache veebiserver koos mod_ssl-iga
  * Saidi nimega sobiv SSLi serveri seritifikaat
- * Eraldi IP-aadress või poliitiline otsus kasutada
-   [http://en.wikipedia.org/wiki/Server_Name_Indication SNI]-d
+ * Eraldi IP-aadress või poliitiline otsus kasutada [http://en.wikipedia.org/wiki/Server_Name_Indication SNI]-d
  * Poliitiline otsus, kas kasutada sertifikaatide kontrollimiseks CRL-e või OCSP-d
 
 = Konfigureerimine scriptiga =
