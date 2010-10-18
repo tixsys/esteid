@@ -29,7 +29,7 @@ Autentimine on veebiserveri ja rakenduse koostöö ja selleks, et see töötaks 
 
 = Levinumatele veebiserverite seadistamine =
 
- * [AuthConfApache Juhend apache jaoks]
+ * [AuthConfApache Juhend Apache jaoks]
     
 
 = Vigased Autentimismeetodid =
