@@ -1,14 +1,30 @@
-#summary Apache veebiserveri konfigureerimine
+﻿#summary Juhend Apache veebiserveri konfigureerimiseks
+
+= Sisukord =
+
+<wiki:toc max_depth="2" />
 
 = Eeldused =
- * Töötav veebiserver
- * Töötav mod_ssl
+ * Töötav Apache veebiserver koos mod_ssl-iga
  * Saidi nimega sobiv SSLi serveri seritifikaat
  * Eraldi IP-aadress või poliitiline otsus kasutada SNI-d
+ * Poliitiline otsus, kas kasutada sertifikaatide kontrollimiseks
+   CRL-e või OCSP-d
+
+= Konfigureerimine scriptiga =
+
+Lae alla konfigureerimisscript ja käivita see
+
+{{{
+wget https://esteid.googlecode.com/svn/misc/configure-apache.sh
+sudo sh configure-apache.sh
+}}}
+
+Muuda konfiguratsioonifaile vastavalt scripti poolt väljastatud juhistele.
 
 = Konfigureerimine käsitsi =
 
-== Apache konfigureerimine ==
+== Apache seadistamine ==
 
 Tekita ID-kaardi juursertifikaatide ja CRLide jaoks kataloogid
 {{{
@@ -33,21 +49,20 @@ echo '<pre> <?php print_r($_SERVER); ?> </pre>' > /var/www/esteid/index.php
 
 Loo ID-kaardiga autentiva saidi jaoks eraldi konfifail.
  * Debian või Ubuntu {{{/etc/sites-available/id-card}}}
- * Fedora või RedHat {{{/etc/httpd/conf.d/id-card.conf}}}
+ * Fedora või !RedHat {{{/etc/httpd/conf.d/id-card.conf}}}
 
 Lisa sinna faili järgmised read:
 {{{
-<VirtualHost MINU-IP:443>
+<VirtualHost MY-IP-ADDRESS:443>
     SSLEngine on
 
-    # Set document root and Logs
+    # Set document root and site name
     DocumentRoot "/var/www/esteid"
-    ErrorLog logs/esteid_error_log
-    TransferLog logs/esteid_access_log
+    ServerName MY-SITE-NAME
 
     # Where to find server SSL certificate and key
-    SSLCertificateFile /etc/pki/tls/certs/MINU-SAIDINIMI.crt
-    SSLCertificateKeyFile /etc/pki/tls/private/MINU-SAIDINIMI.key
+    SSLCertificateFile /etc/pki/tls/certs/MY-SITE-NAME.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/MY-SITE-NAME.key
 
     # Where to find ID-card CA certificates and CRLs
     SSLCACertificatePath /etc/pki/esteid/ca
@@ -64,42 +79,48 @@ Lisa sinna faili järgmised read:
 </VirtualHost>
 }}}
 
-Proovi kas töötab.
+== CRLide uuendamise seadistamine ==
 
-== CRLide laadimine ==
-
-Kui Sind CRL-id ei huvita, sest rakendus kasutab ise otse OCSP-d või sind lihtsalt ei koti
-kas tühistatud või peatatud ID-kaardiga saab sisse või mitte, siis võid järgneva vahele jätta.
+Kui Sind CRL-id ei huvita, sest Su rakendus kasutab ise
+OCSP-d või sind lihtsalt ei koti kas tühistatud või peatatud
+ID-kaardiga saab sisse või mitte, siis võid järgneva lõigu vahele jätta.
 
 Lisa faili {{{/etc/pki/esteid/update-crl.sh}}} järgmised read:
 {{{
-#!/bin/bash
+#!/bin/sh
 
-cd /etc/pki/esteid/crl || exit 2
+cd "/etc/pki/esteid"/crl || exit 2
 
-date
-wget -nv -O "esteid.crl" http://www.sk.ee/crls/esteid/esteid.crl
-wget -nv -O "esteid2007.crl" http://www.sk.ee/crls/esteid/esteid2007.crl   
-wget -nv -O "crl.crl" http://www.sk.ee/crls/juur/crl.crl 
+echo -n "Starting CRL download: "
+LANG=C date
+wget -nv -O "esteid.der" http://www.sk.ee/crls/esteid/esteid.crl
+wget -nv -O "esteid2007.der" http://www.sk.ee/crls/esteid/esteid2007.crl   
+wget -nv -O "crl.der" http://www.sk.ee/crls/juur/crl.crl 
 
-rm -f *.r?
-n="0"
-for f in *.crl; do
-    openssl crl -in "$f" -out "$f" -inform DER
-    ln -s "$f" `openssl crl -hash -noout -in "$f"`.r$n
-    let n=n+1
+echo "Converting CRLs to PEM format and generating hash links"
+rm -f *.r0
+for f in *.der; do
+    p=`basename "$f" .der`.crl
+    openssl crl -in "$f" -out "$p" -inform DER
+    ln -s "$p" `openssl crl -hash -noout -in "$p"`.r0
+    rm -f "$f"
 done
+
+echo "Notifying Apache about new CRL-s"
+# This MUST be a full restart, otherwise CRL-s will not be reloaded
+[ -x /etc/init.d/httpd ] && /etc/init.d/httpd restart
+[ -x /etc/init.d/apache2 ] && /etc/init.d/apache2 restart
 }}}
 
-Käivita uuendusscript prooviks käsurealt:
+Käivita script esimest korda käsurealt:
 {{{
 chmod a+x /etc/pki/esteid/update-crl.sh
 /etc/pki/esteid/update-crl.sh
 }}}
 
-Pane uuendusscript crontabist käivituma iga 6 tunni tagant.
+Pane CRLide uuendamine crontabist käivituma iga 12 tunni tagant.
 
 Tekita faili {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
 {{{
-5 */6 * * * root /etc/pki/esteid/update-crl.sh > /var/log/esteid-update.log 2>&1
+5 6,18 * * * root /etc/pki/esteid/update-crl.sh > /var/log/esteid-update.log 2>&1
 }}}
