@@ -1,4 +1,6 @@
-﻿<wiki:toc max_depth="2" />
+﻿#sidebar DeveloperTOC
+
+<wiki:toc max_depth="2" />
 
 = Isikutuvastus =
 
