@@ -1,0 +1,14 @@
+#summary Navigatsioonimenüü arendajatele
+
+* [WebDeveloper Veebirakendused]
+  * [VeebisAutentimine Veebiserverid]
+    * [AuthConfApache Apache]
+  * [WebDeveloper#Autentimine Autentimine]
+  * [WebDeveloper#Allkirjastamine Allkirjastamine]
+  * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
+* [DigiDocLibraries DigiDoc]
+  * [jDigiDoc Java]
+* [BaseDeveloper Baastarkvara]
+  * [SysteemiKirjeldus Suur pilt]
+  * [GetSource SVNi kasutamine]
+  * [ReportingIssues Vearaporti koostamine]
