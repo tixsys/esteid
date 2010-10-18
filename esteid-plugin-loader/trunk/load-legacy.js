@@ -115,7 +115,7 @@ estEidLoader.setupSKplug = function(id) {
   };
   e.getVersion = function() {
     var s = document.getElementById("sSign");
-    return s.version + " (legacy x-digidoc)";
+    return "0.0.0 " + s.version + " (legacy x-digidoc)";
   };
   estEidLoader.defineCertGetter(id, estEidLoader.getCertSKplug);
 };
@@ -245,7 +245,7 @@ estEidLoader.setupMoz = function(id) {
   };
   e.getVersion = function() {
     var s = document.getElementById("mSign");
-    return s.getVersion() + " (legacy Mozilla plugin)";
+    return "0.0.0 " + s.getVersion() + " (legacy Mozilla plugin)";
   };
   estEidLoader.defineCertGetter(id, estEidLoader.getCertMoz);
 };
