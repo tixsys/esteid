@@ -4,7 +4,7 @@
   * [VeebisAutentimine Serverite konfigureerimine]
    * [AuthConfApache Apache]
   * [WebDeveloper#Autentimine Isikutuvastus]
-  * [WebDeveloper#Allkirjastamine Allkirjastamine]
+  * [WebDeveloper#Allkirjastamine Allkirjastamine (plugin)]
   * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
  * [DigiDocLibraries Digidoc teegid]
   * [jDigiDoc Java]
