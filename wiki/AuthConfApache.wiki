@@ -8,8 +8,7 @@
  * Töötav Apache veebiserver koos mod_ssl-iga
  * Saidi nimega sobiv SSLi serveri seritifikaat
  * Eraldi IP-aadress või poliitiline otsus kasutada SNI-d
- * Poliitiline otsus, kas kasutada sertifikaatide kontrollimiseks
-   CRL-e või OCSP-d
+ * Poliitiline otsus, kas kasutada sertifikaatide kontrollimiseks CRL-e või OCSP-d
 
 = Konfigureerimine scriptiga =
 
@@ -48,8 +47,8 @@ echo '<pre> <?php print_r($_SERVER); ?> </pre>' > /var/www/esteid/index.php
 }}}
 
 Loo ID-kaardiga autentiva saidi jaoks eraldi konfifail.
- * Debian või Ubuntu {{{/etc/sites-available/id-card}}}
- * Fedora või !RedHat {{{/etc/httpd/conf.d/id-card.conf}}}
+ * Debian või Ubuntu {{{/etc/apache2/sites-available/esteid}}}
+ * Fedora või !RedHat {{{/etc/httpd/conf.d/esteid.conf}}}
 
 Lisa sinna faili järgmised read:
 {{{
@@ -120,7 +119,7 @@ chmod a+x /etc/pki/esteid/update-crl.sh
 
 Pane CRLide uuendamine crontabist käivituma iga 12 tunni tagant.
 
-Tekita faili {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
+Tekita fail {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
 {{{
 5 6,18 * * * root /etc/pki/esteid/update-crl.sh > /var/log/esteid-update.log 2>&1
 }}}
