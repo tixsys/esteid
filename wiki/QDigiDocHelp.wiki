@@ -1034,21 +1034,261 @@ Faili võid turvaümbrikust hiirega lohistada ka mõnda teise rakendusse, näite
   ==== Faili lisamine turvaümbrikku ====
 
 
+Enne turvaümbriku krüpteerimist või pärast dekrüpteerimist saad turvaümbrikusse faile lisada. Seda võib teha mitmel viisil:  
+
+ _*Koos turvaümbriku loomisega*_:  
+
+ # Lohista krüpteeritavad failid hiirega avatud Digidoc3 Krüpto aknasse.
+ # Lisatud faile näed turvaümbrikus.
+
+
+
+ _*Faililisamisdialoogis*_:  
+ * Klõpsa hiirega turvaümbrikus lingil Lisa fail (Pilt 68, 1).
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt68.png
+
+*Pilt 68*
+
+
+ * Avanevas faililisamisdialoogis vali failid, mida soovid krüpteerida.
+ * Lisatud faile näed turvaümbrikus. 
+
+
+ _*Hiirega avatud turvaümbrikusse lohistades*:  
+
+ # Lohista krüpteeritavad failid hiirega turvaümbrikusse.
+ # Lisatud faile näed turvaümbrikus. 
 
 
 
 
+  ==== Faili eemaldamine turvaümbrikust ====
+
+Enne turvaümbriku krüpteerimist või pärast dekrüpteerimist saad turvaümbrikust faile eemaldada. 
+
+ # Klõpsa turvaümbrikus faili kõrval olevale eemaldusnupule (Pilt 68, 2) või vajuta hiirega failil olles Delete klahvi.
+ # Fail eemaldatakse turvaümbrikus olevate failide nimekirjast.
+
+
+ === Turvaümbriku adressaadid ===
+
+
+  ==== Turvaümbriku adressaatide otsimine ja lisamine ====
+
+ * LDAP kataloogist leitud uute turvaümbriku adressaatide sertifikaadid salvestatakse automaatselt, et neid saaks järgmisel korral varem krüpteerimisel kasutatud isikute loetelust valida.
+ 
+ * Sama isikut ei saa mitu korda turvaümbriku adressaatide hulka lisada.
+ 
+ * Kui ID-kaardilt lisatud adressaadi isikutuvastamise sertifikaat on aegunud, kuvatakse hoiatus, et sertifikaadi uuendamisel saa turvaümbrikku dekrüpteerida.
+
+
+ * Vali avatud ümbriku adressaatide osas Lisa adressaat (Pilt 69).
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt69.png
+
+*Pilt 69*
+
+
+
+ * Avaneb kahe vahekaardiga aken (Pilt 70), milles saad turvaümbriku adressaadi sertifikaadi valida neljal erineval viisil:
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt70.png
+
+*Pilt 70*
+
+ # Sertifitseerimiskeskuse (SK) sertifikaadihoidlast ehk LDAP kataloogist isikukoodi või asutuse nime järgi (Pilt 70, 1),
+ # laadida ID-kaardilt (Pilt 70, 2),
+ # laadida failist (Pilt 70, 3),
+ # valida kasutatud sertifikaatide hulgast (Pilt 70, 4).
+
+
+*1. Sertifikaadi lisamine Sertifitseerimiskeskuse (SK) sertifikaadihoidlast ehk LDAP kataloogist isikukoodi järgi*
+
+
+ * Sisesta esimesel vahekaardil turvaümbriku adressaadi isikukood (Pilt 71) või asutuse nimi.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt71.png
+
+*Pilt 71*
+
+ * Klõpsa hiirega nupul Otsi.
+ * Kuvatakse leitud isiku sertifikaatide andmed (Pilt 72).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt72.png
+
+*Pilt 72*
+
+
+
+ * Tee väljavalitud sertifikaadi omaniku nimel hiirega klõps nii, et sertifikaadi omaniku nime taustavärv muutub ja seejärel klõpsa nuppu Lisa sertifikaat.
+
+Samuti võid teha sertifikaadi omaniku nimel hiirega topeltklõpsu.
+
+ * Valitud isik lisatakse turvaümbriku adressaatide nimekirja (Pilt 73).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt73.png
+
+*Pilt 73*
+
+
+*2. Sertifikaadi lisamine eelnevalt salvestatud adressaatide hulgast*
+
+
+ * Mine vahekaardil Kasutatud sertifikaadid hiirega selle isiku nime juurde, keda tahad adressaadiks lisada (Pilt 74).
+ 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt74.png
+
+*Pilt 74*
+
+    
+ * Tee hiirega topeltklõps isiku nimel.
+ * Avaneb esimene vahekaart.
+ * Tee väljavalitud sertifikaadi omaniku nimel hiirega klõps nii, et sertifikaadi omaniku nime taustavärv muutub ning klõpsa nuppu Lisa sertifikaat (Pilt 74).
+
+
+Samuti võid teha sertifikaadi omaniku nimel hiirega topeltklõpsu.
+ 
+ * Valitud isik lisatakse turvaümbriku adressaatide nimekirja (Pilt 73).
+
+
+
+*3. Sertifikaadi lisamine ID-kaardilt*
+
+ # Klõpsa nupule Lisa sertifikaat kaardilt.
+ # Kaardilugejas oleva ID-kaardi omanik lisatakse turvaümbriku adressaatide hulka (Pilt 73).
+
+
+ * Kui leitud isiku sertifikaat on aegunud, peatatud või tühistatud, kuvatakse sellekohane hoiatus (Pilt 75).
+
+
+*4. Sertifikaadi lisamine failist.* 
+
+
+ # Klõpsa nupule Lisa sertifikaat failist.
+ # Vali avanevas dialoogiaknas pem., cer või .crt formaadis sertifikaadifail, mida soovid lisada.
+ # Valitud sertifikaadi omanik lisatakse turvaümbriku adressaatide nimekirja (Pilt 73).
+
+
+
+  ==== Turvaümbriku adressaatide eemaldamine ====
+
+
+ * Enne turvaümbriku krüpteerimist või pärast dekrüpteerimist saad turvaümbriku adressaate eemaldada.  
+ * Vali adressaatide nimekirjast isik, keda soovid adressaatide hulgast eemaldada
+Klõpsa lingil Eemalda ( Pilt 76).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt76.png
+
+*Pilt 76*
+
+
+ * Valitud adressaat eemaldatakse turvaümbriku adressaatide nimekirjast.
 
 
 
 
+  ==== Turvaümbriku adressaatide detailandmete vaatamine ====
 
-*järgneb...*
+
+ * Vali turvaümbriku adressaat, kelle detailandmeid soovid vaadata (Pilt 77)
+ 
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt77.png
+
+*Pilt 77*
+
+ 
+
+ * Klõpsa hiirega adressaadi andmete juures Vaata üksikasju
+ * Avaneb aken adressaadi krüptovõtme üksikasjadega (Pilt 78).
 
 
-Digidoc3
-DigiDoc3
-digidoc3
-DigiDoc
-Digidoc
-digidoc
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt78.png
+
+*Pilt 78*
+
+
+Soovi korral võid vaadata saaja isikutuvastuse sertifikaadi andmeid, klõpsates nupule Näita sertifikaati. Samuti saad sertifikaadi salvestada.
+
+
+
+ === Digidoc3 Krüpto seaded ===
+
+
+Vali Digidoc3 Krüpto kasutajaliidesel seadete ja abi osas Seaded (Pilt 79). 
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt79.png
+
+*Pilt 79*
+
+
+Avaneb Digidoc3 Krüpto seadete aken (Pilt 80).  
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt80.png
+
+*Pilt 80*
+
+
+ * *Turvaümbriku loomise vaikekataloogi valik.*
+ 
+Märgistades Samasse kataloogi (Pilt 80, 1), salvestub turvaümbrik esimese ümbrikusse lisatud failiga samasse kataloogi.  
+
+Vaikimisi salvestamise kataloogi saad muuta, valides Turvaümbriku loomise vaikekataloogi uue asukoha (Pilt 80, 2).  
+
+
+
+
+ * *Salvestatava turvaümbriku nime küsimine.*
+ 
+Märgista valik Küsi turvaümbriku nime, kui soovid turvaümbriku loomisel võimalust muuta turvaümbriku nime ja salvestamise kataloogi (Pilt 80, 3). 
+
+
+
+ * *Sissejuhatuse näitamine*
+ 
+Märgistades Näita krüpteerimisel sissejuhatust, näidatakse enne krüpteerimist alati krüpteerimise ja sellega kaasnevate ohtude lühikest tutvustust (Pilt 80, 4). 
+
+
+
+ === Mitme ID-kaardi vahel valimine ===
+
+ID-kaardi valiku menüünupp ilmub menüüribale ainult siis, kui arvutiga on ühendatud mitu ID-kaardiga kaardilugejat.   
+
+ * Klõpsa hiirega menüüribal ID-kaardi valiku menüünupule (Pilt 81).
+ * Avaneb arvutisolevate ID-kaartide numbrite rippmenüü.
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt81.png
+
+*Pilt 81*
+
+
+ * Klõpsa hiirega enda ID-kaardi numbrile.
+ * Rakenduse paneelile ilmuvad valitud ID-kaardi- ja isikuandmed
+
+
+ === Digidoc3 Krüpto kasutuskeele valik ===
+
+Kasutuskeele muutmiseks: 
+
+ * Mine hiirega keelevaliku menüüsse (Pilt 82).
+
+
+http://esteid.googlecode.com/svn/wiki/img/juhend/digidoc_pilt82.png
+
+*Pilt 82*
+
+
+ * Klõpsa avanevas rippmenüüs hiirega endale sobiva keele nimele.
+ * Valitud keel ilmub keelevaliku aknasse ja rakenduse kasutajaliidese keel muutub.
