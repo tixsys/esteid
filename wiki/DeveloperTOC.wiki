@@ -3,7 +3,7 @@
  * [WebDeveloper Veebirakendused]
   * [VeebisAutentimine Serverite konfigureerimine]
    * [AuthConfApache Apache]
-  * [WebDeveloper#Autentimine Autentimine]
+  * [WebDeveloper#Autentimine Isikutuvastus]
   * [WebDeveloper#Allkirjastamine Allkirjastamine]
   * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
  * [DigiDocLibraries Digidoc teegid]
