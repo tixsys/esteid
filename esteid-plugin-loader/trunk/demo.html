@@ -10,23 +10,30 @@
 <div style="margin-top: 2em;">
 <script type="text/javascript">
 
+function showOutput(data) {
+    var o = document.getElementById("output");
+    o.innerHTML = data;
+}
+
 function loadPlugin() {
     var b = document.getElementById("lb");
     b.disabled = true;
 
     estEidLoader.loadPlugin('esteid', {
-        pluginReady: function() { 
+        pluginReady: function() {
+            var e = document.getElementById("esteid");
+            if(e.isLegacy) {
+                showOutput("One of the legacy plugins loaded successfully");
+            } else {
+                showOutput("Plugin loaded successfully");
+            }
             document.getElementById("b1").disabled = false;
         },
         pluginFail: function() {
           b.disabled = false;
+          showOutput("Failed load any plugin");
         }
     });
-}
-
-function showOutput(data) {
-    var o = document.getElementById("output");
-    o.innerHTML = data;
 }
 
 function showCert() {
