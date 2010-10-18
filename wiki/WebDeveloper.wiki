@@ -1,6 +1,6 @@
 ﻿<wiki:toc max_depth="2" />
 
-= Isikutuvatus =
+= Isikutuvastus =
 
  * Konfigureeri oma veebiserver nõudma kliendipoolset sertifikaati: VeebisAutentimine
  * Kasuta rakenduses vastavaid CGI standardi keskkonnamuutujaid.<br>
