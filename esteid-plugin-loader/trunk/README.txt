@@ -8,7 +8,7 @@ signer methods. A transparent API converter will make those old
 technologies behave the same as the new plugin. All known signers
 will be automatically probed for and the best one will be enabled.
 No user input or "signing preference" is required. Legacy support is
-encapsulated into a separate JS file and desined in a way that it's
+encapsulated into a separate JS file and designed in a way that it's
 easy to remove when old plugins finally fade out of existence.
 
 
