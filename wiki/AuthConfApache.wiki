@@ -1,0 +1,95 @@
+#summary Apache veebiserveri konfigureerimine
+
+= Eeldused =
+ * Töötav veebiserver
+ * Töötav mod_ssl
+ * Saidi nimega sobiv SSLi serveri seritifikaat
+ * Eraldi IP-aadress või poliitiline otsus kasutada SNI-d
+
+= Pikem protseduur =
+
+Tekita ID-kaardi juursertifikaatide ja CRLide jaoks kataloogid
+{{{
+mkdir -p /etc/pki/esteid/{ca,crl}
+}}}
+
+Lae sinna SK juursertifikaadid ja loo räsilingid
+{{{
+cd /etc/pki/esteid/ca
+wget -O "JUUR-SK.crt" http://www.sk.ee/files/JUUR-SK.PEM.cer
+wget -O "ESTEID-SK.crt" http://www.sk.ee/files/ESTEID-SK.PEM.cer
+wget -O "ESTEID-SK 2007.crt" http://www.sk.ee/files/ESTEID-SK%202007.PEM.cer
+
+for f in *.crt;do ln -sf "$f" `openssl x509 -hash -noout -in "$f"`.0; done
+}}}
+
+Tekita ID-kaardiga saidi kataloog ja test lehekülg
+{{{
+mkdir -p /var/www/esteid
+echo '<pre> <?php print_r($_SERVER); ?> </pre>' > /var/www/esteid/index.php
+}}}
+
+Loo ID-kaardiga autentiva saidi jaoks eraldi konfifail.
+ * Debian või Ubuntu {{{/etc/sites-available/id-card}}}
+ * Fedora või RedHat {{{/etc/httpd/conf.d/id-card.conf}}}
+
+Lisa sinna faili järgmised read:
+{{{
+<VirtualHost MINU-IP:443>
+    SSLEngine on
+
+    # Set document root and Logs
+    DocumentRoot "/var/www/esteid"
+    ErrorLog logs/esteid_error_log
+    TransferLog logs/esteid_access_log
+
+    # Where to find server SSL certificate and key
+    SSLCertificateFile /etc/pki/tls/certs/MINU-SAIDINIMI.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/MINU-SAIDINIMI.key
+
+    # Where to find ID-card CA certificates and CRLs
+    SSLCACertificatePath /etc/pki/esteid/ca
+    SSLCARevocationPath /etc/pki/esteid/crl
+
+    # Require Authentication with ID-card
+    SSLVerifyClient require
+    SSLVerifyDepth  2
+
+    # Make SSL session data available to scripts
+    <Files ~ "\.(cgi|shtml|php)$">
+        SSLOptions +StdEnvVars +ExportCertData
+    </Files>
+</VirtualHost>
+}}}
+
+Proovi kas töötab.
+
+Lisa faili {{{/etc/pki/esteid/update-crl.sh}}} järgmised read:
+{{{
+#!/bin/bash
+
+cd /etc/pki/esteid/crl || exit 2
+
+date
+wget -nv -O "esteid.crl" http://www.sk.ee/crls/esteid/esteid.crl
+wget -nv -O "esteid2007.crl" http://www.sk.ee/crls/esteid/esteid2007.crl   
+wget -nv -O "crl.crl" http://www.sk.ee/crls/juur/crl.crl 
+
+rm -f *.r?
+n="0"
+for f in *.crl; do
+    openssl crl -in "$f" -out "$f" -inform DER
+    ln -s "$f" `openssl crl -hash -noout -in "$f"`.r$n
+    let n=n+1
+done
+}}}
+
+Käivita uuendusscript prooviks käsurealt:
+{{{
+chmod a+x /etc/pki/esteid/update-crl.sh
+/etc/pki/esteid/update-crl.sh
+}}}
+
+Pane uuendusscript crontabist käivituma iga 6 tunni tagant.
+Tekita faili {{{/etc/cron.d/esteid}}} ja lisa sinna järgmine rida:
+5 */6 * * * root /etc/pki/esteid/update-crl.sh 2>&1 > /var/log/esteid-update.log
