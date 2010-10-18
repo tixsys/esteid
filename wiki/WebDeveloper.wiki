@@ -45,10 +45,8 @@ PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [Install
 
 Kõigil kasutajatel ei ole veel paigaldatud uued pluginad.
 Allkirjatehnoloogiat ei ole mõistlik küsida kasutaja käest, kuna ta ei saa
-niikuinii päris täpselt aru, mida temalt tahetakse.
-
-Tegelikult on võimalik tuvastada sobiv tehnoloogia automaatselt
-Javascripti abil.
+niikuinii päris täpselt aru, mida temalt tahetakse. Tegelikult on võimalik
+tuvastada sobiv tehnoloogia automaatselt Javascripti abil.
 
 
 [https://id.smartlink.ee/plugin-loader/demo.html Vaata DEMO]
@@ -58,10 +56,9 @@ Sarnase metoodika realiseeris meile teadaolevatel andmetel esimesena Swedbank.
 
 Vanu pluginaid on nagu kirjuid koeri (kokku rohkem kui neli erinevat)
 ja nende kõigi üksipulgi tundmine on väga vaevarikas tegevus. Vanade
-tehnoloogiate kergemaks kasutamiseks on loodud teegikomplekt
-esteid-plugin-loader, mille abil on võimalik laadida uus brauseri plugin
-ja kui seda ei ole olemas, siis valida vanadest tehnoloogiatest automaatselt
-mõni, mis tundub töötavat.
+tehnoloogiate kergemaks kasutamiseks on loodud teegikomplekt, mille abil
+on võimalik laadida uus brauseri plugin ja kui seda ei ole olemas, siis
+valida vanadest tehnoloogiatest automaatselt mõni, mis tundub töötavat.
 
 EstEID Plugin Loader on ehitatud nii, et see muudab kõigi vanade pluginate API
 identseks uuega, seega ei lisandu veebirakendusse üleliigset "ühilduvuskoodi".
@@ -75,13 +72,13 @@ Lae endale plugina laadija komponendid
 svn checkout http://esteid.googlecode.com/svn/esteid-plugin-loader/trunk esteid-plugin-loader
 }}}
 
-Lisa Javascripti failid veebilehele
+Lisa laadija komponendid veebilehele
 {{{
   <script type="text/javascript" src="esteid.js"></script>
   <script type="text/javascript" src="load-legacy.js"></script>
 }}}
 
-Edasi tuleb plugina laadimiseks kasutada järgmist JavaScripti koodi
+Edasi tuleb plugina laadimiseks kasutada järgmist Javascripti koodi
 {{{
   estEidLoader.loadPlugin('esteid', {
     pluginReady: function() { /* Enable Signing controls */ },
@@ -89,8 +86,8 @@ Edasi tuleb plugina laadimiseks kasutada järgmist JavaScripti koodi
   });
 }}}
 
-Nüüd saad kasutada tekkinud objekti täpselt sama moodi nagu "päris"
-pluginat.
+Nüüd saad tekkinud objekti poole pöörduda täpselt sama moodi nagu "päris"
+plugina poole.
 
 {{{
 var esteid = document.getElementById('esteid');
@@ -98,14 +95,15 @@ var cert_pem = esteid.signCert.cert;
 }}}
 
 Vaata ka plugina laadija komplektis leiduvat
-[https://id.smartlink.ee/plugin-loader/demo.html demo.html] faili.
+[http://code.google.com/p/esteid/source/browse/esteid-plugin-loader/trunk/demo.html demo.html]
+faili.
 
 === Vähim võimalik ühisosa ===
 
 Vanad tehnoloogiad ei oska pooltki neid funktsioone, mida toetab uus plugin.
 Ühilduvusrežiimilt saab eeldada ainult kõige elementaarsemat allkirjastamise
-funktsionaalsust. Ühilduvusrežiim toetab vähemalt versiooni küsimist,
-sertifikaadi lugemist ja allkirjastamist:
+funktsionaalsust. API translaator toetab vähemalt versiooni küsimist, sertifikaadi
+lugemist ja allkirjastamist:
 
  * esteid.getVersion
  * esteid.signCert.cert
