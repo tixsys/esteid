@@ -22,13 +22,13 @@ su -c "wget http://id.smartlink.ee/repo/apt-esteid-test.gpg.asc -O - | apt-key a
 
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
-sudo aptitude update
-sudo aptitude dist-upgrade
-sudo aptitude install qdigidoc qesteidutil mozilla-esteid icedove-esteid
+su -c "apt-get update"
+su -c "apt-get dist-upgrade"
+su -c "apt-get install qdigidoc qesteidutil mozilla-esteid icedove-esteid"
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
-sudo aptitude update
-sudo aptitude dist-upgrade
+su -c "apt-get update"
+su -c "apt-get dist-upgrade"
 }}}
