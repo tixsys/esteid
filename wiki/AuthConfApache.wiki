@@ -1,4 +1,5 @@
 ﻿#summary Juhend Apache veebiserveri konfigureerimiseks
+#sidebar DeveloperTOC
 
 = Sisukord =
 
