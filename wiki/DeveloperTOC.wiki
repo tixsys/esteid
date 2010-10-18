@@ -1,10 +1,11 @@
 #summary Navigatsioonimenüü arendajatele
 
- * [VeebisAutentimine Veebiserverite konfigureerimine]
-  * [AuthConfApache Apache]
- * [WebDeveloper#Autentimine Autentimine veebis]
- * [WebDeveloper#Allkirjastamine Allkirjastamine veebis]
- * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
+ * [WebDeveloper Veebirakendused]
+  * [VeebisAutentimine serverite konfigureerimine]
+   * [AuthConfApache Apache]
+  * [WebDeveloper#Autentimine Autentimine veebis]
+  * [WebDeveloper#Allkirjastamine Allkirjastamine veebis]
+  * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
  * [DigiDocLibraries Digidoc teegid]
   * [jDigiDoc Java]
  * [BaseDeveloper Baastarkvara]
