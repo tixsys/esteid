@@ -47,3 +47,4 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://msdn.microsoft.com/en-us/library/bb250462%28VS.85%29.aspx
  * http://uninformed.org/index.cgi?v=1&a=3&p=5
  * http://wiki.itcollege.ee/index.php/ID_kaardiga_autentimine_Apache2_veebiserveriga
+ * http://www.pctools.com/guides/registry/detail/1188
