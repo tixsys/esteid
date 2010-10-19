@@ -1,4 +1,6 @@
-﻿Vali oma rakenduse tüüp:
+﻿#sidebar DeveloperTOC
+
+Vali oma rakenduse tüüp:
 
  * [WebDeveloper Kaarti kasutav veebirakendus (isikutuvastus, allkirjastamine)]
  * [DigiDocLibraries Digiallkirjastatud dokumente töötlev rakendus]
