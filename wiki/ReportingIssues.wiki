@@ -18,9 +18,9 @@ Kõige raskem töö ongi vea lokaliseerimine, õige komponendi leidmine ja piisa
 <tr><td>csp</td><td>Vastutab veebilehtedel autentimise eest Windows Vistas ja vanemates kõigi brauseritega välja arvatud Firefox</td></tr>
 <tr><td>tokend</td><td>Vastutab veebilehtedel autentimise eest MacOS X-is kõigi brauseritega välja arvatud Firefox</td></tr>
 <tr><td>opensc</td><td>Vastutab autentimise eest Firefox-is kõigil platvormidel, samuti kaardiga suhtlemise eest DigiDoc tööriistades</td></tr>
-<tr><td>[QEstEidUtil qesteidutil]</td><td>Graafiline ID-kaardi halduvahend</td></tr>
-<tr><td>[QDigiDocClient qdigidocclient]</td><td>Graafiline allkirjastamise tööriist aka DigiDoc3</td></tr>
-<tr><td>qdigidoccrypto</td><td>Graafiline krüpteerimise tööriist aka DigiDoc3 Crypto</td></tr>
+<tr><td>[QEsteidUtil  qesteidutil]</td><td>Graafiline ID-kaardi halduvahend</td></tr>
+<tr><td>[QDigiDocClient qdigidocclient]</td><td>Graafiline allkirjastamise tööriist aka !DigiDoc3</td></tr>
+<tr><td>qdigidoccrypto</td><td>Graafiline krüpteerimise tööriist aka !DigiDoc3 Crypto</td></tr>
 <tr><td>windows updater</td><td>Tarkvara uuendaja Windowsile</td></tr>
 <tr><td>macosx updater</td><td>Tarkvara uuendaja Macile</td></tr>
 <tr><td>windows packages</td><td>MSI paigalduspaketid Windowsile.<br />*NB!* selle komponendi vearaport ilma installeri logita on 100% kasutu. Logi tegemise õpetust [WindowsInstallerIssues loe siit]</td></tr>
