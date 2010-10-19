@@ -29,7 +29,7 @@ Kõige raskem töö ongi vea lokaliseerimine, õige komponendi leidmine ja piisa
 <tr><td>jne</td><td></td></tr>
 </table>
 
-Kui Sa ei suuda õiget komponenti tuvastada, kasuta komponendi nimena sõna "unknown".
+Pole ka midagi hullu, kui Sa ei suuda õiget komponenti tuvastada; sel juhul jäta komponendi lahter tühjaks ja keegi täidab selle hiljem ära.
 
 == 2. kirjuta vearaportile korrektne pealkiri ==
 Arvatava komponendi nimi käib pealkirja algusesse nurksulgudesse, lisaks lühike probleemikirjeldus ning lõppu ümarsulgudesse operatsioonisüsteemi nimi ja versioon. Näiteks:
