@@ -13,3 +13,5 @@ Vajalikud failid:
  * openssl-1.0.0a.tar.gz
  * boost_1_44_0.tar.bz2
  * xsd-3.3.0-i686-macosx.tar.bz2
+
+TODO: Keegi hea inimene võiks selle porno tegelikult [http://library.gnome.org/devel/jhbuild/stable/introduction.html.en JHBuildi] peale kolida
