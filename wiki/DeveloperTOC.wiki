@@ -5,7 +5,7 @@
    * [AuthConfApache Apache]
   * [WebDeveloper#Autentimine Isikutuvastus]
   * [WebDeveloper#Allkirjastamine Allkirjastamine (plugin)]
-  * [WebDeveloper#Vanade_tehnoloogiate_toetamine Vanad pluginad]
+  * [EstEIDPluginLoader Vanad pluginad]
  * [DigiDocLibraries Digidoc teegid]
   * [jDigiDoc Java]
  * [BaseDeveloper Baastarkvara]
