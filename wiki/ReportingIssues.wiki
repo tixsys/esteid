@@ -48,7 +48,7 @@ Kirjuta Description väljale pikem probleemikirjeldus. Märgi hoolikalt üles ve
 
 Kirjelduse lõppu lisa kindlasti täpne tarkvara versioon. Tarkvara täpse versiooni tuvastamine võib olla tükk tegemist, selleks on allpool [ReportingIssues#Tarkvara_versiooni_tuvastamine mõned vihjed].
 
-Maini ära ka kasutusel olev opsüsteem ja selle versioon (nt. Windows 7, 64 bit). Tihtipeale on vead sellised, mis esinevad ainult ühel konkreetsel platvormil ja arendaja arvutid ei tule välja; selle tõttu on ka tähtis ära mainida kasutatav opsüsteem, et arendaja saaks viga oma näpuga järgi katsetada.
+Maini ära ka kasutusel olev opsüsteem ja selle versioon (nt. Windows 7, 64 bit). Tihtipeale on vead sellised, mis esinevad ainult ühel konkreetsel platvormil ja arendaja arvutis ei tule välja.
 
 Kui on olemas ka screenshot situatsioonist, siis oleks hea kui saaks selle ticketile kaasa panna. Edasi nupule "submit issue" ja ongi olemas.
 
