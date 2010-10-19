@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-mv "$3$2/EstEIDSU.app" ~/.Trash
+rm -rf /Applications/Utilities/EstEIDSU.app
 
 exit 0

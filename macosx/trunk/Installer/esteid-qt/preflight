@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+rm -rf /Library/Frameworks/QtCore.framework
+rm -rf /Library/Frameworks/QtDBus.framework
+rm -rf /Library/Frameworks/QtGui.framework
+rm -rf /Library/Frameworks/QtNetwork.framework
+rm -rf /Library/Frameworks/QtWebKit.framework
+rm -rf /Library/Frameworks/QtXml.framework
+rm -rf /Library/Frameworks/QtXmlPatterns.framework
+rm -rf /Library/Frameworks/phonon.framework
+
+exit 0

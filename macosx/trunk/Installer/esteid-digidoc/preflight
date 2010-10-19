@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+rm -f /usr/local/etc/digidoc.conf
+rm -rf /usr/local/etc/digidocpp
+rm -rf /usr/local/share/libdigidoc
+rm -f /usr/local/lib/libdigidoc.dylib
+rm -f /usr/local/lib/libdigidoc.2.dylib 
+rm -f /usr/local/lib/libdigidocpp.dylib 
+rm -f /usr/local/lib/libdigidocpp.0.dylib 
+rm -f /usr/local/lib/libp11.dylib 
+rm -f /usr/local/lib/libp11.1.dylib 
+
+exit 0

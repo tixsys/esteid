@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rm -rf /usr/libexec/SmartCardServices/drivers/ifd-ccid.bundle
+
+exit 0

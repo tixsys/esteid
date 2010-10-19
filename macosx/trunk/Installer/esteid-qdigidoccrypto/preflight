@@ -9,4 +9,6 @@ if [ $RESULT -gt 0 ]; then
 	RESULT=`"$PKMKSENDAE" $RESULT 'quit'`
 fi
 
+rm -rf /Applications/Utilities/qdigidoccrypto.app
+
 exit 0

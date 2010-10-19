@@ -9,4 +9,6 @@ if [ $RESULT -gt 0 ]; then
 	RESULT=`"$PKMKSENDAE" $RESULT 'quit'`
 fi
 
+rm -rf /Library/Application\ Support/Mozilla/Extensions/*/\{aa84ce40-4253-11da-8cd6-0800200c9a66\}
+
 exit 0

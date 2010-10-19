@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+rm -rf /Library/OpenSC
+rm -f /usr/lib/opensc-pkcs11.so
+
+exit 0
