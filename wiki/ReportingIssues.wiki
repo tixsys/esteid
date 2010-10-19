@@ -32,12 +32,13 @@ Kõige raskem töö ongi vea lokaliseerimine, õige komponendi leidmine ja piisa
 Pole ka midagi hullu, kui Sa ei suuda õiget komponenti tuvastada; sel juhul jäta komponendi lahter tühjaks ja keegi täidab selle hiljem ära.
 
 == 2. kirjuta vearaportile korrektne pealkiri ==
-Arvatava komponendi nimi käib pealkirja algusesse nurksulgudesse, lisaks lühike probleemikirjeldus ning lõppu ümarsulgudesse operatsioonisüsteemi nimi ja versioon. Näiteks:
+Arvatava komponendi nimi käib pealkirja algusesse nurksulgudesse, lisaks lühike probleemikirjeldus.
+Näiteks:
 
- * {{{[qdigidoccrypto] Unable to send container to e-mail recipient (MacOSX 10.5.7)}}}
- * {{{[browserplugin] Unable to sign on test page with Internet Explorer (Win7 64bit)}}}
- * {{{[windows packages] Installer fails with "Error 13" (WinXP SP3 32bit)}}}
- * {{{[opensc] Unable to read certificate data from card (SuSe 11.1 64bit)}}}
+ * {{{[qdigidoccrypto] Unable to send container to e-mail recipient}}}
+ * {{{[browserplugin] Unable to sign on test page with Internet Explorer}}}
+ * {{{[windows packages] Installer fails with "Error 13"}}}
+ * {{{[opensc] Unable to read certificate data from card}}}
 
 == 3. pane külge õiged "lipikud" ==
 All servas on labels rida, vali sealt opsüsteem ning komponent. See dubleeriv informatsioon on vajalik vearaportite automaatseks sorteerimiseks kuna masinad üldjuhul ei oska inimloetavaid pealkirju lugeda.
@@ -46,6 +47,8 @@ All servas on labels rida, vali sealt opsüsteem ning komponent. See dubleeriv i
 Kirjuta Description väljale pikem probleemikirjeldus. Märgi hoolikalt üles vea reprodutseerimise võimalikkus ning täpse seletus, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist veendu, et viga on Sinu arvutis reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
 
 Kirjelduse lõppu lisa kindlasti täpne tarkvara versioon. Tarkvara täpse versiooni tuvastamine võib olla tükk tegemist, selleks on allpool [ReportingIssues#Tarkvara_versiooni_tuvastamine mõned vihjed].
+
+Maini ära ka kasutusel olev opsüsteem ja selle versioon (nt. Windows 7, 64 bit). Tihtipeale on vead sellised, mis esinevad ainult ühel konkreetsel platvormil ja arendaja arvutid ei tule välja; selle tõttu on ka tähtis ära mainida kasutatav opsüsteem, et arendaja saaks viga oma näpuga järgi katsetada.
 
 Kui on olemas ka screenshot situatsioonist, siis oleks hea kui saaks selle ticketile kaasa panna. Edasi nupule "submit issue" ja ongi olemas.
 
