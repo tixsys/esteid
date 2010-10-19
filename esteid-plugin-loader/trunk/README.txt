@@ -54,4 +54,4 @@ DEVELOPER DOCUMENTATION
 =======================
 
 The usage of this library is detailed on Open EstEID web developer pages.
-Please navigate to http://code.google.com/p/esteid/wiki/WebDeveloper
+Please navigate to http://code.google.com/p/esteid/wiki/EstEIDPluginLoader
