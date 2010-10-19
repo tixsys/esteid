@@ -1,4 +1,5 @@
 ﻿#summary kuidas baastarkvara arendamisega kätt proovida
+#sidebar DeveloperTOC
 
 == Sisukord ==
 
