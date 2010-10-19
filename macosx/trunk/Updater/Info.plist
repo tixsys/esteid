@@ -26,7 +26,7 @@
 	<string></string>
 	<key>EstEIDWebService</key>
 	<array>
-		<string>http://id.smartlink.ee/repo/nightly/macosx/Repository/Manifest.xml</string>
+		<string>http://esteid.estobuntu.org/repo/release/macosx/Repository/Manifest.xml</string>
 	</array>
 	<key>LSBackgroundOnly</key>
 	<false/>

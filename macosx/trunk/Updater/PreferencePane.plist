@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>$REVISION</string>
 	<key>EstEIDHelpWebsite</key>
-	<string>http://www.id.ee/</string>
+	<string>http://esteid.googlecode.com/</string>
 	<key>NSMainNibFile</key>
 	<string>PreferencePane</string>
 	<key>NSPrefPaneIconFile</key>
