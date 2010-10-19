@@ -44,7 +44,7 @@ Näiteks:
 All servas on labels rida, vali sealt opsüsteem ning komponent. See dubleeriv informatsioon on vajalik vearaportite automaatseks sorteerimiseks kuna masinad üldjuhul ei oska inimloetavaid pealkirju lugeda.
 
 == 4. kirjelda põhjalikult probleemi olemust ==
-Kirjuta Description väljale pikem probleemikirjeldus. Märgi hoolikalt üles vea reprodutseerimise võimalikkus ning täpse seletus, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist veendu, et viga on Sinu arvutis reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
+Kirjuta Description väljale pikem probleemikirjeldus. Märgi hoolikalt üles vea reprodutseerimise võimalikkus ning täpne seletus, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist veendu, et viga on Sinu arvutis reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
 
 Kirjelduse lõppu lisa kindlasti täpne tarkvara versioon. Tarkvara täpse versiooni tuvastamine võib olla tükk tegemist, selleks on allpool [ReportingIssues#Tarkvara_versiooni_tuvastamine mõned vihjed].
 
@@ -78,7 +78,7 @@ Tarkvara levitatakse MSI paketina, mille versiooni saab teada Control Panel -> A
 
 === Ubuntu / Debian ===
 Käsurealt saab järgi pärida erinevate pakettide (nt. qdigidoc, qesteidutil, mozilla-esteid) versioone.
-{{
+{{{
 dpkg-query -l qdigidoc
 dpkg-query -l libdigidoc2
 dpkg-query -l libdigidocpp0
