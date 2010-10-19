@@ -43,7 +43,7 @@ NB! Igasugune kaastöö on teretulnud ;)
 
 PS! Brauserite pluginad ei ole eraldi komponendid vaid neid levitatakse [InstallStart paigaldatava baastarkvara] koosseisus
 
-== Vanade tehnoloogiate toetamine ==
+= Vanade tehnoloogiate toetamine =
 
 Kõigil kasutajatel ei ole veel paigaldatud uued pluginad.
 Allkirjatehnoloogiat ei ole mõistlik küsida kasutaja käest, kuna ta ei saa
