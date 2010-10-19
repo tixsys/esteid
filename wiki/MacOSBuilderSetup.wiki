@@ -2,10 +2,10 @@
 
 Võrreldes Linuxiga on Maci arendaja elu koeraelu!
 
-* XCode
-* MacPorts
-* Hulk sodi macportsist {{{/opt/local/bin/port install mercurial git-core cmake pkgconfig wget}}}
-* XSD Binary xsd-3.3.0-i686-macosx.tar.bz2
+ * XCode
+ * MacPorts
+ * Hulk sodi macportsist {{{/opt/local/bin/port install mercurial git-core cmake pkgconfig wget}}}
+ * XSD Binary xsd-3.3.0-i686-macosx.tar.bz2
 
 Lähtekoodist tuleb kompileerida:
  * xml-security-c-1.5.1.tar.gz
