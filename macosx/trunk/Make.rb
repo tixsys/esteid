@@ -289,18 +289,6 @@ class Application
 			FileUtils.cp_r("build/crypto/qdigidoccrypto.app", binaries)
 		end
 		
-		puts "Creating Open Office extension..." if @options.verbose
-		FileUtils.cd(Pathname.new(@path).join('../../ooo-digidoc/trunk').to_s) do
-			FileUtils.rm_rf('build') if File.exists? 'build'
-			FileUtils.mkdir_p('build')
-			FileUtils.cd('build') do
-				run_command ". " + @options.setsdkenv + "; cmake -DCMAKE_OSX_ARCHITECTURES='i386' -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.5.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.5 -DCMAKE-BUILD-TYPE=#{@options.target} .. ; make VERBOSE=1"
-
-				puts "Copying Open Office extension..." if @options.verbose
-				run_command "cp ooo-digidoc*.oxt #{binaries}/ooo-digidoc.oxt"
-			end
-		end
-
 		project_build = Pathname.new(@path).join(@options.build, 'Project.build').to_s
 		FileUtils.rm_rf(project_build) if File.exists? project_build
 		
@@ -793,7 +781,6 @@ class Application
 							   'org.esteid.installer.qt',
 							   'org.esteid.installer.su',
 							   'org.esteid.installer.pp',
-							   #'org.esteid.installer.openoffice',
 							   'org.esteid.installer.tokend.10.6',
 							   'org.esteid.installer.tokend.10.5',
 							   'org.esteid.installer.drivers.10.5' ]
@@ -868,14 +855,6 @@ class Application
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
 				:version => '4.6.3'
-			}, {
-				:name => 'esteid-openoffice',
-				:files => File.join(@options.binaries, 'ooo-digidoc.oxt'),
-				:froot => @options.binaries,
-				:location => '/usr/local/share',
-				:identifier => 'org.esteid.installer.openoffice',
-				:version => '0.0.$',
-				:svnroot => '/ooo-digidoc/trunk'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),

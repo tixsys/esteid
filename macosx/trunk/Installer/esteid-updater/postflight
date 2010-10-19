@@ -24,4 +24,15 @@ if test "$v" = "10.5"; then
 	/usr/bin/open -a "/Applications/Utilities/EstEIDSU.app/Contents/Resources/Keychain Tool.app"
 fi
 
+# Remove obsolete openoffice extension
+if [ -f /usr/local/share/ooo-digidoc.oxt ]; then
+   unopkg=/Applications/OpenOffice.org.app/Contents/program/unopkg
+   if $unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null 2>&1; then
+       $unopkg remove --shared ee.smartlink.ooo.digidoc >/dev/null 2>&1
+       $unopkg list --shared >/dev/null 2>&1
+   fi
+   rm -rf /Library/Receipts/org.esteid.installer.openoffice*
+   rm -f /usr/local/share/ooo-digidoc.oxt
+fi
+
 exit 0
