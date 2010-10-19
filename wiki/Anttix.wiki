@@ -23,6 +23,8 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * #911
  * #918
 
+ * issue 116 - signAsync in IE
+
  * r2078
  
  * http://www.opensc-project.org/opensc/ticket/137
@@ -48,8 +50,6 @@ Minu (Antti Andreimann) isiklik wikileht, kus ma hoian nimekirja ticketitest ja 
  * http://uninformed.org/index.cgi?v=1&a=3&p=5
  * http://wiki.itcollege.ee/index.php/ID_kaardiga_autentimine_Apache2_veebiserveriga
  * http://www.pctools.com/guides/registry/detail/1188
- * http://www.codeproject.com/kb/vista-security/PMSurvivalGuide.aspx
- * http://www.microsoft.com/downloads/en/details.aspx?FamilyId=24DA89E9-B581-47B0-B45E-492DD6DA2971&displaylang=en
  * http://id.ee/?id=10821
  * http://www.id.ee/10736
  * http://www.sk.ee/pages.php/0202040202,36
