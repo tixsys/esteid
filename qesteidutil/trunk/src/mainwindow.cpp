@@ -32,7 +32,7 @@
 MainWindow::MainWindow( QWidget *parent )
 :	QWebView( parent )
 {
-	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint );
+	setWindowFlags( Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint | Qt::WindowTitleHint );
 #if QT_VERSION >= 0x040500
 	setWindowFlags( windowFlags() | Qt::WindowCloseButtonHint );
 #else
