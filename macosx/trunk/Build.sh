@@ -2,6 +2,8 @@
 
 export PATH=/usr/local/bin:$PATH
 
+set -e
+
 svn update ../..
 
 ARCH=universal
@@ -28,7 +30,7 @@ NAME=`date "+ID-card_software_installer_%Y%m%d_r${REVISION}.dmg"`
 FILE=build/Packages/${NAME}
 
 env
-./make.rb -V -f --sign build/Manifest.key --arch ${ARCH} installer
+./Make.rb -V --sign build/Manifest.key --arch ${ARCH} installer
 cp build/Packages/ID-Installer.dmg ${FILE}
 
 if test -n "$2"; then

@@ -27,8 +27,7 @@ class Application
 		
 		@options = OpenStruct.new
 		@options.arch = 'universal'
-		@options.force = false
-		@options.verbose = false
+		@options.verbose = true
 		@options.quiet = false
 		@options.name = 'ID-Installer'
 		@options.volname = nil
@@ -44,7 +43,7 @@ class Application
 		@options.packages = 'build/Packages'
 		@options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
 		@options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
-		@options.setsdkenv = '~/OpenOffice.org3.1_SDK/' + `hostname`.strip + '/setsdkenv_unix.sh'
+		@options.setsdkenv = '~/OpenOffice.org3.2_SDK/' + `hostname`.strip + '/setsdkenv_unix.sh'
 		@options.sign = nil
 	end
 	
@@ -53,6 +52,8 @@ class Application
 			begin
 				if @arguments.last == 'digidoc'
 					run_digidoc
+				elsif @arguments.last == 'opensc'
+					run_opensc
 				elsif @arguments.last == 'binaries'
 					run_binaries
 				elsif @arguments.last == 'clean'
@@ -64,6 +65,7 @@ class Application
 				elsif @arguments.last == 'installer'
 					run_clean
 					run_digidoc
+					run_opensc
 					run_binaries
 					run_packages
 					run_repository
@@ -85,99 +87,142 @@ class Application
 	
 	protected
 	
+	def run_cmake_build(source_dir, cmake_extra_args = '', skip_install = false)
+		puts "run_cmake_build: #{source_dir}, #{cmake_extra_args}"
+		
+		FileUtils.cd(Pathname.new(@path).join("#{source_dir}").to_s) do
+			FileUtils.rm_rf('build') if File.exists? 'build'
+			FileUtils.mkdir_p('build')
+			FileUtils.cd('build') do
+				run_command "cmake -DCMAKE_OSX_ARCHITECTURES='i386;x86_64' -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.5.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.5 -DCMAKE-BUILD-TYPE=#{@options.target} -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.dylib -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.dylib -DOPENSSL_INCLUDE_DIR=/usr/local/include/ #{cmake_extra_args} .."
+				run_command "make -j2 VERBOSE=1"
+				unless skip_install
+					run_command "sudo make install"
+				end
+			end
+		end
+	end
+
+	def run_opensc
+		FileUtils.cd(Pathname.new(@path).join(@options.build).to_s) do
+			_run_opensc "10.5"
+			_run_opensc "10.6"
+		end
+	end
+
+	def _run_opensc(osx_target)
+		puts "Creating opensc..." if @options.verbose
+
+		stagedir = Pathname.new(@path).join(@options.opensc + "." + osx_target).to_s
+		builddir = 'opensc-build-' + osx_target
+		prefix = '/Library/OpenSC'
+
+		# Get latest tarball
+		latest_tarball = `ssh idkopeerija@pontu.smartlink ls -1 "/home/ftp/pub/id/nightly/snapshots/opensc-0.12.0-svn-r*.tar.gz" | tail -n 1 | xargs basename`.strip
+		run_command "scp \"idkopeerija@pontu.smartlink:/home/ftp/pub/id/nightly/snapshots/#{latest_tarball}\" ." unless File.exists? latest_tarball
+		opensc_rev = `echo "#{latest_tarball}" | sed "s/.*opensc-0\.12\.0-svn-r\(.*\)\.tar\.gz/\1/"`.strip
+
+		run_command 'rm -rf ' + stagedir
+		run_command 'sudo rm -rf ' + builddir
+		run_command 'rm -rf opensc-0.12.0'
+
+		run_command "tar -xzf " + latest_tarball
+		run_command "mv opensc-0.12.0 " + builddir
+
+		FileUtils.cd(builddir) do
+			if osx_target == "10.5"
+				cflags = "-isysroot /Developer/SDKs/MacOSX10.5.sdk -arch i386 -arch ppc7400 -mmacosx-version-min=10.5 -O2"
+				ltlib_libs = "/Developer/SDKs/MacOSX10.5.sdk/usr/lib/libltdl.a"
+			elsif osx_target == "10.6"
+				cflags = "-isysroot /Developer/SDKs/MacOSX10.6.sdk -arch i386 -arch x86_64 -mmacosx-version-min=10.6 -O2"
+				ltlib_libs = "/Developer/SDKs/MacOSX10.6.sdk/usr/lib/libltdl.a"
+			end
+
+			run_command "CFLAGS=\"#{cflags}\" LTLIB_LIBS=\"#{ltlib_libs}\" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --prefix=#{prefix} --sysconfdir=#{prefix}/etc --disable-dependency-tracking --disable-doc --enable-man --enable-shared --disable-static --enable-iconv --enable-strict --disable-assert"
+			run_command "make -j2"
+
+			run_command "make install DESTDIR=" + stagedir
+			run_command "rm " + stagedir + prefix + "/lib/*.la"
+
+			run_command "sudo make install"
+			run_command "sudo rm " + prefix + "/lib/*.la"
+
+			_run_tokend osx_target
+		end
+		
+		puts "\n" if @options.verbose
+	end
+
+	def _run_tokend(osx_target)
+		puts "Creating tokend..." if @options.verbose
+
+		stagedir = Pathname.new(@path).join(@options.binaries + "/" + osx_target).to_s
+		git = "/usr/local/git/bin/git"
+
+		run_command git + " clone git://github.com/martinpaljak/OpenSC.tokend.git"
+		run_command git + " --git-dir OpenSC.tokend/.git --work-tree OpenSC.tokend checkout origin/" + osx_target
+		run_command "rm -rf OpenSC.tokend/build"
+
+		run_command "curl http://martinpaljak.net/download/build-" + osx_target + ".tar.gz -o build-" + osx_target + ".tar.gz"
+
+		# Unpack the binary building components
+		run_command "tar -C OpenSC.tokend -xzvf build-" + osx_target + ".tar.gz"
+
+		# Create the symlink to OpenSC sources
+		run_command "ln -sf `pwd`/src OpenSC.tokend/build/opensc-src"
+
+		# build and copy OpenSC.tokend
+		run_command "xcodebuild -configuration Deployment -project OpenSC.tokend/Tokend.xcodeproj"
+		run_command "rm -rf " + stagedir
+		run_command "mkdir -p " + stagedir
+		run_command "mv OpenSC.tokend/build/OpenSC.tokend " + stagedir + "/OpenSC.tokend"
+	end
+
 	def run_digidoc
 		puts "Creating libdigidoc..." if @options.verbose
 		
-		release = Pathname.new(@path).join(@options.digidoc, 'lib').to_s
-		digidoc2 = File.join(release, 'libdigidoc.dylib')
-		digidoc = File.join(release, 'libdigidocpp.dylib')
-		libp11 = File.join(release, 'libp11.dylib')
+		stagedir = Pathname.new(@path).join(@options.digidoc).to_s
+		etcdir = File.join(stagedir, 'etc')
+		libdir = File.join(stagedir, 'lib')
+		sharedir = File.join(stagedir, 'share')
+		digidoc2 = File.join(libdir, 'libdigidoc.2.dylib')
+		digidoc = File.join(libdir, 'libdigidocpp.0.dylib')
+		libp11 = File.join(libdir, 'libp11.1.dylib')
+		libcrypto = File.join(libdir, 'libcrypto.1.0.0.dylib')
+		libssl = File.join(libdir, 'libssl.1.0.0.dylib')
 		
-		FileUtils.mkdir_p(release) unless File.exists? release
-		FileUtils.rm_rf(digidoc2) if File.exists? digidoc2
-		FileUtils.rm_rf(digidoc) if File.exists? digidoc
-		FileUtils.rm_rf(libp11) if File.exists? libp11
-		
-		conf_root = Pathname.new(@path).join(@options.digidoc, 'etc', 'digidocpp')
-		conf = File.join(conf_root, 'digidocpp.conf')
-		conf_certs = File.join(conf_root, 'certs')
-		conf_schema = File.join(conf_root, 'schema')
-		
-		FileUtils.rm_rf(conf) if File.exists? conf
-		FileUtils.rm_rf(conf_certs) if File.exists? conf_certs
-		FileUtils.rm_rf(conf_schema) if File.exists? conf_schema
-		FileUtils.mkdir_p(conf_certs) unless File.exists? conf_certs
-		FileUtils.mkdir_p(conf_schema) unless File.exists? conf_schema
-		
+		FileUtils.rm_rf(stagedir) if File.exists? stagedir
+		FileUtils.mkdir_p(etcdir)
+		FileUtils.mkdir_p(libdir)
+		FileUtils.mkdir_p(sharedir)
+
 		puts "Copying file libp11.dylib" if @options.verbose
 		FileUtils.cp('/usr/local/lib/libp11.dylib', libp11)
+
+		puts "Copying openssl" if @options.verbose
+		FileUtils.cp('/usr/local/lib/libcrypto.1.0.0.dylib', libcrypto)
+		FileUtils.cp('/usr/local/lib/libssl.1.0.0.dylib', libssl)
 		
+		puts "Creating libdigidoc..." if @options.verbose
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidoc/trunk').to_s) do	
-			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
-			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command "rm -R -f libdigidoc/#{@options.target}" if File.exists? "libdigidoc/#{@options.target}"
-			run_command 'cmake -G "Xcode" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command "xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
-			run_command "install_name_tool -id /usr/local/libdigidoc.dylib libdigidoc/#{@options.target}/libdigidoc.dylib"
+			run_cmake_build('../../libdigidoc/trunk')
+
 			puts "Copying file libdigidoc.dylib" if @options.verbose
-			FileUtils.cp_r("libdigidoc/#{@options.target}/libdigidoc.dylib", digidoc2)
+			FileUtils.cp_r("/usr/local/lib/libdigidoc.dylib", digidoc2)
 			
-			if @options.force
-				run_command "sudo xcodebuild -project libdigidoc.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
-			end
-			
-			# This should be here only temporary until overall structure is fixed in libdigidoc2 (ie no 2 certificate storages)
-			digidoc2conf = Pathname.new(@path).join(@options.digidoc, 'etc', 'digidoc.conf').to_s
-			digidoc2stuff = Pathname.new(@path).join(@options.digidoc, 'share').to_s
-			
-			FileUtils.rm_rf(digidoc2conf) if File.exists? digidoc2conf
-			FileUtils.rm_rf(digidoc2stuff) if File.exists? digidoc2stuff
-			
-			FileUtils.cp('etc/digidoc.conf', digidoc2conf)
-			FileUtils.mkdir_p(digidoc2stuff) unless File.exists? digidoc2stuff
-			FileUtils.cp_r('/usr/local/share/libdigidoc/', digidoc2stuff)
+			FileUtils.cp('/usr/local/etc/digidoc.conf', etcdir)
+			FileUtils.cp_r('/usr/local/share/libdigidoc/', sharedir)
 		end
 		
-		puts "Creating libdigidocpp..."if @options.verbose
-		
+		puts "Creating libdigidocpp..." if @options.verbose
 		FileUtils.cd(Pathname.new(@path).join('../../libdigidocpp/trunk').to_s) do
-			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
-			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command "rm -R -f src/#{@options.target}" if File.exists? "src/#{@options.target}"
-			run_command 'cmake -G "Xcode" -DXSD_EXECUTABLE=/usr/local/bin/xsd -DCMAKE_INSTALL_PREFIX=/usr/local -DPKCS11H_LIBRARY=/usr/local/lib/libpkcs11-helper.a -DPKCS11H_INCLUDE_DIR=/usr/local/include/pkcs11-helper-1.0 -DLIBP11_LIBRARY=/usr/local/lib/libp11.dylib -DLIBXML2_LIBRARIES=/usr/lib/libxml2.dylib -DXERCESC_LIBRARY=/usr/local/lib/libxerces-c.a -DXMLSECURITYC_LIBRARY=/usr/local/lib/libxml-security-c.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			run_command "xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
-			run_command "install_name_tool -id /usr/local/libdigidocpp.dylib src/#{@options.target}/libdigidocpp.dylib"
+			run_cmake_build('../../libdigidocpp/trunk', '-DENABLE_BINDINGS=NO')
+
 			puts "Copying file libdigidocpp.dylib" if @options.verbose
-			FileUtils.cp_r("src/#{@options.target}/libdigidocpp.dylib", digidoc)
+			FileUtils.cp_r("/usr/local/lib/libdigidocpp.dylib", digidoc)
 			
-			puts "Copying file digidocpp.conf" if @options.verbose
-			FileUtils.cp_r('etc/digidocpp.conf', conf)
-			
-			Dir.glob(File.join('etc/certs', '**/*')).each do |path|
-				rpath = File.join(conf_certs, path['etc/certs'.length, path.length - 1])
-				
-				if File.directory? path
-					Dir.mkdir(rpath)
-				else
-					puts "Copying file #{path['etc/certs'.length, path.length - 1]}" if @options.verbose
-					FileUtils.cp(path, rpath)
-				end
-			end
-			
-			Dir.glob(File.join('etc/schema', '**/*')).each do |path|
-				rpath = File.join(conf_schema, path['etc/schema'.length, path.length - 1])
-				
-				if File.directory? path
-					Dir.mkdir(rpath)
-				else
-					puts "Copying file #{path['etc/schema'.length, path.length - 1]}" if @options.verbose
-					FileUtils.cp(path, rpath)
-				end
-			end
-			
-			if @options.force
-				run_command "sudo xcodebuild -project libdigidocpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
-			end
+			puts "Copying digidocpp config dir" if @options.verbose
+			FileUtils.cp_r('/usr/local/etc/digidocpp/', etcdir)
 		end
 		
 		puts "\n" if @options.verbose
@@ -189,155 +234,79 @@ class Application
 		binaries = Pathname.new(@path).join(@options.binaries).to_s
 		
 		# Cleanup
-		FileUtils.rm_rf(File.join(binaries, 'esteid.plugin')) if File.exists? File.join(binaries, 'esteid.plugin')
-		FileUtils.rm_rf(File.join(binaries, 'qesteidutil.app')) if File.exists? File.join(binaries, 'qesteidutil.app')
-		FileUtils.rm_rf(File.join(binaries, 'qdigidocclient.app')) if File.exists? File.join(binaries, 'qdigidocclient.app')
-		FileUtils.rm_rf(File.join(binaries, 'qdigidoccrypto.app')) if File.exists? File.join(binaries, 'qdigidoccrypto.app')
-		FileUtils.rm_rf(File.join(binaries, 'ooo-digidoc.oxt')) if File.exists? File.join(binaries, 'ooo-digidoc.oxt')
-		FileUtils.rm_rf(File.join(binaries, @options.mozappid)) if File.exists? File.join(binaries, @options.mozappid)
-		FileUtils.rm_rf(File.join(binaries, '10.4')) if File.exists? File.join(binaries, '10.4')
-		FileUtils.rm_rf(File.join(binaries, '10.5')) if File.exists? File.join(binaries, '10.5')
-		FileUtils.rm_rf(File.join(binaries, '10.6')) if File.exists? File.join(binaries, '10.6')
-		FileUtils.mkdir_p(binaries) unless File.exists? binaries
-		FileUtils.mkdir_p(File.join(binaries, '10.4')) unless File.exists? File.join(binaries, '10.4')
-		FileUtils.mkdir_p(File.join(binaries, '10.5')) unless File.exists? File.join(binaries, '10.5')
-		FileUtils.mkdir_p(File.join(binaries, '10.6')) unless File.exists? File.join(binaries, '10.6')
+		FileUtils.mkdir_p(binaries)
+		FileUtils.mkdir_p(File.join(binaries, '10.5'))
+		FileUtils.mkdir_p(File.join(binaries, '10.6'))
 		
 		puts "Creating smartcardpp..." if @options.verbose
-		
 		FileUtils.cd(Pathname.new(@path).join('../../smartcardpp/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
-			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc x86_64" ..'
-				run_command "xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
-				
-				if @options.force
-					run_command "sudo xcodebuild -project smartcardpp.xcodeproj -configuration #{@options.target} -target install -sdk macosx10.4 GCC_VERSION=4.0"
-				end
-			end
+			run_cmake_build('../../smartcardpp/trunk')
 		end
 		
 		puts "Creating browser plugin..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join(@options.firebreath).to_s) do
-			FileUtils.rm_rf('build') if File.exists? 'build'
+		FileUtils.cd(Pathname.new(@path).join(@options.build).to_s) do
+			FileUtils.rm_rf('firebreath') if File.exists? 'firebreath'
+			run_command '/opt/local/bin/hg clone -r a85df5ce249e https://firebreath.googlecode.com/hg/ firebreath'
+			FileUtils.cd('firebreath') do
+				FileUtils.mkdir_p('projects')
+				FileUtils.cd('projects') do
+					FileUtils.cp_r('/Users/kalev/nightly_build/google-svn/esteid-browser-plugin/trunk', 'esteid-browser-plugin')
+				end
+
+				run_command './prepmac.sh projects/ build/ -DWITH_SYSTEM_BOOST=YES -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.5.sdk -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"'
+				FileUtils.cd('build') do
+					run_command "cmake --build . --config #{@options.target}"
+
+					# Copy the resulting plugin
+					proot = Pathname.new(@path).join('projects', 'esteid-browser-plugin', @options.target, 'esteid.plugin').to_s
+					FileUtils.cp_r("projects/esteid-browser-plugin/#{@options.target}/esteid.plugin", File.join(binaries, 'esteid.plugin'))
+
+					run_command "ditto -xk *.xpi #{@options.mozappid}"
 			
-			run_command './prepmac.sh'
-			
-			FileUtils.cd('build') do
-				proot = Pathname.new(@path).join(@options.firebreath, 'build', 'projects', (File.exists? 'projects/trunk') ? 'trunk' : 'esteid', @options.target, 'esteid.plugin').to_s
-				pbinary = proot + '/Contents/MacOS/esteid'
-				
-				# Two pass build - first build 64 bit variant with 10.5 SDK and then 32 bit variants with 10.4 SDK
-				run_command "xcodebuild -project FireBreath.xcodeproj -configuration #{@options.target} -target esteid -sdk macosx10.5 GCC_VERSION=4.0 ARCHS=\"x86_64\""
-				FileUtils.cp(pbinary, 'esteid.x86_64')
-				run_command "xcodebuild -project FireBreath.xcodeproj -configuration #{@options.target} -target esteid -sdk macosx10.4 GCC_VERSION=4.0 ARCHS=\"i386 ppc\""
-				
-				# lipo magic
-				run_command "lipo -create esteid.x86_64 #{pbinary} -output #{pbinary}"
-				
-				# Copy the resulting plugin
-				FileUtils.cp_r(proot, File.join(binaries, 'esteid.plugin'))
+					puts "Copying Mozilla extension..." if @options.verbose
+					FileUtils.cp_r(@options.mozappid, binaries)
+				end
 			end
 		end
 		
 		# Build cross-platform Qt-based components
 		puts "Creating qesteidutil..." if @options.verbose
-		
 		FileUtils.cd(Pathname.new(@path).join('../../qesteidutil/trunk').to_s) do
-			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
-			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command "rm -R -f #{@options.target}" if File.exists? "#{@options.target}"
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/'
-			run_command "xcodebuild -project qesteidutil.xcodeproj -configuration #{@options.target} -target qesteidutil -sdk macosx10.4 GCC_VERSION=4.0"
+			run_cmake_build('../../qesteidutil/trunk', "-DCMAKE_OSX_ARCHITECTURES='i386'", true)
 			
 			puts "Copying qesteidutil.app..." if @options.verbose
-			FileUtils.cp_r("#{@options.target}/qesteidutil.app", binaries)
+			FileUtils.cp_r("build/qesteidutil.app", binaries)
 		end
 		
 		puts "Creating qdigidoc..." if @options.verbose
-		
 		FileUtils.cd(Pathname.new(@path).join('../../qdigidoc/trunk').to_s) do
-			run_command 'rm CMakeCache.txt' if File.exists? 'CMakeCache.txt'
-			run_command 'rm -R CMakeFiles' if File.exists? 'CMakeFiles'
-			run_command 'rm client/CMakeCache.txt' if File.exists? 'client/CMakeCache.txt'
-			run_command 'rm -R client/CMakeFiles' if File.exists? 'client/CMakeFiles'
-			run_command "rm -R -f client/#{@options.target}" if File.exists? "client/#{@options.target}"
-			run_command 'rm crypto/CMakeCache.txt' if File.exists? 'crypto/CMakeCache.txt'
-			run_command 'rm -R crypto/CMakeFiles' if File.exists? 'crypto/CMakeFiles'
-			run_command "rm -R -f crypto/#{@options.target}" if File.exists? "crypto/#{@options.target}"
-			run_command 'cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ -DICONV_INCLUDE_DIR=/Developer/SDKs/MacOSX10.4u.sdk/usr/include'
-			
-			puts "Creating qdigidocclient..." if @options.verbose
-			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidocclient -sdk macosx10.4 GCC_VERSION=4.0"
+			run_cmake_build('../../qdigidoc/trunk', "-DCMAKE_OSX_ARCHITECTURES='i386' -DENABLE_KDE=NO -DENABLE_NAUTILUS_EXTENSION=NO", true)
 			
 			puts "Copying qdigidocclient.app..." if @options.verbose
-			FileUtils.cp_r("client/#{@options.target}/qdigidocclient.app", binaries)
-			
-			puts "Creating qdigidoccrypto..." if @options.verbose
-			run_command "xcodebuild -project qdigidoc.xcodeproj -configuration #{@options.target} -target qdigidoccrypto -sdk macosx10.4 GCC_VERSION=4.0"
+			FileUtils.cp_r("build/client/qdigidocclient.app", binaries)
 			
 			puts "Copying qdigidoccrypto.app..." if @options.verbose
-			FileUtils.cp_r("crypto/#{@options.target}/qdigidoccrypto.app", binaries)
+			FileUtils.cp_r("build/crypto/qdigidoccrypto.app", binaries)
 		end
 		
 		puts "Creating Open Office extension..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../plugins/ooo-digidoc/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
+		FileUtils.cd(Pathname.new(@path).join('../../ooo-digidoc/trunk').to_s) do
+			FileUtils.rm_rf('build') if File.exists? 'build'
+			FileUtils.mkdir_p('build')
 			FileUtils.cd('build') do
-				run_command '. ' + @options.setsdkenv + '; cmake -G "Xcode" -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386" -DOPENSSLCRYPTO_LIBRARY=/usr/local/lib/libcrypto.a -DOPENSSLCRYPTO_INCLUDE_DIR=/usr/local/include -DOPENSSL_LIBRARIES=/usr/local/lib/libssl.a -DOPENSSL_INCLUDE_DIR=/usr/local/include/ ..'
-				run_command 'xcodebuild -project OOoDigiDocPlugin.xcodeproj -configuration Release -sdk macosx10.4 GCC_VERSION=4.0'
-				
-				run_command "cp *.oxt ooo-digidoc.oxt"
-				
+				run_command ". " + @options.setsdkenv + "; cmake -DCMAKE_OSX_ARCHITECTURES='i386' -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.5.sdk -DCMAKE_OSX_DEPLOYMENT_TARGET=10.5 -DCMAKE-BUILD-TYPE=#{@options.target} .. ; make VERBOSE=1"
+
 				puts "Copying Open Office extension..." if @options.verbose
-				FileUtils.cp_r('ooo-digidoc.oxt', binaries)
+				run_command "cp ooo-digidoc*.oxt #{binaries}/ooo-digidoc.oxt"
 			end
 		end
-		
-		puts "Creating Mozilla extension..." if @options.verbose
-		
-		FileUtils.cd(Pathname.new(@path).join('../../plugins/firefox/trunk').to_s) do
-			run_command 'rm -fR build' if File.exists? 'build'
-			run_command 'mkdir build'
-			
-			FileUtils.cd('build') do
-				run_command 'cmake -G "Xcode" -DSMARTCARDPP_LIBRARY=/usr/local/lib/libsmartcardpp.a -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.4u.sdk/ -DCMAKE_OSX_ARCHITECTURES="i386 ppc" ..'
-				run_command "xcodebuild -project xpi.xcodeproj -configuration #{@options.target} -target ALL_BUILD -sdk macosx10.4 GCC_VERSION=4.0"
-				run_command "ditto -xk *.xpi #{@options.mozappid}"
-				
-				# Clean-up extension? TODO: This should be removed
-				run_command "rm -rf #{@options.mozappid}/components/xpi.build"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS"
-				run_command "mkdir #{@options.mozappid}/plugins/npesteid.plugin/Contents/Resources"
-				run_command "rm -rf #{@options.mozappid}/plugins/xpi.build"
-				run_command "mv -f  #{@options.mozappid}/plugins/*.dylib #{@options.mozappid}/plugins/npesteid.plugin/Contents/MacOS/"
-				run_command "cp ../plugins/mac/Info.plist #{@options.mozappid}/plugins/npesteid.plugin/Contents/"
-				
-				puts "Copying Mozilla extension..." if @options.verbose
-				FileUtils.cp_r(@options.mozappid, binaries)
-			end
-		end
+
+		project_build = Pathname.new(@path).join(@options.build, 'Project.build').to_s
+		FileUtils.rm_rf(project_build) if File.exists? project_build
 		
 		# Build all xcode targets
 		puts "Building xcode projects..." if @options.verbose
-		run_command "xcodebuild -project Project.xcodeproj -configuration Release -target Main GCC_VERSION=4.0"
-		
-		puts "Building tokend..." if @options.verbose
-		
-		# NOTE: This is more complicated and time consuming (10.4) so use binary builds instead.
-		#run_command 'xcodebuild -project tokend/Tokend.xcodeproj -configuration Deployment -target world'
-		#FileUtils.cp_r(File.join(@path, 'tokend', 'build', 'OpenSC.tokend'), File.join(@path, @options.binaries, 'OpenSC.tokend'))
-		run_command "tar -xzf tokend/OpenSC.tokend_tiger.tgz -C #{File.join(binaries, '10.4')}"
-		run_command "tar -xzf tokend/OpenSC.tokend_leopard.tgz -C #{File.join(binaries, '10.5')}"
-		run_command "tar -xzf tokend/OpenSC.tokend_snowleopard.tgz -C #{File.join(binaries, '10.6')}"
+		run_command "xcodebuild -project Project.xcodeproj -configuration Release -target Main"
 		
 		puts "\n" if @options.verbose
 	end
@@ -350,12 +319,12 @@ class Application
 			FileUtils.rm_rf(File.join(@path, @options.packages))
 		end
 		
-		if File.exists? File.join(@path, @options.binaries) and @options.force
+		if File.exists? File.join(@path, @options.binaries)
 			puts "Cleaning #{File.join(@path, @options.binaries)}" if @options.verbose
 			FileUtils.rm_rf(File.join(@path, @options.binaries))
 		end
 		
-		if File.exists? File.join(@path, @options.repository) and @options.force
+		if File.exists? File.join(@path, @options.repository)
 			puts "Cleaning #{File.join(@path, @options.repository)}" if @options.verbose
 			FileUtils.rm_rf(File.join(@path, @options.repository))
 		end
@@ -399,9 +368,9 @@ class Application
 					name = identifier + '.' + version + ((@options.arch == 'universal') ? '' : '.' + @options.arch) + '.zip'
 					path = File.join(cpkgroot, name)
 					
-					unless File.exists? path and !@options.force
+					unless File.exists? path
 						puts "Compressing package #{identifier}..." if @options.verbose
-						`ditto -c -k -X #{pkgroot} #{path}`
+						run_command "ditto -c -k -X #{pkgroot} #{path}"
 					end
 					
 					sha1 = `openssl dgst -sha1 #{path}`
@@ -776,6 +745,7 @@ class Application
 	end
 	
 	def run_command(cmd)
+		puts "run_command: #{cmd}" if @options.verbose
 		out = `#{cmd}`
 		puts out if @options.verbose
 	end
@@ -795,7 +765,6 @@ class Application
 		opts.on('-h', '--help', 'Show this message') { run_usage; exit 0 }
 		opts.on('-V', '--verbose', 'Run verbosely') { @options.verbose = true }	
 		opts.on('-q', '--quiet', 'Run quietly') { @options.quiet = true }
-		opts.on('-f', '--force', 'Perform additional actions that are normally skipped') { @options.force = true }
 		opts.on('-a', '--arch [ppc|x86|universal]', 'Use architecture. The default is universsal') { |arch| @options.arch = arch }
 		opts.on('-n', '--name [NAME]', 'File name for the installer') { |name| @options.name = name }
 		opts.on('-N', '--volname [VOLNAME]', 'Volume name for the installer') { |volname| @options.volname = volname }
@@ -827,7 +796,6 @@ class Application
 							   #'org.esteid.installer.openoffice',
 							   'org.esteid.installer.tokend.10.6',
 							   'org.esteid.installer.tokend.10.5',
-							   'org.esteid.installer.tokend.10.4',
 							   'org.esteid.installer.drivers.10.5' ]
 			}, {
 				:title => 'Internet Plug-ins',
@@ -865,16 +833,16 @@ class Application
 				:froot => File.join(@options.opensc + '.10.6'),
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc.10.6',
-				:version => '1.0.2',
+				:version => '1.0.5',
 				:script => "return system.version.ProductVersion >= '10.6';",
 				:system => '10.6>='
 			}, {
 				:name => 'esteid-opensc',
-				:files => [ File.join(@options.opensc, '*/**') ],
-				:froot => @options.opensc,
+				:files => [ File.join(@options.opensc + '.10.5', '*/**') ],
+				:froot => File.join(@options.opensc + '.10.5'),
 				:location => '/',
 				:identifier => 'org.esteid.installer.opensc',
-				:version => '1.0.3',
+				:version => '1.0.5',
 				:script => "return system.version.ProductVersion &lt; '10.6';",
 				:system => '10.6&lt;'
 			}, {
@@ -894,11 +862,12 @@ class Application
 					File.join(@options.qt, 'QtNetwork.framework'),
 					File.join(@options.qt, 'QtWebKit.framework'),
 					File.join(@options.qt, 'QtXml.framework'),
+					File.join(@options.qt, 'QtXmlPatterns.framework'),
 					File.join(@options.qt, 'phonon.framework') ],
 				:froot => @options.qt,
 				:location => '/Library/Frameworks',
 				:identifier => 'org.esteid.installer.qt',
-				:version => '4.5.3'
+				:version => '4.6.3'
 			}, {
 				:name => 'esteid-openoffice',
 				:files => File.join(@options.binaries, 'ooo-digidoc.oxt'),
@@ -906,7 +875,7 @@ class Application
 				:location => '/usr/local/share',
 				:identifier => 'org.esteid.installer.openoffice',
 				:version => '0.0.$',
-				:svnroot => '/plugins/ooo-digidoc/trunk'
+				:svnroot => '/ooo-digidoc/trunk'
 			}, {
 				:name => 'esteid-qesteidutil',
 				:files => File.join(@options.binaries, 'qesteidutil.app'),
@@ -931,6 +900,8 @@ class Application
 				:helpers => [ 'pkmksendae', 'pkmkpidforapp' ],
 				:froot => @options.binaries,
 				:identifier => 'org.esteid.installer.mozilla',
+				:version => '1.0.$',
+				:svnroot => '/esteid-browser-plugin/trunk',
 				:location => '/Library/Application Support/Mozilla/Extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}'
 			}, {
 				:name => 'esteid-qdigidocclient',
@@ -963,6 +934,7 @@ class Application
 				:froot => File.join(@options.binaries, '10.6'),
 				:identifier => 'org.esteid.installer.tokend.10.6',
 				:location => '/System/Library/Security/tokend',
+				:version => '1.0.2',
 				:script => "return system.version.ProductVersion >= '10.6';",
 				:system => '10.6>='
 			}, {
@@ -971,23 +943,16 @@ class Application
 				:froot => File.join(@options.binaries, '10.5'),
 				:identifier => 'org.esteid.installer.tokend.10.5',
 				:location => '/System/Library/Security/tokend',
+				:version => '1.0.2',
 				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
 				:system => '10.5='
-			}, {
-				:name => 'esteid-tokend-tiger',
-				:files => File.join(@options.binaries, '10.4', 'OpenSC.tokend'),
-				:froot => File.join(@options.binaries, '10.4'),
-				:identifier => 'org.esteid.installer.tokend.10.4',
-				:location => '/System/Library/Security/tokend',
-				:script => "return system.version.ProductVersion &lt; '10.5';",
-				:system => '10.5&lt;'
 			}, {
 				:name => 'esteid-drivers-leopard',
 				:files => [ File.join(@options.drivers, '*/**') ],
 				:froot => @options.drivers,
 				:identifier => 'org.esteid.installer.drivers.10.5',
 				:location => '/usr/libexec/SmartCardServices/drivers',
-				:version => '1.0',
+				:version => '1.1',
 				:script => "if(system.version.ProductVersion >= '10.6') { return false; } return system.version.ProductVersion >= '10.5';",
 				:system => '10.5='
 			}, {
@@ -1010,6 +975,12 @@ class HugeNum
 		return "<real>#{@value}</real>"
 	end
 end
+
+# don't buffer stdout and stderr
+$stdout.sync=true
+$stderr.sync=true
+# redirect stderr to stdout
+$stderr.reopen($stdout)
 
 application = Application.new(ARGV, STDIN)
 application.run
