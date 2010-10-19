@@ -147,6 +147,10 @@ class Application
 			run_command "sudo make install"
 			run_command "sudo rm " + prefix + "/lib/*.la"
 
+			# An ugly hack to help people who have broken CCID
+			# driver that is linked against wrong libusb path
+			run_command "cp " + @options.drivers + "/ifd-ccid.bundle/Contents/MacOS/libusb-0.1.4.dylib " + prefix + "/lib/"
+
 			_run_tokend osx_target
 		end
 		
