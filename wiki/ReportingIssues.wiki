@@ -3,11 +3,70 @@ Kui ID-kaardi tarkvara kasutamisel avastatakse mõni viga ehk bugi, on ilus sell
 
 Enne ticketi tekitamist tuleks põgusalt veenduda, et sama sisuga bugist pole juba raporteeritud. Selleks külasta seda kohta: http://code.google.com/p/esteid/issues/list
 
-Uue "issue" loomisel (http://code.google.com/p/esteid/issues/entry) tuleks pealkirja algusesse, nurksulgudesse panna rakendusele viitav nimi, näiteks "[QEsteidUtil [utiliit]]", "[QDigiDocClient [klient]]". Siis pealkirjaks lühike probleemikirjeldus ning lõppu OSi nimi ja versioon, näiteks (WinXP SP4), (MacOS10.5.7). Issue all on veel labels rida, sealt peab valima veel täiendavalt Opsüsteemi, kus viga esile tuleb ning komponendi.
+Vigadest teatamisel palun pea silmas järgmisi põhitõdesid:
 
-Description väljale kirjutatakse pikem probleemikirjeldus. Ja lõppu pannakse täpne tarkvara versioon. Kui on olemas ka screenshot situatsioonist, siis see tuleb ticketile kaasa panna. Edasi nupule "submit issue" ja ongi olemas.
+ # Ole viisakas! Projekti veavad vabatahtlikud oma vabast ajast ja lahmivad vearaportid ei aita maailma paremaks muuta
+ # Kogu võimalikult palju vajalikku informatsiooni, et viga oleks võimalik ka teistel reprodutseerida. Vead, mille reprodutseerimine on vähese informatsiooni tõttu raskendatud jäävad tõenäoliselt parandamata.
+ # Teavitajalt eeldatakse koostöövalmidust probleemi täpsemaks lokaliseerimiseks või veaparanduse testimiseks
 
-Ticketisse võiks kirjutada ka vea reprodutseerimise võimalikkuse ning täpse seletuse, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist tuleks veenduda, et viga on reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
+Kõige raskem töö ongi vea lokaliseerimine, õige komponendi leidmine ja piisava koguse informatsiooni kogumine.
+
+== 1. püüa leida komponent, mille juurde viga kuulub. ==
+<table cellspacing="2">
+<tr><td>browserplugin</td><td>Vastutab allkirjastamise eest veebilehtedel</td></tr>
+<tr><td>minidriver</td><td>Vastutab veebilehtedel autentimise eest Windows 7-s ja uuemates kõigi brauseritega välja arvatud Firefox</td></tr>
+<tr><td>csp</td><td>Vastutab veebilehtedel autentimise eest Windows Vistas ja vanemates kõigi brauseritega välja arvatud Firefox</td></tr>
+<tr><td>tokend</td><td>Vastutab veebilehtedel autentimise eest MacOS X-is kõigi brauseritega välja arvatud Firefox</td></tr>
+<tr><td>opensc</td><td>Vastutab autentimise eest Firefox-is kõigil platvormidel, samuti kaardiga suhtlemise eest DigiDoc tööriistades</td></tr>
+<tr><td>[QEstEidUtil qesteidutil]</td><td>Graafiline ID-kaardi halduvahend</td></tr>
+<tr><td>[QDigiDocClient qdigidocclient]</td><td>Graafiline allkirjastamise tööriist aka DigiDoc3</td></tr>
+<tr><td>qdigidoccrypto</td><td>Graafiline krüpteerimise tööriist aka DigiDoc3 Crypto</td></tr>
+<tr><td>windows updater</td><td>Tarkvara uuendaja Windowsile</td></tr>
+<tr><td>macosx updater</td><td>Tarkvara uuendaja Macile</td></tr>
+<tr><td>windows packages</td><td>MSI paigalduspaketid Windowsile.<br />*NB!* selle komponendi vearaport ilma installeri logita on 100% kasutu. Logi tegemise õpetust [WindowsInstallerIssues loe siit]</td></tr>
+<tr><td>macosx packages</td><td>Paigalduspaketid MacOS-ile</td></tr>
+<tr><td>debian packages</td><td>Paigalduspaketid Debian-ile</td></tr>
+<tr><td>jne</td><td></td></tr>
+</table>
+
+Kui Sa ei suuda õiget komponenti tuvastada, kasuta komponendi nimena sõna "unknown".
+
+== 2. kirjuta vearaportile korrektne pealkiri ==
+Arvatava komponendi nimi käib pealkirja algusesse nurksulgudesse, lisaks lühike probleemikirjeldus ning lõppu ümarsulgudesse operatsioonisüsteemi nimi ja versioon. Näiteks:
+
+ * {{{[qdigidoccrypto] Unable to send container to e-mail recipient (MacOSX 10.5.7)}}}
+ * {{{[browserplugin] Unable to sign on test page with Internet Explorer (Win7 64bit)}}}
+ * {{{[windows packages] Installer fails with "Error 13" (WinXP SP3 32bit)}}}
+ * {{{[opensc] Unable to read certificate data from card (SuSe 11.1 64bit)}}}
+
+== 3. pane külge õiged "lipikud" ==
+All servas on labels rida, vali sealt opsüsteem ning komponent. See dubleeriv informatsioon on vajalik vearaportite automaatseks sorteerimiseks kuna masinad üldjuhul ei oska inimloetavaid pealkirju lugeda.
+
+== 4. kirjelda põhjalikult probleemi olemust ==
+Kirjuta Description väljale pikem probleemikirjeldus. Märgi hoolikalt üles vea reprodutseerimise võimalikkus ning täpse seletus, kuidas seda viga saaks ka teistes masinates esile kutsuda. Enne ticketi loomist veendu, et viga on Sinu arvutis reprodutseeritav ja ei teki lihtsalt paljude juhuste kokkulangemisel.
+
+Kirjelduse lõppu lisa kindlasti täpne tarkvara versioon. Tarkvara täpse versiooni tuvastamine võib olla tükk tegemist, selleks on allpool [ReportingIssues#Tarkvara_versiooni_tuvastamine mõned vihjed].
+
+Kui on olemas ka screenshot situatsioonist, siis oleks hea kui saaks selle ticketile kaasa panna. Edasi nupule "submit issue" ja ongi olemas.
+
+= Mida teha kui mitte midagi ei tundu töötavat? =
+
+Kui viga avaldub korraga paljudes komponentides, näiteks ei tööta mitte ükski brauser, DigiDoc3 ei näe kaarti jne, on tegemist mõne alumise kihi probleemiga. Probleemi täpsemaks lokaliseerimiseks
+tuleb võtta lahti käsurida ja kirjutada järjest järgmised käsud:
+
+ * {{{opensc-tool -l}}} - kas masin näeb üldse lugejat?
+ * {{{opensc-tool -a}}} - kas saab suhelda kaardiga (lugeda ATRi maha)?
+ * {{{opensc-tool -n}}} - kas opensc peab kaarti omaks?
+ * {{{pkcs15-tool --list-certificates}}} - kas serdid on näha?
+ * {{{pkcs15-tool --list-pins}}} - kas PINid pole lukus?
+ * {{{pkcs15-tool -o mina.crt --read-certificate 01}}} - kas sert saadakse kätte? Ava tekkinud fail ja uuri, kas see on ikka OK.
+
+Need käsud peaks töötama Linuxi all ilma pikema pusimiseta. Windowsi ja Maci peal tuleb iga käsu ette kirjutada tarkvara paigalduskataloogi asukoht. Näiteks:
+
+ * {{{/Library/OpenSC/bin/opensc-tool -l}}}
+ * {{{C:\Program Files\Estonian ID Card\opensc-tool.exe -l}}}
+
+Kui mitte ükski nendest käskudest ei näe ei näe kaarti, siis on ilmselt viga kaardilugeja draiverites.
 
 = Tarkvara versiooni tuvastamine =
 
@@ -16,7 +75,7 @@ Tarkvara levitatakse MSI paketina, mille versiooni saab teada Control Panel -> A
 
 === Ubuntu / Debian ===
 Käsurealt saab järgi pärida erinevate pakettide (nt. qdigidoc, qesteidutil, mozilla-esteid) versioone.
-{{{
+{{
 dpkg-query -l qdigidoc
 dpkg-query -l libdigidoc2
 dpkg-query -l libdigidocpp0
