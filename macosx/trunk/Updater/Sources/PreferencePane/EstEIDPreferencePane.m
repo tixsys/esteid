@@ -291,7 +291,9 @@ typedef enum _EstEIDAgentUpdateFrequency {
 	[self->m_authorizationView updateStatus:nil];
 	[self->m_authorizationView setAutoupdate:YES];
 	[self->m_manualUpdateButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.CheckNow" value:nil table:@"PreferencePane"]];
-	[self->m_keychainToolButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.KeychainTool" value:nil table:@"PreferencePane"]];
+	// Only needed for Leopard
+	if (MacOSXVersionNumber < 0x1060)
+		[self->m_keychainToolButton setTitle:[bundle localizedStringForKey:@"PreferencePane.Action.KeychainTool" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyNever" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyDaily" value:nil table:@"PreferencePane"]];
 	[self->m_updateFrequencyPopUpButton addItemWithTitle:[bundle localizedStringForKey:@"PreferencePane.Action.UpdateFrequencyWeekly" value:nil table:@"PreferencePane"]];
