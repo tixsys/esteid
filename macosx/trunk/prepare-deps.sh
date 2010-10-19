@@ -1,17 +1,28 @@
 #!/bin/sh
 
+LIBP11VER="0.2.7"
+XMLSECVER="1.5.1"
+XERCESVER="3.0.1"
+XSDVER="3.3.0"
+OSSLVER="1.0.0"
+OSSLNAME="openssl-1.0.0a"
+
 # ======================================== #
 # Install various utilities from macports  #
 # ======================================== #
 
 sudo /opt/local/bin/port install mercurial git-core cmake pkgconfig wget
 
-# Source versions
-LIBP11VER="0.2.7"
-XMLSECVER="1.5.1"
-XERCESVER="3.0.1"
-OSSLVER="1.0.0"
-OSSLNAME="openssl-1.0.0a"
+# ========================== #
+#         Install XSD        #
+# ========================== #
+
+if [ ! -x /usr/local/bin/xsd ]; then
+    tar -jtvf xsd-$XSDVER-i686-macosx.tar.bz2
+    sudo mv xsd-$XSDVER-i686-macosx/bin/xsd /usr/local/bin
+    rm -rf xsd-$XSDVER-i686-macosx
+fi
+
 
 # ======================== #
 #       Build OpenSSL      #
