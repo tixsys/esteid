@@ -69,7 +69,7 @@ Need käsud peaks töötama Linuxi all ilma pikema pusimiseta. Windowsi ja Maci 
  * {{{/Library/OpenSC/bin/opensc-tool -l}}}
  * {{{C:\Program Files\Estonian ID Card\opensc-tool.exe -l}}}
 
-Kui mitte ükski nendest käskudest ei näe ei näe kaarti, siis on ilmselt viga kaardilugeja draiverites.
+Kui mitte ükski nendest käskudest ei näe kaarti, siis on ilmselt viga kaardilugeja draiverites.
 
 = Tarkvara versiooni tuvastamine =
 
