@@ -78,6 +78,7 @@ Katsetusjärgus tarkvara:
  * Maci peal ei lisata allkirjastatud/krüpteeritud faili manusesse, kui vajutada Kliendis või Krüptos linki "Saada ümbrik e-postiga"
  * SEB's ja eesti.ee's saab Maci ja Linuxi peal allkirjastada ainult Firefoxiga. Samuti Swedbankis Java appleti kaudu töötab allkirjastamine ainult Firefoxiga.
  * Brauseri plugin (PIN2 aken veebis) on ainult Inglise keelne (issue 110)
+ * IE 7's ja IE 8's ei saa testlehel allkirjastada, kui Protected Mode on peal. (Issue 116)
 
 = Arendajast sõltumatud probleemid =
 
