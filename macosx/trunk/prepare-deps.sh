@@ -13,6 +13,12 @@ OSSLNAME="openssl-1.0.0a"
 
 sudo /opt/local/bin/port install mercurial git-core cmake pkgconfig wget
 
+# ======================================== #
+#         Install Ruby modules             #
+# ======================================== #
+
+sudo gem install plist
+
 # ========================== #
 #         Install XSD        #
 # ========================== #
