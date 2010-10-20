@@ -14,4 +14,14 @@ Vajalikud failid:
  * boost_1_44_0.tar.bz2
  * xsd-3.3.0-i686-macosx.tar.bz2
 
+Tee nii:
+{{{
+mkdir esteid-build
+svn checkout http://esteid.googlecode.com/svn/macosx
+sh macosx/trunk/build-deps.sh
+sh macosx/trunk/checkout.sh
+cd macosx/trunk
+./Build.sh
+}}}
+
 TODO: Keegi hea inimene võiks selle porno tegelikult [http://library.gnome.org/devel/jhbuild/stable/introduction.html.en JHBuildi] peale kolida
