@@ -5,6 +5,7 @@ Võrreldes Linuxiga on Maci arendaja elu koeraelu!
 Vajalik soft:
  * XCode
  * Macports
+ * Qt
 
 Vajalikud failid:
  * xml-security-c-1.5.1.tar.gz
