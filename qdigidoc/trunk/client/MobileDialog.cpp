@@ -87,7 +87,7 @@ MobileDialog::MobileDialog( DigiDoc *doc, QWidget *parent )
 	}
 
 	if ( m_doc->documentType() == digidoc::WDoc::BDocType )
-		request.setUrl( QUrl( Settings().value("Client/bdocurl", "https://www.sk.ee:8097").toString() ) );
+		request.setUrl( QUrl( Settings().value("Client/bdocurl", "https://digidocservice.sk.ee").toString() ) );
 	else
 		request.setUrl( QUrl( Settings().value("Client/ddocurl", "https://digidocservice.sk.ee").toString() ) );
 
