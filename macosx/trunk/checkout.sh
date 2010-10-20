@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd ../..
-
 PROJECTS="esteid-browser-plugin libdigidoc libdigidocpp qdigidoc"
 PROJECTS="$PROJECTS qesteidutil smartcardpp"
 
