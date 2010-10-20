@@ -37,13 +37,14 @@ class Application
         @options.binaries = 'build/Release'
         @options.repository = 'build/Repository'
         @options.digidoc = 'build/Digidoc'
-        @options.qt = 'build/Qt'
+        @options.qt = '/Library/Frameworks'
         @options.opensc = 'build/OpenSC'
+        @options.opensc105_rev = '966a6613b94f8a975c2061c6d6708f4ffd4d22f2'
+        @options.opensc106_rev = '27d02c8821c18b15cbb5d4c25daeeab813525d8a'
         @options.drivers = 'build/Drivers'
         @options.packages = 'build/Packages'
         @options.pkgapp = '/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS'
         @options.mozappid = '{aa84ce40-4253-11da-8cd6-0800200c9a66}'
-        @options.setsdkenv = '~/OpenOffice.org3.2_SDK/' + `hostname`.strip + '/setsdkenv_unix.sh'
         @options.sign = nil
     end
     
@@ -138,7 +139,7 @@ class Application
                 ltlib_libs = "/Developer/SDKs/MacOSX10.6.sdk/usr/lib/libltdl.a"
             end
 
-            run_command "CFLAGS=\"#{cflags}\" LTLIB_LIBS=\"#{ltlib_libs}\" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --prefix=#{prefix} --sysconfdir=#{prefix}/etc --disable-dependency-tracking --disable-doc --enable-man --enable-shared --disable-static --enable-iconv --enable-strict --disable-assert"
+            run_command "CFLAGS=\"#{cflags}\" LTLIB_LIBS=\"#{ltlib_libs}\" PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ./configure --prefix=#{prefix} --sysconfdir=#{prefix}/etc --disable-dependency-tracking --disable-doc --disable-man --enable-shared --disable-static --enable-strict --disable-assert"
             run_command "make -j2"
 
             run_command "make install DESTDIR=" + stagedir
@@ -163,14 +164,17 @@ class Application
         stagedir = Pathname.new(@path).join(@options.binaries + "/" + osx_target).to_s
         git = "/usr/local/git/bin/git"
 
-        run_command git + " clone git://github.com/martinpaljak/OpenSC.tokend.git"
-        run_command git + " --git-dir OpenSC.tokend/.git --work-tree OpenSC.tokend checkout origin/" + osx_target
-        run_command "rm -rf OpenSC.tokend/build"
-
-        run_command "curl http://martinpaljak.net/download/build-" + osx_target + ".tar.gz -o build-" + osx_target + ".tar.gz"
+        run_command "rm -rf OpenSC.tokend"
+        run_command git + " clone ../../../../OpenSC.tokend"
+        if osx_target == "10.5"
+            rev = @options.opensc105_rev
+        elsif osx_target == "10.6"
+            rev = @options.opensc106_rev
+        end
+        run_command git + " --git-dir OpenSC.tokend/.git --work-tree OpenSC.tokend checkout " + rev
 
         # Unpack the binary building components
-        run_command "tar -C OpenSC.tokend -xzvf build-" + osx_target + ".tar.gz"
+        run_command "tar -C OpenSC.tokend -xzvf ../../../../build-" + osx_target + ".tar.gz"
 
         # Create the symlink to OpenSC sources
         run_command "ln -sf `pwd`/src OpenSC.tokend/build/opensc-src"
@@ -250,11 +254,11 @@ class Application
         puts "Creating browser plugin..." if @options.verbose
         FileUtils.cd(Pathname.new(@path).join(@options.build).to_s) do
             FileUtils.rm_rf('firebreath') if File.exists? 'firebreath'
-            run_command '/opt/local/bin/hg clone -r a85df5ce249e https://firebreath.googlecode.com/hg/ firebreath'
+            FileUtils.cp_r('../../../firebreath', 'firebreath')
             FileUtils.cd('firebreath') do
                 FileUtils.mkdir_p('projects')
                 FileUtils.cd('projects') do
-                    FileUtils.cp_r('/Users/kalev/nightly_build/google-svn/esteid-browser-plugin/trunk', 'esteid-browser-plugin')
+                    FileUtils.cp_r('../../../../../esteid-browser-plugin/trunk', 'esteid-browser-plugin')
                 end
 
                 run_command './prepmac.sh projects/ build/ -DWITH_SYSTEM_BOOST=YES -DCMAKE_OSX_SYSROOT=/Developer/SDKs/MacOSX10.5.sdk -DCMAKE_OSX_ARCHITECTURES="i386;x86_64"'
