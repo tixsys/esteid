@@ -3,19 +3,15 @@ Toetatud Gentoo testing (*~x86* ja *~x86_64*)
 
 === Tarkvara paigaldamine ===
 
-Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara paigaldamiseks vajalikke live ebuilde. Overlay kasutamiseks on vaja "layman" nimelist programmi, mis tuleb eelnevalt paigaldada ning konfigureerida. Lisaks on vaja ka svn ja git kliente.
+Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara paigaldamiseks vajalikke live ebuilde. Overlay kasutamiseks on vaja "layman" nimelist programmi, mis tuleb eelnevalt paigaldada ning konfigureerida. Lisaks on vaja ka svn klienti.
 Layman paigaldamiseks:
 {{{
-emerge -av layman subversion dev-util/git
+emerge -av layman subversion
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 }}}
 
-
-Osad vajalikud XML teegid pole veel Gentoo portage-s sees, ning nende jaoks on lisaks veel vaja "dev-zero" overlayd.
-
-Overlayde paigaldamiseks anna järgmised käsud:
+Esteid overlay paigaldamiseks anna järgmised käsud:
 {{{
-layman -a dev-zero
 layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
@@ -25,10 +21,10 @@ Ning seejärel peaks juba töötama tarkvara paigaldus:
 emerge -av qdigidoc qesteidutil esteid-browser-plugin
 }}}
 
-Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlayd, ning seejärel kõik uuesti kompileerida
+Hiljem tarkvara uuendamiseks tuleb kõigepealt sünkroniseerida overlay, ning seejärel paigaldada uuendused:
 {{{
 layman -S
-emerge -av -1 libdigidoc libdigidocpp qdigidoc smartcardpp qesteidutil esteid-browser-plugin
+emerge -avuDN world
 etc-update
 }}}
 
@@ -38,4 +34,9 @@ layman -d esteid
 rm -rf /usr/portage/distfiles/svn-src/{esteid-mozilla,libdigidoc,libdigidocpp,qdigidoc,qesteidutil,smartcardpp}
 layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
+}}}
+
+Note that dev-zero overlay is no longer needed and can be removed:
+{{{
+layman -d dev-zero
 }}}
