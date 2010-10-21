@@ -9,5 +9,6 @@ rm -f /usr/local/lib/libdigidocpp.dylib
 rm -f /usr/local/lib/libdigidocpp.0.dylib 
 rm -f /usr/local/lib/libp11.dylib 
 rm -f /usr/local/lib/libp11.1.dylib 
+rm -rf /Library/EstonianIDCard
 
 exit 0

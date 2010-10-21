@@ -11,5 +11,7 @@ fi
 
 rm -rf /Library/Internet\ Plug-Ins/esteid.plugin
 rm -rf /Library/Internet\ Plug-Ins/EstEIDWP.plugin
+rm -rf /Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle
+rm -rf /Library/Internet\ Plug-Ins/esteidsafariplugin.webplugin
 
 exit 0
