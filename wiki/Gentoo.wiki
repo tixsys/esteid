@@ -3,7 +3,7 @@ Toetatud Gentoo testing (*~x86* ja *~x86_64*)
 
 === Tarkvara paigaldamine ===
 
-Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara paigaldamiseks vajalikke live ebuilde. Overlay kasutamiseks on vaja "layman" nimelist programmi, mis tuleb eelnevalt paigaldada ning konfigureerida. Lisaks on vaja ka svn klienti.
+Gentoo jaoks on hetkel eksperimentaalne "esteid" overlay, kust saab tarkvara paigaldamiseks vajalikke ebuilde. Overlay kasutamiseks on vaja "layman" nimelist programmi, mis tuleb eelnevalt paigaldada ning konfigureerida. Lisaks on vaja ka svn klienti.
 Layman paigaldamiseks:
 {{{
 emerge -av layman subversion
