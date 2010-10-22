@@ -10,5 +10,6 @@ if [ $RESULT -gt 0 ]; then
 fi
 
 rm -rf /Applications/Utilities/qdigidoccrypto.app
+rm -rf /Applications/qdigidoccrypto.app
 
 exit 0
