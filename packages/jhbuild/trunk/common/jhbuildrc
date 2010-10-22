@@ -1,0 +1,52 @@
+# -*- mode: python -*-
+
+_esteid_jhbdir = os.path.abspath(_esteid_jhbdir)
+
+# Set our build root
+_root = os.environ.get("ESTEID_BUILD_ROOT")
+if _root is None:
+    _root = os.path.join(_esteid_jhbdir, "build")
+
+# Source and installation locations.
+prefix = os.environ.get("ESTEID_PREFIX")
+if prefix is None:
+    prefix = os.path.join(_root, "install")
+
+checkoutroot = os.path.join(_root, "sources")
+tarballdir = os.path.join(_root, "pkgs")
+buildroot = os.path.join(_root, "work")
+os.environ["JHB_DIR"] = _esteid_jhbdir
+os.environ["CHECKOUT_ROOT"] = checkoutroot
+
+# Setup default modules (platform RC-s may override those)
+modulesets_dir = os.path.join(_esteid_jhbdir, "common")
+moduleset = 'esteid'
+modules = [ 'meta-esteid' ]
+use_local_modulesets = True
+
+# Include utility functions
+_utilfile = os.path.join(_esteid_jhbdir, 'common', 'rcutils.py')
+execfile(_utilfile)
+
+# Setup build type
+# setup_debug()
+# setup_release()
+
+# Set make flags
+# You can also use 'make V=0' if you want less output while compiling.
+makeargs = '-j4'
+
+
+# Make sure we find our installed modules before other versions.
+environ_prepend('LDFLAGS', '-L' + prefix + '/lib')
+environ_prepend('CPPFLAGS', '-I' + prefix + '/include')
+
+# Make sure that ltdl can find our libraries
+addpath("LTDL_LIBRARY_PATH", prefix + "/lib")
+
+# Use the included install-check program if available. It won't update
+# timestamps if the header hasn't changed, which speeds up builds.
+_path = os.path.expanduser('~/.local/bin/install-check')
+if os.path.exists(_path):
+    os.environ['INSTALL'] = _path
+

@@ -1,0 +1,20 @@
+diff --git a/jhbuild/utils/trayicon.py b/jhbuild/utils/trayicon.py
+index bbca615..a64895b 100644
+--- a/jhbuild/utils/trayicon.py
++++ b/jhbuild/utils/trayicon.py
+@@ -21,7 +21,6 @@ import sys
+ import os
+ import subprocess
+ import signal
+-import dbus
+ 
+ class TrayIcon:
+     proc = None
+@@ -32,6 +31,7 @@ class TrayIcon:
+         if not os.environ.get('DISPLAY'):
+             return
+         try:
++            import dbus
+             bus = dbus.SessionBus()
+             proxy = bus.get_object('org.freedesktop.Notifications',
+                                    '/org/freedesktop/Notifications')

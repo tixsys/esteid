@@ -1,0 +1,13 @@
+<?xml version="1.0"?><!--*- mode: nxml; indent-tabs-mode: nil -*-->
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<!-- vim:set ts=2 expandtab: -->
+<moduleset>
+  <include href="../common/esteid.modules" />
+
+  <metamodule id="meta-esteid-osx">
+    <dependencies>
+      <dep package="meta-esteid" />
+    </dependencies>
+  </metamodule>
+</moduleset>

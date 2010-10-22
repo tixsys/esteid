@@ -1,0 +1,55 @@
+# Include platform specific utility functions
+_utilfile = os.path.join(_esteid_jhbdir, 'osx', 'rcutils-osx.py')
+execfile(_utilfile)
+
+# Set up OSX specific modules
+modulesets_dir = os.path.join(_esteid_jhbdir, "osx")
+modules = [ 'meta-esteid-osx' ]
+
+# Disable tray icon. MacOSX does not have dbus
+notrayicon = True
+nonotify = True
+
+# Change some system directories
+#_exec_prefix = os.path.join(prefix, "/Library/EstonianIDCard")
+#autogenargs = autogenargs + "--exec-prefix " + _exec_prefix
+
+# Find out what we're building on
+_osx_version = os.popen("uname -r").read().strip()
+
+# Build Universal binaries
+setup_universal_build("10.5", "10.5", [ "i386", "x86_64" ])
+
+# We want the system perl and python, not from macports or so.
+os.environ["PERL"] = "/usr/bin/perl"
+os.environ["INTLTOOL_PERL"] = "/usr/bin/perl"
+os.environ["PYTHON"] = "/usr/bin/python"
+
+# The option "headerpad_max_install_names" is there to leave some room for
+# changing the library locations with install_name_tool. Note that GNU
+# libtool seems to drop the option if we don't use -W here.
+environ_append('LDFLAGS', '-Wl,-headerpad_max_install_names')
+
+# Make sure we find our installed modules before other versions.
+environ_prepend('LDFLAGS', '-L' + prefix + '/lib')
+environ_prepend('CPPFLAGS', '-I' + prefix + '/include')
+
+# Make sure that ltdl can find our libraries
+addpath("LTDL_LIBRARY_PATH", prefix + "/lib")
+
+# Set package specific build options
+
+# Build xerces-c and xml-security-c as static
+append_autogenargs("xerces-c", "--disable-shared --enable-static")
+append_autogenargs("xml-security-c", "--disable-shared --enable-static")
+
+# Build only shared version of libp11
+append_autogenargs("libp11", "--disable-static --enable-shared")
+
+append_cmakeargs("libdigidocpp", "-DENABLE_BINDINGS=No")
+
+# Build only 32bit versions
+append_cmakeargs("qesteidutil", "-DCMAKE_OSX_ARCHITECTURES=i386")
+append_cmakeargs("qdigidoc",    "-DCMAKE_OSX_ARCHITECTURES=i386")
+
+# os.environ["OPENSSL_DIR"] = "/etc/openssl"

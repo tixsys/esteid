@@ -1,0 +1,78 @@
+<?xml version="1.0"?><!--*- mode: nxml; indent-tabs-mode: nil -*-->
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<!-- vim:set ts=2 expandtab: -->
+<moduleset>
+  <repository type="svn" name="esteid-svn" 
+              href="https://esteid.googlecode.com/svn/" default="yes" />
+
+  <repository type="hg" name="firebreath"
+              href="https://firebreath.googlecode.com/hg/" />
+
+  <cmake id="smartcardpp">
+    <branch />
+  </cmake>
+
+  <cmake id="qesteidutil">
+    <branch />
+    <dependencies>
+      <dep package="smartcardpp" />
+    </dependencies>
+  </cmake>
+
+  <cmake id="firebreath" cmakeargs="
+      -DPROJECTS_DIR=&quot;$CHECKOUT_ROOT/esteid-browser-plugin&quot;">
+    <branch repo="firebreath" />
+    <dependencies>
+      <dep package="esteid-browser-plugin" />
+      <dep package="smartcardpp" />
+    </dependencies>
+  </cmake>
+
+  <!-- Ugly hack to just check out sources -->
+  <autotools id="esteid-browser-plugin" supports-non-srcdir-builds="no"
+      autogen-template=" " makeargs="." makeinstallargs=".">
+    <branch checkoutdir="esteid-browser-plugin/src" />
+  </autotools>
+
+  <cmake id="libdigidoc">
+    <branch />
+  </cmake>
+
+  <cmake id="libdigidocpp">
+    <branch />
+    <dependencies>
+      <dep package="libdigidoc" />
+    </dependencies>
+  </cmake>
+
+  <cmake id="qdigidoc">
+    <branch />
+    <dependencies>
+      <dep package="libdigidocpp" />
+    </dependencies>
+  </cmake>
+
+  <autotools id="opensc"
+      autogen-template="%(srcdir)s/opensc/bootstrap --prefix %(prefix)s
+                        --libdir %(libdir)s %(autogenargs)s">
+    <branch module="externals/" checkoutdir="externals" />
+  </autotools>
+
+  <metamodule id="meta-esteid-bootstrap">
+    <dependencies>
+      <dep package="xml-security-c" />
+      <dep package="libp11" />
+    </dependencies>
+  </metamodule>
+
+  <metamodule id="meta-esteid">
+    <dependencies>
+      <dep package="qdigidoc" />
+      <dep package="qesteidutil" />
+      <dep package="firebreath" />
+      <dep package="opensc" />
+    </dependencies>
+  </metamodule>
+
+</moduleset>

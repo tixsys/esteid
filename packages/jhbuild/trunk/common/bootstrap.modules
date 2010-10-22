@@ -1,0 +1,49 @@
+<?xml version="1.0"?><!--*- mode: nxml; indent-tabs-mode: nil -*-->
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<!-- vim:set ts=2 expandtab: -->
+<moduleset>
+
+  <repository type="tarball" name="archive.apache.org"
+      href="http://archive.apache.org/dist/" />
+
+  <repository type="tarball" name="opensc-project.org"
+      href="http://www.opensc-project.org/files/" />
+
+  <autotools id="xerces-c" autogen-sh="configure"
+             autogenargs="--disable-pretty-make --disable-network --disable-sse2 --enable-transcoder-iconv">
+    <branch repo="archive.apache.org"
+            module="xerces/c/3/sources/xerces-c-3.0.1.tar.gz" version="3.0.1"
+            hash="md5:293c03f59bf8e956020d73f5b122094c" />
+  </autotools>
+
+  <autotools id="xml-security-c" autogen-sh="configure"
+      supports-non-srcdir-builds="no" autogenargs="XERCESCROOT=${prefix}">
+    <branch repo="archive.apache.org"
+            module="santuario/c-library/xml-security-c-1.5.1.tar.gz"
+            version="1.5.1" hash="md5:2c47c4ec12e8d6abe967aa5e5e99000c" />
+    <dependencies>
+      <dep package="xerces-c" />
+    </dependencies>
+  </autotools>
+
+  <autotools id="libp11" autogen-sh="configure">
+    <branch repo="opensc-project.org"
+            module="libp11/libp11-0.2.7.tar.gz" version="0.2.7"
+            hash="md5:564ab53ad7353903ddfdc15b153c44fb" />
+  </autotools>
+
+  <metamodule id="meta-esteid-bootstrap">
+    <dependencies>
+      <dep package="xml-security-c" />
+      <dep package="libp11" />
+    </dependencies>
+  </metamodule>
+
+  <metamodule id="meta-bootstrap">
+    <dependencies>
+      <dep package="meta-esteid-bootstrap" />
+    </dependencies>
+  </metamodule>
+
+</moduleset>
