@@ -248,7 +248,7 @@ class Application
         
         puts "Creating smartcardpp..." if @options.verbose
         FileUtils.cd(Pathname.new(@path).join('../../smartcardpp/trunk').to_s) do
-            run_cmake_build('../../smartcardpp/trunk')
+            run_cmake_build('../../smartcardpp/trunk', "-DCMAKE_OSX_ARCHITECTURES='ppc;i386;x86_64'")
         end
         
         puts "Creating browser plugin..." if @options.verbose
