@@ -23,6 +23,10 @@ rm -f /usr/local/lib/libp11.dylib
 rm -f /usr/local/lib/libp11.1.dylib
 rm -rf /Library/EstonianIDCard
 
+for f in /Users/*/.digidocpp/digidocpp.conf ; do
+    grep -q EstonianIDCard "$f" 2> /dev/null && rm -f "$f"
+done
+
 # esteid-mozilla
 echo 'Removing Mozilla extension'
 rm -rf /Library/Application\ Support/Mozilla/Extensions/*/\{aa84ce40-4253-11da-8cd6-0800200c9a66\}
