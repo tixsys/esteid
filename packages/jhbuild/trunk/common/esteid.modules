@@ -3,11 +3,14 @@
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <!-- vim:set ts=2 expandtab: -->
 <moduleset>
-  <repository type="svn" name="esteid-svn" 
+  <repository type="svn" name="esteid" 
               href="https://esteid.googlecode.com/svn/" default="yes" />
 
   <repository type="hg" name="firebreath"
               href="https://firebreath.googlecode.com/hg/" />
+
+  <repository type="svn" name="opensc"
+              href="http://www.opensc-project.org/svn/" />
 
   <cmake id="smartcardpp">
     <branch />
@@ -53,10 +56,13 @@
     </dependencies>
   </cmake>
 
-  <autotools id="opensc"
-      autogen-template="%(srcdir)s/opensc/bootstrap --prefix %(prefix)s
-                        --libdir %(libdir)s %(autogenargs)s">
-    <branch module="externals/" checkoutdir="externals" />
+  <autotools id="opensc" autogen-template="
+        (cd %(srcdir)s ; ./bootstrap);
+        %(srcdir)s/configure --prefix %(prefix)s
+                             --libdir %(libdir)s %(autogenargs)s"
+      autogenargs="--disable-doc --disable-man --enable-shared
+                   --disable-static --enable-strict --disable-assert">
+    <branch repo="opensc" revision="4820" />
   </autotools>
 
   <metamodule id="meta-esteid-bootstrap">
