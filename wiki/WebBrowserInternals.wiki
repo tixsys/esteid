@@ -1,4 +1,5 @@
-#summary On this page we try to document how web browsers work
+h#summary On this page we try to document how web browsers work
+<wiki:toc max_depth="2" />
 
 = Firefox =
 
@@ -11,19 +12,6 @@
  * Tehnoloogia: NPAPI kõigil platvormidel
  * Staatus: Töötab esteid-browser-plugin-iga kõigil platvormidel
 
-= Internet Explorer =
-
-== Autentimine ==
- * Tehnoloogia: Windows Crypto API
- * Staatus:
-  * Töötab IE6 (ei ole ametlikult toetatud), IE7, IE8
-  * Ei tööta: IE9 beta
- * Kiiksud: IE6 ei näita vahetult peale paigaldamist sertifikaadi valikut. Pärast [https://www.sk.ee/cgi-bin/tervitus SK tervituslehekülje] või [http://digidoc.sk.ee DigiDoc portaali] külastamist hakkab iseenesest tööle.
-
-== Allkirjastamine ==
- * Tehnoloogia: ActiveX
- * Staatus: Töötab esteid-browser-plugin-iga
- 
 = Google Chrome / Chromium =
 
 == Autentimine ==
@@ -51,3 +39,20 @@
 == Allkirjastamine ==
  * Tehnoloogia: NPAPI kõigil platvormidel
  * Staatus: Töötab esteid-browser-plugin-iga
+
+= Internet Explorer =
+
+== Autentimine ==
+ * Tehnoloogia: Windows Crypto API
+ * Staatus:
+  * Töötab IE7, IE8
+  * Ei tööta: IE9 beta, IE6 (on see kindel)
+
+== Allkirjastamine ==
+ * Tehnoloogia: ActiveX
+ * Staatus: Töötab esteid-browser-plugin-iga
+
+
+= Webkit Gtk+ (Epiphany, Midori) ja Webkit Qt =
+
+Hetkel tugi puudub: [https://bugs.webkit.org/show_bug.cgi?id=24077 Webkit#24077]. Küll aga on olemas osaline NPAPI tugi.
