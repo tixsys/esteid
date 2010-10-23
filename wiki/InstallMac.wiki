@@ -9,4 +9,12 @@
 
 Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
 
+== Draiveri Probleemid Snow Leopardiga (OSX 10.6) ==
+
+Kui Sa oled proovinud mitmeid erinevaid ID-kaardi tarkvarasid või, veel hullem, paigaldanud Omnikey kaardilugeja draiveri paki, siis on võimalik, et Su kiipkaardi draiverid on lootusetult katki.
+
+Abi saab, kui paigaldad uuesti Apple originaaldraiverid
+
+[http://code.google.com/p/esteid/downloads/detail?name=default-ccid-driver-10.6.pkg default-ccid-driver-10.6.pkg]
+
 [InstallStart Tagasi]
