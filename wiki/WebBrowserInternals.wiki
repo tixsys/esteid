@@ -1,0 +1,52 @@
+#summary On this page we try to document how web browsers work
+
+= Firefox =
+
+== Autentimine ==
+ * Tehnoloogia: PKCS#11 kõigil platvormidel
+ * Kiiksud: Näitab kõiki sertifikaate, hoolimata sertifikaadi lippudest, vajab allkirjaserdi peitmist.
+ * Staatus: Töötab opensc onepin mooduliga kõigil platvormidel
+
+== Allkirjastamine ==
+ * Tehnoloogia: NPAPI kõigil platvormidel
+ * Staatus: Töötab esteid-browser-plugin-iga kõigil platvormidel
+
+= Internet Explorer =
+
+== Autentimine ==
+ * Tehnoloogia: Windows Crypto API
+ * Staatus:
+  * Töötab IE7, IE8
+  * Ei tööta: IE9 beta, IE6 (on see kindel)
+
+== Allkirjastamine ==
+ * Tehnoloogia: ActiveX
+ * Staatus: Töötab esteid-browser-plugin-iga
+
+= Google Chrome / Chromium =
+
+== Autentimine ==
+ * Tehnoloogia
+  * Windows: Windows Crypto API
+  * Mac: TokenD
+  * Linux: PKCS#11
+ * Kiiksud: Autentimise hädad [http://code.google.com/p/chromium/issues/detail?id=44075 #44075]
+ * Staatus: Töötab korralikult ainult Windowsil, Linuxil ei ole PKCS#11 PIN-i aken realiseeritud, Maci all on see miskipärast ebastabiilne.
+
+== Allkirjastamine ==
+ * Tehnoloogia: NPAPI kõigil platvormidel
+ * Staatus: Töötab esteid-browser-plugin-iga
+
+
+= Safari =
+
+== Autentimine ==
+ * Tehnoloogia
+  * Windows: Windows Crypto API
+  * Mac: TokenD
+ * Kiiksud: MacOS X 10.5-s vajab saitide sidumist kaardiga kas käsitsi või Keychain tool-i abil.
+ * Staatus: Töötab
+
+== Allkirjastamine ==
+ * Tehnoloogia: NPAPI kõigil platvormidel
+ * Staatus: Töötab esteid-browser-plugin-iga
