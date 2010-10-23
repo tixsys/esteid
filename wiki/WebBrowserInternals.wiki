@@ -16,13 +16,14 @@
 == Autentimine ==
  * Tehnoloogia: Windows Crypto API
  * Staatus:
-  * Töötab IE7, IE8
-  * Ei tööta: IE9 beta, IE6 (on see kindel)
+  * Töötab IE6 (ei ole ametlikult toetatud), IE7, IE8
+  * Ei tööta: IE9 beta
+ * Kiiksud: IE6 ei näita vahetult peale paigaldamist sertifikaadi valikut. Pärast [https://www.sk.ee/cgi-bin/tervitus SK tervituslehekülje] või [http://digidoc.sk.ee !DigiDoc portaali] külastamist hakkab iseenesest tööle.
 
 == Allkirjastamine ==
  * Tehnoloogia: ActiveX
  * Staatus: Töötab esteid-browser-plugin-iga
-
+ 
 = Google Chrome / Chromium =
 
 == Autentimine ==
