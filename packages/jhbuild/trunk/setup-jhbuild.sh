@@ -8,7 +8,7 @@
 #
 # sh setup-jhbuild.sh
 #
-# jhbuild -f config bootstrap
+# jhbuild -f config bootstrap --ignore-system
 # jhbuild -f config build
 #
 
