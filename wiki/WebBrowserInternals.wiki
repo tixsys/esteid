@@ -18,7 +18,7 @@
  * Staatus:
   * Töötab IE6 (ei ole ametlikult toetatud), IE7, IE8
   * Ei tööta: IE9 beta
- * Kiiksud: IE6 ei näita vahetult peale paigaldamist sertifikaadi valikut. Pärast [https://www.sk.ee/cgi-bin/tervitus SK tervituslehekülje] või [http://digidoc.sk.ee !DigiDoc portaali] külastamist hakkab iseenesest tööle.
+ * Kiiksud: IE6 ei näita vahetult peale paigaldamist sertifikaadi valikut. Pärast [https://www.sk.ee/cgi-bin/tervitus SK tervituslehekülje] või [http://digidoc.sk.ee DigiDoc portaali] külastamist hakkab iseenesest tööle.
 
 == Allkirjastamine ==
  * Tehnoloogia: ActiveX
