@@ -36,7 +36,7 @@ JHB_REV=`cat $mydir/jhbuild-revision`
 
 echo "Checking out jhbuild from git ..."
 if ! test -d $BDIR/jhbuild; then
-    mkdir -p $BDIR
+    mkdir -p $BDIR/work
     cd $BDIR
     git clone git://git.gnome.org/jhbuild 
     cd jhbuild
