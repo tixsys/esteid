@@ -1,0 +1,12 @@
+#summary Standard operating procedure for creating binary releases
+
+= Generic instructions =
+
+ # Build the release
+ # Test the release
+ # Add installer file to Downloads
+ # Send out release candidate announcement
+ # On positive feedback
+  # Mark new release as Featured
+  # Mark old release as Deprecated
+  # Update link on Operating System specific download page
