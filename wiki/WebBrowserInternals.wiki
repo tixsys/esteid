@@ -64,5 +64,11 @@
 
 
 = Webkit Gtk+ (Epiphany, Midori) ja Webkit Qt =
+Hetkel tugi puudub: [https://bugs.webkit.org/show_bug.cgi?id=24077 Webkit#24077].
 
-Hetkel tugi puudub: [https://bugs.webkit.org/show_bug.cgi?id=24077 Webkit#24077]. Küll aga on olemas osaline NPAPI tugi.
+== Autentimine ==
+ * Tehnoloogia: Ei toeta kiipkaarte
+ * Ei tööta
+== Allkirjastamine ==
+ * Tehnoloogia: olemas NPAPI tugi.
+ * Ei tööta
