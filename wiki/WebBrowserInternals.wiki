@@ -1,4 +1,5 @@
-h#summary On this page we try to document how web browsers work
+#summary On this page we try to document how web browsers work
+
 <wiki:toc max_depth="2" />
 
 = Firefox =
@@ -26,7 +27,6 @@ h#summary On this page we try to document how web browsers work
  * Tehnoloogia: NPAPI kõigil platvormidel
  * Staatus: Töötab esteid-browser-plugin-iga
 
-
 = Safari =
 
 == Autentimine ==
@@ -51,6 +51,16 @@ h#summary On this page we try to document how web browsers work
 == Allkirjastamine ==
  * Tehnoloogia: ActiveX
  * Staatus: Töötab esteid-browser-plugin-iga
+
+= Opera =
+
+== Autentimine ==
+ * Tehnoloogia: Opera ei toeta kiipkaarti
+ * Staatus: Ei tööta
+
+== Allkirjastamine ==
+ * Tehnoloogia: NPAPI
+ * Staatus: Ei tööta
 
 
 = Webkit Gtk+ (Epiphany, Midori) ja Webkit Qt =
