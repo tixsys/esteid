@@ -1,6 +1,6 @@
 #summary On this page we try to document how web browsers work
 
-<wiki:toc max_depth="2" />
+<wiki:toc max_depth="1" />
 
 = Firefox =
 
