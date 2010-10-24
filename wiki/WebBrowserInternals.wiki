@@ -55,7 +55,7 @@
 = Opera =
 
 == Autentimine ==
- * Tehnoloogia: Opera ei toeta kiipkaarti. Võid hääletada [http://my.opera.com/community/forums/topic.dml?id=237391 opera foorumis] äkki võtavad lõpuks kuulda.
+ * Tehnoloogia: Opera ei toeta kiipkaarti. Võid hääletada [http://my.opera.com/community/forums/topic.dml?id=237391 opera foorumis], võib-olla võtavad nad kasutajate muret lõpuks kuulda.
  * Staatus: Ei tööta
 
 == Allkirjastamine ==
