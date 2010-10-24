@@ -1,15 +1,19 @@
-#summary Spetsiifiline abi ja nõuanded Windowsi kasutajatele
+﻿#summary Spetsiifiline abi ja nõuanded Windowsi kasutajatele
 
-= Introduction =
+<wiki:toc max_depth="1" />
 
-Add your content here.
+= Teade "Device driver software was not successfully installed" = 
 
-
-= Teate "Device driver software was not successfully installed" keelamine Windows 7-s ja Vistas =
+Windows 7 ja Vista näitavad kaardi sisestamisel sellist pilti:
 
 http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_veateade.png
 
-Selgituseks, et Windows ei leia Microsofti varamust Eesti ID-kaardi draiverit. Seniks kuni seda seal ei ole, saab nendest ebameeldivatest teadetest lahti järgnevalt:
+See teade tähendab, et Windows ei leia Microsofti varamust Eesti ID-kaardi
+draiverit. Tegelikult on draiver süsteemis olemas ja töötab, lihtsalt
+Windows arvab, et ta peaks selle ikkagi internetist tooma.
+Seniks kuni draiverit pole varamus (draiveri lisamise teenus on tasuline
+maksab ja vabatahtlikel pole seda raha kuskilt võtta ning ID-kaardi tarkvara
+"ametlik" arendaja pole vaevunud seda ka tegema), saab nendest ebameeldivatest teadetest lahti järgnevalt:
 
 1. Ava Windowsi Start menüüst arvuti haldamine (_Start_ -> paremklõps _Computer_ peal ning sealt _Manage_).
 
