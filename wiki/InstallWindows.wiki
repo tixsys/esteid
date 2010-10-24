@@ -1,13 +1,13 @@
 ﻿== Toetatud operatsioonisüsteemid ==
 
  * Windows XP SP3 või uuem
- * Windows Vista SP1 või uuem
- * Windows 7
+ * Windows Vista SP1 või uuem (vaata [WindowsUserHelp#Error_%22Device_driver_software_was_not_successfully_installed seda märkust])
+ * Windows 7 (vaata [WindowsUserHelp#Error_%22Device_driver_software_was_not_successfully_installed seda märkust])
 
 == Toetatud veebilehitsejad ==
 
  * Firefox (3.6 ja uuem)
- * Internet Explorer (7 ja 8)
+ * Internet Explorer 7 ja 8 (IE 9 Beta ei tööta)
  * Google Chrome
  * Safari
 
@@ -29,5 +29,11 @@ Hiljem toimub tarkvara uuenduste kontroll automaatselt või käivitades id-updat
 
 Kui Sa ei tea, kas Sul on 32 või 64 bitine Windows,
 siis tee see kindlaks, kasutades [http://support.microsoft.com/kb/827218 neid juhiseid].
+
+== Paigaldamine kui on all vana tarkvara ==
+
+Üldjuhul peaks uus tarkvara vana puhtalt ära asendama. Samas võib Firefoxi puhul olla vajalik kaks 
+brauseri restarti. Esimese korraga eemaldatakse vanad moodulid ja teise käivitusega tõmmatakse uus
+tarkvara korralikult käima. Seda peaks näha olema olekuribal olevalt ID ikoonilt, kui see esimesel korral käivitub punase ristiga, siis on tarvis Firefox veelkord taaskäivitada.
 
 [InstallStart Tagasi]
