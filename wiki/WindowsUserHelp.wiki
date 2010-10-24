@@ -11,9 +11,7 @@ http://esteid.googlecode.com/svn/wiki/img/juhend/windowsuserhelp_veateade.png
 See teade tähendab, et Windows ei leia Microsofti varamust Eesti ID-kaardi
 draiverit. Tegelikult on draiver süsteemis olemas ja töötab, lihtsalt
 Windows arvab, et ta peaks selle ikkagi internetist tooma.
-Seniks kuni draiverit pole varamus (draiveri lisamise teenus on tasuline
-maksab ja vabatahtlikel pole seda raha kuskilt võtta ning ID-kaardi tarkvara
-"ametlik" arendaja pole vaevunud seda ka tegema), saab nendest ebameeldivatest teadetest lahti järgnevalt:
+Seniks kuni draiverit pole varamus (draiveri lisamise teenus on tasuline, vabatahtlikel pole seda raha kuskilt võtta ning ID-kaardi tarkvara "ametlik" arendaja pole vaevunud seda ka tegema), saab nendest ebameeldivatest teadetest lahti järgnevalt:
 
 1. Ava Windowsi Start menüüst arvuti haldamine (_Start_ -> paremklõps _Computer_ peal ning sealt _Manage_).
 
