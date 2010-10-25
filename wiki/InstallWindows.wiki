@@ -36,4 +36,7 @@ siis tee see kindlaks, kasutades [http://support.microsoft.com/kb/827218 neid ju
 brauseri restarti. Esimese korraga eemaldatakse vanad moodulid ja teise käivitusega tõmmatakse uus
 tarkvara korralikult käima. Seda peaks näha olema olekuribal olevalt ID ikoonilt, kui see esimesel korral käivitub punase ristiga, siis on tarvis Firefox veelkord taaskäivitada.
 
+== Ikka ei tööta ? ==
+Tule [Discussions IRC kanalile] või [http://www.facebook.com/open.esteid Facebooki] ja räägi inimestega. Üksinda nurgas sajatamine ei muuda midagi.
+
 [InstallStart Tagasi]
