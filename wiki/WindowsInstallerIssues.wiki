@@ -4,9 +4,7 @@
 
 Windowsis uue MSI paigaldamiseks pole üldjuhul käsitsi vaja vana maha võtta vaid piisab uue installimisest. Vana versioon võetakse automaatselt maha ning uus paigaldatakse selle asemele.
 
-Kui paigaldamisel tekivad aga probleemid, siis ilma installeri logifailita on nende põhjuseid võimatu kindlaks teha. Veateade on väga üldine ja ei sisalda piisavalt infot.
-
-Seetõttu on äärmiselt oluline kätte saada installeri logi.
+Kui paigaldamisel tekivad aga probleemid, siis ilma installeri logifailita on nende põhjuseid võimatu kindlaks teha. Veateade on väga üldine ja ei sisalda piisavalt infot. Seetõttu on äärmiselt oluline kätte saada installeri logi.
 
 Toimi nii:
 
