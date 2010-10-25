@@ -17,4 +17,7 @@ Abi saab, kui paigaldad uuesti Apple originaaldraiverid [http://code.google.com/
 
 NB! Peale draiverite paigaldamist ära unusta arvutile alglaadimist teha
 
+== Ikka ei tööta ? ==
+Tule [Discussions IRC kanalile] või [Discussions Facebooki] ja räägi inimestega. Üksinda nurgas sajatamine ei muuda midagi.
+
 [InstallStart Tagasi]
