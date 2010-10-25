@@ -1,0 +1,47 @@
+#Kiipkaardi lugejad ja nende driverid
+
+
+Kui arvuti ei tunne pärast ID-kaardi tarkvara installimist ID-kaardi lugejat ära, võib olla asi selles, et draiver on puudu. Järgnevas nimekirjas on hulk kaardilugejaid ning aadresse, kust saab neile lugejatele draivereid.
+
+
+Kaardilugeja SPR532
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/SPR532.jpg
+
+
+Draiveri saab tõmmata [http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SPR532/ siit].
+
+
+
+Kaardilugeja SCR331.jpg
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/SCR331.jpg
+
+
+Draiveri saab tõmmata siit.
+
+
+
+Kaardilugeja SCR3310.jpg
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/SCR3310.jpg
+
+
+Draiveri saab tõmmata siit.
+
+
+
+Kaardilugeja SCR3311.jpg
+
+
+
+http://esteid.googlecode.com/svn/wiki/img/SCR3311.jpg
+
+
+Draiveri saab tõmmata siit.
