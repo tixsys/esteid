@@ -8,11 +8,13 @@ Kui paigaldamisel tekivad aga probleemid, siis ilma installeri logifailita on ne
 
 Seetõttu on äärmiselt oluline kätte saada installeri logi.
 
-Logi tekitamiseks on olemas fail nimega logging.bat: http://esteid.googlecode.com/svn/misc/logging.bat .
+Toimi nii:
 
-See tuleb tõmmata enda masinasse, salvestada töölauale, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
-
-Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail kenasti
+ # Tõmba fail nimega logging.bat http://esteid.googlecode.com/svn/misc/logging.bat
+ # Salvesta see töölauale
+ # Lohista MSI fail .bat faili peale.
+ # Käivitub install ja genereeritakse logifail kujul installipaketinimi.log
+ # Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail kenasti
 manusena kaasa.
 
 Aitäh!
