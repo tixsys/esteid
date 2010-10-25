@@ -1,0 +1,24 @@
+#summary Kuidas debugida Windowsi installipaketi probleeme
+
+= MSI Logifaili tekitamine =
+
+Windowsis uue MSI paigaldamiseks pole üldjuhul käsitsi vaja vana maha võtta vaid piisab uue installimisest. Vana versioon võetakse automaatselt maha ning uus paigaldatakse selle asemele.
+
+Kui paigaldamisel tekivad aga probleemid, siis ilma installeri logifailita on nende põhjuseid võimatu kindlaks teha. Veateade on väga üldine ja ei sisalda piisavalt infot.
+
+Seetõttu on äärmiselt oluline kätte saada installeri logi.
+
+Logi tekitamiseks on olemas fail nimega logging.bat: http://esteid.googlecode.com/svn/misc/logging.bat .
+
+See tuleb tõmmata enda masinasse, salvestada töölauale, ning siis installi MSI fail lohistada .bat faili peale. Käivitub install ning samuti ka automaatselt logimine ja genereeritakse logifail kujul installipaketinimi.log . 
+
+Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail kenasti
+manusena kaasa.
+
+Aitäh!
+
+
+= Windows Installeri andmebaasi puhastamine käsitsi =
+
+Päris tooreid arendusversioone proovides või ise installerit arendades võib tekkida olukord, kus juba paigaldatud MSI paketi uninstalli osa on vigane ning seetõttu ei õnnestu seda enam eemaldada. Üks teadaolev sarnane viga esines MSI-s enne alfa versiooni 2.7.924.331, kuid uuemates on see korras.
+Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti kasutades Windows Installeri puhastusutiliiti [http://support.microsoft.com/kb/290301]. Kui seejärel peale installida uuem versioon, peaks uninstall olema korras.
