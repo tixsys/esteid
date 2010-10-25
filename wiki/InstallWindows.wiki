@@ -1,6 +1,6 @@
 ﻿== Toetatud operatsioonisüsteemid ==
 
- * Windows XP SP3 või uuem
+ * Windows XP (32 bit) SP3 või uuem
  * Windows Vista SP1 või uuem (vaata [WindowsUserHelp#Error_%22Device_driver_software_was_not_successfully_installed seda märkust])
  * Windows 7 (vaata [WindowsUserHelp#Error_%22Device_driver_software_was_not_successfully_installed seda märkust])
 
