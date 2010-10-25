@@ -36,6 +36,13 @@ siis tee see kindlaks, kasutades [http://support.microsoft.com/kb/827218 neid ju
 brauseri restarti. Esimese korraga eemaldatakse vanad moodulid ja teise käivitusega tõmmatakse uus
 tarkvara korralikult käima. Seda peaks näha olema olekuribal olevalt ID ikoonilt, kui see esimesel korral käivitub punase ristiga, siis on tarvis Firefox veelkord taaskäivitada.
 
+Kui aga pakett ikkagi tõrgub peale minemast, võib proovida järgmist:
+ # Eemalda Control Paneli alt vana tarkvara
+ # Tee reboot (jah, see on oluline, ära jäta seda sammu vahele)
+ # Paigalda uus
+
+Kui nüüd ka ei paigaldu, siis on tegemist haruldase installeri veaga ja ainult Sina saad maailma paremaks muuta. Palun järgi [WindowsInstallerIssues neid juhiseid] ja aita meil probleemile jälile saada. Aitäh!
+
 == Ikka ei tööta ? ==
 Tule [Discussions IRC kanalile] või [http://www.facebook.com/open.esteid Facebooki] ja räägi inimestega. Üksinda nurgas sajatamine ei muuda midagi.
 
