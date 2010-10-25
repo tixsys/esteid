@@ -14,8 +14,7 @@ Toimi nii:
  # Salvesta see töölauale
  # Lohista MSI fail .bat faili peale.
  # Käivitub install ja genereeritakse logifail kujul installipaketinimi.log
- # Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail kenasti
-manusena kaasa.
+ # Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail manusena kaasa.
 
 Aitäh!
 
