@@ -6,9 +6,6 @@ Teenusepakkuja säilitab dokumenti oma serveris, kuid pakub Sulle ka võimaluse 
 
 = Teadaolevad probleemid! =
 
-SEB's ei ole hetkel võimalik allkirjastada Maci ja Linuxi all. Ka windowsi Firefoxis ja Chrome'is pole allkirjastamine võimalik Java appletiga, kuni pole installeeritud ohjurprogrammi IE kaudu.
-id.eesti.ee's pole allkirjastamine võimalik.
+SEB'i internetipangas allkirjastamine on võimalik ainult IE'ga ja Firefoxiga (tänu eriti koledale Mozilla spetsiifilisele wrapperile/häkile brauseri pluginas). Ei Safari ega Chromega pole SEB'is allkirjastamine võimalik. Kuni SEB ei kaasajasta oma internetipangas allkirjastamise koodi, olukord ei muutu. 
 
-= Kasutaja(te) kommentaarid =
-
-Digiallkirjastamise sain toimima nii SEB-is, Swedbankis kui eesti.ee kodanikuportaalis, järgides [https://ideelabor.ee/opensource/wiki/IdKaardiTarkvara/DigiallkiriVeebisLinuxiga Ideelabori juhiseid] (Ubuntu 9.10 amd64) -- Peeter P. Mõtsküla, 18.10.2009.
+Ajutise lahendusena on võimalik nii Safari kui ka Chrome SEB'is allkirjastama saada paigaldades Java PKCS#11 wrapperi (vt nt [https://ideelabor.ee/opensource/wiki/IdKaardiTarkvara/DigiallkiriVeebisLinuxiga Ideelabori juhiseid]). Kuid kuna wrapper on tihti ebastabiilne põhjustades crash'e ja hangumisi ning näitab kasutajatele mõttetuid ja segadusse ajavaid dialooge, on soovitav sellest wrapperist siiski eemale hoida.
