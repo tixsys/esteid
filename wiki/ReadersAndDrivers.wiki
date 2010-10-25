@@ -10,3 +10,4 @@ Kui arvuti ei tunne pärast ID-kaardi tarkvara installimist ID-kaardi lugejat ä
 ||SCR3311||http://esteid.googlecode.com/svn/wiki/img/SCR3311.jpg||[http://www.scmmicro.com/ SCM]||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||
 ||Cardman 1021|| -||[http://www.omnikey.com/ OmniKey]||OK || OK || ?? ||
 ||HP USB Keyboard||-||[http://www.hp.com/ Hewlett-Packard]||OK || OK || ?? ||
+||Argos Mini||-||[http://www.todos.se/ Todos]|| OK? || -- || ?? ||
