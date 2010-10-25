@@ -4,7 +4,9 @@
 Kui arvuti ei tunne pärast ID-kaardi tarkvara installimist ID-kaardi lugejat ära, võib olla asi selles, et draiver on puudu. Järgnevas nimekirjas on hulk kaardilugejaid ning aadresse, kust saab neile lugejatele draivereid.
 
 ||*Tüüp*||*Pilt*||*Tootja*||*Windows*||*Linux*||*Mac*||
-|| SPR532 || http://esteid.googlecode.com/svn/wiki/img/SPR532.jpg || [http://www.scmmicro.com/ SCM] || OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SPR532/ Draiver] || OK || OK ||
-|| SCR331 ||http://esteid.googlecode.com/svn/wiki/img/SCR331.jpg|| [http://www.scmmicro.com/ SCM] || OK || OK || OK ||
-|| SCR3310 || http://esteid.googlecode.com/svn/wiki/img/SCR3310.jpg || [http://www.scmmicro.com/ SCM] ||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || OK ||
-||SCR3311||http://esteid.googlecode.com/svn/wiki/img/SCR3311.jpg||[http://www.scmmicro.com/ SCM]||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || OK ||
+|| SPR532 || http://esteid.googlecode.com/svn/wiki/img/SPR532.jpg || [http://www.scmmicro.com/ SCM] || OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SPR532/ Draiver] || OK || ?? ||
+|| SCR331 ||http://esteid.googlecode.com/svn/wiki/img/SCR331.jpg|| [http://www.scmmicro.com/ SCM] || OK || OK || ?? ||
+|| SCR3310 || http://esteid.googlecode.com/svn/wiki/img/SCR3310.jpg || [http://www.scmmicro.com/ SCM] ||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||
+||SCR3311||http://esteid.googlecode.com/svn/wiki/img/SCR3311.jpg||[http://www.scmmicro.com/ SCM]||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||
+||Cardman 1021|| -||[http://www.omnikey.com/ OmniKey]||OK || OK || ?? ||
+||HP USB Keyboard||-||[http://www.hp.com/ Hewlett-Packard]||OK || OK || ?? ||
