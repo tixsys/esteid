@@ -1,21 +1,78 @@
 #summary Omnikey CardMan 4040 konfigureerimine Linuxi all
 
 
-See on üks lugeja, mille konfigureerimine on hulk käsitööd.
+See on üks lugeja, mille konfigureerimine on hulk käsitööd. Püüan siia kirja panna oma kogemused mis saadud opensuse (viimati 11.3) alla seda käima ajades. Teistes distordes võivad ilmselt failide asukohad ja/või pakkide nimed olla erinevad kuid üldidee peaks olema sama.
 
-Herr Raudpats lubas kirjutada kuidas see käib.
-
-Vaja on modida /etc/openct.conf faili
+Vaja on modida /etc/openct.conf faili. Vastav lõik peaks olema seal olemas kuid vaikimisi välja kommenteeritud. Seega kustuta kommentaarimärgid või kui seda lõiku pole üldse, siis lisa.
 {{{
-kirjuta siia midagi
+reader cm4040 {
+        driver = ccid;
+        device = pcmcia_block:/dev/cmx0;
+};
 }}}
 
-Kontrollida, et töötab
+Samuti tuleks modida /etc/opensc.conf faili. Vastav rida peaks jällegi olema seal olemas kuid vaikimisi välja kommenteeritud. Seega kustuta kommentaarimärgid või kui seda lõiku pole üldse, siis lisa.
 {{{
-openct-tool list
-openct-tool atr
+reader_drivers = openct, pcsc, ctapi;
 }}}
 
-Lisada openct->PC/SC sild.
+Nüüd võiks teha openct restardi ("rcopenct restart" näiteks) ning kontrollida, et kaardilugeja töötab järgmiste käskudega. Tulemused võiksid olla midagi sarnast kui siin toodud...
+{{{
+# openct-tool list
+  0 CCID Compatible
 
-jne.
+# openct-tool atr
+Detected CCID Compatible
+Card present, status changed
+ATR: 3b fe 94 00 ff 80 c1 fa 45 1f 03 45 73 75 45 49 44 20 76 65 71 20 31 2e 30 43
+}}}
+
+Nüüd võib ka ideeliselt proovida, et ehk on lausa kõik tööle läinud. Selleks teha pcscd restart ("rcpcscd restart" näiteks) ning proovida kas ka opensc näeb kaardilugejat
+{{{
+# opensc-tool --list-readers
+No smart card readers found.
+}}}
+Kui tulemuseks polegi "No smart card readers found." vaid hoopis leitakse lugeja siis edasine võib vahele jääda. Aga tõenäoliselt siiski on vastus justnimelt selline ning seega tuleb minna järgmise sammu juurde - vaja on lisada openct->PC/SC sild.
+
+Selleks tuleb lisaks installeerida pakk pcsc-openct (Fedoras pidi olema paki nimi näiteks pcsc-lite-openct, üldiselt otsides pakki mille nimes nii pcsc kui openct esindatud peaks õige leitud olema).
+
+Järgmiseks on vaja luua fail /etc/reader.conf.d/openct.conf Mõnel distrol pidi see olema kaasas pcsc-openct pakiga, opensuse 11.3'el igatahes ei olnud. Selle faili sisuks võiks olla midagi sellist
+{{{
+FRIENDLYNAME     OpenCT
+DEVICENAME       /dev/cmx0
+LIBPATH          /usr/lib/readers/openct-ifd.bundle/Contents/Linux/openct-ifd.so
+CHANNELID        0
+}}}
+
+Nüüd siis jälle teha pcscd restart ("rcpcscd restart" näiteks) ning proovida kas nüüd opensc näeb kaardilugejat ja ka IDkaarti
+{{{
+# opensc-tool --list-readers
+# Detected readers (pcsc)
+Nr.  Card  Features  Name
+0    Yes             OpenCT 00 00
+
+# pkcs15-tool --list-certificates
+Using reader with a card: OpenCT 00 00
+X.509 Certificate [Isikutuvastus]
+        Object Flags   : [0x0]
+        Authority      : no
+        Path           : 3f00eeeeaace
+        ID             : 01
+        Encoded serial : 02 04 49192344
+
+X.509 Certificate [Allkirjastamine]
+        Object Flags   : [0x0]
+        Authority      : no
+        Path           : 3f00eeeeddce
+        ID             : 02
+        Encoded serial : 02 04 49192034
+}}}
+
+Kui tulemus on sarnane, siis palju õnne - oled oma kaardilugeja tööle saanud. Nüüd peaks juba ka weebilehitseja ja ID Kaardi haldusprogramm jms kaardi üles leidma.
+Aga kui asi ikka ei tööta, siis kas jäi Sinul midagi tegemata või jäi minul siis midagi kirja panemata. Viimasel juhul katseta ise edasi ja kui saad tööle ja leiad, et seda kirjatükki peaks täiendama, siis anna teada!
+
+Ahjaa... Mingil hetkel netist leitud soovituse põhjal sai "spetsiaalne" fail /lib/udev/devices/cmx0 loodud. Seda saab teha näiteks järgmise käsuga
+{{{
+mknod -m 666 /lib/udev/devices/cmx0 c 253 0
+}}}
+Ehk siis kui seni asi ei toimi ja sarnast faili pole olemas, siis on ehk seegi väärt proovimist! :)
