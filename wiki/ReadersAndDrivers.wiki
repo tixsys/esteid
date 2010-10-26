@@ -8,6 +8,6 @@ Kui arvuti ei tunne pärast ID-kaardi tarkvara installimist ID-kaardi lugejat ä
 || SCR3310 || http://esteid.googlecode.com/svn/wiki/img/readers/SCR3310.jpg || [http://www.scmmicro.com/ SCM] ||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||
 ||SCR3311||http://esteid.googlecode.com/svn/wiki/img/readers/SCR3311.jpg||[http://www.scmmicro.com/ SCM]||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||
 ||Cardman 1021|| http://esteid.googlecode.com/svn/wiki/img/readers/OK1021.jpg ||[http://www.omnikey.com/ OmniKey]|| OK || OK || ?? ||
-||Cardman 4040|| http://esteid.googlecode.com/svn/wiki/img/readers/CM4040.jpg ||[http://www.hidglobal.com/ OmniKey (HID Global)]|| OK<br>[http://www.hidglobal.com/driverDownloads.php?techCat=19&prod_id=180 Draiver] || OK, aga <br />[CM4040LinuxConfig Nõuab pusimist] || EI? ||
+||Cardman 4040|| http://esteid.googlecode.com/svn/wiki/img/readers/CM4040.jpg ||[http://www.hidglobal.com/ HID Global]<br />(!OmniKey)|| OK<br>[http://www.hidglobal.com/driverDownloads.php?techCat=19&prod_id=180 Draiver] || OK, aga <br />[CM4040LinuxConfig Nõuab pusimist] || EI? ||
 ||HP USB Smartcard <br /> Keyboard||http://esteid.googlecode.com/svn/wiki/img/readers/HPKEYB.jpg ||[http://www.hp.com/ Hewlett-Packard]|| OK || OK || ?? ||
 ||Argos Mini||-||[http://www.todos.se/ Todos]|| OK? || -- || ?? ||
