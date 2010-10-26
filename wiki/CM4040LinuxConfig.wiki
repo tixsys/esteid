@@ -1,0 +1,21 @@
+#summary Omnikey CardMan 4040 konfigureerimine Linuxi all
+
+
+See on üks lugeja, mille konfigureerimine on hulk käsitööd.
+
+Herr Raudpats lubas kirjutada kuidas see käib.
+
+Vaja on modida /etc/openct.conf faili
+{{{
+kirjuta siia midagi
+}}}
+
+Kontrollida, et töötab
+{{{
+openct-tool list
+openct-tool atr
+}}}
+
+Lisada openct->PC/SC sild.
+
+jne.
