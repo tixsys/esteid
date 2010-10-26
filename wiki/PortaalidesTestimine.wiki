@@ -19,11 +19,12 @@ Kuidas testida: Sisene ID-kaardiga aadressilt https://www.seb.ee
 
 Tulemus: Töötab IE, FF
 
+MacOSX Snow Leopard (10.6.4): Safari, Firefox - 26.10.2010
 
   * Pank SEB autentimine - www.seb.ee
 -Toimib
 
-  *Pank SEB allkirjastamine - www.seb.ee makse sooritamisel
+  * Pank SEB allkirjastamine - www.seb.ee makse sooritamisel
 -Toimib korralikult ainult ActiveX ja IE-ga kuna SEBi kasutab vana Java Applet, mida ühilduvusrežiim ei toeta.
 
 
@@ -32,6 +33,8 @@ Tulemus: Töötab IE, FF
 Kuidas testida: Sisene ID-kaardiga aadressilt http://www.eesti.ee/portaal/portaal.sisene?level=21&loc=!portaal.clean_url%3F/est/kodanik
 
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+
+MacOSX Snow Leopard (10.6.4): Safari, Firefox, Chrome - 26.10.2010
 
 === Allkirjastamine === 
 Kuidas testida: Lisa minu dokumentidesse uus dokument ja proovi allkirjastada
@@ -44,6 +47,8 @@ Kuidas testida: Sisene ID-kaardiga aadressilt http://www.emta.ee/?id=12223
 
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
 
+MacOSX Snow Leopard (10.6.4): Safari, Firefox, Chrome - 26.10.2010
+
   * e-maksuamet www.emta.ee allkirjastamine - 
 
 == e-kinnisturaamat ==
@@ -51,6 +56,8 @@ Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2
 Kuidas testida: Sisene ID-kaardiga aadressilt https://kinnistusraamat.rik.ee/detailparing/Avaleht.aspx
 
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+
+MacOSX Snow Leopard (10.6.4): Firefox, Chrome - 26.10.2010
  
  * e-kinnisturamaat allkirjastamine -
 
@@ -60,6 +67,8 @@ Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2
 Kuidas testida: Sisene ID-kaardiga aadressilt http://www.e-toimik.ee/
 
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
+
+MacOSX Snow Leopard (10.6.4): Safari, Firefox, Chrome - 26.10.2010
 
   * e-toimik allkirjastamine - 
 
@@ -71,6 +80,8 @@ Kuidas testida: Sisene ID-kaardiga aadressilt http://www.digilugu.ee/portal/page
 
 Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2010 
 
+MacOSX Snow Leopard (10.6.4): Safari, Firefox, Chrome - 26.10.2010
+
   * e-tervise infosüsteem allkirjastamine - 
 
 == !DigiDoc portaal ==
@@ -78,6 +89,8 @@ Tulemus: Töötab IE(Win7, XP), FF (Win7, XP, Linux), Chrome(Win7, XP) - 15.09.2
 Kuidas testida: Sisene ID-kaardiga aadressilt http://digidoc.sk.ee
 
 Tulemus: Töötab IE, FF (Win, Mac, Linux), Chrome (Win) - 15.09.2010
+
+MacOSX Snow Leopard (10.6.4): Safari, Firefox, Chrome - 26.10.2010
 
 === Allkirjastamine ===
 Kuidas testida: Sisene ID-kaardiga, lisa suvaline tekstidokument.
