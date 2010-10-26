@@ -3,8 +3,8 @@
 Kui arvuti ei tunne pärast ID-kaardi tarkvara installimist ID-kaardi lugejat ära, võib olla asi selles, et draiver on puudu. Järgnevas nimekirjas on hulk kaardilugejaid ning aadresse, kust saab neile lugejatele draivereid.
 
 ||*Tüüp*||*Pilt*||*Tootja*||*Windows*||*Linux*||*Mac*||Märkused||
-|| SPR532 || http://esteid.googlecode.com/svn/wiki/img/readers/SPR532.jpg || [http://www.scmmicro.com/ SCM] || OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SPR532/ Draiver] || OK || ?? ||Võib vajada <br />firmware uuendust||
-|| SCR331 ||http://esteid.googlecode.com/svn/wiki/img/readers/SCR331.jpg|| [http://www.scmmicro.com/ SCM] || OK || OK || ?? ||Võib vajada <br />firmware uuendust||
+|| SPR532 || http://esteid.googlecode.com/svn/wiki/img/readers/SPR532.jpg || [http://www.scmmicro.com/ SCM] || OK<br>[http://www.scmmicro.com/en/support/pc-security-support/downloads.html Draiver] || OK || ?? ||Võib vajada <br />[http://www.scmmicro.com/en/support/pc-security-support/downloads.html firmware uuendust]||
+|| SCR331 ||http://esteid.googlecode.com/svn/wiki/img/readers/SCR331.jpg|| [http://www.scmmicro.com/ SCM] || OK || OK || ?? ||Võib vajada <br />[http://www.scmmicro.com/en/support/pc-security-support/downloads.html firmware uuendust]||
 || SCR3310 || http://esteid.googlecode.com/svn/wiki/img/readers/SCR3310.jpg || [http://www.scmmicro.com/ SCM] ||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||-||
 ||SCR3311||http://esteid.googlecode.com/svn/wiki/img/readers/SCR3311.jpg||[http://www.scmmicro.com/ SCM]||OK<br>[http://www.isecuretech.com/download/SmartCardReader/SCM/driver/SCR3xxx/ Draiver]|| OK || ?? ||-||
 ||Cardman 1021|| http://esteid.googlecode.com/svn/wiki/img/readers/OK1021.jpg ||[http://www.omnikey.com/ OmniKey]|| OK || OK || ?? ||-||
