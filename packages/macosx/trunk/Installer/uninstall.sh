@@ -6,6 +6,17 @@ if [ x"$(id -u)" != x"0" ] ; then
 	exit 1
 fi
 
+# Remove obsolete openoffice extension
+if [ -f /usr/local/share/ooo-digidoc.oxt ]; then
+   unopkg=/Applications/OpenOffice.org.app/Contents/program/unopkg
+   if $unopkg list --shared ee.smartlink.ooo.digidoc >/dev/null 2>&1; then
+       $unopkg remove --shared ee.smartlink.ooo.digidoc >/dev/null 2>&1
+       $unopkg list --shared >/dev/null 2>&1
+   fi
+   rm -rf /Library/Receipts/org.esteid.installer.openoffice*
+   rm -f /usr/local/share/ooo-digidoc.oxt
+fi
+
 # esteid-contextmenu
 echo 'Removing Finder plug-in'
 rm -rf /Library/Contextual\ Menu\ Items/EstEIDCM.plugin
@@ -79,6 +90,19 @@ rm -rf /Library/Internet\ Plug-Ins/esteidsafariplugin.webplugin
 
 echo 'Removing receipts'
 rm -rf /Library/Receipts/org.esteid.*
+
+# SK receipst
+rm -rf /Library/Receipts/com.EE.esteid.pkg
+rm -rf /Library/Receipts/esteidfirefoxplugin.pkg
+rm -rf /Library/Receipts/esteidpkcs11loader.pkg
+rm -rf /Library/Receipts/esteidsafariplugin.pkg
+rm -rf /Library/Receipts/libdigidoc.pkg
+rm -rf /Library/Receipts/libdigidocpp.pkg
+rm -rf /Library/Receipts/OpenSC-10.6.pkg
+rm -rf /Library/Receipts/qdigidoc.pkg
+rm -rf /Library/Receipts/qesteidutil.pkg
+rm -rf /Library/Receipts/Qt_libraries.pkg
+rm -rf /Library/Receipts/smartcardpp.pkg
 
 echo "Files removed."
 
