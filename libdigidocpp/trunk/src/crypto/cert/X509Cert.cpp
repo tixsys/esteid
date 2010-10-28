@@ -76,6 +76,32 @@ digidoc::X509Cert::X509Cert(std::vector<unsigned char> bytes) throw(IOException)
 }
 
 /**
+ * Creates X509 certificate from the provided PEM encoded string.
+ *
+ * @param pem X509 certificate in PEM format.
+ * @throws IOException throws exception if X509 certificate parsing failed.
+ */
+digidoc::X509Cert::X509Cert(const std::string& pem) throw(IOException)
+ : cert(NULL)
+{
+    if(pem.empty())
+    {
+        THROW_IOEXCEPTION("No bytes given to parse X509.");
+    }
+
+    // Parse certificate from PEM formatted buffer.
+    BIO *mem = BIO_new_mem_buf((void *)pem.c_str(), -1); BIO_scope memScope(&mem);
+    // X509 *PEM_read_X509(FILE *fp, X509 **x, pem_password_cb *cb, void *u);
+    PEM_read_bio_X509(mem, &cert, 0, NULL);
+    BIO_free(mem);
+
+    if(cert == NULL)
+    {
+        THROW_IOEXCEPTION("Failed to parse X509 certificate from PEM string: %s", ERR_reason_error_string(ERR_get_error()));
+    }
+}
+
+/**
  * Copy constructor.
  *
  * @param copy instance of X509Cert class to be copied.
