@@ -325,7 +325,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
 {
-	SCError::checkError((*pSCardDisconnect)((( PCSCConnection *)c)->hScard,SCARD_RESET_CARD));
+	(*pSCardDisconnect)((( PCSCConnection *)c)->hScard,SCARD_RESET_CARD);
 }
 
 void PCSCManager::beginTransaction(ConnectionBase *c)
