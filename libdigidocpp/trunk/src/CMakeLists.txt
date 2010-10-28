@@ -109,6 +109,7 @@ set(digidocpp_SRCS
     SignatureException.cpp
     SignatureAttributes.cpp
     WDoc.cpp
+    crypto/Types.cpp
     crypto/Digest.cpp
     crypto/cert/X509Cert.cpp
     crypto/cert/X509CertStore.cpp
@@ -119,6 +120,7 @@ set(digidocpp_SRCS
     crypto/signer/PKCS11Signer.cpp
     crypto/signer/EstEIDSigner.cpp
     crypto/signer/RSASigner.cpp
+    crypto/signer/WebSigner.cpp
     crypto/signer/Signer.cpp
     crypto/signer/SignException.cpp
     io/IOException.cpp
@@ -218,6 +220,7 @@ install( FILES
 )
 
 install( FILES
+    crypto/Types.h
     crypto/Digest.h
     crypto/OpenSSLHelpers.h
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto
@@ -245,6 +248,7 @@ install( FILES
     crypto/signer/EstEIDSigner.h
     crypto/signer/PKCS11Signer.h
     crypto/signer/RSASigner.h
+    crypto/signer/WebSigner.h
     crypto/signer/Signer.h
     crypto/signer/SignException.h
     DESTINATION ${DIGIDOCPP_INCLUDE_DIR}/crypto/signer
