@@ -105,7 +105,7 @@ ErrorMessage g_ddocErrorStrings[ERR_MAX] = {
 /* ERR_BAD_DATAFILE_XML */		  {"XML content cannot contain the first XML line", USER},
 /* ERR_UNSUPPORTED_VERSION */	  {"Unsupported SK-XML version. Please upgrade!", TECHNICAL},
 /* ERR_UNSUPPORTED_CHARSET */	  {"Unsupported charset", TECHNICAL},
-/* ERR_PKCS12_EXPIRED */		  {"PKCS#12 certificate has expired. Please get a new onew from www.sk.ee", USER},
+/* ERR_PKCS12_EXPIRED */		  {"PKCS#12 certificate has expired. Please get a new one from http://www.sk.ee/getaccess", USER},
 /* ERR_CSP_USER_CANCEL */		  {"User canceled certificate selection", USER},
 /* ERR_CSP_NODEFKEY_CONTAINER */  {"Can't find default key container", TECHNICAL},
 /* ERR_CONNECTION_FAILURE */      {"Connection error", USER},
