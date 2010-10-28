@@ -8,7 +8,7 @@ Kui paigaldamisel tekivad aga probleemid, siis ilma installeri logifailita on ne
 
 Toimi nii:
 
- # Tõmba fail nimega logging.bat http://esteid.googlecode.com/svn/misc/logging.bat
+ # Tõmba fail nimega logging.bat http://esteid.googlecode.com/files/logging.bat
  # Salvesta see töölauale
  # Lohista MSI fail .bat faili peale.
  # Käivitub install ja genereeritakse logifail kujul installipaketinimi.log
