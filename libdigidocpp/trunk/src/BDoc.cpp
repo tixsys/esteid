@@ -99,7 +99,7 @@ digidoc::BDoc::~BDoc()
  */
 void digidoc::BDoc::readFrom(std::auto_ptr<ISerialize> serializer) throw(IOException, BDocException)
 {
-    DEBUG("BDoc::readFrom(serializer = 0x%X '%s')", (unsigned int)serializer.get(), serializer->getPath().c_str());
+    DEBUG("BDoc::readFrom(serializer = %p '%s')", serializer.get(), serializer->getPath().c_str());
 
     // Set container initializer.
     this->serializer = serializer;
@@ -640,7 +640,7 @@ void digidoc::BDoc::sign(Signer* signer, Signature::Type profile) throw(BDocExce
         THROW_BDOCEXCEPTION("Null pointer in digidoc::BDoc::sign");
     }
 
-    DEBUG("sign(signer = 0x%X, profile=%d)", (unsigned int)signer, profile);
+    DEBUG("sign(signer = %p, profile=%d)", signer, profile);
 
     // Create signature by type.
     Signature* signature = NULL;

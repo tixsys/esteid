@@ -275,9 +275,9 @@ X509* digidoc::PKCS11Signer::getCert() throw(SignException)
  */
 void digidoc::PKCS11Signer::sign(const Digest& digest, Signature& signature) throw(SignException)
 {
-    DEBUG("sign(digest = {type=%s,digest=0x%X,length=%d}, signature={signature=0x%X,length=%d})",
-            OBJ_nid2sn(digest.type), (unsigned int)digest.digest, digest.length,
-            (unsigned int)signature.signature, signature.length);
+    DEBUG("sign(digest = {type=%s,digest=%p,length=%d}, signature={signature=%p,length=%d})",
+            OBJ_nid2sn(digest.type), digest.digest, digest.length,
+            signature.signature, signature.length);
 
     // Check that sign slot and certificate are selected.
     if(d->sign.certificate == NULL || d->sign.slot == NULL)

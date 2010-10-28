@@ -84,9 +84,9 @@ X509* digidoc::RSASigner::getCert() throw(SignException)
  */
 void digidoc::RSASigner::sign(const Digest& digest, Signature& signature) throw(SignException)
 {
-    DEBUG("RSASigner::sign(digest = {type=%s,digest=0x%X,length=%d}, signature={signature=0x%X,length=%d})",
-            OBJ_nid2sn(digest.type), (unsigned int)digest.digest, digest.length,
-            (unsigned int)signature.signature, signature.length);
+    DEBUG("RSASigner::sign(digest = {type=%s,digest=%p,length=%d}, signature={signature=%p,length=%d})",
+            OBJ_nid2sn(digest.type), digest.digest, digest.length,
+            signature.signature, signature.length);
 
     try
     {

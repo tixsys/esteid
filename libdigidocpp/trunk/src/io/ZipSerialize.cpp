@@ -127,7 +127,7 @@ namespace digidoc
 {
 void extractCurrentFile(unzFile zipFile, const std::string& directory) throw(IOException)
 {
-    DEBUG("ZipSerialize::extractCurrentFile(zipFile = 0x%X, directory = '%s')", (unsigned int)zipFile, directory.c_str());
+    DEBUG("ZipSerialize::extractCurrentFile(zipFile = %p, directory = '%s')", zipFile, directory.c_str());
 
     // Get filename of the current file inside ZIP container.
     // XXX: How long must the filename buffer be?
@@ -262,7 +262,7 @@ void digidoc::ZipSerialize::save() throw(IOException)
     // Create new ZIP file.
     std::string fileName = digidoc::util::File::encodeName(util::File::tempFileName());
     zipFile zipFile = zipOpen(fileName.c_str(), APPEND_STATUS_CREATE);
-    DEBUG("Created ZIP file: fileName = '%s', zipFile = 0x%X", fileName.c_str(), (unsigned int)zipFile);
+    DEBUG("Created ZIP file: fileName = '%s', zipFile = %p", fileName.c_str(), zipFile);
     if(zipFile == NULL)
     {
         THROW_IOEXCEPTION("Failed to create ZIP file '%s'.", path.c_str());
