@@ -119,6 +119,7 @@ digidoc::WebSignature::~WebSignature()
 X509* digidoc::WebSignature::getCert() throw(SignException)
 {
     THROW_SIGNEXCEPTION("WebSignature can only be used for finalizing the signature");
+    return NULL; // Dummy return to make OpenSuse compilers happy
 }
 
 /**
