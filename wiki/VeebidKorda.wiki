@@ -1,18 +1,18 @@
 #summary Kampaania Veebid Korda
 
-== Kas Sulle käib närvidele, et ID-kaart ei tööta Sinu lemmikbrauseriga korralikult? ==
+= Kas Sulle käib närvidele, et ID-kaart ei tööta Sinu lemmikbrauseriga korralikult? =
 
 Põhjuseid pole vaja kaugelt otsida. Sertifitseerimiskeskus AS on aastaid propageerinud lahendusi, mis töötavad hästi ainult Internet Exploreriga ning seetõttu on paljud olemasolevad veebileheküljed sõna otseses mõttes vigased. Nüüd aga ei tööta ka IE ise enam mitmete kiviaegsete "lahendustega" korralikult.
 
-Aita veenda veebilehtede omanikke, et nad oma aegunud tehnoloogia välja vahetaksid.
-
 Veebirakenduste omanikud peavad tegema ainult kaks lihtsat liigutust, et kõigi kasutajate elu oluliselt paremaks teha.
 
-== 1. Palu teha sisse logimine korda ==
+== 1. Sisse logimine korda ==
 
 Seni SK poolt soovitatud lahendus töötab mõistlikult ainult Internet Exploreriga. Kõigi teiste brauserite kasutajate jaoks on see äärmiselt ebamugav, kuna peale sisselogimise ebaõnnestumist ei ole võimalik ilma *kõiki aknaid* kinni panemata enam saiti sisse saada. Sisse logimise korda tegemiseks on tavaliselt vaja teha ainult üks või kaks pisikest muudatust serveri poolel, mis ei võta palju aega ega raha.
 
-Anna neile teada, et soovitused stiilis:
+Kui teha sisse logimine korda, siis kaovad ära ka osades saitides (nagu näiteks [http://digidoc.sk.ee digidoc.sk.ee]) tekkivad Firefox 4.0-i turvahoiatused, millest üle saamiseks tuleb käsitsi about:config lehel susserdada.
+
+Seni on veebilehed läinud kergema vastupanu teed ja näitavad teateid stiilis:
 
 {{{
 Olete ID kaardiga juba U-Netist välja loginud. Palun sulgege korraks oma internetilehitseja ning sisenege seejärel U-Netti uuesti."
@@ -22,16 +22,47 @@ Olete ID kaardiga juba U-Netist välja loginud. Palun sulgege korraks oma intern
 ID-kaardiga allkirjastamine katkestati! Kui soovite uuesti midagi allkirjastada peate oma brauseri korraks sulgema!
 }}}
 
-*ei ole vastuvõetavad*.
+Selline "lahendus" *ei ole vastuvõetav*.
 
-Kui teha sisse logimine korda, siis kaovad ära ka osades saitides (nagu näiteks [http://digidoc.sk.ee digidoc.sk.ee]) tekkivad Firefox 4.0-i turvahoiatused, millest üle saamiseks tuleb käsitsi about:config lehel susserdada.
 
 Täpsemalt saab autentimise õigest konfigureerimisest lugeda  [VeebisAutentimine Siit].
 
-== 2. Palu lisada uute allkirjateholoogiate toetus ==
+== 2. Uute allkirjateholoogiate toetus ==
 
-Räägi neile, et vananenud tehnoloogia on ebastabiilne, allkirjastamine õnnestub kohati vaid ühel korral kolmest kuna Java Virtuaalmasin jookseb alatasa kokku.
+Vananenud tehnoloogia on ebastabiilne, allkirjastamine õnnestub kohati vaid ühel korral kolmest kuna Java Virtuaalmasin jookseb alatasa kokku.
 
 Vanade ja uute tehnoloogiate üheskoos toetamine on vabatahtlike jõupingutuste tulemusena lihtne ja selleks tuleb vaid paar faili alla tõmmata ning oma veebirakendusse integreerida.
 
 Täpsemalt saab nimetatud tehnoloogiast lugeda [EstEIDPluginLoader Siit]
+
+
+= Mida saan mina ära teha? =
+
+Aita veenda veebilehtede omanikke, et nad oma aegunud tehnoloogia välja vahetaksid.
+
+Selleks kirjuta viisakas kiri veebilehekülje omanikule. Näiteks:
+
+{{{
+Tere!
+
+Kasutan teie internetipanka/veebiteenust.
+Mind teeb murelikuks teie puudulik toetus Eesti ID-kaardile,
+teie leheküljel ei tööta ID-kaart minu Safariga/Firefoxiga/Chromega.
+
+Täpsemalt:
+1. Mind häirb, et ebaõnnestunud sisse logimise järel pean ma uuesti proovimiseks kõik aknad sulgema.
+2. Allkirjastamine ei tööta üldse/töötab ainult aeg-ajalt.
+
+Palun teid võtta kasutusele uuem tehnoloogia, et muuta oma veebilehekülg paremaks.
+
+Lugupidamisega
+    Jaan Jaanipoeg
+}}}
+
+Lisa kindlasti oma kontaktandmed. Võid lisada ka viite aadressile http://esteid.googlecode.com/
+
+== Veebilehekülgede omanike kontaktandmed == 
+ * Swedbank: saada pangateade või e-kiri info@swedbank.ee
+ * SEB pank: saada pangateade või e-kiri info@seb.ee
+ * DigiDoc portaal ([http://digidoc.sk.ee digidoc.sk.ee]): abi@id.ee
+ * Riigiportaal [http://www.eesti.ee eesti.ee]: help@ria.ee
