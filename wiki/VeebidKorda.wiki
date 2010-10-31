@@ -50,7 +50,7 @@ Mind teeb murelikuks teie puudulik toetus Eesti ID-kaardile,
 teie leheküljel ei tööta ID-kaart minu Safariga/Firefoxiga/Chromega.
 
 Täpsemalt:
-1. Mind häirb, et ebaõnnestunud sisse logimise järel pean ma uuesti proovimiseks kõik aknad sulgema.
+1. Mind häirb, et ebaõnnestunud sisselogimise järel pean ma uuesti proovimiseks kõik aknad sulgema.
 2. Allkirjastamine ei tööta üldse/töötab ainult aeg-ajalt.
 
 Palun teid võtta kasutusele uuem tehnoloogia, et muuta oma veebilehekülg paremaks.
