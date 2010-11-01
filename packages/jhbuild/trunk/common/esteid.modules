@@ -24,18 +24,20 @@
   </cmake>
 
   <cmake id="firebreath" cmakeargs="
-      -DPROJECTS_DIR=&quot;$CHECKOUT_ROOT/esteid-browser-plugin&quot;">
+      -DPROJECTS_DIR=&quot;$CHECKOUT_ROOT/firebreath-projects&quot;">
     <branch repo="firebreath" />
     <dependencies>
       <dep package="esteid-browser-plugin" />
-      <dep package="smartcardpp" />
     </dependencies>
   </cmake>
 
   <!-- Ugly hack to just check out sources -->
   <autotools id="esteid-browser-plugin" supports-non-srcdir-builds="no"
       autogen-template=" " makeargs="." makeinstallargs=".">
-    <branch checkoutdir="esteid-browser-plugin/src" />
+    <branch checkoutdir="firebreath-projects/esteid-browser-plugin" />
+    <dependencies>
+      <dep package="smartcardpp" />
+    </dependencies>
   </autotools>
 
   <cmake id="libdigidoc">
@@ -62,7 +64,7 @@
                              --libdir %(libdir)s %(autogenargs)s"
       autogenargs="--disable-doc --disable-man --enable-shared
                    --disable-static --enable-strict --disable-assert">
-    <branch repo="opensc" revision="4835" />
+    <branch repo="opensc" /> <!-- revision="4835" /> -->
   </autotools>
 
   <metamodule id="meta-esteid-bootstrap">
