@@ -21,7 +21,7 @@
   * Mac: TokenD
   * Linux: PKCS#11
  * Kiiksud: Autentimise hädad [http://code.google.com/p/chromium/issues/detail?id=44075 #44075]
- * Staatus: Töötab korralikult ainult Windowsil, Linuxil ei ole PKCS#11 PIN-i aken realiseeritud, Maci all on see miskipärast ebastabiilne.
+ * Staatus: Töötab korralikult ainult Windowsil, Linuxil ei ole PKCS#11 PIN-i aken realiseeritud [http://code.google.com/p/chromium/issues/detail?id=42073 #42073], Maci all on see miskipärast ebastabiilne.
 
 == Allkirjastamine ==
  * Tehnoloogia: NPAPI kõigil platvormidel
