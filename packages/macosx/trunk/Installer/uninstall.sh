@@ -84,6 +84,7 @@ rm -rf /Applications/Utilities/EstEIDSU.app
 # esteid-webplugin
 echo 'Removing Web Browser plug-ins'
 rm -rf /Library/Internet\ Plug-Ins/esteid.plugin
+rm -rf /Library/Internet\ Plug-Ins/npidcard.plugin
 rm -rf /Library/Internet\ Plug-Ins/EstEIDWP.plugin
 rm -rf /Library/Internet\ Plug-Ins/esteidfirefoxplugin.bundle
 rm -rf /Library/Internet\ Plug-Ins/esteidsafariplugin.webplugin
