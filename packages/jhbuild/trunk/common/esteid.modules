@@ -64,7 +64,7 @@
                              --libdir %(libdir)s %(autogenargs)s"
       autogenargs="--disable-doc --disable-man --enable-shared
                    --disable-static --enable-strict --disable-assert">
-    <branch repo="opensc" /> <!-- revision="4835" /> -->
+    <branch repo="opensc" revision="4765" />
   </autotools>
 
   <metamodule id="meta-esteid-bootstrap">
