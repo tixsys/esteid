@@ -1,0 +1,72 @@
+#summary Eesti ID-kaardi tarkvara ja draiverid versioon 2.8.1
+
+<h1> Eesti ID-kaardi tarkvara ja draiverid 2.8.1 </h1>
+??.11.2010
+
+<wiki:toc max_depth="1" />
+
+Toetatud operatsioonisüsteemid:
+ * Windows XP (32bit)
+ * Windows Vista
+ * Windows 7
+ * MacOS X 10.5 Intel
+ * MacOS X 10.6 Intel
+ * Ubuntu Linux 9.10
+ * Ubuntu Linux 10.04
+ * Ubuntu Linux 10.10
+ * Fedora Linux 12
+ * Fedora Linux 13
+ * Fedora Linux 14
+ * SuSE Linux 11.1
+ * SuSE Linux 11.2
+ * SuSE Linux 11.3
+ * Gentoo Linux
+
+Toetatud veebilehitsejad:
+ * Google Chrome (Windows ja MacOS X)
+ * Firefox (3.6 ja uuem)
+ * Internet Explorer (7 ja 8)
+ * Safari
+
+Lõpptarbija komponendid:
+ * ID-kaardi draiverid (csp, minidraiver, opensc)
+ * Allkirjastamise tööriist (qdigidoc)
+ * ID-kaardi utiliit (qesteidutil)
+ * Veebibrauserite laiendus allkirjastamiseks (esteid-browser-plugin)
+
+Arendajatele suunatud komponendid:
+ * C-teek (libdigidoc)
+ * C++ teek (libdigidocpp)
+ * Java teek (jdigidoc)
+ * C++ kaarditaseme draiver (smartcardpp)
+
+Katsetusjärgus tarkvara:
+ * PDF allkirjastaja (pdf-signer)
+ * Javas realiseeritud SOAP liidesed (digidocservice)
+
+= Mis on uut? =
+
+ * Täiustatud Java Appletite konverter Firefoxile. Töötab uues SEB pangas ja Nordeas.
+ * Parandatud plugina laadimist osadel lehtedel (issue 123)
+ * Testlehel allkirjastamine töötab ka siis, kui IE "protected mode" on sisse lülitatud (issue 116) .
+
+= Teadaolevad probleemid =
+
+ * Allkirjastamise tööriist (qdigidoc) blokeerub ligipääsutõendi laadimise ajaks
+ * Firefox ei leia kaarti, kui kaardilugeja ühendati süsteemiga peale firefoxi käivitamist, aitab lehitseja sulgemine ja uuesti käivitamine
+ * Maci peal ei lisata allkirjastatud/krüpteeritud faili manusesse, kui vajutada Kliendis või Krüptos linki "Saada ümbrik e-postiga"
+ * Nordea's, SEB's ja eesti.ee's saab Maci ja Linuxi peal allkirjastada ainult Firefoxiga. Samuti Swedbankis Java appleti kaudu töötab allkirjastamine ainult Firefoxiga.
+ * Brauseri plugin (PIN2 aken veebis) on ainult Inglise keelne (issue 110)
+
+= Arendajast sõltumatud probleemid =
+
+ * DigiDoc portaalis ja eesti.ee-s ei tööta allkirjastamine Safariga. Nende saitide Safarispetsiifiline JavaScript on vigane ja ei tunne pluginat ära.
+ * Windowsi all ei saa Firefox 3.5 või vanema brauseriga allkirjastada Swedbanki internetipangas. Firefoxi uuendamine vähemalt versioonile 3.6 lahendab probleemi. Vaata issue 74
+ * Windowsi all ei saa ei Safari ega Google Chrome brauseriga allkirjastada Swedbanki internetipangas kui allkirjatehnoloogia on "veebilehitsejapõhine". Kui kasutad neid brausereid regulaarselt, tuleb valida internetipanga seadetes allkirjastamise tehnoloogiaks Java Applet. Swedbanki poolne probleem on sama, mis vanemate Firefox veebilehitsejatega. Vaata issue 74
+ * Paljud veebilehed ei võimalda kasutajal uuesti autentida kui kaart unustati sisestada enne sisselogimise nupu vajutamist. Lahenduseks on terve veebilehitseja restart (tuleb sulgeda kõik aknad, kaasaarvatud allalaadimiste oma) või tuleb oodata 15-20min. Olukorra parandamiseks osale kampaanias VeebidKorda.
+ * Google Chrome ei toeta Linux platvormil kaardiga autentimist.
+ * Java abil allkirjastamine töötab stabiilselt ainult Windows platvormil. Teistel platvormidel on soovitatav kasutada Firefoxi, kuna viimase laiendusse on sisse ehitatud spetsiaalne ühilduvusrežiim (loe: häkk).
+ * Java "ohjurprogrammide" paigaldamine SEB pangast Firefoxi ja Chrome all ebaõnnestub. Mõlemad brauserid hakkavad tööle, kui allkirjastamise seaded muuta Java põhiseks Internet Exploreri abil
+ * MacOSX 10.5-s ei tööta Safaris autentimine osadel veebilehtedel, kus kasutaja ei ole oma ID-kaarti ja seda konkreetset saiti kokku sidunud. Olukorra parandamiseks osale kampaanias VeebidKorda.
+ * Autentimine ei tööta Internet Explorer 9 Beta-ga. Sertfikaadi saab valida, aga PIN1 akent ei teki. Kuna IE kasutab Microsofti Base CSP kihti, siis on viga nende kahe omavahelises suhtluses, mida ID-kaardi baastarkvara ei saa mõjutada. Tuleb oodata Microsofti veaparandust.
+ * Internet Explorer 6 (mis ei ole tarkvara poolt tegelikult toetatud), ei tööta vahetult peale paigaldamist. Pärast [https://www.sk.ee/cgi-bin/tervitus SK tervituslehekülje] või [http://digidoc.sk.ee DigiDoc portaali] külastamist hakkab iseenesest tööle. Soovitame soojalt oma veebilehitsejat uuendada.
