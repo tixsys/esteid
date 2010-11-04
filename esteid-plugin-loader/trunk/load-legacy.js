@@ -103,8 +103,8 @@ estEidLoader.setupSKplug = function(id) {
     var s = document.getElementById("sSign");
     estEidLoader.htmlLog("Trying to sign with x-digidoc plugin");
     try { 
-      var cn = s.getCertificate().CN;
-      var sig = s.sign(cn, hash, { language: 'en' });
+      var id = s.getCertificate().id;
+      var sig = s.sign(id, hash, { language: 'en' });
       estEidLoader.htmlLog("x-digidoc sign successful");
       callback.onSuccess(sig);
     } catch(e) {
