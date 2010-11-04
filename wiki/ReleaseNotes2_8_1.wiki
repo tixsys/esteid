@@ -47,8 +47,9 @@ Katsetusjärgus tarkvara:
 = Mis on uut? =
 
  * Täiustatud Java Appletite konverter Firefoxile. Töötab uues SEB pangas ja Nordeas.
+ * Java appletite konverter töötab nüüd ka Firefox 4-ga
  * Parandatud plugina laadimist osadel lehtedel (issue 123)
- * Testlehel allkirjastamine töötab ka siis, kui IE "protected mode" on sisse lülitatud (issue 116) .
+ * Testlehel allkirjastamine töötab ka siis, kui IE "protected mode" on sisse lülitatud (issue 116).
 
 = Teadaolevad probleemid =
 
