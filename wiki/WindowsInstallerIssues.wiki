@@ -16,6 +16,16 @@ Toimi nii:
 
 Aitäh!
 
+= Uninstalli logi tekitamine =
+
+Kui paketti ei õnnestu uninstallida, siis on samuti ainuke viis viga parandada logifail.
+
+Toimi nii:
+
+ # Tõmba fail nimega uninslog.bat http://esteid.googlecode.com/svn/misc/uninslog.bat
+ # Salvesta see töölauale ja käivita
+ # Käivitub uninstall ja genereeritakse logifail kujul eidunins.log
+ # Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail manusena kaasa.
 
 = Windows Installeri andmebaasi puhastamine käsitsi =
 
