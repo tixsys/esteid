@@ -5,7 +5,7 @@
 == Paigaldamine ==
  # Palun loe läbi [ReleaseNotes2_8_0 need olulised märkused]
  # Tõmba paigalduspakett siit:
-   [http://code.google.com/p/esteid/downloads/detail?name=ID-card_installer_2_8_0.dmg ID-card_installer_2_8_0.dmg]
+   [http://code.google.com/p/esteid/downloads/detail?name=ID-card_installer_2_8_1.dmg ID-card_installer_2_8_1.dmg]
  
 Hiljem toimub tarkvara uuenduste kontroll automaatselt või läbi "System Preferences" ID-kaardi vaate käsitsi.
 
