@@ -30,4 +30,4 @@ Toimi nii:
 = Windows Installeri andmebaasi puhastamine käsitsi =
 
 Päris tooreid arendusversioone proovides või ise installerit arendades võib tekkida olukord, kus juba paigaldatud MSI paketi uninstalli osa on vigane ning seetõttu ei õnnestu seda enam eemaldada. Üks teadaolev sarnane viga esines MSI-s enne alfa versiooni 2.7.924.331, kuid uuemates on see korras.
-Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti kasutades Windows Installeri puhastusutiliiti [http://majorgeeks.com/Windows_Installer_CleanUp_Utility_d4459.html]. Kui seejärel peale installida uuem versioon, peaks uninstall olema korras.
+Taolisest vanast, mitte-eemalduvast ning mitte-upgradevast paketist saab lahti kasutades Windows Installeri puhastusutiliiti [http://id.anttix.org/util/msicuu2.exe]. Kui seejärel peale installida uuem versioon, peaks uninstall olema korras.
