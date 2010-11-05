@@ -1,5 +1,7 @@
 = Archlinux =
 
+*NB! Archi paketid on hetkel orvu staatuses ja võib-olla töötavad, võib-olla mitte. Otsime vabatahtlikku, kes võtaks Archile pakendamise enda peale. Huvilistel anda endast märku esteid-devel listis või IRC kanalil*
+
 === Pakettide paigaldamine ===
 Kõik pakid asuvad AURis ning nende paigaldamiseks on soovitatav kasutada näiteks [http://wiki.archlinux.org/index.php/Yaourt yaourt]-i.
 
