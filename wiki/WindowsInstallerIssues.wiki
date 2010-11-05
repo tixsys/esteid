@@ -23,8 +23,8 @@ Kui paketti ei õnnestu uninstallida, siis on samuti ainuke viis viga parandada 
 Toimi nii:
 
  # Tõmba fail nimega uninslog.bat http://esteid.googlecode.com/svn/misc/uninslog.bat
- # Salvesta see töölauale ja käivita
- # Käivitub uninstall ja genereeritakse logifail kujul eidunins.log
+ # Lohista *paigaldatud versiooni* MSI fail .bat faili peale. Kui Sul MSI faili enam alles ei ole, siis mine [http://code.google.com/p/esteid/downloads/list siia], kirjuta versiooninumber otsingusse ja vajuta Enterit.
+ # Käivitub uninstall ja genereeritakse logifail kujul installipaketinimi-u.log
  # Edasi jälgi [ReportingIssues vigadest teatamise juhendit] ja pane tekkinud logifail manusena kaasa.
 
 = Windows Installeri andmebaasi puhastamine käsitsi =
