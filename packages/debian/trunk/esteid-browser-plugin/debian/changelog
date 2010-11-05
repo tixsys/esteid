@@ -1,3 +1,10 @@
+esteid-browser-plugin (1.2.0-0esteid0~maverick1) maverick; urgency=low
+
+  * Update to esteid-browser-plugin 1.2.0
+  * Update bundled firebreath to 1.3.0
+
+ -- Kalev Lember <kalev@smartlink.ee>  Fri, 05 Nov 2010 09:58:02 +0200
+
 esteid-browser-plugin (1.1.0-0esteid0~maverick1) maverick; urgency=low
 
   * Initial build
