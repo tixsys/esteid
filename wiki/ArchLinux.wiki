@@ -4,26 +4,25 @@
 Kõik pakid asuvad [http://aur.archlinux.org/packages.php?SeB=m&L=2&K=kevku AURis] ning nende paigaldamiseks on soovitatav kasutada näiteks [http://wiki.archlinux.org/index.php/Yaourt yaourt]-i.
 
 === Kaardilugeja draiverid ===
-Tarkvara esmakordsel paigaldamisel on vaja paigaldada lugejate draiverid [http://aur.archlinux.org/packages.php?ID=10135 ccid], [http://aur.archlinux.org/packages.php?ID=32519 opensc-esteid], [http://aur.archlinux.org/packages.php?ID=10155 openct] ja [http://aur.archlinux.org/packages.php?ID=10156 pcscd]:
+Tarkvara esmakordsel paigaldamisel on vaja paigaldada lugejate draiverid [http://aur.archlinux.org/packages.php?ID=10156 pcscd], [http://aur.archlinux.org/packages.php?ID=10135 ccid] ja [http://aur.archlinux.org/packages.php?ID=39488 opensc-svn]:
 {{{
-yaourt -S ccid openct opensc-esteid
-sudo /etc/rc.d/openct start
+yaourt -S pcscd ccid opensc-svn
 sudo /etc/rc.d/pcscd start
 }}}
 
-Viimased kaks tuleks lisada ka /etc/rc.conf faili DAEMONS reale:
+Viimane tuleks ka lisada /etc/rc.conf faili DAEMONS reale:
 {{{
-DAEMONS=(... openct pcscd)
+DAEMONS=(... @pcscd)
 }}}
 
 === Paketid ===
 === TÄHELEPANU! Tegu on arendusjärgus olevate programmidega ning need ei pruugi veel igalpool toimida! ===
-Pakettide [http://aur.archlinux.org/packages.php?ID=32199 qdigidoc], [http://aur.archlinux.org/packages.php?ID=32193 qesteidutil] ja [http://aur.archlinux.org/packages.php?ID=34274 firefox-esteid-svn] paigaldamiseks tuleb käsureal anda järgmised käsud:
+Pakettide [http://aur.archlinux.org/packages.php?ID=32199 qdigidoc], [http://aur.archlinux.org/packages.php?ID=32193 qesteidutil] ja [http://aur.archlinux.org/packages.php?ID=42553 firefox-esteid-hg-svn] paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
-yaourt -S qdigidoc-svn qesteidutil-svn firefox-esteid-svn --noconfirm
+yaourt -S qdigidoc-svn qesteidutil-svn esteid-browser-plugin-hg-svn
 }}}
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
-yaourt -Syu --aur --noconfirm
+yaourt -Su --aur
 }}}
