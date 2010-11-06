@@ -1,0 +1,26 @@
+diff --git a/jhbuild/modtypes/cmake.py b/jhbuild/modtypes/cmake.py
+index ad02632..6ef5cad 100644
+--- a/jhbuild/modtypes/cmake.py
++++ b/jhbuild/modtypes/cmake.py
+@@ -89,9 +89,18 @@ class CMakeModule(Package, DownloadableModule):
+         builddir = self.get_builddir(buildscript)
+         if not os.path.exists(builddir):
+             os.mkdir(builddir)
+-        prefix = os.path.expanduser(buildscript.config.prefix)
+-        baseargs = '-DCMAKE_INSTALL_PREFIX=%s -DLIB_INSTALL_DIR=%s -Dlibdir=%s' % (
+-                        prefix, buildscript.config.libdir, buildscript.config.libdir)
++
++        vars = {'prefix': os.path.expanduser(buildscript.config.prefix),
++                'libdir': buildscript.config.libdir}
++
++        # Cmake is a complex beast
++        # http://www.cmake.org/Wiki/CMake_RPATH_handling
++        baseargs = ("-DCMAKE_PREFIX_PATH=%(prefix)s "
++                    "-DCMAKE_INSTALL_PREFIX=%(prefix)s "
++                    "-DLIB_INSTALL_DIR=%(libdir)s "
++                    "-DCMAKE_INSTALL_RPATH=%(libdir)s "
++                    "-Dlibdir=%(libdir)s ") % vars
++
+         cmd = 'cmake %s %s %s' % (baseargs, self.get_cmakeargs(), srcdir)
+         if os.path.exists(os.path.join(builddir, 'CMakeCache.txt')):
+             # remove that file, as it holds the result of a previous cmake
