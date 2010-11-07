@@ -1,0 +1,7 @@
+= Mandriva =
+
+Toetatud Mandriva Linux 2010.1 Spring ja arendusversioon cooker.
+
+= Tarkvara paigaldamine =
+
+Täpsemad paigaldusjuhised leiad aadressilt http://mandriva.sander85.com/loe-idkaart.html
