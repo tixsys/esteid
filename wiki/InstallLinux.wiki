@@ -7,7 +7,8 @@
  * [Debian Debiani seadistamine]
  * [Fedora Fedora seadistamine]
  * [Gentoo Gentoo seadistamine]
- * [Ubuntu Ubuntu seadistamine]
+ * [Mandriva Mandriva seadistamine]
  * [openSUSE openSUSE seadistamine]
+ * [Ubuntu Ubuntu seadistamine]
 
 [InstallStart Tagasi]
