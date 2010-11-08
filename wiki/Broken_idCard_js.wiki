@@ -1,0 +1,43 @@
+#summary Probleemid SK "Veebis signeerimise Javascripti klienditeek" plugina laadijates
+
+Nimetatud teek on see, mida kasutab näiteks !DigiDoc portaal.
+
+See analüüs on kirjutatud versiooni 0.6 kohta:
+Peegel sellest versioonist on [http://esteid.googlecode.com/svn/misc/broken-ks/idCard.js siin], 
+originaali (kuniks seda pole uuendatud) leiab [http://digidoc.sk.ee/include/JS/idCard.js siit].
+
+Miks ei ole hea mõte kasutada seda teeki [EstEIDPluginLoader EstEIDPluginLoader] asemel ja kirjutada sinna Open EstEID plugina tugi?
+
+Probleemil on kaks tahku.
+
+Esiteks on selle teegi API-st puudu kaks väga olulist asja:
+
+ # Pluginale ei ole võimalik edastada allkirjastatava dokumendi (bdoc või ddoc konteineri) aadressi.
+ # Allkirjastamise operatsioon on sünkroonne.
+
+Peatume pikemalt puudusel nr 2. Nimelt on uued brauserid ja eriti Google Chrome arendusversioonid (Chromiumi nime all), muutunud märgatavalt agressiivsemaks enda hangumise vastu kaitsmisel. Kui mõni !JavaScripti funktsioon jääb liiga kauaks mõttesse (vaikimisi 20-30 sek), pakub brauser võimalust see "ära tappa". Uutes chrome versioonides kehtib see mitte ainult puhtalt !JavaScripti koodile vaid ka pluginas lõpetavate funktsioonide kohta.
+
+http://esteid.googlecode.com/svn/wiki/img/chromium-notresponding.png
+
+Miks see halb on? Sest inimesed on kohati aeglased, otsivad oma PIN koode taga, räägivad poole allkirjastamise pealt telefoniga jne. Mingid lambist välja hüppavad aknad ajavad kasutaja segadusse ja ilmselt on vastuseks hiireklikk esimesele nupule, mis tähendab, et plugin lüüakse maha ja edasine allkirjastamine on võimatu.
+
+SK pluginad hetkel Chromiumiga ei tööta, selle pärast ei ole nad veel seda "avastanud". Chromium on brauserimaailmas selline omamoodi innovatsioonimajakas ja kui seal mingi funktsioon pikemaks ajaks pidama jääb, võib arvata, et see jõuab varsti ka Chrome lõppversioonidesse ja webkit-i kaudu ka Safarisse. Selle koha peal peaks ID-kaardindusega olema proaktiivne, mitte reaktiivne.
+
+Teine tahk puudutab koodi ennast
+
+SK teek on täis koodi stiilis (kirjavead on tsiteeritud muutmata kujul)
+{{{
+// Allkärgnev kontroll on Safari jaoks, et kui plugin puudub ei tuleks kasutajale koledat teadet
+if ( ((navigator.userAgent.indexOf('Mac') == -1) && (navigator.userAgent.indexOf('Safari') == -1)) || (isPluginSupportedBySafari("application/x-digidoc")))
+{
+...
+}}}
+
+UA järgi brauseri tuvastamist on kood paksult täis.
+See on aga väga halb praktika ja maailmas ammu ebasoovitavaks kuulutatud.
+
+http://www.javascripttoolbox.com/bestpractices/#detect
+
+Lisaks sellele on isPluginSupportedBySafari ülemäära keeruline ja katki: Selle asemel, et kontrollida täiesti standardse navigator.mimeTypes objekti sisu, tehakse seal mingit ulmet, mistõttu kood on võimeline "avastama" plugina vaid siis kui otsitav MIME tüüp on nimekirjas esimene.
+
+Soovitame soojalt sellest teegist eemale hoida.
