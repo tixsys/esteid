@@ -22,6 +22,8 @@
 
 #include "../log.h"
 
+#include <sstream>
+
 #include <memory.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -217,34 +219,35 @@ std::string digidoc::util::String::convertUTF8(const std::string& str_in, bool t
 /**
  * Helper method for converting strings with non-ascii characters to the URI format (%HH for each non-ascii character).
  * 
- * Not converting:
- * (From RFC 2396 "URI Generic Syntax")
+ * This implementation doesn't convert the following symbols as defined in the RFC 2396:
+ * From RFC 2396 "URI Generic Syntax":
  * reserved = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" | "$" | ","
  * mark     = "-" | "_" | "." | "!" | "~" | "*" | "'" | "(" | ")"
+ *
+ * Doing so isn't strictly compliant with the RFC since some of the symbols are allowed unencoded in some parts 
+ * of the URI but not others. However it seems to work well enough in practice and fully compilant implementation
+ * would be much more complicated.
+ *
  * @param str_in the string to be converted
  * @return the string converted to the URI format
  */
  
 std::string digidoc::util::String::toUriFormat(const std::string& str_in)
 {
-    char dst[1024] = {0}; 
+    std::ostringstream retval;
+    const std::string LEGAL_CHARS = "-_.!~*'();/?:@&=+$,";
 
-    std::string legal_chars = "-_.!~*'();/?:@&=+$,";
-    for(size_t i=0, j=0; i<str_in.length(); i++)
+    for(size_t i=0; i<str_in.length(); i++)
     {
-        if( (!(isalnum((str_in.c_str())[i])) ) && ( legal_chars.find((str_in.c_str())[i]) == std::string::npos) )
+        unsigned char byte_in = str_in[i];
+        if(!isalnum(byte_in)  && ( LEGAL_CHARS.find(byte_in) == std::string::npos))
         {
-            strncpy(&dst[j], "%", 1);
-            j++;
-            char const to_convert = (str_in.c_str())[i];
-            sprintf(&dst[j], "%x", (to_convert&0x000000ff));
-            j+=2;
+            retval << '%' << std::hex << (int)byte_in;
         }
         else
         {
-            sprintf(&dst[j], "%c", (str_in.c_str())[i]);
-            j++;
+            retval << byte_in;
         }
     }
-    return std::string(dst);
+    return retval.str();
 }
