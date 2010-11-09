@@ -1,3 +1,15 @@
+esteid-browser-plugin (1.2.0-0esteid2~maverick1) maverick; urgency=low
+
+  * Rebuild
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 10 Nov 2010 07:22:04 +0900
+
+esteid-browser-plugin (1.2.0-0esteid1~maverick1) maverick; urgency=low
+
+  * Add missing esteid-browser-plugin.mo
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 10 Nov 2010 04:47:39 +0900
+
 esteid-browser-plugin (1.2.0-0esteid0~maverick1) maverick; urgency=low
 
   * Update to esteid-browser-plugin 1.2.0
