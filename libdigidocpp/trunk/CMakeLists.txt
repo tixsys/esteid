@@ -6,22 +6,20 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 include(InstallSettings)
 
-option(PKCS11_MODULE_NAME "PKCS#11 module name." "")
-option(PKCS11_MODULE_DIR "PKCS#11 module location." "")
+if(WIN32)
+    set(DEFAULT_PKCS11_MODULE_NAME "opensc-pkcs11.dll")
+else()
+    set(DEFAULT_PKCS11_MODULE_NAME "opensc-pkcs11.so")
+endif()
 
-IF(NOT PKCS11_MODULE_NAME)
-    if(WIN32)
-        set(PKCS11_MODULE_NAME "opensc-pkcs11.dll")
-    else()
-        set(PKCS11_MODULE_NAME "opensc-pkcs11.so")
-    endif()
-ENDIF(NOT PKCS11_MODULE_NAME)
+if(APPLE)
+    set(DEFAULT_PKCS11_MODULE_DIR "/Library/OpenSC/lib")
+endif()
 
-IF(NOT PKCS11_MODULE_DIR)
-    if(APPLE)
-        set(PKCS11_MODULE_DIR "/Library/OpenSC/lib")
-    endif()
-ENDIF(NOT PKCS11_MODULE_DIR)
+set(PKCS11_MODULE_NAME "${DEFAULT_PKCS11_MODULE_NAME}"
+    CACHE STRING "PKCS#11 module name.")
+set(PKCS11_MODULE_DIR "${DEFAULT_PKCS11_MODULE_DIR}"
+    CACHE PATH "PKCS#11 module location.")
 
 IF(PKCS11_MODULE_DIR)
     SET(PKCS11_MODULE "${PKCS11_MODULE_DIR}/${PKCS11_MODULE_NAME}")
