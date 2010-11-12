@@ -8,7 +8,7 @@ index aaff7ca..3e15d28 100644
  
 -bindir=$(HOME)/.local/bin
 -datarootdir=$(HOME)/.local/share
-+PREFIX ?= $(HOME)/.local/bin
++PREFIX ?= $(HOME)/.local
 +
 +bindir=$(PREFIX)/bin
 +datarootdir=$(PREFIX)/share
