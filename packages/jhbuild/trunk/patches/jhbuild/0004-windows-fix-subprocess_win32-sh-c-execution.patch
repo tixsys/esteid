@@ -1,0 +1,25 @@
+From 1a7b497ca4ae85d6baa6dcf2c92f5e79f9c8bd9b Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Sat, 4 Jul 2009 01:55:24 +0100
+Subject: [PATCH] [windows] fix subprocess_win32 'sh -c' execution
+
+---
+ jhbuild/utils/subprocess_win32.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/utils/subprocess_win32.py b/jhbuild/utils/subprocess_win32.py
+index a9bccd1..7710a87 100644
+--- a/jhbuild/utils/subprocess_win32.py
++++ b/jhbuild/utils/subprocess_win32.py
+@@ -96,7 +96,7 @@ class Popen(real_subprocess.Popen):
+         # ./ confuses windows, and these are normally shell scripts so use
+         # sh.exe
+         if command[0].startswith('./'):
+-            command = ['sh', command[0].replace('./','')] + command[1:]
++            command = ['sh', '-c', ' '.join([command[0]] + command[1:])]
+         elif not command[0].endswith('.exe'):
+             # check if program has no extension or has .sh extension - it
+             # probably needs executing by sh rather than by Windows directly
+-- 
+1.5.5.6
+

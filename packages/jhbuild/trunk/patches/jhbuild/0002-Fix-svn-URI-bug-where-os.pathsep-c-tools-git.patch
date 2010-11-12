@@ -1,0 +1,26 @@
+From fea80c240e5574f7563a8d0011230a3448f8dfc6 Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Mon, 8 Jun 2009 13:55:42 +0100
+Subject: [PATCH] Fix svn URI bug where os.pathsep!='c:/tools/git'
+
+---
+ jhbuild/versioncontrol/svn.py |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/versioncontrol/svn.py b/jhbuild/versioncontrol/svn.py
+index de3f22b..b05e89b 100644
+--- a/jhbuild/versioncontrol/svn.py
++++ b/jhbuild/versioncontrol/svn.py
+@@ -159,7 +159,8 @@ class SubversionRepository(Repository):
+             checkoutdir = name
+ 
+         splitted_href = list(urlparse.urlsplit(module_href))
+-        splitted_href[2] = os.path.abspath(splitted_href[2])
++        if os.pathsep=='/':
++            splitted_href[2] = os.path.abspath(splitted_href[2])
+         module_href = urlparse.urlunsplit(splitted_href)
+ 
+         if self.svn_program == 'bzr' and not revision:
+-- 
+1.5.5.6
+

@@ -1,0 +1,52 @@
+From 17f6f418ea04fd9acb85b54d9453eb3b8ad5f060 Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Sun, 7 Jun 2009 23:44:16 +0100
+Subject: [PATCH] Hack around lack of 'select' in win32
+
+---
+ jhbuild/utils/cmds.py |   15 ++++++++++++---
+ 1 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/jhbuild/utils/cmds.py b/jhbuild/utils/cmds.py
+index a3e9221..06040cf 100644
+--- a/jhbuild/utils/cmds.py
++++ b/jhbuild/utils/cmds.py
+@@ -25,6 +25,8 @@ import sys
+ from signal import SIGINT
+ from jhbuild.errors import CommandError
+ 
++import time
++
+ def get_output(cmd, cwd=None, extra_env=None, get_stderr = True):
+     '''Return the output (stdout and stderr) from the command.
+ 
+@@ -179,8 +181,12 @@ def pprint_output(pipe, format_line):
+     out_data = err_data = ''
+     try:
+         while read_set:
+-            rlist, wlist, xlist = select.select(read_set, [], [])
+-
++            if not sys.platform.startswith('win'):
++                rlist, wlist, xlist = select.select(read_set, [], [])
++            else:
++                # FIXME: hack because select isn't going to happen on Windows
++                rlist = read_set
++
+             if pipe.stdout in rlist:
+                 out_chunk = os.read(pipe.stdout.fileno(), 1024)
+                 if out_chunk == '':
+@@ -218,7 +224,10 @@ def pprint_output(pipe, format_line):
+                 if pipe.stdin:
+                     os.write(pipe.stdin.fileno(), in_chunk)
+         
+-            select.select([],[],[],.1) # give a little time for buffers to fill
++            if not sys.platform.startswith('win'):
++                select.select([],[],[],.1) # give a little time for buffers to fill
++            else:
++                time.sleep(0.1)
+     except KeyboardInterrupt:
+         # interrupt received.  Send SIGINT to child process.
+         try:
+-- 
+1.5.5.6
+

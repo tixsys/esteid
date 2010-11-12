@@ -1,0 +1,25 @@
+From f29d7383b88f90c5a32e633346b2c7e6c617d91a Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Fri, 11 Jun 2010 12:23:15 +0100
+Subject: [PATCH] config.py: fix against string out-of-bounds in PATH handling
+
+---
+ jhbuild/config.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/config.py b/jhbuild/config.py
+index d034346..76c6f93 100644
+--- a/jhbuild/config.py
++++ b/jhbuild/config.py
+@@ -106,7 +106,7 @@ def addpath(envvar, path):
+             if sys.platform.startswith('win'):
+                 path = jhbuild.utils.subprocess_win32.fix_path_for_msys(path)
+ 
+-            if sys.platform.startswith('win') and path[1]==':':
++            if sys.platform.startswith('win') and len(path)>1 and path[1]==':':
+                 # Windows: Don't allow c:/ style paths in :-separated env vars
+                 # for obvious reasons. /c/ style paths are valid - if a var is
+                 # separated by : it will only be of interest to programs inside
+-- 
+1.5.5.6
+

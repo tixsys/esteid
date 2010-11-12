@@ -47,7 +47,7 @@ else
             (git fetch && git checkout -f $JHB_REV)
 fi
 
-for p in $mydir/patches/jhbuild-*.patch; do
+for p in $mydir/patches/jhbuild/*.patch; do
     if [ -f "$p" ]; then
         echo "Applying `basename $p` ..."
         git apply $p

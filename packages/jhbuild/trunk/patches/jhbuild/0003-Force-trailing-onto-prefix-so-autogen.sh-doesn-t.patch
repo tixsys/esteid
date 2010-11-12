@@ -1,0 +1,27 @@
+From 998c3bdc0aa0c28268086582968e9e46b7b9d45a Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Mon, 8 Jun 2009 16:52:31 +0100
+Subject: [PATCH] Force trailing / onto prefix, so autogen.sh doesn't break.
+
+---
+ jhbuild/config.py |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/jhbuild/config.py b/jhbuild/config.py
+index 1565568..d034346 100644
+--- a/jhbuild/config.py
++++ b/jhbuild/config.py
+@@ -286,6 +286,10 @@ class Config:
+     def setup_env(self):
+         '''set environment variables for using prefix'''
+ 
++        if self.prefix[len(self.prefix)-1] != '/':
++            self.prefix += '/'
++            print "Warning: added '/' to prefix '%s'\n" % self.prefix
++
+         if not os.path.exists(self.prefix):
+             try:
+                 os.makedirs(self.prefix)
+-- 
+1.5.5.6
+

@@ -1,0 +1,27 @@
+From c55eed2f204b13594f8d2f698b906aae885fa0fc Mon Sep 17 00:00:00 2001
+From: Sam Thursfield <ssssam@gmail.com>
+Date: Sun, 2 Aug 2009 18:00:34 +0100
+Subject: [PATCH] tarball: make patch work.
+
+---
+ jhbuild/versioncontrol/tarball.py |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/versioncontrol/tarball.py b/jhbuild/versioncontrol/tarball.py
+index a3dcb4e..ffb71b3 100644
+--- a/jhbuild/versioncontrol/tarball.py
++++ b/jhbuild/versioncontrol/tarball.py
+@@ -279,8 +279,9 @@ class TarballBranch(Branch):
+                 else:
+                     raise CommandError(_('Failed to find patch: %s') % patch)
+ 
++            patchfile = os.path.abspath (patchfile)
+             buildscript.set_action(_('Applying patch'), self, action_target=patch)
+-            buildscript.execute('patch -p%d < "%s"'
++            buildscript.execute('patch -p%d -i "%s"'
+                                 % (patchstrip, patchfile),
+                                 cwd=self.raw_srcdir)
+ 
+-- 
+1.5.5.6
+
