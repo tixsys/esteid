@@ -22,3 +22,7 @@ Building
 Generating API documentation
 ----------------------------
 Run mvn javadoc:jar
+
+Generating Maven bundle
+-----------------------
+Run mvn repository:bundle-create

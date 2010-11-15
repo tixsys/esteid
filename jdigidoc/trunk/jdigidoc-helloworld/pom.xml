@@ -6,7 +6,7 @@
   <name>Java DigiDoc library example project</name>
   <version>2.3.99</version>
   <description>A simple "quickstart" web project for jDigiDoc</description>
-  <url>http://id.eesti.ee</url>
+  <url>http://esteid.googlecode.com</url>
   <licenses>
     <license>
       <name>GNU Lesser General Public License, Version 2.1</name>
@@ -15,7 +15,7 @@
     </license>
   </licenses>
   <scm>
-    <url>https://id.eesti.ee/idtrac/browser/jdigidoc</url>
+    <url>http://code.google.com/p/esteid/source/browse/jdigidoc</url>
   </scm>
   <dependencies>
     <!-- Modern java Web application dependencies (Servlet, JSP, JSTL) -->
@@ -49,7 +49,7 @@
   <repositories>
     <repository>
       <id>jdigidoc-devel</id>
-      <url>http://ftp.id.eesti.ee/pub/id/mvnrepo</url>
+      <url>http://id.smartlink.ee/repo/mvnrepo</url>
     </repository>
   </repositories>
 

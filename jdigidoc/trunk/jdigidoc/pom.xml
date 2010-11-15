@@ -6,7 +6,7 @@
   <name>Java DigiDoc library</name>
   <version>2.3.99</version>
   <description>A Java libray for manipulating Estonian digital signature container files DDOC and BDOC</description>
-  <url>http://id.eesti.ee</url>
+  <url>http://code.google.com/p/esteid</url>
   <licenses>
     <license>
       <name>GNU Lesser General Public License, Version 2.1</name>
