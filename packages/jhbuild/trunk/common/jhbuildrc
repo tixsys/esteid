@@ -34,7 +34,7 @@ execfile(_utilfile)
 
 # Set make flags
 # You can also use 'make V=0' if you want less output while compiling.
-#makeargs = '-j4'
+makeargs = '-j4'
 
 
 # Make sure we find our installed modules before other versions.
