@@ -11,8 +11,8 @@
 
   <autotools id="m4" autogen-sh="configure">
     <branch repo="ftp.gnu.org"
-	    module="m4/m4-1.4.13.tar.bz2" version="1.4.13"
-	    hash="md5:28f9ccd3ac4da45409251008b911d677" />
+	    module="m4/m4-1.4.15.tar.bz2" version="1.4.15"
+	    hash="md5:c7c32540bc3842d5550f88d47ef551d8" />
   </autotools>
 
   <autotools id="autoconf" autogen-sh="configure">

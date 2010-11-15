@@ -13,7 +13,7 @@ execfile(_rcommon)
 setup_release()
 
 # Set make flags
-makeargs = '-j4 V=0'
+#makeargs = '-j4 V=0'
 
 # Include platform specific RC file
 if sys.platform.startswith("darwin"):

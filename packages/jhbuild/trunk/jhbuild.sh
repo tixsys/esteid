@@ -17,4 +17,6 @@ set -
 # Set HOME environment variable on windows
 [ "$HOME" ] || export HOME="$HOMEDRIVE/$HOMEPATH"
 
+export LD=cl
+
 "$BDIR"/bin/jhbuild -f "$mydir/config" "$@"
