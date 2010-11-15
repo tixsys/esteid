@@ -49,7 +49,7 @@ Arendusversioonide repositooriumi kasutamiseks tuleb lisada pom.xml faili järgm
   <repositories>
     <repository>
       <id>jdigidoc-devel</id>
-      <url>http://ftp.smartlink.ee/pub/id/mvnrepo</url>
+      <url>http://id.smartlink.ee/repo/mvnrepo</url>
     </repository>
   </repositories>
   ...
