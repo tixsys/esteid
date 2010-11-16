@@ -21,3 +21,4 @@ configure_file(ltdl_config.h config.h)
 
 add_library(libltdl STATIC ${SOURCES})
 install(TARGETS libltdl DESTINATION lib)
+install(FILES ltdl.h DESTINATION include)
