@@ -23,8 +23,8 @@
     </dependencies>
   </cmake>
 
-  <cmake id="firebreath" cmakeargs="
-      -DPROJECTS_DIR=&quot;$CHECKOUT_ROOT/firebreath-projects&quot;">
+  <cmake id="firebreath" buildtype="Release"
+         cmakeargs="-DPROJECTS_DIR=../firebreath-projects -DWITH_DYNAMIC_MSVC_RUNTIME=YES">
     <branch repo="firebreath" />
     <dependencies>
       <dep package="esteid-browser-plugin" />
