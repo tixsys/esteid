@@ -16,7 +16,6 @@ checkoutroot = os.path.join(_root, "sources")
 tarballdir = os.path.join(_root, "pkgs")
 buildroot = os.path.join(_root, "work")
 os.environ["JHB_DIR"] = _esteid_jhbdir
-os.environ["CHECKOUT_ROOT"] = checkoutroot
 
 # Setup default modules (platform RC-s may override those)
 modulesets_dir = os.path.join(_esteid_jhbdir, "common")
@@ -36,6 +35,11 @@ execfile(_utilfile)
 # You can also use 'make V=0' if you want less output while compiling.
 makeargs = '-j4'
 
+# Set CMake build type
+buildtype = 'Release'
+
+# Add modulesets directory to PATH so we can run scripts from there
+environ_append("PATH", modulesets_dir, os.pathsep)
 
 # Make sure we find our installed modules before other versions.
 environ_prepend('LDFLAGS', '-L' + prefix + '/lib')
