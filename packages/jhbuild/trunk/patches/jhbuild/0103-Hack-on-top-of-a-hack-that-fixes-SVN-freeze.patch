@@ -1,0 +1,54 @@
+From 984132a98dff9aa0830095e006ac7d867c8dd683 Mon Sep 17 00:00:00 2001
+From: unknown <anttix@.(none)>
+Date: Wed, 17 Nov 2010 18:17:33 +0200
+Subject: [PATCH] Hack on top of a hack that "fixes" SVN freeze
+
+---
+ jhbuild/frontends/terminal.py |    1 +
+ jhbuild/utils/cmds.py         |   17 ++++++++---------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/jhbuild/frontends/terminal.py b/jhbuild/frontends/terminal.py
+index 0d8a29f..39b6952 100644
+--- a/jhbuild/frontends/terminal.py
++++ b/jhbuild/frontends/terminal.py
+@@ -159,6 +159,7 @@ class TerminalBuildScript(buildscript.BuildScript):
+         if hint in ('cvs', 'svn', 'hg-update.py'):
+             kws['stdout'] = subprocess.PIPE
+             kws['stderr'] = subprocess.STDOUT
++            kws['stdin']  = sys.stdin
+         else:
+             kws['stdout'] = None
+             kws['stderr'] = None
+diff --git a/jhbuild/utils/cmds.py b/jhbuild/utils/cmds.py
+index e208aaa..1a8f9f7 100644
+--- a/jhbuild/utils/cmds.py
++++ b/jhbuild/utils/cmds.py
+@@ -218,16 +218,15 @@ def pprint_output(pipe, format_line):
+                     format_line(err_data[:pos+1], True)
+                     err_data = err_data[pos+1:]
+ 
+-            # safeguard against tinderbox that close 0 (stdin)
+-            if sys.stdin in rlist and os.isatty(0):
+-                in_chunk = os.read(sys.stdin.fileno(), 1024)
+-                if pipe.stdin:
+-                    os.write(pipe.stdin.fileno(), in_chunk)
+-        
++            # Do not poll stdin on Windows platform 
+             if not sys.platform.startswith('win'):
+-                select.select([],[],[],.1) # give a little time for buffers to fill
+-            else:
+-                time.sleep(0.1)
++                # safeguard against tinderbox that close 0 (stdin)
++                if sys.stdin in rlist and os.isatty(0):
++                    in_chunk = os.read(sys.stdin.fileno(), 1024)
++                    if pipe.stdin:
++                        os.write(pipe.stdin.fileno(), in_chunk)
++
++            time.sleep(0.1) # give a little time for buffers to fill
+     except KeyboardInterrupt:
+         # interrupt received.  Send SIGINT to child process.
+         try:
+-- 
+1.7.3.1.msysgit.0
+

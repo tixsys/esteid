@@ -1,0 +1,28 @@
+From 20693a52d546c3f81a0626f40ca249281299abdc Mon Sep 17 00:00:00 2001
+From: unknown <anttix@.(none)>
+Date: Wed, 17 Nov 2010 00:13:53 +0200
+Subject: [PATCH] Fix bootstrap for modules that have a VCS branch
+
+---
+ jhbuild/commands/bootstrap.py |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/jhbuild/commands/bootstrap.py b/jhbuild/commands/bootstrap.py
+index 00aee3e..23194f6 100644
+--- a/jhbuild/commands/bootstrap.py
++++ b/jhbuild/commands/bootstrap.py
+@@ -66,6 +66,11 @@ class cmd_bootstrap(cmd_build):
+             for module in module_list:
+                 if module.type == 'meta':
+                     continue
++		# See if the branch has version to check against
++		try:
++		    getattr(module.branch, "version")
++		except AttributeError:
++		    continue
+                 for version_regex in (r'.*?[ \(]([\d.]+)', r'^([\d.]+)'):
+                     if check_version([module.name, '--version'],
+                             version_regex, module.branch.version):
+-- 
+1.7.3.1.msysgit.0
+

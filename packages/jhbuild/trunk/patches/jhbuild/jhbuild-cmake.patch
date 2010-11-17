@@ -1,8 +1,70 @@
+diff --git a/jhbuild/config.py b/jhbuild/config.py
+index 1565568..f89bf58 100644
+--- a/jhbuild/config.py
++++ b/jhbuild/config.py
+@@ -56,7 +56,8 @@ _known_keys = [ 'moduleset', 'modules', 'skip', 'tags', 'prefix',
+                 'jhbuildbot_mastercfg', 'use_local_modulesets',
+                 'ignore_suggests', 'modulesets_dir', 'mirror_policy',
+                 'module_mirror_policy', 'dvcs_mirror_dir', 'build_targets',
+-                'cmakeargs', 'module_cmakeargs' ]
++                'cmakeargs', 'module_cmakeargs', 'buildtype',
++                'module_buildtype' ]
+ 
+ env_prepends = {}
+ def prependpath(envvar, path):
+diff --git a/jhbuild/defaults.jhbuildrc b/jhbuild/defaults.jhbuildrc
+index 54242b6..583dfeb 100644
+--- a/jhbuild/defaults.jhbuildrc
++++ b/jhbuild/defaults.jhbuildrc
+@@ -48,6 +48,7 @@ autogenargs = '--disable-static --disable-gtk-doc'
+ cmakeargs = ''
+ makeargs = ''
+ cflags = ''
++buildtype = 'Debug'
+ 
+ # a alternative install program to use; the included install-check
+ # program won't update timestamps if the header hasn't changed
+@@ -65,6 +66,7 @@ branches = {}
+ module_autogenargs = {}
+ module_cmakeargs = {}
+ module_makeargs = {}
++module_buildtype = {}
+ module_extra_env = {}
+ module_makecheck = {}
+ module_nopoison = {}
 diff --git a/jhbuild/modtypes/cmake.py b/jhbuild/modtypes/cmake.py
-index ad02632..6ef5cad 100644
+index ad02632..229084b 100644
 --- a/jhbuild/modtypes/cmake.py
 +++ b/jhbuild/modtypes/cmake.py
-@@ -89,9 +89,18 @@ class CMakeModule(Package, DownloadableModule):
+@@ -39,11 +39,12 @@ class CMakeModule(Package, DownloadableModule):
+     PHASE_INSTALL = 'install'
+ 
+     def __init__(self, name, branch, cmakeargs='', makeargs='',
+-                 dependencies=[], after=[], suggests=[]):
++                 buildtype='', dependencies=[], after=[], suggests=[]):
+         Package.__init__(self, name, dependencies, after, suggests)
+         self.branch = branch
+         self.cmakeargs = cmakeargs
+         self.makeargs  = makeargs
++        self.buildtype = buildtype
+ 
+     def get_srcdir(self, buildscript):
+         return self.branch.srcdir
+@@ -80,6 +81,13 @@ class CMakeModule(Package, DownloadableModule):
+                               self.name, self.config.makeargs))
+         return self.eval_args(args)
+ 
++    def get_buildtype(self):
++        if self.buildtype:
++	    return self.buildtype
++	else:
++	    return self.config.module_buildtype.get(
++                       self.name, self.config.buildtype)
++
+     def skip_configure(self, buildscript, last_phase):
+         return buildscript.config.nobuild
+ 
+@@ -89,9 +97,18 @@ class CMakeModule(Package, DownloadableModule):
          builddir = self.get_builddir(buildscript)
          if not os.path.exists(builddir):
              os.mkdir(builddir)
@@ -24,3 +86,65 @@ index ad02632..6ef5cad 100644
          cmd = 'cmake %s %s %s' % (baseargs, self.get_cmakeargs(), srcdir)
          if os.path.exists(os.path.join(builddir, 'CMakeCache.txt')):
              # remove that file, as it holds the result of a previous cmake
+@@ -105,7 +122,8 @@ class CMakeModule(Package, DownloadableModule):
+     def do_clean(self, buildscript):
+         buildscript.set_action(_('Cleaning'), self)
+         builddir = self.get_builddir(buildscript)
+-        cmd = '%s %s clean' % (os.environ.get('MAKE', 'make'), self.get_makeargs())
++        cmd = 'cmake --build . --config %s --target clean %s' % (
++	        self.get_buildtype(), self.get_makeargs())
+         buildscript.execute(cmd, cwd = builddir,
+                 extra_env = self.extra_env)
+     do_clean.depends = [PHASE_CONFIGURE]
+@@ -114,7 +132,8 @@ class CMakeModule(Package, DownloadableModule):
+     def do_build(self, buildscript):
+         buildscript.set_action(_('Building'), self)
+         builddir = self.get_builddir(buildscript)
+-        cmd = '%s %s' % (os.environ.get('MAKE', 'make'), self.get_makeargs())
++        cmd = 'cmake --build . --config %s %s' % (
++	        self.get_buildtype(), self.get_makeargs())
+         buildscript.execute(cmd, cwd = builddir,
+                 extra_env = self.extra_env)
+     do_build.depends = [PHASE_CONFIGURE]
+@@ -122,8 +141,8 @@ class CMakeModule(Package, DownloadableModule):
+ 
+     def do_dist(self, buildscript):
+         buildscript.set_action(_('Creating tarball for'), self)
+-        cmd = '%s %s package_source' % (os.environ.get('MAKE', 'make'),
+-                self.get_makeargs())
++        cmd = 'cmake --build . --config %s --target package_source %s' % (
++	        self.get_buildtype(), self.get_makeargs())
+         buildscript.execute(cmd, cwd = self.get_builddir(buildscript),
+                 extra_env = self.extra_env)
+     do_dist.depends = [PHASE_CONFIGURE]
+@@ -132,8 +151,8 @@ class CMakeModule(Package, DownloadableModule):
+     def do_install(self, buildscript):
+         buildscript.set_action(_('Installing'), self)
+         builddir = self.get_builddir(buildscript)
+-        cmd = '%s %s install' % (os.environ.get('MAKE', 'make'),
+-                self.get_makeargs())
++        cmd = 'cmake --build . --config %s --target install %s' % (
++	        self.get_buildtype(), self.get_makeargs())
+         buildscript.execute(cmd,
+                 cwd = builddir,
+                 extra_env = self.extra_env)
+@@ -148,15 +167,18 @@ def parse_cmake(node, config, uri, repositories, default_repo):
+     id = node.getAttribute('id')
+     cmakeargs = ''
+     makeargs = ''
++    buildtype = ''
+     if node.hasAttribute('cmakeargs'):
+         cmakeargs = node.getAttribute('cmakeargs')
+     if node.hasAttribute('makeargs'):
+         makeargs = node.getAttribute('makeargs')
++    if node.hasAttribute('buildtype'):
++        buildtype = node.getAttribute('buildtype')
+ 
+     dependencies, after, suggests = get_dependencies(node)
+     branch = get_branch(node, repositories, default_repo, config)
+ 
+-    return CMakeModule(id, branch, cmakeargs, makeargs,
++    return CMakeModule(id, branch, cmakeargs, makeargs, buildtype,
+                        dependencies = dependencies, after = after,
+                        suggests = suggests)
+ 

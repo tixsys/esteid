@@ -1,0 +1,25 @@
+From d555906c82bb2737137a237a3aa7e2e332908e57 Mon Sep 17 00:00:00 2001
+From: unknown <anttix@.(none)>
+Date: Wed, 17 Nov 2010 13:07:41 +0200
+Subject: [PATCH] Assume downloaded .exe files are sfx zips
+
+---
+ jhbuild/utils/unpack.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/utils/unpack.py b/jhbuild/utils/unpack.py
+index be5567b..7db64c1 100644
+--- a/jhbuild/utils/unpack.py
++++ b/jhbuild/utils/unpack.py
+@@ -131,7 +131,7 @@ def unpack_archive(buildscript, localfile, target_directory, checkoutdir=None):
+     elif ext in ('.gz', '.tgz') and has_command('gunzip') and has_command('tar'):
+         buildscript.execute('gunzip -dc "%s" | tar xf -' % localfile,
+                 cwd=target_directory)
+-    elif ext == '.zip' and has_command('unzip'):
++    elif ext in ('.zip', '.exe') and has_command('unzip'):
+         buildscript.execute('unzip "%s"' % localfile,
+                 cwd=target_directory)
+     else:
+-- 
+1.7.3.1.msysgit.0
+
