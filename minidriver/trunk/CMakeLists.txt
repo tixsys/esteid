@@ -6,6 +6,14 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(SmartCardpp REQUIRED)
 find_package(Perl)
 
+find_path(CNGDK_INCLUDE_DIR cardmod.h
+    "C:\Program Files (x86)\Microsoft CNG Development Kit\Include"
+    "C:\Program Files\Microsoft CNG Development Kit\Include")
+
+if(NOT CNGDK_INCLUDE_DIR)
+    message(FATAL_ERROR "Microsoft Cryptography Development Kit Next Generation Not Found")
+endif()
+
 # Get current date
 if(PERL_FOUND)
     execute_process(COMMAND "${PERL_EXECUTABLE}" "-le" "@T=localtime; print sprintf \"%02d/%02d/%04d\",$T[4]+1,$T[3],$T[5]+1900"
@@ -50,6 +58,7 @@ endforeach(flag_var)
 include_directories(
     ${SMARTCARDPP_INCLUDE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
+    ${CNGDK_INCLUDE_DIR}
 )
 
 # esteidcm64.dll on x64
