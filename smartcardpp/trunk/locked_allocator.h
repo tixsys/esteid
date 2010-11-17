@@ -85,3 +85,5 @@ public:
 
 template <class T>
 bool operator==(const locked_allocator<T> &,const locked_allocator<T> &) { return true;}
+template <class T>
+bool operator!=(const locked_allocator<T> &,const locked_allocator<T> &) { return false;}
