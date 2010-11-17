@@ -169,3 +169,10 @@ option(ENABLE_NAUTILUS_EXTENSION "Install Nautilus extension (default: TRUE)" TR
 if (ENABLE_NAUTILUS_EXTENSION)
     add_subdirectory(nautilus)
 endif()
+
+if(WIN32)
+    option(ENABLE_WINDOWS_EXPLORER_EXTENSION "Build Windows Explorer extension (default: TRUE)" TRUE)
+    if (ENABLE_WINDOWS_EXPLORER_EXTENSION)
+        add_subdirectory(windows)
+    endif()
+endif()
