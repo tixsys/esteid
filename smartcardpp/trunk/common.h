@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <iomanip>
-#include <smartcardpp/types.h>
+#include "types.h"
 
 #ifdef _WIN32
 #include <tchar.h>

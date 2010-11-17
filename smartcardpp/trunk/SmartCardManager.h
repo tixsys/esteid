@@ -7,7 +7,7 @@
 */
 // Revision $Revision: 361 $
 #pragma once
-#include <smartcardpp/ManagerInterface.h>
+#include "ManagerInterface.h"
 
 struct SmartCardManagerPriv;
 struct SmartCardConnectionPriv;

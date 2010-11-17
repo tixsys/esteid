@@ -6,7 +6,7 @@
 	\date		$Date: 2009-07-15 21:16:04 +0300 (Wed, 15 Jul 2009) $
 */
 // Revision $Revision: 361 $
-#include <smartcardpp/CardBase.h>
+#include "CardBase.h"
 #include <algorithm>
 #include "helperMacro.h"
 #include "common.h"

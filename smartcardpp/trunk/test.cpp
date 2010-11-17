@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <smartcardpp/smartcardpp.h>
+#include "smartcardpp.h"
 
 void validateOnPinpad() {
 	SmartCardManager mgr;

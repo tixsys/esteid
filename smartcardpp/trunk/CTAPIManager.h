@@ -7,8 +7,8 @@
 */
 // Revision $Revision: 345 $
 #pragma once
-#include <smartcardpp/ManagerInterface.h>
-#include <smartcardpp/DynamicLibrary.h>
+#include "ManagerInterface.h"
+#include "DynamicLibrary.h"
 
 #ifdef _WIN32
 #define CTAPI __stdcall

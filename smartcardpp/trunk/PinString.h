@@ -1,4 +1,4 @@
-#include <smartcardpp/locked_allocator.h>
+#include "locked_allocator.h"
 
 typedef std::basic_string<char, std::char_traits<char>, locked_allocator<char> > base_str;
 

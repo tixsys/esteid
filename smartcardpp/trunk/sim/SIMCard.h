@@ -1,5 +1,5 @@
 #pragma once
-#include <smartcardpp/CardBase.h>
+#include "../CardBase.h"
 
 class SIMCard :
 	public CardBase

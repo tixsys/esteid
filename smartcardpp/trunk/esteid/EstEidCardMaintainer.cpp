@@ -6,7 +6,7 @@
 	\date		$Date: 2009-07-09 19:31:59 +0300 (Thu, 09 Jul 2009) $
 */
 // Revision $Revision: 351 $
-#include <smartcardpp/esteid/EstEidCardMaintainer.h>
+#include "EstEidCardMaintainer.h"
 #include "common.h"
 
 void EstEidCardMaintainer::performGenerateNewKeys() {

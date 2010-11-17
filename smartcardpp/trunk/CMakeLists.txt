@@ -22,7 +22,6 @@ if(MSVC)
 endif(MSVC)
 
 include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${LIBDL_INCLUDE_DIR}
     ${PCSCLITE_INCLUDE_DIR}
@@ -81,27 +80,9 @@ set(esteid_HDRS
 # Public headers which get installed into smartcardpp/sim/ directory
 set(sim_HDRS sim/SIMCard.h)
 
-set(GENERATED_HEADERS "")
-macro(stage_smartcard_headers HEADERS)
-    foreach(H ${HEADERS})
-        set(SRC "${CMAKE_CURRENT_SOURCE_DIR}/${H}")
-        set(DST "${CMAKE_CURRENT_BINARY_DIR}/smartcardpp/${H}")
-
-        add_custom_command(
-            OUTPUT ${DST}
-            COMMAND ${CMAKE_COMMAND} -E copy ${SRC} ${DST}
-            DEPENDS ${SRC}
-        )
-
-        set(GENERATED_HEADERS ${GENERATED_HEADERS} ${DST})
-    endforeach(H)
-endmacro(stage_smartcard_headers)
-
-stage_smartcard_headers("${smartcard_HDRS}")
-stage_smartcard_headers("${esteid_HDRS}")
-stage_smartcard_headers("${sim_HDRS}")
-
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp DESTINATION ${INCLUDE_INSTALL_DIR})
+install(FILES ${smartcard_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp)
+install(FILES ${esteid_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp/esteid)
+install(FILES ${sim_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp/sim)
 
 if(WIN32 OR APPLE)
     set(LIB_TYPE STATIC)
@@ -110,7 +91,6 @@ else(WIN32 OR APPLE)
 endif(WIN32 OR APPLE)
 
 add_library(smartcardpp ${LIB_TYPE}
-    ${GENERATED_HEADERS}
     ${smartcard_SRCS}
     ${sim_SRCS}
     ${esteid_SRCS}

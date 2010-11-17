@@ -14,9 +14,9 @@
 #include <arpa/inet.h>
 #endif
 
-#include <smartcardpp/PCSCManager.h>
-#include <smartcardpp/SCError.h>
-#include <smartcardpp/CardBase.h> //for exceptions
+#include "PCSCManager.h"
+#include "SCError.h"
+#include "CardBase.h" //for exceptions
 #include "common.h"
 
 #ifndef CM_IOCTL_GET_FEATURE_REQUEST

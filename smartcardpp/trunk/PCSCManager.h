@@ -7,8 +7,8 @@
 */
 // Revision $Revision: 470 $
 #pragma once
-#include <smartcardpp/ManagerInterface.h>
-#include <smartcardpp/DynamicLibrary.h>
+#include "ManagerInterface.h"
+#include "DynamicLibrary.h"
 #ifndef _WIN32
 #ifdef __APPLE__
 typedef void *LPVOID;

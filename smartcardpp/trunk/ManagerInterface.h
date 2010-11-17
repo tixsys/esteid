@@ -8,7 +8,7 @@
 // Revision $Revision: 345 $
 #pragma once
 
-#include <smartcardpp/types.h>
+#include "types.h"
 #include <stdexcept>
 
 struct ConnectionBase;

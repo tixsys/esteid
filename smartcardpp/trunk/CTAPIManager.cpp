@@ -6,9 +6,9 @@
 	\date		$Date: 2009-11-17 01:16:15 +0200 (T, 17 nov 2009) $
 */
 // Revision $Revision: 493 $
-#include <smartcardpp/CTAPIManager.h>
-#include <smartcardpp/SCError.h> //for exceptions
-#include <smartcardpp/CardBase.h> //for exceptions
+#include "CTAPIManager.h"
+#include "SCError.h" //for exceptions
+#include "CardBase.h" //for exceptions
 #include "helperMacro.h"
 #include "common.h"
 

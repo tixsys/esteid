@@ -6,7 +6,7 @@
 	\date		$Date: 2009-10-05 22:16:29 +0300 (E, 05 okt 2009) $
 */
 // Revision $Revision: 473 $
-#include <smartcardpp/DynamicLibrary.h>
+#include "DynamicLibrary.h"
 #include <string.h>
 #include "common.h"
 
