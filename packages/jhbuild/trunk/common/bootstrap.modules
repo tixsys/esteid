@@ -6,6 +6,7 @@
 
   <repository type="tarball" name="ftp.gnu.org"
       href="ftp://ftp.gnu.org/gnu/"/>
+
   <repository type="tarball" name="pkgconfig"
       href="http://pkgconfig.freedesktop.org/releases/"/>
 
@@ -53,8 +54,8 @@
   <autotools id="xerces-c" autogen-sh="configure"
              autogenargs="--disable-pretty-make --disable-network --disable-sse2 --enable-transcoder-iconv">
     <branch repo="archive.apache.org"
-            module="xerces/c/3/sources/xerces-c-3.0.1.tar.gz" version="3.0.1"
-            hash="md5:293c03f59bf8e956020d73f5b122094c" />
+            module="xerces/c/3/sources/xerces-c-3.1.1.tar.gz" version="3.1.1"
+            hash="md5:6a8ec45d83c8cfb1584c5a5345cb51ae" />
   </autotools>
 
   <autotools id="xml-security-c" autogen-sh="configure"
