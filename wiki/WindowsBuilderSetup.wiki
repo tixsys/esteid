@@ -1,0 +1,20 @@
+﻿#summary kuidas sättida Windowsi masin kompileerimiseks valmis
+
+Võrreldes Linuxiga on Windowsi arendaja elu täielik õudusunenägu!
+
+Vajalik soft:
+ * Windows 7 või Windows Server 2008 R2
+ * Visual Studio 2010 Ultimate
+ * Driver DDK
+ * WiX
+ * Mingw-Get (otsi faili mingw-get-*bin.zip)
+   http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/
+
+Muud vajalikud kulinad:
+ * VeriSigni poolt välja antud koodi signeerimise sertifikaat
+
+Tee nii:
+ * Paigalda nõutud soft
+ * Paki mingw-get lahti c:\tools kataloogi
+ * Sikuta [http://esteid.googlecode.com/svn/packages/jhbuild/trunk/win/setup-msys.bat setup-msys.bat]
+ * Käivita see
