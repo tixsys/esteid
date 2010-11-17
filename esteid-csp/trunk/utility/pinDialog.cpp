@@ -41,7 +41,7 @@ struct pinDialogPriv {
 	} params;
 	pinDialog &m_dlg;
 	HWND m_hwnd;
-	std::vector<char,locked_allocator < char > > m_buffer;
+	PinString m_buffer;
 	iconHandle *dlgIcon,*appIcon;
 	pinDialogPriv(pinDialog &ref,const void * opsysParam) : 
 		m_buffer(20,'0'),m_dlg(ref),dlgIcon(NULL),appIcon(NULL) {
