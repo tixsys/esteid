@@ -144,4 +144,6 @@ if(UNIX AND NOT APPLE)
             RENAME ${TGT}
         )
     endforeach(RES)
-endif(UNIX AND NOT APPLE)
+elseif(WIN32)
+    install(FILES images/qdigidoc_crypto_document_48x48.ico DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps)
+endif()

@@ -158,7 +158,9 @@ if(UNIX AND NOT APPLE)
             RENAME ${TGT}
         )
     endforeach(RES)
-endif(UNIX AND NOT APPLE)
+elseif(WIN32)
+    install(FILES images/qdigidoc_client_document_48x48.ico DESTINATION ${SHARE_INSTALL_PREFIX}/pixmaps)
+endif()
 
 option(ENABLE_KDE "Install KDE service menu (default: TRUE)" TRUE)
 if (ENABLE_KDE)
