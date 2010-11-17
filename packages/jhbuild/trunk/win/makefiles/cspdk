@@ -1,0 +1,6 @@
+include make.env
+
+all:
+	echo TODO: What shall we do with this drunken sailor
+
+install: all

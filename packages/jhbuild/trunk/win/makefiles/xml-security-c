@@ -1,0 +1,12 @@
+PROJFILE=Projects/VC10.0/xsec/xsec_lib/xsec_lib.vcxproj
+
+all: compile
+
+install: install-bin install-lib install-include
+
+install-include:
+	install-headers "*.hpp" $(SRCDIR)/xsec $(INCLUDEDIR)/xsec
+
+include make.msbuild
+
+MSBUILD_CONFIG +=  No Xalan

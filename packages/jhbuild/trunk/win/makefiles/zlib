@@ -1,0 +1,27 @@
+include make.env
+
+INSTALL ?= install -p
+
+# Zlib nmake build system does not support out-of-tree build
+OUTDIR = $(SRCDIR)
+
+all: build
+
+build:
+	nmake -f win32/Makefile.msc
+
+install: install-bin install-lib install-include
+
+install-bin:
+	$(INSTALL) -d $(BINDIR)
+	$(INSTALL) $(OUTDIR)/*.dll $(BINDIR)
+
+install-lib:
+	$(INSTALL) -d $(LIBDIR)
+	$(INSTALL) $(OUTDIR)/*.lib $(LIBDIR)
+	-$(INSTALL) $(OUTDIR)/*.pdb $(LIBDIR)
+
+install-include:
+	$(INSTALL) -d $(INCLUDEDIR)
+	$(INSTALL) $(OUTDIR)/zconf.h $(INCLUDEDIR)
+	$(INSTALL) $(OUTDIR)/zlib.h $(INCLUDEDIR)

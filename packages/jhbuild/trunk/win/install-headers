@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Find all headers and copy them to destination
+# directory
+
+set -e
+
+[ "$INSTALL" ] || INSTALL="install -p"
+
+hdrglob="$1"
+srcdir="$2"
+destdir="$3"
+
+cd "$srcdir"
+
+echo "Copying $hdrglob from $srcdir to $destdir"
+
+/bin/find * -iname "$hdrglob" -exec $INSTALL -D {} $destdir/{} \;

@@ -1,0 +1,13 @@
+include make.env
+
+all: build
+
+# Makefile.msvc uses the old DOS copy command
+# which does not support forward slashes
+WINPFX=$(shell echo $(PREFIX) | sed 's|/|\\|g')
+
+build:
+	nmake -f Makefile.msvc NO_NLS=1 MFLAGS=-MD
+
+install:
+	nmake -f Makefile.msvc install PREFIX=$(WINPFX)

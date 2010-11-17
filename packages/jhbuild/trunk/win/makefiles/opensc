@@ -1,0 +1,39 @@
+include make.env
+
+INSTALL ?= install -p
+MACHINE ?= ix86
+
+all: nmake-compile
+
+nmake-compile:
+	sed -i -e "s|^LIBLTDL_INCL.*|LIBLTDL_INCL = /I$(INCLUDEDIR)|" \
+	       -e "s|^LIBLTDL_LIB.*|LIBLTDL_LIB = $(LIBDIR)/libltdl.lib|" \
+	       -e "s|^OPENSSL_INCL_DIR.*|OPENSSL_INCL_DIR = /I$(INCLUDEDIR)|" \
+	       -e "s|^OPENSSL_LIB.*|OPENSSL_LIB = $(LIBDIR)/static/libeay32.lib user32.lib advapi32.lib crypt32.lib|" \
+	       -e "s|^#OPENSSL_DEF|OPENSSL_DEF|" \
+	       -e "s|^#ZLIB_DEF|ZLIB_DEF|" \
+	       -e "s|^ZLIB_INCL_DIR.*|ZLIB_INCL_DIR = /I$(INCLUDEDIR)|" \
+	       -e "s|^ZLIB_LIB.*|ZLIB_LIB = $(LIBDIR)/zlib.lib|" \
+	       -e "s|^ICONV_INCL_DIR.*|ICONV_INCL_DIR = /I$(INCLUDEDIR)|" \
+	       -e "s|^ICONV_LIB.*|ICONV_LIB = $(LIBDIR)/iconv.lib|" \
+	       -e "s|^#ICONV_DEF|ICONV_DEF|" \
+	       -e "s|/MACHINE:IX86|/MACHINE:$(MACHINE)|" \
+	       win32/Make.rules.mak
+	sed -i -e "s|/machine:ix86|/MACHINE:$(MACHINE)|" \
+	    src/scconf/Makefile.mak \
+	    src/pkcs11/Makefile.mak \
+	    src/common/Makefile.mak
+	sed -i -e "s|cardmod||" \
+	    src/Makefile.mak
+	nmake -f Makefile.mak
+
+install: install-bin install-etc
+
+install-bin:
+	$(INSTALL) -d $(BINDIR)
+	$(INSTALL) $(SRCDIR)/src/*/*.dll $(BINDIR)
+	$(INSTALL) $(SRCDIR)/src/tools/*.exe $(BINDIR)
+
+install-etc:
+	$(INSTALL) -d $(PREFIX)/etc
+	$(INSTALL) $(SRCDIR)/etc/opensc.conf.in $(PREFIX)/etc/opensc.conf

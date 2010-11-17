@@ -1,0 +1,23 @@
+include make.env
+
+all: build
+
+win32/config.msvc:
+	sed -i -e "/NOWIN98/d" win32/Makefile.msvc
+	cd win32; \
+	cscript configure.js \
+		compiler=msvc \
+		cruntime=-MD \
+		include=$(INCLUDEDIR) \
+		lib=$(LIBDIR)
+
+# Makefile.msvc uses the old DOS copy command
+# which does not support forward slashes
+WINPFX=$(shell echo $(PREFIX) | sed 's|/|\\|g')
+
+build: win32/config.msvc
+	cd win32; nmake -f Makefile.msvc
+
+install:
+	cd win32; nmake -f Makefile.msvc install PREFIX='$(WINPFX)'
+	mv -f $(LIBDIR)/libxml2.dll $(BINDIR)

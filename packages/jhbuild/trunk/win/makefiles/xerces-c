@@ -1,0 +1,12 @@
+PROJFILE = projects/$(MSBUILD_ARCH)/VC10/xerces-all/XercesLib/XercesLib.vcxproj
+
+all: compile
+
+install: install-bin install-lib install-include
+
+install-include:
+	install-headers "*.hpp" $(SRCDIR)/src/xercesc $(INCLUDEDIR)/xercesc
+	# Xerces has some .c files amongst headers. Braindead? Absolutely!
+	install-headers "*.c" $(SRCDIR)/src/xercesc $(INCLUDEDIR)/xercesc
+
+include make.msbuild

@@ -1,0 +1,39 @@
+include make.env
+
+STATICLIBDIR ?= $(LIBDIR)/static
+INSTALL ?= install -p
+
+PATH = $(shell echo /c/Perl64/bin:$$PATH)
+
+all: dll static tests
+
+install: installdll installstatic
+
+ms/ntdll.mak:
+	./Configure VC-WIN32 --prefix=$(PREFIX)
+	cmd \/c ms\do_nasm
+
+ms/nt.mak: ms/ntdll.mak
+
+dll: ms/ntdll.mak
+	nmake -f ms/ntdll.mak
+
+static: ms/nt.mak
+	nmake -f ms/nt.mak
+
+tests: dlltest statictest
+
+dlltest: ms/ntdll.mak
+	nmake -f ms/ntdll.mak test
+	touch dlltest
+
+statictest: ms/nt.mak
+	nmake -f ms/nt.mak test
+	touch statictest
+
+installdll:
+	nmake -f ms/ntdll.mak install
+
+installstatic:
+	$(INSTALL) -d $(STATICLIBDIR)
+	$(INSTALL) out32/*.lib $(STATICLIBDIR)

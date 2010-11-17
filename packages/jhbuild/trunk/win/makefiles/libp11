@@ -1,0 +1,21 @@
+MACHINE = ix86
+
+all: nmake-compile
+
+nmake-compile:
+	sed -i -e "s|^LIBLTDL_INC.*|LIBLTDL_INC = /I$(INCLUDEDIR)|" \
+	       -e "s|^LIBLTDL_LIB.*|LIBLTDL_LIB = $(LIBDIR)/libltdl.lib|" \
+	       -e "s|^OPENSSL_INC.*|OPENSSL_INC = /I$(INCLUDEDIR)|" \
+	       -e "s|^OPENSSL_LIB.*|OPENSSL_LIB = $(LIBDIR)/libeay32.lib|" \
+	       -e "s|/MACHINE:IX86|/MACHINE:$(MACHINE)|" \
+	       src/Makefile.mak
+	nmake -f Makefile.mak
+
+install: install-bin install-lib install-include
+
+install-include:
+	install-headers libp11.h $(SRCDIR)/src $(INCLUDEDIR)
+
+include make.msbuild
+
+OUTDIR = $(SRCDIR)/src

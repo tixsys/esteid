@@ -1,0 +1,82 @@
+<?xml version="1.0"?><!--*- mode: nxml; indent-tabs-mode: nil -*-->
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<!-- vim:set ts=2 expandtab: -->
+<moduleset>
+<!--  <include href="../common/esteid.modules" /> -->
+  <include href="../../../common/esteid.modules" />
+
+  <repository type="svn" name="esteid" 
+              href="https://esteid.googlecode.com/svn/" default="yes" />
+
+  <repository type="tarball" name="smartlink/snapshots"
+              href="http://id.smartlink.ee/repo/nightly/snapshots/" />
+
+  <autotools id="iaikPKCS11Wrapper" skip-autogen="never"
+      autogen-template="prepwin iaikPKCS11Wrapper %(srcdir)s %(prefix)s"
+      makeargs="-f make.win"
+      makeinstallargs="-f make.win install"
+      supports-non-srcdir-builds="no">
+    <branch repo="smartlink/snapshots"
+            module="PKCS11Wrapper-1.0.0.2.tgz"
+            version="1.0.0.2" hash="md5:f93e0b6a651d455486b7073f89ccad3d" />
+  </autotools>
+
+  <autotools id="opensc" skip-autogen="never"
+      autogen-template="prepwin opensc %(srcdir)s %(prefix)s"
+      makeargs="-f make.win"
+      makeinstallargs="-f make.win install"
+      supports-non-srcdir-builds="no">
+    <branch repo="smartlink/snapshots"
+            module="opensc-0.12.0-svn-r3928.tar.gz"
+            checkoutdir="opensc-0.12.0"
+            version="0.12.0" hash="md5:6acd6bc342ce458c8e2a287669010b7a" />
+    <!-- depends on iconv, libltdl, openssl, and zlib from bootstrap -->
+  </autotools>
+
+  <cmake id="smartcardpp-static"
+         cmakeargs="-DUSE_STATIC_RUNTIME=TRUE -DLIB_SUFFIX=/static">
+    <branch module="smartcardpp" />
+  </cmake>
+
+  <cmake id="minidriver"
+         cmakeargs="-DSMARTCARDPP_LIBRARY=${libdir}/static/smartcardpp.lib">
+    <branch />
+    <dependencies>
+      <dep package="smartcardpp-static" />
+    </dependencies>
+  </cmake>
+
+  <cmake id="SmartCardRemoval">
+    <branch />
+    <dependencies>
+      <dep package="smartcardpp" />
+    </dependencies>
+  </cmake>
+
+  <cmake id="id-updater"
+         cmakeargs="-DUPDATER_URL=http://esteid.estobuntu.org/repo/release/windows/updater/Win32/">
+    <branch />
+    <dependencies>
+      <dep package="smartcardpp" />
+    </dependencies>
+  </cmake>
+
+  <cmake id="esteid-csp"
+         cmakeargs="-DSMARTCARDPP_LIBRARY=${libdir}/static/smartcardpp.lib
+                    -DUSE_STATIC_RUNTIME=TRUE">
+    <branch />
+    <dependencies>
+      <dep package="smartcardpp-static" />
+    </dependencies>
+  </cmake>
+
+  <metamodule id="meta-esteid-win">
+    <dependencies>
+      <dep package="meta-esteid" />
+      <dep package="minidriver" />
+      <dep package="esteid-csp" />
+      <dep package="iaikPKCS11Wrapper" />
+    </dependencies>
+  </metamodule>
+</moduleset>

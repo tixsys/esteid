@@ -1,0 +1,20 @@
+include make.env
+
+all: build
+
+$(PREFIX)/mkspecs:
+	cp -a mkspecs $(PREFIX)
+
+configure.cache: $(PREFIX)/mkspecs
+	./configure.exe -openssl -I $(INCLUDEDIR) \
+	  -L $(LIBDIR) \
+	  -no-qt3support -no-sse2 -no-phonon \
+	  -no-multimedia -no-declarative \
+	  -fast -release -opensource -confirm-license \
+	  -prefix $(PREFIX)
+
+build: configure.cache
+	nmake 
+
+install:
+	nmake install

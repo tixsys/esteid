@@ -1,0 +1,9 @@
+include make.env
+
+INSTALL ?= install -p
+
+all: PKCS11Wrapper.dll
+
+install: all
+	$(INSTALL) -d $(BINDIR)
+	$(INSTALL) PKCS11Wrapper.dll $(BINDIR)

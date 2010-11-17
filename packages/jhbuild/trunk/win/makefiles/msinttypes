@@ -1,0 +1,8 @@
+include make.env
+
+# Nothing to build, just check if the files are there
+
+all: inttypes.h stdint.h
+
+install:
+	install-headers "*.h" $(SRCDIR) $(INCLUDEDIR)

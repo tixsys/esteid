@@ -1,0 +1,31 @@
+#!/bin/sh
+
+mydir=`dirname "$0"`
+makefile="$mydir/makefiles/$1"
+srcdir="$2"
+prefix="$3"
+
+set -e
+
+# Copy MSBuild makefile
+cp $mydir/make.msbuild .
+
+# Store configuration environment so make.msbuild can load it
+cat > make.env <<E_O_F
+SRCDIR = $srcdir
+WORKDIR = `pwd -W`
+PREFIX = $prefix
+BINDIR = $prefix/bin
+INCLUDEDIR = $prefix/include
+LIBDIR = $prefix/lib
+E_O_F
+
+# Copy package specific files (including Makefile)
+if [ -f "$makefile" ]; then
+    cp -f "$makefile" make.win
+fi
+
+# Rename GNU standard INSTALL file so make install will not find it
+[ -f INSTALL ] && mv INSTALL INSTALL.TXT
+
+exit 0

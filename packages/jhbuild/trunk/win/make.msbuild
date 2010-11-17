@@ -1,0 +1,37 @@
+include make.env
+
+MSBUILD_ARCH ?= Win32
+MSBUILD_CONFIG ?= Release
+MSBUILD_TARGET ?= Build
+INSTALL ?= install -p
+
+OUTDIR = $(WORKDIR)/$(MSBUILD_ARCH)
+
+
+#		   -p:AdditionalIncludeDirectories=$(INCLUDEDIR)/ \
+#		   -p:AdditionalLibraryDirectories=$(LIBDIR)/ \
+
+# Some useful MSBuild documentation
+# http://msdn.microsoft.com/en-us/library/bb629394.aspx
+# http://blogs.msdn.com/b/vcblog/archive/2010/01/11/vcbuild-vs-c-msbuild-on-the-command-line.aspx
+
+compile:
+	$(MSBUILD) $(SRCDIR)/$(PROJFILE) -t:$(MSBUILD_TARGET) \
+	           -p:Configuration="$(MSBUILD_CONFIG)" \
+		   -p:Platform=$(MSBUILD_ARCH) \
+		   -p:OutDir=$(OUTDIR)/ \
+		   -p:useenv=true \
+		   $(MSBUILD_FLAGS)
+
+clean:
+	rm -rf $(OUTDIR)
+
+install-bin:
+	$(INSTALL) -d $(BINDIR)
+	-$(INSTALL) $(OUTDIR)/*.exe $(BINDIR)
+	-$(INSTALL) $(OUTDIR)/*.dll $(BINDIR)
+
+install-lib:
+	$(INSTALL) -d $(LIBDIR)
+	-$(INSTALL) $(OUTDIR)/*.lib $(LIBDIR)
+	-$(INSTALL) $(OUTDIR)/*.pdb $(LIBDIR)

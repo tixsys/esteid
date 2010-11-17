@@ -1,0 +1,21 @@
+# Set up Windows specific modules
+modulesets_dir = os.path.join(_esteid_jhbdir, "win")
+modules = [ 'meta-esteid-win' ]
+
+# Add platform directory to path so we can run scripts from there
+environ_append("PATH", modulesets_dir, os.pathsep)
+
+# Set make flags (NB! as of 16.11.2010 these must be empty)
+makeargs = ""
+
+# Set CMake build type
+buildtype = "RelWithDebInfo"
+
+# Make sure MSBUILD finds our headers and libs
+environ_prepend('LIB',     os.path.join(prefix, 'lib'),     ';')
+environ_prepend('INCLUDE', os.path.join(prefix, 'include'), ';')
+
+# Set Visual Studio builder name
+os.environ["MSBUILD"] = "MSBuild.exe"
+os.environ["MSBUILD_FLAGS"] = "-nologo"
+#os.environ["MSBUILD_CONFIG"] = "Release"
