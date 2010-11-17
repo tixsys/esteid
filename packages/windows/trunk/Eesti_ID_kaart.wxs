@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- FIXME: The following defines should go to a separate include file. -->
+<?define ProductName = "Estonian ID card software" ?>
+<?define ProductManufacturer = "Smartlink OU" ?>
+<?define IDCardFolder = "Estonian ID Card" ?>
+
+<!--
+Windows Installer ignores 4th digit in Version attributes.
+
+1. koht: major versioon. Kuna SK tehtud soft oli "1", siis see on "2".
+2. koht: installeri versioon
+3. koht; esteid.googlecode.com SVN revision
+4. koht: esteidutil.sf.net SVN revision
+-->
+<?define Version = "$(env.MSI_VERSION)"?>
+<?define UpgradeCode = "{58A1DBA8-81A2-4D58-980B-4A6174D5B66B}" ?>
+
+<?if $(var.Platform) = "x64" ?>
+<?define Win64YesNo="yes" ?>
+<?define PlatformUserVisible=" (64 bit)" ?>
+<?else?>
+<?define Win64YesNo="no" ?>
+<?define PlatformUserVisible="" ?>
+<?endif?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+<Product Id="*" Name="$(var.ProductName) $(var.Version)$(var.PlatformUserVisible)"
+         Language="1033" Version="$(var.Version)" Manufacturer="$(var.ProductManufacturer)"
+         UpgradeCode='$(var.UpgradeCode)'>
+    <Package Platform="$(var.Platform)" Manufacturer="$(var.ProductManufacturer)" Description="$(var.ProductName) Installation" Comments="$(var.ProductName) Installation" InstallerVersion="300" Compressed="yes" Languages="1033" ShortNames="no" SummaryCodepage="1252" />
+    <Media Id="1" Cabinet="Eesti_ID_kaart.cab" EmbedCab="yes" CompressionLevel="high" />
+
+    <Icon Id="IDIcon" SourceFile="ID.ico" />
+
+    <!-- Properties -->
+    <Property Id="ARPHELPLINK" Value="http://code.google.com/p/esteid/" />
+    <Property Id="ARPPRODUCTICON" Value="IDIcon" />
+    <Property Id="ARPURLINFOABOUT" Value="http://code.google.com/p/esteid/" />
+    <Property Id="ARPURLUPDATEINFO" Value="http://code.google.com/p/esteid/" />
+
+    <!-- Don't allow 32 bit MSI to install on an x64 platform. -->
+    <?if $(var.Platform)!=x64 ?>
+    <Condition Message='This package cannot be installed on a 64-bit platform. Please use the 64-bit version of $(var.ProductName) package.'>NOT VersionNT64</Condition>
+    <?endif ?>
+
+    <Condition Message="You need to be an Administrator to install this product.">
+        Privileged
+    </Condition>
+    <Condition Message="This product is only supported on Windows XP or higher.">
+        <![CDATA[Installed OR (VersionNT >= 501)]]>
+    </Condition>
+    <Condition Message="A later version of $(var.ProductName) is already installed.">
+        NOT NEWERVERSIONDETECTED
+    </Condition>
+
+    <!-- Check if .NET framework 2.0 is installed -->
+    <PropertyRef Id="NETFRAMEWORK20"/>
+    <Condition Message="This application requires .NET Framework 2.0. Please install the .NET Framework then run this installer again.">
+        <![CDATA[Installed OR NETFRAMEWORK20]]>
+    </Condition>
+
+    <!-- http://msdn.microsoft.com/en-us/library/aa371182%28VS.85%29.aspx
+         default: omus
+         a - Force all files to be reinstalled, regardless of checksum or version.
+         o - Reinstall if the file is missing or is an older version. -->
+    <Property Id="REINSTALLMODE" Value="amus" />
+
+    <!-- Upgrade qesteidutil.msi
+         It was only used during internal alpha testing, with version always set to 0.0.1 -->
+    <Upgrade Id="{2BF9CBBD-BEB6-4875-92C3-45D570A447D2}">
+        <UpgradeVersion Maximum="0.0.1" IncludeMaximum="yes"
+                        Property="REMOVINGALPHAQESTEIDUTIL"
+                        IgnoreRemoveFailure="yes" />
+    </Upgrade>
+
+    <!-- DigiDoc.msi upgrade tabelis UPGRADE_1 -->
+    <Upgrade Id="{F3824017-C4B7-4438-BE1E-A1158988CEE3}">
+        <UpgradeVersion Maximum="2.6.5.00" IncludeMaximum="yes"
+                        Property="REMOVINGSKDIGIDOC1"
+                        IgnoreRemoveFailure="yes" />
+    </Upgrade>
+
+    <!-- DigiDoc.msi upgrade tabelis UPGRADE_2 -->
+    <Upgrade Id="{15709E1D-03A2-4A0D-AE12-F5E185868D9E}">
+        <UpgradeVersion Minimum="2.6.5.00"
+                        Maximum="3.0.0.00" IncludeMaximum="no"
+                        Property="REMOVINGSKDIGIDOC2"
+                        IgnoreRemoveFailure="yes" />
+    </Upgrade>
+
+    <!-- ID-kaart.msi upgrade tabelis UPGRADE_1 -->
+    <Upgrade Id="{388EBF55-03B0-4BED-B6EC-FE6A96BB5386}">
+        <UpgradeVersion Maximum="1.4.92.00" IncludeMaximum="yes"
+                        Property="REMOVINGSKIDKAART1"
+                        IgnoreRemoveFailure="yes" />
+    </Upgrade>
+
+    <!-- See UpgradeCode oli algselt ID-kaart.msi 1.4.92.00 oma, aga kasutasime seda ka endal enne beeta versiooni. -->
+    <Upgrade Id="{74BC381F-B648-461B-8E37-4825171B49EB}">
+        <!-- SK soft -->
+        <UpgradeVersion Maximum="2.0.0.0" IncludeMaximum="no"
+                        Property="REMOVINGSKIDKAART2"
+                        IgnoreRemoveFailure="yes" />
+        <!-- Meie beeta-versiooni eelne variant. Hilisematel versioonidel on uus UpgradeCode. -->
+        <UpgradeVersion Minimum="2.0.0.0" IncludeMinimum="yes"
+                        Maximum="2.6.837.329" IncludeMaximum="yes"
+                        Property="REMOVINGALPHA" />
+    </Upgrade>
+
+    <!-- Upgrade this MSI -->
+    <Upgrade Id="$(var.UpgradeCode)">
+        <UpgradeVersion Minimum="$(var.Version)"
+                        OnlyDetect="yes"
+                        Property="NEWERVERSIONDETECTED" />
+        <UpgradeVersion Minimum="2.7.0.0" IncludeMinimum="yes"
+                        Maximum="$(var.Version)" IncludeMaximum="no"
+                        MigrateFeatures="yes"
+                        Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+
+    <Property Id="IDEELABORFIREFOXDETECTED">
+        <DirectorySearch Id="Ideelabor" Path="[ProgramFilesFolder]\Ideelabor\idCard" AssignToProperty="yes">
+            <FileSearch Id="opensc.conf" Name="opensc.conf" />
+        </DirectorySearch>
+    </Property>
+
+    <Property Id="USB_CCID_INF_FILE">
+        <DirectorySearch Id="FindUsbCcidInf" Path="[SystemFolder]\DRVSTORE\usbccid_33B1DF4EF8E805EC7EC23B15C0FD4B5226A31BFD">
+            <FileSearch Id="usbccid.inf" Name="usbccid.inf" />
+        </DirectorySearch>
+    </Property>
+
+
+    <!-- Close Firefox before installing OpenSC and Firefox extension. -->
+    <!-- 
+         CloseApplication in Wix 3.0 RTM doesn't support showing the message.
+         Disabling the custom action for now.
+    <util:CloseApplication Id="CloseFirefox"
+                           CloseMessage="no"
+                           Target="firefox.exe"
+                           RebootPrompt="no"
+                           Description="Firefox is running and needs to be closed." />
+    -->
+
+<!--
+         http://sourceforge.net/tracker/index.php?func=detail&aid=1989218&group_id=105970&atid=642717
+
+         There is a simpler solution for this. It is possible to use Restart Manager
+         to close the applications for us. We just need to add restart manager
+         resources for each process we need to close before InstallValidate action.
+         During this action RMFilesInUse Dialog will be shown with our process
+         listed with other processes that need to be closed. It works only on Vista
+         though.
+
+         I've created a Custom Action that does the work, I can share the code.
+-->
+
+    <!-- Custom action for removing Ideelabor Firefox installer. -->
+    <CustomAction Id="RemoveIdeelaborFirefox"
+                  Directory="TARGETDIR"
+                  ExeCommand="[ProgramFilesFolder]\Ideelabor\idCard\unins000.exe /SILENT"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+    <!-- Custom action for removing USB CCID Generic driver. -->
+    <Binary Id="DPInst.exe" SourceFile="C:\WinDDK\7600.16385.1\redist\DIFx\dpinst\EngMui\x86\dpinst.exe" />
+    <CustomAction Id="RemoveUsbCcid"
+                  BinaryKey="DPInst.exe"
+                  ExeCommand="/u [USB_CCID_INF_FILE] /s"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+        <Directory Id="DesktopFolder" />
+        <Directory Id='ProgramFilesFolder'>
+            <Directory Id="APPLICATIONFOLDER" Name="$(var.IDCardFolder)">
+                <Directory Id="CertificatesFolder" Name="certs" />
+                <Directory Id="DriversFolder" Name="drivers" />
+                <Directory Id="SchemaFolder" Name="schema" />
+                <Directory Id="MozillaExtensionFolder" Name="Mozilla" />
+            </Directory>
+        </Directory>
+        <Directory Id="ProgramMenuFolder">
+            <Directory Id="EsteidShortcutFolder" Name="ID-kaart" />
+        </Directory>
+        <Directory Id="SystemFolder" />
+        <?if $(var.Platform)=x64 ?>
+        <Directory Id='ProgramFiles64Folder'>
+            <Directory Id="APPLICATION64FOLDER" Name="$(var.IDCardFolder)">
+            </Directory>
+        </Directory>
+        <Directory Id="System64Folder" />
+        <?endif ?>
+    </Directory>
+
+    <DirectoryRef Id="TARGETDIR">
+        <Merge Id='CRT' Language='0' SourceFile='$(env.MergeModules)\Microsoft_VC100_CRT_x86.msm' DiskId='1' />
+        <?if $(var.Platform) = "x64" ?>
+        <Merge Id='CRT64' Language='0' SourceFile='$(env.MergeModules)\Microsoft_VC100_CRT_x64.msm' DiskId='1' />
+        <?endif ?>
+
+        <Component Id="RegistryInfo" Guid="*">
+            <Condition>Privileged</Condition>
+            <RegistryKey Root="HKLM"
+                         Key="Software\Estonian ID Card"
+                         Action="createAndRemoveOnUninstall">
+                <RegistryValue Type="string" Name="Installed" Value="[APPLICATIONFOLDER]" />
+            </RegistryKey>
+        </Component>
+        <?if $(var.Platform) = "x64" ?>
+        <Component Id="RegistryInfo_64" Guid="*" Win64="yes">
+            <Condition>Privileged</Condition>
+            <RegistryKey Root="HKLM"
+                         Key="Software\Estonian ID Card"
+                         Action="createAndRemoveOnUninstall">
+                <RegistryValue Type="string" Name="Installed" Value="[APPLICATIONFOLDER]" />
+            </RegistryKey>
+        </Component>
+        <?endif ?>
+
+        <!-- Restart Smart Card service -->
+        <Component Id="SCardSvrStart" Guid="{0AFDDA6E-A145-40B6-8ABD-FE502FD9C31D}" KeyPath="yes" Win64="$(var.Win64YesNo)">
+            <ServiceControl Id="SCardSvrStart" Name="SCardSvr" Start="install" Stop="both" />
+        </Component>
+
+        <!-- Vista and higher have Certificate Propagation Service which has to be restarted after CSP install -->
+        <Component Id="CertPropSvcStart" Guid="{4BF6CF46-3AC5-4B5A-A698-6B7BB0584800}" KeyPath="yes" Win64="$(var.Win64YesNo)">
+            <Condition><![CDATA[VersionNT >= 600]]></Condition>
+            <ServiceControl Id="CertPropSvcStart" Name="CertPropSvc" Start="install" Stop="both" />
+        </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="EsteidShortcutFolder">
+        <Component Id="EsteidShortcutComponent" Guid="*">
+            <RemoveFolder Id="CleanupShortcutFolder" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\Estonian ID Card" Name="Installed" Value="[APPLICATIONFOLDER]" Type="string" KeyPath="yes"/>
+        </Component>
+    </DirectoryRef>
+
+    <Feature Id="qesteidutil" Title="ID Card Utility" Level="1">
+        <ComponentGroupRef Id="qesteidutil" />
+        <ComponentGroupRef Id="OpenSC" />
+        <ComponentGroupRef Id="QtLibs" />
+        <ComponentGroupRef Id="CommonLibs" />
+    </Feature>
+
+    <Feature Id="qdigidoc" Title="DigiDoc Client" Level="1">
+        <ComponentGroupRef Id="qdigidoc" />
+        <ComponentGroupRef Id="libdigidoc" />
+        <ComponentGroupRef Id="OpenSC" />
+        <ComponentGroupRef Id="QtLibs" />
+        <ComponentGroupRef Id="CommonLibs" />
+    </Feature>
+
+    <Feature Id="iesupport" Title="Internet Explorer Support" AllowAdvertise="no" Level="1">
+        <ComponentGroupRef Id="BrowserPlugin" />
+        <ComponentGroupRef Id="iesupport" />
+    </Feature>
+
+    <Feature Id="firefoxsupport" Title="Mozilla Support" AllowAdvertise="no" Level="1">
+        <ComponentGroupRef Id="BrowserPlugin" />
+        <ComponentGroupRef Id="MozillaExtension" />
+        <ComponentGroupRef Id="OpenSC" />
+    </Feature>
+
+    <Feature Id="common" Title="Common Items" AllowAdvertise="no" Display="hidden" Level="1">
+        <ComponentGroupRef Id="SKCertificates" />
+        <ComponentGroupRef Id="updater" />
+
+        <ComponentRef Id="EsteidShortcutComponent" />
+        <ComponentRef Id="SCardSvrStart" />
+        <ComponentRef Id="CertPropSvcStart" />
+        <ComponentRef Id="RegistryInfo" />
+
+        <?if $(var.Platform) = "x64" ?>
+        <ComponentRef Id="RegistryInfo_64" />
+        <?endif ?>
+    </Feature>
+
+    <Feature Id="testcertificates" Title="Test Certificates" AllowAdvertise="no" Level="1000">
+        <ComponentGroupRef Id="TestCertificates" />
+    </Feature>
+
+    <Feature Id="VCRedist" Title="Visual C++ 9.0 Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+        <MergeRef Id="CRT" />
+        <?if $(var.Platform) = "x64" ?>
+        <MergeRef Id="CRT64" />
+        <?endif ?>
+    </Feature>
+
+    <!-- Install to all users -->
+    <Property Id="ALLUSERS" Value="1" />
+    <WixVariable Id="WixUISupportPerMachine" Value="1" />
+    <WixVariable Id="WixUISupportPerUser" Value="0" />
+
+    <UIRef Id="WixUI_IDCard" />
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER"/>
+    <Property Id="QESTEIDUTIL_DESKTOP_SHORTCUT" Value="1" />
+    <Property Id="QDIGIDOC_DESKTOP_SHORTCUT" Value="1" />
+
+    <InstallExecuteSequence>
+        <FindRelatedProducts Before="LaunchConditions" />
+
+        <!-- http://jpassing.wordpress.com/2007/06/16/where-to-place-removeexistingproducts-in-a-major-msi-upgrade/ -->
+        <!-- http://blog.deploymentengineering.com/2008/05/more-problems-with-ms-vc-8-sp1-merge.html -->
+        <RemoveExistingProducts After="InstallValidate" />
+
+        <Custom Action="RemoveIdeelaborFirefox" After="InstallInitialize">
+            NOT Installed AND IDEELABORFIREFOXDETECTED
+        </Custom>
+        <Custom Action="RemoveUsbCcid" After="InstallInitialize">
+            NOT Installed AND USB_CCID_INF_FILE
+        </Custom>
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+        <FindRelatedProducts Before="LaunchConditions" />
+    </InstallUISequence>
+
+</Product>
+</Wix>

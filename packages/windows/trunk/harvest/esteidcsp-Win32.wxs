@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="esteidcsp.dll" Guid="PUT-GUID-HERE">
+                <File Id="esteidcsp.dll" KeyPath="yes" Source="$(var.IESupportSourceDir)\esteidcsp.dll" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATR" Value="3B000000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATRMask" Value="FF00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATR" Value="3B0000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATRMask" Value="FF000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATR" Value="3B0000004573744549442076657220312E30" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATRMask" Value="FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Image Path" Value="[#esteidcsp.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Type" Value="1" Type="integer" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="SigInFile" Value="0" Type="integer" Action="write" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

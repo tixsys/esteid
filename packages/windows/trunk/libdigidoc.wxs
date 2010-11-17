@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define LibdigidocRegistryKey = "Software\Estonian ID Card\digidocpp" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="libdigidoc">
+            <ComponentRef Id="digidocpp.conf" />
+            <ComponentRef Id="LibdigidocRegistryConfigFile" />
+            <ComponentRef Id="digidocpp.dll" />
+            <ComponentRef Id="xerces_c_3_1.dll" />
+            <ComponentRef Id="xsec_1_6.dll" />
+
+            <ComponentRef Id="digidoc.ini" />
+            <ComponentRef Id="digidoc.dll" />
+            <ComponentRef Id="libxml2.dll" />
+
+            <ComponentRef Id="conf.xsd" />
+            <ComponentRef Id="datatypes.dtd" />
+            <ComponentRef Id="OpenDocument_manifest.xsd" />
+            <ComponentRef Id="XAdES.xsd" />
+            <ComponentRef Id="xmldsig_core_schema.xsd" />
+            <ComponentRef Id="XMLSchema.dtd" />
+        </ComponentGroup>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="digidocpp.conf" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\digidocpp.conf" />
+            </Component>
+            <Component Id="LibdigidocRegistryConfigFile" Guid="*">
+                <RegistryValue Root="HKMU" Key="$(var.LibdigidocRegistryKey)" Name="ConfigFile" Value="[APPLICATIONFOLDER]digidocpp.conf" Type="string" />
+            </Component>
+            <Component Id="digidocpp.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\digidocpp.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="xerces_c_3_1.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\xerces-c_3_1.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="xsec_1_6.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\xsec_1_6.dll" Checksum="yes" Vital="yes" />
+            </Component>
+
+            <Component Id="digidoc.ini" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidoc.ini" />
+                <IniFile Id="setCaCertPath"
+                         Action="addLine"
+                         Directory="APPLICATIONFOLDER"
+                         Section="ca"
+                         Name="digidoc.ini"
+                         Key="CA_CERT_PATH"
+                         Value="[APPLICATIONFOLDER]certs" />
+            </Component>
+            <Component Id="digidoc.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\digidoc.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="libxml2.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\libxml2.dll" Checksum="yes" Vital="yes" />
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="SchemaFolder">
+            <Component Id="conf.xsd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\conf.xsd" />
+            </Component>
+            <Component Id="datatypes.dtd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\datatypes.dtd" />
+            </Component>
+            <Component Id="OpenDocument_manifest.xsd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\OpenDocument_manifest.xsd" />
+            </Component>
+            <Component Id="XAdES.xsd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\XAdES.xsd" />
+            </Component>
+            <Component Id="xmldsig_core_schema.xsd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\xmldsig-core-schema.xsd" />
+            </Component>
+            <Component Id="XMLSchema.dtd" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\digidocpp\schema\XMLSchema.dtd" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?if $(var.Platform) = "x64" ?>
+<?define MinidriverDir = "C:\build\x64\deploy\minidriver" ?>
+<?else ?>
+<?define MinidriverDir = "C:\build\Win32\deploy\minidriver" ?>
+<?endif ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension">
+    <Fragment>
+        <DirectoryRef Id="DriversFolder">
+            <Component Id="minidriver" Guid="{333D7637-09D6-41B3-B001-6B66C845B03F}">
+                <Condition><![CDATA[VersionNT >= 601]]></Condition>
+                <File Source="$(var.MinidriverDir)\esteidcm.inf" KeyPath="yes" />
+                <File Source="$(var.MinidriverDir)\esteidcm.cat" />
+                <File Source="$(var.MinidriverDir)\esteidcm.dll" />
+                <?if $(var.Platform) = "x64" ?>
+                <File Source="$(var.MinidriverDir)\esteidcm64.dll" />
+                <?endif ?>
+                <difx:Driver DeleteFiles="yes" PlugAndPlayPrompt="no" />
+            </Component>
+       </DirectoryRef>
+    </Fragment>
+</Wix>

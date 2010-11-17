@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define browserPluginGUID = "{aa84ce40-4253-11da-8cd6-0800200c9a66}" ?>
+<?define ExtensionSourceDir = "$(env.PREFIX32)\..\work\firebreath\projects\esteid-browser-plugin\Mozilla\xpi" ?>
+
+<!-- http://github.com/darwin/xrefresh/blob/e2ec86faa766796cfd5f614e81961cac2514e36b/ins/xrefresh.wxs -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="MozillaExtension">
+            <ComponentRef Id="remove_npidcard" />
+
+            <ComponentRef Id='FirefoxExtensionReg' />
+            <ComponentRef Id='SeaMonkeyExtensionReg' />
+            <ComponentRef Id='ThunderbirdExtensionReg' />
+            <ComponentRef Id='FlockExtensionReg' />
+
+            <ComponentRef Id='chrome.manifest' />
+            <ComponentRef Id='install.rdf' />
+            <ComponentRef Id='browser.xul' />
+            <ComponentRef Id='config.js' />
+            <ComponentRef Id='convertLegacy.js' />
+            <ComponentRef Id='esteid.js' />
+            <ComponentRef Id='mail.xul' />
+            <ComponentRef Id='prefs.js' />
+            <ComponentRef Id='prefs.xul' />
+            <ComponentRef Id='sebHack.js' />
+            <ComponentRef Id='en_US_esteid.dtd' />
+            <ComponentRef Id='en_US_esteid.properties' />
+            <ComponentRef Id='et_EE_esteid.dtd' />
+            <ComponentRef Id='et_EE_esteid.properties' />
+            <ComponentRef Id='ru_RU_esteid.dtd' />
+            <ComponentRef Id='ru_RU_esteid.properties' />
+            <ComponentRef Id='global.jsm' />
+            <ComponentRef Id='esteid.css' />
+            <ComponentRef Id='id_16.png' />
+            <ComponentRef Id='id_32.png' />
+            <ComponentRef Id='id_error_16.png' />
+            <ComponentRef Id='id_warning_16.png' />
+            <ComponentRef Id='OldJavaBlocker.js' />
+            <ComponentRef Id='defaults.js' />
+        </ComponentGroup>
+
+        <ComponentGroup Id="BrowserPlugin">
+            <ComponentRef Id='npesteid.dll' />
+            <?if $(var.Platform) = "x64" ?>
+            <ComponentRef Id="npesteid_64.dll" />
+            <?endif ?>
+        </ComponentGroup>
+
+        <DirectoryRef Id="ProgramFilesFolder">
+            <Directory Id='MozillaFirefoxFolder' Name='Mozilla Firefox'>
+                <Directory Id='plugins' Name='plugins'>
+                    <Component Id="remove_npidcard" Guid="{93C388AA-8619-4B75-905B-9FF8C284A647}">
+                        <RemoveFile Id="npidcard.dll" On="install" Name="npidcard.dll" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+
+        <DirectoryRef Id="MozillaExtensionFolder">
+            <!-- Registry keys -->
+            <Component Id="FirefoxExtensionReg" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\Firefox\Extensions">
+                    <RegistryValue Type="string" Name="$(var.browserPluginGUID)" Value="[MozillaExtensionFolder]" />
+                </RegistryKey>
+            </Component>
+            <Component Id="SeaMonkeyExtensionReg" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\SeaMonkey\Extensions">
+                    <RegistryValue Type="string" Name="$(var.browserPluginGUID)" Value="[MozillaExtensionFolder]" />
+                </RegistryKey>
+            </Component>
+            <Component Id="ThunderbirdExtensionReg" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\Thunderbird\Extensions">
+                    <RegistryValue Type="string" Name="$(var.browserPluginGUID)" Value="[MozillaExtensionFolder]" />
+                </RegistryKey>
+            </Component>
+            <Component Id="FlockExtensionReg" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryKey Root="HKLM" Key="SOFTWARE\Mozilla\Flock\Extensions">
+                    <RegistryValue Type="string" Name="$(var.browserPluginGUID)" Value="[MozillaExtensionFolder]" />
+                </RegistryKey>
+            </Component>
+
+            <!-- Files from xpi -->
+            <Component Id='chrome.manifest' Guid='*'>
+                 <File Source="$(var.ExtensionSourceDir)\chrome.manifest" />
+            </Component>
+            <Component Id='install.rdf' Guid='*'>
+                 <File Source="$(var.ExtensionSourceDir)\install.rdf" />
+            </Component>
+
+            <Directory Id='chrome' Name='chrome'>
+                <Directory Id='content' Name='content'>
+                    <Component Id='browser.xul' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\browser.xul" />
+                    </Component>
+                    <Component Id='config.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\config.js" />
+                    </Component>
+                    <Component Id='convertLegacy.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\convertLegacy.js" />
+                    </Component>
+                    <Component Id='esteid.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\esteid.js" />
+                    </Component>
+                    <Component Id='mail.xul' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\mail.xul" />
+                    </Component>
+                    <Component Id='prefs.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\prefs.js" />
+                    </Component>
+                    <Component Id='prefs.xul' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\prefs.xul" />
+                    </Component>
+                    <Component Id='sebHack.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\content\sebHack.js" />
+                    </Component>
+                </Directory>
+
+                <Directory Id='locale' Name='locale'>
+                    <Directory Id='mozilla_en_US' Name='en-US'>
+                        <Component Id='en_US_esteid.dtd' Guid='*'>
+                            <File Id='en_US_esteid.dtd' Source="$(var.ExtensionSourceDir)\chrome\locale\en-US\esteid.dtd" />
+                        </Component>
+                        <Component Id='en_US_esteid.properties' Guid='*'>
+                            <File Id='en_US_esteid.properties' Source="$(var.ExtensionSourceDir)\chrome\locale\en-US\esteid.properties" />
+                        </Component>
+                    </Directory>
+
+                    <Directory Id='mozilla_et_EE' Name='et-EE'>
+                        <Component Id='et_EE_esteid.dtd' Guid='*'>
+                            <File Id='et_EE_esteid.dtd' Source="$(var.ExtensionSourceDir)\chrome\locale\et-EE\esteid.dtd" />
+                        </Component>
+                        <Component Id='et_EE_esteid.properties' Guid='*'>
+                            <File Id='et_EE_esteid.properties' Source="$(var.ExtensionSourceDir)\chrome\locale\et-EE\esteid.properties" />
+                        </Component>
+                    </Directory>
+
+                    <Directory Id='mozilla_ru_RU' Name='ru-RU'>
+                        <Component Id='ru_RU_esteid.dtd' Guid='*'>
+                            <File Id='ru_RU_esteid.dtd' Source="$(var.ExtensionSourceDir)\chrome\locale\ru-RU\esteid.dtd" />
+                        </Component>
+                        <Component Id='ru_RU_esteid.properties' Guid='*'>
+                            <File Id='ru_RU_esteid.properties' Source="$(var.ExtensionSourceDir)\chrome\locale\ru-RU\esteid.properties" />
+                        </Component>
+                    </Directory>
+                </Directory>
+
+                <Directory Id='modules' Name='modules'>
+                    <Component Id='global.jsm' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\modules\global.jsm" />
+                    </Component>
+                </Directory>
+
+                <Directory Id='skin' Name='skin'>
+                    <Component Id='esteid.css' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\skin\esteid.css" />
+                    </Component>
+                    <Component Id='id_16.png' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\skin\id-16.png" />
+                    </Component>
+                    <Component Id='id_32.png' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\skin\id-32.png" />
+                    </Component>
+                    <Component Id='id_error_16.png' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\skin\id-error-16.png" />
+                    </Component>
+                    <Component Id='id_warning_16.png' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\chrome\skin\id-warning-16.png" />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id='components' Name='components'>
+                <Component Id='OldJavaBlocker.js' Guid='*'>
+                    <File Source="$(var.ExtensionSourceDir)\components\OldJavaBlocker.js" />
+                </Component>
+            </Directory>
+            <Directory Id='defaults' Name='defaults'>
+                <Directory Id='preferences' Name='preferences'>
+                    <Component Id='defaults.js' Guid='*'>
+                        <File Source="$(var.ExtensionSourceDir)\defaults\preferences\defaults.js" />
+                    </Component>
+                </Directory>
+            </Directory>
+        </DirectoryRef>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="npesteid.dll" Guid="*">
+                <File Id="npesteid.dll" KeyPath="yes" Source="$(env.LIBDIR32)\mozilla\plugins\npesteid.dll" Checksum="yes" Vital="yes" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Control" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\InprocServer32" Value="[#npesteid.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\InprocServer32" Name="ThreadingModel" Value="Single" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\MiscStatus\1" Value="131473" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\MiscStatus" Value="0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\ProgID" Value="EE.esteid.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Programmable" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Version" Value="1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\VersionIndependentProgID" Value="EE.esteid" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\InprocServer32" Value="[#npesteid.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\InprocServer32" Name="ThreadingModel" Value="Single" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\ProgID" Value="EIDCard.Sign.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\Programmable" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\Version" Value="1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\VersionIndependentProgID" Value="EIDCard.Sign" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid\CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid\CurVer" Value="EE.esteid.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid.1\CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid.1" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign\CLSID" Value="{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign\CurVer" Value="EIDCard.Sign.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign.1\CLSID" Value="{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign.1" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\ProxyStubClsid" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\ProxyStubClsid32" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}" Value="IFBComJavascriptObject" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\ProxyStubClsid" Value="{00020420-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\ProxyStubClsid32" Value="{00020420-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}" Value="IFBComEventSource" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\ProxyStubClsid" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\ProxyStubClsid32" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}" Value="IFBControl" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Name="Extension" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Name="CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\0\win32" Value="[#npesteid.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\FLAGS" Value="0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\HELPDIR" Value="[APPLICATIONFOLDER]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0" Value="esteid 1.0 Type Library" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\ClassesB\AppID\npFireBreath.dll" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\ClassesB\AppID\{B415CD14-B45D-4BCA-B552-B06175C38606}" Value="FireBreathWin" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\MozillaPlugins\id.eesti.ee/esteid" Name="Path" Value="[#npesteid.dll]" Type="string" Action="write" />
+            </Component>
+        </DirectoryRef>
+
+        <?if $(var.Platform) = "x64" ?>
+        <DirectoryRef Id="APPLICATION64FOLDER">
+            <Component Id="npesteid_64.dll" Guid="*" Win64="yes">
+                <File Id="npesteid_64.dll" KeyPath="yes" Source="$(env.LIBDIR64)\mozilla\plugins\npesteid.dll" Checksum="yes" Vital="yes" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Control" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\InprocServer32" Value="[#npesteid_64.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\InprocServer32" Name="ThreadingModel" Value="Single" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\MiscStatus\1" Value="131473" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\MiscStatus" Value="0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\ProgID" Value="EE.esteid.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Programmable" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\Version" Value="1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}\VersionIndependentProgID" Value="EE.esteid" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\InprocServer32" Value="[#npesteid_64.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\InprocServer32" Name="ThreadingModel" Value="Single" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\ProgID" Value="EIDCard.Sign.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\Programmable" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\Version" Value="1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}\VersionIndependentProgID" Value="EIDCard.Sign" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\CLSID\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid\CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid\CurVer" Value="EE.esteid.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid.1\CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EE.esteid.1" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign\CLSID" Value="{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign\CurVer" Value="EIDCard.Sign.1" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign.1\CLSID" Value="{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\EIDCard.Sign.1" Value="Compatibility Sign Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\ProxyStubClsid" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\ProxyStubClsid32" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{4662CD17-0B44-535A-91E5-1753BB2F1666}" Value="IFBComJavascriptObject" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\ProxyStubClsid" Value="{00020420-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\ProxyStubClsid32" Value="{00020420-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{60EB3E65-2938-5533-9491-4596E4ACC5E6}" Value="IFBComEventSource" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\ProxyStubClsid" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\ProxyStubClsid32" Value="{00020424-0000-0000-C000-000000000046}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\TypeLib" Value="{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}\TypeLib" Name="Version" Value="1.0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\Interface\{8CEB9C14-AA9C-5A2E-BE64-727F7C24BD5F}" Value="IFBControl" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Value="esteid Control Class" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Name="Extension" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\MIME\Database\Content Type\application/x-esteid" Name="CLSID" Value="{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\0\win32" Value="[#npesteid_64.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\FLAGS" Value="0" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0\HELPDIR" Value="[APPLICATION64FOLDER]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Classes\TypeLib\{B2C0ED58-945A-53EA-BBCF-51AF4AD4F81D}\1.0" Value="esteid 1.0 Type Library" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\ClassesB\AppID\npFireBreath.dll" Name="AppID" Value="{B415CD14-B45D-4BCA-B552-B06175C38606}" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\ClassesB\AppID\{B415CD14-B45D-4BCA-B552-B06175C38606}" Value="FireBreathWin" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{29CE3405-F2FD-5402-A971-CB7B9FC0ABAC}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\Ext\PreApproved\{FC5B7BD2-584A-4153-92D7-4C5840E4BC28}" Value="" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="Software\MozillaPlugins\id.eesti.ee/esteid" Name="Path" Value="[#npesteid_64.dll]" Type="string" Action="write" />
+            </Component>
+        </DirectoryRef>
+        <?endif ?>
+    </Fragment>
+</Wix>

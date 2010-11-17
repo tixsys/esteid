@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="OpenSC">
+            <ComponentRef Id="esteid_pkcs11.dll" />
+            <ComponentRef Id="opensc_pkcs11.dll" />
+            <ComponentRef Id="onepin_opensc_pkcs11.dll" />
+            <ComponentRef Id="opensc.dll" />
+            <ComponentRef Id="pkcs15init.dll" />
+            <ComponentRef Id="opensc_tool.exe" />
+            <ComponentRef Id="pkcs11_tool.exe" />
+            <ComponentRef Id="pkcs15_tool.exe" />
+            <ComponentRef Id="opensc.conf" />
+            <ComponentRef Id="OpenscRegistryConfigFile" />
+            <ComponentRef Id="PKCS11Wrapper.dll" />
+        </ComponentGroup>
+
+        <DirectoryRef Id="SystemFolder">
+            <Component Id="onepin_opensc_pkcs11.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\onepin-opensc-pkcs11.dll" Checksum="yes" Vital="yes" />
+                <Environment Id="PATH" Name="PATH" Value="[APPLICATIONFOLDER]" Permanent="no" Part="first" Action="set" System="yes" />
+            </Component>
+            <Component Id="esteid_pkcs11.dll" Guid="*">
+                <File Id="esteid_pkcs11.dll" Name="esteid_pkcs11.dll" Source="$(env.BINDIR32)\opensc-pkcs11.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="opensc_pkcs11.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\opensc-pkcs11.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="opensc.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\opensc.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="pkcs15init.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\pkcs15init.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="PKCS11Wrapper.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\PKCS11Wrapper.dll" Checksum="yes" Vital="yes" />
+            </Component>
+        </DirectoryRef>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="opensc_tool.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\opensc-tool.exe" Checksum="yes" />
+            </Component>
+            <Component Id="pkcs11_tool.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\pkcs11-tool.exe" Checksum="yes" />
+            </Component>
+            <Component Id="pkcs15_tool.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\pkcs15-tool.exe" Checksum="yes" />
+            </Component>
+            <Component Id="opensc.conf" Guid="*">
+                <File Source="$(env.PREFIX32)\etc\opensc.conf" />
+            </Component>
+            <Component Id="OpenscRegistryConfigFile" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryKey Root="HKLM"
+                             Key="Software\OpenSC"
+                             Action="createAndRemoveOnUninstall">
+                    <RegistryValue Type="string" Name="ConfigFile" Value="[APPLICATIONFOLDER]opensc.conf" />
+                </RegistryKey>
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define CertSourceDir = "certs" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+
+    <Fragment>
+        <DirectoryRef Id="CertificatesFolder">
+            <Component Id="TEST_SK_file" Guid="*">
+                <File Id="TEST_SK" Name="TEST-SK.crt" Source="$(var.CertSourceDir)\TEST-SK.crt" />
+            </Component>
+
+            <Component Id="TEST_SK" Guid="AC6DA2A0-3C38-470E-9A72-3AB18524EBF0" KeyPath="yes">
+                <iis:Certificate Id="TEST_SK"
+                                 Name="TEST_SK"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="TEST_SK"
+                                 />
+            </Component>
+
+            <Component Id="TEST_SK_OCSP_2005_file" Guid="*">
+                <File Id="TEST_SK_OCSP_2005" Name="TEST-SK OCSP 2005.crt" Source="$(var.CertSourceDir)\TEST-SK OCSP 2005.crt" />
+            </Component>
+
+            <Component Id="TEST_SK_OCSP_2005" Guid="6B24AB02-E410-465E-B9B8-0E5CB99CE503" KeyPath="yes">
+                <iis:Certificate Id="TEST_SK_OCSP_2005"
+                                 Name="TEST_SK_OCSP_2005"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="TEST_SK_OCSP_2005"
+                                 />
+            </Component>
+
+        </DirectoryRef>
+
+        <Binary Id="TEST_SK" SourceFile="$(var.CertSourceDir)\TEST-SK.crt" />
+        <Binary Id="TEST_SK_OCSP_2005" SourceFile="$(var.CertSourceDir)\TEST-SK OCSP 2005.crt" />
+    </Fragment>
+
+    <Fragment>
+        <ComponentGroup Id="TestCertificates">
+            <ComponentRef Id="TEST_SK" />
+            <ComponentRef Id="TEST_SK_file" />
+            <ComponentRef Id="TEST_SK_OCSP_2005" />
+            <ComponentRef Id="TEST_SK_OCSP_2005_file" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

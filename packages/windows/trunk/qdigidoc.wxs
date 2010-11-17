@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define QdigidocRegistryKey = "Software\Estonian ID Card\QDigiDoc" ?>
+<?define ShellExtId = "{310AAB39-76FE-401B-8A7F-0F578C5F6AB5}" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="qdigidoc">
+            <ComponentRef Id="qdigidocclient.exe" />
+            <ComponentRef Id="qdigidoccrypto.exe" />
+            
+            <ComponentRef Id="QdigidocStartMenuShortcut" />
+            <ComponentRef Id="QdigidocDesktopShortcut" />
+
+            <ComponentRef Id="EsteidShellExtension.dll" />
+            <ComponentRef Id="InstallRegWild" />
+            <ComponentRef Id="InstallRegApproved" />
+            <?if $(var.Platform) = "x64" ?>
+            <ComponentRef Id="EsteidShellExtension_64.dll" />
+            <ComponentRef Id="InstallRegWild_64" />
+            <ComponentRef Id="InstallRegApproved_64" />
+            <?endif ?>
+        </ComponentGroup>
+
+        <!-- Document icons. -->
+        <Icon Id="QdigidocClientDocument" SourceFile="$(env.PREFIX32)\share\pixmaps\qdigidoc_client_document_48x48.ico" />
+        <Icon Id="QdigidocCryptoDocument" SourceFile="$(env.PREFIX32)\share\pixmaps\qdigidoc_crypto_document_48x48.ico" />
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="qdigidocclient.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\qdigidocclient.exe" Checksum="yes" Vital="yes" />
+                <ProgId Id="Qdigidocclient.bdoc" Description="DigiDoc3 signed document" Icon="QdigidocClientDocument" Advertise="yes">
+                    <Extension Id="bdoc" ContentType="application/x-bdoc">
+                        <Verb Id="openBdoc" Sequence="1" Command="Open" Argument='"%1"' />
+                    </Extension>
+                </ProgId>
+                <ProgId Id="Qdigidocclient.ddoc" Description="DigiDoc3 signed document" Icon="QdigidocClientDocument" Advertise="yes">
+                    <Extension Id="ddoc" ContentType="application/x-ddoc">
+                        <Verb Id="openDdoc" Sequence="1" Command="Open" Argument='"%1"' />
+                    </Extension>
+                </ProgId>
+                <ProgId Id="Qdigidocclient.p12d" Description="DigiDoc3 PKCS#12 certificate" Icon="QdigidocClientDocument" Advertise="yes">
+                    <Extension Id="p12d" ContentType="application/x-p12d">
+                        <Verb Id="openP12d" Sequence="1" Command="Open" Argument='"%1"' />
+                    </Extension>
+                </ProgId>
+            </Component>
+
+            <Component Id="qdigidoccrypto.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\qdigidoccrypto.exe" Checksum="yes" Vital="yes" />
+                <ProgId Id="Qdigidoccrypto.cdoc" Description="DigiDoc3 encrypted container" Icon="QdigidocCryptoDocument" Advertise="yes">
+                    <Extension Id="cdoc" ContentType="application/x-cdoc">
+                        <Verb Id="openCdoc" Sequence="1" Command="Open" Argument='"%1"' />
+                    </Extension>
+                </ProgId>
+            </Component>
+        </DirectoryRef>
+
+        <!-- Always install 32 bit shell extension. -->
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="EsteidShellExtension.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\EsteidShellExtension.dll" Checksum="yes" Vital="yes" />
+                <RegistryKey Root="HKCR"
+                             Key="CLSID\$(var.ShellExtId)\InprocServer32"
+                             Action="createAndRemoveOnUninstall">
+                    <RegistryValue Type="string" Value="[APPLICATIONFOLDER]EsteidShellExtension.dll"/>
+                    <RegistryValue Type="string" Name="ThreadingModel" Value="Apartment" />
+                </RegistryKey>
+            </Component>
+
+            <Component Id="InstallRegWild" Guid="*">
+                <RegistryValue Root="HKCR"
+                               Key="*\shellex\ContextMenuHandlers\EsteidShellExtension"
+                               Value="$(var.ShellExtId)"
+                               Type="string" />
+            </Component>
+
+            <Component Id="InstallRegApproved" Guid="*">
+                <Condition>Privileged</Condition>
+                <RegistryValue Root="HKLM"
+                               Key="Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved"
+                               Name="$(var.ShellExtId)"
+                               Value="Estonian ID Card Shell Extension"
+                               Type="string" />
+            </Component>
+        </DirectoryRef>
+
+        <!-- Install 64 bit shell extension on x64 platform. -->
+        <?if $(var.Platform) = "x64" ?>
+        <DirectoryRef Id="APPLICATION64FOLDER">
+            <Component Id="EsteidShellExtension_64.dll" Guid="*" Win64="yes">
+                <File Id="EsteidShellExtension_64.dll" Source="$(env.BINDIR64)\EsteidShellExtension.dll" Checksum="yes" Vital="yes" />
+                <RegistryKey Root="HKCR"
+                             Key="CLSID\$(var.ShellExtId)\InprocServer32"
+                             Action="createAndRemoveOnUninstall">
+                    <RegistryValue Type="string" Value="[APPLICATION64FOLDER]EsteidShellExtension.dll"/>
+                    <RegistryValue Type="string" Name="ThreadingModel" Value="Apartment" />
+                </RegistryKey>
+            </Component>
+
+            <Component Id="InstallRegWild_64" Guid="*" Win64="yes">
+                <RegistryValue Root="HKCR"
+                               Key="*\shellex\ContextMenuHandlers\EsteidShellExtension"
+                               Value="$(var.ShellExtId)"
+                               Type="string" />
+            </Component>
+
+            <Component Id="InstallRegApproved_64" Guid="*" Win64="yes">
+                <Condition>Privileged</Condition>
+                <RegistryValue Root="HKLM"
+                               Key="Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved"
+                               Name="$(var.ShellExtId)"
+                               Value="Estonian ID Card Shell Extension"
+                               Type="string" />
+            </Component>
+        </DirectoryRef>
+        <?endif ?>
+
+        <!-- Program Menu shortcut -->
+        <DirectoryRef Id="EsteidShortcutFolder">
+            <Component Id="QdigidocStartMenuShortcut" Guid="*">
+                <Shortcut Id="QdigidocStartMenuShortcut"
+                          Name="DigiDoc3 klient"
+                          Target="[APPLICATIONFOLDER]qdigidocclient.exe"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <RegistryValue Root="HKCU" Key="$(var.QdigidocRegistryKey)" Name="StartMenuShortcut" Value="1" Type="integer" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+
+        <!-- Desktop shortcut -->
+        <DirectoryRef Id="DesktopFolder">
+            <Component Id="QdigidocDesktopShortcut" Guid="*">
+                <Condition>QDIGIDOC_DESKTOP_SHORTCUT</Condition>
+                <Shortcut Id="QdigidocDesktopShortcut"
+                          Name="DigiDoc3 klient"
+                          Target="[APPLICATIONFOLDER]qdigidocclient.exe"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <!-- XXX: Placing shortcut's keypath in HKCU might cause problems if another user tries to uninstall it.
+                          However, if I put it in HKMU I get an ICE57 error, and one is not allowed to ignore
+                          ICE57 errors for Windows Vista logo certification. -->
+                <RegistryValue Root="HKCU" Key="$(var.QdigidocRegistryKey)" Name="DesktopShortcut" Value="1" Type="integer" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

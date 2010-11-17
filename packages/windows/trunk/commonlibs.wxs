@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="CommonLibs">
+            <ComponentRef Id="libeay32.dll" />
+            <ComponentRef Id="ssleay32.dll" />
+            <ComponentRef Id="libp11.dll" />
+        </ComponentGroup>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="libeay32.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\libeay32.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="ssleay32.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\ssleay32.dll" Checksum="yes" Vital="yes" />
+            </Component>
+            <Component Id="libp11.dll" Guid="*">
+                <File Source="$(env.BINDIR32)\libp11.dll" Checksum="yes" Vital="yes" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>

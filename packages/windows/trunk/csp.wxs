@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="iesupport">
+            <ComponentRef Id="esteidcsp.dll" />
+            <ComponentRef Id="CleanSystemFolder" />
+            <?if $(var.Platform) = "x64" ?>
+            <ComponentRef Id="esteidcsp_64.dll" />
+            <ComponentRef Id="CleanSystem64Folder" />
+            <?endif ?>
+
+            <?if $(var.Platform) = "x64" ?>
+            <ComponentRef Id="SmartCardRemoval_64.exe" />
+            <?else ?>
+            <ComponentRef Id="SmartCardRemoval.exe" />
+            <?endif ?>
+
+            <!-- minidriver.wxs -->
+            <ComponentRef Id="minidriver" />
+        </ComponentGroup>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="esteidcsp.dll" Guid="{1743C62E-789D-5C2B-BC99-663A4414080E}">
+                <!-- Do not install on Windows 7 -->
+                <Condition><![CDATA[VersionNT < 601]]></Condition>
+                <File Id="esteidcsp.dll" KeyPath="yes" Source="$(env.BINDIR32)\esteidcsp.dll" Checksum="yes" Vital="yes" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATR" Value="3B000000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATRMask" Value="FF00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATR" Value="3B0000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATRMask" Value="FF000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATR" Value="3B0000004573744549442076657220312E30" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATRMask" Value="FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Image Path" Value="[#esteidcsp.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Type" Value="1" Type="integer" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="SigInFile" Value="0" Type="integer" Action="write" />
+                <RemoveFile Id="esteid.dll" On="install" Name="esteid.dll" />
+            </Component>
+        </DirectoryRef>
+
+        <?if $(var.Platform) = "x64" ?>
+        <DirectoryRef Id="APPLICATION64FOLDER">
+            <Component Id="esteidcsp_64.dll" Guid="{5BB6FFD0-3408-543A-83B0-EF978730348A}" Win64="yes">
+                <!-- Do not install on Windows 7 -->
+                <Condition><![CDATA[VersionNT < 601]]></Condition>
+                <File Id="esteidcsp_64.dll" KeyPath="yes" Source="$(env.BINDIR64)\esteidcsp.dll" Checksum="yes" Vital="yes" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATR" Value="3B000000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card" Name="ATRMask" Value="FF00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATR" Value="3B0000000000000000004573744549442076657220312E3000" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (MultOS)" Name="ATRMask" Value="FF000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF00" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="Crypto Provider" Value="EstEID NewCard CSP" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATR" Value="3B0000004573744549442076657220312E30" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Calais\SmartCards\EstEID National ID Card (short ATR)" Name="ATRMask" Value="FF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF" Type="binary" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Image Path" Value="[#esteidcsp_64.dll]" Type="string" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="Type" Value="1" Type="integer" Action="write" />
+                <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Cryptography\Defaults\Provider\EstEID NewCard CSP" Name="SigInFile" Value="0" Type="integer" Action="write" />
+            </Component>
+        </DirectoryRef>
+        <?endif ?>
+
+        <DirectoryRef Id="SystemFolder">
+            <Component Id="CleanSystemFolder" Guid="{0AB5E4B0-F4DF-4D1B-859C-A2018CDB75DD}">
+                <RemoveFile Id="System_EIDCard.dll" On="install" Name="EIDCard.dll" />
+                <RemoveFile Id="System_esteidcsp.dll" On="install" Name="esteidcsp.dll" />
+                <RemoveFile Id="System_esteidcsp.log" On="install" Name="esteidcsp.log" />
+                <RemoveFile Id="System_esteid.dll" On="install" Name="esteid.dll" />
+                <RemoveFile Id="System_EstEIDSigningPluginBHO.dll" On="install" Name="EstEIDSigningPluginBHO.dll" />
+            </Component>
+        </DirectoryRef>
+
+        <?if $(var.Platform) = "x64" ?>
+        <DirectoryRef Id="System64Folder">
+            <Component Id="CleanSystem64Folder" Guid="{9738DAE9-C2DF-4F87-BA20-1F8E0676A50E}" Win64="yes">
+                <RemoveFile Id="System64_esteidcsp_64.dll" On="install" Name="esteidcsp.dll" />
+                <RemoveFile Id="System64_esteidcsp_64.log" On="install" Name="esteidcsp.log" />
+                <RemoveFile Id="System64_esteid_64.dll" On="install" Name="esteid.dll" />
+                <RemoveFile Id="System64_EstEIDSigningPluginBHO_64.dll" On="install" Name="EstEIDSigningPluginBHO.dll" />
+            </Component>
+        </DirectoryRef>
+        <?endif ?>
+
+        <?if $(var.Platform) = "x64" ?>
+        <DirectoryRef Id="APPLICATION64FOLDER">
+            <Component Id="SmartCardRemoval_64.exe" Guid="*" Win64="yes">
+                <File Id="SmartCardRemoval_64.exe" Source="$(env.BINDIR64)\SmartCardRemoval.exe" KeyPath="yes" Checksum="yes" Vital="yes" />
+                <ServiceInstall Id="SmartCardRemoval"
+                                Name="SmartCardRemoval"
+                                DisplayName="Smart Card Removal"
+                                Description="Cleans up Certificate Store of Estonian ID Card personal sertificates."
+                                Start="auto"
+                                Type="ownProcess"
+                                ErrorControl="ignore">
+                    <ServiceDependency Id="RpcSs" />
+                </ServiceInstall>
+                <AppId Id="{DEAE87CA-A84D-4F75-BC47-721D7F0F7848}" LocalService="SmartCardRemoval" />
+                <ServiceControl Id="SmartCardRemoval" Name="SmartCardRemoval" Start="install" Stop="both" Remove="uninstall" Wait="no" />
+            </Component>
+        </DirectoryRef>
+        <?else ?>
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id="SmartCardRemoval.exe" Guid="*">
+                <File Source="$(env.BINDIR32)\SmartCardRemoval.exe" KeyPath="yes" Checksum="yes" Vital="yes" />
+                <ServiceInstall Id="SmartCardRemoval"
+                                Name="SmartCardRemoval"
+                                DisplayName="Smart Card Removal"
+                                Description="Cleans up Certificate Store of Estonian ID Card personal sertificates."
+                                Start="auto"
+                                Type="ownProcess"
+                                ErrorControl="ignore">
+                    <ServiceDependency Id="RpcSs" />
+                </ServiceInstall>
+                <AppId Id="{DEAE87CA-A84D-4F75-BC47-721D7F0F7848}" LocalService="SmartCardRemoval" />
+                <ServiceControl Id="SmartCardRemoval" Name="SmartCardRemoval" Start="install" Stop="both" Remove="uninstall" Wait="no" />
+            </Component>
+        </DirectoryRef>
+        <?endif ?>
+    </Fragment>
+</Wix>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define CertSourceDir = "certs" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+
+    <Fragment>
+        <DirectoryRef Id="CertificatesFolder">
+            <Component Id="EID_SK_2007_file" Guid="*">
+                <File Id="EID_SK_2007" Name="EID-SK 2007.crt" Source="$(var.CertSourceDir)\EID-SK 2007.crt" />
+            </Component>
+
+            <Component Id="EID_SK_2007" Guid="619A1CE0-3575-414A-8318-131B40467EFD" KeyPath="yes">
+                <iis:Certificate Id="EID_SK_2007"
+                                 Name="EID_SK_2007"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK_2007"
+                                 />
+            </Component>
+
+            <Component Id="EID_SK_2007_OCSP_2010_file" Guid="*">
+                <File Id="EID_SK_2007_OCSP_2010" Name="EID-SK 2007 OCSP 2010.crt" Source="$(var.CertSourceDir)\EID-SK 2007 OCSP 2010.crt" />
+            </Component>
+
+            <Component Id="EID_SK_2007_OCSP_2010" Guid="23DD66CC-4FEA-4936-824A-CD55187B28AC" KeyPath="yes">
+                <iis:Certificate Id="EID_SK_2007_OCSP_2010"
+                                 Name="EID_SK_2007_OCSP_2010"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK_2007_OCSP_2010"
+                                 />
+            </Component>
+
+            <Component Id="EID_SK_2007_OCSP_file" Guid="*">
+                <File Id="EID_SK_2007_OCSP" Name="EID-SK 2007 OCSP.crt" Source="$(var.CertSourceDir)\EID-SK 2007 OCSP.crt" />
+            </Component>
+
+            <Component Id="EID_SK_2007_OCSP" Guid="6949BC46-2D03-4989-A2DE-0E500050AE9A" KeyPath="yes">
+                <iis:Certificate Id="EID_SK_2007_OCSP"
+                                 Name="EID_SK_2007_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK_2007_OCSP"
+                                 />
+            </Component>
+
+            <Component Id="EID_SK_file" Guid="*">
+                <File Id="EID_SK" Name="EID-SK.crt" Source="$(var.CertSourceDir)\EID-SK.crt" />
+            </Component>
+
+            <Component Id="EID_SK" Guid="74437D8D-8D81-451E-878C-2032479C8B3F" KeyPath="yes">
+                <iis:Certificate Id="EID_SK"
+                                 Name="EID_SK"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK"
+                                 />
+            </Component>
+
+            <Component Id="EID_SK_OCSP_2006_file" Guid="*">
+                <File Id="EID_SK_OCSP_2006" Name="EID-SK OCSP 2006.crt" Source="$(var.CertSourceDir)\EID-SK OCSP 2006.crt" />
+            </Component>
+
+            <Component Id="EID_SK_OCSP_2006" Guid="58D6847C-39F8-44AD-994D-81C5D06E5BC5" KeyPath="yes">
+                <iis:Certificate Id="EID_SK_OCSP_2006"
+                                 Name="EID_SK_OCSP_2006"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK_OCSP_2006"
+                                 />
+            </Component>
+
+            <Component Id="EID_SK_OCSP_file" Guid="*">
+                <File Id="EID_SK_OCSP" Name="EID-SK OCSP.crt" Source="$(var.CertSourceDir)\EID-SK OCSP.crt" />
+            </Component>
+
+            <Component Id="EID_SK_OCSP" Guid="ED1CB564-D896-4ABA-98F7-7DF0DBE52EDA" KeyPath="yes">
+                <iis:Certificate Id="EID_SK_OCSP"
+                                 Name="EID_SK_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="EID_SK_OCSP"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007_file" Guid="*">
+                <File Id="ESTEID_SK_2007" Name="ESTEID-SK 2007.crt" Source="$(var.CertSourceDir)\ESTEID-SK 2007.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007" Guid="7266EF3B-ADE1-4C35-BF25-D6B0A7321878" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK_2007"
+                                 Name="ESTEID_SK_2007"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK_2007"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007_OCSP_2010_file" Guid="*">
+                <File Id="ESTEID_SK_2007_OCSP_2010" Name="ESTEID-SK 2007 OCSP 2010.crt" Source="$(var.CertSourceDir)\ESTEID-SK 2007 OCSP 2010.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007_OCSP_2010" Guid="EDBCC8D6-5C4C-4394-8401-4C88418E49B0" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK_2007_OCSP_2010"
+                                 Name="ESTEID_SK_2007_OCSP_2010"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK_2007_OCSP_2010"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007_OCSP_file" Guid="*">
+                <File Id="ESTEID_SK_2007_OCSP" Name="ESTEID-SK 2007 OCSP.crt" Source="$(var.CertSourceDir)\ESTEID-SK 2007 OCSP.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK_2007_OCSP" Guid="67DA39D2-B851-4D17-99BF-F2CF89FF88FC" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK_2007_OCSP"
+                                 Name="ESTEID_SK_2007_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK_2007_OCSP"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_file" Guid="*">
+                <File Id="ESTEID_SK" Name="ESTEID-SK.crt" Source="$(var.CertSourceDir)\ESTEID-SK.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK" Guid="E5F232A1-A6CD-449B-B3BD-3DA7111DAC65" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK"
+                                 Name="ESTEID_SK"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_OCSP_2005_file" Guid="*">
+                <File Id="ESTEID_SK_OCSP_2005" Name="ESTEID-SK OCSP 2005.crt" Source="$(var.CertSourceDir)\ESTEID-SK OCSP 2005.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK_OCSP_2005" Guid="EBD1970D-1052-4C59-BF33-AC64A00112E2" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK_OCSP_2005"
+                                 Name="ESTEID_SK_OCSP_2005"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK_OCSP_2005"
+                                 />
+            </Component>
+
+            <Component Id="ESTEID_SK_OCSP_file" Guid="*">
+                <File Id="ESTEID_SK_OCSP" Name="ESTEID-SK OCSP.crt" Source="$(var.CertSourceDir)\ESTEID-SK OCSP.crt" />
+            </Component>
+
+            <Component Id="ESTEID_SK_OCSP" Guid="74764A22-0C68-4557-B79D-D29CCC966BB1" KeyPath="yes">
+                <iis:Certificate Id="ESTEID_SK_OCSP"
+                                 Name="ESTEID_SK_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="ESTEID_SK_OCSP"
+                                 />
+            </Component>
+
+            <Component Id="JUUR_SK_file" Guid="*">
+                <File Id="JUUR_SK" Name="JUUR-SK.crt" Source="$(var.CertSourceDir)\JUUR-SK.crt" />
+            </Component>
+
+            <Component Id="JUUR_SK" Guid="" KeyPath="yes">
+                <Condition>NOT JUUR_CERTIFICATE_INSTALLED</Condition>
+                <iis:Certificate Id="JUUR_SK"
+                                 Name="JUUR_SK"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="root"
+                                 Overwrite="yes"
+                                 BinaryKey="JUUR_SK"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_2010_file" Guid="*">
+                <File Id="KLASS3_SK_2010" Name="KLASS3-SK 2010.crt" Source="$(var.CertSourceDir)\KLASS3-SK 2010.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK_2010" Guid="46FE65F7-CA34-43C8-A4D9-C8ABB5943B81" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK_2010"
+                                 Name="KLASS3_SK_2010"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK_2010"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_2010_OCSP_file" Guid="*">
+                <File Id="KLASS3_SK_2010_OCSP" Name="KLASS3-SK 2010 OCSP.crt" Source="$(var.CertSourceDir)\KLASS3-SK 2010 OCSP.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK_2010_OCSP" Guid="992178F1-3BB8-417C-BD7C-FA23FF08ADD7" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK_2010_OCSP"
+                                 Name="KLASS3_SK_2010_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK_2010_OCSP"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_file" Guid="*">
+                <File Id="KLASS3_SK" Name="KLASS3-SK.crt" Source="$(var.CertSourceDir)\KLASS3-SK.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK" Guid="E9F101D4-D999-4346-9C0E-754840060F8D" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK"
+                                 Name="KLASS3_SK"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP_2006_file" Guid="*">
+                <File Id="KLASS3_SK_OCSP_2006" Name="KLASS3-SK OCSP 2006.crt" Source="$(var.CertSourceDir)\KLASS3-SK OCSP 2006.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP_2006" Guid="CE707488-4995-49E6-8550-766406AB9290" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK_OCSP_2006"
+                                 Name="KLASS3_SK_OCSP_2006"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK_OCSP_2006"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP_2009_file" Guid="*">
+                <File Id="KLASS3_SK_OCSP_2009" Name="KLASS3-SK OCSP 2009.crt" Source="$(var.CertSourceDir)\KLASS3-SK OCSP 2009.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP_2009" Guid="7BFDE812-6527-44A6-9F8D-A9F3717F3BA0" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK_OCSP_2009"
+                                 Name="KLASS3_SK_OCSP_2009"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK_OCSP_2009"
+                                 />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP_file" Guid="*">
+                <File Id="KLASS3_SK_OCSP" Name="KLASS3-SK OCSP.crt" Source="$(var.CertSourceDir)\KLASS3-SK OCSP.crt" />
+            </Component>
+
+            <Component Id="KLASS3_SK_OCSP" Guid="D1562E26-4FED-47FC-BE82-B7E1D4790D2C" KeyPath="yes">
+                <iis:Certificate Id="KLASS3_SK_OCSP"
+                                 Name="KLASS3_SK_OCSP"
+                                 Request="no"
+                                 StoreLocation="localMachine"
+                                 StoreName="ca"
+                                 Overwrite="yes"
+                                 BinaryKey="KLASS3_SK_OCSP"
+                                 />
+            </Component>
+
+        </DirectoryRef>
+
+        <Binary Id="EID_SK_2007" SourceFile="$(var.CertSourceDir)\EID-SK 2007.crt" />
+        <Binary Id="EID_SK_2007_OCSP_2010" SourceFile="$(var.CertSourceDir)\EID-SK 2007 OCSP 2010.crt" />
+        <Binary Id="EID_SK_2007_OCSP" SourceFile="$(var.CertSourceDir)\EID-SK 2007 OCSP.crt" />
+        <Binary Id="EID_SK" SourceFile="$(var.CertSourceDir)\EID-SK.crt" />
+        <Binary Id="EID_SK_OCSP_2006" SourceFile="$(var.CertSourceDir)\EID-SK OCSP 2006.crt" />
+        <Binary Id="EID_SK_OCSP" SourceFile="$(var.CertSourceDir)\EID-SK OCSP.crt" />
+        <Binary Id="ESTEID_SK_2007" SourceFile="$(var.CertSourceDir)\ESTEID-SK 2007.crt" />
+        <Binary Id="ESTEID_SK_2007_OCSP_2010" SourceFile="$(var.CertSourceDir)\ESTEID-SK 2007 OCSP 2010.crt" />
+        <Binary Id="ESTEID_SK_2007_OCSP" SourceFile="$(var.CertSourceDir)\ESTEID-SK 2007 OCSP.crt" />
+        <Binary Id="ESTEID_SK" SourceFile="$(var.CertSourceDir)\ESTEID-SK.crt" />
+        <Binary Id="ESTEID_SK_OCSP_2005" SourceFile="$(var.CertSourceDir)\ESTEID-SK OCSP 2005.crt" />
+        <Binary Id="ESTEID_SK_OCSP" SourceFile="$(var.CertSourceDir)\ESTEID-SK OCSP.crt" />
+        <Binary Id="JUUR_SK" SourceFile="$(var.CertSourceDir)\JUUR-SK.crt" />
+        <Binary Id="KLASS3_SK_2010" SourceFile="$(var.CertSourceDir)\KLASS3-SK 2010.crt" />
+        <Binary Id="KLASS3_SK_2010_OCSP" SourceFile="$(var.CertSourceDir)\KLASS3-SK 2010 OCSP.crt" />
+        <Binary Id="KLASS3_SK" SourceFile="$(var.CertSourceDir)\KLASS3-SK.crt" />
+        <Binary Id="KLASS3_SK_OCSP_2006" SourceFile="$(var.CertSourceDir)\KLASS3-SK OCSP 2006.crt" />
+        <Binary Id="KLASS3_SK_OCSP_2009" SourceFile="$(var.CertSourceDir)\KLASS3-SK OCSP 2009.crt" />
+        <Binary Id="KLASS3_SK_OCSP" SourceFile="$(var.CertSourceDir)\KLASS3-SK OCSP.crt" />
+    </Fragment>
+
+    <Fragment>
+        <ComponentGroup Id="SKCertificates">
+            <ComponentRef Id="EID_SK_2007" />
+            <ComponentRef Id="EID_SK_2007_file" />
+            <ComponentRef Id="EID_SK_2007_OCSP_2010" />
+            <ComponentRef Id="EID_SK_2007_OCSP_2010_file" />
+            <ComponentRef Id="EID_SK_2007_OCSP" />
+            <ComponentRef Id="EID_SK_2007_OCSP_file" />
+            <ComponentRef Id="EID_SK" />
+            <ComponentRef Id="EID_SK_file" />
+            <ComponentRef Id="EID_SK_OCSP_2006" />
+            <ComponentRef Id="EID_SK_OCSP_2006_file" />
+            <ComponentRef Id="EID_SK_OCSP" />
+            <ComponentRef Id="EID_SK_OCSP_file" />
+            <ComponentRef Id="ESTEID_SK_2007" />
+            <ComponentRef Id="ESTEID_SK_2007_file" />
+            <ComponentRef Id="ESTEID_SK_2007_OCSP_2010" />
+            <ComponentRef Id="ESTEID_SK_2007_OCSP_2010_file" />
+            <ComponentRef Id="ESTEID_SK_2007_OCSP" />
+            <ComponentRef Id="ESTEID_SK_2007_OCSP_file" />
+            <ComponentRef Id="ESTEID_SK" />
+            <ComponentRef Id="ESTEID_SK_file" />
+            <ComponentRef Id="ESTEID_SK_OCSP_2005" />
+            <ComponentRef Id="ESTEID_SK_OCSP_2005_file" />
+            <ComponentRef Id="ESTEID_SK_OCSP" />
+            <ComponentRef Id="ESTEID_SK_OCSP_file" />
+            <ComponentRef Id="JUUR_SK" />
+            <ComponentRef Id="JUUR_SK_file" />
+            <ComponentRef Id="KLASS3_SK_2010" />
+            <ComponentRef Id="KLASS3_SK_2010_file" />
+            <ComponentRef Id="KLASS3_SK_2010_OCSP" />
+            <ComponentRef Id="KLASS3_SK_2010_OCSP_file" />
+            <ComponentRef Id="KLASS3_SK" />
+            <ComponentRef Id="KLASS3_SK_file" />
+            <ComponentRef Id="KLASS3_SK_OCSP_2006" />
+            <ComponentRef Id="KLASS3_SK_OCSP_2006_file" />
+            <ComponentRef Id="KLASS3_SK_OCSP_2009" />
+            <ComponentRef Id="KLASS3_SK_OCSP_2009_file" />
+            <ComponentRef Id="KLASS3_SK_OCSP" />
+            <ComponentRef Id="KLASS3_SK_OCSP_file" />
+        </ComponentGroup>
+    </Fragment>
+</Wix>

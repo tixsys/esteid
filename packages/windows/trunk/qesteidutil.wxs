@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define QesteidutilRegistryKey = "Software\Estonian ID Card\QEsteidUtil" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <ComponentGroup Id="qesteidutil">
+            <ComponentRef Id='qesteidutil.exe' />
+            <ComponentRef Id="QesteidutilStartMenuShortcut" />
+            <ComponentRef Id="QesteidutilDesktopShortcut" />
+        </ComponentGroup>
+
+        <DirectoryRef Id="APPLICATIONFOLDER">
+            <Component Id='qesteidutil.exe' Guid='*'>
+                <File Source="$(env.BINDIR32)\qesteidutil.exe" Checksum="yes" Vital="yes" />
+            </Component>
+        </DirectoryRef>
+
+        <!-- Program Menu shortcut -->
+        <DirectoryRef Id="EsteidShortcutFolder">
+            <Component Id="QesteidutilStartMenuShortcut" Guid="*">
+                <Shortcut Id="QesteidutilStartMenuShortcut"
+                          Name="ID-kaardi haldusvahend"
+                          Target="[APPLICATIONFOLDER]qesteidutil.exe"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <RegistryValue Root="HKCU" Key="$(var.QesteidutilRegistryKey)" Name="StartMenuShortcut" Value="1" Type="integer" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+
+        <!-- Desktop shortcut -->
+        <DirectoryRef Id="DesktopFolder">
+            <Component Id="QesteidutilDesktopShortcut" Guid="*">
+                <Condition>QESTEIDUTIL_DESKTOP_SHORTCUT</Condition>
+                <Shortcut Id="QesteidutilDesktopShortcut"
+                          Name="ID-kaardi haldusvahend"
+                          Target="[APPLICATIONFOLDER]qesteidutil.exe"
+                          WorkingDirectory="APPLICATIONFOLDER"/>
+                <RegistryValue Root="HKCU" Key="$(var.QesteidutilRegistryKey)" Name="DesktopShortcut" Value="1" Type="integer" KeyPath="yes"/>
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+</Wix>
