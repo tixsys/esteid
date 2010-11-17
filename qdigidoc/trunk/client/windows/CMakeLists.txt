@@ -5,6 +5,7 @@ add_definitions(
     -D_UNICODE
     -DUNICODE
     -D_MERGE_PROXYSTUB
+    -UWIN32_LEAN_AND_MEAN
 )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -33,7 +34,7 @@ add_custom_command(
            ${CMAKE_CURRENT_BINARY_DIR}/EsteidShellExtension_p.c
     COMMAND Midl.Exe EsteidShellExtension.idl
                      /nologo
-                     /I ${CMAKE_SOURCE_DIR}
+                     /I ${CMAKE_CURRENT_SOURCE_DIR}
                      /char signed
                      /env ${MIDL_TARGET}
                      /Oicf
@@ -46,5 +47,5 @@ add_custom_command(
     VERBATIM
 )
 
-add_library(EsteidShellExtension SHARED ${SOURCES})
-install(TARGETS EsteidShellExtension DESTINATION lib)
+add_library(EsteidShellExtension MODULE ${SOURCES})
+install(TARGETS EsteidShellExtension DESTINATION bin)
