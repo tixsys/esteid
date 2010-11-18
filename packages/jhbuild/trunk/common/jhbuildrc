@@ -42,7 +42,6 @@ buildtype = 'Release'
 environ_append("PATH", modulesets_dir, os.pathsep)
 
 # Make sure we find our installed modules before other versions.
-environ_prepend('LDFLAGS', '-L' + prefix + '/lib')
 environ_prepend('CPPFLAGS', '-I' + prefix + '/include')
 
 # Make sure that ltdl can find our libraries
