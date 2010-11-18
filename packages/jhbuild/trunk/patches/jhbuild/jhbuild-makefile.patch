@@ -1,0 +1,43 @@
+diff --git a/Makefile.plain b/Makefile.plain
+index aaff7ca..9f8d40e 100644
+--- a/Makefile.plain
++++ b/Makefile.plain
+@@ -6,15 +6,17 @@ CFLAGS = -Wall -O2
+ 
+ MAKE ?= make
+ 
+-bindir=$(HOME)/.local/bin
+-datarootdir=$(HOME)/.local/share
++PREFIX ?= $(HOME)/.local
++
++bindir=$(PREFIX)/bin
++datarootdir=$(PREFIX)/share
+ desktopdir=$(datarootdir)/applications
+ 
+ all: install-check
+ 	@echo 'Run "make install" to install.'
+ 
+ install-check: install-check.c
+-	$(CC) $(CFLAGS) -o install-check install-check.c
++	-$(CC) $(CFLAGS) -o install-check install-check.c
+ 
+ update:
+ 	git pull --rebase
+@@ -24,7 +26,7 @@ install: install-check
+ 	@if [ "x$(DISABLE_GETTEXT)" = x ]; then (cd po && $(MAKE) -f Makefile.plain install); fi
+ 	@echo "Creating $(bindir)/jhbuild"
+ 	@mkdir -p $(bindir)
+-	@sed -e "s,@jhbuilddir@,`pwd`,g" \
++	@sed -e "s,@jhbuilddir@,`pwd -W 2>&- || pwd`,g" \
+ 		-e "s,USE_CHECKOUT_SRC = False,USE_CHECKOUT_SRC = True," < \
+ 		scripts/jhbuild.in > $(bindir)/jhbuild
+ 	@chmod a+x $(bindir)/jhbuild
+@@ -35,7 +37,7 @@ install: install-check
+ 		< jhbuild.desktop.in.in > $(desktopdir)/jhbuild.desktop
+ 
+ 	@[ -f $(HOME)/.jhbuildrc ]||echo "Don't forget to create ~/.jhbuildrc"
+-	install -m755 install-check $(bindir)/install-check
++	[ -x install-check ] && install -m755 install-check $(bindir)/install-check || true
+ 
+ 	# if ~/bin/jbuild exists, it is most likely an old version, and it will
+ 	# not work; so rename it and install a symlink to the new version
