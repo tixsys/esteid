@@ -56,7 +56,7 @@ IF EXIST %MINGW_GET% (
     )
 
     ECHO ======= Installing needed MSYS packages ========
-    %MINGW_GET% install msys-core msys-zip msys-make msys-m4 msys-autoconf msys-automake msys-libtool
+    %MINGW_GET% install msys-core msys-zip msys-make msys-m4 msys-autoconf msys-automake msys-libtool msys-gettext
 
     IF NOT EXIST %BINDIR%\svn.exe (
         ECHO ======= Installing command-line SVN client ========
