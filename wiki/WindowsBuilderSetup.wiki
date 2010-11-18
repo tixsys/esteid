@@ -3,12 +3,11 @@
 Võrreldes Linuxiga on Windowsi arendaja elu täielik õudusunenägu!
 
 Vajalik soft:
- * Windows 7 või Windows Server 2008 R2
- * Visual Studio 2010 Ultimate
+ * Windows 7 või Windows Server 2008 !R2
+ * Visual Studio 2010 Ultimate (NB! see on tasuline, osa asju kompileeruvad ka Express Editioniga, aga mitte kõik, kuna sealt on ATL puudu)
  * Driver DDK
  * WiX
- * Mingw-Get (otsi faili mingw-get-*bin.zip)
-   http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/
+ * [http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get/mingw-get-0.1-alpha-5/mingw-get-0.1-mingw32-alpha-5-bin.zip/download Mingw-Get]
 
 Muud vajalikud kulinad:
  * VeriSigni poolt välja antud koodi signeerimise sertifikaat
