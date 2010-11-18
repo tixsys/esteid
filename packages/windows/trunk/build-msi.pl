@@ -45,7 +45,7 @@ $ENV{'PREFIX32'} = "$prefix32";
 $ENV{'LIBDIR32'} = "$prefix32/lib";
 $ENV{'BINDIR32'} = "$prefix32/bin";
 
-$prefix32 = "C:/esteid/nightly/x64/build/install";
+$prefix64 = "C:/esteid/nightly/x64/build/install";
 $ENV{'PREFIX64'} = "$prefix64";
 $ENV{'LIBDIR64'} = "$prefix64/lib";
 $ENV{'BINDIR64'} = "$prefix64/bin";
