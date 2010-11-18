@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?if $(var.Platform) = "x64" ?>
-<?define MinidriverDir = "C:\build\x64\deploy\minidriver" ?>
-<?else ?>
-<?define MinidriverDir = "C:\build\Win32\deploy\minidriver" ?>
-<?endif ?>
+<?define MinidriverDir = "minidriver" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:difx="http://schemas.microsoft.com/wix/DifxAppExtension">
