@@ -1,19 +1,77 @@
 ﻿#summary kuidas sättida Windowsi masin kompileerimiseks valmis
 
-Võrreldes Linuxiga on Windowsi arendaja elu täielik õudusunenägu!
+= Eeldused =
 
-Vajalik soft:
- * Windows 7 või Windows Server 2008 !R2
- * Visual Studio 2010 Ultimate (NB! see on tasuline, osa asju kompileeruvad ka Express Editioniga, aga mitte kõik, kuna sealt on ATL puudu)
- * Driver DDK
- * WiX
+Võrreldes Linuxiga on Windowsi arendaja elu täielik õudusunenägu!
+Vaja on tonnide kaupa kettaruumi (hea on ca 50GB), hulgaliselt tarkvara
+ja palju kannatust, et oodata kuni see kõik internetist alla venib
+ja kokku kompileeritakse.
+
+Esialgne ajaline investeering on vähemalt 2-3 päeva.
+
+== Kohustuslik tarkvara ==
+
+ * Windows 7 või Windows Server 2008R2
+ * Visual Studio 2010 Ultimate (osa asju kompileeruvad ka Express Editioniga, aga mitte kõik, kuna sealt on ATL puudu)
+ * [http://download.microsoft.com/download/4/A/2/4A25C7D5-EFBE-4182-B6A9-AE6 409A78/GRMWDK_EN_7600_1.ISO The Windows Driver Kit (WDK) 7.1.0]
+ * [http://www.microsoft.com/downloads/en/details.aspx?FamilyId=1EF399E9-B018-49DB-A98B-0CED7CB8FF6F&displaylang=en Microsoft Windows Cryptographic Next Generation Software Development Kit 2.0.0 (CNG SDK)]
+ * [http://wix.sourceforge.net/releases/3.5.2229.0/Wix35.msi WiX 3.5]
+ * [http://www.python.org/download/ Python 2.7]
  * [http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/mingw-get/mingw-get-0.1-alpha-5/mingw-get-0.1-mingw32-alpha-5-bin.zip/download Mingw-Get]
 
-Muud vajalikud kulinad:
- * VeriSigni poolt välja antud koodi signeerimise sertifikaat
+== Soovituslik tarkvara ==
+ * Firefox
+ * Notepad++
+ * [http://www.dependencywalker.com/ Dependency Walker]
+ * [http://sunet.dl.sourceforge.net/project/tortoisesvn/Application%64/1.6.11/TortoiseSVN-1.6.11.20210-x64-svn-1.6.13.msi TortoiseSVN]
+ * [http://cdn.bitbucket.org/tortoisehg/stable/downloads/tortoisehg-14-hg-1.6.4-x64.msi TortoiseHG]
+ * [http://mesh.dl.sourceforge.net/project/winscp/WinSCP/4.2.9/winscp429sp.exe WinSCP]
 
-Tee nii:
- * Paigalda nõutud soft
+== Muud vajalikud kulinad ==
+
+ * Installipakkide tootmiseks on vaja Verisigni poolt välja antud koodi signeerimise sertifikaati. JAH! Verisign on ainuke, mis kõlbab, kuna teistega ei saa draivereid allkirjastada.
+
+= Tööriistade seadistamine =
+
+ * Paigalda vajalik soft
+ * Lisa kataloog C:\Python27 PATH-i
  * Paki mingw-get lahti c:\tools kataloogi
- * Sikuta [http://esteid.googlecode.com/svn/packages/jhbuild/trunk/win/setup-msys.bat setup-msys.bat]
- * Käivita see
+ * Ava Wordpad-iga fail c:\tools\var\lib\mingw-get\data\defaults.xml
+ * Eemalda faili lõpu poole leiduvast msys-i asukohast (%R/msys/1.0) versiooninumber (alles jääb %R/msys)
+ * Käivita [http://esteid.googlecode.com/svn/packages/jhbuild/trunk/win/setup-msys.bat setup-msys.bat]. See tõmbab ja paigaldab ülejäänud vajalikud tööriistad.
+ * Pinni endale Start menüüsse Programs->Microsoft Visual Studio 2010->Visual Studio Tools alt "Visual Studio Command Prompt (2010)" ja "Visual Studio x64 Win64 Command Prompt (2010)" neid läheb Sul tihti vaja
+
+= Baasteekide kompileerimine (bootstrap) =
+
+Kirjuta järgmised käsud "Visual Studio Command Prompt"-i
+
+{{{
+\tools\msys\bin\sh --login -i
+cd /c
+mkdir esteid-trunk
+cd esteid-trunk
+svn co https://esteid.googlecode.com/svn/packages/jhbuild/trunk win32
+cd win32
+sh setup-jhbuild.sh
+sh jhbuild.sh bootstrap qt
+sh jhbuild.sh bootstrap
+}}}
+
+Kummalised errorid bootstrappimisel
+
+Järgnev error on ohutu ja probleem kaob kui bootstrap teistkordselt
+käivitatakse.
+
+{{{
+error:  cannot delete old qt-everywhere-opensource-src-4.7.1/configure
+        No such file or directory
+jhbuild bootstrap: failed to unpack c:\esteid-trunk\win32\build\pkgs\qt-everywhere-opensource-src-4.7.1.zip
+}}}
+
+= Open EstEID komplekti kompileerimine =
+
+{{{
+\tools\msys\bin\sh --login -i
+cd /c/esteid-trunk/win32
+sh jhbuild.sh
+}}}
