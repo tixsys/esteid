@@ -1,0 +1,25 @@
+From 440458694113eed7e0ba100430986d4e1f470d35 Mon Sep 17 00:00:00 2001
+From: Antti Andreimann <Antti.Andreimann@mail.ee>
+Date: Thu, 18 Nov 2010 04:54:30 +0200
+Subject: [PATCH] Make unzip behave just like tar: be quiet
+
+---
+ jhbuild/utils/unpack.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/jhbuild/utils/unpack.py b/jhbuild/utils/unpack.py
+index 7db64c1..8c323d4 100644
+--- a/jhbuild/utils/unpack.py
++++ b/jhbuild/utils/unpack.py
+@@ -132,7 +132,7 @@ def unpack_archive(buildscript, localfile, target_directory, checkoutdir=None):
+         buildscript.execute('gunzip -dc "%s" | tar xf -' % localfile,
+                 cwd=target_directory)
+     elif ext in ('.zip', '.exe') and has_command('unzip'):
+-        buildscript.execute('unzip "%s"' % localfile,
++        buildscript.execute('unzip -qo "%s"' % localfile,
+                 cwd=target_directory)
+     else:
+         try:
+-- 
+1.7.2.3
+
