@@ -11,6 +11,13 @@ makeargs = ""
 # Set CMake build type
 buildtype = "RelWithDebInfo"
 
+# Set project generator type
+if os.environ.get('PLATFORM', '') == 'X64':
+    _generator = "Visual Studio 10 Win64"
+else:
+    _generator = "Visual Studio 10"
+cmakeargs = '-G "%s"' % (_generator)
+
 # Make sure MSBUILD finds our headers and libs
 environ_prepend('LIB',     os.path.join(prefix, 'lib'),     ';')
 environ_prepend('INCLUDE', os.path.join(prefix, 'include'), ';')
