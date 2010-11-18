@@ -3,7 +3,7 @@ include make.env
 STATICLIBDIR ?= $(LIBDIR)/static
 INSTALL ?= install -p
 
-PATH = $(shell echo /c/Perl64/bin:$$PATH)
+PATH = $(shell echo /perl/bin:$$PATH)
 
 all: dll static tests
 

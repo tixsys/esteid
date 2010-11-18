@@ -55,11 +55,6 @@ for p in $mydir/patches/jhbuild/*.patch; do
 done
 
 echo "Installing jhbuild ..."
-make -f Makefile.plain DISABLE_GETTEXT=1 install >/dev/null
-
-if test "x`echo $PATH | grep $HOME/.local/bin`" == x; then
-    echo "PATH does not contain $HOME/.local/bin, it is recommended that you add that."
-    echo 
-fi
+make -f Makefile.plain DISABLE_GETTEXT=1 PREFIX=$BDIR install >/dev/null
 
 echo "Done."

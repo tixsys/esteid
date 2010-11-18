@@ -34,7 +34,7 @@ index e208aaa..1a8f9f7 100644
 -                if pipe.stdin:
 -                    os.write(pipe.stdin.fileno(), in_chunk)
 -        
-+            # Do not poll stdin on Windows platform 
++            # Do not poll stdin on Windows platform
              if not sys.platform.startswith('win'):
 -                select.select([],[],[],.1) # give a little time for buffers to fill
 -            else:
