@@ -75,6 +75,8 @@
     <dependencies>
       <dep package="meta-esteid" />
       <dep package="minidriver" />
+      <dep package="SmartCardRemoval" />
+      <dep package="id-updater" />
       <dep package="esteid-csp" />
       <dep package="iaikPKCS11Wrapper" />
     </dependencies>
