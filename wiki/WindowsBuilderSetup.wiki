@@ -13,7 +13,7 @@ Esialgne ajaline investeering on vähemalt 2-3 päeva.
 
  * Windows 7 või Windows Server 2008R2
  * Visual Studio 2010 Ultimate (osa asju kompileeruvad ka Express Editioniga, aga mitte kõik, kuna sealt on ATL puudu)
- * [http://download.microsoft.com/download/4/A/2/4A25C7D5-EFBE-4182-B6A9-AE6409A78/GRMWDK_EN_7600_1.ISO The Windows Driver Kit (WDK) 7.1.0]
+ * [http://download.microsoft.com/download/4/A/2/4A25C7D5-EFBE-4182-B6A9-AE6850409A78/GRMWDK_EN_7600_1.ISO The Windows Driver Kit (WDK) 7.1.0]
  * [http://www.microsoft.com/downloads/en/details.aspx?FamilyId=1EF399E9-B018-49DB-A98B-0CED7CB8FF6F&displaylang=en Microsoft Windows Cryptographic Next Generation Software Development Kit 2.0.0 (CNG SDK)]
  * [http://wix.sourceforge.net/releases/3.5.2229.0/Wix35.msi WiX 3.5]
  * [http://www.python.org/download/ Python 2.7]
