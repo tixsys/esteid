@@ -10,6 +10,15 @@ set -e
 # Copy MSBuild makefile
 cp $mydir/make.msbuild .
 
+# $PLATFORM is an environment variable set by VS command prompt
+if [ x"$PLATFORM" = x"X64" ]; then
+    MACHINE=x64
+    MSBUILD_ARCH=x64
+else
+    MACHINE=x86
+    MSBUILD_ARCH=Win32
+fi
+
 # Store configuration environment so make.msbuild can load it
 cat > make.env <<E_O_F
 SRCDIR = $srcdir
@@ -19,13 +28,8 @@ BINDIR = $prefix/bin
 INCLUDEDIR = $prefix/include
 LIBDIR = $prefix/lib
 
-MSBUILD_ARCH = Win32
-
-ifeq (\$(MSBUILD_ARCH),x64)
-MACHINE = x64
-else
-MACHINE = x86
-endif
+MACHINE = $MACHINE
+MSBUILD_ARCH = $MSBUILD_ARCH
 E_O_F
 
 # Copy package specific files (including Makefile)
