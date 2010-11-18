@@ -189,6 +189,7 @@
       <dep package="xsd" />
       <dep package="msinttypes" />
       <dep package="cspdk" />
+      <dep package="qt" />
       <dep package="meta-esteid-bootstrap" />
     </dependencies>
   </metamodule>
