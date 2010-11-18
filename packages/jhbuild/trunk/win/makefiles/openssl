@@ -10,8 +10,13 @@ all: dll static tests
 install: installdll installstatic
 
 ms/ntdll.mak:
+ifeq ($(MSBUILD_ARCH),x64)
+	./Configure VC-WIN64A --prefix=$(PREFIX)
+	cmd \/c ms\do_win64a
+else
 	./Configure VC-WIN32 --prefix=$(PREFIX)
 	cmd \/c ms\do_nasm
+endif
 
 ms/nt.mak: ms/ntdll.mak
 

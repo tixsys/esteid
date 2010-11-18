@@ -1,4 +1,4 @@
-PROJFILE = projects/$(MSBUILD_ARCH)/VC10/xerces-all/XercesLib/XercesLib.vcxproj
+PROJFILE = projects/Win32/VC10/xerces-all/XercesLib/XercesLib.vcxproj
 
 all: compile
 

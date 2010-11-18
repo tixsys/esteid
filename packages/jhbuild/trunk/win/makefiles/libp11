@@ -1,5 +1,3 @@
-MACHINE = ix86
-
 all: nmake-compile
 
 nmake-compile:

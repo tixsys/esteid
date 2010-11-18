@@ -1,6 +1,5 @@
 include make.env
 
-MSBUILD_ARCH ?= Win32
 MSBUILD_CONFIG ?= Release
 MSBUILD_TARGET ?= Build
 INSTALL ?= install -p

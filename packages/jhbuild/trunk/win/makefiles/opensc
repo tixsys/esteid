@@ -1,7 +1,6 @@
 include make.env
 
 INSTALL ?= install -p
-MACHINE ?= ix86
 
 all: nmake-compile
 

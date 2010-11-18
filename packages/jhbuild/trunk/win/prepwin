@@ -18,6 +18,14 @@ PREFIX = $prefix
 BINDIR = $prefix/bin
 INCLUDEDIR = $prefix/include
 LIBDIR = $prefix/lib
+
+MSBUILD_ARCH = Win32
+
+ifeq (\$(MSBUILD_ARCH),x64)
+MACHINE = x64
+else
+MACHINE = x86
+endif
 E_O_F
 
 # Copy package specific files (including Makefile)
