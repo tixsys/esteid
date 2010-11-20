@@ -10,7 +10,14 @@ Package: esteid-browser-plugin
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Estonian ID card browser plugin
- Estonian ID card digital signing browser plugin.
+ Esteid Browser Plugin is cross-browser plugin that exposes
+ Estonian eID card functions via JavaScript.
+ .
+ The plugin is used by web pages to obtain users digital signature.
+ To protect privacy, only web pages in "whitelist" can use the
+ card. For unlisted pages, a yellow notification bar appears.
+ The plugin also implements a compatibility mode to support
+ existing web pages that use old signature API-s.
 
 Package: esteid-browser-plugin-dbg
 Architecture: any
@@ -18,26 +25,25 @@ Section: libdevel
 Priority: extra
 Depends: esteid-browser-plugin (= ${binary:Version}), ${misc:Depends}
 Description: debugging symbols for esteid-browser-plugin
+ Esteid Browser Plugin is cross-browser plugin that exposes
+ Estonian eID card functions via JavaScript.
+ .
  This package contains debugging symbols for esteid-browser-plugin package.
 
 Package: mozilla-esteid
 Architecture: any
 Depends: esteid-browser-plugin, libopensc3, libdigidocpp0, ${shlibs:Depends}, ${misc:Depends}
-Provides: esteid-firefox
-Conflicts: esteid-firefox (<< 0.4-0svnr1759)
-Replaces: esteid-firefox (<< 0.4-0svnr1759)
 Description: Estonian ID card extension for Firefox
- Estonian ID card digital signing extension for Firefox.
+ Esteid Browser Plugin is cross-browser plugin that exposes
+ Estonian eID card functions via JavaScript.
+ .
+ This package contains the extension for Firefox.
 
 Package: thunderbird-esteid
 Architecture: any
 Depends: mozilla-esteid (= ${binary:Version}), ${misc:Depends}
 Description: Estonian ID card extension for Thunderbird
- Estonian ID card digital signing extension for Thunderbird.
-
-Package: esteid-firefox
-Architecture: any
-Depends: mozilla-esteid
-Description: transitional dummy upgrade package for mozilla-esteid
- This is a dummy transitional package to ease the migration to the new
- mozilla-esteid package. You can remove it safely.
+ Esteid Browser Plugin is cross-browser plugin that exposes
+ Estonian eID card functions via JavaScript.
+ .
+ This package contains the extension for Thunderbird.
