@@ -41,15 +41,15 @@ Esialgne ajaline investeering on vähemalt 2-3 päeva.
  * Käivita [http://esteid.googlecode.com/svn/packages/jhbuild/trunk/win/setup-msys.bat setup-msys.bat]. See tõmbab ja paigaldab ülejäänud vajalikud tööriistad.
  * Pinni endale Start menüüsse Programs->Microsoft Visual Studio 2010->Visual Studio Tools alt "Visual Studio Command Prompt (2010)" ja "Visual Studio x64 Win64 Command Prompt (2010)" neid läheb Sul tihti vaja
 
-= Baasteekide kompileerimine (bootstrap) =
+= Baasteekide kompileerimine (bootstrap) (32 bit) =
 
-Kirjuta järgmised käsud "Visual Studio Command Prompt"-i
+Kirjuta järgmised käsud "Visual Studio Command Prompt (2010)"-i
 
 {{{
 \tools\msys\bin\sh --login -i
 cd /c
-mkdir esteid-trunk
-cd esteid-trunk
+mkdir -p esteid/nightly
+cd esteid/nightly
 svn co https://esteid.googlecode.com/svn/packages/jhbuild/trunk win32
 cd win32
 sh setup-jhbuild.sh
@@ -57,12 +57,39 @@ sh jhbuild.sh bootstrap
 }}}
 
 
-= Open EstEID komplekti kompileerimine =
+= 32-bitise Open EstEID komplekti kompileerimine (32 bit) =
 
 Kirjuta järgmised käsud "Visual Studio Command Prompt"-i
 
 {{{
 \tools\msys\bin\sh --login -i
-cd /c/esteid-trunk/win32
+cd /c/esteid/nightly/win32
+sh jhbuild.sh
+}}}
+
+
+= Baasteekide kompileerimine (bootstrap) (64 bit) =
+
+Kirjuta järgmised käsud "Visual Studio x64 Win64 Command Prompt (2010)"-i
+
+{{{
+\tools\msys\bin\sh --login -i
+cd /c
+mkdir -p esteid/nightly
+cd esteid/nightly
+svn co https://esteid.googlecode.com/svn/packages/jhbuild/trunk x64
+cd x64
+sh setup-jhbuild.sh
+sh jhbuild.sh bootstrap
+}}}
+
+
+= Open EstEID komplekti kompileerimine (64 bit) =
+
+Kirjuta järgmised käsud "Visual Studio x64 Win64 Command Prompt (2010)"-i
+
+{{{
+\tools\msys\bin\sh --login -i
+cd /c/esteid/nightly/x64
 sh jhbuild.sh
 }}}
