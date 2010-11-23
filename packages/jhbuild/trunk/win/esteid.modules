@@ -9,6 +9,9 @@
   <repository type="svn" name="esteid" 
               href="https://esteid.googlecode.com/svn/" default="yes" />
 
+  <repository type="hg" name="firebreath"
+              href="https://firebreath.googlecode.com/hg/" />
+
   <repository type="tarball" name="smartlink/snapshots"
               href="http://id.smartlink.ee/repo/nightly/snapshots/" />
 
@@ -37,6 +40,16 @@
   <cmake id="smartcardpp-static"
          cmakeargs="-DUSE_STATIC_RUNTIME=TRUE -DLIB_SUFFIX=/static">
     <branch module="smartcardpp" />
+  </cmake>
+
+  <cmake id="firebreath" buildtype="Release"
+         cmakeargs="-DPROJECTS_DIR=../firebreath-projects
+                    -DWITH_DYNAMIC_MSVC_RUNTIME=YES
+                    -DOPENSSLCRYPTO_LIBRARY=${libdir}/static/libeay32.lib">
+    <branch repo="firebreath" />
+    <dependencies>
+      <dep package="esteid-browser-plugin" />
+    </dependencies>
   </cmake>
 
   <cmake id="minidriver"
