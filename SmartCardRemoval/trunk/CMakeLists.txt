@@ -11,6 +11,7 @@ add_definitions(
     -DUNICODE
     -D_MERGE_PROXYSTUB
     -D_WIN_SERVICE_STARTUP_HACK
+    -DVS2010_WITH_BROKEN_ATL
 
     # Needed for smartcardpp
     -D_SECURE_SCL=0

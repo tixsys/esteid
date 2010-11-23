@@ -91,8 +91,27 @@ public :
 	{
 		return S_OK;
 	}
+
+#ifdef VS2010_WITH_BROKEN_ATL
+	// Work around "service is always starting" issue with Visual Studio 2010
+	// http://connect.microsoft.com/VisualStudio/feedback/details/545718/atl-service-template-broken-in-visual-studio-2010-rc
+	HRESULT PreMessageLoop(int nShowCmd)
+	{
+		log << "PreMessageLoop .." << std::endl;
+		HRESULT hr = __super::PreMessageLoop(nShowCmd);
+		if (hr == S_FALSE) {
+			hr = S_OK;
+		}
+		return hr;
+	}
+#endif
+
 	void RunMessageLoop()
 	{
+#ifdef VS2010_WITH_BROKEN_ATL
+		log << "setting service status to SERVICE_RUNNING .." << std::endl;
+		SetServiceStatus(SERVICE_RUNNING);
+#endif
 		log << "starting monitor .." << std::endl;
 		monitorThread monitor(*this,lock);
 		monitor.start();
