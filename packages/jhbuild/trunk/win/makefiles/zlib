@@ -10,11 +10,7 @@ all: build
 build:
 	nmake -f win32/Makefile.msc
 
-install: install-bin install-lib install-include
-
-install-bin:
-	$(INSTALL) -d $(BINDIR)
-	$(INSTALL) $(OUTDIR)/*.dll $(BINDIR)
+install: install-lib install-include
 
 install-lib:
 	$(INSTALL) -d $(LIBDIR)
