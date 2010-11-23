@@ -53,20 +53,9 @@ cd esteid-trunk
 svn co https://esteid.googlecode.com/svn/packages/jhbuild/trunk win32
 cd win32
 sh setup-jhbuild.sh
-sh jhbuild.sh bootstrap qt
 sh jhbuild.sh bootstrap
 }}}
 
-Kummalised errorid bootstrappimisel
-
-Järgnev error on ohutu ja probleem kaob kui bootstrap teistkordselt
-käivitatakse.
-
-{{{
-error:  cannot delete old qt-everywhere-opensource-src-4.7.1/configure
-        No such file or directory
-jhbuild bootstrap: failed to unpack c:\esteid-trunk\win32\build\pkgs\qt-everywhere-opensource-src-4.7.1.zip
-}}}
 
 = Open EstEID komplekti kompileerimine =
 
