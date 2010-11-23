@@ -10,6 +10,7 @@ configure.cache: $(PREFIX)/mkspecs
 	  -L $(LIBDIR) \
 	  -no-qt3support -no-sse2 -no-phonon \
 	  -no-multimedia -no-declarative \
+	  -qt-zlib \
 	  -fast -release -opensource -confirm-license \
 	  -prefix $(PREFIX)
 
