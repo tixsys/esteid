@@ -278,14 +278,15 @@ void digidoc::XmlConf::setDefaultConfPath() throw(IOException)
  */
 void digidoc::XmlConf::setUserConfPath()
 {
+    const char *home;
 #ifdef _WIN32
-    USER_CONF_LOC = getenv ("APPDATA");
-    if (USER_CONF_LOC.size())
-        USER_CONF_LOC += "\\digidocpp\\digidocpp.conf";   
+    home = getenv("APPDATA");
+    if (home && strlen(home) > 0)
+        USER_CONF_LOC = std::string(home) + "\\digidocpp\\digidocpp.conf";   
 #else
-    USER_CONF_LOC = getenv("HOME");
-    if (USER_CONF_LOC.size())
-        USER_CONF_LOC += "/.digidocpp/digidocpp.conf"; 
+    home = getenv("HOME");
+    if (home && strlen(home) > 0)
+        USER_CONF_LOC = std::string(home) + "/.digidocpp/digidocpp.conf"; 
 #endif
 }
 
