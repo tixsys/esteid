@@ -14,6 +14,7 @@ Lisaks võivad isikukoodid kattuda (näiteks Leedu ja Eesti kattuvad).
 Seega ei saa enam siduda kasutajakontot jäigalt isikukoodiga. Kasutajakontot ei ole hea siduda ka otseselt sertifikaadi järjekorranumbriga, kuna see muutub iga kord kui isik saab uue kaardi. Samuti võib samal isikul olla mitu sertifikaati.
 
 Täpne lahendus sõltub rakendusest, kuid soovitame järgmist strateegiat:
+ # Kui sertifikaadis leidub isikukood või selle ekvivalent, siis lisada sellele kahetäheline riigikood (selle leiab samuti sertifikaadist): näiteks EE:47101010033
  # Kui sertifikaadis puudub isikukood, siis kasutada isiku nimest ja sünnikuupäevast moodustatud kombinatsiooni. Kui sünnikuupäeva ei ole, siis kasutada sertifikaadi numbrit.
  # Kui sertifikaadis puudub nimi, siis kasutada sertifikaadi numbrit.
 
