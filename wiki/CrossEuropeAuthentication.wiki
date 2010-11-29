@@ -34,3 +34,12 @@ Allpool on nimekiri analüüsitud välisriikidest ja nende sertifikaadide näidi
 
 ||Riik||Isikukood||E-post||Näidised||Märkused||
 ||Austria||Ei||Ei||[austria/auth.txt Auth] [austria/sign.txt Sign]||Allkirjasert on ECDSA||
+||Belgia||JAH||EI||Auth Sign||-||
+||Rootsi||JAH||EI||Auth Sign||-||
+||Itaalia||EI||JAH||[http://code.google.com/p/esteid/downloads/dtail?name=itaalia_auth_cert.crl.txt Auth] Sign||-||
+||Soome||JAH||JAH||Auth Sign||-||
+||Luksemburg||JAH||JAH||Auth Sign||-||
+||Portugal||JAH||EI||Auth Sign||-||
+||Sloveenia||JAH||JAH||Auth Sign||-||
+||Hispaania||JAH||EI||Auth Sign||-||
+||Eesti||JAH||JAH||Auth Sign||-||
