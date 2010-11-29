@@ -1,0 +1,170 @@
+acControlCenter Version	1.2.6.0
+                    	
+##### Windows ##### 	
+                    	
+Windows Version     	Windows XP Service Pack 3
+Windows Directory   	C:\WINDOWS\
+System Directory    	C:\WINDOWS\system32
+User Name           	kasutaja
+Path                	C:\Program Files\Internet Explorer;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem
+                    	
+##### AdminRights #####	
+Yes                 	
+                    	
+IE Version          	8.0.6001.18702
+IE ProxyEnable      	0
+                    	
+Java Version        	0
+                    	
+##### Prozesse #####	
+                    	
+                    	[System Process]
+                    	System
+                    	smss.exe
+                    	csrss.exe
+                    	winlogon.exe
+                    	services.exe
+                    	lsass.exe
+                    	VBoxService.exe
+                    	svchost.exe
+                    	svchost.exe
+                    	svchost.exe
+                    	svchost.exe
+                    	svchost.exe
+                    	spoolsv.exe
+                    	scardsvr.exe
+                    	explorer.exe
+                    	svchost.exe
+                    	VBoxTray.exe
+                    	ctfmon.exe
+                    	alg.exe
+                    	wscntfy.exe
+                    	iexplore.exe
+                    	iexplore.exe
+                    	acLauncher.exe
+                    	acSecurityLayer.exe
+                    	acControlCenter_setup.exe
+                    	
+                    	
+##### Suche Kartenleser #####	
+                    	
+Prüfe auf Kartenlesertreiber	ct32.dll
+ct32.dll            	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	ChyCTApiSp.dll
+ChyCTApiSp.dll      	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	ctrsct32.dll
+ctrsct32.dll        	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	CTpcsc32.dll
+CTpcsc32.dll        	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	CTpcsc24.dll
+CTpcsc24.dll        	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	CTDeutin.dll
+CTDeutin.dll        	Treiber nicht installiert.
+Prüfe auf Kartenlesertreiber	CT_Signator.dll
+CT_Signator.dll     	Treiber nicht installiert.
+                    	
+PC/SC reader found: 	SCM Microsystems Inc. SCR33x USB Smart Card Reader 0
+                    	
+1 Leser gefunden.   	
+                    	
+a-sign Client ist installiert.	
+                    	
+                    	
+##### Zertifikate #####	
+                    	
+Root-Zertifikate im Windows-Zertifikatsspeicher:
+	
+A-Trust BKU, A-Trust BKU	
+A-Trust-nQual-03, A-Trust-nQual-03	
+                    	
+Benutzerzertifikate im Windows-Zertifikatsspeicher:
+	
+Max Mustermann, a-sign-token-Test-03, CSP-Name: A-Trust a-sign Client v1.0, kein Zwischen-CA-Zertifikat gefunden	
+                    	
+                    	
+##### PKCS#11 ##### 	
+                    	
+asignp11.dll        	
+Manufacturer: A-Trust                         
+Description : A-Trust a-sign Client           
+Version     : 12.78
+	
+Slot:Cert  Token                           Certificate/Object
+-----------------------------------------------------------------	
+ 00 : 00   a.sign premium e                C.CH.EKEY	
+ 00 : 00   a.sign premium e                CIN	
+ 00 : 01   a.sign premium e                PERSONENBINDUNG	
+                    	
+##### DLL's #####   	
+                    	
+Visual C-Runtime    	:
+Visual C-Runtime    	7.0.2600.5512 - (343040 b, 14/04/2008  08:42)
+asignp11.dll        	:
+asignp11.dll        	1.2.7.8 - (851968 b, 20/08/2010  14:23)
+winscard.dll        	:
+winscard.dll        	5.1.2600.5512 - (99328 b, 14/04/2008  08:42)
+ct32x.dll           	:
+ct32x.dll           	 - (0 b, )
+ct32ra.dll          	:
+ct32ra.dll          	 - (0 b, )
+ct32scan.dll        	:
+ct32scan.dll        	 - (0 b, )
+KOBIL ct32.dll      	:
+KOBIL ct32.dll      	 - (0 b, )
+KOBIL ctapi_Control.dll	:
+KOBIL ctapi_Control.dll	 - (0 b, )
+KOBIL CTAPIUtilities.dll	:
+KOBIL CTAPIUtilities.dll	 - (0 b, )
+SCM CTpcsc32.dll    	:
+SCM CTpcsc32.dll    	 - (0 b, )
+Reiner SCT ctrsct32.dll	:
+Reiner SCT ctrsct32.dll	 - (0 b, )
+Cherry ChyCTApiSp.dll	:
+Cherry ChyCTApiSp.dll	 - (0 b, )
+Siemens CT_Signator.dll	:
+Siemens CT_Signator.dll	 - (0 b, )
+BDC. hot:sign       	:
+BDC. hot:sign       	 - (0 b, )
+id2scaps.exe        	:
+id2scaps.exe        	 - (0 b, )
+id2cbox.dll         	:
+id2cbox.dll         	 - (0 b, )
+id2csp.dll          	:
+id2csp.dll          	 - (0 b, )
+id2sign.dll         	:
+id2sign.dll         	 - (0 b, )
+id2wsmain.dll       	:
+id2wsmain.dll       	 - (0 b, )
+                    	
+##### a.sign Client Settings #####	
+                    	
+InstallDir          	C:\Program Files\A-Trust GmbH\a.sign Client\
+ReaderTime          	10000
+Reader0             	PCSC Reader
+ReaderName          	SCM Microsystems Inc. SCR33x USB Smart Card Reader 0
+Reader1             	not entered !
+                    	attempt to update registry HKLM returns 0x0.
+CardNumber          	0000002300785859
+                    	attempt to update registry HKCU returns 0x0.
+Testing Registry Access:	HKLM
+Testing Registry Access:	HKCU
+                    	
+##### hot:sign Settings #####	
+                    	
+                    	
+##### w-Form Settings #####	
+                    	
+not installed.      	
+                    	
+                    	
+##### Security Layer #####	
+                    	
+Teste Verbindung auf TCP/IP.	
+Sende Properties Request an Security Layer.	
+ok.                 	<?xml version='1.0' encoding='UTF-8'?><GetPropertiesResponse><ViewerMediaType>text/plain</ViewerMediaType><ViewerMediaType>text/html</ViewerMediaType><ViewerMediaType>text/xml</ViewerMediaType><ViewerMediaType>text/sgml</ViewerMediaType><ViewerMediaType>text/tab-separated-values</ViewerMediaType><ViewerMediaType>application/xml</ViewerMediaType><ViewerMediaType>application/xhtml+xml</ViewerMediaType><ViewerMediaType>application/sgml</ViewerMediaType><ViewerMediaType>message/rfc822</ViewerMediaType><XMLSignatureTransform>http://www.w3.org/TR/2001/REC-xml-c14n-20010315</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/2001/10/xml-exc-c14n#</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/2001/10/xml-exc-c14n#WithComments</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/2000/09/xmldsig#base64</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/TR/1999/REC-xpath-19991116</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/2002/06/xmldsig-filter2</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/2000/09/xmldsig#enveloped-signature</XMLSignatureTransform><XMLSignatureTransform>http://www.w3.org/TR/1999/REC-xslt-19991116</XMLSignatureTransform><KeyboxIdentifier Signature="1" Encryption="0">SecureSignatureKeypair</KeyboxIdentifier><KeyboxIdentifier Signature="1" Encryption="1">CertifiedKeypair</KeyboxIdentifier><Binding Identifier="HTTP"/><Binding Identifier="HTTPS"/><ProtocolVersion>1.0</ProtocolVersion><ProtocolVersion>1.1</ProtocolVersion><ProtocolVersion>1.2</ProtocolVersion></GetPropertiesResponse>
+Sende Status Request an Security Layer.	
+ok.                 	<?xml version='1.0' encoding='UTF-8'?><sl:GetStatusResponse xmlns:sl='http://www.buergerkarte.at/namespaces/securitylayer/20020225#'><sl:TokenStatus>ready</sl:TokenStatus></sl:GetStatusResponse>
+Sende Infobox Available Request an Security Layer.	
+ok.                 	<?xml version='1.0' encoding='UTF-8'?><sl:InfoboxAvailableResponse xmlns:sl='http://www.buergerkarte.at/namespaces/securitylayer/20020225#'><sl:InfoboxIdentifier>IdentityLink</sl:InfoboxIdentifier><sl:InfoboxIdentifier>CompressedIdentityLink</sl:InfoboxIdentifier><sl:InfoboxIdentifier>Certificates</sl:InfoboxIdentifier></sl:InfoboxAvailableResponse>
+                    	
+Das Stammzertifikat zu Ihrer Karte wurde nicht installiert.	

@@ -1,0 +1,74 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            5a:87:90:ae:a0:4c:c2:71
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: CN=(Teste) EC de Autentica\xC3\xA7\xC3\xA3o do Cart\xC3\xA3o de Cidad\xC3\xA3o 0003, OU=subECEstado, O=Cart\xC3\xA3o de Cidad\xC3\xA3o, C=PT
+        Validity
+            Not Before: Mar  6 07:45:07 2010 GMT
+            Not After : Mar  5 00:00:00 2015 GMT
+        Subject: C=PT, O=Cart\xC3\xA3o de Cidad\xC3\xA3o, OU=(Teste) Autentica\xC3\xA7\xC3\xA3o do Cidad\xC3\xA3o, OU=Cidad\xC3\xA3o Portugu\xC3\xAAs, SN=DIONEL RAMATULAI, GN=CLAYTA SET\xC3\x89LO/serialNumber=BI348254652, CN=CLAYTA SET\xC3\x89LO DIONEL RAMATULAI
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:9e:17:8e:34:c5:3c:45:02:05:82:c0:cf:ed:30:
+                    56:c3:e0:04:af:ba:68:b7:ca:36:ec:72:5d:7c:c3:
+                    08:e8:5f:b5:f7:0b:98:2b:65:4a:c7:0f:b8:b3:90:
+                    d2:ba:f8:19:0b:5e:5d:b8:ad:7f:fa:d2:10:2e:f6:
+                    e4:77:f3:e2:6f:30:20:6d:e0:1b:b1:c6:fc:1f:70:
+                    43:a1:64:8e:61:78:83:cb:e3:a8:9d:50:6b:01:75:
+                    df:12:2a:4e:37:aa:c6:b8:29:6b:3c:1d:a2:db:41:
+                    8e:9d:d6:f0:3f:b7:f3:9f:40:7d:63:f5:ba:d1:04:
+                    24:1c:17:ac:f8:66:d3:90:eb
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Key Usage: critical
+                Digital Signature, Key Agreement
+            X509v3 Subject Key Identifier: 
+                1F:68:4E:19:42:C0:BB:7E:CE:5A:3E:48:F8:81:26:04:02:59:A7:82
+            X509v3 Authority Key Identifier: 
+                keyid:C4:37:6C:B1:FB:C3:FD:FB:11:27:23:0A:6F:9F:82:5E:89:29:AC:16
+
+            X509v3 Certificate Policies: 
+                Policy: 2.16.620.1.1.1.2.20
+                  User Notice:
+                    Explicit Text: 
+                Policy: 2.16.620.1.1.1.2.4.2.0.7
+                  CPS: http://pki.teste.cartaodecidadao.pt/publico/politicas/dpc/cc_sub-ec_cidadao_autenticacao_dpc.html
+                Policy: 2.16.620.1.1.1.2.10
+                  CPS: http://www.scee.gov.pt/pcert
+                Policy: 2.16.620.1.1.1.2.4.2.0.1.1
+                  CPS: http://pki.teste.cartaodecidadao.pt/publico/politicas/pc/cc_sub-ec_cidadao_autenticacao_pc.html
+
+            X509v3 CRL Distribution Points: 
+                URI:http://pki.teste.cartaodecidadao.pt/publico/lrc/cc_sub-ec_cidadao_autenticacao_crl0003_p0001.crl
+
+            2.5.29.46: 
+                0n0l.j.h.fhttp://pki.teste.cartaodecidadao.pt/publico/lrc/cc_sub-ec_cidadao_autenticacao_crl0003_delta_p0001.crl
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.auc.teste.cartaodecidadao.pt/publico/ocsp
+
+            Netscape Cert Type: 
+                SSL Client, S/MIME
+            2.5.29.9: 
+                0.0...+.......1...19801010120000Z
+    Signature Algorithm: sha1WithRSAEncryption
+        1e:bd:44:5e:90:08:34:ca:90:5a:f3:2b:76:47:55:58:41:d0:
+        7f:bc:78:18:4f:fe:50:5f:4b:a3:4d:2e:15:93:92:1c:47:e2:
+        94:9c:5e:0c:9c:7d:91:99:c0:9d:2a:49:4b:ba:a9:c5:03:d7:
+        a2:1e:1b:1f:a6:24:db:0a:fb:76:ef:d2:33:6c:d1:71:51:6a:
+        f9:19:09:05:f6:54:b7:7a:91:f4:6b:09:5a:24:72:9b:22:e5:
+        b1:1b:66:e6:61:ac:41:c6:cd:c2:1d:2e:9d:cd:22:5c:f4:56:
+        a0:95:5e:89:0b:59:a1:fb:da:59:50:7e:0d:a8:21:1e:ce:ef:
+        af:02:e9:30:2e:8e:fe:43:34:28:b0:f3:df:60:02:32:6e:20:
+        ff:48:e2:22:8d:ba:61:30:2a:22:94:53:74:79:f6:e7:6d:e8:
+        47:75:17:aa:04:18:b4:14:3b:38:ac:5c:0f:63:6a:8b:a7:00:
+        82:b9:78:3b:52:28:c1:a5:3f:6e:7f:0e:b0:7a:bc:e2:e5:03:
+        1f:08:11:c0:c5:cb:f3:d6:63:06:34:37:69:c8:13:44:40:ae:
+        67:69:e9:d4:94:3c:eb:09:d7:fc:11:94:e1:e1:af:6e:67:c9:
+        00:a7:1f:fa:9f:a5:26:42:fb:13:3e:d4:30:53:97:63:5c:07:
+        aa:f5:c2:92

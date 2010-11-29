@@ -1,0 +1,103 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 889547 (0xd92cb)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=IT, O=INFOCERT SPA/serialNumber=07945211006, OU=Ente Certificatore, CN=InfoCert Servizi di Certificazione
+        Validity
+            Not Before: Apr  1 07:26:46 2010 GMT
+            Not After : Apr  1 00:00:00 2016 GMT
+        Subject: C=IT, O=POLITECNICO DI TORINO/00518460019, OU=PERSONALE, CN=SNTGRG80E04F205P/1204070000371794.ur4f2xpJyWHeyUVM0k+voZp6v7g=/serialNumber=SNTGRG80E04F205P/emailAddress=giorgio.santiano@polito.it, GN=GIORGIO, SN=SANTIANO/dnQualifier=2010500040A316
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:c8:7e:3d:21:46:4f:c1:c3:cc:3a:ab:ad:64:a2:
+                    c8:52:3f:f3:7c:72:a5:4e:9d:a0:f2:c1:8c:62:96:
+                    20:9e:26:78:8b:32:b5:3c:96:d4:74:52:7a:fe:56:
+                    bb:25:af:00:fb:ce:80:ae:0c:1d:d4:64:5b:1a:b9:
+                    5a:78:cc:e0:6c:45:84:2b:e9:f4:06:99:e7:09:9a:
+                    1d:3b:5b:35:3a:93:18:82:31:7d:73:c1:92:b6:77:
+                    d2:16:ca:be:59:38:ac:6c:25:7b:48:36:15:65:e6:
+                    06:0f:31:4e:04:b9:2c:24:68:1c:9e:8f:81:fe:f6:
+                    69:ec:3e:82:44:08:10:69:65
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Certificate Policies: 
+                Policy: 1.3.76.36.1.1.20
+                  User Notice:
+                    Explicit Text: InfoCert SpA SSL and SMIME UNITO Client Certificate
+                  CPS: http://www.firma.infocert.it/documentazione/manuali.php
+
+            X509v3 Subject Alternative Name: 
+                email:giorgio.santiano@polito.it
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.infocert.it/OCSPServer_ICE/OCSPServlet
+
+            X509v3 Key Usage: critical
+                Digital Signature, Non Repudiation, Key Encipherment, Data Encipherment
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, E-mail Protection, Code Signing
+            X509v3 Issuer Alternative Name: 
+                email:firma.digitale@infocert.it
+            X509v3 Authority Key Identifier: 
+                keyid:41:68:E4:FF:C7:64:E3:14:43:7F:35:C7:EC:8F:60:39:67:3D:3F:A6
+
+            X509v3 CRL Distribution Points: 
+                URI:ldap://ldap.infocert.it/cn%3dAtenei%20Piemontesi%20AUT,ou%3dEnte%20Certificatore,o%3dINFOCERT%20SPA,c%3dIT?certificateRevocationList
+
+            X509v3 Subject Key Identifier: 
+                CD:44:C6:61:E8:95:BB:4C:86:EE:29:A0:C7:CF:16:4C:18:83:9A:77
+    Signature Algorithm: sha1WithRSAEncryption
+        c4:b1:5f:84:1c:4a:f4:48:93:8d:9b:f2:81:89:49:59:01:5e:
+        0a:86:64:6a:32:fa:cd:e7:61:02:5f:85:b3:65:26:58:48:90:
+        a2:c4:e0:3b:cf:18:fd:19:08:da:d0:de:9f:c2:70:63:f2:dc:
+        39:f7:e4:60:56:c3:b3:93:1e:95:3a:a7:a6:3f:a1:16:5c:81:
+        3b:d9:93:ac:6e:cb:28:24:68:90:ee:a0:d2:fd:5d:1d:1e:fd:
+        29:4f:24:92:5f:13:6e:3c:eb:83:ae:0f:5d:b7:b4:fe:cd:fc:
+        1d:0d:3b:5f:00:48:f8:c0:6d:29:21:75:3a:96:72:0c:b8:00:
+        8e:5e:64:d1:07:24:48:f8:e0:2c:c4:08:04:79:e0:fb:a3:c7:
+        ad:bc:cb:84:7d:cb:06:f5:72:dd:c8:2a:2d:6f:5c:76:e7:5a:
+        3c:08:46:5f:0d:13:c4:1e:f5:40:95:91:38:aa:e5:1c:a6:ac:
+        e0:db:82:cf:5a:27:89:59:87:ce:47:be:a7:23:73:64:bb:14:
+        41:0f:9f:83:6a:ba:ee:a3:9d:f5:b0:dc:dc:3e:98:ee:05:c4:
+        e8:53:c7:6f:58:76:02:24:42:fc:ef:ba:0d:50:d5:32:2b:22:
+        89:97:05:ed:fd:5f:78:2f:ac:d0:86:a4:d5:01:5d:63:ec:0f:
+        87:59:0f:62
+-----BEGIN CERTIFICATE-----
+MIIGBDCCBOygAwIBAgIDDZLLMA0GCSqGSIb3DQEBBQUAMIGEMQswCQYDVQQGEwJJ
+VDEVMBMGA1UECgwMSU5GT0NFUlQgU1BBMRQwEgYDVQQFEwswNzk0NTIxMTAwNjEb
+MBkGA1UECwwSRW50ZSBDZXJ0aWZpY2F0b3JlMSswKQYDVQQDDCJJbmZvQ2VydCBT
+ZXJ2aXppIGRpIENlcnRpZmljYXppb25lMB4XDTEwMDQwMTA3MjY0NloXDTE2MDQw
+MTAwMDAwMFowggEaMQswCQYDVQQGEwJJVDEqMCgGA1UECgwhUE9MSVRFQ05JQ08g
+REkgVE9SSU5PLzAwNTE4NDYwMDE5MRIwEAYDVQQLDAlQRVJTT05BTEUxRzBFBgNV
+BAMMPlNOVEdSRzgwRTA0RjIwNVAvMTIwNDA3MDAwMDM3MTc5NC51cjRmMnhwSnlX
+SGV5VVZNMGsrdm9acDZ2N2c9MRkwFwYDVQQFExBTTlRHUkc4MEUwNEYyMDVQMSkw
+JwYJKoZIhvcNAQkBFhpnaW9yZ2lvLnNhbnRpYW5vQHBvbGl0by5pdDEQMA4GA1UE
+KgwHR0lPUkdJTzERMA8GA1UEBAwIU0FOVElBTk8xFzAVBgNVBC4TDjIwMTA1MDAw
+NDBBMzE2MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIfj0hRk/Bw8w6q61k
+oshSP/N8cqVOnaDywYxiliCeJniLMrU8ltR0Unr+VrslrwD7zoCuDB3UZFsauVp4
+zOBsRYQr6fQGmecJmh07WzU6kxiCMX1zwZK2d9IWyr5ZOKxsJXtINhVl5gYPMU4E
+uSwkaByej4H+9mnsPoJECBBpZQIDAQABo4ICaDCCAmQwCQYDVR0TBAIwADCBoQYD
+VR0gBIGZMIGWMIGTBgYrTCQBARQwgYgwQQYIKwYBBQUHAgIwNQwzSW5mb0NlcnQg
+U3BBIFNTTCBhbmQgU01JTUUgVU5JVE8gQ2xpZW50IENlcnRpZmljYXRlMEMGCCsG
+AQUFBwIBFjdodHRwOi8vd3d3LmZpcm1hLmluZm9jZXJ0Lml0L2RvY3VtZW50YXpp
+b25lL21hbnVhbGkucGhwMCUGA1UdEQQeMByBGmdpb3JnaW8uc2FudGlhbm9AcG9s
+aXRvLml0ME4GCCsGAQUFBwEBBEIwQDA+BggrBgEFBQcwAYYyaHR0cDovL29jc3Au
+aW5mb2NlcnQuaXQvT0NTUFNlcnZlcl9JQ0UvT0NTUFNlcnZsZXQwDgYDVR0PAQH/
+BAQDAgTwMCcGA1UdJQQgMB4GCCsGAQUFBwMCBggrBgEFBQcDBAYIKwYBBQUHAwMw
+JQYDVR0SBB4wHIEaZmlybWEuZGlnaXRhbGVAaW5mb2NlcnQuaXQwHwYDVR0jBBgw
+FoAUQWjk/8dk4xRDfzXH7I9gOWc9P6YwgZsGA1UdHwSBkzCBkDCBjaCBiqCBh4aB
+hGxkYXA6Ly9sZGFwLmluZm9jZXJ0Lml0L2NuJTNkQXRlbmVpJTIwUGllbW9udGVz
+aSUyMEFVVCxvdSUzZEVudGUlMjBDZXJ0aWZpY2F0b3JlLG8lM2RJTkZPQ0VSVCUy
+MFNQQSxjJTNkSVQ/Y2VydGlmaWNhdGVSZXZvY2F0aW9uTGlzdDAdBgNVHQ4EFgQU
+zUTGYeiVu0yG7imgx88WTBiDmncwDQYJKoZIhvcNAQEFBQADggEBAMSxX4QcSvRI
+k42b8oGJSVkBXgqGZGoy+s3nYQJfhbNlJlhIkKLE4DvPGP0ZCNrQ3p/CcGPy3Dn3
+5GBWw7OTHpU6p6Y/oRZcgTvZk6xuyygkaJDuoNL9XR0e/SlPJJJfE24864OuD123
+tP7N/B0NO18ASPjAbSkhdTqWcgy4AI5eZNEHJEj44CzECAR54Pujx628y4R9ywb1
+ct3IKi1vXHbnWjwIRl8NE8Qe9UCVkTiq5RymrODbgs9aJ4lZh85Hvqcjc2S7FEEP
+n4Nquu6jnfWw3Nw+mO4FxOhTx29YdgIkQvzvug1Q1TIrIomXBe39X3gvrNCGpNUB
+XWPsD4dZD2I=
+-----END CERTIFICATE-----

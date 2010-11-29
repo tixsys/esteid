@@ -1,0 +1,111 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1085453873 (0x40b2b631)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=si, O=state-institutions, OU=sitest-ca
+        Validity
+            Not Before: Feb 23 11:44:38 2010 GMT
+            Not After : Feb 23 12:14:38 2015 GMT
+        Subject: C=si, O=state-institutions, OU=SITEST-CA, OU=certificates-web, CN=Marija Vzorec/serialNumber=2302201000006
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (2048 bit)
+                Modulus (2048 bit):
+                    00:c2:15:51:d0:19:5b:6b:a0:6b:69:47:9b:64:a3:
+                    38:43:55:99:8f:5e:9e:be:1e:13:98:90:60:d9:3a:
+                    63:53:a1:d3:1a:85:98:4e:ff:15:c4:c5:f1:85:ca:
+                    3d:77:4e:55:c3:33:c3:3b:03:f0:72:1a:9e:59:a2:
+                    d6:f5:93:be:b7:1f:bf:b0:45:2f:a7:ae:d9:f3:44:
+                    cc:fa:ad:04:6f:42:a5:f6:86:34:51:7a:2d:ba:6d:
+                    fe:06:38:b1:2e:87:78:e8:80:69:05:93:de:16:cf:
+                    56:c7:fc:15:3e:a8:23:08:57:f4:76:af:5f:71:6e:
+                    82:f2:5d:cf:a5:f1:ef:9d:a0:5d:9a:d9:d3:cc:ad:
+                    0e:9a:39:62:b8:d3:e8:8e:9d:c3:7b:cc:69:1a:bc:
+                    79:c8:f1:eb:7e:6e:97:8d:98:ad:12:33:8a:71:64:
+                    42:7a:da:65:f9:75:9b:2d:f2:b4:2e:fd:7d:01:87:
+                    80:83:89:e3:7a:69:b4:88:0f:19:dc:ce:cf:e6:07:
+                    7d:24:70:80:6b:f4:d8:99:42:46:7c:0c:4c:43:53:
+                    f6:22:b3:19:54:91:fe:34:65:86:ae:1c:f1:33:07:
+                    ff:05:84:10:90:65:e9:5c:f1:08:3b:97:62:34:d7:
+                    fe:4f:77:f3:7f:62:44:bf:90:05:1a:5b:79:51:ae:
+                    75:25
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment
+            X509v3 Private Key Usage Period: 
+                Not Before: Feb 23 11:44:38 2010 GMT, Not After: Feb 23 12:14:38 2015 GMT
+            X509v3 Certificate Policies: 
+                Policy: 1.3.6.1.4.1.6105.2.2.3.2
+                  CPS: http://www.ca.gov.si/cps/
+                Policy: 0.4.0.1456.1.2
+
+            qcStatements: 
+                0
+0......F..
+            X509v3 Subject Alternative Name: 
+                email:Marija.Vzorec@test.si
+            X509v3 CRL Distribution Points: 
+                DirName:/C=si/O=state-institutions/OU=sitest-ca/CN=CRL3
+                URI:ldap://x500.gov.si/ou=sitest-ca,o=state-institutions,c=si?certificateRevocationList?base
+                URI:http://www.sigen-ca.si/crl/sitest/sitest-ca.crl
+
+            X509v3 Authority Key Identifier: 
+                keyid:54:49:07:46:87:CF:1D:89:9D:CA:AE:72:A7:A8:A0:A0:69:B7:21:E7
+
+            X509v3 Subject Key Identifier: 
+                61:C4:6E:17:48:E1:92:86:E5:52:0D:56:93:DC:2B:A9:D9:E7:E4:9A
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            1.2.840.113533.7.65.0: 
+                0
+..V7.1....
+    Signature Algorithm: sha1WithRSAEncryption
+        72:ff:2f:cb:be:db:d4:59:d3:81:39:13:8b:c0:b0:df:ce:a0:
+        24:b6:98:9b:59:6b:e6:d4:7e:17:06:45:ae:64:a7:c3:de:20:
+        42:e2:65:a4:d9:30:44:bc:c8:53:42:e9:b0:cc:6b:06:d4:81:
+        8a:71:0f:17:60:df:72:e9:b7:53:62:78:e7:d6:98:c8:cd:0f:
+        31:2e:d0:57:e2:9e:e5:0e:54:8e:7d:ef:06:af:41:e4:0b:f3:
+        49:94:22:53:af:33:2a:59:dd:4c:f6:3f:7b:30:86:3d:d3:ec:
+        b4:63:0b:c5:b1:7a:98:84:c8:97:39:36:e9:7f:29:d3:f9:e1:
+        1b:4a:04:50:b0:ed:59:17:2a:31:c6:f4:2c:c5:7c:de:b7:2f:
+        ec:aa:75:3a:b8:07:62:bd:8d:3e:ec:5c:b3:f7:bb:fc:e5:0b:
+        2a:f4:1d:25:35:aa:ea:e7:6c:0c:f1:92:ed:31:4c:b6:9f:65:
+        d0:72:50:94:cf:62:49:a0:e8:62:2b:45:3b:af:ba:93:27:d0:
+        68:04:6f:8d:2d:31:ce:dc:52:28:09:4e:88:73:c7:27:e1:2e:
+        be:20:a6:9c:fe:d8:f3:66:06:fc:63:52:c8:3d:0f:af:29:e1:
+        58:26:ee:7d:8c:78:a7:98:e1:2c:44:62:50:53:b1:a8:8f:81:
+        66:d8:98:d0
+-----BEGIN CERTIFICATE-----
+MIIFbzCCBFegAwIBAgIEQLK2MTANBgkqhkiG9w0BAQUFADA+MQswCQYDVQQGEwJz
+aTEbMBkGA1UEChMSc3RhdGUtaW5zdGl0dXRpb25zMRIwEAYDVQQLEwlzaXRlc3Qt
+Y2EwHhcNMTAwMjIzMTE0NDM4WhcNMTUwMjIzMTIxNDM4WjCBhzELMAkGA1UEBhMC
+c2kxGzAZBgNVBAoTEnN0YXRlLWluc3RpdHV0aW9uczESMBAGA1UECxMJU0lURVNU
+LUNBMRkwFwYDVQQLExBjZXJ0aWZpY2F0ZXMtd2ViMSwwFAYDVQQDEw1NYXJpamEg
+VnpvcmVjMBQGA1UEBRMNMjMwMjIwMTAwMDAwNjCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBAMIVUdAZW2uga2lHm2SjOENVmY9enr4eE5iQYNk6Y1Oh0xqF
+mE7/FcTF8YXKPXdOVcMzwzsD8HIanlmi1vWTvrcfv7BFL6eu2fNEzPqtBG9CpfaG
+NFF6Lbpt/gY4sS6HeOiAaQWT3hbPVsf8FT6oIwhX9HavX3FugvJdz6Xx752gXZrZ
+08ytDpo5YrjT6I6dw3vMaRq8ecjx635ul42YrRIzinFkQnraZfl1my3ytC79fQGH
+gIOJ43pptIgPGdzOz+YHfSRwgGv02JlCRnwMTENT9iKzGVSR/jRlhq4c8TMH/wWE
+EJBl6VzxCDuXYjTX/k93839iRL+QBRpbeVGudSUCAwEAAaOCAikwggIlMA4GA1Ud
+DwEB/wQEAwIFoDArBgNVHRAEJDAigA8yMDEwMDIyMzExNDQzOFqBDzIwMTUwMjIz
+MTIxNDM4WjBLBgNVHSAERDBCMDYGCysGAQQBr1kCAgMCMCcwJQYIKwYBBQUHAgEW
+GWh0dHA6Ly93d3cuY2EuZ292LnNpL2Nwcy8wCAYGBACLMAECMBgGCCsGAQUFBwED
+BAwwCjAIBgYEAI5GAQEwIAYDVR0RBBkwF4EVTWFyaWphLlZ6b3JlY0B0ZXN0LnNp
+MIH2BgNVHR8Ege4wgeswVaBToFGkTzBNMQswCQYDVQQGEwJzaTEbMBkGA1UEChMS
+c3RhdGUtaW5zdGl0dXRpb25zMRIwEAYDVQQLEwlzaXRlc3QtY2ExDTALBgNVBAMT
+BENSTDMwgZGggY6ggYuGWGxkYXA6Ly94NTAwLmdvdi5zaS9vdT1zaXRlc3QtY2Es
+bz1zdGF0ZS1pbnN0aXR1dGlvbnMsYz1zaT9jZXJ0aWZpY2F0ZVJldm9jYXRpb25M
+aXN0P2Jhc2WGL2h0dHA6Ly93d3cuc2lnZW4tY2Euc2kvY3JsL3NpdGVzdC9zaXRl
+c3QtY2EuY3JsMB8GA1UdIwQYMBaAFFRJB0aHzx2JncqucqeooKBptyHnMB0GA1Ud
+DgQWBBRhxG4XSOGShuVSDVaT3Cup2efkmjAJBgNVHRMEAjAAMBkGCSqGSIb2fQdB
+AAQMMAobBFY3LjEDAgOoMA0GCSqGSIb3DQEBBQUAA4IBAQBy/y/LvtvUWdOBOROL
+wLDfzqAktpibWWvm1H4XBkWuZKfD3iBC4mWk2TBEvMhTQumwzGsG1IGKcQ8XYN9y
+6bdTYnjn1pjIzQ8xLtBX4p7lDlSOfe8Gr0HkC/NJlCJTrzMqWd1M9j97MIY90+y0
+YwvFsXqYhMiXOTbpfynT+eEbSgRQsO1ZFyoxxvQsxXzety/sqnU6uAdivY0+7Fyz
+97v85Qsq9B0lNarq52wM8ZLtMUy2n2XQclCUz2JJoOhiK0U7r7qTJ9BoBG+NLTHO
+3FIoCU6Ic8cn4S6+IKac/tjzZgb8Y1LIPQ+vKeFYJu59jHinmOEsRGJQU7Goj4Fm
+2JjQ
+-----END CERTIFICATE-----

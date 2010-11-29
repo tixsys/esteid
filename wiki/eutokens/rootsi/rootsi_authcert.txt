@@ -1,0 +1,78 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            3c:dc:5b:e2:58:62:95:99:f2:47:d4:5b:1b:fd:8c:c5
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=SE, O=Testbank A AB (publ)/serialNumber=111111111111, CN=Testbank A e-Customer CA1 for BankID
+        Validity
+            Not Before: Aug 17 14:06:54 2005 GMT
+            Not After : Aug 15 21:59:59 2015 GMT
+        Subject: C=SE, O=Testbank A AB (publ), SN=Kranstege, GN=Frida/serialNumber=197705232382/name=Frida Kranstege-0D7AD, CN=Frida Kranstege
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:d4:20:fa:a3:05:a0:3c:69:10:43:82:f7:eb:86:
+                    44:2b:19:67:12:ce:02:a0:8f:77:6d:93:3a:6b:5b:
+                    53:58:48:a9:26:e6:fb:99:14:05:6e:31:98:b0:fc:
+                    06:5f:23:6e:e5:7b:a4:ba:d6:1b:52:08:93:47:18:
+                    71:6d:fd:40:b4:b2:42:1e:08:a2:9b:e6:9c:a6:87:
+                    61:df:01:bb:18:67:55:15:c4:9c:0f:9e:be:a8:3a:
+                    85:3b:34:8e:4a:c0:04:d2:63:10:b1:e4:dd:74:0b:
+                    ed:73:24:c7:05:80:7d:38:93:c3:43:98:e5:e8:be:
+                    7e:94:dd:b2:61:fe:68:d6:f3
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            Authority Information Access: 
+                OCSP - URI:http://cpact.test.pkiservices.com/
+
+            X509v3 Certificate Policies: 
+                Policy: 1.2.3.4.5
+
+            X509v3 Key Usage: critical
+                Digital Signature
+            X509v3 Authority Key Identifier: 
+                keyid:2A:D7:FF:67:28:5D:90:61:09:D5:FB:92:CA:BC:DA:09:10:09:73:BA
+
+            X509v3 Subject Key Identifier: 
+                79:AD:D5:11:85:95:6C:35:35:C9:57:D1:24:04:3C:01:BF:E3:5C:E0
+    Signature Algorithm: sha1WithRSAEncryption
+        70:66:dc:85:dc:d8:bb:28:7c:0f:79:97:a9:34:68:9b:bc:8a:
+        e3:77:c0:12:4d:e9:fc:4d:e6:71:c4:78:70:b3:ae:a5:fd:2e:
+        01:5f:c5:23:e4:4b:22:00:6c:51:f8:bc:8f:a0:88:97:33:10:
+        62:6d:f4:ed:ef:83:b0:b0:04:b9:c7:4c:60:57:d6:81:60:15:
+        a0:47:e3:28:92:f2:68:89:b7:1f:8a:04:b3:19:24:d2:d1:86:
+        8d:a9:6a:69:a6:83:72:b9:d4:69:84:86:4e:05:c6:ea:ef:d0:
+        83:29:be:8e:56:83:5c:cf:77:ba:8f:e8:f0:2d:01:23:73:d5:
+        78:ef:c1:1d:0a:11:af:ab:80:47:3e:82:19:b4:0c:d5:73:d9:
+        9a:75:50:44:cd:ab:a3:57:44:ff:01:82:ed:83:f5:45:32:e2:
+        eb:c9:78:83:13:dc:69:04:b8:66:fb:99:1c:35:aa:f5:0c:98:
+        d9:79:8a:45:e6:91:28:52:58:6b:16:24:03:d7:2a:11:51:a2:
+        c3:c1:20:0c:f3:30:e5:0c:b2:d0:8a:aa:7d:c8:c3:ee:e1:fb:
+        95:40:43:b7:3f:52:ed:e3:04:f1:0b:ea:02:54:e7:08:e2:de:
+        7d:e0:43:65:d2:1a:11:cd:d1:d5:a4:66:33:81:33:35:49:43:
+        06:bd:b0:a4
+-----BEGIN CERTIFICATE-----
+MIIDwTCCAqmgAwIBAgIQPNxb4lhilZnyR9RbG/2MxTANBgkqhkiG9w0BAQUFADBy
+MQswCQYDVQQGEwJTRTEdMBsGA1UECgwUVGVzdGJhbmsgQSBBQiAocHVibCkxFTAT
+BgNVBAUTDDExMTExMTExMTExMTEtMCsGA1UEAwwkVGVzdGJhbmsgQSBlLUN1c3Rv
+bWVyIENBMSBmb3IgQmFua0lEMB4XDTA1MDgxNzE0MDY1NFoXDTE1MDgxNTIxNTk1
+OVowgaExCzAJBgNVBAYTAlNFMR0wGwYDVQQKDBRUZXN0YmFuayBBIEFCIChwdWJs
+KTESMBAGA1UEBAwJS3JhbnN0ZWdlMQ4wDAYDVQQqDAVGcmlkYTEVMBMGA1UEBRMM
+MTk3NzA1MjMyMzgyMR4wHAYDVQQpDBVGcmlkYSBLcmFuc3RlZ2UtMEQ3QUQxGDAW
+BgNVBAMMD0ZyaWRhIEtyYW5zdGVnZTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkC
+gYEA1CD6owWgPGkQQ4L364ZEKxlnEs4CoI93bZM6a1tTWEipJub7mRQFbjGYsPwG
+XyNu5XukutYbUgiTRxhxbf1AtLJCHgiim+acpodh3wG7GGdVFcScD56+qDqFOzSO
+SsAE0mMQseTddAvtcyTHBYB9OJPDQ5jl6L5+lN2yYf5o1vMCAwEAAaOBpjCBozA+
+BggrBgEFBQcBAQQyMDAwLgYIKwYBBQUHMAGGImh0dHA6Ly9jcGFjdC50ZXN0LnBr
+aXNlcnZpY2VzLmNvbS8wEQYDVR0gBAowCDAGBgQqAwQFMA4GA1UdDwEB/wQEAwIH
+gDAfBgNVHSMEGDAWgBQq1/9nKF2QYQnV+5LKvNoJEAlzujAdBgNVHQ4EFgQUea3V
+EYWVbDU1yVfRJAQ8Ab/jXOAwDQYJKoZIhvcNAQEFBQADggEBAHBm3IXc2LsofA95
+l6k0aJu8iuN3wBJN6fxN5nHEeHCzrqX9LgFfxSPkSyIAbFH4vI+giJczEGJt9O3v
+g7CwBLnHTGBX1oFgFaBH4yiS8miJtx+KBLMZJNLRho2pammmg3K51GmEhk4Fxurv
+0IMpvo5Wg1zPd7qP6PAtASNz1XjvwR0KEa+rgEc+ghm0DNVz2Zp1UETNq6NXRP8B
+gu2D9UUy4uvJeIMT3GkEuGb7mRw1qvUMmNl5ikXmkShSWGsWJAPXKhFRosPBIAzz
+MOUMstCKqn3Iw+7h+5VAQ7c/Uu3jBPEL6gJU5wji3n3gQ2XSGhHN0dWkZjOBMzVJ
+Qwa9sKQ=
+-----END CERTIFICATE-----

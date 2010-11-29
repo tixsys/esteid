@@ -1,0 +1,75 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1146110380 (0x445041ac)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=ES, O=DIRECCION GENERAL DE LA POLICIA, OU=DNIE, CN=AC DNIE 003
+        Validity
+            Not Before: Feb  5 09:42:14 2009 GMT
+            Not After : Aug  5 09:12:10 2011 GMT
+        Subject: C=ES/serialNumber=99999035A, SN=ESPECIMEN SPECIMEN SP\xC3\x89CIMEN, GN=FICTICIO FICTITIOUS FICTIF, CN=ESPECIMEN SPECIMEN SP\xC3\x89CIMEN ESPECIMEN SPECIMEN SP\xC3\x89CIMEN, FICTICIO FICTITIOUS FICTIF (AUTENTICACI\xC3\x93N)
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (2048 bit)
+                Modulus (2048 bit):
+                    00:ad:80:d3:f2:90:07:45:2e:05:f6:a7:0b:fa:63:
+                    7e:b0:e2:e2:be:78:99:f8:55:3d:3d:cc:80:11:fb:
+                    61:b9:23:25:ec:fb:f1:d9:1c:f0:dd:4b:39:8a:9d:
+                    21:73:79:9b:8f:0c:8c:10:b2:64:c0:07:98:28:d4:
+                    0c:1d:9a:0b:d8:77:fe:d2:3f:9b:40:77:90:61:cf:
+                    67:18:32:91:5e:81:b9:d8:9c:81:ef:50:32:5d:ce:
+                    ac:e0:b0:84:40:7e:09:d4:3c:61:d5:73:10:b6:9e:
+                    fe:c1:15:6a:33:ae:2c:a4:5f:62:d5:83:76:81:d1:
+                    9e:4f:9e:b3:20:67:48:2f:a9:0a:a6:ac:2f:90:30:
+                    65:0d:c9:ba:d2:b2:a8:a7:37:7f:d9:4c:55:24:a4:
+                    25:d4:dc:df:de:6b:98:c4:9f:2a:e6:9a:9e:b5:89:
+                    ed:78:2e:0b:35:cc:3b:5e:e9:30:b9:1a:6b:2d:45:
+                    04:bf:6d:43:41:ed:1c:b1:27:e9:7a:33:a0:fe:4a:
+                    85:65:dd:d8:cc:78:aa:a2:ea:d3:98:e0:bc:ce:ec:
+                    3b:19:98:3e:c4:8e:f7:ce:19:f2:87:b4:44:5e:c6:
+                    87:af:b6:ec:4f:29:b5:fb:74:f6:33:3a:b7:9b:72:
+                    0b:71:f5:38:fa:66:04:31:7e:68:40:a7:de:7b:c8:
+                    60:71
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Key Usage: critical
+                Digital Signature
+            2.5.29.9: 
+                0.0...+.......1...19680410120000Z
+            2.16.724.1.2.2.4.1: 
+                0402...0...`.H.e..... >..t.s7.ue.OS8..a....E2....!.Q
+            Biometric Info: 
+                0..02...0...`.H.e..... tK..7.x.$|{6].3....a^........>.*02...0...`.H.e..... .A{k....L.+N+HQ:O.w....a......m.0:..`.T......0...`.H.e..... s..D......W..{....?Vo{>.^.P\)+&.0:..`.T......0...`.H.e..... .6.........a...@...Be....s[.H.[.
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            qcStatements: 
+                0.0......F..0......F..
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.dnie.es
+                CA Issuers - URI:http://www.dnie.es/certs/ACRaiz.crt
+
+            X509v3 Certificate Policies: 
+                Policy: 2.16.724.1.2.2.2.4
+                  CPS: http://www.dnie.es/dpc
+
+            X509v3 Authority Key Identifier: 
+                keyid:03:95:43:40:74:88:D4:61:56:85:4E:9B:BA:7C:40:54:F0:4F:A2:EE
+
+            X509v3 Subject Key Identifier: 
+                36:3D:F9:6D:C9:30:C4:92:B7:B4:7E:48:8B:82:81:56:A6:50:23:F1
+    Signature Algorithm: sha1WithRSAEncryption
+        0f:78:5f:81:24:a1:44:d7:5e:b5:e0:7e:b4:a2:9f:ac:7d:2a:
+        9e:ab:ce:e5:40:16:aa:99:27:8b:c9:d3:c7:6b:de:8e:0c:ea:
+        cb:da:21:10:43:cd:7a:e9:32:7f:4b:03:76:bc:2a:54:cb:f7:
+        82:d5:f5:c6:74:56:56:8e:bf:3f:17:f2:e2:4a:cb:81:cd:72:
+        0d:b8:a0:8f:4f:34:e6:40:16:cf:9a:07:01:06:a9:19:1d:bb:
+        fc:61:1f:e7:5e:82:3f:4f:c1:03:80:ea:49:08:31:5f:ac:05:
+        0b:9d:8e:98:51:04:b9:aa:aa:93:3b:4c:8f:35:48:76:70:b3:
+        6b:48:70:70:36:52:5a:3e:3f:a8:f0:ae:f8:79:68:3c:ee:be:
+        fd:5e:cd:9e:49:db:23:92:83:5d:90:5e:71:69:16:c8:2c:50:
+        75:0f:0c:64:7a:15:b4:c8:a4:33:7a:89:19:c9:bb:a7:b4:0e:
+        44:66:b7:a9:81:42:3b:4f:78:9f:91:7e:04:83:66:08:0d:80:
+        c6:db:da:ae:16:8f:c8:c2:06:78:a4:53:68:c2:20:0e:05:00:
+        4a:59:47:c8:a4:63:22:d8:51:c7:cc:dc:98:ad:90:cf:dc:6c:
+        5b:1a:de:67:6a:4c:9e:16:7d:e2:d3:02:4c:b1:48:23:e0:0d:
+        53:b4:0c:cc

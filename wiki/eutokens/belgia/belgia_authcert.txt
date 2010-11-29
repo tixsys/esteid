@@ -1,0 +1,85 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            01:00:00:00:00:01:20:18:e0:93:c1
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=BE, CN=SPECIMEN Citizen CA/serialNumber=200501
+        Validity
+            Not Before: Mar 18 09:19:12 2009 GMT
+            Not After : Mar 18 09:19:12 2011 GMT
+        Subject: C=BE, CN=Alice SPECIMEN (Authentication), SN=SPECIMEN, GN=Alice Soft1237367692310/serialNumber=71715100070
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:b1:07:66:d0:01:d7:cd:78:7e:5d:43:28:6f:d3:
+                    28:ae:1b:c4:55:36:76:91:b3:61:04:3e:c9:06:15:
+                    ea:64:27:69:a8:6d:91:00:71:65:de:a6:d5:07:01:
+                    2e:a5:77:92:77:10:26:ea:a3:19:a9:25:72:69:25:
+                    8b:4a:2c:26:df:b5:9a:12:e5:d7:09:58:f9:6b:c0:
+                    a0:69:f0:bd:4d:63:b3:c9:03:e9:bf:a8:00:fe:0c:
+                    97:e8:03:cf:f6:8d:71:a2:8e:de:ef:ea:b9:d3:14:
+                    41:d2:92:cb:89:1c:d6:b0:ec:63:75:cf:7f:26:83:
+                    47:4d:53:39:fe:59:d0:a4:b3
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Authority Key Identifier: 
+                keyid:D6:A5:FE:65:26:BF:28:6C:16:15:D7:FA:7E:3D:DA:9F:A9:EE:7D:1D
+
+            Authority Information Access: 
+                CA Issuers - URI:http://certs.specimen-eid.belgium.be/belgiumrs.crt
+                OCSP - URI:http://ocsp.specimen-eid.belgium.be
+
+            X509v3 Certificate Policies: 
+                Policy: 0.3.2062.7.1.1.401.1
+                  CPS: http://repository.specimen-eid.belgium.be
+
+            X509v3 CRL Distribution Points: 
+                URI:http://crl.specimen-eid.belgium.be/eidc200501.crl
+
+            X509v3 Key Usage: critical
+                Digital Signature
+            Netscape Cert Type: 
+                SSL Client, S/MIME
+    Signature Algorithm: sha1WithRSAEncryption
+        73:13:2c:9a:69:64:fe:02:7e:9f:0e:93:de:aa:af:3f:f7:e2:
+        8b:3e:55:b1:d2:40:0f:dc:a2:69:30:a0:33:ca:fa:02:85:f4:
+        c6:74:d9:db:ef:a0:ce:32:37:4a:09:8a:81:f4:cf:0b:74:c7:
+        fb:7d:75:d8:34:92:3e:36:cf:65:47:87:df:ae:97:34:8b:58:
+        18:11:7b:31:99:ce:ea:66:1a:2e:49:f9:e7:35:fa:8a:12:41:
+        f4:f0:78:ef:25:f6:85:28:e0:c2:74:64:68:3e:3a:8f:c5:85:
+        d9:e5:a6:ce:89:29:78:57:c7:71:09:79:ee:73:0c:36:3d:0a:
+        7c:80:7d:49:2b:52:8a:07:8f:59:e6:1c:ea:0b:5d:a7:c6:f1:
+        4c:61:7e:fc:7a:cb:e0:b3:d0:ba:a9:89:ac:dd:d8:6d:59:20:
+        93:a3:0a:f4:02:c6:5a:68:f0:42:2e:fb:b6:37:d5:89:bd:3b:
+        7a:11:a5:62:5f:1c:6a:b1:af:1c:eb:ec:66:65:a0:e5:92:f1:
+        80:ef:f0:02:75:fb:92:f5:3a:ab:66:18:f4:6a:66:7f:28:c0:
+        dd:0a:1c:d7:60:7a:dd:76:30:89:70:76:ed:4f:69:86:af:1f:
+        0b:ff:69:2d:d0:8d:6e:8c:df:ea:11:04:45:53:69:b8:99:6e:
+        b7:6d:05:a1
+-----BEGIN CERTIFICATE-----
+MIIEIDCCAwigAwIBAgILAQAAAAABIBjgk8EwDQYJKoZIhvcNAQEFBQAwPDELMAkG
+A1UEBhMCQkUxHDAaBgNVBAMTE1NQRUNJTUVOIENpdGl6ZW4gQ0ExDzANBgNVBAUT
+BjIwMDUwMTAeFw0wOTAzMTgwOTE5MTJaFw0xMTAzMTgwOTE5MTJaMIGCMQswCQYD
+VQQGEwJCRTEoMCYGA1UEAxMfQWxpY2UgU1BFQ0lNRU4gKEF1dGhlbnRpY2F0aW9u
+KTERMA8GA1UEBBMIU1BFQ0lNRU4xIDAeBgNVBCoTF0FsaWNlIFNvZnQxMjM3MzY3
+NjkyMzEwMRQwEgYDVQQFEws3MTcxNTEwMDA3MDCBnzANBgkqhkiG9w0BAQEFAAOB
+jQAwgYkCgYEAsQdm0AHXzXh+XUMob9MorhvEVTZ2kbNhBD7JBhXqZCdpqG2RAHFl
+3qbVBwEupXeSdxAm6qMZqSVyaSWLSiwm37WaEuXXCVj5a8CgafC9TWOzyQPpv6gA
+/gyX6APP9o1xoo7e7+q50xRB0pLLiRzWsOxjdc9/JoNHTVM5/lnQpLMCAwEAAaOC
+AV4wggFaMB8GA1UdIwQYMBaAFNal/mUmvyhsFhXX+n492p+p7n0dMH8GCCsGAQUF
+BwEBBHMwcTA+BggrBgEFBQcwAoYyaHR0cDovL2NlcnRzLnNwZWNpbWVuLWVpZC5i
+ZWxnaXVtLmJlL2JlbGdpdW1ycy5jcnQwLwYIKwYBBQUHMAGGI2h0dHA6Ly9vY3Nw
+LnNwZWNpbWVuLWVpZC5iZWxnaXVtLmJlME8GA1UdIARIMEYwRAYJA5AOBwEBgxEB
+MDcwNQYIKwYBBQUHAgEWKWh0dHA6Ly9yZXBvc2l0b3J5LnNwZWNpbWVuLWVpZC5i
+ZWxnaXVtLmJlMEIGA1UdHwQ7MDkwN6A1oDOGMWh0dHA6Ly9jcmwuc3BlY2ltZW4t
+ZWlkLmJlbGdpdW0uYmUvZWlkYzIwMDUwMS5jcmwwDgYDVR0PAQH/BAQDAgeAMBEG
+CWCGSAGG+EIBAQQEAwIFoDANBgkqhkiG9w0BAQUFAAOCAQEAcxMsmmlk/gJ+nw6T
+3qqvP/fiiz5VsdJAD9yiaTCgM8r6AoX0xnTZ2++gzjI3SgmKgfTPC3TH+3112DSS
+PjbPZUeH366XNItYGBF7MZnO6mYaLkn55zX6ihJB9PB47yX2hSjgwnRkaD46j8WF
+2eWmzokpeFfHcQl57nMMNj0KfIB9SStSigePWeYc6gtdp8bxTGF+/HrL4LPQuqmJ
+rN3YbVkgk6MK9ALGWmjwQi77tjfVib07ehGlYl8carGvHOvsZmWg5ZLxgO/wAnX7
+kvU6q2YY9GpmfyjA3Qoc12B63XYwiXB27U9phq8fC/9pLdCNbozf6hEERVNpuJlu
+t20FoQ==
+-----END CERTIFICATE-----

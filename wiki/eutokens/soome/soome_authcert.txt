@@ -1,0 +1,67 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 100082898 (0x5f724d2)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=FI, ST=Finland, O=Vaestorekisterikeskus TEST, OU=Testivarmenteet, CN=VRK CA for Test Purposes
+        Validity
+            Not Before: Feb 23 11:09:24 2006 GMT
+            Not After : Feb 21 21:59:59 2011 GMT
+        Subject: C=FI/serialNumber=997337945, GN=TESTI2786, SN=JAVA-PR\xC5VSTR\xD6M, CN=JAVA-PR\xC5VSTR\xD6M TESTI2786 997337945
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:84:46:b8:47:ad:f2:5a:e5:62:09:1c:e1:57:43:
+                    f1:c7:6c:5e:33:27:3c:48:ab:a5:a9:5f:b0:18:61:
+                    e5:d7:ba:80:9e:80:bc:bd:1e:52:d1:c1:00:a8:d1:
+                    1f:08:a8:b6:cd:7f:30:3c:77:0c:c4:68:ba:f9:e8:
+                    42:01:6b:e6:a7:1d:b0:57:0d:ef:21:08:ae:2c:72:
+                    c4:cc:d7:91:a2:81:61:6f:a4:ff:17:d2:8e:e1:0d:
+                    b9:31:f8:b9:20:8d:aa:9b:c2:bf:f2:0d:2d:c8:39:
+                    79:fc:4d:e5:de:30:7f:a6:83:20:7c:2a:95:98:a2:
+                    30:7a:47:72:59:ef:d7:a7:ab
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Certificate Policies: 
+                Policy: 1.2.246.517.99.10.2.1
+                  User Notice:
+                    Explicit Text: Tutustu varmennepolitiikkaan - se certifikat policy http://www.fineid.fi/cps99
+                  CPS: http://www.fineid.fi/cps99/
+
+            Authority Information Access: 
+                CA Issuers - URI:http://proxy.fineid.fi/ca/vrktp.crt
+
+            Netscape Cert Type: 
+                SSL Client, S/MIME
+            X509v3 Subject Alternative Name: 
+                email:testi2786.java-pravstrom@testi.fi
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment, Data Encipherment
+            X509v3 Authority Key Identifier: 
+                keyid:72:31:18:87:59:FE:93:E7:9E:55:F9:C0:4A:E1:8F:F3:4A:96:58:0E
+
+            X509v3 CRL Distribution Points: 
+                URI:http://proxy.fineid.fi/crl/vrktpc.crl
+                URI:ldap://ldap.fineid.fi:389/cn%3dVRK%20CA%20for%20Test%20Purposes,ou%3dTestivarmenteet,o%3dVaestorekisterikeskus%20TEST,dmdName%3dFINEID,c%3dFI?certificateRevocationList??objectClass=cRLDistributionPoint
+
+            X509v3 Subject Key Identifier: 
+                6A:BC:00:B4:AF:83:4C:01:86:1B:E2:B5:CA:8B:F8:4C:A6:02:C2:F6
+    Signature Algorithm: sha1WithRSAEncryption
+        41:54:de:87:e6:4e:52:57:b0:e7:c4:ae:e2:1b:3f:6b:2e:38:
+        d3:f6:e4:0e:3b:62:8b:2b:14:db:35:ad:4b:fe:03:90:d5:94:
+        eb:11:af:e4:c1:05:7e:fb:a2:3d:1d:b5:b9:44:2b:9a:e0:bf:
+        bd:95:31:f0:f2:db:77:d0:b0:b3:ab:ba:f5:76:5d:6c:b8:f4:
+        9e:1c:fd:f6:f7:97:60:05:7b:78:64:71:09:35:56:97:5a:00:
+        0d:e9:e3:ea:82:79:10:78:97:a6:39:47:3f:1c:00:f5:14:19:
+        df:3e:7f:f1:8a:c2:2d:46:3b:b0:0c:28:87:7e:af:29:fa:e0:
+        92:e5:b0:c3:54:83:c2:14:c9:8d:b5:2c:14:6a:46:e1:4b:2f:
+        f5:ae:f8:1d:5f:8b:52:d6:ca:af:0c:d0:2d:41:c6:c3:dd:b0:
+        8d:8b:eb:9e:a2:3c:4f:13:17:a0:b3:2b:71:68:aa:75:b5:e2:
+        7b:56:a0:75:e3:bb:87:78:60:d4:8e:cf:a6:82:2a:0e:74:e6:
+        e7:85:b2:ba:3a:ab:e4:c3:53:77:70:89:4e:0b:e2:79:ee:96:
+        f2:a7:5e:58:20:45:da:47:fc:e9:54:5a:e8:a3:f5:be:e9:db:
+        30:2f:96:8a:11:17:2e:1a:c3:ec:80:3f:ff:7e:b1:ef:ca:d5:
+        78:af:6b:81

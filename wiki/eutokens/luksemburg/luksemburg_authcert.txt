@@ -1,0 +1,91 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 103558 (0x19486)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=LU, O=LuxTrust S.A., CN=LuxTrust Qualified CA
+        Validity
+            Not Before: Apr 13 12:05:39 2010 GMT
+            Not After : Apr 13 12:05:39 2013 GMT
+        Subject: C=EE, CN=Tarvi Martens, SN=Martens, GN=Tarvi/serialNumber=10100366210005756091/emailAddress=tarvi@sk.ee/title=Private Person
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:b7:56:88:6f:fa:7f:51:28:97:02:47:ed:22:2d:
+                    dc:1b:5d:0b:89:92:f6:91:05:80:02:1f:8d:17:40:
+                    e2:a0:c6:17:c5:04:a8:29:50:da:a6:ce:ef:ca:f1:
+                    3e:33:d7:28:c2:85:5a:08:4d:51:a6:bf:46:a2:6d:
+                    a1:88:68:3b:89:f5:47:1b:b7:5e:ab:f9:0d:d7:46:
+                    02:9d:2e:43:1b:13:f9:4c:75:4a:60:b7:01:d8:f1:
+                    17:bc:a5:f7:ea:c6:ae:0f:a0:e0:57:45:5a:2b:52:
+                    6c:54:f5:cc:26:1f:4b:00:07:98:74:6a:29:6e:93:
+                    43:cb:31:31:81:de:d4:a3:41
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.luxtrust.lu
+                CA Issuers - URI:http://ca.luxtrust.lu/LTQCA.crt
+
+            X509v3 Certificate Policies: 
+                Policy: 1.3.171.1.1.2.5.7
+                  User Notice:
+                    Explicit Text: LuxTrust TEST Certificate on SSCD compliant with ETSI TS 102 042 LCP certificate policy. Key Generation by CSP. Sole Authorised Usage: Data or Entity Authentication and Data Encryption.
+                  CPS: http://repository.luxtrust.lu
+                Policy: 0.4.0.2042.1.3
+
+            Netscape Cert Type: 
+                SSL Client, S/MIME
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment, Data Encipherment
+            X509v3 Authority Key Identifier: 
+                keyid:8D:90:A3:07:DD:1A:13:77:99:4C:92:AB:4D:43:DE:3F:CD:29:64:05
+
+            X509v3 Subject Key Identifier: 
+                46:5C:CD:2F:33:D6:1A:8B
+    Signature Algorithm: sha1WithRSAEncryption
+        2c:4f:57:5b:8f:5b:6c:e6:09:6e:96:18:7a:d3:02:50:2c:7f:
+        2c:3f:0e:b0:d2:5b:cc:c7:06:84:d1:d2:80:7e:b7:8c:97:5c:
+        02:a2:96:70:cb:ec:e9:e5:90:9a:30:a3:22:00:8c:22:1d:1d:
+        40:e5:bf:32:79:a2:5d:8f:3b:ca:47:6d:cd:58:3f:1f:b4:19:
+        97:bb:67:50:f1:28:e9:16:a1:c9:3e:0e:89:d5:ed:65:32:a6:
+        48:00:77:16:3c:b4:43:90:24:73:8f:d7:ad:dd:ca:92:16:34:
+        38:94:c5:03:d2:88:90:fe:20:25:55:17:45:5d:d9:bd:b1:47:
+        ef:64:e5:5b:e8:16:f7:73:87:8b:26:31:c6:65:c6:c9:b2:84:
+        42:e3:f9:6a:e9:42:e0:bd:fd:49:d2:49:0e:d7:d5:a5:b7:d5:
+        a4:1f:5d:4c:68:c5:49:01:0a:4d:18:79:2c:f8:90:1e:41:2d:
+        78:81:84:3e:04:b7:ed:43:32:76:24:f0:20:5a:17:65:b5:b8:
+        98:f4:dc:6a:b6:1a:f0:03:0f:5d:34:c9:e9:38:9f:c1:90:ac:
+        fa:39:ce:21:c6:0d:55:a0:da:a6:8e:86:c8:35:87:8a:a7:23:
+        c6:e0:a9:ee:5d:bd:32:26:0e:7d:97:7d:38:b8:6a:24:81:a0:
+        1d:dd:28:81
+-----BEGIN CERTIFICATE-----
+MIIExzCCA6+gAwIBAgIDAZSGMA0GCSqGSIb3DQEBBQUAMEUxCzAJBgNVBAYTAkxV
+MRYwFAYDVQQKEw1MdXhUcnVzdCBTLkEuMR4wHAYDVQQDExVMdXhUcnVzdCBRdWFs
+aWZpZWQgQ0EwHhcNMTAwNDEzMTIwNTM5WhcNMTMwNDEzMTIwNTM5WjCBmzELMAkG
+A1UEBhMCRUUxFjAUBgNVBAMTDVRhcnZpIE1hcnRlbnMxEDAOBgNVBAQTB01hcnRl
+bnMxDjAMBgNVBCoTBVRhcnZpMR0wGwYDVQQFExQxMDEwMDM2NjIxMDAwNTc1NjA5
+MTEaMBgGCSqGSIb3DQEJARYLdGFydmlAc2suZWUxFzAVBgNVBAwTDlByaXZhdGUg
+UGVyc29uMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC3Vohv+n9RKJcCR+0i
+LdwbXQuJkvaRBYACH40XQOKgxhfFBKgpUNqmzu/K8T4z1yjChVoITVGmv0aibaGI
+aDuJ9Ucbt16r+Q3XRgKdLkMbE/lMdUpgtwHY8Re8pffqxq4PoOBXRVorUmxU9cwm
+H0sAB5h0ailuk0PLMTGB3tSjQQIDAQABo4IB6zCCAecwDAYDVR0TAQH/BAIwADBg
+BggrBgEFBQcBAQRUMFIwIwYIKwYBBQUHMAGGF2h0dHA6Ly9vY3NwLmx1eHRydXN0
+Lmx1MCsGCCsGAQUFBzAChh9odHRwOi8vY2EubHV4dHJ1c3QubHUvTFRRQ0EuY3J0
+MIIBHwYDVR0gBIIBFjCCARIwggEEBggrgSsBAQIFBzCB9zCByQYIKwYBBQUHAgIw
+gbwagblMdXhUcnVzdCBURVNUIENlcnRpZmljYXRlIG9uIFNTQ0QgY29tcGxpYW50
+IHdpdGggRVRTSSBUUyAxMDIgMDQyIExDUCBjZXJ0aWZpY2F0ZSBwb2xpY3kuIEtl
+eSBHZW5lcmF0aW9uIGJ5IENTUC4gU29sZSBBdXRob3Jpc2VkIFVzYWdlOiBEYXRh
+IG9yIEVudGl0eSBBdXRoZW50aWNhdGlvbiBhbmQgRGF0YSBFbmNyeXB0aW9uLjAp
+BggrBgEFBQcCARYdaHR0cDovL3JlcG9zaXRvcnkubHV4dHJ1c3QubHUwCAYGBACP
+egEDMBEGCWCGSAGG+EIBAQQEAwIFoDALBgNVHQ8EBAMCBLAwHwYDVR0jBBgwFoAU
+jZCjB90aE3eZTJKrTUPeP80pZAUwEQYDVR0OBAoECEZczS8z1hqLMA0GCSqGSIb3
+DQEBBQUAA4IBAQAsT1dbj1ts5glulhh60wJQLH8sPw6w0lvMxwaE0dKAfreMl1wC
+opZwy+zp5ZCaMKMiAIwiHR1A5b8yeaJdjzvKR23NWD8ftBmXu2dQ8SjpFqHJPg6J
+1e1lMqZIAHcWPLRDkCRzj9et3cqSFjQ4lMUD0oiQ/iAlVRdFXdm9sUfvZOVb6Bb3
+c4eLJjHGZcbJsoRC4/lq6ULgvf1J0kkO19Wlt9WkH11MaMVJAQpNGHks+JAeQS14
+gYQ+BLftQzJ2JPAgWhdltbiY9NxqthrwAw9dNMnpOJ/BkKz6Oc4hxg1VoNqmjobI
+NYeKpyPG4KnuXb0yJg59l304uGokgaAd3SiB
+-----END CERTIFICATE-----

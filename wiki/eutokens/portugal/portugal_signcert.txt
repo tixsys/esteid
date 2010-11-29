@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            15:a2:62:5e:66:74:3c:3c
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: CN=(Teste) EC de Assinatura Digital Qualificada do Cart\xC3\xA3o de Cidad\xC3\xA3o 0003, OU=subECEstado, O=Cart\xC3\xA3o de Cidad\xC3\xA3o, C=PT
+        Validity
+            Not Before: Mar  6 07:45:27 2010 GMT
+            Not After : Mar  5 00:00:00 2015 GMT
+        Subject: C=PT, O=Cart\xC3\xA3o de Cidad\xC3\xA3o, OU=(Teste) Assinatura Qualificada do Cidad\xC3\xA3o, OU=Cidad\xC3\xA3o Portugu\xC3\xAAs, SN=DIONEL RAMATULAI, GN=CLAYTA SET\xC3\x89LO/serialNumber=BI348254652, CN=CLAYTA SET\xC3\x89LO DIONEL RAMATULAI
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:dc:c8:a3:72:ac:df:55:07:83:b6:07:6c:c5:cf:
+                    29:6f:6d:b3:90:e2:de:30:65:96:74:25:d5:94:e9:
+                    72:e3:a2:84:7d:2d:e1:6a:dd:7a:f6:39:31:fb:4c:
+                    37:fb:04:65:05:a8:81:be:99:3e:4c:48:38:fb:f2:
+                    4e:8d:38:eb:69:f3:9f:8b:44:69:64:c5:51:30:b5:
+                    69:38:a3:4b:cf:7d:9f:5d:42:76:1e:bd:bd:4b:8b:
+                    85:24:6d:15:fa:bc:09:24:0b:bf:64:a8:53:6a:e6:
+                    bd:50:53:38:62:9d:86:d4:1b:0f:3f:02:e8:29:6f:
+                    69:f3:21:b5:8a:72:a6:f0:19
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Key Usage: critical
+                Non Repudiation
+            X509v3 Subject Key Identifier: 
+                F7:44:9D:E6:AF:7D:8D:4C:7B:03:2E:C3:82:94:B5:97:1A:2B:DD:AB
+            X509v3 Authority Key Identifier: 
+                keyid:A4:A9:96:16:F8:F8:1D:4A:4F:99:9A:26:4B:AE:FE:07:04:A6:2F:E2
+
+            X509v3 Certificate Policies: 
+                Policy: 2.16.620.1.1.1.2.4.1.0.1.1
+                  CPS: http://pki.teste.cartaodecidadao.pt/publico/politicas/pc/cc_sub-ec_cidadao_assinatura_pc.html
+                Policy: 2.16.620.1.1.1.2.4.1.0.7
+                  CPS: http://pki.teste.cartaodecidadao.pt/publico/politicas/dpc/cc_sub-ec_cidadao_assinatura_dpc.html
+                Policy: 2.16.620.1.1.1.2.10
+                  CPS: http://www.scee.gov.pt/pcert
+                  User Notice:
+                    Explicit Text: 
+
+            X509v3 CRL Distribution Points: 
+                URI:http://pki.teste.cartaodecidadao.pt/publico/lrc/cc_sub-ec_cidadao_assinatura_crl0003_p0001.crl
+
+            2.5.29.46: 
+                0l0j.h.f.dhttp://pki.teste.cartaodecidadao.pt/publico/lrc/cc_sub-ec_cidadao_assinatura_crl0003_delta_p0001.crl
+            Authority Information Access: 
+                OCSP - URI:http://ocsp.asc.teste.cartaodecidadao.pt/publico/ocsp
+
+            Netscape Cert Type: 
+                S/MIME
+            qcStatements: 
+                0.0
+..+.......0......F..
+            2.5.29.9: 
+                0.0...+.......1...19801010120000Z
+    Signature Algorithm: sha1WithRSAEncryption
+        01:4c:08:0d:63:ee:de:d0:6f:17:80:12:bf:69:62:82:f7:36:
+        a1:4e:a4:36:fd:2b:40:93:fe:62:65:9a:6e:26:19:ec:66:99:
+        03:18:6d:92:a2:ce:90:f9:94:8e:45:ee:2d:ba:95:e7:e0:81:
+        ae:9a:65:97:4f:56:81:69:ca:6d:a4:ac:b9:cc:68:c1:cd:4b:
+        f7:1b:6f:e5:2a:b4:df:dd:e7:b2:45:8b:1f:bf:c9:c3:d8:90:
+        ef:a0:42:c8:70:95:9d:07:fd:63:99:e9:b9:a5:cc:64:e4:67:
+        5f:a7:86:3b:d3:99:36:9a:0d:5c:ee:28:b7:a3:61:a9:c0:1d:
+        92:11:40:e2:e1:1f:13:23:45:89:8a:2a:1d:87:85:1f:5a:49:
+        4f:7b:90:6c:77:af:b4:f4:82:28:be:a0:d2:60:80:9c:cd:a4:
+        22:41:2f:68:e6:b4:3c:01:14:7d:f9:9c:c5:46:04:91:b0:0e:
+        2c:fc:aa:49:c1:6b:8b:11:81:24:45:5c:ad:fe:04:22:49:b5:
+        d0:31:8f:d0:6c:f0:fe:9e:17:e2:9a:0c:50:72:9d:ec:69:20:
+        63:44:43:29:96:09:f9:37:f4:52:44:52:45:3c:da:c3:36:e9:
+        36:7d:c0:74:f2:db:ae:13:fe:22:33:35:e1:7f:e7:51:ea:3b:
+        a8:e5:02:ed

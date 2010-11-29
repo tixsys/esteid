@@ -1,0 +1,69 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 142929 (0x22e51)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=AT, O=A-Trust Ges. f. Sicherheitssysteme im elektr. Datenverkehr GmbH, OU=a-sign-token-Test-03, CN=a-sign-token-Test-03
+        Validity
+            Not Before: Feb 25 10:42:26 2010 GMT
+            Not After : Mar 30 09:42:26 2011 GMT
+        Subject: C=AT, CN=Max Mustermann, SN=Mustermann, GN=Max/serialNumber=678038445287/title=Titelv
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1536 bit)
+                Modulus (1536 bit):
+                    00:ab:a2:85:2e:5e:0b:7e:cb:9b:dd:b0:30:d2:f5:
+                    63:2d:ec:1a:b1:d0:06:60:c7:db:c7:32:58:20:69:
+                    3b:ce:1b:05:bf:f8:83:68:9d:2b:42:da:2d:4f:88:
+                    d4:25:29:4d:37:29:8c:e7:62:6d:ab:95:4d:a3:ea:
+                    b5:22:bd:9c:85:2b:b5:45:d4:76:3f:61:71:76:cd:
+                    fe:e4:2f:2e:f1:56:10:c0:5d:56:32:7e:99:82:31:
+                    4a:db:a7:c1:e2:53:f5:26:73:5c:c9:0b:ad:e9:33:
+                    ca:7f:d5:e3:a6:1b:45:0a:50:ea:da:7b:66:1e:cf:
+                    0f:50:58:fb:8a:47:d2:dc:a3:00:46:6a:1e:71:bb:
+                    7f:0d:e2:4f:fb:20:8d:ca:c0:0c:f9:ed:c2:c8:06:
+                    77:b9:cd:2d:db:85:66:e9:a2:4a:4b:86:02:3a:c1:
+                    8c:f6:ac:f8:d4:cb:09:06:49:f7:bc:1d:2f:68:9d:
+                    61:6c:d6:30:77:dd:0e:7b:40:dc:37:bf:c1
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Authority Key Identifier: 
+                keyid:47:7E:5B:DB:37:33:B1:FA
+
+            Authority Information Access: 
+                OCSP - URI:http://ocsp-test.a-trust.at/ocsp
+                CA Issuers - URI:http://www.a-trust.at/certs/a-sign-token-test-03.crt
+
+            X509v3 Certificate Policies: 
+                Policy: 1.2.40.0.17.1.3
+                  CPS: http://www.a-trust.at/docs/cp/a-sign-test
+                  User Notice:
+                    Explicit Text: Dieses Zertifikat dient nur zu Testzwecken
+
+            X509v3 CRL Distribution Points: 
+                URI:ldap://ldap-test.a-trust.at/ou=a-sign-token-03,o=A-Trust,c=AT?certificaterevocationlist?base?objectclass=eidCertificationAuthority
+
+            X509v3 Subject Key Identifier: 
+                4E:EC:3D:63:07:2D:A9:83
+            X509v3 Key Usage: critical
+                Digital Signature, Key Encipherment, Data Encipherment
+            X509v3 Subject Alternative Name: 
+                email:thomas.zefferer@iaik.tugraz.at
+            X509v3 Basic Constraints: 
+                CA:FALSE
+    Signature Algorithm: sha1WithRSAEncryption
+        38:dc:a9:37:94:97:a5:be:dd:cb:8d:07:55:80:47:fd:af:2b:
+        5b:4c:08:f1:26:0f:a8:26:b5:c0:8c:27:88:2e:04:d0:64:5f:
+        2a:a9:fc:0f:49:d4:3c:94:50:96:63:46:c0:a1:f8:20:4a:bd:
+        57:7c:c4:09:3a:fb:1c:b0:18:45:a9:90:cd:c7:7b:ea:53:5e:
+        bf:02:e6:6f:e4:dc:30:d7:98:0c:16:14:d0:6e:b0:26:1e:2d:
+        5e:a3:6f:28:51:ee:8b:2b:f3:e1:69:ab:d4:f4:01:bc:d2:2e:
+        6a:f2:6c:8d:27:ab:3f:e9:88:fb:6b:bc:73:9e:5a:a5:09:85:
+        26:6e:95:03:6f:7e:a9:4a:1b:0c:44:16:2d:b1:ab:f3:44:50:
+        9f:26:29:25:37:64:63:de:a1:c1:f7:cf:72:d7:a9:d3:86:7c:
+        6c:2d:f1:e9:c2:d3:de:f1:64:9d:6f:d4:ba:93:5c:3d:25:ab:
+        06:1a:56:0b:da:87:42:56:57:1a:06:aa:58:39:4a:f7:6f:5d:
+        b8:0b:7c:80:59:36:e4:8b:1a:73:5f:b8:cb:a2:ec:8a:fe:56:
+        63:98:c1:e5:dd:aa:8c:7a:26:51:81:cd:5c:14:d8:c3:28:b3:
+        3d:2f:87:97:28:62:74:d3:25:77:21:b1:dd:6f:73:e0:22:52:
+        8d:5f:d0:ee

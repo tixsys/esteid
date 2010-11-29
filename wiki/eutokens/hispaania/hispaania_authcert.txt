@@ -1,0 +1,82 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            7c:49:0f:ed:70:d1:e2:8b:44:05:7f:6e:8d:12:48:a3
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=ES, O=DIRECCION GENERAL DE LA POLICIA, OU=DNIE, CN=AC RAIZ DNIE
+        Validity
+            Not Before: Mar  1 11:03:10 2006 GMT
+            Not After : Feb 26 22:59:59 2021 GMT
+        Subject: C=ES, O=DIRECCION GENERAL DE LA POLICIA, OU=DNIE, CN=AC DNIE 003
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (2048 bit)
+                Modulus (2048 bit):
+                    00:aa:45:a9:f8:37:34:ee:ec:fc:65:5a:2a:ae:97:
+                    74:00:28:73:4d:ef:22:40:87:8e:1c:68:27:aa:fc:
+                    96:1d:7c:b0:ed:90:f6:c0:a9:c8:ce:b3:2b:81:7f:
+                    76:6f:92:46:59:5e:0c:c1:e1:e9:55:70:73:17:df:
+                    96:b7:96:ee:48:1f:65:2d:85:40:17:d4:32:0c:ea:
+                    f6:43:af:a4:01:e5:7b:f9:76:a6:3a:7a:2f:69:59:
+                    0e:35:06:bc:75:d0:f6:68:77:22:0b:7f:03:9b:2c:
+                    cf:dd:89:6f:3c:5d:6c:31:b6:1f:c5:81:df:ce:03:
+                    8b:82:6b:6a:16:6d:00:e0:01:19:c8:d9:83:44:fe:
+                    50:24:c0:f9:0b:e7:8a:d3:c7:0e:8f:14:6e:ea:24:
+                    c6:2c:0c:c5:99:f4:87:c5:d4:32:83:fb:95:3f:23:
+                    3d:28:b1:01:bf:f7:03:f8:bc:26:a7:2a:11:47:d6:
+                    c2:bb:2a:c2:52:dc:12:d0:87:fe:de:1b:1a:72:bf:
+                    ae:73:ff:9b:42:35:be:5a:cf:a6:5d:bb:4c:2a:81:
+                    4d:64:6a:64:a7:81:f2:e2:5b:5b:c4:98:58:03:be:
+                    5a:87:ae:03:15:28:72:56:d2:73:d2:6f:47:a3:2a:
+                    58:a5:49:d4:f0:2e:2b:9c:31:e3:9c:d3:38:11:5c:
+                    c9:c9
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:TRUE, pathlen:0
+            X509v3 Subject Key Identifier: 
+                03:95:43:40:74:88:D4:61:56:85:4E:9B:BA:7C:40:54:F0:4F:A2:EE
+            X509v3 Authority Key Identifier: 
+                keyid:8E:45:F4:9F:73:C5:FF:2F:1B:05:DB:01:47:60:1B:03:8A:81:B7:BA
+
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Certificate Policies: 
+                Policy: 2.5.29.32.0
+                  CPS: http://www.dnie.es/dpc
+
+            X509v3 CRL Distribution Points: 
+                URI:http://crls.dnie.es/crls/ARL.crl
+                URI:ldap://ldap.dnie.es/CN=CRL,CN=AC%20RAIZ%20DNIE,OU=DNIE,O=DIRECCION%20GENERAL%20DE%20LA%20POLICIA,C=ES?authorityRevocationList?base?objectclass=cRLDistributionPoint
+
+    Signature Algorithm: sha1WithRSAEncryption
+        07:0e:ce:40:9d:a5:c4:08:ee:bd:88:57:51:61:68:30:dd:6c:
+        59:2b:d4:b7:1a:87:b7:a3:8a:bf:10:6f:75:c4:0d:11:61:5c:
+        b5:28:b2:f4:30:9d:17:f2:ed:6e:e9:d2:ff:78:6b:d1:6e:d4:
+        cb:f8:47:07:3d:ec:95:5d:5e:16:ae:2d:9f:e8:76:b9:d8:70:
+        d3:62:d0:29:05:9c:33:ef:93:fa:db:11:20:82:3d:90:ec:8e:
+        d5:07:88:de:3a:f3:5c:92:43:7a:52:c0:f4:61:50:48:22:0f:
+        7a:c1:3e:29:a9:56:65:9c:1a:3b:d4:3c:ce:60:d1:7b:fb:e1:
+        6d:02:07:7f:f7:8e:d0:91:35:57:3b:29:c7:c2:6e:69:47:1e:
+        7b:42:72:aa:72:aa:45:3d:10:87:54:56:64:78:05:84:95:84:
+        4f:c7:77:41:1d:d3:fb:df:54:29:c4:3e:3e:c1:37:9f:60:51:
+        88:92:e3:c7:6f:24:31:3b:6b:8c:ad:22:8e:97:a7:ab:92:41:
+        2d:b3:cc:bb:4b:93:01:0e:13:40:8c:83:a5:97:e8:2d:bf:fd:
+        57:41:3a:53:5a:07:87:6b:56:9b:89:ac:ab:5d:8b:a7:88:37:
+        7e:f2:a0:b1:d3:65:57:de:19:17:58:6d:f8:a0:a7:cb:2b:f6:
+        0c:3b:57:41:7b:39:14:9a:8c:2e:8c:2b:b5:6e:ab:6e:ce:4d:
+        76:45:62:3c:91:86:d2:a9:82:5e:48:55:9a:b7:28:e9:b8:7a:
+        ac:e8:94:fb:73:ec:d9:26:c9:1c:e6:37:99:c1:b9:c1:79:c4:
+        61:77:eb:56:a7:4e:cd:ef:ee:dc:27:1d:fb:ed:0f:74:1b:2b:
+        a2:d3:c0:26:13:31:c2:79:96:f3:82:ef:59:bf:74:48:f6:26:
+        61:64:4c:50:b1:20:be:14:f7:52:e5:cc:b5:60:95:1c:d7:0d:
+        b1:7b:af:ec:a3:cd:c1:d2:70:7c:a5:b6:59:bc:32:b2:c0:2e:
+        ac:80:bf:d1:2c:3f:ef:d0:b9:d0:ca:70:58:28:8a:13:23:10:
+        35:f3:4a:74:83:23:9a:9b:87:3e:80:8e:55:99:10:69:65:49:
+        27:e4:bd:39:af:a3:84:b3:cf:37:8e:11:7b:a4:49:bd:9e:c6:
+        5f:ff:9c:d7:0c:af:a2:7f:3c:33:a9:8c:69:53:44:fb:e8:4f:
+        c2:83:bc:d2:a6:3b:92:7a:a1:c5:51:a1:37:e0:99:c6:52:3f:
+        02:d0:20:8c:e1:3f:d1:90:34:ca:41:c6:7b:66:21:f9:1b:84:
+        42:8f:11:2b:e3:59:40:b6:b4:ef:75:a9:95:ee:47:be:ae:47:
+        14:b0:a6:4c:e5:da:90:08
