@@ -1,0 +1,35 @@
+#summary Kuidas autentida mõne teise EU riigi kaardiga
+
+Tehniliselt on võimalik enamike EU-s kasutusel olevate kiipkaartidega autentida sarnaselt [VeebisAutentimine Eesti ID-kaardiga]
+
+Veebiteenused peavad aga arvestama järgmiste iseärasustega:
+
+= Välisriigi sertifikaatides võib olla vähem andmeid kui oleme harjunud =
+
+# Sertifikaadis võib puududa isikukoodi ekvivalent. Näiteks näiteks Itaalia ja Austria.
+# Sertifikaadis võib puududa isiku nimi.
+# Sertifikaadis võib puududa e-posti aadress. Näiteks Austria ja Eesti "Digi-ID".
+
+Lisaks võivad isikukoodid kattuda (näiteks Leedu ja Eesti kattuvad).
+Seega ei saa enam siduda kasutajakontot jäigalt isikukoodiga. Kasutajakontot ei ole hea siduda ka otseselt sertifikaadi järjekorranumbriga, kuna see muutub iga kord kui isik saab uue kaardi. Samuti võib samal isikul olla mitu sertifikaati.
+
+Täpne lahendus sõltub rakendusest, kuid soovitame järgmist strateegiat:
+# Kui sertifikaadis puudub isikukood, siis kasutada isiku nimest ja sünnikuupäevast moodustatud kombinatsiooni. Kui sünnikuupäeva ei ole, siis kasutada sertifikaadi numbrit.
+# Kui sertifikaadis puudub nimi, siis kasutada sertifikaadi numbrit.
+
+Juhul kui rakendus vajab ikkagi isikukoodi mingite muude toimingute teostamiseks, tuleb viia läbi juriidiline analüüs, mis selgitab välja MIKS isikukood on vajalik. Analüüsi käigus tasub meeles pidada, et Euroopas on riike kus isikukoodiga ekvivalentset, konkreetse isikuga seostatavat numbrit, poliitilistel põhjustel põhimõtteliselt ei kasutata.
+
+= Välisriigi CA peab olema usaldatud =
+
+Sertifikaadi usaldamiseks tuleb usaldada selle välja andnud CA-de sertifikaati. Käsitsi kõigi EU liikmesriikides tunnustatud CA-de nimekirja uuendamine on tülikas, seetõttu on vajalik paigaldada vebiserverisse sobilik TSLi listide uuendaja / konverter (lahendused on loomisel Apache ja IISi jaoks).
+
+Välisriikide sertifikaatide "kvaliteet" on erinev. Kvaliteeditase on kirjas TSLis. Sertifikaatide uuendajatele saab minimaalse nõutava kvaliteeditaseme ette öelda, mis tähendab muuhulgas, et madalama tasemega sertifikaadiga sisse logida ei saa.
+
+Juhul kui teie rakendus peab tegema ise otsuseid, lähtuvalt erinevatest sertifikaatide tasemetest, tuleb lubada kõigi tunnustatud sertidega sisse logida ja edasi määrata kasutaja õigused juba rakenduse tasemel. Sertifikaadi kvaliteeditaseme saab rakendus teada kas otse TSL faili lugedes või vastava X-tee teenuse kaudu.
+
+= Sertifikaatide näidised =
+
+Allpool on nimekiri analüüsitud välisriikidest ja nende sertifikaadide näidised.
+
+||Riik|Isikukood|E-post|Näidised|Märkused||
+||Austria|Ei|Ei|[austria/auth.txt Auth] [austria/sign.txt Sign]|Allkirjasert on ECDSA||
