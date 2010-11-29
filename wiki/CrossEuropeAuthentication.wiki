@@ -6,16 +6,16 @@ Veebiteenused peavad aga arvestama järgmiste iseärasustega:
 
 = Välisriigi sertifikaatides võib olla vähem andmeid kui oleme harjunud =
 
-# Sertifikaadis võib puududa isikukoodi ekvivalent. Näiteks näiteks Itaalia ja Austria.
-# Sertifikaadis võib puududa isiku nimi.
-# Sertifikaadis võib puududa e-posti aadress. Näiteks Austria ja Eesti "Digi-ID".
+ # Sertifikaadis võib puududa isikukoodi ekvivalent. Näiteks näiteks Itaalia ja Austria.
+ # Sertifikaadis võib puududa isiku nimi.
+ # Sertifikaadis võib puududa e-posti aadress. Näiteks Austria ja Eesti "Digi-ID".
 
 Lisaks võivad isikukoodid kattuda (näiteks Leedu ja Eesti kattuvad).
 Seega ei saa enam siduda kasutajakontot jäigalt isikukoodiga. Kasutajakontot ei ole hea siduda ka otseselt sertifikaadi järjekorranumbriga, kuna see muutub iga kord kui isik saab uue kaardi. Samuti võib samal isikul olla mitu sertifikaati.
 
 Täpne lahendus sõltub rakendusest, kuid soovitame järgmist strateegiat:
-# Kui sertifikaadis puudub isikukood, siis kasutada isiku nimest ja sünnikuupäevast moodustatud kombinatsiooni. Kui sünnikuupäeva ei ole, siis kasutada sertifikaadi numbrit.
-# Kui sertifikaadis puudub nimi, siis kasutada sertifikaadi numbrit.
+ # Kui sertifikaadis puudub isikukood, siis kasutada isiku nimest ja sünnikuupäevast moodustatud kombinatsiooni. Kui sünnikuupäeva ei ole, siis kasutada sertifikaadi numbrit.
+ # Kui sertifikaadis puudub nimi, siis kasutada sertifikaadi numbrit.
 
 Juhul kui rakendus vajab ikkagi isikukoodi mingite muude toimingute teostamiseks, tuleb viia läbi juriidiline analüüs, mis selgitab välja MIKS isikukood on vajalik. Analüüsi käigus tasub meeles pidada, et Euroopas on riike kus isikukoodiga ekvivalentset, konkreetse isikuga seostatavat numbrit, poliitilistel põhjustel põhimõtteliselt ei kasutata.
 
