@@ -31,5 +31,5 @@ Juhul kui teie rakendus peab tegema ise otsuseid, lähtuvalt erinevatest sertifi
 
 Allpool on nimekiri analüüsitud välisriikidest ja nende sertifikaadide näidised.
 
-||Riik|Isikukood|E-post|Näidised|Märkused||
-||Austria|Ei|Ei|[austria/auth.txt Auth] [austria/sign.txt Sign]|Allkirjasert on ECDSA||
+||Riik||Isikukood||E-post||Näidised||Märkused||
+||Austria||Ei||Ei||[austria/auth.txt Auth] [austria/sign.txt Sign]||Allkirjasert on ECDSA||
