@@ -42,4 +42,3 @@ Allpool on nimekiri analüüsitud välisriikidest ja nende sertifikaadide näidi
 ||Portugal||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/portugal/portugal_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/portugal/portugal_signcert.txt Sign]||-||
 ||Sloveenia||JAH||JAH||[http://esteid.googlecode.com/svn/wiki/eutokens/sloveenia/sloveenia_authcert.txt Auth]||-||
 ||Hispaania||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/hispaania/hispaania_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/hispaania/hispaania_signcert.txt Sign]||-||
-||Eesti||JAH||JAH||Auth Sign||-||
