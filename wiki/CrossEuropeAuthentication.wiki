@@ -36,10 +36,10 @@ Allpool on nimekiri analüüsitud välisriikidest ja nende sertifikaadide näidi
 ||Austria||Ei||Ei||[http://esteid.googlecode.com/svn/wiki/eutokens/austria/austria_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/austria/austria_signcert.txt Sign]||Allkirjasert on ECDSA||
 ||Belgia||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/belgia/belgia_authcert.txt Auth] ||-||
 ||Rootsi||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/rootsi/rootsi_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/rootsi/rootsi_signcert.txt Sign]||-||
-||Itaalia||EI||JAH||[http://code.google.com/p/esteid/downloads/dtail?name=itaalia_auth_cert.crl.txt Auth] Sign||-||
+||Itaalia||EI||JAH||[http://esteid.googlecode.com/svn/wiki/eutokens/itaalia/itaalia_authcert.txt Auth]||-||
 ||Soome||JAH||JAH||[http://esteid.googlecode.com/svn/wiki/eutokens/soome/soome_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/soome/soome_signcert.txt Sign]||-||
 ||Luksemburg||JAH||JAH||[http://esteid.googlecode.com/svn/wiki/eutokens/luksemburg/luksemburg_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/luksemburg/luksemburg_signcert.txt Sign]||-||
 ||Portugal||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/portugal/portugal_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/portugal/portugal_signcert.txt Sign]||-||
 ||Sloveenia||JAH||JAH||[http://esteid.googlecode.com/svn/wiki/eutokens/sloveenia/sloveenia_authcert.txt Auth]||-||
 ||Hispaania||JAH||EI||[http://esteid.googlecode.com/svn/wiki/eutokens/hispaania/hispaania_authcert.txt Auth] [http://esteid.googlecode.com/svn/wiki/eutokens/hispaania/hispaania_signcert.txt Sign]||-||
-||Eesti||JAH||JAH||[Auth] [Sign]||-||
+||Eesti||JAH||JAH||Auth Sign||-||
