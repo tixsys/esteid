@@ -1,0 +1,23 @@
+#summary Kuidas allkirjastada teise EU riigi kaardiga
+
+= Portaalisisene allkirja verifitseerimine =
+
+a)     BDOCi ja PDFi toetavate librade valmisolek ning toimivus veebiserverites.
+
+b)     Erinevate XaDese profiilide toetamine portaali siseselt
+
+c)     OCSP teenuse olemasolu ning liidestus portaaliga
+
+d)     Ajatempli teenuse olemasolu ning liidestus portaaliga
+
+= Dokumendi allkirjastamine =
+
+a)     BDOCi ja PDFi toetavate librade valmisolek ning toimivus veebiserverites
+
+b)     Veebipluginate levitamise lahendus lõpptarbijale
+
+c)      Erinevate XaDese profiilide toetamine portaali siseselt
+
+d)     OCSP teenuse olemasolu ning liidestus portaaliga
+
+e)     Ajatempli teenuse olemasolu ning liidestus portaaliga
