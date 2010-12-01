@@ -43,3 +43,7 @@ Nimetatud võimekust on võimalik saavutada kahel erineval viisil:
 = Soovitused =
 
 Projekti käigus luuakse ühine allkirjaplugin, mille abil saab kasutada kõigi toetatud riikide kaarte. Samas tuleb selle plugina kasutamine realiseerida selliselt, et vajadusel on kerge pluginat vahetada. Veebis allkirjastamine on maailmas uudne nähtus ja Eestis kasutatavad vahendid on meie enda välja mõeldud, ehk *ebastandardsed*. Tulevikus on tõenäoline, et riigid lepivad kokku mingi ühise standardi. Samuti on võimalik, et tehnoloogia arenedes tuleb pluginat järgneva viie aasta jooksul 3x ringi kirjutada.
+
+= See jutt on ju liiga üldine?! =
+
+Absoluutselt! Täpne plugina API, samuti X-Tee teenuste API-d, testserverid, millega oma lahendusi prototüüpida jne ei ole täna (01.12.2010) veel valmis. Nii kuidas need tekivad, uuendame ka seda lehekülge.
