@@ -1,23 +1,45 @@
-#summary Kuidas allkirjastada teise EU riigi kaardiga
+#summary Kuidas EU kodaniku allkirjadega hakkama saada
 
-= Portaalisisene allkirja verifitseerimine =
+Oluline eeldus: projekti skoobis on EU liikmesriigi kaardiga allkirjastamine *vastavalt Eesti standarditele BDOC ja/või PDF formaadis*.
 
-a)     BDOCi ja PDFi toetavate librade valmisolek ning toimivus veebiserverites.
+Ehk teisisõnu, mingis välisriigi tarkvaras X tehtud allkirju sööma ei pea.
 
-b)     Erinevate XaDese profiilide toetamine portaali siseselt
+Lähteülesande saab jagada kaheks erinevaks komponendiks:
 
-c)     OCSP teenuse olemasolu ning liidestus portaaliga
+ # Allkirjastatud dokumendi töötlemine
+ # Dokumendi allkirjastamine
 
-d)     Ajatempli teenuse olemasolu ning liidestus portaaliga
+= BDOC ja PDF formaadi töötlemise võimekus =
 
-= Dokumendi allkirjastamine =
+Nimetatud võimekust on võimalik saavutada kahel erineval viisil:
 
-a)     BDOCi ja PDFi toetavate librade valmisolek ning toimivus veebiserverites
+ # BDOCi ja PDFi toetavate librade kaudu otse veebiserveris
+  * + Saab töödelda suvalise suurusega faile
+  * + Ei vaja liidestust X-Teega
+  * - Allkirjastamine eeldab ligipääsu OCSP teenustele
+  * - Allkirjastamine eeldab ajatembeldusteenuse olemasolu
+ # Kasutades spetsiaalset teenust X-Tee kaudu
+  * + Ei pea ise teeke paigaldama
+  * + Saab kasutada ka programmeerimiskeeltest mida teek ei toeta
+  * - Vajalik ühendus X-Teega
+  * - Failide suurus on üldjuhul piiratud 10Mb-ga
 
-b)     Veebipluginate levitamise lahendus lõpptarbijale
+= Eeldused allkirjastatud dokumentide töötlemiseks =
 
-c)      Erinevate XaDese profiilide toetamine portaali siseselt
+ # Librade valmisolek ning toimivus või ühendus X-Tee teenusega
+ # Otsus mis kvaliteeditasemel sertifikaatidega antud allkirju me aktsepteerime
+ # TSLi lugemise või vastava X-Tee teenuse kasutamise võimekus
 
-d)     OCSP teenuse olemasolu ning liidestus portaaliga
+= Eeldused dokumendi allkirjastamiseks =
 
-e)     Ajatempli teenuse olemasolu ning liidestus portaaliga
+ # Librade valmisolek ning toimivus või ühendus X-Tee teenusega
+ # Otsus mis kvaliteeditasemel sertifikaatidega antud allkirju me aktsepteerime
+ # TSLi lugemise või vastava X-Tee teenuse kasutamise võimekus
+ # Piiriülese allkirjaplugina kasutamise võimekus
+ # Plugina puudumisel lõpptarbija informeerimine selle allalaadimiseks vajalikest tegevustest
+ # Ligipääs OCSP teenustele
+ # Ligipääs ajatembeldusteenusele
+
+= Soovitused =
+
+Projekti käigus luuakse ühine allkirjaplugin, mille abil saab kasutada kõigi toetatud riikide kaarte. Samas tuleb selle plugina kasutamine realiseerida selliselt, et vajadusel on kerge pluginat vahetada. Veebis allkirjastamine on maailmas uudne nähtus ja Eestis kasutatavad vahendid on meie enda välja mõeldud, ehk *ebastandardsed*. Tulevikus on tõenäoline, et riigid lepivad kokku mingi ühise standardi. Samuti on võimalik, et tehnoloogia arenedes tuleb pluginat järgneva viie aasta jooksul 3x ringi kirjutada.
