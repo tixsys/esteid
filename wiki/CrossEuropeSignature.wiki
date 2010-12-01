@@ -1,6 +1,6 @@
 #summary Kuidas EU kodaniku allkirjadega hakkama saada
 
-Oluline eeldus: projekti skoobis on EU liikmesriigi kaardiga allkirjastamine *vastavalt Eesti standarditele BDOC ja/või PDF formaadis*.
+Projekti skoobis on EU liikmesriigi kaardiga allkirjastamine *vastavalt Eesti standarditele BDOC ja/või PDF formaadis*.
 
 Ehk teisisõnu, mingis välisriigi tarkvaras X tehtud allkirju sööma ei pea.
 
