@@ -6,8 +6,8 @@
   <repository type="svn" name="esteid" 
               href="https://esteid.googlecode.com/svn/" default="yes" />
 
-  <repository type="hg" name="firebreath"
-              href="https://firebreath.googlecode.com/hg/" />
+  <repository type="git" name="github.com"
+              href="git://github.com/" />
 
   <repository type="svn" name="opensc"
               href="http://www.opensc-project.org/svn/" />
@@ -25,7 +25,8 @@
 
   <cmake id="firebreath" buildtype="Release"
          cmakeargs="-DPROJECTS_DIR=../firebreath-projects">
-    <branch repo="firebreath" />
+    <branch repo="github.com"
+            module="firebreath/FireBreath.git" checkoutdir="firebreath" />
     <dependencies>
       <dep package="esteid-browser-plugin" />
     </dependencies>
