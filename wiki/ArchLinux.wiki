@@ -17,7 +17,7 @@ DAEMONS=(... @pcscd)
 
 === Paketid ===
 === TÄHELEPANU! Tegu on arendusjärgus olevate programmidega ning need ei pruugi veel igalpool toimida! ===
-Pakettide [http://aur.archlinux.org/packages.php?ID=32199 qdigidoc], [http://aur.archlinux.org/packages.php?ID=32193 qesteidutil] ja [http://http://aur.archlinux.org/packages.php?ID=45977 esteid-browser-plugin-svn] paigaldamiseks tuleb käsureal anda järgmised käsud:
+Pakettide [http://aur.archlinux.org/packages.php?ID=32199 qdigidoc], [http://aur.archlinux.org/packages.php?ID=32193 qesteidutil] ja [http://aur.archlinux.org/packages.php?ID=45977 esteid-browser-plugin-svn] paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
 yaourt -S qdigidoc-svn qesteidutil-svn esteid-browser-plugin-svn
 }}}
