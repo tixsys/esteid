@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <memory>
 
 template <class T> class locked_allocator;
