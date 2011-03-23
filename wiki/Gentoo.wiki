@@ -27,16 +27,3 @@ layman -S
 emerge -avuDN world
 etc-update
 }}}
-
-If you have already installed esteid overlay from id.eesti.ee and would now like to switch, run the following commands:
-{{{
-layman -d esteid
-rm -rf /usr/portage/distfiles/svn-src/{esteid-mozilla,libdigidoc,libdigidocpp,qdigidoc,qesteidutil,smartcardpp}
-layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
-layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
-}}}
-
-Note that dev-zero overlay is no longer needed and can be removed:
-{{{
-layman -d dev-zero
-}}}
