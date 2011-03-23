@@ -4,13 +4,15 @@
 
 EAPI="3"
 
-inherit cmake-utils mercurial mozextension multilib nsplugins subversion
+inherit cmake-utils git mozextension multilib nsplugins subversion
 
+EGIT_BRANCH="firebreath-1.3"
+EGIT_COMMIT="${EGIT_BRANCH}"
+EGIT_REPO_URI="git://github.com/firebreath/FireBreath.git"
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
-EHG_REPO_URI="https://firebreath.googlecode.com/hg/"
 
 MY_PN="esteid"
-MY_PV="1.1.0"
+MY_PV="1.2.0"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
@@ -28,19 +30,18 @@ RDEPEND="app-arch/zip
 
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/hg"
-
 src_unpack() {
 	# unpack firebreath
-	mercurial_src_unpack
+	git_src_unpack
 	# unpack esteid-browser-plugin to projects/ subdir
-	S="${S}/projects/${PN}" subversion_src_unpack
-
-	cd "${S}"
+	subversion_fetch ${ESVN_REPO_URI} projects/${MY_PN}
 }
 
 src_configure() {
-	local mycmakeargs="-DWITH_SYSTEM_BOOST:BOOL=YES"
+	local mycmakeargs="
+		-DSYSCONF_INSTALL_DIR=/etc
+		-DWITH_SYSTEM_BOOST=ON
+	"
 
 	cmake-utils_src_configure
 }
