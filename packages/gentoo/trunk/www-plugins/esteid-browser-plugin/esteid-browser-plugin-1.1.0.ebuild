@@ -23,7 +23,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 RDEPEND="app-arch/zip
-	dev-cpp/gtkmm
+	dev-cpp/gtkmm:2.4
 	dev-libs/boost
 	dev-libs/openssl
 	dev-libs/smartcardpp"
