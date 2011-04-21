@@ -93,7 +93,6 @@ digidoc::X509Cert::X509Cert(const std::string& pem) throw(IOException)
     BIO *mem = BIO_new_mem_buf((void *)pem.c_str(), -1); BIO_scope memScope(&mem);
     // X509 *PEM_read_X509(FILE *fp, X509 **x, pem_password_cb *cb, void *u);
     PEM_read_bio_X509(mem, &cert, 0, NULL);
-    BIO_free(mem);
 
     if(cert == NULL)
     {
