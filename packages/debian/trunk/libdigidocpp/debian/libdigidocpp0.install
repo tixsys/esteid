@@ -1,2 +1,2 @@
-debian/tmp/usr/etc/digidocpp/*
+debian/tmp/etc/digidocpp/*
 debian/tmp/usr/lib/libdigidocpp.so.*
