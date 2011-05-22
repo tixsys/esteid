@@ -1,3 +1,11 @@
+opensc (0.12.1-pre2) unstable; urgency=low
+
+    As of version of 0.12.0, the libopensc-dev package is gone and direct
+    linking against libopensc deprecated by upstream. Applications should
+    use the PKCS#11 module instead.
+
+ -- Martin Paljak <martin@martinpaljak.net>  Sun, 20 Mar 2011 15:35:59 +0200
+
 opensc (0.10.1-1) unstable; urgency=high
 
     As of version of 0.10.0, the libopensc-openssl and libpam-opensc are

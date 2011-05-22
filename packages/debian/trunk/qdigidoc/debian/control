@@ -14,6 +14,12 @@ Depends: ${shlibs:Depends}, ttf-liberation
 Description: Qt based Digidoc client
  Qt based Digidoc client built on libdigidoc BDoc C++ library.
 
+Package: qdigidoc-nautilus
+Architecture: any
+Depends: qdigidoc, python-nautilus
+Description: Nautilus file manager support for Digidoc client
+ Digidoc context menu for Nautilus file manager.
+
 Package: qdigidoc-dbg
 Architecture: any
 Section: libdevel

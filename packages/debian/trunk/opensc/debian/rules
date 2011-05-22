@@ -1,16 +1,18 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
+%:
+	dh $@
 
-DEB_CONFIGURE_EXTRA_FLAGS = --enable-pcsc --with-pcsc-provider=libpcsclite.so.1
+override_dh_auto_configure:
+	dh_auto_configure -- --sysconfdir=/etc/opensc \
+		--enable-pcsc \
+		--with-pcsc-provider=libpcsclite.so.1
 
-DEB_INSTALL_DOCS_ALL := README NEWS
+override_dh_strip:
+	dh_strip --dbg-package=libopensc3-dbg
 
-DEB_SHLIBDEPS_INCLUDE := debian/tmp/usr/lib debian/tmp/usr/lib/pkcs11
+override_dh_makeshlibs:
+	dh_makeshlibs -Xpkcs11
 
-DEB_CONFIGURE_SYSCONFDIR := /etc/opensc
-
-DEB_INSTALL_CHANGELOGS_ALL := doc/nonpersistent/ChangeLog
-
-DEB_DH_STRIP_ARGS := --dbg-package=libopensc3-dbg
+override_dh_installdocs:
+	dh_installdocs -A README NEWS

@@ -1,0 +1,5 @@
+# let dpkg-source create a debian.tar.bz2 with maximal compression
+compression = "bzip2"
+compression-level = 9
+# use debian/patches/debian-changes as automatic patch
+single-debian-patch

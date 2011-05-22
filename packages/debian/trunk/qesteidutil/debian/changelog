@@ -1,3 +1,9 @@
+qesteidutil (0.3.0-0esteid2~natty1) natty; urgency=low
+
+  * Built from release.
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Thu, 19 May 2011 15:10:00 +0300
+
 qesteidutil (0.3.0-0esteid1~maverick1) maverick; urgency=low
 
   * Initial release

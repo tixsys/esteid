@@ -1,3 +1,9 @@
+smartcardpp (0.2.0-0esteid3~natty1) natty; urgency=low
+
+  * Built from release.
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 18 May 2011 22:56:33 +0300
+
 smartcardpp (0.2.0-0esteid1~maverick1) maverick; urgency=low
 
   * Initial build

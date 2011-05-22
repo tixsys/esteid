@@ -2,7 +2,7 @@ Source: libdigidocpp
 Section: utils
 Priority: extra
 Maintainer: Kalev Lember <kalev@smartlink.ee>
-Build-Depends: cdbs, debhelper (>= 7), cmake, libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev, libpkcs11-helper-dev, swig, php5-dev, python-dev, libperl-dev
+Build-Depends: debhelper (>= 7), cmake, python-support, libp11-dev, libxml-security-c-dev, libssl-dev, xsdcxx, libdigidoc-dev, libpkcs11-helper-dev, swig, php5-dev, python-dev, libperl-dev
 Standards-Version: 3.8.0
 Homepage: http://code.google.com/p/esteid/
 
@@ -19,7 +19,7 @@ Package: python-digidoc
 Section: libs
 Architecture: any
 Provides: python-digidoc
-Depends: libdigidocpp0 (= ${binary:Version}), python
+Depends: libdigidocpp0 (= ${binary:Version}), ${python:Depends}
 Description:
  Python bindings for BDoc C++ library (libdigidocpp0)
 

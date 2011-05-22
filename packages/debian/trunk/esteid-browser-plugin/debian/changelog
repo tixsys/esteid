@@ -1,3 +1,9 @@
+esteid-browser-plugin (1.2.0-0esteid4~natty1) natty; urgency=low
+
+  * Build using Firebreath 1.3.2a
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 18 May 2011 22:45:26 +0300
+
 esteid-browser-plugin (1.2.0-0esteid3~maverick1) maverick; urgency=low
 
   * Updated bundled firebreath to 1.3.1

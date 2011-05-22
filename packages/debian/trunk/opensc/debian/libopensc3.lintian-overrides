@@ -1,0 +1,3 @@
+shlib-without-versioned-soname usr/lib/opensc-pkcs11.so opensc-pkcs11.so
+shlib-without-versioned-soname usr/lib/pkcs11-spy.so pkcs11-spy.so
+shlib-without-versioned-soname usr/lib/onepin-opensc-pkcs11.so onepin-opensc-pkcs11.so

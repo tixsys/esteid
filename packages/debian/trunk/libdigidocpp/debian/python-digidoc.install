@@ -1,2 +1,2 @@
-debian/tmp/usr/lib/python2.6/dist-packages/_digidoc.so
-debian/tmp/usr/lib/python2.6/dist-packages/digidoc.py*
+debian/tmp/usr/lib/python*/dist-packages/_digidoc.so
+debian/tmp/usr/lib/python*/dist-packages/digidoc.py*

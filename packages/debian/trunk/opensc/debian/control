@@ -3,9 +3,9 @@ Priority: extra
 Section: utils
 Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
 XSBC-Original-Maintainer: Eric Dorland <eric@debian.org>
-Build-Depends: cdbs, debhelper (>> 5), libltdl3-dev, libssl-dev (>= 0.9.7d-3), libpcsclite-dev (>= 1.2.9-beta1), libxt-dev, flex, pkg-config
-Standards-Version: 3.8.1
-Homepage: http://www.opensc-project.org/
+Build-Depends: debhelper (>= 7.0.50~), libltdl3-dev, libssl-dev (>= 0.9.8), libpcsclite-dev (>= 1.4.0), flex, pkg-config, libreadline-dev, xsltproc, docbook-xsl
+Standards-Version: 3.8.4
+Homepage: http://www.opensc-project.org/opensc
 Vcs-Git: git://git.debian.org/git/pkg-opensc/opensc.git
 Vcs-Browser: http://git.debian.org/?p=pkg-opensc/opensc.git 
 
@@ -13,35 +13,42 @@ Package: opensc
 Section: utils
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: SmartCard utilities with support for PKCS#15 compatible cards
- This package includes utilities for manipulating
- PKCS#15 compatible smart cards and similar security tokens
- with the libopensc libraries.
+Description: Smart card utilities with support for PKCS#15 compatible cards
+ OpenSC provides a set of libraries and utilities to access smart
+ cards.  It mainly focuses on cards that support cryptographic
+ operations. It facilitates their use in security applications such as
+ mail encryption, authentication, and digital signature. OpenSC
+ implements the PKCS#11 API. Applications supporting this API, such as
+ Iceweasel and Icedove, can use it. OpenSC implements the PKCS#15
+ standard and aims to be compatible with all software that does so as
+ well.
  .
- These utilities allow the user to initialize, personalize and
- otherwise manipulate PKCS#15 cards with PINs and cryptographic 
- keys. Users can sign and decrypt data with private keys 
- residing on-card.
- .
- Supported cards include Gemplus GPK, Schlumberger Cryptoflex,
- Finnish FINEID, Swedish eID, MioCOS and TCOS cards.
+ Before purchasing any cards, please read carefully documentation in
+ OpenSC wiki http://www.opensc-project.org/opensc - not all cards are
+ supported. Not only does card type matters, but also card version,
+ card OS version and any preloaded applets. Only a subset of possible
+ operations may be supported for your card. Card initialization may
+ require third party proprietary software.
 
 Package: libopensc3
 Section: libs
 Priority: optional
 Architecture: any
-Provides: libopensc2
-Conflicts: libopensc2 (<< 0.12.0-0svnr4365)
-Replaces: libopensc2 (<< 0.12.0-0svnr4365)
+Conflicts: libopensc0, libopensc1, libopensc2, libopensc1-dev, libopensc2-dev
+Replaces: libopensc0, libopensc1, libopensc2, libopensc1-dev, libopensc2-dev
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: SmartCard library with support for PKCS#15 compatible smart cards
- This package contains the libopensc libraries from OpenSC.org.
- These libraries allow programs to access data, such as
- cryptographic keys, on various PKCS#15 compatible smart cards
- and similar security tokens.
+Recommends: pcscd (>= 1.4.0), libccid
+Description: Smart card library with support for PKCS#15 compatible smart cards
+ OpenSC provides a set of libraries and utilities to access smart
+ cards.  It mainly focuses on cards that support cryptographic
+ operations. It facilitates their use in security applications such as
+ mail encryption, authentication, and digital signature. OpenSC
+ implements the PKCS#11 API. Applications supporting this API, such as
+ Iceweasel and Icedove, can use it. OpenSC implements the PKCS#15
+ standard and aims to be compatible with all software that does so as
+ well.
  .
- Supported cards include Gemplus GPK, Schlumberger Cryptoflex,
- Finnish FINEID, Swedish eID, MioCOS and TCOS cards.
+ This package contains the libopensc libraries from opensc-project.org.
  .
  Card initialization can be performed by utilities in the opensc package.
 
@@ -49,18 +56,10 @@ Package: libopensc3-dbg
 Section: debug
 Priority: extra
 Architecture: any
-Provides: libopensc2-dbg
-Conflicts: libopensc2-dbg (<< 0.12.0-0svnr4365)
-Replaces: libopensc2-dbg (<< 0.12.0-0svnr4365)
 Depends: libopensc3 (= ${binary:Version}), ${misc:Depends}
-Description: debugging symbols for libopensc3
+Description: Debugging symbols for libopensc3
  This package contains the debugging symbols for the libopensc library
- from OpenSC.org.  These libraries allow programs to access data, such
- as cryptographic keys, on various PKCS#15 compatible smart cards and
- similar security tokens.
- .
- Supported cards include Gemplus GPK, Schlumberger Cryptoflex,
- Finnish FINEID, Swedish eID, MioCOS and TCOS cards.
+ from opensc-project.org.
  .
  Card initialization can be performed by utilities in the opensc package.
 
