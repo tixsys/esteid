@@ -63,7 +63,7 @@
         <translation>Teksti failid (*.txt)</translation>
     </message>
     <message>
-        <source>Error occured</source>
+        <source>Error occurred</source>
         <translation>Tekkis viga</translation>
     </message>
     <message>

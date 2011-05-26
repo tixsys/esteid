@@ -87,7 +87,7 @@
         <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
-        <source>Error occured</source>
+        <source>Error occurred</source>
         <translation>Возникла ошибка</translation>
     </message>
     <message>

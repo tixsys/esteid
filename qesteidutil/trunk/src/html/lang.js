@@ -115,7 +115,7 @@ var htmlStrings = {
 	"mobileOperator": new tr( "Mobiili operaator", "Mobile operator", "Оператор моб. телефона" ),
 	"mobileStatus": new tr( "Staatus", "Mobile status", "Статус" ),
 	
-	"errorFound": new tr( "Tekkis viga: ", "Error occured: ", "Возникла ошибка:" ),
+	"errorFound": new tr( "Tekkis viga: ", "Error occurred: ", "Возникла ошибка:" ),
 	"loadEmail": new tr( "Laen e-posti seadeid", "Loading e-mail settings", "Загружаю настройки эл. почты" ),
 	"activatingEmail": new tr( "Aktiveerin e-posti seadeid", "Activating e-mail settings", "настройки эл. почты" ),
 	"forwardFailed": new tr( "E-posti suunamise aktiveerimine ebaõnnestus.", "Failed activating e-mail forwards.", "Активация перенаправления с эл. почты провалилась." ),

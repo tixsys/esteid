@@ -284,5 +284,5 @@ void DiagnosticsDialog::save()
 		f.close();
 	}
 	else
-		QMessageBox::warning( this, tr("Error occured"), tr("Failed write to file!") );
+		QMessageBox::warning( this, tr("Error occurred"), tr("Failed write to file!") );
 }

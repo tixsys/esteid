@@ -63,8 +63,8 @@
         <translation>Text files (*.txt)</translation>
     </message>
     <message>
-        <source>Error occured</source>
-        <translation>Error occured</translation>
+        <source>Error occurred</source>
+        <translation>Error occurred</translation>
     </message>
     <message>
         <source>Failed write to file!</source>
