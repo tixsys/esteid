@@ -1,6 +1,6 @@
 = Fedora =
 
-Supported versions *12* and *13* 
+Supported releases are *13*, *14* and *15*
 
 
 === Card reader drivers ===
@@ -22,9 +22,14 @@ sudo /etc/init.d/pcscd start
 
 When first installing software you must add a configuration file to the repository and import the GPG key. Both of those come with the esteid-release package which you can get from: 
 
-When using Fedora12: http://id.smartlink.ee/repo/release/fedora/12/i386/esteid-release-12-0.6.noarch.rpm
+Fedora 13:
+http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.rpm
 
-When using Fedora13: http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.rpm
+Fedora 14:
+http://id.smartlink.ee/repo/release/fedora/14/i386/esteid-release-14-0.6.noarch.rpm
+
+Fedora 15:
+http://id.smartlink.ee/repo/release/fedora/15/i386/esteid-release-15-0.6.noarch.rpm
 
 
 === Installing packages ===
