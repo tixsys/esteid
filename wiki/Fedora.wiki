@@ -2,12 +2,12 @@
 Toetatud versioonid *13*, *14* ja *15*
 
 === Kaardilugeja draiverid ===
-Tarkvara esmakordsel paigaldamisel on vaja Fedora 12's ja 13's paigaldada ka CCID lugejate draiverid:
+Tarkvara esmakordsel paigaldamisel on vaja Fedora 13's ja 14's paigaldada ka CCID lugejate draiverid:
 {{{
 sudo yum install ccid
 }}}
 
-Vaikimisi kasutab fedora lugejadraiverina OpenCT-d, mis on katki. Esmakordsel paigaldamisel tee olukorra parandamiseks:
+Vaikimisi kasutab Fedora 13 ja 14 lugejadraiverina OpenCT-d, mis on katki. Esmakordsel paigaldamisel tee olukorra parandamiseks:
 {{{
 sudo chkconfig openct off
 sudo chkconfig pcscd on
@@ -18,9 +18,6 @@ sudo /etc/init.d/pcscd start
 
 === Repositooriumi lisamine ===
 Tarkvara esmakordsel paigaldamisel on vaja lisada repositooriumi häälestusfail ning importida GPG võti. Need mõlemad tulevad kaasa esteid-release pakiga, mille paigaldamiseks installi
-
-Fedora 12 puhul:
-http://id.smartlink.ee/repo/release/fedora/12/i386/esteid-release-12-0.6.noarch.rpm
 
 Fedora 13 puhul:
 http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.rpm
