@@ -1,5 +1,5 @@
 = Fedora =
-Toetatud versioonid *12*, *13* ja *14*
+Toetatud versioonid *13*, *14* ja *15*
 
 === Kaardilugeja draiverid ===
 Tarkvara esmakordsel paigaldamisel on vaja Fedora 12's ja 13's paigaldada ka CCID lugejate draiverid:
@@ -28,6 +28,8 @@ http://id.smartlink.ee/repo/release/fedora/13/i386/esteid-release-13-0.6.noarch.
 Fedora 14 puhul:
 http://id.smartlink.ee/repo/release/fedora/14/i386/esteid-release-14-0.6.noarch.rpm
 
+Fedora 15 puhul:
+http://id.smartlink.ee/repo/release/fedora/15/i386/esteid-release-15-0.6.noarch.rpm
 === Pakettide paigaldamine ===
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
@@ -41,7 +43,7 @@ sudo yum update
 }}}
 
 
-PS: Kui süsteem ei näe kaardilugejat, tuleks teha kindlaks, et ei ole installeeritud pakk nimega ﻿﻿﻿pcsc-lite-openct. Vastasel juhul kasutade käsku: 
+PS: Kui süsteem ei näe kaardilugejat, tuleks teha kindlaks, et ei ole installeeritud pakk nimega ﻿﻿﻿pcsc-lite-openct. Vastasel juhul kasutada käsku: 
 {{{
 sudo yum remove pcsc-lite-openct
 }}}
