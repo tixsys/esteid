@@ -6,7 +6,7 @@ EAPI="3"
 
 inherit cmake-utils git mozextension multilib nsplugins subversion
 
-EGIT_BRANCH="firebreath-1.3"
+EGIT_BRANCH="firebreath-1.5"
 EGIT_COMMIT="${EGIT_BRANCH}"
 EGIT_REPO_URI="git://github.com/firebreath/FireBreath.git"
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
@@ -22,13 +22,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-RDEPEND="app-arch/zip
+DEPEND="app-arch/zip
 	dev-cpp/gtkmm:2.4
 	dev-libs/boost
 	dev-libs/openssl
 	dev-libs/smartcardpp"
 
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}
+	app-crypt/ccid
+	dev-libs/opensc"
 
 src_unpack() {
 	# unpack firebreath
@@ -56,7 +58,7 @@ src_install() {
 	mozillas=""
 
 	xpiname="${MY_P}"
-	xpi_unpack "${CMAKE_BUILD_DIR}/${xpiname}.xpi"
+	xpi_unpack "${CMAKE_BUILD_DIR}/projects/esteid/${xpiname}.xpi"
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
 	# Install the extension for each of these Mozilla browsers;
