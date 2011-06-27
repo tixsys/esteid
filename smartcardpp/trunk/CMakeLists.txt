@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 include(InstallSettings)
 
-set(SMARTCARDPP_VERSION "0.2.0")
+set(SMARTCARDPP_VERSION "0.3.0")
 
 if(UNIX)
     find_package(PCSCLite REQUIRED)
@@ -88,7 +88,7 @@ endif(WIN32)
 
 target_link_libraries(smartcardpp ${CMAKE_DL_LIBS} ${WIN_LIBRARIES})
 
-set_target_properties(smartcardpp PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
+set_target_properties(smartcardpp PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 1)
 install(TARGETS smartcardpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
 add_executable(card-test compat_getopt.c compat_getpass.c test.cpp)
