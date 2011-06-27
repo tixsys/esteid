@@ -1,0 +1,14 @@
+{
+	global:
+		NP_Initialize;
+		NP_Shutdown;
+		NP_GetPluginVersion;
+		NP_GetMIMEDescription;
+		NP_GetValue;
+		*SCError*;
+		*CardError*;
+		*CardDataError*;
+		*AuthError*;
+	local:
+		*;
+};
