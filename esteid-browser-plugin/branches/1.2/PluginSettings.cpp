@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #endif
 
+#define BOOST_FILESYSTEM_VERSION 2
 #include <algorithm>
 #include <fstream>
 #include <boost/bind.hpp>
