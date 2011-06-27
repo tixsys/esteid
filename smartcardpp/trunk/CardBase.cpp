@@ -179,7 +179,7 @@ ByteVec CardBase::readRecord(int numrec)
 	byte cmdReadREC[] = {CLAByte(),0xB2,0x00,0x04,0x00}; 
 
 	cmdReadREC[2] = LOBYTE(numrec);
-	return execute(MAKEVECTOR(cmdReadREC));
+	return execute(MAKEVECTOR(cmdReadREC),true);
 }
 
 void CardBase::executePinEntry(ByteVec cmd) {
@@ -240,7 +240,7 @@ ByteVec CardBase::execute(ByteVec cmd,bool noreply)
 	if (SW1 == 0x61) {
 		byte cmdRead[]= {CLAByte(),0xC0,0x00,0x00,0x00}; 
 		cmdRead[4] = SW2;
-		return execute(MAKEVECTOR(cmdRead));
+		return execute(MAKEVECTOR(cmdRead), true);
 		}
 
 	if (SW1 != 0x90) 
