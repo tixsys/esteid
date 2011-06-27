@@ -125,7 +125,6 @@ public:
             return FB::variant();
         }
     };
-    void deprecatedCall();
     std::string sign(const std::string&, const std::string&);
     std::string get_version(); // SK leakplugin
     FB::JSAPIPtr getCertificate(); // SK leakplugin
@@ -206,7 +205,6 @@ private:
     int getPin2RetryCount();
     void ShowSettings();
     void DisplayNotification(const std::string& msg);
-    void DisplayError(const std::string& msg);
     void CreateNotificationBar();
     void OpenNotificationBar();
     void CloseNotificationBar();
