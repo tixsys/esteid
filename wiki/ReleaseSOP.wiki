@@ -35,7 +35,7 @@ tar cjf awesomeproject-1.2.3.tar.bz2 awesomeproject-1.2.3
 Go to http://code.google.com/p/esteid/downloads/list
 Click 'New download'
 
-Summary: awesomeproject 1.2.3 release
+Summary: awesomeproject 1.2.3 source
 Labels: Type-Source
 }}}
 
