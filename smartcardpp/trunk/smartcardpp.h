@@ -4,11 +4,10 @@
 //This is a main header - it inludes everything else.
 
 #include "CardBase.h"
+#include "PCSCManager.h"
 #include "DynamicLibrary.h"
 #include "esteid/EstEidCard.h"
 #include "SCError.h"
-#include "sim/SIMCard.h"
-#include "SmartCardManager.h"
 #include "types.h"
 
 #endif // SMARTCARDPP_H

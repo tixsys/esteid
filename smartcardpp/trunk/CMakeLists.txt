@@ -40,26 +40,20 @@ endif(MSVC AND USE_STATIC_RUNTIME)
 
 set(smartcard_SRCS
     CardBase.cpp
-    CTAPIManager.cpp
     DynamicLibrary.cpp
     locked_allocator.cpp
     PCSCManager.cpp
     SCError.cpp
-    SmartCardManager.cpp
     types.cpp
 )
 
 set(esteid_SRCS
     esteid/EstEidCard.cpp
-    esteid/EstEidCardMaintainer.cpp
 )
-
-set(sim_SRCS sim/SIMCard.cpp)
 
 # Public headers which get installed into smartcardpp/ directory
 set(smartcard_HDRS
     CardBase.h
-    CTAPIManager.h
     DynamicLibrary.h
     locked_allocator.h
     ManagerInterface.h
@@ -67,22 +61,17 @@ set(smartcard_HDRS
     PinString.h
     SCError.h
     smartcardpp.h
-    SmartCardManager.h
     types.h
 )
 
 # Public headers which get installed into smartcardpp/esteid/ directory
 set(esteid_HDRS
     esteid/EstEidCard.h
-    esteid/EstEidCardMaintainer.h
 )
 
-# Public headers which get installed into smartcardpp/sim/ directory
-set(sim_HDRS sim/SIMCard.h)
 
 install(FILES ${smartcard_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp)
 install(FILES ${esteid_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp/esteid)
-install(FILES ${sim_HDRS} DESTINATION ${INCLUDE_INSTALL_DIR}/smartcardpp/sim)
 
 if(WIN32 OR APPLE)
     set(LIB_TYPE STATIC)
@@ -92,7 +81,6 @@ endif(WIN32 OR APPLE)
 
 add_library(smartcardpp ${LIB_TYPE}
     ${smartcard_SRCS}
-    ${sim_SRCS}
     ${esteid_SRCS}
 )
 

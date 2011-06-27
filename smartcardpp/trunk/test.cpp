@@ -3,7 +3,7 @@
 #include "smartcardpp.h"
 
 void validateOnPinpad() {
-	SmartCardManager mgr;
+	PCSCManager mgr;
 	uint rdr, i, nr;
 	EstEidCard eid(mgr);
 
@@ -152,7 +152,7 @@ int main(int argc, char *argvp[]) {
 			testkeys = true;
 		}
 	}
-	SmartCardManager mgr;
+	PCSCManager mgr;
 
 	idx = testCardReading(mgr);
 
