@@ -22,8 +22,6 @@
 #define tagFMD 0x64 //file management data
 #define tagFCI 0x6F //file control information
 
-#define SC_MAX_ATR_SIZE 33
-
 using std::string;
 
 namespace
@@ -75,20 +73,13 @@ bool EstEidCard::isInReader(unsigned int idx)
 
 void EstEidCard::setVersion()
 {
-	byte atr[SC_MAX_ATR_SIZE];
-	dword atr_size = sizeof(atr);
-	memset(atr, 0, atr_size);
 
-	mManager.getATRHex(mConnection, atr, &atr_size);
-
-	// FIXME: reinterpret_cast from unsigned char to char may mess up bytes
-	// hex bytes should be safe though
-	std::string atr_str(reinterpret_cast<const char *>(atr), atr_size);
-	_card_version = atr_to_version(atr_str);
+	string ATR = mManager.getATRHex(mConnection);
+	_card_version = atr_to_version(ATR);
 
 	if (_card_version == VER_INVALID)
 		// FIXME: refactor exceptions
-		throw std::runtime_error("Unknown ATR: " + atr_str);
+		throw std::runtime_error("Unknown ATR: " + ATR);
 }
 
 unsigned int EstEidCard::getKeySize()
@@ -115,10 +106,11 @@ CardBase::FCI EstEidCard::parseFCI(ByteVec fci)
 		fci.size()-2 != fci[1] )
 		throw CardDataError("invalid fci record");
 
-	if (getCardVersion() == VER_3_0)
+/*	if (getCardVersion() == VER_3_0)
 		fci = ByteVec(fci.begin()+ 4, fci.end());
 	else
-		fci = ByteVec(fci.begin()+ 2, fci.end());
+	*/
+	fci = ByteVec(fci.begin()+ 2, fci.end());
 
 	tag = getTag(0x83, 2, fci);
 	if (tag.size() != 2)
@@ -182,6 +174,13 @@ void EstEidCard::enterPin(PinType pinType, PinString pin, bool forceUnsecure) {
 	} catch(CardError &e) {
 		if (e.SW1 == 0x63) throw AuthError(e);
 		if (e.SW1 == 0x69 && e.SW2 == 0x83) throw AuthError(e.SW1,e.SW2,true);
+		if (e.SW1 == 0x69 && e.SW2 == 0x84)
+		{
+			AuthError err(0,0);
+			err.m_badinput = true;
+			err.desc = "Referenced data invalidated";
+			throw err;
+		}
 		throw e;
 	}
 }
@@ -341,28 +340,22 @@ bool EstEidCard::changePin_internal(
 		if (!mConnection->isSecure() )
 			throw std::runtime_error("bad pin length");
 
-		// FIXME: This is probably broken on PC/SC readers and
-		//	  it is not known to work on CT-API either
-		oldPinLen = (oldPin[0] - '0') * 10 + oldPin[1] - '0';
-		newPinLen = (newPin[0] - '0') * 10 + newPin[1]- '0';
-		oldPin = PinString(oldPinLen,'0');
-		newPin = PinString(newPinLen,'0');
 		doSecure = true;
 	} else {
 		oldPinLen = oldPin.length();
 		newPinLen = newPin.length();
-	}
 
-	ByteVec catPins;
-	catPins.resize(oldPinLen + newPinLen);
-	copy(oldPin.begin(), oldPin.end(), catPins.begin());
-	copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
-	cmd.push_back(LOBYTE(catPins.size()));
-	cmd.insert(cmd.end(),catPins.begin(),catPins.end());
+		ByteVec catPins;
+		catPins.resize(oldPinLen + newPinLen);
+		copy(oldPin.begin(), oldPin.end(), catPins.begin());
+		copy(newPin.begin(), newPin.end(), catPins.begin() + oldPin.length());
+		cmd.push_back(LOBYTE(catPins.size()));
+		cmd.insert(cmd.end(),catPins.begin(),catPins.end());
+	}
 
 	try {
 		if (doSecure)
-			executePinChange(cmd,oldPinLen,newPinLen);
+			executePinChange(cmd,0,0);
 		else
 			execute(cmd,true);
 	} catch(AuthError &ae) {
@@ -380,7 +373,7 @@ bool EstEidCard::changePin_internal(
 	}
 
 void EstEidCard::reconnectWithT0() {
-	if (mConnection->mOwnConnection) {
+	if (mConnection && mConnection->mOwnConnection) {
 		uint prev = mConnection->mIndex;
 		delete mConnection;
 		connect(prev);
@@ -635,8 +628,6 @@ bool EstEidCard::unblockAuthPin(PinString newPin,PinString mPUK, byte &retriesLe
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PUK,mPUK,retriesLeft);
-	if (newPin.length() < 4)
-		throw std::runtime_error("secure unblock not implemented yet");
 	for(char i='0'; i < '6'; i++) try { //ENSURE its blocked
 			validatePin_internal(PIN_AUTH,PinString("0000") + i ,retriesLeft,true);
 		} catch (...) {}
@@ -647,8 +638,6 @@ bool EstEidCard::unblockSignPin(PinString newPin,PinString mPUK, byte &retriesLe
 	Transaction _m(mManager,mConnection);
 	if (!mConnection->isSecure())
 		validatePin_internal(PUK,mPUK,retriesLeft);
-	if (newPin.length() < 4)
-		throw std::runtime_error("secure unblock not implemented yet");
 	for(char i='0'; i < '6'; i++) try { //ENSURE its blocked
 			validatePin_internal(PIN_SIGN,PinString("0000") + i ,retriesLeft,true);
 		} catch (...) {}

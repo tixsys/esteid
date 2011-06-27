@@ -12,6 +12,7 @@
 #include <stdexcept>
 
 struct ConnectionBase;
+struct PCSCConnection;
 
 /// Abstraction of the system smartcard manager
 class ManagerInterface
@@ -31,8 +32,9 @@ public:
 	virtual std::string getReaderState(uint index) = 0;
 	/// hex representation of card ATR in reader at index, empty string if no card is present
 	virtual std::string getATRHex(uint index) = 0;
-	virtual void getATRHex(ConnectionBase* conn, byte* buf, dword* buf_size) {};
-
+	virtual std::string getATRHex(ConnectionBase* conn) = 0;
+	// checks if reader has pinpad features
+	virtual bool isPinPad(uint index,PCSCConnection *c=0) = 0;
 	/// connects instance of card to reader at index, forceT0 is used for cards that cant speak T1
 	virtual ConnectionBase * connect(uint index) = 0;
 	/// reconnect using a different protocol

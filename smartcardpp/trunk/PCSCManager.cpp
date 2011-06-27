@@ -18,6 +18,7 @@
 #include "SCError.h"
 #include "CardBase.h" //for exceptions
 #include "common.h"
+#include <string.h> // for memset()
 
 #ifndef CM_IOCTL_GET_FEATURE_REQUEST
 
@@ -249,69 +250,121 @@ PCSCConnection * PCSCManager::reconnect(ConnectionBase *c) {
 	return pc;
 }
 
-void PCSCManager::getATRHex(ConnectionBase* conn, LPBYTE buf, LPDWORD buf_size)
+string PCSCManager::getATRHex(ConnectionBase* conn)
 {
+	byte atr[33]; // SC_MAX_ATR_SIZE
+	DWORD atr_size = sizeof(atr);
+	memset(atr, 0, atr_size);
+	                 
 	if (!conn)
 		// FIXME: use proper exceptions when the exception hierarchy
 		// has been refactored
 		throw std::runtime_error("Connection pointer is NULL");
 	PCSCConnection* pcsc_conn = static_cast<PCSCConnection*>(conn);
 
-	SCError::checkError(pSCardStatus(pcsc_conn->hScard, 0, 0, 0, 0, buf, buf_size));
+	SCError::checkError(pSCardStatus(pcsc_conn->hScard, 0, 0, 0, 0, atr, &atr_size));
+	
+	std::ostringstream buf;
+	buf << "";
+	for(uint i=0; i<atr_size; i++)
+		buf << std::setfill('0') << std::setw(2) <<std::hex << (short) atr[i];
+	string hexstring = buf.str();
+	return hexstring;
 }
 
-void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
+bool PCSCManager::isPinPad(uint idx,PCSCConnection *c)
 {
-	PCSCConnection *pc = (PCSCConnection *)c;
+	if(!pSCardControl) return false; // PC/SC API is too old to support PinPADs
+
 	DWORD i, feature_len, rcount;
 	PCSC_TLV_STRUCTURE *pcsc_tlv;
 	BYTE feature_buf[256], rbuf[256];
 	LONG rv;
-	
-	SCError::checkError((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto));
 
-	if (pc->proto != SCARD_PROTOCOL_T0)
-		SCError::checkError((*pSCardReconnect)(pc->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &pc->proto));
-
+	PCSCConnection *pc = c;
+	if ( !pc )
+	{
+		ensureReaders(idx);
+		rv = SCARD_E_SHARING_VIOLATION;
+		pc = new PCSCConnection(*this);
+		/* Use DIRECT mode only if there is no card in the reader */
+		if (mReaderStates[idx].dwEventState & SCARD_STATE_EMPTY) {
+#ifndef _WIN32  /* Apple 10.5.7 and pcsc-lite previous to v1.5.5 do not support 0 as protocol identifier */
+			rv = (*pSCardConnect)(mSCardContext, (CSTRTYPE)mReaderStates[idx].szReader, SCARD_SHARE_DIRECT, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto);
+#else
+			rv = (*pSCardConnect)(mSCardContext, (CSTRTYPE)mReaderStates[idx].szReader, SCARD_SHARE_DIRECT, 0, &pc->hScard, &pc->proto);
+#endif
+		}
+		if (rv == (LONG)SCARD_E_SHARING_VIOLATION) { /* Assume that there is a card in the reader in shared mode if direct communcation failed */
+			rv = (*pSCardConnect)(mSCardContext, (CSTRTYPE)mReaderStates[idx].szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto);
+		}
+		if (rv != SCARD_S_SUCCESS)
+			return false;
+	}
 	// Is there a pinpad?
 	pc->verify_ioctl = pc->verify_ioctl_start = pc->verify_ioctl_finish = 0;
 	pc->modify_ioctl = pc->modify_ioctl_start = pc->modify_ioctl_finish = 0;
 	pc->pinpad = pc->display = false;
 
-	if(!pSCardControl) return; // PC/SC API is too old to support PinPADs
-
 	rv = (*pSCardControl)(pc->hScard, CM_IOCTL_GET_FEATURE_REQUEST, NULL, 0, feature_buf, sizeof(feature_buf), &feature_len);
-	if (rv == SCARD_S_SUCCESS) {
-		if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) == 0) {
-			feature_len /= sizeof(PCSC_TLV_STRUCTURE);
-			pcsc_tlv = (PCSC_TLV_STRUCTURE *)feature_buf;
-			for (i = 0; i < feature_len; i++) {
-				if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_DIRECT) {
-					pc->verify_ioctl = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_START) {
-					pc->verify_ioctl_start = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_FINISH) {
-					pc->verify_ioctl_finish = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_DIRECT) {
-					pc->modify_ioctl = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_START) {
-					pc->modify_ioctl_start = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_FINISH) {
-					pc->modify_ioctl_finish = ntohl(pcsc_tlv[i].value);
-				} else if (pcsc_tlv[i].tag == FEATURE_IFD_PIN_PROPERTIES) {
-					if ((*pSCardControl)(pc->hScard,  ntohl(pcsc_tlv[i].value), NULL, 0, rbuf, sizeof(rbuf), &rcount) == SCARD_S_SUCCESS) {
-						PIN_PROPERTIES_STRUCTURE *caps = (PIN_PROPERTIES_STRUCTURE *)rbuf;
-						if (caps->wLcdLayout > 0)
-							pc->display=true; 
-					}
-				}	
+	if (rv != SCARD_S_SUCCESS)
+	{
+		if ( !c )
+			(*pSCardDisconnect)(pc->hScard, SCARD_LEAVE_CARD);
+		return false;
+	}
+	
+	if ((feature_len % sizeof(PCSC_TLV_STRUCTURE)) != 0)
+	{
+		if ( !c )
+			(*pSCardDisconnect)(pc->hScard, SCARD_LEAVE_CARD);
+		return false;
+	}
+
+	feature_len /= sizeof(PCSC_TLV_STRUCTURE);
+	pcsc_tlv = (PCSC_TLV_STRUCTURE *)feature_buf;
+	for (i = 0; i < feature_len; i++) {
+		if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_DIRECT) {
+			pc->verify_ioctl = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_START) {
+			pc->verify_ioctl_start = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_VERIFY_PIN_FINISH) {
+			pc->verify_ioctl_finish = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_DIRECT) {
+			pc->modify_ioctl = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_START) {
+			pc->modify_ioctl_start = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_MODIFY_PIN_FINISH) {
+			pc->modify_ioctl_finish = ntohl(pcsc_tlv[i].value);
+		} else if (pcsc_tlv[i].tag == FEATURE_IFD_PIN_PROPERTIES) {
+			if ((*pSCardControl)(pc->hScard,  ntohl(pcsc_tlv[i].value), NULL, 0, rbuf, sizeof(rbuf), &rcount) == SCARD_S_SUCCESS) {
+				PIN_PROPERTIES_STRUCTURE *caps = (PIN_PROPERTIES_STRUCTURE *)rbuf;
+				if (caps->wLcdLayout > 0)
+					pc->display=true; 
 			}
-		}
+		}	
 	}
 
 	if((pc->verify_ioctl || (pc->verify_ioctl_start && pc->verify_ioctl_finish)) &&
 	   (pc->modify_ioctl || (pc->modify_ioctl_start && pc->modify_ioctl_finish)))
 		pc->pinpad = true;
+	
+	if ( !c )
+		(*pSCardDisconnect)(pc->hScard, SCARD_LEAVE_CARD);
+
+	return pc->pinpad;
+}
+
+void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
+{
+	PCSCConnection *pc = (PCSCConnection *)c;
+	
+	SCError::checkError((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto));
+
+	if (pc->proto != SCARD_PROTOCOL_T0)
+		SCError::checkError((*pSCardReconnect)(pc->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &pc->proto));	
+
+	isPinPad(idx,pc);
 }
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
@@ -463,12 +516,22 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 	if (SW1 != 0x90) {
                 // 0x00 - Timeout (SCM)
                 // 0x01 - Cancel pressed (OK, SCM)
-                // 0x03 - Omnikey sends this when Pin was too short
-		if (SW1==0x64 && ( SW2 == 0x00 || SW2 == 0x01 || SW2 == 0x02) ) {
-			AuthError err(SW1,SW2);
+		AuthError err(SW1,SW2);
+		if (SW1==0x64 && ( SW2 == 0x00 || SW2 == 0x01 ) ) {
 			err.m_aborted = true;
 			throw err;
 		}
+		if ( ( SW1==0x63 && SW2==0xC0 ) || //pin retry count 0
+			( SW1==0x69 && SW2==0x83 ) ) //blocked
+		{
+			err.m_blocked = true;
+			throw err;
+		}
+		if ( SW1==0x63 || //wrong pin
+			( SW1==0x64 && SW2==0x02 ) || //password mistmatch
+			( SW1==0x64 && SW2==0x03 ) ) //pin too short
+			throw AuthError(SW1,SW2);
+
 		throw CardError(SW1, SW2);
 	}
 }

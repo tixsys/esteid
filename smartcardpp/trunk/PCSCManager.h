@@ -56,6 +56,8 @@ struct PCSCConnection : public ConnectionBase {
 	DWORD modify_ioctl_finish;
 	bool display;
 	bool pinpad;
+	PCSCConnection(ManagerInterface &iface) :
+		ConnectionBase(iface) {}
 	PCSCConnection(ManagerInterface &iface,unsigned int index) :
 		ConnectionBase(iface,index) {}
 	PCSCConnection(ManagerInterface &iface, SCARDHANDLE existing, DWORD mProto): 
@@ -126,7 +128,8 @@ public:
 	std::string getReaderName(uint idx);
 	std::string getReaderState(uint idx);
 	std::string getATRHex(uint idx);
-	void getATRHex(ConnectionBase* conn, BYTE* buf, DWORD* buf_size);
+	std::string getATRHex(ConnectionBase* conn);
+	bool isPinPad(uint index,PCSCConnection *c=0);
 	PCSCConnection * connect(uint idx);
 	/// connect using an application-supplied connection handle
 	PCSCConnection * connect(SCARDHANDLE existingHandle);
