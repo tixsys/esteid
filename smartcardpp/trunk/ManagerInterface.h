@@ -13,10 +13,7 @@
 
 struct ConnectionBase;
 
-/// Abstraction of system smartcard managers
-/** ManagerInterface is abstraction of system smartcard managers.
- Concrete managers are PCSCManager and CTAPIManager. Example additional 
- derivations might be direct communications driver or even serial/USB port */
+/// Abstraction of the system smartcard manager
 class ManagerInterface
 {
 private: //disable object copying
@@ -34,10 +31,12 @@ public:
 	virtual std::string getReaderState(uint index) = 0;
 	/// hex representation of card ATR in reader at index, empty string if no card is present
 	virtual std::string getATRHex(uint index) = 0;
+	virtual void getATRHex(ConnectionBase* conn, byte* buf, dword* buf_size) {};
+
 	/// connects instance of card to reader at index, forceT0 is used for cards that cant speak T1
-	virtual ConnectionBase * connect(uint index,bool forceT0=false) = 0;
+	virtual ConnectionBase * connect(uint index) = 0;
 	/// reconnect using a different protocol
-	virtual ConnectionBase * reconnect(ConnectionBase *c,bool forceT0=false) {UNUSED_ARG(forceT0);return c;}
+	virtual ConnectionBase * reconnect(ConnectionBase *c) = 0;
 	/// use given stream as APDU log
 	inline void setLogging(std::ostream *logStream) {mLogger = logStream;}
 protected:
@@ -57,13 +56,13 @@ protected:
 	virtual void execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
 		UNUSED_ARG(c);UNUSED_ARG(cmd);
 		throw std::runtime_error("This manager does not support PIN entry commands");
-		}
+	}
 	virtual void execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd
 		,size_t oldPinLen,size_t newPinLen) { 
 		UNUSED_ARG(c);UNUSED_ARG(cmd);
 		UNUSED_ARG(oldPinLen);UNUSED_ARG(newPinLen);
 		throw std::runtime_error("This manager does not support PIN change commands");
-		}
+	}
 	/// tell if given connection is using T1 (true) or T0
 	virtual bool isT1Protocol(ConnectionBase *c) = 0;
 };
@@ -77,23 +76,22 @@ struct ConnectionBase {
 	ManagerInterface &mManager;
 	/// reader index
 	uint mIndex;
-	/// force T0 protocol for connection
-	bool mForceT0;
+
 	/// if false, we are using application-supplied connection handle
 	bool mOwnConnection;
 
 	/// tells if the manager has a secure PIN input method, true for CTAPI
 	virtual bool isSecure() {return false;}
 	ConnectionBase(ManagerInterface &manager) : 
-		mManager(manager),mIndex((uint)-1),mForceT0(false),mOwnConnection(false) {}
-	ConnectionBase(ManagerInterface &manager,unsigned int index,bool f) 
-		: mManager(manager),mIndex(index),mForceT0(f),mOwnConnection(true) {
+		mManager(manager),mIndex((uint)-1),mOwnConnection(false) {}
+	ConnectionBase(ManagerInterface &manager,unsigned int index) 
+		: mManager(manager),mIndex(index),mOwnConnection(true) {
 		mManager.makeConnection(this,index);
-		}
+	}
 	virtual ~ConnectionBase() {
 		if (mOwnConnection)
 			mManager.deleteConnection(this);
-		}
+	}
 private:
 	const ConnectionBase operator=(const ConnectionBase &);
 };
@@ -105,12 +103,14 @@ private:
 struct Transaction {
 	ManagerInterface& mManager;
 	ConnectionBase *mConnection;
+
 	Transaction(ManagerInterface& manager,ConnectionBase *connection): mManager(manager),mConnection(connection) {
 		mManager.beginTransaction(mConnection);
-		}
+	}
+
 	~Transaction() {
 		mManager.endTransaction(mConnection);
-		}
+	}
 private:
 	const Transaction operator=(const Transaction &);
-	};
+};

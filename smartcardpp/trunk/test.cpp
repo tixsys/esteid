@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 #include "smartcardpp.h"
+#include "compat_getopt.h"
+#include "compat_getpass.h"
 
 void validateOnPinpad() {
 	PCSCManager mgr;
@@ -29,7 +32,7 @@ void validateOnPinpad() {
 	}
 
 	std::cout << "Doing pin validation test on reader #" << rdr << std::endl;
-	
+
 	//Transaction _m(m, c);
 	//eid.enterPin(EstEidCard::PIN_AUTH, PinString(""));
 
@@ -43,18 +46,18 @@ void validateOnPinpad() {
 	}
 }
 
-void readEstEidCard(ManagerInterface &m, ConnectionBase *c) {
-	EstEidCard eid(m, c);
+void readEstEidCard(EstEidCard &eid) {
 	std::cout << "\t" << "EstEID: " << eid.readCardName();
 	std::cout << " " << eid.readCardID();
 	std::cout << " " << eid.readDocumentID();
 }
 
-int testCardReading(ManagerInterface &mgr) {
-	EstEidCard eidCard(mgr);
+int testCardReading(PCSCManager &mgr) {
 	uint nr = mgr.getReaderCount();
 	int rv = -1;
 	std::cout << "Found " << nr << " readers" << std::endl;
+	if (nr == 0)
+		exit(1);
 	std::cout << "Nr.\tState\t\tName" << std::endl;
 	for(uint i = 0; i < nr; i++) {
 		std::string state = mgr.getReaderState(i);
@@ -66,12 +69,16 @@ int testCardReading(ManagerInterface &mgr) {
 		if (state.find("PRESENT") != std::string::npos) {
 			std::cout << std::endl << "\tATR: " << mgr.getATRHex(i);
 			try {
-				ConnectionBase *c = mgr.connect(i, false);
+				ConnectionBase *c = mgr.connect(i);
 				std::cout << " PinPad: " << c->isSecure();
+				
+				EstEidCard eidCard(mgr, c);
+				
 				if(eidCard.isInReader(i)) {
-					if(rv == -1) rv = i;
+					if (rv == -1)
+						rv = i;
 					std::cout << std::endl;
-					readEstEidCard(mgr, c);
+					readEstEidCard(eidCard);
 				}
 			}
 			catch(std::runtime_error &e) {
@@ -85,12 +92,11 @@ int testCardReading(ManagerInterface &mgr) {
 }
 
 PinString ReadPinFromStdin() {
-	// FIXME: implement
-	throw std::runtime_error("Pin entry from keyboard not implemented yet!");
-	return PinString("0090");
+	std::cout << std::endl;
+	return PinString(getpass("Enter PIN!"));
 }
 
-void testKey(ManagerInterface &m, unsigned int reader, EstEidCard::KeyType key) {
+void testKey(PCSCManager &m, unsigned int reader, EstEidCard::KeyType key) {
 	EstEidCard eid(m, reader);
 	byte *tmp = (byte *)"12345678901234567890";
 	ByteVec dummyHash(tmp, tmp + 20);
@@ -130,35 +136,61 @@ void testKey(ManagerInterface &m, unsigned int reader, EstEidCard::KeyType key) 
 	}
 }
 
-void testAuth(ManagerInterface &m, unsigned int reader) {
+void testAuth(PCSCManager &m, unsigned int reader) {
 	testKey(m, reader, EstEidCard::AUTH);
 }
 
-void testSign(ManagerInterface &m, unsigned int reader) {
+void testSign(PCSCManager &m, unsigned int reader) {
 	testKey(m, reader, EstEidCard::SIGN);
 }
 
 int main(int argc, char *argvp[]) {
 	int idx = 0;
+	int opt;
+	int longind = 0;
+	const char *shortopts = "pkd";
 	bool testkeys = false;
+	bool debug = false;
 
-	if(argc >= 2) {
-		std::string arg1(argvp[1]);
-		if(arg1 == "--pinpad") {
-			validateOnPinpad();
-			return 0;
-		}
-		if(arg1 == "--keys") {
-			testkeys = true;
+	PCSCManager mgr;
+
+	struct option longopts[] = {
+		/* name,    has_arg,      flag, val */ /* longind */
+		{ "pinpad", no_argument,  0,    'p'  }, /*       0 */
+		{ "keys",   no_argument,  0,    'k'  }, /*       1 */
+		{ "debug",  no_argument,  0,    'd'  }, /*       1 */
+		/* end-of-list marker */
+		{ 0, 0, 0, 0 }
+	};
+
+	while ((opt = getopt_long_only(argc, argvp, shortopts, longopts, &longind)) != -1) {
+		switch (opt) {
+			case 'p': // pinpad
+				validateOnPinpad();
+				return 0;
+			case 'k': // keys
+				testkeys = true;
+				break;
+			case 'd':
+				mgr.setLogging(&std::cerr);
+				break;
+			default: /* something unexpected has happened */
+				std::cerr << "getopt_long_only returned an unexpected value " << opt << std::endl;
+				return 1;
 		}
 	}
-	PCSCManager mgr;
 
 	idx = testCardReading(mgr);
 
 	if(testkeys && idx >= 0) {
+		EstEidCard eid(mgr, idx);
+		eid.isInReader(idx);
+		std::cout << "Card version: " << eid.getCardVersion() << std::endl;
+		std::cout << "Card key size: " << eid.getKeySize() << " bits" << std::endl;
+
 		std::cout << std::endl << "Testing crypto operations with card in reader #" << idx << std::endl;
 		testAuth(mgr, idx);
 		testSign(mgr, idx);
+
 	}
 }

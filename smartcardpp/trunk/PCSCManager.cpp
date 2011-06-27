@@ -43,16 +43,13 @@
 
 using std::string;
 
-PCSCManager::PCSCManager(void): mLibrary(LIBNAME),mOwnContext(true) 
+PCSCManager::PCSCManager(void): mLibrary(LIBNAME), mOwnContext(true) 
 {
 	construct();
-	SCError::checkError((*pSCardEstablishContext)(SCARD_SCOPE_USER,
-					NULL,
-					NULL,
-					&mSCardContext));
+	SCError::checkError((*pSCardEstablishContext)(SCARD_SCOPE_USER, NULL, NULL, &mSCardContext));
 }
 
-PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME),mOwnContext(false) 
+PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME), mOwnContext(false) 
 {
 	construct();
 	mSCardContext=existingContext;
@@ -60,13 +57,6 @@ PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME),mOwnCo
 
 void PCSCManager::construct()
 {
-#ifdef _WIN32
-	osVersionInfo.dwOSVersionInfoSize = sizeof(osVersionInfo);
-	GetVersionEx(&osVersionInfo);
-	pSCardAccessStartedEvent = ( HANDLE(SCAPI *)() )
-		mLibrary.getProc("SCardAccessStartedEvent");
-	pSCardReleaseStartedEvent = (void(SCAPI *)(HANDLE))mLibrary.getProc("SCardReleaseStartedEvent");
-#endif
 	pSCardEstablishContext = (LONG(SCAPI *)(DWORD,LPCVOID,LPCVOID,SCARDCONTEXT*))
 		mLibrary.getProc("SCardEstablishContext");
 	pSCardReleaseContext = (LONG(SCAPI *)(SCARDCONTEXT))
@@ -107,8 +97,13 @@ void PCSCManager::construct()
 		pSCardControl = NULL;
 	
 #ifdef _WIN32
-	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD ,
-		LPDWORD ,LPDWORD ,LPBYTE ,LPDWORD ))
+	OSVERSIONINFO osVersionInfo;
+	osVersionInfo.dwOSVersionInfoSize = sizeof(osVersionInfo);
+	GetVersionEx(&osVersionInfo);
+	pSCardAccessStartedEvent = ( HANDLE(SCAPI *)() )
+		mLibrary.getProc("SCardAccessStartedEvent");
+	pSCardReleaseStartedEvent = (void(SCAPI *)(HANDLE))mLibrary.getProc("SCardReleaseStartedEvent");
+	pSCardStatus = (LONG(SCAPI *)(SCARDHANDLE ,STRTYPE ,LPDWORD, LPDWORD, LPDWORD, LPBYTE, LPDWORD))
 		mLibrary.getProc("SCardStatus" SUFFIX);
 
 	if (!((osVersionInfo.dwMajorVersion == 5) && (osVersionInfo.dwMinorVersion == 0) )) { //win2K
@@ -122,12 +117,12 @@ void PCSCManager::construct()
 			std::ostringstream buf;
 			buf << "SCardAccessStartedEvent returns NULL\n" << (LPCTSTR)lpMsgBuf;
 			throw std::runtime_error(buf.str());
-			}
+		}
 		//the timeout here is NEEDED under Vista/Longhorn, do not remove it
 		if (WAIT_OBJECT_0 != WaitForSingleObject(mSCStartedEvent,1000) ) {
 			throw std::runtime_error("Smartcard subsystem not started");
-			}
 		}
+	}
 #endif
 }
 
@@ -148,7 +143,7 @@ void PCSCManager::ensureReaders(uint idx)
 	if (ccReaders == 0) {
 		mReaderStates.clear();
 		return;
-		}
+	}
 	if (ccReaders != mReaders.size()) { //check whether we have listed already
 		mReaderStates.clear();
 		mReaders.resize(ccReaders);
@@ -158,7 +153,7 @@ void PCSCManager::ensureReaders(uint idx)
 			SCARD_READERSTATE s = {p,NULL,SCARD_STATE_UNAWARE,0,0,{'\0'}};
 			mReaderStates.push_back(s);
 			p+= string(p).length() + 1;
-			}
+		}
 		if (mReaderStates.size() ==  0 )
 			throw SCError(SCARD_E_READER_UNAVAILABLE);
 		}
@@ -168,7 +163,7 @@ void PCSCManager::ensureReaders(uint idx)
 		SCError::checkError((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[i], 1));
 	}
 #else
-	SCError::checkError((*pSCardGetStatusChange)(mSCardContext,0, &mReaderStates[0],DWORD(mReaderStates.size())));
+	SCError::checkError((*pSCardGetStatusChange)(mSCardContext, 0, &mReaderStates[0], DWORD(mReaderStates.size())));
 #endif
 	if (idx >= mReaderStates.size())
 		throw std::range_error("ensureReaders: Index out of bounds");
@@ -181,11 +176,11 @@ uint PCSCManager::getReaderCount(bool forceRefresh)
 	try {
 		ensureReaders(0);
 	} catch(SCError &err) {
-		if (err.error == long(SCARD_E_NO_READERS_AVAILABLE))
-			throw SCError(SCARD_E_READER_UNAVAILABLE);
+		if (err.error == long(SCARD_E_NO_READERS_AVAILABLE) || err.error == long(SCARD_E_NO_SERVICE))
+			return 0;
 		else
 			throw err;
-		}
+	}
 	return (uint) mReaderStates.size();
 }
 
@@ -215,7 +210,8 @@ string PCSCManager::getReaderState(uint idx)
 #ifdef SCARD_STATE_UNPOWERED
 	SS(UNPOWERED);
 #endif
-	if (stateStr.length() > 0 ) stateStr = stateStr.substr(0,stateStr.length()-1);
+	if (stateStr.length() > 0)
+		stateStr = stateStr.substr(0,stateStr.length()-1);
 	return stateStr ;
 }
 
@@ -231,31 +227,38 @@ string PCSCManager::getATRHex(uint idx)
 	return retval;
 }
 
-PCSCConnection * PCSCManager::connect(uint idx,bool forceT0)
+PCSCConnection * PCSCManager::connect(uint idx)
 {
 	ensureReaders(idx);
-	return new PCSCConnection(*this,idx,forceT0);
+	return new PCSCConnection(*this, idx);
 }
 
 PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
 	DWORD proto = SCARD_PROTOCOL_T0;
 #ifdef _WIN32 //quick hack, pcsclite headers dont have that
 	DWORD tmpProto,sz=sizeof(DWORD);
-	if (!(*pSCardGetAttrib)(existingHandle,SCARD_ATTR_CURRENT_PROTOCOL_TYPE,
-		(LPBYTE)&tmpProto,&sz)) 
+	if (!(*pSCardGetAttrib)(existingHandle,SCARD_ATTR_CURRENT_PROTOCOL_TYPE, (LPBYTE)&tmpProto, &sz))
 		proto = tmpProto;
 #endif
-	return new PCSCConnection(*this,existingHandle,proto);
+	return new PCSCConnection(*this, existingHandle, proto);
 }
 
-PCSCConnection * PCSCManager::reconnect(ConnectionBase *c,bool forceT0) {
-	UNUSED_ARG(forceT0); //??
+PCSCConnection * PCSCManager::reconnect(ConnectionBase *c) {
 	PCSCConnection *pc = (PCSCConnection *)c;
-	SCError::checkError((*pSCardReconnect)(pc->hScard, 
-		SCARD_SHARE_SHARED, (pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0,
-		SCARD_RESET_CARD,&pc->proto));
+	SCError::checkError((*pSCardReconnect)(pc->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &pc->proto));
 	return pc;
-	}
+}
+
+void PCSCManager::getATRHex(ConnectionBase* conn, LPBYTE buf, LPDWORD buf_size)
+{
+	if (!conn)
+		// FIXME: use proper exceptions when the exception hierarchy
+		// has been refactored
+		throw std::runtime_error("Connection pointer is NULL");
+	PCSCConnection* pcsc_conn = static_cast<PCSCConnection*>(conn);
+
+	SCError::checkError(pSCardStatus(pcsc_conn->hScard, 0, 0, 0, 0, buf, buf_size));
+}
 
 void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 {
@@ -265,10 +268,10 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 	BYTE feature_buf[256], rbuf[256];
 	LONG rv;
 	
-	SCError::checkError((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader,
-		SCARD_SHARE_SHARED,
-		(pc->mForceT0 ? 0 : SCARD_PROTOCOL_T1 ) | SCARD_PROTOCOL_T0
-		, & pc->hScard,& pc->proto));
+	SCError::checkError((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto));
+
+	if (pc->proto != SCARD_PROTOCOL_T0)
+		SCError::checkError((*pSCardReconnect)(pc->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &pc->proto));
 
 	// Is there a pinpad?
 	pc->verify_ioctl = pc->verify_ioctl_start = pc->verify_ioctl_finish = 0;
@@ -309,22 +312,13 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 	if((pc->verify_ioctl || (pc->verify_ioctl_start && pc->verify_ioctl_finish)) &&
 	   (pc->modify_ioctl || (pc->modify_ioctl_start && pc->modify_ioctl_finish)))
 		pc->pinpad = true;
-
-	/* Force T=0 for PinPad readers. T=1 is terminally broken. */
-	if(pc->proto != SCARD_PROTOCOL_T0 && pc->pinpad) {
-		pc->mForceT0 = true;
-		deleteConnection(c);
-
-		SCError::checkError((*pSCardConnect)(mSCardContext,
-				(CSTRTYPE) mReaderStates[idx].szReader,
-				SCARD_SHARE_SHARED,
-				SCARD_PROTOCOL_T0,
-				& pc->hScard,& pc->proto));
-	}
 }
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
 {
+	/* FIXME: Don't check the return code with SCError, which will throw if something happens.
+	 * deleteConnection is called from a destructor what means throwing is not allowed.
+	 * Fix when removing ConnectionBase */
 	(*pSCardDisconnect)((( PCSCConnection *)c)->hScard,SCARD_RESET_CARD);
 }
 
@@ -345,14 +339,11 @@ void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
 		result = (*pSCardStatus)((( PCSCConnection *)c)->hScard,reader,&rdrLen,&state,&proto,atr,&atrLen);
 		if (result == SCARD_W_RESET_CARD) {
 			// FIXME: This will allow re-connecting with T1 even when T0 is forced
-			result = (*pSCardReconnect)((( PCSCConnection *)c)->hScard,SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, 
-				SCARD_LEAVE_CARD,&active);
+			result = (*pSCardReconnect)((( PCSCConnection *)c)->hScard,SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0,SCARD_LEAVE_CARD,&active);
 			(*pSCardStatus)((( PCSCConnection *)c)->hScard,reader,&rdrLen,&state,&proto,atr,&atrLen);
 			}
-		}
-	/*SCError::checkError(*/
-	(*pSCardEndTransaction)((( PCSCConnection *)c)->hScard,forceReset ? SCARD_RESET_CARD : SCARD_LEAVE_CARD)
-		/*)*/;
+	}
+	(*pSCardEndTransaction)((( PCSCConnection *)c)->hScard,forceReset ? SCARD_RESET_CARD : SCARD_LEAVE_CARD);
 }
 
 void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
@@ -398,8 +389,7 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
          * so this is redundant.
          */
 	if(pc->proto != SCARD_PROTOCOL_T0) {
-		pc->mForceT0 = true;
-		reconnect(pc, true);
+		reconnect(pc);
 	}
 	
 	BYTE sbuf[256], rbuf[256];
@@ -495,5 +485,5 @@ void PCSCManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd,
 
 bool PCSCManager::isT1Protocol(ConnectionBase *c) {
 	PCSCConnection *pc = (PCSCConnection *)c;
-	return pc->proto == SCARD_PROTOCOL_T1 && !pc->mForceT0;
-	}
+	return pc->proto == SCARD_PROTOCOL_T1;
+}

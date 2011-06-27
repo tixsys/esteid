@@ -93,6 +93,6 @@ target_link_libraries(smartcardpp ${LIBDL_LIBRARIES} ${WIN_LIBRARIES})
 set_target_properties(smartcardpp PROPERTIES VERSION ${SMARTCARDPP_VERSION} SOVERSION 0)
 install(TARGETS smartcardpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 
-add_executable(card-test test.cpp)
-target_link_libraries(card-test smartcardpp)
+add_executable(card-test compat_getopt.c compat_getpass.c test.cpp)
+target_link_libraries(card-test smartcardpp ${LIBDL_LIBRARIES})
 install(TARGETS card-test DESTINATION ${BIN_INSTALL_DIR})

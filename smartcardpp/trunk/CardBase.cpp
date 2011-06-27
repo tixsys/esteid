@@ -38,9 +38,10 @@ CardBase::CardBase(ManagerInterface &ref,unsigned int idx) :
 CardBase::CardBase(ManagerInterface &ref,ConnectionBase *conn):
 	mManager(ref),mConnection(conn),mLogger(ref.mLogger) {}
 
-void CardBase::connect(unsigned int idx,bool forceT0) {
-	mConnection = mManager.connect(idx,forceT0);
-	}
+void CardBase::connect(unsigned int idx) {
+	mConnection = mManager.connect(idx);
+	reIdentify();
+}
 
 CardBase::~CardBase(void)
 {
@@ -49,10 +50,6 @@ CardBase::~CardBase(void)
 		mConnection = NULL;
 		}
 }
-
-#define tagFCP 0x62 //file control parameters
-#define tagFMD 0x64 //file management data
-#define tagFCI 0x6F //file control information
 
 ByteVec CardBase::getTag(int identTag,int len,ByteVec &arr) {
 	std::ostringstream oss;
@@ -72,50 +69,13 @@ ByteVec CardBase::getTag(int identTag,int len,ByteVec &arr) {
 	}
 
 CardBase::FCI CardBase::parseFCI(ByteVec fci) {
-	ByteVec tag;
-
-	FCI tmp;
-	tmp.fileID = 0;
-	if (fci.size() < 0x0B ||
-		(fci[0] != tagFCP && fci[0] != tagFCI)	|| 
-		fci.size()-2 != fci[1] )
-		throw CardDataError("invalid fci record");
-
-	fci = ByteVec( fci.begin()+ 2  ,fci.end());
-
-	tag = getTag(0x83,2,fci);
-	if (tag.size() != 2) 
-		throw CardDataError("file name record invalid length, not two bytes");
-	tmp.fileID = MAKEWORD(tag[1],tag[0]);	
-
-	tag = getTag(0x82,0,fci);
-	switch (tag[0] & 0x3F) {
-		case 0x38: //DF
-		case 0x01: //binary
-			if (tag.size() != 1) 
-				throw CardDataError("linear variable file descriptor not 1 bytes long");
-			tag = getTag(0x85,2,fci);
-			tmp.fileLength = MAKEWORD(tag[1],tag[0]);
-			break;
-		case 0x02:
-		//linear variable
-		case 0x04:
-			if (tag.size() != 5) 
-				throw CardDataError("linear variable file descriptor not 5 bytes long");
-			tmp.recMaxLen	= MAKEWORD( tag[0x03], tag[0x02] );
-			tmp.recCount	= tag[0x04];
-			tmp.fileLength	= 0;
-			break;
-
-		default:
-			throw CardDataError("invalid filelen record, unrecognized tag");
-		}
-	return tmp;
+	throw std::runtime_error("unimplemented");
 }
+
 
 CardBase::FCI CardBase::selectMF(bool ignoreFCI)
 {
-	byte cmdMF[]= {CLAByte(),0xA4,0x00,ignoreFCI ? 0x08 : 0x00,0x00/*0x02,0x3F,0x00*/}; 
+	byte cmdMF[]= {CLAByte(), 0xA4, 0x00, ignoreFCI ? 0x08 : 0x00, 0x00/*0x02,0x3F,0x00*/}; 
 	ByteVec code;
 	code = execute( MAKEVECTOR(cmdMF));
 	if (ignoreFCI) return FCI();
@@ -136,13 +96,13 @@ int CardBase::selectDF(int fileID,bool ignoreFCI)
 
 CardBase::FCI CardBase::selectEF(int fileID,bool ignoreFCI)
 {
-	byte cmdSelectEF[] = {CLAByte(),0xA4,0x02,ignoreFCI ? 0x08 : 0x04,0x02 };
+	byte cmdSelectEF[] = {CLAByte(), 0xA4, 0x02, ignoreFCI ? 0x08 : 0x04, 0x02 };
 	ByteVec cmd(MAKEVECTOR(cmdSelectEF));
 	cmd.push_back(HIBYTE(fileID));
 	cmd.push_back(LOBYTE(fileID));
 	ByteVec fci = execute(cmd);
 
-	if (ignoreFCI) 
+	if (ignoreFCI)
 		return FCI();
 	return parseFCI(fci);
 }
@@ -199,51 +159,68 @@ ByteVec CardBase::execute(ByteVec cmd,bool noreply)
 	ByteVec RecvBuffer(1024);
 	uint realLen = (uint) RecvBuffer.size() ;
 
+	/*
 	if (mManager.isT1Protocol(mConnection) && !noreply) {
 		cmd.push_back((byte)realLen);
 		}
+		*/
 
 	if (mLogger != 0 && mLogger->good()) {
-		*mLogger << "-> " ;
-		if (mManager.isT1Protocol(mConnection)) *mLogger << "(T1)";
-		else *mLogger << "(T0)";
-		for(ByteVec::iterator it=cmd.begin();it < cmd.end(); it++ ) 
+		*mLogger << "-> " << std::setfill('0') << std::setw(2) << cmd.size();   
+		if (mManager.isT1Protocol(mConnection))
+		   	*mLogger << " (T1):   ";
+		else
+		   	*mLogger << " (T0):   ";		
+		for (ByteVec::iterator it = cmd.begin(); it < cmd.end(); it++)
 			*mLogger << std::hex << std::setfill('0') << std::setw(2) <<  (int) *it << " ";
-		*mLogger << std::endl << std::endl;
-		}
 
-	mManager.execCommand(mConnection,cmd,RecvBuffer,realLen);
-	if (realLen < 2) throw std::runtime_error("zero-length input from cardmanager");
+		*mLogger << std::endl << std::endl;
+	}
+
+	mManager.execCommand(mConnection, cmd, RecvBuffer, realLen);
+
+	if (realLen < 2)
+		// FIXME
+		throw std::runtime_error("zero-length input from cardmanager");
+
 	byte SW1 = RecvBuffer[ realLen - 2 ];
 	byte SW2 = RecvBuffer[ realLen - 1 ];
 
+	/*
 	if (SW1 == 0x67 ) { //fallback, this should never occur in production
 		cmd.pop_back();
 		realLen = (dword) RecvBuffer.size();
 		mManager.execCommand(mConnection,cmd,RecvBuffer,realLen);
-		if (realLen < 2) throw std::runtime_error("zero-length input from cardmanager");
+		if (realLen < 2)
+			// FIXME
+			throw std::runtime_error("zero-length input from cardmanager");
 		SW1 = RecvBuffer[ realLen - 2 ];
 		SW2 = RecvBuffer[ realLen - 1 ];
 		}
+	*/
 
 	RecvBuffer.resize(realLen - 2);
 
 	if (mLogger != 0 && mLogger->good()) {
+
 		*mLogger << "<- ";
-		*mLogger << "SW1=" << std::hex << std::setfill('0') << std::setw(2) <<  (int) SW1 << " ";
-		*mLogger << "SW2=" << std::hex << std::setfill('0') << std::setw(2) <<  (int) SW2 << " ";
-		for(ByteVec::iterator it=RecvBuffer.begin();it < RecvBuffer.end(); it++ ) 
-			*mLogger << std::hex << std::setfill('0') << std::setw(2) <<  (int) *it << " ";
-		*mLogger << std::endl << std::endl;
+		*mLogger << std::hex << std::setfill('0') << std::setw(2) <<  (int) SW1;
+		*mLogger << std::hex << std::setfill('0') << std::setw(2) <<  (int) SW2;
+		if (RecvBuffer.size() > 0) {
+			*mLogger << " [" << std::hex << std::setfill('0') << std::setw(2) <<  RecvBuffer.size() << "]: ";
+			for(ByteVec::iterator it = RecvBuffer.begin(); it < RecvBuffer.end(); it++ )
+				*mLogger << std::hex << std::setfill('0') << std::setw(2) <<  (int) *it << " ";
 		}
+		*mLogger << std::endl << std::endl;
+	}
 
 	if (SW1 == 0x61) {
-		byte cmdRead[]= {CLAByte(),0xC0,0x00,0x00,0x00}; 
+		byte cmdRead[]= {CLAByte(),0xC0,0x00,0x00,0x00};
 		cmdRead[4] = SW2;
 		return execute(MAKEVECTOR(cmdRead), true);
-		}
+	}
 
-	if (SW1 != 0x90) 
+	if (SW1 != 0x90)
 		throw CardError(SW1,SW2);
 
 	return RecvBuffer;

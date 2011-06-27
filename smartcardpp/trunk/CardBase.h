@@ -64,7 +64,9 @@ protected:
 	/// helper to parse returned TLVs from card
 	ByteVec getTag(int identTag,int len,ByteVec &arr);
 	/// Parses a File Control Infromation block from select file commands
-	FCI parseFCI(ByteVec fci);
+	// FIXME: make this pure virtual
+	virtual FCI parseFCI(ByteVec fci);
+
 	/// Reads a record from record-based Elementary File
 	ByteVec readRecord(int numrec);
 	/// Read entire binary Elementary File
@@ -75,6 +77,10 @@ protected:
 	virtual void executePinEntry(ByteVec cmd);
 	/// perform pin change command. useful if card manager supports direct pin entry
 	virtual void executePinChange(ByteVec cmd, size_t oldPinLen,size_t newPinLen);
+	/* HACK. Implemented here because needed to be called on connect, which is in CardBase. */
+	/// possibly re-identify the card by sending GET VERSION APDU.	
+	virtual void reIdentify() {};
+	
 public:
 	/// Selects the Master File on card
 	FCI selectMF(bool ignoreFCI = false);
@@ -92,9 +98,14 @@ public:
 
 	virtual ~CardBase(void);
 	/// connects the card instance to the reader at index idx
-	void connect(unsigned int idx,bool forceT0=false);
+	void connect(unsigned int idx);
 	/// virtual to be overridden by concrete cards, that can check for ATR or other card specific data
 	virtual bool isInReader(unsigned int idx) {UNUSED_ARG(idx);return false;}
+
+	//FIXME: this should be pure virtual
+	/// return card RSA key size in bits
+	virtual unsigned int getKeySize() { return 0; }
+
 	/// set logging stream. set to NULL for no logging ( default )
 	void setLogging(std::ostream *logStream);
 	/// sigh .. just a hack to reset card in some instances

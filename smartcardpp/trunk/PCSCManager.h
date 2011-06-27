@@ -56,12 +56,11 @@ struct PCSCConnection : public ConnectionBase {
 	DWORD modify_ioctl_finish;
 	bool display;
 	bool pinpad;
-	PCSCConnection(ManagerInterface &iface,unsigned int index,bool force) :
-		ConnectionBase(iface,index,force) {}
-	PCSCConnection(ManagerInterface &iface,SCARDHANDLE existing,DWORD mProto): 
+	PCSCConnection(ManagerInterface &iface,unsigned int index) :
+		ConnectionBase(iface,index) {}
+	PCSCConnection(ManagerInterface &iface, SCARDHANDLE existing, DWORD mProto): 
 		ConnectionBase(iface),hScard(existing),proto(mProto) {}
-	~PCSCConnection() {
-	}
+	~PCSCConnection() {}
 	virtual bool isSecure() {return pinpad;}
 };
 
@@ -73,15 +72,12 @@ class PCSCManager : public ManagerInterface {
 private:
 	DynamicLibrary mLibrary;
 	bool mOwnContext;
-#ifdef _WIN32
-	HANDLE mSCStartedEvent;
-	OSVERSIONINFO osVersionInfo;
-#endif
 	SCARDCONTEXT mSCardContext;
 	std::vector<char > mReaders;
 	std::vector<SCARD_READERSTATE> mReaderStates;
 
 #ifdef _WIN32
+	HANDLE mSCStartedEvent;
 	HANDLE (SCAPI *pSCardAccessStartedEvent)();
 	void (SCAPI *pSCardReleaseStartedEvent)(HANDLE hStartedEventHandle);
 #endif
@@ -111,7 +107,7 @@ private:
 	void execPinCommand(ConnectionBase *c, bool verify, std::vector<byte> &cmd);
 
 protected:
-	void makeConnection(ConnectionBase *c,uint idx);
+	void makeConnection(ConnectionBase *c, uint idx);
 	void deleteConnection(ConnectionBase *c);
 	void beginTransaction(ConnectionBase *c);
 	void endTransaction(ConnectionBase *c,bool forceReset = false);
@@ -130,8 +126,9 @@ public:
 	std::string getReaderName(uint idx);
 	std::string getReaderState(uint idx);
 	std::string getATRHex(uint idx);
-	PCSCConnection * connect(uint idx,bool forceT0);
+	void getATRHex(ConnectionBase* conn, BYTE* buf, DWORD* buf_size);
+	PCSCConnection * connect(uint idx);
 	/// connect using an application-supplied connection handle
 	PCSCConnection * connect(SCARDHANDLE existingHandle);
-	PCSCConnection * reconnect(ConnectionBase *c,bool forceT0);
+	PCSCConnection * reconnect(ConnectionBase *c);
 };
