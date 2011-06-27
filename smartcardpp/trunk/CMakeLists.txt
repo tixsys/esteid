@@ -94,3 +94,10 @@ install(TARGETS smartcardpp DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 add_executable(card-test compat_getopt.c compat_getpass.c test.cpp)
 target_link_libraries(card-test smartcardpp ${CMAKE_DL_LIBS})
 install(TARGETS card-test DESTINATION ${BIN_INSTALL_DIR})
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/smartcardpp.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp.pc
+    @ONLY
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/smartcardpp.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
