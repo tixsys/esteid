@@ -1,0 +1,7 @@
+#ifndef ESTEID_CONFIG_H
+#define ESTEID_CONFIG_H
+
+#cmakedefine HAVE_LIBINTL_H
+#define ESTEID_LOCALEDIR "@ESTEID_LOCALEDIR@"
+
+#endif //ESTEID_CONFIG_H

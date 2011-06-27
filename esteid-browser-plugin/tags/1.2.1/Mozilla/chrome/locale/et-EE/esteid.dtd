@@ -1,0 +1,6 @@
+<!ENTITY esteid.PrefsTitle "Allkirjastamise plugina seadistamine">
+<!ENTITY esteid.Whitelist "Lubatud veebilehed">
+<!ENTITY esteid.Log "Logi">
+<!ENTITY esteid.Preferences "Seaded">
+<!ENTITY esteid.PreferencesCaption "Üldised seaded">
+<!ENTITY esteid.OpenWhiteList "ID-kaardi kasutusõigusega veebilehed">
