@@ -22,7 +22,7 @@
 #include "CspEstEid.h"
 
 #include <smartcardpp/esteid/EstEidCard.h>
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcardpp/PCSCManager.h>
 #include <utility/pinDialog.h>
 #include <utility/threadObj.h>
 #include "utility.h"
@@ -40,11 +40,11 @@ class EstEidContext : public CSPContext {
 	PinString cachedAuthPin;
 protected:
 	HMODULE m_module;
-	SmartCardManager cardMgr;
+	PCSCManager cardMgr;
 public:
 	EstEidContext(logger &log,HMODULE module);
 	~EstEidContext();
-	SmartCardManager & getMgr() { return cardMgr;};
+	PCSCManager & getMgr() { return cardMgr;};
 	CSPKeyContext * EstEidContext::createKeyContext();
 	CSPHashContext * EstEidContext::createHashContext();
 	template<class T>
