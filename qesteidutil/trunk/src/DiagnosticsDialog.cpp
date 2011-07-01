@@ -22,7 +22,7 @@
 #include "DiagnosticsDialog.h"
 
 #include <smartcardpp/DynamicLibrary.h>
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcardpp/PCSCManager.h>
 #include <smartcardpp/esteid/EstEidCard.h>
 
 #include <QDesktopServices>
@@ -196,10 +196,10 @@ QString DiagnosticsDialog::getReaderInfo() const
 	QTextStream s( &d );
 
 	QHash<QString,QString> readers;
-	SmartCardManager *m = 0;
+	PCSCManager *m = 0;
 	QString reader;
 	try {
-		m = new SmartCardManager();
+		m = new PCSCManager();
 		int readersCount = m->getReaderCount( true );
 		for( int i = 0; i < readersCount; i++ )
 		{

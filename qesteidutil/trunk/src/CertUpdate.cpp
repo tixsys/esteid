@@ -42,7 +42,7 @@ CertUpdate::CertUpdate( int reader, QObject *parent )
 ,	generateKeys( false )
 ,	m_authCert( 0 )
 {
-	cardMgr = new SmartCardManager();
+	cardMgr = new PCSCManager();
 
 	card = new EstEidCard(*cardMgr);
 	if ( !card->isInReader( reader ) )

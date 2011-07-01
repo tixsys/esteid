@@ -24,7 +24,7 @@
 #include <QString>
 #include <QObject>
 
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcardpp/PCSCManager.h>
 #include <smartcardpp/esteid/EstEidCard.h>
 #include "jscertdata.h"
 
@@ -94,7 +94,7 @@ signals:
     void cardError(QString func, QString err);
 
 private:
-	SmartCardManager *m_cardManager;
+	PCSCManager *m_cardManager;
 	void handleError(QString msg);
 	dword authUsageCount;
 	dword signUsageCount;

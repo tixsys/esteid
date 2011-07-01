@@ -37,7 +37,7 @@ JsCardManager::JsCardManager(JsEsteidCard *jsEsteidCard)
 ,   readAllowed( true )
 {
 	try {
-		cardMgr = new SmartCardManager();
+		cardMgr = new PCSCManager();
 	} catch ( std::runtime_error &e ) {
 		qDebug() << e.what();
 	}
@@ -70,7 +70,7 @@ void JsCardManager::pollCard()
 		bool foundConnected = false;
 
         if (!cardMgr)
-            cardMgr = new SmartCardManager();
+            cardMgr = new PCSCManager();
 
 		// Build current device list with statuses
         QHash<QString,ReaderState> tmp;
@@ -241,7 +241,7 @@ bool JsCardManager::selectReader( const ReaderState &reader )
     EstEidCard *card = 0;
     try {
         if (!cardMgr)
-            cardMgr = new SmartCardManager();
+            cardMgr = new PCSCManager();
 		card = new EstEidCard(*cardMgr);
 		card->connect( reader.id );
 		QCoreApplication::processEvents();

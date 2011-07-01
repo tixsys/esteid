@@ -25,7 +25,7 @@
 #include <QHash>
 #include <QTimer>
 
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcardpp/PCSCManager.h>
 #include "jsesteidcard.h"
 
 class JsCardManager : public QObject
@@ -45,7 +45,7 @@ public:
 	~JsCardManager();
 
 private:
-    SmartCardManager *cardMgr;
+    PCSCManager *cardMgr;
 	JsEsteidCard *m_jsEsteidCard;
     QTimer pollTimer;
 

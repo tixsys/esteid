@@ -15,6 +15,9 @@ find_package(OpenSSL REQUIRED)
 find_package(OpenSSLCrypto REQUIRED)
 find_package(LibP11 REQUIRED)
 find_package(SmartCardpp REQUIRED)
+if(UNIX)
+    find_package(PCSCLite)
+endif()
 
 if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
@@ -125,8 +128,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}
     ${LIBP11_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
+    ${PCSCLITE_INCLUDE_DIR}
     ${QTSINGLEAPPLICATION_INCLUDE_DIRS}
-    ${SMARTCARDPP_INCLUDE_DIR}
+    ${SMARTCARDPP_INCLUDE_DIRS}
 )
 
 if(APPLE)
