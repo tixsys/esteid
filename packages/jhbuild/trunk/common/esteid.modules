@@ -24,9 +24,10 @@
   </cmake>
 
   <cmake id="firebreath" buildtype="Release"
-         cmakeargs="-DPROJECTS_DIR=../firebreath-projects">
+         cmakeargs="-DFB_PROJECTS_DIR=../firebreath-projects">
     <branch repo="github.com"
-            module="firebreath/FireBreath.git" checkoutdir="firebreath" />
+            module="firebreath/FireBreath.git" revision="firebreath-1.5"
+            checkoutdir="firebreath" />
     <dependencies>
       <dep package="esteid-browser-plugin" />
     </dependencies>
