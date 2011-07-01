@@ -9,14 +9,14 @@
 
 #include "precompiled.h"
 #include "monitorThread.h"
-#include <smartcardpp/SmartCardManager.h>
+#include <smartcardpp/PCSCManager.h>
 #include <smartcardpp/esteid/EstEidCard.h>
 
 #include <iostream>
 
 struct checker {
     monitorObserver &observer;
-	SmartCardManager mgr;
+	PCSCManager mgr;
     EstEidCard card;
 	std::vector<bool> cardPresent;
 	checker(monitorObserver &ref) : observer(ref),card(mgr) {}
