@@ -49,8 +49,8 @@
       makeinstallargs="-f make.win install"
       supports-non-srcdir-builds="no">
     <branch repo="openssl.org"
-            module="openssl-1.0.0b.tar.gz" version="1.0.0b"
-            hash="md5:104deb3b7e6820cae6de3f49ba0ff2b0" />
+            module="openssl-1.0.0d.tar.gz" version="1.0.0d"
+            hash="md5:40b6ea380cc8a5bf9734c2f8bf7e701e" />
   </autotools>
 
   <autotools id="xsd" supports-non-srcdir-builds="no" skip-autogen="never"
