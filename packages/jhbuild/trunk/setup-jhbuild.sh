@@ -27,7 +27,6 @@ die()
 
 # Sanity Check
 [ x"`which svn`" == x ] && die "Svn (subversion) must be installed."
-[ x"`which hg`" == x ]  && die "Hg (mercurial) must be installed."
 [ x"`which git`" == x ] && die "Git must be installed."
 
 [ -f $mydir/jhbuild-revision ] || die "Can't find $mydir/jhbuild-revision"
