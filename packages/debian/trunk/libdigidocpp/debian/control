@@ -43,7 +43,7 @@ Description: BDoc C++ library
 
 Package: libdigidocpp0-dbg
 Architecture: any
-Section: libdevel
+Section: debug
 Priority: extra
 Conflicts: libdigidoc0-dbg (<< 0.1.0-0), libdigidoc++0-dbg (<< 0.1.0-0)
 Replaces: libdigidoc0-dbg (<< 0.1.0-0), libdigidoc++0-dbg (<< 0.1.0-0)
