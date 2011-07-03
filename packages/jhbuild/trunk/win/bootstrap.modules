@@ -18,8 +18,8 @@
   <repository type="tarball" name="archive.apache.org"
       href="http://archive.apache.org/dist/" />
 
-  <repository type="tarball" name="santuario.apache.org"
-      href="http://santuario.apache.org/dist/" />
+  <repository type="tarball" name="www.apache.org"
+      href="http://www.apache.org/dist/" />
 
   <repository type="tarball" name="opensc-project.org"
       href="http://www.opensc-project.org/files/" />
@@ -70,8 +70,8 @@
       makeinstallargs="-f make.win install"
       supports-non-srcdir-builds="no">
     <branch repo="qt.nokia.com"
-            module="qt-everywhere-opensource-src-4.7.1.tar.gz" version="4.7.1"
-            hash="md5:6f88d96507c84e9fea5bf3a71ebeb6d7" />
+            module="qt-everywhere-opensource-src-4.7.3.tar.gz" version="4.7.3"
+            hash="md5:49b96eefb1224cc529af6fe5608654fe" />
     <dependencies>
       <dep package="openssl" />
     </dependencies>
@@ -130,9 +130,9 @@
       makeinstallargs="-f make.win install"
       supports-non-srcdir-builds="yes">
 
-    <branch repo="santuario.apache.org" checkoutdir="xml-security-c-1.6.0"
-            module="c-library/xml-security-c-1.6.0rc2.tar.gz"
-            version="1.6.0" hash="md5:3cde5fc544a7092d97384b7163f6ff64" />
+    <branch repo="www.apache.org" checkoutdir="xml-security-c-1.6.0"
+            module="santuario/c-library/xml-security-c-1.6.0.tar.gz"
+            version="1.6.0" hash="md5:b66046f074f5483e3b0081c5303e320c" />
 
 <!--
     <branch repo="archive.apache.org"
