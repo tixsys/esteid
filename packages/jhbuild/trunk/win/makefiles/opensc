@@ -25,7 +25,11 @@ nmake-compile:
 	    src/common/Makefile.mak
 	sed -i -e "s|cardmod||" \
 	    src/Makefile.mak
+ifeq ($(MSBUILD_ARCH),x64)
+	nmake -f Makefile.mak BUILD_FOR=WIN64
+else
 	nmake -f Makefile.mak
+endif
 
 install: install-bin install-etc
 
