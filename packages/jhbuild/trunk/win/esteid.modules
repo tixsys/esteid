@@ -12,6 +12,9 @@
   <repository type="git" name="github.com"
               href="git://github.com/" />
 
+  <repository type="tarball" name="opensc-project.org"
+      href="http://www.opensc-project.org/files/" />
+
   <repository type="tarball" name="smartlink/snapshots"
               href="http://id.smartlink.ee/repo/nightly/snapshots/" />
 
@@ -30,10 +33,9 @@
       makeargs="-f make.win"
       makeinstallargs="-f make.win install"
       supports-non-srcdir-builds="no">
-    <branch repo="smartlink/snapshots"
-            module="opensc-0.12.0-svn-r3928.tar.gz"
-            checkoutdir="opensc-0.12.0"
-            version="0.12.0" hash="md5:6acd6bc342ce458c8e2a287669010b7a" />
+    <branch repo="opensc-project.org"
+            module="opensc/opensc-0.12.1.tar.gz" version="0.12.1"
+            hash="md5:62fe8d3ed1864556c1970d7c23d8d58e" />
     <!-- depends on iconv, libltdl, openssl, and zlib from bootstrap -->
   </autotools>
 

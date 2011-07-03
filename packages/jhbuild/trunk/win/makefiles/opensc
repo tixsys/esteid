@@ -16,6 +16,7 @@ nmake-compile:
 	       -e "s|^ICONV_INCL_DIR.*|ICONV_INCL_DIR = /I$(INCLUDEDIR)|" \
 	       -e "s|^ICONV_LIB.*|ICONV_LIB = $(LIBDIR)/iconv.lib|" \
 	       -e "s|^#ICONV_DEF|ICONV_DEF|" \
+	       -e "s|^MINIDRIVER_DEF|#MINIDRIVER_DEF|" \
 	       -e "s|/MACHINE:IX86|/MACHINE:$(MACHINE)|" \
 	       win32/Make.rules.mak
 	sed -i -e "s|/machine:ix86|/MACHINE:$(MACHINE)|" \
