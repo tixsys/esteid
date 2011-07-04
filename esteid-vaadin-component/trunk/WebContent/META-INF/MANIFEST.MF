@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: EstEid
+Implementation-Version: 1.0.0
+Vaadin-Package-Version: 1
+Vaadin-Widgetsets: ee.smartlink.esteid.widgetset.EsteidWidgetset
+Class-Path: 
+
