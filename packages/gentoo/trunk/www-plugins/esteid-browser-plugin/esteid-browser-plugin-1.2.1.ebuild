@@ -9,7 +9,7 @@ MY_PN="esteid"
 MY_P="${MY_PN}-${PV}"
 
 FB_PN="firebreath"
-FB_PV="1.2.2"
+FB_PV="1.3.2"
 FB_P="${FB_PN}-${FB_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
