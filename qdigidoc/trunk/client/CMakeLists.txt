@@ -136,6 +136,8 @@ install(TARGETS qdigidocclient DESTINATION ${BIN_INSTALL_DIR})
 install(FILES qdigidoc-client.desktop DESTINATION ${SHARE_INSTALL_PREFIX}/applications)
 install(FILES qdigidoc-client.xml DESTINATION ${SHARE_INSTALL_PREFIX}/mime/packages)
 
+install(FILES qdigidocclient.1 DESTINATION ${MAN_INSTALL_DIR}/man1)
+
 if(UNIX AND NOT APPLE)
     # Install icons
     foreach(RES 16 22 32 48 128)
