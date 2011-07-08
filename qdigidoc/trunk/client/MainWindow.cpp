@@ -210,7 +210,7 @@ bool MainWindow::addFile( const QString &file )
 		{
 			select = true;
 			QMessageBox::warning( this, tr("DigiDoc3 client"),
-				tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
+				tr( "You don't have sufficient privileges to write this file into folder %1" ).arg( docname ) );
 		}
 
 		while( select )
@@ -225,7 +225,7 @@ bool MainWindow::addFile( const QString &file )
 			if( !Common::canWrite( docname ) )
 			{
 				QMessageBox::warning( this, tr("DigiDoc3 client"),
-					tr( "You dont have suficient privilegs to write this fail into folder %1" ).arg( docname ) );
+					tr( "You don't have sufficient privileges to write this file into folder %1" ).arg( docname ) );
 			}
 			else
 				select = false;

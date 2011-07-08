@@ -364,7 +364,7 @@ Digitaalallkirja andmiseks on vajalik internetiühendus.&lt;/p&gt;
         <translation>NB: Vigane allkiri</translation>
     </message>
     <message>
-        <source>You dont have suficient privilegs to write this fail into folder %1</source>
+        <source>You don't have sufficient privileges to write this file into folder %1</source>
         <translation>Sul ei ole piisavalt õigusi, et kirjutada fail kataloogi %1</translation>
     </message>
     <message>

@@ -364,8 +364,8 @@ Also an active internet connection is needed.&lt;/p&gt;
         <translation>NB! Invalid signature</translation>
     </message>
     <message>
-        <source>You dont have suficient privilegs to write this fail into folder %1</source>
-        <translation>You dont have suficient privilegs to write this fail into folder %1</translation>
+        <source>You don't have sufficient privileges to write this file into folder %1</source>
+        <translation>You don't have sufficient privileges to write this file into folder %1</translation>
     </message>
     <message>
         <source>Documents (*.bdoc *.BDOC *.ddoc *.DDOC)</source>

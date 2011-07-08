@@ -364,7 +364,7 @@ p, li { white-space: pre-wrap; }
         <translation>NB: Ошибочная подпись</translation>
     </message>
     <message>
-        <source>You dont have suficient privilegs to write this fail into folder %1</source>
+        <source>You don't have sufficient privileges to write this file into folder %1</source>
         <translation>У Вас недостаточно прав для записи файла в каталог %1</translation>
     </message>
     <message>

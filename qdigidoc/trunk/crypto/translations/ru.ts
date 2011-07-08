@@ -371,7 +371,7 @@
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;
 &lt;b&gt;File encryption&lt;/b&gt;&lt;br /&gt;&lt;br /&gt;
 The purpose of file encryption is to make the data stored in the file unreadable for any unauthorised users.&lt;br /&gt;&lt;br /&gt;
-Encryption with ID-card is not ment for long and secure data storage, it is only ment for secure transfering of data over unsecure media.&lt;br /&gt;&lt;br /&gt;
+Encryption with ID-card is not meant for long and secure data storage, it is only meant for secure transferring of data over unsecure media.&lt;br /&gt;&lt;br /&gt;
 For encryption AS Sertifitseerimiskeskus&apos; LDAP service is used, to search for reciever(s) certificates. Documents are encrypted with public key that is found the certificate.&lt;/p&gt;
 &lt;p style=&quot; font: 12px &apos;Arial,Liberation Sans&apos;;&quot;&gt;&lt;font color=&quot;red&quot;&gt;&lt;b&gt;Warning&lt;/b&gt;&lt;/font&gt;&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Encryption is one-way only. Private key needed for decryption is stored only on reciever&apos;s ID-card. Decryption of files is impossible if ID-card is lost or damaged, sertificates are expired or renewed. &lt;/b&gt;
