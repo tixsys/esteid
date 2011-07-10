@@ -14,9 +14,9 @@
 typedef void *LPVOID;
 #define __COREFOUNDATION_CFPLUGINCOM__
 #endif
-#include <PCSC/wintypes.h>
-#include <PCSC/pcsclite.h>
-#include <PCSC/winscard.h>
+#include <wintypes.h>
+#include <pcsclite.h>
+#include <winscard.h>
 #include <arpa/inet.h>
 #else
 #pragma warning(push)
