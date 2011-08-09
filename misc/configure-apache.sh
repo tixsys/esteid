@@ -17,6 +17,7 @@ echo "* Downloading CA certificates to $estdir/ca"
 wget -nv -O "JUUR-SK.crt" http://www.sk.ee/files/JUUR-SK.PEM.cer
 wget -nv -O "ESTEID-SK.crt" http://www.sk.ee/files/ESTEID-SK.PEM.cer
 wget -nv -O "ESTEID-SK 2007.crt" http://www.sk.ee/files/ESTEID-SK%202007.PEM.cer
+wget -nv -O "ESTEID-SK 2011.crt" http://www.sk.ee/upload/files/ESTEID-SK%202011.pem.cer
 for f in *.crt;do ln -sf "$f" `openssl x509 -hash -noout -in "$f"`.0; done
 
 if [ ! -f "$wwwdir"/index.php ]; then
@@ -79,6 +80,7 @@ echo -n "Starting CRL download: "
 LANG=C date
 wget -nv -O "esteid.der" http://www.sk.ee/crls/esteid/esteid.crl
 wget -nv -O "esteid2007.der" http://www.sk.ee/crls/esteid/esteid2007.crl   
+wget -nv -O "esteid2011.der" http://www.sk.ee/repository/crls/esteid2011.crl
 wget -nv -O "crl.der" http://www.sk.ee/crls/juur/crl.crl 
 
 echo "Converting CRLs to PEM format and generating hash links"
