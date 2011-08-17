@@ -1,0 +1,112 @@
+# Estonian translations for PACKAGE package.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Automatically generated, 2010.
+# Guido Tabbernuk <boamaod@gmail.com>, 2010.
+# Sander <sander.lepik@eesti.ee>, 2010.
+# Sander Lepik <sander.lepik@eesti.ee>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: et\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-28 21:15+0900\n"
+"PO-Revision-Date: 2010-11-28 20:14+0900\n"
+"Last-Translator: Guido Tabbernuk <boamaod@gmail.com>\n"
+"Language-Team: Estonian <firefox-et@googlegroups.com>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.1\n"
+
+#: ../EsteidAPI.cpp:501
+msgid "\" target=\"_blank\" style=\"color: blue;\">here</a> for details."
+msgstr "\" target=\"_blank\" style=\"color: blue;\">siin</a>."
+
+#: ../X11/pininputdialog.cpp:97
+msgid "<span color=\"red\">Wrong PIN!</span> Tries left: "
+msgstr "<span color=\"red\">Vale PIN!</span> Katseid järel: "
+
+#: ../EsteidAPI.cpp:64
+msgid ""
+"Access to ID card was denied because the connection to the server is not "
+"secure."
+msgstr ""
+"Ligipääs ID-kaardile keelati, kuna ühendus selle serveriga pole turvaline."
+
+#: ../EsteidAPI.cpp:62
+msgid "Allow"
+msgstr "Luba"
+
+#: ../X11/whitelistdialog.ui:7
+msgid "Allowed Sites"
+msgstr "Lubatud veebisaidid"
+
+#: ../X11/pininputdialog.ui:113
+msgid "Do_cument:"
+msgstr "Do_kument:"
+
+#: ../X11/pininputdialog.ui:7
+msgid "Enter PIN"
+msgstr "PIN-koodi sisestamine"
+
+#: ../X11/whitelistdialog.ui:39
+msgid "Enter a site to add to whitelist:"
+msgstr "Sisesta veebisait, mille soovid nimekirja lisada:"
+
+#: ../X11/GtkUI.cpp:227
+msgid "Error saving configuration"
+msgstr "Viga seadete salvestamisel"
+
+#: ../X11/GtkUI.cpp:166
+msgid "PIN2 blocked"
+msgstr "PIN2 blokitud"
+
+#: ../X11/GtkUI.cpp:167
+msgid "Please run ID card Utility to unlock the PIN."
+msgstr "PIN-i avamiseks kasuta ID-kaardi haldusvahendit!"
+
+#: ../EsteidAPI.cpp:63
+msgid "This site is trying to obtain access to your ID card."
+msgstr "See veebisait soovib kasutada sinu ID-kaarti."
+
+#: ../EsteidAPI.h:39
+msgid "User cancelled operation"
+msgstr "Kasutaja katkestas toimingu"
+
+#: ../EsteidAPI.cpp:500
+msgid ""
+"Website is using old signature APIs. Please contact site owner. Click <a "
+"href=\""
+msgstr ""
+"See veebisait kasutab vana allkirjastamise liidest. Palun, võta ühendust "
+"saidi omanikuga! Üksikasjadega saad tutvuda <a href=\""
+
+#: ../X11/whitelistdialog.ui:23
+msgid ""
+"You can specify which web sites are allowed to have access to your ID card. "
+"Only add the sites you trust to keep your private information safe."
+msgstr ""
+"Siin saab määrata, millised veebisaidid tohivad ID-kaarti eraldi teavitamata "
+"kasutada. Lisa siia ainult neid saite, millele julged oma isiklikke andmeid "
+"usaldada!"
+
+#: ../X11/pininputdialog.ui:175
+msgid "_Details"
+msgstr "Üksikasja_d"
+
+#: ../X11/pininputdialog.ui:145
+msgid "_Hash:"
+msgstr "_Räsi:"
+
+#~ msgid ""
+#~ "In order to use your ID card on newly added site, it may be needed to "
+#~ "start the desired operation from the beginning or reload the page."
+#~ msgstr ""
+#~ "ID-kaardi kasutamiseks äsja lisatud veebisaidil võib olla vajalik "
+#~ "alustada pooleliolevat toimingut otsast peale või laadida leht uuesti."
+
+#~ msgid "Settings"
+#~ msgstr "Luba"
