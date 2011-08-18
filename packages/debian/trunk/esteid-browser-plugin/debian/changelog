@@ -1,10 +1,28 @@
+esteid-browser-plugin (1.3.0-0esteid1~natty1) natty; urgency=low
+
+  * Build using Firebreath 1.5.2
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 17 Aug 2011 18:30:32 +0300
+
+esteid-browser-plugin (1.2.1-0esteid1~natty1) natty; urgency=low
+
+  * Update to esteid-browser-plugin 1.2.1
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Mon, 27 Jun 2011 23:18:44 +0300
+
+esteid-browser-plugin (1.2.0-0esteid5~natty1) natty; urgency=low
+
+  * Rebuild
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Mon, 23 May 2011 00:17:58 +0300
+
 esteid-browser-plugin (1.2.0-0esteid4~natty1) natty; urgency=low
 
   * Build using Firebreath 1.3.2a
 
  -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 18 May 2011 22:45:26 +0300
 
-esteid-browser-plugin (1.2.0-0esteid3~maverick1) maverick; urgency=low
+esteid-browser-plugin (1.2.0-0esteid3~natty1) natty; urgency=low
 
   * Updated bundled firebreath to 1.3.1
     + 01_firebreath-scoped_ptr-include.patch:
@@ -14,26 +32,26 @@ esteid-browser-plugin (1.2.0-0esteid3~maverick1) maverick; urgency=low
 
  -- Kalev Lember <kalev@smartlink.ee>  Sat, 20 Nov 2010 11:34:44 +0200
 
-esteid-browser-plugin (1.2.0-0esteid2~maverick1) maverick; urgency=low
+esteid-browser-plugin (1.2.0-0esteid2~natty1) natty; urgency=low
 
   * Rebuild
 
  -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 10 Nov 2010 07:22:04 +0900
 
-esteid-browser-plugin (1.2.0-0esteid1~maverick1) maverick; urgency=low
+esteid-browser-plugin (1.2.0-0esteid1~natty1) natty; urgency=low
 
   * Add missing esteid-browser-plugin.mo
 
  -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 10 Nov 2010 04:47:39 +0900
 
-esteid-browser-plugin (1.2.0-0esteid0~maverick1) maverick; urgency=low
+esteid-browser-plugin (1.2.0-0esteid0~natty1) natty; urgency=low
 
   * Update to esteid-browser-plugin 1.2.0
   * Update bundled firebreath to 1.3.0
 
  -- Kalev Lember <kalev@smartlink.ee>  Fri, 05 Nov 2010 09:58:02 +0200
 
-esteid-browser-plugin (1.1.0-0esteid0~maverick1) maverick; urgency=low
+esteid-browser-plugin (1.1.0-0esteid0~natty1) natty; urgency=low
 
   * Initial build
 

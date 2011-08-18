@@ -1,3 +1,4 @@
 usr/lib/mozilla/plugins/npesteid.so
 usr/share/esteid-browser-plugin/*.ui
 usr/share/locale/*/LC_MESSAGES/esteid-browser-plugin.mo
+usr/etc/esteid-browser-plugin.conf

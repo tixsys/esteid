@@ -23,4 +23,4 @@ pre-build::
 
 install/esteid-browser-plugin::
 	mkdir -p $(PLUGIN_DIR)
-	unzip $(DEB_BUILDDIR)/esteid-*.xpi -d $(PLUGIN_DIR)
+	unzip $(DEB_BUILDDIR)/projects/esteid/esteid-*.xpi -d $(PLUGIN_DIR)
