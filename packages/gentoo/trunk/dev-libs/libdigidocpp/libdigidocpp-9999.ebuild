@@ -27,6 +27,11 @@ DEPEND="${RDEPEND}
 
 DOCS="AUTHORS NEWS README"
 
+src_prepare() {
+	cd ${S}
+	rm -r etc/certs/
+}
+
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
 	local mycmakeargs="${mycmakeargs}

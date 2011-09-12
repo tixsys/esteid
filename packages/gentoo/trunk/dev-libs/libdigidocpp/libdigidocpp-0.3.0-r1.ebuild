@@ -23,9 +23,15 @@ RDEPEND="dev-libs/libp11
 	dev-util/cppunit
 	sys-libs/zlib"
 DEPEND="${RDEPEND}
+	=app-misc/sk-certificates-${PN}
 	>=dev-cpp/xsd-3.2.0"
 
 DOCS="AUTHORS NEWS README"
+
+src_prepare() {
+	cd ${S}
+	rm -r etc/certs/
+}
 
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
