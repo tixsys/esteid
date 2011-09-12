@@ -9,7 +9,7 @@ MY_PN="esteid"
 MY_P="${MY_PN}-${PV}"
 
 FB_PN="firebreath"
-FB_PV="1.3.2"
+FB_PV="1.5.2"
 FB_P="${FB_PN}-${FB_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"
@@ -22,13 +22,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-RDEPEND="app-arch/zip
+DEPEND="app-arch/zip
 	dev-cpp/gtkmm:2.4
 	dev-libs/boost
 	dev-libs/openssl
 	dev-libs/smartcardpp"
 
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}
+	app-misc/sk-certificates
+	app-crypt/ccid
+	dev-libs/opensc"
 
 S="${WORKDIR}/${FB_P}"
 
@@ -46,7 +49,10 @@ src_unpack() {
 }
 
 src_configure() {
-	local mycmakeargs="-DWITH_SYSTEM_BOOST:BOOL=YES"
+	local mycmakeargs="
+		-DSYSCONF_INSTALL_DIR=/etc
+		-DWITH_SYSTEM_BOOST=ON
+	"
 
 	cmake-utils_src_configure
 }
@@ -61,7 +67,8 @@ src_install() {
 	mozillas=""
 
 	xpiname="${MY_P}"
-	xpi_unpack "${CMAKE_BUILD_DIR}/${xpiname}.xpi"
+	xpi_unpack "${CMAKE_BUILD_DIR}/projects/esteid/${xpiname}.xpi"
+
 
 	# FIXME: Hard-coded MOZILLA_FIVE_HOME dirs
 	# Install the extension for each of these Mozilla browsers;

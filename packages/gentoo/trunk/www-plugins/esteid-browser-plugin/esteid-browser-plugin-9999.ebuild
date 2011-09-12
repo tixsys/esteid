@@ -29,6 +29,7 @@ DEPEND="app-arch/zip
 	dev-libs/smartcardpp"
 
 RDEPEND="${DEPEND}
+	app-misc/sk-certificates
 	app-crypt/ccid
 	dev-libs/opensc"
 
