@@ -29,6 +29,7 @@ DEPEND="${RDEPEND}
 DOCS="AUTHORS NEWS README"
 
 src_prepare() {
+	# We use another package (sk-certificates) to install root certs
 	cd "${S}"
 	rm -r etc/certs/
 }
