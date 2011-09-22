@@ -1086,8 +1086,10 @@ public class DataFile implements Serializable
             		bis =  new BufferedInputStream( new FileInputStream(m_fDfCache));
             		//setSize(m_fDfCache.length());
             	} else {
-            		bis =  new BufferedInputStream( new FileInputStream(m_fileName));
-            		setSize(new File(m_fileName).length());
+					// Lauri Lüüs: bug when cache is located in other directory or changed the original DIGIDOC_DF_CACHE_DIR
+					File fname = new File(ConfigManager.instance().getStringProperty("DIGIDOC_DF_CACHE_DIR", System.getProperty("java.io.tmpdir")), m_fileName);
+            		bis =  new BufferedInputStream( new FileInputStream(fname));
+            		setSize(fname.length());
             	} 
             }
             //L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
