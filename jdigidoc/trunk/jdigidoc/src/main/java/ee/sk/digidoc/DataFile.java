@@ -1087,7 +1087,9 @@ public class DataFile implements Serializable
             		//setSize(m_fDfCache.length());
             	} else {
 					// Lauri Lüüs: bug when cache is located in other directory or changed the original DIGIDOC_DF_CACHE_DIR
-					File fname = new File(ConfigManager.instance().getStringProperty("DIGIDOC_DF_CACHE_DIR", System.getProperty("java.io.tmpdir")), m_fileName);
+					File fname = new File(m_fileName);
+					if(!fname.exists())
+						fname=new File(ConfigManager.instance().getStringProperty("DIGIDOC_DF_CACHE_DIR", System.getProperty("java.io.tmpdir")), m_fileName);
             		bis =  new BufferedInputStream( new FileInputStream(fname));
             		setSize(fname.length());
             	} 
