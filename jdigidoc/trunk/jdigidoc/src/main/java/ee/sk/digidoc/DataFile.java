@@ -103,7 +103,7 @@ public class DataFile implements Serializable
     public static final String DIGEST_TYPE_SHA1 = "sha1";
     private static int block_size = 2048;
     /** log4j logger */
-	private Logger m_logger = null;
+	private transient Logger m_logger = null;
 	/** temp file used to cache DataFile data if caching is enabled */
 	private File m_fDfCache = null;
 	//A Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
@@ -1470,5 +1470,14 @@ public class DataFile implements Serializable
 	//L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1.2
 	// L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1.1
 	//L Inga <2008 aprill> BDOCiga seotud muudatused xml-is 1
+	
+	/**
+	 * Beacause Logger is not serialzable we'll fix this
+	 * @author Lauri Lüüs
+	 */
+	 private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException{
+		 in.defaultReadObject();
+		 this.m_logger=Logger.getLogger(DataFile.class);
+	 }
 	
 }

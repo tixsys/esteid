@@ -21,6 +21,7 @@
 package ee.sk.digidoc;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
@@ -36,7 +37,7 @@ import ee.sk.utils.ConvertUtils;
  * @author  Veiko Sinivee
  * @version 1.0
  */
-public class CertValue {
+public class CertValue  implements Serializable{
     /** elements id atribute if present */
     private String m_id;
     /** parent object - Signature ref */

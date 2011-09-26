@@ -21,6 +21,7 @@ package ee.sk.digidoc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.math.BigInteger;
@@ -37,7 +38,7 @@ import org.bouncycastle.tsp.TimeStampToken;
  * @author  Veiko Sinivee
  * @version 1.0
  */
-public class TimestampInfo {
+public class TimestampInfo  implements Serializable{
 	/** elements Id atribute */
     private String m_id;
     /** parent object - Signature ref */

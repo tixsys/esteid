@@ -1,4 +1,7 @@
 package ee.sk.digidoc;
+
+import java.io.Serializable;
+
 /**
  * Models the QualifyingProperties element of
  * an BDOC.
@@ -6,7 +9,7 @@ package ee.sk.digidoc;
  * @version 1.0
  */
 
-public class QualifyingProperties {
+public class QualifyingProperties  implements Serializable{
 	private String m_Target;
 
 	public String getTarget() {

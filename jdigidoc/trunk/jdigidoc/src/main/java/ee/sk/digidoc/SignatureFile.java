@@ -1,12 +1,14 @@
 package ee.sk.digidoc;
 
+import java.io.Serializable;
+
 /**
  * Represents a signature file inside BDOC
  * 
  * @author  Kalev Suik
  * @version 0.7
  */
-public class SignatureFile {
+public class SignatureFile  implements Serializable{
 	/** fullpath inside BDOC container */
 	private String fullPath;
 	/** mime type as described in  BDOC's mainfest file	 */

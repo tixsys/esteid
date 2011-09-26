@@ -21,6 +21,7 @@ package ee.sk.digidoc;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import ee.sk.utils.ConvertUtils;
@@ -33,7 +34,7 @@ import ee.sk.utils.ConvertUtils;
  * @author  Veiko Sinivee
  * @version 1.0
  */
-public class IncludeInfo {
+public class IncludeInfo  implements Serializable{
 	/** elements URI atribute */
     private String m_uri;
     /** parent object - TimestampInfo ref */
