@@ -39,7 +39,7 @@ Igaüks, kes teeb vahet bitil ja baidil on teretulnud sinna kirjutama.
 http://esteid.googlecode.com/svn/wiki/img/irc-icon.png
 </td>
 <td>
-Operatiivsemaks suhtlemiseks on [http://freenode.net/using_the_network.shtml FreeNodes] IRC kanal #esteid
+Operatiivsemaks suhtlemiseks on [http://freenode.net/using_the_network.shtml FreeNodes] IRC kanal [http://webchat.freenode.net/?channels=esteid&uio=d4 #esteid]
 </td>
 </tr>
 
