@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-18 21:39+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../X11/basepindialog.cpp:82
+msgid "<span color=\"red\">Wrong PIN!</span> Tries left: "
+msgstr ""
+
+#: ../EsteidAPI.cpp:63
+msgid ""
+"Access to ID card was denied because the connection to the server is not "
+"secure."
+msgstr ""
+
+#. UI Messages
+#: ../EsteidAPI.cpp:61
+msgid "Allow"
+msgstr ""
+
+#: ../X11/whitelistdialog.ui:7
+msgid "Allowed Sites"
+msgstr ""
+
+#: ../X11/pinpaddialog.ui:179 ../X11/pininputdialog.ui:113
+msgid "Do_cument:"
+msgstr ""
+
+#: ../X11/pinpaddialog.ui:7 ../X11/pininputdialog.ui:7
+msgid "Enter PIN"
+msgstr ""
+
+#: ../X11/pinpaddialog.ui:132
+msgid "Enter PIN on pinpad"
+msgstr ""
+
+#: ../X11/whitelistdialog.ui:39
+msgid "Enter a site to add to whitelist:"
+msgstr ""
+
+#: ../X11/GtkUI.cpp:244
+msgid "Error saving settings"
+msgstr ""
+
+#: ../X11/GtkUI.cpp:183
+msgid "PIN2 blocked"
+msgstr ""
+
+#: ../X11/GtkUI.cpp:184
+msgid "Please run ID card Utility to unlock the PIN."
+msgstr ""
+
+#: ../EsteidAPI.cpp:62
+msgid "This site is trying to obtain access to your ID card."
+msgstr ""
+
+#: ../EsteidAPI.h:38
+msgid "User cancelled operation"
+msgstr ""
+
+#: ../X11/whitelistdialog.ui:23
+msgid ""
+"You can specify which web sites are allowed to have access to your ID card. "
+"Only add the sites you trust to keep your private information safe."
+msgstr ""
+
+#: ../X11/pinpaddialog.ui:256 ../X11/pininputdialog.ui:175
+msgid "_Details"
+msgstr ""
+
+#: ../X11/pinpaddialog.ui:219 ../X11/pininputdialog.ui:145
+msgid "_Hash:"
+msgstr ""
+
+#. TRANLATORS: 's' is seconds
+#: ../X11/pinpaddialog.cpp:70
+msgid "s"
+msgstr ""
