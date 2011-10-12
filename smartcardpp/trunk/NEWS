@@ -1,3 +1,15 @@
+smartcardpp 0.3.0 (2011-10-12)
+==============================
+Most of the changes below are merged from svn.eesti.ee code dumps. Also note
+that this release changes the library ABI (soname) and all applications need to
+be rebuilt.
+
+- ESTEID 2011 card support
+- Improved pinpad support
+- Removed CTAPIManager, SmartCardManager, and SIMCard classes
+- Fix build with Visual Studio 10 and GCC 4.6
+- Misc. bug fixes
+
 smartcardpp 0.2.0 (2010-09-29)
 ==============================
 
