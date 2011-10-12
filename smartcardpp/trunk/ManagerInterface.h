@@ -1,11 +1,14 @@
-/*!
-	\file		ManagerInterface.h
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-06 13:21:43 +0300 (Mon, 06 Jul 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 345 $
 #pragma once
 
 #include "types.h"
@@ -41,6 +44,10 @@ public:
 	virtual ConnectionBase * reconnect(ConnectionBase *c) = 0;
 	/// use given stream as APDU log
 	inline void setLogging(std::ostream *logStream) {mLogger = logStream;}
+	virtual void beginTransaction(ConnectionBase *c) = 0;
+	virtual void endTransaction(ConnectionBase *c,bool forceReset = false) = 0;
+	virtual void writeLog(const char *fmt,...) = 0;
+
 protected:
 	std::ostream  *mLogger;
 	friend struct ConnectionBase;
@@ -50,8 +57,7 @@ protected:
 	friend struct SmartCardConnection;
 	virtual void makeConnection(ConnectionBase *c,uint idx) = 0;
 	virtual void deleteConnection(ConnectionBase *c) = 0;
-	virtual void beginTransaction(ConnectionBase *c) = 0;
-	virtual void endTransaction(ConnectionBase *c,bool forceReset = false) = 0;
+	
 
 	virtual void execCommand(ConnectionBase *c,std::vector<byte> &cmd,std::vector<byte> &recv,
 		unsigned int &recvLen) = 0;

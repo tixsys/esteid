@@ -43,6 +43,7 @@ set(smartcard_SRCS
     PCSCManager.cpp
     SCError.cpp
     types.cpp
+    md5.cpp
 )
 
 set(esteid_SRCS

@@ -1,14 +1,21 @@
-/*!
-	\file		DynamicLibrary.cpp
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-10-05 22:16:29 +0300 (E, 05 okt 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 473 $
-#include "DynamicLibrary.h"
-#include <string.h>
+
+
+
 #include "common.h"
+#include "DynamicLibrary.h"
+
+#include <string.h>
 
 DynamicLibrary::DynamicLibrary(const char *dllName) :
 	mLibhandle(NULL),name(dllName),m_pathHint("") {

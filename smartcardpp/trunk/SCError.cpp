@@ -1,13 +1,17 @@
-/*!
-	\file		SCError.cpp
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-07-06 13:21:43 +0300 (Mon, 06 Jul 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 345 $
-#include "SCError.h"
+
 #include "common.h"
+#include "SCError.h"
 
 SCError::SCError(long err) : runtime_error("smart card API error"),error(err)
 {

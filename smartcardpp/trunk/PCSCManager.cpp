@@ -1,24 +1,37 @@
-/*!
-	\file		PCSCManager.cpp
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 470 $
 
-#ifdef _WIN32
+
+#ifdef WIN32
 // This must be included first because other crap may pull in the conflicting ws2def.h
 #include <winsock2.h>
+#include <time.h>
+#include <Windows.h>
+#include <WinNT.h>
+#include <Psapi.h>
+#include <stdlib.h>
 #else
+#include <stdio.h>
+#include <cstdlib>
+#include <stdarg.h>
 #include <arpa/inet.h>
 #endif
 
+#include <string.h>
+#include <sys/stat.h>
+#include "common.h"
 #include "PCSCManager.h"
 #include "SCError.h"
 #include "CardBase.h" //for exceptions
-#include "common.h"
-#include <string.h> // for memset()
 
 #ifndef CM_IOCTL_GET_FEATURE_REQUEST
 
@@ -46,18 +59,71 @@ using std::string;
 
 PCSCManager::PCSCManager(void): mLibrary(LIBNAME), mOwnContext(true) 
 {
+		if(getenv("SMARTCARDPP_DEBUG")!= NULL)
+	{
+#ifdef _WIN32
+		WCHAR logfile[MAX_PATH * 4];
+		GetTempPathW(sizeof(logfile)/sizeof(WCHAR),logfile);
+		_snwprintf(logfile + wcslen(logfile),MAX_PATH,L"smartcardpp.log");
+		debugfp = _wfopen(logfile,L"a+");
+#else
+		if(checkTEMP())
+		{
+			debugfp=fopen("/tmp/smartcardpp.log", "a+");
+		}
+		else
+		{
+			debug = false;
+		}
+#endif
+		debug = true;
+		sprintf(procName, "%s", "unknown");
+	}
+	else
+	{
+		debug = false;
+	}
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
+	transactionID = 0;
 	construct();
 	SCError::check((*pSCardEstablishContext)(SCARD_SCOPE_USER, NULL, NULL, &mSCardContext));
 }
 
 PCSCManager::PCSCManager(SCARDCONTEXT existingContext): mLibrary(LIBNAME), mOwnContext(false) 
 {
+	if(getenv("SMARTCARDPP_DEBUG")!= NULL)
+	{
+#ifdef _WIN32
+		WCHAR logfile[MAX_PATH * 4];
+		GetTempPathW(sizeof(logfile)/sizeof(WCHAR),logfile);
+		_snwprintf(logfile + wcslen(logfile),MAX_PATH,L"smartcardpp.log");
+		debugfp = _wfopen(logfile,L"a+");
+#else
+		if(checkTEMP())
+		{
+			debugfp=fopen("/tmp/smartcardpp.log", "a+");
+		}
+		else
+		{
+			debug = false;
+		}
+#endif
+		debug = true;
+		sprintf(procName, "%s", "unknown");
+	}
+	else
+	{
+		debug = false;
+	}
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
+	transactionID = 0;
 	construct();
 	mSCardContext=existingContext;
 }
 
 void PCSCManager::construct()
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	pSCardEstablishContext = (LONG(SCAPI *)(DWORD,LPCVOID,LPCVOID,SCARDCONTEXT*))
 		mLibrary.getProc("SCardEstablishContext");
 	pSCardReleaseContext = (LONG(SCAPI *)(SCARDCONTEXT))
@@ -129,16 +195,18 @@ void PCSCManager::construct()
 
 PCSCManager::~PCSCManager(void)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	if (mOwnContext)
 		(*pSCardReleaseContext)(mSCardContext);
-#ifdef _WIN32
+	if(debug == true)
+		fclose(debugfp);
 // this crashes with "ESP not being preserved", wrong calling convention apparently
 //	(*pSCardReleaseStartedEvent)(mSCStartedEvent);
-#endif
 }
 
 void PCSCManager::ensureReaders(uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	DWORD ccReaders = 0;
 	SCError::check((*pSCardListReaders)(mSCardContext,NULL,NULL,&ccReaders));
 	if (ccReaders == 0) {
@@ -172,6 +240,7 @@ void PCSCManager::ensureReaders(uint idx)
 
 uint PCSCManager::getReaderCount(bool forceRefresh)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	if (forceRefresh) 
 		mReaders.clear();
 	try {
@@ -187,6 +256,7 @@ uint PCSCManager::getReaderCount(bool forceRefresh)
 
 string PCSCManager::getReaderName(uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	ensureReaders(idx);
 	return mReaderStates[idx].szReader;
 }
@@ -196,6 +266,7 @@ string PCSCManager::getReaderName(uint idx)
 
 string PCSCManager::getReaderState(uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	ensureReaders(idx);
 	DWORD theState = mReaderStates[idx].dwEventState;
 	string stateStr = "";
@@ -218,6 +289,7 @@ string PCSCManager::getReaderState(uint idx)
 
 string PCSCManager::getATRHex(uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	ensureReaders(idx);
 	std::ostringstream buf;
 	buf << "";
@@ -230,11 +302,13 @@ string PCSCManager::getATRHex(uint idx)
 
 PCSCConnection * PCSCManager::connect(uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	ensureReaders(idx);
 	return new PCSCConnection(*this, idx);
 }
 
 PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	DWORD proto = SCARD_PROTOCOL_T0;
 #ifdef _WIN32 //quick hack, pcsclite headers dont have that
 	DWORD tmpProto,sz=sizeof(DWORD);
@@ -245,6 +319,7 @@ PCSCConnection * PCSCManager::connect(SCARDHANDLE existingHandle) {
 }
 
 PCSCConnection * PCSCManager::reconnect(ConnectionBase *c) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	PCSCConnection *pc = (PCSCConnection *)c;
 	SCError::check((*pSCardReconnect)(pc->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0, SCARD_RESET_CARD, &pc->proto));
 	return pc;
@@ -252,6 +327,7 @@ PCSCConnection * PCSCManager::reconnect(ConnectionBase *c) {
 
 string PCSCManager::getATRHex(ConnectionBase* conn)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	byte atr[33]; // SC_MAX_ATR_SIZE
 	DWORD atr_size = sizeof(atr);
 	memset(atr, 0, atr_size);
@@ -274,6 +350,7 @@ string PCSCManager::getATRHex(ConnectionBase* conn)
 
 bool PCSCManager::isPinPad(uint idx,PCSCConnection *c)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	if(!pSCardControl) return false; // PC/SC API is too old to support PinPADs
 
 	DWORD i, feature_len, rcount;
@@ -357,6 +434,7 @@ bool PCSCManager::isPinPad(uint idx,PCSCConnection *c)
 
 void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	PCSCConnection *pc = (PCSCConnection *)c;
 	
 	SCError::check((*pSCardConnect)(mSCardContext, (CSTRTYPE) mReaderStates[idx].szReader, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0|SCARD_PROTOCOL_T1, &pc->hScard, &pc->proto));
@@ -369,6 +447,7 @@ void PCSCManager::makeConnection(ConnectionBase *c,uint idx)
 
 void PCSCManager::deleteConnection(ConnectionBase *c)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	/* FIXME: Don't check the return code with SCError, which will throw if something happens.
 	 * deleteConnection is called from a destructor what means throwing is not allowed.
 	 * Fix when removing ConnectionBase */
@@ -377,11 +456,25 @@ void PCSCManager::deleteConnection(ConnectionBase *c)
 
 void PCSCManager::beginTransaction(ConnectionBase *c)
 {
-	SCError::check((*pSCardBeginTransaction)( (( PCSCConnection *)c)->hScard));
+	if(transactionID == 0)
+	{
+		transactionID = rand();
+		writeLog("[%s:%d] Starting new transaction.", __FUNCTION__, __LINE__);
+		SCError::check((*pSCardBeginTransaction)( (( PCSCConnection *)c)->hScard));
+	}
+	else
+	{
+		writeLog("[%s:%d] Transaction allready started.", __FUNCTION__, __LINE__);
+	}
 }
 
 void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
 {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
+	if(transactionID == 0)
+		return;
+
+	transactionID = 0;
 	if (forceReset) { //workaround for reader driver bug
 		BYTE _rdrBuf[1024];
 		STRTYPE reader = (STRTYPE) _rdrBuf;
@@ -402,6 +495,7 @@ void PCSCManager::endTransaction(ConnectionBase *c,bool forceReset)
 void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 		,std::vector<BYTE> &recv,
 		uint &recvLen) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	PCSCConnection *pc = (PCSCConnection *)c;
 	const SCARD_IO_REQUEST _MT0 = {1,8};
 	const SCARD_IO_REQUEST _MT1 = {2,8};
@@ -432,6 +526,7 @@ void PCSCManager::execCommand(ConnectionBase *c,std::vector<BYTE> &cmd
 
 
 void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byte> &cmd) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	if(!pSCardControl)
 		throw std::runtime_error("PC/SC API is too old");
 
@@ -537,16 +632,64 @@ void PCSCManager::execPinCommand(ConnectionBase *c, bool verify, std::vector<byt
 }
 
 void PCSCManager::execPinEntryCommand(ConnectionBase *c,std::vector<byte> &cmd) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	execPinCommand(c, true, cmd);
 }
 
-void PCSCManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd, size_t oldPinLen, size_t newPinLen) {
+void PCSCManager::execPinChangeCommand(ConnectionBase *c,std::vector<byte> &cmd, size_t, size_t) {
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	execPinCommand(c, false, cmd);
 }
-         
 
-
-bool PCSCManager::isT1Protocol(ConnectionBase *c) {
+bool PCSCManager::isT1Protocol(ConnectionBase *c)
+{
+	writeLog("[%s:%d]", __FUNCTION__, __LINE__);
 	PCSCConnection *pc = (PCSCConnection *)c;
 	return pc->proto == SCARD_PROTOCOL_T1;
+}
+
+void PCSCManager::writeLog(const char *fmt,...)
+{
+	if(debug == true)
+	{
+		time_t dbgTime;
+		time(&dbgTime);
+		struct tm *timeinfo = localtime(&dbgTime);
+		va_list vList ;
+		char msg[4096] ;
+		va_start(vList,fmt) ;
+		vsnprintf(msg, 4096, fmt, vList) ;
+		getParentProcName();
+		fprintf(debugfp, "%02i.%02i.%i %02i:%02i:%02i [%s][%i]", timeinfo->tm_mday, timeinfo->tm_mon+1, (timeinfo->tm_year)-100, 
+			timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, procName, transactionID);
+		fprintf(debugfp,"%s \n", msg) ;
+		fflush(debugfp);
+		va_end(vList);
+	}
+}
+
+void PCSCManager::getParentProcName()
+{
+#ifdef _WIN32
+	WCHAR _cname[256 * 4 ] = L"\0";
+	HMODULE caller = GetModuleHandle(NULL);
+	PWCHAR cname = _cname + 1;
+	GetModuleFileNameW(caller,cname,256);
+	PWCHAR fl = (PWCHAR )cname  + lstrlenW(cname) -1;
+	while (isalnum(*fl) || (L'.' == *fl) || (L'_' == *fl))
+		fl--;
+	fl++;
+	
+	
+	memset((void *)procName, 0, sizeof(procName));
+	char DefChar = ' ';
+	WideCharToMultiByte(CP_ACP,0,fl,-1, procName,1024,&DefChar, NULL);
+#endif
+}
+
+bool PCSCManager::checkTEMP()
+{
+	struct stat St;
+	bool bRes = ( stat( "/tmp", &St ) == 0 );
+	return bRes;
 }

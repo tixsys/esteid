@@ -1,3 +1,15 @@
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
+*/
+
 #include <iostream>
 #include <string>
 #include <stdlib.h>
@@ -5,7 +17,20 @@
 #include "compat_getopt.h"
 #include "compat_getpass.h"
 
-void validateOnPinpad() {
+void validateOnPinpad();
+void readEstEidCard(EstEidCard &eid);
+int testCardReading(PCSCManager &mgr);
+PinString ReadPinFromStdin();
+void testKey(PCSCManager &m, unsigned int reader, EstEidCard::KeyType key);
+void testAuth(PCSCManager &m, unsigned int reader);
+void testSign(PCSCManager &m, unsigned int reader);
+void reIdentify(PCSCManager &m, int cardReaderIdx);
+void testPIN1ChangeCSP(PCSCManager &m, unsigned int reader);
+void testPIN2ChangeCSP(PCSCManager &m, unsigned int reader);
+void testGetMD5KeyContainerName(PCSCManager &m, unsigned int reader);
+
+void validateOnPinpad()
+{
 	PCSCManager mgr;
 	uint rdr, i, nr;
 	EstEidCard eid(mgr);
@@ -73,7 +98,7 @@ int testCardReading(PCSCManager &mgr) {
 				std::cout << " PinPad: " << c->isSecure();
 				
 				EstEidCard eidCard(mgr, c);
-				
+				//eidCard.reconnectWithT0();
 				if(eidCard.isInReader(i)) {
 					if (rv == -1)
 						rv = i;
@@ -114,23 +139,31 @@ void testKey(PCSCManager &m, unsigned int reader, EstEidCard::KeyType key) {
 
 	std::cout << "cert is " << cert.size() << " bytes long" << std::endl;
 
-	if(eid.hasSecurePinEntry()) {
-		std::cout << "Testing key please enter PIN from PinPad " << std::flush;
+	if(eid.hasSecurePinEntry())
+	{
+		std::cout << "Testing key please enter " << ((key == EstEidCard::AUTH) ? "authentication" : "signing") << " PIN from PinPad " << std::flush;
 		pin = PinString("");
-	} else {
-		std::cout << "Testing key please enter PIN: " << std::flush;
+	}
+	else
+	{
+		std::cout << "Testing key please enter " << ((key == EstEidCard::AUTH) ? "authentication" : "signing") << " PIN: " << std::flush;
 		pin = ReadPinFromStdin();
 	}
 
-	try {
+	try
+	{
 		eid.calcSignSHA1(dummyHash, key, pin);
 		std::cout << std::endl;
 		std::cout << "Pin OK";
 		std::cout << std::endl;
-	} catch(AuthError &e) {
+	}
+	catch(AuthError &e)
+	{
 		std::cout << std::endl;
 		std::cout << "Invalid PIN." << e.what() << std::endl;
-	} catch(std::runtime_error &e) {
+	}
+	catch(std::runtime_error &e)
+	{
 		std::cout << std::endl;
 		std::cout << "Other Error: " << e.what() << std::endl;
 	}
@@ -148,9 +181,12 @@ int main(int argc, char *argvp[]) {
 	int idx = 0;
 	int opt;
 	int longind = 0;
-	const char *shortopts = "pkd";
+	const char *shortopts = "pkd12c";
 	bool testkeys = false;
 	bool debug = false;
+	bool testPIN1Change = false;
+	bool testPIN2Change = false;
+	bool testKeyContainerName = false;
 
 	PCSCManager mgr;
 
@@ -159,6 +195,9 @@ int main(int argc, char *argvp[]) {
 		{ "pinpad", no_argument,  0,    'p'  }, /*       0 */
 		{ "keys",   no_argument,  0,    'k'  }, /*       1 */
 		{ "debug",  no_argument,  0,    'd'  }, /*       1 */
+		{ "changePIN1",  no_argument,  0,    '1'  }, /*       1 */
+		{ "changePIN2",  no_argument,  0,    '2'  }, /*       1 */
+		{ "getKeyContainerName",  no_argument,  0,    'c'  }, /*       1 */
 		/* end-of-list marker */
 		{ 0, 0, 0, 0 }
 	};
@@ -172,7 +211,16 @@ int main(int argc, char *argvp[]) {
 				testkeys = true;
 				break;
 			case 'd':
-				mgr.setLogging(&std::cerr);
+				//mgr->setLogging(&std::cerr);
+				break;
+			case '1':	//Test PIN1 change
+				testPIN1Change = true;
+				break;
+			case '2':	//Test PIN2 change
+				testPIN2Change = true;
+				break;
+			case 'c':	//Test PIN2 change
+				testKeyContainerName = true;
 				break;
 			default: /* something unexpected has happened */
 				std::cerr << "getopt_long_only returned an unexpected value " << opt << std::endl;
@@ -182,7 +230,10 @@ int main(int argc, char *argvp[]) {
 
 	idx = testCardReading(mgr);
 
-	if(testkeys && idx >= 0) {
+	if(testkeys && idx >= 0)
+	{
+		std::cout << "####################################################################" << std::endl;
+		std::cout << "TESTING KEYS ON CARD" << std::endl;
 		EstEidCard eid(mgr, idx);
 		eid.isInReader(idx);
 		std::cout << "Card version: " << eid.getCardVersion() << std::endl;
@@ -191,6 +242,105 @@ int main(int argc, char *argvp[]) {
 		std::cout << std::endl << "Testing crypto operations with card in reader #" << idx << std::endl;
 		testAuth(mgr, idx);
 		testSign(mgr, idx);
-
+		std::cout << "####################################################################" << std::endl;
 	}
+
+	if(testPIN1Change == true && idx >= 0)
+	{
+		std::cout << "####################################################################" << std::endl;
+		std::cout << "TESTING AUTH PIN CHANGE" << std::endl;
+		EstEidCard eid(mgr, idx);
+		eid.isInReader(idx);
+		std::cout << "Card version: " << eid.getCardVersion() << std::endl;
+		std::cout << "Card key size: " << eid.getKeySize() << " bits" << std::endl;
+		testPIN1ChangeCSP(mgr, idx);
+		std::cout << "####################################################################" << std::endl;
+	}
+	if(testPIN2Change == true && idx >= 0)
+	{
+		std::cout << "####################################################################" << std::endl;
+		std::cout << "TESTING SIGN PIN CHANGE" << std::endl;
+		EstEidCard eid(mgr, idx);
+		eid.isInReader(idx);
+		std::cout << "Card version: " << eid.getCardVersion() << std::endl;
+		std::cout << "Card key size: " << eid.getKeySize() << " bits" << std::endl;
+		testPIN2ChangeCSP(mgr, idx);
+		std::cout << "####################################################################" << std::endl;
+	}
+	if(testKeyContainerName == true && idx >= 0)
+	{
+		std::cout << "####################################################################" << std::endl;
+		std::cout << "TESTING KEY CONTAINER NAME" << std::endl;
+		EstEidCard eid(mgr, idx);
+		eid.isInReader(idx);
+		std::cout << "Card version: " << eid.getCardVersion() << std::endl;
+		std::cout << "Card key size: " << eid.getKeySize() << " bits" << std::endl;
+		testGetMD5KeyContainerName(mgr, idx);
+		std::cout << "####################################################################" << std::endl;
+	}
+}
+
+void testPIN1ChangeCSP(PCSCManager &m, unsigned int reader)
+{
+	EstEidCard eid(m, reader);
+	PinString oldPIN1;
+	PinString newPIN1;
+	byte retriesLeft = 0;
+
+	std::cout << "Enter old AUTH PIN code" << std::endl;
+	oldPIN1 = ReadPinFromStdin();
+	std::cout << "Enter new AUTH PIN code" << std::endl;
+	newPIN1 = ReadPinFromStdin();
+
+	try
+	{
+		eid.changeAuthPin(newPIN1, oldPIN1, retriesLeft);
+	}
+	catch(CardError &e)
+	{
+		std::cout << e.SW1 << " " << e.SW2 << " " << e.what() << std::endl;
+		return;
+	}
+	std::cout << "AUTH PIN changed" << std::endl;
+}
+
+void testPIN2ChangeCSP(PCSCManager &m, unsigned int reader)
+{
+	EstEidCard eid(m, reader);
+	PinString oldPIN2;
+	PinString newPIN2;
+	byte retriesLeft = 0;
+
+	std::cout << "Enter old SIGN PIN code" << std::endl;
+	oldPIN2 = ReadPinFromStdin();
+	std::cout << "Enter new SIGN PIN code" << std::endl;
+	newPIN2 = ReadPinFromStdin();
+
+	try
+	{
+		eid.changeSignPin(newPIN2, oldPIN2, retriesLeft);
+	}
+	catch(CardError &e)
+	{
+		std::cout << e.SW1 << " " << e.SW2 << " " << e.what() << std::endl;
+		return;
+	}
+	std::cout << "SIGN PIN changed" << std::endl;
+}
+
+void testGetMD5KeyContainerName(PCSCManager &m, unsigned int reader)
+{
+	std::string documentID = "";
+	std::string authKeyContainerName = "";
+	std::string signKeyContainerName = "";
+	EstEidCard eid(m, reader);
+	std::cout << "Reading document number..." << std::endl;
+	documentID = eid.readDocumentID();
+	std::cout << "Document number is: " << documentID.c_str() << std::endl;
+	
+	authKeyContainerName = eid.getMD5KeyContainerName(eid.AUTH);
+	signKeyContainerName = eid.getMD5KeyContainerName(eid.SIGN);
+
+	std::cout << "AUTH container name: " << authKeyContainerName.c_str() << std::endl;
+	std::cout << "SIGN container name: " << signKeyContainerName.c_str() << std::endl;
 }

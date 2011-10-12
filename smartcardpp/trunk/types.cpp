@@ -1,11 +1,14 @@
-/*!
-	\file		types.cpp
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-04-13 13:59:50 +0300 (Mon, 13 Apr 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 246 $
 
 #include "common.h"
 

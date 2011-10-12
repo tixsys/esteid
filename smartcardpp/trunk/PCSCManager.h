@@ -1,11 +1,14 @@
-/*!
-	\file		PCSCManager.h
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-10-05 07:07:55 +0300 (E, 05 okt 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 470 $
 #pragma once
 #include "ManagerInterface.h"
 #include "DynamicLibrary.h"
@@ -77,6 +80,9 @@ private:
 	SCARDCONTEXT mSCardContext;
 	std::vector<char > mReaders;
 	std::vector<SCARD_READERSTATE> mReaderStates;
+	bool debug;
+	FILE *debugfp;
+	char procName[1024];
 
 #ifdef _WIN32
 	HANDLE mSCStartedEvent;
@@ -105,8 +111,9 @@ private:
 
 	void construct(void);
 	void ensureReaders(uint idx);
-
 	void execPinCommand(ConnectionBase *c, bool verify, std::vector<byte> &cmd);
+	void getParentProcName();
+	bool checkTEMP();
 
 protected:
 	void makeConnection(ConnectionBase *c, uint idx);
@@ -134,4 +141,6 @@ public:
 	/// connect using an application-supplied connection handle
 	PCSCConnection * connect(SCARDHANDLE existingHandle);
 	PCSCConnection * reconnect(ConnectionBase *c);
+	int transactionID;
+	void writeLog(const char *fmt,...);
 };

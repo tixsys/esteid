@@ -1,13 +1,19 @@
-/*!
-	\file		CardBase.h
-	\copyright	(c) Kaido Kert ( kaidokert@gmail.com )    
-	\licence	BSD
-	\author		$Author: kaidokert $
-	\date		$Date: 2009-08-13 16:52:22 +0300 (Thu, 13 Aug 2009) $
+/*
+* SMARTCARDPP
+* 
+* This software is released under either the GNU Library General Public
+* License (see LICENSE.LGPL) or the BSD License (see LICENSE.BSD).
+* 
+* Note that the only valid version of the LGPL license as far as this
+* project is concerned is the original GNU Library General Public License
+* Version 2.1, February 1999
+*
 */
-// Revision $Revision: 422 $
+
+
 #pragma once
 #include "ManagerInterface.h"
+#include <fstream>
 
 using std::vector;
 
@@ -56,7 +62,7 @@ protected:
 	} LPFCI;
 	ManagerInterface &mManager;
 	ConnectionBase	*mConnection;
-	std::ostream	*mLogger;
+	//std::ostream	*mLogger;
 
 	/// provide CLA for card APDUs
 	virtual byte CLAByte() { return 0x00; }
@@ -72,7 +78,7 @@ protected:
 	/// Read entire binary Elementary File
 	ByteVec readEF(unsigned int fileLen);
 	/// perform a basic APDU command. noreply indicates that command expects no reply data apart from status bytes
-	virtual ByteVec execute(ByteVec cmd,bool noreply=false);
+	virtual ByteVec execute(ByteVec cmd, int apducase = 0);
 	/// perform pin entry command. this is only useful if card manager supports direct pin entry from reader like CTAPI
 	virtual void executePinEntry(ByteVec cmd);
 	/// perform pin change command. useful if card manager supports direct pin entry
@@ -112,4 +118,5 @@ public:
 	void endTransaction();
 	/// check if the manager that we are connected to, supports secure PIN entry
 	bool hasSecurePinEntry();
+	//FILE *logFile;
 };
