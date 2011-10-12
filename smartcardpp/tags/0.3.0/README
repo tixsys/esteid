@@ -1,0 +1,2 @@
+smartcardpp is a set of C++ classes to manage smartcard
+communications and implement basic command primitives. 
