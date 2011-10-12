@@ -1,3 +1,19 @@
+qesteidutil 0.3.1 (2011-10-12)
+==============================
+- New man page (Mihkel Vain)
+- Window decorations fix with IceWM/LXDE (alvar@raamat.polva.ee)
+- Use system copy of qtsingleapplication if possible (Kalev Lember)
+- Fixed build with smartcardpp 0.3.0 (Kalev Lember)
+- Fixed blank window with recent webkit versions (Kalev Lember)
+- Fixed unreadable Russian text in email settings (Sander Lepik)
+- Translation updates (Erkko Kebbinau)
+
+Bugs fixed with this release:
+ #79  - "Wrong text in russian language
+ #160 - "Misspelling of occurred in qesteidutil"
+ #169 - "Starts with blank non functional window on Ubuntu Oneiric (and Debian
+         Unstable)"
+
 qesteidutil 0.3.0 (2010-09-29)
 ==============================
 
