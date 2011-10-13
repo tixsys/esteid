@@ -23,7 +23,7 @@
  * into HTML page in order to change broken behaviour.
  */
 var esteidHackTable = [
-  { url: "^https://id.seb.ee", js: "sebHack.js" }
+  { url: "^https://id.seb.ee", js: "sebJava.js" }
 ];
 
 /* Shamelessly stolen from:
