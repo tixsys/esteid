@@ -325,7 +325,13 @@ FB::JSAPIPtr EsteidAPI::get_personalData()
 
 std::string EsteidAPI::getVersion()
 {
-    return FBSTRING_PLUGIN_VERSION;
+    if (m_mimeType == "application/x-digidoc") {
+        // SEB site checks if the first digit is 3 before deciding to
+        // work with the plugin
+        return "3." FBSTRING_PLUGIN_VERSION;
+    } else {
+        return FBSTRING_PLUGIN_VERSION;
+    }
 }
 
 
