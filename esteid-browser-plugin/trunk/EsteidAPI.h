@@ -220,8 +220,6 @@ private:
     void returnSignedData(const std::string& data);
     void returnSignFailure(const std::string& msg);
     void pinBlockedMessage();
-    void on_pinpadSignCompletedWrapper(const std::string& data);
-    void on_pinpadSignFailedWrapper(SignError error, const std::string& msg);
     void on_pinpadSignCompleted(const std::string& data);
     void on_pinpadSignFailed(SignError error, const std::string& msg);
 
