@@ -83,7 +83,7 @@ function requestRestart() {
         restartLabel = sb.formatStringFromName("restartButton", [appName], 1);
         restartKey   = sb.GetStringFromName("restartAccessKey");
     } catch(e) {
-        alert(e);
+        esteid_log("Error loading restart button: " + e);
         restartLabel = "Restart Now";
         restartKey = null;
     }
