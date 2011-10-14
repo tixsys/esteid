@@ -1,3 +1,19 @@
+esteid-browser-plugin 1.3.2 (2011-10-14)
+========================================
+
+A bug fix release which fixes a compatibility issue with SEB site.
+
+Changes:
+ - Fix compatibility with SEB site
+ - More robust pinpad support
+ - Avoid showing internal exception details when module loading fails
+
+Bugs fixed:
+ #146 - "'TypeError: e is null' instead of PIN2 dialog in SEB"
+ #153 - "signing SEB bank transaction with PIN2 fails"
+ #170 - "Error starting Firefox"
+
+
 esteid-browser-plugin 1.3.1 (2011-10-10)
 ========================================
 
