@@ -1,0 +1,6 @@
+<!ENTITY esteid.PrefsTitle "Предпочтения подписывающего ID-картой">
+<!ENTITY esteid.Whitelist "Список разрешенных веб-страниц">
+<!ENTITY esteid.Preferences "Предпочтения">
+<!ENTITY esteid.PreferencesCaption "Общие настройки">
+<!ENTITY esteid.Log "Лог">
+<!ENTITY esteid.OpenWhiteList "Веб-страницы, которые ID-карта может использовать">
