@@ -1,3 +1,21 @@
+libdigidocpp (0.3.0-0esteid8~oneiric1) oneiric; urgency=low
+
+  * Rebuild
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Sun, 09 Oct 2011 15:25:10 +0300
+
+libdigidocpp (0.3.0-0esteid6~natty1) natty; urgency=low
+
+  * Fix empty debug packages
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Sun, 03 Jul 2011 01:35:27 +0300
+
+libdigidocpp (0.3.0-0esteid5~natty1) natty; urgency=low
+
+  * Fix sysconf install directories
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Sun, 22 May 2011 22:40:02 +0300
+
 libdigidocpp (0.3.0-0esteid4~natty1) natty; urgency=low
 
   * Convert to debhelper and fix for all Python versions

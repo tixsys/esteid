@@ -1,4 +1,12 @@
-qdigidoc (0.4.0-0esteid4~natty1) natty; urgency=low
+qdigidoc (0.4.0-0esteid6~oneiric1) oneiric; urgency=low
+
+  * Rebuild with patches
+    + 01_nautilus-newversion.patch:
+      - Fix Nautilus extension for ver 3.*.*
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Mon, 17 Oct 2011 10:58:39 +0300
+
+qdigidoc (0.4.0-0esteid4~oneiric1) oneiric; urgency=low
 
   * Create qdigidoc-nautilus depending from python-nautilus.
 

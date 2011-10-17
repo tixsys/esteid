@@ -1,4 +1,7 @@
 #!/usr/bin/make -f
 
+DEB_TAR_SRCDIR := $(shell ls -1 smartcardpp-*.tar.bz2 | sed -e 's,\.tar.*,,g')
+
+include /usr/share/cdbs/1/rules/tarball.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/cmake.mk

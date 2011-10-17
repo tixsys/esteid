@@ -1,4 +1,10 @@
-qesteidutil (0.3.0-0esteid2~natty1) natty; urgency=low
+qesteidutil (0.3.1-0esteid2~oneiric1) oneiric; urgency=low
+
+  * Built from release tarball
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 12 Oct 2011 23:55:29 +0300
+
+qesteidutil (0.3.0-0esteid2~oneiric1) oneiric; urgency=low
 
   * Built from release.
 

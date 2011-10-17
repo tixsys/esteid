@@ -1,4 +1,10 @@
-smartcardpp (0.2.0-0esteid3~natty1) natty; urgency=low
+smartcardpp (0.3.0-0esteid1~oneiric1) oneiric; urgency=low
+
+  * Built from release tarball
+
+ -- Guido Tabbernuk <boamaod@gmail.com>  Wed, 12 Oct 2011 23:53:28 +0300
+
+smartcardpp (0.2.0-0esteid4~oneiric1) oneiric; urgency=low
 
   * Built from release.
 
