@@ -32,7 +32,7 @@ Description: debugging symbols for esteid-browser-plugin
 
 Package: mozilla-esteid
 Architecture: any
-Depends: esteid-browser-plugin, libopensc3, libdigidocpp0, ${shlibs:Depends}, ${misc:Depends}
+Depends: esteid-browser-plugin, opensc, libdigidocpp0, ${shlibs:Depends}, ${misc:Depends}
 Description: Estonian ID card extension for Firefox
  Esteid Browser Plugin is cross-browser plugin that exposes
  Estonian eID card functions via JavaScript.

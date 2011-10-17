@@ -8,7 +8,7 @@ Homepage: http://code.google.com/p/esteid/
 
 Package: qesteidutil
 Architecture: any
-Depends: ${shlibs:Depends}, ttf-liberation, libopensc3
+Depends: ${shlibs:Depends}, ttf-liberation, opensc
 Description: Estonian ID card utility
  Qt based Estonian ID card utility.
 

@@ -15,7 +15,7 @@ PLUGIN_DIR := $(DEB_DESTDIR)/usr/lib/firefox/extensions/$(EXT_ID)
 
 CFLAGS += "-fno-strict-aliasing"
 CXXFLAGS += "-fno-strict-aliasing"
-DEB_CMAKE_EXTRA_FLAGS += "-DWITH_SYSTEM_BOOST=YES"
+DEB_CMAKE_EXTRA_FLAGS += "-DWITH_SYSTEM_BOOST=YES -DPKCS11_MODULE_DIR=/usr/lib"
 
 pre-build::
 	mkdir -p $(CURDIR)/$(DEB_SRCDIR)/projects

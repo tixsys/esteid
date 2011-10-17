@@ -29,7 +29,7 @@ Architecture: any
 Provides: libdigidoc0, libdigidoc++0
 Conflicts: libdigidoc0 (<< 0.1.0-0), libdigidoc++0 (<< 0.1.0-0)
 Replaces: libdigidoc0 (<< 0.1.0-0), libdigidoc++0 (<< 0.1.0-0)
-Depends: ${shlibs:Depends}, libopensc3
+Depends: ${shlibs:Depends}, opensc
 Recommends: pcscd
 Description: BDoc C++ library
  BDoc C++ lib is library for creating and validating BDOC-1.0 documents.
