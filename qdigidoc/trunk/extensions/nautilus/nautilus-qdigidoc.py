@@ -19,14 +19,14 @@
 #
 import os
 import urllib
-import gio
-import nautilus
 import gettext
 import locale
 
+from gi.repository import Nautilus, GObject, Gio
+
 APP = 'nautilus-qdigidoc'
 
-class OpenDigidocExtension(nautilus.MenuProvider):
+class OpenDigidocExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         pass
         
@@ -41,7 +41,7 @@ class OpenDigidocExtension(nautilus.MenuProvider):
         self._open_client(paths)
 
     def valid_file(self, file):
-        return file.get_file_type() == gio.FILE_TYPE_REGULAR and file.get_uri_scheme() == 'file'
+        return file.get_file_type() == Gio.FileType.REGULAR and file.get_uri_scheme() == 'file'
 
     def get_file_items(self, window, files):
         paths = []
@@ -62,9 +62,11 @@ class OpenDigidocExtension(nautilus.MenuProvider):
                                            'Sign selected files with Digidoc3 Client',
                                            len(paths))
 
-        item = nautilus.MenuItem('DigidocSigner',
-                                 _('Sign with ID card'),
-                                 tooltip_message)
+        item = Nautilus.MenuItem(
+            name="OpenDigidocExtension::DigidocSigner",
+            label=_('Sign with ID card'),
+            tip=tooltip_message
+        )
         item.set_property('icon', 'qdigidoc-client')
 
         item.connect('activate', self.menu_activate_cb, paths)
