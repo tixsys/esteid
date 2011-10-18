@@ -27,6 +27,24 @@
             <target>1.5</target>
           </configuration>
         </plugin>
+       <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <index>true</index>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+              <manifestEntries>
+                <Vaadin-Package-Version>1</Vaadin-Package-Version>
+                <!-- Comma-separated list of widgetsets in the package -->
+                <Vaadin-Widgetsets>ee.smartlink.esteid.widgetset.EsteidWidgetset</Vaadin-Widgetsets>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
 
