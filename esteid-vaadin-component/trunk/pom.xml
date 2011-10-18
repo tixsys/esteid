@@ -15,20 +15,21 @@
 		<gson.version>1.6</gson.version>
 	</properties>
 	<build>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-
-      
-      
-      
-
       <!-- Compiles your custom GWT components with the GWT compiler -->
       <!-- A hosted mode browser for client-side widget debugging can be run with the goal gwt:run after uncommenting the 
         correct line below. A remote debugger can then be connected to port 8998. Note that e.g. a Jetty server should be running 
