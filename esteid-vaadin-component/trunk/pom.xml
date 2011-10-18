@@ -58,17 +58,13 @@
         <artifactId>gwt-maven-plugin</artifactId>
         <version>${gwt.plugin.version}</version>
         <configuration>
-          <!-- if you don't specify any modules, the plugin will find them -->
-          <modules> 
-            <module>ee.smartlink.esteid.widgetset.EsteidWidgetset</module> 
-          </modules>
           <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
           <!-- On Mac running Snow Leopard, add "-d32" -->
           <!-- This causes error messages (but build works) in phase "package": two processes would use the same debug 
             port -->
           <!--extraJvmArgs>-Xmx512M -Xss1024k -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8998</extraJvmArgs -->
           <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-          <runTarget>project-name</runTarget>
+          <runTarget>esteid-vaadin-component</runTarget>
           <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
           <noServer>true</noServer>
           <port>8080</port>
@@ -101,10 +97,6 @@
         <version>${vaadin.plugin.version}</version>
         <executions>
           <execution>
-            <configuration>
-              <!-- if you don't specify any modules, the plugin will find them -->
-              <!-- <modules> <module>your.company.gwt.MyWidgetSet</module> </modules> -->
-            </configuration>
             <goals>
               <goal>update-widgetset</goal>
             </goals>
@@ -112,7 +104,7 @@
         </executions>
       </plugin>
 
-      <!-- A simple Jetty test server at http://localhost:8080/project-name can be launched with the Maven goal jetty:run 
+      <!-- A simple Jetty test server at http://localhost:8080/esteid-vaadin-component can be launched with the Maven goal jetty:run 
         and stopped with jetty:stop -->
       <plugin>
         <groupId>org.mortbay.jetty</groupId>
@@ -120,12 +112,12 @@
         <version>6.1.24</version>
         <configuration>
           <stopPort>9966</stopPort>
-          <stopKey>project-name</stopKey>
+          <stopKey>esteid-vaadin-component</stopKey>
           <!-- Redeploy every x seconds if changes are detected, 0 for no automatic redeployment -->
           <scanIntervalSeconds>0</scanIntervalSeconds>
           <!-- make sure Jetty also finds the widgetset -->
           <webAppConfig>
-            <contextPath>/project-name</contextPath>
+            <contextPath>/esteid-vaadin-component</contextPath>
             <baseResource implementation="org.mortbay.resource.ResourceCollection">
               <!-- Workaround for Maven/Jetty issue http://jira.codehaus.org/browse/JETTY-680 -->
               <!-- <resources>src/main/webapp,${project.build.directory}/${project.build.finalName}</resources> -->
