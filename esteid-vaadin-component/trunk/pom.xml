@@ -131,10 +131,10 @@
     <!-- This is needed for the sources required by the GWT compiler to be included in the produced JARs -->
     <resources>
       <resource>
-        <directory>src</directory>
+        <directory>src/main/java</directory>
       </resource>
       <resource>
-        <directory>src/ee/smartlink/esteid/widgeteset</directory>
+        <directory>src/main/resources</directory>
       </resource>
     </resources>
   </build>
