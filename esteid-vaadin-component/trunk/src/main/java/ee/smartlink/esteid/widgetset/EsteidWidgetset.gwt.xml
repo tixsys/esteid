@@ -19,6 +19,6 @@
     <!-- <set-property name="user.agent" value="gecko1_8"/> -->
 	 <!-- Inherit the JSON parsing stuff.                            -->
 	<script src="esteid/scripts/esteid.js"/>
-
-    
+	<script src="esteid/scripts/esteid-legacy.js"/>
+	<script src="esteid/scripts/esteid-component.js"/>    
 </module>

@@ -7,7 +7,6 @@ import com.vaadin.terminal.gwt.client.Paintable;
 import com.vaadin.terminal.gwt.client.UIDL;
 
 public class VEstEidComponent extends Widget implements Paintable{
-
 	
 	/** Set the tagn ame used to statically resolve widget from UIDL. */
     public static final String TAGNAME = "esteidcomponent";
@@ -20,12 +19,9 @@ public class VEstEidComponent extends Widget implements Paintable{
 	
 	/** Reference to the server connection object. */
 	ApplicationConnection client;
-
 	
 	 /** current state **/
     private int state = 0;
-		
-    
 	
 	/**
 	 * The constructor should first call super() to initialize the component and
@@ -38,9 +34,7 @@ public class VEstEidComponent extends Widget implements Paintable{
 		
 		// This method call of the Paintable interface sets the component
 		// style name in DOM tree
-	setStyleName(CLASSNAME);
-		
-		
+		setStyleName(CLASSNAME);
 	}
 	
 	
@@ -113,15 +107,15 @@ public class VEstEidComponent extends Widget implements Paintable{
 	 // based on the method's return type
 	 public native String getPersonInfo() /*-{
 	    // Get a reference to the first customer in the JSON array from earlier
-	    return $wnd.JSON.stringify($wnd.estEidLoader.readPersonInfo());
+	    return $wnd.JSON.stringify($wnd.esteid_component.readPersonInfo());
 	 }-*/;
 	
     native boolean isSupported() /*-{
-	return typeof $wnd.estEidLoader != "undefined";
+	return typeof $wnd.esteid_component != "undefined";
 	}-*/;
 	
 	native void sign(VEstEidComponent component, String hash) /*-{
-		$wnd.estEidLoader.doSign(hash, "url", {
+		$wnd.esteid_component.doSign(hash, "url", {
 			onSuccess:function(hex) {
 				component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
 			},
@@ -132,14 +126,14 @@ public class VEstEidComponent extends Widget implements Paintable{
 	}-*/;
 	
 	native String getCertBase64() /*-{
-		return $wnd.estEidLoader.getCertBase64();
+		return $wnd.esteid_component.getCertBase64();
 	}-*/;
 	
 	public native void initialize(VEstEidComponent component) /*-{
 		var self=this;
-		if (typeof($wnd.estEidLoader)!="undefined") 
+		if (typeof($wnd.esteid_component)!="undefined") 
 		{	
-			$wnd.estEidLoader.loadPlugin('__esteid', {
+			$wnd.esteid_component.loadPlugin('__esteid', {
 				pluginReady: function(cert) {
 					component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (cert);
 				},
