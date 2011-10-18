@@ -1,21 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ee.smartlink</groupId>
-	<artifactId>EstEid</artifactId>
-	<packaging>jar</packaging>
-	<version>1.0</version>
-	<name>Estonian ID card Signing Widget</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>6.6.4</vaadin.version>
-		<vaadin.plugin.version>1.0.2</vaadin.plugin.version>
-		<gwt.version>2.3.0</gwt.version>
-		<gwt.plugin.version>2.3.0</gwt.plugin.version>
-		<gson.version>1.6</gson.version>
-	</properties>
-	<build>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ee.smartlink</groupId>
+  <artifactId>EstEid</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>Estonian ID card Signing Widget</name>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <vaadin.version>6.6.4</vaadin.version>
+    <vaadin.plugin.version>1.0.2</vaadin.plugin.version>
+    <gwt.version>2.3.0</gwt.version>
+    <gwt.plugin.version>2.3.0</gwt.plugin.version>
+    <gson.version>1.6</gson.version>
+  </properties>
+
+  <build>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -41,7 +42,7 @@
         <configuration>
           <!-- if you don't specify any modules, the plugin will find them -->
           <modules> 
-          	<module>ee.smartlink.esteid.widgetset.EsteidWidgetset</module> 
+            <module>ee.smartlink.esteid.widgetset.EsteidWidgetset</module> 
           </modules>
           <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
           <!-- On Mac running Snow Leopard, add "-d32" -->
@@ -198,7 +199,7 @@
       <version>1.0.0.GA</version>
       <classifier>sources</classifier>
       <scope>provided</scope>
-	</dependency>
+  </dependency>
     
   </dependencies>
 
