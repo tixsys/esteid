@@ -3,6 +3,7 @@
  */
 
 estEidLoader.myuri         = '.';
+estEidLoader.jaruri        = estEidLoader.myuri + '/jar';
 estEidLoader.javaTimeout   = 30;
 estEidLoader.err_notloaded = "Applet not loaded yet!";
 estEidLoader.err_cancel    = "User Cancelled request";
@@ -314,7 +315,7 @@ estEidLoader.getCertJava = function() {
 estEidLoader.createJava = function(id, pluginReady, pluginFail) {
   if(estEidLoader.disable_java) { pluginFail(); return; }
 
-  var myuri = estEidLoader.myuri;
+  var jaruri = estEidLoader.jaruri;
 
   estEidLoader.htmlLog("Trying to create Java Applet");
 
@@ -324,7 +325,7 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
     var s = document.createElement('span');
     s.innerHTML = '<object id="jSign" classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93" width="1" height="1" codebase="http://java.sun.com/products/plugin/autodl/jinstall-1_4_0-win.cab#Version=1,4,0,0">' +
       '<param name="code" value="SignatureApplet.class">' +
-      '<param name ="archive" value="' + myuri + '/SignApplet_sig.jar,' + myuri + '/iaikPkcs11Wrapper_sig.jar">' +
+      '<param name ="archive" value="' + jaruri + '/SignApplet_sig.jar,' + jaruri + '/iaikPkcs11Wrapper_sig.jar">' +
       '<param name="type" value="application/x-java-applet;version=1.4">' +
       '<param name="mayscript" value="true">' +
       '<param name="name" value="SignatureApplet">' +
@@ -332,7 +333,7 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
       '<param name="lang" value="ENG">' +
       '<embed id="ejSign" type="application/x-java-applet;version=1.4" width="1" height="1"' +
       'pluginspage="http://java.sun.com/products/plugin/index.html#download" code="SignatureApplet.class"' +
-      'archive="' + myuri + '/SignApplet_sig.jar,' + myuri +'/iaikPkcs11Wrapper_sig.jar" ' +
+      'archive="' + jaruri + '/SignApplet_sig.jar,' + jaruri +'/iaikPkcs11Wrapper_sig.jar" ' +
       'name="SignatureApplet" mayscript="true" lang="ENG" debug_level="4">' +
       '</embed></object>';
     estEidLoader.appendToBody(s);
