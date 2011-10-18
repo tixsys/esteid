@@ -13,7 +13,6 @@
     <vaadin.plugin.version>1.0.2</vaadin.plugin.version>
     <gwt.version>2.3.0</gwt.version>
     <gwt.plugin.version>2.3.0</gwt.plugin.version>
-    <gson.version>1.6</gson.version>
   </properties>
 
   <build>
@@ -182,25 +181,11 @@
       <scope>provided</scope>
     </dependency> 
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>${gson.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <version>1.0.0.GA</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>1.0.0.GA</version>
-      <classifier>sources</classifier>
-      <scope>provided</scope>
-  </dependency>
-    
   </dependencies>
 
 </project>
