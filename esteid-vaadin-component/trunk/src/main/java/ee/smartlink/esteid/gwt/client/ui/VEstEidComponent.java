@@ -167,18 +167,24 @@ public class VEstEidComponent extends Widget implements Paintable{
 
     private native void initialize() /*-{
         var that = this;
+        var pluginId = this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ();
+
         if (typeof($wnd.estEidLoader) != "undefined")
         {
-            var pluginId = this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ();
-            $wnd.estEidLoader.loadPlugin(pluginId, {
-                pluginReady: function() {
-                    var ver = $wnd.document.getElementById(pluginId).getVersion();
-                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (ver);
-                },
-                pluginFail: function(msg) {
-                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (msg);
-                },
-            });
+            $wnd.estEidLoader.disable_java = true;
+            try {
+                $wnd.estEidLoader.loadPlugin(pluginId, {
+                    pluginReady: function() {
+                        var ver = $wnd.document.getElementById(pluginId).getVersion();
+                        that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (ver);
+                    },
+                    pluginFail: function(msg) {
+                        that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (msg);
+                    },
+                });
+            } catch(err) {
+                this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (err.toString());
+            }
         } else {
             this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) ('esteid-plugin-loader js Library not available');
         }
