@@ -104,13 +104,13 @@ estEidLoader.setupSKplug = function(id) {
     var s = document.getElementById("sSign");
     estEidLoader.htmlLog("Trying to sign with x-digidoc plugin");
     try { 
-      var id = s.getCertificate().id;
-      var sig = s.sign(id, hash, { language: 'en' });
+      var cid = s.getCertificate().id;
+      var sig = s.sign(cid, hash, { language: 'en' });
       estEidLoader.htmlLog("x-digidoc sign successful");
       callback.onSuccess(sig);
-    } catch(e) {
+    } catch(err) {
       estEidLoader.htmlLog("x-digidoc sign failed");
-      callback.onError(estEidLoader.err_sign + "[" + e.message + "]");
+      callback.onError(estEidLoader.err_sign + "[" + err.message + "]");
     }
     document.getElementById(id).signCert = null;
   };
