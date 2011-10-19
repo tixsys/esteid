@@ -417,7 +417,10 @@ estEidLoader.createJava = function(id, pluginReady, pluginFail) {
     estEidLoader.htmlLog("Trying to sign with Java Applet");
 
     var s = window.jCrap.plugin;
-    if(!s) callback.onError(estEidLoader.err_notloaded);
+    if(!s) {
+      callback.onError(estEidLoader.err_notloaded);
+      return;
+    }
     window.jCrap.callback = callback;
     s.finalize(window.jCrap.slot, hash, 'window.jCrap.sign',
                'window.jCrap.cancel', 'window.jCrap.error');
