@@ -457,7 +457,7 @@ estEidLoader.loadLegacySigner = function(id, cb) {
         estEidLoader.createJava(id, cb.pluginReady, function() {
           if(e) estEidLoader.removeFromBody(e);
           estEidLoader.htmlLog("Failed to find any legacy plugin");
-          cb.pluginFail();
+          cb.pluginFail("Unable to find any supported signing plugin");
         });
       });
     }
