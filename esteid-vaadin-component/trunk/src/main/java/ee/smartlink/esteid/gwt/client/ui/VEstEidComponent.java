@@ -141,14 +141,24 @@ public class VEstEidComponent extends Widget implements Paintable{
 
     native void sign(String hash, String url) /*-{
         var that = this;
-        $wnd.document.getElementById(this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ()).signAsync(hash, url, {
-            onSuccess: function(hex) {
-                that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
-            },
-            onError: function(msg) {
-                that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
-            }
-        });
+        var pluginId = this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ();
+        var plugin = $wnd.document.getElementById(pluginId);
+        if(!plugin) {
+            that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (pluginId + ' not found in page');
+            return;
+        }
+        try {
+            plugin.signAsync(hash, url, {
+                onSuccess: function(hex) {
+                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
+                },
+                onError: function(msg) {
+                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
+                }
+            });
+        } catch(err) {
+            that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (err.toString())
+        }
     }-*/;
 
     private native String getSignCert() /*-{
