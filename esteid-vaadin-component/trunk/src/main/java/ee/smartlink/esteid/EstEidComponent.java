@@ -12,7 +12,7 @@ import com.vaadin.ui.Window.Notification;
  * @author Lauri Lüüs.
  */
 
-@com.vaadin.ui.ClientWidget(ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent.class)
+@com.vaadin.ui.ClientWidget(ee.smartlink.esteid.gwt.client.ui.VEstEidComponent.class)
 public class EstEidComponent extends AbstractComponent {
 
     private static final long serialVersionUID = 6901433173868836522L;

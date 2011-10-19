@@ -1,4 +1,4 @@
-package ee.smartlink.esteid.widgetset.client.ui;
+package ee.smartlink.esteid.gwt.client.ui;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
@@ -141,36 +141,36 @@ public class VEstEidComponent extends Widget implements Paintable{
 
     native void sign(String hash, String url) /*-{
         var that = this;
-        $wnd.document.getElementById(this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ()).signAsync(hash, url, {
+        $wnd.document.getElementById(this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ()).signAsync(hash, url, {
             onSuccess: function(hex) {
-                that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
+                that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
             },
             onError: function(msg) {
-                that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
+                that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
             }
         });
     }-*/;
 
     private native String getSignCert() /*-{
-        return $wnd.document.getElementById(this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ()).signCert.cert;
+        return $wnd.document.getElementById(this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ()).signCert.cert;
     }-*/;
 
     private native void initialize() /*-{
         var that = this;
         if (typeof($wnd.estEidLoader) != "undefined")
         {
-            var pluginId = this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ();
+            var pluginId = this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::getPluginId() ();
             $wnd.estEidLoader.loadPlugin(pluginId, {
                 pluginReady: function() {
                     var ver = $wnd.document.getElementById(pluginId).getVersion();
-                    that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (ver);
+                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (ver);
                 },
                 pluginFail: function(msg) {
-                    that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (msg);
+                    that.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (msg);
                 },
             });
         } else {
-            this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) ('esteid-plugin-loader js Library not available');
+            this.@ee.smartlink.esteid.gwt.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) ('esteid-plugin-loader js Library not available');
         }
     }-*/;
 
