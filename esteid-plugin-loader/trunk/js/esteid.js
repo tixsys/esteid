@@ -8,6 +8,10 @@ var estEidLoader = {
    * @param {String} msg a message to log
    */
   htmlLog: function(msg) {
+    if(window.console && console.log) {
+      console.log(msg);
+    }
+
     var e = document.getElementById("htmlLog");
     if(e) e.innerHTML = "[" + (new Date()) + "] " + 
                         msg + "<br />\n" + e.innerHTML;
