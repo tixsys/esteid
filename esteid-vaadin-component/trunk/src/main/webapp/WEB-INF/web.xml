@@ -17,7 +17,7 @@
         <init-param>
             <description>Application widgetset</description>
             <param-name>widgetset</param-name>
-            <param-value>ee.smartlink.esteid.widgetset.EsteidWidgetSet</param-value>
+            <param-value>ee.smartlink.esteid.gwt.EsteidWidgetSet</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
