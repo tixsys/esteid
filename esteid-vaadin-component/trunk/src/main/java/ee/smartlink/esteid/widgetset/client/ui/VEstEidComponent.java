@@ -2,6 +2,7 @@ package ee.smartlink.esteid.widgetset.client.ui;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Timer;
 import com.vaadin.terminal.gwt.client.ApplicationConnection;
 import com.vaadin.terminal.gwt.client.Paintable;
 import com.vaadin.terminal.gwt.client.UIDL;
@@ -23,6 +24,10 @@ public class VEstEidComponent extends Widget implements Paintable{
      /** current state **/
     private int state = 0;
 
+
+    /** plugin tag ID in HTML */
+    private String pluginId;
+
     /**
      * The constructor should first call super() to initialize the component and
      * then handle any initialization relevant to Vaadin.
@@ -35,9 +40,15 @@ public class VEstEidComponent extends Widget implements Paintable{
         // This method call of the Paintable interface sets the component
         // style name in DOM tree
         setStyleName(CLASSNAME);
+
+        // set the plugin ID
+        pluginId = "VEstEid" + (int)(Math.random() * 20 + 1);
     }
 
 
+    public String getPluginId() {
+        return pluginId;
+    }
 
     /**
      * Called whenever an update is received from the server
@@ -56,30 +67,26 @@ public class VEstEidComponent extends Widget implements Paintable{
 
         if(uidl.getBooleanAttribute("initialize"))
         {
-            initialize(this);
-        }
-
-        if(uidl.getBooleanAttribute("loadPersonInfo"))
-        {
-            String person=getPersonInfo();
-            client.updateVariable(uidlId, "onPersonInfoLoaded", person, true);
-        }
-
-        if(uidl.getBooleanAttribute("getCertBase64"))
-        {
-            String cert=getCertBase64();
-            client.updateVariable(uidlId, "getCertBase64", cert, true);
+            initialize();
         }
 
         if(uidl.hasAttribute("sign"))
         {
-            String hash=uidl.getStringAttribute("signHash");
-            sign(this, hash);
+            String hash = uidl.getStringAttribute("signHash");
+            sign(hash, "url");
+        }
+        if(uidl.hasAttribute("getCert"))
+        {
+            getCert();
         }
     }
 
-    public void onPluginReady(String cert) {
-        client.updateVariable(uidlId, "onPluginReady", cert, true);
+    public void onPluginReady(String ver) {
+        client.updateVariable(uidlId, "onPluginReady", ver, true);
+    }
+
+    public void onPluginFailure(String msg) {
+        client.updateVariable(uidlId, "onPluginFailure", msg, true);
     }
 
     public void onSignSuccess(String hex) {
@@ -90,71 +97,80 @@ public class VEstEidComponent extends Widget implements Paintable{
         client.updateVariable(uidlId, "onSignFailure", msg, true);
     }
 
-    public void onCardInserted(String cert) {
-        client.updateVariable(uidlId, "onCardInserted", cert, true);
+    public void onCertificateLoaded(String cert) {
+        client.updateVariable(uidlId, "onCertificateLoaded", cert, true);
     }
 
-    public void onCardRemoved() {
-        client.updateVariable(uidlId, "onCardRemoved", true, true);
+    public void onCertificateFailure(String msg) {
+        client.updateVariable(uidlId, "onCertificateFailure", msg, true);
     }
 
-    public void onError(String msg) {
-        client.updateVariable(uidlId, "onError", msg, true);
-    }
+    public void getCert() {
+        final int timeout = 120;
 
-     // Use JSNI to grab the JSON object we care about
-     // The JSON object gets its Java type implicitly
-     // based on the method's return type
-     public native String getPersonInfo() /*-{
-        // Get a reference to the first customer in the JSON array from earlier
-        return $wnd.JSON.stringify($wnd.esteid_component.readPersonInfo());
-     }-*/;
+        Timer t = new Timer() {
+            int n = 0;
+            public void run() {
+                String cert = "";
+                try {
+                    cert = getSignCert();
+                } catch(Exception e) { }
+
+                if(cert != null && !cert.equals("")) {
+                    onCertificateLoaded(cert);
+                    cancel();
+                }
+
+                if(n > timeout) {
+                    onCertificateFailure("Timed out waiting for certificate");
+                    cancel();
+                }
+                n++;
+            }
+        };
+        t.scheduleRepeating(1000);
+    };
+
+    // Use JSNI to grab the JSON object we care about
+    // The JSON object gets its Java type implicitly
+    // based on the method's return type
 
     native boolean isSupported() /*-{
-    return typeof $wnd.esteid_component != "undefined";
+      return typeof $wnd.estEidLoader != "undefined";
     }-*/;
 
-    native void sign(VEstEidComponent component, String hash) /*-{
-        $wnd.esteid_component.doSign(hash, "url", {
-            onSuccess:function(hex) {
-                component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
+    native void sign(String hash, String url) /*-{
+        var that = this;
+        $wnd.document.getElementById(this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ()).signAsync(hash, url, {
+            onSuccess: function(hex) {
+                that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (hex);
             },
-            onError:function(msg) {
-                component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
+            onError: function(msg) {
+                that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
             }
         });
     }-*/;
 
-    native String getCertBase64() /*-{
-        return $wnd.esteid_component.getCertBase64();
+    private native String getSignCert() /*-{
+        return $wnd.document.getElementById(this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ()).signCert.cert;
     }-*/;
 
-    public native void initialize(VEstEidComponent component) /*-{
-        var self=this;
-        if (typeof($wnd.esteid_component)!="undefined")
+    private native void initialize() /*-{
+        var that = this;
+        if (typeof($wnd.estEidLoader) != "undefined")
         {
-            $wnd.esteid_component.loadPlugin('__esteid', {
-                pluginReady: function(cert) {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (cert);
+            var pluginId = this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::getPluginId() ();
+            $wnd.estEidLoader.loadPlugin(pluginId, {
+                pluginReady: function() {
+                    var ver = $wnd.document.getElementById(pluginId).getVersion();
+                    that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginReady(Ljava/lang/String;) (ver);
                 },
                 pluginFail: function(msg) {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onError(Ljava/lang/String;) (msg);
+                    that.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) (msg);
                 },
-                onCardInserted: function(cert) {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onCardInserted(Ljava/lang/String;) (cert);
-                },
-                onCardRemoved: function() {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onCardRemoved() ();
-                },
-                onSignSuccess: function(msg) {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignSuccess(Ljava/lang/String;) (msg);
-                },
-                onSignFailure: function(msg) {
-                    component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onSignFailure(Ljava/lang/String;) (msg);
-                }
             });
-        }else{
-            component.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onError(Ljava/lang/String;) ('esteid js Library not available');
+        } else {
+            this.@ee.smartlink.esteid.widgetset.client.ui.VEstEidComponent::onPluginFailure(Ljava/lang/String;) ('esteid-plugin-loader js Library not available');
         }
     }-*/;
 
