@@ -19,15 +19,15 @@ public class EsteidApplication extends Application {
 
 	@Override
 	public void init() {
-		 final Window mainWindow = new Window("Ie6crash Application");
-	        final EstEidComponent estEid = new EstEidComponent();
-	        
-	        estEid.addListener(new EstEidComponent.EstEidCardListener() {
-				
+		final Window mainWindow = new Window("Ie6crash Application");
+		final EstEidComponent estEid = new EstEidComponent();
+
+		estEid.addListener(new EstEidComponent.EstEidCardListener() {
+
 				@Override
 				public void onEstEidEvent(EstEidEvent event) {
 					switch (event.getEventType()) {
-					case CARD_INSERTED:	
+					case CARD_INSERTED:
 						mainWindow.showNotification("Card inserted",event.getMessage(),Notification.TYPE_HUMANIZED_MESSAGE);
 						b.setEnabled(true);
 						tf.setEnabled(true);
@@ -53,10 +53,10 @@ public class EsteidApplication extends Application {
 						break;
 					default:
 						break;
-					}					
+					}
 				}
 			});
-	        estEid.addListener(new EstEidComponent.PersonInfoLoadedListener() {
+		estEid.addListener(new EstEidComponent.PersonInfoLoadedListener() {
 				@Override
 				public void onLoaded(PersonInfoLoadedEvent event) {
 					mainWindow.showNotification("Customer loaded","Welcome "+event.getPersonInfo().getFirstName(), Notification.TYPE_HUMANIZED_MESSAGE);
@@ -68,34 +68,34 @@ public class EsteidApplication extends Application {
 					return null;
 				}
 			});
-	        
-	        estEid.init();
-	        b = new Button("Load customer info");
-	        b.addListener(new Button.ClickListener() {
-	            @Override
-	            public void buttonClick(ClickEvent event) {
-	                estEid.LoadCustomerInfo();
-	            	//PersonInfo pi=estEid.getPersonInfo();
-	            	
-	            }
-	        });
-	        
-	        tf = new TextField("demoHash");
-	        tf.setValue("26fd6dbee37c55c14af480f00daff8817b61967e");
-	        sign = new Button("Sign the hash");
-	        sign.addListener(new Button.ClickListener() {
-	            @Override
-	            public void buttonClick(ClickEvent event) {
-	                estEid.startSign((String)tf.getValue());
-	            }
-	        });
-	        
-	        mainWindow.addComponent(b);
-	        mainWindow.addComponent(estEid);
-	        mainWindow.addComponent(tf);
-	        mainWindow.addComponent(sign);
-	        
-	        setMainWindow(mainWindow);
+
+		estEid.init();
+		b = new Button("Load customer info");
+		b.addListener(new Button.ClickListener() {
+		    @Override
+		    public void buttonClick(ClickEvent event) {
+			estEid.LoadCustomerInfo();
+		    	//PersonInfo pi=estEid.getPersonInfo();
+		    
+		    }
+		});
+
+		tf = new TextField("demoHash");
+		tf.setValue("26fd6dbee37c55c14af480f00daff8817b61967e");
+		sign = new Button("Sign the hash");
+		sign.addListener(new Button.ClickListener() {
+		    @Override
+		    public void buttonClick(ClickEvent event) {
+			estEid.startSign((String)tf.getValue());
+		    }
+		});
+
+		mainWindow.addComponent(b);
+		mainWindow.addComponent(estEid);
+		mainWindow.addComponent(tf);
+		mainWindow.addComponent(sign);
+
+		setMainWindow(mainWindow);
 	}
 
 }
