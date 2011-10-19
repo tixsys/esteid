@@ -442,7 +442,7 @@ estEidLoader.loadLegacySigner = function(id, cb) {
 
   /* Create a dummy DOM object to attach our wrapper functions to */
   var e = document.createElement("span");
-  e.id = 'esteid';
+  e.id = id;
   e.isLegacy = true;
   e = estEidLoader.appendToBody(e);
 
