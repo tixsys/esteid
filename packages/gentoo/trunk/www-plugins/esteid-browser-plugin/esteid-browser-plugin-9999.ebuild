@@ -1,13 +1,12 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="3"
 
-inherit cmake-utils git mozextension multilib nsplugins subversion
+inherit cmake-utils git-2 mozextension multilib nsplugins subversion
 
-EGIT_BRANCH="firebreath-1.5"
-EGIT_COMMIT="${EGIT_BRANCH}"
+EGIT_BRANCH="firebreath-1.6"
 EGIT_REPO_URI="git://github.com/firebreath/FireBreath.git"
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
 
@@ -34,9 +33,9 @@ RDEPEND="${DEPEND}
 	dev-libs/opensc"
 
 src_unpack() {
-	# unpack firebreath
-	git_src_unpack
-	# unpack esteid-browser-plugin to projects/ subdir
+	# Unpack firebreath
+	git-2_src_unpack
+	# Unpack esteid-browser-plugin into projects/ subdir
 	subversion_fetch ${ESVN_REPO_URI} projects/${MY_PN}
 }
 
@@ -101,4 +100,9 @@ pkg_postinst() {
 	for i in ${mozillas}; do
 		elog "  $i"
 	done
+
+	elog
+	elog "If you have installed other Mozilla programs after installing esteid"
+	elog "browser plugin, you need to reinstall ${PN} to make this plugin"
+	elog "available to these programs."
 }

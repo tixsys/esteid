@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -44,8 +44,6 @@ src_unpack() {
 	pushd "${S}/projects"
 	unpack "${P}.tar.bz2"
 	popd
-
-	#cd "${S}"
 }
 
 src_configure() {
@@ -110,4 +108,9 @@ pkg_postinst() {
 	for i in ${mozillas}; do
 		elog "  $i"
 	done
+
+	elog
+	elog "If you have installed other Mozilla programs after installing esteid"
+	elog "browser plugin, you need to reinstall ${PN} to make this plugin"
+	elog "available to these programs."
 }
