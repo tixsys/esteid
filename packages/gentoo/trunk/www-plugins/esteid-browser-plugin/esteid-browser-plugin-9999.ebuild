@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://github.com/firebreath/FireBreath.git"
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/${PN}/trunk"
 
 MY_PN="esteid"
-MY_PV="1.3.1"
+MY_PV="1.3.2"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="Estonian ID card digital signing browser plugin"

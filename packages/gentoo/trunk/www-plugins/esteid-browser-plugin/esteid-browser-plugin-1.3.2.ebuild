@@ -36,16 +36,16 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${FB_P}"
 
 src_unpack() {
-	# unpack firebreath
+	# Unpack firebreath
 	unpack "${FB_P}.tar.bz2"
 
-	# unpack esteid-browser-plugin to projects/ subdir
+	# Unpack esteid-browser-plugin into projects/ subdir
 	mkdir -p "${S}/projects"
 	pushd "${S}/projects"
 	unpack "${P}.tar.bz2"
 	popd
 
-	cd "${S}"
+	#cd "${S}"
 }
 
 src_configure() {
