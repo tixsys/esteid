@@ -63,10 +63,11 @@ var estEidLoader = {
       return;
     }
 
-    /* Wait for plugin only on browsers that support plugin registry
-     * because then we are sure that the plugin actually has a chance
-     * to become active. Othervise we are just wasting valuable time. */
-    if(!navigator.mimeTypes || navigator.mimeTypes.length <= 0) {
+    /* Check if browser has completed loading of the plugin.
+     * If plugin is loaded but does not respond it must of failed. */
+    if(typeof e.readyState !== "undefined" &&
+        (e.readyState == 4 || e.readyState == "complete")) {
+      estEidLoader.htmlLog("Plugin ready, but does not respond. Stop waiting.");
       callbacks.onFail(e);
       return;
     }
