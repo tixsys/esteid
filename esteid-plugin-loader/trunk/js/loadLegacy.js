@@ -73,7 +73,17 @@ estEidLoader.defineCertGetter = function(id, getter) {
     var e = document.getElementById(id);
 
     try {
-        e.__defineGetter__("signCert", getter);
+        /* Define ES5 getter if possible */
+        if(Object.defineProperty) {
+            /* Check if getters actually work, IE8 has broken implementation. */
+            var t = new Object();
+            Object.defineProperty(t,"a",{get:function(){return {a: "ok"};}});
+            if(t.a.a !== "ok") throw("Broken defineProperty implementation");
+
+            Object.defineProperty(e, "signCert", { get : getter });
+        } else {
+            e.__defineGetter__("signCert", getter);
+        }
     } catch(err) {
         // Use polling for old IE-s that have no support for getters
         estEidLoader.pollCert(id, getter);
