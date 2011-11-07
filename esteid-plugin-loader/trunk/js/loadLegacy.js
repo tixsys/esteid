@@ -89,10 +89,14 @@ estEidLoader.getCertSKplug = function() {
     var s = document.getElementById("sSign");
     var c = s.getCertificate();
 
-    /* TODO: Improve error handling */
-    if(!c.certificateAsPEM) throw("no cert data");
+    /* SK Plugin has certificateAsPEM field, but it's broken in IE */
 
-    return { cert: c.certificateAsPEM,
+    /* TODO: Improve error handling */
+    if(!c.certificateAsHex) throw("no cert data");
+
+    s.certID = c.id;
+
+    return { cert: estEidLoader.hex2pem(c.certificateAsHex),
              CN: c.CN,
              validFrom: c.validFrom,
              validTo: c.validUntil };
@@ -104,8 +108,8 @@ estEidLoader.setupSKplug = function(id) {
     var s = document.getElementById("sSign");
     estEidLoader.htmlLog("Trying to sign with x-digidoc plugin");
     try { 
-      var cid = s.getCertificate().id;
-      var sig = s.sign(cid, hash, { language: 'en' });
+      if(!s.certID) s.certID = s.getCertificate().id;
+      var sig = s.sign(s.certID, hash, { language: 'en' });
       estEidLoader.htmlLog("x-digidoc sign successful");
       callback.onSuccess(sig);
     } catch(err) {
