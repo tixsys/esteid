@@ -28,9 +28,10 @@ Windows XP
  * Google Chrome 6.0
 
 Windows 7 32bit and 64bit
- * Firefox 3.6 and 4.0b6
+ * Firefox 3.6, 4.0b6, 7.0
  * Internet Explorer 8 (see note)
- * Google Chrome 6
+ * Internet Explorer 9
+ * Google Chrome 6, 15
 
 MacOSX 10.6.4
  * Safari 5.0
