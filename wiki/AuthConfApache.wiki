@@ -37,7 +37,7 @@ cd /etc/pki/esteid/ca
 wget -O "JUUR-SK.crt" http://www.sk.ee/files/JUUR-SK.PEM.cer
 wget -O "ESTEID-SK.crt" http://www.sk.ee/upload/files/ESTEID-SK.PEM.cer
 wget -O "ESTEID-SK 2007.crt" http://www.sk.ee/files/ESTEID-SK%202007.PEM.cer
-wget -O "ESTEID_SK 2011.crt" http://www.sk.ee/upload/files/ESTEID-SK%202011.pem.cer
+wget -O "ESTEID-SK 2011.crt" http://www.sk.ee/upload/files/ESTEID-SK%202011.pem.cer
 
 for f in *.crt;do ln -sf "$f" `openssl x509 -hash -noout -in "$f"`.0; done
 }}}
