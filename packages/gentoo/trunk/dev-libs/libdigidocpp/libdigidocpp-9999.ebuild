@@ -5,7 +5,7 @@
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/libdigidocpp/trunk"
 
 EAPI=3
-inherit cmake-utils subversion
+inherit cmake-utils eutils subversion
 
 DESCRIPTION="Library for creating and validating BDoc and DDoc containers"
 HOMEPAGE="http://code.google.com/p/esteid/"
@@ -21,13 +21,14 @@ RDEPEND="dev-libs/libp11
 	dev-libs/xerces-c
 	dev-libs/xml-security-c
 	dev-util/cppunit
-	sys-libs/zlib"
+	sys-libs/zlib[minizip]"
 DEPEND="${RDEPEND}
 	>=dev-cpp/xsd-3.2.0"
 
 DOCS="AUTHORS NEWS README"
 
 src_prepare() {
+	epatch "${FILESDIR}/system-minizip.patch"
 	# We use another package (app-misc/sk-certificates) to install root certs
 	cd ${S}
 	rm etc/certs/*

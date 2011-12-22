@@ -1,0 +1,15 @@
+diff --git a/src/io/ZipSerialize.cpp b/src/io/ZipSerialize.cpp
+index 26f1c61..f41e4b1 100644
+--- a/src/io/ZipSerialize.cpp
++++ b/src/io/ZipSerialize.cpp
+@@ -18,8 +18,8 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  */
+ 
+-#include "../minizip/zip.h"
+-#include "../minizip/unzip.h"
++#include <minizip/zip.h>
++#include <minizip/unzip.h>
+ 
+ #include <iostream>
+ #include "../log.h"
