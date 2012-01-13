@@ -35,10 +35,10 @@ sudo apt-get dist-upgrade
 sudo apt-get install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid 
 }}}
 
+*NB!* Kui tahad, et töötaks allkirjastamine Nautiluse failihalduri kontekstimenüüst, siis paigalda paketi _qdigidoc_ asemel elik sellele lisaks pakett _qdigidoc-nautilus_.
+
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
 sudo apt-get update
 sudo apt-get dist-upgrade
 }}}
-
-*NB!* Kui tahad, et töötaks allkirjastamine Nautiluse kontekstimenüüst, siis paigalda paketi _qdigidoc_ asemel elik sellele lisaks pakett _qdigidoc-nautilus_.
