@@ -1,5 +1,5 @@
 = Ubuntu =
-Toetatud versioonid *Lucid Lynx (10.04)*, *Maverick Meerkat (10.10)*, *Natty Narwhal (11.04)*, *Oneiric Ocelot (11.10)*
+Toetatud versioonid *Lucid Lynx (10.04)*, *Maverick Meerkat (10.10)*, *Natty Narwhal (11.04)*, *Oneiric Ocelot (11.10)*, *Precise Pangolin (12.04)*
 
 == Graafiline paigaldus ==
 
@@ -23,7 +23,7 @@ http://esteid.googlecode.com/svn/wiki/img/ubuntu-addppa-et.png
 
 == Paigaldus käsurealt ==
 
-Tarkvara esmakordsel paigaldamisel on vaja lisada repositoorium:
+Tarkvara esmakordsel paigaldamisel on vaja lisada varamu:
 {{{
 sudo add-apt-repository ppa:esteid/ppa
 }}}
@@ -40,3 +40,5 @@ Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmisel
 sudo apt-get update
 sudo apt-get dist-upgrade
 }}}
+
+*NB!* Kui tahad, et töötaks allkirjastamine Nautiluse kontekstimenüüst, siis paigalda paketi _qdigidoc_ asemel elik sellele lisaks pakett _qdigidoc-nautilus_.
