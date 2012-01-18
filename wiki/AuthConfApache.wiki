@@ -94,7 +94,6 @@ cd "/etc/pki/esteid"/crl || exit 2
 
 echo -n "Starting CRL download: "
 LANG=C date
-wget -nv -O "esteid.der" http://www.sk.ee/crls/esteid/esteid.crl
 wget -nv -O "esteid2007.der" http://www.sk.ee/crls/esteid/esteid2007.crl 
 wget -nv -O "crl.der" http://www.sk.ee/crls/juur/crl.crl
 wget -nv -O "esteid2011.der" http://www.sk.ee/repository/crls/esteid2011.crl
