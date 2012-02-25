@@ -20,6 +20,8 @@
 	#include <Windows.h>
 	#include <WinNT.h>
 	#include <Psapi.h>
+#else
+#include <unistd.h>
 #endif
 
 #define NULLWSTR(a) (a == NULL ? L"<NULL>" : a)
