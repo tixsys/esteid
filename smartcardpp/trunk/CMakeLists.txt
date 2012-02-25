@@ -21,9 +21,15 @@ if(MSVC)
 endif(MSVC)
 
 include_directories(
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PCSCLITE_INCLUDE_DIR}
 )
+
+include(CheckIncludeFiles)
+check_include_files(getopt.h HAVE_GETOPT_H)
+configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+add_definitions(-DHAVE_CONFIG_H)
 
 if(MSVC AND USE_STATIC_RUNTIME)
     message(STATUS "Building with static MSVC runtime")
