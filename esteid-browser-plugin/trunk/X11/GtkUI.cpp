@@ -55,17 +55,17 @@ GtkUI::GtkUI(boost::shared_ptr<UICallbacks> cb)
 
     // connect signals
     if (m_pinInputDialog) {
-        m_pinInputDialog->signal_show().connect(sigc::bind(sigc::mem_fun(*this,
+        m_pinInputDialog->signal_realize().connect(sigc::bind(sigc::mem_fun(*this,
                     &GtkUI::make_transient), m_pinInputDialog));
         m_pinInputConnection = m_pinInputDialog->signal_response().connect( sigc::mem_fun(*this,
                     &GtkUI::on_pininputdialog_response) );
     }
     if (m_pinpadDialog) {
-        m_pinpadDialog->signal_show().connect(sigc::bind(sigc::mem_fun(*this,
+        m_pinpadDialog->signal_realize().connect(sigc::bind(sigc::mem_fun(*this,
                     &GtkUI::make_transient), m_pinpadDialog));
     }
     if (m_whitelistDialog) {
-        m_whitelistDialog->signal_show().connect(sigc::bind(sigc::mem_fun(*this,
+        m_whitelistDialog->signal_realize().connect(sigc::bind(sigc::mem_fun(*this,
                     &GtkUI::make_transient), m_whitelistDialog));
         m_whitelistDialog->signal_response().connect( sigc::mem_fun(*this,
                     &GtkUI::on_whitelistdialog_response) );
@@ -182,7 +182,7 @@ void GtkUI::pinBlockedMessage(int pin)
 
     Gtk::MessageDialog dialog(_("PIN2 blocked"), false, Gtk::MESSAGE_WARNING);
     dialog.set_secondary_text(_("Please run ID card Utility to unlock the PIN."));
-    dialog.signal_show().connect(sigc::bind(sigc::mem_fun(*this,
+    dialog.signal_realize().connect(sigc::bind(sigc::mem_fun(*this,
                 &GtkUI::make_transient), &dialog));
 
     dialog.run();
