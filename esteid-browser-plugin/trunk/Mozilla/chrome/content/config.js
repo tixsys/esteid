@@ -367,12 +367,6 @@ function ConfigureEstEID() {
     var certdb    = Cc[nsX509CertDB]  .createInstance(Ci.nsIX509CertDB);
     var certdb2   = certdb.QueryInterface(Ci.nsIX509CertDB2);
 
-/*  This works as documented with FF >= 3.0,
- *  but we need Thunderbird 2.0 support as well so
- *  we are currently using code that relies on undocumented
- *  behaviour below :(
- *  FIXME: Use this code after dropping 2.0 support
-
     var certcache = Cc[nsNSSCertCache].createInstance(Ci.nsINSSCertCache);
     certcache.cacheAllCerts();
     var certList = certcache.getX509CachedCerts().getEnumerator();
@@ -385,22 +379,7 @@ function ConfigureEstEID() {
             caCertIDs.push(cert.sha1Fingerprint);
         }
     }
-*/
-
-    var cnt = new Object(); var nicks = new Object(); 
-    certdb.findCertNicknames(null, Ci.nsIX509Cert.CA_CERT, cnt, nicks);
-    nicks = nicks.value;
-    esteid_debug("Found " + nicks.length + " CA certs from database");
-    for(var i = 0; i < nicks.length; i++) {
-        /* UNDOCUMENTED CRAP!
-         * The strings in array do NOT contain a nickname but
-         * are actually in format: \001Token Name\001Cert Name\001DbKey
-         * See: security/manager/ssl/src/nsNSSCertificateDB.cpp
-         */
-        var tmp = nicks[i].split("\001");
-        var cert = certdb.findCertByDBKey(tmp[tmp.length-1], null);
-        caCertIDs.push(cert.sha1Fingerprint);
-    }
+    esteid_debug("Found " + caCertIDs.length + " CA certs from database");
 
     var EstEIDcertIDs = new Array();
 
