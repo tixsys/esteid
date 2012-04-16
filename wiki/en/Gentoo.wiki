@@ -1,38 +1,29 @@
 = Gentoo =
-Supported versions ~x86 ja ~x86_64
+Supported version is Gentoo testing (*~x86* ja *~amd64*)
 
+=== Software installation ===
 
-=== Installing software ===
-
-At the moment there is an experimental "esteid" overlay for Gentoo where you can get the necessary live builds for installing the software. To use the overlay you need a program named "layman" which has to be installed and configured first. In addition you need svn and git clients. To install layman:
+At the moment there is an experimental "esteid" overlay for ebuilds. To use the overlay you will need a program called "layman" which has to be installed and configured first. In addition you need svn and git clients.
+To install layman:
 {{{
 emerge -av layman subversion dev-util/git
 echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 }}}
 
-Some of the necessary XML libraries are not in the Gentoo portage and you need the "dev-zero" overlay for them. To install the overlays use the following commands:
+Use to following commands to add esteid overlay:
 {{{
-layman -a dev-zero
-layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
+layman -f --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
 
-After that installing the software should work:
+After that it's just the matter of emerging the packages:
 {{{
 emerge -av qdigidoc qesteidutil esteid-browser-plugin
 }}}
 
-To update the software later you first need to synchronize the overlays and then recompile everything:
+To update the software later you'll first need to synchronize the overlay and then apply updates:
 {{{
 layman -S
-emerge -av -1 libdigidoc libdigidocpp qdigidoc smartcardpp qesteidutil esteid-browser-plugin
+emerge -avuDN world
 etc-update
-}}}
-
-If you have already installed esteid overlay from id.eesti.ee and would now like to switch, run the following commands: 
-{{{
-layman -d esteid
-rm -rf /usr/portage/distfiles/svn-src/{esteid-mozilla,libdigidoc,libdigidocpp,qdigidoc,qesteidutil,smartcardpp}
-layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
-layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
