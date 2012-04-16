@@ -1,5 +1,5 @@
 = Gentoo =
-Toetatud Gentoo testing (*~x86* ja *~x86_64*)
+Toetatud Gentoo testing (*~x86* ja *~amd64*)
 
 === Tarkvara paigaldamine ===
 
@@ -12,7 +12,7 @@ echo "source /var/lib/layman/make.conf" >> /etc/make.conf
 
 Esteid overlay paigaldamiseks anna järgmised käsud:
 {{{
-layman -f esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
+layman -f --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 layman -a esteid --overlays=http://id.smartlink.ee/repo/gentoo/layman-idkaart.txt
 }}}
 
