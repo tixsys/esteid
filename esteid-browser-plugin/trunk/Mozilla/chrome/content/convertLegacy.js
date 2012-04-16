@@ -220,7 +220,7 @@ var EsteidConvertLegacy =
             doc = doc.defaultView.frameElement.ownerDocument;
           }
         }
-        this.loadHacks(doc);
+        EsteidConvertLegacy.loadHacks(doc);
       }
     }, true);
   }
