@@ -19,39 +19,49 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-var params = window.arguments[0];
-var sb = null;
-var plugin = null;
+var Prefs =
+{
+  plugin: null,
 
-function onLoad() {
-  var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"]
-                      .getService(Components.interfaces.nsIStringBundleService);
-  sb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
+  onLoad: function()
+  {
+    var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"]
+                        .getService(Components.interfaces.nsIStringBundleService);
+    var sb = sbs.createBundle("chrome://esteid/locale/esteid.properties");
 
-  var logmsg;
-  try {
-    Components.utils.import("resource://esteid/global.jsm");
-    logmsg = esteidglobal.log;
-  } catch(e) {
-    if(params.log) logmsg = params.log;
-    else logmsg = "";
-    logmsg += e + "\n";
+    var logmsg;
+    try {
+      Components.utils.import("resource://esteid/global.jsm");
+      logmsg = esteidglobal.log;
+    } catch(e) {
+      var params = window.arguments[0];
+
+      if (params.log)
+        logmsg = params.log;
+      else
+        logmsg = "";
+      logmsg += e + "\n";
+    }
+
+    var elt = document.getElementById('log');
+    elt.value = logmsg;
+
+    this.plugin = this.getPlugin();
+    if (this.plugin != null)
+      document.getElementById('wlbtn').disabled = false;
+  },
+
+  doOK: function()
+  {
+  },
+
+  getPlugin: function()
+  {
+    return document.getElementById('eidplugin');
+  },
+
+  openPluginSettings: function()
+  {
+    this.plugin.showSettings();
   }
-
-  var elt = document.getElementById('log');
-  elt.value = logmsg;
-
-  plugin = getPlugin();
-  if(plugin != null) document.getElementById('wlbtn').disabled = false;
-}
-
-function doOK() {
-}
-
-function getPlugin() {
-  return document.getElementById('eidplugin');
-}
-
-function openPluginSettings() {
-  plugin.showSettings();
-}
+};
