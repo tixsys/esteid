@@ -241,10 +241,10 @@ ByteVec CardBase::execute(ByteVec cmd, int apducase)
 		}
 		mManager.writeLog("[%s] [%d] Executing", __FUNCTION__, __LINE__);
 		mManager.execCommand(mConnection, cmd, RecvBuffer, realLen);
-		mManager.writeLog("[%s] [%d] Recieved buffer size is: %i bytes", __FUNCTION__, __LINE__, realLen);
+		mManager.writeLog("[%s] [%d] Received buffer size is: %i bytes", __FUNCTION__, __LINE__, realLen);
 		if(realLen < 2)
 		{
-		  mManager.writeLog("[%s] [%d] Recieved buffer size is less then two bytes: %i", __FUNCTION__, __LINE__,  realLen);
+		  mManager.writeLog("[%s] [%d] Received buffer size is less then two bytes: %i", __FUNCTION__, __LINE__,  realLen);
 		  SW1 = 0x00;
 		  SW2 = 0x00;
 		  throw CardDataError("Zero-length input from cardmanager");
@@ -286,10 +286,10 @@ ByteVec CardBase::execute(ByteVec cmd, int apducase)
 
 			mManager.writeLog("[%s] [%d] Executing...", __FUNCTION__, __LINE__);
 			mManager.execCommand(mConnection, cmdReadVec, RecvBuffer, realLen);
-			mManager.writeLog("[%s] [%d] Recieved buffer size is: %i bytes", __FUNCTION__, __LINE__, realLen);
+			mManager.writeLog("[%s] [%d] Received buffer size is: %i bytes", __FUNCTION__, __LINE__, realLen);
 			if(realLen < 2)
 			{
-			  mManager.writeLog("[%s] [%d] Recieved buffer size is less then two bytes: %i", __FUNCTION__, __LINE__,  realLen);
+			  mManager.writeLog("[%s] [%d] Received buffer size is less then two bytes: %i", __FUNCTION__, __LINE__,  realLen);
 			  SW1 = 0x00;
 			  SW2 = 0x00;
 			  throw CardDataError("Zero-length input from cardmanager");
