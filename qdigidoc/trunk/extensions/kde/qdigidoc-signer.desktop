@@ -1,7 +1,6 @@
 [Desktop Entry]
 X-KDE-ServiceTypes=KonqPopupMenu/Plugin,all/allfiles	
 Actions=sign;
-Encoding=UTF-8
 Type=Service
 X-KDE-Priority=TopLevel
 X-KDE-PluginInfo-Name=digidoc-signer
