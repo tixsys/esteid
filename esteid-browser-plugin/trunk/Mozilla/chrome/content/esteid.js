@@ -29,7 +29,7 @@ try {
     log : "",
     isConfigured : false,
   };
-  log_debug("No global JSM available, logs will be window specific");
+  esteid_debug("No global JSM available, logs will be window specific");
 }
 
 function esteid_log(a) {
