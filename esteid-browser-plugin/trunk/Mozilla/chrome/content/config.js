@@ -444,7 +444,7 @@ var Config =
         esteid_debug("Esteid Certs: " + EstEIDcertIDs.join("\n"));
 
         if (restartNeeded)
-            this.requestRestart();
+            setTimeout("Config.requestRestart()", 2000);
     }
 };
 
