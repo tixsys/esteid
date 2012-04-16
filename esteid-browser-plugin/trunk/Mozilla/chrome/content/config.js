@@ -24,10 +24,10 @@
  * security modules into browser.
  *
  * IMPORTANT NOTE: global functions esteid_log esteid_error and esteid_debug
- * must be defined before running the code in Config.init();
+ * must be defined before running the code in EsteidConfig.init();
  */
 
-var Config =
+var EsteidConfig =
 {
     PEM2Base64: function(pem)
     {
@@ -436,7 +436,7 @@ var Config =
         esteid_debug("Esteid Certs: " + EstEIDcertIDs.join("\n"));
 
         if (restartNeeded)
-            setTimeout("Config.requestRestart()", 2000);
+            setTimeout("EsteidConfig.requestRestart()", 2000);
     }
 };
 

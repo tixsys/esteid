@@ -26,7 +26,7 @@ var esteidHackTable = [
   { url: "^https://id.seb.ee", js: "sebJava.js" }
 ];
 
-var ConvertLegacy =
+var EsteidConvertLegacy =
 {
   /* Shamelessly stolen from:
    * http://forums.mozillazine.org/viewtopic.php?p=921150#921150 */
@@ -66,7 +66,7 @@ var ConvertLegacy =
           esteid_log('Loading ' + o.js + ' on page ' + doc.location.href);
           this.injectJS(doc, this.getContents("chrome://esteid/content/" + o.js));
         }
-      } catch(e) { esteid_log("Error in ConvertLegacy.loadHacks: " + e); }
+      } catch(e) { esteid_log("Error in EsteidConvertLegacy.loadHacks: " + e); }
     }
   },
 
@@ -207,9 +207,9 @@ var ConvertLegacy =
       doc.addEventListener("DOMNodeInserted", function() {
         var doc = aEvent.originalTarget;
         if (!doc.esteidConvertLegacyRunning)
-          ConvertLegacy.convert(doc);
+          EsteidConvertLegacy.convert(doc);
       }, false);
-      ConvertLegacy.convert(doc); }, false);
+      EsteidConvertLegacy.convert(doc); }, false);
 
     // https://developer.mozilla.org/en/XUL_School/Intercepting_Page_Loads
     gBrowser.addEventListener("load", function(aEvent) {

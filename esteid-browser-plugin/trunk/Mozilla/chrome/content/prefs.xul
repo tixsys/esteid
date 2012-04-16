@@ -7,9 +7,9 @@
 <dialog id="esteidprefs" title="&esteid.PrefsTitle;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml"
-        onload="Prefs.onLoad();"
+        onload="EsteidPrefs.onLoad();"
         buttons="accept"
-        ondialogaccept="Prefs.doOK();"
+        ondialogaccept="EsteidPrefs.doOK();"
         style="max-width: 50em;">
 
   <script type="application/x-javascript" src="prefs.js"/>
@@ -24,7 +24,7 @@
         <caption label="&esteid.PreferencesCaption;" />
         <hbox>
           <button id="wlbtn" label="&esteid.OpenWhiteList;"
-                  oncommand="Prefs.openPluginSettings();" disabled="true" />
+                  oncommand="EsteidPrefs.openPluginSettings();" disabled="true" />
         </hbox>
         <hbox>
           <html:object id="eidplugin" type="application/x-esteid"

@@ -111,7 +111,7 @@ var Esteid =
                 esteid_error("Open EstEID browser plugin is not installed");
             }
             try {
-                ConvertLegacy.init();
+                EsteidConvertLegacy.init();
             } catch (anError) {
                 esteid_error("Can't register legacy converter: " + anError);
             }
@@ -119,7 +119,7 @@ var Esteid =
 
         try {
             if (!esteidglobal.isConfigured)
-                Config.init();
+                EsteidConfig.init();
         } catch (anError) {
             esteid_error(anError);
         }
