@@ -27,27 +27,6 @@
  * must be defined before running the code in ConfigureEstEID();
  */
 
-const nsNSSCertCache          = "@mozilla.org/security/nsscertcache;1";
-const nsModDB                 = "@mozilla.org/security/pkcs11moduledb;1"
-const nsX509CertDB            = "@mozilla.org/security/x509certdb;1"
-const nsLocalFile             = "@mozilla.org/file/local;1";
-const nsFileInputStream       = "@mozilla.org/network/file-input-stream;1";
-const nsScriptableInputStream = "@mozilla.org/scriptableinputstream;1";
-const nsPKCS11                = "@mozilla.org/security/pkcs11;1";
-const nsIPKCS11Slot           = Components.interfaces.nsIPKCS11Slot;
-const nsIPK11Token            = Components.interfaces.nsIPK11Token;
-const nsHttpProtocolHandler   = "@mozilla.org/network/protocol;1?name=http";
-const nsWindowsRegKey         = "@mozilla.org/windows-registry-key;1";
-const nsPreferencesService    = "@mozilla.org/preferences-service;1";
-
-const brdBundleURL = "chrome://branding/locale/brand.properties";
-const extBundleURL = "chrome://mozapps/locale/extensions/extensions.properties";
-const eidBundleURL = "chrome://esteid/locale/esteid.properties";
-const eidIconURL   = "chrome://esteid/skin/id-16.png";
-
-const EstEidModName = "Estonian ID Card";
-const soName = "onepin-opensc-pkcs11";
-
 function PEM2Base64(pem) {
     var beginCert = "-----BEGIN CERTIFICATE-----";
     var endCert = "-----END CERTIFICATE-----";
@@ -58,6 +37,11 @@ function PEM2Base64(pem) {
 }
 
 function requestRestart() {
+    const brdBundleURL = "chrome://branding/locale/brand.properties";
+    const extBundleURL = "chrome://mozapps/locale/extensions/extensions.properties";
+    const eidBundleURL = "chrome://esteid/locale/esteid.properties";
+    const eidIconURL   = "chrome://esteid/skin/id-16.png";
+
     var restartLabel, restartKey, restartMessage;
     var nb;
 
@@ -132,6 +116,8 @@ function doRestart() {
  */
 function allSlotsFriendly(module)
 {
+    const Ci = Components.interfaces;
+
     var allFriendly = true;
 
     var slots = module.listSlots();
@@ -142,7 +128,7 @@ function allSlotsFriendly(module)
     while (!slots_done) {
         var slot = null;
         try {
-            slot = slots.currentItem().QueryInterface(nsIPKCS11Slot);
+            slot = slots.currentItem().QueryInterface(Ci.nsIPKCS11Slot);
         } catch (e) { slot = null; }
         if (slot != null) {
             var token = slot.getToken();
@@ -168,6 +154,20 @@ function allSlotsFriendly(module)
 
 
 function ConfigureEstEID() {
+    const nsNSSCertCache          = "@mozilla.org/security/nsscertcache;1";
+    const nsModDB                 = "@mozilla.org/security/pkcs11moduledb;1"
+    const nsX509CertDB            = "@mozilla.org/security/x509certdb;1"
+    const nsLocalFile             = "@mozilla.org/file/local;1";
+    const nsFileInputStream       = "@mozilla.org/network/file-input-stream;1";
+    const nsScriptableInputStream = "@mozilla.org/scriptableinputstream;1";
+    const nsPKCS11                = "@mozilla.org/security/pkcs11;1";
+    const nsHttpProtocolHandler   = "@mozilla.org/network/protocol;1?name=http";
+    const nsWindowsRegKey         = "@mozilla.org/windows-registry-key;1";
+    const nsPreferencesService    = "@mozilla.org/preferences-service;1";
+
+    const EstEidModName = "Estonian ID Card";
+    const soName = "onepin-opensc-pkcs11";
+
     const Ci = Components.interfaces;
     const Cc = Components.classes;
 
