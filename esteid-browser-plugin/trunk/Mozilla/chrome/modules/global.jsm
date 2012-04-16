@@ -6,5 +6,6 @@ var EXPORTED_SYMBOLS = ["esteidglobal"];
 
 var esteidglobal = {  
   log : "",
+  errflag : false,
   isConfigured : false,
 };
