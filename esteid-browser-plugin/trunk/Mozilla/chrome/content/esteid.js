@@ -119,7 +119,7 @@ var Esteid =
 
         try {
             if (!esteidglobal.isConfigured)
-                ConfigureEstEID();
+                Config.init();
         } catch (anError) {
             esteid_error(anError);
         }
