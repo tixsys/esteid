@@ -42,7 +42,6 @@ var Config =
     requestRestart: function()
     {
         const brdBundleURL = "chrome://branding/locale/brand.properties";
-        const extBundleURL = "chrome://mozapps/locale/extensions/extensions.properties";
         const eidBundleURL = "chrome://esteid/locale/esteid.properties";
         const eidIconURL   = "chrome://esteid/skin/id-16.png";
 
@@ -59,27 +58,20 @@ var Config =
         var sbs = Components.classes["@mozilla.org/intl/stringbundle;1"].
                       getService(Components.interfaces.nsIStringBundleService);
 
-        /* Load restart button label and accelerator key
-         * from extension manager string bundle
-         * toolkit/mozapps/extensions/content/extensions.xul
-         * toolkit/mozapps/extensions/content/extensions.js
-         */
+        /* Load restart notification strings */
         try {
             var sb = sbs.createBundle(brdBundleURL);
             var appName = sb.GetStringFromName("brandShortName");
-            sb = sbs.createBundle(extBundleURL);
-            restartLabel = sb.formatStringFromName("restartButton", [appName], 1);
-            restartKey   = sb.GetStringFromName("restartAccessKey");
+
+            sb = sbs.createBundle(eidBundleURL);
+            restartMessage = sb.formatStringFromName("pkcs11Restart.message", [appName], 1);
+            restartLabel = sb.GetStringFromName("pkcs11Restart.restartButton");
+            restartKey = sb.GetStringFromName("pkcs11Restart.restartButton.accesskey");
         } catch(e) {
-            esteid_log("Error loading restart button: " + e);
+            esteid_log("Error loading restart notification strings: " + e);
+            restartMessage = "ID card security module update requires a restart.";
             restartLabel = "Restart Now";
-            restartKey = null;
-        }
-        try {
-            var sb = sbs.createBundle(eidBundleURL);
-            restartMessage = sb.GetStringFromName("pkcs11RestartMessage");
-        } catch(e) {
-            restartMessage = "Turvamooduli laadimise lõpetamine vajab restarti";
+            restartKey = "R";
         }
 
         var buttons = [{
