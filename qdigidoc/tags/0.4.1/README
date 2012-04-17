@@ -1,0 +1,31 @@
+QDigiDoc is an application for digitally signing and encrypting documents in
+BDoc, DDoc, and CDoc container formats. These file formats are widespread in
+Estonia where they are used for storing legally binding digital signatures.
+
+
+Dependencies
+============
+
+cmake >= 2.6.0
+libdigidoc >= 2.7.0
+libdigidocpp >= 0.3.0
+libp11
+openldap
+openssl
+qt >= 4.4.0
+xerces-c
+xsdcxx
+
+pkcs11 library (e.g. opensc)
+
+
+BUILD INSTRUCTIONS
+==================
+
+1. Run build with cmake
+     mkdir build
+     cd build
+     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+     make -j4
+2. Install the application to a system wide directory
+     make install

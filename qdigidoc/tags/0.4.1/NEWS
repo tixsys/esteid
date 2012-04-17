@@ -1,0 +1,17 @@
+qdigidoc 0.4.1 (2012-04-17)
+===========================
+
+- Fix Window decorations with IceWM/LXDE (alvar@raamat.polva.ee)
+- Man pages for qdigidoccrypto and qdigidocclient (Mihkel Vain)
+- Update Nautilus extension for GNOME 3 (Guido Tabbernuk)
+- Remove the UTF-8 encoding key from desktop files (Martin-Éric Racine)
+
+
+qdigidoc 0.4.0 (2010-09-29)
+===========================
+
+- Initial release
+
+Many thanks to all the contributors:
+Antti Andreimann, Aram Sahradyan, Asse Sauga, Edgar Kivisild, Erkko Kebbinau,
+Janek Priimann, Jargo Kõster, Kalev Lember, Raul Metsma, Toomas Tamme.

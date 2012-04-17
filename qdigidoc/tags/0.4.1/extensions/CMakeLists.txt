@@ -1,0 +1,18 @@
+if (UNIX AND NOT APPLE)
+    option(ENABLE_KDE "Install KDE service menu (default: TRUE)" TRUE)
+    if (ENABLE_KDE)
+        add_subdirectory(kde)
+    endif()
+
+    option(ENABLE_NAUTILUS_EXTENSION "Build Nautilus extension (default: TRUE)" TRUE)
+    if (ENABLE_NAUTILUS_EXTENSION)
+        add_subdirectory(nautilus)
+    endif()
+endif()
+
+if (WIN32)
+    option(ENABLE_WINDOWS_EXPLORER_EXTENSION "Build Windows Explorer extension (default: TRUE)" TRUE)
+    if (ENABLE_WINDOWS_EXPLORER_EXTENSION)
+        add_subdirectory(windows)
+    endif()
+endif()
