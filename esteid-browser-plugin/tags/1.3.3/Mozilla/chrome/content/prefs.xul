@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://esteid/skin/" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://esteid/locale/esteid.dtd">
+
+<dialog id="esteidprefs" title="&esteid.PrefsTitle;"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml"
+        onload="EsteidPrefs.onLoad();"
+        buttons="accept"
+        ondialogaccept="EsteidPrefs.doOK();"
+        style="max-width: 50em;">
+
+  <script type="application/x-javascript" src="prefs.js"/>
+
+  <tabbox flex="1">
+    <tabs>
+      <tab label="&esteid.Preferences;"  />
+      <tab label="&esteid.Log;"       />
+    </tabs>
+    <tabpanels flex="1" >
+      <vbox>
+        <caption label="&esteid.PreferencesCaption;" />
+        <hbox>
+          <button id="wlbtn" label="&esteid.OpenWhiteList;"
+                  oncommand="EsteidPrefs.openPluginSettings();" disabled="true" />
+        </hbox>
+        <hbox>
+          <html:object id="eidplugin" type="application/x-esteid"
+                       style="width: 1px; height: 1px;
+                              margin: 0px; padding: 0px;" />
+        </hbox>
+      </vbox>
+      <textbox id="log" multiline="true" rows="20" cols="40"
+               readonly="true" />
+    </tabpanels>
+  </tabbox>
+</dialog>

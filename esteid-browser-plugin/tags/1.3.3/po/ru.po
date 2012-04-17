@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Vladimir Levijev <vl@dimir.eu>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: ru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-18 21:39+0300\n"
+"PO-Revision-Date: 2011-10-09 23:53+0300\n"
+"Last-Translator: Vladimir Levijev <vl@dimir.eu>\n"
+"Language-Team: Russian <firefox-et@googlegroups.com>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../X11/basepindialog.cpp:82
+msgid "<span color=\"red\">Wrong PIN!</span> Tries left: "
+msgstr "<span color=\"red\">Неверный PIN!</span> Осталось попыток: "
+
+#: ../EsteidAPI.cpp:63
+msgid "Access to ID card was denied because the connection to the server is not secure."
+msgstr "Доступ к ID карте не разрешён, не безопасная связь с сервером."
+
+#. UI Messages
+#: ../EsteidAPI.cpp:61
+msgid "Allow"
+msgstr "Разрешить"
+
+#: ../X11/whitelistdialog.ui:7
+msgid "Allowed Sites"
+msgstr "Разрешённые сайты"
+
+#: ../X11/pinpaddialog.ui:179
+#: ../X11/pininputdialog.ui:113
+msgid "Do_cument:"
+msgstr "До_кумент:"
+
+#: ../X11/pinpaddialog.ui:7
+#: ../X11/pininputdialog.ui:7
+msgid "Enter PIN"
+msgstr "Введите PIN"
+
+#: ../X11/pinpaddialog.ui:132
+msgid "Enter PIN on pinpad"
+msgstr "Введите PIN на клавиатуре кардридера"
+
+#: ../X11/whitelistdialog.ui:39
+msgid "Enter a site to add to whitelist:"
+msgstr "Добавить сайт в \"белый\" список:"
+
+#: ../X11/GtkUI.cpp:244
+msgid "Error saving settings"
+msgstr "Ошибка сохранения настроек"
+
+#: ../X11/GtkUI.cpp:183
+msgid "PIN2 blocked"
+msgstr "PIN2 заблокирован"
+
+#: ../X11/GtkUI.cpp:184
+msgid "Please run ID card Utility to unlock the PIN."
+msgstr "Запустите пожалуйста ID card Utility, чтобы разблокировать вашу ID карту."
+
+#: ../EsteidAPI.cpp:62
+msgid "This site is trying to obtain access to your ID card."
+msgstr "Этот сайт пытается получить доступ к вашей ID карте."
+
+#: ../EsteidAPI.h:38
+msgid "User cancelled operation"
+msgstr "Операция прервана пользователем"
+
+#: ../X11/whitelistdialog.ui:23
+msgid "You can specify which web sites are allowed to have access to your ID card. Only add the sites you trust to keep your private information safe."
+msgstr "Вы можете перечислить сайты, которым даёте доступ к вашей ID карте. Добавляйте только те сайты, которым вы доверяете свою личную информацию."
+
+#: ../X11/pinpaddialog.ui:256
+#: ../X11/pininputdialog.ui:175
+msgid "_Details"
+msgstr "_Детали"
+
+#: ../X11/pinpaddialog.ui:219
+#: ../X11/pininputdialog.ui:145
+msgid "_Hash:"
+msgstr "_Хеш"
+
+#. TRANLATORS: 's' is seconds
+#: ../X11/pinpaddialog.cpp:70
+msgid "s"
+msgstr "с"
+
