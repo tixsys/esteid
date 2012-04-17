@@ -1,3 +1,20 @@
+esteid-browser-plugin 1.3.3 (2012-04-17)
+========================================
+
+Changes:
+ - Improvements to initial keyboard focus handling
+ - Removed support for Thunderbird versions older than 3.0
+ - Fix PKCS#11 module reloading notification with recent Firefox
+ - Proper namespacing for Mozilla extension code
+
+Translation updates:
+ - Russian (Vladimir Levijev)
+
+Bugs fixed:
+ #117 - "Extension should suggest a browser restart on failed module load"
+ #176 - "firefox browser plugin failing at getContent"
+
+
 esteid-browser-plugin 1.3.2 (2011-10-14)
 ========================================
 
