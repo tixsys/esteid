@@ -38,6 +38,16 @@ sudo apt-get install esteid
 
 *NB!* Kui tahad, et töötaks allkirjastamine Nautiluse failihalduri kontekstimenüüst, siis paigalda lisaks _nautilus-qdigidoc_.
 
+=== Uuendamine ===
+
+Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
+{{{
+sudo apt-get update
+sudo apt-get dist-upgrade
+}}}
+
+=== Vanad versioonid ===
+
 Ubuntud kuni Maverick Meerkatini (10.10):
 {{{
 sudo apt-get update
@@ -46,9 +56,3 @@ sudo apt-get install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid
 }}}
 
 *NB!* Allkirjastamine Nautiluse failihalduri kontekstimenüüst: _qdigidoc-nautilus_.
-
-Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
-{{{
-sudo apt-get update
-sudo apt-get dist-upgrade
-}}}
