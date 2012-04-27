@@ -1,5 +1,5 @@
 = Ubuntu =
-Toetatud versioonid *Lucid Lynx (10.04)*, *Maverick Meerkat (10.10)*, *Natty Narwhal (11.04)*, *Oneiric Ocelot (11.10)*, *Precise Pangolin (12.04)*
+Toetatud versioonid ~~*Lucid Lynx (10.04)*, *Maverick Meerkat (10.10)*, ~~*Natty Narwhal (11.04)*, *Oneiric Ocelot (11.10)*, *Precise Pangolin (12.04)*
 
 == Graafiline paigaldus ==
 
@@ -9,12 +9,12 @@ Toetatud versioonid *Lucid Lynx (10.04)*, *Maverick Meerkat (10.10)*, *Natty Nar
  # Vajuta nuppu Lisa allikas
  # Vajuta nuppu Sulge
  # Lase tarkvarakeskusel metaandmed ära uuendada (oota kuni roheline ketas enam ei keerle)
- # <a href="http://tinyurl.com/3448w2k">Kliki siia pakettide installimiseks</a>
+ # <a href="http://tinyurl.com/cyy34kt">Kliki siia pakettide installimiseks</a>
 
 <wiki:comment>
 Kuna Google code wiki on loll, siis peab tinyurl-i kasutama APT URLi kodeerimiseks:
 
-apt:mozilla-esteid?section=universe?section=multiverse,qesteidutil?section=universe?section=multiverse,qdigidoc?section=universe?section=multiverse,thunderbird-esteid?section=universe?section=multiverse
+apt:esteid?section=universe?section=multiverse
 
 Vaata lisa: https://wiki.ubuntu.com/AptUrl
 </wiki:comment>
@@ -28,14 +28,24 @@ Tarkvara esmakordsel paigaldamisel on vaja lisada varamu:
 sudo add-apt-repository ppa:esteid/ppa
 }}}
 
-Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
+Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud...
+
+{{{
+sudo apt-get update
+sudo apt-get dist-upgrade
+sudo apt-get install esteid 
+}}}
+
+*NB!* Kui tahad, et töötaks allkirjastamine Nautiluse failihalduri kontekstimenüüst, siis paigalda lisaks _nautilus-qdigidoc_.
+
+Ubuntud kuni Maverick Meerkatini (10.10):
 {{{
 sudo apt-get update
 sudo apt-get dist-upgrade
 sudo apt-get install qdigidoc qesteidutil mozilla-esteid thunderbird-esteid 
 }}}
 
-*NB!* Kui tahad, et töötaks allkirjastamine Nautiluse failihalduri kontekstimenüüst, siis paigalda paketi _qdigidoc_ asemel elik sellele lisaks pakett _qdigidoc-nautilus_.
+*NB!* Allkirjastamine Nautiluse failihalduri kontekstimenüüst: _qdigidoc-nautilus_.
 
 Kui paketid on juba korra paigaldatud, siis edaspidi käib uuendamine järgmiselt:
 {{{
