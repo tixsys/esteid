@@ -31,6 +31,8 @@
 #include <windows.h>
 #include <Winreg.h>
 #include <direct.h>
+#else
+#include <unistd.h>
 #endif
 
 #include "log.h"
