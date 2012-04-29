@@ -58,6 +58,7 @@ static PProcessIdToSessionId pProcessIdToSessionId = 0;
 #if defined(Q_OS_UNIX)
 #include <errno.h>
 #include <time.h>
+#include <unistd.h>
 #endif
 
 namespace QtLP_Private {
