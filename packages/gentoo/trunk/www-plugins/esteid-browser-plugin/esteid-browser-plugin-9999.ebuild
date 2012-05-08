@@ -44,7 +44,6 @@ src_configure() {
 		-DSYSCONF_INSTALL_DIR=/etc
 		-DWITH_SYSTEM_BOOST=ON
 	"
-
 	cmake-utils_src_configure
 }
 
@@ -52,7 +51,6 @@ src_install() {
 	cmake-utils_src_install
 
 	inst_plugin "/usr/$(get_libdir)/mozilla/plugins/npesteid.so"
-
 
 	local MOZILLA_FIVE_HOME xpiname
 	mozillas=""
