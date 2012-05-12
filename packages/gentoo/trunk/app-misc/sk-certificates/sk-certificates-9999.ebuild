@@ -2,9 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/libdigidocpp/trunk"
 
-EAPI=3
 inherit subversion
 
 MY_P="libdigidocpp-${PV}"
