@@ -5,7 +5,7 @@
 ESVN_REPO_URI="https://esteid.googlecode.com/svn/libdigidoc/trunk"
 
 EAPI=3
-inherit cmake-utils subversion
+inherit cmake-utils eutils subversion
 
 DESCRIPTION="Library for handling digitally signed documents"
 HOMEPAGE="http://code.google.com/p/esteid/"
@@ -21,6 +21,10 @@ RDEPEND="dev-libs/libxml2
 DEPEND="${RDEPEND}"
 
 DOCS="AUTHORS ChangeLog NEWS README"
+
+src_prepare() {
+	epatch "${FILESDIR}/${P}-fix-compilation.patch"
+}
 
 src_configure() {
 	# If prefix is /usr, sysconf needs to be /etc, not /usr/etc
