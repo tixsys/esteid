@@ -1,20 +1,5 @@
 = Fedora =
-Toetatud versioonid *14*, *15* ja *16*
-
-=== Kaardilugeja draiverid ===
-Tarkvara esmakordsel paigaldamisel on vaja Fedora 14's paigaldada ka CCID lugejate draiverid:
-{{{
-sudo yum install ccid
-}}}
-
-Vaikimisi kasutab Fedora 14 lugejadraiverina OpenCT-d, mis on katki. Esmakordsel paigaldamisel tee olukorra parandamiseks:
-{{{
-sudo chkconfig openct off
-sudo chkconfig pcscd on
-sudo /etc/init.d/openct stop
-sudo /etc/init.d/pcscd start
-}}}
-
+Toetatud versioonid *16* ja *17*
 
 === Pakettide paigaldamine ===
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
