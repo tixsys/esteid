@@ -7,7 +7,7 @@ Supported releases are *16* and *17*
 
 To install all packages enter the following command into the terminal:
 {{{
-sudo yum install qesteidutil qdigidoc mozilla-esteid
+sudo yum install mozilla-esteid pcsc-lite qesteidutil qdigidoc
 }}}
 
 Once the packages are installed, you can get any updates with:
