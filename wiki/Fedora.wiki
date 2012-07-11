@@ -4,7 +4,6 @@ Toetatud versioonid *16* ja *17*
 === Pakettide paigaldamine ===
 Kõikide pakettide paigaldamiseks tuleb käsureal anda järgmised käsud:
 {{{
-sudo yum update
 sudo yum install qesteidutil qdigidoc mozilla-esteid
 }}}
 
