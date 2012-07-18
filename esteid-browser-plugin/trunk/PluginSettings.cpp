@@ -23,9 +23,9 @@
 #include <stdlib.h>
 #endif
 
-#define BOOST_FILESYSTEM_VERSION 2
+#define BOOST_FILESYSTEM_VERSION 3
 #include <fstream>
-#include <boost/filesystem/path.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -60,9 +60,9 @@ path PluginSettings::globalSettingsDir()
 path PluginSettings::userSettingsDir()
 {
 #ifdef _WIN32
-    return path(getenv("APPDATA"), native);
+    return path(getenv("APPDATA"));
 #else // UNIX
-    path home(getenv("HOME"), native);
+    path home(getenv("HOME"));
 # ifdef __APPLE__
     return home / "Library/Application Support";
 # else
