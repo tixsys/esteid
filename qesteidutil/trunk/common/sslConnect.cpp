@@ -341,7 +341,7 @@ QByteArray SSLConnect::getUrl( RequestType type, const QString &value )
 			"</SOAP-ENV:Envelope>" )
 			.arg( lang.toUpper() );
 		header = QString(
-			"POST /id/GetAccessTokenWSProxy/ HTTP/1.1\r\n"
+			"POST /GetAccessTokenWS/ HTTP/1.1\r\n"
 			"Host: %1\r\n"
 			"Content-Type: text/xml\r\n"
 			"Content-Length: %2\r\n"

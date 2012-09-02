@@ -24,7 +24,7 @@
 #include <QObject>
 
 #define EESTI "sisene.www.eesti.ee"
-#define SK "www.openxades.org"
+#define SK "id.sk.ee"
 
 class SSLConnectPrivate;
 class SSLConnect: public QObject
