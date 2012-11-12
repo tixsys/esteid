@@ -18,7 +18,7 @@ DESCRIPTION="Estonian ID card digital signing browser plugin"
 HOMEPAGE="http://code.google.com/p/esteid/"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug"
 
 DEPEND="app-arch/zip
