@@ -31,7 +31,7 @@ DEPEND="app-arch/zip
 RDEPEND="${DEPEND}
 	app-misc/sk-certificates
 	app-crypt/ccid
-	dev-libs/opensc"
+	<=dev-libs/opensc-0.13"
 
 S="${WORKDIR}/${FB_P}"
 
