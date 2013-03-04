@@ -18,11 +18,11 @@ IUSE="gnome kde"
 RDEPEND="dev-libs/libdigidoc
 	dev-libs/libdigidocpp
 	dev-libs/openssl
+	dev-qt/qtcore:4[ssl]
+	dev-qt/qtgui:4
+	dev-qt/qtwebkit:4
 	gnome? ( dev-python/nautilus-python )
-	net-nds/openldap
-	x11-libs/qt-core:4[ssl]
-	x11-libs/qt-gui:4
-	x11-libs/qt-webkit:4"
+	net-nds/openldap"
 DEPEND="${RDEPEND}"
 
 DOCS="AUTHORS NEWS README"

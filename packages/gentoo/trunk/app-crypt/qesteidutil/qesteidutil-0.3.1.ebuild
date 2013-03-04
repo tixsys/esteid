@@ -16,9 +16,9 @@ IUSE=""
 
 RDEPEND="dev-libs/smartcardpp
 	dev-libs/libp11
-	x11-libs/qt-core:4[ssl]
-	x11-libs/qt-gui:4
-	x11-libs/qt-webkit:4"
+	dev-qt/qtcore:4[ssl]
+	dev-qt/qtgui:4
+	dev-qt/qtwebkit:4"
 DEPEND="${RDEPEND}"
 
 DOCS="AUTHORS NEWS README"
