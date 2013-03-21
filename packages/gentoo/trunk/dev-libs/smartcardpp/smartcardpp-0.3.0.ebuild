@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=3
-inherit cmake-utils
+inherit eutils cmake-utils
 
 DESCRIPTION="Library for accessing smart cards"
 HOMEPAGE="http://code.google.com/p/esteid/"
@@ -19,3 +19,13 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 DOCS="NEWS"
+
+src_prepare() {
+	cmake-utils_src_prepare
+	epatch "$FILESDIR"/sleep-header.patch
+}
+
+src_configure() {
+	append-cppflags -DHAVE_GETOPT_H
+	cmake-utils_src_configure
+}

@@ -1,0 +1,11 @@
+--- CardBase.cpp.orig	2013-03-21 10:35:43.908827524 +0100
++++ CardBase.cpp	2013-03-21 10:36:38.344825538 +0100
+@@ -20,6 +20,8 @@
+ 	#include <Windows.h>
+ 	#include <WinNT.h>
+ 	#include <Psapi.h>
++#else
++	#include <unistd.h>
+ #endif
+ 
+ #define NULLWSTR(a) (a == NULL ? L"<NULL>" : a)
