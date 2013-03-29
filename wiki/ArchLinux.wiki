@@ -4,7 +4,7 @@
 Kõik pakid asuvad [http://aur.archlinux.org/packages.php?SeB=m&L=2&K=kevku AURis] ning nende paigaldamiseks on soovitatav kasutada näiteks [http://wiki.archlinux.org/index.php/Yaourt yaourt]-i.
 
 === Kaardilugeja draiverid ===
-Tarkvara esmakordsel paigaldamisel on vaja paigaldada lugejate draiverid [http://www.archlinux.org/packages/?q=pcsclite pcsclite], [http://www.archlinux.org/packages/?q=ccid ccid] ja [http://aur.archlinux.org/packages.php?ID=10154 opensc]:
+Tarkvara esmakordsel paigaldamisel on vaja paigaldada lugejate draiverid [http://www.archlinux.org/packages/?q=pcsclite pcsclite], [http://www.archlinux.org/packages/?q=ccid ccid] ja [https://aur.archlinux.org/packages/opensc012/ opensc]:
 {{{
 yaourt -S pcsclite ccid opensc012
 systemctl enable pcscd.socket
