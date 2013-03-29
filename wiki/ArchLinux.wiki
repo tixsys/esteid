@@ -7,12 +7,7 @@ Kõik pakid asuvad [http://aur.archlinux.org/packages.php?SeB=m&L=2&K=kevku AURi
 Tarkvara esmakordsel paigaldamisel on vaja paigaldada lugejate draiverid [http://www.archlinux.org/packages/?q=pcsclite pcsclite], [http://www.archlinux.org/packages/?q=ccid ccid] ja [http://aur.archlinux.org/packages.php?ID=10154 opensc]:
 {{{
 yaourt -S pcsclite ccid opensc
-sudo /etc/rc.d/pcscd start
-}}}
-
-Viimane tuleks ka lisada /etc/rc.conf faili DAEMONS reale:
-{{{
-DAEMONS=(... @pcscd)
+systemctl enable pcscd.socket
 }}}
 
 === Paketid ===
